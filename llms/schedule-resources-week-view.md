@@ -2428,7 +2428,149 @@ const events = [
 
 ## Event resize
 
-Note that event resize is not supported in the week view.
+Enable event resizing with `withEventResize` prop. Events can be resized by dragging their left or
+right edges, and the `onEventResize` callback is called with the updated event start and end times.
+
+```tsx
+// Demo.tsx
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { ResourcesWeekView, ScheduleEventData } from '@mantine/schedule';
+import { events as initialEvents, resources } from './data';
+
+function Demo() {
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
+  const [events, setEvents] = useState<ScheduleEventData[]>(initialEvents);
+
+  return (
+    <ResourcesWeekView
+      date={date}
+      onDateChange={setDate}
+      resources={resources}
+      events={events}
+      startTime="08:00:00"
+      endTime="18:00:00"
+      startScrollDateTime={`${today} 08:00:00`}
+      withEventResize
+      onEventResize={({ eventId, newStart, newEnd }) => {
+        setEvents((current) =>
+          current.map((event) =>
+            event.id === eventId
+              ? { ...event, start: newStart, end: newEnd }
+              : event
+          )
+        );
+      }}
+    />
+  );
+}
+
+// data.ts
+import dayjs from 'dayjs';
+import { ScheduleResourceData } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
+const dayAfter = dayjs().add(2, 'day').format('YYYY-MM-DD');
+const dayAfter2 = dayjs().add(3, 'day').format('YYYY-MM-DD');
+
+const resources: ScheduleResourceData[] = [
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
+  { id: 'london', label: 'Meeting room: London' },
+];
+
+const events = [
+  {
+    id: 1,
+    title: 'Team Standup',
+    start: \`\${today} 09:00:00\`,
+    end: \`\${today} 09:30:00\`,
+    color: 'blue',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 2,
+    title: 'Sprint Planning',
+    start: \`\${today} 10:00:00\`,
+    end: \`\${today} 11:30:00\`,
+    color: 'green',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 3,
+    title: 'Client Call',
+    start: \`\${tomorrow} 09:30:00\`,
+    end: \`\${tomorrow} 10:30:00\`,
+    color: 'violet',
+    resourceId: 'paris',
+  },
+  {
+    id: 4,
+    title: 'Design Review',
+    start: \`\${today} 13:00:00\`,
+    end: \`\${today} 14:00:00\`,
+    color: 'orange',
+    resourceId: 'paris',
+  },
+  {
+    id: 5,
+    title: '1:1 Meeting',
+    start: \`\${tomorrow} 11:00:00\`,
+    end: \`\${tomorrow} 11:30:00\`,
+    color: 'cyan',
+    resourceId: 'new-york',
+  },
+  {
+    id: 6,
+    title: 'Workshop',
+    start: \`\${dayAfter} 14:00:00\`,
+    end: \`\${dayAfter} 16:00:00\`,
+    color: 'pink',
+    resourceId: 'new-york',
+  },
+  {
+    id: 7,
+    title: 'Architecture Review',
+    start: \`\${tomorrow} 10:00:00\`,
+    end: \`\${tomorrow} 11:00:00\`,
+    color: 'red',
+    resourceId: 'london',
+  },
+  {
+    id: 8,
+    title: 'Retrospective',
+    start: \`\${today} 15:00:00\`,
+    end: \`\${today} 16:00:00\`,
+    color: 'grape',
+    resourceId: 'london',
+  },
+  {
+    id: 9,
+    title: 'Product Demo',
+    start: \`\${dayAfter} 09:00:00\`,
+    end: \`\${dayAfter} 10:00:00\`,
+    color: 'teal',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 10,
+    title: 'Budget Review',
+    start: \`\${dayAfter2} 11:00:00\`,
+    end: \`\${dayAfter2} 12:30:00\`,
+    color: 'indigo',
+    resourceId: 'paris',
+  },
+];
+```
+
+
+Resizing is constrained to the day the event belongs to: an event cannot be resized to span multiple
+days. To make an event cover several days, update its `start` and `end` dates directly in your data.
+
+Use `canResizeEvent` to control which events can be resized.
 
 ## Static mode
 
@@ -2570,6 +2712,7 @@ const events = [
 |------|------|---------|-------------|
 | businessHours | [string, string] | - | - |
 | canDragEvent | (event: ScheduleEventData) => boolean | - | - |
+| canResizeEvent | (event: ScheduleEventData) => boolean | - | Function to determine if event can be resized |
 | date | string \| Date | required | - |
 | endTime | string | - | - |
 | events | ScheduleEventData[] | - | - |
@@ -2590,6 +2733,7 @@ const events = [
 | onEventDragEnd | () => void | - | - |
 | onEventDragStart | (event: ScheduleEventData) => void | - | - |
 | onEventDrop | ((data: { eventId: string \| number; newStart: string; newEnd: string; event: ScheduleEventData; resourceId?: string \| number; }) => void) \| undefined | - | - |
+| onEventResize | (data: { eventId: string \| number; newStart: string; newEnd: string; event: ScheduleEventData; }) => void | - | Called when event is resized |
 | onExternalEventDrop | ((data: { dataTransfer: DataTransfer; dropDateTime: string; resourceId?: string \| number; }) => void) \| undefined | - | - |
 | onSlotDragEnd | ((data: { rangeStart: string; rangeEnd: string; resourceId?: string \| number; }) => void) \| undefined | - | - |
 | onTimeSlotClick | ((data: { slotStart: string; slotEnd: string; nativeEvent: MouseEvent<HTMLButtonElement, MouseEvent>; resourceId?: string \| number; }) => void) \| undefined | - | - |
@@ -2617,6 +2761,7 @@ const events = [
 | withCurrentTimeBubble | boolean | - | - |
 | withCurrentTimeIndicator | boolean | - | - |
 | withDragSlotSelect | boolean | - | - |
+| withEventResize | boolean | - | If true, events can be resized by dragging their left/right edges |
 | withEventsDragAndDrop | boolean | - | - |
 | withHeader | boolean | - | - |
 | withWeekendDays | boolean | - | - |

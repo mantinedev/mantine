@@ -1197,7 +1197,7 @@ function Demo() {
   return (
     <>
       <Text ta="center">Affix is located at the bottom of the screen, scroll to see it</Text>
-      <Affix position={{ bottom: 20, right: 20 }}>
+      <Affix position={{ bottom: 20, left: 20 }}>
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button
@@ -35386,7 +35386,7 @@ function Demo() {
         placeholder="Autosize with no rows limit"
         label="Autosize with no rows limit"
         autosize
-        minRows={2}
+        minRows={4}
       />
 
       <Textarea
@@ -69931,7 +69931,7 @@ yet, you can continue using Mantine 8.x until you are ready to update React and 
 
 ## Update dependencies
 
-* Update all `@mantine/*` packages to version 9.4.0
+* Update all `@mantine/*` packages to version 9.4.1
 * If you use `@mantine/tiptap` package, update all `@tiptap/*` packages to the latest `3.x` version
 * If you use `@mantine/charts` package, update `recharts` to the latest `3.x` version
 
@@ -70369,6 +70369,20 @@ const [value, setValue] = useLocalStorage({
 ```
 
 The same change applies to `readLocalStorageValue`, `useSessionStorage`, and `readSessionStorageValue`.
+
+## useHeadroom returns object instead of boolean
+
+The `useHeadroom` hook now returns an `{ pinned: boolean; scrollProgress: number }` object instead of a plain boolean. `scrollProgress` is a value between `0` (fully hidden) and `1` (fully visible) that can be used for scroll-linked reveal animations. A new `scrollDistance` option controls how many pixels of scrolling are required to fully reveal or hide the element (default: `100`).
+
+```tsx
+import { useHeadroom } from '@mantine/hooks';
+
+// ❌ In 8.x, the return type is plain boolean
+const pinned = useHeadroom({ fixedAt: 120 });
+
+// ✅ In 9.x, the return type is an object containing `pinned` property
+const { pinned } = useHeadroom({ fixedAt: 120 });
+```
 
 ## Default border-radius change
 
@@ -71822,9 +71836,12 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-Object.defineProperty(document, 'fonts', {
-  value: { addEventListener: jest.fn(), removeEventListener: jest.fn() },
-});
+if (!document.fonts) {
+  Object.defineProperty(document, 'fonts', {
+    writable: true,
+    value: { addEventListener: jest.fn(), removeEventListener: jest.fn() },
+  });
+}
 
 class ResizeObserver {
   observe() {}
@@ -73401,9 +73418,12 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-Object.defineProperty(document, 'fonts', {
-  value: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
-});
+if (!document.fonts) {
+  Object.defineProperty(document, 'fonts', {
+    writable: true,
+    value: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
+  });
+}
 
 class ResizeObserver {
   observe() {}
@@ -92772,16 +92792,6 @@ const events = [
     color: 'green',
   },
   {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: `${startOfMonth} 09:30:00`,
-    end: `${startOfMonth} 10:00:00`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;COUNT=30',
-    },
-  },
-  {
     id: 'weekly-review-series',
     title: 'Weekly review',
     start: `${startOfMonth} 16:00:00`,
@@ -95447,16 +95457,6 @@ const events = [
     start: `${today} 10:00:00`,
     end: `${today} 11:30:00`,
     color: 'green',
-  },
-  {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:00:00`,
-    end: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:30:00`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;COUNT=10',
-    },
   },
   {
     id: 'weekly-review-series',
@@ -98980,16 +98980,6 @@ const events = [
     start: `${today} 14:00:00`,
     end: `${today} 15:00:00`,
     color: 'green',
-  },
-  {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: `${startOfMonth} 09:30:00`,
-    end: `${startOfMonth} 10:00:00`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;COUNT=30',
-    },
   },
   {
     id: 'weekly-review-series',
@@ -105179,8 +105169,9 @@ function Demo() {
 
 ## Event resize
 
-Enable event resizing with `withEventResize` prop. Event resize is only available in day view
-where events can be resized by dragging their left or right edges.
+Enable event resizing with `withEventResize` prop. Event resize is available in day and week views
+where events can be resized by dragging their left or right edges. In week view, resizing is
+constrained to the event's own day.
 
 ```tsx
 // Demo.tsx
@@ -107866,7 +107857,149 @@ const events = [
 
 ## Event resize
 
-Note that event resize is not supported in the week view.
+Enable event resizing with `withEventResize` prop. Events can be resized by dragging their left or
+right edges, and the `onEventResize` callback is called with the updated event start and end times.
+
+```tsx
+// Demo.tsx
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { ResourcesWeekView, ScheduleEventData } from '@mantine/schedule';
+import { events as initialEvents, resources } from './data';
+
+function Demo() {
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
+  const [events, setEvents] = useState<ScheduleEventData[]>(initialEvents);
+
+  return (
+    <ResourcesWeekView
+      date={date}
+      onDateChange={setDate}
+      resources={resources}
+      events={events}
+      startTime="08:00:00"
+      endTime="18:00:00"
+      startScrollDateTime={`${today} 08:00:00`}
+      withEventResize
+      onEventResize={({ eventId, newStart, newEnd }) => {
+        setEvents((current) =>
+          current.map((event) =>
+            event.id === eventId
+              ? { ...event, start: newStart, end: newEnd }
+              : event
+          )
+        );
+      }}
+    />
+  );
+}
+
+// data.ts
+import dayjs from 'dayjs';
+import { ScheduleResourceData } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
+const dayAfter = dayjs().add(2, 'day').format('YYYY-MM-DD');
+const dayAfter2 = dayjs().add(3, 'day').format('YYYY-MM-DD');
+
+const resources: ScheduleResourceData[] = [
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
+  { id: 'london', label: 'Meeting room: London' },
+];
+
+const events = [
+  {
+    id: 1,
+    title: 'Team Standup',
+    start: \`\${today} 09:00:00\`,
+    end: \`\${today} 09:30:00\`,
+    color: 'blue',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 2,
+    title: 'Sprint Planning',
+    start: \`\${today} 10:00:00\`,
+    end: \`\${today} 11:30:00\`,
+    color: 'green',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 3,
+    title: 'Client Call',
+    start: \`\${tomorrow} 09:30:00\`,
+    end: \`\${tomorrow} 10:30:00\`,
+    color: 'violet',
+    resourceId: 'paris',
+  },
+  {
+    id: 4,
+    title: 'Design Review',
+    start: \`\${today} 13:00:00\`,
+    end: \`\${today} 14:00:00\`,
+    color: 'orange',
+    resourceId: 'paris',
+  },
+  {
+    id: 5,
+    title: '1:1 Meeting',
+    start: \`\${tomorrow} 11:00:00\`,
+    end: \`\${tomorrow} 11:30:00\`,
+    color: 'cyan',
+    resourceId: 'new-york',
+  },
+  {
+    id: 6,
+    title: 'Workshop',
+    start: \`\${dayAfter} 14:00:00\`,
+    end: \`\${dayAfter} 16:00:00\`,
+    color: 'pink',
+    resourceId: 'new-york',
+  },
+  {
+    id: 7,
+    title: 'Architecture Review',
+    start: \`\${tomorrow} 10:00:00\`,
+    end: \`\${tomorrow} 11:00:00\`,
+    color: 'red',
+    resourceId: 'london',
+  },
+  {
+    id: 8,
+    title: 'Retrospective',
+    start: \`\${today} 15:00:00\`,
+    end: \`\${today} 16:00:00\`,
+    color: 'grape',
+    resourceId: 'london',
+  },
+  {
+    id: 9,
+    title: 'Product Demo',
+    start: \`\${dayAfter} 09:00:00\`,
+    end: \`\${dayAfter} 10:00:00\`,
+    color: 'teal',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 10,
+    title: 'Budget Review',
+    start: \`\${dayAfter2} 11:00:00\`,
+    end: \`\${dayAfter2} 12:30:00\`,
+    color: 'indigo',
+    resourceId: 'paris',
+  },
+];
+```
+
+
+Resizing is constrained to the day the event belongs to: an event cannot be resized to span multiple
+days. To make an event cover several days, update its `start` and `end` dates directly in your data.
+
+Use `canResizeEvent` to control which events can be resized.
 
 ## Static mode
 
@@ -108008,6 +108141,7 @@ const events = [
 |------|------|---------|-------------|
 | businessHours | [string, string] | - | - |
 | canDragEvent | (event: ScheduleEventData) => boolean | - | - |
+| canResizeEvent | (event: ScheduleEventData) => boolean | - | Function to determine if event can be resized |
 | date | string \| Date | required | - |
 | endTime | string | - | - |
 | events | ScheduleEventData[] | - | - |
@@ -108028,6 +108162,7 @@ const events = [
 | onEventDragEnd | () => void | - | - |
 | onEventDragStart | (event: ScheduleEventData) => void | - | - |
 | onEventDrop | ((data: { eventId: string \| number; newStart: string; newEnd: string; event: ScheduleEventData; resourceId?: string \| number; }) => void) \| undefined | - | - |
+| onEventResize | (data: { eventId: string \| number; newStart: string; newEnd: string; event: ScheduleEventData; }) => void | - | Called when event is resized |
 | onExternalEventDrop | ((data: { dataTransfer: DataTransfer; dropDateTime: string; resourceId?: string \| number; }) => void) \| undefined | - | - |
 | onSlotDragEnd | ((data: { rangeStart: string; rangeEnd: string; resourceId?: string \| number; }) => void) \| undefined | - | - |
 | onTimeSlotClick | ((data: { slotStart: string; slotEnd: string; nativeEvent: MouseEvent<HTMLButtonElement, MouseEvent>; resourceId?: string \| number; }) => void) \| undefined | - | - |
@@ -108055,6 +108190,7 @@ const events = [
 | withCurrentTimeBubble | boolean | - | - |
 | withCurrentTimeIndicator | boolean | - | - |
 | withDragSlotSelect | boolean | - | - |
+| withEventResize | boolean | - | If true, events can be resized by dragging their left/right edges |
 | withEventsDragAndDrop | boolean | - | - |
 | withHeader | boolean | - | - |
 | withWeekendDays | boolean | - | - |
@@ -108462,16 +108598,6 @@ const events = [
     start: `${tomorrow} 14:00:00`,
     end: `${tomorrow} 15:00:00`,
     color: 'violet',
-  },
-  {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:00:00`,
-    end: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:30:00`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;COUNT=14',
-    },
   },
   {
     id: 'weekly-review-series',
@@ -111643,16 +111769,6 @@ const events = [
     color: 'green',
   },
   {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: `${dayjs(startOfWeek).subtract(3, 'day').format('YYYY-MM-DD')} 14:00:00`,
-    end: `${dayjs(startOfWeek).subtract(3, 'day').format('YYYY-MM-DD')} 14:30:00`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;COUNT=14',
-    },
-  },
-  {
     id: 'weekly-review-series',
     title: 'Weekly review',
     start: `${startOfWeek} 16:00:00`,
@@ -112868,7 +112984,7 @@ First of all, thank you for showing interest in contributing to Mantine! All you
 * Decide on what you want to contribute.
 * If you would like to implement a new feature, discuss it with the maintainer ([GitHub Discussions](https://github.com/mantinedev/mantine/discussions/new) or [Discord](https://discord.gg/wbH82zuWMN)) before jumping into coding.
 * After finalizing issue details, you can begin working on the code.
-* Run tests with `npm test:all` and submit a PR once all tests have passed.
+* Run tests with `npm test` and submit a PR once all tests have passed.
 * Get a code review and fix all issues noticed by the maintainer.
 * If you cannot finish your task or if you change your mind – that's totally fine! Just let us know in the GitHub issue that you created during the first step of this process. The Mantine community is friendly – we won't judge or ask any questions if you decide to cancel your submission.
 * Your PR is merged. You are awesome ❤️!
@@ -112899,7 +113015,7 @@ Individual packages do not have dedicated scripts.
 
 * `syncpack` – runs [syncpack](https://www.npmjs.com/package/syncpack)
 * `typecheck` – runs TypeScript typechecking with `tsc --noEmit` on all packages and docs
-* `lint` – runs ESLint on src folder
+* `lint` – runs oxlint and stylelint on the codebase
 * `jest` – runs tests with jest
 * `test` – runs all above testing scripts
 
@@ -112915,50 +113031,6 @@ Individual packages do not have dedicated scripts.
 
 --------------------------------------------------------------------------------
 
-### EslintConfig
-
-# Mantine ESLint config
-
-[eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
-is a set of ESLint rules and configurations used in Mantine projects.
-You can use it in your project to ensure that your code follows the same
-style and conventions as Mantine.
-
-## Installation
-
-Mantine ESLint config requires ESLint 9 or higher:
-
-```bash
-yarn add @eslint/js eslint eslint-plugin-jsx-a11y eslint-plugin-react typescript-eslint eslint-config-mantine
-```
-
-```bash
-npm install @eslint/js eslint eslint-plugin-jsx-a11y eslint-plugin-react typescript-eslint eslint-config-mantine
-```
-
-## Usage
-
-Add the following configuration to your `eslint.config.mjs`:
-
-```tsx
-import mantine from 'eslint-config-mantine';
-import tseslint from 'typescript-eslint';
-
-export default tseslint.config(
-  ...mantine,
-  { ignores: ['**/*.{mjs,cjs,js,d.ts,d.mts}'] },
-);
-```
-
-## Rules and source code
-
-Mantine ESLint config extends recommended [ESLint](https://eslint.org/docs/rules/), [typescript-eslint](https://typescript-eslint.io/)
-and [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y) rules and adds custom rules and configurations.
-You can find the full list of rules and source code in the [eslint-config-mantine repository](https://github.com/mantinedev/eslint-config-mantine/blob/master/eslint.config.js).
-
-
---------------------------------------------------------------------------------
-
 ### GettingStarted
 
 # Getting started
@@ -112968,7 +113040,7 @@ You can find the full list of rules and source code in the [eslint-config-mantin
 The easiest way to get started is to use one of the templates.
 All templates include required dependencies and pre-configured settings.
 Some templates also include additional features like [Jest](https://jestjs.io/),
-[Storybook](https://storybook.js.org/), [ESLint](https://eslint.org/), etc.
+[Storybook](https://storybook.js.org/), [oxlint](https://oxc.rs/), etc.
 
 Templates include only `@mantine/core` and `@mantine/hooks` packages,
 if you need additional `@mantine/*` packages, follow installation instructions
@@ -113175,6 +113247,98 @@ that they are up-to-date with the latest Mantine version.
 All `@mantine/*` packages are distributed under [MIT](https://github.com/mantinedev/mantine/blob/master/LICENSE) license.
 You can use them in any project, commercial or not, with or without attribution. All `@mantine/*` packages
 dependencies are also distributed under MIT license.
+
+
+--------------------------------------------------------------------------------
+
+### OxcConfig
+
+# Mantine oxc config
+
+[oxc-config-mantine](https://github.com/mantinedev/oxc-config-mantine)
+is a set of [oxc](https://oxc.rs) configurations for
+[oxlint](https://www.npmjs.com/package/oxlint) (linter) and
+[oxfmt](https://www.npmjs.com/package/oxfmt) (formatter) used in Mantine projects.
+You can use it in your project to ensure that your code follows the same
+style and conventions as Mantine.
+
+## Installation
+
+Install `oxc-config-mantine` together with `oxlint` and `oxfmt`:
+
+```bash
+yarn add oxlint oxfmt oxc-config-mantine
+```
+
+```bash
+npm install oxlint oxfmt oxc-config-mantine
+```
+
+## oxlint configuration
+
+Create an `oxlint.config.ts` file in the root of your project and extend
+the shared configuration:
+
+```tsx
+import { defineConfig } from 'oxlint';
+import { oxlint } from 'oxc-config-mantine';
+
+export default defineConfig({
+  extends: [oxlint],
+  ignorePatterns: ['**/*.{mjs,cjs,js,d.ts,d.mts}'],
+});
+```
+
+## oxfmt configuration
+
+Create an `oxfmt.config.ts` file in the root of your project:
+
+```tsx
+import { defineConfig } from 'oxfmt';
+import { oxfmt } from 'oxc-config-mantine';
+
+export default defineConfig(oxfmt);
+```
+
+You can customize the formatter by spreading the base configuration and adding
+project-specific settings, for example, to add extra ignore patterns:
+
+```tsx
+import { defineConfig } from 'oxfmt';
+import { oxfmt } from 'oxc-config-mantine';
+
+export default defineConfig({
+  ...oxfmt,
+  ignorePatterns: [...oxfmt.ignorePatterns, 'dist'],
+});
+```
+
+## Running oxlint and oxfmt
+
+Add scripts to your `package.json` to lint and format the code:
+
+```json
+{
+  "scripts": {
+    "lint": "oxlint",
+    "format": "oxfmt --write \"**/*.{ts,tsx,css}\""
+  }
+}
+```
+
+Then run them with your package manager:
+
+```bash
+npm run lint
+npm run format
+```
+
+## Rules and source code
+
+Mantine oxlint config extends recommended [oxlint](https://oxc.rs/docs/guide/usage/linter)
+rules and adds custom rules and configurations for the `react`, `typescript`,
+`jsx-a11y` and `jest` plugins. You can find the full list of rules and source code
+in the [oxc-config-mantine repository](https://github.com/mantinedev/oxc-config-mantine).
 
 
 --------------------------------------------------------------------------------
@@ -127236,16 +127400,6 @@ const events = [
     color: 'green',
   },
   {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: `${startOfMonth} 09:30:00`,
-    end: `${startOfMonth} 10:00:00`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;COUNT=30',
-    },
-  },
-  {
     id: 'weekly-review-series',
     title: 'Weekly review',
     start: `${startOfMonth} 16:00:00`,
@@ -127297,16 +127451,6 @@ const events = [
     start: `${today} 14:00:00`,
     end: `${today} 15:00:00`,
     color: 'green',
-  },
-  {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: `${startOfMonth} 09:30:00`,
-    end: `${startOfMonth} 10:00:00`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;COUNT=30',
-    },
   },
   {
     id: 'weekly-review-series',
@@ -130247,7 +130391,7 @@ There are multiple ways to contribute even without writing code
 * Decide on what you want to contribute.
 * If you would like to implement a new feature, discuss it with the maintainer ([GitHub Discussions](https://github.com/mantinedev/mantine/discussions/new) or [Discord](https://discord.gg/wbH82zuWMN)) before jumping into coding.
 * After finalizing the issue details, you can begin working on the code.
-* Run tests with `npm test:all` and submit a PR once all tests have passed.
+* Run tests with `npm test` and submit a PR once all tests have passed.
 * Get a code review and fix all issues noticed by the maintainer.
 * If you cannot finish your task or if you change your mind – that's totally fine! Just let us know in the GitHub issue that you created during the first step of this process. The Mantine community is friendly – we won't judge or ask any questions if you decide to cancel your submission.
 * Your PR is merged. You are awesome ❤️!

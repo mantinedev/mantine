@@ -1,0 +1,21 @@
+__turbopack_load_page_chunks__("/charts/pie-chart", [
+  "static/chunks/01z5bivg15t4c.js",
+  "static/chunks/36qt71a61_-di.js",
+  "static/chunks/0f6me72kaa9x7.js",
+  "static/chunks/10re5ve8iyym-.js",
+  "static/chunks/334kmx_sa3py_.js",
+  "static/chunks/0dlwjb-xzalqu.js",
+  "static/chunks/1-ik6q3ejq7pk.js",
+  "static/chunks/19cgrlgqa71y7.js",
+  "static/chunks/005nn13pvgap1.js",
+  "static/chunks/1-5sb7acawwgr.js",
+  "static/chunks/050l3md8cosel.js",
+  "static/chunks/3-u--m7mca3_5.js",
+  "static/chunks/0uz3bm3u838-q.js",
+  "static/chunks/3hfak7cac8rvc.js",
+  "static/chunks/1n37j68suczqi.js",
+  "static/chunks/3ccec4kk3_4if.css",
+  "static/chunks/21hvpvux84e_7.css",
+  "static/chunks/0-7wdzp76gmz_.css",
+  "static/chunks/turbopack-0sim_w2054_4g.js"
+])

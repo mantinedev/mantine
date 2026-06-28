@@ -19,7 +19,7 @@ function Demo() {
   return (
     <>
       <Text ta="center">Affix is located at the bottom of the screen, scroll to see it</Text>
-      <Affix position={{ bottom: 20, right: 20 }}>
+      <Affix position={{ bottom: 20, left: 20 }}>
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button

@@ -759,8 +759,9 @@ function Demo() {
 
 ## Event resize
 
-Enable event resizing with `withEventResize` prop. Event resize is only available in day view
-where events can be resized by dragging their left or right edges.
+Enable event resizing with `withEventResize` prop. Event resize is available in day and week views
+where events can be resized by dragging their left or right edges. In week view, resizing is
+constrained to the event's own day.
 
 ```tsx
 // Demo.tsx

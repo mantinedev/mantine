@@ -1,0 +1,88 @@
+# OxcConfig
+
+# Mantine oxc config
+
+[oxc-config-mantine](https://github.com/mantinedev/oxc-config-mantine)
+is a set of [oxc](https://oxc.rs) configurations for
+[oxlint](https://www.npmjs.com/package/oxlint) (linter) and
+[oxfmt](https://www.npmjs.com/package/oxfmt) (formatter) used in Mantine projects.
+You can use it in your project to ensure that your code follows the same
+style and conventions as Mantine.
+
+## Installation
+
+Install `oxc-config-mantine` together with `oxlint` and `oxfmt`:
+
+```bash
+yarn add oxlint oxfmt oxc-config-mantine
+```
+
+```bash
+npm install oxlint oxfmt oxc-config-mantine
+```
+
+## oxlint configuration
+
+Create an `oxlint.config.ts` file in the root of your project and extend
+the shared configuration:
+
+```tsx
+import { defineConfig } from 'oxlint';
+import { oxlint } from 'oxc-config-mantine';
+
+export default defineConfig({
+  extends: [oxlint],
+  ignorePatterns: ['**/*.{mjs,cjs,js,d.ts,d.mts}'],
+});
+```
+
+## oxfmt configuration
+
+Create an `oxfmt.config.ts` file in the root of your project:
+
+```tsx
+import { defineConfig } from 'oxfmt';
+import { oxfmt } from 'oxc-config-mantine';
+
+export default defineConfig(oxfmt);
+```
+
+You can customize the formatter by spreading the base configuration and adding
+project-specific settings, for example, to add extra ignore patterns:
+
+```tsx
+import { defineConfig } from 'oxfmt';
+import { oxfmt } from 'oxc-config-mantine';
+
+export default defineConfig({
+  ...oxfmt,
+  ignorePatterns: [...oxfmt.ignorePatterns, 'dist'],
+});
+```
+
+## Running oxlint and oxfmt
+
+Add scripts to your `package.json` to lint and format the code:
+
+```json
+{
+  "scripts": {
+    "lint": "oxlint",
+    "format": "oxfmt --write \"**/*.{ts,tsx,css}\""
+  }
+}
+```
+
+Then run them with your package manager:
+
+```bash
+npm run lint
+npm run format
+```
+
+## Rules and source code
+
+Mantine oxlint config extends recommended [oxlint](https://oxc.rs/docs/guide/usage/linter)
+rules and adds custom rules and configurations for the `react`, `typescript`,
+`jsx-a11y` and `jest` plugins. You can find the full list of rules and source code
+in the [oxc-config-mantine repository](https://github.com/mantinedev/oxc-config-mantine).

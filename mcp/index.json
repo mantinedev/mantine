@@ -1398,10 +1398,10 @@
     "package": "@mantine/schedule",
     "route": "/schedule/resources-week-view",
     "description": "Week view with resource rows for scheduling across resources",
-    "propsCount": 52,
+    "propsCount": 55,
     "llmUrl": "https://mantine.dev/llms/schedule-resources-week-view.md",
     "componentDataUrl": "/mcp/components/schedule-resources-week-view.json",
-    "searchText": "resourcesweekview week view with resource rows for scheduling across resources @mantine/schedule /schedule/resources-week-view businesshours candragevent date endtime events firstdayofweek grouplabelwidth groups highlightbusinesshours highlighttoday intervalminutes labels locale maxeventspertimeslot mode moreeventsprops nextcontrolprops ondatechange oneventclick oneventdragend oneventdragstart oneventdrop onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody rendergrouplabel renderresourcelabel renderweeklabel resources rowheight scrollareaprops slotlabelformat slotwidth startscrolldatetime starttime todaycontrolprops viewselectprops weeklabelformat weekdayformat weekenddays withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventsdraganddrop withheader withweekenddays"
+    "searchText": "resourcesweekview week view with resource rows for scheduling across resources @mantine/schedule /schedule/resources-week-view businesshours candragevent canresizeevent date endtime events firstdayofweek grouplabelwidth groups highlightbusinesshours highlighttoday intervalminutes labels locale maxeventspertimeslot mode moreeventsprops nextcontrolprops ondatechange oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody rendergrouplabel renderresourcelabel renderweeklabel resources rowheight scrollareaprops slotlabelformat slotwidth startscrolldatetime starttime todaycontrolprops viewselectprops weeklabelformat weekdayformat weekenddays withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventresize witheventsdraganddrop withheader withweekenddays"
   },
   {
     "id": "x-tiptap",

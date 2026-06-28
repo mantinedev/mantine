@@ -10,7 +10,7 @@ yet, you can continue using Mantine 8.x until you are ready to update React and 
 
 ## Update dependencies
 
-* Update all `@mantine/*` packages to version 9.4.0
+* Update all `@mantine/*` packages to version 9.4.1
 * If you use `@mantine/tiptap` package, update all `@tiptap/*` packages to the latest `3.x` version
 * If you use `@mantine/charts` package, update `recharts` to the latest `3.x` version
 
@@ -448,6 +448,20 @@ const [value, setValue] = useLocalStorage({
 ```
 
 The same change applies to `readLocalStorageValue`, `useSessionStorage`, and `readSessionStorageValue`.
+
+## useHeadroom returns object instead of boolean
+
+The `useHeadroom` hook now returns an `{ pinned: boolean; scrollProgress: number }` object instead of a plain boolean. `scrollProgress` is a value between `0` (fully hidden) and `1` (fully visible) that can be used for scroll-linked reveal animations. A new `scrollDistance` option controls how many pixels of scrolling are required to fully reveal or hide the element (default: `100`).
+
+```tsx
+import { useHeadroom } from '@mantine/hooks';
+
+// ❌ In 8.x, the return type is plain boolean
+const pinned = useHeadroom({ fixedAt: 120 });
+
+// ✅ In 9.x, the return type is an object containing `pinned` property
+const { pinned } = useHeadroom({ fixedAt: 120 });
+```
 
 ## Default border-radius change
 

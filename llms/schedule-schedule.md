@@ -330,16 +330,6 @@ const events = [
     color: 'violet',
   },
   {
-    id: 'daily-sync-series',
-    title: 'Daily sync',
-    start: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:00:00`,
-    end: `${dayjs(today).subtract(3, 'day').format('YYYY-MM-DD')} 14:30:00`,
-    color: 'grape',
-    recurrence: {
-      rrule: 'FREQ=DAILY;COUNT=14',
-    },
-  },
-  {
     id: 'weekly-review-series',
     title: 'Weekly review',
     start: `${dayjs(today).startOf('week').format('YYYY-MM-DD')} 16:00:00`,

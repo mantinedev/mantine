@@ -84,9 +84,12 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-Object.defineProperty(document, 'fonts', {
-  value: { addEventListener: jest.fn(), removeEventListener: jest.fn() },
-});
+if (!document.fonts) {
+  Object.defineProperty(document, 'fonts', {
+    writable: true,
+    value: { addEventListener: jest.fn(), removeEventListener: jest.fn() },
+  });
+}
 
 class ResizeObserver {
   observe() {}
