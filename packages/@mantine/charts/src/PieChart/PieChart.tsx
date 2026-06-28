@@ -81,7 +81,7 @@ export interface PieChartProps
   /** Determines whether segments labels should have lines that connect the segment with the label @default true */
   withLabelsLine?: boolean;
 
-  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default 80 */
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default 160 */
   size?: number;
 
   /** Controls width of segments stroke @default 1 */
