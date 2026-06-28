@@ -340,8 +340,6 @@ describe('@mantine/dates/TimePicker', () => {
       />
     );
 
-    
-
     await userEvent.type(screen.getByLabelText('test-hours'), '7');
     await userEvent.type(screen.getByLabelText('test-minutes'), '30');
     await userEvent.type(screen.getByLabelText('test-seconds'), '0');
@@ -747,15 +745,31 @@ describe('@mantine/dates/TimePicker', () => {
     await userEvent.paste('155:22:45');
     expect(spy).toHaveBeenCalledWith('155:22:45');
   });
-  it('allows values greater than 9999 hours in duration mode', async () => {
+
+  it('allows pasting values greater than 9999 hours in duration mode', async () => {
     const spy = jest.fn();
-  
     render(<TimePicker {...defaultProps} type="duration" withSeconds onChange={spy} />);
-  
+
     await userEvent.click(screen.getByLabelText('test-hours'));
     await userEvent.paste('10000:00:00');
-  
     expect(spy).toHaveBeenCalledWith('10000:00:00');
+  });
+
+  it('allows typing values greater than 9999 hours in duration mode', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} type="duration" withSeconds onChange={spy} />);
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '10000');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '00');
+    await userEvent.type(screen.getByLabelText('test-seconds'), '00');
+
+    expect(screen.getByLabelText('test-hours')).toHaveValue('10000');
+    expect(spy).toHaveBeenCalledWith('10000:00:00');
+  });
+
+  it('does not set an upper bound on the hours field in duration mode', () => {
+    render(<TimePicker {...defaultProps} type="duration" withSeconds />);
+    expect(screen.getByLabelText('test-hours')).not.toHaveAttribute('aria-valuemax');
   });
 
   it('does not auto-advance from hours field in duration mode', async () => {
