@@ -331,7 +331,7 @@
 .resourcesWeekViewAllDayEvent {
   position: absolute;
   height: var(--resources-week-view-all-day-height);
-  z-index: 3;
+  z-index: 2;
 }
 
 .resourcesWeekViewResizeHandle {
@@ -382,6 +382,10 @@
     opacity: 0;
     pointer-events: none;
   }
+}
+
+.resourcesWeekView:where([data-event-interaction]) .resourcesWeekViewRowSlot {
+  pointer-events: none;
 }
 
 .resourcesWeekView:where([data-resizing]) {

@@ -76,7 +76,7 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** Called when the clear button is clicked */
   onClear?: () => void;
 
-  /** Called when user attemps to select more values than allowed */
+  /** Called when user attempts to select more values than allowed */
   onMaxValues?: () => void;
 
   /** Controlled search value */

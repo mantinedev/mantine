@@ -100,6 +100,48 @@ describe('@mantine/charts/ChartLegend', () => {
     expect(onHighlight).toHaveBeenCalledWith(null);
   });
 
+  it('calls onHighlight with highlightKey (index) when present, isolating duplicate names', async () => {
+    const onHighlight = jest.fn();
+    const indexedPayload = [
+      { dataKey: 'Other', highlightKey: 0, color: 'red', payload: { name: 'Other' } },
+      { dataKey: 'Other', highlightKey: 1, color: 'blue', payload: { name: 'Other' } },
+    ];
+    const { container } = render(
+      <ChartLegend payload={indexedPayload} onHighlight={onHighlight} legendPosition="bottom" />
+    );
+    const items = container.querySelectorAll('.mantine-ChartLegend-legendItem');
+
+    await userEvent.hover(items[1]);
+    expect(onHighlight).toHaveBeenCalledWith(1);
+  });
+
+  it('passes a highlightKey of 0 instead of falling back to dataKey', async () => {
+    const onHighlight = jest.fn();
+    const indexedPayload = [
+      { dataKey: 'Other', highlightKey: 0, color: 'red', payload: { name: 'Other' } },
+    ];
+    const { container } = render(
+      <ChartLegend payload={indexedPayload} onHighlight={onHighlight} legendPosition="bottom" />
+    );
+    const items = container.querySelectorAll('.mantine-ChartLegend-legendItem');
+
+    await userEvent.hover(items[0]);
+    expect(onHighlight).toHaveBeenCalledWith(0);
+  });
+
+  it('still displays dataKey as the label when highlightKey is present', () => {
+    const indexedPayload = [
+      { dataKey: 'Other', highlightKey: 0, color: 'red', payload: { name: 'Other' } },
+      { dataKey: 'Other', highlightKey: 1, color: 'blue', payload: { name: 'Other' } },
+    ];
+    const { container } = render(
+      <ChartLegend payload={indexedPayload} onHighlight={() => {}} legendPosition="bottom" />
+    );
+    const names = container.querySelectorAll('.mantine-ChartLegend-legendItemName');
+    expect(names[0]).toHaveTextContent('Other');
+    expect(names[1]).toHaveTextContent('Other');
+  });
+
   it('does not call onHighlight(null) when moving between legend items', () => {
     const onHighlight = jest.fn();
     const { container } = render(<ChartLegend {...defaultProps} onHighlight={onHighlight} />);

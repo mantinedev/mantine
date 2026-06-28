@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import { useForceUpdate } from '../use-force-update/use-force-update';
+import { useRef, useState } from 'react';
 
 export function readonlySetLikeToSet<T>(input: ReadonlySetLike<T>): Set<T> {
   if (input instanceof Set) {
@@ -16,33 +15,34 @@ export function readonlySetLikeToSet<T>(input: ReadonlySetLike<T>): Set<T> {
 }
 
 export function useSet<T>(values?: T[]): Set<T> {
-  const setRef = useRef(new Set(values));
-  const forceUpdate = useForceUpdate();
+  const [set, setSet] = useState(() => new Set(values));
+  const setRef = useRef(set);
+  setRef.current = set;
 
-  setRef.current.add = (...args) => {
+  set.add = (...args) => {
     const res = Set.prototype.add.apply(setRef.current, args);
-    forceUpdate();
+    setSet(new Set(setRef.current));
     return res;
   };
 
-  setRef.current.clear = (...args) => {
+  set.clear = (...args) => {
     Set.prototype.clear.apply(setRef.current, args);
-    forceUpdate();
+    setSet(new Set(setRef.current));
   };
 
-  setRef.current.delete = (...args) => {
+  set.delete = (...args) => {
     const res = Set.prototype.delete.apply(setRef.current, args);
-    forceUpdate();
+    setSet(new Set(setRef.current));
     return res;
   };
 
-  setRef.current.union = <U>(other: ReadonlySetLike<U>): Set<T | U> => {
+  set.union = <U>(other: ReadonlySetLike<U>): Set<T | U> => {
     const result = new Set<T | U>(setRef.current as Set<T>);
     readonlySetLikeToSet(other).forEach((item) => result.add(item));
     return result;
   };
 
-  setRef.current.intersection = <U>(other: ReadonlySetLike<U>): Set<T & U> => {
+  set.intersection = <U>(other: ReadonlySetLike<U>): Set<T & U> => {
     const result = new Set<T & U>();
     const otherSet = readonlySetLikeToSet(other);
     setRef.current.forEach((item) => {
@@ -53,7 +53,7 @@ export function useSet<T>(values?: T[]): Set<T> {
     return result;
   };
 
-  setRef.current.difference = <U>(other: ReadonlySetLike<U>): Set<T> => {
+  set.difference = <U>(other: ReadonlySetLike<U>): Set<T> => {
     const result = new Set<T>();
     const otherSet = readonlySetLikeToSet(other);
     setRef.current.forEach((item) => {
@@ -64,7 +64,7 @@ export function useSet<T>(values?: T[]): Set<T> {
     return result;
   };
 
-  setRef.current.symmetricDifference = <U>(other: ReadonlySetLike<U>): Set<T | U> => {
+  set.symmetricDifference = <U>(other: ReadonlySetLike<U>): Set<T | U> => {
     const result = new Set<T | U>();
     const otherSet = readonlySetLikeToSet(other);
 
@@ -83,5 +83,5 @@ export function useSet<T>(values?: T[]): Set<T> {
     return result;
   };
 
-  return setRef.current;
+  return set;
 }

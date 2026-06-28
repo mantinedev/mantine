@@ -1,6 +1,7 @@
 import { render, tests } from '@mantine-tests/core';
 import { ActionIcon, ActionIconProps, ActionIconStylesNames } from './ActionIcon';
 import { ActionIconGroup } from './ActionIconGroup/ActionIconGroup';
+import { ActionIconGroupSection } from './ActionIconGroupSection/ActionIconGroupSection';
 
 const defaultProps: ActionIconProps = {};
 
@@ -49,7 +50,32 @@ describe('@mantine/core/ActionIcon', () => {
     expect(container.querySelector('button')).not.toHaveAttribute('disabled');
   });
 
-  it('exposes ActionIcon.Group component', () => {
+  it('sets aria-busy on the button while loading', () => {
+    const { container, rerender } = render(<ActionIcon aria-label="test" loading />);
+    expect(container.querySelector('button')).toHaveAttribute('aria-busy', 'true');
+    rerender(<ActionIcon aria-label="test" />);
+    expect(container.querySelector('button')).not.toHaveAttribute('aria-busy');
+  });
+
+  it('does not override a consumer-provided aria-busy when not loading', () => {
+    const { container } = render(<ActionIcon aria-label="test" aria-busy />);
+    expect(container.querySelector('button')).toHaveAttribute('aria-busy', 'true');
+  });
+
+  it('renders the loader and forwards loaderProps while loading', () => {
+    const { container } = render(
+      <ActionIcon aria-label="test" loading loaderProps={{ className: 'test-loader' }} />
+    );
+    expect(container.querySelector('.test-loader')).toBeInTheDocument();
+  });
+
+  it('disables the button while loading', () => {
+    const { container } = render(<ActionIcon aria-label="test" loading />);
+    expect(container.querySelector('button')).toHaveAttribute('disabled');
+  });
+
+  it('exposes internal components as static properties', () => {
     expect(ActionIcon.Group).toBe(ActionIconGroup);
+    expect(ActionIcon.GroupSection).toBe(ActionIconGroupSection);
   });
 });

@@ -44,4 +44,41 @@ describe('@mantine/hooks/use-map', () => {
     expect(hook.result.current.get('a')).toBeUndefined();
     expect(hook.result.current.get('b')).toBeUndefined();
   });
+
+  it('returns a new instance identity after each mutation', () => {
+    const hook = renderHook(() => useMap<string, number>([['a', 1]]));
+
+    const afterInit = hook.result.current;
+    act(() => hook.result.current.set('b', 2));
+    expect(hook.result.current).not.toBe(afterInit);
+
+    const afterSet = hook.result.current;
+    act(() => hook.result.current.delete('b'));
+    expect(hook.result.current).not.toBe(afterSet);
+
+    const afterDelete = hook.result.current;
+    act(() => hook.result.current.clear());
+    expect(hook.result.current).not.toBe(afterDelete);
+  });
+
+  it('accumulates multiple synchronous mutations', () => {
+    const hook = renderHook(() => useMap<string, number>());
+    act(() => {
+      hook.result.current.set('a', 1);
+      hook.result.current.set('b', 2);
+    });
+    expect(hook.result.current.get('a')).toBe(1);
+    expect(hook.result.current.get('b')).toBe(2);
+  });
+
+  it('applies a retained mutator to the latest instance', () => {
+    const hook = renderHook(() => useMap<string, number>());
+    const retainedSet = hook.result.current.set;
+    act(() => hook.result.current.set('a', 1));
+    act(() => hook.result.current.set('b', 2));
+    act(() => retainedSet('c', 3));
+    expect(hook.result.current.get('a')).toBe(1);
+    expect(hook.result.current.get('b')).toBe(2);
+    expect(hook.result.current.get('c')).toBe(3);
+  });
 });

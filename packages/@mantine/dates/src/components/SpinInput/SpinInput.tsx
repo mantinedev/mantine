@@ -37,8 +37,9 @@ export function SpinInput({
   maxDigits,
   ...others
 }: SpinInputProps) {
-  const maxDigit = getMaxDigit(max);
-  const arrowsMax = max + 1 - step;
+  const hasMax = Number.isFinite(max);
+  const maxDigit = hasMax ? getMaxDigit(max) : Infinity;
+  const arrowsMax = hasMax ? max + 1 - step : max;
 
   const handleChange = (value: string) => {
     if (readOnly) {
@@ -88,7 +89,7 @@ export function SpinInput({
       onChange(min);
     }
 
-    if (event.key === 'End') {
+    if (event.key === 'End' && hasMax) {
       event.preventDefault();
       onChange(max);
     }
@@ -121,7 +122,8 @@ export function SpinInput({
 
     if (event.key === 'ArrowDown') {
       event.preventDefault();
-      const newValue = value === null ? arrowsMax : clamp(value - step, min, arrowsMax);
+      const fallback = hasMax ? arrowsMax : min;
+      const newValue = value === null ? fallback : clamp(value - step, min, arrowsMax);
       onChange(newValue);
     }
   };
@@ -132,7 +134,7 @@ export function SpinInput({
       // eslint-disable-next-line jsx-a11y/no-redundant-roles -- input type="text" has implicit role textbox, not spinbutton; the role is required here because this text input acts as a spinbutton
       role="spinbutton"
       aria-valuemin={min}
-      aria-valuemax={max}
+      aria-valuemax={hasMax ? max : undefined}
       aria-valuenow={value === null ? 0 : value}
       data-empty={value === null || undefined}
       inputMode="numeric"
