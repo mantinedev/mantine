@@ -62,9 +62,12 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-Object.defineProperty(document, 'fonts', {
-  value: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
-});
+if (!document.fonts) {
+  Object.defineProperty(document, 'fonts', {
+    writable: true,
+    value: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
+  });
+}
 
 class ResizeObserver {
   observe() {}
