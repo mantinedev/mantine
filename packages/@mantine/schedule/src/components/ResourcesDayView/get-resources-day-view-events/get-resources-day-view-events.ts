@@ -72,14 +72,11 @@ export function getResourcesDayViewEvents({
 
     const eventStart = dayjs(event.start);
     const eventEnd = dayjs(event.end);
-    const isOnDay = eventStart.isSame(dayStart, 'day');
-    const spansIntoDay =
-      !isOnDay &&
-      event.display === 'background' &&
-      eventStart.isBefore(dayEnd) &&
-      eventEnd.isAfter(dayStart);
 
-    if (isOnDay || spansIntoDay) {
+    const isOnDay = eventStart.isSame(dayStart, 'day');
+    const overlapsDay = eventStart.isBefore(dayEnd) && eventEnd.isAfter(dayStart);
+
+    if (isOnDay || overlapsDay) {
       if (isOnDay && !isEventInTimeRange({ event, startTime, endTime })) {
         continue;
       }
@@ -96,8 +93,21 @@ export function getResourcesDayViewEvents({
 
       if (event.display === 'background') {
         backgroundByResource[event.resourceId].push(validated);
-      } else {
+      } else if (isOnDay) {
         eventsByResource[event.resourceId].push(validated);
+      } else {
+        const clippedStart = eventStart.isBefore(dayStart) ? dayStart : eventStart;
+        const clippedEnd = eventEnd.isAfter(dayEnd) ? dayEnd : eventEnd;
+
+        const clippedEvent = {
+          ...validated,
+          start: clippedStart.format('YYYY-MM-DD HH:mm:ss'),
+          end: clippedEnd.format('YYYY-MM-DD HH:mm:ss'),
+        };
+
+        if (isEventInTimeRange({ event: clippedEvent, startTime, endTime })) {
+          eventsByResource[event.resourceId].push(clippedEvent);
+        }
       }
     }
   }
