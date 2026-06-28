@@ -42,9 +42,9 @@ export const TabsPanel = factory<TabsPanelFactory>((_props) => {
   const ctx = useTabsContext();
 
   useEffect(() => {
-    ctx.mountedPanels.current.add(value);
+    ctx.setMountedPanel(value, true);
     return () => {
-      ctx.mountedPanels.current.delete(value);
+      ctx.setMountedPanel(value, false);
     };
   }, [value]);
 

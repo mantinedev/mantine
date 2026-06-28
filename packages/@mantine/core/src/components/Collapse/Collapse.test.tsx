@@ -1,4 +1,5 @@
-import { tests } from '@mantine-tests/core';
+import { createRef } from 'react';
+import { render, screen, tests } from '@mantine-tests/core';
 import { Collapse, CollapseProps } from './Collapse';
 
 const defaultProps: CollapseProps = {
@@ -13,5 +14,29 @@ describe('@mantine/core/Collapse', () => {
     children: true,
     classes: false,
     displayName: '@mantine/core/Collapse',
+  });
+
+  it('applies style when transitionDuration is 0', () => {
+    render(
+      <Collapse expanded transitionDuration={0} style={{ background: 'red' }}>
+        <div>content</div>
+      </Collapse>
+    );
+
+    expect(screen.getByText('content').parentElement).toHaveStyle({
+      background: 'red',
+    });
+  });
+
+  it('forwards ref when transitionDuration is 0', () => {
+    const ref = createRef<HTMLDivElement>();
+
+    render(
+      <Collapse expanded transitionDuration={0} ref={ref}>
+        <div>content</div>
+      </Collapse>
+    );
+
+    expect(ref.current).not.toBeNull();
   });
 });

@@ -117,6 +117,9 @@ export interface WeekViewProps
   /** Number of minutes for each interval in the day view @default 60 */
   intervalMinutes?: number;
 
+  /** If set, grid lines are displayed for intervals smaller than one hour, for example 15 and 30 minutes intervals @default true */
+  withSubHourGridLines?: boolean;
+
   /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm  */
   slotLabelFormat?: DateLabelFormat;
 
@@ -303,6 +306,7 @@ const defaultProps = {
   endTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
   intervalMinutes: 60,
+  withSubHourGridLines: true,
   weekdayFormat: 'ddd',
   withWeekNumber: true,
   withCurrentTimeBubble: true,
@@ -342,6 +346,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     date,
     onDateChange,
     intervalMinutes,
+    withSubHourGridLines,
     slotLabelFormat,
     withWeekendDays,
     weekendDays,
@@ -571,7 +576,11 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withWeekendDays,
   });
 
-  const timeValues = slots.map((interval) => {
+  const timeValues = slots.reduce<React.ReactNode[]>((acc, interval) => {
+    if (!interval.isHourStart) {
+      return acc;
+    }
+
     const intervalTime = dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${interval.startTime}`);
     const label = formatDate({
       date: intervalTime,
@@ -579,7 +588,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       format: slotLabelFormat,
     });
 
-    return (
+    acc.push(
       <Box
         {...getStyles('weekViewSlotLabel')}
         key={interval.startTime}
@@ -595,7 +604,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         {label}
       </Box>
     );
-  });
+
+    return acc;
+  }, []);
 
   const slotsRef: WeekViewControlsRef = useRef<HTMLButtonElement[][]>([]);
   const allDaySlotsRef = useRef<HTMLButtonElement[]>([]);
@@ -857,6 +868,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         day={day}
         dayIndex={dayIndex}
         slots={slots}
+        intervalMinutes={intervalMinutes}
         getStyles={getStyles}
         weekendDays={weekendDays}
         highlightBusinessHours={highlightBusinessHours}
@@ -1062,7 +1074,11 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
               ? '7'
               : `${7 - ctx.getWeekendDays(weekendDays).length}`,
           }}
-          mod={{ 'with-weekends': withWeekendDays }}
+          mod={{
+            'with-weekends': withWeekendDays,
+            'hide-sub-hour-grid-lines': !withSubHourGridLines,
+            'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
+          }}
         >
           <ScrollArea.Autosize
             scrollbarSize={4}

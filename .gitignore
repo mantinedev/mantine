@@ -75,4 +75,5 @@ claude/
 .superpowers/
 /.claude/scheduled_tasks.lock
 /.claude/settings.local.json
+/.claude/skills/
 /.playwright-mcp

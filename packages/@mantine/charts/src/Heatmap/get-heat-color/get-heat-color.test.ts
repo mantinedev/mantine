@@ -13,4 +13,12 @@ describe('@mantine/charts/get-heat-color', () => {
   it('returns the last color when min equals max (all values identical)', () => {
     expect(getHeatColor({ value: 5, min: 5, max: 5, colors })).toBe('4');
   });
+
+  it('clamps values above max to the last color', () => {
+    expect(getHeatColor({ value: 150, min: 0, max: 100, colors })).toBe('4');
+  });
+
+  it('clamps values below min to the first color', () => {
+    expect(getHeatColor({ value: -200, min: 0, max: 100, colors })).toBe('1');
+  });
 });

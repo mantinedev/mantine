@@ -222,7 +222,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
   const isAnimationActive = (tooltipAnimationDuration || 0) > 0;
   const _withGradient = typeof withGradient === 'boolean' ? withGradient : type === 'default';
   const stacked = type === 'stacked' || type === 'percent';
-  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
+  const [highlightedArea, setHighlightedArea] = useState<string | number | null>(null);
   const shouldHighlight = highlightedArea !== null;
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     setHighlightedArea(null);

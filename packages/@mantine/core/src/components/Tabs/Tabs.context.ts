@@ -21,6 +21,7 @@ export interface TabsContextValue {
   unstyled: boolean | undefined;
   getStyles: GetStylesApi<TabsFactory>;
   mountedPanels: React.RefObject<Set<string>>;
+  setMountedPanel: (value: string, mounted: boolean) => void;
 }
 
 export const [TabsProvider, useTabsContext] = createSafeContext<TabsContextValue>(

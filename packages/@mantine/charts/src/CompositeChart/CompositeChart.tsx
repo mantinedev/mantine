@@ -219,7 +219,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
   const theme = useMantineTheme();
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
-  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
+  const [highlightedArea, setHighlightedArea] = useState<string | number | null>(null);
   const shouldHighlight = highlightedArea !== null;
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     setHighlightedArea(null);

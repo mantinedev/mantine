@@ -153,7 +153,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
   } = props;
 
   const theme = useMantineTheme();
-  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
+  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
 
   const getStyles = useStyles<FunnelChartFactory>({
     name: 'FunnelChart',
@@ -180,10 +180,11 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
       <ResponsiveContainer>
         <RechartsFunnelChart {...funnelChartProps}>
           <Funnel
-            data={data.map((entry) => ({
+            data={data.map((entry, index) => ({
               ...entry,
+              __segmentIndex: index,
               fill: getThemeColor(entry.color, theme),
-              fillOpacity: highlightedArea ? (highlightedArea === entry.name ? 1 : 0.2) : 1,
+              fillOpacity: highlightedIndex !== null ? (highlightedIndex === index ? 1 : 0.2) : 1,
             }))}
             dataKey="value"
             isAnimationActive={false}
@@ -222,7 +223,9 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
                   styles={resolvedStyles}
                   type="radial"
                   segmentId={
-                    tooltipDataSource === 'segment' ? (payload?.[0]?.name as string) : undefined
+                    tooltipDataSource === 'segment'
+                      ? (payload?.[0]?.payload?.__segmentIndex as number)
+                      : undefined
                   }
                   valueFormatter={valueFormatter}
                   attributes={attributes}
@@ -237,12 +240,15 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
               verticalAlign="bottom"
               content={() => (
                 <ChartLegend
-                  payload={data.map((item) => ({
+                  payload={data.map((item, index) => ({
                     value: item.name,
                     color: getThemeColor(item.color, theme),
                     dataKey: item.name,
+                    highlightKey: index,
                   }))}
-                  onHighlight={setHighlightedArea}
+                  onHighlight={(value) =>
+                    setHighlightedIndex(typeof value === 'number' ? value : null)
+                  }
                   legendPosition={legendProps?.verticalAlign || 'bottom'}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}

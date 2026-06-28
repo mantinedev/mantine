@@ -18,6 +18,11 @@ export const Demo_dragDrop = {
   render: renderDemo(demos.dragDrop),
 };
 
+export const Demo_eventResize = {
+  name: '⭐ Demo: eventResize',
+  render: renderDemo(demos.eventResize),
+};
+
 export const Demo_eventForm = {
   name: '⭐ Demo: eventForm',
   render: renderDemo(demos.eventForm),
