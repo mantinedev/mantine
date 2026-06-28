@@ -101,6 +101,30 @@ describe('@mantine/core/Splitter', () => {
     expect(screen.getByText('Sidebar')).toHaveStyle({ flexGrow: '0', flexBasis: '15rem' });
   });
 
+  it('uses pixel-mode flex styles when only the step uses a fixed unit (matches the hook)', () => {
+    render(
+      <Splitter step="10px">
+        <Splitter.Pane defaultSize={1}>Left</Splitter.Pane>
+        <Splitter.Pane defaultSize={1}>Right</Splitter.Pane>
+      </Splitter>
+    );
+    expect(screen.getByText('Left')).toHaveStyle({ flexGrow: '1' });
+    expect(screen.getByText('Right')).toHaveStyle({ flexGrow: '1' });
+  });
+
+  it('uses pixel-mode flex styles when only a min uses a fixed unit (matches the hook)', () => {
+    render(
+      <Splitter>
+        <Splitter.Pane defaultSize={1} min="100px">
+          Left
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={1}>Right</Splitter.Pane>
+      </Splitter>
+    );
+    expect(screen.getByText('Left')).toHaveStyle({ flexGrow: '1' });
+    expect(screen.getByText('Right')).toHaveStyle({ flexGrow: '1' });
+  });
+
   it('resets adjacent panes to their default ratio when their handle is double-clicked', () => {
     const ref = createRef<UseSplitterReturnValue>();
     render(

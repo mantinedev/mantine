@@ -32,6 +32,16 @@ const panelStyle: React.CSSProperties = {
   overflow: 'hidden',
 };
 
+const isFixed = (size: SplitterPaneSize) =>
+  typeof size === 'string' && (size.endsWith('px') || size.endsWith('rem'));
+
+// Mirrors how @mantine/core Splitter lays panes out: fixed px/rem panes use flex-basis and shrink
+// proportionally when they overflow the container, flexible panes share the leftover via flex-grow.
+const paneFlexStyle = (size: SplitterPaneSize): React.CSSProperties =>
+  isFixed(size)
+    ? { flexGrow: 0, flexShrink: 1, flexBasis: size as string }
+    : { flexGrow: typeof size === 'number' ? size : parseFloat(size), flexShrink: 1, flexBasis: 0 };
+
 export function Usage() {
   const splitter = useSplitter({
     panels: [{ defaultSize: 50 }, { defaultSize: 50 }],
@@ -113,6 +123,68 @@ export function Collapsible() {
       <button type="button" onClick={() => splitter.toggleCollapse(0)} style={{ marginTop: 10 }}>
         Toggle Panel 1
       </button>
+    </div>
+  );
+}
+
+export function OverflowingFixedPanes() {
+  // Two 600px panes in an 800px container overflow, so they render down-scaled (~400px each).
+  // Before the fix, any drag rewrote the raw sizes to the scaled values, permanently shrinking
+  // both panes. After the fix the raw px total stays ~1200px and only the dragged delta moves.
+  const splitter = useSplitter({
+    panels: [{ defaultSize: '600px' }, { defaultSize: '600px' }],
+  });
+
+  return (
+    <div
+      ref={splitter.ref}
+      style={{ display: 'flex', width: 800, height: 300, border: '1px solid #ddd' }}
+    >
+      <div
+        style={{ ...panelStyle, ...paneFlexStyle(splitter.sizes[0]), backgroundColor: '#e3f2fd' }}
+      >
+        {String(splitter.sizes[0])}
+      </div>
+      <div {...splitter.getHandleProps({ index: 0 })} style={handleStyle} />
+      <div
+        style={{ ...panelStyle, ...paneFlexStyle(splitter.sizes[1]), backgroundColor: '#fce4ec' }}
+      >
+        {String(splitter.sizes[1])}
+      </div>
+    </div>
+  );
+}
+
+export function OverflowingFixedWithFlexible() {
+  // Two 600px fixed panes (overflowing the 800px container) plus a flexible pane rendered at 0.
+  // Dragging the second handle left hands real space to the flexible pane and clears the overflow:
+  // the fixed panes must settle at their true rendered px and the flexible pane keep the space.
+  const splitter = useSplitter({
+    panels: [{ defaultSize: '600px' }, { defaultSize: '600px' }, { defaultSize: 1, min: 0 }],
+  });
+
+  return (
+    <div
+      ref={splitter.ref}
+      style={{ display: 'flex', width: 800, height: 300, border: '1px solid #ddd' }}
+    >
+      <div
+        style={{ ...panelStyle, ...paneFlexStyle(splitter.sizes[0]), backgroundColor: '#e3f2fd' }}
+      >
+        {String(splitter.sizes[0])}
+      </div>
+      <div {...splitter.getHandleProps({ index: 0 })} style={handleStyle} />
+      <div
+        style={{ ...panelStyle, ...paneFlexStyle(splitter.sizes[1]), backgroundColor: '#e8f5e9' }}
+      >
+        {String(splitter.sizes[1])}
+      </div>
+      <div {...splitter.getHandleProps({ index: 1 })} style={handleStyle} />
+      <div
+        style={{ ...panelStyle, ...paneFlexStyle(splitter.sizes[2]), backgroundColor: '#fce4ec' }}
+      >
+        flex ({pct(splitter.sizes[2])})
+      </div>
     </div>
   );
 }

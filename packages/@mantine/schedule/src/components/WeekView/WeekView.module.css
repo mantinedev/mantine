@@ -178,7 +178,7 @@
   display: block;
   width: 100%;
   border-top: 1px solid var(--week-view-border-color);
-  height: var(--week-view-slot-height);
+  height: calc(var(--week-view-slot-height) * var(--slot-size, 1));
   min-width: var(--week-view-min-slot-width);
   padding: 4px;
   cursor: pointer;
@@ -266,6 +266,24 @@
     cursor: default;
     pointer-events: none;
   }
+}
+
+.weekViewDaySlots .weekViewDaySlot {
+  border-top-style: dotted;
+
+  &:where([data-hour-start]) {
+    border-top-style: solid;
+  }
+}
+
+.weekViewRoot:where([data-hide-sub-hour-grid-lines])
+  .weekViewDaySlots
+  .weekViewDaySlot:not([data-hour-start]) {
+  border-top-color: transparent;
+}
+
+.weekViewRoot:where([data-event-interaction]) .weekViewDaySlots .weekViewDaySlot {
+  pointer-events: none;
 }
 
 .weekViewWeekLabel {

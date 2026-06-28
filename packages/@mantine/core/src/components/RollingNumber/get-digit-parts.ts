@@ -57,8 +57,10 @@ export function getDigitParts({
   const intStr = dotIdx >= 0 ? str.slice(0, dotIdx) : str;
   const fracStr = dotIdx >= 0 ? str.slice(dotIdx + 1) : '';
 
+  const roundedToZero = !/[1-9]/.test(str);
+
   return {
-    negative: value < 0,
+    negative: value < 0 && !roundedToZero,
     intDigits: intStr.split(''),
     fracDigits: fracStr ? fracStr.split('') : [],
     hasDecimal: dotIdx >= 0,

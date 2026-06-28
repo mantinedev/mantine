@@ -236,6 +236,8 @@ const varsResolver = createVarsResolver<TimePickerFactory>((_theme, { size }) =>
   },
 }));
 
+const DURATION_HOURS_MAX = Infinity;
+
 export const TimePicker = factory<TimePickerFactory>((_props) => {
   const props = useProps(['Input', 'InputWrapper', 'TimePicker'], defaultProps, _props);
   const {
@@ -468,7 +470,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   onChange={controller.setHours}
                   onNextInput={() => controller.focus('minutes')}
                   min={format === '12h' ? 1 : 0}
-                  max={isDuration ? 9999 : format === '12h' ? 12 : 23}
+                  max={isDuration ? DURATION_HOURS_MAX : format === '12h' ? 12 : 23}
                   allowTemporaryZero={format === '12h'}
                   disableAutoAdvance={isDuration}
                   focusable

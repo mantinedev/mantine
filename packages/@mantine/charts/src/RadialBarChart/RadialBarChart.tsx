@@ -129,7 +129,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props) => {
     attributes,
     ...others
   } = props;
-  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
+  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
 
   const getStyles = useStyles<RadialBarChartFactory>({
     name: 'RadialBarChart',
@@ -146,17 +146,19 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props) => {
   });
 
   const theme = useMantineTheme();
-  const dataWithResolvedColor = data.map(({ color, ...item }) => {
+  const dataWithResolvedColor = data.map(({ color, ...item }, index) => {
     const resolvedColor = getThemeColor(color, theme);
 
     return {
       ...item,
+      __segmentIndex: index,
       fill: resolvedColor,
-      fillOpacity: highlightedArea
-        ? highlightedArea === item.name
-          ? item.opacity || 1
-          : 0.05
-        : item.opacity || 1,
+      fillOpacity:
+        highlightedIndex !== null
+          ? highlightedIndex === index
+            ? item.opacity || 1
+            : 0.05
+          : item.opacity || 1,
     };
   });
 
@@ -205,8 +207,11 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props) => {
                   payload={payload.payload?.map((item) => ({
                     ...item,
                     dataKey: (item.payload as any)?.name,
+                    highlightKey: (item.payload as any)?.__segmentIndex,
                   }))}
-                  onHighlight={setHighlightedArea}
+                  onHighlight={(value) =>
+                    setHighlightedIndex(typeof value === 'number' ? value : null)
+                  }
                   legendPosition={legendProps?.verticalAlign || 'bottom'}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}

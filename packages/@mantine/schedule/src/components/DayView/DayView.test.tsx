@@ -118,6 +118,18 @@ describe('@mantine/schedule/DayView', () => {
     ).not.toBeInTheDocument();
   });
 
+  it('supports withSubHourGridLines={false}', () => {
+    const { container, rerender } = render(<DayView {...defaultProps} />);
+    expect(container.querySelector('.mantine-DayView-dayView')).not.toHaveAttribute(
+      'data-hide-sub-hour-grid-lines'
+    );
+
+    rerender(<DayView {...defaultProps} withSubHourGridLines={false} />);
+    expect(container.querySelector('.mantine-DayView-dayView')).toHaveAttribute(
+      'data-hide-sub-hour-grid-lines'
+    );
+  });
+
   it('supports custom slotLabelFormat (dayjs string)', () => {
     render(<DayView {...defaultProps} slotLabelFormat="h:mm A" />);
     expect(screen.getByText('1:00 AM')).toBeInTheDocument();

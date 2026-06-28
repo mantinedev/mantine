@@ -226,7 +226,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
   const theme = useMantineTheme();
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
-  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
+  const [highlightedArea, setHighlightedArea] = useState<string | number | null>(null);
   const shouldHighlight = highlightedArea !== null;
   const stacked = type === 'stacked' || type === 'percent';
   const tickFormatter = type === 'percent' ? valueToPercent : valueFormatter;

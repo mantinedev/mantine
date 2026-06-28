@@ -25,6 +25,17 @@ describe('getDigitParts', () => {
     expect(result.intDigits).toEqual(['4', '2']);
   });
 
+  it('is not negative when a negative value rounds to zero', () => {
+    expect(getDigitParts({ value: -0.4, decimalScale: 0 }).negative).toBe(false);
+    expect(
+      getDigitParts({ value: -0.001, decimalScale: 2, fixedDecimalScale: true }).negative
+    ).toBe(false);
+  });
+
+  it('stays negative when a negative value rounds to a non-zero magnitude', () => {
+    expect(getDigitParts({ value: -0.6, decimalScale: 0 }).negative).toBe(true);
+  });
+
   it('handles decimal values', () => {
     const result = getDigitParts({ value: 3.14 });
     expect(result.intDigits).toEqual(['3']);

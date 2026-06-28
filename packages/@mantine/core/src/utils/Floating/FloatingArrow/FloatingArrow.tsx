@@ -32,6 +32,7 @@ export function FloatingArrow({
 
   return (
     <div
+      role="presentation"
       {...others}
       style={{
         ...style,

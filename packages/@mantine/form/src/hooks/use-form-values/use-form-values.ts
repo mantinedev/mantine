@@ -132,8 +132,8 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
     });
   }, [setValues]);
 
-  const getValues = useCallback(() => refValues.current, []);
-  const getValuesSnapshot = useCallback(() => valuesSnapshot.current, []);
+  const getValues = useCallback(() => refValues.current, [refValues.current]);
+  const getValuesSnapshot = useCallback(() => valuesSnapshot.current, [valuesSnapshot.current]);
 
   const resetField = useCallback(
     (path: PropertyKey, subscribers?: (SetFieldValueSubscriber<Values> | null | undefined)[]) => {

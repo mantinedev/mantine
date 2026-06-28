@@ -43,14 +43,19 @@ function updateChartTooltipPayload(payload: Record<string, any>[]): Record<strin
 
 export function getFilteredChartTooltipPayload(
   payload: readonly Record<string, any>[] | Record<string, any>[],
-  segmentId?: string
+  segmentId?: string | number
 ) {
   const duplicatesFilter = updateChartTooltipPayload(
     payload.filter((item) => item.fill !== 'none' || !item.color)
   );
 
-  if (!segmentId) {
+  if (segmentId === undefined || segmentId === null) {
     return duplicatesFilter;
+  }
+
+  if (typeof segmentId === 'number') {
+    const item = duplicatesFilter[segmentId];
+    return item ? [item] : [];
   }
 
   return duplicatesFilter.filter((item) => item.name === segmentId);
@@ -94,8 +99,8 @@ export interface ChartTooltipProps
   /** Tooltip type that determines the content and styles, `area` for LineChart, AreaChart and BarChart, `radial` for DonutChart and PieChart @default 'area' */
   type?: 'area' | 'radial' | 'scatter';
 
-  /** Id of the segment to display data for. Only applicable when `type="radial"`. If not set, all data is rendered. */
-  segmentId?: string;
+  /** Segment to display data for, identified by its index in the data array (preferred, isolates duplicate names) or by its name. Only applicable when `type="radial"`. If not set, all data is rendered. */
+  segmentId?: string | number;
 
   /** Chart series data, applicable only for `area` type */
   series?: ChartSeries[];
@@ -163,8 +168,8 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props) => {
   const labels = getSeriesLabels(series);
   const _label = label || scatterLabel;
 
-  const items = filteredPayload.map((item) => (
-    <div key={item?.key ?? item.name} data-type={type} {...getStyles('tooltipItem')}>
+  const items = filteredPayload.map((item, index) => (
+    <div key={item?.key ?? `${item.name}-${index}`} data-type={type} {...getStyles('tooltipItem')}>
       <div {...getStyles('tooltipItemBody')}>
         {showColor && (
           <svg {...getStyles('tooltipItemColor')}>

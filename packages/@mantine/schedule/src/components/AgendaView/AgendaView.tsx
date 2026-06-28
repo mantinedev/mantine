@@ -20,7 +20,13 @@ import {
 import { useDatesContext } from '@mantine/dates';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { AnyDateValue, DateLabelFormat, ScheduleEventData, ScheduleMode } from '../../types';
-import { expandRecurringEvents, formatDate, isMultidayEvent, sortEvents } from '../../utils';
+import {
+  expandRecurringEvents,
+  formatDate,
+  isAllDayEvent,
+  isMultidayEvent,
+  sortEvents,
+} from '../../utils';
 import { RenderEvent } from '../ScheduleEvent/ScheduleEvent';
 import { getAgendaViewEvents } from './get-agenda-view-events';
 import classes from './AgendaView.module.css';
@@ -179,7 +185,7 @@ export const AgendaView = factory<AgendaViewFactory>((_props) => {
     const eventNodes = dateEvents.map((event) => {
       const startTime = dayjs(event.start).format('HH:mm');
       const endTime = dayjs(event.end).format('HH:mm');
-      const isAllDay = (startTime === '00:00' && endTime === '00:00') || isMultidayEvent(event);
+      const isAllDay = isMultidayEvent(event) || isAllDayEvent({ event, date: dateStr });
 
       const eventChildren = (
         <Box {...getStyles('agendaViewEventBody')}>

@@ -114,6 +114,49 @@ describe('@mantine/schedule/get-resources-day-view-events', () => {
     expect(result.regularEvents['room-a'][0].id).toBe(1);
   });
 
+  it('includes multi-day events on every overlapping day, clipped to that day', () => {
+    const events = [
+      testUtils.createEvent({
+        id: 1,
+        start: '2025-01-14 10:00:00',
+        end: '2025-01-16 18:00:00',
+        resourceId: 'room-a',
+      }),
+    ];
+
+    const firstDay = getResourcesDayViewEvents({ events, resources, date: '2025-01-14' });
+    expect(firstDay.regularEvents['room-a']).toHaveLength(1);
+    expect(firstDay.regularEvents['room-a'][0].id).toBe(1);
+    expect(firstDay.regularEvents['room-a'][0].position.top).toBeCloseTo(41.67, 1);
+
+    const middleDay = getResourcesDayViewEvents({ events, resources, date: '2025-01-15' });
+    expect(middleDay.allDayEvents['room-a']).toHaveLength(1);
+    expect(middleDay.allDayEvents['room-a'][0].id).toBe(1);
+    expect(middleDay.allDayEvents['room-a'][0].position.top).toBe(0);
+    expect(middleDay.allDayEvents['room-a'][0].position.height).toBe(100);
+
+    const lastDay = getResourcesDayViewEvents({ events, resources, date: '2025-01-16' });
+    expect(lastDay.regularEvents['room-a']).toHaveLength(1);
+    expect(lastDay.regularEvents['room-a'][0].id).toBe(1);
+    expect(lastDay.regularEvents['room-a'][0].position.top).toBe(0);
+    expect(lastDay.regularEvents['room-a'][0].position.height).toBeCloseTo(75, 1);
+  });
+
+  it('does not leak an event ending exactly at midnight onto the next day', () => {
+    const events = [
+      testUtils.createEvent({
+        id: 1,
+        start: '2025-01-14 22:00:00',
+        end: '2025-01-15 00:00:00',
+        resourceId: 'room-a',
+      }),
+    ];
+
+    const nextDay = getResourcesDayViewEvents({ events, resources, date: '2025-01-15' });
+    expect(nextDay.regularEvents['room-a']).toHaveLength(0);
+    expect(nextDay.allDayEvents['room-a']).toHaveLength(0);
+  });
+
   it('filters by startTime and endTime', () => {
     const events = [
       testUtils.createEvent({

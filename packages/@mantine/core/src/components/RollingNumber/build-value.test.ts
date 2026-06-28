@@ -39,6 +39,11 @@ describe('buildValue', () => {
     expect(buildValue({ value: -42 })).toBe('-42');
   });
 
+  it('does not render "-0" for negative values that round to zero', () => {
+    expect(buildValue({ value: -0.4, decimalScale: 0 })).toBe('0');
+    expect(buildValue({ value: -0.001, decimalScale: 2, fixedDecimalScale: true })).toBe('0.00');
+  });
+
   it('handles negative values with prefix', () => {
     expect(buildValue({ value: -1234, prefix: '$ ', thousandSeparator: true })).toBe('$ -1,234');
   });

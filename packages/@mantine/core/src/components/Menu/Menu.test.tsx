@@ -161,6 +161,19 @@ describe('@mantine/core/Menu', () => {
     expect(document.querySelectorAll('.mantine-Menu-arrow')).toHaveLength(0);
   });
 
+  it('assigns role="presentation" to non-menuitem children of role="menu" (issue #8971)', () => {
+    render(<TestContainer defaultOpened withArrow />);
+    const menu = screen.getByRole('menu');
+
+    const autofocusPlaceholder = menu.querySelector('[data-autofocus]');
+    expect(autofocusPlaceholder).not.toBeNull();
+    expect(autofocusPlaceholder).toHaveAttribute('role', 'presentation');
+
+    const arrow = menu.querySelector('.mantine-Menu-arrow');
+    expect(arrow).not.toBeNull();
+    expect(arrow).toHaveAttribute('role', 'presentation');
+  });
+
   it('exposes related components as static properties', () => {
     expect(Menu.Item).toBe(MenuItem);
     expect(Menu.Dropdown).toBe(MenuDropdown);

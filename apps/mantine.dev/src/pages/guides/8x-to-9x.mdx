@@ -410,6 +410,20 @@ const [value, setValue] = useLocalStorage({
 
 The same change applies to `readLocalStorageValue`, `useSessionStorage`, and `readSessionStorageValue`.
 
+## useHeadroom returns object instead of boolean
+
+The `useHeadroom` hook now returns an `{ pinned: boolean; scrollProgress: number }` object instead of a plain boolean. `scrollProgress` is a value between `0` (fully hidden) and `1` (fully visible) that can be used for scroll-linked reveal animations. A new `scrollDistance` option controls how many pixels of scrolling are required to fully reveal or hide the element (default: `100`).
+
+```tsx
+import { useHeadroom } from '@mantine/hooks';
+
+// ❌ In 8.x, the return type is plain boolean
+const pinned = useHeadroom({ fixedAt: 120 });
+
+// ✅ In 9.x, the return type is an object containing `pinned` property
+const { pinned } = useHeadroom({ fixedAt: 120 });
+```
+
 ## Default border-radius change
 
 In 8.x, the default border-radius (`theme.defaultRadius`) was `sm` (`4px`).

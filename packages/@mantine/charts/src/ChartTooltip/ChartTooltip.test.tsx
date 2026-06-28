@@ -207,4 +207,37 @@ describe('@mantine/charts/ChartToolTip', () => {
     expect(tooltipLabelList[2].textContent).toBe('TomatoesLabel');
     expect(tooltipDataList[2].textContent).toBe('2290');
   });
+
+  describe('radial segment selection by index', () => {
+    const radialPayload = [
+      { name: 'Other', value: 10, color: 'var(--mantine-color-blue-6)' },
+      { name: 'Other', value: 20, color: 'var(--mantine-color-red-6)' },
+      { name: 'Unique', value: 30, color: 'var(--mantine-color-teal-6)' },
+    ];
+
+    it('isolates a single segment by numeric index even when names are duplicated', () => {
+      const { container } = render(
+        <ChartTooltip type="radial" payload={radialPayload} segmentId={1} />
+      );
+      expect(container.querySelectorAll('.mantine-ChartTooltip-tooltipItem')).toHaveLength(1);
+      expect(container.querySelector('.mantine-ChartTooltip-tooltipItemData')!.textContent).toBe(
+        '20'
+      );
+    });
+
+    it('isolates the first segment when the numeric index is 0', () => {
+      const { container } = render(
+        <ChartTooltip type="radial" payload={radialPayload} segmentId={0} />
+      );
+      expect(container.querySelectorAll('.mantine-ChartTooltip-tooltipItem')).toHaveLength(1);
+      expect(container.querySelector('.mantine-ChartTooltip-tooltipItemData')!.textContent).toBe(
+        '10'
+      );
+    });
+
+    it('renders all segments when no segmentId is provided', () => {
+      const { container } = render(<ChartTooltip type="radial" payload={radialPayload} />);
+      expect(container.querySelectorAll('.mantine-ChartTooltip-tooltipItem')).toHaveLength(3);
+    });
+  });
 });

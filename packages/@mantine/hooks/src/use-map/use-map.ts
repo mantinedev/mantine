@@ -1,27 +1,27 @@
-import { useRef } from 'react';
-import { useForceUpdate } from '../use-force-update/use-force-update';
+import { useRef, useState } from 'react';
 
 export function useMap<T, V>(initialState?: [T, V][]): Map<T, V> {
-  const mapRef = useRef(new Map<T, V>(initialState));
-  const forceUpdate = useForceUpdate();
+  const [map, setMap] = useState(() => new Map<T, V>(initialState));
+  const mapRef = useRef(map);
+  mapRef.current = map;
 
-  mapRef.current.set = (...args) => {
+  map.set = (...args) => {
     Map.prototype.set.apply(mapRef.current, args);
-    forceUpdate();
+    setMap(new Map(mapRef.current));
     return mapRef.current;
   };
 
-  mapRef.current.clear = (...args) => {
+  map.clear = (...args) => {
     Map.prototype.clear.apply(mapRef.current, args);
-    forceUpdate();
+    setMap(new Map(mapRef.current));
   };
 
-  mapRef.current.delete = (...args) => {
+  map.delete = (...args) => {
     const res = Map.prototype.delete.apply(mapRef.current, args);
-    forceUpdate();
+    setMap(new Map(mapRef.current));
 
     return res;
   };
 
-  return mapRef.current;
+  return map;
 }

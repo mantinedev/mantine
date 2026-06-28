@@ -130,6 +130,11 @@ export function getRenderableMonthEventSegments({
     renderRows.get(event)!.set(dayIndex, row);
   };
 
+  // Each event remembers the row it was last placed on, so a multi-day bar reuses that row on every
+  // day it covers and stays continuous instead of jumping rows between adjacent days. A different row
+  // is only picked when the preferred one is already taken on that day.
+  const lastRow = new Map<MonthPositionedEventData, number>();
+
   for (let dayIndex = 0; dayIndex < week.length; dayIndex += 1) {
     if (hiddenColumnSet.has(dayIndex)) {
       continue;
@@ -146,29 +151,21 @@ export function getRenderableMonthEventSegments({
       );
     });
 
-    if (dayEvents.length > maxEventsPerDay) {
-      dayWeekEvents.forEach((event) => {
-        if (event.position.row < maxEventsPerDay) {
-          setRenderRow(event, dayIndex, event.position.row);
-        }
-      });
-
-      continue;
-    }
+    // On a truncated day only the events whose stable row fits are shown; the rest collapse into the
+    // "+N more" indicator. Other days show every event, compacting overflow rows down to fit.
+    const candidates =
+      dayEvents.length > maxEventsPerDay
+        ? dayWeekEvents.filter((event) => event.position.row < maxEventsPerDay)
+        : dayWeekEvents;
 
     const usedRows = new Set<number>();
-    const sortedDayEvents = [...dayWeekEvents].sort((a, b) => {
+    const sortedDayEvents = [...candidates].sort((a, b) => {
       const rowDiff = a.position.row - b.position.row;
-
-      if (rowDiff !== 0) {
-        return rowDiff;
-      }
-
-      return eventIndexes.get(a)! - eventIndexes.get(b)!;
+      return rowDiff !== 0 ? rowDiff : eventIndexes.get(a)! - eventIndexes.get(b)!;
     });
 
     sortedDayEvents.forEach((event) => {
-      let row = event.position.row;
+      let row = lastRow.get(event) ?? event.position.row;
 
       if (row >= maxEventsPerDay || usedRows.has(row)) {
         const availableRow = getFirstAvailableRow(usedRows, maxEventsPerDay);
@@ -182,6 +179,7 @@ export function getRenderableMonthEventSegments({
 
       usedRows.add(row);
       setRenderRow(event, dayIndex, row);
+      lastRow.set(event, row);
     });
   }
 

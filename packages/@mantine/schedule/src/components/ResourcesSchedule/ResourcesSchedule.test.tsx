@@ -336,7 +336,7 @@ describe('@mantine/schedule/ResourcesSchedule', () => {
     });
   });
 
-  it('withEventResize only affects day view', async () => {
+  it('withEventResize is forwarded to both day and week views', async () => {
     const { container } = render(
       <ResourcesSchedule {...defaultProps} defaultView="day" events={testEvents} withEventResize />
     );
@@ -349,6 +349,9 @@ describe('@mantine/schedule/ResourcesSchedule', () => {
     expect(
       container.querySelector('.mantine-ResourcesDayView-resourcesDayViewResizeHandle')
     ).not.toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewResizeHandle')
+    ).toBeInTheDocument();
   });
 
   it('withEventsDragAndDrop forwarded to day view', () => {

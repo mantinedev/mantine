@@ -202,3 +202,8 @@ export const Demo_forceCurrentTimeIndicator = {
   name: '⭐ Demo: forceCurrentTimeIndicator',
   render: renderDemo(demos.forceCurrentTimeIndicator),
 };
+
+export const Demo_subHourGridLines = {
+  name: '⭐ Demo: subHourGridLines',
+  render: renderDemo(demos.subHourGridLines),
+};

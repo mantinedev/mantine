@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { DirectionProvider } from '../../core';
 import { Tabs, TabsProps, TabsStylesNames } from './Tabs';
@@ -251,5 +252,66 @@ describe('@mantine/core/Tabs', () => {
     expect(Tabs.Tab).toBe(TabsTab);
     expect(Tabs.List).toBe(TabsList);
     expect(Tabs.Panel).toBe(TabsPanel);
+  });
+
+  it('sets aria-controls to the matching panel id on the initial render', () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-1" />);
+
+    const activeTab = getTab('tab-1');
+    const panel = screen.getByText('tab-1 panel');
+
+    expect(panel.id).toBeTruthy();
+    expect(activeTab).toHaveAttribute('aria-controls', panel.id);
+  });
+
+  it('keeps aria-controls in sync for every tab with a panel', () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-1" />);
+
+    TAB_VALUES.forEach((value) => {
+      const tab = getTab(value);
+      const panel = screen.getByText(`${value} panel`);
+      expect(tab).toHaveAttribute('aria-controls', panel.id);
+    });
+  });
+
+  it('updates aria-controls when a panel mounts after the tab (panel registration triggers a re-render)', async () => {
+    function DynamicPanel() {
+      const [mounted, setMounted] = useState(false);
+      return (
+        <Tabs defaultValue="a">
+          <Tabs.List>
+            <Tabs.Tab value="a">a</Tabs.Tab>
+          </Tabs.List>
+          {mounted && <Tabs.Panel value="a">a panel</Tabs.Panel>}
+          <button type="button" onClick={() => setMounted(true)}>
+            add panel
+          </button>
+        </Tabs>
+      );
+    }
+
+    render(<DynamicPanel />);
+
+    const tab = screen.getByRole('tab', { name: 'a' });
+    expect(tab).not.toHaveAttribute('aria-controls');
+
+    await userEvent.click(screen.getByText('add panel'));
+
+    const panel = screen.getByText('a panel');
+    expect(tab).toHaveAttribute('aria-controls', panel.id);
+  });
+
+  it('does not set aria-controls when a tab has no associated panel', () => {
+    render(
+      <Tabs defaultValue="a">
+        <Tabs.List>
+          <Tabs.Tab value="a">a</Tabs.Tab>
+          <Tabs.Tab value="b">b</Tabs.Tab>
+        </Tabs.List>
+      </Tabs>
+    );
+
+    expect(screen.getByRole('tab', { name: 'a' })).not.toHaveAttribute('aria-controls');
+    expect(screen.getByRole('tab', { name: 'b' })).not.toHaveAttribute('aria-controls');
   });
 });

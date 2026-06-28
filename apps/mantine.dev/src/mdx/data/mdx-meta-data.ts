@@ -49,10 +49,10 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
-  EslintConfig: {
-    title: 'eslint-config-mantine',
-    slug: '/eslint-config-mantine',
-    search: 'Linting configuration for Mantine projects',
+  OxcConfig: {
+    title: 'oxc-config-mantine',
+    slug: '/oxc-config-mantine',
+    search: 'Linting and formatting configuration for Mantine projects',
     hideSiblings: true,
     hideHeader: true,
   },

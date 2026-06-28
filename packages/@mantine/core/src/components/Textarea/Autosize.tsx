@@ -244,5 +244,5 @@ export function TextareaAutosize({
     return () => document.body.removeEventListener('reset', handleReset);
   }, [isControlled]);
 
-  return <textarea {...props} onChange={handleChange} ref={ref} />;
+  return <textarea rows={minRows} {...props} onChange={handleChange} ref={ref} />;
 }

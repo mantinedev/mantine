@@ -201,11 +201,14 @@ export function useField<
     setTouched(false);
   }, [initialValue]);
 
-  const getValue = useCallback(() => valueRef.current, []);
+  const getValue = useCallback(() => valueRef.current, [valueRef.current]);
 
-  const isTouched = useCallback(() => touchedRef.current, []);
+  const isTouched = useCallback(() => touchedRef.current, [touchedRef.current]);
 
-  const isDirty = useCallback(() => valueRef.current !== initialValue, [initialValue]);
+  const isDirty = useCallback(
+    () => valueRef.current !== initialValue,
+    [valueRef.current, initialValue]
+  );
 
   const _validate = useCallback(async () => {
     const validationResult = validate?.(valueRef.current);

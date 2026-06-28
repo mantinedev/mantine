@@ -27,6 +27,16 @@ class ResizeObserver {
 
 window.ResizeObserver = ResizeObserver;
 
+if (!document.fonts) {
+  Object.defineProperty(document, 'fonts', {
+    writable: true,
+    value: {
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    },
+  });
+}
+
 const originalConsoleError = console.error;
 console.error = (...data) => {
   if (

@@ -192,7 +192,7 @@ export function useTimePicker({
     const timeString = getTimeString({ ...parsedTime, format, withSeconds, amPmLabels });
     if (timeString.valid) {
       acceptChange.current = false;
-      const defaultMax = type === 'duration' ? '9999:59:59' : '23:59:59';
+      const defaultMax = type === 'duration' ? undefined : '23:59:59';
       const clamped = clampTime(timeString.value, min || '00:00:00', max || defaultMax);
       onChange?.(clamped.timeString);
       setHours(parsedTime.hours);

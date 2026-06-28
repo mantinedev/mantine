@@ -1,8 +1,12 @@
 import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { ScheduleMode, ScheduleResourceData, ScheduleResourceGroup } from '../../types';
-import { DayTimeInterval, getBusinessHoursMod, ResourceGroupInfo } from '../../utils';
-import type { ResourcesDayViewControlsRef } from './handle-resources-day-view-key-down';
+import {
+  DayTimeInterval,
+  getBusinessHoursMod,
+  ResourceGroupInfo,
+  ResourcesGridControlsRef,
+} from '../../utils';
 import type { ResourcesDayViewFactory } from './ResourcesDayView';
 
 export interface ResourcesDayViewRowProps {
@@ -34,7 +38,7 @@ export interface ResourcesDayViewRowProps {
   ) => void;
   dropTargetSlotIndex?: number;
   mode?: ScheduleMode;
-  slotsRef?: ResourcesDayViewControlsRef;
+  slotsRef?: ResourcesGridControlsRef;
   firstSlotIndex?: { resourceIndex: number; slotIndex: number };
   onSlotKeyDown?: (
     event: React.KeyboardEvent<HTMLButtonElement>,
