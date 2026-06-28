@@ -180,8 +180,11 @@ export function cleanNotifications(store: NotificationsStore = notificationsStor
 }
 
 export function cleanNotificationsQueue(store: NotificationsStore = notificationsStore) {
-  updateNotificationsState(store, (notifications) =>
-    notifications.slice(0, store.getState().limit)
+  const { defaultPosition, limit } = store.getState();
+  updateNotificationsState(
+    store,
+    (notifications) =>
+      getDistributedNotifications(notifications, defaultPosition, limit).notifications
   );
 }
 

@@ -1,6 +1,7 @@
 export { usage } from './WeekView.demo.usage';
 export { timeRange } from './WeekView.demo.timeRange';
 export { intervalMinutes } from './WeekView.demo.intervalMinutes';
+export { subHourGridLines } from './WeekView.demo.subHourGridLines';
 export { firstDayOfWeek } from './WeekView.demo.firstDayOfWeek';
 export { weekdayFormat } from './WeekView.demo.weekdayFormat';
 export { withoutWeekendDays } from './WeekView.demo.withoutWeekendDays';

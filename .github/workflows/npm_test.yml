@@ -15,7 +15,7 @@ jobs:
   test_pull_request:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
@@ -28,4 +28,4 @@ jobs:
       - name: Build public packages
         run: npm run build all
       - name: Run tests
-        run: npm run test:all
+        run: npm test

@@ -86,11 +86,18 @@ export const Collapse = factory<CollapseFactory>((props) => {
     if (keepMounted === true && env !== 'test') {
       return (
         <Activity mode={expanded ? 'visible' : 'hidden'}>
-          <Box {...others}>{children}</Box>
+          <Box {...others} style={style} ref={ref}>
+            {children}
+          </Box>
         </Activity>
       );
     }
-    return expanded ? <Box {...others}>{children}</Box> : null;
+
+    return expanded ? (
+      <Box {...others} style={style} ref={ref}>
+        {children}
+      </Box>
+    ) : null;
   }
 
   const isExited = collapse.state === 'exited';

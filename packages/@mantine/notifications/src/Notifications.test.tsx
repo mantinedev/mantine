@@ -522,4 +522,76 @@ describe('@mantine/core/Notifications', () => {
       expect(state.queue.map((n) => n.id)).toEqual(['high']);
     });
   });
+
+  describe('cleanQueue', () => {
+    function createStoreWithLimit(limit: number) {
+      const store = createNotificationsStore();
+      store.setState((current) => ({ ...current, limit }));
+      return store;
+    }
+
+    it('removes queued notifications and keeps the visible ones', () => {
+      const store = createStoreWithLimit(1);
+
+      notifications.show({ id: 'visible', message: 'visible' }, store);
+      notifications.show({ id: 'queued', message: 'queued' }, store);
+
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['visible']);
+      expect(store.getState().queue.map((n) => n.id)).toEqual(['queued']);
+
+      notifications.cleanQueue(store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id)).toEqual(['visible']);
+      expect(state.queue).toEqual([]);
+    });
+
+    it('keeps visible notifications of every position (limit is applied per position)', () => {
+      const store = createStoreWithLimit(1);
+
+      notifications.show({ id: 'tl-visible', message: 'tl-visible', position: 'top-left' }, store);
+      notifications.show({ id: 'tl-queued', message: 'tl-queued', position: 'top-left' }, store);
+      notifications.show(
+        { id: 'br-visible', message: 'br-visible', position: 'bottom-right' },
+        store
+      );
+      notifications.show(
+        { id: 'br-queued', message: 'br-queued', position: 'bottom-right' },
+        store
+      );
+
+      expect(
+        store
+          .getState()
+          .notifications.map((n) => n.id)
+          .sort()
+      ).toEqual(['br-visible', 'tl-visible']);
+
+      notifications.cleanQueue(store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id).sort()).toEqual(['br-visible', 'tl-visible']);
+      expect(state.queue).toEqual([]);
+    });
+
+    it('clears the queue and caps visible notifications when the limit was lowered', () => {
+      const store = createStoreWithLimit(3);
+
+      notifications.show({ id: 'a', message: 'a' }, store);
+      notifications.show({ id: 'b', message: 'b' }, store);
+      notifications.show({ id: 'c', message: 'c' }, store);
+
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['a', 'b', 'c']);
+
+      // Lowering the limit (as the Notifications component does) does not redistribute on its own
+      store.setState((current) => ({ ...current, limit: 1 }));
+      expect(store.getState().notifications.map((n) => n.id)).toEqual(['a', 'b', 'c']);
+
+      notifications.cleanQueue(store);
+
+      const state = store.getState();
+      expect(state.notifications.map((n) => n.id)).toEqual(['a']);
+      expect(state.queue).toEqual([]);
+    });
+  });
 });

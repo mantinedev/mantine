@@ -39,11 +39,13 @@ import {
   calculateMonthDropDate,
   expandRecurringEvents,
   formatDate,
+  getGroupToResourceIdMap,
+  getIndexFromDragPoint,
   getOrderedResources,
   toDateString,
 } from '../../utils';
 import { DragContext } from '../DragContext/DragContext';
-import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
+import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
@@ -67,6 +69,7 @@ export type ResourcesMonthViewStylesNames =
   | 'resourcesMonthViewInner'
   | 'resourcesMonthViewGroupColumn'
   | 'resourcesMonthViewGroupColumnEmpty'
+  | MoreEventsStylesNames
   | CombinedScheduleHeaderStylesNames;
 
 export type ResourcesMonthViewCssVariables = {
@@ -255,6 +258,56 @@ const defaultProps = {
   mode: 'default',
 } satisfies Partial<ResourcesMonthViewProps>;
 
+function compareCellEvents(a: ScheduleEventData, b: ScheduleEventData): number {
+  const aStart = dayjs(a.start);
+  const bStart = dayjs(b.start);
+  const aSpan = dayjs(a.end).startOf('day').diff(aStart.startOf('day'), 'day');
+  const bSpan = dayjs(b.end).startOf('day').diff(bStart.startOf('day'), 'day');
+
+  if (aSpan !== bSpan) {
+    return bSpan - aSpan;
+  }
+
+  return aStart.valueOf() - bStart.valueOf();
+}
+
+function getFirstAvailableRow(usedRows: Set<number>, maxRows: number): number | null {
+  for (let row = 0; row < maxRows; row += 1) {
+    if (!usedRows.has(row)) {
+      return row;
+    }
+  }
+
+  return null;
+}
+
+interface ResourcesMonthViewCellLayout {
+  visible: { event: ScheduleEventData; row: number }[];
+  hiddenCount: number;
+}
+
+interface ResourcesMonthViewSegment {
+  event: ScheduleEventData;
+  startDayIndex: number;
+  endDayIndex: number;
+  row: number;
+  clipStart: boolean;
+  clipEnd: boolean;
+  hanging: 'start' | 'end' | 'both' | 'none';
+
+  /** True when any day the segment covers shows a "+N more" indicator (those days compress rows) */
+  hiddenInSpan: boolean;
+}
+
+interface ResourcesMonthViewResourceLayout {
+  byDay: Record<string, ResourcesMonthViewCellLayout>;
+  segments: ResourcesMonthViewSegment[];
+}
+
+function isMultiDayEvent(event: ScheduleEventData): boolean {
+  return dayjs(event.end).startOf('day').isAfter(dayjs(event.start).startOf('day'));
+}
+
 export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) => {
   const props = useProps('ResourcesMonthView', defaultProps, _props);
   const {
@@ -345,24 +398,26 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
   const ctx = useDatesContext();
   const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
-  const { orderedResources, groupRanges, resourceGroupMap } = getOrderedResources(
-    resources,
-    groups
+  const { orderedResources, groupRanges, resourceGroupMap } = useMemo(
+    () => getOrderedResources(resources, groups),
+    [resources, groups]
   );
   const hasGroups = groupRanges.length > 0;
 
-  const monthStart = dayjs(date).startOf('month');
-  const monthEnd = dayjs(date).endOf('month');
-  const daysInMonth = monthEnd.date();
-
-  const monthDays: string[] = [];
-  for (let d = 1; d <= daysInMonth; d++) {
-    const day = monthStart.date(d);
-    if (!withWeekendDays && resolvedWeekendDays.includes(day.day() as DayOfWeek)) {
-      continue;
+  const monthDays = useMemo(() => {
+    const start = dayjs(date).startOf('month');
+    const daysCount = start.endOf('month').date();
+    const weekendDayList = ctx.getWeekendDays(weekendDays);
+    const days: string[] = [];
+    for (let d = 1; d <= daysCount; d++) {
+      const day = start.date(d);
+      if (!withWeekendDays && weekendDayList.includes(day.day() as DayOfWeek)) {
+        continue;
+      }
+      days.push(day.format('YYYY-MM-DD'));
     }
-    monthDays.push(day.format('YYYY-MM-DD'));
-  }
+    return days;
+  }, [date, withWeekendDays, weekendDays, ctx]);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
@@ -400,40 +455,168 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     }
   }, []);
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: monthStart.toDate(),
-    rangeEnd: monthEnd.toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
+  const expandedEvents = useMemo(
+    () =>
+      expandRecurringEvents({
+        events,
+        rangeStart: dayjs(date).startOf('month').toDate(),
+        rangeEnd: dayjs(date).endOf('month').toDate(),
+        expansionLimit: recurrenceExpansionLimit,
+      }),
+    [events, date, recurrenceExpansionLimit]
+  );
 
-  const eventsByResourceAndDay: Record<string | number, Record<string, ScheduleEventData[]>> = {};
-  for (const resource of resources) {
-    eventsByResourceAndDay[resource.id] = {};
-    for (const day of monthDays) {
-      eventsByResourceAndDay[resource.id][day] = [];
-    }
-  }
-
-  if (expandedEvents) {
-    for (const event of expandedEvents) {
-      if (event.resourceId === undefined || !(event.resourceId in eventsByResourceAndDay)) {
-        continue;
-      }
-
-      const eventStart = dayjs(event.start);
-      const eventEnd = dayjs(event.end);
-
+  const { eventsByResourceAndDay, eventLayoutByResource } = useMemo(() => {
+    const eventsByResourceAndDay: Record<string | number, Record<string, ScheduleEventData[]>> = {};
+    for (const resource of resources) {
+      eventsByResourceAndDay[resource.id] = {};
       for (const day of monthDays) {
-        const dayStart = dayjs(day).startOf('day');
-        const dayEnd = dayjs(day).endOf('day');
+        eventsByResourceAndDay[resource.id][day] = [];
+      }
+    }
 
-        if (eventStart.isBefore(dayEnd) && eventEnd.isAfter(dayStart)) {
-          eventsByResourceAndDay[event.resourceId][day].push(event);
+    if (expandedEvents) {
+      for (const event of expandedEvents) {
+        if (event.resourceId === undefined || !(event.resourceId in eventsByResourceAndDay)) {
+          continue;
+        }
+
+        const eventStart = dayjs(event.start);
+        const eventEnd = dayjs(event.end);
+
+        for (const day of monthDays) {
+          const dayStart = dayjs(day).startOf('day');
+          const dayEnd = dayjs(day).endOf('day');
+
+          if (eventStart.isBefore(dayEnd) && eventEnd.isAfter(dayStart)) {
+            eventsByResourceAndDay[event.resourceId][day].push(event);
+          }
         }
       }
     }
-  }
+
+    const eventLayoutByResource: Record<string | number, ResourcesMonthViewResourceLayout> = {};
+    const monthRangeStart = dayjs(monthDays[0]).startOf('day');
+    const monthEndExclusive = dayjs(monthDays[monthDays.length - 1])
+      .add(1, 'day')
+      .startOf('day');
+
+    for (const resource of resources) {
+      const byDay: Record<string, ResourcesMonthViewCellLayout> = {};
+      const lastRow = new Map<string | number, number>();
+      const rowByEventDay = new Map<string | number, Map<number, number>>();
+      const overlapByEvent = new Map<
+        string | number,
+        { event: ScheduleEventData; days: number[] }
+      >();
+
+      monthDays.forEach((day, dayIndex) => {
+        const dayEvents = eventsByResourceAndDay[resource.id][day];
+        dayEvents.sort(compareCellEvents);
+
+        for (const event of dayEvents) {
+          const overlap = overlapByEvent.get(event.id);
+          if (overlap) {
+            overlap.days.push(dayIndex);
+          } else {
+            overlapByEvent.set(event.id, { event, days: [dayIndex] });
+          }
+        }
+
+        const usedRows = new Set<number>();
+        const visible: ResourcesMonthViewCellLayout['visible'] = [];
+        let hiddenCount = 0;
+
+        for (const event of dayEvents) {
+          let row: number | null | undefined = lastRow.get(event.id);
+
+          if (row === undefined || row >= maxEventsPerTimeSlot || usedRows.has(row)) {
+            row = getFirstAvailableRow(usedRows, maxEventsPerTimeSlot);
+          }
+
+          if (row === null) {
+            hiddenCount += 1;
+            continue;
+          }
+
+          usedRows.add(row);
+          visible.push({ event, row });
+          if (!rowByEventDay.has(event.id)) {
+            rowByEventDay.set(event.id, new Map());
+          }
+          rowByEventDay.get(event.id)!.set(dayIndex, row);
+          lastRow.set(event.id, row);
+        }
+
+        byDay[day] = { visible, hiddenCount };
+      });
+
+      const segments: ResourcesMonthViewSegment[] = [];
+
+      for (const { event, days } of overlapByEvent.values()) {
+        if (!isMultiDayEvent(event)) {
+          continue;
+        }
+
+        const firstOverlap = days[0];
+        const lastOverlap = days[days.length - 1];
+        const rows = rowByEventDay.get(event.id);
+        const extendsBefore = dayjs(event.start).isBefore(monthRangeStart);
+        const extendsAfter = dayjs(event.end).isAfter(monthEndExclusive);
+        let run: { startDayIndex: number; endDayIndex: number; row: number } | null = null;
+
+        const flushRun = () => {
+          if (!run) {
+            return;
+          }
+          const clipStart = run.startDayIndex > firstOverlap;
+          const clipEnd = run.endDayIndex < lastOverlap;
+          const hangStart = !clipStart && extendsBefore;
+          const hangEnd = !clipEnd && extendsAfter;
+          let hiddenInSpan = false;
+          for (let dayIndex = run.startDayIndex; dayIndex <= run.endDayIndex; dayIndex += 1) {
+            if ((byDay[monthDays[dayIndex]]?.hiddenCount ?? 0) > 0) {
+              hiddenInSpan = true;
+              break;
+            }
+          }
+          segments.push({
+            event,
+            startDayIndex: run.startDayIndex,
+            endDayIndex: run.endDayIndex,
+            row: run.row,
+            clipStart,
+            clipEnd,
+            hanging: hangStart && hangEnd ? 'both' : hangStart ? 'start' : hangEnd ? 'end' : 'none',
+            hiddenInSpan,
+          });
+          run = null;
+        };
+
+        for (let dayIndex = firstOverlap; dayIndex <= lastOverlap; dayIndex += 1) {
+          const row = rows?.get(dayIndex);
+
+          if (row === undefined) {
+            flushRun();
+            continue;
+          }
+
+          if (run && run.row === row && run.endDayIndex === dayIndex - 1) {
+            run.endDayIndex = dayIndex;
+          } else {
+            flushRun();
+            run = { startDayIndex: dayIndex, endDayIndex: dayIndex, row };
+          }
+        }
+
+        flushRun();
+      }
+
+      eventLayoutByResource[resource.id] = { byDay, segments };
+    }
+
+    return { eventsByResourceAndDay, eventLayoutByResource };
+  }, [resources, monthDays, expandedEvents, maxEventsPerTimeSlot]);
 
   type DropTargetCell = { day: string; resourceId: string | number };
 
@@ -471,13 +654,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
 
-  const groupToResourceId = useMemo(() => {
-    const map = new Map<string, string | number>();
-    for (const resource of resources) {
-      map.set(String(resource.id), resource.id);
-    }
-    return map;
-  }, [resources]);
+  const groupToResourceId = useMemo(() => getGroupToResourceIdMap(resources), [resources]);
 
   const slotDragSelect = useSlotDragSelect({
     enabled: withDragSlotSelect && mode !== 'static',
@@ -522,38 +699,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
   const cellsRef = useRef<HTMLButtonElement[][]>([]);
 
   const getDayIndexFromDragPoint = useCallback((event: React.DragEvent, resourceIndex: number) => {
-    const resourceCells = cellsRef.current[resourceIndex] ?? [];
-    const dayIndex = resourceCells.findIndex((cellNode) => {
-      if (!cellNode) {
-        return false;
-      }
-      const rect = cellNode.getBoundingClientRect();
-      return event.clientX >= rect.left && event.clientX <= rect.right;
-    });
-
-    if (dayIndex >= 0) {
-      return dayIndex;
-    }
-
-    const firstCell = resourceCells[0];
-    const lastCell = resourceCells[resourceCells.length - 1];
-
-    if (!firstCell || !lastCell) {
-      return null;
-    }
-
-    const firstRect = firstCell.getBoundingClientRect();
-    const lastRect = lastCell.getBoundingClientRect();
-
-    if (event.clientX < firstRect.left) {
-      return 0;
-    }
-
-    if (event.clientX > lastRect.right) {
-      return resourceCells.length - 1;
-    }
-
-    return null;
+    return getIndexFromDragPoint(cellsRef.current[resourceIndex] ?? [], event.clientX);
   }, []);
 
   const handleCellKeyDown = (
@@ -606,19 +752,24 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         (dropTarget as DropTargetCell).resourceId === resource.id;
       const isDragSelected = slotDragSelect.isSlotSelected(dayIndex, slotGroup);
       const dayEvents = eventsByResourceAndDay[resource.id]?.[day] || [];
-      const visibleEvents = dayEvents.slice(0, maxEventsPerTimeSlot);
-      const hiddenEventsCount = Math.max(0, dayEvents.length - maxEventsPerTimeSlot);
+      const layout = eventLayoutByResource[resource.id]?.byDay[day];
+      const visibleEvents = layout?.visible ?? [];
+      const hiddenEventsCount = layout?.hiddenCount ?? 0;
       const isFirstCell = resourceIndex === 0 && dayIndex === 0;
       const dayLeftPercent = (dayIndex / totalDays) * 100;
       const dayWidthPercent = 100 / totalDays;
 
       const hasHiddenEvents = hiddenEventsCount > 0 && mode !== 'static';
 
-      visibleEvents.forEach((event, eventIndex) => {
+      visibleEvents.forEach(({ event, row }) => {
+        if (isMultiDayEvent(event)) {
+          return;
+        }
+
         const isDraggable = dragDrop.isDraggableEvent(event);
         const topValue = hasHiddenEvents
-          ? `calc((100% - 18px) * ${eventIndex} / ${maxEventsPerTimeSlot} + 1px)`
-          : `calc(${eventIndex * rowHeightPercent}% + 1px)`;
+          ? `calc((100% - 18px) * ${row} / ${maxEventsPerTimeSlot} + 1px)`
+          : `calc(${row * rowHeightPercent}% + 1px)`;
         const heightValue = hasHiddenEvents
           ? `calc((100% - 18px) / ${maxEventsPerTimeSlot} - 2px)`
           : `calc(${rowHeightPercent}% - 2px)`;
@@ -655,6 +806,10 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
             events={dayEvents}
             moreEventsCount={hiddenEventsCount}
             mode={mode}
+            labels={labels}
+            renderEventBody={renderEventBody}
+            renderEvent={renderEvent}
+            onEventClick={onEventClick}
             style={{
               position: 'absolute',
               bottom: 1,
@@ -663,6 +818,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
               height: 18,
               zIndex: 4,
             }}
+            {...stylesApiProps}
             {...moreEventsProps}
           />
         );
@@ -709,6 +865,48 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
               : undefined
           }
           onDragOver={withDragHandlers ? (e) => e.preventDefault() : undefined}
+        />
+      );
+    });
+
+    const resourceSegments = eventLayoutByResource[resource.id]?.segments ?? [];
+
+    resourceSegments.forEach((segment) => {
+      const isDraggable = dragDrop.isDraggableEvent(segment.event);
+      const segmentLeftPercent = (segment.startDayIndex / totalDays) * 100;
+      const segmentWidthPercent =
+        ((segment.endDayIndex - segment.startDayIndex + 1) / totalDays) * 100;
+      const compressed = segment.hiddenInSpan && mode !== 'static';
+      const topValue = compressed
+        ? `calc((100% - 18px) * ${segment.row} / ${maxEventsPerTimeSlot} + 1px)`
+        : `calc(${segment.row * rowHeightPercent}% + 1px)`;
+      const heightValue = compressed
+        ? `calc((100% - 18px) / ${maxEventsPerTimeSlot} - 2px)`
+        : `calc(${rowHeightPercent}% - 2px)`;
+
+      eventNodes.push(
+        <ScheduleEvent
+          key={`${segment.event.id}-segment-${segment.startDayIndex}`}
+          event={segment.event}
+          nowrap
+          autoSize
+          size="sm"
+          hanging={segment.hanging}
+          draggable={isDraggable}
+          renderEventBody={renderEventBody}
+          renderEvent={renderEvent}
+          radius={radius}
+          mode={mode}
+          mod={{ 'clip-start': segment.clipStart, 'clip-end': segment.clipEnd }}
+          onClick={onEventClick ? (e) => onEventClick(segment.event, e) : undefined}
+          style={{
+            position: 'absolute',
+            top: topValue,
+            left: `calc(${segmentLeftPercent}% + 1px)`,
+            width: `calc(${segmentWidthPercent}% - 2px)`,
+            height: heightValue,
+            zIndex: 3,
+          }}
         />
       );
     });
@@ -795,6 +993,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         {
           static: mode === 'static',
           'slot-dragging': slotDragSelect.isDragging,
+          'event-interaction': dragDrop.dragContextValue.isDragging,
         },
         mod,
       ]}
@@ -839,6 +1038,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
       <Box {...getStyles('resourcesMonthViewRoot')}>
         <ScrollArea
+          scrollbars="x"
           scrollbarSize={4}
           {...scrollAreaProps}
           {...getStyles('resourcesMonthViewScrollArea', {

@@ -411,6 +411,10 @@
   }
 }
 
+.resourcesDayView:where([data-event-interaction]) .resourcesDayViewRowSlot {
+  pointer-events: none;
+}
+
 .resourcesDayView:where([data-resizing]) {
   & * {
     cursor: ew-resize !important;

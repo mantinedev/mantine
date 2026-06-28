@@ -28,6 +28,7 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
+import { getPieChartData } from '../utils';
 import classes from './PieChart.module.css';
 
 export interface PieChartCell {
@@ -252,7 +253,7 @@ export const PieChart = factory<PieChartFactory>((_props) => {
   } = props;
 
   const theme = useMantineTheme();
-  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
+  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
 
   const getStyles = useStyles<PieChartFactory>({
     name: 'PieChart',
@@ -274,14 +275,7 @@ export const PieChart = factory<PieChartFactory>((_props) => {
     props,
   });
 
-  const pieData = data.map((item) => ({
-    ...item,
-    fill: getThemeColor(item.color, theme),
-    stroke: 'var(--chart-stroke-color, var(--mantine-color-body))',
-    strokeWidth,
-    fillOpacity: highlightedArea ? (highlightedArea === item.name ? 1 : 0.2) : 1,
-    ...(typeof cellProps === 'function' ? cellProps(item) : cellProps),
-  }));
+  const pieData = getPieChartData({ data, theme, strokeWidth, highlightedIndex, cellProps });
 
   return (
     <Box size={size} {...getStyles('root')} {...others}>
@@ -325,7 +319,9 @@ export const PieChart = factory<PieChartFactory>((_props) => {
                   styles={resolvedStyles}
                   type="radial"
                   segmentId={
-                    tooltipDataSource === 'segment' ? (payload?.[0]?.name as string) : undefined
+                    tooltipDataSource === 'segment'
+                      ? (payload?.[0]?.payload?.__segmentIndex as number)
+                      : undefined
                   }
                   valueFormatter={valueFormatter}
                   attributes={attributes}
@@ -343,8 +339,11 @@ export const PieChart = factory<PieChartFactory>((_props) => {
                   payload={payload.payload?.map((item) => ({
                     ...item,
                     dataKey: (item.payload as any)?.name,
+                    highlightKey: (item.payload as any)?.__segmentIndex,
                   }))}
-                  onHighlight={setHighlightedArea}
+                  onHighlight={(value) =>
+                    setHighlightedIndex(typeof value === 'number' ? value : null)
+                  }
                   legendPosition={legendProps?.verticalAlign || 'bottom'}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}

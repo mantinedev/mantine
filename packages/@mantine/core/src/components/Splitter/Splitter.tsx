@@ -193,8 +193,8 @@ export const Splitter = factory<SplitterFactory>((_props) => {
 
   useImperativeHandle(splitterRef, () => splitter, [splitter]);
 
-  const pixelMode = splitter.sizes.some(isFixedPaneSize);
-  const getPaneStyle = (index: number) => getPaneFlexStyle(splitter.sizes[index], pixelMode);
+  const getPaneStyle = (index: number) =>
+    getPaneFlexStyle(splitter.sizes[index], splitter.pixelMode);
 
   const mergedRef = useMergedRef(ref, splitter.ref);
 
