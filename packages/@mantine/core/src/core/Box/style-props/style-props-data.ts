@@ -6,7 +6,7 @@ export interface SystemPropData {
   property: string | string[];
 }
 
-export const STYlE_PROPS_DATA: Record<keyof MantineStyleProps, SystemPropData> = {
+export const STYLE_PROPS_DATA: Record<keyof MantineStyleProps, SystemPropData> = {
   m: { type: 'spacing', property: 'margin' },
   mt: { type: 'spacing', property: 'marginTop' },
   mb: { type: 'spacing', property: 'marginBottom' },
