@@ -279,4 +279,34 @@ describe('@mantine/core/Accordion', () => {
     expect(Accordion.Panel).toBe(AccordionPanel);
     expect(Accordion.Chevron).toBe(AccordionChevron);
   });
+
+  it('supports keepMountedMode="display-none" on Accordion level', () => {
+    render(
+      <Accordion keepMounted keepMountedMode="display-none" transitionDuration={0}>
+        <Accordion.Item value="item-1">
+          <Accordion.Control>Label 1</Accordion.Control>
+          <Accordion.Panel>test-item-1</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    expect(screen.getByText('test-item-1').parentElement).toHaveStyle({
+      display: 'none',
+    });
+  });
+
+  it('supports keepMountedMode="display-none" override on AccordionPanel level', () => {
+    render(
+      <Accordion keepMounted keepMountedMode="activity" transitionDuration={0}>
+        <Accordion.Item value="item-1">
+          <Accordion.Control>Label 1</Accordion.Control>
+          <Accordion.Panel keepMountedMode="display-none">test-item-1</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    expect(screen.getByText('test-item-1').parentElement).toHaveStyle({
+      display: 'none',
+    });
+  });
 });

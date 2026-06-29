@@ -39,4 +39,16 @@ describe('@mantine/core/Collapse', () => {
 
     expect(ref.current).not.toBeNull();
   });
+
+  it('applies display: none style when keepMountedMode is display-none and expanded is false (transitionDuration is 0)', () => {
+    render(
+      <Collapse expanded={false} transitionDuration={0} keepMounted keepMountedMode="display-none">
+        <div>content</div>
+      </Collapse>
+    );
+
+    expect(screen.getByText('content').parentElement).toHaveStyle({
+      display: 'none',
+    });
+  });
 });

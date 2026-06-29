@@ -35,6 +35,13 @@ export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'
 
   /** If set, the element is kept in the DOM when collapsed. When `true`, React 19 `Activity` is used to preserve state while collapsed. When `false`, the element is unmounted after the exit animation. @default true */
   keepMounted?: boolean;
+
+  /** Controls how the element is hidden when `keepMounted` is set:
+   * `'activity'` – hidden with React 19 `Activity` component,
+   * `'display-none'` – hidden with `display: none` styles
+   * @default 'activity'
+   */
+  keepMountedMode?: 'activity' | 'display-none';
 }
 
 export type CollapseFactory = Factory<{
@@ -48,6 +55,7 @@ const defaultProps = {
   animateOpacity: true,
   orientation: 'vertical',
   keepMounted: true,
+  keepMountedMode: 'activity',
 } satisfies Partial<CollapseProps>;
 
 export const Collapse = factory<CollapseFactory>((props) => {
@@ -61,6 +69,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
     onTransitionStart,
     animateOpacity,
     keepMounted,
+    keepMountedMode,
     ref,
     orientation,
     ...others
@@ -83,7 +92,22 @@ export const Collapse = factory<CollapseFactory>((props) => {
   });
 
   if (duration === 0) {
-    if (keepMounted === true && env !== 'test') {
+    if (keepMounted === true && (keepMountedMode === 'display-none' || env !== 'test')) {
+      if (keepMountedMode === 'display-none') {
+        return (
+          <Box
+            {...others}
+            style={{
+              ...getStyleObject(style, theme),
+              ...(!expanded ? { display: 'none' } : {}),
+            }}
+            ref={ref}
+          >
+            {children}
+          </Box>
+        );
+      }
+
       return (
         <Activity mode={expanded ? 'visible' : 'hidden'}>
           <Box {...others} style={style} ref={ref}>
@@ -106,7 +130,12 @@ export const Collapse = factory<CollapseFactory>((props) => {
   if (keepMounted === false) {
     content = isExited ? null : children;
   } else if (keepMounted === true) {
-    content = <Activity mode={isExited ? 'hidden' : 'visible'}>{children}</Activity>;
+    content =
+      keepMountedMode === 'display-none' ? (
+        children
+      ) : (
+        <Activity mode={isExited ? 'hidden' : 'visible'}>{children}</Activity>
+      );
   } else {
     content = children;
   }
@@ -119,6 +148,9 @@ export const Collapse = factory<CollapseFactory>((props) => {
           opacity: expanded || !animateOpacity ? 1 : 0,
           transition: animateOpacity ? `opacity ${duration}ms ${transitionTimingFunction}` : 'none',
           ...getStyleObject(style, theme),
+          ...(keepMounted && keepMountedMode === 'display-none' && isExited
+            ? { display: 'none' }
+            : {}),
         },
         ref,
       })}
