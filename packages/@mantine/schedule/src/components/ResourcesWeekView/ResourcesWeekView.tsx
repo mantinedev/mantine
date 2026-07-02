@@ -45,6 +45,7 @@ import {
   getGroupToResourceIdMap,
   getIndexFromDragPoint,
   getOrderedResources,
+  getTimeAxisEventStyle,
   getWeekDays,
   handleResourcesGridKeyDown,
   isAllDayEvent,
@@ -726,11 +727,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
             __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
             data-resizing={isThisEventResizing || undefined}
             style={{
-              left: `calc(${eventLeft}% + 1px)`,
+              ...getTimeAxisEventStyle({ start: eventLeft, span: eventWidth }),
               top: adjustPosition
                 ? `calc((100% - 22px) * ${event.position.column} / ${maxEventsPerTimeSlot})`
                 : `${event.position.offset}%`,
-              width: `calc(${eventWidth}% - 2px)`,
               height: adjustPosition
                 ? `calc((100% - 22px) / ${maxEventsPerTimeSlot})`
                 : `${event.position.width}%`,

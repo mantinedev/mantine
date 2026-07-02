@@ -44,6 +44,7 @@ import {
   formatDate,
   getBusinessHoursMod,
   getDayTimeIntervals,
+  getTimeAxisEventStyle,
   getWeekDays,
   getWeekNumber,
   isAllDayEvent,
@@ -853,10 +854,15 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           }
           style={{
             position: 'absolute',
-            top: `calc(${eventTop}% + 1px)`,
+            ...getTimeAxisEventStyle({
+              start: eventTop,
+              span: eventHeight,
+              axis: 'vertical',
+              gap: 1,
+              trailingGap: 0,
+            }),
             left: `${event.position.offset}%`,
             width: `${event.position.width}%`,
-            height: `calc(${eventHeight}% - 1px)`,
           }}
         />
       );

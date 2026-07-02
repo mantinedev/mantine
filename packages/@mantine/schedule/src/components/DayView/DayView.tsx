@@ -43,6 +43,7 @@ import {
   formatDate,
   getBusinessHoursMod,
   getDayTimeIntervals,
+  getTimeAxisEventStyle,
   getVisibleEvents,
   isAllDayEvent,
   toDateString,
@@ -752,8 +753,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
       key: event.id,
       ...getStyles('dayViewBackgroundEvent', {
         style: {
-          top: `calc(${event.position.top}% + 1px)`,
-          height: `calc(${event.position.height}% - 2px)`,
+          ...getTimeAxisEventStyle({
+            start: event.position.top,
+            span: event.position.height,
+            axis: 'vertical',
+          }),
           width: '100%',
         },
       }),
