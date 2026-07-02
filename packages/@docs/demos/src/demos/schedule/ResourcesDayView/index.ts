@@ -11,6 +11,7 @@ export { externalDragDrop } from './ResourcesDayView.demo.externalDragDrop';
 export { bidirectionalDragDrop } from './ResourcesDayView.demo.bidirectionalDragDrop';
 export { localization } from './ResourcesDayView.demo.localization';
 export { timeRange } from './ResourcesDayView.demo.timeRange';
+export { multiHourIntervals } from './ResourcesDayView.demo.multiHourIntervals';
 export { slotWidth } from './ResourcesDayView.demo.slotWidth';
 export { radius } from './ResourcesDayView.demo.radius';
 export { startScrollTime } from './ResourcesDayView.demo.startScrollTime';
