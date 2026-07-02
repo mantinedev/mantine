@@ -469,39 +469,53 @@ export function ShortEvents() {
   );
 }
 
-export function IntervalMinutesOver60() {
+export function MultiHourIntervals() {
   return (
     <Stack gap="xl" p="md">
       <div>
         <Text size="sm" fw={500}>
-          intervalMinutes = 60
+          intervalMinutes = 120 (2-hour columns)
         </Text>
         <ResourcesDayView
           date={today}
-          resources={shortEventResources}
-          events={shortEvents}
-          rowHeight={26}
-          intervalMinutes={60}
-          withHeader={false}
+          resources={resources}
+          events={regularEvents}
+          startTime="08:00:00"
+          endTime="20:00:00"
+          intervalMinutes={120}
           withCurrentTimeIndicator={false}
         />
       </div>
 
       <div>
         <Text size="sm" fw={500}>
-          intervalMinutes = 120
-        </Text>
-        <Text size="xs" c="dimmed">
-          Expected: 12 columns spanning 2 hours each. Actual: identical to the 60-minute grid above
-          (24 one-hour columns) because the value is clamped to 60.
+          intervalMinutes = 240 (4-hour columns)
         </Text>
         <ResourcesDayView
           date={today}
-          resources={shortEventResources}
-          events={shortEvents}
-          rowHeight={26}
+          resources={resources}
+          events={regularEvents}
+          startTime="08:00:00"
+          endTime="20:00:00"
+          intervalMinutes={240}
+          withCurrentTimeIndicator={false}
+        />
+      </div>
+
+      <div>
+        <Text size="sm" fw={500}>
+          intervalMinutes = 120, startTime = 07:00 (2-hour columns from an odd start time)
+        </Text>
+        <Text size="xs" c="dimmed">
+          Columns start at the requested `startTime` and events stay aligned to the grid.
+        </Text>
+        <ResourcesDayView
+          date={today}
+          resources={resources}
+          events={regularEvents}
+          startTime="07:00:00"
+          endTime="19:00:00"
           intervalMinutes={120}
-          withHeader={false}
           withCurrentTimeIndicator={false}
         />
       </div>

@@ -115,7 +115,7 @@ export interface WeekViewProps
   /** End time for the day view, in `HH:mm:ss` format @default 23:59:59 */
   endTime?: string;
 
-  /** Number of minutes for each interval in the day view @default 60 */
+  /** Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
   intervalMinutes?: number;
 
   /** If set, grid lines are displayed for intervals smaller than one hour, for example 15 and 30 minutes intervals @default true */

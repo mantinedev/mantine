@@ -14,6 +14,7 @@ interface GetResourcesDayViewEventsInput {
   date: AnyDateValue;
   startTime?: string;
   endTime?: string;
+  intervalMinutes?: number;
 }
 
 export interface ResourcesDayViewEventsResult {
@@ -29,6 +30,7 @@ export function getResourcesDayViewEvents({
   date,
   startTime,
   endTime,
+  intervalMinutes,
 }: GetResourcesDayViewEventsInput): ResourcesDayViewEventsResult {
   const result: ResourcesDayViewEventsResult = {
     regularEvents: {},
@@ -118,6 +120,7 @@ export function getResourcesDayViewEvents({
       startTime,
       endTime,
       date,
+      intervalMinutes,
     });
 
     for (const event of positioned) {
@@ -156,7 +159,12 @@ export function getResourcesDayViewEvents({
           },
         });
       } else {
-        const { top, height } = getDayPosition({ event: clippedEvent, startTime, endTime });
+        const { top, height } = getDayPosition({
+          event: clippedEvent,
+          startTime,
+          endTime,
+          intervalMinutes,
+        });
         if (height <= 0) {
           continue;
         }
