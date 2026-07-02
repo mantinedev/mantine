@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { AnyDateValue } from '../../types';
+import { alignTimeToInterval } from '../align-time-to-interval/align-time-to-interval';
 import { clampIntervalMinutes } from '../clamp-interval-minutes/clamp-interval-minutes';
 
 interface GetCurrentTimePositionInput {
@@ -20,7 +21,12 @@ export function getCurrentTimePosition(input?: GetCurrentTimePositionInput) {
     return (diffInMinutes / 1440) * 100;
   }
 
-  const [startHour, startMinute, startSecond = 0] = input.startTime.split(':').map(Number);
+  const alignedStartTime =
+    input.intervalMinutes !== undefined
+      ? alignTimeToInterval(input.startTime, input.intervalMinutes)
+      : input.startTime;
+
+  const [startHour, startMinute, startSecond = 0] = alignedStartTime.split(':').map(Number);
   const [endHour, endMinute, endSecond = 0] = input.endTime.split(':').map(Number);
 
   const startOfDay = now.startOf('date');

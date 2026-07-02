@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { ScheduleEventData } from '../../types';
+import { alignTimeToInterval } from '../align-time-to-interval/align-time-to-interval';
 import { clampIntervalMinutes } from '../clamp-interval-minutes/clamp-interval-minutes';
 import { parseTimeString } from '../parse-time-string/parse-time-string';
 
@@ -27,7 +28,7 @@ export function getDayPosition({
   const eventStart = dayjs(event.start);
   const eventEnd = dayjs(event.end);
 
-  const parsedStartTime = parseTimeString(startTime);
+  const parsedStartTime = parseTimeString(alignTimeToInterval(startTime, intervalMinutes));
   const parsedEndTime = parseTimeString(endTime);
 
   const startOfDay = eventStart.startOf('date');

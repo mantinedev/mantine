@@ -16,6 +16,7 @@ export { toDateString } from './to-date-string/to-date-string';
 export { nextWeek } from './next-week/next-week';
 export { previousWeek } from './previous-week/previous-week';
 export { clampIntervalMinutes } from './clamp-interval-minutes/clamp-interval-minutes';
+export { alignTimeToInterval } from './align-time-to-interval/align-time-to-interval';
 export { getCurrentTimePosition } from './get-current-time-position/get-current-time-position';
 export { isInTimeRange } from './is-in-time-range/is-in-time-range';
 export { isAllDayEvent } from './is-all-day-event/is-all-day-event';

@@ -114,7 +114,7 @@ export interface ResourcesDayViewProps
   /** End time for the day view, in `HH:mm:ss` format @default 23:59:59 */
   endTime?: string;
 
-  /** Number of minutes for each interval in the day view @default 60 */
+  /** Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
   intervalMinutes?: number;
 
   /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm */
@@ -553,8 +553,9 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
         resources,
         startTime,
         endTime,
+        intervalMinutes,
       }),
-    [date, expandedEvents, resources, startTime, endTime]
+    [date, expandedEvents, resources, startTime, endTime, intervalMinutes]
   );
 
   const timeLabels = slots.map((interval) => {

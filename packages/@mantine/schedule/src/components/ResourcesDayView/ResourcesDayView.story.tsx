@@ -101,6 +101,51 @@ export function IntervalMinutes() {
   );
 }
 
+export function IntervalTwoHours() {
+  const [date, setDate] = useState(toDateString(new Date()));
+  return (
+    <ResourcesDayView
+      date={date}
+      onDateChange={setDate}
+      resources={resources}
+      events={regularEvents}
+      startTime="08:00:00"
+      endTime="20:00:00"
+      intervalMinutes={120}
+    />
+  );
+}
+
+export function IntervalFourHours() {
+  const [date, setDate] = useState(toDateString(new Date()));
+  return (
+    <ResourcesDayView
+      date={date}
+      onDateChange={setDate}
+      resources={resources}
+      events={regularEvents}
+      startTime="08:00:00"
+      endTime="20:00:00"
+      intervalMinutes={240}
+    />
+  );
+}
+
+export function IntervalTwoHoursOddStart() {
+  const [date, setDate] = useState(toDateString(new Date()));
+  return (
+    <ResourcesDayView
+      date={date}
+      onDateChange={setDate}
+      resources={resources}
+      events={regularEvents}
+      startTime="07:00:00"
+      endTime="19:00:00"
+      intervalMinutes={120}
+    />
+  );
+}
+
 export function SlotWidth() {
   const [date, setDate] = useState(toDateString(new Date()));
   return (

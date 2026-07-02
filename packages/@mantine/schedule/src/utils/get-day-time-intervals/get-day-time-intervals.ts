@@ -1,3 +1,4 @@
+import { alignTimeToInterval } from '../align-time-to-interval/align-time-to-interval';
 import { clampIntervalMinutes } from '../clamp-interval-minutes/clamp-interval-minutes';
 import { parseTimeString } from '../parse-time-string/parse-time-string';
 import { toTimeString } from '../to-time-string/to-time-string';
@@ -34,7 +35,7 @@ export function getDayTimeIntervals({
 }: GetDayTimeIntervalsInput): DayTimeInterval[] {
   const intervalMinutes = clampIntervalMinutes(_intervalMinutes);
 
-  const start = parseTimeString(startTime);
+  const start = parseTimeString(alignTimeToInterval(startTime, intervalMinutes));
   const end = endTime ? parseTimeString(endTime) : { hours: 23, minutes: 59, seconds: 59 };
 
   const startSeconds = start.hours * 3600 + start.minutes * 60 + start.seconds;
