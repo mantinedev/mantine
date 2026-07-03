@@ -67,7 +67,7 @@ export function useScrollIntoView<
 
   const reducedMotion = useReducedMotion();
 
-  const _easing = easing ?? easeInOutQuad
+  const _easing = easing ?? easeInOutQuad;
 
   const cancel = (): void => {
     if (frameID.current) {
