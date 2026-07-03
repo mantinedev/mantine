@@ -91,6 +91,12 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** Maximum number of values, no limit if not set */
   maxValues?: number;
 
+  /** Maximum number of values displayed in the input, the rest are hidden in an overflow pill */
+  maxDisplayedValues?: number;
+
+  /** Content shown when values overflow maxDisplayedValues */
+  maxDisplayedValuesContent?: React.ReactNode | ((overflow: number) => React.ReactNode);
+
   /** Allows searching through options by user input @default false */
   searchable?: boolean;
 
@@ -255,6 +261,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     loading,
     loadingPosition,
     withPillsReorder,
+    maxDisplayedValues,
+    maxDisplayedValuesContent,
     ...others
   } = props;
 
@@ -344,7 +352,12 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     handleInputKeyDown(event);
   };
 
-  const values = _value.map((item, index) => {
+  const visibleValues = maxDisplayedValues != null ? _value.slice(0, maxDisplayedValues) : _value;
+
+  const overflowCount =
+    maxDisplayedValues != null ? Math.max(0, _value.length - maxDisplayedValues) : 0;
+
+  const values = visibleValues.map((item, index) => {
     const optionData = optionsLockup[`${item}`] || retainedSelectedOptions.current[`${item}`];
     const reorderProps = getPillProps(index);
 
@@ -382,6 +395,18 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
       </Pill>
     );
   });
+
+  if (overflowCount > 0) {
+    const overflowContent =
+      typeof maxDisplayedValuesContent === 'function'
+        ? maxDisplayedValuesContent(overflowCount)
+        : maxDisplayedValuesContent || `+${overflowCount} more`;
+    values.push(
+      <Pill key="__overflow" unstyled={unstyled} disabled={disabled} {...getStyles('pill')}>
+        {overflowContent}
+      </Pill>
+    );
+  }
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {

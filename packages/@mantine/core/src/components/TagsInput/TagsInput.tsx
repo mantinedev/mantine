@@ -84,6 +84,12 @@ export interface TagsInputProps
   /** Maximum number of tags @default Infinity */
   maxTags?: number;
 
+  /** Maximum number of values displayed in the input, the rest are hidden in an overflow pill */
+  maxDisplayedValues?: number;
+
+  /** Content shown when values overflow maxDisplayedValues */
+  maxDisplayedValuesContent?: React.ReactNode | ((overflow: number) => React.ReactNode);
+
   /** Called when user tries to add more tags than maxTags */
   onMaxTags?: (value: string) => void;
 
@@ -236,6 +242,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     loading,
     loadingPosition,
     withPillsReorder,
+    maxDisplayedValues,
+    maxDisplayedValuesContent,
     ...others
   } = props;
 
@@ -405,7 +413,12 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     }
   };
 
-  const values = _value.map((item, index) => {
+  const visibleValues = maxDisplayedValues != null ? _value.slice(0, maxDisplayedValues) : _value;
+
+  const overflowCount =
+    maxDisplayedValues != null ? Math.max(0, _value.length - maxDisplayedValues) : 0;
+
+  const values = visibleValues.map((item, index) => {
     const onRemoveItem = () => {
       const next_value = _value.slice();
       next_value.splice(index, 1);
@@ -444,6 +457,18 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
       </Pill>
     );
   });
+
+  if (overflowCount > 0) {
+    const overflowContent =
+      typeof maxDisplayedValuesContent === 'function'
+        ? maxDisplayedValuesContent(overflowCount)
+        : maxDisplayedValuesContent || `+${overflowCount} more`;
+    values.push(
+      <Pill key="__overflow" unstyled={unstyled} disabled={disabled} {...getStyles('pill')}>
+        {overflowContent}
+      </Pill>
+    );
+  }
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {

@@ -329,3 +329,26 @@ export function LongPillText() {
     </div>
   );
 }
+
+export function MaxDisplayedValues() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <h3>Max displayed: 2</h3>
+      <MultiSelect
+        data={['React', 'Angular', 'Svelte', 'Vue', 'Ember']}
+        defaultValue={['React', 'Angular', 'Svelte', 'Vue']}
+        maxDisplayedValues={2}
+        placeholder="Select frameworks"
+      />
+
+      <h3 style={{ marginTop: 20 }}>Max displayed: 2 with custom format function</h3>
+      <MultiSelect
+        data={['React', 'Angular', 'Svelte', 'Vue', 'Ember']}
+        defaultValue={['React', 'Angular', 'Svelte', 'Vue']}
+        maxDisplayedValues={2}
+        maxDisplayedValuesContent={(overflow) => `and ${overflow} other technologies`}
+        placeholder="Select frameworks"
+      />
+    </div>
+  );
+}

@@ -136,3 +136,24 @@ export function WithData() {
     </div>
   );
 }
+
+export function MaxDisplayedValues() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <h3>Max displayed: 2</h3>
+      <TagsInput
+        defaultValue={['React', 'Angular', 'Svelte', 'Vue']}
+        maxDisplayedValues={2}
+        placeholder="Enter tags"
+      />
+
+      <h3 style={{ marginTop: 20 }}>Max displayed: 2 with custom format function</h3>
+      <TagsInput
+        defaultValue={['React', 'Angular', 'Svelte', 'Vue']}
+        maxDisplayedValues={2}
+        maxDisplayedValuesContent={(overflow) => `and ${overflow} other tags`}
+        placeholder="Enter tags"
+      />
+    </div>
+  );
+}
