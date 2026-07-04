@@ -1,4 +1,4 @@
-import { BulletChartDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, SunburstChartDemos, TableDemos, TimelineDemos } from '@docs/demos';
+import { AccordionDemos, BulletChartDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, SunburstChartDemos, TableDemos, TimelineDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -67,6 +67,15 @@ a target and qualitative thresholds like poor, average, and good.
 displaying month labels at the bottom of the heatmap instead of the top (default).
 
 <Demo data={HeatmapDemos.monthLabelsPosition} />
+
+## Accordion disable collapse
+
+[Accordion](/core/accordion) now supports the `disableCollapse` prop. When enabled in single
+mode (`multiple={false}`), the open item cannot be collapsed by clicking it again, so one item
+always stays open. Pair it with `defaultValue` or `value` to guarantee that a section is open
+from the start – useful for settings panels, stepper-style flows and FAQ pages.
+
+<Demo data={AccordionDemos.disableCollapse} />
 
 ## New example: Table virtualization
 
