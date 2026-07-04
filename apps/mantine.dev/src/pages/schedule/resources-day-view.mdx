@@ -28,6 +28,14 @@ and slot granularity.
 
 <Demo data={ResourcesDayViewDemos.timeRange} />
 
+## Multi-hour intervals
+
+`intervalMinutes` accepts values that divide evenly into an hour (for example `15` or `30`)
+or whole numbers of hours (for example `120` or `240`). Multi-hour intervals render wider
+columns that each span several hours, which is useful for displaying long time ranges compactly.
+
+<Demo data={ResourcesDayViewDemos.multiHourIntervals} />
+
 ## Start scroll time
 
 Use `startScrollTime` prop to set the initial horizontal scroll position to a specific time.

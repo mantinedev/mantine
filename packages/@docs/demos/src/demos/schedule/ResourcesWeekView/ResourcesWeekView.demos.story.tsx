@@ -78,6 +78,11 @@ export const Demo_timeRange = {
   render: renderDemo(demos.timeRange),
 };
 
+export const Demo_multiHourIntervals = {
+  name: '⭐ Demo: multiHourIntervals',
+  render: renderDemo(demos.multiHourIntervals),
+};
+
 export const Demo_currentTimeIndicator = {
   name: '⭐ Demo: currentTimeIndicator',
   render: renderDemo(demos.currentTimeIndicator),

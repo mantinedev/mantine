@@ -52,7 +52,7 @@ export function useScrollIntoView<
   axis = 'y',
   onScrollFinish,
   onScrollCancel,
-  easing = easeInOutQuad,
+  easing,
   offset = 0,
   cancelable = true,
   isList = false,
@@ -66,6 +66,8 @@ export function useScrollIntoView<
   const targetRef = useRef<Target | null>(null);
 
   const reducedMotion = useReducedMotion();
+
+  const _easing = easing ?? easeInOutQuad;
 
   const cancel = (): void => {
     if (frameID.current) {
@@ -108,7 +110,7 @@ export function useScrollIntoView<
         // Easing timing progress
         const t = reducedMotion || duration === 0 ? 1 : elapsed / duration;
 
-        const distance = start + change * easing(t);
+        const distance = start + change * _easing(t);
 
         setScrollParam({
           parent: scrollableRef.current,
@@ -132,7 +134,7 @@ export function useScrollIntoView<
       }
       animateScroll();
     },
-    [axis, duration, easing, isList, offset, onScrollFinish, onScrollCancel, reducedMotion]
+    [axis, duration, _easing, isList, offset, onScrollFinish, onScrollCancel, reducedMotion]
   );
 
   const handleStop = () => {
