@@ -45,6 +45,14 @@ and slot granularity.
 
 <Demo data={ResourcesWeekViewDemos.timeRange} />
 
+## Multi-hour intervals
+
+`intervalMinutes` accepts values that divide evenly into an hour (for example `15` or `30`)
+or whole numbers of hours (for example `120` or `240`). Multi-hour intervals render wider
+columns that each span several hours, which is useful for displaying long time ranges compactly.
+
+<Demo data={ResourcesWeekViewDemos.multiHourIntervals} />
+
 ## Current time indicator
 
 Use `withCurrentTimeIndicator` to display a line at the current time. Set `withCurrentTimeBubble={false}`

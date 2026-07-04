@@ -45,6 +45,7 @@ import {
   getGroupToResourceIdMap,
   getIndexFromDragPoint,
   getOrderedResources,
+  getTimeAxisEventStyle,
   handleResourcesGridKeyDown,
   isAllDayEvent,
   isInTimeRange,
@@ -114,7 +115,7 @@ export interface ResourcesDayViewProps
   /** End time for the day view, in `HH:mm:ss` format @default 23:59:59 */
   endTime?: string;
 
-  /** Number of minutes for each interval in the day view @default 60 */
+  /** Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
   intervalMinutes?: number;
 
   /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm */
@@ -553,8 +554,9 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
         resources,
         startTime,
         endTime,
+        intervalMinutes,
       }),
-    [date, expandedEvents, resources, startTime, endTime]
+    [date, expandedEvents, resources, startTime, endTime, intervalMinutes]
   );
 
   const timeLabels = slots.map((interval) => {
@@ -718,11 +720,10 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
           data-resizing={isThisEventResizing || undefined}
           style={{
-            left: `calc(${eventLeft}% + 1px)`,
+            ...getTimeAxisEventStyle({ start: eventLeft, span: eventWidth }),
             top: adjustPosition
               ? `calc((100% - 22px) * ${event.position.column} / ${maxEventsPerTimeSlot})`
               : `${event.position.offset}%`,
-            width: `calc(${eventWidth}% - 2px)`,
             height: adjustPosition
               ? `calc((100% - 22px) / ${maxEventsPerTimeSlot})`
               : `${event.position.width}%`,

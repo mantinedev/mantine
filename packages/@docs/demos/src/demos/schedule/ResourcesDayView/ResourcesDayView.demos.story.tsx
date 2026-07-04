@@ -68,6 +68,11 @@ export const Demo_timeRange = {
   render: renderDemo(demos.timeRange),
 };
 
+export const Demo_multiHourIntervals = {
+  name: '⭐ Demo: multiHourIntervals',
+  render: renderDemo(demos.multiHourIntervals),
+};
+
 export const Demo_slotWidth = {
   name: '⭐ Demo: slotWidth',
   render: renderDemo(demos.slotWidth),
