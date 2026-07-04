@@ -56,6 +56,7 @@ interface GetResourcesWeekViewEventsInput {
   weekdays: string[];
   startTime?: string;
   endTime?: string;
+  intervalMinutes?: number;
   expansionLimit?: number;
 }
 
@@ -65,6 +66,7 @@ export function getResourcesWeekViewEvents({
   weekdays,
   startTime,
   endTime,
+  intervalMinutes,
   expansionLimit,
 }: GetResourcesWeekViewEventsInput): ResourcesWeekViewEventsResult {
   const rangeStart = dayjs(weekdays[0]).startOf('day').toDate();
@@ -132,6 +134,7 @@ export function getResourcesWeekViewEvents({
       date: day,
       startTime,
       endTime,
+      intervalMinutes,
     });
   }
 

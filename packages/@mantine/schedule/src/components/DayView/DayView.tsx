@@ -43,6 +43,7 @@ import {
   formatDate,
   getBusinessHoursMod,
   getDayTimeIntervals,
+  getTimeAxisEventStyle,
   getVisibleEvents,
   isAllDayEvent,
   toDateString,
@@ -108,7 +109,7 @@ export interface DayViewProps
   /** Time slots end time in `HH:mm:ss` format @default 23:59:59 */
   endTime?: string;
 
-  /** Number of minutes for each time slot @default 15 */
+  /** Number of minutes for each time slot. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 15 */
   intervalMinutes?: number;
 
   /** If set, grid lines are displayed for intervals smaller than one hour, for example 15 and 30 minutes intervals @default true */
@@ -752,8 +753,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
       key: event.id,
       ...getStyles('dayViewBackgroundEvent', {
         style: {
-          top: `calc(${event.position.top}% + 1px)`,
-          height: `calc(${event.position.height}% - 2px)`,
+          ...getTimeAxisEventStyle({
+            start: event.position.top,
+            span: event.position.height,
+            axis: 'vertical',
+          }),
           width: '100%',
         },
       }),

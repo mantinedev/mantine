@@ -30,6 +30,7 @@ export { getMonthRange } from './get-month-range/get-month-range';
 export { parseTimeString } from './parse-time-string/parse-time-string';
 export { toTimeString } from './to-time-string/to-time-string';
 export { getDayPosition } from './get-day-position/get-day-position';
+export { getTimeAxisEventStyle } from './get-time-axis-event-style/get-time-axis-event-style';
 export { calculateDropTime } from './calculate-drop-time/calculate-drop-time';
 export { calculateMonthDropDate } from './calculate-month-drop-date/calculate-month-drop-date';
 export { getBusinessHoursMod } from './get-business-hours-mod/get-business-hours-mod';
