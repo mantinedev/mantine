@@ -111,6 +111,9 @@ export interface GridChartBaseProps {
 
   /** Determines whether additional y-axis should be displayed on the right side of the chart, `false` by default */
   withRightYAxis?: boolean;
+
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  accessibilityLayer?: boolean;
 }
 
 export type MantineChartDotProps = Omit<DotProps, 'ref'> & { strokeWidth?: number };

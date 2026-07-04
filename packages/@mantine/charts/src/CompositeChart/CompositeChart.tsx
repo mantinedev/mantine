@@ -151,6 +151,7 @@ const defaultProps = {
   connectNulls: true,
   strokeWidth: 2,
   curveType: 'monotone',
+  accessibilityLayer: true,
 } satisfies Partial<CompositeChartProps>;
 
 const varsResolver = createVarsResolver<CompositeChartFactory>(
@@ -213,6 +214,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     maxBarWidth,
     composedChartProps,
     attributes,
+    accessibilityLayer,
     ...others
   } = props;
 
@@ -407,6 +409,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...composedChartProps}
         >
           {withLegend && (

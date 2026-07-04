@@ -1,4 +1,4 @@
-import { AccordionDemos, BulletChartDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, SunburstChartDemos, TableDemos, TimelineDemos } from '@docs/demos';
+import { AccordionDemos, BulletChartDemos, CascaderDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, SunburstChartDemos, TableDemos, TimelineDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -46,6 +46,16 @@ and `Home`/`End` keys (jump to min/max size).
 
 <Demo data={FloatingWindowDemos.resizeHandle} />
 
+## Cascader component
+
+New [Cascader](/core/cascader) component allows selecting a value from hierarchical data
+by drilling down through cascading columns. Picking an option in one column reveals its
+children in a new column to the right, and the value is an ordered path from the root option
+to the selected node. It supports `changeOnSelect`, `hover` expand trigger, search, a flat list
+layout for mobile, and full keyboard navigation.
+
+<Demo data={CascaderDemos.usage} />
+
 ## SunburstChart component
 
 New [SunburstChart](/charts/sunburst-chart) component displays hierarchical data
@@ -60,6 +70,16 @@ a qualitative range, useful for comparing a primary value (such as revenue) agai
 a target and qualitative thresholds like poor, average, and good.
 
 <Demo data={BulletChartDemos.usage} />
+
+## Charts keyboard navigation
+
+All [@mantine/charts](/charts/getting-started/#keyboard-navigation) components now expose the
+`accessibilityLayer` prop (`true` by default) that makes charts navigable with the keyboard.
+The chart surface is focusable and displays the Mantine focus ring; once focused, the arrow keys
+move the active tooltip point-by-point and <kbd>Enter</kbd> toggles the tooltip, so users who do not
+use a mouse can read the underlying values. The prop is supported by `AreaChart`, `BarChart`,
+`LineChart`, `CompositeChart`, `ScatterChart`, `BubbleChart`, `PieChart`, `DonutChart`, `RadarChart`,
+`RadialBarChart` and `FunnelChart` components.
 
 ## Heatmap month labels position
 

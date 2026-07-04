@@ -315,6 +315,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.MultiSelect,
       MDX_DATA.ComboboxPopover,
       MDX_DATA.TreeSelect,
+      MDX_DATA.Cascader,
     ],
   },
   {

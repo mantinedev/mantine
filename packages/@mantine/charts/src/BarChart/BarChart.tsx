@@ -126,6 +126,7 @@ const defaultProps = {
   strokeDasharray: '5 5',
   gridAxis: 'x',
   type: 'default',
+  accessibilityLayer: true,
 } satisfies Partial<BarChartProps>;
 
 const varsResolver = createVarsResolver<BarChartFactory>(
@@ -220,6 +221,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
     gridColor,
     textColor,
     attributes,
+    accessibilityLayer,
     ...others
   } = props;
 
@@ -362,6 +364,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...barChartProps}
         >
           {withLegend && (

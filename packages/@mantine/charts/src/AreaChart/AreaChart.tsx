@@ -148,6 +148,7 @@ const defaultProps = {
   type: 'default',
   splitColors: ['green.7', 'red.7'],
   orientation: 'horizontal',
+  accessibilityLayer: true,
 } satisfies Partial<AreaChartProps>;
 
 const varsResolver = createVarsResolver<AreaChartFactory>((theme, { textColor, gridColor }) => ({
@@ -211,6 +212,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     gridColor,
     textColor,
     attributes,
+    accessibilityLayer,
     ...others
   } = props;
 
@@ -358,6 +360,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...areaChartProps}
         >
           {referenceLinesItems}
