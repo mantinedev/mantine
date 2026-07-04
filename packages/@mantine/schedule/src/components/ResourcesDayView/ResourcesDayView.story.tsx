@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { Stack, Text } from '@mantine/core';
+import { Button, Group, Stack, Text } from '@mantine/core';
 import { ScheduleEventData, ScheduleResourceData } from '../../types';
 import { toDateString } from '../../utils';
 import { ResourcesDayView } from './ResourcesDayView';
@@ -367,5 +367,158 @@ export function ManyOverlappingEvents() {
       startTime="08:00:00"
       endTime="18:00:00"
     />
+  );
+}
+
+const shortEventResources: ScheduleResourceData[] = [
+  { id: 'A', label: 'A' },
+  { id: 'B', label: 'B' },
+  { id: 'C', label: 'C' },
+];
+
+const shortEvents: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: '',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:01:00`,
+    color: 'red',
+    resourceId: 'A',
+  },
+  {
+    id: 2,
+    title: '',
+    start: `${today} 09:01:00`,
+    end: `${today} 09:03:00`,
+    color: 'green',
+    resourceId: 'A',
+  },
+  {
+    id: 3,
+    title: '',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:02:00`,
+    color: 'red',
+    resourceId: 'B',
+  },
+  {
+    id: 4,
+    title: '',
+    start: `${today} 09:02:00`,
+    end: `${today} 09:03:00`,
+    color: 'green',
+    resourceId: 'B',
+  },
+  {
+    id: 5,
+    title: '',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:03:00`,
+    color: 'green',
+    resourceId: 'C',
+  },
+];
+
+const shortEventIntervals = [1, 5, 10, 15, 30, 60, 120];
+
+export function ShortEvents() {
+  const [zoomIndex, setZoomIndex] = useState(shortEventIntervals.indexOf(60));
+  const intervalMinutes = shortEventIntervals[zoomIndex];
+
+  return (
+    <Stack gap="md" p="md">
+      <div>
+        <Text size="sm" fw={500}>
+          Short events (intervalMinutes = {intervalMinutes})
+        </Text>
+        <Text size="xs" c="dimmed">
+          Every row ends at 09:03. Even at coarse intervals where the 1-2 minute events are only a
+          few pixels wide, they stay visible and their right edges line up across every row and zoom
+          level.
+        </Text>
+      </div>
+
+      <ResourcesDayView
+        date={today}
+        resources={shortEventResources}
+        events={shortEvents}
+        rowHeight={26}
+        intervalMinutes={intervalMinutes}
+        withHeader={false}
+        withCurrentTimeIndicator={false}
+        startScrollTime="08:30:00"
+      />
+
+      <Group>
+        <Button
+          onClick={() => setZoomIndex((index) => Math.max(index - 1, 0))}
+          disabled={zoomIndex === 0}
+        >
+          Zoom in
+        </Button>
+        <Button
+          onClick={() =>
+            setZoomIndex((index) => Math.min(index + 1, shortEventIntervals.length - 1))
+          }
+          disabled={zoomIndex === shortEventIntervals.length - 1}
+        >
+          Zoom out
+        </Button>
+      </Group>
+    </Stack>
+  );
+}
+
+export function MultiHourIntervals() {
+  return (
+    <Stack gap="xl" p="md">
+      <div>
+        <Text size="sm" fw={500}>
+          intervalMinutes = 120 (2-hour columns)
+        </Text>
+        <ResourcesDayView
+          date={today}
+          resources={resources}
+          events={regularEvents}
+          startTime="08:00:00"
+          endTime="20:00:00"
+          intervalMinutes={120}
+          withCurrentTimeIndicator={false}
+        />
+      </div>
+
+      <div>
+        <Text size="sm" fw={500}>
+          intervalMinutes = 240 (4-hour columns)
+        </Text>
+        <ResourcesDayView
+          date={today}
+          resources={resources}
+          events={regularEvents}
+          startTime="08:00:00"
+          endTime="20:00:00"
+          intervalMinutes={240}
+          withCurrentTimeIndicator={false}
+        />
+      </div>
+
+      <div>
+        <Text size="sm" fw={500}>
+          intervalMinutes = 120, startTime = 07:00 (2-hour columns from an odd start time)
+        </Text>
+        <Text size="xs" c="dimmed">
+          Columns start at the requested `startTime` and events stay aligned to the grid.
+        </Text>
+        <ResourcesDayView
+          date={today}
+          resources={resources}
+          events={regularEvents}
+          startTime="07:00:00"
+          endTime="19:00:00"
+          intervalMinutes={120}
+          withCurrentTimeIndicator={false}
+        />
+      </div>
+    </Stack>
   );
 }

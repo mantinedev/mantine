@@ -45,6 +45,7 @@ import {
   getGroupToResourceIdMap,
   getIndexFromDragPoint,
   getOrderedResources,
+  getTimeAxisEventStyle,
   getWeekDays,
   handleResourcesGridKeyDown,
   isAllDayEvent,
@@ -111,6 +112,7 @@ export interface ResourcesWeekViewProps
   resources: ScheduleResourceData[];
   startTime?: string;
   endTime?: string;
+  /** Number of minutes for each interval in the week view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
   intervalMinutes?: number;
   slotLabelFormat?: DateLabelFormat;
   radius?: MantineRadius;
@@ -520,9 +522,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         weekdays,
         startTime,
         endTime,
+        intervalMinutes,
         expansionLimit: recurrenceExpansionLimit,
       }),
-    [events, resources, weekdays, startTime, endTime, recurrenceExpansionLimit]
+    [events, resources, weekdays, startTime, endTime, intervalMinutes, recurrenceExpansionLimit]
   );
 
   const dayLabels = weekdays.map((day) => {
@@ -726,11 +729,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
             __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
             data-resizing={isThisEventResizing || undefined}
             style={{
-              left: `calc(${eventLeft}% + 1px)`,
+              ...getTimeAxisEventStyle({ start: eventLeft, span: eventWidth }),
               top: adjustPosition
                 ? `calc((100% - 22px) * ${event.position.column} / ${maxEventsPerTimeSlot})`
                 : `${event.position.offset}%`,
-              width: `calc(${eventWidth}% - 2px)`,
               height: adjustPosition
                 ? `calc((100% - 22px) / ${maxEventsPerTimeSlot})`
                 : `${event.position.width}%`,
