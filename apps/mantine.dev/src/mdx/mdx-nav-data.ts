@@ -330,6 +330,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Button,
       MDX_DATA.CloseButton,
       MDX_DATA.CopyButton,
+      MDX_DATA.DownloadTrigger,
       MDX_DATA.FileButton,
       MDX_DATA.Toggle,
       MDX_DATA.UnstyledButton,

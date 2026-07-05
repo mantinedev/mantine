@@ -1,0 +1,71 @@
+import { DownloadTriggerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DownloadTrigger);
+
+## Usage
+
+`DownloadTrigger` triggers a client-side file download. When the download is triggered, it turns the
+given `data` into an object URL, dispatches the download through a hidden anchor and revokes the URL.
+It is useful for exporting generated content (CSV, JSON, images, QR codes) without a server request.
+
+`DownloadTrigger` does not render any element on its own – its children is a function that receives
+an object with the following properties:
+
+- `download` – function that must be called to trigger the download
+- `loading` – boolean that is `true` while an async `data` function is resolving
+
+<Demo data={DownloadTriggerDemos.usage} />
+
+`data` can be a string, a `Blob` or a `File`. When `data` is a string, it is wrapped in a `Blob`
+with the `mimeType` you provide. Use the `fileName` prop to set the suggested name of the downloaded
+file.
+
+## Async data
+
+`data` can be a function that returns a `Blob`/string or a promise that resolves with one. The
+function is called when the download is triggered, which is useful when the content has to be fetched
+or generated lazily. While the promise is resolving, the `loading` property is `true` and repeated
+triggers are ignored:
+
+<Demo data={DownloadTriggerDemos.async} />
+
+## Error handling
+
+If the async `data` function throws or rejects, the error is passed to the `onError` callback and
+the `loading` state is reset. `onDownloadComplete` is called after the download has been dispatched:
+
+<Demo data={DownloadTriggerDemos.error} />
+
+## Custom trigger
+
+Children can return any element – a [Button](/core/button), an [ActionIcon](/core/action-icon), a
+[Menu.Item](/core/menu) or your own component. Call the `download` function from the element `onClick`
+handler:
+
+<Demo data={DownloadTriggerDemos.customTrigger} />
+
+## Accessibility
+
+`DownloadTrigger` renders the element returned from the children function, so accessibility depends
+on the element you use. When the trigger is icon-only, set the `aria-label` prop to describe the
+action:
+
+```tsx
+import { ActionIcon, DownloadTrigger } from '@mantine/core';
+
+function Demo() {
+  return (
+    <DownloadTrigger data="data" fileName="file.txt">
+      {({ download }) => (
+        <ActionIcon aria-label="Download file" onClick={download}>
+          ⬇
+        </ActionIcon>
+      )}
+    </DownloadTrigger>
+  );
+}
+```
+
+<ServerComponentsIncompatible component="DownloadTrigger" />

@@ -1,4 +1,4 @@
-import { ColorWheelDemos, CompareSliderDemos } from '@docs/demos';
+import { ColorWheelDemos, CompareSliderDemos, DownloadTriggerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -28,3 +28,13 @@ The two sides can be any React nodes (images, videos, charts, plain markup), it 
 orientation, custom handle, hover tracking and is fully keyboard accessible:
 
 <Demo data={CompareSliderDemos.usage} />
+
+## DownloadTrigger component
+
+New [DownloadTrigger](/core/download-trigger) component – a utility that triggers a client-side file
+download. Similar to [CopyButton](/core/copy-button), its children is a function that receives a
+`download` handler and a `loading` state, so you can use any element as the trigger. It turns a
+string, `Blob`, `File` or an async producer into an object URL and dispatches the download without a
+server request:
+
+<Demo data={DownloadTriggerDemos.usage} />

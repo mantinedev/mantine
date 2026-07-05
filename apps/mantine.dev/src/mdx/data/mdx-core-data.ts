@@ -630,6 +630,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/divider.mdx',
     searchTags: 'separator, hr, horizontal line, vertical line, rule',
   },
+  DownloadTrigger: {
+    title: 'DownloadTrigger',
+    package: '@mantine/core',
+    slug: '/core/download-trigger',
+    props: ['DownloadTrigger'],
+    description: 'Trigger a client-side file download',
+    source: '@mantine/core/src/components/DownloadTrigger/DownloadTrigger.tsx',
+    docs: 'core/download-trigger.mdx',
+    searchTags: 'download file, export, save file, blob, download button, export csv',
+  },
   AspectRatio: {
     title: 'AspectRatio',
     package: '@mantine/core',

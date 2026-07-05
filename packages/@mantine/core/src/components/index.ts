@@ -51,6 +51,7 @@ export * from './CopyButton';
 export * from './DataList';
 export * from './Dialog';
 export * from './Divider';
+export * from './DownloadTrigger';
 export * from './Drawer';
 export * from './EmptyState';
 export * from './Fieldset';
