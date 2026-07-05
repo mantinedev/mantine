@@ -1,0 +1,114 @@
+.root {
+  --compare-position: 50%;
+  --compare-transition-duration: 0ms;
+  --compare-divider-width: rem(2px);
+  --compare-divider-color: var(--mantine-color-white);
+  --compare-handle-size: rem(36px);
+
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+  cursor: ew-resize;
+
+  &[data-orientation='vertical'] {
+    cursor: ns-resize;
+  }
+
+  &[data-disabled] {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.before,
+.after {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.after {
+  z-index: 0;
+}
+
+.before {
+  z-index: 1;
+  clip-path: inset(0 calc(100% - var(--compare-position)) 0 0);
+  transition: clip-path var(--compare-transition-duration) ease;
+
+  .root[data-orientation='vertical'] & {
+    clip-path: inset(0 0 calc(100% - var(--compare-position)) 0);
+  }
+}
+
+.divider {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: var(--compare-position);
+  width: var(--compare-divider-width);
+  transform: translateX(-50%);
+  background-color: var(--compare-divider-color);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.35);
+  transition: left var(--compare-transition-duration) ease;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .root[data-orientation='vertical'] & {
+    inset: var(--compare-position) 0 auto 0;
+    width: auto;
+    height: var(--compare-divider-width);
+    transform: translateY(-50%);
+    transition: top var(--compare-transition-duration) ease;
+  }
+}
+
+.handle {
+  box-sizing: border-box;
+  width: var(--compare-handle-size);
+  height: var(--compare-handle-size);
+  flex-shrink: 0;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mantine-color-black);
+  background-color: var(--compare-divider-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  cursor: grab;
+  outline: none;
+  pointer-events: auto;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &[data-custom] {
+    width: auto;
+    height: auto;
+    color: inherit;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  &[data-hidden] {
+    opacity: 0;
+    box-shadow: none;
+    background-color: transparent;
+    pointer-events: none;
+  }
+
+  .root[data-disabled] &:not([data-hidden]) {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  .root[data-orientation='vertical'] & [data-compare-handle-icon] {
+    transform: rotate(90deg);
+  }
+}

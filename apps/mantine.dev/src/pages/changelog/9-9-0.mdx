@@ -1,4 +1,4 @@
-import { ColorWheelDemos } from '@docs/demos';
+import { ColorWheelDemos, CompareSliderDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -19,3 +19,12 @@ the ring or use the keyboard to change the value. Supports custom ring colors, s
 and can be used with uncontrolled forms:
 
 <Demo data={ColorWheelDemos.usage} />
+
+## CompareSlider component
+
+New [CompareSlider](/core/compare-slider) component – a before/after reveal slider. It stacks two
+layers of content and clips the top one with a draggable divider to reveal the layer underneath.
+The two sides can be any React nodes (images, videos, charts, plain markup), it supports vertical
+orientation, custom handle, hover tracking and is fully keyboard accessible:
+
+<Demo data={CompareSliderDemos.usage} />

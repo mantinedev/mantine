@@ -1410,6 +1410,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'hue, color picker, color ring, hue wheel, hue ring, circular color',
   },
 
+  CompareSlider: {
+    title: 'CompareSlider',
+    package: '@mantine/core',
+    slug: '/core/compare-slider',
+    props: ['CompareSlider'],
+    styles: ['CompareSlider'],
+    description: 'Before/after slider to compare two layers of content',
+    source: '@mantine/core/src/components/CompareSlider/CompareSlider.tsx',
+    docs: 'core/compare-slider.mdx',
+    searchTags: 'before after, image compare, reveal, comparison slider, diff images',
+  },
+
   FloatingWindow: {
     title: 'FloatingWindow',
     package: '@mantine/core',

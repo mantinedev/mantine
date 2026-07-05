@@ -44,6 +44,7 @@ export * from './ColorInput';
 export * from './ColorSwatch';
 export * from './ColorWheel';
 export * from './Combobox';
+export * from './CompareSlider';
 export * from './ComboboxPopover';
 export * from './Container';
 export * from './CopyButton';
