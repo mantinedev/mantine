@@ -1,4 +1,4 @@
-import { ActionBarDemos, AreaChartDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, StepperDemos, WaffleChartDemos } from '@docs/demos';
+import { ActionBarDemos, AreaChartDemos, CandlestickChartDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, StepperDemos, WaffleChartDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -69,6 +69,15 @@ New [MatrixChart](/charts/matrix-chart) component – a generic x/y heatmap with
 Each cell is colored based on a value, useful for visualizing patterns in two-dimensional categorical data.
 
 <Demo data={MatrixChartDemos.usage} />
+
+## CandlestickChart component
+
+New [CandlestickChart](/charts/candlestick-chart) component – a financial OHLC chart that displays
+open, high, low and close values as candles. Candles are colored based on their direction, the wick
+shows the high–low range and the body shows the open–close range. Supports custom colors, data keys,
+reference lines, axis labels and value formatting.
+
+<Demo data={CandlestickChartDemos.usage} />
 
 ## Charts reference areas
 

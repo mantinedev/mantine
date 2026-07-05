@@ -143,6 +143,18 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     searchTags: 'mixed chart, combined chart, composed chart, multi type chart, recharts',
   },
 
+  CandlestickChart: {
+    title: 'CandlestickChart',
+    props: ['CandlestickChart'],
+    styles: ['CandlestickChart'],
+    package: '@mantine/charts',
+    slug: '/charts/candlestick-chart',
+    description: 'Financial OHLC candlestick chart',
+    source: '@mantine/charts/src/CandlestickChart/CandlestickChart.tsx',
+    docs: 'charts/candlestick-chart.mdx',
+    searchTags: 'financial chart, ohlc chart, stock chart, trading chart, candlestick, recharts',
+  },
+
   RadialBarChart: {
     title: 'RadialBarChart',
     props: ['RadialBarChart'],

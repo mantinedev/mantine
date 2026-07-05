@@ -154,6 +154,7 @@ export * as RadarChartDemos from './demos/charts/RadarChart';
 export * as ScatterChartDemos from './demos/charts/ScatterChart';
 export * as BubbleChartDemos from './demos/charts/BubbleChart';
 export * as CompositeChartDemos from './demos/charts/CompositeChart';
+export * as CandlestickChartDemos from './demos/charts/CandlestickChart';
 export * as RadialBarChartDemos from './demos/charts/RadialBarChart';
 export * as FunnelChartDemos from './demos/charts/FunnelChart';
 export * as HeatmapDemos from './demos/charts/Heatmap';
