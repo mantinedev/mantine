@@ -18,6 +18,11 @@ export const Demo_percent = {
   render: renderDemo(demos.percent),
 };
 
+export const Demo_stream = {
+  name: '⭐ Demo: stream',
+  render: renderDemo(demos.stream),
+};
+
 export const Demo_legend = {
   name: '⭐ Demo: legend',
   render: renderDemo(demos.legend),

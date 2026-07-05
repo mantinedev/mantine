@@ -28,6 +28,18 @@ contribution of each series in terms of percentages.
 
 <Demo data={AreaChartDemos.percent} />
 
+## Streamgraph
+
+Set `type="stream"` to render a streamgraph (also known as ThemeRiver). A streamgraph is a
+stacked area chart whose baseline flows around a central axis instead of being fixed to zero,
+producing the characteristic organic "river" shape. It is useful for showing how the composition
+of a total shifts over time when the overall flow and proportions matter more than exact values.
+
+Since the baseline floats, the y-axis values are not meaningful to read off – the y-axis is
+hidden by default for `type="stream"`. You can set `withYAxis` back to `true` if you need it.
+
+<Demo data={AreaChartDemos.stream} />
+
 ## Split area chart
 
 Set `type="split"` to render a split area chart. In this type of area chart,

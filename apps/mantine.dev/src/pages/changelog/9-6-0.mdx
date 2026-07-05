@@ -90,6 +90,15 @@ anomaly. Each dot is positioned by `x`/`y` data coordinates and supports a radiu
 
 <Demo data={AreaChartDemos.referenceDots} />
 
+## AreaChart streamgraph
+
+[AreaChart](/charts/area-chart) now supports `type="stream"` that renders a streamgraph (also known
+as ThemeRiver) – a stacked area chart whose baseline flows around a central axis instead of being
+fixed to zero, producing the characteristic organic "river" shape. The y-axis is hidden by default
+for this type since its floating baseline makes the values not meaningful to read off:
+
+<Demo data={AreaChartDemos.stream} />
+
 ## Stepper labelPosition
 
 [Stepper](/core/stepper) component now supports the `labelPosition` prop. Set `labelPosition="bottom"`

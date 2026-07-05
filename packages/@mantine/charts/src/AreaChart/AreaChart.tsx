@@ -54,7 +54,7 @@ export interface AreaChartSeries extends ChartSeries {
   curveType?: AreaChartCurveType;
 }
 
-export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split';
+export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split' | 'stream';
 
 export type AreaChartCurveType =
   | 'bump'
@@ -80,7 +80,7 @@ export interface AreaChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: AreaChartSeries[];
 
-  /** Controls how chart areas are positioned relative to each other @default 'default' */
+  /** Controls how chart areas are positioned relative to each other. Set to `'stream'` to render a streamgraph. @default 'default' */
   type?: AreaChartType;
 
   /** Determines whether the chart area should be represented with a gradient instead of the solid color @default false */
@@ -136,8 +136,6 @@ export type AreaChartFactory = Factory<{
 }>;
 
 const defaultProps = {
-  withXAxis: true,
-  withYAxis: true,
   withDots: true,
   withTooltip: true,
   connectNulls: true,
@@ -174,8 +172,8 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     series,
     withGradient,
     dataKey,
-    withXAxis,
-    withYAxis,
+    withXAxis: withXAxisProp,
+    withYAxis: withYAxisProp,
     curveType,
     gridProps,
     withDots,
@@ -230,7 +228,9 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
   const isAnimationActive = (tooltipAnimationDuration || 0) > 0;
   const _withGradient = typeof withGradient === 'boolean' ? withGradient : type === 'default';
-  const stacked = type === 'stacked' || type === 'percent';
+  const stacked = type === 'stacked' || type === 'percent' || type === 'stream';
+  const withXAxis = withXAxisProp ?? !(type === 'stream' && orientation === 'vertical');
+  const withYAxis = withYAxisProp ?? !(type === 'stream' && orientation === 'horizontal');
   const [highlightedArea, setHighlightedArea] = useState<string | number | null>(null);
   const shouldHighlight = highlightedArea !== null;
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -404,7 +404,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsAreaChart
           data={data}
-          stackOffset={type === 'percent' ? 'expand' : undefined}
+          stackOffset={type === 'percent' ? 'expand' : type === 'stream' ? 'wiggle' : undefined}
           layout={orientation}
           margin={{
             bottom: xAxisLabel ? 30 : undefined,
