@@ -53,6 +53,11 @@ export const Demo_minMax = {
   render: renderDemo(demos.minMax),
 };
 
+export const Demo_keyboardStepping = {
+  name: '⭐ Demo: keyboardStepping',
+  render: renderDemo(demos.keyboardStepping),
+};
+
 export const Demo_strictClamp = {
   name: '⭐ Demo: strictClamp',
   render: renderDemo(demos.strictClamp),

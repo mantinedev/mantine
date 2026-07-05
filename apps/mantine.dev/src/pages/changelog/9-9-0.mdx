@@ -2,6 +2,7 @@ import {
   ColorWheelDemos,
   CompareSliderDemos,
   DownloadTriggerDemos,
+  NumberInputDemos,
   UseCountdownDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
@@ -52,3 +53,12 @@ time in milliseconds together with `days`/`hours`/`minutes`/`seconds`/`milliseco
 does not drift, as the remaining time is always computed from a stored end timestamp:
 
 <Demo data={UseCountdownDemos.usage} />
+
+## Large step keyboard stepping
+
+[NumberInput](/core/number-input), [Slider](/core/slider) and [RangeSlider](/core/slider) now support
+`largeStep` prop to move by a larger amount from the keyboard. Press `Shift` + Arrow or
+`PageUp`/`PageDown` to step by `largeStep` (`10 × step` by default). `NumberInput` additionally
+supports `smallStep` prop for finer stepping with `Alt` + Arrow:
+
+<Demo data={NumberInputDemos.keyboardStepping} />

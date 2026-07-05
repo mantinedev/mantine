@@ -60,6 +60,9 @@ export interface SliderProps
   /** Number by which value will be incremented/decremented with thumb drag and arrows @default 1 */
   step?: number;
 
+  /** Number by which value is incremented/decremented on `Shift + Arrow` and `PageUp`/`PageDown` keys. Ignored when `restrictToMarks` is set @default 10 × step */
+  largeStep?: number;
+
   /** Number of significant digits after the decimal point */
   precision?: number;
 
@@ -176,6 +179,7 @@ export const Slider = factory<SliderFactory>((_props) => {
     max,
     domain,
     step,
+    largeStep,
     precision: _precision,
     defaultValue,
     name,
@@ -240,7 +244,8 @@ export const Slider = factory<SliderFactory>((_props) => {
   const position = getPosition({ value: _value, min: domainMin, max: domainMax });
   const scaledValue = scale!(_value);
   const _label = typeof label === 'function' ? label(scaledValue) : label;
-  const precision = _precision ?? getPrecision(step);
+  const largeStepValue = largeStep ?? step * 10;
+  const precision = _precision ?? Math.max(getPrecision(step), getPrecision(largeStepValue));
 
   const hasStartPoint = typeof startPointValue === 'number' && !inverted;
   const startPosition = hasStartPoint
@@ -317,7 +322,10 @@ export const Slider = factory<SliderFactory>((_props) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(_value + step, domainMin), domainMax),
+            Math.min(
+              Math.max(_value + (event.shiftKey ? largeStepValue : step), domainMin),
+              domainMax
+            ),
             precision
           );
           setValue(nextValue);
@@ -337,8 +345,12 @@ export const Slider = factory<SliderFactory>((_props) => {
             break;
           }
 
+          const delta = event.shiftKey ? largeStepValue : step;
           const nextValue = getFloatingValue(
-            Math.min(Math.max(dir === 'rtl' ? _value - step : _value + step, domainMin), domainMax),
+            Math.min(
+              Math.max(dir === 'rtl' ? _value - delta : _value + delta, domainMin),
+              domainMax
+            ),
             precision
           );
           setValue(nextValue);
@@ -358,7 +370,10 @@ export const Slider = factory<SliderFactory>((_props) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(_value - step, domainMin), domainMax),
+            Math.min(
+              Math.max(_value - (event.shiftKey ? largeStepValue : step), domainMin),
+              domainMax
+            ),
             precision
           );
           setValue(nextValue);
@@ -378,8 +393,52 @@ export const Slider = factory<SliderFactory>((_props) => {
             break;
           }
 
+          const delta = event.shiftKey ? largeStepValue : step;
           const nextValue = getFloatingValue(
-            Math.min(Math.max(dir === 'rtl' ? _value + step : _value - step, domainMin), domainMax),
+            Math.min(
+              Math.max(dir === 'rtl' ? _value + delta : _value - delta, domainMin),
+              domainMax
+            ),
+            precision
+          );
+          setValue(nextValue);
+          callOnChangeEnd(nextValue);
+          break;
+        }
+
+        case 'PageUp': {
+          event.preventDefault();
+          thumb.current?.focus();
+
+          if (restrictToMarks && marks) {
+            const nextValue = getNextMarkValue(_value, marks);
+            setValue(nextValue);
+            callOnChangeEnd(nextValue);
+            break;
+          }
+
+          const nextValue = getFloatingValue(
+            Math.min(Math.max(_value + largeStepValue, domainMin), domainMax),
+            precision
+          );
+          setValue(nextValue);
+          callOnChangeEnd(nextValue);
+          break;
+        }
+
+        case 'PageDown': {
+          event.preventDefault();
+          thumb.current?.focus();
+
+          if (restrictToMarks && marks) {
+            const nextValue = getPreviousMarkValue(_value, marks);
+            setValue(nextValue);
+            callOnChangeEnd(nextValue);
+            break;
+          }
+
+          const nextValue = getFloatingValue(
+            Math.min(Math.max(_value - largeStepValue, domainMin), domainMax),
             precision
           );
           setValue(nextValue);

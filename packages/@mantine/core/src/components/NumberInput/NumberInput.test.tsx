@@ -312,6 +312,88 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenCalledTimes(0);
   });
 
+  it('increments by largeStep with Shift + ArrowUp and decrements with Shift + ArrowDown', () => {
+    render(<NumberInput defaultValue={0} largeStep={10} />);
+    fireEvent.keyDown(getInput(), { key: 'ArrowUp', shiftKey: true });
+    expectValue('10');
+    fireEvent.keyDown(getInput(), { key: 'ArrowDown', shiftKey: true });
+    expectValue('0');
+  });
+
+  it('uses 10 × step as the default largeStep', () => {
+    render(<NumberInput defaultValue={0} step={2} />);
+    fireEvent.keyDown(getInput(), { key: 'ArrowUp', shiftKey: true });
+    expectValue('20');
+  });
+
+  it('increments/decrements by largeStep with PageUp and PageDown', () => {
+    render(<NumberInput defaultValue={50} largeStep={25} />);
+    fireEvent.keyDown(getInput(), { key: 'PageUp' });
+    expectValue('75');
+    fireEvent.keyDown(getInput(), { key: 'PageDown' });
+    expectValue('50');
+  });
+
+  it('increments by smallStep with Alt + ArrowUp when smallStep is set', () => {
+    render(<NumberInput defaultValue={1} smallStep={0.5} />);
+    fireEvent.keyDown(getInput(), { key: 'ArrowUp', altKey: true });
+    expectValue('1.5');
+  });
+
+  it('falls back to step on Alt + ArrowUp when smallStep is not set', () => {
+    render(<NumberInput defaultValue={1} step={2} />);
+    fireEvent.keyDown(getInput(), { key: 'ArrowUp', altKey: true });
+    expectValue('3');
+  });
+
+  it('clamps largeStep to max and calls onMaxReached', () => {
+    const spy = jest.fn();
+    render(<NumberInput min={0} max={10} defaultValue={5} largeStep={10} onMaxReached={spy} />);
+    fireEvent.keyDown(getInput(), { key: 'PageUp' });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('10');
+  });
+
+  it('clamps largeStep to min and calls onMinReached', () => {
+    const spy = jest.fn();
+    render(<NumberInput min={0} max={10} defaultValue={5} largeStep={10} onMinReached={spy} />);
+    fireEvent.keyDown(getInput(), { key: 'PageDown' });
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('0');
+  });
+
+  it('rounds a decimal largeStep without floating point drift', () => {
+    render(<NumberInput defaultValue={0.1} largeStep={0.25} decimalScale={2} />);
+    fireEvent.keyDown(getInput(), { key: 'ArrowUp', shiftKey: true });
+    expectValue('0.35');
+  });
+
+  it('honors largeStep in bigint mode', () => {
+    render(<NumberInput defaultValue={BigInt(100)} largeStep={BigInt(50)} />);
+    fireEvent.keyDown(getInput(), { key: 'ArrowUp', shiftKey: true });
+    expectValue('150');
+    fireEvent.keyDown(getInput(), { key: 'PageDown' });
+    expectValue('100');
+  });
+
+  it('ignores smallStep in bigint mode and steps by step on Alt + ArrowUp', () => {
+    render(<NumberInput defaultValue={BigInt(100)} step={BigInt(5)} smallStep={BigInt(2)} />);
+    fireEvent.keyDown(getInput(), { key: 'ArrowUp', altKey: true });
+    expectValue('105');
+  });
+
+  it('does not step by largeStep when readOnly', () => {
+    render(<NumberInput defaultValue={0} largeStep={10} readOnly />);
+    fireEvent.keyDown(getInput(), { key: 'PageUp' });
+    expectValue('0');
+  });
+
+  it('does not step by largeStep when withKeyboardEvents is false', () => {
+    render(<NumberInput defaultValue={0} largeStep={10} withKeyboardEvents={false} />);
+    fireEvent.keyDown(getInput(), { key: 'ArrowUp', shiftKey: true });
+    expectValue('0');
+  });
+
   it('selects all text on focus when selectAllOnFocus is true', async () => {
     render(<NumberInput defaultValue={123} selectAllOnFocus />);
     const input = getInput() as HTMLInputElement;

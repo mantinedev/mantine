@@ -3,6 +3,7 @@ export { customize } from './Slider.demo.customize';
 export { marks } from './Slider.demo.marks';
 export { label } from './Slider.demo.label';
 export { step } from './Slider.demo.step';
+export { largeStep } from './Slider.demo.largeStep';
 export { changeEnd } from './Slider.demo.changeEnd';
 export { disabled } from './Slider.demo.disabled';
 export { thumbSize } from './Slider.demo.thumbSize';
