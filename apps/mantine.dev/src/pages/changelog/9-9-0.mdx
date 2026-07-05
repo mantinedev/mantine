@@ -3,6 +3,7 @@ import {
   CompareSliderDemos,
   DownloadTriggerDemos,
   NumberInputDemos,
+  ScrollAreaDemos,
   UseCountdownDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
@@ -62,3 +63,12 @@ does not drift, as the remaining time is always computed from a stored end times
 supports `smallStep` prop for finer stepping with `Alt` + Arrow:
 
 <Demo data={NumberInputDemos.keyboardStepping} />
+
+## ScrollArea edge fade
+
+[ScrollArea](/core/scroll-area) now supports `scrollFade` prop that fades out content at the scrollable
+edges to indicate that there is more content to scroll. The fade is shown at an edge only when there is
+hidden content past it and disappears once that edge is reached. Use `scrollFadeSize` prop to change the
+length of the fade gradient:
+
+<Demo data={ScrollAreaDemos.scrollFade} />
