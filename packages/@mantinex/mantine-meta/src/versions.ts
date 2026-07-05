@@ -13,6 +13,13 @@ export interface Version {
 
 export const allVersions = [
   {
+    version: '9.10.0',
+    date: 'January 19, 2027',
+    github: 'https://github.com/mantinedev/mantine/releases/tag/9.10.0',
+    link: 'https://mantine.dev/changelog/9-10-0',
+    patches: [],
+  },
+  {
     version: '9.9.0',
     date: 'December 15, 2026',
     github: 'https://github.com/mantinedev/mantine/releases/tag/9.9.0',
