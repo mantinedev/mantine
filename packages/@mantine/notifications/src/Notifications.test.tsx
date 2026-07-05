@@ -501,6 +501,49 @@ describe('@mantine/core/Notifications', () => {
     expect(Number(style0.zIndex)).toBeLessThan(Number(style1.zIndex));
   });
 
+  it('keeps stacked styling while a stacked notification is exiting', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={100}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'exit-a', message: 'Exiting notification' }, store);
+      notifications.show({ id: 'exit-b', message: 'Remaining notification' }, store);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(200);
+    });
+
+    act(() => {
+      notifications.hide('exit-a', store);
+    });
+
+    // The notification is still mounted (transition in progress), now in the exiting state
+    const exiting = screen
+      .getAllByRole('alert')
+      .find((el) => el.textContent?.includes('Exiting notification'))!;
+
+    expect(exiting).toBeDefined();
+    // Stays inside the shared grid cell so the remaining notifications do not jump
+    expect(exiting.style.gridArea).toBe('1 / 1');
+    // Keeps a transition so the exit animation actually plays
+    expect(exiting.style.transition).not.toBe('');
+    // Does not instantly collapse its height (stacked notifications overlap, no space to collapse)
+    expect(exiting.style.maxHeight).not.toBe('0px');
+    // Exit animation starts immediately, without the entrance stagger delay
+    expect(exiting.style.transitionDelay).toBe('0ms');
+  });
+
   it('calls onOpen when notification is mounted', async () => {
     const onOpen = jest.fn();
     const consoleError = jest.spyOn(console, 'error');
