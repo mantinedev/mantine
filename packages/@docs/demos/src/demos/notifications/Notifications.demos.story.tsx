@@ -28,6 +28,11 @@ export const Demo_priority = {
   render: renderDemo(demos.priority),
 };
 
+export const Demo_stacked = {
+  name: '⭐ Demo: stacked',
+  render: renderDemo(demos.stacked),
+};
+
 export const Demo_update = {
   name: '⭐ Demo: update',
   render: renderDemo(demos.update),
