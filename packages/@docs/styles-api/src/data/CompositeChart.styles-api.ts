@@ -24,6 +24,7 @@ export const CompositeChartStylesApi: StylesApiData<CompositeChartFactory> = {
     tooltipLabel: 'Label of the tooltip',
     referenceLine: 'Reference line',
     axisLabel: 'X and Y axis labels',
+    brush: 'Brush (range selector) root element',
   },
 
   vars: {

@@ -41,7 +41,7 @@ export interface ScatterChartSeries {
 
 export type ScatterChartStylesNames =
   | 'scatter'
-  | BaseChartStylesNames
+  | Exclude<BaseChartStylesNames, 'brush'>
   | ChartLegendStylesNames
   | ChartTooltipStylesNames;
 
@@ -51,7 +51,10 @@ export type ScatterChartCssVariables = {
 
 export interface ScatterChartProps
   extends
-    Omit<GridChartBaseProps, 'dataKey' | 'data' | 'unit' | 'valueFormatter'>,
+    Omit<
+      GridChartBaseProps,
+      'dataKey' | 'data' | 'unit' | 'valueFormatter' | 'withBrush' | 'brushProps'
+    >,
     BoxProps,
     StylesApiProps<ScatterChartFactory>,
     ElementProps<'div'> {
@@ -101,6 +104,7 @@ const defaultProps = {
   tickLine: 'y',
   strokeDasharray: '5 5',
   gridAxis: 'x',
+  accessibilityLayer: true,
 } satisfies Partial<ScatterChartProps>;
 
 const varsResolver = createVarsResolver<ScatterChartFactory>((theme, { textColor, gridColor }) => ({
@@ -150,6 +154,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
     scatterProps,
     pointLabels,
     attributes,
+    accessibilityLayer,
     ...others
   } = props;
 
@@ -239,6 +244,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...scatterChartProps}
         >
           <CartesianGrid

@@ -1,4 +1,4 @@
-import { BulletChartDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, SunburstChartDemos, TableDemos, TimelineDemos } from '@docs/demos';
+import { AccordionDemos, BulletChartDemos, CascaderDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, SunburstChartDemos, TableDemos, TimelineDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -46,6 +46,16 @@ and `Home`/`End` keys (jump to min/max size).
 
 <Demo data={FloatingWindowDemos.resizeHandle} />
 
+## Cascader component
+
+New [Cascader](/core/cascader) component allows selecting a value from hierarchical data
+by drilling down through cascading columns. Picking an option in one column reveals its
+children in a new column to the right, and the value is an ordered path from the root option
+to the selected node. It supports `changeOnSelect`, `hover` expand trigger, search, a flat list
+layout for mobile, and full keyboard navigation.
+
+<Demo data={CascaderDemos.usage} />
+
 ## SunburstChart component
 
 New [SunburstChart](/charts/sunburst-chart) component displays hierarchical data
@@ -61,12 +71,41 @@ a target and qualitative thresholds like poor, average, and good.
 
 <Demo data={BulletChartDemos.usage} />
 
+## Charts keyboard navigation
+
+All [@mantine/charts](/charts/getting-started/#keyboard-navigation) components now expose the
+`accessibilityLayer` prop (`true` by default) that makes charts navigable with the keyboard.
+The chart surface is focusable and displays the Mantine focus ring; once focused, the arrow keys
+move the active tooltip point-by-point and <kbd>Enter</kbd> toggles the tooltip, so users who do not
+use a mouse can read the underlying values. The prop is supported by `AreaChart`, `BarChart`,
+`LineChart`, `CompositeChart`, `ScatterChart`, `BubbleChart`, `PieChart`, `DonutChart`, `RadarChart`,
+`RadialBarChart` and `FunnelChart` components.
+
+## Charts brush
+
+[AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart), [LineChart](/charts/line-chart)
+and [CompositeChart](/charts/composite-chart) now support the `withBrush` prop that displays a
+brush (range selector) under the chart. Drag the brush handles to zoom into a subset of the data.
+Use the `brushProps` prop to customize the underlying recharts `Brush`, or render the new
+themed `ChartBrush` component as a child of the chart for full control.
+
+<Demo data={AreaChartDemos.brush} />
+
 ## Heatmap month labels position
 
 [Heatmap](/charts/heatmap) now supports `monthLabelsPosition` prop that allows
 displaying month labels at the bottom of the heatmap instead of the top (default).
 
 <Demo data={HeatmapDemos.monthLabelsPosition} />
+
+## Accordion disable collapse
+
+[Accordion](/core/accordion) now supports the `disableCollapse` prop. When enabled in single
+mode (`multiple={false}`), the open item cannot be collapsed by clicking it again, so one item
+always stays open. Pair it with `defaultValue` or `value` to guarantee that a section is open
+from the start – useful for settings panels, stepper-style flows and FAQ pages.
+
+<Demo data={AccordionDemos.disableCollapse} />
 
 ## New example: Table virtualization
 

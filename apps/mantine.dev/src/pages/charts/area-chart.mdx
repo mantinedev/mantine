@@ -275,3 +275,46 @@ rendered behind the chart.
 Use the `ReferenceArea` component from recharts to display a reference area:
 
 <Demo data={AreaChartDemos.referenceArea} />
+
+## Brush
+
+Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
+brush handles (travellers) to zoom into a subset of the data – the chart updates to show
+only the selected range. The brush border and background are themed to match the chart grid
+and adapt to the color scheme. `withBrush` is `false` by default and is supported by
+`AreaChart`, `BarChart`, `LineChart` and `CompositeChart` components with horizontal orientation.
+
+<Demo data={AreaChartDemos.brush} />
+
+## Brush props
+
+Use the `brushProps` prop to pass props down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush)
+component. For example, you can set the initially selected range with `startIndex`/`endIndex`,
+change the brush `height`, or subscribe to range changes with `onChange`:
+
+<Demo data={AreaChartDemos.brushProps} />
+
+## ChartBrush component
+
+For full control over the brush, render the `ChartBrush` component as a child of the chart
+instead of using the `withBrush` prop. `ChartBrush` accepts all recharts `Brush` props and
+applies Mantine theming – this is useful when you need a [custom traveller](https://recharts.org/en-US/api/Brush)
+or a panorama preview inside the brush:
+
+```tsx
+import { AreaChart, ChartBrush } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      series={[{ name: 'Apples', color: 'indigo.6' }]}
+    >
+      <ChartBrush dataKey="date" startIndex={0} endIndex={10} />
+    </AreaChart>
+  );
+}
+```
