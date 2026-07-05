@@ -53,6 +53,7 @@ export * from './Dialog';
 export * from './Divider';
 export * from './DownloadTrigger';
 export * from './Drawer';
+export * from './Editable';
 export * from './EmptyState';
 export * from './Fieldset';
 export * from './FileButton';

@@ -1,0 +1,202 @@
+import { EditableDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Editable);
+
+## Usage
+
+`Editable` renders a value as a preview and switches it to an input for inline editing. It is used
+for edit-in-place scenarios like renaming a title, a list item or a table cell. The edit is
+committed on `Enter` or blur and cancelled on `Escape`:
+
+<Demo data={EditableDemos.usage} />
+
+## Activation mode
+
+`activationMode` prop controls how the preview enters edit mode:
+
+- `focus` (default) – the preview enters edit mode when it receives focus (`Tab` or click)
+- `click` – the preview enters edit mode on a single click
+- `dblclick` – the preview enters edit mode on a double click
+- `none` – the preview never enters edit mode on its own, editing is triggered programmatically
+  with the controller or with `Editable.EditTrigger`
+
+<Demo data={EditableDemos.activation} />
+
+## Submit mode
+
+`submitMode` prop controls what commits the edit. `Escape` always reverts the value to the last
+committed state regardless of `submitMode`:
+
+- `both` (default) – the edit is committed on `Enter` and on blur
+- `enter` – the edit is committed only on `Enter`
+- `blur` – the edit is committed only on blur
+- `none` – the edit is committed only programmatically with the controller or with
+  `Editable.SubmitTrigger`
+
+<Demo data={EditableDemos.submitMode} />
+
+## Placeholder
+
+Set `placeholder` to display text when the value is empty. It can be a string or an object with
+`preview` and `edit` keys to use different text in each mode:
+
+<Demo data={EditableDemos.placeholder} />
+
+## Controlled value
+
+Use `value` and `onChange` props to control the value. `onChange` is called on every keystroke,
+`onValueCommit` is called when the edit is confirmed and `onValueRevert` is called when it is
+cancelled:
+
+```tsx
+import { useState } from 'react';
+import { Editable } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('Project name');
+  return (
+    <Editable
+      value={value}
+      onChange={setValue}
+      onValueCommit={(committed) => console.log('committed', committed)}
+      onValueRevert={(reverted) => console.log('reverted to', reverted)}
+    />
+  );
+}
+```
+
+## Controlled editing state
+
+Use `editing` and `onEditingChange` props to control the editing state. Set `defaultEditing` to
+start in edit mode in uncontrolled mode:
+
+```tsx
+import { useState } from 'react';
+import { Editable } from '@mantine/core';
+
+function Demo() {
+  const [editing, setEditing] = useState(false);
+  return (
+    <Editable
+      defaultValue="Project name"
+      editing={editing}
+      onEditingChange={setEditing}
+    />
+  );
+}
+```
+
+## Multiline
+
+Set `multiline` prop to use a `textarea` instead of an `input`. In multiline mode `Enter` inserts a
+new line and the edit is committed with `Cmd`/`Ctrl` + `Enter` or on blur. Add `autosize` to grow
+the field to fit its content and control its size with `minRows` and `maxRows`:
+
+<Demo data={EditableDemos.multiline} />
+
+## useEditable hook
+
+`Editable` is built on top of the `useEditable` hook. Use the hook directly to share one controller
+between several components or to build a fully custom edit-in-place UI. `useEditable` accepts the
+same options as `Editable` and returns the editing state and actions:
+
+```tsx
+import { useEditable } from '@mantine/core';
+
+function Demo() {
+  const editable = useEditable({ defaultValue: 'Project name' });
+
+  editable.value; // -> current value
+  editable.editing; // -> boolean, true while the field is in edit mode
+
+  editable.edit(); // enters edit mode
+  editable.submit(); // commits the edit
+  editable.cancel(); // cancels the edit and reverts the value
+  editable.setValue('New value'); // updates the value
+
+  return null;
+}
+```
+
+### useEditable options
+
+<DataTable
+  head={['Name', 'Type', 'Default', 'Description']}
+  data={[
+    ['value', 'string', '–', 'Controlled value'],
+    ['defaultValue', 'string', '–', 'Uncontrolled value initial state'],
+    ['onChange', '(value: string) => void', '–', 'Called on every keystroke'],
+    ['onValueCommit', '(value: string) => void', '–', 'Called when the edit is confirmed'],
+    ['onValueRevert', '(value: string) => void', '–', 'Called when the edit is cancelled'],
+    ['editing', 'boolean', '–', 'Controlled editing state'],
+    ['defaultEditing', 'boolean', 'false', 'Uncontrolled editing state initial value'],
+    ['onEditingChange', '(editing: boolean) => void', '–', 'Called when the editing state changes'],
+    ['activationMode', "'focus' | 'click' | 'dblclick' | 'none'", "'focus'", 'How the preview enters edit mode'],
+    ['submitMode', "'both' | 'enter' | 'blur' | 'none'", "'both'", 'What confirms the edit'],
+    ['selectOnFocus', 'boolean', 'true', 'Selects the input contents when entering edit mode'],
+    ['disabled', 'boolean', 'false', 'Disables entering edit mode'],
+    ['readOnly', 'boolean', 'false', 'Prevents changing the value'],
+  ]}
+/>
+
+## Controlling with useEditable
+
+To control `Editable` from outside, create a controller with `useEditable` and pass it to the
+`controller` prop. When a controller is provided, the option props on `Editable` are ignored – the
+controller owns the state:
+
+<Demo data={EditableDemos.controller} />
+
+## Custom layout
+
+For custom layouts, pass compound components as children instead of relying on the default preview
+and input. `Editable.Preview` and `Editable.Input` (or `Editable.Textarea`) render the value in
+each mode, `Editable.Control` wraps the triggers, and `Editable.EditTrigger`,
+`Editable.SubmitTrigger` and `Editable.CancelTrigger` are buttons that control the editing state.
+Triggers are shown only in the relevant mode – the edit trigger in preview mode, the submit and
+cancel triggers in edit mode:
+
+<Demo data={EditableDemos.triggers} />
+
+### Compound components
+
+- `Editable.Area` – optional wrapper of the preview and input
+- `Editable.Preview` – displays the value in read mode
+- `Editable.Input` – the input displayed in edit mode
+- `Editable.Textarea` – the textarea displayed in edit mode when `multiline` layout is needed
+- `Editable.Control` – wrapper of the triggers
+- `Editable.EditTrigger` – enters edit mode, rendered only in preview mode
+- `Editable.SubmitTrigger` – commits the edit, rendered only in edit mode
+- `Editable.CancelTrigger` – cancels the edit, rendered only in edit mode
+
+## Form field props
+
+`Editable` supports standard input attributes that are forwarded to the field: `disabled`,
+`readOnly`, `required`, `maxLength` and `name`. Set `name` to include the value in native form
+submission.
+
+## Accessibility
+
+In `focus`, `click` and `dblclick` activation modes the preview is a `button` element, so it is
+focusable and can be activated with the keyboard. In `none` mode the preview is not interactive and
+editing is controlled with triggers or the controller.
+
+When a trigger renders only an icon, set an `aria-label`:
+
+```tsx
+import { Editable } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Editable defaultValue="Project name" activationMode="none">
+      <Editable.Preview />
+      <Editable.Input />
+      <Editable.EditTrigger aria-label="Edit name">✎</Editable.EditTrigger>
+      <Editable.SubmitTrigger aria-label="Save">✓</Editable.SubmitTrigger>
+      <Editable.CancelTrigger aria-label="Cancel">✕</Editable.CancelTrigger>
+    </Editable>
+  );
+}
+```

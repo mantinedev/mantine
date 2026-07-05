@@ -301,6 +301,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Chip,
       MDX_DATA.Rating,
       MDX_DATA.Textarea,
+      MDX_DATA.Editable,
       MDX_DATA.JsonInput,
       MDX_DATA.PasswordInput,
       MDX_DATA.FileInput,

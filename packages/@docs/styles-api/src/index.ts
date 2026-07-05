@@ -45,6 +45,7 @@ export * from './data/Divider.styles-api';
 export * from './data/DonutChart.styles-api';
 export * from './data/Drawer.styles-api';
 export * from './data/Dropzone.styles-api';
+export * from './data/Editable.styles-api';
 export * from './data/EmojiPicker.styles-api';
 export * from './data/EmojiPickerInput.styles-api';
 export * from './data/EmptyState.styles-api';

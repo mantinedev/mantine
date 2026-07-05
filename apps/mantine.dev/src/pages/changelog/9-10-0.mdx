@@ -1,4 +1,4 @@
-import { TimerDemos } from '@docs/demos';
+import { EditableDemos, TimerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -20,3 +20,13 @@ fully custom timer UIs, and it supports custom layouts with `Timer.Segment`, `Ti
 `Timer.Control` compound components:
 
 <Demo data={TimerDemos.usage} />
+
+## Editable component
+
+New [Editable](/core/editable) component – edit text inline by switching a preview to an input. It
+supports commit on `Enter`/blur, cancel on `Escape`, `focus`/`click`/`dblclick` activation modes,
+multiline editing and a placeholder. `Editable` is built on top of the new `useEditable` hook and
+supports custom layouts with `Editable.Preview`, `Editable.Input` and `Editable.Control` with
+`Editable.EditTrigger`, `Editable.SubmitTrigger` and `Editable.CancelTrigger` compound components:
+
+<Demo data={EditableDemos.triggers} />
