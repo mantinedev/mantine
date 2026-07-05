@@ -231,11 +231,15 @@ rendered behind the chart.
 
 <Demo data={LineChartDemos.referenceLines} />
 
-## Reference area
+## Reference areas
 
-Use the `ReferenceArea` component from recharts to display a reference area:
+Use the `referenceAreas` prop to highlight a rectangular region of the chart. Each area is
+bounded by `x1`/`x2` (horizontal) and `y1`/`y2` (vertical) data values – omit one pair to span
+the full opposite axis, for example provide only `y1`/`y2` to highlight a target range across the
+entire width of the chart. Set `color` to any [theme color](/theming/colors/) or CSS color and
+`label` to display text inside the area. Reference areas are rendered behind the chart series.
 
-<Demo data={LineChartDemos.referenceArea} />
+<Demo data={LineChartDemos.referenceAreas} />
 
 ## Brush
 

@@ -30,7 +30,7 @@ export { rotateLabels } from './AreaChart.demo.rotateLabels';
 export { axisLabels } from './AreaChart.demo.axisLabels';
 export { rightYAxis } from './AreaChart.demo.rightYAxis';
 export { pointLabels } from './AreaChart.demo.pointLabels';
-export { referenceArea } from './AreaChart.demo.referenceArea';
+export { referenceAreas } from './AreaChart.demo.referenceAreas';
 export { curveType } from './AreaChart.demo.curveType';
 export { brush } from './AreaChart.demo.brush';
 export { brushProps } from './AreaChart.demo.brushProps';

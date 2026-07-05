@@ -73,6 +73,11 @@ export const Demo_referenceLines = {
   render: renderDemo(demos.referenceLines),
 };
 
+export const Demo_referenceAreas = {
+  name: '⭐ Demo: referenceAreas',
+  render: renderDemo(demos.referenceAreas),
+};
+
 export const Demo_rightYAxis = {
   name: '⭐ Demo: rightYAxis',
   render: renderDemo(demos.rightYAxis),

@@ -10,6 +10,7 @@ import {
   Legend,
   BarChart as ReChartsBarChart,
   Rectangle,
+  ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -200,6 +201,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
     gridProps,
     tooltipProps,
     referenceLines,
+    referenceAreas,
     fillOpacity,
     barChartProps,
     type,
@@ -336,6 +338,28 @@ export const BarChart = factory<BarChartFactory>((_props) => {
     );
   });
 
+  const referenceAreasItems = referenceAreas?.map((area, index) => {
+    const color = getThemeColor(area.color, theme);
+    return (
+      <ReferenceArea
+        key={index}
+        fill={area.color ? color : 'var(--chart-grid-color)'}
+        fillOpacity={0.2}
+        stroke={area.color ? color : 'var(--chart-grid-color)'}
+        strokeOpacity={0.6}
+        yAxisId={area.yAxisId || undefined}
+        {...area}
+        label={{
+          fill: area.color ? color : 'currentColor',
+          fontSize: 12,
+          position: area.labelPosition ?? 'insideTop',
+          ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+        }}
+        {...getStyles('referenceArea')}
+      />
+    );
+  });
+
   const sharedYAxisProps = {
     axisLine: false,
     ...(orientation === 'vertical'
@@ -370,6 +394,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...barChartProps}
         >
+          {referenceAreasItems}
           {withLegend && (
             <Legend
               verticalAlign="top"

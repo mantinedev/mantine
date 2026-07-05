@@ -5,6 +5,7 @@ import {
   LabelList,
   Legend,
   ScatterChart as ReChartsScatterChart,
+  ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
   Scatter,
@@ -124,6 +125,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
     unstyled,
     vars,
     referenceLines,
+    referenceAreas,
     dir,
     withLegend,
     withTooltip,
@@ -218,6 +220,27 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
     );
   });
 
+  const referenceAreasItems = referenceAreas?.map((area, index) => {
+    const color = getThemeColor(area.color, theme);
+    return (
+      <ReferenceArea
+        key={index}
+        fill={area.color ? color : 'var(--chart-grid-color)'}
+        fillOpacity={0.2}
+        stroke={area.color ? color : 'var(--chart-grid-color)'}
+        strokeOpacity={0.6}
+        {...area}
+        label={{
+          fill: area.color ? color : 'currentColor',
+          fontSize: 12,
+          position: area.labelPosition ?? 'insideTop',
+          ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+        }}
+        {...getStyles('referenceArea')}
+      />
+    );
+  });
+
   const scatters = mappedData.map((item, index) => {
     const dimmed = shouldHighlight && highlightedArea !== item.name;
     return (
@@ -247,6 +270,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...scatterChartProps}
         >
+          {referenceAreasItems}
           <CartesianGrid
             strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}

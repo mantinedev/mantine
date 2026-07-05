@@ -1,4 +1,4 @@
-import { ActionBarDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, StepperDemos, WaffleChartDemos } from '@docs/demos';
+import { ActionBarDemos, AreaChartDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, StepperDemos, WaffleChartDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -69,6 +69,16 @@ New [MatrixChart](/charts/matrix-chart) component – a generic x/y heatmap with
 Each cell is colored based on a value, useful for visualizing patterns in two-dimensional categorical data.
 
 <Demo data={MatrixChartDemos.usage} />
+
+## Charts reference areas
+
+[AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart), [LineChart](/charts/line-chart),
+[CompositeChart](/charts/composite-chart) and [ScatterChart](/charts/scatter-chart) now support the
+`referenceAreas` prop that highlights a rectangular region of the plot – a weekend band, a target
+range, a threshold zone and similar annotations. Each area is bounded by `x1`/`x2` and/or `y1`/`y2`
+data values (omit one pair to span the full opposite axis) and supports a theme `color` and a `label`.
+
+<Demo data={AreaChartDemos.referenceAreas} />
 
 ## Stepper labelPosition
 

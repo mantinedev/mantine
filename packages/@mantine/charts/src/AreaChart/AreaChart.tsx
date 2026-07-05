@@ -6,6 +6,7 @@ import {
   Label,
   Legend,
   AreaChart as ReChartsAreaChart,
+  ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -200,6 +201,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     onMouseLeave,
     orientation,
     referenceLines,
+    referenceAreas,
     dir,
     valueFormatter,
     children,
@@ -337,6 +339,28 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     );
   });
 
+  const referenceAreasItems = referenceAreas?.map((area, index) => {
+    const color = getThemeColor(area.color, theme);
+    return (
+      <ReferenceArea
+        key={index}
+        fill={area.color ? color : 'var(--chart-grid-color)'}
+        fillOpacity={0.2}
+        stroke={area.color ? color : 'var(--chart-grid-color)'}
+        strokeOpacity={0.6}
+        yAxisId={area.yAxisId || undefined}
+        {...area}
+        label={{
+          fill: area.color ? color : 'currentColor',
+          fontSize: 12,
+          position: area.labelPosition ?? 'insideTop',
+          ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+        }}
+        {...getStyles('referenceArea')}
+      />
+    );
+  });
+
   const tickFormatter = type === 'percent' ? valueToPercent : valueFormatter;
 
   const sharedYAxisProps = {
@@ -366,6 +390,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...areaChartProps}
         >
+          {referenceAreasItems}
           {referenceLinesItems}
           {withLegend && (
             <Legend

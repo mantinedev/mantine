@@ -6,6 +6,7 @@ import {
   Line,
   LineProps,
   LineChart as ReChartsLineChart,
+  ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -183,6 +184,7 @@ export const LineChart = factory<LineChartFactory>((_props) => {
     gridProps,
     tooltipProps,
     referenceLines,
+    referenceAreas,
     withDots,
     dotProps,
     activeDotProps,
@@ -318,6 +320,28 @@ export const LineChart = factory<LineChartFactory>((_props) => {
     );
   });
 
+  const referenceAreasItems = referenceAreas?.map((area, index) => {
+    const color = getThemeColor(area.color, theme);
+    return (
+      <ReferenceArea
+        key={index}
+        fill={area.color ? color : 'var(--chart-grid-color)'}
+        fillOpacity={0.2}
+        stroke={area.color ? color : 'var(--chart-grid-color)'}
+        strokeOpacity={0.6}
+        yAxisId={area.yAxisId || undefined}
+        {...area}
+        label={{
+          fill: area.color ? color : 'currentColor',
+          fontSize: 12,
+          position: area.labelPosition ?? 'insideTop',
+          ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+        }}
+        {...getStyles('referenceArea')}
+      />
+    );
+  });
+
   const sharedYAxisProps = {
     axisLine: false,
     ...(orientation === 'vertical'
@@ -344,6 +368,7 @@ export const LineChart = factory<LineChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...lineChartProps}
         >
+          {referenceAreasItems}
           {type === 'gradient' && (
             <defs>
               <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
