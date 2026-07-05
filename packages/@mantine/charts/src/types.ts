@@ -5,6 +5,7 @@ import type {
   LabelProps,
   LegendProps,
   ReferenceAreaProps,
+  ReferenceDotProps,
   ReferenceLineProps,
   TooltipProps,
   XAxisProps,
@@ -24,6 +25,12 @@ export interface ChartReferenceAreaProps extends Omit<ReferenceAreaProps, 'ref' 
   labelPosition?: LabelProps['position'];
 }
 
+export interface ChartReferenceDotProps extends Omit<ReferenceDotProps, 'ref' | 'label'> {
+  color?: MantineColor;
+  label?: string | Omit<LabelProps, 'ref'>;
+  labelPosition?: LabelProps['position'];
+}
+
 export interface ChartSeries {
   name: string;
   color?: MantineColor;
@@ -38,6 +45,7 @@ export type BaseChartStylesNames =
   | 'grid'
   | 'referenceLine'
   | 'referenceArea'
+  | 'referenceDot'
   | 'axisLabel'
   | 'brush';
 
@@ -55,6 +63,9 @@ export interface GridChartBaseProps {
 
   /** Reference areas that should be displayed on the chart */
   referenceAreas?: ChartReferenceAreaProps[];
+
+  /** Reference dots that should be displayed on the chart */
+  referenceDots?: ChartReferenceDotProps[];
 
   /** Determines whether x-axis should be displayed, `true` by default */
   withXAxis?: boolean;

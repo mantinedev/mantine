@@ -241,6 +241,15 @@ entire width of the chart. Set `color` to any [theme color](/theming/colors/) or
 
 <Demo data={LineChartDemos.referenceAreas} />
 
+## Reference dots
+
+Use the `referenceDots` prop to mark individual points on the chart – a peak, an event, a record
+value or an anomaly. Each dot is positioned by `x` and `y` data coordinates and supports `r` (radius),
+`color` (any [theme color](/theming/colors/) or CSS color) and `label`. Reference dots are rendered on
+top of the chart series.
+
+<Demo data={LineChartDemos.referenceDots} />
+
 ## Brush
 
 Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the

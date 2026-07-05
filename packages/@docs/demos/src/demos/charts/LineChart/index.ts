@@ -27,4 +27,5 @@ export { gradient } from './LineChart.demo.gradient';
 export { rightYAxis } from './LineChart.demo.rightYAxis';
 export { pointLabels } from './LineChart.demo.pointLabels';
 export { referenceAreas } from './LineChart.demo.referenceAreas';
+export { referenceDots } from './LineChart.demo.referenceDots';
 export { brush } from './LineChart.demo.brush';

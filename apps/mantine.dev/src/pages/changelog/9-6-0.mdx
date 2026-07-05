@@ -80,6 +80,16 @@ data values (omit one pair to span the full opposite axis) and supports a theme 
 
 <Demo data={AreaChartDemos.referenceAreas} />
 
+## Charts reference dots
+
+[AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart), [LineChart](/charts/line-chart),
+[CompositeChart](/charts/composite-chart) and [ScatterChart](/charts/scatter-chart) now support the
+`referenceDots` prop that marks individual points on the plot – a peak, an event, a record value or an
+anomaly. Each dot is positioned by `x`/`y` data coordinates and supports a radius, a theme `color` and a
+`label`. Reference dots are rendered on top of the chart series.
+
+<Demo data={AreaChartDemos.referenceDots} />
+
 ## Stepper labelPosition
 
 [Stepper](/core/stepper) component now supports the `labelPosition` prop. Set `labelPosition="bottom"`

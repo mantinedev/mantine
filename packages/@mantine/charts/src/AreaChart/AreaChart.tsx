@@ -7,6 +7,7 @@ import {
   Legend,
   AreaChart as ReChartsAreaChart,
   ReferenceArea,
+  ReferenceDot,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -202,6 +203,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     orientation,
     referenceLines,
     referenceAreas,
+    referenceDots,
     dir,
     valueFormatter,
     children,
@@ -357,6 +359,28 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
           ...(typeof area.label === 'object' ? area.label : { value: area.label }),
         }}
         {...getStyles('referenceArea')}
+      />
+    );
+  });
+
+  const referenceDotsItems = referenceDots?.map((dot, index) => {
+    const color = getThemeColor(dot.color, theme);
+    return (
+      <ReferenceDot
+        key={index}
+        r={5}
+        fill={dot.color ? color : 'var(--chart-grid-color)'}
+        stroke="var(--mantine-color-body)"
+        strokeWidth={2}
+        yAxisId={dot.yAxisId || undefined}
+        {...dot}
+        label={{
+          fill: dot.color ? color : 'currentColor',
+          fontSize: 12,
+          position: dot.labelPosition ?? 'top',
+          ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+        }}
+        {...getStyles('referenceDot')}
       />
     );
   });
@@ -522,6 +546,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
 
           {areas}
           {withDots && dotsAreas}
+          {referenceDotsItems}
           {withBrush && (
             <ChartBrush
               dataKey={dataKey}

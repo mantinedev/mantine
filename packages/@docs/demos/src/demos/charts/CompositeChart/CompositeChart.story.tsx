@@ -78,6 +78,11 @@ export const Demo_referenceAreas = {
   render: renderDemo(demos.referenceAreas),
 };
 
+export const Demo_referenceDots = {
+  name: '⭐ Demo: referenceDots',
+  render: renderDemo(demos.referenceDots),
+};
+
 export const Demo_rightYAxis = {
   name: '⭐ Demo: rightYAxis',
   render: renderDemo(demos.rightYAxis),

@@ -48,6 +48,11 @@ export const Demo_referenceAreas = {
   render: renderDemo(demos.referenceAreas),
 };
 
+export const Demo_referenceDots = {
+  name: '⭐ Demo: referenceDots',
+  render: renderDemo(demos.referenceDots),
+};
+
 export const Demo_strokeDasharray = {
   name: '⭐ Demo: strokeDasharray',
   render: renderDemo(demos.strokeDasharray),

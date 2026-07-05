@@ -12,6 +12,7 @@ import {
   LineProps,
   ComposedChart as ReChartsCompositeChart,
   ReferenceArea,
+  ReferenceDot,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -194,6 +195,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     tooltipProps,
     referenceLines,
     referenceAreas,
+    referenceDots,
     withDots,
     dotProps,
     activeDotProps,
@@ -415,6 +417,28 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     );
   });
 
+  const referenceDotsItems = referenceDots?.map((dot, index) => {
+    const color = getThemeColor(dot.color, theme);
+    return (
+      <ReferenceDot
+        key={index}
+        r={5}
+        fill={dot.color ? color : 'var(--chart-grid-color)'}
+        stroke="var(--mantine-color-body)"
+        strokeWidth={2}
+        yAxisId={dot.yAxisId || undefined}
+        {...dot}
+        label={{
+          fill: dot.color ? color : 'currentColor',
+          fontSize: 12,
+          position: dot.labelPosition ?? 'top',
+          ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+        }}
+        {...getStyles('referenceDot')}
+      />
+    );
+  });
+
   const sharedYAxisProps = {
     axisLine: false,
     type: 'number' as const,
@@ -558,6 +582,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
 
           {lines}
           {referenceLinesItems}
+          {referenceDotsItems}
           {withBrush && (
             <ChartBrush
               dataKey={dataKey}
