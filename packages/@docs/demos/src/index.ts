@@ -113,6 +113,7 @@ export * as TextareaDemos from './demos/core/Textarea';
 export * as TextInputDemos from './demos/core/TextInput';
 export * as ThemeIconDemos from './demos/core/ThemeIcon';
 export * as TimelineDemos from './demos/core/Timeline';
+export * as TimerDemos from './demos/core/Timer';
 export * as TitleDemos from './demos/core/Title';
 export * as ToggleDemos from './demos/core/Toggle';
 export * as ToolbarDemos from './demos/core/Toolbar';

@@ -1432,6 +1432,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'before after, image compare, reveal, comparison slider, diff images',
   },
 
+  Timer: {
+    title: 'Timer',
+    package: '@mantine/core',
+    slug: '/core/timer',
+    props: ['Timer', 'TimerSegment', 'TimerSeparator', 'TimerControl'],
+    styles: ['Timer'],
+    componentPrefix: 'Timer',
+    description: 'Controllable countdown and stopwatch timer',
+    source: '@mantine/core/src/components/Timer/Timer.tsx',
+    docs: 'core/timer.mdx',
+    searchTags: 'countdown, stopwatch, useTimer, use-timer, elapsed, pomodoro, clock',
+  },
+
   FloatingWindow: {
     title: 'FloatingWindow',
     package: '@mantine/core',

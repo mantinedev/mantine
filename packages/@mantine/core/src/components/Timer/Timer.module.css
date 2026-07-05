@@ -1,0 +1,52 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+.value {
+  font-size: var(--mantine-font-size-xl);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.segment {
+  font-weight: 700;
+}
+
+.separator {
+  display: inline-block;
+  opacity: 0.65;
+}
+
+.controls {
+  display: flex;
+  gap: var(--mantine-spacing-xs);
+}
+
+.control {
+  appearance: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: 1;
+  border-radius: var(--mantine-radius-default);
+}
+
+.control:focus-visible {
+  outline: rem(2px) solid var(--mantine-primary-color-filled);
+  outline-offset: rem(2px);
+}
+
+.control:disabled {
+  cursor: not-allowed;
+}

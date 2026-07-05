@@ -114,6 +114,11 @@ const FILES_PATHS = getPaths([
   // Timeline
   'packages/@mantine/core/src/components/Timeline/TimelineItem/TimelineItem.tsx',
 
+  // Timer
+  'packages/@mantine/core/src/components/Timer/TimerSegment.tsx',
+  'packages/@mantine/core/src/components/Timer/TimerSeparator.tsx',
+  'packages/@mantine/core/src/components/Timer/TimerControl.tsx',
+
   // List
   'packages/@mantine/core/src/components/List/ListItem/ListItem.tsx',
 

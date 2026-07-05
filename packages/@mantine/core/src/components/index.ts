@@ -115,6 +115,7 @@ export * from './Textarea';
 export * from './TextInput';
 export * from './ThemeIcon';
 export * from './Timeline';
+export * from './Timer';
 export * from './Title';
 export * from './Toggle';
 export * from './Toolbar';

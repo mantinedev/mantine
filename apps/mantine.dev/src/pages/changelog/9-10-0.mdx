@@ -1,3 +1,4 @@
+import { TimerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +10,13 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## Timer component
+
+New [Timer](/core/timer) component – a controllable countdown and stopwatch. It counts up or down,
+has running/paused state, exposes start/pause/resume/reset/restart controls and `onTick`/`onComplete`
+callbacks. `Timer` is built on top of the new `useTimer` hook, which can be used on its own to build
+fully custom timer UIs, and it supports custom layouts with `Timer.Segment`, `Timer.Separator` and
+`Timer.Control` compound components:
+
+<Demo data={TimerDemos.usage} />
