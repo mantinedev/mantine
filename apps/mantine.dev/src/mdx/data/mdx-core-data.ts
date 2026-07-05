@@ -1398,6 +1398,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'angle, rotation, degrees, circular slider, compass',
   },
 
+  ColorWheel: {
+    title: 'ColorWheel',
+    package: '@mantine/core',
+    slug: '/core/color-wheel',
+    props: ['ColorWheel'],
+    styles: ['ColorWheel'],
+    description: 'Circular hue selector',
+    source: '@mantine/core/src/components/ColorWheel/ColorWheel.tsx',
+    docs: 'core/color-wheel.mdx',
+    searchTags: 'hue, color picker, color ring, hue wheel, hue ring, circular color',
+  },
+
   FloatingWindow: {
     title: 'FloatingWindow',
     package: '@mantine/core',

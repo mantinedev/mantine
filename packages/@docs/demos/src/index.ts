@@ -37,6 +37,7 @@ export * as CollapseDemos from './demos/core/Collapse';
 export * as ColorInputDemos from './demos/core/ColorInput';
 export * as ColorPickerDemos from './demos/core/ColorPicker';
 export * as ColorSwatchDemos from './demos/core/ColorSwatch';
+export * as ColorWheelDemos from './demos/core/ColorWheel';
 export * as ComboboxDemos from './demos/core/Combobox';
 export * as ComboboxPopoverDemos from './demos/core/ComboboxPopover';
 export * as ContainerDemos from './demos/core/Container';

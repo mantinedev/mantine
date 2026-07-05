@@ -1,3 +1,4 @@
+import { ColorWheelDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +10,12 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## ColorWheel component
+
+New [ColorWheel](/core/color-wheel) component – a circular hue selector. Its value is a hue in
+degrees (0–360) that can be converted to a color with the `hsl()` syntax. Drag the thumb around
+the ring or use the keyboard to change the value. Supports custom ring colors, size, thickness
+and can be used with uncontrolled forms:
+
+<Demo data={ColorWheelDemos.usage} />

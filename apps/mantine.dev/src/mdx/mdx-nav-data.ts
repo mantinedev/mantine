@@ -306,6 +306,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.NumberInput,
       MDX_DATA.PhoneInput,
       MDX_DATA.AngleSlider,
+      MDX_DATA.ColorWheel,
     ],
   },
   {
