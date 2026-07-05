@@ -290,7 +290,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     title: 'Version v9.5.0',
     slug: '/changelog/9-5-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/9.5.0',
-    date: 'July 14th, 2026',
+    date: 'July 28th, 2026',
     searchTags: '9-5-0, 950',
   },
 
@@ -298,7 +298,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     title: 'Version v9.6.0',
     slug: '/changelog/9-6-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/9.6.0',
-    date: 'August 4th, 2026',
+    date: 'September 1st, 2026',
     searchTags: '9-6-0, 960',
   },
 
@@ -306,7 +306,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     title: 'Version v9.7.0',
     slug: '/changelog/9-7-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/9.7.0',
-    date: 'August 25th, 2026',
+    date: 'October 6th, 2026',
     searchTags: '9-7-0, 970',
   },
 
@@ -314,8 +314,24 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     title: 'Version v9.8.0',
     slug: '/changelog/9-8-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/9.8.0',
-    date: 'September 15th, 2026',
+    date: 'November 10th, 2026',
     searchTags: '9-8-0, 980',
+  },
+
+  Changelog990: {
+    title: 'Version v9.9.0',
+    slug: '/changelog/9-9-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/9.9.0',
+    date: 'December 15th, 2026',
+    searchTags: '9-9-0, 990',
+  },
+
+  Changelog9100: {
+    title: 'Version v9.10.0',
+    slug: '/changelog/9-10-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/9.10.0',
+    date: 'January 19th, 2027',
+    searchTags: '9-10-0, 9100',
   },
 
   Changelog1000: {
