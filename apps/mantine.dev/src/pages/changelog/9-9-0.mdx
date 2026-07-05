@@ -1,4 +1,9 @@
-import { ColorWheelDemos, CompareSliderDemos, DownloadTriggerDemos } from '@docs/demos';
+import {
+  ColorWheelDemos,
+  CompareSliderDemos,
+  DownloadTriggerDemos,
+  UseCountdownDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -38,3 +43,12 @@ string, `Blob`, `File` or an async producer into an object URL and dispatches th
 server request:
 
 <Demo data={DownloadTriggerDemos.usage} />
+
+## use-countdown hook
+
+New [use-countdown](/hooks/use-countdown) hook – a headless countdown that can either count down to a
+target date or from a given duration with `start`/`stop`/`reset` controls. It returns the remaining
+time in milliseconds together with `days`/`hours`/`minutes`/`seconds`/`milliseconds` segments and
+does not drift, as the remaining time is always computed from a stored end timestamp:
+
+<Demo data={UseCountdownDemos.usage} />

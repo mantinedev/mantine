@@ -34,6 +34,10 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   ),
 
   useCounter: hDocs('useCounter', 'Increments/decrements state within given boundaries'),
+  useCountdown: {
+    ...hDocs('useCountdown', 'Counts down to a target date or from a given duration'),
+    searchTags: 'useCountdown countdown timer sale ends resend otp cooldown remaining time',
+  },
   useDebouncedState: hDocs('useDebouncedState', 'Debounces value changes'),
   useDebouncedValue: hDocs('useDebouncedValue', 'Debounces value changes'),
 

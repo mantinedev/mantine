@@ -201,6 +201,7 @@ export * as UseClipboardDemos from './demos/hooks/use-clipboard';
 export * as UseCollapseDemos from './demos/hooks/use-collapse';
 export * as UseColorSchemeDemos from './demos/hooks/use-color-scheme';
 export * as UseCounterDemos from './demos/hooks/use-counter';
+export * as UseCountdownDemos from './demos/hooks/use-countdown';
 export * as UseDebouncedCallbackDemos from './demos/hooks/use-debounced-callback';
 export * as UseDebouncedStateDemos from './demos/hooks/use-debounced-state';
 export * as UseDebouncedValueDemos from './demos/hooks/use-debounced-value';
