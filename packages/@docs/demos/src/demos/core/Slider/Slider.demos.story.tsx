@@ -28,6 +28,11 @@ export const Demo_step = {
   render: renderDemo(demos.step),
 };
 
+export const Demo_largeStep = {
+  name: '⭐ Demo: largeStep',
+  render: renderDemo(demos.largeStep),
+};
+
 export const Demo_changeEnd = {
   name: '⭐ Demo: changeEnd',
   render: renderDemo(demos.changeEnd),

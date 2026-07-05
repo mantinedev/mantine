@@ -72,6 +72,20 @@ To change label behavior and appearance, set the following props:
 
 <Demo data={SliderDemos.step} />
 
+## Keyboard stepping
+
+The focused thumb moves by `step` when the arrow keys are pressed. Set the `largeStep` prop
+(`10 × step` by default) to control the amount the thumb moves with keyboard modifiers:
+
+- **`Shift` + Arrow** and **`PageUp`/`PageDown`** – move by `largeStep`
+- **Arrow keys without modifiers** – move by `step`
+
+`largeStep` is ignored when [`restrictToMarks`](#restrict-selection-to-marks) is set, keyboard
+navigation stays mark-to-mark. The same `largeStep` logic applies to both `Slider` and `RangeSlider`
+(in `RangeSlider` it moves the currently focused thumb):
+
+<Demo data={SliderDemos.largeStep} />
+
 ## Domain
 
 By default, the `min` and `max` props define both the visual range (track display) and

@@ -1,5 +1,6 @@
 import { fireEvent } from '@testing-library/react';
 import { render, tests } from '@mantine-tests/core';
+import { DirectionProvider } from '../../core';
 import { ScrollArea, ScrollAreaProps, ScrollAreaStylesNames } from './ScrollArea';
 
 const defaultProps: ScrollAreaProps = {
@@ -226,6 +227,228 @@ describe('@mantine/core/ScrollArea', () => {
       restoreResizeObserver();
     }
   });
+
+  it('does not set scroll fade attributes when scrollFade is not set', () => {
+    const { container } = render(
+      <ScrollArea h={100}>
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+    expect(viewport).not.toHaveAttribute('data-scroll-fade');
+    expect(viewport).not.toHaveAttribute('data-fade-top');
+    expect(viewport).not.toHaveAttribute('data-fade-bottom');
+  });
+
+  it('sets data-scroll-fade attribute on the viewport, resolving true to the scrollbars axis', () => {
+    const { container } = render(
+      <ScrollArea h={100} scrollFade>
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    expect(getViewport(container)).toHaveAttribute('data-scroll-fade', 'xy');
+  });
+
+  it('resolves scrollFade to the restricted scrollbars axis when scrollbars is set', () => {
+    const { container } = render(
+      <ScrollArea h={100} scrollbars="y" scrollFade>
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    expect(getViewport(container)).toHaveAttribute('data-scroll-fade', 'y');
+  });
+
+  it('does not fade when scrollbars is false and scrollFade is true (bounded by scrollbars)', () => {
+    const { container } = render(
+      <ScrollArea h={100} scrollbars={false} scrollFade>
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    expect(container.querySelector('[data-scrollarea-viewport]')).not.toHaveAttribute(
+      'data-scroll-fade'
+    );
+  });
+
+  it('recomputes fade attributes when the fade axis changes', () => {
+    const { container, rerender } = render(
+      <ScrollArea w={100} scrollFade="x">
+        <div style={{ width: 500, height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+    Object.defineProperty(viewport, 'scrollWidth', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientWidth', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollHeight', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollLeft', { value: 200, configurable: true });
+    Object.defineProperty(viewport, 'scrollTop', { value: 200, configurable: true });
+    fireEvent.scroll(viewport);
+
+    expect(viewport).toHaveAttribute('data-fade-left');
+    expect(viewport).toHaveAttribute('data-fade-right');
+
+    // Wrapped in a fragment to match the test `render` wrapper so the component updates in place
+    rerender(
+      <>
+        <ScrollArea w={100} scrollFade="y">
+          <div style={{ width: 500, height: 500 }}>Content</div>
+        </ScrollArea>
+      </>
+    );
+
+    expect(viewport).not.toHaveAttribute('data-fade-left');
+    expect(viewport).not.toHaveAttribute('data-fade-right');
+    expect(viewport).toHaveAttribute('data-fade-top');
+    expect(viewport).toHaveAttribute('data-fade-bottom');
+  });
+
+  it('shows the end fade and hides the start fade based on vertical scroll position', () => {
+    const { container } = render(
+      <ScrollArea h={100} scrollFade="y">
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+    Object.defineProperty(viewport, 'scrollHeight', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 100, configurable: true });
+
+    Object.defineProperty(viewport, 'scrollTop', { value: 0, configurable: true });
+    fireEvent.scroll(viewport);
+    expect(viewport).not.toHaveAttribute('data-fade-top');
+    expect(viewport).toHaveAttribute('data-fade-bottom');
+
+    Object.defineProperty(viewport, 'scrollTop', { value: 200, configurable: true });
+    fireEvent.scroll(viewport);
+    expect(viewport).toHaveAttribute('data-fade-top');
+    expect(viewport).toHaveAttribute('data-fade-bottom');
+
+    Object.defineProperty(viewport, 'scrollTop', { value: 400, configurable: true });
+    fireEvent.scroll(viewport);
+    expect(viewport).toHaveAttribute('data-fade-top');
+    expect(viewport).not.toHaveAttribute('data-fade-bottom');
+  });
+
+  it('scrollFade="x" only toggles horizontal fade attributes', () => {
+    const { container } = render(
+      <ScrollArea w={100} scrollFade="x">
+        <div style={{ width: 500, height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+    Object.defineProperty(viewport, 'scrollWidth', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientWidth', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollHeight', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollLeft', { value: 200, configurable: true });
+    Object.defineProperty(viewport, 'scrollTop', { value: 200, configurable: true });
+    fireEvent.scroll(viewport);
+
+    expect(viewport).toHaveAttribute('data-fade-left');
+    expect(viewport).toHaveAttribute('data-fade-right');
+    expect(viewport).not.toHaveAttribute('data-fade-top');
+    expect(viewport).not.toHaveAttribute('data-fade-bottom');
+  });
+
+  it('scrollFade="y" only toggles vertical fade attributes', () => {
+    const { container } = render(
+      <ScrollArea scrollFade="y">
+        <div style={{ width: 500, height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+    Object.defineProperty(viewport, 'scrollWidth', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientWidth', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollHeight', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollLeft', { value: 200, configurable: true });
+    Object.defineProperty(viewport, 'scrollTop', { value: 200, configurable: true });
+    fireEvent.scroll(viewport);
+
+    expect(viewport).toHaveAttribute('data-fade-top');
+    expect(viewport).toHaveAttribute('data-fade-bottom');
+    expect(viewport).not.toHaveAttribute('data-fade-left');
+    expect(viewport).not.toHaveAttribute('data-fade-right');
+  });
+
+  it('normalizes RTL scroll positions for horizontal fade attributes', () => {
+    const { container } = render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <ScrollArea w={100} scrollFade="x">
+          <div style={{ width: 500 }}>Content</div>
+        </ScrollArea>
+      </DirectionProvider>
+    );
+
+    const viewport = getViewport(container);
+    Object.defineProperty(viewport, 'scrollWidth', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientWidth', { value: 100, configurable: true });
+
+    // At the start (right) edge in RTL scrollLeft is 0 – only the left edge has hidden content
+    Object.defineProperty(viewport, 'scrollLeft', { value: 0, configurable: true });
+    fireEvent.scroll(viewport);
+    expect(viewport).not.toHaveAttribute('data-fade-right');
+    expect(viewport).toHaveAttribute('data-fade-left');
+
+    // Scrolled towards the left in RTL scrollLeft is negative – both edges have hidden content
+    Object.defineProperty(viewport, 'scrollLeft', { value: -200, configurable: true });
+    fireEvent.scroll(viewport);
+    expect(viewport).toHaveAttribute('data-fade-right');
+    expect(viewport).toHaveAttribute('data-fade-left');
+
+    // Fully scrolled to the left (end) edge in RTL – only the right edge has hidden content
+    Object.defineProperty(viewport, 'scrollLeft', { value: -400, configurable: true });
+    fireEvent.scroll(viewport);
+    expect(viewport).toHaveAttribute('data-fade-right');
+    expect(viewport).not.toHaveAttribute('data-fade-left');
+  });
+
+  it('reuses the 0.8px sub-pixel tolerance so the end fade clears at the real bottom', () => {
+    const { container } = render(
+      <ScrollArea h={100} scrollFade="y">
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+    Object.defineProperty(viewport, 'scrollHeight', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollTop', { value: 399.5, configurable: true });
+    fireEvent.scroll(viewport);
+
+    expect(viewport).not.toHaveAttribute('data-fade-bottom');
+  });
+
+  it('sets --scrollarea-fade-size from a numeric scrollFadeSize', () => {
+    const { container } = render(
+      <ScrollArea scrollFade scrollFadeSize={48}>
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const root = getViewport(container).parentElement as HTMLElement;
+    expect(root.style.getPropertyValue('--scrollarea-fade-size')).toBe(
+      'calc(3rem * var(--mantine-scale))'
+    );
+  });
+
+  it('sets --scrollarea-fade-size from a string scrollFadeSize', () => {
+    const { container } = render(
+      <ScrollArea scrollFade scrollFadeSize="2.5rem">
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const root = getViewport(container).parentElement as HTMLElement;
+    expect(root.style.getPropertyValue('--scrollarea-fade-size')).toBe('2.5rem');
+  });
 });
 
 describe('@mantine/core/ScrollAreaAutosize', () => {
@@ -252,5 +475,15 @@ describe('@mantine/core/ScrollAreaAutosize', () => {
     } finally {
       restoreResizeObserver();
     }
+  });
+
+  it('forwards scrollFade to the inner ScrollArea', () => {
+    const { container } = render(
+      <ScrollArea.Autosize mah={100} scrollFade="y">
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea.Autosize>
+    );
+
+    expect(getViewport(container)).toHaveAttribute('data-scroll-fade', 'y');
   });
 });

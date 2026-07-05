@@ -1,0 +1,141 @@
+import { CompareSliderDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.CompareSlider);
+
+## Usage
+
+`CompareSlider` displays two layers stacked in the same box with a draggable divider that clips
+the top layer to reveal the one underneath. It is commonly used to compare two versions of an
+image (before/after an edit), but the two sides can be any React nodes. Drag the handle, click
+anywhere on the slider or use the keyboard to change the divider position:
+
+<Demo data={CompareSliderDemos.usage} />
+
+The `before` layer is displayed on the left/top side of the divider, the `after` layer is
+displayed on the right/bottom side. Both layers are absolutely positioned and fill the
+container, so they should have the same size for a meaningful comparison.
+
+## Compare any content
+
+`CompareSlider` is not limited to images – `before` and `after` accept any React node: videos,
+maps, charts, code blocks or plain markup. Both layers fill the container, make sure they have
+the same dimensions:
+
+<Demo data={CompareSliderDemos.content} />
+
+## Vertical orientation
+
+Set `orientation="vertical"` to move the divider vertically and clip the layers top/bottom:
+
+<Demo data={CompareSliderDemos.vertical} />
+
+## Controlled
+
+Set `position` and `onPositionChange` props to control the divider position. The position is a
+number between 0 and 100 that represents the percentage of the container revealed by the divider:
+
+<Demo data={CompareSliderDemos.controlled} />
+
+## Change position on hover
+
+Set `changePositionOnHover` to update the divider position when the pointer moves over the
+component, without requiring a drag:
+
+<Demo data={CompareSliderDemos.hover} />
+
+## Custom handle
+
+Use the `handle` prop to replace the default divider handle with any React node:
+
+<Demo data={CompareSliderDemos.customHandle} />
+
+Set `withHandle={false}` to hide the handle. The divider line stays visible and the component
+remains interactive and keyboard accessible:
+
+```tsx
+import { CompareSlider, Image } from '@mantine/core';
+
+function Demo() {
+  return (
+    <CompareSlider
+      withHandle={false}
+      before={<Image src="/before.png" />}
+      after={<Image src="/after.png" />}
+    />
+  );
+}
+```
+
+## Container size
+
+`CompareSlider` does not have an intrinsic size – both layers are absolutely positioned, so the
+component must be given a definite size. It takes the full width of its parent, so in most layouts
+you only need to set a height with the `h` prop or an `aspect-ratio`. If the parent does not
+constrain the width (for example a flex or grid container that shrinks to content), set the width
+explicitly with the `w` or `maw` prop. Make both layers fill the box, for example with `h="100%"`,
+`w="100%"` and `fit="cover"` on `Image`:
+
+```tsx
+import { CompareSlider, Image } from '@mantine/core';
+
+function Demo() {
+  return (
+    <CompareSlider
+      w={{ base: 300, sm: 500 }}
+      h={{ base: 192, sm: 320 }}
+      before={<Image src="/before.png" h="100%" w="100%" fit="cover" />}
+      after={<Image src="/after.png" h="100%" w="100%" fit="cover" />}
+    />
+  );
+}
+```
+
+## Transition
+
+Set the `transition` prop to animate divider position changes, for example when the position is
+changed with the keyboard or updated with a controlled value. Pass `true` to use the default
+`150ms` duration or a number to set a custom duration in milliseconds. The transition is
+disabled while the divider is being dragged:
+
+```tsx
+import { CompareSlider } from '@mantine/core';
+
+function Demo() {
+  return <CompareSlider transition={200} before="Before" after="After" />;
+}
+```
+
+## Disabled
+
+Set the `disabled` prop to lock the divider and prevent user interaction:
+
+<Demo data={CompareSliderDemos.disabled} />
+
+## Accessibility
+
+The divider handle is a `role="slider"` element. To make the component accessible for screen
+readers, set the `aria-label` prop:
+
+```tsx
+import { CompareSlider } from '@mantine/core';
+
+function Demo() {
+  return <CompareSlider aria-label="Compare before and after" before="Before" after="After" />;
+}
+```
+
+Keyboard interactions when the handle is focused:
+
+<KeyboardEventsTable
+  data={[
+    { key: 'ArrowLeft/ArrowDown', description: 'Decreases position by keyboardStep' },
+    { key: 'ArrowRight/ArrowUp', description: 'Increases position by keyboardStep' },
+    { key: 'Home', description: 'Sets position to 0' },
+    { key: 'End', description: 'Sets position to 100' },
+  ]}
+/>
+
+For vertical orientation, `ArrowUp`/`ArrowLeft` decrease the position and
+`ArrowDown`/`ArrowRight` increase it.

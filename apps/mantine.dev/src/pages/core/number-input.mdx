@@ -127,6 +127,20 @@ Set the `min` and `max` props to limit the input value:
 
 <Demo data={NumberInputDemos.minMax} />
 
+## Keyboard stepping
+
+By default, the value is incremented/decremented by `step` when the up/down arrow keys are pressed.
+Use `largeStep` and `smallStep` props to control the amount added/subtracted with keyboard modifiers:
+
+- **`Shift` + Arrow** and **`PageUp`/`PageDown`** – move by `largeStep` (`10 × step` by default)
+- **`Alt` + Arrow** – move by `smallStep`. When `smallStep` is not set, `Alt` + Arrow moves by `step`
+- **Arrow keys without modifiers** – move by `step`
+
+Large and small steps go through the same `min`/`max` clamping and decimal precision rounding as the
+regular step. In [bigint](#bigint-values) mode `largeStep` is supported, but `smallStep` is ignored:
+
+<Demo data={NumberInputDemos.keyboardStepping} />
+
 ## Clamp behavior
 
 By default, the value is clamped when the input is blurred. If you set `clampBehavior="strict"`,

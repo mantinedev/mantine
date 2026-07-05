@@ -193,6 +193,95 @@ describe('@mantine/core/Slider', () => {
     expect(spy).toHaveBeenLastCalledWith(50);
   });
 
+  it('moves by largeStep with Shift + Arrow keys', async () => {
+    const spy = jest.fn();
+    render(<Slider defaultValue={50} step={1} largeStep={10} onChange={spy} />);
+    const slider = screen.getByRole('slider');
+
+    await userEvent.type(slider, '{Shift>}{ArrowUp}{/Shift}');
+    expect(spy).toHaveBeenLastCalledWith(60);
+    await userEvent.type(slider, '{Shift>}{ArrowDown}{/Shift}');
+    expect(spy).toHaveBeenLastCalledWith(50);
+    await userEvent.type(slider, '{Shift>}{ArrowRight}{/Shift}');
+    expect(spy).toHaveBeenLastCalledWith(60);
+    await userEvent.type(slider, '{Shift>}{ArrowLeft}{/Shift}');
+    expect(spy).toHaveBeenLastCalledWith(50);
+  });
+
+  it('uses 10 × step as the default largeStep', async () => {
+    const spy = jest.fn();
+    render(<Slider defaultValue={0} step={2} onChange={spy} />);
+    await userEvent.type(screen.getByRole('slider'), '{Shift>}{ArrowUp}{/Shift}');
+    expect(spy).toHaveBeenLastCalledWith(20);
+  });
+
+  it('moves by largeStep with PageUp and PageDown', async () => {
+    const spy = jest.fn();
+    render(<Slider defaultValue={50} largeStep={10} onChange={spy} />);
+    const slider = screen.getByRole('slider');
+
+    await userEvent.type(slider, '{PageUp}');
+    expect(spy).toHaveBeenLastCalledWith(60);
+    await userEvent.type(slider, '{PageDown}');
+    expect(spy).toHaveBeenLastCalledWith(50);
+  });
+
+  it('still moves by step with plain arrow keys when largeStep is set', async () => {
+    const spy = jest.fn();
+    render(<Slider defaultValue={50} step={1} largeStep={10} onChange={spy} />);
+    await pressArrow('right');
+    expect(spy).toHaveBeenLastCalledWith(51);
+  });
+
+  it('clamps largeStep to max', async () => {
+    const spy = jest.fn();
+    render(<Slider defaultValue={95} min={0} max={100} largeStep={10} onChange={spy} />);
+    await userEvent.type(screen.getByRole('slider'), '{PageUp}');
+    expect(spy).toHaveBeenLastCalledWith(100);
+  });
+
+  it('clamps largeStep to min', async () => {
+    const spy = jest.fn();
+    render(<Slider defaultValue={5} min={0} max={100} largeStep={10} onChange={spy} />);
+    await userEvent.type(screen.getByRole('slider'), '{PageDown}');
+    expect(spy).toHaveBeenLastCalledWith(0);
+  });
+
+  it('ignores largeStep and stays mark-to-mark when restrictToMarks is set', async () => {
+    const spy = jest.fn();
+    render(
+      <Slider
+        defaultValue={50}
+        marks={[{ value: 0 }, { value: 25 }, { value: 50 }, { value: 75 }, { value: 100 }]}
+        restrictToMarks
+        largeStep={10}
+        onChange={spy}
+      />
+    );
+    const slider = screen.getByRole('slider');
+
+    await userEvent.type(slider, '{Shift>}{ArrowRight}{/Shift}');
+    expect(spy).toHaveBeenLastCalledWith(75);
+    await userEvent.type(slider, '{PageUp}');
+    expect(spy).toHaveBeenLastCalledWith(100);
+    await userEvent.type(slider, '{PageDown}');
+    expect(spy).toHaveBeenLastCalledWith(75);
+  });
+
+  it('calls onChangeEnd with the final value after largeStep', async () => {
+    const spy = jest.fn();
+    render(<Slider defaultValue={50} largeStep={10} onChangeEnd={spy} />);
+    await userEvent.type(screen.getByRole('slider'), '{Shift>}{ArrowUp}{/Shift}');
+    expect(spy).toHaveBeenLastCalledWith(60);
+  });
+
+  it('preserves a decimal largeStep that is more precise than step', async () => {
+    const spy = jest.fn();
+    render(<Slider defaultValue={1} min={0} max={10} step={1} largeStep={0.25} onChange={spy} />);
+    await userEvent.type(screen.getByRole('slider'), '{Shift>}{ArrowUp}{/Shift}');
+    expect(spy).toHaveBeenLastCalledWith(1.25);
+  });
+
   it('domain prop restricts keyboard navigation', async () => {
     const { container } = render(
       <Slider defaultValue={50} min={0} max={100} domain={[30, 70]} step={10} />

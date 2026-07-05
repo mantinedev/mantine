@@ -5,6 +5,7 @@ export { useClickOutside } from './use-click-outside/use-click-outside.js';
 export { useClipboard } from './use-clipboard/use-clipboard.js';
 export { useColorScheme } from './use-color-scheme/use-color-scheme.js';
 export { useCounter } from './use-counter/use-counter.js';
+export { useCountdown } from './use-countdown/use-countdown.js';
 export { useDebouncedState } from './use-debounced-state/use-debounced-state.js';
 export { useDebouncedValue } from './use-debounced-value/use-debounced-value.js';
 export { useDocumentTitle } from './use-document-title/use-document-title.js';
@@ -106,6 +107,11 @@ export type {
   UseCounterHandlers,
   UseCounterReturnValue,
 } from './use-counter/use-counter';
+export type {
+  UseCountdownOptions,
+  UseCountdownReturnValue,
+  UseCountdownFormatted,
+} from './use-countdown/use-countdown';
 export type {
   UseDebouncedCallbackOptions,
   UseDebouncedCallbackReturnValue,

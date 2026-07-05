@@ -225,6 +225,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
     category: 'Utilities',
     pages: [
       MDX_DATA.useClipboard,
+      MDX_DATA.useCountdown,
       MDX_DATA.useDocumentTitle,
       MDX_DATA.useDocumentVisibility,
       MDX_DATA.useEyeDropper,
@@ -307,6 +308,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.NumberInput,
       MDX_DATA.PhoneInput,
       MDX_DATA.AngleSlider,
+      MDX_DATA.ColorWheel,
     ],
   },
   {
@@ -330,6 +332,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Button,
       MDX_DATA.CloseButton,
       MDX_DATA.CopyButton,
+      MDX_DATA.DownloadTrigger,
       MDX_DATA.FileButton,
       MDX_DATA.Toggle,
       MDX_DATA.UnstyledButton,
@@ -393,6 +396,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Indicator,
       MDX_DATA.Card,
       MDX_DATA.Image,
+      MDX_DATA.CompareSlider,
       MDX_DATA.ThemeIcon,
       MDX_DATA.Timeline,
       MDX_DATA.Spoiler,

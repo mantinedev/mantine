@@ -630,6 +630,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/divider.mdx',
     searchTags: 'separator, hr, horizontal line, vertical line, rule',
   },
+  DownloadTrigger: {
+    title: 'DownloadTrigger',
+    package: '@mantine/core',
+    slug: '/core/download-trigger',
+    props: ['DownloadTrigger'],
+    description: 'Trigger a client-side file download',
+    source: '@mantine/core/src/components/DownloadTrigger/DownloadTrigger.tsx',
+    docs: 'core/download-trigger.mdx',
+    searchTags: 'download file, export, save file, blob, download button, export csv',
+  },
   AspectRatio: {
     title: 'AspectRatio',
     package: '@mantine/core',
@@ -1396,6 +1406,30 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/AngleSlider/AngleSlider.tsx',
     docs: 'core/angle-slider.mdx',
     searchTags: 'angle, rotation, degrees, circular slider, compass',
+  },
+
+  ColorWheel: {
+    title: 'ColorWheel',
+    package: '@mantine/core',
+    slug: '/core/color-wheel',
+    props: ['ColorWheel'],
+    styles: ['ColorWheel'],
+    description: 'Circular hue selector',
+    source: '@mantine/core/src/components/ColorWheel/ColorWheel.tsx',
+    docs: 'core/color-wheel.mdx',
+    searchTags: 'hue, color picker, color ring, hue wheel, hue ring, circular color',
+  },
+
+  CompareSlider: {
+    title: 'CompareSlider',
+    package: '@mantine/core',
+    slug: '/core/compare-slider',
+    props: ['CompareSlider'],
+    styles: ['CompareSlider'],
+    description: 'Before/after slider to compare two layers of content',
+    source: '@mantine/core/src/components/CompareSlider/CompareSlider.tsx',
+    docs: 'core/compare-slider.mdx',
+    searchTags: 'before after, image compare, reveal, comparison slider, diff images',
   },
 
   FloatingWindow: {

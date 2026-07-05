@@ -81,6 +81,7 @@
     "docs:deploy:v8": "npm run docs:build:v8 && wrangler pages deploy apps/mantine.dev/out --branch master --project-name v8-mantine-docs"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.2.1",
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/serialize": "^1.3.3",
