@@ -403,6 +403,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Timer,
       MDX_DATA.Spoiler,
       MDX_DATA.NumberFormatter,
+      MDX_DATA.FileSize,
       MDX_DATA.RollingNumber,
       MDX_DATA.OverflowList,
       MDX_DATA.DataList,

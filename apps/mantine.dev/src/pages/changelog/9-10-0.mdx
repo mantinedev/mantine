@@ -1,4 +1,4 @@
-import { EditableDemos, TimerDemos } from '@docs/demos';
+import { EditableDemos, FileSizeDemos, TimerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -30,3 +30,12 @@ supports custom layouts with `Editable.Preview`, `Editable.Input` and `Editable.
 `Editable.EditTrigger`, `Editable.SubmitTrigger` and `Editable.CancelTrigger` compound components:
 
 <Demo data={EditableDemos.triggers} />
+
+## FileSize component
+
+New [FileSize](/core/file-size) component and `formatBytes` function – format a raw number of bytes
+into a human-readable file size (`1.45 kB`, `4.8 GB`). Both are built on top of the native
+`Intl.NumberFormat` API and support SI (decimal) and binary units, bytes and bits, locale-aware
+formatting and `unitDisplay` options:
+
+<Demo data={FileSizeDemos.usage} />

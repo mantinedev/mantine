@@ -58,6 +58,7 @@ export * from './EmptyState';
 export * from './Fieldset';
 export * from './FileButton';
 export * from './FileInput';
+export * from './FileSize';
 export * from './FloatingWindow';
 export * from './FocusTrap';
 export * from './Grid';

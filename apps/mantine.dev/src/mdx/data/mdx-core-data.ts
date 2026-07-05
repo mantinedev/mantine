@@ -1187,6 +1187,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'upload, file picker, attach file, browse file, document upload',
   },
 
+  FileSize: {
+    title: 'FileSize',
+    package: '@mantine/core',
+    slug: '/core/file-size',
+    props: ['FileSize'],
+    description: 'Format bytes into a human-readable file size',
+    source: '@mantine/core/src/components/FileSize/FileSize.tsx',
+    docs: 'core/file-size.mdx',
+    searchTags: 'format bytes, human readable size, kb, mb, gb, kib, mib, filesize, formatBytes',
+  },
+
   Splitter: {
     title: 'Splitter',
     package: '@mantine/core',
