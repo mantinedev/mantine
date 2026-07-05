@@ -2386,6 +2386,7 @@ __metadata:
     "@mantinex/mantine-logo": "workspace:*"
     "@tiptap/core": "npm:^3.26.1"
     "@tiptap/extension-floating-menu": "npm:^3.23.6"
+    "@tiptap/extension-image": "npm:^3.26.1"
     "@tiptap/extension-link": "npm:^3.26.1"
     "@tiptap/pm": "npm:^3.26.1"
     "@tiptap/react": "npm:^3.26.1"
