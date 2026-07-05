@@ -1,4 +1,5 @@
 import type {
+  BrushProps,
   CartesianGridProps,
   DotProps,
   LabelProps,
@@ -29,7 +30,8 @@ export type BaseChartStylesNames =
   | 'axis'
   | 'grid'
   | 'referenceLine'
-  | 'axisLabel';
+  | 'axisLabel'
+  | 'brush';
 
 export type ChartData = Record<string, any>[];
 
@@ -114,6 +116,12 @@ export interface GridChartBaseProps {
 
   /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
   accessibilityLayer?: boolean;
+
+  /** Determines whether a brush (range selector) should be displayed under the chart, `false` by default */
+  withBrush?: boolean;
+
+  /** Props passed down to the `Brush` component */
+  brushProps?: Omit<BrushProps, 'ref'>;
 }
 
 export type MantineChartDotProps = Omit<DotProps, 'ref'> & { strokeWidth?: number };

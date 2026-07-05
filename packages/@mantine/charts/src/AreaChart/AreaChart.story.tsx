@@ -7,9 +7,16 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { ChartBrush } from '../ChartBrush';
 import { AreaChart } from './AreaChart';
 
 export default { title: 'AreaChart' };
+
+const brushData = Array.from({ length: 40 }, (_, index) => ({
+  date: `Day ${index + 1}`,
+  Apples: Math.round(2000 + Math.sin(index / 3) * 800 + index * 20),
+  Oranges: Math.round(1500 + Math.cos(index / 4) * 600 + index * 15),
+}));
 
 const data = [
   {
@@ -459,6 +466,53 @@ export function RechartsExample() {
           <Line dataKey="uv" stroke="#82ca9d" isAnimationActive={false} />
         </LineChart>
       </ResponsiveContainer>
+    </div>
+  );
+}
+
+export function WithBrush() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={brushData}
+        dataKey="date"
+        withBrush
+        series={[
+          { name: 'Apples', color: 'indigo.6' },
+          { name: 'Oranges', color: 'blue.6' },
+        ]}
+      />
+    </div>
+  );
+}
+
+export function WithBrushProps() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={brushData}
+        dataKey="date"
+        withBrush
+        brushProps={{ startIndex: 5, endIndex: 20, height: 30 }}
+        series={[{ name: 'Apples', color: 'indigo.6' }]}
+      />
+    </div>
+  );
+}
+
+export function StandaloneBrush() {
+  return (
+    <div style={{ padding: 40 }}>
+      <AreaChart
+        h={400}
+        data={brushData}
+        dataKey="date"
+        series={[{ name: 'Apples', color: 'indigo.6' }]}
+      >
+        <ChartBrush dataKey="date" startIndex={0} endIndex={15} />
+      </AreaChart>
     </div>
   );
 }

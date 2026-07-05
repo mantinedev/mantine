@@ -41,7 +41,7 @@ export interface ScatterChartSeries {
 
 export type ScatterChartStylesNames =
   | 'scatter'
-  | BaseChartStylesNames
+  | Exclude<BaseChartStylesNames, 'brush'>
   | ChartLegendStylesNames
   | ChartTooltipStylesNames;
 
@@ -51,7 +51,10 @@ export type ScatterChartCssVariables = {
 
 export interface ScatterChartProps
   extends
-    Omit<GridChartBaseProps, 'dataKey' | 'data' | 'unit' | 'valueFormatter'>,
+    Omit<
+      GridChartBaseProps,
+      'dataKey' | 'data' | 'unit' | 'valueFormatter' | 'withBrush' | 'brushProps'
+    >,
     BoxProps,
     StylesApiProps<ScatterChartFactory>,
     ElementProps<'div'> {

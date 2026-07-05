@@ -81,6 +81,16 @@ use a mouse can read the underlying values. The prop is supported by `AreaChart`
 `LineChart`, `CompositeChart`, `ScatterChart`, `BubbleChart`, `PieChart`, `DonutChart`, `RadarChart`,
 `RadialBarChart` and `FunnelChart` components.
 
+## Charts brush
+
+[AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart), [LineChart](/charts/line-chart)
+and [CompositeChart](/charts/composite-chart) now support the `withBrush` prop that displays a
+brush (range selector) under the chart. Drag the brush handles to zoom into a subset of the data.
+Use the `brushProps` prop to customize the underlying recharts `Brush`, or render the new
+themed `ChartBrush` component as a child of the chart for full control.
+
+<Demo data={AreaChartDemos.brush} />
+
 ## Heatmap month labels position
 
 [Heatmap](/charts/heatmap) now supports `monthLabelsPosition` prop that allows

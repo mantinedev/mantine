@@ -28,6 +28,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useId } from '@mantine/hooks';
+import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
@@ -206,6 +207,8 @@ export const LineChart = factory<LineChartFactory>((_props) => {
     attributes,
     gridColor,
     accessibilityLayer,
+    withBrush,
+    brushProps,
     ...others
   } = props;
 
@@ -471,6 +474,14 @@ export const LineChart = factory<LineChartFactory>((_props) => {
 
           {lines}
           {referenceLinesItems}
+          {withBrush && (
+            <ChartBrush
+              dataKey={dataKey}
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+              {...brushProps}
+            />
+          )}
           {children}
         </ReChartsLineChart>
       </ResponsiveContainer>

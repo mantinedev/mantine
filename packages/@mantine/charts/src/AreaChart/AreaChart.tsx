@@ -27,6 +27,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
@@ -213,6 +214,8 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     textColor,
     attributes,
     accessibilityLayer,
+    withBrush,
+    brushProps,
     ...others
   } = props;
 
@@ -494,6 +497,14 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
 
           {areas}
           {withDots && dotsAreas}
+          {withBrush && (
+            <ChartBrush
+              dataKey={dataKey}
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+              {...brushProps}
+            />
+          )}
           {children}
         </ReChartsAreaChart>
       </ResponsiveContainer>

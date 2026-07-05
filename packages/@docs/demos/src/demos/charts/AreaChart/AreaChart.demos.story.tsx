@@ -167,3 +167,13 @@ export const Demo_referenceArea = {
   name: '⭐ Demo: referenceArea',
   render: renderDemo(demos.referenceArea),
 };
+
+export const Demo_brush = {
+  name: '⭐ Demo: brush',
+  render: renderDemo(demos.brush),
+};
+
+export const Demo_brushProps = {
+  name: '⭐ Demo: brushProps',
+  render: renderDemo(demos.brushProps),
+};

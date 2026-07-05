@@ -1,5 +1,6 @@
 export * from './ChartTooltip/index.js';
 export * from './ChartLegend/index.js';
+export * from './ChartBrush/index.js';
 export * from './AreaChart/index.js';
 export * from './BarChart/index.js';
 export * from './LineChart/index.js';
