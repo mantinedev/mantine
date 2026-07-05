@@ -2384,6 +2384,7 @@ __metadata:
     "@mantinex/mantine-logo": "workspace:*"
     "@tiptap/core": "npm:^3.26.1"
     "@tiptap/extension-floating-menu": "npm:^3.23.6"
+    "@tiptap/extension-image": "npm:^3.26.1"
     "@tiptap/extension-link": "npm:^3.26.1"
     "@tiptap/pm": "npm:^3.26.1"
     "@tiptap/react": "npm:^3.26.1"
@@ -6097,6 +6098,15 @@ __metadata:
     "@tiptap/core": 3.27.1
     "@tiptap/pm": 3.27.1
   checksum: 10c0/50a88cd05c59840255ca99908aa31e0f9c9dfa7721623e096db980d14675c2c27deb66714a15ab8302a985db127c70861ca498857b8b807b9468ab65c1c0612f
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-image@npm:^3.26.1":
+  version: 3.27.1
+  resolution: "@tiptap/extension-image@npm:3.27.1"
+  peerDependencies:
+    "@tiptap/core": 3.27.1
+  checksum: 10c0/c53d6200997b4ebc4f73f6a7a04cf7064c43caa9de98eac98882e70e866b3549de7a8ef1853998cb481cd3c1aa56fd1c5278b4293c758ff57fe31a6b09358a9c
   languageName: node
   linkType: hard
 
@@ -13958,6 +13968,7 @@ __metadata:
     "@tiptap/extension-color": "npm:^3.26.1"
     "@tiptap/extension-highlight": "npm:^3.26.1"
     "@tiptap/extension-history": "npm:^3.26.1"
+    "@tiptap/extension-image": "npm:^3.26.1"
     "@tiptap/extension-link": "npm:^3.26.1"
     "@tiptap/extension-list": "npm:^3.26.1"
     "@tiptap/extension-placeholder": "npm:^3.26.1"
