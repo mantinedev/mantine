@@ -6,6 +6,7 @@ import {
   inline,
   offset,
   shift,
+  useClick,
   useDelayGroup,
   useDismiss,
   useFloating,
@@ -30,7 +31,9 @@ interface UseTooltip {
   offset: number | FloatingAxesOffsets;
   arrowRef?: React.RefObject<HTMLDivElement | null>;
   arrowOffset?: number;
-  events?: { hover: boolean; focus: boolean; touch: boolean };
+  events?: { hover?: boolean; focus?: boolean; touch?: boolean; click?: boolean };
+  closeOnClickOutside?: boolean;
+  closeOnEscape?: boolean;
   inline?: boolean;
   strategy?: FloatingStrategy;
   middlewares?: TooltipMiddlewares;
@@ -122,16 +125,25 @@ export function useTooltip(settings: UseTooltip) {
 
   const { delay: groupDelay, currentId, setCurrentId } = useDelayGroup(context, { id: uid });
 
+  const clickEnabled = settings.events?.click === true;
+  const hoverEnabled = !clickEnabled && (settings.events?.hover ?? true);
+  const focusEnabled = !clickEnabled && (settings.events?.focus ?? false);
+
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {
-      enabled: settings.events?.hover,
+      enabled: hoverEnabled,
       delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
       mouseOnly: !settings.events?.touch,
     }),
-    useFocus(context, { enabled: settings.events?.focus, visibleOnly: true }),
+    useFocus(context, { enabled: focusEnabled, visibleOnly: true }),
+    useClick(context, { enabled: clickEnabled }),
     useRole(context, { role: 'tooltip' }),
     // Cannot be used with controlled tooltip, page jumps
-    useDismiss(context, { enabled: typeof settings.opened === 'undefined' }),
+    useDismiss(context, {
+      enabled: typeof settings.opened === 'undefined',
+      escapeKey: settings.closeOnEscape,
+      outsidePress: settings.closeOnClickOutside,
+    }),
   ]);
 
   const previousPlacementRef = useRef(placement);

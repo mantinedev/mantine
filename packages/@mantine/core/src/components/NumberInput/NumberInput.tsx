@@ -1,7 +1,13 @@
 import React, { useRef } from 'react';
 import cx from 'clsx';
 import { NumberFormatValues, NumericFormat, OnValueChange } from 'react-number-format';
-import { assignRef, clamp, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import {
+  assignRef,
+  clamp,
+  useHoldRepeatHandlers,
+  useMergedRef,
+  useUncontrolled,
+} from '@mantine/hooks';
 import {
   BoxProps,
   createVarsResolver,
@@ -223,6 +229,12 @@ export interface NumberInputProps<T extends NumberInputNumericType = number>
   /** Number by which value will be incremented/decremented with up/down controls and keyboard arrows @default 1 */
   step?: NumberInputNumericValue<T>;
 
+  /** Number by which the value is incremented/decremented on `Shift + Arrow` and `PageUp`/`PageDown` keys @default 10 × step */
+  largeStep?: NumberInputNumericValue<T>;
+
+  /** Number by which the value is incremented/decremented on `Alt + Arrow` keys. When not set, `Alt + Arrow` behaves like a normal step. Ignored in bigint mode */
+  smallStep?: NumberInputNumericValue<T>;
+
   /** If set, the up/down controls are hidden @default false */
   hideControls?: boolean;
 
@@ -356,6 +368,8 @@ export const NumberInput = genericFactory<NumberInputFactory>(
       max,
       min,
       step,
+      largeStep,
+      smallStep,
       hideControls,
       rightSection,
       isAllowed,
@@ -427,19 +441,20 @@ export const NumberInput = genericFactory<NumberInputFactory>(
       onChange: onChange as ((value: InternalNumberInputValue) => void) | undefined,
     });
 
-    const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
     const inputRef = useRef<HTMLInputElement>(null);
-    const onStepTimeoutRef = useRef<number | null>(null);
-    const stepCountRef = useRef<number>(0);
 
     const minNumber = typeof min === 'number' ? min : undefined;
     const maxNumber = typeof max === 'number' ? max : undefined;
     const stepNumber = typeof step === 'number' ? step : defaultProps.step;
     const startValueNumber = typeof startValue === 'number' ? startValue : defaultProps.startValue;
 
+    const largeStepNumber = typeof largeStep === 'number' ? largeStep : stepNumber * 10;
+    const smallStepNumber = typeof smallStep === 'number' ? smallStep : undefined;
+
     const minBigInt = toBigIntOrUndefined(min);
     const maxBigInt = toBigIntOrUndefined(max);
     const stepBigInt = toBigIntOrUndefined(step) ?? BigInt(1);
+    const largeStepBigInt = toBigIntOrUndefined(largeStep) ?? stepBigInt * BigInt(10);
     const startValueBigInt = toBigIntOrUndefined(startValue) ?? BigInt(0);
 
     const parseBigIntOrString = (inputValue: string): bigint | string => {
@@ -492,18 +507,19 @@ export const NumberInput = genericFactory<NumberInputFactory>(
       }
     };
 
-    const incrementRef = useRef<() => void>(noop);
-    incrementRef.current = () => {
+    const incrementRef = useRef<(stepOverride?: number | bigint) => void>(noop);
+    incrementRef.current = (stepOverride) => {
       if (isBigIntMode) {
         if (!canStepBigInt(_value as bigint | string, allowNegativeResolved)) {
           return;
         }
 
+        const effectiveStep = typeof stepOverride === 'bigint' ? stepOverride : stepBigInt;
         let val: bigint;
         const currentValue = _value;
 
         if (typeof currentValue === 'bigint') {
-          const incrementedValue = currentValue + stepBigInt;
+          const incrementedValue = currentValue + effectiveStep;
           if (maxBigInt !== undefined && incrementedValue > maxBigInt) {
             onMaxReached?.();
           }
@@ -515,7 +531,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
             return;
           }
 
-          const incrementedValue = parsed + stepBigInt;
+          const incrementedValue = parsed + effectiveStep;
           if (maxBigInt !== undefined && incrementedValue > maxBigInt) {
             onMaxReached?.();
           }
@@ -539,9 +555,10 @@ export const NumberInput = genericFactory<NumberInputFactory>(
         return;
       }
 
+      const effectiveStep = typeof stepOverride === 'number' ? stepOverride : stepNumber;
       let val: number;
       const currentValuePrecision = getDecimalPlaces(_value as number | string);
-      const stepPrecision = getDecimalPlaces(stepNumber);
+      const stepPrecision = getDecimalPlaces(effectiveStep);
       const maxPrecision = Math.max(currentValuePrecision, stepPrecision);
       const factor = 10 ** maxPrecision;
 
@@ -549,13 +566,13 @@ export const NumberInput = genericFactory<NumberInputFactory>(
         val = clamp(startValueNumber, minNumber, maxNumber);
       } else if (maxNumber !== undefined) {
         const incrementedValue =
-          (Math.round(Number(_value) * factor) + Math.round(stepNumber * factor)) / factor;
+          (Math.round(Number(_value) * factor) + Math.round(effectiveStep * factor)) / factor;
         if (incrementedValue > maxNumber) {
           onMaxReached?.();
         }
         val = incrementedValue <= maxNumber ? incrementedValue : maxNumber;
       } else {
-        val = (Math.round(Number(_value) * factor) + Math.round(stepNumber * factor)) / factor;
+        val = (Math.round(Number(_value) * factor) + Math.round(effectiveStep * factor)) / factor;
       }
 
       const formattedValue = val.toFixed(maxPrecision);
@@ -567,20 +584,21 @@ export const NumberInput = genericFactory<NumberInputFactory>(
       setTimeout(() => adjustCursor(inputRef.current?.value.length), 0);
     };
 
-    const decrementRef = useRef<() => void>(noop);
-    decrementRef.current = () => {
+    const decrementRef = useRef<(stepOverride?: number | bigint) => void>(noop);
+    decrementRef.current = (stepOverride) => {
       if (isBigIntMode) {
         if (!canStepBigInt(_value as bigint | string, allowNegativeResolved)) {
           return;
         }
 
+        const effectiveStep = typeof stepOverride === 'bigint' ? stepOverride : stepBigInt;
         let val: bigint;
         const minValue =
           minBigInt !== undefined ? minBigInt : !allowNegativeResolved ? BigInt(0) : undefined;
         const currentValue = _value;
 
         if (typeof currentValue === 'bigint') {
-          const decrementedValue = currentValue - stepBigInt;
+          const decrementedValue = currentValue - effectiveStep;
           if (minValue !== undefined && decrementedValue < minValue) {
             onMinReached?.();
           }
@@ -591,7 +609,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
             return;
           }
 
-          const decrementedValue = parsed - stepBigInt;
+          const decrementedValue = parsed - effectiveStep;
           if (minValue !== undefined && decrementedValue < minValue) {
             onMinReached?.();
           }
@@ -614,11 +632,12 @@ export const NumberInput = genericFactory<NumberInputFactory>(
         return;
       }
 
+      const effectiveStep = typeof stepOverride === 'number' ? stepOverride : stepNumber;
       let val: number;
       const minValue =
         minNumber !== undefined ? minNumber : !allowNegativeResolved ? 0 : Number.MIN_SAFE_INTEGER;
       const currentValuePrecision = getDecimalPlaces(_value as number | string);
-      const stepPrecision = getDecimalPlaces(stepNumber);
+      const stepPrecision = getDecimalPlaces(effectiveStep);
       const maxPrecision = Math.max(currentValuePrecision, stepPrecision);
       const factor = 10 ** maxPrecision;
 
@@ -626,7 +645,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
         val = clamp(startValueNumber, minValue, maxNumber);
       } else {
         const decrementedValue =
-          (Math.round(Number(_value) * factor) - Math.round(stepNumber * factor)) / factor;
+          (Math.round(Number(_value) * factor) - Math.round(effectiveStep * factor)) / factor;
         if (minValue !== undefined && decrementedValue < minValue) {
           onMinReached?.();
         }
@@ -679,6 +698,26 @@ export const NumberInput = genericFactory<NumberInputFactory>(
       others.onPaste?.(event as any);
     };
 
+    const resolveKeyboardStep = (
+      event: React.KeyboardEvent<HTMLInputElement>
+    ): number | bigint | undefined => {
+      const useLargeStep = event.key === 'PageUp' || event.key === 'PageDown' || event.shiftKey;
+
+      if (isBigIntMode) {
+        return useLargeStep ? largeStepBigInt : undefined;
+      }
+
+      if (useLargeStep) {
+        return largeStepNumber;
+      }
+
+      if (event.altKey && smallStepNumber !== undefined) {
+        return smallStepNumber;
+      }
+
+      return undefined;
+    };
+
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       onKeyDown?.(event);
 
@@ -686,14 +725,14 @@ export const NumberInput = genericFactory<NumberInputFactory>(
         return;
       }
 
-      if (event.key === 'ArrowUp') {
+      if (event.key === 'ArrowUp' || event.key === 'PageUp') {
         event.preventDefault();
-        incrementRef.current?.();
+        incrementRef.current?.(resolveKeyboardStep(event));
       }
 
-      if (event.key === 'ArrowDown') {
+      if (event.key === 'ArrowDown' || event.key === 'PageDown') {
         event.preventDefault();
-        decrementRef.current?.();
+        decrementRef.current?.(resolveKeyboardStep(event));
       }
     };
 
@@ -753,46 +792,19 @@ export const NumberInput = genericFactory<NumberInputFactory>(
 
     assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
 
-    const onStepHandleChange = (isIncrement: boolean) => {
-      if (isIncrement) {
-        incrementRef.current?.();
-      } else {
-        decrementRef.current?.();
-      }
-      stepCountRef.current += 1;
-    };
+    const incrementControls = useHoldRepeatHandlers(() => incrementRef.current?.(), {
+      delay: stepHoldDelay,
+      interval: stepHoldInterval,
+      events: ['pointer'],
+      onStart: () => inputRef.current?.focus(),
+    });
 
-    const onStepLoop = (isIncrement: boolean) => {
-      onStepHandleChange(isIncrement);
-
-      if (shouldUseStepInterval) {
-        const interval =
-          typeof stepHoldInterval === 'number'
-            ? stepHoldInterval
-            : stepHoldInterval(stepCountRef.current);
-        onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), interval);
-      }
-    };
-
-    const onStep = (
-      event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-      isIncrement: boolean
-    ) => {
-      event.preventDefault();
-      inputRef.current?.focus();
-      onStepHandleChange(isIncrement);
-      if (shouldUseStepInterval) {
-        onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), stepHoldDelay);
-      }
-    };
-
-    const onStepDone = () => {
-      if (onStepTimeoutRef.current) {
-        window.clearTimeout(onStepTimeoutRef.current);
-      }
-      onStepTimeoutRef.current = null;
-      stepCountRef.current = 0;
-    };
+    const decrementControls = useHoldRepeatHandlers(() => decrementRef.current?.(), {
+      delay: stepHoldDelay,
+      interval: stepHoldInterval,
+      events: ['pointer'],
+      onStart: () => inputRef.current?.focus(),
+    });
 
     const controls = (
       <div {...getStyles('controls')}>
@@ -807,11 +819,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
           }
           mod={{ direction: 'up' }}
           onMouseDown={(event) => event.preventDefault()}
-          onPointerDown={(event) => {
-            onStep(event, true);
-          }}
-          onPointerUp={onStepDone}
-          onPointerLeave={onStepDone}
+          {...incrementControls}
         >
           <NumberInputChevron direction="up" />
         </UnstyledButton>
@@ -826,11 +834,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
           }
           mod={{ direction: 'down' }}
           onMouseDown={(event) => event.preventDefault()}
-          onPointerDown={(event) => {
-            onStep(event, false);
-          }}
-          onPointerUp={onStepDone}
-          onPointerLeave={onStepDone}
+          {...decrementControls}
         >
           <NumberInputChevron direction="down" />
         </UnstyledButton>

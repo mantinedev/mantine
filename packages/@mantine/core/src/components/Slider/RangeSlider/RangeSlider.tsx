@@ -66,6 +66,9 @@ export interface RangeSliderProps
   /** Number by which value will be incremented/decremented with thumb drag and arrows @default 1 */
   step?: number;
 
+  /** Number by which the focused thumb is moved on `Shift + Arrow` and `PageUp`/`PageDown` keys. Ignored when `restrictToMarks` is set @default 10 × step */
+  largeStep?: number;
+
   /** Number of significant digits after the decimal point */
   precision?: number;
 
@@ -199,6 +202,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
     minRange,
     maxRange,
     step,
+    largeStep,
     precision: _precision,
     defaultValue,
     name,
@@ -262,7 +266,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
     getPosition({ value: _value[1], min: domainMin, max: domainMax }),
   ];
 
-  const precision = _precision ?? getPrecision(step);
+  const largeStepValue = largeStep ?? step * 10;
+  const precision = _precision ?? Math.max(getPrecision(step), getPrecision(largeStepValue));
 
   const _setValue = (val: RangeSliderValue) => {
     setValue(val);
@@ -453,10 +458,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
+          const delta = event.shiftKey ? largeStepValue : step;
           const nextValue =
             restrictToMarks && marks
               ? getNextMarkValue(valueRef.current[focusedIndex], marks)
-              : Math.min(Math.max(valueRef.current[focusedIndex] + step, domainMin), domainMax);
+              : Math.min(Math.max(valueRef.current[focusedIndex] + delta, domainMin), domainMax);
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
@@ -466,6 +472,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
 
+          const delta = event.shiftKey ? largeStepValue : step;
           const nextValue =
             restrictToMarks && marks
               ? (dir === 'rtl' ? getPreviousMarkValue : getNextMarkValue)(
@@ -475,8 +482,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
               : Math.min(
                   Math.max(
                     dir === 'rtl'
-                      ? valueRef.current[focusedIndex] - step
-                      : valueRef.current[focusedIndex] + step,
+                      ? valueRef.current[focusedIndex] - delta
+                      : valueRef.current[focusedIndex] + delta,
                     domainMin
                   ),
                   domainMax
@@ -490,10 +497,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
+          const delta = event.shiftKey ? largeStepValue : step;
           const nextValue =
             restrictToMarks && marks
               ? getPreviousMarkValue(valueRef.current[focusedIndex], marks)
-              : Math.min(Math.max(valueRef.current[focusedIndex] - step, domainMin), domainMax);
+              : Math.min(Math.max(valueRef.current[focusedIndex] - delta, domainMin), domainMax);
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
@@ -503,6 +511,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
 
+          const delta = event.shiftKey ? largeStepValue : step;
           const nextValue =
             restrictToMarks && marks
               ? (dir === 'rtl' ? getNextMarkValue : getPreviousMarkValue)(
@@ -512,13 +521,43 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
               : Math.min(
                   Math.max(
                     dir === 'rtl'
-                      ? valueRef.current[focusedIndex] + step
-                      : valueRef.current[focusedIndex] - step,
+                      ? valueRef.current[focusedIndex] + delta
+                      : valueRef.current[focusedIndex] - delta,
                     domainMin
                   ),
                   domainMax
                 );
 
+          setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
+          break;
+        }
+
+        case 'PageUp': {
+          event.preventDefault();
+          const focusedIndex = getFocusedThumbIndex();
+          thumbs.current[focusedIndex].focus();
+          const nextValue =
+            restrictToMarks && marks
+              ? getNextMarkValue(valueRef.current[focusedIndex], marks)
+              : Math.min(
+                  Math.max(valueRef.current[focusedIndex] + largeStepValue, domainMin),
+                  domainMax
+                );
+          setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
+          break;
+        }
+
+        case 'PageDown': {
+          event.preventDefault();
+          const focusedIndex = getFocusedThumbIndex();
+          thumbs.current[focusedIndex].focus();
+          const nextValue =
+            restrictToMarks && marks
+              ? getPreviousMarkValue(valueRef.current[focusedIndex], marks)
+              : Math.min(
+                  Math.max(valueRef.current[focusedIndex] - largeStepValue, domainMin),
+                  domainMax
+                );
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }

@@ -187,6 +187,94 @@ describe('@mantine/core/RangeSlider', () => {
     expectInputValue('75', container, 1);
   });
 
+  it('moves the focused thumb by largeStep with Shift + Arrow and PageUp/PageDown', async () => {
+    const { container } = render(<RangeSlider defaultValue={[20, 80]} largeStep={10} />);
+    const sliders = getSliders();
+    await act(async () => {
+      sliders[0].focus();
+    });
+
+    await userEvent.keyboard('{Shift>}{ArrowRight}{/Shift}');
+    expectInputValue('30', container, 0);
+    expectInputValue('80', container, 1);
+
+    await userEvent.keyboard('{PageDown}');
+    expectInputValue('20', container, 0);
+
+    await userEvent.keyboard('{PageUp}');
+    expectInputValue('30', container, 0);
+
+    await userEvent.keyboard('{Shift>}{ArrowLeft}{/Shift}');
+    expectInputValue('20', container, 0);
+  });
+
+  it('uses 10 × step as the default largeStep', async () => {
+    const { container } = render(<RangeSlider defaultValue={[0, 90]} step={2} />);
+    const sliders = getSliders();
+    await act(async () => {
+      sliders[0].focus();
+    });
+
+    await userEvent.keyboard('{Shift>}{ArrowUp}{/Shift}');
+    expectInputValue('20', container, 0);
+  });
+
+  it('applies largeStep to the focused thumb and respects the sibling bound', async () => {
+    const { container } = render(
+      <RangeSlider defaultValue={[40, 50]} minRange={10} largeStep={10} pushOnOverlap={false} />
+    );
+    const sliders = getSliders();
+    await act(async () => {
+      sliders[0].focus();
+    });
+
+    await userEvent.keyboard('{PageUp}');
+    expectInputValue('40', container, 0);
+    expectInputValue('50', container, 1);
+
+    await act(async () => {
+      sliders[1].focus();
+    });
+    await userEvent.keyboard('{PageUp}');
+    expectInputValue('60', container, 1);
+  });
+
+  it('ignores largeStep and stays mark-to-mark when restrictToMarks is set', async () => {
+    const { container } = render(
+      <RangeSlider
+        defaultValue={[0, 100]}
+        marks={[{ value: 0 }, { value: 25 }, { value: 50 }, { value: 75 }, { value: 100 }]}
+        restrictToMarks
+        largeStep={10}
+      />
+    );
+    const sliders = getSliders();
+    await act(async () => {
+      sliders[0].focus();
+    });
+
+    await userEvent.keyboard('{Shift>}{ArrowRight}{/Shift}');
+    expectInputValue('25', container, 0);
+
+    await userEvent.keyboard('{PageUp}');
+    expectInputValue('50', container, 0);
+
+    await userEvent.keyboard('{PageDown}');
+    expectInputValue('25', container, 0);
+  });
+
+  it('calls onChangeEnd with the final value after largeStep', async () => {
+    const spy = jest.fn();
+    render(<RangeSlider defaultValue={[20, 80]} largeStep={10} onChangeEnd={spy} />);
+    const sliders = getSliders();
+    await act(async () => {
+      sliders[0].focus();
+    });
+
+    await userEvent.keyboard('{Shift>}{ArrowUp}{/Shift}');
+    expect(spy).toHaveBeenLastCalledWith([30, 80]);
+  });
+
   it('domain prop restricts keyboard navigation', async () => {
     const { container } = render(
       <RangeSlider defaultValue={[40, 60]} min={0} max={100} domain={[30, 70]} step={10} />

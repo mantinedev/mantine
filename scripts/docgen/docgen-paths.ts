@@ -114,6 +114,21 @@ const FILES_PATHS = getPaths([
   // Timeline
   'packages/@mantine/core/src/components/Timeline/TimelineItem/TimelineItem.tsx',
 
+  // Timer
+  'packages/@mantine/core/src/components/Timer/TimerSegment.tsx',
+  'packages/@mantine/core/src/components/Timer/TimerSeparator.tsx',
+  'packages/@mantine/core/src/components/Timer/TimerControl.tsx',
+
+  // Editable
+  'packages/@mantine/core/src/components/Editable/EditableArea.tsx',
+  'packages/@mantine/core/src/components/Editable/EditablePreview.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableInput.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableTextarea.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableControl.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableEditTrigger.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableSubmitTrigger.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableCancelTrigger.tsx',
+
   // List
   'packages/@mantine/core/src/components/List/ListItem/ListItem.tsx',
 

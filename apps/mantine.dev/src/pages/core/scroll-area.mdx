@@ -35,6 +35,25 @@ To disable horizontal scrollbars, set the `scrollbars="y"` prop:
 
 <Demo data={ScrollAreaDemos.scrollbars} />
 
+## Edge fade
+
+Set the `scrollFade` prop to fade out content at the scrollable edges. The fade is a visual affordance
+that signals there is more content to scroll – it is shown at an edge only when there is hidden content
+past it and disappears once that edge is reached:
+
+<Demo data={ScrollAreaDemos.scrollFade} />
+
+`scrollFade` prop accepts the following values:
+
+- `true` – fades both axes, bounded by the `scrollbars` prop
+- `'x'` – fades the horizontal (left/right) edges only
+- `'y'` – fades the vertical (top/bottom) edges only
+
+Use the `scrollFadeSize` prop to change the length of the fade gradient (`2rem` by default), numbers are
+converted to rem. The example below restricts the fade to the horizontal axis with a larger fade length:
+
+<Demo data={ScrollAreaDemos.scrollFadeHorizontal} />
+
 ## Subscribe to scroll position changes
 
 Set the `onScrollPositionChange` function to subscribe to scroll position changes.

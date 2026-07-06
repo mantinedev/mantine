@@ -1,5 +1,6 @@
 .root {
   --scrollarea-scrollbar-size: 12px;
+  --scrollarea-fade-size: 2rem;
 
   position: relative;
   overflow: hidden;
@@ -53,6 +54,34 @@
         padding-bottom: var(--scrollarea-scrollbar-size);
       }
     }
+  }
+
+  &:where([data-scroll-fade]) {
+    --fade: var(--scrollarea-fade-size);
+    --fade-top: linear-gradient(black, black);
+    --fade-bottom: linear-gradient(black, black);
+    --fade-left: linear-gradient(black, black);
+    --fade-right: linear-gradient(black, black);
+
+    mask-image: var(--fade-top), var(--fade-bottom), var(--fade-left), var(--fade-right);
+    mask-composite: intersect;
+    transition: mask-image 150ms ease;
+  }
+
+  &:where([data-fade-top]) {
+    --fade-top: linear-gradient(to bottom, transparent, black var(--fade));
+  }
+
+  &:where([data-fade-bottom]) {
+    --fade-bottom: linear-gradient(to top, transparent, black var(--fade));
+  }
+
+  &:where([data-fade-left]) {
+    --fade-left: linear-gradient(to right, transparent, black var(--fade));
+  }
+
+  &:where([data-fade-right]) {
+    --fade-right: linear-gradient(to left, transparent, black var(--fade));
   }
 }
 

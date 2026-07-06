@@ -13,6 +13,11 @@ export const Demo_controlled = {
   render: renderDemo(demos.controlled),
 };
 
+export const Demo_click = {
+  name: '⭐ Demo: click',
+  render: renderDemo(demos.click),
+};
+
 export const Demo_arrow = {
   name: '⭐ Demo: arrow',
   render: renderDemo(demos.arrow),

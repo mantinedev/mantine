@@ -10,6 +10,7 @@ import {
   Factory,
   rem,
   StylesApiProps,
+  useDirection,
   useProps,
   useStyles,
 } from '../../core';
@@ -30,7 +31,7 @@ export type ScrollAreaStylesNames =
   | 'content';
 
 export type ScrollAreaCssVariables = {
-  root: '--scrollarea-scrollbar-size';
+  root: '--scrollarea-scrollbar-size' | '--scrollarea-fade-size';
 };
 
 export interface ScrollAreaProps
@@ -71,6 +72,19 @@ export interface ScrollAreaProps
    * @default false
    */
   offsetScrollbars?: boolean | 'x' | 'y' | 'present';
+
+  /**
+   * Fades out the content at the scrollable edges to indicate that there is more content to scroll.
+   * The fade at a given edge is shown only when there is hidden content past it.
+   * - `true` – fades both axes, bounded by `scrollbars`
+   * - `'x'` – fades the horizontal edges only
+   * - `'y'` – fades the vertical edges only
+   * @default false
+   */
+  scrollFade?: boolean | 'x' | 'y';
+
+  /** Length of the edge fade gradient, numbers are converted to rem @default '2rem' */
+  scrollFadeSize?: number | string;
 
   /** Assigns viewport element (scrollable container) ref */
   viewportRef?: React.Ref<HTMLDivElement>;
@@ -131,7 +145,7 @@ const defaultProps = {
 } satisfies Partial<ScrollAreaProps>;
 
 const varsResolver = createVarsResolver<ScrollAreaFactory>(
-  (_, { scrollbarSize, overscrollBehavior, scrollbars }) => {
+  (_, { scrollbarSize, overscrollBehavior, scrollbars, scrollFadeSize }) => {
     let overrideOverscrollBehavior = overscrollBehavior;
 
     if (overscrollBehavior && scrollbars) {
@@ -146,10 +160,36 @@ const varsResolver = createVarsResolver<ScrollAreaFactory>(
       root: {
         '--scrollarea-scrollbar-size': rem(scrollbarSize),
         '--scrollarea-over-scroll-behavior': overrideOverscrollBehavior,
+        '--scrollarea-fade-size': rem(scrollFadeSize),
       },
     };
   }
 );
+
+type ScrollFadeAxis = 'x' | 'y' | 'xy';
+
+function resolveScrollFadeAxis(
+  scrollFade: ScrollAreaProps['scrollFade'],
+  scrollbars: ScrollAreaProps['scrollbars']
+): ScrollFadeAxis | undefined {
+  if (!scrollFade) {
+    return undefined;
+  }
+
+  if (scrollFade === 'x' || scrollFade === 'y') {
+    return scrollFade;
+  }
+
+  return scrollbars || undefined;
+}
+
+function setFadeAttribute(element: HTMLElement, name: string, active: boolean) {
+  if (active) {
+    element.setAttribute(name, 'true');
+  } else {
+    element.removeAttribute(name);
+  }
+}
 
 export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
   const props = useProps('ScrollArea', defaultProps, _props);
@@ -169,6 +209,8 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
     children,
     offsetScrollbars,
     scrollbars,
+    scrollFade,
+    scrollFadeSize,
     onBottomReached,
     onTopReached,
     onLeftReached,
@@ -210,13 +252,64 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
   }, []);
   const combinedViewportRef = useMergeRefs([viewportRef, localViewportRef, viewportCallbackRef]);
 
-  useResizeObserver(offsetScrollbars === 'present' ? viewportElement : null, () => {
+  const { dir } = useDirection();
+  const resolvedScrollFade = resolveScrollFadeAxis(scrollFade, scrollbars);
+
+  const updateFadeState = () => {
     const element = localViewportRef.current;
-    if (element) {
-      setVerticalThumbVisible(element.scrollHeight > element.clientHeight);
-      setHorizontalThumbVisible(element.scrollWidth > element.clientWidth);
+    if (!element) {
+      return;
     }
-  });
+
+    const fadeY = resolvedScrollFade === 'y' || resolvedScrollFade === 'xy';
+    const fadeX = resolvedScrollFade === 'x' || resolvedScrollFade === 'xy';
+
+    if (!fadeY && !fadeX) {
+      setFadeAttribute(element, 'data-fade-top', false);
+      setFadeAttribute(element, 'data-fade-bottom', false);
+      setFadeAttribute(element, 'data-fade-left', false);
+      setFadeAttribute(element, 'data-fade-right', false);
+      return;
+    }
+
+    const { scrollTop, scrollHeight, clientHeight, scrollLeft, scrollWidth, clientWidth } = element;
+
+    setFadeAttribute(element, 'data-fade-top', fadeY && scrollTop > 0);
+    setFadeAttribute(
+      element,
+      'data-fade-bottom',
+      fadeY && scrollTop - (scrollHeight - clientHeight) < -0.8
+    );
+
+    const maxScrollLeft = scrollWidth - clientWidth;
+    const distanceFromStart = Math.abs(scrollLeft);
+    const contentHiddenBeforeStart = distanceFromStart > 0;
+    const contentHiddenAfterEnd = maxScrollLeft - distanceFromStart > 0.8;
+    const contentHiddenLeft = dir === 'rtl' ? contentHiddenAfterEnd : contentHiddenBeforeStart;
+    const contentHiddenRight = dir === 'rtl' ? contentHiddenBeforeStart : contentHiddenAfterEnd;
+
+    setFadeAttribute(element, 'data-fade-left', fadeX && contentHiddenLeft);
+    setFadeAttribute(element, 'data-fade-right', fadeX && contentHiddenRight);
+  };
+
+  useResizeObserver(
+    offsetScrollbars === 'present' || resolvedScrollFade ? viewportElement : null,
+    () => {
+      const element = localViewportRef.current;
+      if (element && offsetScrollbars === 'present') {
+        setVerticalThumbVisible(element.scrollHeight > element.clientHeight);
+        setHorizontalThumbVisible(element.scrollWidth > element.clientWidth);
+      }
+      updateFadeState();
+    }
+  );
+
+  useResizeObserver(
+    resolvedScrollFade && viewportElement
+      ? (viewportElement.firstElementChild as HTMLElement | null)
+      : null,
+    updateFadeState
+  );
 
   useIsomorphicEffect(() => {
     if (startScrollPosition && localViewportRef.current) {
@@ -226,6 +319,10 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
       });
     }
   }, []);
+
+  useIsomorphicEffect(() => {
+    updateFadeState();
+  }, [resolvedScrollFade, dir]);
 
   return (
     <ScrollAreaRoot
@@ -242,6 +339,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
         ref={combinedViewportRef}
         data-offset-scrollbars={offsetScrollbars === true ? 'xy' : offsetScrollbars || undefined}
         data-scrollbars={scrollbars || undefined}
+        data-scroll-fade={resolvedScrollFade || undefined}
         data-horizontal-hidden={
           offsetScrollbars === 'present' && !horizontalThumbVisible ? 'true' : undefined
         }
@@ -282,6 +380,10 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
 
           prevAtRightRef.current = isAtRight;
           prevAtLeftRef.current = isAtLeft;
+
+          if (resolvedScrollFade) {
+            updateFadeState();
+          }
         }}
       >
         {children}
@@ -349,6 +451,8 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
     variant,
     viewportProps,
     scrollbars,
+    scrollFade,
+    scrollFadeSize,
     style,
     vars,
     onBottomReached,
@@ -429,6 +533,8 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
           viewportProps={viewportProps}
           vars={vars}
           scrollbars={scrollbars}
+          scrollFade={scrollFade}
+          scrollFadeSize={scrollFadeSize}
           onBottomReached={onBottomReached}
           onTopReached={onTopReached}
           startScrollPosition={startScrollPosition}

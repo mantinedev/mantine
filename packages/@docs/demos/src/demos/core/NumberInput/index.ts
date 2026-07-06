@@ -8,6 +8,7 @@ export { decimalSeparator } from './NumberInput.demo.decimalSeparator';
 export { fixedDecimalScale } from './NumberInput.demo.fixedDecimalScale';
 export { prefixSuffix } from './NumberInput.demo.prefixSuffix';
 export { minMax } from './NumberInput.demo.minMax';
+export { keyboardStepping } from './NumberInput.demo.keyboardStepping';
 export { strictClamp } from './NumberInput.demo.strictClamp';
 export { usage } from './NumberInput.demo.usage';
 export { error } from './NumberInput.demo.error';

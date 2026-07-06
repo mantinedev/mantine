@@ -57,3 +57,13 @@ export const Demo_startScrollPosition = {
   name: '⭐ Demo: startScrollPosition',
   render: renderDemo(demos.startScrollPosition),
 };
+
+export const Demo_scrollFade = {
+  name: '⭐ Demo: scrollFade',
+  render: renderDemo(demos.scrollFade),
+};
+
+export const Demo_scrollFadeHorizontal = {
+  name: '⭐ Demo: scrollFadeHorizontal',
+  render: renderDemo(demos.scrollFadeHorizontal),
+};

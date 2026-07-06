@@ -1,3 +1,11 @@
+import {
+  EditableDemos,
+  FileSizeDemos,
+  TimerDemos,
+  TooltipDemos,
+  UseDebouncedEffectDemos,
+  UseHoldRepeatHandlersDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +17,64 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## Timer component
+
+New [Timer](/core/timer) component – a controllable countdown and stopwatch. It counts up or down,
+has running/paused state, exposes start/pause/resume/reset/restart controls and `onTick`/`onComplete`
+callbacks. `Timer` is built on top of the new `useTimer` hook, which can be used on its own to build
+fully custom timer UIs, and it supports custom layouts with `Timer.Segment`, `Timer.Separator` and
+`Timer.Control` compound components:
+
+<Demo data={TimerDemos.usage} />
+
+## Editable component
+
+New [Editable](/core/editable) component – edit text inline by switching a preview to an input. It
+supports commit on `Enter`/blur, cancel on `Escape`, `focus`/`click`/`dblclick` activation modes,
+multiline editing and a placeholder. `Editable` is built on top of the new `useEditable` hook and
+supports custom layouts with `Editable.Preview`, `Editable.Input` and `Editable.Control` with
+`Editable.EditTrigger`, `Editable.SubmitTrigger` and `Editable.CancelTrigger` compound components:
+
+<Demo data={EditableDemos.triggers} />
+
+## FileSize component
+
+New [FileSize](/core/file-size) component and `formatBytes` function – format a raw number of bytes
+into a human-readable file size (`1.45 kB`, `4.8 GB`). Both are built on top of the native
+`Intl.NumberFormat` API and support SI (decimal) and binary units, bytes and bits, locale-aware
+formatting and `unitDisplay` options:
+
+<Demo data={FileSizeDemos.usage} />
+
+## use-hold-repeat and use-hold-repeat-handlers hooks
+
+New [use-hold-repeat](/hooks/use-hold-repeat) and
+[use-hold-repeat-handlers](/hooks/use-hold-repeat-handlers) hooks – a reusable press-and-hold-to-repeat
+engine extracted from `NumberInput`. They fire an action once, then keep repeating it at a fixed or
+accelerating interval while a control is held. `use-hold-repeat` is the headless timing engine with
+imperative `start`/`stop`, and `use-hold-repeat-handlers` returns a bundle of pointer, mouse, touch
+and keyboard event handlers to spread onto an element:
+
+<Demo data={UseHoldRepeatHandlersDemos.usage} />
+
+## use-debounced-effect and use-throttled-effect hooks
+
+New [use-debounced-effect](/hooks/use-debounced-effect) and
+[use-throttled-effect](/hooks/use-throttled-effect) hooks – `useEffect` variants whose
+execution is debounced (runs after the dependencies stop changing) or throttled (runs at
+most once per interval). They complete the debounced/throttled family alongside the existing
+value, state and callback variants and are handy for running data fetching, analytics or
+expensive recalculations in response to rapidly changing dependencies:
+
+<Demo data={UseDebouncedEffectDemos.usage} />
+
+## Tooltip click mode
+
+[Tooltip](/core/tooltip) now supports a click-to-toggle mode. Set `events={{ click: true }}` to open
+the tooltip on trigger click and close it on the next click, on outside click or `Escape` key press
+instead of on hover. This makes the tooltip accessible to keyboard and touchscreen users and is handy
+for small info bubbles next to a label. Outside click and `Escape` closing can be disabled with the
+new `closeOnClickOutside` and `closeOnEscape` props:
+
+<Demo data={TooltipDemos.click} />

@@ -34,6 +34,14 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   ),
 
   useCounter: hDocs('useCounter', 'Increments/decrements state within given boundaries'),
+  useCountdown: {
+    ...hDocs('useCountdown', 'Counts down to a target date or from a given duration'),
+    searchTags: 'useCountdown countdown timer sale ends resend otp cooldown remaining time',
+  },
+  useDebouncedEffect: {
+    ...hDocs('useDebouncedEffect', 'Runs an effect debounced when its dependencies change'),
+    searchTags: 'useDebouncedEffect debounce effect useEffect search fetch deps',
+  },
   useDebouncedState: hDocs('useDebouncedState', 'Debounces value changes'),
   useDebouncedValue: hDocs('useDebouncedValue', 'Debounces value changes'),
 
@@ -89,6 +97,18 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Detects whether the user is scrolling up or down'
   ),
 
+  useHoldRepeat: {
+    ...hDocs('useHoldRepeat', 'Repeats an action while a control is held down'),
+    searchTags: 'useHoldRepeat press and hold repeat stepper accelerate spinner auto repeat',
+  },
+  useHoldRepeatHandlers: {
+    ...hDocs(
+      'useHoldRepeatHandlers',
+      'Press-and-hold-to-repeat event handlers for pointer, mouse, touch and keyboard'
+    ),
+    searchTags:
+      'useHoldRepeatHandlers press and hold repeat stepper pointer touch keyboard handlers',
+  },
   useHotkeys: hDocs('useHotkeys', 'Listen for keys combinations on document element'),
   useHover: hDocs('useHover', 'Detects if given element is hovered'),
   useId: hDocs('useId', 'Generates memoized random id'),
@@ -181,6 +201,10 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useThrottledState: hDocs('useThrottledState', 'Throttles state changes'),
   useThrottledValue: hDocs('useThrottledValue', 'Throttles value changes'),
   useThrottledCallback: hDocs('useThrottledCallback', 'Throttles function calls'),
+  useThrottledEffect: {
+    ...hDocs('useThrottledEffect', 'Runs an effect throttled when its dependencies change'),
+    searchTags: 'useThrottledEffect throttle effect useEffect scroll pointer deps',
+  },
   useDebouncedCallback: hDocs(
     'useDebouncedCallback',
     'Creates debounced version of the given function'

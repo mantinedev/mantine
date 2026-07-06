@@ -1,0 +1,110 @@
+import { FileSizeDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.FileSize);
+
+## Usage
+
+`FileSize` formats a raw number of bytes into a human-readable file size (`1.45 kB`,
+`4.8 GB`). It is built on top of the native
+[Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
+API and renders the formatted value as text without a wrapping element:
+
+<Demo data={FileSizeDemos.usage} />
+
+## SI (decimal) and binary units
+
+By default, `FileSize` uses the decimal (SI) unit system: it scales by 1000 and uses
+`kB`, `MB`, `GB` units. Set `unitSystem="binary"` to scale by 1024 and use `KiB`,
+`MiB`, `GiB` units instead:
+
+<Demo data={FileSizeDemos.unitSystem} />
+
+## Bytes and bits
+
+The `value` is measured in bytes by default. Set `unit="bit"` to measure it in bits –
+useful for network throughput and bitrate:
+
+<Demo data={FileSizeDemos.units} />
+
+## Unit display
+
+Use the `unitDisplay` prop to control how the unit is rendered: `short` (`1.45 MB`),
+`long` (`1.45 megabytes`) or `narrow` (`1.45MB`). It defaults to `short`:
+
+<Demo data={FileSizeDemos.unitDisplay} />
+
+## Locale
+
+`FileSize` uses the host default locale to format the number. Set the `locale` prop to
+format the value for a specific locale:
+
+<Demo data={FileSizeDemos.locale} />
+
+Note that when rendering on the server it is usually better to set the `locale` prop
+explicitly rather than relying on the default host locale, which may differ between the
+server and the client and cause hydration mismatches.
+
+## Maximum fraction digits
+
+Use the `maximumFractionDigits` prop to control the number of digits displayed after
+the decimal point. It defaults to `2`:
+
+```tsx
+import { FileSize } from '@mantine/core';
+
+function Demo() {
+  return <FileSize value={1_450_500} maximumFractionDigits={0} />; // -> 1 MB
+}
+```
+
+## formatBytes function
+
+`FileSize` is a thin wrapper around the `formatBytes` function. Use `formatBytes`
+directly when you need the formatted string instead of a React component, for example
+in an `aria-label` or a chart tooltip:
+
+<Demo data={FileSizeDemos.functionUsage} />
+
+```tsx
+import { formatBytes } from '@mantine/core';
+
+formatBytes(1450); // -> '1.45 kB'
+formatBytes(1450, { unitSystem: 'binary' }); // -> '1.42 KiB'
+formatBytes(8_000_000, { unit: 'bit' }); // -> '8 Mb'
+formatBytes(1450, { locale: 'de-DE' }); // -> '1,45 kB'
+```
+
+### formatBytes options
+
+`formatBytes` accepts a value in bytes (or bits) and an options object. `FileSize`
+supports the same options as props:
+
+<DataTable
+  head={['Name', 'Type', 'Default', 'Description']}
+  data={[
+    ['unit', "'byte' | 'bit'", "'byte'", 'Unit that the value is measured in'],
+    [
+      'unitSystem',
+      "'decimal' | 'binary'",
+      "'decimal'",
+      'Scales by 1000 (kB/MB) or 1024 (KiB/MiB)',
+    ],
+    [
+      'unitDisplay',
+      "'short' | 'long' | 'narrow'",
+      "'short'",
+      'Controls how the unit is displayed',
+    ],
+    ['locale', 'string', '–', 'Locale used to format the number, host default if not set'],
+    ['maximumFractionDigits', 'number', '2', 'Maximum number of digits after the decimal point'],
+  ]}
+/>
+
+## Edge cases
+
+- `0` is formatted as `0 byte` (`0 B` for binary units)
+- Negative values are formatted with a sign (`-1.45 kB`)
+- Non-finite values (`NaN`, `Infinity`) are formatted as an empty string
+- Bytes are not scaled beyond `PB`/`PiB` and bits not beyond `Tb`/`Tibit` (the largest units named by `Intl`)

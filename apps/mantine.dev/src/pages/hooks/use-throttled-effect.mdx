@@ -1,0 +1,40 @@
+import { UseThrottledEffectDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useThrottledEffect);
+
+## Usage
+
+`use-throttled-effect` works like `useEffect`, but its execution is throttled: the
+effect runs on the leading edge and then at most once per `wait` milliseconds while
+its dependencies keep changing. It is useful for running side effects at a steady
+rate in response to a continuous stream of updates, for example tracking scroll
+position, pointer movement or a slider value:
+
+<Demo data={UseThrottledEffectDemos.usage} />
+
+## Difference from useEffect
+
+The effect runs immediately on the leading edge (including on mount) and is then
+suppressed until `wait` milliseconds have elapsed. If the dependencies change again
+during that window, the effect runs once more on the trailing edge with the latest
+values.
+
+The effect may return a cleanup function. It is called before the next execution
+and when the component unmounts, exactly like the cleanup of a regular `useEffect`.
+A pending trailing execution is canceled on unmount.
+
+Unlike [use-debounced-effect](/hooks/use-debounced-effect), the throttled variant
+does not support the `leading` or `maxWait` options – it always runs on the leading
+edge and its contract matches [use-throttled-callback](/hooks/use-throttled-callback).
+
+## Definition
+
+```tsx
+function useThrottledEffect(
+  effect: React.EffectCallback,
+  deps: React.DependencyList,
+  wait: number
+): void;
+```

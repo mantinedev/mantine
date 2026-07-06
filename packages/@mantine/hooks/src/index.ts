@@ -5,6 +5,8 @@ export { useClickOutside } from './use-click-outside/use-click-outside.js';
 export { useClipboard } from './use-clipboard/use-clipboard.js';
 export { useColorScheme } from './use-color-scheme/use-color-scheme.js';
 export { useCounter } from './use-counter/use-counter.js';
+export { useCountdown } from './use-countdown/use-countdown.js';
+export { useDebouncedEffect } from './use-debounced-effect/use-debounced-effect.js';
 export { useDebouncedState } from './use-debounced-state/use-debounced-state.js';
 export { useDebouncedValue } from './use-debounced-value/use-debounced-value.js';
 export { useDocumentTitle } from './use-document-title/use-document-title.js';
@@ -70,6 +72,7 @@ export { useStateHistory } from './use-state-history/use-state-history.js';
 export { useMap } from './use-map/use-map.js';
 export { useSet } from './use-set/use-set.js';
 export { useThrottledCallback } from './use-throttled-callback/use-throttled-callback.js';
+export { useThrottledEffect } from './use-throttled-effect/use-throttled-effect.js';
 export { useThrottledState } from './use-throttled-state/use-throttled-state.js';
 export { useThrottledValue } from './use-throttled-value/use-throttled-value.js';
 export { useIsFirstRender } from './use-is-first-render/use-is-first-render.js';
@@ -80,6 +83,8 @@ export { useScrollSpy } from './use-scroll-spy/use-scroll-spy.js';
 export { useScroller } from './use-scroller/use-scroller.js';
 export { useFileDialog } from './use-file-dialog/use-file-dialog.js';
 export { useLongPress } from './use-long-press/use-long-press.js';
+export { useHoldRepeat } from './use-hold-repeat/use-hold-repeat.js';
+export { useHoldRepeatHandlers } from './use-hold-repeat-handlers/use-hold-repeat-handlers.js';
 export { useSelection } from './use-selection/use-selection.js';
 export { useFloatingWindow } from './use-floating-window/use-floating-window.js';
 export { useCollapse } from './use-collapse/use-collapse.js';
@@ -107,9 +112,15 @@ export type {
   UseCounterReturnValue,
 } from './use-counter/use-counter';
 export type {
+  UseCountdownOptions,
+  UseCountdownReturnValue,
+  UseCountdownFormatted,
+} from './use-countdown/use-countdown';
+export type {
   UseDebouncedCallbackOptions,
   UseDebouncedCallbackReturnValue,
 } from './use-debounced-callback/use-debounced-callback';
+export type { UseDebouncedEffectOptions } from './use-debounced-effect/use-debounced-effect';
 export type {
   UseDebouncedStateOptions,
   UseDebouncedStateReturnValue,
@@ -215,6 +226,16 @@ export type {
   UseLongPressOptions,
   UseLongPressReturnValue,
 } from './use-long-press/use-long-press';
+export type {
+  UseHoldRepeatInterval,
+  UseHoldRepeatOptions,
+  UseHoldRepeatReturnValue,
+} from './use-hold-repeat/use-hold-repeat';
+export type {
+  UseHoldRepeatEvent,
+  UseHoldRepeatHandlersOptions,
+  UseHoldRepeatHandlersReturnValue,
+} from './use-hold-repeat-handlers/use-hold-repeat-handlers';
 export type {
   SetFloatingWindowPosition,
   UseFloatingWindowOptions,

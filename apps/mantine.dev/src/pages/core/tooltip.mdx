@@ -148,6 +148,7 @@ with the following properties that determine which events will trigger the toolt
 - `hover` – mouse hover event, `true` by default
 - `focus` – focus/blur events excluding clicks on the target element, `false` by default
 - `touch` – events for touchscreen devices, `false` by default
+- `click` – toggles the tooltip on trigger click, disables `hover` and `focus` opening, `false` by default
 
 ```tsx
 import { Tooltip } from '@mantine/core';
@@ -163,6 +164,41 @@ function Demo() {
   );
 }
 ```
+
+## Click to toggle
+
+Set `events={{ click: true }}` to turn the tooltip into a click toggle instead of a hover tooltip.
+This is useful for a small info bubble next to a label: the trigger becomes a real button that opens
+the tooltip on click and closes it on the next click, on outside click or when the `Escape` key is
+pressed. Hover and focus opening are disabled in this mode to avoid double-triggering, which also
+makes the tooltip accessible to keyboard and touchscreen users:
+
+<Demo data={TooltipDemos.click} />
+
+In click mode the tooltip closes on outside click and `Escape` key press by default. Set
+`closeOnClickOutside` and `closeOnEscape` to `false` to disable this behavior, for example when
+the tooltip is [controlled](#controlled):
+
+```tsx
+import { Tooltip } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tooltip
+      label="Tooltip"
+      events={{ click: true }}
+      closeOnClickOutside={false}
+      closeOnEscape={false}
+    >
+      <button>target</button>
+    </Tooltip>
+  );
+}
+```
+
+Click tooltips are intentionally minimal – the tooltip body is not interactive (`pointer-events`
+are disabled) and its content should be plain text. If you need interactive content (links,
+buttons, forms) or a larger surface, use the [Popover](/core/popover) component instead.
 
 ## Multiline
 

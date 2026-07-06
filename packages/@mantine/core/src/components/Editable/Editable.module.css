@@ -1,0 +1,101 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  max-width: 100%;
+}
+
+.area {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.preview,
+.input {
+  box-sizing: border-box;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  margin: 0;
+  padding: rem(2px) rem(6px);
+  border: 0;
+  border-radius: var(--mantine-radius-default);
+  background-color: transparent;
+}
+
+.preview {
+  cursor: text;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-width: rem(4px);
+
+  &[data-multiline] {
+    display: block;
+    width: 100%;
+  }
+
+  &[data-empty] {
+    color: var(--mantine-color-placeholder);
+  }
+
+  &[data-disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &:focus-visible {
+    outline: rem(2px) solid var(--mantine-primary-color-filled);
+    outline-offset: rem(2px);
+  }
+}
+
+.input {
+  appearance: none;
+  -webkit-appearance: none;
+
+  &:focus {
+    outline: rem(2px) solid var(--mantine-primary-color-filled);
+    outline-offset: rem(2px);
+  }
+}
+
+input.input {
+  field-sizing: content;
+  min-width: rem(60px);
+  max-width: 100%;
+}
+
+textarea.input {
+  display: block;
+  width: 100%;
+}
+
+.control {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(4px);
+}
+
+.editTrigger,
+.submitTrigger,
+.cancelTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: rem(2px) solid var(--mantine-primary-color-filled);
+    outline-offset: rem(2px);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}

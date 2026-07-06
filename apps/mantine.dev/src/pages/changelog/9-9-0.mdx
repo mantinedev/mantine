@@ -1,3 +1,11 @@
+import {
+  ColorWheelDemos,
+  CompareSliderDemos,
+  DownloadTriggerDemos,
+  NumberInputDemos,
+  ScrollAreaDemos,
+  UseCountdownDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +17,58 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## ColorWheel component
+
+New [ColorWheel](/core/color-wheel) component – a circular hue selector. Its value is a hue in
+degrees (0–360) that can be converted to a color with the `hsl()` syntax. Drag the thumb around
+the ring or use the keyboard to change the value. Supports custom ring colors, size, thickness
+and can be used with uncontrolled forms:
+
+<Demo data={ColorWheelDemos.usage} />
+
+## CompareSlider component
+
+New [CompareSlider](/core/compare-slider) component – a before/after reveal slider. It stacks two
+layers of content and clips the top one with a draggable divider to reveal the layer underneath.
+The two sides can be any React nodes (images, videos, charts, plain markup), it supports vertical
+orientation, custom handle, hover tracking and is fully keyboard accessible:
+
+<Demo data={CompareSliderDemos.usage} />
+
+## DownloadTrigger component
+
+New [DownloadTrigger](/core/download-trigger) component – a utility that triggers a client-side file
+download. Similar to [CopyButton](/core/copy-button), its children is a function that receives a
+`download` handler and a `loading` state, so you can use any element as the trigger. It turns a
+string, `Blob`, `File` or an async producer into an object URL and dispatches the download without a
+server request:
+
+<Demo data={DownloadTriggerDemos.usage} />
+
+## use-countdown hook
+
+New [use-countdown](/hooks/use-countdown) hook – a headless countdown that can either count down to a
+target date or from a given duration with `start`/`stop`/`reset` controls. It returns the remaining
+time in milliseconds together with `days`/`hours`/`minutes`/`seconds`/`milliseconds` segments and
+does not drift, as the remaining time is always computed from a stored end timestamp:
+
+<Demo data={UseCountdownDemos.usage} />
+
+## Large step keyboard stepping
+
+[NumberInput](/core/number-input), [Slider](/core/slider) and [RangeSlider](/core/slider) now support
+`largeStep` prop to move by a larger amount from the keyboard. Press `Shift` + Arrow or
+`PageUp`/`PageDown` to step by `largeStep` (`10 × step` by default). `NumberInput` additionally
+supports `smallStep` prop for finer stepping with `Alt` + Arrow:
+
+<Demo data={NumberInputDemos.keyboardStepping} />
+
+## ScrollArea edge fade
+
+[ScrollArea](/core/scroll-area) now supports `scrollFade` prop that fades out content at the scrollable
+edges to indicate that there is more content to scroll. The fade is shown at an edge only when there is
+hidden content past it and disappears once that edge is reached. Use `scrollFadeSize` prop to change the
+length of the fade gradient:
+
+<Demo data={ScrollAreaDemos.scrollFade} />

@@ -71,8 +71,14 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type @default { duration: 100, transition: 'fade' } */
   transitionProps?: TransitionOverride;
 
-  /** Determines which events will be used to show tooltip @default { hover: true, focus: false, touch: false } */
-  events?: { hover: boolean; focus: boolean; touch: boolean };
+  /** Determines which events are used to open the tooltip. Set `click: true` to toggle the tooltip on trigger click – hover and focus opening are disabled in this mode @default { hover: true, focus: false, touch: false } */
+  events?: { hover?: boolean; focus?: boolean; touch?: boolean; click?: boolean };
+
+  /** If set, the tooltip is closed when a click is registered outside of the tooltip, applies only to click mode @default true */
+  closeOnClickOutside?: boolean;
+
+  /** If set, the tooltip is closed when the `Escape` key is pressed, applies only to click mode @default true */
+  closeOnEscape?: boolean;
 
   /** Must be set if the tooltip target is an inline element */
   inline?: boolean;
@@ -112,6 +118,8 @@ const defaultProps = {
   offset: 5,
   transitionProps: { duration: 100, transition: 'fade' },
   events: { hover: true, focus: false, touch: false },
+  closeOnClickOutside: true,
+  closeOnEscape: true,
   zIndex: getDefaultZIndex('popover'),
   middlewares: { flip: true, shift: true, inline: false },
 } satisfies Partial<TooltipProps>;
@@ -164,6 +172,8 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     transitionProps,
     multiline,
     events,
+    closeOnClickOutside,
+    closeOnEscape,
     zIndex,
     disabled,
     onClick,
@@ -195,6 +205,8 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     opened,
     defaultOpened,
     events,
+    closeOnClickOutside,
+    closeOnEscape,
     arrowRef,
     arrowOffset,
     offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,

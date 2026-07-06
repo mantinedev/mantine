@@ -1,0 +1,210 @@
+import { UseHoldRepeatHandlersDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useHoldRepeatHandlers);
+
+## Usage
+
+`use-hold-repeat-handlers` builds on [use-hold-repeat](/hooks/use-hold-repeat) and returns a bundle
+of event handlers that you can spread onto an element to add press-and-hold-to-repeat behavior. It
+is the hook that powers the increment/decrement controls of the
+[NumberInput](/core/number-input) component. Press and hold the buttons below – the value keeps
+changing at an accelerating rate until you release:
+
+<Demo data={UseHoldRepeatHandlersDemos.usage} />
+
+## Definition
+
+```tsx
+type UseHoldRepeatEvent = 'pointer' | 'mouse' | 'touch' | 'keyboard';
+
+interface UseHoldRepeatHandlersOptions extends UseHoldRepeatOptions {
+  /** Which event handlers to produce. Do not combine `pointer` with `mouse`/`touch`. @default ['pointer'] */
+  events?: UseHoldRepeatEvent[];
+
+  /** When `events` includes `keyboard`, only these keys start the hold (e.g. `['ArrowUp']`).
+   *  Omit to react to any key. */
+  keys?: string[];
+
+  /** Call `event.preventDefault()` on the pointer, mouse and keyboard start event.
+   *  Touch start events are exempt (React registers `touchstart` as a passive listener). @default true */
+  preventDefault?: boolean;
+}
+
+interface UseHoldRepeatHandlersReturnValue {
+  onPointerDown?: (event: React.PointerEvent) => void;
+  onPointerUp?: (event: React.PointerEvent) => void;
+  onPointerLeave?: (event: React.PointerEvent) => void;
+  onPointerCancel?: (event: React.PointerEvent) => void;
+
+  onMouseDown?: (event: React.MouseEvent) => void;
+  onMouseUp?: (event: React.MouseEvent) => void;
+  onMouseLeave?: (event: React.MouseEvent) => void;
+
+  onTouchStart?: (event: React.TouchEvent) => void;
+  onTouchEnd?: (event: React.TouchEvent) => void;
+  onTouchCancel?: (event: React.TouchEvent) => void;
+
+  onKeyDown?: (event: React.KeyboardEvent) => void;
+  onKeyUp?: (event: React.KeyboardEvent) => void;
+  onBlur?: (event: React.FocusEvent) => void;
+
+  /** Imperative passthrough from useHoldRepeat for custom wiring */
+  start: () => void;
+  stop: () => void;
+}
+
+function useHoldRepeatHandlers(
+  onTrigger: () => void,
+  options?: UseHoldRepeatHandlersOptions,
+): UseHoldRepeatHandlersReturnValue
+```
+
+The hook shares all [use-hold-repeat](/hooks/use-hold-repeat) options (`delay`, `interval`,
+`onStart`, `onStop`), so repeating is opt-in in the same way: an action fires once per press unless
+both `delay` and `interval` are set.
+
+## Event sources
+
+By default the hook produces pointer handlers. Use the `events` option to choose which input types
+should start and stop the hold – only the handlers for the requested events are present on the
+returned object:
+
+```tsx
+import { useHoldRepeatHandlers } from '@mantine/hooks';
+
+function Demo() {
+  const handlers = useHoldRepeatHandlers(() => console.log('tick'), {
+    delay: 500,
+    interval: 100,
+    events: ['mouse', 'touch'],
+  });
+
+  return <button {...handlers}>Hold me</button>;
+}
+```
+
+- `pointer` – `onPointerDown` starts, `onPointerUp`, `onPointerLeave` and `onPointerCancel` stop
+- `mouse` – `onMouseDown` starts, `onMouseUp` and `onMouseLeave` stop
+- `touch` – `onTouchStart` starts, `onTouchEnd` and `onTouchCancel` stop
+- `keyboard` – `onKeyDown` starts, `onKeyUp` and `onBlur` stop
+
+`pointer` already unifies mouse and touch input, so it should not be combined with `mouse` or
+`touch` in the same `events` array – doing so triggers the action twice per interaction because the
+browser dispatches both pointer and compatibility mouse/touch events. Use `pointer` on its own
+(the default), or combine `mouse` and `touch` when you need to target them separately.
+
+## Keyboard
+
+When `events` includes `keyboard`, the hold starts on `keydown` and stops on `keyup`. It also stops
+on `blur` so a hold cannot get stuck if the element loses focus (click away, `Alt + Tab`, window
+blur) before the `keyup` is delivered. Auto-repeat `keydown` events (`event.repeat === true`) are
+ignored so that the hook's own timer drives the cadence instead of the OS key repeat, but
+`preventDefault` is still called on them so the browser default (such as scrolling) stays
+suppressed while the key is held. Use the `keys` option to restrict which keys start the hold:
+
+```tsx
+import { useHoldRepeatHandlers } from '@mantine/hooks';
+
+function Demo() {
+  const handlers = useHoldRepeatHandlers(() => console.log('tick'), {
+    delay: 500,
+    interval: 100,
+    events: ['keyboard'],
+    keys: ['ArrowUp'],
+  });
+
+  return <button {...handlers}>Focus and hold ArrowUp</button>;
+}
+```
+
+To drive a single element from several keys, create one hook instance per action and filter each
+with `keys`. Because every instance ignores keys that are not in its `keys` array, their handler
+bundles can be combined onto one element without conflicts – use the
+[mergeEventHandlers](#combining-handler-bundles) utility to merge them into a single set of props.
+The example below turns a text input into a stepper: focus it and hold <kbd>ArrowUp</kbd> or
+<kbd>ArrowDown</kbd> to change the value at an accelerating rate:
+
+<Demo data={UseHoldRepeatHandlersDemos.events} />
+
+## Combining handler bundles
+
+`mergeEventHandlers` is a utility exported from `@mantine/hooks` that merges multiple event-handler
+objects into one. For every handler key (`onKeyDown`, `onPointerDown`, …) present in more than one
+object, the merged handler calls each original handler in order with the same event. It is handy
+for spreading several `useHoldRepeatHandlers` bundles – or any handler props – onto a single
+element:
+
+```tsx
+import { mergeEventHandlers, useHoldRepeatHandlers } from '@mantine/hooks';
+
+function Demo() {
+  const increment = useHoldRepeatHandlers(increment, { events: ['keyboard'], keys: ['ArrowUp'] });
+  const decrement = useHoldRepeatHandlers(decrement, { events: ['keyboard'], keys: ['ArrowDown'] });
+
+  // { onKeyDown, onKeyUp } that dispatch to both instances
+  return <input {...mergeEventHandlers(increment, decrement)} />;
+}
+```
+
+Only enumerable function properties are merged, so the non-enumerable `start`/`stop` passthrough of
+`useHoldRepeatHandlers` is not forwarded to the DOM. `mergeEventHandlers` returns new function
+references on every call – wrap it in `useMemo` if you need a stable identity.
+
+## preventDefault
+
+By default `event.preventDefault()` is called on the start event (pointer down, mouse down or key
+down). Set `preventDefault: false` to keep the browser default behavior. Touch start events are
+exempt: React registers `touchstart` as a passive listener where `preventDefault()` has no effect,
+so use the [touch-action](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) CSS
+property to prevent scrolling during a touch hold:
+
+```tsx
+import { useHoldRepeatHandlers } from '@mantine/hooks';
+
+function Demo() {
+  const handlers = useHoldRepeatHandlers(() => console.log('tick'), {
+    delay: 500,
+    interval: 100,
+    preventDefault: false,
+  });
+
+  return <button {...handlers}>Hold me</button>;
+}
+```
+
+## Imperative start/stop
+
+The returned object also exposes the `start`/`stop` functions from
+[use-hold-repeat](/hooks/use-hold-repeat) for advanced wiring – for example, driving the same
+repeat from a source that is not covered by the generated handlers. They are non-enumerable, so
+spreading the bundle onto a DOM element (`<button {...handlers} />`) does not forward them as
+attributes:
+
+```tsx
+import { useHoldRepeatHandlers } from '@mantine/hooks';
+
+function Demo() {
+  const handlers = useHoldRepeatHandlers(() => console.log('tick'), {
+    delay: 500,
+    interval: 100,
+  });
+
+  // handlers.start() / handlers.stop() are available for custom control
+  return <button {...handlers}>Hold me</button>;
+}
+```
+
+## Exported types
+
+`UseHoldRepeatEvent`, `UseHoldRepeatHandlersOptions` and `UseHoldRepeatHandlersReturnValue` types
+are exported from the `@mantine/hooks` package; you can import them in your application:
+
+```tsx
+import type {
+  UseHoldRepeatEvent,
+  UseHoldRepeatHandlersOptions,
+  UseHoldRepeatHandlersReturnValue,
+} from '@mantine/hooks';
+```
