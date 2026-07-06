@@ -251,6 +251,8 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
     category: 'Lifecycle',
     pages: [
       MDX_DATA.useDidUpdate,
+      MDX_DATA.useDebouncedEffect,
+      MDX_DATA.useThrottledEffect,
       MDX_DATA.useForceUpdate,
       MDX_DATA.useIsomorphicEffect,
       MDX_DATA.useLogger,

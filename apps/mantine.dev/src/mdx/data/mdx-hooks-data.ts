@@ -38,6 +38,10 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     ...hDocs('useCountdown', 'Counts down to a target date or from a given duration'),
     searchTags: 'useCountdown countdown timer sale ends resend otp cooldown remaining time',
   },
+  useDebouncedEffect: {
+    ...hDocs('useDebouncedEffect', 'Runs an effect debounced when its dependencies change'),
+    searchTags: 'useDebouncedEffect debounce effect useEffect search fetch deps',
+  },
   useDebouncedState: hDocs('useDebouncedState', 'Debounces value changes'),
   useDebouncedValue: hDocs('useDebouncedValue', 'Debounces value changes'),
 
@@ -197,6 +201,10 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useThrottledState: hDocs('useThrottledState', 'Throttles state changes'),
   useThrottledValue: hDocs('useThrottledValue', 'Throttles value changes'),
   useThrottledCallback: hDocs('useThrottledCallback', 'Throttles function calls'),
+  useThrottledEffect: {
+    ...hDocs('useThrottledEffect', 'Runs an effect throttled when its dependencies change'),
+    searchTags: 'useThrottledEffect throttle effect useEffect scroll pointer deps',
+  },
   useDebouncedCallback: hDocs(
     'useDebouncedCallback',
     'Creates debounced version of the given function'

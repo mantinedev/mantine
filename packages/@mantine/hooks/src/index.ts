@@ -6,6 +6,7 @@ export { useClipboard } from './use-clipboard/use-clipboard.js';
 export { useColorScheme } from './use-color-scheme/use-color-scheme.js';
 export { useCounter } from './use-counter/use-counter.js';
 export { useCountdown } from './use-countdown/use-countdown.js';
+export { useDebouncedEffect } from './use-debounced-effect/use-debounced-effect.js';
 export { useDebouncedState } from './use-debounced-state/use-debounced-state.js';
 export { useDebouncedValue } from './use-debounced-value/use-debounced-value.js';
 export { useDocumentTitle } from './use-document-title/use-document-title.js';
@@ -71,6 +72,7 @@ export { useStateHistory } from './use-state-history/use-state-history.js';
 export { useMap } from './use-map/use-map.js';
 export { useSet } from './use-set/use-set.js';
 export { useThrottledCallback } from './use-throttled-callback/use-throttled-callback.js';
+export { useThrottledEffect } from './use-throttled-effect/use-throttled-effect.js';
 export { useThrottledState } from './use-throttled-state/use-throttled-state.js';
 export { useThrottledValue } from './use-throttled-value/use-throttled-value.js';
 export { useIsFirstRender } from './use-is-first-render/use-is-first-render.js';
@@ -118,6 +120,7 @@ export type {
   UseDebouncedCallbackOptions,
   UseDebouncedCallbackReturnValue,
 } from './use-debounced-callback/use-debounced-callback';
+export type { UseDebouncedEffectOptions } from './use-debounced-effect/use-debounced-effect';
 export type {
   UseDebouncedStateOptions,
   UseDebouncedStateReturnValue,

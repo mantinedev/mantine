@@ -1,0 +1,79 @@
+import { UseDebouncedEffectDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useDebouncedEffect);
+
+## Usage
+
+`use-debounced-effect` works like `useEffect`, but its execution is debounced: the
+effect runs only after its dependencies stop changing for the specified `delay`.
+It is useful for running side effects (data fetching, analytics events, expensive
+recalculations) in response to rapidly changing dependencies, for example a search
+input, resize or scroll handler:
+
+<Demo data={UseDebouncedEffectDemos.usage} />
+
+## Difference from useEffect
+
+Unlike a regular `useEffect`, the effect is **not** executed immediately on mount –
+it runs `delay` milliseconds after the dependencies change (including the initial
+change on mount). If you need the effect to run immediately on the leading edge,
+set the `leading` option to `true`.
+
+The effect may return a cleanup function. It is called before the next debounced
+execution and when the component unmounts, exactly like the cleanup of a regular
+`useEffect`. A pending effect that has not run yet is canceled on unmount.
+
+## Options
+
+The third argument is either a number (a `delay` shorthand) or an options object
+with the same shape as [use-debounced-callback](/hooks/use-debounced-callback):
+
+```tsx
+import { useDebouncedEffect } from '@mantine/hooks';
+
+// Delay shorthand
+useDebouncedEffect(() => fetchResults(query), [query], 300);
+
+// Options object
+useDebouncedEffect(() => fetchResults(query), [query], {
+  delay: 300,
+  // Run the effect immediately on the first change, then ignore changes within the delay window
+  leading: true,
+  // Guarantee that the effect runs at least once every 1000ms while the deps keep changing
+  maxWait: 1000,
+});
+```
+
+`leading` and `maxWait` behave exactly like in
+[use-debounced-callback](/hooks/use-debounced-callback). Note that `leading` is
+leading-edge only: when it is enabled, the effect runs on the first change and then
+ignores subsequent changes until the deps stay unchanged for the full `delay` – it does
+not run again on the trailing edge. Use `maxWait` if you also need periodic runs while
+the deps keep changing.
+
+## Definition
+
+```tsx
+interface UseDebouncedEffectOptions {
+  delay: number;
+  leading?: boolean;
+  maxWait?: number;
+}
+
+function useDebouncedEffect(
+  effect: React.EffectCallback,
+  deps: React.DependencyList,
+  options: number | UseDebouncedEffectOptions
+): void;
+```
+
+## Exported types
+
+`UseDebouncedEffectOptions` type is exported from the `@mantine/hooks` package,
+you can import it in your application:
+
+```tsx
+import type { UseDebouncedEffectOptions } from '@mantine/hooks';
+```

@@ -3,6 +3,7 @@ import {
   FileSizeDemos,
   TimerDemos,
   TooltipDemos,
+  UseDebouncedEffectDemos,
   UseHoldRepeatHandlersDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
@@ -56,6 +57,17 @@ imperative `start`/`stop`, and `use-hold-repeat-handlers` returns a bundle of po
 and keyboard event handlers to spread onto an element:
 
 <Demo data={UseHoldRepeatHandlersDemos.usage} />
+
+## use-debounced-effect and use-throttled-effect hooks
+
+New [use-debounced-effect](/hooks/use-debounced-effect) and
+[use-throttled-effect](/hooks/use-throttled-effect) hooks – `useEffect` variants whose
+execution is debounced (runs after the dependencies stop changing) or throttled (runs at
+most once per interval). They complete the debounced/throttled family alongside the existing
+value, state and callback variants and are handy for running data fetching, analytics or
+expensive recalculations in response to rapidly changing dependencies:
+
+<Demo data={UseDebouncedEffectDemos.usage} />
 
 ## Tooltip click mode
 
