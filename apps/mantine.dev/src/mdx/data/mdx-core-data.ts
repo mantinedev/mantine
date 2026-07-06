@@ -1457,6 +1457,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'before after, image compare, reveal, comparison slider, diff images',
   },
 
+  QRCode: {
+    title: 'QRCode',
+    package: '@mantine/core',
+    slug: '/core/qr-code',
+    props: ['QRCode'],
+    styles: ['QRCode'],
+    description: 'Generate and display QR codes',
+    source: '@mantine/core/src/components/QRCode/QRCode.tsx',
+    docs: 'core/qr-code.mdx',
+    searchTags: 'qr, qr code, barcode, 2d code, scan, encodeQR',
+  },
+
   FloatingWindow: {
     title: 'FloatingWindow',
     package: '@mantine/core',

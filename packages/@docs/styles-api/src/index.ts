@@ -107,6 +107,7 @@ export * from './data/PillsInput.styles-api';
 export * from './data/PinInput.styles-api';
 export * from './data/Popover.styles-api';
 export * from './data/Progress.styles-api';
+export * from './data/QRCode.styles-api';
 export * from './data/RadarChart.styles-api';
 export * from './data/RadialBarChart.styles-api';
 export * from './data/Radio.styles-api';

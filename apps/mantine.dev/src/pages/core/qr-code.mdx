@@ -1,0 +1,77 @@
+import { QRCodeDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.QRCode);
+
+## Usage
+
+`QRCode` encodes a string into a QR code and renders it as an SVG. The encoder is
+bundled with the component, so no additional dependencies or network requests are
+required – the code is generated on the client and works with server-side rendering:
+
+<Demo data={QRCodeDemos.usage} />
+
+## Size
+
+Set the `size` prop to control the width and height of the code. Numbers are
+converted to rem, strings are used as is. The code is always square and scales
+crisply to any size because it is rendered as vector graphics:
+
+<Demo data={QRCodeDemos.sizes} />
+
+## Colors
+
+Use the `color` prop to change the color of the dark modules and the standard
+[bg style prop](/styles/style-props) to change the background and quiet zone color.
+Both props accept `theme.colors` keys (for example `blue.8`) or any valid CSS color
+value. Keep a high contrast between the modules and the background so that the code
+stays scannable:
+
+<Demo data={QRCodeDemos.colors} />
+
+## Error correction level
+
+The `errorCorrectionLevel` prop controls how much of the code can be damaged or
+covered while remaining readable. Higher levels add redundancy at the cost of a
+denser code:
+
+- `L` – recovers up to ~7% of data
+- `M` – recovers up to ~15% of data (default)
+- `Q` – recovers up to ~25% of data
+- `H` – recovers up to ~30% of data
+
+<Demo data={QRCodeDemos.errorCorrection} />
+
+## Logo
+
+Pass any React node to the `logo` prop to render a centered overlay, usually a brand
+logo. The overlay covers part of the code, so set `errorCorrectionLevel="H"` to make
+sure the code can still be scanned:
+
+<Demo data={QRCodeDemos.logo} />
+
+## Custom rendering with encodeQR
+
+`QRCode` renders the code as a single SVG `path` of square modules. If you need full
+control over the appearance (rounded dots, gradients, canvas export, etc.), use the
+`encodeQR` function to get the raw module matrix and render it yourself:
+
+```tsx
+import { encodeQR } from '@mantine/core';
+
+const { matrix, size } = encodeQR('https://mantine.dev', { errorCorrectionLevel: 'M' });
+// matrix – boolean[][], `true` for dark modules
+// size – number of modules per side (without the quiet zone)
+```
+
+The example below renders every dark module as a circle instead of a square:
+
+<Demo data={QRCodeDemos.customRender} />
+
+## Accessibility
+
+The inner `svg` element has `role="img"` and an `aria-label` set to the encoded
+`value`, so screen readers announce the content of the code. If the code is decorative
+or duplicated by nearby text, you can override these attributes with the
+[Styles API](/styles/styles-api) or by wrapping the component.

@@ -3,6 +3,7 @@ import {
   CompareSliderDemos,
   DownloadTriggerDemos,
   NumberInputDemos,
+  QRCodeDemos,
   ScrollAreaDemos,
   UseCountdownDemos,
 } from '@docs/demos';
@@ -72,3 +73,13 @@ hidden content past it and disappears once that edge is reached. Use `scrollFade
 length of the fade gradient:
 
 <Demo data={ScrollAreaDemos.scrollFade} />
+
+## QRCode component
+
+New [QRCode](/core/qr-code) component generates and renders QR codes as SVG. The
+encoder is bundled with `@mantine/core`, so it works without additional dependencies
+and supports server-side rendering. It is themeable with the `color` and `bg` props,
+supports a centered `logo` overlay, and exposes the `encodeQR` function for custom
+rendering:
+
+<Demo data={QRCodeDemos.usage} />
