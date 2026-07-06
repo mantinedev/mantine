@@ -1,5 +1,6 @@
 export { clamp } from './clamp/clamp';
 export { lowerFirst } from './lower-first/lower-first';
+export { mergeEventHandlers } from './merge-event-handlers/merge-event-handlers';
 export { randomId } from './random-id/random-id';
 export { range } from './range/range';
 export { shallowEqual } from './shallow-equal/shallow-equal';

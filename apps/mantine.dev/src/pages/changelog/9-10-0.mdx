@@ -1,4 +1,9 @@
-import { EditableDemos, FileSizeDemos, TimerDemos } from '@docs/demos';
+import {
+  EditableDemos,
+  FileSizeDemos,
+  TimerDemos,
+  UseHoldRepeatHandlersDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -39,3 +44,14 @@ into a human-readable file size (`1.45 kB`, `4.8 GB`). Both are built on top of 
 formatting and `unitDisplay` options:
 
 <Demo data={FileSizeDemos.usage} />
+
+## use-hold-repeat and use-hold-repeat-handlers hooks
+
+New [use-hold-repeat](/hooks/use-hold-repeat) and
+[use-hold-repeat-handlers](/hooks/use-hold-repeat-handlers) hooks – a reusable press-and-hold-to-repeat
+engine extracted from `NumberInput`. They fire an action once, then keep repeating it at a fixed or
+accelerating interval while a control is held. `use-hold-repeat` is the headless timing engine with
+imperative `start`/`stop`, and `use-hold-repeat-handlers` returns a bundle of pointer, mouse, touch
+and keyboard event handlers to spread onto an element:
+
+<Demo data={UseHoldRepeatHandlersDemos.usage} />

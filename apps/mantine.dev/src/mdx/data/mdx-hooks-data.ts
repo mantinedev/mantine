@@ -93,6 +93,18 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Detects whether the user is scrolling up or down'
   ),
 
+  useHoldRepeat: {
+    ...hDocs('useHoldRepeat', 'Repeats an action while a control is held down'),
+    searchTags: 'useHoldRepeat press and hold repeat stepper accelerate spinner auto repeat',
+  },
+  useHoldRepeatHandlers: {
+    ...hDocs(
+      'useHoldRepeatHandlers',
+      'Press-and-hold-to-repeat event handlers for pointer, mouse, touch and keyboard'
+    ),
+    searchTags:
+      'useHoldRepeatHandlers press and hold repeat stepper pointer touch keyboard handlers',
+  },
   useHotkeys: hDocs('useHotkeys', 'Listen for keys combinations on document element'),
   useHover: hDocs('useHover', 'Detects if given element is hovered'),
   useId: hDocs('useId', 'Generates memoized random id'),

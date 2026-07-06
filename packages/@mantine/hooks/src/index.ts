@@ -81,6 +81,8 @@ export { useScrollSpy } from './use-scroll-spy/use-scroll-spy.js';
 export { useScroller } from './use-scroller/use-scroller.js';
 export { useFileDialog } from './use-file-dialog/use-file-dialog.js';
 export { useLongPress } from './use-long-press/use-long-press.js';
+export { useHoldRepeat } from './use-hold-repeat/use-hold-repeat.js';
+export { useHoldRepeatHandlers } from './use-hold-repeat-handlers/use-hold-repeat-handlers.js';
 export { useSelection } from './use-selection/use-selection.js';
 export { useFloatingWindow } from './use-floating-window/use-floating-window.js';
 export { useCollapse } from './use-collapse/use-collapse.js';
@@ -221,6 +223,16 @@ export type {
   UseLongPressOptions,
   UseLongPressReturnValue,
 } from './use-long-press/use-long-press';
+export type {
+  UseHoldRepeatInterval,
+  UseHoldRepeatOptions,
+  UseHoldRepeatReturnValue,
+} from './use-hold-repeat/use-hold-repeat';
+export type {
+  UseHoldRepeatEvent,
+  UseHoldRepeatHandlersOptions,
+  UseHoldRepeatHandlersReturnValue,
+} from './use-hold-repeat-handlers/use-hold-repeat-handlers';
 export type {
   SetFloatingWindowPosition,
   UseFloatingWindowOptions,

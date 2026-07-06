@@ -185,6 +185,8 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useOrientation,
       MDX_DATA.useFileDialog,
       MDX_DATA.useLongPress,
+      MDX_DATA.useHoldRepeat,
+      MDX_DATA.useHoldRepeatHandlers,
       MDX_DATA.useDrag,
       MDX_DATA.useSplitter,
       MDX_DATA.useMask,

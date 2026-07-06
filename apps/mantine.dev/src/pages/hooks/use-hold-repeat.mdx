@@ -1,0 +1,118 @@
+import { UseHoldRepeatDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useHoldRepeat);
+
+## Usage
+
+`use-hold-repeat` is a headless press-and-hold-to-repeat engine: it fires an action once, then
+keeps repeating it at a fixed or accelerating interval until you stop it. It owns the timer and
+the step count but does not attach any DOM events – you wire `start`/`stop` to whatever source
+you need. To get ready-made event handlers, use
+[use-hold-repeat-handlers](/hooks/use-hold-repeat-handlers) instead.
+
+<Demo data={UseHoldRepeatDemos.usage} />
+
+## Definition
+
+```tsx
+type UseHoldRepeatInterval = number | ((count: number) => number);
+
+interface UseHoldRepeatOptions {
+  /** Initial delay in ms before repeating begins after the first trigger.
+   *  Repeat happens only when both `delay` and `interval` are set. */
+  delay?: number;
+
+  /** Interval in ms between repeats, or `(count) => ms` for dynamic/accelerating intervals.
+   *  Repeat happens only when both `delay` and `interval` are set. */
+  interval?: UseHoldRepeatInterval;
+
+  /** Called once when a hold starts, before the first trigger */
+  onStart?: () => void;
+
+  /** Called once when a hold stops */
+  onStop?: () => void;
+}
+
+interface UseHoldRepeatReturnValue {
+  /** Fires the trigger once, then schedules repeats while held */
+  start: () => void;
+
+  /** Stops repeating and resets the internal step count */
+  stop: () => void;
+}
+
+function useHoldRepeat(
+  onTrigger: () => void,
+  options?: UseHoldRepeatOptions,
+): UseHoldRepeatReturnValue
+```
+
+## Repeat is opt-in
+
+By default the hook is a single-fire helper: calling `start()` triggers the action exactly once.
+Repeating begins only when **both** `delay` and `interval` are provided. `delay` is the pause
+before the first repeat, `interval` is the time between all subsequent repeats:
+
+```tsx
+import { useHoldRepeat } from '@mantine/hooks';
+
+function Demo() {
+  // Fires once on start, then repeats every 100ms after a 500ms delay
+  const { start, stop } = useHoldRepeat(() => console.log('tick'), {
+    delay: 500,
+    interval: 100,
+  });
+
+  return (
+    <button onPointerDown={start} onPointerUp={stop} onPointerLeave={stop}>
+      Hold me
+    </button>
+  );
+}
+```
+
+## Accelerating interval
+
+Pass a function to `interval` to compute the delay before each repeat from the current step
+count. This is useful to accelerate the cadence the longer the control is held. The count is
+incremented as part of each trigger, so the first dynamic interval is evaluated with `count === 2`
+(step 1 is the immediate press, step 2 is the first repeat):
+
+```tsx
+import { useHoldRepeat } from '@mantine/hooks';
+
+function Demo() {
+  const { start, stop } = useHoldRepeat(() => console.log('tick'), {
+    delay: 500,
+    // 300ms, then faster and faster down to a 50ms floor
+    interval: (count) => Math.max(50, 300 - count * 10),
+  });
+
+  return (
+    <button onPointerDown={start} onPointerUp={stop} onPointerLeave={stop}>
+      Hold me
+    </button>
+  );
+}
+```
+
+## Cleanup
+
+The pending timeout is cleared automatically when the component unmounts, so a hold that is still
+active when the component is removed will not keep firing. `stop()` also clears the timer and
+resets the internal step count.
+
+## Exported types
+
+`UseHoldRepeatInterval`, `UseHoldRepeatOptions` and `UseHoldRepeatReturnValue` types are exported
+from the `@mantine/hooks` package; you can import them in your application:
+
+```tsx
+import type {
+  UseHoldRepeatInterval,
+  UseHoldRepeatOptions,
+  UseHoldRepeatReturnValue,
+} from '@mantine/hooks';
+```

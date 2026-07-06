@@ -1,7 +1,13 @@
 import React, { useRef } from 'react';
 import cx from 'clsx';
 import { NumberFormatValues, NumericFormat, OnValueChange } from 'react-number-format';
-import { assignRef, clamp, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import {
+  assignRef,
+  clamp,
+  useHoldRepeatHandlers,
+  useMergedRef,
+  useUncontrolled,
+} from '@mantine/hooks';
 import {
   BoxProps,
   createVarsResolver,
@@ -435,10 +441,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
       onChange: onChange as ((value: InternalNumberInputValue) => void) | undefined,
     });
 
-    const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
     const inputRef = useRef<HTMLInputElement>(null);
-    const onStepTimeoutRef = useRef<number | null>(null);
-    const stepCountRef = useRef<number>(0);
 
     const minNumber = typeof min === 'number' ? min : undefined;
     const maxNumber = typeof max === 'number' ? max : undefined;
@@ -789,46 +792,19 @@ export const NumberInput = genericFactory<NumberInputFactory>(
 
     assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
 
-    const onStepHandleChange = (isIncrement: boolean) => {
-      if (isIncrement) {
-        incrementRef.current?.();
-      } else {
-        decrementRef.current?.();
-      }
-      stepCountRef.current += 1;
-    };
+    const incrementControls = useHoldRepeatHandlers(() => incrementRef.current?.(), {
+      delay: stepHoldDelay,
+      interval: stepHoldInterval,
+      events: ['pointer'],
+      onStart: () => inputRef.current?.focus(),
+    });
 
-    const onStepLoop = (isIncrement: boolean) => {
-      onStepHandleChange(isIncrement);
-
-      if (shouldUseStepInterval) {
-        const interval =
-          typeof stepHoldInterval === 'number'
-            ? stepHoldInterval
-            : stepHoldInterval(stepCountRef.current);
-        onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), interval);
-      }
-    };
-
-    const onStep = (
-      event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-      isIncrement: boolean
-    ) => {
-      event.preventDefault();
-      inputRef.current?.focus();
-      onStepHandleChange(isIncrement);
-      if (shouldUseStepInterval) {
-        onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), stepHoldDelay);
-      }
-    };
-
-    const onStepDone = () => {
-      if (onStepTimeoutRef.current) {
-        window.clearTimeout(onStepTimeoutRef.current);
-      }
-      onStepTimeoutRef.current = null;
-      stepCountRef.current = 0;
-    };
+    const decrementControls = useHoldRepeatHandlers(() => decrementRef.current?.(), {
+      delay: stepHoldDelay,
+      interval: stepHoldInterval,
+      events: ['pointer'],
+      onStart: () => inputRef.current?.focus(),
+    });
 
     const controls = (
       <div {...getStyles('controls')}>
@@ -843,11 +819,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
           }
           mod={{ direction: 'up' }}
           onMouseDown={(event) => event.preventDefault()}
-          onPointerDown={(event) => {
-            onStep(event, true);
-          }}
-          onPointerUp={onStepDone}
-          onPointerLeave={onStepDone}
+          {...incrementControls}
         >
           <NumberInputChevron direction="up" />
         </UnstyledButton>
@@ -862,11 +834,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
           }
           mod={{ direction: 'down' }}
           onMouseDown={(event) => event.preventDefault()}
-          onPointerDown={(event) => {
-            onStep(event, false);
-          }}
-          onPointerUp={onStepDone}
-          onPointerLeave={onStepDone}
+          {...decrementControls}
         >
           <NumberInputChevron direction="down" />
         </UnstyledButton>

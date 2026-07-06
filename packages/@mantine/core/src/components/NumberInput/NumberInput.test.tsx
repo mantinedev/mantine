@@ -733,4 +733,130 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(25.5);
     expectValue('25,5');
   });
+
+  describe('stepHold', () => {
+    beforeAll(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.clearAllTimers();
+    });
+
+    afterAll(() => {
+      jest.useRealTimers();
+    });
+
+    const getUp = (container: HTMLElement) =>
+      container.querySelector<HTMLButtonElement>(
+        '.mantine-NumberInput-control[data-direction="up"]'
+      )!;
+
+    const getDown = (container: HTMLElement) =>
+      container.querySelector<HTMLButtonElement>(
+        '.mantine-NumberInput-control[data-direction="down"]'
+      )!;
+
+    it('steps once per press when stepHoldDelay/stepHoldInterval are not set', () => {
+      const { container } = render(<NumberInput defaultValue={0} />);
+      const up = getUp(container);
+
+      fireEvent.pointerDown(up);
+      fireEvent.pointerUp(up);
+      expectValue('1');
+
+      act(() => {
+        jest.advanceTimersByTime(1000);
+      });
+      expectValue('1');
+    });
+
+    it('repeats stepping while the control is held with stepHoldDelay + stepHoldInterval', () => {
+      const { container } = render(
+        <NumberInput defaultValue={0} stepHoldDelay={100} stepHoldInterval={50} />
+      );
+      const up = getUp(container);
+
+      fireEvent.pointerDown(up);
+      expectValue('1');
+
+      act(() => {
+        jest.advanceTimersByTime(100);
+      });
+      expectValue('2');
+
+      act(() => {
+        jest.advanceTimersByTime(50);
+      });
+      expectValue('3');
+
+      act(() => {
+        jest.advanceTimersByTime(50);
+      });
+      expectValue('4');
+
+      fireEvent.pointerUp(up);
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expectValue('4');
+    });
+
+    it('stops repeating when the pointer leaves the control', () => {
+      const { container } = render(
+        <NumberInput defaultValue={0} stepHoldDelay={100} stepHoldInterval={50} />
+      );
+      const up = getUp(container);
+
+      fireEvent.pointerDown(up);
+      act(() => {
+        jest.advanceTimersByTime(100);
+      });
+      expectValue('2');
+
+      fireEvent.pointerLeave(up);
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+      expectValue('2');
+    });
+
+    it('supports a function stepHoldInterval evaluated with the current step count', () => {
+      const interval = jest.fn(() => 50);
+      const { container } = render(
+        <NumberInput defaultValue={0} stepHoldDelay={100} stepHoldInterval={interval} />
+      );
+      const up = getUp(container);
+
+      fireEvent.pointerDown(up);
+      act(() => {
+        jest.advanceTimersByTime(100);
+      });
+      expect(interval).toHaveBeenNthCalledWith(1, 2);
+
+      act(() => {
+        jest.advanceTimersByTime(50);
+      });
+      expect(interval).toHaveBeenNthCalledWith(2, 3);
+
+      fireEvent.pointerUp(up);
+    });
+
+    it('decrements repeatedly while the down control is held', () => {
+      const { container } = render(
+        <NumberInput defaultValue={0} stepHoldDelay={100} stepHoldInterval={50} />
+      );
+      const down = getDown(container);
+
+      fireEvent.pointerDown(down);
+      expectValue('-1');
+
+      act(() => {
+        jest.advanceTimersByTime(100);
+      });
+      expectValue('-2');
+
+      fireEvent.pointerUp(down);
+    });
+  });
 });

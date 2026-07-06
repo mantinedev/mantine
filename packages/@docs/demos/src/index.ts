@@ -228,6 +228,8 @@ export * as UseHoverDemos from './demos/hooks/use-hover';
 export * as UseIdleDemos from './demos/hooks/use-idle';
 export * as UseInViewportDemos from './demos/hooks/use-in-viewport';
 export * as UseIntersectionDemos from './demos/hooks/use-intersection';
+export * as UseHoldRepeatDemos from './demos/hooks/use-hold-repeat';
+export * as UseHoldRepeatHandlersDemos from './demos/hooks/use-hold-repeat-handlers';
 export * as UseIntervalDemos from './demos/hooks/use-interval';
 export * as UseIsFirstRenderDemos from './demos/hooks/use-is-first-render';
 export * as UseLoggerDemos from './demos/hooks/use-logger';
