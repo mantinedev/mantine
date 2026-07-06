@@ -1,0 +1,41 @@
+.root {
+  --qr-size: 160px;
+  --qr-color: var(--mantine-color-black);
+
+  position: relative;
+  display: block;
+  width: var(--qr-size);
+  height: var(--qr-size);
+  min-width: var(--qr-size);
+  line-height: 0;
+  background-color: var(--mantine-color-white);
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 25%;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: rem(4px);
+  border-radius: var(--mantine-radius-sm);
+  background-color: inherit;
+  pointer-events: none;
+}
+
+.image :where(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

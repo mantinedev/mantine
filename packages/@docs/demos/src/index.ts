@@ -88,6 +88,7 @@ export * as PillsInputDemos from './demos/core/PillsInput';
 export * as PinInputDemos from './demos/core/PinInput';
 export * as PopoverDemos from './demos/core/Popover';
 export * as ProgressDemos from './demos/core/Progress';
+export * as QRCodeDemos from './demos/core/QRCode';
 export * as RadioDemos from './demos/core/Radio';
 export * as RatingDemos from './demos/core/Rating';
 export * as RingProgressDemos from './demos/core/RingProgress';

@@ -3,5 +3,5 @@ import { oxlint } from 'oxc-config-mantine';
 
 export default defineConfig({
   ...oxlint,
-  ignorePatterns: ['**/*.{mjs,cjs,js,d.ts,d.mts}'],
+  ignorePatterns: ['**/*.{mjs,cjs,js,d.ts,d.mts}', '**/QRCode/encoder/**'],
 });
