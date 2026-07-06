@@ -1,3 +1,10 @@
+import {
+  QRCodeDemos,
+  TiltDemos,
+  UseActiveElementDemos,
+  UseBrowserLanguageDemos,
+  UseTiltDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +16,51 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## QRCode component
+
+New [QRCode](/core/qr-code) component generates and renders QR codes as SVG. The
+encoder is bundled with `@mantine/core`, so it works without additional dependencies
+and supports server-side rendering. It is themeable with the `color` and `bg` props,
+supports a centered `logo` overlay, and exposes the `encodeQR` function for custom
+rendering:
+
+<Demo data={QRCodeDemos.usage} />
+
+## Tilt component
+
+New [Tilt](/core/tilt) component rotates its content in 3D in response to the pointer position
+and device orientation. It owns the `perspective` container and the transform, supports a layered
+depth effect with `Tilt.Layer`, an optional pointer-following `withGlare`, `trackWindow` to react
+to the pointer anywhere on the page, and respects `prefers-reduced-motion`:
+
+<Demo data={TiltDemos.layers} />
+
+## use-tilt hook
+
+New [use-tilt](/hooks/use-tilt) hook powers the `Tilt` component. It produces normalized `roll`
+and `tilt` values from the pointer position over a target element and, when available, the device
+orientation gyroscope. It is headless – map the returned values to CSS transforms to build tilt
+and layered depth effects that respond to the cursor on desktop and to device tilt on mobile:
+
+<Demo data={UseTiltDemos.card} />
+
+## use-active-element hook
+
+New [use-active-element](/hooks/use-active-element) hook reactively tracks
+`document.activeElement` – the element that currently has focus. It updates as focus moves,
+pierces shadow roots to return the truly-focused element inside web components, and can observe
+DOM removals so the returned value stays in sync when the focused element is unmounted. It is
+useful to build focus-aware UI or to decide whether a global keyboard shortcut should fire:
+
+<Demo data={UseActiveElementDemos.usage} />
+
+## use-browser-language hook
+
+New [use-browser-language](/hooks/use-browser-language) hook reactively reads the user's browser
+language preference from `navigator.language` and updates when it changes. It ships with a
+`usePreferredLanguages` sibling hook that returns the full ordered list of preferred languages
+from `navigator.languages`. Both hooks are useful to pick a default locale for formatting or i18n
+fallback without a full internationalization library:
+
+<Demo data={UseBrowserLanguageDemos.usage} />

@@ -21,6 +21,17 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
+  useActiveElement: {
+    ...hDocs('useActiveElement', 'Tracks the currently focused element (document.activeElement)'),
+    searchTags: 'useActiveElement active element focus focused document.activeElement shadow dom',
+  },
+
+  useBrowserLanguage: {
+    ...hDocs('useBrowserLanguage', 'Reads and subscribes to the browser language preferences'),
+    searchTags:
+      'useBrowserLanguage usePreferredLanguages navigator.language navigator.languages locale i18n',
+  },
+
   useClickOutside: hDocs(
     'useClickOutside',
     'Detects click and touch events outside of given element or elements group'
@@ -141,6 +152,11 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'useMove',
     'Handles move behavior over given element, can be used to build custom sliders'
   ),
+
+  useTilt: {
+    ...hDocs('useTilt', 'Produces roll/tilt values from pointer and device orientation'),
+    searchTags: 'useTilt useParallax tilt roll parallax mouse device orientation gyroscope 3d card',
+  },
 
   useNetwork: hDocs('useNetwork', 'Returns current connection status'),
   useOs: hDocs('useOs', 'Detects user operating system'),

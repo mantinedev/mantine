@@ -158,6 +158,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'UI and Dom',
     pages: [
+      MDX_DATA.useActiveElement,
       MDX_DATA.useClickOutside,
       MDX_DATA.useCollapse,
       MDX_DATA.useColorScheme,
@@ -173,6 +174,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useMediaQuery,
       MDX_DATA.useMouse,
       MDX_DATA.useMove,
+      MDX_DATA.useTilt,
       MDX_DATA.useRadialMove,
       MDX_DATA.useFloatingWindow,
       MDX_DATA.useScroller,
@@ -229,6 +231,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'Utilities',
     pages: [
+      MDX_DATA.useBrowserLanguage,
       MDX_DATA.useClipboard,
       MDX_DATA.useCountdown,
       MDX_DATA.useDocumentTitle,
@@ -408,6 +411,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.ThemeIcon,
       MDX_DATA.Timeline,
       MDX_DATA.Timer,
+      MDX_DATA.QRCode,
       MDX_DATA.Spoiler,
       MDX_DATA.NumberFormatter,
       MDX_DATA.FileSize,
@@ -441,6 +445,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Portal,
       MDX_DATA.ScrollArea,
       MDX_DATA.Scroller,
+      MDX_DATA.Tilt,
       MDX_DATA.Transition,
       MDX_DATA.VisuallyHidden,
       MDX_DATA.Divider,

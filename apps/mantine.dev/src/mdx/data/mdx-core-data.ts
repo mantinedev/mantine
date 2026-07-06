@@ -1296,6 +1296,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'history, activity, chronology, events list, feed, vertical steps',
   },
 
+  Tilt: {
+    title: 'Tilt',
+    package: '@mantine/core',
+    slug: '/core/tilt',
+    componentPrefix: 'Tilt',
+    props: ['Tilt', 'TiltLayer'],
+    styles: ['Tilt'],
+    description: 'Tilts its content in 3D in response to the pointer and device orientation',
+    source: '@mantine/core/src/components/Tilt/Tilt.tsx',
+    docs: 'core/tilt.mdx',
+    searchTags: 'parallax, 3d, hover, rotate, perspective, card, glare, mouse tilt',
+  },
+
   Dialog: {
     title: 'Dialog',
     package: '@mantine/core',
@@ -1476,6 +1489,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/Timer/Timer.tsx',
     docs: 'core/timer.mdx',
     searchTags: 'countdown, stopwatch, useTimer, use-timer, elapsed, pomodoro, clock',
+  },
+
+  QRCode: {
+    title: 'QRCode',
+    package: '@mantine/core',
+    slug: '/core/qr-code',
+    props: ['QRCode'],
+    styles: ['QRCode'],
+    description: 'Generate and display QR codes',
+    source: '@mantine/core/src/components/QRCode/QRCode.tsx',
+    docs: 'core/qr-code.mdx',
+    searchTags: 'qr, qr code, barcode, 2d code, scan, encodeQR',
   },
 
   FloatingWindow: {
