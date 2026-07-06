@@ -53,4 +53,117 @@ describe('@mantine/core/Tooltip', () => {
 
     expect(screen.getByText('test-tooltip')).toBeInTheDocument();
   });
+
+  it('toggles tooltip on click when events.click is set', async () => {
+    render(
+      <Tooltip label="test-tooltip" events={{ click: true }} transitionProps={{ duration: 0 }}>
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    expect(screen.queryByText('test-tooltip')).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.queryByText('test-tooltip')).not.toBeInTheDocument();
+  });
+
+  it('keeps hover enabled by default when a partial events object is passed', async () => {
+    render(
+      <Tooltip label="test-tooltip" events={{ focus: true }} transitionProps={{ duration: 0 }}>
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    await userEvent.hover(screen.getByRole('button'));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+
+    await userEvent.unhover(screen.getByRole('button'));
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+  });
+
+  it('does not open on hover in click mode', async () => {
+    render(
+      <Tooltip label="test-tooltip" events={{ click: true }} transitionProps={{ duration: 0 }}>
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    await userEvent.hover(screen.getByRole('button'));
+    expect(screen.queryByText('test-tooltip')).not.toBeInTheDocument();
+  });
+
+  it('closes tooltip on Escape in click mode', async () => {
+    render(
+      <Tooltip label="test-tooltip" events={{ click: true }} transitionProps={{ duration: 0 }}>
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+
+    await userEvent.keyboard('{Escape}');
+    expect(screen.queryByText('test-tooltip')).not.toBeInTheDocument();
+  });
+
+  it('does not close on Escape when closeOnEscape is false', async () => {
+    render(
+      <Tooltip
+        label="test-tooltip"
+        events={{ click: true }}
+        closeOnEscape={false}
+        transitionProps={{ duration: 0 }}
+      >
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.keyboard('{Escape}');
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+  });
+
+  it('closes tooltip on outside click in click mode', async () => {
+    render(
+      <>
+        <button type="button" data-testid="outside">
+          outside
+        </button>
+        <Tooltip label="test-tooltip" events={{ click: true }} transitionProps={{ duration: 0 }}>
+          <button type="button">target</button>
+        </Tooltip>
+      </>
+    );
+
+    await userEvent.click(screen.getByText('target'));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByTestId('outside'));
+    expect(screen.queryByText('test-tooltip')).not.toBeInTheDocument();
+  });
+
+  it('does not close on outside click when closeOnClickOutside is false', async () => {
+    render(
+      <>
+        <button type="button" data-testid="outside">
+          outside
+        </button>
+        <Tooltip
+          label="test-tooltip"
+          events={{ click: true }}
+          closeOnClickOutside={false}
+          transitionProps={{ duration: 0 }}
+        >
+          <button type="button">target</button>
+        </Tooltip>
+      </>
+    );
+
+    await userEvent.click(screen.getByText('target'));
+    await userEvent.click(screen.getByTestId('outside'));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+  });
 });

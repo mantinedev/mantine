@@ -1,5 +1,6 @@
 export { configurator } from './Tooltip.demo.configurator';
 export { controlled } from './Tooltip.demo.controlled';
+export { click } from './Tooltip.demo.click';
 export { arrow } from './Tooltip.demo.arrow';
 export { multiline } from './Tooltip.demo.multiline';
 export { transitions } from './Tooltip.demo.transitions';

@@ -288,3 +288,17 @@ export function Fixed() {
     </div>
   );
 }
+
+export function ClickMode() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Tooltip
+        label="Toggled on click, closes on outside click or Escape"
+        events={{ click: true }}
+        withArrow
+      >
+        <button type="button">Click to toggle</button>
+      </Tooltip>
+    </div>
+  );
+}
