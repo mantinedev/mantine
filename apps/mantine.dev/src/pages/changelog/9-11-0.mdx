@@ -1,4 +1,4 @@
-import { QRCodeDemos, TiltDemos, UseTiltDemos } from '@docs/demos';
+import { QRCodeDemos, TiltDemos, UseActiveElementDemos, UseTiltDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -38,3 +38,13 @@ orientation gyroscope. It is headless – map the returned values to CSS transfo
 and layered depth effects that respond to the cursor on desktop and to device tilt on mobile:
 
 <Demo data={UseTiltDemos.card} />
+
+## use-active-element hook
+
+New [use-active-element](/hooks/use-active-element) hook reactively tracks
+`document.activeElement` – the element that currently has focus. It updates as focus moves,
+pierces shadow roots to return the truly-focused element inside web components, and can observe
+DOM removals so the returned value stays in sync when the focused element is unmounted. It is
+useful to build focus-aware UI or to decide whether a global keyboard shortcut should fire:
+
+<Demo data={UseActiveElementDemos.usage} />
