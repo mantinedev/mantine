@@ -26,6 +26,12 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     searchTags: 'useActiveElement active element focus focused document.activeElement shadow dom',
   },
 
+  useBrowserLanguage: {
+    ...hDocs('useBrowserLanguage', 'Reads and subscribes to the browser language preferences'),
+    searchTags:
+      'useBrowserLanguage usePreferredLanguages navigator.language navigator.languages locale i18n',
+  },
+
   useClickOutside: hDocs(
     'useClickOutside',
     'Detects click and touch events outside of given element or elements group'

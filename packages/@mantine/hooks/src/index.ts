@@ -1,6 +1,10 @@
 export * from './utils/index.js';
 
 export { useActiveElement } from './use-active-element/use-active-element.js';
+export {
+  useBrowserLanguage,
+  usePreferredLanguages,
+} from './use-browser-language/use-browser-language.js';
 export { useDebouncedCallback } from './use-debounced-callback/use-debounced-callback.js';
 export { useClickOutside } from './use-click-outside/use-click-outside.js';
 export { useClipboard } from './use-clipboard/use-clipboard.js';

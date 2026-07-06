@@ -202,6 +202,7 @@ export * as CarouselDemos from './demos/carousel';
 export * as LightboxDemos from './demos/lightbox';
 export * as SpotlightDemos from './demos/spotlight';
 export * as UseActiveElementDemos from './demos/hooks/use-active-element';
+export * as UseBrowserLanguageDemos from './demos/hooks/use-browser-language';
 export * as UseClickOutsideDemos from './demos/hooks/use-click-outside';
 export * as UseClipboardDemos from './demos/hooks/use-clipboard';
 export * as UseCollapseDemos from './demos/hooks/use-collapse';
