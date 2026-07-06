@@ -1,6 +1,7 @@
 import {
   EditableDemos,
   FileSizeDemos,
+  ImageCropperDemos,
   TimerDemos,
   TooltipDemos,
   UseDebouncedEffectDemos,
@@ -74,3 +75,13 @@ for small info bubbles next to a label. Outside click and `Escape` closing can b
 new `closeOnClickOutside` and `closeOnEscape` props:
 
 <Demo data={TooltipDemos.click} />
+
+## ImageCropper component
+
+New [ImageCropper](/core/image-cropper) component provides an interactive crop UI: load an image,
+then pan, zoom, rotate and flip it inside a fixed crop window with a rectangle or circle shape and
+an optional aspect ratio. The cropped result can be exported as a `Blob` or data URL via a canvas,
+or read back as a crop rectangle in source pixels for server-side cropping. It has no third-party
+dependencies and works with server-side rendering:
+
+<Demo data={ImageCropperDemos.usage} />
