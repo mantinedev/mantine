@@ -8,6 +8,7 @@ import {
   QuarterPickerDemos,
   QuarterPickerInputDemos,
   UseActiveElementDemos,
+  UseBrowserLanguageDemos,
   WeekPickerDemos,
   WeekPickerInputDemos,
 } from '@docs/demos';
@@ -119,3 +120,13 @@ DOM removals so the returned value stays in sync when the focused element is unm
 useful to build focus-aware UI or to decide whether a global keyboard shortcut should fire:
 
 <Demo data={UseActiveElementDemos.usage} />
+
+## use-browser-language hook
+
+New [use-browser-language](/hooks/use-browser-language) hook reactively reads the user's browser
+language preference from `navigator.language` and updates when it changes. It ships with a
+`usePreferredLanguages` sibling hook that returns the full ordered list of preferred languages
+from `navigator.languages`. Both hooks are useful to pick a default locale for formatting or i18n
+fallback without a full internationalization library:
+
+<Demo data={UseBrowserLanguageDemos.usage} />

@@ -217,6 +217,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'Utilities',
     pages: [
+      MDX_DATA.useBrowserLanguage,
       MDX_DATA.useClipboard,
       MDX_DATA.useDocumentTitle,
       MDX_DATA.useDocumentVisibility,
