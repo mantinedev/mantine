@@ -29,6 +29,7 @@ export { useMediaQuery } from './use-media-query/use-media-query.js';
 export { useMergedRef, mergeRefs, assignRef } from './use-merged-ref/use-merged-ref.js';
 export { useMouse, useMousePosition } from './use-mouse/use-mouse.js';
 export { useMove, clampUseMovePosition } from './use-move/use-move.js';
+export { useTilt } from './use-tilt/use-tilt.js';
 export { usePagination } from './use-pagination/use-pagination.js';
 export { useQueue } from './use-queue/use-queue.js';
 export { usePageLeave } from './use-page-leave/use-page-leave.js';
@@ -170,6 +171,11 @@ export type {
 } from './use-list-state/use-list-state';
 export type { UseStorageOptions, UseStorageReturnValue } from './use-local-storage/create-storage';
 export type { UseMovePosition, UseMoveHandlers, UseMoveReturnValue } from './use-move/use-move';
+export type {
+  UseTiltOptions,
+  UseTiltReturnValue,
+  UseTiltSource,
+} from './use-tilt/use-tilt';
 export type { UserNetworkReturnValue } from './use-network/use-network';
 export type {
   UseOrientationOptions,

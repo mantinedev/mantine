@@ -1,0 +1,29 @@
+.root {
+  --tilt-perspective: 1000px;
+
+  display: inline-block;
+  perspective: var(--tilt-perspective);
+}
+
+.content {
+  position: relative;
+  border-radius: var(--tilt-radius, 0);
+  transform-style: preserve-3d;
+}
+
+.glare {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0) 55%
+  );
+}
+
+.layer {
+  will-change: transform;
+}

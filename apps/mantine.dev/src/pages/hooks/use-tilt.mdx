@@ -1,0 +1,196 @@
+import { UseTiltDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useTilt);
+
+## Usage
+
+`use-tilt` produces normalized `roll` and `tilt` values from the pointer position over a
+target element and, when available, the device orientation gyroscope. It is headless: you map
+the returned values to CSS transforms to create a tilt or layered depth effect. On desktop the
+values follow the cursor, on supported mobile devices they follow the physical tilt of the
+device. By default `roll` and `tilt` reset to `0` when the pointer leaves the element, so the
+element returns to its original position:
+
+<Demo data={UseTiltDemos.usage} />
+
+## Definition
+
+```tsx
+interface UseTiltOptions {
+  /** If set, the hook reacts to the pointer position anywhere on the page instead of only
+   *  when the target element is hovered, false by default */
+  trackWindow?: boolean;
+
+  /** If set, roll and tilt reset to 0 when the pointer leaves the target element.
+   *  Ignored when the trackWindow option is set to true, true by default */
+  resetOnLeave?: boolean;
+
+  /** Adjusts raw device orientation roll value before it is returned */
+  deviceOrientationRollAdjust?: (value: number) => number;
+
+  /** Adjusts raw device orientation tilt value before it is returned */
+  deviceOrientationTiltAdjust?: (value: number) => number;
+
+  /** Adjusts raw mouse roll value before it is returned */
+  mouseRollAdjust?: (value: number) => number;
+
+  /** Adjusts raw mouse tilt value before it is returned */
+  mouseTiltAdjust?: (value: number) => number;
+}
+
+interface UseTiltReturnValue<T extends HTMLElement = any> {
+  /** Ref callback that must be assigned to the target element */
+  ref: React.RefCallback<T | null>;
+
+  /** Vertical tilt normalized to `[-0.5, 0.5]` for mouse input */
+  roll: number;
+
+  /** Horizontal tilt normalized to `[-0.5, 0.5]` for mouse input */
+  tilt: number;
+
+  /** Input source that produced the current `roll` and `tilt` values */
+  source: 'mouse' | 'deviceOrientation';
+}
+
+function useTilt<T extends HTMLElement = any>(
+  options?: UseTiltOptions,
+): UseTiltReturnValue<T>;
+```
+
+## roll and tilt values
+
+`roll` is the vertical tilt and `tilt` is the horizontal tilt. For mouse input both values are
+normalized relative to the target center: they are `0` when the cursor is over the center and
+approach `-0.5`/`0.5` at the edges. Multiply them by the number of degrees or pixels you need
+and apply the result to a `transform`:
+
+```tsx
+import { useTilt } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, roll, tilt } = useTilt<HTMLDivElement>();
+
+  return (
+    <div style={{ perspective: 800 }}>
+      <div
+        ref={ref}
+        style={{
+          transform: `rotateX(${roll * 20}deg) rotateY(${tilt * 20}deg)`,
+        }}
+      >
+        Tilting card
+      </div>
+    </div>
+  );
+}
+```
+
+## Example: 3D card
+
+Nested layers with different multipliers create a sense of depth. The example below tilts a
+payment card in 3D and moves a light glare across its surface based on the current `roll` and
+`tilt` values:
+
+<Demo data={UseTiltDemos.card} />
+
+## Reset on leave
+
+By default `roll` and `tilt` reset to `0` when the pointer leaves the target element, animating
+the element back to its neutral position. Set `resetOnLeave: false` to keep the last values
+after the pointer leaves:
+
+```tsx
+import { useTilt } from '@mantine/hooks';
+
+function Demo() {
+  // The element keeps its last tilt after the cursor leaves
+  const { ref, roll, tilt } = useTilt<HTMLDivElement>({ resetOnLeave: false });
+  // ...
+}
+```
+
+## React to the whole page
+
+By default the hook only updates while the target element is hovered. Set `trackWindow: true` to
+react to the pointer position anywhere on the page. The `roll` and `tilt` values are still
+computed relative to the element center, but they keep updating as the cursor moves across the
+whole document, which is useful for a hero element that should respond to the pointer even when
+it is not directly hovered:
+
+<Demo data={UseTiltDemos.page} />
+
+When `trackWindow` is set to `true`, the values are not clamped to `[-0.5, 0.5]` – they grow larger
+the further the cursor is from the element. Clamp them or use the adjust options if you need to
+limit the effect.
+
+## Adjusting values
+
+Use the `*Adjust` options to transform the raw values before they are returned. This is useful
+to amplify, dampen, clamp or invert the effect independently for each input source. In the
+example below the mouse values are inverted and amplified, so the card tilts away from the
+cursor:
+
+<Demo data={UseTiltDemos.adjust} />
+
+```tsx
+import { useTilt } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, roll, tilt } = useTilt<HTMLDivElement>({
+    // Amplify the mouse effect
+    mouseRollAdjust: (value) => value * 2,
+    mouseTiltAdjust: (value) => value * 2,
+    // Invert the device orientation effect
+    deviceOrientationRollAdjust: (value) => -value,
+    deviceOrientationTiltAdjust: (value) => -value,
+  });
+
+  // ...
+}
+```
+
+## Source selection
+
+The `source` field tells you which input is currently active: `'mouse'` or
+`'deviceOrientation'`. When the device reports gyroscope data, the hook switches to
+`deviceOrientation` and keeps using it. Otherwise it falls back to the pointer position. You can
+use `source` to render input-specific hints, for example prompting the user to move the cursor
+on desktop and to tilt the device on mobile.
+
+## Device orientation permission
+
+On iOS 13+ access to device orientation data requires a user gesture: you must call
+`DeviceOrientationEvent.requestPermission()` from an event handler (for example a button click)
+before the browser starts emitting `deviceorientation` events. `use-tilt` does not prompt
+for permission automatically – it attempts to listen and silently falls back to the mouse until
+permission is granted. If you need device orientation on iOS, request permission yourself:
+
+```tsx
+async function requestOrientationPermission() {
+  const DeviceOrientationEventTyped = DeviceOrientationEvent as unknown as {
+    requestPermission?: () => Promise<'granted' | 'denied'>;
+  };
+
+  if (typeof DeviceOrientationEventTyped.requestPermission === 'function') {
+    await DeviceOrientationEventTyped.requestPermission();
+  }
+}
+```
+
+Once permission is granted, `use-tilt` picks up the events and switches `source` to
+`deviceOrientation` automatically.
+
+## Exported types
+
+`UseTiltOptions`, `UseTiltReturnValue` and `UseTiltSource` types are exported from
+the `@mantine/hooks` package, you can import them in your application:
+
+```tsx
+import type {
+  UseTiltOptions,
+  UseTiltReturnValue,
+  UseTiltSource,
+} from '@mantine/hooks';
+```

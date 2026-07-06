@@ -142,6 +142,11 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Handles move behavior over given element, can be used to build custom sliders'
   ),
 
+  useTilt: {
+    ...hDocs('useTilt', 'Produces roll/tilt values from pointer and device orientation'),
+    searchTags: 'useTilt useParallax tilt roll parallax mouse device orientation gyroscope 3d card',
+  },
+
   useNetwork: hDocs('useNetwork', 'Returns current connection status'),
   useOs: hDocs('useOs', 'Detects user operating system'),
   usePageLeave: hDocs('usePageLeave', 'Calls given function when the mouse leaves the page'),

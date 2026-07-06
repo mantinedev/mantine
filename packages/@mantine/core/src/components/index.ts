@@ -117,6 +117,7 @@ export * from './Text';
 export * from './Textarea';
 export * from './TextInput';
 export * from './ThemeIcon';
+export * from './Tilt';
 export * from './Timeline';
 export * from './Timer';
 export * from './Title';
