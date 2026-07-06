@@ -62,6 +62,7 @@ export * from './data/Heatmap.styles-api';
 export * from './data/Highlight.styles-api';
 export * from './data/HoverCard.styles-api';
 export * from './data/Image.styles-api';
+export * from './data/ImageCropper.styles-api';
 export * from './data/Indicator.styles-api';
 export * from './data/Input.styles-api';
 export * from './data/InputBase.styles-api';

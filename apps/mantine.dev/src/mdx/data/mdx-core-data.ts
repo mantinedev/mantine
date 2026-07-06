@@ -1139,6 +1139,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'img, picture, photo, thumbnail, figure',
   },
 
+  ImageCropper: {
+    title: 'ImageCropper',
+    package: '@mantine/core',
+    slug: '/core/image-cropper',
+    componentPrefix: 'ImageCropper',
+    props: ['ImageCropper'],
+    styles: ['ImageCropper'],
+    description: 'Interactive image crop, zoom, rotate and flip with canvas export',
+    source: '@mantine/core/src/components/ImageCropper/ImageCropper.tsx',
+    docs: 'core/image-cropper.mdx',
+    searchTags: 'crop, avatar, zoom, rotate, flip, canvas, upload, thumbnail, resize image',
+  },
+
   Card: {
     title: 'Card',
     package: '@mantine/core',

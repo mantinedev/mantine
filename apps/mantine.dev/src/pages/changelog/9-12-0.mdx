@@ -1,3 +1,4 @@
+import { ImageCropperDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,3 +10,13 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## ImageCropper component
+
+New [ImageCropper](/core/image-cropper) component provides an interactive crop UI: load an image,
+then pan, zoom, rotate and flip it inside a fixed crop window with a rectangle or circle shape and
+an optional aspect ratio. The cropped result can be exported as a `Blob` or data URL via a canvas,
+or read back as a crop rectangle in source pixels for server-side cropping. It has no third-party
+dependencies and works with server-side rendering:
+
+<Demo data={ImageCropperDemos.usage} />

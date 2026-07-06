@@ -1,0 +1,99 @@
+.root {
+  --image-cropper-overlay-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
+  width: 100%;
+}
+
+.viewport {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: var(--mantine-color-black);
+  border-radius: var(--mantine-radius-default);
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+
+.viewport[data-active] {
+  cursor: grabbing;
+}
+
+.viewport[data-disabled] {
+  cursor: default;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+  transform-origin: center center;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 rem(9999px) var(--image-cropper-overlay-color);
+  border: rem(1px) solid rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+}
+
+.overlay[data-shape='circle'] {
+  border-radius: 50%;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+}
+
+.gridLine {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.gridLine[data-orientation='vertical'] {
+  top: 0;
+  bottom: 0;
+  width: rem(1px);
+}
+
+.gridLine[data-orientation='vertical'][data-position='1'] {
+  left: 33.333%;
+}
+
+.gridLine[data-orientation='vertical'][data-position='2'] {
+  left: 66.666%;
+}
+
+.gridLine[data-orientation='horizontal'] {
+  left: 0;
+  right: 0;
+  height: rem(1px);
+}
+
+.gridLine[data-orientation='horizontal'][data-position='1'] {
+  top: 33.333%;
+}
+
+.gridLine[data-orientation='horizontal'][data-position='2'] {
+  top: 66.666%;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+}

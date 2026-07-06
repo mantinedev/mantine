@@ -406,6 +406,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Indicator,
       MDX_DATA.Card,
       MDX_DATA.Image,
+      MDX_DATA.ImageCropper,
       MDX_DATA.CompareSlider,
       MDX_DATA.ThemeIcon,
       MDX_DATA.Timeline,

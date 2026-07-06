@@ -1,0 +1,164 @@
+import { ImageCropperDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ImageCropper);
+
+## Usage
+
+`ImageCropper` is an interactive crop UI: load an image, then pan, zoom, rotate and flip it inside
+a fixed crop window. The crop window stays centered and keeps the configured aspect ratio, while
+the image moves behind it. Drag the image to pan, use the mouse wheel to zoom, and use the default
+controls (or the imperative API) to rotate and flip:
+
+<Demo data={ImageCropperDemos.usage} />
+
+The component does not depend on any third-party library. The interactive view is built with CSS
+transforms, and the cropped result is produced with a one-shot `<canvas>` rasterization, so it also
+works with server-side rendering.
+
+## Interactions
+
+While you pan and zoom, the image is constrained so it stays covering the crop window. At large
+rotation angles you may need to zoom in to keep the crop area fully covered:
+
+- **Pan** – drag the image inside the viewport.
+- **Zoom** – scroll the mouse wheel over the viewport, or use the zoom slider in the default
+  controls. Zoom is constrained between `minZoom` (default `1`) and `maxZoom` (default `5`), with
+  `zoomStep` (default `0.1`) granularity.
+- **Rotate** – use the rotate control or the imperative `rotateBy`/`setRotation` actions.
+- **Flip** – mirror the image horizontally or vertically with the default controls or the
+  `flipHorizontal`/`flipVertical` actions.
+
+Set `withControls` to render the default zoom slider together with rotate, flip and reset buttons
+under the viewport.
+
+## Aspect ratio
+
+Set `aspectRatio` to control the shape of the crop window, for example `1` for a square or
+`16 / 9` for a widescreen crop. When `aspectRatio` is not set, the crop window matches the viewport
+aspect ratio:
+
+<Demo data={ImageCropperDemos.aspectRatio} />
+
+## Circle crop
+
+Set `cropShape="circle"` to display a circular crop window, which is useful for avatars. The circle
+shape enforces a square (`1:1`) aspect ratio and, on export, applies a circular mask to the result:
+
+<Demo data={ImageCropperDemos.circle} />
+
+## Rule-of-thirds grid
+
+Set `withGrid` to display a rule-of-thirds grid over the crop window to help align the image:
+
+```tsx
+import { ImageCropper } from '@mantine/core';
+
+function Demo() {
+  return <ImageCropper src="/image.png" withGrid />;
+}
+```
+
+## Controller
+
+Use the `useImageCropper` hook to control the cropper from the outside and to access its imperative
+API. Pass the returned controller to the `controller` prop – when a controller is provided, the
+zoom, rotation and flip option props of `ImageCropper` are ignored and managed by the hook instead:
+
+```tsx
+import { ImageCropper, useImageCropper } from '@mantine/core';
+
+function Demo() {
+  const controller = useImageCropper({ cropShape: 'circle', maxZoom: 4 });
+
+  return <ImageCropper src="/image.png" controller={controller} withControls />;
+}
+```
+
+The controller exposes the current state (`zoom`, `rotation`, `flip`, `crop`) and the following
+actions:
+
+- `setZoom(value)` / `zoomBy(delta)` – set or change zoom, clamped to `minZoom`/`maxZoom`
+- `setRotation(degrees)` / `rotateBy(delta)` – set or change rotation
+- `flipHorizontal()` / `flipVertical()` – toggle mirroring on each axis
+- `reset()` – reset zoom, rotation, flip and crop position to their initial values
+- `getCropData()` – get the current crop rectangle in natural source pixels
+- `getCroppedImage(options)` – rasterize and return the cropped image
+
+## Exporting the crop
+
+`getCroppedImage` draws the current crop to an offscreen canvas and returns it as a `Blob` (default)
+or a data URL. It accepts `type` (`'image/png'`, `'image/jpeg'` or `'image/webp'`), `quality` and
+`output` (`'blob'` or `'dataURL'`) options:
+
+<Demo data={ImageCropperDemos.exportImage} />
+
+```tsx
+const blob = await controller.getCroppedImage({ type: 'image/jpeg', quality: 0.9 });
+const dataURL = await controller.getCroppedImage({ output: 'dataURL' });
+```
+
+Because the export goes through a canvas, exporting a remote image requires the image host to send
+permissive CORS headers, and the image must be loaded with `crossOrigin="anonymous"`. Pass the
+`crossOrigin` prop to `ImageCropper` to enable it. Images loaded from object URLs or data URLs
+(for example from `@mantine/dropzone` or a file input) do not require any extra configuration.
+
+## Server-side cropping
+
+If you crop the image on the server, use `getCropData()` or the `onCropChange` callback to get the
+crop rectangle in natural source pixels instead of rasterizing on the client. The callback fires
+with both `pixels` (natural source pixels) and `percent` (percentages of the source image) whenever
+the crop changes:
+
+```tsx
+import { ImageCropper } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ImageCropper
+      src="/image.png"
+      onCropChange={({ pixels }) => {
+        // { x, y, width, height, rotation } in natural source pixels
+        console.log(pixels);
+      }}
+    />
+  );
+}
+```
+
+## Compound components
+
+By default `ImageCropper` renders a viewport with the image and, optionally, the default controls.
+To build a custom layout, compose the compound components manually:
+
+```tsx
+import { ImageCropper } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ImageCropper src="/image.png" aspectRatio={1}>
+      <ImageCropper.Viewport>
+        <ImageCropper.Image />
+      </ImageCropper.Viewport>
+
+      <ImageCropper.Controls />
+    </ImageCropper>
+  );
+}
+```
+
+- `ImageCropper.Viewport` – the crop viewport, clips the image and handles pan/zoom interactions.
+- `ImageCropper.Image` – the image element that is panned, zoomed, rotated and flipped.
+- `ImageCropper.Controls` – the default controls. Pass custom children to replace them.
+
+## Disabled state
+
+Set `disabled` to render a static, non-interactive cropper. Panning, zooming and the default
+controls are disabled, which is useful for a read-only preview of a saved crop.
+
+## Pairing with Dropzone
+
+`ImageCropper` does not include a file input. Combine it with
+[Dropzone](/x/dropzone/) or a native file input to let users pick an image, create an object URL
+with `URL.createObjectURL(file)`, pass it to `src`, and export the crop for upload.

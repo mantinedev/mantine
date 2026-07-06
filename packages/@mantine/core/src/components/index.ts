@@ -65,6 +65,7 @@ export * from './Grid';
 export * from './Highlight';
 export * from './HoverCard';
 export * from './Image';
+export * from './ImageCropper';
 export * from './Indicator';
 export * from './JsonInput';
 export * from './Kbd';
