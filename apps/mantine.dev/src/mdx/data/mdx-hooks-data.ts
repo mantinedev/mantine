@@ -21,6 +21,11 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
+  useActiveElement: {
+    ...hDocs('useActiveElement', 'Tracks the currently focused element (document.activeElement)'),
+    searchTags: 'useActiveElement active element focus focused document.activeElement shadow dom',
+  },
+
   useClickOutside: hDocs(
     'useClickOutside',
     'Detects click and touch events outside of given element or elements group'

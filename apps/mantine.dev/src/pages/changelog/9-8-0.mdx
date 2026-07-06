@@ -1,4 +1,16 @@
-import { DiffDemos, EmojiPickerDemos, EmojiPickerInputDemos, EmojiPickerPopoverDemos, MaskedDateInputDemos, PhoneInputDemos, QuarterPickerDemos, QuarterPickerInputDemos, WeekPickerDemos, WeekPickerInputDemos } from '@docs/demos';
+import {
+  DiffDemos,
+  EmojiPickerDemos,
+  EmojiPickerInputDemos,
+  EmojiPickerPopoverDemos,
+  MaskedDateInputDemos,
+  PhoneInputDemos,
+  QuarterPickerDemos,
+  QuarterPickerInputDemos,
+  UseActiveElementDemos,
+  WeekPickerDemos,
+  WeekPickerInputDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -97,3 +109,13 @@ and the corresponding input components has been reworked:
 - When the dropdown of `DatePickerInput` and other input components is closed after a keyboard interaction,
   focus is returned to the input
 - Dropdown start padding is reduced when presets are displayed
+
+## use-active-element hook
+
+New [use-active-element](/hooks/use-active-element) hook reactively tracks
+`document.activeElement` – the element that currently has focus. It updates as focus moves,
+pierces shadow roots to return the truly-focused element inside web components, and can observe
+DOM removals so the returned value stays in sync when the focused element is unmounted. It is
+useful to build focus-aware UI or to decide whether a global keyboard shortcut should fire:
+
+<Demo data={UseActiveElementDemos.usage} />
