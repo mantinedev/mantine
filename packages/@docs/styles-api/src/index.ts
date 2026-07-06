@@ -147,6 +147,7 @@ export * from './data/Textarea.styles-api';
 export * from './data/TextInput.styles-api';
 export * from './data/ThemeIcon.styles-api';
 export * from './data/TimeGrid.styles-api';
+export * from './data/Tilt.styles-api';
 export * from './data/Timeline.styles-api';
 export * from './data/TimePicker.styles-api';
 export * from './data/Title.styles-api';

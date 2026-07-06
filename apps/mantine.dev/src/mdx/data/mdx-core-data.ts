@@ -1276,6 +1276,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'history, activity, chronology, events list, feed, vertical steps',
   },
 
+  Tilt: {
+    title: 'Tilt',
+    package: '@mantine/core',
+    slug: '/core/tilt',
+    componentPrefix: 'Tilt',
+    props: ['Tilt', 'TiltLayer'],
+    styles: ['Tilt'],
+    description: 'Tilts its content in 3D in response to the pointer and device orientation',
+    source: '@mantine/core/src/components/Tilt/Tilt.tsx',
+    docs: 'core/tilt.mdx',
+    searchTags: 'parallax, 3d, hover, rotate, perspective, card, glare, mouse tilt',
+  },
+
   Dialog: {
     title: 'Dialog',
     package: '@mantine/core',

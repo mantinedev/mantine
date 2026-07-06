@@ -1,0 +1,70 @@
+import { TiltDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Tilt);
+
+## Usage
+
+`Tilt` rotates its content in 3D in response to the pointer position and, on supported mobile
+devices, the device orientation. It owns the `perspective` container and the transform, so you
+only need to provide the content. Wrap any element with a defined size – the component tilts it
+towards the cursor and animates it back to its resting position when the pointer leaves:
+
+<Demo data={TiltDemos.usage} />
+
+`Tilt` is a thin, styled layer on top of the [use-tilt](/hooks/use-tilt) hook. If you need full
+control over the transforms, or you want to drive something other than a DOM element, use the
+hook directly.
+
+## Props
+
+- `maxRotate` – maximum rotation in degrees applied at the edges (default `15`)
+- `perspective` – perspective distance of the 3D container, numbers are converted to rem (default `1000`)
+- `radius` – key of `theme.radius` or any valid CSS value to round the content and glare
+- `withGlare` – render a light glare that follows the pointer (default `false`)
+- `transitionDuration` – transition duration in ms while the pointer moves (default `150`)
+- `resetTransitionDuration` – transition duration in ms when returning to the neutral position (defaults to `transitionDuration * 2`)
+- `trackWindow` – react to the pointer anywhere on the page instead of only when hovered (default `false`)
+- `resetOnLeave` – return to the neutral position when the pointer leaves (default `true`)
+
+<Demo data={TiltDemos.configurator} />
+
+## Layers
+
+Use `Tilt.Layer` components to build a layered depth effect. Each layer shifts in the direction
+of the tilt by an amount controlled by its `depth` prop (`0` – static, `1` – full shift), so
+layers with a higher `depth` appear closer to the viewer. The `shift` prop controls the distance
+in pixels a layer moves at `depth={1}` (default `20`):
+
+<Demo data={TiltDemos.layers} />
+
+`Tilt.Layer` accepts any styles, so you can position layers absolutely inside a sized container
+and give each of them a different `depth` to create parallax.
+
+## Glare
+
+Set `withGlare` to render a light reflection that follows the pointer across the surface. It is
+useful for card and image-like content. Style the glare with the `glare`
+[Styles API](/styles/styles-api) selector:
+
+<Demo data={TiltDemos.usage} />
+
+## React to the whole page
+
+By default `Tilt` only reacts while the element is hovered. Set `trackWindow` to make it follow
+the pointer anywhere on the page, which is useful for a hero element that should respond even
+when the cursor is not directly over it:
+
+<Demo data={TiltDemos.trackWindow} />
+
+## Reduced motion
+
+`Tilt` respects the user's `prefers-reduced-motion` setting: when reduced motion is requested,
+the content stays in its neutral position and does not tilt.
+
+## Device orientation
+
+On supported mobile devices `Tilt` reacts to the device orientation gyroscope instead of the
+pointer. On iOS 13+, access to device orientation requires a user gesture to grant permission –
+see the [use-tilt](/hooks/use-tilt) documentation for details on requesting it.
