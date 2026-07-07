@@ -35,6 +35,18 @@
       &:not([data-vertical-hidden]) {
         padding-inline-end: var(--scrollarea-scrollbar-size);
         padding-inline-start: unset;
+
+        &:where([data-vertical-scrollbar-position='left']) {
+          padding-inline-end: unset;
+          padding-left: var(--scrollarea-scrollbar-size);
+          padding-right: unset;
+        }
+
+        &:where([data-vertical-scrollbar-position='right']) {
+          padding-inline-end: unset;
+          padding-left: unset;
+          padding-right: var(--scrollarea-scrollbar-size);
+        }
       }
     }
   }
@@ -101,6 +113,18 @@
     top: 0;
     bottom: var(--sa-corner-width);
     inset-inline-end: 0;
+
+    &:where([data-vertical-scrollbar-position='left']) {
+      inset-inline-end: auto;
+      left: 0;
+      right: auto;
+    }
+
+    &:where([data-vertical-scrollbar-position='right']) {
+      inset-inline-end: auto;
+      left: auto;
+      right: 0;
+    }
   }
 
   &:where([data-orientation='horizontal']) {
@@ -109,6 +133,20 @@
     bottom: 0;
     inset-inline-start: 0;
     inset-inline-end: var(--sa-corner-width);
+
+    &:where([data-vertical-scrollbar-position='left']) {
+      inset-inline-start: auto;
+      inset-inline-end: auto;
+      left: var(--sa-corner-width);
+      right: 0;
+    }
+
+    &:where([data-vertical-scrollbar-position='right']) {
+      inset-inline-start: auto;
+      inset-inline-end: auto;
+      left: 0;
+      right: var(--sa-corner-width);
+    }
   }
 }
 
@@ -148,6 +186,18 @@
   display: block;
   inset-inline-end: 0;
   bottom: 0;
+
+  &:where([data-vertical-scrollbar-position='left']) {
+    inset-inline-end: auto;
+    left: 0;
+    right: auto;
+  }
+
+  &:where([data-vertical-scrollbar-position='right']) {
+    inset-inline-end: auto;
+    left: auto;
+    right: 0;
+  }
 
   @mixin where-light {
     background-color: var(--mantine-color-gray-0);

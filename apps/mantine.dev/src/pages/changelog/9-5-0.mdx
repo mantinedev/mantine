@@ -1,4 +1,4 @@
-import { AccordionDemos, BulletChartDemos, CascaderDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, SunburstChartDemos, TableDemos, TimelineDemos } from '@docs/demos';
+import { AccordionDemos, BulletChartDemos, CascaderDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, ScrollAreaDemos, SunburstChartDemos, TableDemos, TimelineDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -106,6 +106,16 @@ always stays open. Pair it with `defaultValue` or `value` to guarantee that a se
 from the start – useful for settings panels, stepper-style flows and FAQ pages.
 
 <Demo data={AccordionDemos.disableCollapse} />
+
+## ScrollArea vertical scrollbar position
+
+[ScrollArea](/core/scroll-area) now supports the `verticalScrollbarPosition` prop that pins the
+vertical scrollbar to a physical side (`left` or `right`) regardless of direction. This is useful
+for RTL applications where users expect the vertical scrollbar to stay on the right, matching the
+behavior of most desktop software. The prop also realigns the offset padding, the corner and the
+horizontal scrollbar gap, so it works correctly with `offsetScrollbars` and `scrollbars="xy"`.
+
+<Demo data={ScrollAreaDemos.verticalScrollbarPosition} />
 
 ## New example: Table virtualization
 
