@@ -52,7 +52,7 @@
     "clsx": "^2.1.1",
     "react-number-format": "^5.4.5",
     "react-remove-scroll": "^2.7.2",
-    "type-fest": "^5.7.0"
+    "type-fest": "^5.8.0"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
