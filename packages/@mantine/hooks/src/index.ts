@@ -111,6 +111,7 @@ export type { UseActiveElementOptions } from './use-active-element/use-active-el
 export type {
   UseClipboardInput as UseClipboardOptions,
   UseClipboardReturnValue,
+  UseClipboardCopyValue,
 } from './use-clipboard/use-clipboard';
 export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';
 export type {

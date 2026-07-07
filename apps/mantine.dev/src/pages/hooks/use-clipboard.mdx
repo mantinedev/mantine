@@ -6,28 +6,129 @@ export default Layout(MDX_DATA.useClipboard);
 
 ## Usage
 
-The `use-clipboard` hook provides a simple way to copy text to the clipboard,
+The `use-clipboard` hook provides a simple way to copy content to the clipboard,
 track the copied state, handle errors, and reset the state after a given timeout.
-It uses the [navigator.clipboard.writeText](https://caniuse.com/mdn-api_clipboard_writetext) API under the hood.
+Strings are copied with the [navigator.clipboard.writeText](https://caniuse.com/mdn-api_clipboard_writetext) API:
 
 <Demo data={UseClipboardDemos.usage} />
+
+## Copying images and other blobs
+
+Besides strings, `copy` accepts a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob),
+a [ClipboardItem](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardItem) or an array of
+`ClipboardItem`s and copies them with the
+[navigator.clipboard.write](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/write) API.
+This is useful for copying binary data such as images. In the example below a gradient is drawn on a
+canvas, exported as an `image/png` blob and copied to the clipboard – after copying you can paste the
+image into any application that accepts images:
+
+<Demo data={UseClipboardDemos.image} />
+
+To keep the copy within the user gesture (required by Safari), construct a `ClipboardItem` with a
+`Promise` that resolves to the blob synchronously in the event handler, rather than awaiting the blob
+first:
+
+```tsx
+const copyImage = () => {
+  const blob = new Promise<Blob>((resolve, reject) => {
+    canvasRef.current?.toBlob(
+      (result) => (result ? resolve(result) : reject(new Error('Failed to export image'))),
+      'image/png'
+    );
+  });
+
+  clipboard.copy(new ClipboardItem({ 'image/png': blob }));
+};
+```
+
+`copy` accepts the following value types:
+
+```tsx
+type UseClipboardCopyValue =
+  // Copied with navigator.clipboard.writeText
+  | string
+  | number
+  | boolean
+  // Copied with navigator.clipboard.write
+  | Blob
+  | ClipboardItem
+  | ClipboardItem[];
+```
+
+String, number and boolean values keep using `navigator.clipboard.writeText` (primitives are coerced
+to text), which has the widest browser support and works in contexts where `navigator.clipboard.write`
+is not available. `Blob`, `ClipboardItem` and `ClipboardItem[]` values are copied with
+`navigator.clipboard.write`.
+
+## Checking browser support
+
+The `supported` value is `true` if the `navigator.clipboard.write` API (used for blobs and images) is
+available in the current environment. It is `false` during server-side rendering and in browsers that
+do not support it. Copying strings does not require `navigator.clipboard.write`, so it works even when
+`supported` is `false`:
+
+```tsx
+import { useClipboard } from '@mantine/hooks';
+
+function Demo() {
+  const clipboard = useClipboard();
+
+  return (
+    <button type="button" disabled={!clipboard.supported} onClick={() => clipboard.copy(imageBlob)}>
+      Copy image
+    </button>
+  );
+}
+```
+
+## Handling errors
+
+If copying fails – for example when the clipboard API is not available or the user denied
+permission – the `error` value is set to the corresponding `Error` object:
+
+```tsx
+import { useClipboard } from '@mantine/hooks';
+
+function Demo() {
+  const clipboard = useClipboard();
+
+  if (clipboard.error) {
+    return <div>Failed to copy: {clipboard.error.message}</div>;
+  }
+
+  // ...
+}
+```
 
 ## Limitations
 
 Due to security reasons, the `use-clipboard` hook will not work in iframes and may not work with local files opened with the `file://` protocol
 (the hook will work fine with local websites that are using the `http://` protocol). You can learn more about `navigator.clipboard` [here](https://web.dev/async-clipboard/).
 
+Copying blobs with `navigator.clipboard.write` has narrower browser support than `writeText` and, in
+some browsers (notably Safari), must be triggered by a user gesture. When copying asynchronously
+generated blobs in Safari, construct a `ClipboardItem` with a `Promise` instead of resolving the blob
+before calling `copy`.
+
 ## Definition
 
 ```tsx
+type UseClipboardCopyValue =
+  | string
+  | number
+  | boolean
+  | Blob
+  | ClipboardItem
+  | ClipboardItem[];
+
 interface UseClipboardOptions {
   /** Time in ms after which the copied state will reset, `2000` by default */
   timeout?: number;
 }
 
 interface UseClipboardReturnValue {
-  /** Function to copy value to clipboard */
-  copy: (value: any) => void;
+  /** Copies value to the clipboard */
+  copy: (value: UseClipboardCopyValue) => void;
 
   /** Function to reset copied state and error */
   reset: () => void;
@@ -37,16 +138,23 @@ interface UseClipboardReturnValue {
 
   /** Boolean indicating if the value was copied successfully */
   copied: boolean;
+
+  /** `true` if the `navigator.clipboard.write` API (blobs and images) is available */
+  supported: boolean;
 }
 
-function useClipboard(options?: UseClipboardOptions): UseClipboardReturnValue
+function useClipboard(options?: UseClipboardOptions): UseClipboardReturnValue;
 ```
 
 ## Exported types
 
-The `UseClipboardOptions` and `UseClipboardReturnValue` types are exported from the `@mantine/hooks` package;
+The `UseClipboardOptions`, `UseClipboardReturnValue` and `UseClipboardCopyValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx
-import type { UseClipboardOptions, UseClipboardReturnValue } from '@mantine/hooks';
+import type {
+  UseClipboardCopyValue,
+  UseClipboardOptions,
+  UseClipboardReturnValue,
+} from '@mantine/hooks';
 ```

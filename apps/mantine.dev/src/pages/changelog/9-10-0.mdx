@@ -4,6 +4,7 @@ import {
   ImageCropperDemos,
   TimerDemos,
   TooltipDemos,
+  UseClipboardDemos,
   UseDebouncedEffectDemos,
   UseHoldRepeatHandlersDemos,
 } from '@docs/demos';
@@ -85,3 +86,13 @@ or read back as a crop rectangle in source pixels for server-side cropping. It h
 dependencies and works with server-side rendering:
 
 <Demo data={ImageCropperDemos.usage} />
+
+## use-clipboard blobs and images support
+
+[use-clipboard](/hooks/use-clipboard) `copy` function now accepts `Blob`, `ClipboardItem` and
+`ClipboardItem[]` values in addition to strings. This makes it possible to copy binary data such as
+images to the clipboard with `navigator.clipboard.write`, while strings keep using the widely
+supported `navigator.clipboard.writeText`. The new `supported` value indicates whether copying
+blobs and images is available:
+
+<Demo data={UseClipboardDemos.image} />
