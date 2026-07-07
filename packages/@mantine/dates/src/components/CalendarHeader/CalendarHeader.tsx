@@ -117,6 +117,9 @@ export interface CalendarHeaderProps
 
   /** Max date constraint for native level select */
   __maxDate?: DateStringValue | Date;
+
+  /** Disables native level selects when date changes would not take effect (controlled `date` without `onDateChange`) */
+  __disableNativeLevelSelect?: boolean;
 }
 
 export type CalendarHeaderFactory = Factory<{
@@ -176,6 +179,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
     __onDateChange,
     __minDate,
     __maxDate,
+    __disableNativeLevelSelect,
     attributes,
     ...others
   } = props;
@@ -235,6 +239,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
           <select
             {...getStyles('calendarHeaderSelect')}
             data-select="month"
+            disabled={__disableNativeLevelSelect}
             value={dayjs(__date).month()}
             onChange={(event) => {
               const newDate = dayjs(__date)
@@ -258,6 +263,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
         <select
           {...getStyles('calendarHeaderSelect')}
           data-select="year"
+          disabled={__disableNativeLevelSelect}
           value={dayjs(__date).year()}
           onChange={(event) => {
             const newDate = dayjs(__date)

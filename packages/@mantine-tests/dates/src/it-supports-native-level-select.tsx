@@ -68,6 +68,29 @@ export function itSupportsNativeLevelSelect(
       expect(options_list[0].textContent).not.toBe('January');
     });
 
+    it('disables native selects when date is controlled without onDateChange', () => {
+      const { container } = render(
+        <options.component {...options.props} date="2024-03-01" withNativeLevelSelect />
+      );
+
+      expect(container.querySelector('select[data-select="month"]')).toBeDisabled();
+      expect(container.querySelector('select[data-select="year"]')).toBeDisabled();
+    });
+
+    it('keeps native selects enabled when date is controlled with onDateChange', () => {
+      const { container } = render(
+        <options.component
+          {...options.props}
+          date="2024-03-01"
+          onDateChange={() => {}}
+          withNativeLevelSelect
+        />
+      );
+
+      expect(container.querySelector('select[data-select="month"]')).not.toBeDisabled();
+      expect(container.querySelector('select[data-select="year"]')).not.toBeDisabled();
+    });
+
     it('hides level button when native selects are shown', () => {
       const { container } = render(
         <options.component

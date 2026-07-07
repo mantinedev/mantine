@@ -50,6 +50,9 @@ export interface MonthLevelProps
 
   /** Called when date is changed via native level select */
   __onDateChange?: (date: DateStringValue) => void;
+
+  /** Disables native level selects when date changes would not take effect */
+  __disableNativeLevelSelect?: boolean;
 }
 
 export type MonthLevelFactory = Factory<{
@@ -114,6 +117,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
     unstyled,
     __staticSelector,
     __onDateChange,
+    __disableNativeLevelSelect,
     size,
     static: isStatic,
     fullWidth,
@@ -162,6 +166,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
         __date={month}
         __locale={locale || ctx.locale}
         __onDateChange={__onDateChange}
+        __disableNativeLevelSelect={__disableNativeLevelSelect}
         __minDate={minDate}
         __maxDate={maxDate}
         nextIcon={nextIcon}

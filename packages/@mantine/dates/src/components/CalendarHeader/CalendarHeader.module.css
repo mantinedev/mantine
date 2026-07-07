@@ -89,6 +89,11 @@
     outline-offset: rem(2px);
     border-radius: var(--mantine-radius-sm);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--mantine-color-dimmed);
+  }
 }
 
 .calendarHeaderControlIcon {
