@@ -110,6 +110,7 @@ export * from './Space';
 export * from './Splitter';
 export * from './Spoiler';
 export * from './Stack';
+export * from './Stat';
 export * from './Stepper';
 export * from './Switch';
 export * from './Table';

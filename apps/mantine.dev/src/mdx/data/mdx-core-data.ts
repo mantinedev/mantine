@@ -1203,6 +1203,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'user, profile, presence, avatar, contact, people, identity, presence badge',
   },
 
+  Stat: {
+    title: 'Stat',
+    package: '@mantine/core',
+    slug: '/core/stat',
+    componentPrefix: 'Stat',
+    props: ['Stat', 'StatLabel', 'StatValue', 'StatDiff', 'StatIcon', 'StatCountdown'],
+    styles: ['Stat'],
+    description: 'Display a key metric with a label, formatted value, trend and countdown',
+    source: '@mantine/core/src/components/Stat/Stat.tsx',
+    docs: 'core/stat.mdx',
+    searchTags: 'statistic, metric, kpi, dashboard, number, trend, countdown, stat',
+  },
+
   PhoneInput: {
     title: 'PhoneInput',
     package: '@mantine/core',

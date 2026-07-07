@@ -124,6 +124,13 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Persona/PersonaPresence.tsx',
   'packages/@mantine/core/src/components/Persona/PersonaText.tsx',
 
+  // Stat
+  'packages/@mantine/core/src/components/Stat/StatLabel.tsx',
+  'packages/@mantine/core/src/components/Stat/StatValue.tsx',
+  'packages/@mantine/core/src/components/Stat/StatDiff.tsx',
+  'packages/@mantine/core/src/components/Stat/StatIcon.tsx',
+  'packages/@mantine/core/src/components/Stat/StatCountdown.tsx',
+
   // Editable
   'packages/@mantine/core/src/components/Editable/EditableArea.tsx',
   'packages/@mantine/core/src/components/Editable/EditablePreview.tsx',
