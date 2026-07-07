@@ -280,6 +280,20 @@ describe('@mantine/dates/TimePicker', () => {
     expect(spy).toHaveBeenLastCalledWith('13:34:00');
   });
 
+  it('does not include seconds in pasted value when withSeconds is false', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} format="24h" onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    expect(screen.getByLabelText('test-hours')).toHaveFocus();
+
+    await userEvent.paste('13:34:56');
+
+    expect(screen.getByLabelText('test-hours')).toHaveValue('13');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('34');
+    expect(spy).toHaveBeenLastCalledWith('13:34');
+  });
+
   it('calls onChange function when the value is valid (24h format)', async () => {
     const spy = jest.fn();
     render(<TimePicker {...defaultProps} withSeconds format="24h" onChange={spy} />);

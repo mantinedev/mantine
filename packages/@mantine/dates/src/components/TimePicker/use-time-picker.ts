@@ -194,7 +194,9 @@ export function useTimePicker({
       acceptChange.current = false;
       const defaultMax = type === 'duration' ? undefined : '23:59:59';
       const clamped = clampTime(timeString.value, min || '00:00:00', max || defaultMax);
-      onChange?.(clamped.timeString);
+      onChange?.(
+        withSeconds ? clamped.timeString : clamped.timeString.split(':').slice(0, 2).join(':')
+      );
       setHours(parsedTime.hours);
       setMinutes(parsedTime.minutes);
       setSeconds(parsedTime.seconds);
