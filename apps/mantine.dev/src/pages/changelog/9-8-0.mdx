@@ -4,6 +4,7 @@ import {
   EmojiPickerInputDemos,
   EmojiPickerPopoverDemos,
   MaskedDateInputDemos,
+  MentionsDemos,
   PhoneInputDemos,
   QuarterPickerDemos,
   QuarterPickerInputDemos,
@@ -130,3 +131,14 @@ from `navigator.languages`. Both hooks are useful to pick a default locale for f
 fallback without a full internationalization library:
 
 <Demo data={UseBrowserLanguageDemos.usage} />
+
+## Mentions component
+
+New [Mentions](/core/mentions) component captures `@`-mentions (and any other trigger) in a textarea.
+Typing a trigger opens a suggestions dropdown; picking a suggestion inserts a structured mention token
+into the value. The value is stored as markup (`@[Display](id)`) that preserves a stable id for each
+mention and round-trips through editing, while the user only ever sees the plain text. It supports
+multiple triggers, async data sources with `AbortSignal` cancellation, caret-anchored or inline
+suggestions and caret-aware mention styling, all with no third-party dependencies:
+
+<Demo data={MentionsDemos.usage} />

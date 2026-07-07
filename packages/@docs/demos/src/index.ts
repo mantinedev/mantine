@@ -69,6 +69,7 @@ export * as MarqueeDemos from './demos/core/Marquee';
 export * as MaskInputDemos from './demos/core/MaskInput';
 export * as MenuDemos from './demos/core/Menu';
 export * as MenubarDemos from './demos/core/Menubar';
+export * as MentionsDemos from './demos/core/Mentions';
 export * as ModalDemos from './demos/core/Modal';
 export * as MultiSelectDemos from './demos/core/MultiSelect';
 export * as NativeSelectDemos from './demos/core/NativeSelect';

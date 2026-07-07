@@ -1,0 +1,126 @@
+.control {
+  position: relative;
+  width: 100%;
+  min-height: max(
+    calc(var(--mentions-min-rows, 1) * 1lh),
+    calc(var(--input-height) - 2 * var(--input-padding-y, 0rem))
+  );
+  max-height: calc(var(--mentions-max-rows) * 1lh);
+  overflow: hidden;
+}
+
+/* The highlighter sits in normal flow and drives the height of the control. It renders the plain
+   text with mention spans so the styled runs line up under the transparent textarea. */
+.highlighter {
+  margin: 0;
+  color: var(--input-color);
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  pointer-events: none;
+  min-height: inherit;
+  max-height: calc(var(--mentions-max-rows) * 1lh);
+
+  /* When mentions are rendered with `renderMention`, the highlighter is raised above the transparent
+     textarea so the mention spans can receive pointer events (for tooltips, HoverCard, etc.). The
+     container itself keeps `pointer-events: none`, so only the mention spans are interactive and the
+     rest of the input still passes clicks through to the textarea. */
+  &[data-interactive] {
+    position: relative;
+    z-index: 2;
+
+    & .highlight {
+      pointer-events: auto;
+      cursor: default;
+    }
+  }
+}
+
+/* Mention runs must not change text metrics (no padding/border/margin), otherwise the overlay would
+   drift from the textarea. Only background and color are applied. The `data-mention-selection`
+   attribute is exposed for custom caret-aware styling but is not styled by default. */
+.highlight {
+  border-radius: var(--mantine-radius-sm);
+  color: var(--mentions-highlight-color, var(--mantine-primary-color-light-color));
+  background-color: var(--mentions-highlight-bg, var(--mantine-primary-color-light));
+}
+
+/* The real editable control, laid over the highlighter with transparent text and a visible caret. */
+.field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--input-color);
+  -webkit-text-fill-color: transparent;
+  resize: none;
+  outline: none;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1;
+
+  /* The visible text is painted by the highlighter, so the textarea scrollbar is hidden while the
+     content stays scrollable with the wheel and the caret. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::placeholder {
+    color: var(--input-placeholder-color);
+    -webkit-text-fill-color: var(--input-placeholder-color);
+    opacity: 1;
+  }
+}
+
+.caretAnchor {
+  position: absolute;
+  width: 1px;
+  height: 0;
+  pointer-events: none;
+}
+
+.nothingFound {
+  color: var(--mantine-color-dimmed);
+  text-align: center;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+}
+
+/* Full overlay that mirrors the highlighter box so the transparent prefix aligns the completion */
+.inlineSuggestion {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.inlineSuggestionPrefix {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.inlineSuggestionText {
+  color: var(--mantine-color-placeholder);
+}
