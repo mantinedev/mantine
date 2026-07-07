@@ -3,6 +3,7 @@ import {
   CompareSliderDemos,
   DownloadTriggerDemos,
   NumberInputDemos,
+  PersonaDemos,
   QRCodeDemos,
   ScrollAreaDemos,
   TiltDemos,
@@ -103,3 +104,13 @@ orientation gyroscope. It is headless – map the returned values to CSS transfo
 and layered depth effects that respond to the cursor on desktop and to device tilt on mobile:
 
 <Demo data={UseTiltDemos.card} />
+
+## Persona component
+
+New [Persona](/core/persona) component displays a person identity: an avatar, an optional
+presence badge and up to four stacked text lines. It composes `Avatar` and renders its own
+presence badge in a single component that is useful in people pickers, contact and chat lists,
+comment authors and profile headers. It supports presence statuses, initials and
+image avatars, configurable text position and alignment, and a polymorphic root:
+
+<Demo data={PersonaDemos.people} />

@@ -122,6 +122,11 @@ const FILES_PATHS = getPaths([
   // Timeline
   'packages/@mantine/core/src/components/Timeline/TimelineItem/TimelineItem.tsx',
 
+  // Persona
+  'packages/@mantine/core/src/components/Persona/PersonaAvatar.tsx',
+  'packages/@mantine/core/src/components/Persona/PersonaPresence.tsx',
+  'packages/@mantine/core/src/components/Persona/PersonaText.tsx',
+
   // List
   'packages/@mantine/core/src/components/List/ListItem/ListItem.tsx',
 
