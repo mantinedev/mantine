@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import {
+  ResponsiveContainer,
   SunburstChart as RechartsSunburstChart,
   SunburstChartProps as RechartsSunburstChartProps,
   Tooltip,
@@ -209,58 +210,58 @@ export const SunburstChart = factory<SunburstChartFactory>((_props) => {
 
   return (
     <Box size={size} {...getStyles('root')} {...others}>
-      <RechartsSunburstChart
-        data={rootData as any}
-        dataKey={dataKey as any}
-        width={size}
-        height={size}
-        innerRadius={innerRadius}
-        padding={gap}
-        ringPadding={0}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        stroke="var(--chart-stroke-color, var(--mantine-color-body))"
-        textOptions={
-          withLabels
-            ? {
-                fontWeight: 'bold',
-                fontSize: '.65rem',
-                paintOrder: 'stroke fill',
-                stroke: 'var(--chart-stroke-color, var(--mantine-color-body))',
-                strokeWidth: 1,
-                fill: 'var(--mantine-color-bright)',
-                pointerEvents: 'none',
-              }
-            : { display: 'none' }
-        }
-        {...sunburstChartProps}
-      >
-        {withTooltip && (
-          <Tooltip
-            animationDuration={tooltipAnimationDuration}
-            isAnimationActive={false}
-            content={({ payload }) => (
-              <ChartTooltip
-                payload={
-                  payload?.map((item) => ({
-                    name: item.name as string,
-                    value: item.value as number,
-                    color: (item.payload as any)?.fill || 'var(--mantine-color-blue-6)',
-                  })) || []
+      <ResponsiveContainer>
+        <RechartsSunburstChart
+          data={rootData as any}
+          dataKey={dataKey as any}
+          innerRadius={innerRadius}
+          padding={gap}
+          ringPadding={0}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          stroke="var(--chart-stroke-color, var(--mantine-color-body))"
+          textOptions={
+            withLabels
+              ? {
+                  fontWeight: 'bold',
+                  fontSize: '.65rem',
+                  paintOrder: 'stroke fill',
+                  stroke: 'var(--chart-stroke-color, var(--mantine-color-body))',
+                  strokeWidth: 1,
+                  fill: 'var(--mantine-color-bright)',
+                  pointerEvents: 'none',
                 }
-                classNames={resolvedClassNames}
-                styles={resolvedStyles}
-                type="radial"
-                valueFormatter={valueFormatter}
-                attributes={attributes}
-              />
-            )}
-            {...tooltipProps}
-          />
-        )}
+              : { display: 'none' }
+          }
+          {...sunburstChartProps}
+        >
+          {withTooltip && (
+            <Tooltip
+              animationDuration={tooltipAnimationDuration}
+              isAnimationActive={false}
+              content={({ payload }) => (
+                <ChartTooltip
+                  payload={
+                    payload?.map((item) => ({
+                      name: item.name as string,
+                      value: item.value as number,
+                      color: (item.payload as any)?.fill || 'var(--mantine-color-blue-6)',
+                    })) || []
+                  }
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                  type="radial"
+                  valueFormatter={valueFormatter}
+                  attributes={attributes}
+                />
+              )}
+              {...tooltipProps}
+            />
+          )}
 
-        {children}
-      </RechartsSunburstChart>
+          {children}
+        </RechartsSunburstChart>
+      </ResponsiveContainer>
     </Box>
   );
 });
