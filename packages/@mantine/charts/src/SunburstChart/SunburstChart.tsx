@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   SunburstChart as RechartsSunburstChart,
   SunburstChartProps as RechartsSunburstChartProps,
@@ -111,13 +112,15 @@ const varsResolver = createVarsResolver<SunburstChartFactory>((theme, { strokeCo
   },
 }));
 
-function resolveDataRecursive(
+function resolveData(
   data: SunburstChartData[],
   theme: MantineTheme,
   dataKey: string,
   parentFill?: string
-): any[] {
-  return data.map((item) => {
+): { resolved: any[]; total: number } {
+  let total = 0;
+
+  const resolved = data.map((item) => {
     const resolvedColor = item.color
       ? parseThemeColor({ color: item.color, theme }).value
       : parentFill;
@@ -129,23 +132,20 @@ function resolveDataRecursive(
     };
 
     if (item.children) {
-      result.children = resolveDataRecursive(item.children, theme, dataKey, fill);
+      const child = resolveData(item.children, theme, dataKey, fill);
+      result.children = child.resolved;
       if (result[dataKey] == null) {
-        result[dataKey] = computeTotalValue(item.children, dataKey);
+        result[dataKey] = child.total;
       }
+      total += child.total;
+    } else {
+      total += Number(item[dataKey]) || 0;
     }
 
     return result;
   });
-}
 
-function computeTotalValue(data: SunburstChartData[], dataKey: string): number {
-  return data.reduce((sum, item) => {
-    if (item.children) {
-      return sum + computeTotalValue(item.children, dataKey);
-    }
-    return sum + (Number(item[dataKey]) || 0);
-  }, 0);
+  return { resolved, total };
 }
 
 export const SunburstChart = factory<SunburstChartFactory>((_props) => {
@@ -198,13 +198,14 @@ export const SunburstChart = factory<SunburstChartFactory>((_props) => {
     props,
   });
 
-  const resolvedData = resolveDataRecursive(data, theme, dataKey!);
-
-  const rootData = {
-    name: 'root',
-    [dataKey!]: computeTotalValue(data, dataKey!),
-    children: resolvedData,
-  };
+  const rootData = useMemo(() => {
+    const { resolved, total } = resolveData(data, theme, dataKey!);
+    return {
+      name: 'root',
+      [dataKey!]: total,
+      children: resolved,
+    };
+  }, [data, theme, dataKey]);
 
   return (
     <Box size={size} {...getStyles('root')} {...others}>
