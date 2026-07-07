@@ -1,4 +1,4 @@
-import { AccordionDemos, BulletChartDemos, CascaderDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, ScrollAreaDemos, SunburstChartDemos, TableDemos, TimelineDemos, AreaChartDemos } from '@docs/demos';
+import { AccordionDemos, BulletChartDemos, CascaderDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, ResourcesDayViewDemos, ScrollAreaDemos, SunburstChartDemos, TableDemos, TimelineDemos, AreaChartDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -10,6 +10,19 @@ You can now sponsor Mantine development with [OpenCollective](https://opencollec
 All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
+
+## Migration to oxc
+
+Mantine has migrated its linting and formatting toolchain from ESLint and Prettier
+to [oxc](https://oxc.rs) – [oxlint](https://www.npmjs.com/package/oxlint) is now used
+as the linter and [oxfmt](https://www.npmjs.com/package/oxfmt) as the formatter. Both
+tools are written in Rust and are significantly faster than their predecessors, which
+makes linting and formatting the entire codebase almost instant.
+
+The shared configuration is available as a new
+[oxc-config-mantine](/oxc-config-mantine) package (a replacement for the previous
+`eslint-config-mantine`). You can use it in your own projects to follow the same
+code style and conventions as Mantine.
 
 ## Native level select in date pickers
 
@@ -116,6 +129,17 @@ behavior of most desktop software. The prop also realigns the offset padding, th
 horizontal scrollbar gap, so it works correctly with `offsetScrollbars` and `scrollbars="xy"`.
 
 <Demo data={ScrollAreaDemos.verticalScrollbarPosition} />
+
+## Schedule intervals larger than one hour
+
+[ResourcesDayView](/schedule/resources-day-view) and
+[ResourcesWeekView](/schedule/resources-week-view) now support `intervalMinutes` values
+larger than 60. Previously the interval was capped at one hour – you can now set it to any
+whole number of hours (for example `120` or `240`) to display multi-hour time slots. Values
+of 60 or less must still divide evenly into an hour; any value that does not keep the grid on
+hour boundaries falls back to `60`.
+
+<Demo data={ResourcesDayViewDemos.multiHourIntervals} />
 
 ## New example: Table virtualization
 
