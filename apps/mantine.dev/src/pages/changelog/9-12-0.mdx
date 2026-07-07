@@ -1,4 +1,9 @@
-import { ImageCropperDemos, MentionsDemos, UseBroadcastChannelDemos } from '@docs/demos';
+import {
+  ImageCropperDemos,
+  MentionsDemos,
+  UseBroadcastChannelDemos,
+  UseClipboardDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -41,3 +46,13 @@ and receive it in all others subscribed to the same channel name, with support f
 structured-clone payloads and server-side rendering:
 
 <Demo data={UseBroadcastChannelDemos.usage} />
+
+## use-clipboard blobs and images support
+
+[use-clipboard](/hooks/use-clipboard) `copy` function now accepts `Blob`, `ClipboardItem` and
+`ClipboardItem[]` values in addition to strings. This makes it possible to copy binary data such as
+images to the clipboard with `navigator.clipboard.write`, while strings keep using the widely
+supported `navigator.clipboard.writeText`. The new `supported` value indicates whether copying
+blobs and images is available:
+
+<Demo data={UseClipboardDemos.image} />
