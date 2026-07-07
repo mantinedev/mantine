@@ -1190,6 +1190,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'password field, secret input, hidden input, passcode input, reveal password',
   },
 
+  Persona: {
+    title: 'Persona',
+    package: '@mantine/core',
+    slug: '/core/persona',
+    componentPrefix: 'Persona',
+    props: ['Persona', 'PersonaAvatar', 'PersonaPresence', 'PersonaText'],
+    styles: ['Persona'],
+    description: 'Display a person identity: avatar, presence badge and stacked text lines',
+    source: '@mantine/core/src/components/Persona/Persona.tsx',
+    docs: 'core/persona.mdx',
+    searchTags: 'user, profile, presence, avatar, contact, people, identity, presence badge',
+  },
+
   PhoneInput: {
     title: 'PhoneInput',
     package: '@mantine/core',

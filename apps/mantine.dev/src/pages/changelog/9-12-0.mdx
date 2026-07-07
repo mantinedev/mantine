@@ -1,6 +1,7 @@
 import {
   ImageCropperDemos,
   MentionsDemos,
+  PersonaDemos,
   UseBroadcastChannelDemos,
   UseClipboardDemos,
 } from '@docs/demos';
@@ -36,6 +37,16 @@ multiple triggers, async data sources with `AbortSignal` cancellation, caret-anc
 suggestions and caret-aware mention styling, all with no third-party dependencies:
 
 <Demo data={MentionsDemos.usage} />
+
+## Persona component
+
+New [Persona](/core/persona) component displays a person identity: an avatar, an optional
+presence badge and up to four stacked text lines. It composes existing `Avatar` and
+`Indicator` primitives into a single component that is useful in people pickers, contact and
+chat lists, comment authors and profile headers. It supports presence statuses, initials and
+image avatars, configurable text position and alignment, and a polymorphic root:
+
+<Demo data={PersonaDemos.people} />
 
 ## use-broadcast-channel hook
 

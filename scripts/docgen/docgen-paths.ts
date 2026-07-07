@@ -119,6 +119,11 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Timer/TimerSeparator.tsx',
   'packages/@mantine/core/src/components/Timer/TimerControl.tsx',
 
+  // Persona
+  'packages/@mantine/core/src/components/Persona/PersonaAvatar.tsx',
+  'packages/@mantine/core/src/components/Persona/PersonaPresence.tsx',
+  'packages/@mantine/core/src/components/Persona/PersonaText.tsx',
+
   // Editable
   'packages/@mantine/core/src/components/Editable/EditableArea.tsx',
   'packages/@mantine/core/src/components/Editable/EditablePreview.tsx',
