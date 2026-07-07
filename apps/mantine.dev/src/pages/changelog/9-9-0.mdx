@@ -6,6 +6,7 @@ import {
   PersonaDemos,
   QRCodeDemos,
   ScrollAreaDemos,
+  StatDemos,
   TiltDemos,
   UseCountdownDemos,
   UseTiltDemos,
@@ -114,3 +115,13 @@ comment authors and profile headers. It supports presence statuses, initials and
 image avatars, configurable text position and alignment, and a polymorphic root:
 
 <Demo data={PersonaDemos.people} />
+
+## Stat component
+
+New [Stat](/core/stat) component displays a single key metric: a label, a formatted value,
+an optional prefix/suffix, a trend indicator and a countdown variant. It composes existing
+`NumberFormatter`, `RollingNumber` and `Skeleton` primitives into the dashboard-stat primitive,
+with a `diff` prop for up/down trends, an `animate` prop for value transitions, a `loading` state
+and a `Stat.Countdown` sub-component that ticks down to a target time:
+
+<Demo data={StatDemos.statRow} />

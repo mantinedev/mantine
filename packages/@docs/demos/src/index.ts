@@ -106,6 +106,7 @@ export * as SpaceDemos from './demos/core/Space';
 export * as SplitterDemos from './demos/core/Splitter';
 export * as SpoilerDemos from './demos/core/Spoiler';
 export * as StackDemos from './demos/core/Stack';
+export * as StatDemos from './demos/core/Stat';
 export * as StepperDemos from './demos/core/Stepper';
 export * as SwitchDemos from './demos/core/Switch';
 export * as TableDemos from './demos/core/Table';
