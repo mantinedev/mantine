@@ -230,6 +230,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'Utilities',
     pages: [
+      MDX_DATA.useBroadcastChannel,
       MDX_DATA.useBrowserLanguage,
       MDX_DATA.useClipboard,
       MDX_DATA.useCountdown,
@@ -331,6 +332,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.TagsInput,
       MDX_DATA.Select,
       MDX_DATA.MultiSelect,
+      MDX_DATA.Mentions,
       MDX_DATA.ComboboxPopover,
       MDX_DATA.TreeSelect,
     ],

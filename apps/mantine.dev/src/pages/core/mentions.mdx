@@ -1,0 +1,177 @@
+import { MentionsDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Mentions);
+
+## Usage
+
+`Mentions` is a textarea that opens a suggestions dropdown when the user types a trigger character
+(`@`, `#`, `:`, …). Picking a suggestion inserts a structured mention token into the value. The value
+is stored as **markup** (`@[__display__](__id__)` by default), while the user only ever sees the
+plain text – the markup round-trips through editing, copy/paste and serialization:
+
+<Demo data={MentionsDemos.usage} />
+
+The component does not depend on any third-party library. Mentions are rendered as styled,
+non-editable spans by painting a highlighter element directly behind a transparent-text textarea,
+pixel-aligned to it. Editing operates on the plain text and is mapped back to the markup value, so a
+deletion that clips any part of a mention removes the whole mention (mentions are atomic).
+
+## Value and markup
+
+The `value` (and `defaultValue`) is a **markup string**. For example, the value:
+
+```tsx
+'Hey @[Walter White](walter), are you there?';
+```
+
+is displayed to the user as `Hey Walter White, are you there?`. Each mention stores a stable `id`
+(`walter`) separately from the display text (`Walter White`), so the identity is preserved even when
+the display text repeats or changes.
+
+By default the trigger character is not shown in the display text. Set `withTrigger` on
+`Mentions.Mention` to keep it as a prefix, so the same value is displayed as
+`Hey @Walter White, are you there?` instead:
+
+<Demo data={MentionsDemos.showTrigger} />
+
+## Custom mention rendering
+
+Use the `renderMention` prop to customize how mentions are displayed in the overlay, for example to
+add a tooltip or a `HoverCard` with additional details. The mention spans are interactive (they
+receive pointer events), while the rest of the input still handles typing as usual. The returned
+content must keep the same text metrics as the mention `display`, otherwise the overlay drifts out
+of alignment with the input:
+
+<Demo data={MentionsDemos.renderMention} />
+
+## onChange payload
+
+Unlike other Mantine inputs, `Mentions` `onChange` receives a rich object instead of a plain string:
+
+```tsx
+import { Mentions } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Mentions
+      onChange={(payload) => {
+        payload.value; // Markup value: "Hey @[Walter White](walter)"
+        payload.plainTextValue; // What the user sees: "Hey Walter White"
+        payload.idValue; // Display replaced by id: "Hey walter"
+        payload.mentions; // Array of mentions present in the value
+        payload.mentionId; // Id of the mention that triggered the change, if any
+        payload.previousValue; // Previous markup value
+        payload.trigger; // { type: 'input' | 'mention-add' | 'mention-remove' | ... }
+      }}
+    >
+      <Mentions.Mention trigger="@" data={[{ id: 'walter', display: 'Walter White' }]} />
+    </Mentions>
+  );
+}
+```
+
+## Multiple triggers
+
+Add one `Mentions.Mention` per trigger/data source. Each source declares its own `trigger`, `data`
+and `markup`:
+
+<Demo data={MentionsDemos.multipleTriggers} />
+
+## Data sources
+
+The `data` prop of `Mentions.Mention` accepts either a static array of `{ id, display }` items or a
+function that returns matches. Array data is filtered locally against the current query. To disable
+local filtering (for server-driven data) set `filter={false}` on `Mentions`.
+
+Set `ignoreAccents` on `Mentions.Mention` to match array data accents-insensitively (for example
+`jose` matches `José`), and `allowSpaceInQuery` to let the query contain spaces (by default the query
+ends at the first whitespace after the trigger).
+
+## Async data
+
+The `data` function can be asynchronous. It receives the current query and a context object with an
+`AbortSignal` that is aborted automatically when the request becomes stale, so you never need to
+handle race conditions manually. Use `debounceMs` to throttle requests:
+
+<Demo data={MentionsDemos.async} />
+
+If an async `data` function rejects, the error state is displayed. Use `renderError` on
+`Mentions.Mention` to customize it, `renderEmpty` to customize the empty state, and
+`nothingFoundMessage` on `Mentions` for the default empty message.
+
+## Custom markup
+
+By default a mention is stored as `@[__display__](__id__)` (the trigger prefix is derived from the
+`trigger` prop). Override the `markup` prop to change how a source's mentions are serialized, for
+example `#[__display__](__id__)`. For formats a template cannot express, pass a full serializer
+object with `insert` and `findAll` methods.
+
+## Anchor mode
+
+By default the dropdown is anchored to the caret position (`anchorMode="caret"`). Set
+`anchorMode="left"` to anchor it to the left edge of the input instead. Use `suggestionsPlacement`
+(`'below'` by default, or `'above'`) to control the dropdown placement.
+
+## Inline suggestions
+
+Set `suggestionsDisplay="inline"` to render the top match as ghost text at the caret instead of a
+dropdown. Press <kbd>Tab</kbd>, <kbd>Enter</kbd> or <kbd>→</kbd> to accept the suggestion:
+
+<Demo data={MentionsDemos.inline} />
+
+## Caret-aware styling
+
+Each rendered mention exposes a `data-mention-selection` attribute that reflects its overlap with the
+current caret or selection: `inside` (collapsed caret within the mention), `boundary` (caret exactly
+on an edge), `partial` (selection overlaps but does not cover) and `full` (selection fully covers).
+The attribute is not styled by default – use it to style mentions based on the caret state:
+
+<Demo data={MentionsDemos.caretStyling} />
+
+The `onSelectionChange` callback fires with the current selection and the mentions it overlaps.
+
+## Parsing mentions
+
+Use the exported `getMentions` helper to parse a markup value into structured mentions, for example
+on submit or for validation:
+
+```tsx
+import { getMentions } from '@mantine/core';
+
+const mentions = getMentions('Hey @[Walter White](walter)', [{ trigger: '@' }]);
+// [{ id: 'walter', display: 'Walter White', index: 4, plainTextIndex: 4, trigger: '@' }]
+```
+
+Other exported helpers include `createMarkupSerializer` (build a serializer from a template string)
+and `makeTriggerRegex` (build an anchored trigger regex).
+
+## Undo and redo
+
+Because the value is transformed to and from markup, the browser's native undo history cannot be
+used. `Mentions` keeps its own history instead, so <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Z</kbd>
+(undo) and <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> (or <kbd>Ctrl</kbd> +
+<kbd>Y</kbd>, redo) work as expected, including restoring mentions that were removed.
+
+## Single line
+
+Set `singleLine` to render a one-line `input` instead of a `textarea`.
+
+## Disabled and static
+
+Set `disabled` to render a disabled input, or `mode="static"` to render a non-interactive,
+read-only preview with no dropdown.
+
+## Accessibility
+
+The underlying control has `role="combobox"` with `aria-autocomplete="list"`,
+`aria-expanded`, `aria-controls` and `aria-activedescendant` wired to the suggestions list. Provide
+a label via the `label` prop, or set `aria-label`. Use `a11ySuggestionsListLabel` to label the
+suggestions list for screen readers.
+
+## Styles API
+
+<StylesApiSelectors component="Mentions" />
+
+<Demo data={MentionsDemos.stylesApi} />

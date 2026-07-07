@@ -1,4 +1,4 @@
-import { ImageCropperDemos } from '@docs/demos';
+import { ImageCropperDemos, MentionsDemos, UseBroadcastChannelDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -20,3 +20,24 @@ or read back as a crop rectangle in source pixels for server-side cropping. It h
 dependencies and works with server-side rendering:
 
 <Demo data={ImageCropperDemos.usage} />
+
+## Mentions component
+
+New [Mentions](/core/mentions) component captures `@`-mentions (and any other trigger) in a textarea.
+Typing a trigger opens a suggestions dropdown; picking a suggestion inserts a structured mention token
+into the value. The value is stored as markup (`@[Display](id)`) that preserves a stable id for each
+mention and round-trips through editing, while the user only ever sees the plain text. It supports
+multiple triggers, async data sources with `AbortSignal` cancellation, caret-anchored or inline
+suggestions and caret-aware mention styling, all with no third-party dependencies:
+
+<Demo data={MentionsDemos.usage} />
+
+## use-broadcast-channel hook
+
+New [use-broadcast-channel](/hooks/use-broadcast-channel) hook is a reactive wrapper over the
+[BroadcastChannel API](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel) for
+same-origin messaging across tabs, windows, iframes and workers. Post a message from one context
+and receive it in all others subscribed to the same channel name, with support for
+structured-clone payloads and server-side rendering:
+
+<Demo data={UseBroadcastChannelDemos.usage} />
