@@ -2971,7 +2971,7 @@ Each time slot button has an `aria-label` attribute with the complete slot infor
 | getTimeSlotProps | ((data: { start: string; end: string; }) => Record<string, any>) \| undefined | - | Function to get additional props for each time slot. Receives slot start and end datetime strings. Returned props are spread onto the slot element. Event handlers returned by this function are composed with internal handlers (e.g. onClick) rather than overriding them. |
 | headerFormat | string \| ((date: string) => string) | - | Date format in the header |
 | highlightBusinessHours | boolean | - | If set to true, highlights business hours with white background |
-| intervalMinutes | number | - | Number of minutes for each time slot |
+| intervalMinutes | number | - | Number of minutes for each time slot. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) |
 | labels | Partial<ScheduleLabels> | - | Labels override |
 | locale | string | - | Locale passed down to dayjs, overrides value defined on `DatesProvider` |
 | mode | ScheduleMode | - | Interaction mode: 'default' allows all interactions, 'static' disables event interactions |

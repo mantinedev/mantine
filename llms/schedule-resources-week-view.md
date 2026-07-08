@@ -835,6 +835,79 @@ const events = [
 ```
 
 
+## Multi-hour intervals
+
+`intervalMinutes` accepts values that divide evenly into an hour (for example `15` or `30`)
+or whole numbers of hours (for example `120` or `240`). Multi-hour intervals render wider
+columns that each span several hours, which is useful for displaying long time ranges compactly.
+
+```tsx
+// Demo.tsx
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { SegmentedControl, Stack } from '@mantine/core';
+import { ResourcesWeekView } from '@mantine/schedule';
+import { events, resources } from './data';
+
+function Demo() {
+  const today = dayjs().format('YYYY-MM-DD');
+  const [date, setDate] = useState(today);
+  const [intervalMinutes, setIntervalMinutes] = useState('240');
+
+  return (
+    <Stack>
+      <SegmentedControl
+        value={intervalMinutes}
+        onChange={setIntervalMinutes}
+        data={[
+          { label: '1 hour', value: '60' },
+          { label: '2 hours', value: '120' },
+          { label: '4 hours', value: '240' },
+        ]}
+      />
+      <ResourcesWeekView
+        date={date}
+        onDateChange={setDate}
+        resources={resources}
+        events={events}
+        startTime="08:00:00"
+        endTime="20:00:00"
+        intervalMinutes={Number(intervalMinutes)}
+        startScrollDateTime={`${today} 08:00:00`}
+      />
+    </Stack>
+  );
+}
+
+// data.ts
+import dayjs from 'dayjs';
+import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
+
+const day1 = dayjs().format('YYYY-MM-DD');
+const day2 = dayjs().add(1, 'day').format('YYYY-MM-DD');
+const day3 = dayjs().add(2, 'day').format('YYYY-MM-DD');
+
+export const resources: ScheduleResourceData[] = [
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
+  { id: 'london', label: 'Meeting room: London' },
+];
+
+// Events last between 2 and 6 hours
+export const events: ScheduleEventData[] = [
+  { id: 1, title: 'Design workshop', start: `${day1} 08:00:00`, end: `${day1} 12:00:00`, color: 'blue', resourceId: 'tokyo' },
+  { id: 2, title: 'Client onboarding', start: `${day1} 10:00:00`, end: `${day1} 14:00:00`, color: 'violet', resourceId: 'paris' },
+  { id: 3, title: 'Hackathon', start: `${day1} 13:00:00`, end: `${day1} 19:00:00`, color: 'pink', resourceId: 'london' },
+  { id: 4, title: 'Sprint review', start: `${day2} 09:00:00`, end: `${day2} 11:00:00`, color: 'cyan', resourceId: 'new-york' },
+  { id: 5, title: 'Strategy offsite', start: `${day2} 14:00:00`, end: `${day2} 18:00:00`, color: 'green', resourceId: 'tokyo' },
+  { id: 6, title: 'Security audit', start: `${day2} 08:00:00`, end: `${day2} 13:00:00`, color: 'orange', resourceId: 'paris' },
+  { id: 7, title: 'Onboarding training', start: `${day3} 10:00:00`, end: `${day3} 16:00:00`, color: 'grape', resourceId: 'london' },
+  { id: 8, title: 'Interviews', start: `${day3} 12:00:00`, end: `${day3} 14:00:00`, color: 'teal', resourceId: 'new-york' },
+];
+```
+
+
 ## Current time indicator
 
 Use `withCurrentTimeIndicator` to display a line at the current time. Set `withCurrentTimeBubble={false}`
@@ -2721,7 +2794,7 @@ const events = [
 | groups | ScheduleResourceGroup[] | - | List of resource groups to display as a column to the left of resource labels |
 | highlightBusinessHours | boolean | - | - |
 | highlightToday | boolean | - | - |
-| intervalMinutes | number | - | - |
+| intervalMinutes | number | - | Number of minutes for each interval in the week view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) |
 | labels | Partial<ScheduleLabels> | - | - |
 | locale | string | - | - |
 | maxEventsPerTimeSlot | number | - | Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 |

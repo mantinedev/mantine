@@ -279,6 +279,129 @@ const events = [
 ```
 
 
+## Multi-hour intervals
+
+`intervalMinutes` accepts values that divide evenly into an hour (for example `15` or `30`)
+or whole numbers of hours (for example `120` or `240`). Multi-hour intervals render wider
+columns that each span several hours, which is useful for displaying long time ranges compactly.
+
+```tsx
+// Demo.tsx
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { SegmentedControl, Stack } from '@mantine/core';
+import { ResourcesDayView } from '@mantine/schedule';
+import { events, resources } from './data';
+
+function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [intervalMinutes, setIntervalMinutes] = useState('120');
+
+  return (
+    <Stack>
+      <SegmentedControl
+        value={intervalMinutes}
+        onChange={setIntervalMinutes}
+        data={[
+          { label: '1 hour', value: '60' },
+          { label: '2 hours', value: '120' },
+          { label: '4 hours', value: '240' },
+        ]}
+      />
+      <ResourcesDayView
+        date={date}
+        onDateChange={setDate}
+        resources={resources}
+        events={events}
+        intervalMinutes={Number(intervalMinutes)}
+        startScrollTime="08:00:00"
+      />
+    </Stack>
+  );
+}
+
+// data.ts
+import dayjs from 'dayjs';
+import { ScheduleResourceData } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+
+const resources: ScheduleResourceData[] = [
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
+  { id: 'london', label: 'Meeting room: London' },
+];
+
+const events = [
+  {
+    id: 1,
+    title: 'Team Standup',
+    start: \`\${today} 09:00:00\`,
+    end: \`\${today} 09:30:00\`,
+    color: 'blue',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 2,
+    title: 'Sprint Planning',
+    start: \`\${today} 10:00:00\`,
+    end: \`\${today} 11:30:00\`,
+    color: 'green',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 3,
+    title: 'Client Call',
+    start: \`\${today} 09:30:00\`,
+    end: \`\${today} 10:30:00\`,
+    color: 'violet',
+    resourceId: 'paris',
+  },
+  {
+    id: 4,
+    title: 'Design Review',
+    start: \`\${today} 13:00:00\`,
+    end: \`\${today} 14:00:00\`,
+    color: 'orange',
+    resourceId: 'paris',
+  },
+  {
+    id: 5,
+    title: '1:1 Meeting',
+    start: \`\${today} 11:00:00\`,
+    end: \`\${today} 11:30:00\`,
+    color: 'cyan',
+    resourceId: 'new-york',
+  },
+  {
+    id: 6,
+    title: 'Workshop',
+    start: \`\${today} 14:00:00\`,
+    end: \`\${today} 16:00:00\`,
+    color: 'pink',
+    resourceId: 'new-york',
+  },
+  {
+    id: 7,
+    title: 'Architecture Review',
+    start: \`\${today} 10:00:00\`,
+    end: \`\${today} 11:00:00\`,
+    color: 'red',
+    resourceId: 'london',
+  },
+  {
+    id: 8,
+    title: 'Retrospective',
+    start: \`\${today} 15:00:00\`,
+    end: \`\${today} 16:00:00\`,
+    color: 'grape',
+    resourceId: 'london',
+  },
+];
+```
+
+
 ## Start scroll time
 
 Use `startScrollTime` prop to set the initial horizontal scroll position to a specific time.
@@ -2554,7 +2677,7 @@ const events = [
 | groups | ScheduleResourceGroup[] | - | List of resource groups to display as a column to the left of resource labels |
 | headerFormat | string \| ((date: string) => string) | - | Dayjs format for header label |
 | highlightBusinessHours | boolean | - | If set to true, highlights business hours with white background |
-| intervalMinutes | number | - | Number of minutes for each interval in the day view |
+| intervalMinutes | number | - | Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) |
 | labels | Partial<ScheduleLabels> | - | Labels override |
 | locale | string | - | Locale passed down to dayjs, overrides value defined on `DatesProvider` |
 | maxEventsPerTimeSlot | number | - | Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 |
