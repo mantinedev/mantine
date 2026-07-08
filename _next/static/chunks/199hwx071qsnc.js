@@ -15,10 +15,10 @@ __turbopack_load_page_chunks__("/", [
   "static/chunks/2w2rc1-z9nom9.js",
   "static/chunks/14t9vvzva3hed.js",
   "static/chunks/14s_2c3vuy7uz.js",
-  "static/chunks/0amusb81md12c.js",
+  "static/chunks/2o58w62og6va1.js",
   "static/chunks/1vg0-viyv_2i2.js",
   "static/chunks/2siw-kdmrh5te.js",
   "static/chunks/3ccec4kk3_4if.css",
   "static/chunks/21hvpvux84e_7.css",
-  "static/chunks/turbopack-1efoaje9x4ut5.js"
+  "static/chunks/turbopack-17bf6mjj_zgi3.js"
 ])
