@@ -16,6 +16,8 @@ interface Sponsor {
 
 const docgenPath = getPath('apps/mantine.dev/src/.docgen');
 
+const SPONSOR_TIER_AMOUNT = 200;
+
 async function fetchSponsors() {
   const response = await fetch('https://opencollective.com/mantinedev/members/all.json');
 
@@ -25,7 +27,9 @@ async function fetchSponsors() {
 
   const sponsors = data
     .filter((item: any) => {
-      const isActiveSponsor = item.role === 'BACKER' && item.tier === 'sponsor';
+      const isActiveSponsor =
+        item.role === 'BACKER' &&
+        (item.tier === 'sponsor' || item.lastTransactionAmount >= SPONSOR_TIER_AMOUNT);
       const hasRecentTransaction =
         item.lastTransactionAt && dayjs(item.lastTransactionAt).isAfter(thirtyOneDaysAgo);
       const hasPositiveTransaction = item.lastTransactionAmount > 0;
