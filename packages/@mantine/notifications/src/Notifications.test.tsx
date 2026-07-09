@@ -594,4 +594,43 @@ describe('@mantine/core/Notifications', () => {
       expect(state.queue).toEqual([]);
     });
   });
+
+  it('does not close notification on hover when autoClose is enabled', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications store={store} withinPortal={false} autoClose={3000} transitionDuration={10} />
+    );
+
+    act(() => {
+      notifications.show(
+        { id: 'hover-prevent-close', message: 'Hover me to pause autoClose' },
+        store
+      );
+    });
+
+    const notification = screen.getByRole('alert');
+
+    // Simulate hover
+    fireEvent.mouseEnter(notification);
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    // Notification should still be present because it is hovered
+    expect(store.getState().notifications).toHaveLength(1);
+    expect(screen.getByText('Hover me to pause autoClose')).toBeInTheDocument();
+
+    // Simulate mouse leave
+    fireEvent.mouseLeave(notification);
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    // Notification should now be closed
+    expect(store.getState().notifications).toHaveLength(0);
+  });
 });

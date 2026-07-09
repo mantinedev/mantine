@@ -86,6 +86,7 @@ export function NotificationContainer({
       return;
     }
 
+    cancelAutoClose();
     autoCloseTimeout.current = window.setTimeout(handleHide, autoCloseDuration);
   };
 
