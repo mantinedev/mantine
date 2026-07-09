@@ -237,7 +237,9 @@ export function TreeNode({
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
       onBlur={(event) => {
-        event.currentTarget.removeAttribute('data-focus-ring');
+        if (!event.currentTarget.contains(event.relatedTarget as HTMLElement)) {
+          event.currentTarget.removeAttribute('data-focus-ring');
+        }
       }}
       ref={ref}
     >

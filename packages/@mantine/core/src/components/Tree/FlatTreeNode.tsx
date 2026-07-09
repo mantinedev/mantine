@@ -194,7 +194,9 @@ export const FlatTreeNode = memo(function FlatTreeNode({
       tabIndex={tabIndex}
       onKeyDown={handleKeyDown}
       onBlur={(event) => {
-        event.currentTarget.removeAttribute('data-focus-ring');
+        if (!event.currentTarget.contains(event.relatedTarget as HTMLElement)) {
+          event.currentTarget.removeAttribute('data-focus-ring');
+        }
       }}
     >
       {linesPath?.map((state, idx) => {
