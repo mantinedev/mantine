@@ -20,7 +20,7 @@ function getValuesRange(anchor: string | null, value: string | undefined, flatVa
 }
 
 function isVisibleTreeNode(node: HTMLElement, root: Element) {
-  for (let current: HTMLElement | null = node; current && current !== root;) {
+  for (let current: HTMLElement | null = node; current && current !== root; ) {
     if (current.style.display === 'none') {
       return false;
     }
@@ -123,7 +123,9 @@ export function TreeNode({
       event.preventDefault();
 
       if (isExpanded) {
-        event.currentTarget.querySelector<HTMLLIElement>('[role=treeitem]')?.focus();
+        const nextNode = event.currentTarget.querySelector<HTMLLIElement>('[role=treeitem]');
+        nextNode?.setAttribute('data-focus-ring', 'true');
+        nextNode?.focus();
       } else {
         controller.expand(node.value);
       }
@@ -135,7 +137,12 @@ export function TreeNode({
       if (isExpanded && hasChildren) {
         controller.collapse(node.value);
       } else if (isSubtree) {
-        findElementAncestor(event.currentTarget as HTMLElement, '[role=treeitem]')?.focus();
+        const parentNode = findElementAncestor(
+          event.currentTarget as HTMLElement,
+          '[role=treeitem]'
+        );
+        parentNode?.setAttribute('data-focus-ring', 'true');
+        parentNode?.focus();
       }
     }
 
@@ -158,7 +165,9 @@ export function TreeNode({
       }
 
       const nextIndex = event.nativeEvent.code === 'ArrowDown' ? index + 1 : index - 1;
-      nodes[nextIndex]?.focus();
+      const nextNode = nodes[nextIndex];
+      nextNode?.setAttribute('data-focus-ring', 'true');
+      nextNode?.focus();
 
       if (event.shiftKey) {
         const selectNode = nodes[nextIndex];
@@ -227,6 +236,9 @@ export function TreeNode({
       data-level={level}
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
+      onBlur={(event) => {
+        event.currentTarget.removeAttribute('data-focus-ring');
+      }}
       ref={ref}
     >
       {typeof renderNode === 'function' ? (
