@@ -127,7 +127,10 @@ export function MenubarTarget(props: MenubarTargetProps) {
       ctx.openMenu(menuCtx.index, 'hover');
       ctx.setActiveIndex(menuCtx.index);
     } else if (ctx.openIndex !== null && ctx.openIndex !== menuCtx.index) {
-      ctx.openMenu(menuCtx.index, 'hover');
+      // Hover-switching with trigger="click" continues a click-driven interaction:
+      // keep 'click' as the open source so that the next click on the target
+      // closes the menu, same as a click-opened menu (desktop application pattern)
+      ctx.openMenu(menuCtx.index, 'click');
       ctx.setActiveIndex(menuCtx.index);
     }
   });
