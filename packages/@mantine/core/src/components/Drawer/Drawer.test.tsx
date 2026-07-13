@@ -72,6 +72,24 @@ describe('@mantine/core/Drawer', () => {
     expect(Drawer.Title).toBe(DrawerTitle);
     expect(Drawer.CloseButton).toBe(DrawerCloseButton);
   });
+
+  it('applies display: none style when keepMountedMode is display-none and opened is false (transitionDuration is 0)', () => {
+    const { container } = render(
+      <Drawer
+        {...defaultProps}
+        opened={false}
+        keepMounted
+        keepMountedMode="display-none"
+        transitionProps={{ duration: 0 }}
+      >
+        test-drawer
+      </Drawer>
+    );
+
+    expect(container.querySelector('.mantine-Drawer-content')).toHaveStyle({
+      display: 'none',
+    });
+  });
 });
 
 describe('@mantine/core/DrawerRoot', () => {
