@@ -97,12 +97,30 @@ describe('@mantine/core/Modal', () => {
         keepMounted
         keepMountedMode="display-none"
         transitionProps={{ duration: 0 }}
-      >
-        test-modal
-      </Modal>
+      />,
+      undefined,
+      { env: 'default' }
     );
 
     expect(container.querySelector('.mantine-Modal-content')).toHaveStyle({
+      display: 'none',
+    });
+  });
+
+  it('does not apply display: none style when keepMountedMode is activity and opened is false (transitionDuration is 0)', () => {
+    const { container } = render(
+      <Modal
+        {...defaultProps}
+        opened={false}
+        keepMounted
+        keepMountedMode="activity"
+        transitionProps={{ duration: 0 }}
+      />,
+      undefined,
+      { env: 'default' }
+    );
+
+    expect(container.querySelector('.mantine-Modal-content')).not.toHaveStyle({
       display: 'none',
     });
   });
