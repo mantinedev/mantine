@@ -352,3 +352,23 @@ export function MaxDisplayedValues() {
     </div>
   );
 }
+
+export function HidePlaceholder() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <h3>hidePlaceholder: true</h3>
+      <MultiSelect
+        data={['React', 'Angular', 'Svelte', 'Vue']}
+        placeholder="Placeholder goes away once value is selected"
+        hidePlaceholder
+      />
+
+      <h3 style={{ marginTop: 20 }}>hidePlaceholder: false</h3>
+      <MultiSelect
+        data={['React', 'Angular', 'Svelte', 'Vue']}
+        placeholder="Placeholder stays when value is selected"
+        hidePlaceholder={false}
+      />
+    </div>
+  );
+}

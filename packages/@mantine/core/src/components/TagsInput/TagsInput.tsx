@@ -137,6 +137,9 @@ export interface TagsInputProps
 
   /** If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false */
   withPillsReorder?: boolean;
+
+  /** If set, placeholder is hidden when there is at least one value selected */
+  hidePlaceholder?: boolean;
 }
 
 export type TagsInputFactory = Factory<{
@@ -244,6 +247,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     withPillsReorder,
     maxDisplayedValues,
     maxDisplayedValuesContent,
+    placeholder,
+    hidePlaceholder,
     ...others
   } = props;
 
@@ -572,6 +577,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
                 <PillsInput.Field
                   {...rest}
                   ref={_ref}
+                  placeholder={hidePlaceholder && _value.length > 0 ? undefined : placeholder}
                   {...getStyles('inputField')}
                   unstyled={unstyled}
                   onKeyDown={handleInputKeydown}

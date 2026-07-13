@@ -564,4 +564,35 @@ describe('@mantine/core/MultiSelect', () => {
       expect(pills[2]).toHaveTextContent('and 2 others');
     });
   });
+
+  describe('hidePlaceholder', () => {
+    it('hides placeholder when there are selected values and hidePlaceholder is true', () => {
+      const { rerender } = render(
+        <MultiSelect {...defaultProps} placeholder="test-placeholder" value={[]} hidePlaceholder />
+      );
+      expect(screen.getByPlaceholderText('test-placeholder')).toBeInTheDocument();
+
+      rerender(
+        <MultiSelect
+          {...defaultProps}
+          placeholder="test-placeholder"
+          value={['test-1']}
+          hidePlaceholder
+        />
+      );
+      expect(screen.queryByPlaceholderText('test-placeholder')).not.toBeInTheDocument();
+    });
+
+    it('does not hide placeholder when there are selected values and hidePlaceholder is false', () => {
+      render(
+        <MultiSelect
+          {...defaultProps}
+          placeholder="test-placeholder"
+          value={['test-1']}
+          hidePlaceholder={false}
+        />
+      );
+      expect(screen.getByPlaceholderText('test-placeholder')).toBeInTheDocument();
+    });
+  });
 });

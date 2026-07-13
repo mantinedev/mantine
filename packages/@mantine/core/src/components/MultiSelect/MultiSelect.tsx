@@ -148,6 +148,9 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** Controls whether dropdown opens when the input receives focus @default true */
   openOnFocus?: boolean;
 
+  /** If set, placeholder is hidden when there is at least one value selected */
+  hidePlaceholder?: boolean;
+
   /** If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false */
   withPillsReorder?: boolean;
 }
@@ -263,6 +266,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     withPillsReorder,
     maxDisplayedValues,
     maxDisplayedValuesContent,
+    hidePlaceholder,
     ...others
   } = props;
 
@@ -542,7 +546,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
                 <PillsInput.Field
                   {...rest}
                   id={_id}
-                  placeholder={placeholder}
+                  placeholder={hidePlaceholder && _value.length > 0 ? undefined : placeholder}
                   type={!searchable && !placeholder ? 'hidden' : 'visible'}
                   {...getStyles('inputField')}
                   unstyled={unstyled}
