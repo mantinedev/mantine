@@ -238,6 +238,7 @@ export const ColorInput = factory<ColorInputFactory>((_props) => {
         position="bottom-start"
         offset={5}
         opened={dropdownOpened}
+        width={fullWidth ? 'target' : undefined}
         {...popoverProps}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
