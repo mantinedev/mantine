@@ -365,6 +365,7 @@
 .resourcesWeekViewEventWrapper {
   position: absolute;
   z-index: 3;
+  overflow: hidden;
 
   &:hover .resourcesWeekViewResizeHandle {
     opacity: 0.5;

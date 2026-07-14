@@ -1,32 +1,33 @@
 import { getTimeAxisEventStyle } from './get-time-axis-event-style';
 
 describe('@mantine/schedule/get-time-axis-event-style', () => {
-  it('renders a normal event with a 1px gap on each side', () => {
+  it('renders a normal horizontal event with exact start and span percentages', () => {
     const result = getTimeAxisEventStyle({ start: 10, span: 20 });
 
-    expect(result.right).toBe('calc(70% + 1px)');
-    expect(result.width).toBe('max(1px, calc(20% - 2px))');
+    expect(result.left).toBe('10%');
+    expect(result.width).toBe('20%');
   });
 
-  it('anchors the trailing edge so events ending at the same time align regardless of duration', () => {
+  it('anchors the leading edge so events starting at the same time align regardless of duration', () => {
+    const short = getTimeAxisEventStyle({ start: 10, span: 1 });
     const long = getTimeAxisEventStyle({ start: 10, span: 20 });
-    const short = getTimeAxisEventStyle({ start: 29, span: 1 });
 
-    // Both events end at 30% — their trailing edges must resolve identically
-    expect(long.right).toBe('calc(70% + 1px)');
-    expect(short.right).toBe('calc(70% + 1px)');
+    expect(short.left).toBe('10%');
+    expect(long.left).toBe('10%');
   });
 
-  it('floors the visible width so very short events do not collapse to zero', () => {
-    const result = getTimeAxisEventStyle({ start: 29, span: 1 });
+  it('uses exact span percentages so events ending at the same time align', () => {
+    const first = getTimeAxisEventStyle({ start: 10, span: 5 });
+    const second = getTimeAxisEventStyle({ start: 12, span: 3 });
 
-    expect(result.width).toBe('max(1px, calc(1% - 2px))');
+    expect(first.width).toBe('5%');
+    expect(second.width).toBe('3%');
   });
 
-  it('never sets a left inset (the box is anchored from the trailing edge)', () => {
+  it('never sets a trailing inset on the horizontal axis', () => {
     const result = getTimeAxisEventStyle({ start: 10, span: 20 });
 
-    expect(result).not.toHaveProperty('left');
+    expect(result).not.toHaveProperty('right');
   });
 
   it('returns bottom/height for the vertical axis', () => {
@@ -46,7 +47,7 @@ describe('@mantine/schedule/get-time-axis-event-style', () => {
     expect(short.bottom).toBe('calc(70% + 1px)');
   });
 
-  it('supports a single-sided gap (gap without a trailing portion)', () => {
+  it('supports a single-sided gap (gap without a trailing portion) on the vertical axis', () => {
     const result = getTimeAxisEventStyle({
       start: 10,
       span: 20,

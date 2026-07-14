@@ -8,15 +8,15 @@ export interface GetTimeAxisEventStyleInput {
   /** Axis along which time flows @default 'horizontal' */
   axis?: 'horizontal' | 'vertical';
 
-  /** Total gap subtracted from the visible size, in px @default 2 */
+  /** Total gap subtracted from the visible size on the vertical axis, in px @default 2 */
   gap?: number;
 
-  /** Portion of the gap placed after the trailing edge, in px @default 1 */
+  /** Portion of the gap placed after the trailing edge on the vertical axis, in px @default 1 */
   trailingGap?: number;
 }
 
 export interface HorizontalEventStyle {
-  right: string;
+  left: string;
   width: string;
 }
 
@@ -38,10 +38,16 @@ export function getTimeAxisEventStyle({
   gap = 2,
   trailingGap = 1,
 }: GetTimeAxisEventStyleInput): HorizontalEventStyle | VerticalEventStyle {
-  const end = start + span;
+  if (axis === 'horizontal') {
+    return {
+      left: `${start}%`,
+      width: `${span}%`,
+    };
+  }
 
+  const end = start + span;
   const inset = trailingGap ? `calc(${100 - end}% + ${trailingGap}px)` : `${100 - end}%`;
   const size = `max(1px, calc(${span}% - ${gap}px))`;
 
-  return axis === 'vertical' ? { bottom: inset, height: size } : { right: inset, width: size };
+  return { bottom: inset, height: size };
 }

@@ -392,6 +392,7 @@
 .resourcesDayViewEventWrapper {
   position: absolute;
   z-index: 3;
+  overflow: hidden;
 
   &:hover .resourcesDayViewResizeHandle {
     opacity: 0.5;
