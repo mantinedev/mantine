@@ -1,4 +1,4 @@
-import { Checkbox, TextInput } from '@mantine/core';
+import { Button, Checkbox, TextInput } from '@mantine/core';
 import { FORM_INDEX } from '../form-index';
 import { useForm } from '../use-form';
 import { FormBase } from './_base';
@@ -83,7 +83,6 @@ export function ValidateOnChangeUncontrolled() {
 }
 
 import { useState } from 'react';
-import { Button } from '@mantine/core';
 
 export function ValidateDebounce() {
   const [requestCount, setRequestCount] = useState(0);
