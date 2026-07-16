@@ -42,10 +42,25 @@
 .mantine-active {
   &:active {
     transform: translateY(rem(1px));
+    overflow: visible;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: rem(-1px);
+      left: 0;
+      right: 0;
+      height: rem(1px);
+      background-color: transparent;
+    }
   }
 
   fieldset:disabled &:active {
     transform: none;
+
+    &::after {
+      display: none;
+    }
   }
 }
 
