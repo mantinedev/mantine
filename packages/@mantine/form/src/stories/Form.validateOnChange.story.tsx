@@ -81,3 +81,39 @@ export function ValidateOnChangeUncontrolled() {
     </FormBase>
   );
 }
+
+import { useState } from 'react';
+import { Button } from '@mantine/core';
+
+export function ValidateDebounce() {
+  const [requestCount, setRequestCount] = useState(0);
+
+  const form = useForm({
+    mode: 'uncontrolled',
+    validateInputOnChange: true,
+    validateDebounce: 500,
+    initialValues: {
+      name: '',
+    },
+    validate: {
+      name: async (value) => {
+        if (value.trim().length === 0) {
+          return 'Name is required';
+        }
+        setRequestCount((c) => c + 1);
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        return value.length < 5 ? 'Must be at least 5 characters' : null;
+      },
+    },
+  });
+
+  return (
+    <FormBase form={form}>
+      <div>Request Count: {requestCount}</div>
+      <TextInput label="Name" {...form.getInputProps('name')} />
+      <Button onClick={() => setRequestCount(0)} mt="xs">
+        Reset Count
+      </Button>
+    </FormBase>
+  );
+}
