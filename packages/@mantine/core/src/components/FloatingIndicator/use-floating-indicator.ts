@@ -54,6 +54,9 @@ export function useFloatingIndicator({
     const targetRect = target.getBoundingClientRect();
     const parentRect = parent.getBoundingClientRect();
 
+    const scaleX = parent.offsetWidth === 0 ? 1 : parentRect.width / parent.offsetWidth;
+    const scaleY = parent.offsetHeight === 0 ? 1 : parentRect.height / parent.offsetHeight;
+
     const targetComputedStyle = window.getComputedStyle(target);
     const parentComputedStyle = window.getComputedStyle(parent);
 
@@ -63,10 +66,10 @@ export function useFloatingIndicator({
       toInt(targetComputedStyle.borderLeftWidth) + toInt(parentComputedStyle.borderLeftWidth);
 
     const position = {
-      top: targetRect.top - parentRect.top - borderTopWidth,
-      left: targetRect.left - parentRect.left - borderLeftWidth,
-      width: targetRect.width,
-      height: targetRect.height,
+      top: (targetRect.top - parentRect.top) / scaleY - borderTopWidth,
+      left: (targetRect.left - parentRect.left) / scaleX - borderLeftWidth,
+      width: targetRect.width / scaleX,
+      height: targetRect.height / scaleY,
     };
 
     ref.current.style.transform = `translateY(${position.top}px) translateX(${position.left}px)`;
