@@ -3,7 +3,6 @@
 
   position: absolute;
   padding: calc(var(--mantine-spacing-xs) / 2) var(--mantine-spacing-xs);
-  pointer-events: none;
   font-size: var(--mantine-font-size-sm);
   white-space: nowrap;
   border-radius: var(--tooltip-radius);
@@ -24,6 +23,10 @@
 
   &:where([data-fixed]) {
     position: fixed;
+  }
+
+  &:where([data-floating]) {
+    pointer-events: none;
   }
 }
 
