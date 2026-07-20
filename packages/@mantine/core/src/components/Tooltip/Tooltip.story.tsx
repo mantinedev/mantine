@@ -288,3 +288,24 @@ export function Fixed() {
     </div>
   );
 }
+
+export function HoverableContent() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Tooltip
+        position="bottom"
+        withArrow
+        label={
+          <span>
+            Hoverable tooltip content with a{' '}
+            <a href="https://mantine.dev" style={{ color: 'inherit' }}>
+              link
+            </a>
+          </span>
+        }
+      >
+        <button type="button">Hover me, then move pointer onto the tooltip</button>
+      </Tooltip>
+    </div>
+  );
+}

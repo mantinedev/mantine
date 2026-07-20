@@ -232,7 +232,8 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
   });
 
   const child = getSingleElementChild(children);
-  if (!target && !child) {
+  const hasTarget = target !== undefined;
+  if (!hasTarget && !child) {
     throw new Error(
       '[@mantine/core] Tooltip component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported'
     );
@@ -244,7 +245,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
       ? getArrowMergeDropdownStyles({ position: tooltip.placement, dir })
       : undefined;
 
-  if (target) {
+  if (hasTarget) {
     const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
     return (
       <>
