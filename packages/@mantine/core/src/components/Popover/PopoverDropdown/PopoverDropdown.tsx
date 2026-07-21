@@ -155,3 +155,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
 
 PopoverDropdown.classes = classes;
 PopoverDropdown.displayName = '@mantine/core/PopoverDropdown';
+
+export namespace PopoverDropdown {
+  export type Props = PopoverDropdownProps;
+}

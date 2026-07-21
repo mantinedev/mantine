@@ -3,11 +3,7 @@ import { Popover, PopoverProps, PopoverStylesNames } from '../Popover';
 import { PopoverCssVariables } from '../Popover/Popover';
 import { HoverCardContext, HoverCardContextValue } from './HoverCard.context';
 import { HoverCardDropdown, HoverCardDropdownProps } from './HoverCardDropdown/HoverCardDropdown';
-import {
-  HoverCardGroup,
-  HoverCardGroupContextValue,
-  HoverCardGroupProps,
-} from './HoverCardGroup/HoverCardGroup';
+import { HoverCardGroup, HoverCardGroupProps } from './HoverCardGroup/HoverCardGroup';
 import { HoverCardTarget, HoverCardTargetProps } from './HoverCardTarget/HoverCardTarget';
 import { useHoverCard } from './use-hover-card';
 
@@ -85,7 +81,6 @@ export function HoverCard(props: HoverCardProps) {
 HoverCard.displayName = '@mantine/core/HoverCard';
 HoverCard.Target = HoverCardTarget;
 HoverCard.Dropdown = HoverCardDropdown;
-HoverCard.Group = HoverCardGroup;
 HoverCard.extend = (input: ExtendComponent<HoverCardFactory>) => input;
 
 export namespace HoverCard {
@@ -95,8 +90,5 @@ export namespace HoverCard {
   export type GroupProps = HoverCardGroupProps;
   export type ContextValue = HoverCardContextValue;
 
-  export namespace Group {
-    export type Props = HoverCardGroupProps;
-    export type ContextValue = HoverCardGroupContextValue;
-  }
+  export import Group = HoverCardGroup;
 }
