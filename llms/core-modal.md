@@ -822,6 +822,7 @@ function Demo() {
 | fullScreen | boolean | - | If set, the modal takes the entire screen |
 | id | string | - | Id used to connect modal/drawer with body and title |
 | keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the modal/drawer is hidden when `keepMounted` is set: `'activity'` - hidden with React 19 `Activity` component, `'display-none'` - hidden with `display: none` styles |
 | lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
 | onClose | () => void | required | Called when modal/drawer is closed |
 | onEnterTransitionEnd | () => void | - | Called when enter transition ends |
@@ -856,6 +857,7 @@ function Demo() {
 | closeOnEscape | boolean | - | If set, `onClose` is called when user presses the escape key |
 | id | string | - | Id used to connect modal/drawer with body and title |
 | keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the modal/drawer is hidden when `keepMounted` is set: `'activity'` - hidden with React 19 `Activity` component, `'display-none'` - hidden with `display: none` styles |
 | lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
 | onClose | () => void | required | Called when modal/drawer is closed |
 | onEnterTransitionEnd | () => void | - | Called when enter transition ends |

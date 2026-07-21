@@ -489,6 +489,7 @@ The Accordion component implements the [WAI-ARIA accessibility pattern](https://
 | defaultValue | string \| string[] \| null | - | Uncontrolled component default value |
 | disableChevronRotation | boolean | - | If set, chevron rotation is disabled |
 | keepMounted | boolean | - | If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how inactive panels content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | loop | boolean | - | If set, arrow keys loop through items (first to last and last to first) |
 | multiple | boolean | - | If set, multiple items can be opened at the same time |
 | onChange | (value: AccordionValue<Multiple>) => void | - | Called when value changes, payload type depends on `multiple` prop |
@@ -6798,6 +6799,7 @@ function Demo() {
 | animateOpacity | boolean | - | Determines whether the opacity is animated |
 | expanded | boolean | required | Expanded state |
 | keepMounted | boolean | - | If set, the element is kept in the DOM when collapsed. When `true`, React 19 `Activity` is used to preserve state while collapsed. When `false`, the element is unmounted after the exit animation. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the element is hidden when `keepMounted` is set: `'activity'` – hidden with React 19 `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | onTransitionEnd | () => void | - | Called when the transition ends |
 | onTransitionStart | () => void | - | Called when transition starts |
 | orientation | "horizontal" \| "vertical" | - | Collapse orientation |
@@ -11462,6 +11464,7 @@ function Demo() {
 | closeOnEscape | boolean | - | If set, `onClose` is called when user presses the escape key |
 | id | string | - | Id used to connect modal/drawer with body and title |
 | keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the modal/drawer is hidden when `keepMounted` is set: `'activity'` - hidden with React 19 `Activity` component, `'display-none'` - hidden with `display: none` styles |
 | lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
 | offset | string \| number | - | Drawer container offset from the viewport end |
 | onClose | () => void | required | Called when modal/drawer is closed |
@@ -19341,6 +19344,7 @@ function Demo() {
 | fullScreen | boolean | - | If set, the modal takes the entire screen |
 | id | string | - | Id used to connect modal/drawer with body and title |
 | keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the modal/drawer is hidden when `keepMounted` is set: `'activity'` - hidden with React 19 `Activity` component, `'display-none'` - hidden with `display: none` styles |
 | lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
 | onClose | () => void | required | Called when modal/drawer is closed |
 | onEnterTransitionEnd | () => void | - | Called when enter transition ends |
@@ -19375,6 +19379,7 @@ function Demo() {
 | closeOnEscape | boolean | - | If set, `onClose` is called when user presses the escape key |
 | id | string | - | Id used to connect modal/drawer with body and title |
 | keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the modal/drawer is hidden when `keepMounted` is set: `'activity'` - hidden with React 19 `Activity` component, `'display-none'` - hidden with `display: none` styles |
 | lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
 | onClose | () => void | required | Called when modal/drawer is closed |
 | onEnterTransitionEnd | () => void | - | Called when enter transition ends |
@@ -36821,7 +36826,7 @@ This is useful when you want to:
 | exitDelay | number | - | Delay in ms before exit transition starts |
 | exitDuration | number | - | Exit transition duration in ms |
 | keepMounted | boolean | - | If set, the element is kept in the DOM when hidden. React 19 `Activity` is used to preserve state while the element is not visible. |
-| keepMountedMode | "activity" \| "display-none" | - | Controls how the element is hidden when `keepMounted` is set: `'activity'` – hidden with React 19 `Activity` component, `'display-none'` – hidden with `display: none` styles |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the element is hidden when `keepMounted` is set: `'activity'` - hidden with React 19 `Activity` component, `'display-none'` - hidden with `display: none` styles |
 | mounted | boolean | required | Determines whether component should be mounted to the DOM |
 | onEnter | () => void | - | Called when enter transition starts |
 | onEntered | () => void | - | Called when enter transition ends |
@@ -37178,7 +37183,7 @@ function Demo() {
 
 The `renderNode` callback allows you to customize node rendering in the dropdown.
 It is called with an object containing `node`, `level`, `expanded`, `hasChildren`,
-`selected`, `checked`, and `indeterminate` properties:
+`selected`, `checked`, `indeterminate` and `expand` properties:
 
 ```tsx
 import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
@@ -37208,6 +37213,49 @@ function Demo() {
       data={data}
       renderNode={renderTreeNode}
       defaultExpandAll
+    />
+  );
+}
+```
+
+
+The payload also includes an `expand` function that toggles the expanded state of the node.
+Use it to build a custom expand control inside `renderNode` without controlling the expanded
+state externally. Set `expandOnClick={false}` if you want expanding to happen only through your
+custom control:
+
+```tsx
+import { CaretRightIcon } from '@phosphor-icons/react';
+import { Group, TreeSelect, TreeSelectProps } from '@mantine/core';
+import { data } from './data';
+
+const renderTreeNode: TreeSelectProps['renderNode'] = ({ node, hasChildren, expanded, expand }) => (
+  <Group gap="xs" wrap="nowrap">
+    {hasChildren ? (
+      <CaretRightIcon
+        size={14}
+        onClick={expand}
+        style={{
+          cursor: 'pointer',
+          transform: expanded ? 'rotate(90deg)' : undefined,
+          transition: 'transform 150ms ease',
+        }}
+      />
+    ) : (
+      <span style={{ display: 'inline-block', width: 14 }} />
+    )}
+    <span>{node.label}</span>
+  </Group>
+);
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      renderNode={renderTreeNode}
+      expandOnClick={false}
     />
   );
 }
@@ -69931,7 +69979,7 @@ yet, you can continue using Mantine 8.x until you are ready to update React and 
 
 ## Update dependencies
 
-* Update all `@mantine/*` packages to version 9.4.1
+* Update all `@mantine/*` packages to version 9.4.2
 * If you use `@mantine/tiptap` package, update all `@tiptap/*` packages to the latest `3.x` version
 * If you use `@mantine/charts` package, update `recharts` to the latest `3.x` version
 
@@ -86128,6 +86176,7 @@ function Demo() {
 | highlightQuery | boolean | - | Determines whether search query should be highlighted in action label |
 | id | string | - | Id used to connect modal/drawer with body and title |
 | keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the modal/drawer is hidden when `keepMounted` is set: `'activity'` - hidden with React 19 `Activity` component, `'display-none'` - hidden with `display: none` styles |
 | limit | number | - | Maximum number of actions displayed at a time |
 | lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
 | maxHeight | MaxHeight<string \| number> | - | Spotlight content max-height. Ignored unless `scrollable` prop is set. |
@@ -86201,6 +86250,7 @@ function Demo() {
 | fullScreen | boolean | - | If set, the modal takes the entire screen |
 | id | string | - | Id used to connect modal/drawer with body and title |
 | keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the modal/drawer is hidden when `keepMounted` is set: `'activity'` - hidden with React 19 `Activity` component, `'display-none'` - hidden with `display: none` styles |
 | lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
 | maxHeight | MaxHeight<string \| number> | - | Spotlight content max-height. Ignored unless `scrollable` prop is set. |
 | onEnterTransitionEnd | () => void | - | Called when enter transition ends |
@@ -101923,6 +101973,80 @@ const events = [
 ```
 
 
+## Current time indicator in a different timezone
+
+`@mantine/schedule` works with timezone-agnostic `YYYY-MM-DD HH:mm:ss` strings and does not
+perform any timezone conversions on its own. By default, the current time indicator is positioned
+based on the user's local time.
+
+To display the indicator in a different timezone, use the `getCurrentTime` prop. It is a function
+that returns the current time and is called on every tick, so the indicator keeps updating
+automatically. In the example below, the current time is converted to the selected timezone with
+the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone) – switch the timezone to
+see the indicator and the time bubble move accordingly:
+
+```tsx
+// Demo.tsx
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+import { Select, Stack } from '@mantine/core';
+import { ResourcesDayView } from '@mantine/schedule';
+import { getEvents, resources } from './data';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const timezones = ['UTC', 'America/New_York', 'Europe/Berlin', 'Asia/Kolkata', 'Asia/Tokyo'];
+
+function Demo() {
+  const [tz, setTz] = useState('UTC');
+
+  // getCurrentTime is called on every tick, so the indicator keeps updating
+  const getCurrentTime = () => dayjs().tz(tz).format('YYYY-MM-DD HH:mm:ss');
+  const currentDate = getCurrentTime().split(' ')[0];
+
+  return (
+    <Stack>
+      <Select
+        label="Display timezone"
+        data={timezones}
+        value={tz}
+        onChange={(value) => setTz(value!)}
+        allowDeselect={false}
+      />
+
+      <ResourcesDayView
+        date={currentDate}
+        resources={resources}
+        events={getEvents(currentDate)}
+        startScrollTime={dayjs(getCurrentTime()).subtract(2, 'hour').format('HH:mm:ss')}
+        getCurrentTime={getCurrentTime}
+      />
+    </Stack>
+  );
+}
+
+// data.ts
+import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
+
+export const resources: ScheduleResourceData[] = [
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
+];
+
+export function getEvents(date: string): ScheduleEventData[] {
+  return [
+    { id: 1, title: 'Team Standup', start: `${date} 09:00:00`, end: `${date} 09:30:00`, color: 'blue', resourceId: 'tokyo' },
+    { id: 2, title: 'Client Call', start: `${date} 12:00:00`, end: `${date} 13:00:00`, color: 'teal', resourceId: 'paris' },
+    { id: 3, title: 'Workshop', start: `${date} 15:00:00`, end: `${date} 17:00:00`, color: 'grape', resourceId: 'new-york' },
+  ];
+}
+```
+
+
 ## Event permissions
 
 Use `canDragEvent` and `canResizeEvent` to control which events can be dragged or resized.
@@ -102593,6 +102717,7 @@ const events = [
 | date | string \| Date | required | Day to display, Date object or date string in `YYYY-MM-DD` format |
 | endTime | string | - | End time for the day view, in `HH:mm:ss` format |
 | events | ScheduleEventData[] | - | List of events to display |
+| getCurrentTime | () => AnyDateValue | - | A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. |
 | groupLabelWidth | React.CSSProperties["width"] | - | Width of the group label column |
 | groups | ScheduleResourceGroup[] | - | List of resource groups to display as a column to the left of resource labels |
 | headerFormat | string \| ((date: string) => string) | - | Dayjs format for header label |
@@ -102601,6 +102726,7 @@ const events = [
 | labels | Partial<ScheduleLabels> | - | Labels override |
 | locale | string | - | Locale passed down to dayjs, overrides value defined on `DatesProvider` |
 | maxEventsPerTimeSlot | number | - | Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 |
+| minEventSize | number | - | Minimum on-screen size of an event along the time axis, in px. Prevents very short events from collapsing. Larger values make brief events easier to see but extend them past their real start time. |
 | mode | ScheduleMode | - | Interaction mode |
 | moreEventsProps | Partial<MoreEventsProps> | - | Props passed down to `MoreEvents` component |
 | nextControlProps | React.ComponentProps<'button'> | - | Props passed to next control |
@@ -106590,6 +106716,80 @@ const events = [
 ```
 
 
+## Current time indicator in a different timezone
+
+`@mantine/schedule` works with timezone-agnostic `YYYY-MM-DD HH:mm:ss` strings and does not
+perform any timezone conversions on its own. By default, the current time indicator is positioned
+based on the user's local time.
+
+To display the indicator in a different timezone, use the `getCurrentTime` prop. It is a function
+that returns the current time and is called on every tick, so the indicator keeps updating
+automatically. In the example below, the current time is converted to the selected timezone with
+the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone) – switch the timezone to
+see the indicator and the time bubble move accordingly:
+
+```tsx
+// Demo.tsx
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+import { Select, Stack } from '@mantine/core';
+import { ResourcesWeekView } from '@mantine/schedule';
+import { getEvents, resources } from './data';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const timezones = ['UTC', 'America/New_York', 'Europe/Berlin', 'Asia/Kolkata', 'Asia/Tokyo'];
+
+function Demo() {
+  const [tz, setTz] = useState('UTC');
+
+  // getCurrentTime is called on every tick, so the indicator keeps updating
+  const getCurrentTime = () => dayjs().tz(tz).format('YYYY-MM-DD HH:mm:ss');
+  const currentDate = getCurrentTime().split(' ')[0];
+
+  return (
+    <Stack>
+      <Select
+        label="Display timezone"
+        data={timezones}
+        value={tz}
+        onChange={(value) => setTz(value!)}
+        allowDeselect={false}
+      />
+
+      <ResourcesWeekView
+        date={currentDate}
+        resources={resources}
+        events={getEvents(currentDate)}
+        startScrollDateTime={dayjs(getCurrentTime()).subtract(2, 'hour').format('YYYY-MM-DD HH:mm:ss')}
+        getCurrentTime={getCurrentTime}
+      />
+    </Stack>
+  );
+}
+
+// data.ts
+import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
+
+export const resources: ScheduleResourceData[] = [
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
+];
+
+export function getEvents(date: string): ScheduleEventData[] {
+  return [
+    { id: 1, title: 'Team Standup', start: `${date} 09:00:00`, end: `${date} 09:30:00`, color: 'blue', resourceId: 'tokyo' },
+    { id: 2, title: 'Client Call', start: `${date} 12:00:00`, end: `${date} 13:00:00`, color: 'teal', resourceId: 'paris' },
+    { id: 3, title: 'Workshop', start: `${date} 15:00:00`, end: `${date} 17:00:00`, color: 'grape', resourceId: 'new-york' },
+  ];
+}
+```
+
+
 ## First day of week
 
 Use `firstDayOfWeek` to set the first day of the week. Set `weekdayFormat` to customize
@@ -108342,6 +108542,7 @@ const events = [
 | endTime | string | - | - |
 | events | ScheduleEventData[] | - | - |
 | firstDayOfWeek | 0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6 | - | - |
+| getCurrentTime | () => AnyDateValue | - | A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. |
 | groupLabelWidth | React.CSSProperties["width"] | - | Width of the group label column |
 | groups | ScheduleResourceGroup[] | - | List of resource groups to display as a column to the left of resource labels |
 | highlightBusinessHours | boolean | - | - |
@@ -108350,6 +108551,7 @@ const events = [
 | labels | Partial<ScheduleLabels> | - | - |
 | locale | string | - | - |
 | maxEventsPerTimeSlot | number | - | Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 |
+| minEventSize | number | - | Minimum on-screen size of an event along the time axis, in px. Prevents very short events from collapsing. Larger values make brief events easier to see but extend them past their real start time. |
 | mode | ScheduleMode | - | - |
 | moreEventsProps | Partial<MoreEventsProps> | - | Props passed down to `MoreEvents` component |
 | nextControlProps | React.ComponentProps<'button'> | - | - |

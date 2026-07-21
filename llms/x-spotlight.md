@@ -602,6 +602,7 @@ function Demo() {
 | highlightQuery | boolean | - | Determines whether search query should be highlighted in action label |
 | id | string | - | Id used to connect modal/drawer with body and title |
 | keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the modal/drawer is hidden when `keepMounted` is set: `'activity'` - hidden with React 19 `Activity` component, `'display-none'` - hidden with `display: none` styles |
 | limit | number | - | Maximum number of actions displayed at a time |
 | lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
 | maxHeight | MaxHeight<string \| number> | - | Spotlight content max-height. Ignored unless `scrollable` prop is set. |
@@ -675,6 +676,7 @@ function Demo() {
 | fullScreen | boolean | - | If set, the modal takes the entire screen |
 | id | string | - | Id used to connect modal/drawer with body and title |
 | keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the modal/drawer is hidden when `keepMounted` is set: `'activity'` - hidden with React 19 `Activity` component, `'display-none'` - hidden with `display: none` styles |
 | lockScroll | boolean | - | If set, scroll is locked when `opened={true}` |
 | maxHeight | MaxHeight<string \| number> | - | Spotlight content max-height. Ignored unless `scrollable` prop is set. |
 | onEnterTransitionEnd | () => void | - | Called when enter transition ends |

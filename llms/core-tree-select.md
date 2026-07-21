@@ -343,7 +343,7 @@ function Demo() {
 
 The `renderNode` callback allows you to customize node rendering in the dropdown.
 It is called with an object containing `node`, `level`, `expanded`, `hasChildren`,
-`selected`, `checked`, and `indeterminate` properties:
+`selected`, `checked`, `indeterminate` and `expand` properties:
 
 ```tsx
 import { FileTextIcon, FolderOpenIcon, FolderSimpleIcon } from '@phosphor-icons/react';
@@ -373,6 +373,49 @@ function Demo() {
       data={data}
       renderNode={renderTreeNode}
       defaultExpandAll
+    />
+  );
+}
+```
+
+
+The payload also includes an `expand` function that toggles the expanded state of the node.
+Use it to build a custom expand control inside `renderNode` without controlling the expanded
+state externally. Set `expandOnClick={false}` if you want expanding to happen only through your
+custom control:
+
+```tsx
+import { CaretRightIcon } from '@phosphor-icons/react';
+import { Group, TreeSelect, TreeSelectProps } from '@mantine/core';
+import { data } from './data';
+
+const renderTreeNode: TreeSelectProps['renderNode'] = ({ node, hasChildren, expanded, expand }) => (
+  <Group gap="xs" wrap="nowrap">
+    {hasChildren ? (
+      <CaretRightIcon
+        size={14}
+        onClick={expand}
+        style={{
+          cursor: 'pointer',
+          transform: expanded ? 'rotate(90deg)' : undefined,
+          transition: 'transform 150ms ease',
+        }}
+      />
+    ) : (
+      <span style={{ display: 'inline-block', width: 14 }} />
+    )}
+    <span>{node.label}</span>
+  </Group>
+);
+
+function Demo() {
+  return (
+    <TreeSelect
+      label="Your favorite item"
+      placeholder="Pick value"
+      data={data}
+      renderNode={renderTreeNode}
+      expandOnClick={false}
     />
   );
 }

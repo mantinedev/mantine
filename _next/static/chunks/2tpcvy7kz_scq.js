@@ -1,0 +1,16 @@
+__turbopack_load_page_chunks__("/core/simple-grid", [
+  "static/chunks/42txnfzn-56_z.js",
+  "static/chunks/0f6me72kaa9x7.js",
+  "static/chunks/19cgrlgqa71y7.js",
+  "static/chunks/0uz3bm3u838-q.js",
+  "static/chunks/21af5yt-6mzrc.js",
+  "static/chunks/13a_n6tgpv_nh.js",
+  "static/chunks/3ilikapilsug9.js",
+  "static/chunks/050l3md8cosel.js",
+  "static/chunks/10re5ve8iyym-.js",
+  "static/chunks/3-ziq26edavdg.js",
+  "static/chunks/3ccec4kk3_4if.css",
+  "static/chunks/21hvpvux84e_7.css",
+  "static/chunks/0-7wdzp76gmz_.css",
+  "static/chunks/turbopack-32y9ifa491xc4.js"
+])

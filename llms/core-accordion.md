@@ -473,6 +473,7 @@ The Accordion component implements the [WAI-ARIA accessibility pattern](https://
 | defaultValue | string \| string[] \| null | - | Uncontrolled component default value |
 | disableChevronRotation | boolean | - | If set, chevron rotation is disabled |
 | keepMounted | boolean | - | If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how inactive panels content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | loop | boolean | - | If set, arrow keys loop through items (first to last and last to first) |
 | multiple | boolean | - | If set, multiple items can be opened at the same time |
 | onChange | (value: AccordionValue<Multiple>) => void | - | Called when value changes, payload type depends on `multiple` prop |

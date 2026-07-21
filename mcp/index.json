@@ -6,10 +6,10 @@
     "package": "@mantine/core",
     "route": "/core/accordion",
     "description": "Divide content into collapsible sections",
-    "propsCount": 19,
+    "propsCount": 20,
     "llmUrl": "https://mantine.dev/llms/core-accordion.md",
     "componentDataUrl": "/mcp/components/core-accordion.json",
-    "searchText": "accordion divide content into collapsible sections @mantine/core /core/accordion chevron chevroniconsize chevronposition chevronsize defaultvalue disablechevronrotation keepmounted loop multiple onchange order radius transitionduration value value chevron children disabled icon"
+    "searchText": "accordion divide content into collapsible sections @mantine/core /core/accordion chevron chevroniconsize chevronposition chevronsize defaultvalue disablechevronrotation keepmounted keepmountedmode loop multiple onchange order radius transitionduration value value chevron children disabled icon"
   },
   {
     "id": "core-action-icon",
@@ -378,10 +378,10 @@
     "package": "@mantine/core",
     "route": "/core/collapse",
     "description": "Animate presence with slide down/up transition",
-    "propsCount": 8,
+    "propsCount": 9,
     "llmUrl": "https://mantine.dev/llms/core-collapse.md",
     "componentDataUrl": "/mcp/components/core-collapse.json",
-    "searchText": "collapse animate presence with slide down/up transition @mantine/core /core/collapse animateopacity expanded keepmounted ontransitionend ontransitionstart orientation transitionduration transitiontimingfunction"
+    "searchText": "collapse animate presence with slide down/up transition @mantine/core /core/collapse animateopacity expanded keepmounted keepmountedmode ontransitionend ontransitionstart orientation transitionduration transitiontimingfunction"
   },
   {
     "id": "core-color-input",
@@ -594,10 +594,10 @@
     "package": "@mantine/core",
     "route": "/core/drawer",
     "description": "Display overlay area at any side of the screen",
-    "propsCount": 30,
+    "propsCount": 31,
     "llmUrl": "https://mantine.dev/llms/core-drawer.md",
     "componentDataUrl": "/mcp/components/core-drawer.json",
-    "searchText": "drawer display overlay area at any side of the screen @mantine/core /core/drawer children closebuttonprops closeonclickoutside closeonescape id keepmounted lockscroll offset onclose onentertransitionend onexittransitionend opened overlayprops padding portalprops position radius removescrollprops returnfocus scrollareacomponent shadow size stackid title transitionprops trapfocus withclosebutton withoverlay withinportal zindex"
+    "searchText": "drawer display overlay area at any side of the screen @mantine/core /core/drawer children closebuttonprops closeonclickoutside closeonescape id keepmounted keepmountedmode lockscroll offset onclose onentertransitionend onexittransitionend opened overlayprops padding portalprops position radius removescrollprops returnfocus scrollareacomponent shadow size stackid title transitionprops trapfocus withclosebutton withoverlay withinportal zindex"
   },
   {
     "id": "x-dropzone",
@@ -1002,10 +1002,10 @@
     "package": "@mantine/core",
     "route": "/core/modal",
     "description": "An accessible overlay dialog",
-    "propsCount": 32,
+    "propsCount": 33,
     "llmUrl": "https://mantine.dev/llms/core-modal.md",
     "componentDataUrl": "/mcp/components/core-modal.json",
-    "searchText": "modal an accessible overlay dialog @mantine/core /core/modal centered children closebuttonprops closeonclickoutside closeonescape fullscreen id keepmounted lockscroll onclose onentertransitionend onexittransitionend opened overlayprops padding portalprops radius removescrollprops returnfocus scrollareacomponent shadow size stackid title transitionprops trapfocus withclosebutton withoverlay withinportal xoffset yoffset zindex"
+    "searchText": "modal an accessible overlay dialog @mantine/core /core/modal centered children closebuttonprops closeonclickoutside closeonescape fullscreen id keepmounted keepmountedmode lockscroll onclose onentertransitionend onexittransitionend opened overlayprops padding portalprops radius removescrollprops returnfocus scrollareacomponent shadow size stackid title transitionprops trapfocus withclosebutton withoverlay withinportal xoffset yoffset zindex"
   },
   {
     "id": "x-modals",
@@ -1362,10 +1362,10 @@
     "package": "@mantine/schedule",
     "route": "/schedule/resources-day-view",
     "description": "Day view with resource columns for scheduling across resources",
-    "propsCount": 49,
+    "propsCount": 51,
     "llmUrl": "https://mantine.dev/llms/schedule-resources-day-view.md",
     "componentDataUrl": "/mcp/components/schedule-resources-day-view.json",
-    "searchText": "resourcesdayview day view with resource columns for scheduling across resources @mantine/schedule /schedule/resources-day-view businesshours candragevent canresizeevent date endtime events grouplabelwidth groups headerformat highlightbusinesshours intervalminutes labels locale maxeventspertimeslot mode moreeventsprops nextcontrolprops ondatechange oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody rendergrouplabel renderresourcelabel resources rowheight scrollareaprops slotlabelformat slotwidth startscrolltime starttime todaycontrolprops viewselectprops withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventresize witheventsdraganddrop withheader"
+    "searchText": "resourcesdayview day view with resource columns for scheduling across resources @mantine/schedule /schedule/resources-day-view businesshours candragevent canresizeevent date endtime events getcurrenttime grouplabelwidth groups headerformat highlightbusinesshours intervalminutes labels locale maxeventspertimeslot mineventsize mode moreeventsprops nextcontrolprops ondatechange oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody rendergrouplabel renderresourcelabel resources rowheight scrollareaprops slotlabelformat slotwidth startscrolltime starttime todaycontrolprops viewselectprops withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventresize witheventsdraganddrop withheader"
   },
   {
     "id": "schedule-resources-month-view",
@@ -1398,10 +1398,10 @@
     "package": "@mantine/schedule",
     "route": "/schedule/resources-week-view",
     "description": "Week view with resource rows for scheduling across resources",
-    "propsCount": 55,
+    "propsCount": 57,
     "llmUrl": "https://mantine.dev/llms/schedule-resources-week-view.md",
     "componentDataUrl": "/mcp/components/schedule-resources-week-view.json",
-    "searchText": "resourcesweekview week view with resource rows for scheduling across resources @mantine/schedule /schedule/resources-week-view businesshours candragevent canresizeevent date endtime events firstdayofweek grouplabelwidth groups highlightbusinesshours highlighttoday intervalminutes labels locale maxeventspertimeslot mode moreeventsprops nextcontrolprops ondatechange oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody rendergrouplabel renderresourcelabel renderweeklabel resources rowheight scrollareaprops slotlabelformat slotwidth startscrolldatetime starttime todaycontrolprops viewselectprops weeklabelformat weekdayformat weekenddays withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventresize witheventsdraganddrop withheader withweekenddays"
+    "searchText": "resourcesweekview week view with resource rows for scheduling across resources @mantine/schedule /schedule/resources-week-view businesshours candragevent canresizeevent date endtime events firstdayofweek getcurrenttime grouplabelwidth groups highlightbusinesshours highlighttoday intervalminutes labels locale maxeventspertimeslot mineventsize mode moreeventsprops nextcontrolprops ondatechange oneventclick oneventdragend oneventdragstart oneventdrop oneventresize onexternaleventdrop onslotdragend ontimeslotclick onviewchange previouscontrolprops radius recurrenceexpansionlimit renderevent rendereventbody rendergrouplabel renderresourcelabel renderweeklabel resources rowheight scrollareaprops slotlabelformat slotwidth startscrolldatetime starttime todaycontrolprops viewselectprops weeklabelformat weekdayformat weekenddays withcurrenttimebubble withcurrenttimeindicator withdragslotselect witheventresize witheventsdraganddrop withheader withweekenddays"
   },
   {
     "id": "x-tiptap",
@@ -1614,10 +1614,10 @@
     "package": "@mantine/spotlight",
     "route": "/x/spotlight",
     "description": "Command center for your application",
-    "propsCount": 128,
+    "propsCount": 130,
     "llmUrl": "https://mantine.dev/llms/x-spotlight.md",
     "componentDataUrl": "/mcp/components/x-spotlight.json",
-    "searchText": "spotlight command center for your application @mantine/spotlight /x/spotlight actions centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled filter forceopened fullscreen highlightquery id keepmounted limit lockscroll maxheight nothingfound onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollareaprops scrollable searchprops shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled forceopened fullscreen id keepmounted lockscroll maxheight onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollable shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex children closespotlightontrigger description dimmedsections highlightcolor highlightquery keywords label leftsection rightsection children label disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size success witharia witherrorstyles withsuccessstyles wrapperprops"
+    "searchText": "spotlight command center for your application @mantine/spotlight /x/spotlight actions centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled filter forceopened fullscreen highlightquery id keepmounted keepmountedmode limit lockscroll maxheight nothingfound onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollareaprops scrollable searchprops shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex centered children clearqueryonclose closeonactiontrigger closeonclickoutside closeonescape disabled forceopened fullscreen id keepmounted keepmountedmode lockscroll maxheight onentertransitionend onexittransitionend onquerychange onspotlightclose onspotlightopen overlayprops padding portalprops query radius removescrollprops returnfocus scrollareacomponent scrollable shadow shortcut size stackid store tagstoignore title transitionprops trapfocus triggeroncontenteditable withoverlay withinportal xoffset yoffset zindex children closespotlightontrigger description dimmedsections highlightcolor highlightquery keywords label leftsection rightsection children label disabled error id inputsize leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition multiline pointer radius required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth rootref size success witharia witherrorstyles withsuccessstyles wrapperprops"
   },
   {
     "id": "core-stack",

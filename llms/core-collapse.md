@@ -148,6 +148,7 @@ function Demo() {
 | animateOpacity | boolean | - | Determines whether the opacity is animated |
 | expanded | boolean | required | Expanded state |
 | keepMounted | boolean | - | If set, the element is kept in the DOM when collapsed. When `true`, React 19 `Activity` is used to preserve state while collapsed. When `false`, the element is unmounted after the exit animation. |
+| keepMountedMode | "activity" \| "display-none" | - | Controls how the element is hidden when `keepMounted` is set: `'activity'` – hidden with React 19 `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | onTransitionEnd | () => void | - | Called when the transition ends |
 | onTransitionStart | () => void | - | Called when transition starts |
 | orientation | "horizontal" \| "vertical" | - | Collapse orientation |
