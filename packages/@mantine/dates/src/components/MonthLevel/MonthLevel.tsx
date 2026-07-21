@@ -88,18 +88,28 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
     __preventFocus,
     __stopPropagation,
     nextIcon,
+    nextYearIcon,
     previousIcon,
+    previousYearIcon,
     nextLabel,
+    nextYearLabel,
     previousLabel,
+    previousYearLabel,
     onNext,
+    onNextYear,
     onPrevious,
+    onPreviousYear,
     onLevelClick,
     nextDisabled,
+    nextYearDisabled,
     previousDisabled,
+    previousYearDisabled,
     hasNextLevel,
     levelControlAriaLabel,
     withNext,
+    withNextYear,
     withPrevious,
+    withPreviousYear,
     headerControlsOrder,
 
     // Other props
@@ -133,11 +143,25 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
         ? !dayjs(month).endOf('month').isBefore(maxDate)
         : false;
 
+  const _nextYearDisabled =
+    typeof nextYearDisabled === 'boolean'
+      ? nextYearDisabled
+      : maxDate
+        ? !dayjs(month).endOf('year').isBefore(maxDate)
+        : false;
+
   const _previousDisabled =
     typeof previousDisabled === 'boolean'
       ? previousDisabled
       : minDate
         ? !dayjs(month).startOf('month').isAfter(minDate)
+        : false;
+
+  const _previousYearDisabled =
+    typeof previousYearDisabled === 'boolean'
+      ? previousYearDisabled
+      : minDate
+        ? !dayjs(month).startOf('year').isAfter(minDate)
         : false;
 
   return (
@@ -153,18 +177,28 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
         nextIcon={nextIcon}
+        nextYearIcon={nextYearIcon}
         previousIcon={previousIcon}
+        previousYearIcon={previousYearIcon}
         nextLabel={nextLabel}
+        nextYearLabel={nextYearLabel}
         previousLabel={previousLabel}
+        previousYearLabel={previousYearLabel}
         onNext={onNext}
+        onNextYear={onNextYear}
         onPrevious={onPrevious}
+        onPreviousYear={onPreviousYear}
         onLevelClick={onLevelClick}
         nextDisabled={_nextDisabled}
+        nextYearDisabled={_nextYearDisabled}
         previousDisabled={_previousDisabled}
+        previousYearDisabled={_previousYearDisabled}
         hasNextLevel={hasNextLevel}
         levelControlAriaLabel={levelControlAriaLabel}
         withNext={withNext}
+        withNextYear={withNextYear}
         withPrevious={withPrevious}
+        withPreviousYear={withPreviousYear}
         headerControlsOrder={headerControlsOrder}
         fullWidth={fullWidth}
         {...stylesApiProps}

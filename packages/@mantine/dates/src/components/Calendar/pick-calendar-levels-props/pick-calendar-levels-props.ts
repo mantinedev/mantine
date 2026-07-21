@@ -6,7 +6,9 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
     level,
     onLevelChange,
     nextIcon,
+    nextYearIcon,
     previousIcon,
+    previousYearIcon,
     date,
     defaultDate,
     onDateChange,
@@ -15,6 +17,8 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
     ariaLabels,
     nextLabel,
     previousLabel,
+    nextYearLabel,
+    previousYearLabel,
     onYearSelect,
     onMonthSelect,
     onYearMouseEnter,
@@ -32,6 +36,7 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
     __setDateRef,
     __setLevelRef,
     withWeekNumbers,
+    withYearControls,
     headerControlsOrder,
 
     // MonthLevelGroup props
@@ -75,7 +80,9 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
       level,
       onLevelChange,
       nextIcon,
+      nextYearIcon,
       previousIcon,
+      previousYearIcon,
       date,
       defaultDate,
       onDateChange,
@@ -100,6 +107,7 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
       __updateDateOnMonthSelect,
       __setDateRef,
       withWeekNumbers,
+      withYearControls,
       headerControlsOrder,
 
       // MonthLevelGroup props

@@ -58,6 +58,30 @@ export function WithoutNextAndPrevious() {
   );
 }
 
+export function WithNextYearControl() {
+  return (
+    <div style={{ padding: 40, width: 320 }}>
+      <CalendarHeader label="March 2022" withNextYear />
+    </div>
+  );
+}
+
+export function WithPreviousYearControl() {
+  return (
+    <div style={{ padding: 40, width: 320 }}>
+      <CalendarHeader label="March 2022" withPreviousYear />
+    </div>
+  );
+}
+
+export function WithNextAndPreviousYearControls() {
+  return (
+    <div style={{ padding: 40, width: 320 }}>
+      <CalendarHeader label="March 2022" withPreviousYear withNextYear />
+    </div>
+  );
+}
+
 export function Sizes() {
   const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <CalendarHeader label="January" size={size} key={size} mt="xl" />

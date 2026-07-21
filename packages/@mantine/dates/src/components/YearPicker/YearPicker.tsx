@@ -52,7 +52,12 @@ export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
     DecadeLevelBaseSettings,
     Omit<
       CalendarBaseProps,
-      'onNextYear' | 'onPreviousYear' | 'onNextMonth' | 'onPreviousMonth' | 'hasNextLevel'
+      | 'withYearControls'
+      | 'onNextYear'
+      | 'onPreviousYear'
+      | 'onNextMonth'
+      | 'onPreviousMonth'
+      | 'hasNextLevel'
     > {
   /** Predefined values to pick from */
   presets?: YearPickerPreset<Type>[];

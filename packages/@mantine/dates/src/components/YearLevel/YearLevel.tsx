@@ -24,7 +24,22 @@ export interface YearLevelBaseSettings extends MonthsListSettings {
   yearLabelFormat?: DateLabelFormat;
 }
 
-export interface YearLevelSettings extends YearLevelBaseSettings, CalendarHeaderSettings {}
+export interface YearLevelSettings
+  extends
+    YearLevelBaseSettings,
+    Omit<
+      CalendarHeaderSettings,
+      | 'previousYearLabel'
+      | 'nextYearLabel'
+      | 'onNextYear'
+      | 'onPreviousYear'
+      | 'nextYearDisabled'
+      | 'previousYearDisabled'
+      | 'nextYearIcon'
+      | 'previousYearIcon'
+      | 'withNextYear'
+      | 'withPreviousYear'
+    > {}
 
 export interface YearLevelProps
   extends

@@ -14,9 +14,21 @@ function Wrapper(props: Partial<MonthLevelProps>) {
   const onPrevMonth = () =>
     setMonth((current) => dayjs(current).subtract(1, 'month').format('YYYY-MM-DD'));
 
+  const onNextYear = () =>
+    setMonth((current) => dayjs(current).add(1, 'year').format('YYYY-MM-DD'));
+  const onPrevYear = () =>
+    setMonth((current) => dayjs(current).subtract(1, 'year').format('YYYY-MM-DD'));
+
   return (
     <div>
-      <MonthLevel month={month} onNext={onNextMonth} onPrevious={onPrevMonth} {...props} />
+      <MonthLevel
+        month={month}
+        onNextYear={onNextYear}
+        onPreviousYear={onPrevYear}
+        onNext={onNextMonth}
+        onPrevious={onPrevMonth}
+        {...props}
+      />
     </div>
   );
 }
@@ -43,6 +55,14 @@ export function MinDate() {
 
 export function MaxDate() {
   return <Wrapper maxDate="2022-04-11" />;
+}
+
+export function MinDateYearsControl() {
+  return <Wrapper withNextYear withPreviousYear minDate="2022-04-11" />;
+}
+
+export function MaxDateYearsControl() {
+  return <Wrapper withNextYear withPreviousYear maxDate="2022-04-11" />;
 }
 
 export function Sizes() {

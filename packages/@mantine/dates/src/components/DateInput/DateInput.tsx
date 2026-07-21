@@ -49,7 +49,7 @@ export interface DateInputProps
     CalendarBaseProps,
     DecadeLevelSettings,
     YearLevelSettings,
-    MonthLevelSettings,
+    Omit<MonthLevelSettings, 'onNextYear' | 'onPreviousYear'>,
     StylesApiProps<DateInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** A function to parse user input and convert it to date string value */

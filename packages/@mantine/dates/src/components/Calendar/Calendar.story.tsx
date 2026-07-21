@@ -45,6 +45,14 @@ export function MinLevel() {
   );
 }
 
+export function WithYearsControl() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Calendar withYearControls maxDate="2032-04-11" />
+    </div>
+  );
+}
+
 export function NumberOfColumns() {
   return (
     <div style={{ padding: 40 }}>

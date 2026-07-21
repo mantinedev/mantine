@@ -133,6 +133,11 @@ export const Demo_headerControlsOrder = {
   render: renderDemo(demos.headerControlsOrder),
 };
 
+export const Demo_withYearControls = {
+  name: '⭐ Demo: withYearControls',
+  render: renderDemo(demos.withYearControls),
+};
+
 export const Demo_fullWidth = {
   name: '⭐ Demo: fullWidth',
   render: renderDemo(demos.fullWidth),

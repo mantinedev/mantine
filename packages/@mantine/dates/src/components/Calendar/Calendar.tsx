@@ -44,11 +44,17 @@ export interface CalendarAriaLabels {
 type OmittedSettings =
   | 'onNext'
   | 'onPrevious'
+  | 'onNextYear'
+  | 'onPreviousYear'
   | 'onLevelClick'
   | 'withNext'
   | 'withPrevious'
+  | 'withNextYear'
+  | 'withPreviousYear'
   | 'nextDisabled'
   | 'previousDisabled'
+  | 'nextYearDisabled'
+  | 'previousYearDisabled'
   | 'hasNextLevel';
 
 export interface CalendarSettings
@@ -140,6 +146,9 @@ export interface CalendarBaseProps {
 
   /** Called when the previous month button is clicked */
   onPreviousMonth?: (date: DateStringValue) => void;
+
+  /** Enables previous and next year navigation controls in the month view. @default false */
+  withYearControls?: boolean;
 }
 
 export interface CalendarProps
@@ -174,6 +183,7 @@ const defaultProps = {
   __updateDateOnYearSelect: true,
   __updateDateOnMonthSelect: true,
   enableKeyboardNavigation: true,
+  withYearControls: false,
 } satisfies Partial<CalendarProps>;
 
 export const Calendar = factory<CalendarFactory>((_props) => {
@@ -193,7 +203,9 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     columnsToScroll,
     ariaLabels,
     nextLabel,
+    nextYearLabel,
     previousLabel,
+    previousYearLabel,
     onYearSelect,
     onMonthSelect,
     onYearMouseEnter,
@@ -216,7 +228,9 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     getDayAriaLabel,
     monthLabelFormat,
     nextIcon,
+    nextYearIcon,
     previousIcon,
+    previousYearIcon,
     __onDayClick,
     __onDayMouseEnter,
     withCellSpacing,
@@ -240,6 +254,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     minDate,
     maxDate,
     locale,
+    withYearControls,
     __staticSelector,
     size,
     __preventFocus,
@@ -324,10 +339,36 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     setDate(nextDate);
   };
 
+  const handleMonthLevelNextYear = () => {
+    let nextDate = dayjs(currentDate).add(1, 'year');
+
+    if (maxDate && nextDate.isAfter(dayjs(maxDate))) {
+      nextDate = dayjs(maxDate);
+    }
+
+    const formattedDate = nextDate.format('YYYY-MM-DD');
+
+    onNextYear?.(formattedDate);
+    setDate(formattedDate);
+  };
+
   const handlePreviousYear = () => {
     const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'year').format('YYYY-MM-DD');
     onPreviousYear?.(nextDate);
     setDate(nextDate);
+  };
+
+  const handleMonthLevelPreviousYear = () => {
+    let nextDate = dayjs(currentDate).subtract(1, 'year');
+
+    if (minDate && nextDate.isBefore(dayjs(minDate))) {
+      nextDate = dayjs(minDate);
+    }
+
+    const formattedDate = nextDate.format('YYYY-MM-DD');
+
+    onPreviousYear?.(formattedDate);
+    setDate(formattedDate);
   };
 
   const handleNextDecade = () => {
@@ -417,6 +458,8 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     >
       {_level === 'month' && (
         <MonthLevelGroup
+          withPreviousYear={withYearControls}
+          withNextYear={withYearControls}
           month={currentDate}
           minDate={minDate}
           maxDate={maxDate}
@@ -430,16 +473,22 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           hideWeekdays={hideWeekdays}
           getDayAriaLabel={getDayAriaLabel}
           onNext={handleNextMonth}
+          onNextYear={handleMonthLevelNextYear}
           onPrevious={handlePreviousMonth}
+          onPreviousYear={handleMonthLevelPreviousYear}
           hasNextLevel={maxLevel !== 'month'}
           onLevelClick={() => setLevel('year')}
           numberOfColumns={numberOfColumns}
           locale={locale}
           levelControlAriaLabel={ariaLabels?.monthLevelControl}
           nextLabel={ariaLabels?.nextMonth ?? nextLabel}
+          nextYearLabel={ariaLabels?.nextYear ?? nextYearLabel}
           nextIcon={nextIcon}
+          nextYearIcon={nextYearIcon}
           previousLabel={ariaLabels?.previousMonth ?? previousLabel}
+          previousYearLabel={ariaLabels?.previousYear ?? previousYearLabel}
           previousIcon={previousIcon}
+          previousYearIcon={previousYearIcon}
           monthLabelFormat={monthLabelFormat}
           __onDayClick={__onDayClick}
           __onDayMouseEnter={__onDayMouseEnter}

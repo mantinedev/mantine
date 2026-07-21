@@ -17,6 +17,35 @@ export function Usage() {
   );
 }
 
+export function WithYearControls() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div>1 month</div>
+      <MonthLevelGroup withNextYear withPreviousYear month="2022-04-11" mb={50} mt="xs" />
+
+      <div>2 months</div>
+      <MonthLevelGroup
+        withNextYear
+        withPreviousYear
+        numberOfColumns={2}
+        month="2022-04-11"
+        mb={50}
+        mt="xs"
+      />
+
+      <div>3 months</div>
+      <MonthLevelGroup
+        withNextYear
+        withPreviousYear
+        numberOfColumns={3}
+        month="2022-04-11"
+        mb={50}
+        mt="xs"
+      />
+    </div>
+  );
+}
+
 export function Sizes() {
   const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <MonthLevelGroup numberOfColumns={3} size={size} key={size} mt="xl" month="2022-04-11" />

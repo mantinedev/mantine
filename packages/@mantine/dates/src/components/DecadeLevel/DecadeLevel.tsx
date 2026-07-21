@@ -28,7 +28,23 @@ export interface DecadeLevelBaseSettings extends YearsListSettings {
 }
 
 export interface DecadeLevelSettings
-  extends DecadeLevelBaseSettings, Omit<CalendarHeaderSettings, 'onLevelClick' | 'hasNextLevel'> {}
+  extends
+    DecadeLevelBaseSettings,
+    Omit<
+      CalendarHeaderSettings,
+      | 'previousYearLabel'
+      | 'nextYearLabel'
+      | 'onNextYear'
+      | 'onPreviousYear'
+      | 'nextYearDisabled'
+      | 'previousYearDisabled'
+      | 'nextYearIcon'
+      | 'previousYearIcon'
+      | 'withNextYear'
+      | 'withPreviousYear'
+      | 'onLevelClick'
+      | 'hasNextLevel'
+    > {}
 
 export interface DecadeLevelProps
   extends

@@ -70,16 +70,26 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
     // CalendarHeader settings
     __preventFocus,
     nextIcon,
+    nextYearIcon,
     previousIcon,
+    previousYearIcon,
     nextLabel,
+    nextYearLabel,
     previousLabel,
+    previousYearLabel,
     onNext,
+    onNextYear,
     onPrevious,
+    onPreviousYear,
     onLevelClick,
     nextDisabled,
+    nextYearDisabled,
     previousDisabled,
+    previousYearDisabled,
     hasNextLevel,
     headerControlsOrder,
+    withNextYear,
+    withPreviousYear,
 
     // Other settings
     classNames,
@@ -111,6 +121,8 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
           month={currentMonth}
           withNext={monthIndex === numberOfColumns - 1}
           withPrevious={monthIndex === 0}
+          withNextYear={withNextYear && monthIndex === numberOfColumns - 1}
+          withPreviousYear={withPreviousYear && monthIndex === 0}
           monthLabelFormat={monthLabelFormat}
           __stopPropagation={__stopPropagation}
           __onDayClick={__onDayClick}
@@ -154,14 +166,22 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
           getDayAriaLabel={getDayAriaLabel}
           __preventFocus={__preventFocus}
           nextIcon={nextIcon}
+          nextYearIcon={nextYearIcon}
           previousIcon={previousIcon}
+          previousYearIcon={previousYearIcon}
           nextLabel={nextLabel}
+          nextYearLabel={nextYearLabel}
           previousLabel={previousLabel}
+          previousYearLabel={previousYearLabel}
           onNext={onNext}
+          onNextYear={onNextYear}
           onPrevious={onPrevious}
+          onPreviousYear={onPreviousYear}
           onLevelClick={onLevelClick}
           nextDisabled={nextDisabled}
+          nextYearDisabled={nextYearDisabled}
           previousDisabled={previousDisabled}
+          previousYearDisabled={previousYearDisabled}
           hasNextLevel={hasNextLevel}
           classNames={classNames}
           styles={styles}
