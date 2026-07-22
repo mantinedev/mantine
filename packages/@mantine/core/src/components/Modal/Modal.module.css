@@ -36,6 +36,11 @@
   border-start-end-radius: var(--modal-radius, var(--mantine-radius-default));
 }
 
+.footer {
+  border-end-start-radius: var(--modal-radius, var(--mantine-radius-default));
+  border-end-end-radius: var(--modal-radius, var(--mantine-radius-default));
+}
+
 .content {
   flex: var(--modal-content-flex, 0 0 var(--modal-size));
   max-width: 100%;

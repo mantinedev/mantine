@@ -418,3 +418,28 @@ export function KeepMountedMode() {
     </div>
   );
 }
+
+export function WithFooter() {
+  const [opened, { open, close }] = useDisclosure(true);
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open Modal</Button>
+      <Modal.Root opened={opened} onClose={close} size="md">
+        <Modal.Overlay />
+        <Modal.Content>
+          <Modal.Header>
+            <Modal.Title>Modal with Footer</Modal.Title>
+            <Modal.CloseButton />
+          </Modal.Header>
+          <Modal.Body>{content}</Modal.Body>
+          <Modal.Footer style={{ borderTop: '1px solid var(--mantine-color-default-border)' }}>
+            <Button variant="default" onClick={close}>
+              Cancel
+            </Button>
+            <Button onClick={close}>Submit Action</Button>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal.Root>
+    </div>
+  );
+}
