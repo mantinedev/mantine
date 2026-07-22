@@ -1118,7 +1118,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     title: 'Stepper',
     package: '@mantine/core',
     slug: '/core/stepper',
-    props: ['Stepper', 'StepperStep'],
+    props: ['Stepper', 'StepperStep', 'StepperRoot', 'StepperSteps', 'StepperContent'],
     styles: ['Stepper'],
     componentPrefix: 'Stepper',
     description: 'Display content divided into a steps sequence',

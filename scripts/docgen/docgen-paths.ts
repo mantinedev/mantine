@@ -110,6 +110,9 @@ const FILES_PATHS = getPaths([
 
   // Stepper
   'packages/@mantine/core/src/components/Stepper/StepperStep/StepperStep.tsx',
+  'packages/@mantine/core/src/components/Stepper/StepperRoot/StepperRoot.tsx',
+  'packages/@mantine/core/src/components/Stepper/StepperSteps/StepperSteps.tsx',
+  'packages/@mantine/core/src/components/Stepper/StepperContent/StepperContent.tsx',
 
   // Timeline
   'packages/@mantine/core/src/components/Timeline/TimelineItem/TimelineItem.tsx',

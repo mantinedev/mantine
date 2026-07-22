@@ -1,4 +1,6 @@
 export { usage } from './Stepper.demo.usage';
+export { compound } from './Stepper.demo.compound';
+export { compoundSticky } from './Stepper.demo.compoundSticky';
 export { configurator } from './Stepper.demo.configurator';
 export { icons } from './Stepper.demo.icons';
 export { iconSizeConfigurator } from './Stepper.demo.iconSizeConfigurator';
