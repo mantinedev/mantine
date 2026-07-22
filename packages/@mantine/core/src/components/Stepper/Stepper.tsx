@@ -47,8 +47,15 @@ export type StepperFactory = Factory<{
   };
 }>;
 
+const defaultProps = {
+  orientation: 'horizontal',
+  iconPosition: 'left',
+  allowNextStepsSelect: true,
+  wrap: true,
+} satisfies Partial<StepperProps>;
+
 export const Stepper = factory<StepperFactory>((_props) => {
-  const props = useProps('Stepper', null, _props);
+  const props = useProps('Stepper', defaultProps, _props);
   const { children, classNames, styles, vars, ...others } = props;
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<StepperFactory>({
