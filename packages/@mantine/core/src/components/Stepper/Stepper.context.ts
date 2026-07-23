@@ -7,6 +7,9 @@ export interface StepperContextValue {
   orientation: 'horizontal' | 'vertical' | undefined;
   iconPosition: 'left' | 'right' | undefined;
   active: number;
+  stepsCount: number;
+  /** @internal */
+  setStepsCount: (count: number) => void;
   onStepClick?: (stepIndex: number) => void;
   allowNextStepsSelect: boolean | undefined;
   icon: React.ReactNode | StepFragmentComponent;

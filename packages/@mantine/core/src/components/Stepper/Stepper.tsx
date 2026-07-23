@@ -56,7 +56,7 @@ const defaultProps = {
 
 export const Stepper = factory<StepperFactory>((_props) => {
   const props = useProps('Stepper', defaultProps, _props);
-  const { children, classNames, styles, vars, ...others } = props;
+  const { children, classNames, styles, vars, stepsCount, ...others } = props;
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<StepperFactory>({
     classNames,
@@ -73,7 +73,13 @@ export const Stepper = factory<StepperFactory>((_props) => {
     | undefined;
 
   return (
-    <StepperRoot classNames={resolvedClassNames} styles={resolvedStyles} vars={vars} {...others}>
+    <StepperRoot
+      classNames={resolvedClassNames}
+      styles={resolvedStyles}
+      vars={vars}
+      {...others}
+      stepsCount={stepsCount ?? _children.length}
+    >
       <StepperSteps>{_children}</StepperSteps>
       {_children.map((child, index) => (
         <StepperContent step={index} key={index}>

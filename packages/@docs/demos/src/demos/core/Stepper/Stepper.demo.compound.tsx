@@ -1,10 +1,15 @@
 import { useState } from 'react';
-import { Button, Group, Stepper } from '@mantine/core';
+import { Button, Group, Stepper, Text, useStepperContext } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { Stepper, Button, Group } from '@mantine/core';
+import { Stepper, Button, Group, Text, useStepperContext } from '@mantine/core';
+
+function StepCount() {
+  const { active, stepsCount } = useStepperContext();
+  return <Text>Step {Math.min(active + 1, stepsCount)} of {stepsCount}</Text>;
+}
 
 function Demo() {
   const [active, setActive] = useState(0);
@@ -14,6 +19,7 @@ function Demo() {
   return (
     <>
       <Stepper.Root active={active} onStepClick={setActive}>
+        <StepCount />
         <Stepper.Steps>
           <Stepper.Step label="First step" description="Create an account" />
           <Stepper.Step label="Second step" description="Verify email" />
@@ -45,6 +51,15 @@ function Demo() {
 }
 `;
 
+function StepCount() {
+  const { active, stepsCount } = useStepperContext();
+  return (
+    <Text>
+      Step {Math.min(active + 1, stepsCount)} of {stepsCount}
+    </Text>
+  );
+}
+
 function Demo() {
   const [active, setActive] = useState(0);
   const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
@@ -53,6 +68,7 @@ function Demo() {
   return (
     <>
       <Stepper.Root active={active} onStepClick={setActive}>
+        <StepCount />
         <Stepper.Steps>
           <Stepper.Step label="First step" description="Create an account" />
           <Stepper.Step label="Second step" description="Verify email" />

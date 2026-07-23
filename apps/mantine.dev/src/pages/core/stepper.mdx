@@ -21,6 +21,10 @@ use compound components instead:
 
 <Demo data={StepperDemos.compound} />
 
+`useStepperContext` hook provides the current step index and the total number of steps. The `stepsCount`
+value is detected automatically from `Stepper.Steps` children in client-side applications. Set the
+`stepsCount` prop on `Stepper.Root` only when server-side rendering the step count.
+
 Unlike the `Stepper` component, compound components do not restrict the layout structure –
 you can wrap them with any elements. For example, you can pin step indicators to the top of
 the screen while the content below is scrolled independently:

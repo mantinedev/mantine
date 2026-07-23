@@ -1,3 +1,4 @@
+import { useIsomorphicEffect } from '@mantine/hooks';
 import { Children, cloneElement } from 'react';
 import {
   Box,
@@ -39,6 +40,10 @@ export const StepperSteps = factory<StepperStepsFactory>((_props) => {
   const _children = convertedChildren.filter(
     (child) => child.type !== StepperCompleted
   ) as React.ReactElement<StepperStepProps>[];
+
+  useIsomorphicEffect(() => {
+    ctx.setStepsCount(_children.length);
+  }, [_children.length]);
 
   const items = _children.reduce<React.ReactElement<StepperStepProps>[]>(
     (acc, item: React.ReactElement<StepperStepProps>, index) => {

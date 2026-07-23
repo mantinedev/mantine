@@ -7,6 +7,7 @@ import { StepperContent } from './StepperContent/StepperContent';
 import { StepperRoot, StepperRootProps } from './StepperRoot/StepperRoot';
 import { StepperStep } from './StepperStep/StepperStep';
 import { StepperSteps } from './StepperSteps/StepperSteps';
+import { useStepperContext } from './Stepper.context';
 
 const defaultProps: StepperProps = {
   active: 1,
@@ -26,6 +27,11 @@ const defaultProps: StepperProps = {
     <Stepper.Completed key="4">test-step-completed</Stepper.Completed>,
   ],
 };
+
+function StepCount() {
+  const { stepsCount } = useStepperContext();
+  return <div data-testid="steps-count">{stepsCount}</div>;
+}
 
 describe('@mantine/core/Stepper', () => {
   tests.axe([<Stepper {...defaultProps} key="1" />]);
@@ -67,6 +73,20 @@ describe('@mantine/core/Stepper', () => {
     expect(screen.getByText('test-step-completed')).toBeInTheDocument();
     rerender(<Stepper {...defaultProps} active={100} />);
     expect(screen.getByText('test-step-completed')).toBeInTheDocument();
+  });
+
+  it('sets stepsCount in context', () => {
+    render(
+      <Stepper active={0}>
+        <Stepper.Step label="0">
+          <StepCount />
+        </Stepper.Step>
+        <Stepper.Step label="1" />
+        <Stepper.Completed>Completed</Stepper.Completed>
+      </Stepper>
+    );
+
+    expect(screen.getByTestId('steps-count')).toHaveTextContent('2');
   });
 
   it('exposes Stepper.Step and Stepper.Completed components', () => {
@@ -186,6 +206,73 @@ describe('@mantine/core/Stepper compound components', () => {
   it('renders completed content during server-side rendering', () => {
     const html = renderToString(<MantineProvider>{getCompound({ active: 3 })}</MantineProvider>);
     expect(html).toContain('test-step-completed');
+  });
+
+  it('sets stepsCount in context', () => {
+    render(
+      <Stepper.Root active={0}>
+        <StepCount />
+        <Stepper.Steps>
+          <Stepper.Step label="0" />
+          <Stepper.Step label="1" />
+          <Stepper.Completed>Completed</Stepper.Completed>
+        </Stepper.Steps>
+      </Stepper.Root>
+    );
+
+    expect(screen.getByTestId('steps-count')).toHaveTextContent('2');
+  });
+
+  it('updates stepsCount when steps change', () => {
+    const { rerender } = render(
+      <Stepper.Root active={0}>
+        <StepCount />
+        <Stepper.Steps>
+          <Stepper.Step label="0" />
+        </Stepper.Steps>
+      </Stepper.Root>
+    );
+
+    expect(screen.getByTestId('steps-count')).toHaveTextContent('1');
+
+    rerender(
+      <Stepper.Root active={0}>
+        <StepCount />
+        <Stepper.Steps>
+          <Stepper.Step label="0" />
+          <Stepper.Step label="1" />
+        </Stepper.Steps>
+      </Stepper.Root>
+    );
+
+    expect(screen.getByTestId('steps-count')).toHaveTextContent('2');
+  });
+
+  it('supports stepsCount during server-side rendering', () => {
+    const compoundHtml = renderToString(
+      <MantineProvider>
+        <Stepper.Root active={0} stepsCount={2}>
+          <StepCount />
+          <Stepper.Steps>
+            <Stepper.Step label="0" />
+            <Stepper.Step label="1" />
+          </Stepper.Steps>
+        </Stepper.Root>
+      </MantineProvider>
+    );
+    const stepperHtml = renderToString(
+      <MantineProvider>
+        <Stepper active={0}>
+          <Stepper.Step label="0">
+            <StepCount />
+          </Stepper.Step>
+          <Stepper.Step label="1" />
+        </Stepper>
+      </MantineProvider>
+    );
+
+    expect(compoundHtml).toContain('>2<');
+    expect(stepperHtml).toContain('>2<');
   });
 
   it('renders nothing when Stepper.Completed is used outside Stepper', () => {

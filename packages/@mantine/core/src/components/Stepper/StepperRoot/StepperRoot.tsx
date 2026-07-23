@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -59,6 +60,9 @@ export interface __StepperRootProps extends BoxProps, ElementProps<'div'> {
 
   /** Index of the active step */
   active: number;
+
+  /** Number of steps, overrides the value detected from `Stepper.Steps` children. Set for correct value during server-side rendering. */
+  stepsCount?: number;
 
   /** Step icon @default step index + 1 */
   icon?: React.ReactNode | StepFragmentComponent;
@@ -148,6 +152,7 @@ export const StepperRoot = factory<StepperRootFactory>((_props) => {
     children,
     onStepClick,
     active,
+    stepsCount,
     icon,
     completedIcon,
     progressIcon,
@@ -165,6 +170,8 @@ export const StepperRoot = factory<StepperRootFactory>((_props) => {
     attributes,
     ...others
   } = props;
+
+  const [detectedStepsCount, setStepsCount] = useState(0);
 
   const getStyles = useStyles<StepperRootFactory>({
     name: 'Stepper',
@@ -187,6 +194,8 @@ export const StepperRoot = factory<StepperRootFactory>((_props) => {
         orientation,
         iconPosition,
         active,
+        stepsCount: stepsCount ?? detectedStepsCount,
+        setStepsCount,
         onStepClick,
         allowNextStepsSelect,
         icon,
