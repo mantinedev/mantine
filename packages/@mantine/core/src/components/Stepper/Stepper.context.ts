@@ -12,9 +12,9 @@ export interface StepperContextValue {
   setStepsCount: (count: number) => void;
   onStepClick?: (stepIndex: number) => void;
   allowNextStepsSelect: boolean | undefined;
-  icon: React.ReactNode | StepFragmentComponent;
-  completedIcon: React.ReactNode | StepFragmentComponent;
-  progressIcon: React.ReactNode | StepFragmentComponent;
+  icon?: React.ReactNode | StepFragmentComponent;
+  completedIcon?: React.ReactNode | StepFragmentComponent;
+  progressIcon?: React.ReactNode | StepFragmentComponent;
   color: MantineColor | undefined;
   iconSize: number | string | undefined;
   wrap: boolean | undefined;
