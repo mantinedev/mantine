@@ -1,4 +1,5 @@
-import { useEffect, useEffectEvent } from 'react';
+import { useEffect } from 'react';
+import { useCallbackRef } from '../utils';
 
 export function useWindowEvent<K extends string>(
   type: K,
@@ -7,7 +8,7 @@ export function useWindowEvent<K extends string>(
     : (this: Window, ev: CustomEvent) => void,
   options?: boolean | AddEventListenerOptions
 ) {
-  const stableListener = useEffectEvent(listener);
+  const stableListener = useCallbackRef(listener);
 
   useEffect(() => {
     window.addEventListener(type as any, stableListener, options);

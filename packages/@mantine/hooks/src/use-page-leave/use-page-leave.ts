@@ -1,7 +1,8 @@
-import { useEffect, useEffectEvent } from 'react';
+import { useEffect } from 'react';
+import { useCallbackRef } from '../utils';
 
 export function usePageLeave(onPageLeave: () => void) {
-  const onPageLeaveEvent = useEffectEvent(onPageLeave);
+  const onPageLeaveEvent = useCallbackRef(onPageLeave);
 
   useEffect(() => {
     document.documentElement.addEventListener('mouseleave', onPageLeaveEvent);

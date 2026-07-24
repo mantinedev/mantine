@@ -1,11 +1,12 @@
-import { useEffect, useEffectEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForceUpdate } from '../use-force-update/use-force-update';
+import { useCallbackRef } from '../utils';
 
 export function useTextSelection(): Selection | null {
   const forceUpdate = useForceUpdate();
   const [selection, setSelection] = useState<Selection | null>(null);
 
-  const handleSelectionChange = useEffectEvent(() => {
+  const handleSelectionChange = useCallbackRef(() => {
     setSelection(document.getSelection());
     forceUpdate();
   });

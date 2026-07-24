@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useClickOutside } from './use-click-outside';
@@ -239,5 +239,40 @@ describe('@mantine/hooks/use-click-outside', () => {
     const event = handler.mock.calls[0][0];
     expect(event).toHaveProperty('type', 'mousedown');
     expect(event).toHaveProperty('target', outsideTarget);
+  });
+
+  it('calls the latest handler after rerender inside a forwardRef component', async () => {
+    const ForwardedTarget = forwardRef<HTMLButtonElement, UseClickOutsideProps>(
+      ({ handler }, buttonRef) => {
+        const ref = useClickOutside<HTMLDivElement>(handler);
+        return (
+          <div data-testid="target" ref={ref}>
+            <button type="button" ref={buttonRef} />
+          </div>
+        );
+      }
+    );
+
+    const first = jest.fn();
+    const second = jest.fn();
+
+    const { rerender } = render(
+      <>
+        <ForwardedTarget handler={first} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    rerender(
+      <>
+        <ForwardedTarget handler={second} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    await userEvent.click(screen.getByTestId('outside-target'));
+
+    expect(first).not.toHaveBeenCalled();
+    expect(second).toHaveBeenCalledTimes(1);
   });
 });

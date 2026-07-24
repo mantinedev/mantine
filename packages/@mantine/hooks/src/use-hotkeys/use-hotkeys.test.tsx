@@ -1,4 +1,5 @@
-import { act, renderHook } from '@testing-library/react';
+import { forwardRef, memo } from 'react';
+import { act, render, renderHook } from '@testing-library/react';
 import { useHotkeys } from './use-hotkeys';
 
 const dispatchEvent = (data: any) => {
@@ -94,6 +95,48 @@ describe('@mantine/hooks/use-hotkey', () => {
     });
 
     rerender({ handler: second });
+
+    act(() => {
+      dispatchEvent({ ctrlKey: true, key: 'S' });
+    });
+
+    expect(first).not.toHaveBeenCalled();
+    expect(second).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls the latest handler after rerender inside a forwardRef component', () => {
+    const Forwarded = forwardRef<HTMLDivElement, { handler: (event: KeyboardEvent) => void }>(
+      ({ handler }, ref) => {
+        useHotkeys([['ctrl+S', handler]]);
+        return <div ref={ref} />;
+      }
+    );
+
+    const first = jest.fn();
+    const second = jest.fn();
+
+    const { rerender } = render(<Forwarded handler={first} />);
+    rerender(<Forwarded handler={second} />);
+
+    act(() => {
+      dispatchEvent({ ctrlKey: true, key: 'S' });
+    });
+
+    expect(first).not.toHaveBeenCalled();
+    expect(second).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls the latest handler after rerender inside a memo component', () => {
+    const Memoized = memo(({ handler }: { handler: (event: KeyboardEvent) => void }) => {
+      useHotkeys([['ctrl+S', handler]]);
+      return null;
+    });
+
+    const first = jest.fn();
+    const second = jest.fn();
+
+    const { rerender } = render(<Memoized handler={first} />);
+    rerender(<Memoized handler={second} />);
 
     act(() => {
       dispatchEvent({ ctrlKey: true, key: 'S' });

@@ -1,5 +1,5 @@
-import { useEffect, useEffectEvent, useRef, useState } from 'react';
-import { randomId } from '../utils';
+import { useEffect, useRef, useState } from 'react';
+import { randomId, useCallbackRef } from '../utils';
 
 function getHeadingsData(
   headings: HTMLElement[],
@@ -108,7 +108,7 @@ export function useScrollSpy({
   const [data, setData] = useState<UseScrollSpyHeadingData[]>([]);
   const headingsRef = useRef<UseScrollSpyHeadingData[]>([]);
 
-  const handleScroll = useEffectEvent(() => {
+  const handleScroll = useCallbackRef(() => {
     setActive(
       getActiveElement(
         headingsRef.current.map((d) => d.getNode().getBoundingClientRect()),

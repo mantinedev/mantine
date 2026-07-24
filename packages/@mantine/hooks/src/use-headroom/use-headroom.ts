@@ -1,7 +1,8 @@
-import { useEffectEvent, useRef } from 'react';
+import { useRef } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 import { useScrollDirection } from '../use-scroll-direction/use-scroll-direction';
 import { useWindowScroll } from '../use-window-scroll/use-window-scroll';
+import { useCallbackRef } from '../utils';
 
 export { useScrollDirection } from '../use-scroll-direction/use-scroll-direction';
 
@@ -68,9 +69,9 @@ export function useHeadroom({
   const isScrollingUp = scrollDirection === 'up';
   const [{ y: scrollPosition }] = useWindowScroll();
 
-  const onPinEvent = useEffectEvent(() => onPin?.());
-  const onReleaseEvent = useEffectEvent(() => onRelease?.());
-  const onFixEvent = useEffectEvent(() => onFix?.());
+  const onPinEvent = useCallbackRef(() => onPin?.());
+  const onReleaseEvent = useCallbackRef(() => onRelease?.());
+  const onFixEvent = useCallbackRef(() => onFix?.());
 
   useIsomorphicEffect(() => {
     isPinnedOrReleased(

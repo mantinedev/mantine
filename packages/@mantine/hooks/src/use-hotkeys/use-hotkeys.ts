@@ -1,4 +1,5 @@
-import { useEffect, useEffectEvent } from 'react';
+import { useEffect } from 'react';
+import { useCallbackRef } from '../utils';
 import { getHotkeyHandler, getHotkeyMatcher, HotkeyItemOptions } from './parse-hotkey';
 
 export type { HotkeyItemOptions };
@@ -27,7 +28,10 @@ export function useHotkeys(
   tagsToIgnore: string[] = ['INPUT', 'TEXTAREA', 'SELECT'],
   triggerOnContentEditable = false
 ) {
-  const handleKeydown = useEffectEvent((event: KeyboardEvent) => {
+  // useCallbackRef instead of React's useEffectEvent: effect event impls are not
+  // updated inside ForwardRef and SimpleMemoComponent fibers, so the handler would
+  // be pinned to the mount render there. See #9078
+  const handleKeydown = useCallbackRef((event: KeyboardEvent) => {
     hotkeys.forEach(
       ([hotkey, handler, options = { preventDefault: true, usePhysicalKeys: false }]) => {
         if (
