@@ -1,0 +1,59 @@
+name: Publish packages
+
+on:
+  push:
+    branches: ['**'] # any branch: stable from master, alphas from 10.0 or ad-hoc branches
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Optional: publish only this package (e.g. @mantine/core)'
+        required: false
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: publish-packages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      startsWith(github.event.head_commit.message, '[release] Version')
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+
+      - name: Upgrade npm for trusted publishing (needs >= 11.5.1)
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build all packages
+        run: npm run build all
+
+      - name: Publish
+        env:
+          PACKAGE: ${{ inputs.package }}
+        run: |
+          if [ -n "$PACKAGE" ]; then
+            npm run publish:ci -- --package "$PACKAGE"
+          else
+            npm run publish:ci
+          fi
