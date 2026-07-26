@@ -55,7 +55,7 @@ export async function generateCoreCSS() {
       file.endsWith('default-css-variables.css')
   );
 
-  fs.writeJsonSync(
+  fs.outputJsonSync(
     getPath('apps/mantine.dev/src/.docgen/css-exports.json'),
     { modules: modules.map(transformFileName), global: global.map(transformFileName) },
     { spaces: 2 }
