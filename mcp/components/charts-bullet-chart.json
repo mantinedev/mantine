@@ -1,0 +1,169 @@
+{
+  "id": "charts-bullet-chart",
+  "name": "BulletChart",
+  "kind": "component",
+  "package": "@mantine/charts",
+  "route": "/charts/bullet-chart",
+  "description": "Compact KPI chart with value, target, and qualitative ranges",
+  "propsCount": 14,
+  "llmUrl": "https://mantine.dev/llms/charts-bullet-chart.md",
+  "componentDataUrl": "/mcp/components/charts-bullet-chart.json",
+  "searchText": "bulletchart compact kpi chart with value, target, and qualitative ranges @mantine/charts /charts/bullet-chart barcolor barsize gettooltiplabel label orientation ranges size target targetcolor targetratio targetsize value valueformatter withtooltip",
+  "source": "@mantine/charts/src/BulletChart/BulletChart.tsx",
+  "docs": "charts/bullet-chart.mdx",
+  "markdown": "# BulletChart\nPackage: @mantine/charts\nImport: import { BulletChart } from '@mantine/charts';\nDescription: Compact KPI chart with value, target, and qualitative ranges\n\n## Usage\n\n`BulletChart` is a compact KPI chart that displays an actual value against a target\nwith qualitative ranges as background bands. The required props are `value` and `ranges`.\nLabels are automatically displayed at range boundaries, the target position,\nand the bar value.\n\n```tsx\n// Demo.tsx\nimport { BulletChart } from '@mantine/charts';\nimport { ranges } from './data';\n\nfunction Demo() {\n  return (\n    <BulletChart\n      value={230000}\n      target={150000}\n      ranges={ranges}\n      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}\n    />\n  );\n}\n\n// data.ts\nexport const ranges = ${JSON.stringify(ranges, null, 2)};\n```\n\n\n## Data format\n\n`BulletChart` expects `ranges` as an array of objects with `value` and `color` properties.\nRanges are rendered back-to-front (largest first), so smaller ranges overlay larger ones.\n\n```tsx\nconst ranges = [\n  { value: 150000, color: 'red.8', label: 'Poor' },\n  { value: 225000, color: 'yellow.8', label: 'Average' },\n  { value: 300000, color: 'teal.8', label: 'Good' },\n];\n```\n\n## Label\n\nUse `label` prop to display a label next to the chart:\n\n```tsx\n// Demo.tsx\nimport { BulletChart } from '@mantine/charts';\nimport { ranges } from './data';\n\nfunction Demo() {\n  return (\n    <BulletChart\n      value={230000}\n      target={150000}\n      ranges={ranges}\n      label=\"Revenue\"\n      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}\n    />\n  );\n}\n\n// data.ts\nexport const ranges = ${JSON.stringify(ranges, null, 2)};\n```\n\n\n## Vertical orientation\n\nSet `orientation=\"vertical\"` to render the chart vertically. Note that you need to set\na fixed height on the component when using vertical orientation:\n\n```tsx\n// Demo.tsx\nimport { BulletChart } from '@mantine/charts';\nimport { ranges } from './data';\n\nfunction Demo() {\n  return (\n    <BulletChart\n      value={230000}\n      target={150000}\n      ranges={ranges}\n      orientation=\"vertical\"\n      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}\n      h={250}\n    />\n  );\n}\n\n// data.ts\nexport const ranges = ${JSON.stringify(ranges, null, 2)};\n```\n\n\n## Bar color\n\nBy default, the bar color is white. Use `barColor` prop to customize\nthe color of the actual value bar. Use `targetColor` to change the target marker color:\n\n```tsx\n// Demo.tsx\nimport { BulletChart } from '@mantine/charts';\nimport { ranges } from './data';\n\nfunction Demo() {\n  return (\n    <BulletChart\n      value={230000}\n      target={150000}\n      ranges={ranges}\n      barColor=\"black\"\n      targetColor=\"white\"\n      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}\n    />\n  );\n}\n\n// data.ts\nexport const ranges = ${JSON.stringify(ranges, null, 2)};\n```\n\n\n## Chart size\n\nUse `size` prop to control the height of the chart track area.\nThe `barSize` prop controls the height of the actual value bar independently:\n\n```tsx\n// Demo.tsx\nimport { BulletChart } from '@mantine/charts';\nimport { Stack } from '@mantine/core';\nimport { ranges } from './data';\n\nfunction Demo() {\n  return (\n    <Stack>\n      <BulletChart\n        value={230000}\n        target={150000}\n        ranges={ranges}\n        size={20}\n        label=\"Small\"\n        valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}\n      />\n      <BulletChart\n        value={230000}\n        target={150000}\n        ranges={ranges}\n        size={32}\n        label=\"Default\"\n        valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}\n      />\n      <BulletChart\n        value={230000}\n        target={150000}\n        ranges={ranges}\n        size={48}\n        label=\"Large\"\n        valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}\n      />\n    </Stack>\n  );\n}\n\n// data.ts\nexport const ranges = ${JSON.stringify(ranges, null, 2)};\n```\n\n\n## Value formatter\n\nUse `valueFormatter` prop to format values displayed in labels and tooltips.\nSet `withTooltip` to also show a tooltip on hover:\n\n```tsx\n// Demo.tsx\nimport { BulletChart } from '@mantine/charts';\nimport { ranges } from './data';\n\nfunction Demo() {\n  return (\n    <BulletChart\n      value={230000}\n      target={150000}\n      ranges={ranges}\n      withTooltip\n      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}\n    />\n  );\n}\n\n// data.ts\nexport const ranges = ${JSON.stringify(ranges, null, 2)};\n```\n\n\n## Without target\n\nThe `target` prop is optional. If not provided, the target marker is not rendered:\n\n```tsx\n// Demo.tsx\nimport { BulletChart } from '@mantine/charts';\nimport { ranges } from './data';\n\nfunction Demo() {\n  return (\n    <BulletChart\n      value={230000}\n      ranges={ranges}\n      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}\n    />\n  );\n}\n\n// data.ts\nexport const ranges = ${JSON.stringify(ranges, null, 2)};\n```\n\n\n\n#### Props\n\n**BulletChart props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| barColor | MantineColor | - | Color of the actual value bar, |\n| barSize | string \\| number | - | Height of the actual value bar, |\n| getTooltipLabel | ((data: { value: number; target?: number; }) => ReactNode) \\| undefined | - | Custom tooltip content |\n| label | React.ReactNode | - | Label displayed next to the chart |\n| orientation | \"horizontal\" \\| \"vertical\" | - | Orientation, |\n| ranges | BulletChartRange[] | required | Qualitative ranges displayed as background bands |\n| size | string \\| number | - | Height of the chart track area (ranges), |\n| target | number | - | Target value, displayed as a marker line |\n| targetColor | MantineColor | - | Color of the target marker, |\n| targetRatio | number | - | Target marker size relative to chart size, |\n| targetSize | string \\| number | - | Target marker thickness, |\n| value | number | required | Current actual value |\n| valueFormatter | (value: number) => string | - | Value formatter for tooltip/display and labels |\n| withTooltip | boolean | - | Whether to show tooltip on hover, |\n\n\n#### Styles API\n\nBulletChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**BulletChart selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| root | .mantine-BulletChart-root | Root element |\n| label | .mantine-BulletChart-label | Label element |\n| trackWrapper | .mantine-BulletChart-trackWrapper | Wrapper around track and value labels |\n| track | .mantine-BulletChart-track | Container for ranges, bar, and target |\n| range | .mantine-BulletChart-range | Background range band |\n| bar | .mantine-BulletChart-bar | Actual value bar |\n| target | .mantine-BulletChart-target | Target marker line |\n| rangeLabel | .mantine-BulletChart-rangeLabel | Value label at the end of each range |\n| barLabel | .mantine-BulletChart-barLabel | Value label for the actual value bar |\n| targetLabel | .mantine-BulletChart-targetLabel | Value label for the target marker |\n\n**BulletChart CSS variables**\n\n| Selector | Variable | Description |\n|----------|----------|-------------|\n| root | --bullet-size | Controls height of the chart track area |\n| root | --bullet-bar-size | Controls height of the actual value bar |\n",
+  "props": [
+    {
+      "name": "barColor",
+      "description": "Color of the actual value bar,",
+      "required": false,
+      "defaultValue": "'white'",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "barSize",
+      "description": "Height of the actual value bar,",
+      "required": false,
+      "defaultValue": "16",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "getTooltipLabel",
+      "description": "Custom tooltip content",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "((data: { value: number; target?: number; }) => ReactNode) | undefined"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "label",
+      "description": "Label displayed next to the chart",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "orientation",
+      "description": "Orientation,",
+      "required": false,
+      "defaultValue": "'horizontal'",
+      "type": {
+        "name": "\"horizontal\" | \"vertical\"",
+        "raw": "\"horizontal\" | \"vertical\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"horizontal\""
+          },
+          {
+            "value": "\"vertical\""
+          }
+        ]
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "ranges",
+      "description": "Qualitative ranges displayed as background bands",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "BulletChartRange[]"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "size",
+      "description": "Height of the chart track area (ranges),",
+      "required": false,
+      "defaultValue": "32",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "target",
+      "description": "Target value, displayed as a marker line",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "targetColor",
+      "description": "Color of the target marker,",
+      "required": false,
+      "defaultValue": "'dark' for light, 'white' for dark",
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "targetRatio",
+      "description": "Target marker size relative to chart size,",
+      "required": false,
+      "defaultValue": "0.7",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "targetSize",
+      "description": "Target marker thickness,",
+      "required": false,
+      "defaultValue": "2",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "value",
+      "description": "Current actual value",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "valueFormatter",
+      "description": "Value formatter for tooltip/display and labels",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => string"
+      },
+      "sourceComponent": "BulletChart"
+    },
+    {
+      "name": "withTooltip",
+      "description": "Whether to show tooltip on hover,",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "BulletChart"
+    }
+  ]
+}

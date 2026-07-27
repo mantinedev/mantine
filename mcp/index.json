@@ -6,10 +6,10 @@
     "package": "@mantine/core",
     "route": "/core/accordion",
     "description": "Divide content into collapsible sections",
-    "propsCount": 20,
+    "propsCount": 21,
     "llmUrl": "https://mantine.dev/llms/core-accordion.md",
     "componentDataUrl": "/mcp/components/core-accordion.json",
-    "searchText": "accordion divide content into collapsible sections @mantine/core /core/accordion chevron chevroniconsize chevronposition chevronsize defaultvalue disablechevronrotation keepmounted keepmountedmode loop multiple onchange order radius transitionduration value value chevron children disabled icon"
+    "searchText": "accordion divide content into collapsible sections @mantine/core /core/accordion chevron chevroniconsize chevronposition chevronsize defaultvalue disablechevronrotation disablecollapse keepmounted keepmountedmode loop multiple onchange order radius transitionduration value value chevron children disabled icon"
   },
   {
     "id": "core-action-icon",
@@ -114,10 +114,10 @@
     "package": "@mantine/charts",
     "route": "/charts/area-chart",
     "description": "Area chart component with stacked, percent and split variants",
-    "propsCount": 42,
+    "propsCount": 45,
     "llmUrl": "https://mantine.dev/llms/charts-area-chart.md",
     "componentDataUrl": "/mcp/components/charts-area-chart.json",
-    "searchText": "areachart area chart component with stacked, percent and split variants @mantine/charts /charts/area-chart activedotprops areachartprops areaprops children connectnulls curvetype data datakey dotprops fillopacity gridaxis gridcolor gridprops legendprops orientation referencelines rightyaxislabel rightyaxisprops series splitcolors splitoffset strokedasharray strokewidth textcolor tickline tooltipanimationduration tooltipprops type unit valueformatter withdots withgradient withlegend withpointlabels withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops"
+    "searchText": "areachart area chart component with stacked, percent and split variants @mantine/charts /charts/area-chart accessibilitylayer activedotprops areachartprops areaprops brushprops children connectnulls curvetype data datakey dotprops fillopacity gridaxis gridcolor gridprops legendprops orientation referencelines rightyaxislabel rightyaxisprops series splitcolors splitoffset strokedasharray strokewidth textcolor tickline tooltipanimationduration tooltipprops type unit valueformatter withbrush withdots withgradient withlegend withpointlabels withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops"
   },
   {
     "id": "core-aspect-ratio",
@@ -186,10 +186,10 @@
     "package": "@mantine/charts",
     "route": "/charts/bar-chart",
     "description": "Bar chart component with stacked and percent variants",
-    "propsCount": 39,
+    "propsCount": 42,
     "llmUrl": "https://mantine.dev/llms/charts-bar-chart.md",
     "componentDataUrl": "/mcp/components/charts-bar-chart.json",
-    "searchText": "barchart bar chart component with stacked and percent variants @mantine/charts /charts/bar-chart barchartprops barlabelcolor barprops children cursorfill data datakey fillopacity getbarcolor gridaxis gridcolor gridprops legendprops maxbarwidth minbarsize orientation referencelines rightyaxislabel rightyaxisprops series strokedasharray textcolor tickline tooltipanimationduration tooltipprops type unit valueformatter valuelabelprops withbarvaluelabel withlegend withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops"
+    "searchText": "barchart bar chart component with stacked and percent variants @mantine/charts /charts/bar-chart accessibilitylayer barchartprops barlabelcolor barprops brushprops children cursorfill data datakey fillopacity getbarcolor gridaxis gridcolor gridprops legendprops maxbarwidth minbarsize orientation referencelines rightyaxislabel rightyaxisprops series strokedasharray textcolor tickline tooltipanimationduration tooltipprops type unit valueformatter valuelabelprops withbarvaluelabel withbrush withlegend withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops"
   },
   {
     "id": "charts-bars-list",
@@ -234,10 +234,22 @@
     "package": "@mantine/charts",
     "route": "/charts/bubble-chart",
     "description": "Bubble chart component",
-    "propsCount": 14,
+    "propsCount": 15,
     "llmUrl": "https://mantine.dev/llms/charts-bubble-chart.md",
     "componentDataUrl": "/mcp/components/charts-bubble-chart.json",
-    "searchText": "bubblechart bubble chart component @mantine/charts /charts/bubble-chart color data datakey gridcolor label range scatterprops textcolor tooltipprops valueformatter withtooltip xaxisprops yaxisprops zaxisprops"
+    "searchText": "bubblechart bubble chart component @mantine/charts /charts/bubble-chart accessibilitylayer color data datakey gridcolor label range scatterprops textcolor tooltipprops valueformatter withtooltip xaxisprops yaxisprops zaxisprops"
+  },
+  {
+    "id": "charts-bullet-chart",
+    "name": "BulletChart",
+    "kind": "component",
+    "package": "@mantine/charts",
+    "route": "/charts/bullet-chart",
+    "description": "Compact KPI chart with value, target, and qualitative ranges",
+    "propsCount": 14,
+    "llmUrl": "https://mantine.dev/llms/charts-bullet-chart.md",
+    "componentDataUrl": "/mcp/components/charts-bullet-chart.json",
+    "searchText": "bulletchart compact kpi chart with value, target, and qualitative ranges @mantine/charts /charts/bullet-chart barcolor barsize gettooltiplabel label orientation ranges size target targetcolor targetratio targetsize value valueformatter withtooltip"
   },
   {
     "id": "core-burger",
@@ -270,10 +282,10 @@
     "package": "@mantine/dates",
     "route": "/dates/calendar",
     "description": "Base component for custom date pickers",
-    "propsCount": 52,
+    "propsCount": 54,
     "llmUrl": "https://mantine.dev/llms/dates-calendar.md",
     "componentDataUrl": "/mcp/components/dates-calendar.json",
-    "searchText": "calendar base component for custom date pickers @mantine/dates /dates/calendar arialabels columnstoscroll date decadelabelformat defaultdate defaultlevel enablekeyboardnavigation excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday level locale maxdate maxlevel mindate minlevel monthlabelformat monthslistformat nexticon nextlabel numberofcolumns ondatechange onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearmouseenter onyearselect previousicon previouslabel renderday size static weekdayformat weekenddays withcellspacing withweeknumbers yearlabelformat yearslistformat"
+    "searchText": "calendar base component for custom date pickers @mantine/dates /dates/calendar arialabels columnstoscroll date decadelabelformat defaultdate defaultlevel enablekeyboardnavigation excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday level locale maxdate maxlevel mindate minlevel monthlabelformat monthslistformat nexticon nextlabel numberofcolumns ondatechange onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearmouseenter onyearselect previousicon previouslabel renderday size static weekdayformat weekenddays withcellspacing withnativelevelselect withweeknumbers yearlabelformat yearslistformat yearsselectrange"
   },
   {
     "id": "core-card",
@@ -298,6 +310,18 @@
     "llmUrl": "https://mantine.dev/llms/x-carousel.md",
     "componentDataUrl": "/mcp/components/x-carousel.json",
     "searchText": "carousel embla based carousel component @mantine/carousel /x/carousel children controlsize controlsoffset emblaoptions getemblaapi getindicatorprops height includegapinsize initialslide nextcontrolicon nextcontrolprops onnextslide onpreviousslide onslidechange orientation plugins previouscontrolicon previouscontrolprops slidegap slidesize type withcontrols withindicators withkeyboardevents"
+  },
+  {
+    "id": "core-cascader",
+    "name": "Cascader",
+    "kind": "component",
+    "package": "@mantine/core",
+    "route": "/core/cascader",
+    "description": "Select a path from hierarchical data with cascading columns",
+    "propsCount": 69,
+    "llmUrl": "https://mantine.dev/llms/core-cascader.md",
+    "componentDataUrl": "/mcp/components/core-cascader.json",
+    "searchText": "cascader select a path from hierarchical data with cascading columns @mantine/core /core/cascader allowdeselect changeonselect checkiconposition chevroncolor clearbuttonprops clearsectionmode clearable closeonselect columnwidth comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops expandtrigger filter formatvalue hiddeninputprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxdisplayedlevels maxdropdownheight nextlevelscontrollabel nothingfoundmessage onchange onclear ondropdownclose ondropdownopen onsearchchange openonfocus pointer previouslevelscontrollabel radius renderoption rendersearchoption required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue searchable separator size success successprops value withasterisk withcheckicon withcolumns witherrorstyles withsuccessstyles wrapperprops"
   },
   {
     "id": "core-center",
@@ -450,10 +474,10 @@
     "package": "@mantine/charts",
     "route": "/charts/composite-chart",
     "description": "Composed chart with support for Area, Bar and Line charts",
-    "propsCount": 41,
+    "propsCount": 44,
     "llmUrl": "https://mantine.dev/llms/charts-composite-chart.md",
     "componentDataUrl": "/mcp/components/charts-composite-chart.json",
-    "searchText": "compositechart composed chart with support for area, bar and line charts @mantine/charts /charts/composite-chart activedotprops areaprops barprops children composedchartprops connectnulls curvetype data datakey dotprops gridaxis gridcolor gridprops legendprops lineprops maxbarwidth minbarsize referencelines rightyaxislabel rightyaxisprops series strokedasharray strokewidth textcolor tickline tooltipanimationduration tooltipprops unit valueformatter withbarvaluelabel withdots withlegend withpointlabels withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops"
+    "searchText": "compositechart composed chart with support for area, bar and line charts @mantine/charts /charts/composite-chart accessibilitylayer activedotprops areaprops barprops brushprops children composedchartprops connectnulls curvetype data datakey dotprops gridaxis gridcolor gridprops legendprops lineprops maxbarwidth minbarsize referencelines rightyaxislabel rightyaxisprops series strokedasharray strokewidth textcolor tickline tooltipanimationduration tooltipprops unit valueformatter withbarvaluelabel withbrush withdots withlegend withpointlabels withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops"
   },
   {
     "id": "core-container",
@@ -498,10 +522,10 @@
     "package": "@mantine/dates",
     "route": "/dates/date-input",
     "description": "Free form date input",
-    "propsCount": 95,
+    "propsCount": 97,
     "llmUrl": "https://mantine.dev/llms/dates-date-input.md",
     "componentDataUrl": "/mcp/components/dates-date-input.json",
-    "searchText": "dateinput free form date input @mantine/dates /dates/date-input allowdeselect arialabels clearbuttonprops clearsectionmode clearable columnstoscroll date dateparser decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled error errorprops excludedate firstdayofweek fixonblur fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops hasnextlevel headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate monthlabelformat monthslistformat nextdisabled nexticon nextlabel numberofcolumns onchange ondatechange onlevelchange onlevelclick onnext onnextdecade onnextmonth onnextyear onprevious onpreviousdecade onpreviousmonth onpreviousyear pointer popoverprops presets previousdisabled previousicon previouslabel radius renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops value valueformat weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withnext withprevious withsuccessstyles withtime withweeknumbers wrapperprops yearlabelformat yearslistformat"
+    "searchText": "dateinput free form date input @mantine/dates /dates/date-input allowdeselect arialabels clearbuttonprops clearsectionmode clearable columnstoscroll date dateparser decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled error errorprops excludedate firstdayofweek fixonblur fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops hasnextlevel headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate monthlabelformat monthslistformat nextdisabled nexticon nextlabel numberofcolumns onchange ondatechange onlevelchange onlevelclick onnext onnextdecade onnextmonth onnextyear onprevious onpreviousdecade onpreviousmonth onpreviousyear pointer popoverprops presets previousdisabled previousicon previouslabel radius renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size success successprops value valueformat weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withnativelevelselect withnext withprevious withsuccessstyles withtime withweeknumbers wrapperprops yearlabelformat yearslistformat yearsselectrange"
   },
   {
     "id": "dates-date-picker",
@@ -510,10 +534,10 @@
     "package": "@mantine/dates",
     "route": "/dates/date-picker",
     "description": "Inline date, multiple dates and dates range picker",
-    "propsCount": 57,
+    "propsCount": 59,
     "llmUrl": "https://mantine.dev/llms/dates-date-picker.md",
     "componentDataUrl": "/mcp/components/dates-date-picker.json",
-    "searchText": "datepicker inline date, multiple dates and dates range picker @mantine/dates /dates/date-picker allowdeselect allowsingledateinrange arialabels columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue enablekeyboardnavigation excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday level locale maxdate maxlevel mindate monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearmouseenter onyearselect presets previousicon previouslabel renderday size type value weekdayformat weekenddays withcellspacing withweeknumbers yearlabelformat yearslistformat"
+    "searchText": "datepicker inline date, multiple dates and dates range picker @mantine/dates /dates/date-picker allowdeselect allowsingledateinrange arialabels columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue enablekeyboardnavigation excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday level locale maxdate maxlevel mindate monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearmouseenter onyearselect presets previousicon previouslabel renderday size type value weekdayformat weekenddays withcellspacing withnativelevelselect withweeknumbers yearlabelformat yearslistformat yearsselectrange"
   },
   {
     "id": "dates-date-picker-input",
@@ -522,10 +546,10 @@
     "package": "@mantine/dates",
     "route": "/dates/date-picker-input",
     "description": "Date, multiple dates and dates range picker input",
-    "propsCount": 100,
+    "propsCount": 102,
     "llmUrl": "https://mantine.dev/llms/dates-date-picker-input.md",
     "componentDataUrl": "/mcp/components/dates-date-picker-input.json",
-    "searchText": "datepickerinput date, multiple dates and dates range picker input @mantine/dates /dates/date-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled dropdowntype enablekeyboardnavigation error errorprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearmouseenter onyearselect placeholder pointer popoverprops presets previousicon previouslabel radius readonly renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates success successprops type value valueformat valueformatter weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withsuccessstyles withweeknumbers wrapperprops yearlabelformat yearslistformat"
+    "searchText": "datepickerinput date, multiple dates and dates range picker input @mantine/dates /dates/date-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled dropdowntype enablekeyboardnavigation error errorprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearmouseenter onyearselect placeholder pointer popoverprops presets previousicon previouslabel radius readonly renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates success successprops type value valueformat valueformatter weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withnativelevelselect withsuccessstyles withweeknumbers wrapperprops yearlabelformat yearslistformat yearsselectrange"
   },
   {
     "id": "dates-date-time-picker",
@@ -534,10 +558,10 @@
     "package": "@mantine/dates",
     "route": "/dates/date-time-picker",
     "description": "Capture datetime from the user",
-    "propsCount": 99,
+    "propsCount": 101,
     "llmUrl": "https://mantine.dev/llms/dates-date-time-picker.md",
     "componentDataUrl": "/mcp/components/dates-date-time-picker.json",
-    "searchText": "datetimepicker capture datetime from the user @mantine/dates /dates/date-time-picker allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable columnstoscroll date decadelabelformat defaultdate defaultlevel defaulttimevalue defaultvalue description descriptionprops disabled dropdowntype endtimepickerprops error errorprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearselect placeholder pointer popoverprops presets previousicon previouslabel radius readonly renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates submitbuttonprops success successprops timepickerprops type value valueformat weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withseconds withsuccessstyles withweeknumbers wrapperprops yearlabelformat yearslistformat"
+    "searchText": "datetimepicker capture datetime from the user @mantine/dates /dates/date-time-picker allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable columnstoscroll date decadelabelformat defaultdate defaultlevel defaulttimevalue defaultvalue description descriptionprops disabled dropdowntype endtimepickerprops error errorprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onyearselect placeholder pointer popoverprops presets previousicon previouslabel radius readonly renderday required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates submitbuttonprops success successprops timepickerprops type value valueformat weekdayformat weekenddays withasterisk withcellspacing witherrorstyles withnativelevelselect withseconds withsuccessstyles withweeknumbers wrapperprops yearlabelformat yearslistformat yearsselectrange"
   },
   {
     "id": "schedule-day-view",
@@ -582,10 +606,10 @@
     "package": "@mantine/charts",
     "route": "/charts/donut-chart",
     "description": "Donut chart component",
-    "propsCount": 24,
+    "propsCount": 25,
     "llmUrl": "https://mantine.dev/llms/charts-donut-chart.md",
     "componentDataUrl": "/mcp/components/charts-donut-chart.json",
-    "searchText": "donutchart donut chart component @mantine/charts /charts/donut-chart cellprops chartlabel children data endangle labelcolor labelstype legendprops paddingangle piechartprops pieprops size startangle strokecolor strokewidth thickness tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlabelsline withlegend withtooltip"
+    "searchText": "donutchart donut chart component @mantine/charts /charts/donut-chart accessibilitylayer cellprops chartlabel children data endangle labelcolor labelstype legendprops paddingangle piechartprops pieprops size startangle strokecolor strokewidth thickness tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlabelsline withlegend withtooltip"
   },
   {
     "id": "core-drawer",
@@ -690,10 +714,10 @@
     "package": "@mantine/core",
     "route": "/core/floating-window",
     "description": "Draggable floating area",
-    "propsCount": 17,
+    "propsCount": 18,
     "llmUrl": "https://mantine.dev/llms/core-floating-window.md",
     "componentDataUrl": "/mcp/components/core-floating-window.json",
-    "searchText": "floatingwindow draggable floating area @mantine/core /core/floating-window axis constrainoffset constraintoviewport draghandleselector enabled excludedraghandleselector initialposition ondragend ondragstart onpositionchange portalprops radius setpositionref shadow withborder withinportal zindex"
+    "searchText": "floatingwindow draggable floating area @mantine/core /core/floating-window axis constrainoffset constraintoviewport dimensions draghandleselector enabled excludedraghandleselector initialposition ondragend ondragstart onpositionchange portalprops radius setpositionref shadow withborder withinportal zindex"
   },
   {
     "id": "core-focus-trap",
@@ -714,10 +738,10 @@
     "package": "@mantine/charts",
     "route": "/charts/funnel-chart",
     "description": "Funnel chart component",
-    "propsCount": 17,
+    "propsCount": 18,
     "llmUrl": "https://mantine.dev/llms/charts-funnel-chart.md",
     "componentDataUrl": "/mcp/components/charts-funnel-chart.json",
-    "searchText": "funnelchart funnel chart component @mantine/charts /charts/funnel-chart children data funnelchartprops funnelprops labelcolor labelsposition legendprops size strokecolor strokewidth tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlegend withtooltip"
+    "searchText": "funnelchart funnel chart component @mantine/charts /charts/funnel-chart accessibilitylayer children data funnelchartprops funnelprops labelcolor labelsposition legendprops size strokecolor strokewidth tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlegend withtooltip"
   },
   {
     "id": "core-grid",
@@ -750,10 +774,10 @@
     "package": "@mantine/charts",
     "route": "/charts/heatmap",
     "description": "Heatmap chart component",
-    "propsCount": 24,
+    "propsCount": 25,
     "llmUrl": "https://mantine.dev/llms/charts-heatmap.md",
     "componentDataUrl": "/mcp/components/charts-heatmap.json",
-    "searchText": "heatmap heatmap chart component @mantine/charts /charts/heatmap colors data domain enddate firstdayofweek fontsize gap getrectprops gettooltiplabel legendlabels monthlabels monthslabelsheight rectradius rectsize splitmonths startdate tooltipprops weekdaylabels weekdayslabelswidth withlegend withmonthlabels withoutsidedates withtooltip withweekdaylabels"
+    "searchText": "heatmap heatmap chart component @mantine/charts /charts/heatmap colors data domain enddate firstdayofweek fontsize gap getrectprops gettooltiplabel legendlabels monthlabels monthlabelsposition monthslabelsheight rectradius rectsize splitmonths startdate tooltipprops weekdaylabels weekdayslabelswidth withlegend withmonthlabels withoutsidedates withtooltip withweekdaylabels"
   },
   {
     "id": "core-highlight",
@@ -822,10 +846,10 @@
     "package": "@mantine/dates",
     "route": "/dates/inline-date-time-picker",
     "description": "Inline date and time picker with range support",
-    "propsCount": 65,
+    "propsCount": 67,
     "llmUrl": "https://mantine.dev/llms/dates-inline-date-time-picker.md",
     "componentDataUrl": "/mcp/components/dates-inline-date-time-picker.json",
-    "searchText": "inlinedatetimepicker inline date and time picker with range support @mantine/dates /dates/inline-date-time-picker allowdeselect allowsingledateinrange arialabels columnstoscroll date decadelabelformat defaultdate defaultlevel defaulttimevalue defaultvalue enablekeyboardnavigation endtimepickerprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday labelseparator level locale maxdate maxlevel mindate monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onsubmit onyearmouseenter onyearselect presets previousicon previouslabel renderday size submitbuttonprops timepickerprops type value valueformat weekdayformat weekenddays withcellspacing withseconds withweeknumbers yearlabelformat yearslistformat"
+    "searchText": "inlinedatetimepicker inline date and time picker with range support @mantine/dates /dates/inline-date-time-picker allowdeselect allowsingledateinrange arialabels columnstoscroll date decadelabelformat defaultdate defaultlevel defaulttimevalue defaultvalue enablekeyboardnavigation endtimepickerprops excludedate firstdayofweek fullwidth getdayarialabel getdayprops getmonthcontrolprops getyearcontrolprops headercontrolsorder hideoutsidedates hideweekdays highlighttoday labelseparator level locale maxdate maxlevel mindate monthlabelformat monthslistformat nexticon nextlabel numberofcolumns onchange ondatechange onlevelchange onmonthmouseenter onmonthselect onnextdecade onnextmonth onnextyear onpreviousdecade onpreviousmonth onpreviousyear onsubmit onyearmouseenter onyearselect presets previousicon previouslabel renderday size submitbuttonprops timepickerprops type value valueformat weekdayformat weekenddays withcellspacing withnativelevelselect withseconds withweeknumbers yearlabelformat yearslistformat yearsselectrange"
   },
   {
     "id": "core-input",
@@ -870,10 +894,10 @@
     "package": "@mantine/charts",
     "route": "/charts/line-chart",
     "description": "Line chart component",
-    "propsCount": 40,
+    "propsCount": 43,
     "llmUrl": "https://mantine.dev/llms/charts-line-chart.md",
     "componentDataUrl": "/mcp/components/charts-line-chart.json",
-    "searchText": "linechart line chart component @mantine/charts /charts/line-chart activedotprops children connectnulls curvetype data datakey dotprops fillopacity gradientstops gridaxis gridcolor gridprops legendprops linechartprops lineprops orientation referencelines rightyaxislabel rightyaxisprops series strokedasharray strokewidth textcolor tickline tooltipanimationduration tooltipprops type unit valueformatter withdots withlegend withpointlabels withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops"
+    "searchText": "linechart line chart component @mantine/charts /charts/line-chart accessibilitylayer activedotprops brushprops children connectnulls curvetype data datakey dotprops fillopacity gradientstops gridaxis gridcolor gridprops legendprops linechartprops lineprops orientation referencelines rightyaxislabel rightyaxisprops series strokedasharray strokewidth textcolor tickline tooltipanimationduration tooltipprops type unit valueformatter withbrush withdots withlegend withpointlabels withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops"
   },
   {
     "id": "core-list",
@@ -1026,10 +1050,10 @@
     "package": "@mantine/dates",
     "route": "/dates/month-picker",
     "description": "Inline month, multiple months and months range picker",
-    "propsCount": 36,
+    "propsCount": 37,
     "llmUrl": "https://mantine.dev/llms/dates-month-picker.md",
     "componentDataUrl": "/mcp/components/dates-month-picker.json",
-    "searchText": "monthpicker inline month, multiple months and months range picker @mantine/dates /dates/month-picker allowdeselect allowsingledateinrange arialabels columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue fullwidth getmonthcontrolprops getyearcontrolprops level locale maxdate maxlevel mindate monthslistformat nextlabel numberofcolumns onchange ondatechange onlevelchange onmonthselect onnextdecade onnextyear onpreviousdecade onpreviousyear presets previouslabel size type value withcellspacing yearlabelformat yearslistformat"
+    "searchText": "monthpicker inline month, multiple months and months range picker @mantine/dates /dates/month-picker allowdeselect allowsingledateinrange arialabels columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue fullwidth getmonthcontrolprops getyearcontrolprops level locale maxdate maxlevel mindate monthslistformat nextlabel numberofcolumns onchange ondatechange onlevelchange onmonthselect onnextdecade onnextyear onpreviousdecade onpreviousyear presets previouslabel size type value withcellspacing withnativelevelselect yearlabelformat yearslistformat"
   },
   {
     "id": "dates-month-picker-input",
@@ -1038,10 +1062,10 @@
     "package": "@mantine/dates",
     "route": "/dates/month-picker-input",
     "description": "Month, multiple months and months range picker input",
-    "propsCount": 78,
+    "propsCount": 79,
     "llmUrl": "https://mantine.dev/llms/dates-month-picker-input.md",
     "componentDataUrl": "/mcp/components/dates-month-picker-input.json",
-    "searchText": "monthpickerinput month, multiple months and months range picker input @mantine/dates /dates/month-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled dropdowntype error errorprops fullwidth getmonthcontrolprops getyearcontrolprops inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthslistformat nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onnextdecade onnextyear onpreviousdecade onpreviousyear placeholder pointer popoverprops presets previouslabel radius readonly required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates success successprops type value valueformat valueformatter withasterisk withcellspacing witherrorstyles withsuccessstyles wrapperprops yearlabelformat yearslistformat"
+    "searchText": "monthpickerinput month, multiple months and months range picker input @mantine/dates /dates/month-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultlevel defaultvalue description descriptionprops disabled dropdowntype error errorprops fullwidth getmonthcontrolprops getyearcontrolprops inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth level loading loadingposition locale maxdate maxlevel mindate modalprops monthslistformat nextlabel numberofcolumns onchange ondatechange ondropdownclose onlevelchange onnextdecade onnextyear onpreviousdecade onpreviousyear placeholder pointer popoverprops presets previouslabel radius readonly required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates success successprops type value valueformat valueformatter withasterisk withcellspacing witherrorstyles withnativelevelselect withsuccessstyles wrapperprops yearlabelformat yearslistformat"
   },
   {
     "id": "schedule-month-view",
@@ -1218,10 +1242,10 @@
     "package": "@mantine/charts",
     "route": "/charts/pie-chart",
     "description": "Pie chart component",
-    "propsCount": 23,
+    "propsCount": 24,
     "llmUrl": "https://mantine.dev/llms/charts-pie-chart.md",
     "componentDataUrl": "/mcp/components/charts-pie-chart.json",
-    "searchText": "piechart pie chart component @mantine/charts /charts/pie-chart cellprops children data endangle labelcolor labelsposition labelstype legendprops paddingangle piechartprops pieprops size startangle strokecolor strokewidth tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlabelsline withlegend withtooltip"
+    "searchText": "piechart pie chart component @mantine/charts /charts/pie-chart accessibilitylayer cellprops children data endangle labelcolor labelsposition labelstype legendprops paddingangle piechartprops pieprops size startangle strokecolor strokewidth tooltipanimationduration tooltipdatasource tooltipprops valueformatter withlabels withlabelsline withlegend withtooltip"
   },
   {
     "id": "core-pill",
@@ -1302,10 +1326,10 @@
     "package": "@mantine/charts",
     "route": "/charts/radar-chart",
     "description": "Radar chart component",
-    "propsCount": 22,
+    "propsCount": 23,
     "llmUrl": "https://mantine.dev/llms/charts-radar-chart.md",
     "componentDataUrl": "/mcp/components/charts-radar-chart.json",
-    "searchText": "radarchart radar chart component @mantine/charts /charts/radar-chart activedotprops children data datakey dotprops gridcolor legendprops polarangleaxisprops polargridprops polarradiusaxisprops radarchartprops radarprops series textcolor tooltipanimationduration tooltipprops withdots withlegend withpolarangleaxis withpolargrid withpolarradiusaxis withtooltip"
+    "searchText": "radarchart radar chart component @mantine/charts /charts/radar-chart accessibilitylayer activedotprops children data datakey dotprops gridcolor legendprops polarangleaxisprops polargridprops polarradiusaxisprops radarchartprops radarprops series textcolor tooltipanimationduration tooltipprops withdots withlegend withpolarangleaxis withpolargrid withpolarradiusaxis withtooltip"
   },
   {
     "id": "charts-radial-bar-chart",
@@ -1314,10 +1338,10 @@
     "package": "@mantine/charts",
     "route": "/charts/radial-bar-chart",
     "description": "Radial bar chart component",
-    "propsCount": 14,
+    "propsCount": 15,
     "llmUrl": "https://mantine.dev/llms/charts-radial-bar-chart.md",
     "componentDataUrl": "/mcp/components/charts-radial-bar-chart.json",
-    "searchText": "radialbarchart radial bar chart component @mantine/charts /charts/radial-bar-chart barsize data datakey emptybackgroundcolor endangle legendprops radialbarchartprops radialbarprops startangle tooltipprops withbackground withlabels withlegend withtooltip"
+    "searchText": "radialbarchart radial bar chart component @mantine/charts /charts/radial-bar-chart accessibilitylayer barsize data datakey emptybackgroundcolor endangle legendprops radialbarchartprops radialbarprops startangle tooltipprops withbackground withlabels withlegend withtooltip"
   },
   {
     "id": "core-radio",
@@ -1458,10 +1482,10 @@
     "package": "@mantine/charts",
     "route": "/charts/scatter-chart",
     "description": "Scatter chart component",
-    "propsCount": 30,
+    "propsCount": 31,
     "llmUrl": "https://mantine.dev/llms/charts-scatter-chart.md",
     "componentDataUrl": "/mcp/components/charts-scatter-chart.json",
-    "searchText": "scatterchart scatter chart component @mantine/charts /charts/scatter-chart data datakey gridaxis gridcolor gridprops labels legendprops orientation pointlabels referencelines rightyaxislabel rightyaxisprops scatterchartprops scatterprops strokedasharray textcolor tickline tooltipanimationduration tooltipprops unit valueformatter withlegend withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops"
+    "searchText": "scatterchart scatter chart component @mantine/charts /charts/scatter-chart accessibilitylayer data datakey gridaxis gridcolor gridprops labels legendprops orientation pointlabels referencelines rightyaxislabel rightyaxisprops scatterchartprops scatterprops strokedasharray textcolor tickline tooltipanimationduration tooltipprops unit valueformatter withlegend withrightyaxis withtooltip withxaxis withyaxis xaxislabel xaxisprops yaxislabel yaxisprops"
   },
   {
     "id": "schedule-schedule",
@@ -1482,10 +1506,10 @@
     "package": "@mantine/core",
     "route": "/core/scroll-area",
     "description": "Area with custom scrollbars",
-    "propsCount": 14,
+    "propsCount": 15,
     "llmUrl": "https://mantine.dev/llms/core-scroll-area.md",
     "componentDataUrl": "/mcp/components/core-scroll-area.json",
-    "searchText": "scrollarea area with custom scrollbars @mantine/core /core/scroll-area offsetscrollbars onbottomreached onleftreached onrightreached onscrollpositionchange ontopreached overscrollbehavior scrollhidedelay scrollbarsize scrollbars startscrollposition type viewportprops viewportref"
+    "searchText": "scrollarea area with custom scrollbars @mantine/core /core/scroll-area offsetscrollbars onbottomreached onleftreached onrightreached onscrollpositionchange ontopreached overscrollbehavior scrollhidedelay scrollbarsize scrollbars startscrollposition type verticalscrollbarposition viewportprops viewportref"
   },
   {
     "id": "core-scroller",
@@ -1644,6 +1668,18 @@
     "searchText": "stepper display content divided into a steps sequence @mantine/core /core/stepper active allownextstepsselect autocontrast children color completedicon contentpadding icon iconposition iconsize keepmounted onstepclick orientation progressicon radius size wrap allowstepclick allowstepselect color completedicon description icon iconposition iconsize label loading orientation progressicon state step withicon"
   },
   {
+    "id": "charts-sunburst-chart",
+    "name": "SunburstChart",
+    "kind": "component",
+    "package": "@mantine/charts",
+    "route": "/charts/sunburst-chart",
+    "description": "Sunburst chart component for hierarchical data",
+    "propsCount": 15,
+    "llmUrl": "https://mantine.dev/llms/charts-sunburst-chart.md",
+    "componentDataUrl": "/mcp/components/charts-sunburst-chart.json",
+    "searchText": "sunburstchart sunburst chart component for hierarchical data @mantine/charts /charts/sunburst-chart children data datakey endangle gap innerradius size startangle strokecolor sunburstchartprops tooltipanimationduration tooltipprops valueformatter withlabels withtooltip"
+  },
+  {
     "id": "core-switch",
     "name": "Switch",
     "kind": "component",
@@ -1782,10 +1818,10 @@
     "package": "@mantine/core",
     "route": "/core/timeline",
     "description": "Display list of events in chronological order",
-    "propsCount": 15,
+    "propsCount": 17,
     "llmUrl": "https://mantine.dev/llms/core-timeline.md",
     "componentDataUrl": "/mcp/components/core-timeline.json",
-    "searchText": "timeline display list of events in chronological order @mantine/core /core/timeline active align autocontrast bulletsize children color linewidth radius reverseactive bullet children color linevariant radius title"
+    "searchText": "timeline display list of events in chronological order @mantine/core /core/timeline active align autocontrast bulletsize children color linewidth radius reverseactive alternate bullet children color linevariant opposite radius title"
   },
   {
     "id": "dates-time-picker",
@@ -1902,10 +1938,10 @@
     "package": "@mantine/dates",
     "route": "/dates/year-picker",
     "description": "Inline year, multiple years and years range picker",
-    "propsCount": 27,
+    "propsCount": 28,
     "llmUrl": "https://mantine.dev/llms/dates-year-picker.md",
     "componentDataUrl": "/mcp/components/dates-year-picker.json",
-    "searchText": "yearpicker inline year, multiple years and years range picker @mantine/dates /dates/year-picker allowdeselect allowsingledateinrange arialabels columnstoscroll date decadelabelformat defaultdate defaultvalue fullwidth getyearcontrolprops locale maxdate mindate nextlabel numberofcolumns onchange ondatechange onnextdecade onpreviousdecade onyearselect presets previouslabel size type value withcellspacing yearslistformat"
+    "searchText": "yearpicker inline year, multiple years and years range picker @mantine/dates /dates/year-picker allowdeselect allowsingledateinrange arialabels columnstoscroll date decadelabelformat defaultdate defaultvalue fullwidth getyearcontrolprops locale maxdate mindate nextlabel numberofcolumns onchange ondatechange onnextdecade onpreviousdecade onyearselect presets previouslabel size type value withcellspacing withnativelevelselect yearslistformat"
   },
   {
     "id": "dates-year-picker-input",
@@ -1914,10 +1950,10 @@
     "package": "@mantine/dates",
     "route": "/dates/year-picker-input",
     "description": "Inline year, multiple years and years range picker",
-    "propsCount": 69,
+    "propsCount": 70,
     "llmUrl": "https://mantine.dev/llms/dates-year-picker-input.md",
     "componentDataUrl": "/mcp/components/dates-year-picker-input.json",
-    "searchText": "yearpickerinput inline year, multiple years and years range picker @mantine/dates /dates/year-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultvalue description descriptionprops disabled dropdowntype error errorprops fullwidth getyearcontrolprops inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition locale maxdate mindate modalprops nextlabel numberofcolumns onchange ondatechange ondropdownclose onnextdecade onpreviousdecade placeholder pointer popoverprops presets previouslabel radius readonly required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates success successprops type value valueformat valueformatter withasterisk withcellspacing witherrorstyles withsuccessstyles wrapperprops yearslistformat"
+    "searchText": "yearpickerinput inline year, multiple years and years range picker @mantine/dates /dates/year-picker-input allowdeselect allowsingledateinrange arialabels clearbuttonprops clearsectionmode clearable closeonchange columnstoscroll date decadelabelformat defaultdate defaultvalue description descriptionprops disabled dropdowntype error errorprops fullwidth getyearcontrolprops inputcontainer inputsize inputwrapperorder label labelprops labelseparator leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition locale maxdate mindate modalprops nextlabel numberofcolumns onchange ondatechange ondropdownclose onnextdecade onpreviousdecade placeholder pointer popoverprops presets previouslabel radius readonly required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth size sortdates success successprops type value valueformat valueformatter withasterisk withcellspacing witherrorstyles withnativelevelselect withsuccessstyles wrapperprops yearslistformat"
   },
   {
     "id": "schedule-year-view",

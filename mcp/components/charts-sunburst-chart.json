@@ -1,0 +1,167 @@
+{
+  "id": "charts-sunburst-chart",
+  "name": "SunburstChart",
+  "kind": "component",
+  "package": "@mantine/charts",
+  "route": "/charts/sunburst-chart",
+  "description": "Sunburst chart component for hierarchical data",
+  "propsCount": 15,
+  "llmUrl": "https://mantine.dev/llms/charts-sunburst-chart.md",
+  "componentDataUrl": "/mcp/components/charts-sunburst-chart.json",
+  "searchText": "sunburstchart sunburst chart component for hierarchical data @mantine/charts /charts/sunburst-chart children data datakey endangle gap innerradius size startangle strokecolor sunburstchartprops tooltipanimationduration tooltipprops valueformatter withlabels withtooltip",
+  "source": "@mantine/charts/src/SunburstChart/SunburstChart.tsx",
+  "docs": "charts/sunburst-chart.mdx",
+  "markdown": "# SunburstChart\nPackage: @mantine/charts\nImport: import { SunburstChart } from '@mantine/charts';\nDescription: Sunburst chart component for hierarchical data\n\n## Usage\n\n`SunburstChart` is based on the [SunburstChart recharts component](https://recharts.org/en-US/api/SunburstChart).\nIt displays hierarchical data as concentric rings, similar to a treemap plotted in polar coordinates:\n\n```tsx\n// Demo.tsx\nimport { SunburstChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SunburstChart data={data} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'Analytics', value: 100, color: 'pink.6' },\n  {\n    name: 'DevOps',\n    color: 'grape.6',\n    children: [\n      { name: 'Docker', value: 80 },\n      { name: 'Kubernetes', value: 50 },\n    ],\n  },\n  {\n    name: 'Backend',\n    color: 'teal.6',\n    children: [\n      { name: 'Node', value: 150 },\n      {\n        name: 'Python',\n        children: [\n          { name: 'Django', value: 110 },\n          { name: 'FastAPI', value: 60 },\n        ],\n      },\n      { name: 'Go', value: 50 },\n    ],\n  },\n  {\n    name: 'Frontend',\n    color: 'blue.6',\n    children: [\n      {\n        name: 'React',\n        children: [\n          {\n            name: 'Frameworks',\n            children: [\n              { name: 'Next.js', value: 150 },\n              { name: 'Remix', value: 40 },\n            ],\n          },\n          { name: 'CRA', value: 20 },\n        ],\n      },\n      { name: 'Vue', value: 90 },\n      { name: 'Svelte', value: 30 },\n    ],\n  },\n];\n```\n\n\n## Data format\n\n`SunburstChart` expects an array of objects. Each object must have a `name` and `color` property.\nLeaf nodes must have a `value` property. Parent nodes can have a `children` array:\n\n```tsx\nexport const data = [\n  {\n    name: 'Frontend',\n    color: 'blue.6',\n    children: [\n      { name: 'React', value: 400 },\n      { name: 'Vue', value: 200 },\n      { name: 'Angular', value: 150 },\n    ],\n  },\n  {\n    name: 'Backend',\n    color: 'teal.6',\n    children: [\n      { name: 'Node', value: 300 },\n      { name: 'Python', value: 250 },\n    ],\n  },\n];\n```\n\n## Node color\n\nYou can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in\nother components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS\ncolor value is also accepted. Children inherit the color of their parent node.\n\n```tsx\nimport { SunburstChart } from '@mantine/charts';\n\nconst data = [\n  { name: 'Sales', value: 500, color: 'violet.6' },\n  { name: 'Marketing', value: 300, color: 'grape.6' },\n  { name: 'Engineering', value: 400, color: 'pink.6' },\n  { name: 'Support', value: 200, color: 'red.6' },\n];\n\nfunction Demo() {\n  return <SunburstChart data={data} />;\n}\n```\n\n\n## Stroke color\n\nUse `strokeColor` to change the color of the stroke around each sector:\n\n```tsx\n// Demo.tsx\nimport { SunburstChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SunburstChart data={data} strokeColor=\"gray.3\" />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'Analytics', value: 100, color: 'pink.6' },\n  {\n    name: 'DevOps',\n    color: 'grape.6',\n    children: [\n      { name: 'Docker', value: 80 },\n      { name: 'Kubernetes', value: 50 },\n    ],\n  },\n  {\n    name: 'Backend',\n    color: 'teal.6',\n    children: [\n      { name: 'Node', value: 150 },\n      {\n        name: 'Python',\n        children: [\n          { name: 'Django', value: 110 },\n          { name: 'FastAPI', value: 60 },\n        ],\n      },\n      { name: 'Go', value: 50 },\n    ],\n  },\n  {\n    name: 'Frontend',\n    color: 'blue.6',\n    children: [\n      {\n        name: 'React',\n        children: [\n          {\n            name: 'Frameworks',\n            children: [\n              { name: 'Next.js', value: 150 },\n              { name: 'Remix', value: 40 },\n            ],\n          },\n          { name: 'CRA', value: 20 },\n        ],\n      },\n      { name: 'Vue', value: 90 },\n      { name: 'Svelte', value: 30 },\n    ],\n  },\n];\n```\n\n\n## Chart size\n\nUse `size` prop to control the width and height of the chart:\n\n```tsx\n// Demo.tsx\nimport { SunburstChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SunburstChart data={data} size={400} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'Analytics', value: 100, color: 'pink.6' },\n  {\n    name: 'DevOps',\n    color: 'grape.6',\n    children: [\n      { name: 'Docker', value: 80 },\n      { name: 'Kubernetes', value: 50 },\n    ],\n  },\n  {\n    name: 'Backend',\n    color: 'teal.6',\n    children: [\n      { name: 'Node', value: 150 },\n      {\n        name: 'Python',\n        children: [\n          { name: 'Django', value: 110 },\n          { name: 'FastAPI', value: 60 },\n        ],\n      },\n      { name: 'Go', value: 50 },\n    ],\n  },\n  {\n    name: 'Frontend',\n    color: 'blue.6',\n    children: [\n      {\n        name: 'React',\n        children: [\n          {\n            name: 'Frameworks',\n            children: [\n              { name: 'Next.js', value: 150 },\n              { name: 'Remix', value: 40 },\n            ],\n          },\n          { name: 'CRA', value: 20 },\n        ],\n      },\n      { name: 'Vue', value: 90 },\n      { name: 'Svelte', value: 30 },\n    ],\n  },\n];\n```\n\n\n## Gap\n\nUse `gap` prop to control the spacing between sectors and rings:\n\n```tsx\n// Demo.tsx\nimport { SunburstChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SunburstChart data={data}  gap={1} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'Analytics', value: 100, color: 'pink.6' },\n  {\n    name: 'DevOps',\n    color: 'grape.6',\n    children: [\n      { name: 'Docker', value: 80 },\n      { name: 'Kubernetes', value: 50 },\n    ],\n  },\n  {\n    name: 'Backend',\n    color: 'teal.6',\n    children: [\n      { name: 'Node', value: 150 },\n      {\n        name: 'Python',\n        children: [\n          { name: 'Django', value: 110 },\n          { name: 'FastAPI', value: 60 },\n        ],\n      },\n      { name: 'Go', value: 50 },\n    ],\n  },\n  {\n    name: 'Frontend',\n    color: 'blue.6',\n    children: [\n      {\n        name: 'React',\n        children: [\n          {\n            name: 'Frameworks',\n            children: [\n              { name: 'Next.js', value: 150 },\n              { name: 'Remix', value: 40 },\n            ],\n          },\n          { name: 'CRA', value: 20 },\n        ],\n      },\n      { name: 'Vue', value: 90 },\n      { name: 'Svelte', value: 30 },\n    ],\n  },\n];\n```\n\n\n## Labels\n\nSet `withLabels` to display value labels inside each sector. It is recommended\nto increase `size` to give labels enough space:\n\n```tsx\n// Demo.tsx\nimport { SunburstChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SunburstChart data={data} withLabels size={400} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'Analytics', value: 100, color: 'pink.6' },\n  {\n    name: 'DevOps',\n    color: 'grape.6',\n    children: [\n      { name: 'Docker', value: 80 },\n      { name: 'Kubernetes', value: 50 },\n    ],\n  },\n  {\n    name: 'Backend',\n    color: 'teal.6',\n    children: [\n      { name: 'Node', value: 150 },\n      {\n        name: 'Python',\n        children: [\n          { name: 'Django', value: 110 },\n          { name: 'FastAPI', value: 60 },\n        ],\n      },\n      { name: 'Go', value: 50 },\n    ],\n  },\n  {\n    name: 'Frontend',\n    color: 'blue.6',\n    children: [\n      {\n        name: 'React',\n        children: [\n          {\n            name: 'Frameworks',\n            children: [\n              { name: 'Next.js', value: 150 },\n              { name: 'Remix', value: 40 },\n            ],\n          },\n          { name: 'CRA', value: 20 },\n        ],\n      },\n      { name: 'Vue', value: 90 },\n      { name: 'Svelte', value: 30 },\n    ],\n  },\n];\n```\n\n\n## Disable tooltip\n\nTo disable the tooltip, set `withTooltip={false}`:\n\n```tsx\n// Demo.tsx\nimport { SunburstChart } from '@mantine/charts';\nimport { data } from './data';\n\nfunction Demo() {\n  return <SunburstChart data={data} withTooltip={false} />;\n}\n\n// data.ts\nexport const data = [\n  { name: 'Analytics', value: 100, color: 'pink.6' },\n  {\n    name: 'DevOps',\n    color: 'grape.6',\n    children: [\n      { name: 'Docker', value: 80 },\n      { name: 'Kubernetes', value: 50 },\n    ],\n  },\n  {\n    name: 'Backend',\n    color: 'teal.6',\n    children: [\n      { name: 'Node', value: 150 },\n      {\n        name: 'Python',\n        children: [\n          { name: 'Django', value: 110 },\n          { name: 'FastAPI', value: 60 },\n        ],\n      },\n      { name: 'Go', value: 50 },\n    ],\n  },\n  {\n    name: 'Frontend',\n    color: 'blue.6',\n    children: [\n      {\n        name: 'React',\n        children: [\n          {\n            name: 'Frameworks',\n            children: [\n              { name: 'Next.js', value: 150 },\n              { name: 'Remix', value: 40 },\n            ],\n          },\n          { name: 'CRA', value: 20 },\n        ],\n      },\n      { name: 'Vue', value: 90 },\n      { name: 'Svelte', value: 30 },\n    ],\n  },\n];\n```\n\n\n\n#### Props\n\n**SunburstChart props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| children | React.ReactNode | - | Additional elements rendered inside `SunburstChart` component |\n| data | SunburstChartData[] | required | Data used to render chart |\n| dataKey | string | - | Key in data object for the value |\n| endAngle | number | - | Angle in degrees at which the chart should end |\n| gap | number | - | Gap between sectors and rings in px |\n| innerRadius | number | - | Controls the radius of the inner circle at the center of the chart |\n| size | number | - | Controls chart width and height |\n| startAngle | number | - | Angle in degrees from which the chart should start |\n| strokeColor | MantineColor | - | Controls color of the sectors stroke, by default depends on color scheme |\n| sunburstChartProps | Partial<Omit<SunburstChartProps, \"data\" \\| \"ref\" \\| \"dataKey\">> | - | Props passed down to recharts `SunburstChart` component |\n| tooltipAnimationDuration | number | - | Tooltip animation duration in ms |\n| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |\n| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip and labels |\n| withLabels | boolean | - | Determines whether value labels are displayed inside each sector |\n| withTooltip | boolean | - | Determines whether the tooltip should be displayed when a node is hovered |",
+  "props": [
+    {
+      "name": "children",
+      "description": "Additional elements rendered inside <code>SunburstChart</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "data",
+      "description": "Data used to render chart",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "SunburstChartData[]"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "dataKey",
+      "description": "Key in data object for the value",
+      "required": false,
+      "defaultValue": "'value'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "endAngle",
+      "description": "Angle in degrees at which the chart should end",
+      "required": false,
+      "defaultValue": "360",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "gap",
+      "description": "Gap between sectors and rings in px",
+      "required": false,
+      "defaultValue": "1",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "innerRadius",
+      "description": "Controls the radius of the inner circle at the center of the chart",
+      "required": false,
+      "defaultValue": "50",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "size",
+      "description": "Controls chart width and height",
+      "required": false,
+      "defaultValue": "300",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "startAngle",
+      "description": "Angle in degrees from which the chart should start",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "strokeColor",
+      "description": "Controls color of the sectors stroke, by default depends on color scheme",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "sunburstChartProps",
+      "description": "Props passed down to recharts <code>SunburstChart</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Partial<Omit<SunburstChartProps, \"data\" | \"ref\" | \"dataKey\">>"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "tooltipAnimationDuration",
+      "description": "Tooltip animation duration in ms",
+      "required": false,
+      "defaultValue": "0",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "tooltipProps",
+      "description": "Props passed down to <code>Tooltip</code> recharts component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "RechartsProps"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "valueFormatter",
+      "description": "A function to format values inside the tooltip and labels",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: number) => string"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "withLabels",
+      "description": "Determines whether value labels are displayed inside each sector",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SunburstChart"
+    },
+    {
+      "name": "withTooltip",
+      "description": "Determines whether the tooltip should be displayed when a node is hovered",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "SunburstChart"
+    }
+  ]
+}

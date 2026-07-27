@@ -296,6 +296,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | cellProps | Partial<Omit<SVGProps<SVGElement>, "ref">> \| ((series: PieChartCell) => Partial<Omit<SVGProps<SVGElement>, "ref">>) | - | Props passed down to each segment of the chart |
 | children | React.ReactNode | - | Additional elements rendered inside `PieChart` component |
 | data | PieChartCell[] | required | Data used to render chart |

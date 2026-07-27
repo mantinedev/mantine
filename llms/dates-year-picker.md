@@ -343,6 +343,7 @@ Note that the following events will only trigger if focus is on a year control.
 | type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
 | value | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Value for controlled component |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | yearsListFormat | string | - | dayjs format for years list |
 
 **YearPicker.Input props**
@@ -415,6 +416,7 @@ Note that the following events will only trigger if focus is on a year control.
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearsListFormat | string | - | dayjs format for years list |

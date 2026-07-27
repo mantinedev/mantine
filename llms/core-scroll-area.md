@@ -71,6 +71,37 @@ function Demo() {
 ```
 
 
+## Vertical scrollbar position
+
+By default, the vertical scrollbar follows the inline-end edge: it is rendered on the right side
+in LTR and on the left side in RTL. Set the `verticalScrollbarPosition` prop to `left` or `right`
+to pin the vertical scrollbar to a physical side regardless of direction.
+
+This is useful for RTL applications where users expect the vertical scrollbar to stay on the right,
+matching the behavior of most desktop software (Windows, Office, Gmail, etc.). The prop also
+realigns the offset padding, the corner and the horizontal scrollbar gap, so it works correctly
+with `offsetScrollbars` and `scrollbars="xy"`. When the prop is omitted, the default
+direction-based behavior is preserved.
+
+```tsx
+import { ScrollArea } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ScrollArea
+      w={300}
+      h={200}
+      type="always"
+      scrollbars="y"
+       verticalScrollbarPosition="right" offsetScrollbars={true}
+    >
+      {/* ... content */}
+    </ScrollArea>
+  );
+}
+```
+
+
 ## Subscribe to scroll position changes
 
 Set the `onScrollPositionChange` function to subscribe to scroll position changes.
@@ -512,6 +543,7 @@ function Demo() {
 | scrollbars | false \| "x" \| "y" \| "xy" | - | Axis at which scrollbars must be rendered - `'x'` - horizontal scrollbar only - `'y'` - vertical scrollbar only - `'xy'` - both scrollbars - `false` - no scrollbars rendered (content remains scrollable via mouse/touch) |
 | startScrollPosition | { x?: number; y?: number \| undefined; } \| undefined | - | Initial scroll position set on mount |
 | type | "auto" \| "scroll" \| "always" \| "hover" \| "never" | - | Defines scrollbars behavior - `'hover'` – scrollbars visible on hover (default) - `'scroll'` – scrollbars visible during scrolling - `'auto'` – scrollbars visible only when content overflows (like CSS overflow: auto) - `'always'` – scrollbars always visible, even when content doesn't overflow - `'never'` – scrollbars always hidden |
+| verticalScrollbarPosition | "left" \| "right" | - | Pins the vertical scrollbar to a physical side (`left` or `right`) regardless of direction. By default, the scrollbar follows the inline-end edge (right in LTR, left in RTL). |
 | viewportProps | React.ComponentProps<"div"> | - | Props passed down to the viewport element |
 | viewportRef | Ref<HTMLDivElement> | - | Assigns viewport element (scrollable container) ref |
 
@@ -532,6 +564,7 @@ function Demo() {
 | scrollbars | false \| "x" \| "y" \| "xy" | - | Axis at which scrollbars must be rendered - `'x'` - horizontal scrollbar only - `'y'` - vertical scrollbar only - `'xy'` - both scrollbars - `false` - no scrollbars rendered (content remains scrollable via mouse/touch) |
 | startScrollPosition | { x?: number; y?: number \| undefined; } \| undefined | - | Initial scroll position set on mount |
 | type | "auto" \| "scroll" \| "always" \| "hover" \| "never" | - | Defines scrollbars behavior - `'hover'` – scrollbars visible on hover (default) - `'scroll'` – scrollbars visible during scrolling - `'auto'` – scrollbars visible only when content overflows (like CSS overflow: auto) - `'always'` – scrollbars always visible, even when content doesn't overflow - `'never'` – scrollbars always hidden |
+| verticalScrollbarPosition | "left" \| "right" | - | Pins the vertical scrollbar to a physical side (`left` or `right`) regardless of direction. By default, the scrollbar follows the inline-end edge (right in LTR, left in RTL). |
 | viewportProps | React.ComponentProps<"div"> | - | Props passed down to the viewport element |
 | viewportRef | Ref<HTMLDivElement> | - | Assigns viewport element (scrollable container) ref |
 

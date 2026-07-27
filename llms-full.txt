@@ -336,6 +336,65 @@ function Demo() {
 }
 ```
 
+## Disable collapse
+
+By default, in single mode (`multiple={false}`) the open item can always be toggled closed,
+which leaves the Accordion fully collapsed. Set the `disableCollapse` prop to prevent this:
+once an item is open, clicking its control again is a no-op, and the only way to change state
+is to open a different item. This is useful for settings panels, stepper-style flows and FAQ
+pages where one section should always stay visible.
+
+`disableCollapse` only prevents collapsing an already-open item – it does not force an item
+open on mount. To guarantee that one item is open from the start, pair it with `defaultValue`
+(uncontrolled) or `value` (controlled):
+
+```tsx
+// Demo.tsx
+import { Accordion } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const items = data.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
+
+  return (
+    <Accordion defaultValue="Apples" disableCollapse order={3}>
+      {items}
+    </Accordion>
+  );
+}
+
+// data.ts
+export const data = [
+  {
+    emoji: '🍎',
+    value: 'Apples',
+    description:
+      'Crisp and refreshing fruit. Apples are known for their versatility and nutritional benefits. They come in a variety of flavors and are great for snacking, baking, or adding to salads.',
+  },
+  {
+    emoji: '🍌',
+    value: 'Bananas',
+    description:
+      'Naturally sweet and potassium-rich fruit. Bananas are a popular choice for their energy-boosting properties and can be enjoyed as a quick snack, added to smoothies, or used in baking.',
+  },
+  {
+    emoji: '🥦',
+    value: 'Broccoli',
+    description:
+      'Nutrient-packed green vegetable. Broccoli is packed with vitamins, minerals, and fiber. It has a distinct flavor and can be enjoyed steamed, roasted, or added to stir-fries.',
+  },
+];
+```
+
+
+The prop has no effect when `multiple` is set, as multiple mode already allows any combination
+of opened and closed items.
+
 ## Compose controls
 
 Putting a button or link inside `Accordion.Control` is a common mistake when
@@ -488,6 +547,7 @@ The Accordion component implements the [WAI-ARIA accessibility pattern](https://
 | chevronSize | string \| number | - | Size of the chevron icon container |
 | defaultValue | string \| string[] \| null | - | Uncontrolled component default value |
 | disableChevronRotation | boolean | - | If set, chevron rotation is disabled |
+| disableCollapse | boolean | - | If set, the open item cannot be collapsed by clicking it again, so one item always stays open. Only applies when `multiple` is `false`. |
 | keepMounted | boolean | - | If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. |
 | keepMountedMode | "activity" \| "display-none" | - | Controls how inactive panels content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | loop | boolean | - | If set, arrow keys loop through items (first to last and last to first) |
@@ -5072,6 +5132,1053 @@ Card component supports Styles API. With Styles API, you can customize styles of
 | root | data-with-border | `withBorder` prop is set on `Card` component | - |
 | section | data-with-border | `withBorder` prop is set on `Card.Section` component | - |
 | section | data-inherit-padding | `inheritPadding` prop is set on `Card.Section` component | - |
+
+
+--------------------------------------------------------------------------------
+
+### Cascader
+Package: @mantine/core
+Import: import { Cascader } from '@mantine/core';
+Description: Select a path from hierarchical data with cascading columns
+
+## Usage
+
+`Cascader` lets users select a value from hierarchical data by drilling down through
+cascading columns: picking an option in one column reveals its children in a new column
+to the right. The value is an ordered path from the root option to the selected node,
+for example `['asia', 'jp', 'tokyo']`.
+
+`Cascader` is useful for large hierarchical datasets where a nested dropdown would be hard
+to navigate – locations (continent → country → city), categories, organization structures, etc.
+
+All demos on this page switch to the [flat list layout](#flat-list-layout) on small screens, so
+the cascading columns and interactions like hover expand and keyboard navigation cannot be fully
+tested on mobile devices – open the demos on a larger screen to try them out.
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  // Switch to a flat list on small screens
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      label="Location"
+      placeholder="Pick location"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Data prop
+
+Data passed to the `data` prop is an array of `CascaderOption` objects:
+
+* Each option must have a unique `value` across the whole data tree
+* `label` is optional, `value` is used when it is not set
+* `children` contains an array of nested options
+* `disabled` prevents an option from being selected or expanded
+
+```tsx
+import { CascaderOption } from '@mantine/core';
+
+const data: CascaderOption[] = [
+  {
+    value: 'asia',
+    label: 'Asia',
+    children: [
+      {
+        value: 'jp',
+        label: 'Japan',
+        children: [{ value: 'tokyo', label: 'Tokyo' }],
+      },
+    ],
+  },
+];
+```
+
+## Value and onChange
+
+`Cascader` value is an ordered array of option values (a path from root to node) or `null`
+when nothing is selected. The `onChange` callback is called with the selected path and the
+resolved chain of `CascaderOption` objects:
+
+```tsx
+import { useState } from 'react';
+import { Cascader, CascaderOption } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[] | null>(['europe', 'fr', 'paris']);
+
+  const handleChange = (path: string[] | null, options: CascaderOption[]) => {
+    setValue(path);
+    console.log(path, options);
+  };
+
+  return <Cascader data={data} value={value} onChange={handleChange} />;
+}
+```
+
+By default, only leaf options (options without children) can be selected. Clicking a parent
+option only expands the next column.
+
+## Change on select
+
+Set the `changeOnSelect` prop to allow selecting any option, not only leaves. When enabled,
+clicking a parent option both selects its path and expands the next column, so any intermediate
+level is a valid value:
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      changeOnSelect
+      label="Location"
+      placeholder="Pick any level"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Close on select
+
+`closeOnSelect` controls whether the dropdown is closed after a value is selected. When it is not
+set, it defaults to the opposite of [allowDeselect](#allow-deselect): the dropdown stays open by
+default (so the selection can be toggled off), unless `allowDeselect={false}` is set. Set
+`closeOnSelect` explicitly to override this behavior:
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      closeOnSelect={false}
+      label="Location"
+      placeholder="Pick location"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Allow deselect
+
+By default, clicking the selected option again removes the value. Set `allowDeselect={false}` to
+disable this behavior:
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      label="Location"
+      placeholder="Pick location"
+      allowDeselect
+      defaultValue={['asia', 'jp', 'tokyo']}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Expand trigger
+
+By default, the next column is opened when an option is clicked. Set `expandTrigger="hover"`
+to open the next column on hover instead – selecting a leaf still requires a click:
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      expandTrigger="hover"
+      label="Location"
+      placeholder="Hover to expand"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Flat list layout
+
+Cascading columns require horizontal space and are not ideal for narrow screens, which makes them
+a poor fit for mobile layouts. Set `withColumns={false}` to render options as a flat list of full
+paths (the same way as search results) instead of columns – this layout works well on mobile:
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      withColumns={false}
+      searchable
+      label="Location"
+      placeholder="Pick location"
+      nothingFoundMessage="Nothing found..."
+      data={data}
+    />
+  );
+}
+```
+
+
+The most common use case is to render columns on desktop and the flat list on mobile. Combine
+`withColumns` with the [use-matches](https://mantine.dev/hooks/use-matches/) hook to switch between the two layouts
+depending on the screen size. All demos on this page use this technique – resize the window to see
+the layout change:
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return <Cascader withColumns={withColumns} data={data} />;
+}
+```
+
+## Max displayed levels
+
+Deep hierarchies can produce many columns. Use the `maxDisplayedLevels` prop (`3` by default) to
+limit how many columns are displayed next to each other. When you drill deeper than the limit, the
+earliest columns are replaced by the deeper ones and a control is displayed on the left. Click it
+to reveal the previous levels; a control on the right then lets you return to the deeper levels:
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      maxDisplayedLevels={2}
+      label="Location"
+      placeholder="Pick location"
+      defaultValue={['asia', 'jp', 'tokyo']}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Searchable
+
+Set the `searchable` prop to allow filtering options. In search mode, the columns are replaced
+with a flat list of full paths that match the query:
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      searchable
+      label="Location"
+      placeholder="Search location"
+      nothingFoundMessage="Nothing found..."
+      data={data}
+    />
+  );
+}
+```
+
+
+Use the `filter` prop to customize how paths are matched and `renderSearchOption` to customize
+how search results are rendered:
+
+```tsx
+import { Cascader, CascaderOption } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Cascader
+      searchable
+      data={data}
+      filter={(query, options: CascaderOption[]) =>
+        options.some((option) => String(option.label).toLowerCase().includes(query.toLowerCase()))
+      }
+      renderSearchOption={(query, options) => options.map((option) => option.label).join(' → ')}
+    />
+  );
+}
+```
+
+## Controlled search value
+
+Use `searchValue` and `onSearchChange` props to control the search value:
+
+```tsx
+import { useState } from 'react';
+import { Cascader } from '@mantine/core';
+
+function Demo() {
+  const [searchValue, setSearchValue] = useState('');
+  return (
+    <Cascader
+      searchable
+      data={data}
+      searchValue={searchValue}
+      onSearchChange={setSearchValue}
+    />
+  );
+}
+```
+
+## Nothing found
+
+Set the `nothingFoundMessage` prop to display a message when no options match the search query:
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      searchable
+      label="Location"
+      placeholder="Search location"
+      nothingFoundMessage="Nothing found..."
+      data={data}
+    />
+  );
+}
+```
+
+
+## Display value
+
+By default, the selected path is displayed in the input as option labels joined by the `separator`
+(`/` by default). Use the `separator` prop to change the divider and the `formatValue` prop to
+fully customize the input label:
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      label="Location"
+      placeholder="Pick location"
+      separator="›"
+      defaultValue={['asia', 'jp', 'tokyo']}
+      formatValue={({ options }) => options.map((option) => option.label).join(' › ')}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Column width
+
+Use the `columnWidth` prop to set a fixed width for every column and `maxDropdownHeight` to control
+the height of a column before it becomes scrollable (`260` by default):
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      columnWidth={140}
+      maxDropdownHeight={200}
+      label="Location"
+      placeholder="Pick location"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Custom option rendering
+
+Use the `renderOption` prop to customize how options are rendered in columns. The function receives
+the option and its column level:
+
+```tsx
+import { Badge, Cascader, CascaderOption, CascaderProps, Group, useMatches } from '@mantine/core';
+import { data } from './data';
+
+const flags: Record<string, string> = {
+  jp: '🇯🇵', kr: '🇰🇷', fr: '🇫🇷', de: '🇩🇪', us: '🇺🇸', ca: '🇨🇦',
+};
+
+function countCities(option: CascaderOption): number {
+  if (!option.children || option.children.length === 0) {
+    return 1;
+  }
+  return option.children.reduce((acc, child) => acc + countCities(child), 0);
+}
+
+// Regions display the number of cities, countries display a flag, cities display nothing extra
+const renderCascaderOption: CascaderProps['renderOption'] = (option, level) => (
+  <Group gap="xs" justify="space-between" wrap="nowrap" flex="1">
+    <Group gap={6} wrap="nowrap">
+      {level === 1 && <span>{flags[option.value]}</span>}
+      <span>{option.label}</span>
+    </Group>
+    {level === 0 && (
+      <Badge size="xs" variant="light" color="gray">
+        {countCities(option)} cities
+      </Badge>
+    )}
+  </Group>
+);
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      label="Location"
+      placeholder="Pick location"
+      renderOption={renderCascaderOption}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Check icon
+
+Use the `withCheckIcon` prop to toggle the check icon on the selected option and `checkIconPosition`
+to change its position (`left` or `right`):
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      checkIconPosition="left"
+      label="Location"
+      placeholder="Pick location"
+      defaultValue={['asia', 'jp', 'tokyo']}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Disabled options
+
+Set the `disabled` property on an option to prevent it from being selected or expanded. Disabled
+options are skipped during keyboard navigation:
+
+```tsx
+import { Cascader, CascaderOption, useMatches } from '@mantine/core';
+
+const data: CascaderOption[] = [
+  {
+    value: 'asia',
+    label: 'Asia',
+    children: [
+      { value: 'jp', label: 'Japan', children: [{ value: 'tokyo', label: 'Tokyo' }] },
+      { value: 'kr', label: 'South Korea', disabled: true },
+    ],
+  },
+  { value: 'antarctica', label: 'Antarctica', disabled: true },
+];
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      label="Location"
+      placeholder="Pick location"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Left and right sections
+
+`Cascader` supports `leftSection` and `rightSection` props the same way as other inputs. These
+sections are usually used to add icons:
+
+```tsx
+import { MapPinIcon } from '@phosphor-icons/react';
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      label="Location"
+      placeholder="Pick location"
+      leftSectionPointerEvents="none"
+      leftSection={<MapPinIcon size={16} />}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Clearable
+
+Set the `clearable` prop to display the clear button when a value is selected:
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      clearable
+      label="Location"
+      placeholder="Pick location"
+      defaultValue={['asia', 'jp', 'tokyo']}
+      data={data}
+    />
+  );
+}
+```
+
+
+Use the `clearSectionMode` prop to control how the clear button and `rightSection` are rendered:
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      label="Location"
+      placeholder="Pick location"
+      clearable
+      clearSectionMode="clear"
+      defaultValue={['asia', 'jp', 'tokyo']}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Scrollable columns
+
+Each column is scrollable. Use the `maxDropdownHeight` prop to control the height of a column
+before it becomes scrollable and `scrollAreaProps` to pass props down to the
+[ScrollArea](https://mantine.dev/llms/core-scroll-area.md) in each column:
+
+```tsx
+import { Cascader, CascaderOption } from '@mantine/core';
+
+const cities = Array.from({ length: 30 }, (_, index) => ({
+  value: `city-${index + 1}`,
+  label: `City ${index + 1}`,
+}));
+
+const data: CascaderOption[] = [
+  { value: 'asia', label: 'Asia', children: [{ value: 'jp', label: 'Japan', children: cities }] },
+  { value: 'europe', label: 'Europe', children: [{ value: 'fr', label: 'France', children: cities }] },
+];
+
+function Demo() {
+  return (
+    <Cascader
+      label="Location"
+      placeholder="Pick location"
+      defaultValue={['asia', 'jp']}
+      maxDropdownHeight={180}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Control dropdown opened state
+
+Use `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props to
+control the dropdown opened state:
+
+```tsx
+import { Cascader } from '@mantine/core';
+
+function Demo() {
+  const [dropdownOpened, setDropdownOpened] = useState(false);
+  return (
+    <Cascader
+      data={data}
+      dropdownOpened={dropdownOpened}
+      onDropdownOpen={() => setDropdownOpened(true)}
+      onDropdownClose={() => setDropdownOpened(false)}
+    />
+  );
+}
+```
+
+## Dropdown position
+
+Use `comboboxProps` to pass props down to the underlying [Combobox](https://mantine.dev/llms/core-combobox.md) and
+[Popover](https://mantine.dev/llms/core-popover.md). For example, set `position` to change the dropdown position:
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      label="Location"
+      placeholder="Pick location"
+      comboboxProps={{ position: 'top-start' }}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Dropdown offset
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      label="Location"
+      placeholder="Pick location"
+      comboboxProps={{ offset: 0 }}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Dropdown width
+
+In flat list mode (`withColumns={false}`) the dropdown width can be controlled with
+`comboboxProps={{ width }}`. In columns mode the dropdown is sized to the columns:
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      withColumns={false}
+      label="Location"
+      placeholder="Pick location"
+      comboboxProps={{ width: 220, position: 'bottom-start' }}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Dropdown padding
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+// Dropdown padding is only applied to the flat list (withColumns={false});
+// in columns mode each column manages its own padding.
+function Demo() {
+  return (
+    <Cascader
+      withColumns={false}
+      label="Location"
+      placeholder="Pick location"
+      comboboxProps={{ dropdownPadding: 12 }}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Dropdown shadow
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      label="Location"
+      placeholder="Pick location"
+      comboboxProps={{ shadow: 'md' }}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Dropdown animation
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      label="Location"
+      placeholder="Pick location"
+      comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Inside Popover
+
+To use `Cascader` inside a `Popover`, set `comboboxProps={{ withinPortal: false }}`:
+
+```tsx
+import { Button, Cascader, Popover } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Popover width={320} position="bottom" withArrow shadow="md">
+      <Popover.Target>
+        <Button>Toggle popover</Button>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Cascader
+          withColumns={false}
+          label="Location"
+          placeholder="Pick location"
+          comboboxProps={{ withinPortal: false }}
+          data={data}
+        />
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+
+
+## Input props
+
+Cascader component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. Cascader documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+       variant="default" size="sm" radius="md" label="Input label" withAsterisk={false} description="Input description" error=""
+      withColumns={withColumns}
+      placeholder="Pick location"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Read only
+
+Set `readOnly` to make the input read only. When `readOnly` is set, `Cascader` will not open the
+dropdown and will not call the `onChange` function.
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      readOnly
+      label="Location"
+      placeholder="Pick location"
+      defaultValue={['asia', 'jp', 'tokyo']}
+      data={data}
+    />
+  );
+}
+```
+
+
+## Disabled
+
+Set `disabled` to disable the input. When `disabled` is set, the user cannot interact with the
+input and `Cascader` will not open the dropdown.
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      disabled
+      label="Location"
+      placeholder="Pick location"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Error state
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      label="Location"
+      placeholder="Pick location"
+      error="Pick a valid location"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Success state
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      label="Location"
+      placeholder="Pick location"
+      defaultValue={['asia', 'jp', 'tokyo']}
+      success="Looks good!"
+      data={data}
+    />
+  );
+}
+```
+
+
+## Loading state
+
+Set the `loading` prop to display a loader in the right section instead of the chevron:
+
+```tsx
+import { Cascader } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Cascader
+      label="Location"
+      placeholder="Pick location"
+      loading
+      data={data}
+    />
+  );
+}
+```
+
+
+## Accessibility
+
+`Cascader` columns are rendered as nested listboxes with `option` elements. To make the component
+accessible, set the `label` prop or pass `aria-label` to the component:
+
+```tsx
+import { Cascader } from '@mantine/core';
+
+// Set aria-label when the input does not have a visible label
+function Demo() {
+  return <Cascader data={data} aria-label="Pick location" />;
+}
+```
+
+## Keyboard interactions
+
+
+#### Props
+
+**Cascader props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| allowDeselect | boolean | - | If set, the selected value can be deselected by selecting it again |
+| changeOnSelect | boolean | - | If set, any intermediate option can be selected, not only leaf options |
+| checkIconPosition | "left" \| "right" | - | Position of the check icon relative to the option label |
+| chevronColor | MantineColor | - | Controls the default chevron color |
+| clearButtonProps | InputClearButtonProps | - | Props passed down to the clear button |
+| clearSectionMode | ClearSectionMode | - | Determines how the clear button and `rightSection` are rendered |
+| clearable | boolean | - | If set, the clear button is displayed when a value is selected |
+| closeOnSelect | boolean | - | Determines whether the dropdown should be closed when a value is selected, defaults to `!allowDeselect` |
+| columnWidth | string \| number | - | Width of each column |
+| comboboxProps | Record<string, any> | - | Props passed down to the underlying `Combobox` component |
+| data | CascaderOption[] | required | Hierarchical options data |
+| defaultDropdownOpened | boolean | - | Uncontrolled dropdown opened state |
+| defaultSearchValue | string | - | Uncontrolled search value |
+| defaultValue | string[] \| null | - | Uncontrolled selected path from root to node |
+| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |
+| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |
+| disabled | boolean | - | Sets `disabled` attribute on the `input` element |
+| dropdownOpened | boolean | - | Controlled dropdown opened state |
+| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |
+| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |
+| expandTrigger | "hover" \| "click" | - | Determines how the next column is opened |
+| filter | (query: string, options: CascaderOption[]) => boolean | - | Custom search filter, matched against the full option path |
+| formatValue | CascaderFormatValue | - | A function to format the selected path displayed in the input, should return a string |
+| hiddenInputProps | React.ComponentProps<"input"> | - | Props passed down to the hidden input |
+| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |
+| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |
+| inputWrapperOrder | ("input" \| "label" \| "description" \| "error")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |
+| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |
+| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |
+| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
+| leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| leftSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `leftSection` element |
+| leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |
+| loading | boolean | - | Displays loading indicator in the left or right section |
+| loadingPosition | "left" \| "right" | - | Position of the loading indicator |
+| maxDisplayedLevels | number | - | Maximum number of columns (levels) displayed next to each other, deeper levels replace earlier ones |
+| maxDropdownHeight | string \| number | - | Max height of a column before it becomes scrollable |
+| nextLevelsControlLabel | string | - | `aria-label` and `title` of the control that reveals levels hidden after the visible ones by `maxDisplayedLevels` |
+| nothingFoundMessage | React.ReactNode | - | Message displayed when there are no options or search results |
+| onChange | (value: string[] \| null, options: CascaderOption[]) => void | - | Called when the selected path changes with the path and the resolved option chain |
+| onClear | () => void | - | Called when the clear button is clicked |
+| onDropdownClose | () => void | - | Called when the dropdown closes |
+| onDropdownOpen | () => void | - | Called when the dropdown opens |
+| onSearchChange | (value: string) => void | - | Called when the search value changes |
+| openOnFocus | boolean | - | Opens the dropdown when the input is focused in `searchable` mode |
+| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). |
+| previousLevelsControlLabel | string | - | `aria-label` and `title` of the control that reveals levels hidden before the visible ones by `maxDisplayedLevels` |
+| radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
+| renderOption | (option: CascaderOption, level: number) => ReactNode | - | Custom rendering of an option in columns |
+| renderSearchOption | (query: string, options: CascaderOption[]) => ReactNode | - | Custom rendering of a search result row |
+| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
+| rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |
+| rightSectionProps | React.ComponentProps<"div"> | - | Props passed down to the `rightSection` element |
+| rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |
+| scrollAreaProps | ScrollAreaProps | - | Props passed down to the dropdown `ScrollArea` |
+| searchValue | string | - | Controlled search value |
+| searchable | boolean | - | If set, options can be searched by their flattened paths |
+| separator | React.ReactNode | - | Path separator displayed in the input and search results |
+| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |
+| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |
+| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |
+| value | string[] \| null | - | Controlled selected path from root to node |
+| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
+| withCheckIcon | boolean | - | If set, the check icon is displayed on the selected option |
+| withColumns | boolean | - | Renders the dropdown as cascading columns. When `false`, options are rendered as a flat list of paths, the same way as search results (useful for narrow/mobile layouts) |
+| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
+| wrapperProps | WrapperProps | - | Props passed down to the root element |
+
+
+#### Styles API
+
+Cascader component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**Cascader selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Cascader-wrapper | Root element of the Input |
+| input | .mantine-Cascader-input | Input element |
+| section | .mantine-Cascader-section | Left and right sections |
+| bottomSection | .mantine-Cascader-bottomSection | Bottom section element, rendered inside the input border at the bottom |
+| root | .mantine-Cascader-root | Root element |
+| label | .mantine-Cascader-label | Label element |
+| required | .mantine-Cascader-required | Required asterisk element, rendered inside label |
+| description | .mantine-Cascader-description | Description element |
+| error | .mantine-Cascader-error | Error element |
+| success | .mantine-Cascader-success | Success element |
+| columnsList | .mantine-Cascader-columnsList | Wrapper of all cascading columns in the dropdown |
+| columnsOverflow | .mantine-Cascader-columnsOverflow | Control displayed to reveal levels hidden by `maxDisplayedLevels` |
+| column | .mantine-Cascader-column | Single cascading column |
+| columnScroll | .mantine-Cascader-columnScroll | Scrollable options area of a column |
+| columnOption | .mantine-Cascader-columnOption | Option control inside a column |
+| columnOptionLabel | .mantine-Cascader-columnOptionLabel | Label of the column option |
+| columnOptionIcon | .mantine-Cascader-columnOptionIcon | Expand chevron of the column option |
+| columnOptionCheck | .mantine-Cascader-columnOptionCheck | Check icon displayed on the selected leaf option |
+| columnEmpty | .mantine-Cascader-columnEmpty | Empty state of a column |
+| flatOption | .mantine-Cascader-flatOption | Option content in the flat list (search results / `withColumns={false}`) |
+
+**Cascader data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| columnOption | data-active | Option is highlighted in the column that is currently being navigated | - |
+| columnOption | data-in-path | Option is highlighted in one of the previous (ancestor) columns | - |
+| columnOption | data-selected | Option is the selected value | - |
+| columnOption | data-disabled | Option is disabled | - |
 
 
 --------------------------------------------------------------------------------
@@ -12936,6 +14043,94 @@ function Demo() {
 ```
 
 
+## Resize handle
+
+Use `FloatingWindow.ResizeHandle` compound component to add a resize handle to the floating window.
+The `dimensions` prop on `FloatingWindow` controls the resize behavior:
+
+* `initialWidth` / `initialHeight` – initial size of the window in px
+* `minWidth` / `minHeight` – minimum size the window can be resized to
+* `maxWidth` / `maxHeight` – maximum size the window can be resized to
+
+The resize handle respects `constrainToViewport` and `constrainOffset` props – the window
+cannot be resized beyond the viewport boundaries.
+
+`FloatingWindow.ResizeHandle` renders with `role="separator"` and supports keyboard interaction:
+use `Arrow Left`/`Arrow Right` keys to resize width and `Arrow Up`/`Arrow Down` keys to resize
+height in 10px steps. `Home`/`End` keys jump to the minimum/maximum size.
+
+```tsx
+import { NotchesIcon } from '@phosphor-icons/react';
+import { Button, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const [visible, handlers] = useDisclosure();
+
+  return (
+    <>
+      <Button onClick={handlers.toggle} variant="default">
+        {visible ? 'Hide' : 'Show'} floating window
+      </Button>
+
+      {visible && (
+        <FloatingWindow
+          withBorder
+          constrainOffset={40}
+          dimensions={{
+            initialWidth: 260,
+            maxWidth: 500,
+            minWidth: 180,
+            initialHeight: 260,
+            maxHeight: 400,
+            minHeight: 220,
+          }}
+          dragHandleSelector=".drag-handle"
+          excludeDragHandleSelector="button"
+          initialPosition={{ top: 300, left: 60 }}
+          style={{ overflow: 'hidden' }}
+        >
+          <Group
+            justify="space-between"
+            px="md"
+            py="sm"
+            className="drag-handle"
+            style={{ cursor: 'move' }}
+          >
+            <Text fw={500} fz="sm">
+              Resize demo
+            </Text>
+            <CloseButton onClick={handlers.close} />
+          </Group>
+          <Text fz="sm" px="md" pb="sm">
+            Drag the grip icon in the bottom-right corner to resize.
+            Use Arrow keys when the handle is focused:
+            Left/Right for width, Up/Down for height.
+          </Text>
+          <FloatingWindow.ResizeHandle
+            aria-label="Resize floating window"
+            style={{
+              position: 'absolute',
+              right: 0,
+              bottom: 0,
+              width: 20,
+              height: 20,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'nwse-resize',
+            }}
+          >
+            <NotchesIcon size={14} style={{ opacity: 0.5 }} />
+          </FloatingWindow.ResizeHandle>
+        </FloatingWindow>
+      )}
+    </>
+  );
+}
+```
+
+
 ## Lock axis
 
 Use the `axis` option to restrict movement to the specified axis:
@@ -13042,6 +14237,7 @@ function Demo() {
 | axis | "x" \| "y" | - | If set, restricts movement to the specified axis |
 | constrainOffset | number | - | The offset from the viewport edges when constraining the element. Requires `constrainToViewport: true`. |
 | constrainToViewport | boolean | - | If `true`, the element can only move within the current viewport boundaries. |
+| dimensions | FloatingWindowDimensions | - | Dimensions configuration for resizable floating window |
 | dragHandleSelector | string | - | Selector of an element that should be used to drag floating window. If not specified, the entire root element is used as a drag target. |
 | enabled | boolean | - | If `false`, the element can not be dragged. |
 | excludeDragHandleSelector | string | - | Selector of an element within `dragHandleSelector` that should be excluded from the drag event. |
@@ -26985,6 +28181,37 @@ function Demo() {
 ```
 
 
+## Vertical scrollbar position
+
+By default, the vertical scrollbar follows the inline-end edge: it is rendered on the right side
+in LTR and on the left side in RTL. Set the `verticalScrollbarPosition` prop to `left` or `right`
+to pin the vertical scrollbar to a physical side regardless of direction.
+
+This is useful for RTL applications where users expect the vertical scrollbar to stay on the right,
+matching the behavior of most desktop software (Windows, Office, Gmail, etc.). The prop also
+realigns the offset padding, the corner and the horizontal scrollbar gap, so it works correctly
+with `offsetScrollbars` and `scrollbars="xy"`. When the prop is omitted, the default
+direction-based behavior is preserved.
+
+```tsx
+import { ScrollArea } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ScrollArea
+      w={300}
+      h={200}
+      type="always"
+      scrollbars="y"
+       verticalScrollbarPosition="right" offsetScrollbars={true}
+    >
+      {/* ... content */}
+    </ScrollArea>
+  );
+}
+```
+
+
 ## Subscribe to scroll position changes
 
 Set the `onScrollPositionChange` function to subscribe to scroll position changes.
@@ -27426,6 +28653,7 @@ function Demo() {
 | scrollbars | false \| "x" \| "y" \| "xy" | - | Axis at which scrollbars must be rendered - `'x'` - horizontal scrollbar only - `'y'` - vertical scrollbar only - `'xy'` - both scrollbars - `false` - no scrollbars rendered (content remains scrollable via mouse/touch) |
 | startScrollPosition | { x?: number; y?: number \| undefined; } \| undefined | - | Initial scroll position set on mount |
 | type | "auto" \| "scroll" \| "always" \| "hover" \| "never" | - | Defines scrollbars behavior - `'hover'` – scrollbars visible on hover (default) - `'scroll'` – scrollbars visible during scrolling - `'auto'` – scrollbars visible only when content overflows (like CSS overflow: auto) - `'always'` – scrollbars always visible, even when content doesn't overflow - `'never'` – scrollbars always hidden |
+| verticalScrollbarPosition | "left" \| "right" | - | Pins the vertical scrollbar to a physical side (`left` or `right`) regardless of direction. By default, the scrollbar follows the inline-end edge (right in LTR, left in RTL). |
 | viewportProps | React.ComponentProps<"div"> | - | Props passed down to the viewport element |
 | viewportRef | Ref<HTMLDivElement> | - | Assigns viewport element (scrollable container) ref |
 
@@ -27446,6 +28674,7 @@ function Demo() {
 | scrollbars | false \| "x" \| "y" \| "xy" | - | Axis at which scrollbars must be rendered - `'x'` - horizontal scrollbar only - `'y'` - vertical scrollbar only - `'xy'` - both scrollbars - `false` - no scrollbars rendered (content remains scrollable via mouse/touch) |
 | startScrollPosition | { x?: number; y?: number \| undefined; } \| undefined | - | Initial scroll position set on mount |
 | type | "auto" \| "scroll" \| "always" \| "hover" \| "never" | - | Defines scrollbars behavior - `'hover'` – scrollbars visible on hover (default) - `'scroll'` – scrollbars visible during scrolling - `'auto'` – scrollbars visible only when content overflows (like CSS overflow: auto) - `'always'` – scrollbars always visible, even when content doesn't overflow - `'never'` – scrollbars always hidden |
+| verticalScrollbarPosition | "left" \| "right" | - | Pins the vertical scrollbar to a physical side (`left` or `right`) regardless of direction. By default, the scrollbar follows the inline-end edge (right in LTR, left in RTL). |
 | viewportProps | React.ComponentProps<"div"> | - | Props passed down to the viewport element |
 | viewportRef | Ref<HTMLDivElement> | - | Assigns viewport element (scrollable container) ref |
 
@@ -32756,6 +33985,98 @@ function Demo() {
 ```
 
 
+## Example: Table virtualization
+
+This example demonstrates how to use `Table.ScrollContainer` with `@tanstack/react-virtual`
+to efficiently render large datasets. Only the visible rows are rendered in the DOM,
+which significantly improves performance for tables with thousands of rows.
+
+```tsx
+import { useState } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { Table } from '@mantine/core';
+import { generateData } from './data';
+
+
+const data = generateData(5000);
+const ROW_HEIGHT = 36;
+
+function Demo() {
+  const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
+
+  const virtualizer = useVirtualizer({
+    count: data.length,
+    getScrollElement: () => scrollParent,
+    estimateSize: () => ROW_HEIGHT,
+    overscan: 20,
+  });
+
+  const virtualItems = virtualizer.getVirtualItems();
+
+  return (
+    <Table.ScrollContainer
+      minWidth={500}
+      maxHeight={400}
+      scrollAreaProps={{ viewportRef: setScrollParent }}
+    >
+      <Table stickyHeader layout="fixed">
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th w={50}>#</Table.Th>
+            <Table.Th>Name</Table.Th>
+            <Table.Th>Email</Table.Th>
+            <Table.Th>Company</Table.Th>
+            <Table.Th>City</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+
+        <Table.Tbody>
+          {virtualItems.length > 0 && (
+            <tr aria-hidden>
+              <td
+                aria-hidden
+                colSpan={5}
+                style={{ height: virtualItems[0].start, padding: 0, border: 'none' }}
+              />
+            </tr>
+          )}
+
+          {virtualItems.map((virtualItem) => {
+            const row = data[virtualItem.index];
+            return (
+              <Table.Tr key={virtualItem.index}>
+                <Table.Td>{row.id}</Table.Td>
+                <Table.Td>{row.name}</Table.Td>
+                <Table.Td>{row.email}</Table.Td>
+                <Table.Td>{row.company}</Table.Td>
+                <Table.Td>{row.city}</Table.Td>
+              </Table.Tr>
+            );
+          })}
+
+          {virtualItems.length > 0 && (
+            <tr aria-hidden>
+              <td
+                aria-hidden
+                colSpan={5}
+                style={{
+                  height:
+                    virtualizer.getTotalSize() -
+                    virtualItems[virtualItems.length - 1].end,
+                  padding: 0,
+                  border: 'none',
+                }}
+              />
+            </tr>
+          )}
+        </Table.Tbody>
+      </Table>
+    </Table.ScrollContainer>
+  );
+}
+```
+
+
 ## Example: Table with row selection
 
 ```tsx
@@ -35758,6 +37079,133 @@ function Demo() {
 ```
 
 
+## Opposite content
+
+Use the `opposite` prop on `Timeline.Item` to render content on the opposite side of the timeline.
+When any `Timeline.Item` has the `opposite` prop, the timeline switches to a centered layout with
+content on both sides of the line.
+
+```tsx
+import { Timeline, Text } from '@mantine/core';
+import { GitBranchIcon, GitCommitIcon, GitPullRequestIcon, ChatCircleDotsIcon } from '@phosphor-icons/react';
+
+function Demo() {
+  return (
+    <Timeline active={1} bulletSize={24} lineWidth={2}>
+      <Timeline.Item
+        bullet={<GitBranchIcon size={12} />}
+        title="New branch"
+        opposite={
+          <Text size="sm" c="dimmed">
+            2 hours ago
+          </Text>
+        }
+      >
+        <Text c="dimmed" size="sm">You&apos;ve created new branch <Text variant="link" component="span" inherit>fix-notifications</Text> from master</Text>
+      </Timeline.Item>
+
+      <Timeline.Item
+        bullet={<GitCommitIcon size={12} />}
+        title="Commits"
+        opposite={
+          <Text size="sm" c="dimmed">
+            52 minutes ago
+          </Text>
+        }
+      >
+        <Text c="dimmed" size="sm">You&apos;ve pushed 23 commits to <Text variant="link" component="span" inherit>fix-notifications branch</Text></Text>
+      </Timeline.Item>
+
+      <Timeline.Item
+        title="Pull request"
+        bullet={<GitPullRequestIcon size={12} />}
+        lineVariant="dashed"
+        opposite={
+          <Text size="sm" c="dimmed">
+            34 minutes ago
+          </Text>
+        }
+      >
+        <Text c="dimmed" size="sm">You&apos;ve submitted a pull request <Text variant="link" component="span" inherit>Fix incorrect notification message (#187)</Text></Text>
+      </Timeline.Item>
+
+      <Timeline.Item title="Code review" bullet={<ChatCircleDotsIcon size={12} />}>
+        <Text c="dimmed" size="sm"><Text variant="link" component="span" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>
+      </Timeline.Item>
+    </Timeline>
+  );
+}
+```
+
+
+## Alternate items
+
+Set the `alternate` prop on individual `Timeline.Item` components to switch
+the position of content and opposite:
+
+```tsx
+import { Timeline, Text } from '@mantine/core';
+import { GitBranchIcon, GitCommitIcon, GitPullRequestIcon, ChatCircleDotsIcon } from '@phosphor-icons/react';
+
+function Demo() {
+  return (
+    <Timeline active={2} bulletSize={24} lineWidth={2}>
+      <Timeline.Item
+        bullet={<GitBranchIcon size={12} />}
+        title="New branch"
+        opposite={
+          <Text size="sm" c="dimmed">
+            2 hours ago
+          </Text>
+        }
+      >
+        <Text c="dimmed" size="sm">You&apos;ve created new branch <Text variant="link" component="span" inherit>fix-notifications</Text> from master</Text>
+      </Timeline.Item>
+
+      <Timeline.Item
+        bullet={<GitCommitIcon size={12} />}
+        title="Commits"
+        opposite={
+          <Text size="sm" c="dimmed">
+            52 minutes ago
+          </Text>
+        }
+        alternate
+      >
+        <Text c="dimmed" size="sm">You&apos;ve pushed 23 commits to <Text variant="link" component="span" inherit>fix-notifications branch</Text></Text>
+      </Timeline.Item>
+
+      <Timeline.Item
+        title="Pull request"
+        bullet={<GitPullRequestIcon size={12} />}
+        lineVariant="dashed"
+        opposite={
+          <Text size="sm" c="dimmed">
+            34 minutes ago
+          </Text>
+        }
+      >
+        <Text c="dimmed" size="sm">You&apos;ve submitted a pull request <Text variant="link" component="span" inherit>Fix incorrect notification message (#187)</Text></Text>
+      </Timeline.Item>
+
+      <Timeline.Item
+        title="Code review"
+        bullet={<ChatCircleDotsIcon size={12} />}
+        opposite={
+          <Text size="sm" c="dimmed">
+            12 minutes ago
+          </Text>
+        }
+        alternate
+      >
+        <Text c="dimmed" size="sm"><Text variant="link" component="span" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>
+      </Timeline.Item>
+    </Timeline>
+  );
+}
+```
+
+
 ## Bullet as React node
 
 ```tsx
@@ -35867,10 +37315,12 @@ function Demo() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| alternate | boolean | - | If set, switches the position of content and opposite |
 | bullet | React.ReactNode | - | React node that should be rendered inside the bullet – icon, image, avatar, etc. By default, large white dot is displayed. |
 | children | React.ReactNode | - | Content displayed below the title |
 | color | MantineColor | - | Key of `theme.colors` or any valid CSS color to control active item colors |
 | lineVariant | "dashed" \| "dotted" \| "solid" | - | Controls line border style |
+| opposite | React.ReactNode | - | Content displayed on the opposite side of the timeline item |
 | radius | MantineRadius \| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |
 | title | React.ReactNode | - | Item title, displayed next to the bullet |
 
@@ -35889,6 +37339,7 @@ Timeline component supports Styles API. With Styles API, you can customize style
 | itemTitle | .mantine-Timeline-itemTitle | Item title, controlled by title prop |
 | itemContent | .mantine-Timeline-itemContent | Item content, controlled by children prop |
 | itemBullet | .mantine-Timeline-itemBullet | Item bullet |
+| itemOpposite | .mantine-Timeline-itemOpposite | Item opposite content, controlled by opposite prop on Timeline.Item |
 
 **Timeline CSS variables**
 
@@ -50649,6 +52100,19 @@ function Demo() {
 ```
 
 
+## Native level select
+
+Set the `withNativeLevelSelect` prop to replace the calendar header level button with native `<select>` elements.
+
+```tsx
+import { Calendar } from '@mantine/dates';
+
+function Demo() {
+  return <Calendar withNativeLevelSelect />;
+}
+```
+
+
 
 #### Props
 
@@ -50705,9 +52169,11 @@ function Demo() {
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
 | weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 **Calendar.Header props**
 
@@ -50728,8 +52194,10 @@ function Demo() {
 | previousIcon | React.ReactNode | - | Change previous icon |
 | previousLabel | string | - | Previous button `aria-label` |
 | size | MantineSize | - | Component size |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withNext | boolean | - | Determines whether next control should be rendered |
 | withPrevious | boolean | - | Determines whether previous control should be rendered |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 
 #### Styles API
@@ -51156,6 +52624,7 @@ DateInput provides better accessibility support when used in forms. Make sure to
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withNext | boolean | - | Determines whether next control should be rendered |
 | withPrevious | boolean | - | Determines whether previous control should be rendered |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
@@ -51164,6 +52633,7 @@ DateInput provides better accessibility support when used in forms. Make sure to
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 
 #### Styles API
@@ -51826,6 +53296,17 @@ DatePickerInput component supports [Input](https://mantine.dev/core/input) and [
 
 
 
+## Native level select
+
+```tsx
+import { DatePickerInput } from '@mantine/dates';
+
+function Demo() {
+  return <DatePickerInput label="Pick date" placeholder="Pick date" withNativeLevelSelect />;
+}
+```
+
+
 ## Accessibility
 
 DatePickerInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
@@ -51932,11 +53413,13 @@ DatePickerInput provides better accessibility support when used in forms. Make s
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 
 #### Styles API
@@ -52497,6 +53980,20 @@ function Demo() {
 ```
 
 
+## Native level select
+
+Set the `withNativeLevelSelect` prop to replace the calendar header level button with native `<select>` elements.
+At the month level, two selects are rendered for month and year. At the year level, one select is rendered for year.
+
+```tsx
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return <DatePicker withNativeLevelSelect yearsSelectRange={[2020, 2035]} />;
+}
+```
+
+
 ## Accessibility
 
 ### Aria labels
@@ -52615,9 +54112,11 @@ Note that the following events will only trigger if focus is on a date control.
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
 | weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 **DatePicker.Input props**
 
@@ -52718,11 +54217,13 @@ Note that the following events will only trigger if focus is on a date control.
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 
 #### Styles API
@@ -53059,6 +54560,23 @@ function Demo() {
 ```
 
 
+## Native level select
+
+```tsx
+import { DateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateTimePicker
+      label="Pick date and time"
+      placeholder="Pick date and time"
+      withNativeLevelSelect
+    />
+  );
+}
+```
+
+
 ## Accessibility
 
 DateTimePicker provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
@@ -53163,12 +54681,14 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSeconds | boolean | - | Determines whether the seconds input should be displayed |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 
 #### Styles API
@@ -53518,10 +55038,12 @@ function Demo() {
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
 | weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSeconds | boolean | - | Determines whether the seconds input should be displayed |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 
 #### Styles API
@@ -54103,6 +55625,19 @@ MonthPickerInput component supports [Input](https://mantine.dev/core/input) and 
 
 
 
+## Native level select
+
+```tsx
+import { MonthPickerInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MonthPickerInput label="Pick month" placeholder="Pick month" withNativeLevelSelect />
+  );
+}
+```
+
+
 ## Accessibility
 
 MonthPickerInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
@@ -54188,6 +55723,7 @@ MonthPickerInput provides better accessibility support when used in forms. Make 
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
@@ -54551,6 +56087,19 @@ function Demo() {
 ```
 
 
+## Native level select
+
+Set the `withNativeLevelSelect` prop to replace the calendar header level button with native `<select>` elements.
+
+```tsx
+import { MonthPicker } from '@mantine/dates';
+
+function Demo() {
+  return <MonthPicker withNativeLevelSelect />;
+}
+```
+
+
 ## Accessibility
 
 ### Aria labels
@@ -54641,6 +56190,7 @@ Note that the following events will only trigger if focus is on a month control.
 | type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
 | value | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Value for controlled component |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
 
@@ -54722,6 +56272,7 @@ Note that the following events will only trigger if focus is on a month control.
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
@@ -56339,6 +57890,7 @@ YearPickerInput provides better accessibility support when used in forms. Make s
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearsListFormat | string | - | dayjs format for years list |
@@ -56714,6 +58266,7 @@ Note that the following events will only trigger if focus is on a year control.
 | type | "range" \| "multiple" \| "default" | - | Picker type: range, multiple or default |
 | value | DateValue \| DatesRangeValue<DateValue> \| DateValue[] | - | Value for controlled component |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | yearsListFormat | string | - | dayjs format for years list |
 
 **YearPicker.Input props**
@@ -56786,6 +58339,7 @@ Note that the following events will only trigger if focus is on a year control.
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearsListFormat | string | - | dayjs format for years list |
@@ -59042,6 +60596,127 @@ export const data = [
 ```
 
 
+## Brush
+
+Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
+brush handles (travellers) to zoom into a subset of the data – the chart updates to show
+only the selected range. The brush border and background are themed to match the chart grid
+and adapt to the color scheme. `withBrush` is `false` by default and is supported by
+`AreaChart`, `BarChart`, `LineChart` and `CompositeChart` components with horizontal orientation.
+
+```tsx
+// Demo.tsx
+import { AreaChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      withBrush
+      series={[
+        { name: 'Apples', color: 'indigo.6' },
+        { name: 'Oranges', color: 'blue.6' },
+      ]}
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  { date: 'Mar 1', Apples: 2200, Oranges: 1400 },
+  { date: 'Mar 2', Apples: 2500, Oranges: 1500 },
+  { date: 'Mar 3', Apples: 2800, Oranges: 1700 },
+  { date: 'Mar 4', Apples: 3100, Oranges: 1600 },
+  { date: 'Mar 5', Apples: 3000, Oranges: 1800 },
+  { date: 'Mar 6', Apples: 2700, Oranges: 2000 },
+  { date: 'Mar 7', Apples: 2400, Oranges: 2100 },
+  { date: 'Mar 8', Apples: 2100, Oranges: 1900 },
+  { date: 'Mar 9', Apples: 1900, Oranges: 1700 },
+  { date: 'Mar 10', Apples: 2200, Oranges: 1500 },
+  { date: 'Mar 11', Apples: 2600, Oranges: 1600 },
+  { date: 'Mar 12', Apples: 3000, Oranges: 1800 },
+  { date: 'Mar 13', Apples: 3300, Oranges: 2000 },
+  { date: 'Mar 14', Apples: 3100, Oranges: 2200 },
+  { date: 'Mar 15', Apples: 2800, Oranges: 2100 },
+  { date: 'Mar 16', Apples: 2500, Oranges: 1900 },
+];
+```
+
+
+## Brush props
+
+Use the `brushProps` prop to pass props down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush)
+component. For example, you can set the initially selected range with `startIndex`/`endIndex`,
+change the brush `height`, or subscribe to range changes with `onChange`:
+
+```tsx
+// Demo.tsx
+import { AreaChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      withBrush
+      brushProps={{ startIndex: 3, endIndex: 10, height: 30 }}
+      series={[{ name: 'Apples', color: 'indigo.6' }]}
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  { date: 'Mar 1', Apples: 2200, Oranges: 1400 },
+  { date: 'Mar 2', Apples: 2500, Oranges: 1500 },
+  { date: 'Mar 3', Apples: 2800, Oranges: 1700 },
+  { date: 'Mar 4', Apples: 3100, Oranges: 1600 },
+  { date: 'Mar 5', Apples: 3000, Oranges: 1800 },
+  { date: 'Mar 6', Apples: 2700, Oranges: 2000 },
+  { date: 'Mar 7', Apples: 2400, Oranges: 2100 },
+  { date: 'Mar 8', Apples: 2100, Oranges: 1900 },
+  { date: 'Mar 9', Apples: 1900, Oranges: 1700 },
+  { date: 'Mar 10', Apples: 2200, Oranges: 1500 },
+  { date: 'Mar 11', Apples: 2600, Oranges: 1600 },
+  { date: 'Mar 12', Apples: 3000, Oranges: 1800 },
+  { date: 'Mar 13', Apples: 3300, Oranges: 2000 },
+  { date: 'Mar 14', Apples: 3100, Oranges: 2200 },
+  { date: 'Mar 15', Apples: 2800, Oranges: 2100 },
+  { date: 'Mar 16', Apples: 2500, Oranges: 1900 },
+];
+```
+
+
+## ChartBrush component
+
+For full control over the brush, render the `ChartBrush` component as a child of the chart
+instead of using the `withBrush` prop. `ChartBrush` accepts all recharts `Brush` props and
+applies Mantine theming – this is useful when you need a [custom traveller](https://recharts.org/en-US/api/Brush)
+or a panorama preview inside the brush:
+
+```tsx
+import { AreaChart, ChartBrush } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      series={[{ name: 'Apples', color: 'indigo.6' }]}
+    >
+      <ChartBrush dataKey="date" startIndex={0} endIndex={10} />
+    </AreaChart>
+  );
+}
+```
+
 
 #### Props
 
@@ -59049,9 +60724,11 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |
 | areaChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `AreaChart` component |
 | areaProps | ((series: AreaChartSeries) => Partial<Omit<Props<any, any>, "ref">>) \| Partial<Omit<Props<any, any>, "ref">> | - | Props passed down to recharts `Area` component |
+| brushProps | RechartsProps | - | Props passed down to the `Brush` component |
 | children | React.ReactNode | - | Additional components that are rendered inside recharts `AreaChart` component |
 | connectNulls | boolean | - | If set, points with `null` values are connected |
 | curveType | AreaChartCurveType | - | Type of the curve |
@@ -59079,6 +60756,7 @@ export const data = [
 | type | AreaChartType | - | Controls how chart areas are positioned relative to each other |
 | unit | string | - | Unit displayed next to each tick in y-axis |
 | valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
+| withBrush | boolean | - | Determines whether a brush (range selector) should be displayed under the chart, `false` by default |
 | withDots | boolean | - | Determines whether dots should be displayed |
 | withGradient | boolean | - | Determines whether the chart area should be represented with a gradient instead of the solid color |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |
@@ -59120,6 +60798,7 @@ AreaChart component supports Styles API. With Styles API, you can customize styl
 | tooltipLabel | .mantine-AreaChart-tooltipLabel | Label of the tooltip |
 | referenceLine | .mantine-AreaChart-referenceLine | Reference line |
 | axisLabel | .mantine-AreaChart-axisLabel | X and Y axis labels |
+| brush | .mantine-AreaChart-brush | Brush (range selector) root element |
 
 **AreaChart CSS variables**
 
@@ -60527,6 +62206,39 @@ export const data = [
 ```
 
 
+## Brush
+
+Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
+brush handles to zoom into a subset of the data. Use the `brushProps` prop to pass props
+down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush) component,
+or render the `ChartBrush` component as a child for full control.
+
+```tsx
+import { BarChart } from '@mantine/charts';
+
+const data = [
+  { month: 'Jan', Smartphones: 1200, Laptops: 900 },
+  { month: 'Feb', Smartphones: 1400, Laptops: 1000 },
+  /* ...other data points */
+];
+
+function Demo() {
+  return (
+    <BarChart
+      h={300}
+      data={data}
+      dataKey="month"
+      withBrush
+      series={[
+        { name: 'Smartphones', color: 'violet.6' },
+        { name: 'Laptops', color: 'blue.6' },
+      ]}
+    />
+  );
+}
+```
+
+
 
 #### Props
 
@@ -60534,9 +62246,11 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | barChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `BarChart` component |
 | barLabelColor | MantineColor | - | Controls color of the bar label, by default the value is determined by the chart orientation |
 | barProps | ((series: BarChartSeries) => Partial<Omit<Props, "ref">>) \| Partial<Omit<Props, "ref">> | - | Props passed down to recharts `Bar` component |
+| brushProps | RechartsProps | - | Props passed down to the `Brush` component |
 | children | React.ReactNode | - | Additional components that are rendered inside recharts `BarChart` component |
 | cursorFill | MantineColor | - | Fill of hovered bar section, by default value is based on color scheme |
 | data | Record<string, any>[] | required | Data used to display chart. |
@@ -60564,6 +62278,7 @@ export const data = [
 | valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
 | valueLabelProps | ((series: BarChartSeries) => Partial<Omit<Props, "ref">>) \| Partial<Props> | - | Props passed down to recharts `LabelList` component |
 | withBarValueLabel | boolean | - | Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` |
+| withBrush | boolean | - | Determines whether a brush (range selector) should be displayed under the chart, `false` by default |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |
 | withRightYAxis | boolean | - | Determines whether additional y-axis should be displayed on the right side of the chart, `false` by default |
 | withTooltip | boolean | - | Determines whether chart tooltip should be displayed, `true` by default |
@@ -60602,6 +62317,7 @@ BarChart component supports Styles API. With Styles API, you can customize style
 | tooltipLabel | .mantine-BarChart-tooltipLabel | Label of the tooltip |
 | referenceLine | .mantine-BarChart-referenceLine | Reference line |
 | axisLabel | .mantine-BarChart-axisLabel | X and Y axis labels |
+| brush | .mantine-BarChart-brush | Brush (range selector) root element |
 
 **BarChart CSS variables**
 
@@ -61247,6 +62963,7 @@ function Demo() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | color | MantineColor | - | Color of the chart items. Key of `theme.colors` or any valid CSS color. |
 | data | Record<string, any>[] | required | Chart data |
 | dataKey | BubbleChartDataKey | required | Data keys for x, y and z axis |
@@ -61281,6 +62998,284 @@ BubbleChart component supports Styles API. With Styles API, you can customize st
 |----------|----------|-------------|
 | root | --chart-grid-color | Controls color of the grid and cursor lines |
 | root | --chart-text-color | Controls color of the axis labels |
+
+
+--------------------------------------------------------------------------------
+
+### BulletChart
+Package: @mantine/charts
+Import: import { BulletChart } from '@mantine/charts';
+Description: Compact KPI chart with value, target, and qualitative ranges
+
+## Usage
+
+`BulletChart` is a compact KPI chart that displays an actual value against a target
+with qualitative ranges as background bands. The required props are `value` and `ranges`.
+Labels are automatically displayed at range boundaries, the target position,
+and the bar value.
+
+```tsx
+// Demo.tsx
+import { BulletChart } from '@mantine/charts';
+import { ranges } from './data';
+
+function Demo() {
+  return (
+    <BulletChart
+      value={230000}
+      target={150000}
+      ranges={ranges}
+      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+    />
+  );
+}
+
+// data.ts
+export const ranges = ${JSON.stringify(ranges, null, 2)};
+```
+
+
+## Data format
+
+`BulletChart` expects `ranges` as an array of objects with `value` and `color` properties.
+Ranges are rendered back-to-front (largest first), so smaller ranges overlay larger ones.
+
+```tsx
+const ranges = [
+  { value: 150000, color: 'red.8', label: 'Poor' },
+  { value: 225000, color: 'yellow.8', label: 'Average' },
+  { value: 300000, color: 'teal.8', label: 'Good' },
+];
+```
+
+## Label
+
+Use `label` prop to display a label next to the chart:
+
+```tsx
+// Demo.tsx
+import { BulletChart } from '@mantine/charts';
+import { ranges } from './data';
+
+function Demo() {
+  return (
+    <BulletChart
+      value={230000}
+      target={150000}
+      ranges={ranges}
+      label="Revenue"
+      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+    />
+  );
+}
+
+// data.ts
+export const ranges = ${JSON.stringify(ranges, null, 2)};
+```
+
+
+## Vertical orientation
+
+Set `orientation="vertical"` to render the chart vertically. Note that you need to set
+a fixed height on the component when using vertical orientation:
+
+```tsx
+// Demo.tsx
+import { BulletChart } from '@mantine/charts';
+import { ranges } from './data';
+
+function Demo() {
+  return (
+    <BulletChart
+      value={230000}
+      target={150000}
+      ranges={ranges}
+      orientation="vertical"
+      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+      h={250}
+    />
+  );
+}
+
+// data.ts
+export const ranges = ${JSON.stringify(ranges, null, 2)};
+```
+
+
+## Bar color
+
+By default, the bar color is white. Use `barColor` prop to customize
+the color of the actual value bar. Use `targetColor` to change the target marker color:
+
+```tsx
+// Demo.tsx
+import { BulletChart } from '@mantine/charts';
+import { ranges } from './data';
+
+function Demo() {
+  return (
+    <BulletChart
+      value={230000}
+      target={150000}
+      ranges={ranges}
+      barColor="black"
+      targetColor="white"
+      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+    />
+  );
+}
+
+// data.ts
+export const ranges = ${JSON.stringify(ranges, null, 2)};
+```
+
+
+## Chart size
+
+Use `size` prop to control the height of the chart track area.
+The `barSize` prop controls the height of the actual value bar independently:
+
+```tsx
+// Demo.tsx
+import { BulletChart } from '@mantine/charts';
+import { Stack } from '@mantine/core';
+import { ranges } from './data';
+
+function Demo() {
+  return (
+    <Stack>
+      <BulletChart
+        value={230000}
+        target={150000}
+        ranges={ranges}
+        size={20}
+        label="Small"
+        valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+      />
+      <BulletChart
+        value={230000}
+        target={150000}
+        ranges={ranges}
+        size={32}
+        label="Default"
+        valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+      />
+      <BulletChart
+        value={230000}
+        target={150000}
+        ranges={ranges}
+        size={48}
+        label="Large"
+        valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+      />
+    </Stack>
+  );
+}
+
+// data.ts
+export const ranges = ${JSON.stringify(ranges, null, 2)};
+```
+
+
+## Value formatter
+
+Use `valueFormatter` prop to format values displayed in labels and tooltips.
+Set `withTooltip` to also show a tooltip on hover:
+
+```tsx
+// Demo.tsx
+import { BulletChart } from '@mantine/charts';
+import { ranges } from './data';
+
+function Demo() {
+  return (
+    <BulletChart
+      value={230000}
+      target={150000}
+      ranges={ranges}
+      withTooltip
+      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+    />
+  );
+}
+
+// data.ts
+export const ranges = ${JSON.stringify(ranges, null, 2)};
+```
+
+
+## Without target
+
+The `target` prop is optional. If not provided, the target marker is not rendered:
+
+```tsx
+// Demo.tsx
+import { BulletChart } from '@mantine/charts';
+import { ranges } from './data';
+
+function Demo() {
+  return (
+    <BulletChart
+      value={230000}
+      ranges={ranges}
+      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+    />
+  );
+}
+
+// data.ts
+export const ranges = ${JSON.stringify(ranges, null, 2)};
+```
+
+
+
+#### Props
+
+**BulletChart props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| barColor | MantineColor | - | Color of the actual value bar, |
+| barSize | string \| number | - | Height of the actual value bar, |
+| getTooltipLabel | ((data: { value: number; target?: number; }) => ReactNode) \| undefined | - | Custom tooltip content |
+| label | React.ReactNode | - | Label displayed next to the chart |
+| orientation | "horizontal" \| "vertical" | - | Orientation, |
+| ranges | BulletChartRange[] | required | Qualitative ranges displayed as background bands |
+| size | string \| number | - | Height of the chart track area (ranges), |
+| target | number | - | Target value, displayed as a marker line |
+| targetColor | MantineColor | - | Color of the target marker, |
+| targetRatio | number | - | Target marker size relative to chart size, |
+| targetSize | string \| number | - | Target marker thickness, |
+| value | number | required | Current actual value |
+| valueFormatter | (value: number) => string | - | Value formatter for tooltip/display and labels |
+| withTooltip | boolean | - | Whether to show tooltip on hover, |
+
+
+#### Styles API
+
+BulletChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**BulletChart selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-BulletChart-root | Root element |
+| label | .mantine-BulletChart-label | Label element |
+| trackWrapper | .mantine-BulletChart-trackWrapper | Wrapper around track and value labels |
+| track | .mantine-BulletChart-track | Container for ranges, bar, and target |
+| range | .mantine-BulletChart-range | Background range band |
+| bar | .mantine-BulletChart-bar | Actual value bar |
+| target | .mantine-BulletChart-target | Target marker line |
+| rangeLabel | .mantine-BulletChart-rangeLabel | Value label at the end of each range |
+| barLabel | .mantine-BulletChart-barLabel | Value label for the actual value bar |
+| targetLabel | .mantine-BulletChart-targetLabel | Value label for the target marker |
+
+**BulletChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --bullet-size | Controls height of the chart track area |
+| root | --bullet-bar-size | Controls height of the actual value bar |
 
 
 --------------------------------------------------------------------------------
@@ -62926,6 +64921,41 @@ export const data = [
 ```
 
 
+## Brush
+
+Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
+brush handles to zoom into a subset of the data. Use the `brushProps` prop to pass props
+down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush) component,
+or render the `ChartBrush` component as a child for full control.
+
+```tsx
+import { CompositeChart } from '@mantine/charts';
+
+const data = [
+  { date: 'Mar 1', Apples: 2200, Oranges: 1400, Tomatoes: 800 },
+  { date: 'Mar 2', Apples: 2500, Oranges: 1500, Tomatoes: 1000 },
+  /* ...other data points */
+];
+
+function Demo() {
+  return (
+    <CompositeChart
+      h={300}
+      data={data}
+      dataKey="date"
+      maxBarWidth={30}
+      withBrush
+      series={[
+        { name: 'Tomatoes', color: 'rgba(18, 120, 255, 0.2)', type: 'bar' },
+        { name: 'Apples', color: 'red.8', type: 'line' },
+        { name: 'Oranges', color: 'yellow.8', type: 'area' },
+      ]}
+    />
+  );
+}
+```
+
+
 
 #### Props
 
@@ -62933,9 +64963,11 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |
 | areaProps | Partial<Omit<Props<any, any>, "ref">> \| ((series: CompositeChartSeries) => Partial<Omit<Props<any, any>, "ref">>) | - | Props passed down to recharts `Area` component |
 | barProps | Partial<Omit<Props, "ref">> \| ((series: CompositeChartSeries) => Partial<Omit<Props, "ref">>) | - | Props passed down to recharts `Bar` component |
+| brushProps | RechartsProps | - | Props passed down to the `Brush` component |
 | children | React.ReactNode | - | Additional components that are rendered inside recharts `AreaChart` component |
 | composedChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `AreaChart` component |
 | connectNulls | boolean | - | Determines whether points with `null` values should be connected |
@@ -62963,6 +64995,7 @@ export const data = [
 | unit | string | - | Unit displayed next to each tick in y-axis |
 | valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
 | withBarValueLabel | boolean | - | Determines whether a label with bar value should be displayed on top of each bar |
+| withBrush | boolean | - | Determines whether a brush (range selector) should be displayed under the chart, `false` by default |
 | withDots | boolean | - | Determines whether dots should be displayed |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |
 | withPointLabels | boolean | - | Determines whether each point should have associated label |
@@ -63005,6 +65038,7 @@ CompositeChart component supports Styles API. With Styles API, you can customize
 | tooltipLabel | .mantine-CompositeChart-tooltipLabel | Label of the tooltip |
 | referenceLine | .mantine-CompositeChart-referenceLine | Reference line |
 | axisLabel | .mantine-CompositeChart-axisLabel | X and Y axis labels |
+| brush | .mantine-CompositeChart-brush | Brush (range selector) root element |
 
 **CompositeChart CSS variables**
 
@@ -63358,6 +65392,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | cellProps | ((series: DonutChartCell) => Partial<Omit<SVGProps<SVGElement>, "ref">>) \| Partial<Omit<SVGProps<SVGElement>, "ref">> | - | Props passed down to each segment of the chart |
 | chartLabel | string \| number | - | Chart label, displayed in the center of the chart |
 | children | React.ReactNode | - | Additional elements rendered inside `PieChart` component |
@@ -63686,6 +65721,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | children | React.ReactNode | - | Additional elements rendered inside `FunnelChart` component |
 | data | FunnelChartCell[] | required | Data used to render chart |
 | funnelChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `FunnelChart` component |
@@ -63784,6 +65820,45 @@ import '@mantine/charts/styles.css';
 Most of the components in the `@mantine/charts` package are based on the [recharts](https://recharts.org/) library.
 If you need advanced features that are not covered in the `@mantine/charts`
 documentation, refer to the [recharts documentation](https://recharts.org/en-US/api) for more information.
+
+## Keyboard navigation
+
+All `@mantine/charts` components include an accessibility layer that makes charts navigable with the
+keyboard. The chart surface is focusable: once it receives focus (for example, with the&#x20;
+key), the arrow keys move the active tooltip point-by-point, so users who do not use a mouse can read
+the underlying values. The feature is enabled by default on all recharts-based charts.
+
+The following keyboard interactions are supported:
+
+When the chart surface is focused with the keyboard, it displays the Mantine focus ring so that the
+focused chart is clearly visible.
+
+## accessibilityLayer prop
+
+The accessibility layer is controlled with the `accessibilityLayer` prop, which is `true` by default
+on all charts. Set it to `false` to opt out of keyboard navigation, for example when a chart is
+embedded inside another widget that already handles keyboard interactions:
+
+```tsx
+import { AreaChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      accessibilityLayer={false}
+      series={[{ name: 'Apples', color: 'indigo.6' }]}
+    />
+  );
+}
+```
+
+The `accessibilityLayer` prop is supported by `AreaChart`, `BarChart`, `LineChart`, `CompositeChart`,
+`ScatterChart`, `BubbleChart`, `PieChart`, `DonutChart`, `RadarChart`, `RadialBarChart` and
+`FunnelChart` components.
 
 
 --------------------------------------------------------------------------------
@@ -64031,6 +66106,33 @@ export const data = ${JSON.stringify(data, null, 2)};
 ```
 
 
+## Month labels position
+
+Set `monthLabelsPosition="bottom"` to display month labels below the heatmap:
+
+```tsx
+// Demo.tsx
+import { Heatmap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Heatmap
+      data={data}
+      startDate="2024-02-16"
+      endDate="2025-02-16"
+      withMonthLabels
+      withWeekdayLabels
+      monthLabelsPosition="bottom"
+    />
+  );
+}
+
+// data.ts
+export const data = ${JSON.stringify(data, null, 2)};
+```
+
+
 ## Change labels text
 
 To change labels, use the `weekdayLabels` and `monthLabels` props.
@@ -64256,6 +66358,7 @@ export const data = ${JSON.stringify(data, null, 2)};
 | getTooltipLabel | (input: HeatmapRectData) => ReactNode | - | A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible |
 | legendLabels | [string, string] | - | Legend labels, array of 2 elements: [min label, max label] |
 | monthLabels | string[] | - | Month labels, array of 12 elements, can be used for localization |
+| monthLabelsPosition | "bottom" \| "top" | - | Month labels position relative to the heatmap |
 | monthsLabelsHeight | number | - | Height of month labels row |
 | rectRadius | number | - | Rect radius in px |
 | rectSize | number | - | Size of day rect in px |
@@ -66160,6 +68263,39 @@ export const data = [
 ```
 
 
+## Brush
+
+Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
+brush handles to zoom into a subset of the data. Use the `brushProps` prop to pass props
+down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush) component,
+or render the `ChartBrush` component as a child for full control.
+
+```tsx
+import { LineChart } from '@mantine/charts';
+
+const data = [
+  { date: 'Mar 1', Apples: 2200, Oranges: 1400 },
+  { date: 'Mar 2', Apples: 2500, Oranges: 1500 },
+  /* ...other data points */
+];
+
+function Demo() {
+  return (
+    <LineChart
+      h={300}
+      data={data}
+      dataKey="date"
+      withBrush
+      series={[
+        { name: 'Apples', color: 'indigo.6' },
+        { name: 'Oranges', color: 'blue.6' },
+      ]}
+    />
+  );
+}
+```
+
+
 
 #### Props
 
@@ -66167,7 +68303,9 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |
+| brushProps | RechartsProps | - | Props passed down to the `Brush` component |
 | children | React.ReactNode | - | Additional components that are rendered inside recharts `LineChart` component |
 | connectNulls | boolean | - | Determines whether points with `null` values should be connected |
 | curveType | LineChartCurveType | - | Type of the curve |
@@ -66196,6 +68334,7 @@ export const data = [
 | type | LineChartType | - | Controls styles of the line |
 | unit | string | - | Unit displayed next to each tick in y-axis |
 | valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
+| withBrush | boolean | - | Determines whether a brush (range selector) should be displayed under the chart, `false` by default |
 | withDots | boolean | - | Determines whether dots should be displayed |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |
 | withPointLabels | boolean | - | Determines whether each point should have associated label |
@@ -66236,6 +68375,7 @@ LineChart component supports Styles API. With Styles API, you can customize styl
 | tooltipLabel | .mantine-LineChart-tooltipLabel | Label of the tooltip |
 | referenceLine | .mantine-LineChart-referenceLine | Reference line |
 | axisLabel | .mantine-LineChart-axisLabel | X and Y axis labels |
+| brush | .mantine-LineChart-brush | Brush (range selector) root element |
 
 **LineChart CSS variables**
 
@@ -66545,6 +68685,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | cellProps | Partial<Omit<SVGProps<SVGElement>, "ref">> \| ((series: PieChartCell) => Partial<Omit<SVGProps<SVGElement>, "ref">>) | - | Props passed down to each segment of the chart |
 | children | React.ReactNode | - | Additional elements rendered inside `PieChart` component |
 | data | PieChartCell[] | required | Data used to render chart |
@@ -67012,6 +69153,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |
 | children | React.ReactNode | - | Additional components that are rendered inside recharts `RadarChart` component |
 | data | Record<string, any>[] | required | Data used in the chart |
@@ -67208,6 +69350,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | barSize | number | - | Size of bars in px, `20` by default |
 | data | Record<string, any>[] | required | Chart data |
 | dataKey | string | required | Key from data object to use as data key |
@@ -68698,6 +70841,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | data | ScatterChartSeries[] | required | Data that is used to build the chart |
 | dataKey | { x: string; y: string; } | required | Keys that should be used to retrieve data from the data array on x and y axis |
 | gridAxis | "none" \| "x" \| "y" \| "xy" | - | Specifies which lines should be displayed in the grid, `'x'` by default |
@@ -68911,6 +71055,472 @@ Sparkline component supports Styles API. With Styles API, you can customize styl
 | Selector | Variable | Description |
 |----------|----------|-------------|
 | root | --chart-color | Controls stroke and fill color |
+
+
+--------------------------------------------------------------------------------
+
+### SunburstChart
+Package: @mantine/charts
+Import: import { SunburstChart } from '@mantine/charts';
+Description: Sunburst chart component for hierarchical data
+
+## Usage
+
+`SunburstChart` is based on the [SunburstChart recharts component](https://recharts.org/en-US/api/SunburstChart).
+It displays hierarchical data as concentric rings, similar to a treemap plotted in polar coordinates:
+
+```tsx
+// Demo.tsx
+import { SunburstChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SunburstChart data={data} />;
+}
+
+// data.ts
+export const data = [
+  { name: 'Analytics', value: 100, color: 'pink.6' },
+  {
+    name: 'DevOps',
+    color: 'grape.6',
+    children: [
+      { name: 'Docker', value: 80 },
+      { name: 'Kubernetes', value: 50 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.6',
+    children: [
+      { name: 'Node', value: 150 },
+      {
+        name: 'Python',
+        children: [
+          { name: 'Django', value: 110 },
+          { name: 'FastAPI', value: 60 },
+        ],
+      },
+      { name: 'Go', value: 50 },
+    ],
+  },
+  {
+    name: 'Frontend',
+    color: 'blue.6',
+    children: [
+      {
+        name: 'React',
+        children: [
+          {
+            name: 'Frameworks',
+            children: [
+              { name: 'Next.js', value: 150 },
+              { name: 'Remix', value: 40 },
+            ],
+          },
+          { name: 'CRA', value: 20 },
+        ],
+      },
+      { name: 'Vue', value: 90 },
+      { name: 'Svelte', value: 30 },
+    ],
+  },
+];
+```
+
+
+## Data format
+
+`SunburstChart` expects an array of objects. Each object must have a `name` and `color` property.
+Leaf nodes must have a `value` property. Parent nodes can have a `children` array:
+
+```tsx
+export const data = [
+  {
+    name: 'Frontend',
+    color: 'blue.6',
+    children: [
+      { name: 'React', value: 400 },
+      { name: 'Vue', value: 200 },
+      { name: 'Angular', value: 150 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.6',
+    children: [
+      { name: 'Node', value: 300 },
+      { name: 'Python', value: 250 },
+    ],
+  },
+];
+```
+
+## Node color
+
+You can reference colors from [theme](https://mantine.dev/llms/theming-theme-object.md) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted. Children inherit the color of their parent node.
+
+```tsx
+import { SunburstChart } from '@mantine/charts';
+
+const data = [
+  { name: 'Sales', value: 500, color: 'violet.6' },
+  { name: 'Marketing', value: 300, color: 'grape.6' },
+  { name: 'Engineering', value: 400, color: 'pink.6' },
+  { name: 'Support', value: 200, color: 'red.6' },
+];
+
+function Demo() {
+  return <SunburstChart data={data} />;
+}
+```
+
+
+## Stroke color
+
+Use `strokeColor` to change the color of the stroke around each sector:
+
+```tsx
+// Demo.tsx
+import { SunburstChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SunburstChart data={data} strokeColor="gray.3" />;
+}
+
+// data.ts
+export const data = [
+  { name: 'Analytics', value: 100, color: 'pink.6' },
+  {
+    name: 'DevOps',
+    color: 'grape.6',
+    children: [
+      { name: 'Docker', value: 80 },
+      { name: 'Kubernetes', value: 50 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.6',
+    children: [
+      { name: 'Node', value: 150 },
+      {
+        name: 'Python',
+        children: [
+          { name: 'Django', value: 110 },
+          { name: 'FastAPI', value: 60 },
+        ],
+      },
+      { name: 'Go', value: 50 },
+    ],
+  },
+  {
+    name: 'Frontend',
+    color: 'blue.6',
+    children: [
+      {
+        name: 'React',
+        children: [
+          {
+            name: 'Frameworks',
+            children: [
+              { name: 'Next.js', value: 150 },
+              { name: 'Remix', value: 40 },
+            ],
+          },
+          { name: 'CRA', value: 20 },
+        ],
+      },
+      { name: 'Vue', value: 90 },
+      { name: 'Svelte', value: 30 },
+    ],
+  },
+];
+```
+
+
+## Chart size
+
+Use `size` prop to control the width and height of the chart:
+
+```tsx
+// Demo.tsx
+import { SunburstChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SunburstChart data={data} size={400} />;
+}
+
+// data.ts
+export const data = [
+  { name: 'Analytics', value: 100, color: 'pink.6' },
+  {
+    name: 'DevOps',
+    color: 'grape.6',
+    children: [
+      { name: 'Docker', value: 80 },
+      { name: 'Kubernetes', value: 50 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.6',
+    children: [
+      { name: 'Node', value: 150 },
+      {
+        name: 'Python',
+        children: [
+          { name: 'Django', value: 110 },
+          { name: 'FastAPI', value: 60 },
+        ],
+      },
+      { name: 'Go', value: 50 },
+    ],
+  },
+  {
+    name: 'Frontend',
+    color: 'blue.6',
+    children: [
+      {
+        name: 'React',
+        children: [
+          {
+            name: 'Frameworks',
+            children: [
+              { name: 'Next.js', value: 150 },
+              { name: 'Remix', value: 40 },
+            ],
+          },
+          { name: 'CRA', value: 20 },
+        ],
+      },
+      { name: 'Vue', value: 90 },
+      { name: 'Svelte', value: 30 },
+    ],
+  },
+];
+```
+
+
+## Gap
+
+Use `gap` prop to control the spacing between sectors and rings:
+
+```tsx
+// Demo.tsx
+import { SunburstChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SunburstChart data={data}  gap={1} />;
+}
+
+// data.ts
+export const data = [
+  { name: 'Analytics', value: 100, color: 'pink.6' },
+  {
+    name: 'DevOps',
+    color: 'grape.6',
+    children: [
+      { name: 'Docker', value: 80 },
+      { name: 'Kubernetes', value: 50 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.6',
+    children: [
+      { name: 'Node', value: 150 },
+      {
+        name: 'Python',
+        children: [
+          { name: 'Django', value: 110 },
+          { name: 'FastAPI', value: 60 },
+        ],
+      },
+      { name: 'Go', value: 50 },
+    ],
+  },
+  {
+    name: 'Frontend',
+    color: 'blue.6',
+    children: [
+      {
+        name: 'React',
+        children: [
+          {
+            name: 'Frameworks',
+            children: [
+              { name: 'Next.js', value: 150 },
+              { name: 'Remix', value: 40 },
+            ],
+          },
+          { name: 'CRA', value: 20 },
+        ],
+      },
+      { name: 'Vue', value: 90 },
+      { name: 'Svelte', value: 30 },
+    ],
+  },
+];
+```
+
+
+## Labels
+
+Set `withLabels` to display value labels inside each sector. It is recommended
+to increase `size` to give labels enough space:
+
+```tsx
+// Demo.tsx
+import { SunburstChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SunburstChart data={data} withLabels size={400} />;
+}
+
+// data.ts
+export const data = [
+  { name: 'Analytics', value: 100, color: 'pink.6' },
+  {
+    name: 'DevOps',
+    color: 'grape.6',
+    children: [
+      { name: 'Docker', value: 80 },
+      { name: 'Kubernetes', value: 50 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.6',
+    children: [
+      { name: 'Node', value: 150 },
+      {
+        name: 'Python',
+        children: [
+          { name: 'Django', value: 110 },
+          { name: 'FastAPI', value: 60 },
+        ],
+      },
+      { name: 'Go', value: 50 },
+    ],
+  },
+  {
+    name: 'Frontend',
+    color: 'blue.6',
+    children: [
+      {
+        name: 'React',
+        children: [
+          {
+            name: 'Frameworks',
+            children: [
+              { name: 'Next.js', value: 150 },
+              { name: 'Remix', value: 40 },
+            ],
+          },
+          { name: 'CRA', value: 20 },
+        ],
+      },
+      { name: 'Vue', value: 90 },
+      { name: 'Svelte', value: 30 },
+    ],
+  },
+];
+```
+
+
+## Disable tooltip
+
+To disable the tooltip, set `withTooltip={false}`:
+
+```tsx
+// Demo.tsx
+import { SunburstChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SunburstChart data={data} withTooltip={false} />;
+}
+
+// data.ts
+export const data = [
+  { name: 'Analytics', value: 100, color: 'pink.6' },
+  {
+    name: 'DevOps',
+    color: 'grape.6',
+    children: [
+      { name: 'Docker', value: 80 },
+      { name: 'Kubernetes', value: 50 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.6',
+    children: [
+      { name: 'Node', value: 150 },
+      {
+        name: 'Python',
+        children: [
+          { name: 'Django', value: 110 },
+          { name: 'FastAPI', value: 60 },
+        ],
+      },
+      { name: 'Go', value: 50 },
+    ],
+  },
+  {
+    name: 'Frontend',
+    color: 'blue.6',
+    children: [
+      {
+        name: 'React',
+        children: [
+          {
+            name: 'Frameworks',
+            children: [
+              { name: 'Next.js', value: 150 },
+              { name: 'Remix', value: 40 },
+            ],
+          },
+          { name: 'CRA', value: 20 },
+        ],
+      },
+      { name: 'Vue', value: 90 },
+      { name: 'Svelte', value: 30 },
+    ],
+  },
+];
+```
+
+
+
+#### Props
+
+**SunburstChart props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| children | React.ReactNode | - | Additional elements rendered inside `SunburstChart` component |
+| data | SunburstChartData[] | required | Data used to render chart |
+| dataKey | string | - | Key in data object for the value |
+| endAngle | number | - | Angle in degrees at which the chart should end |
+| gap | number | - | Gap between sectors and rings in px |
+| innerRadius | number | - | Controls the radius of the inner circle at the center of the chart |
+| size | number | - | Controls chart width and height |
+| startAngle | number | - | Angle in degrees from which the chart should start |
+| strokeColor | MantineColor | - | Controls color of the sectors stroke, by default depends on color scheme |
+| sunburstChartProps | Partial<Omit<SunburstChartProps, "data" \| "ref" \| "dataKey">> | - | Props passed down to recharts `SunburstChart` component |
+| tooltipAnimationDuration | number | - | Tooltip animation duration in ms |
+| tooltipProps | RechartsProps | - | Props passed down to `Tooltip` recharts component |
+| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip and labels |
+| withLabels | boolean | - | Determines whether value labels are displayed inside each sector |
+| withTooltip | boolean | - | Determines whether the tooltip should be displayed when a node is hovered |
 
 
 --------------------------------------------------------------------------------
@@ -69979,7 +72589,7 @@ yet, you can continue using Mantine 8.x until you are ready to update React and 
 
 ## Update dependencies
 
-* Update all `@mantine/*` packages to version 9.4.2
+* Update all `@mantine/*` packages to version 9.5.0
 * If you use `@mantine/tiptap` package, update all `@tiptap/*` packages to the latest `3.x` version
 * If you use `@mantine/charts` package, update `recharts` to the latest `3.x` version
 
@@ -128211,11 +130821,763 @@ export function Demo() {
 
 --------------------------------------------------------------------------------
 
+### Changelog950
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+## Migration to oxc
+
+Mantine has migrated its linting and formatting toolchain from ESLint and Prettier
+to [oxc](https://oxc.rs) – [oxlint](https://www.npmjs.com/package/oxlint) is now used
+as the linter and [oxfmt](https://www.npmjs.com/package/oxfmt) as the formatter. Both
+tools are written in Rust and are significantly faster than their predecessors, which
+makes linting and formatting the entire codebase almost instant.
+
+The shared configuration is available as a new
+[oxc-config-mantine](https://mantine.dev/llms/oxc-config-mantine.md) package (a replacement for the previous
+`eslint-config-mantine`). You can use it in your own projects to follow the same
+code style and conventions as Mantine.
+
+## Native level select in date pickers
+
+[DatePicker](https://mantine.dev/llms/dates-date-picker.md) and all other date picker components ([DatePickerInput](https://mantine.dev/llms/dates-date-picker-input.md),
+[MonthPicker](https://mantine.dev/llms/dates-month-picker.md), [YearPicker](https://mantine.dev/llms/dates-year-picker.md), [DateTimePicker](https://mantine.dev/llms/dates-date-time-picker.md), etc.)
+now support the `withNativeLevelSelect` prop. When enabled, it replaces the calendar header level button
+with native `<select>` elements, making it easy to quickly navigate to a specific month and year.
+
+```tsx
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return <DatePicker withNativeLevelSelect yearsSelectRange={[2020, 2035]} />;
+}
+```
+
+
+## Timeline opposite and alternate content
+
+[Timeline](https://mantine.dev/llms/core-timeline.md) `Timeline.Item` component now supports the `opposite` prop that allows
+rendering content on the opposite side of the timeline. When any item has the `opposite` prop,
+the timeline switches to a centered layout with content on both sides of the line.
+
+```tsx
+import { Timeline, Text } from '@mantine/core';
+import { GitBranchIcon, GitCommitIcon, GitPullRequestIcon, ChatCircleDotsIcon } from '@phosphor-icons/react';
+
+function Demo() {
+  return (
+    <Timeline active={1} bulletSize={24} lineWidth={2}>
+      <Timeline.Item
+        bullet={<GitBranchIcon size={12} />}
+        title="New branch"
+        opposite={
+          <Text size="sm" c="dimmed">
+            2 hours ago
+          </Text>
+        }
+      >
+        <Text c="dimmed" size="sm">You&apos;ve created new branch <Text variant="link" component="span" inherit>fix-notifications</Text> from master</Text>
+      </Timeline.Item>
+
+      <Timeline.Item
+        bullet={<GitCommitIcon size={12} />}
+        title="Commits"
+        opposite={
+          <Text size="sm" c="dimmed">
+            52 minutes ago
+          </Text>
+        }
+      >
+        <Text c="dimmed" size="sm">You&apos;ve pushed 23 commits to <Text variant="link" component="span" inherit>fix-notifications branch</Text></Text>
+      </Timeline.Item>
+
+      <Timeline.Item
+        title="Pull request"
+        bullet={<GitPullRequestIcon size={12} />}
+        lineVariant="dashed"
+        opposite={
+          <Text size="sm" c="dimmed">
+            34 minutes ago
+          </Text>
+        }
+      >
+        <Text c="dimmed" size="sm">You&apos;ve submitted a pull request <Text variant="link" component="span" inherit>Fix incorrect notification message (#187)</Text></Text>
+      </Timeline.Item>
+
+      <Timeline.Item title="Code review" bullet={<ChatCircleDotsIcon size={12} />}>
+        <Text c="dimmed" size="sm"><Text variant="link" component="span" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>
+      </Timeline.Item>
+    </Timeline>
+  );
+}
+```
+
+
+Set the `alternate` prop on individual `Timeline.Item` components to switch
+the position of content and opposite:
+
+```tsx
+import { Timeline, Text } from '@mantine/core';
+import { GitBranchIcon, GitCommitIcon, GitPullRequestIcon, ChatCircleDotsIcon } from '@phosphor-icons/react';
+
+function Demo() {
+  return (
+    <Timeline active={2} bulletSize={24} lineWidth={2}>
+      <Timeline.Item
+        bullet={<GitBranchIcon size={12} />}
+        title="New branch"
+        opposite={
+          <Text size="sm" c="dimmed">
+            2 hours ago
+          </Text>
+        }
+      >
+        <Text c="dimmed" size="sm">You&apos;ve created new branch <Text variant="link" component="span" inherit>fix-notifications</Text> from master</Text>
+      </Timeline.Item>
+
+      <Timeline.Item
+        bullet={<GitCommitIcon size={12} />}
+        title="Commits"
+        opposite={
+          <Text size="sm" c="dimmed">
+            52 minutes ago
+          </Text>
+        }
+        alternate
+      >
+        <Text c="dimmed" size="sm">You&apos;ve pushed 23 commits to <Text variant="link" component="span" inherit>fix-notifications branch</Text></Text>
+      </Timeline.Item>
+
+      <Timeline.Item
+        title="Pull request"
+        bullet={<GitPullRequestIcon size={12} />}
+        lineVariant="dashed"
+        opposite={
+          <Text size="sm" c="dimmed">
+            34 minutes ago
+          </Text>
+        }
+      >
+        <Text c="dimmed" size="sm">You&apos;ve submitted a pull request <Text variant="link" component="span" inherit>Fix incorrect notification message (#187)</Text></Text>
+      </Timeline.Item>
+
+      <Timeline.Item
+        title="Code review"
+        bullet={<ChatCircleDotsIcon size={12} />}
+        opposite={
+          <Text size="sm" c="dimmed">
+            12 minutes ago
+          </Text>
+        }
+        alternate
+      >
+        <Text c="dimmed" size="sm"><Text variant="link" component="span" inherit>Robert Gluesticker</Text> left a code review on your pull request</Text>
+      </Timeline.Item>
+    </Timeline>
+  );
+}
+```
+
+
+## FloatingWindow resize handle
+
+[FloatingWindow](https://mantine.dev/llms/core-floating-window.md) now supports a `ResizeHandle` compound component
+that allows users to resize the floating window by dragging a handle element.
+Set the `dimensions` prop on `FloatingWindow` to control resize constraints for both
+width (`initialWidth`, `minWidth`, `maxWidth`) and height (`initialHeight`, `minHeight`, `maxHeight`).
+
+The resize handle is fully accessible – it supports keyboard interaction with
+`Arrow Left`/`Arrow Right` keys for width, `Arrow Up`/`Arrow Down` for height (10px steps),
+and `Home`/`End` keys (jump to min/max size).
+
+```tsx
+import { NotchesIcon } from '@phosphor-icons/react';
+import { Button, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const [visible, handlers] = useDisclosure();
+
+  return (
+    <>
+      <Button onClick={handlers.toggle} variant="default">
+        {visible ? 'Hide' : 'Show'} floating window
+      </Button>
+
+      {visible && (
+        <FloatingWindow
+          withBorder
+          constrainOffset={40}
+          dimensions={{
+            initialWidth: 260,
+            maxWidth: 500,
+            minWidth: 180,
+            initialHeight: 260,
+            maxHeight: 400,
+            minHeight: 220,
+          }}
+          dragHandleSelector=".drag-handle"
+          excludeDragHandleSelector="button"
+          initialPosition={{ top: 300, left: 60 }}
+          style={{ overflow: 'hidden' }}
+        >
+          <Group
+            justify="space-between"
+            px="md"
+            py="sm"
+            className="drag-handle"
+            style={{ cursor: 'move' }}
+          >
+            <Text fw={500} fz="sm">
+              Resize demo
+            </Text>
+            <CloseButton onClick={handlers.close} />
+          </Group>
+          <Text fz="sm" px="md" pb="sm">
+            Drag the grip icon in the bottom-right corner to resize.
+            Use Arrow keys when the handle is focused:
+            Left/Right for width, Up/Down for height.
+          </Text>
+          <FloatingWindow.ResizeHandle
+            aria-label="Resize floating window"
+            style={{
+              position: 'absolute',
+              right: 0,
+              bottom: 0,
+              width: 20,
+              height: 20,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'nwse-resize',
+            }}
+          >
+            <NotchesIcon size={14} style={{ opacity: 0.5 }} />
+          </FloatingWindow.ResizeHandle>
+        </FloatingWindow>
+      )}
+    </>
+  );
+}
+```
+
+
+## Cascader component
+
+New [Cascader](https://mantine.dev/llms/core-cascader.md) component allows selecting a value from hierarchical data
+by drilling down through cascading columns. Picking an option in one column reveals its
+children in a new column to the right, and the value is an ordered path from the root option
+to the selected node. It supports `changeOnSelect`, `hover` expand trigger, search, a flat list
+layout for mobile, and full keyboard navigation.
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  // Switch to a flat list on small screens
+  const withColumns = useMatches({ base: false, sm: true });
+  return (
+    <Cascader
+      withColumns={withColumns}
+      label="Location"
+      placeholder="Pick location"
+      data={data}
+    />
+  );
+}
+```
+
+
+## SunburstChart component
+
+New [SunburstChart](https://mantine.dev/llms/charts-sunburst-chart.md) component displays hierarchical data
+as concentric rings, similar to a treemap plotted in polar coordinates.
+
+```tsx
+// Demo.tsx
+import { SunburstChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <SunburstChart data={data} />;
+}
+
+// data.ts
+export const data = [
+  { name: 'Analytics', value: 100, color: 'pink.6' },
+  {
+    name: 'DevOps',
+    color: 'grape.6',
+    children: [
+      { name: 'Docker', value: 80 },
+      { name: 'Kubernetes', value: 50 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.6',
+    children: [
+      { name: 'Node', value: 150 },
+      {
+        name: 'Python',
+        children: [
+          { name: 'Django', value: 110 },
+          { name: 'FastAPI', value: 60 },
+        ],
+      },
+      { name: 'Go', value: 50 },
+    ],
+  },
+  {
+    name: 'Frontend',
+    color: 'blue.6',
+    children: [
+      {
+        name: 'React',
+        children: [
+          {
+            name: 'Frameworks',
+            children: [
+              { name: 'Next.js', value: 150 },
+              { name: 'Remix', value: 40 },
+            ],
+          },
+          { name: 'CRA', value: 20 },
+        ],
+      },
+      { name: 'Vue', value: 90 },
+      { name: 'Svelte', value: 30 },
+    ],
+  },
+];
+```
+
+
+## BulletChart component
+
+New [BulletChart](https://mantine.dev/llms/charts-bullet-chart.md) component displays a single measure against
+a qualitative range, useful for comparing a primary value (such as revenue) against
+a target and qualitative thresholds like poor, average, and good.
+
+```tsx
+// Demo.tsx
+import { BulletChart } from '@mantine/charts';
+import { ranges } from './data';
+
+function Demo() {
+  return (
+    <BulletChart
+      value={230000}
+      target={150000}
+      ranges={ranges}
+      valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+    />
+  );
+}
+
+// data.ts
+export const ranges = ${JSON.stringify(ranges, null, 2)};
+```
+
+
+## Charts keyboard navigation
+
+All [@mantine/charts](https://mantine.dev/llms/charts-getting-started.md#keyboard-navigation) components now expose the
+`accessibilityLayer` prop (`true` by default) that makes charts navigable with the keyboard.
+The chart surface is focusable and displays the Mantine focus ring; once focused, the arrow keys
+move the active tooltip point-by-point and  toggles the tooltip, so users who do not
+use a mouse can read the underlying values. The prop is supported by `AreaChart`, `BarChart`,
+`LineChart`, `CompositeChart`, `ScatterChart`, `BubbleChart`, `PieChart`, `DonutChart`, `RadarChart`,
+`RadialBarChart` and `FunnelChart` components.
+
+## Charts brush
+
+[AreaChart](https://mantine.dev/llms/charts-area-chart.md), [BarChart](https://mantine.dev/llms/charts-bar-chart.md), [LineChart](https://mantine.dev/llms/charts-line-chart.md)
+and [CompositeChart](https://mantine.dev/llms/charts-composite-chart.md) now support the `withBrush` prop that displays a
+brush (range selector) under the chart. Drag the brush handles to zoom into a subset of the data.
+Use the `brushProps` prop to customize the underlying recharts `Brush`, or render the new
+themed `ChartBrush` component as a child of the chart for full control.
+
+```tsx
+// Demo.tsx
+import { AreaChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      withBrush
+      series={[
+        { name: 'Apples', color: 'indigo.6' },
+        { name: 'Oranges', color: 'blue.6' },
+      ]}
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  { date: 'Mar 1', Apples: 2200, Oranges: 1400 },
+  { date: 'Mar 2', Apples: 2500, Oranges: 1500 },
+  { date: 'Mar 3', Apples: 2800, Oranges: 1700 },
+  { date: 'Mar 4', Apples: 3100, Oranges: 1600 },
+  { date: 'Mar 5', Apples: 3000, Oranges: 1800 },
+  { date: 'Mar 6', Apples: 2700, Oranges: 2000 },
+  { date: 'Mar 7', Apples: 2400, Oranges: 2100 },
+  { date: 'Mar 8', Apples: 2100, Oranges: 1900 },
+  { date: 'Mar 9', Apples: 1900, Oranges: 1700 },
+  { date: 'Mar 10', Apples: 2200, Oranges: 1500 },
+  { date: 'Mar 11', Apples: 2600, Oranges: 1600 },
+  { date: 'Mar 12', Apples: 3000, Oranges: 1800 },
+  { date: 'Mar 13', Apples: 3300, Oranges: 2000 },
+  { date: 'Mar 14', Apples: 3100, Oranges: 2200 },
+  { date: 'Mar 15', Apples: 2800, Oranges: 2100 },
+  { date: 'Mar 16', Apples: 2500, Oranges: 1900 },
+];
+```
+
+
+## Heatmap month labels position
+
+[Heatmap](https://mantine.dev/llms/charts-heatmap.md) now supports `monthLabelsPosition` prop that allows
+displaying month labels at the bottom of the heatmap instead of the top (default).
+
+```tsx
+// Demo.tsx
+import { Heatmap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Heatmap
+      data={data}
+      startDate="2024-02-16"
+      endDate="2025-02-16"
+      withMonthLabels
+      withWeekdayLabels
+      monthLabelsPosition="bottom"
+    />
+  );
+}
+
+// data.ts
+export const data = ${JSON.stringify(data, null, 2)};
+```
+
+
+## Accordion disable collapse
+
+[Accordion](https://mantine.dev/llms/core-accordion.md) now supports the `disableCollapse` prop. When enabled in single
+mode (`multiple={false}`), the open item cannot be collapsed by clicking it again, so one item
+always stays open. Pair it with `defaultValue` or `value` to guarantee that a section is open
+from the start – useful for settings panels, stepper-style flows and FAQ pages.
+
+```tsx
+// Demo.tsx
+import { Accordion } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const items = data.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
+
+  return (
+    <Accordion defaultValue="Apples" disableCollapse order={3}>
+      {items}
+    </Accordion>
+  );
+}
+
+// data.ts
+export const data = [
+  {
+    emoji: '🍎',
+    value: 'Apples',
+    description:
+      'Crisp and refreshing fruit. Apples are known for their versatility and nutritional benefits. They come in a variety of flavors and are great for snacking, baking, or adding to salads.',
+  },
+  {
+    emoji: '🍌',
+    value: 'Bananas',
+    description:
+      'Naturally sweet and potassium-rich fruit. Bananas are a popular choice for their energy-boosting properties and can be enjoyed as a quick snack, added to smoothies, or used in baking.',
+  },
+  {
+    emoji: '🥦',
+    value: 'Broccoli',
+    description:
+      'Nutrient-packed green vegetable. Broccoli is packed with vitamins, minerals, and fiber. It has a distinct flavor and can be enjoyed steamed, roasted, or added to stir-fries.',
+  },
+];
+```
+
+
+## ScrollArea vertical scrollbar position
+
+[ScrollArea](https://mantine.dev/llms/core-scroll-area.md) now supports the `verticalScrollbarPosition` prop that pins the
+vertical scrollbar to a physical side (`left` or `right`) regardless of direction. This is useful
+for RTL applications where users expect the vertical scrollbar to stay on the right, matching the
+behavior of most desktop software. The prop also realigns the offset padding, the corner and the
+horizontal scrollbar gap, so it works correctly with `offsetScrollbars` and `scrollbars="xy"`.
+
+```tsx
+import { ScrollArea } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ScrollArea
+      w={300}
+      h={200}
+      type="always"
+      scrollbars="y"
+       verticalScrollbarPosition="right" offsetScrollbars={true}
+    >
+      {/* ... content */}
+    </ScrollArea>
+  );
+}
+```
+
+
+## Schedule intervals larger than one hour
+
+[ResourcesDayView](https://mantine.dev/llms/schedule-resources-day-view.md) and
+[ResourcesWeekView](https://mantine.dev/llms/schedule-resources-week-view.md) now support `intervalMinutes` values
+larger than 60. Previously the interval was capped at one hour – you can now set it to any
+whole number of hours (for example `120` or `240`) to display multi-hour time slots. Values
+of 60 or less must still divide evenly into an hour; any value that does not keep the grid on
+hour boundaries falls back to `60`.
+
+```tsx
+// Demo.tsx
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { SegmentedControl, Stack } from '@mantine/core';
+import { ResourcesDayView } from '@mantine/schedule';
+import { events, resources } from './data';
+
+function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [intervalMinutes, setIntervalMinutes] = useState('120');
+
+  return (
+    <Stack>
+      <SegmentedControl
+        value={intervalMinutes}
+        onChange={setIntervalMinutes}
+        data={[
+          { label: '1 hour', value: '60' },
+          { label: '2 hours', value: '120' },
+          { label: '4 hours', value: '240' },
+        ]}
+      />
+      <ResourcesDayView
+        date={date}
+        onDateChange={setDate}
+        resources={resources}
+        events={events}
+        intervalMinutes={Number(intervalMinutes)}
+        startScrollTime="08:00:00"
+      />
+    </Stack>
+  );
+}
+
+// data.ts
+import dayjs from 'dayjs';
+import { ScheduleResourceData } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+
+const resources: ScheduleResourceData[] = [
+  { id: 'tokyo', label: 'Meeting room: Tokyo' },
+  { id: 'paris', label: 'Meeting room: Paris' },
+  { id: 'new-york', label: 'Meeting room: New York' },
+  { id: 'london', label: 'Meeting room: London' },
+];
+
+const events = [
+  {
+    id: 1,
+    title: 'Team Standup',
+    start: \`\${today} 09:00:00\`,
+    end: \`\${today} 09:30:00\`,
+    color: 'blue',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 2,
+    title: 'Sprint Planning',
+    start: \`\${today} 10:00:00\`,
+    end: \`\${today} 11:30:00\`,
+    color: 'green',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 3,
+    title: 'Client Call',
+    start: \`\${today} 09:30:00\`,
+    end: \`\${today} 10:30:00\`,
+    color: 'violet',
+    resourceId: 'paris',
+  },
+  {
+    id: 4,
+    title: 'Design Review',
+    start: \`\${today} 13:00:00\`,
+    end: \`\${today} 14:00:00\`,
+    color: 'orange',
+    resourceId: 'paris',
+  },
+  {
+    id: 5,
+    title: '1:1 Meeting',
+    start: \`\${today} 11:00:00\`,
+    end: \`\${today} 11:30:00\`,
+    color: 'cyan',
+    resourceId: 'new-york',
+  },
+  {
+    id: 6,
+    title: 'Workshop',
+    start: \`\${today} 14:00:00\`,
+    end: \`\${today} 16:00:00\`,
+    color: 'pink',
+    resourceId: 'new-york',
+  },
+  {
+    id: 7,
+    title: 'Architecture Review',
+    start: \`\${today} 10:00:00\`,
+    end: \`\${today} 11:00:00\`,
+    color: 'red',
+    resourceId: 'london',
+  },
+  {
+    id: 8,
+    title: 'Retrospective',
+    start: \`\${today} 15:00:00\`,
+    end: \`\${today} 16:00:00\`,
+    color: 'grape',
+    resourceId: 'london',
+  },
+];
+```
+
+
+## New example: Table virtualization
+
+New [Table](https://mantine.dev/llms/core-table.md) example demonstrates how to use `Table.ScrollContainer` with
+`@tanstack/react-virtual` to efficiently render large datasets with 5,000 rows.
+
+```tsx
+import { useState } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { Table } from '@mantine/core';
+import { generateData } from './data';
+
+
+const data = generateData(5000);
+const ROW_HEIGHT = 36;
+
+function Demo() {
+  const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
+
+  const virtualizer = useVirtualizer({
+    count: data.length,
+    getScrollElement: () => scrollParent,
+    estimateSize: () => ROW_HEIGHT,
+    overscan: 20,
+  });
+
+  const virtualItems = virtualizer.getVirtualItems();
+
+  return (
+    <Table.ScrollContainer
+      minWidth={500}
+      maxHeight={400}
+      scrollAreaProps={{ viewportRef: setScrollParent }}
+    >
+      <Table stickyHeader layout="fixed">
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th w={50}>#</Table.Th>
+            <Table.Th>Name</Table.Th>
+            <Table.Th>Email</Table.Th>
+            <Table.Th>Company</Table.Th>
+            <Table.Th>City</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+
+        <Table.Tbody>
+          {virtualItems.length > 0 && (
+            <tr aria-hidden>
+              <td
+                aria-hidden
+                colSpan={5}
+                style={{ height: virtualItems[0].start, padding: 0, border: 'none' }}
+              />
+            </tr>
+          )}
+
+          {virtualItems.map((virtualItem) => {
+            const row = data[virtualItem.index];
+            return (
+              <Table.Tr key={virtualItem.index}>
+                <Table.Td>{row.id}</Table.Td>
+                <Table.Td>{row.name}</Table.Td>
+                <Table.Td>{row.email}</Table.Td>
+                <Table.Td>{row.company}</Table.Td>
+                <Table.Td>{row.city}</Table.Td>
+              </Table.Tr>
+            );
+          })}
+
+          {virtualItems.length > 0 && (
+            <tr aria-hidden>
+              <td
+                aria-hidden
+                colSpan={5}
+                style={{
+                  height:
+                    virtualizer.getTotalSize() -
+                    virtualItems[virtualItems.length - 1].end,
+                  padding: 0,
+                  border: 'none',
+                }}
+              />
+            </tr>
+          )}
+        </Table.Tbody>
+      </Table>
+    </Table.ScrollContainer>
+  );
+}
+```
+
+
+
+--------------------------------------------------------------------------------
+
 ### AllReleases
 
 # All releases
 
 ## Releases
+
+### [9.5.0](https://mantine.dev/llms/changelog-9-5-0.md) (July 28, 2026)
+- GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.5.0
 
 ### [9.4.0](https://mantine.dev/llms/changelog-9-4-0.md) (June 23, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.4.0
@@ -128739,6 +132101,9 @@ See all releases: https://mantine.dev/changelog/all-releases
 # All releases
 
 ## Releases
+
+### [9.5.0](https://mantine.dev/llms/changelog-9-5-0.md) (July 28, 2026)
+- GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.5.0
 
 ### [9.4.0](https://mantine.dev/llms/changelog-9-4-0.md) (June 23, 2026)
 - GitHub release: https://github.com/mantinedev/mantine/releases/tag/9.4.0

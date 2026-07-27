@@ -2198,6 +2198,127 @@ export const data = [
 ```
 
 
+## Brush
+
+Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
+brush handles (travellers) to zoom into a subset of the data – the chart updates to show
+only the selected range. The brush border and background are themed to match the chart grid
+and adapt to the color scheme. `withBrush` is `false` by default and is supported by
+`AreaChart`, `BarChart`, `LineChart` and `CompositeChart` components with horizontal orientation.
+
+```tsx
+// Demo.tsx
+import { AreaChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      withBrush
+      series={[
+        { name: 'Apples', color: 'indigo.6' },
+        { name: 'Oranges', color: 'blue.6' },
+      ]}
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  { date: 'Mar 1', Apples: 2200, Oranges: 1400 },
+  { date: 'Mar 2', Apples: 2500, Oranges: 1500 },
+  { date: 'Mar 3', Apples: 2800, Oranges: 1700 },
+  { date: 'Mar 4', Apples: 3100, Oranges: 1600 },
+  { date: 'Mar 5', Apples: 3000, Oranges: 1800 },
+  { date: 'Mar 6', Apples: 2700, Oranges: 2000 },
+  { date: 'Mar 7', Apples: 2400, Oranges: 2100 },
+  { date: 'Mar 8', Apples: 2100, Oranges: 1900 },
+  { date: 'Mar 9', Apples: 1900, Oranges: 1700 },
+  { date: 'Mar 10', Apples: 2200, Oranges: 1500 },
+  { date: 'Mar 11', Apples: 2600, Oranges: 1600 },
+  { date: 'Mar 12', Apples: 3000, Oranges: 1800 },
+  { date: 'Mar 13', Apples: 3300, Oranges: 2000 },
+  { date: 'Mar 14', Apples: 3100, Oranges: 2200 },
+  { date: 'Mar 15', Apples: 2800, Oranges: 2100 },
+  { date: 'Mar 16', Apples: 2500, Oranges: 1900 },
+];
+```
+
+
+## Brush props
+
+Use the `brushProps` prop to pass props down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush)
+component. For example, you can set the initially selected range with `startIndex`/`endIndex`,
+change the brush `height`, or subscribe to range changes with `onChange`:
+
+```tsx
+// Demo.tsx
+import { AreaChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      withBrush
+      brushProps={{ startIndex: 3, endIndex: 10, height: 30 }}
+      series={[{ name: 'Apples', color: 'indigo.6' }]}
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  { date: 'Mar 1', Apples: 2200, Oranges: 1400 },
+  { date: 'Mar 2', Apples: 2500, Oranges: 1500 },
+  { date: 'Mar 3', Apples: 2800, Oranges: 1700 },
+  { date: 'Mar 4', Apples: 3100, Oranges: 1600 },
+  { date: 'Mar 5', Apples: 3000, Oranges: 1800 },
+  { date: 'Mar 6', Apples: 2700, Oranges: 2000 },
+  { date: 'Mar 7', Apples: 2400, Oranges: 2100 },
+  { date: 'Mar 8', Apples: 2100, Oranges: 1900 },
+  { date: 'Mar 9', Apples: 1900, Oranges: 1700 },
+  { date: 'Mar 10', Apples: 2200, Oranges: 1500 },
+  { date: 'Mar 11', Apples: 2600, Oranges: 1600 },
+  { date: 'Mar 12', Apples: 3000, Oranges: 1800 },
+  { date: 'Mar 13', Apples: 3300, Oranges: 2000 },
+  { date: 'Mar 14', Apples: 3100, Oranges: 2200 },
+  { date: 'Mar 15', Apples: 2800, Oranges: 2100 },
+  { date: 'Mar 16', Apples: 2500, Oranges: 1900 },
+];
+```
+
+
+## ChartBrush component
+
+For full control over the brush, render the `ChartBrush` component as a child of the chart
+instead of using the `withBrush` prop. `ChartBrush` accepts all recharts `Brush` props and
+applies Mantine theming – this is useful when you need a [custom traveller](https://recharts.org/en-US/api/Brush)
+or a panorama preview inside the brush:
+
+```tsx
+import { AreaChart, ChartBrush } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      series={[{ name: 'Apples', color: 'indigo.6' }]}
+    >
+      <ChartBrush dataKey="date" startIndex={0} endIndex={10} />
+    </AreaChart>
+  );
+}
+```
+
 
 #### Props
 
@@ -2205,9 +2326,11 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |
 | areaChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `AreaChart` component |
 | areaProps | ((series: AreaChartSeries) => Partial<Omit<Props<any, any>, "ref">>) \| Partial<Omit<Props<any, any>, "ref">> | - | Props passed down to recharts `Area` component |
+| brushProps | RechartsProps | - | Props passed down to the `Brush` component |
 | children | React.ReactNode | - | Additional components that are rendered inside recharts `AreaChart` component |
 | connectNulls | boolean | - | If set, points with `null` values are connected |
 | curveType | AreaChartCurveType | - | Type of the curve |
@@ -2235,6 +2358,7 @@ export const data = [
 | type | AreaChartType | - | Controls how chart areas are positioned relative to each other |
 | unit | string | - | Unit displayed next to each tick in y-axis |
 | valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
+| withBrush | boolean | - | Determines whether a brush (range selector) should be displayed under the chart, `false` by default |
 | withDots | boolean | - | Determines whether dots should be displayed |
 | withGradient | boolean | - | Determines whether the chart area should be represented with a gradient instead of the solid color |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |
@@ -2276,6 +2400,7 @@ AreaChart component supports Styles API. With Styles API, you can customize styl
 | tooltipLabel | .mantine-AreaChart-tooltipLabel | Label of the tooltip |
 | referenceLine | .mantine-AreaChart-referenceLine | Reference line |
 | axisLabel | .mantine-AreaChart-axisLabel | X and Y axis labels |
+| brush | .mantine-AreaChart-brush | Brush (range selector) root element |
 
 **AreaChart CSS variables**
 

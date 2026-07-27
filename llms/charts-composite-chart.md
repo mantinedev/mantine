@@ -1639,6 +1639,41 @@ export const data = [
 ```
 
 
+## Brush
+
+Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
+brush handles to zoom into a subset of the data. Use the `brushProps` prop to pass props
+down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush) component,
+or render the `ChartBrush` component as a child for full control.
+
+```tsx
+import { CompositeChart } from '@mantine/charts';
+
+const data = [
+  { date: 'Mar 1', Apples: 2200, Oranges: 1400, Tomatoes: 800 },
+  { date: 'Mar 2', Apples: 2500, Oranges: 1500, Tomatoes: 1000 },
+  /* ...other data points */
+];
+
+function Demo() {
+  return (
+    <CompositeChart
+      h={300}
+      data={data}
+      dataKey="date"
+      maxBarWidth={30}
+      withBrush
+      series={[
+        { name: 'Tomatoes', color: 'rgba(18, 120, 255, 0.2)', type: 'bar' },
+        { name: 'Apples', color: 'red.8', type: 'line' },
+        { name: 'Oranges', color: 'yellow.8', type: 'area' },
+      ]}
+    />
+  );
+}
+```
+
+
 
 #### Props
 
@@ -1646,9 +1681,11 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |
 | areaProps | Partial<Omit<Props<any, any>, "ref">> \| ((series: CompositeChartSeries) => Partial<Omit<Props<any, any>, "ref">>) | - | Props passed down to recharts `Area` component |
 | barProps | Partial<Omit<Props, "ref">> \| ((series: CompositeChartSeries) => Partial<Omit<Props, "ref">>) | - | Props passed down to recharts `Bar` component |
+| brushProps | RechartsProps | - | Props passed down to the `Brush` component |
 | children | React.ReactNode | - | Additional components that are rendered inside recharts `AreaChart` component |
 | composedChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `AreaChart` component |
 | connectNulls | boolean | - | Determines whether points with `null` values should be connected |
@@ -1676,6 +1713,7 @@ export const data = [
 | unit | string | - | Unit displayed next to each tick in y-axis |
 | valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
 | withBarValueLabel | boolean | - | Determines whether a label with bar value should be displayed on top of each bar |
+| withBrush | boolean | - | Determines whether a brush (range selector) should be displayed under the chart, `false` by default |
 | withDots | boolean | - | Determines whether dots should be displayed |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |
 | withPointLabels | boolean | - | Determines whether each point should have associated label |
@@ -1718,6 +1756,7 @@ CompositeChart component supports Styles API. With Styles API, you can customize
 | tooltipLabel | .mantine-CompositeChart-tooltipLabel | Label of the tooltip |
 | referenceLine | .mantine-CompositeChart-referenceLine | Reference line |
 | axisLabel | .mantine-CompositeChart-axisLabel | X and Y axis labels |
+| brush | .mantine-CompositeChart-brush | Brush (range selector) root element |
 
 **CompositeChart CSS variables**
 

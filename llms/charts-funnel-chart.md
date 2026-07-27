@@ -266,6 +266,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | children | React.ReactNode | - | Additional elements rendered inside `FunnelChart` component |
 | data | FunnelChartCell[] | required | Data used to render chart |
 | funnelChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `FunnelChart` component |

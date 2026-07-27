@@ -151,10 +151,12 @@ function Demo() {
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
 | weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSeconds | boolean | - | Determines whether the seconds input should be displayed |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 
 #### Styles API

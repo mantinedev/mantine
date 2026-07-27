@@ -320,6 +320,65 @@ function Demo() {
 }
 ```
 
+## Disable collapse
+
+By default, in single mode (`multiple={false}`) the open item can always be toggled closed,
+which leaves the Accordion fully collapsed. Set the `disableCollapse` prop to prevent this:
+once an item is open, clicking its control again is a no-op, and the only way to change state
+is to open a different item. This is useful for settings panels, stepper-style flows and FAQ
+pages where one section should always stay visible.
+
+`disableCollapse` only prevents collapsing an already-open item – it does not force an item
+open on mount. To guarantee that one item is open from the start, pair it with `defaultValue`
+(uncontrolled) or `value` (controlled):
+
+```tsx
+// Demo.tsx
+import { Accordion } from '@mantine/core';
+import { data } from './data';
+
+function Demo() {
+  const items = data.map((item) => (
+    <Accordion.Item key={item.value} value={item.value}>
+      <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
+      <Accordion.Panel>{item.description}</Accordion.Panel>
+    </Accordion.Item>
+  ));
+
+  return (
+    <Accordion defaultValue="Apples" disableCollapse order={3}>
+      {items}
+    </Accordion>
+  );
+}
+
+// data.ts
+export const data = [
+  {
+    emoji: '🍎',
+    value: 'Apples',
+    description:
+      'Crisp and refreshing fruit. Apples are known for their versatility and nutritional benefits. They come in a variety of flavors and are great for snacking, baking, or adding to salads.',
+  },
+  {
+    emoji: '🍌',
+    value: 'Bananas',
+    description:
+      'Naturally sweet and potassium-rich fruit. Bananas are a popular choice for their energy-boosting properties and can be enjoyed as a quick snack, added to smoothies, or used in baking.',
+  },
+  {
+    emoji: '🥦',
+    value: 'Broccoli',
+    description:
+      'Nutrient-packed green vegetable. Broccoli is packed with vitamins, minerals, and fiber. It has a distinct flavor and can be enjoyed steamed, roasted, or added to stir-fries.',
+  },
+];
+```
+
+
+The prop has no effect when `multiple` is set, as multiple mode already allows any combination
+of opened and closed items.
+
 ## Compose controls
 
 Putting a button or link inside `Accordion.Control` is a common mistake when
@@ -472,6 +531,7 @@ The Accordion component implements the [WAI-ARIA accessibility pattern](https://
 | chevronSize | string \| number | - | Size of the chevron icon container |
 | defaultValue | string \| string[] \| null | - | Uncontrolled component default value |
 | disableChevronRotation | boolean | - | If set, chevron rotation is disabled |
+| disableCollapse | boolean | - | If set, the open item cannot be collapsed by clicking it again, so one item always stays open. Only applies when `multiple` is `false`. |
 | keepMounted | boolean | - | If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. |
 | keepMountedMode | "activity" \| "display-none" | - | Controls how inactive panels content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles |
 | loop | boolean | - | If set, arrow keys loop through items (first to last and last to first) |

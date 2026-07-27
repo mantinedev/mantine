@@ -154,6 +154,19 @@ function Demo() {
 ```
 
 
+## Native level select
+
+Set the `withNativeLevelSelect` prop to replace the calendar header level button with native `<select>` elements.
+
+```tsx
+import { Calendar } from '@mantine/dates';
+
+function Demo() {
+  return <Calendar withNativeLevelSelect />;
+}
+```
+
+
 
 #### Props
 
@@ -210,9 +223,11 @@ function Demo() {
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
 | weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 **Calendar.Header props**
 
@@ -233,8 +248,10 @@ function Demo() {
 | previousIcon | React.ReactNode | - | Change previous icon |
 | previousLabel | string | - | Previous button `aria-label` |
 | size | MantineSize | - | Component size |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withNext | boolean | - | Determines whether next control should be rendered |
 | withPrevious | boolean | - | Determines whether previous control should be rendered |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 
 #### Styles API

@@ -258,6 +258,23 @@ function Demo() {
 ```
 
 
+## Native level select
+
+```tsx
+import { DateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateTimePicker
+      label="Pick date and time"
+      placeholder="Pick date and time"
+      withNativeLevelSelect
+    />
+  );
+}
+```
+
+
 ## Accessibility
 
 DateTimePicker provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
@@ -362,12 +379,14 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSeconds | boolean | - | Determines whether the seconds input should be displayed |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 
 #### Styles API

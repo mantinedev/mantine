@@ -102,6 +102,7 @@ For a single consolidated file with all content, use:
 - [Burger](https://mantine.dev/llms/core-burger.md): Open/close navigation button
 - [Button](https://mantine.dev/llms/core-button.md): Button component to render button or link
 - [Card](https://mantine.dev/llms/core-card.md): Card with sections
+- [Cascader](https://mantine.dev/llms/core-cascader.md): Select a path from hierarchical data with cascading columns
 - [Center](https://mantine.dev/llms/core-center.md): Centers content vertically and horizontally
 - [Checkbox](https://mantine.dev/llms/core-checkbox.md): Capture boolean input from user
 - [Chip](https://mantine.dev/llms/core-chip.md): Pick one or multiple values with inline controls
@@ -330,6 +331,7 @@ For a single consolidated file with all content, use:
 - [BarChart](https://mantine.dev/llms/charts-bar-chart.md): Bar chart component with stacked and percent variants
 - [BarsList](https://mantine.dev/llms/charts-bars-list.md): Display a list of bars with names and values
 - [BubbleChart](https://mantine.dev/llms/charts-bubble-chart.md): Bubble chart component
+- [BulletChart](https://mantine.dev/llms/charts-bullet-chart.md): Compact KPI chart with value, target, and qualitative ranges
 - [CompositeChart](https://mantine.dev/llms/charts-composite-chart.md): Composed chart with support for Area, Bar and Line charts
 - [DonutChart](https://mantine.dev/llms/charts-donut-chart.md): Donut chart component
 - [FunnelChart](https://mantine.dev/llms/charts-funnel-chart.md): Funnel chart component
@@ -342,6 +344,7 @@ For a single consolidated file with all content, use:
 - [SankeyChart](https://mantine.dev/llms/charts-sankey-chart.md): Sankey diagram component
 - [ScatterChart](https://mantine.dev/llms/charts-scatter-chart.md): Scatter chart component
 - [Sparkline](https://mantine.dev/llms/charts-sparkline.md): Simplified area chart to show trends
+- [SunburstChart](https://mantine.dev/llms/charts-sunburst-chart.md): Sunburst chart component for hierarchical data
 - [Treemap](https://mantine.dev/llms/charts-treemap.md): Treemap chart component
 
 ## Schedule
@@ -462,6 +465,7 @@ For a single consolidated file with all content, use:
 - [Changelog920](https://mantine.dev/llms/changelog-9-2-0.md)
 - [Changelog930](https://mantine.dev/llms/changelog-9-3-0.md)
 - [Changelog940](https://mantine.dev/llms/changelog-9-4-0.md)
+- [Changelog950](https://mantine.dev/llms/changelog-9-5-0.md)
 - [Contribute](https://mantine.dev/llms/contribute.md)
 - [GettingStarted](https://mantine.dev/llms/getting-started.md)
 - [NotFound](https://mantine.dev/llms/404.md)

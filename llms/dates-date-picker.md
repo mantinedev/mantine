@@ -518,6 +518,20 @@ function Demo() {
 ```
 
 
+## Native level select
+
+Set the `withNativeLevelSelect` prop to replace the calendar header level button with native `<select>` elements.
+At the month level, two selects are rendered for month and year. At the year level, one select is rendered for year.
+
+```tsx
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return <DatePicker withNativeLevelSelect yearsSelectRange={[2020, 2035]} />;
+}
+```
+
+
 ## Accessibility
 
 ### Aria labels
@@ -636,9 +650,11 @@ Note that the following events will only trigger if focus is on a date control.
 | weekdayFormat | string \| ((date: string) => string) | - | `dayjs` format for weekdays names |
 | weekendDays | (0 \| 1 \| 2 \| 3 \| 4 \| 5 \| 6)[] | - | Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 **DatePicker.Input props**
 
@@ -739,11 +755,13 @@ Note that the following events will only trigger if focus is on a date control.
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | withWeekNumbers | boolean | - | Determines whether week numbers should be displayed |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
 | yearsListFormat | string | - | dayjs format for years list |
+| yearsSelectRange | [number, number] | - | Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. |
 
 
 #### Styles API

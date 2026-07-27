@@ -1212,6 +1212,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | data | ScatterChartSeries[] | required | Data that is used to build the chart |
 | dataKey | { x: string; y: string; } | required | Keys that should be used to retrieve data from the data array on x and y axis |
 | gridAxis | "none" \| "x" \| "y" \| "xy" | - | Specifies which lines should be displayed in the grid, `'x'` by default |

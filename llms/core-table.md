@@ -383,6 +383,98 @@ function Demo() {
 ```
 
 
+## Example: Table virtualization
+
+This example demonstrates how to use `Table.ScrollContainer` with `@tanstack/react-virtual`
+to efficiently render large datasets. Only the visible rows are rendered in the DOM,
+which significantly improves performance for tables with thousands of rows.
+
+```tsx
+import { useState } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { Table } from '@mantine/core';
+import { generateData } from './data';
+
+
+const data = generateData(5000);
+const ROW_HEIGHT = 36;
+
+function Demo() {
+  const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
+
+  const virtualizer = useVirtualizer({
+    count: data.length,
+    getScrollElement: () => scrollParent,
+    estimateSize: () => ROW_HEIGHT,
+    overscan: 20,
+  });
+
+  const virtualItems = virtualizer.getVirtualItems();
+
+  return (
+    <Table.ScrollContainer
+      minWidth={500}
+      maxHeight={400}
+      scrollAreaProps={{ viewportRef: setScrollParent }}
+    >
+      <Table stickyHeader layout="fixed">
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th w={50}>#</Table.Th>
+            <Table.Th>Name</Table.Th>
+            <Table.Th>Email</Table.Th>
+            <Table.Th>Company</Table.Th>
+            <Table.Th>City</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+
+        <Table.Tbody>
+          {virtualItems.length > 0 && (
+            <tr aria-hidden>
+              <td
+                aria-hidden
+                colSpan={5}
+                style={{ height: virtualItems[0].start, padding: 0, border: 'none' }}
+              />
+            </tr>
+          )}
+
+          {virtualItems.map((virtualItem) => {
+            const row = data[virtualItem.index];
+            return (
+              <Table.Tr key={virtualItem.index}>
+                <Table.Td>{row.id}</Table.Td>
+                <Table.Td>{row.name}</Table.Td>
+                <Table.Td>{row.email}</Table.Td>
+                <Table.Td>{row.company}</Table.Td>
+                <Table.Td>{row.city}</Table.Td>
+              </Table.Tr>
+            );
+          })}
+
+          {virtualItems.length > 0 && (
+            <tr aria-hidden>
+              <td
+                aria-hidden
+                colSpan={5}
+                style={{
+                  height:
+                    virtualizer.getTotalSize() -
+                    virtualItems[virtualItems.length - 1].end,
+                  padding: 0,
+                  border: 'none',
+                }}
+              />
+            </tr>
+          )}
+        </Table.Tbody>
+      </Table>
+    </Table.ScrollContainer>
+  );
+}
+```
+
+
 ## Example: Table with row selection
 
 ```tsx

@@ -1868,6 +1868,39 @@ export const data = [
 ```
 
 
+## Brush
+
+Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
+brush handles to zoom into a subset of the data. Use the `brushProps` prop to pass props
+down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush) component,
+or render the `ChartBrush` component as a child for full control.
+
+```tsx
+import { LineChart } from '@mantine/charts';
+
+const data = [
+  { date: 'Mar 1', Apples: 2200, Oranges: 1400 },
+  { date: 'Mar 2', Apples: 2500, Oranges: 1500 },
+  /* ...other data points */
+];
+
+function Demo() {
+  return (
+    <LineChart
+      h={300}
+      data={data}
+      dataKey="date"
+      withBrush
+      series={[
+        { name: 'Apples', color: 'indigo.6' },
+        { name: 'Oranges', color: 'blue.6' },
+      ]}
+    />
+  );
+}
+```
+
+
 
 #### Props
 
@@ -1875,7 +1908,9 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |
+| brushProps | RechartsProps | - | Props passed down to the `Brush` component |
 | children | React.ReactNode | - | Additional components that are rendered inside recharts `LineChart` component |
 | connectNulls | boolean | - | Determines whether points with `null` values should be connected |
 | curveType | LineChartCurveType | - | Type of the curve |
@@ -1904,6 +1939,7 @@ export const data = [
 | type | LineChartType | - | Controls styles of the line |
 | unit | string | - | Unit displayed next to each tick in y-axis |
 | valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
+| withBrush | boolean | - | Determines whether a brush (range selector) should be displayed under the chart, `false` by default |
 | withDots | boolean | - | Determines whether dots should be displayed |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |
 | withPointLabels | boolean | - | Determines whether each point should have associated label |
@@ -1944,6 +1980,7 @@ LineChart component supports Styles API. With Styles API, you can customize styl
 | tooltipLabel | .mantine-LineChart-tooltipLabel | Label of the tooltip |
 | referenceLine | .mantine-LineChart-referenceLine | Reference line |
 | axisLabel | .mantine-LineChart-axisLabel | X and Y axis labels |
+| brush | .mantine-LineChart-brush | Brush (range selector) root element |
 
 **LineChart CSS variables**
 

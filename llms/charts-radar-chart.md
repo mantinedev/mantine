@@ -407,6 +407,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | activeDotProps | MantineChartDotProps | - | Props passed down to all active dots. Ignored if `withDots={false}` is set. |
 | children | React.ReactNode | - | Additional components that are rendered inside recharts `RadarChart` component |
 | data | Record<string, any>[] | required | Data used in the chart |

@@ -1,0 +1,21 @@
+__turbopack_load_page_chunks__("/charts/radar-chart", [
+  "static/chunks/0f6me72kaa9x7.js",
+  "static/chunks/0uz3bm3u838-q.js",
+  "static/chunks/18xt38q-jarzb.js",
+  "static/chunks/1lsnic9rga3dg.js",
+  "static/chunks/0h6x7w-h11pg7.js",
+  "static/chunks/1uoiq4ut_hwi0.js",
+  "static/chunks/1im_1fa63m_c4.js",
+  "static/chunks/31h__-udr0b4l.js",
+  "static/chunks/1lwy2pj_2xkvs.js",
+  "static/chunks/3252429q673-u.js",
+  "static/chunks/1e2u9gm_292w9.js",
+  "static/chunks/050l3md8cosel.js",
+  "static/chunks/0dlwjb-xzalqu.js",
+  "static/chunks/3mcnal1iqm-r_.js",
+  "static/chunks/3trd6ahm-u1d0.js",
+  "static/chunks/3ccec4kk3_4if.css",
+  "static/chunks/21hvpvux84e_7.css",
+  "static/chunks/0-7wdzp76gmz_.css",
+  "static/chunks/turbopack-3o6akda29ibd_.js"
+])

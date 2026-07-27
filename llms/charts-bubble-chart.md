@@ -284,6 +284,7 @@ function Demo() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | color | MantineColor | - | Color of the chart items. Key of `theme.colors` or any valid CSS color. |
 | data | Record<string, any>[] | required | Chart data |
 | dataKey | BubbleChartDataKey | required | Data keys for x, y and z axis |

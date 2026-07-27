@@ -1,0 +1,23 @@
+__turbopack_load_page_chunks__("/schedule/resources-week-view", [
+  "static/chunks/0f6me72kaa9x7.js",
+  "static/chunks/02ybc_cqeath9.js",
+  "static/chunks/3g6-my_bj2gr5.js",
+  "static/chunks/39lv2eqbnxbaz.js",
+  "static/chunks/24dwsmybgxgkq.js",
+  "static/chunks/38zov5wrbb67f.js",
+  "static/chunks/1cqr0nbttzppg.js",
+  "static/chunks/1344fieu2xuun.js",
+  "static/chunks/31h__-udr0b4l.js",
+  "static/chunks/0h6x7w-h11pg7.js",
+  "static/chunks/050l3md8cosel.js",
+  "static/chunks/39mlmh2vqp0au.js",
+  "static/chunks/3yhebgr7n62ax.js",
+  "static/chunks/0_a3kfggkock5.js",
+  "static/chunks/21af5yt-6mzrc.js",
+  "static/chunks/2gmmi5n5zf30j.js",
+  "static/chunks/1lsnic9rga3dg.js",
+  "static/chunks/3ccec4kk3_4if.css",
+  "static/chunks/21hvpvux84e_7.css",
+  "static/chunks/0-7wdzp76gmz_.css",
+  "static/chunks/turbopack-41754s7agownb.js"
+])

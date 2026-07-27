@@ -1,0 +1,866 @@
+{
+  "id": "core-cascader",
+  "name": "Cascader",
+  "kind": "component",
+  "package": "@mantine/core",
+  "route": "/core/cascader",
+  "description": "Select a path from hierarchical data with cascading columns",
+  "propsCount": 69,
+  "llmUrl": "https://mantine.dev/llms/core-cascader.md",
+  "componentDataUrl": "/mcp/components/core-cascader.json",
+  "searchText": "cascader select a path from hierarchical data with cascading columns @mantine/core /core/cascader allowdeselect changeonselect checkiconposition chevroncolor clearbuttonprops clearsectionmode clearable closeonselect columnwidth comboboxprops data defaultdropdownopened defaultsearchvalue defaultvalue description descriptionprops disabled dropdownopened error errorprops expandtrigger filter formatvalue hiddeninputprops inputcontainer inputsize inputwrapperorder label labelprops leftsection leftsectionpointerevents leftsectionprops leftsectionwidth loading loadingposition maxdisplayedlevels maxdropdownheight nextlevelscontrollabel nothingfoundmessage onchange onclear ondropdownclose ondropdownopen onsearchchange openonfocus pointer previouslevelscontrollabel radius renderoption rendersearchoption required rightsection rightsectionpointerevents rightsectionprops rightsectionwidth scrollareaprops searchvalue searchable separator size success successprops value withasterisk withcheckicon withcolumns witherrorstyles withsuccessstyles wrapperprops",
+  "source": "@mantine/core/src/components/Cascader/Cascader.tsx",
+  "docs": "core/cascader.mdx",
+  "markdown": "# Cascader\nPackage: @mantine/core\nImport: import { Cascader } from '@mantine/core';\nDescription: Select a path from hierarchical data with cascading columns\n\n## Usage\n\n`Cascader` lets users select a value from hierarchical data by drilling down through\ncascading columns: picking an option in one column reveals its children in a new column\nto the right. The value is an ordered path from the root option to the selected node,\nfor example `['asia', 'jp', 'tokyo']`.\n\n`Cascader` is useful for large hierarchical datasets where a nested dropdown would be hard\nto navigate – locations (continent → country → city), categories, organization structures, etc.\n\nAll demos on this page switch to the [flat list layout](#flat-list-layout) on small screens, so\nthe cascading columns and interactions like hover expand and keyboard navigation cannot be fully\ntested on mobile devices – open the demos on a larger screen to try them out.\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  // Switch to a flat list on small screens\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Data prop\n\nData passed to the `data` prop is an array of `CascaderOption` objects:\n\n* Each option must have a unique `value` across the whole data tree\n* `label` is optional, `value` is used when it is not set\n* `children` contains an array of nested options\n* `disabled` prevents an option from being selected or expanded\n\n```tsx\nimport { CascaderOption } from '@mantine/core';\n\nconst data: CascaderOption[] = [\n  {\n    value: 'asia',\n    label: 'Asia',\n    children: [\n      {\n        value: 'jp',\n        label: 'Japan',\n        children: [{ value: 'tokyo', label: 'Tokyo' }],\n      },\n    ],\n  },\n];\n```\n\n## Value and onChange\n\n`Cascader` value is an ordered array of option values (a path from root to node) or `null`\nwhen nothing is selected. The `onChange` callback is called with the selected path and the\nresolved chain of `CascaderOption` objects:\n\n```tsx\nimport { useState } from 'react';\nimport { Cascader, CascaderOption } from '@mantine/core';\n\nfunction Demo() {\n  const [value, setValue] = useState<string[] | null>(['europe', 'fr', 'paris']);\n\n  const handleChange = (path: string[] | null, options: CascaderOption[]) => {\n    setValue(path);\n    console.log(path, options);\n  };\n\n  return <Cascader data={data} value={value} onChange={handleChange} />;\n}\n```\n\nBy default, only leaf options (options without children) can be selected. Clicking a parent\noption only expands the next column.\n\n## Change on select\n\nSet the `changeOnSelect` prop to allow selecting any option, not only leaves. When enabled,\nclicking a parent option both selects its path and expands the next column, so any intermediate\nlevel is a valid value:\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      changeOnSelect\n      label=\"Location\"\n      placeholder=\"Pick any level\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Close on select\n\n`closeOnSelect` controls whether the dropdown is closed after a value is selected. When it is not\nset, it defaults to the opposite of [allowDeselect](#allow-deselect): the dropdown stays open by\ndefault (so the selection can be toggled off), unless `allowDeselect={false}` is set. Set\n`closeOnSelect` explicitly to override this behavior:\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      closeOnSelect={false}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Allow deselect\n\nBy default, clicking the selected option again removes the value. Set `allowDeselect={false}` to\ndisable this behavior:\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      allowDeselect\n      defaultValue={['asia', 'jp', 'tokyo']}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Expand trigger\n\nBy default, the next column is opened when an option is clicked. Set `expandTrigger=\"hover\"`\nto open the next column on hover instead – selecting a leaf still requires a click:\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      expandTrigger=\"hover\"\n      label=\"Location\"\n      placeholder=\"Hover to expand\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Flat list layout\n\nCascading columns require horizontal space and are not ideal for narrow screens, which makes them\na poor fit for mobile layouts. Set `withColumns={false}` to render options as a flat list of full\npaths (the same way as search results) instead of columns – this layout works well on mobile:\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      withColumns={false}\n      searchable\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      nothingFoundMessage=\"Nothing found...\"\n      data={data}\n    />\n  );\n}\n```\n\n\nThe most common use case is to render columns on desktop and the flat list on mobile. Combine\n`withColumns` with the [use-matches](https://mantine.dev/hooks/use-matches/) hook to switch between the two layouts\ndepending on the screen size. All demos on this page use this technique – resize the window to see\nthe layout change:\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return <Cascader withColumns={withColumns} data={data} />;\n}\n```\n\n## Max displayed levels\n\nDeep hierarchies can produce many columns. Use the `maxDisplayedLevels` prop (`3` by default) to\nlimit how many columns are displayed next to each other. When you drill deeper than the limit, the\nearliest columns are replaced by the deeper ones and a control is displayed on the left. Click it\nto reveal the previous levels; a control on the right then lets you return to the deeper levels:\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      maxDisplayedLevels={2}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      defaultValue={['asia', 'jp', 'tokyo']}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Searchable\n\nSet the `searchable` prop to allow filtering options. In search mode, the columns are replaced\nwith a flat list of full paths that match the query:\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      searchable\n      label=\"Location\"\n      placeholder=\"Search location\"\n      nothingFoundMessage=\"Nothing found...\"\n      data={data}\n    />\n  );\n}\n```\n\n\nUse the `filter` prop to customize how paths are matched and `renderSearchOption` to customize\nhow search results are rendered:\n\n```tsx\nimport { Cascader, CascaderOption } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <Cascader\n      searchable\n      data={data}\n      filter={(query, options: CascaderOption[]) =>\n        options.some((option) => String(option.label).toLowerCase().includes(query.toLowerCase()))\n      }\n      renderSearchOption={(query, options) => options.map((option) => option.label).join(' → ')}\n    />\n  );\n}\n```\n\n## Controlled search value\n\nUse `searchValue` and `onSearchChange` props to control the search value:\n\n```tsx\nimport { useState } from 'react';\nimport { Cascader } from '@mantine/core';\n\nfunction Demo() {\n  const [searchValue, setSearchValue] = useState('');\n  return (\n    <Cascader\n      searchable\n      data={data}\n      searchValue={searchValue}\n      onSearchChange={setSearchValue}\n    />\n  );\n}\n```\n\n## Nothing found\n\nSet the `nothingFoundMessage` prop to display a message when no options match the search query:\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      searchable\n      label=\"Location\"\n      placeholder=\"Search location\"\n      nothingFoundMessage=\"Nothing found...\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Display value\n\nBy default, the selected path is displayed in the input as option labels joined by the `separator`\n(`/` by default). Use the `separator` prop to change the divider and the `formatValue` prop to\nfully customize the input label:\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      separator=\"›\"\n      defaultValue={['asia', 'jp', 'tokyo']}\n      formatValue={({ options }) => options.map((option) => option.label).join(' › ')}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Column width\n\nUse the `columnWidth` prop to set a fixed width for every column and `maxDropdownHeight` to control\nthe height of a column before it becomes scrollable (`260` by default):\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      columnWidth={140}\n      maxDropdownHeight={200}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Custom option rendering\n\nUse the `renderOption` prop to customize how options are rendered in columns. The function receives\nthe option and its column level:\n\n```tsx\nimport { Badge, Cascader, CascaderOption, CascaderProps, Group, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nconst flags: Record<string, string> = {\n  jp: '🇯🇵', kr: '🇰🇷', fr: '🇫🇷', de: '🇩🇪', us: '🇺🇸', ca: '🇨🇦',\n};\n\nfunction countCities(option: CascaderOption): number {\n  if (!option.children || option.children.length === 0) {\n    return 1;\n  }\n  return option.children.reduce((acc, child) => acc + countCities(child), 0);\n}\n\n// Regions display the number of cities, countries display a flag, cities display nothing extra\nconst renderCascaderOption: CascaderProps['renderOption'] = (option, level) => (\n  <Group gap=\"xs\" justify=\"space-between\" wrap=\"nowrap\" flex=\"1\">\n    <Group gap={6} wrap=\"nowrap\">\n      {level === 1 && <span>{flags[option.value]}</span>}\n      <span>{option.label}</span>\n    </Group>\n    {level === 0 && (\n      <Badge size=\"xs\" variant=\"light\" color=\"gray\">\n        {countCities(option)} cities\n      </Badge>\n    )}\n  </Group>\n);\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      renderOption={renderCascaderOption}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Check icon\n\nUse the `withCheckIcon` prop to toggle the check icon on the selected option and `checkIconPosition`\nto change its position (`left` or `right`):\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      checkIconPosition=\"left\"\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      defaultValue={['asia', 'jp', 'tokyo']}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Disabled options\n\nSet the `disabled` property on an option to prevent it from being selected or expanded. Disabled\noptions are skipped during keyboard navigation:\n\n```tsx\nimport { Cascader, CascaderOption, useMatches } from '@mantine/core';\n\nconst data: CascaderOption[] = [\n  {\n    value: 'asia',\n    label: 'Asia',\n    children: [\n      { value: 'jp', label: 'Japan', children: [{ value: 'tokyo', label: 'Tokyo' }] },\n      { value: 'kr', label: 'South Korea', disabled: true },\n    ],\n  },\n  { value: 'antarctica', label: 'Antarctica', disabled: true },\n];\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Left and right sections\n\n`Cascader` supports `leftSection` and `rightSection` props the same way as other inputs. These\nsections are usually used to add icons:\n\n```tsx\nimport { MapPinIcon } from '@phosphor-icons/react';\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      leftSectionPointerEvents=\"none\"\n      leftSection={<MapPinIcon size={16} />}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Clearable\n\nSet the `clearable` prop to display the clear button when a value is selected:\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      clearable\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      defaultValue={['asia', 'jp', 'tokyo']}\n      data={data}\n    />\n  );\n}\n```\n\n\nUse the `clearSectionMode` prop to control how the clear button and `rightSection` are rendered:\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      clearable\n      clearSectionMode=\"clear\"\n      defaultValue={['asia', 'jp', 'tokyo']}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Scrollable columns\n\nEach column is scrollable. Use the `maxDropdownHeight` prop to control the height of a column\nbefore it becomes scrollable and `scrollAreaProps` to pass props down to the\n[ScrollArea](https://mantine.dev/llms/core-scroll-area.md) in each column:\n\n```tsx\nimport { Cascader, CascaderOption } from '@mantine/core';\n\nconst cities = Array.from({ length: 30 }, (_, index) => ({\n  value: `city-${index + 1}`,\n  label: `City ${index + 1}`,\n}));\n\nconst data: CascaderOption[] = [\n  { value: 'asia', label: 'Asia', children: [{ value: 'jp', label: 'Japan', children: cities }] },\n  { value: 'europe', label: 'Europe', children: [{ value: 'fr', label: 'France', children: cities }] },\n];\n\nfunction Demo() {\n  return (\n    <Cascader\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      defaultValue={['asia', 'jp']}\n      maxDropdownHeight={180}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Control dropdown opened state\n\nUse `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props to\ncontrol the dropdown opened state:\n\n```tsx\nimport { Cascader } from '@mantine/core';\n\nfunction Demo() {\n  const [dropdownOpened, setDropdownOpened] = useState(false);\n  return (\n    <Cascader\n      data={data}\n      dropdownOpened={dropdownOpened}\n      onDropdownOpen={() => setDropdownOpened(true)}\n      onDropdownClose={() => setDropdownOpened(false)}\n    />\n  );\n}\n```\n\n## Dropdown position\n\nUse `comboboxProps` to pass props down to the underlying [Combobox](https://mantine.dev/llms/core-combobox.md) and\n[Popover](https://mantine.dev/llms/core-popover.md). For example, set `position` to change the dropdown position:\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      comboboxProps={{ position: 'top-start' }}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Dropdown offset\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      comboboxProps={{ offset: 0 }}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Dropdown width\n\nIn flat list mode (`withColumns={false}`) the dropdown width can be controlled with\n`comboboxProps={{ width }}`. In columns mode the dropdown is sized to the columns:\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      withColumns={false}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      comboboxProps={{ width: 220, position: 'bottom-start' }}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Dropdown padding\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\n// Dropdown padding is only applied to the flat list (withColumns={false});\n// in columns mode each column manages its own padding.\nfunction Demo() {\n  return (\n    <Cascader\n      withColumns={false}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      comboboxProps={{ dropdownPadding: 12 }}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Dropdown shadow\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      comboboxProps={{ shadow: 'md' }}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Dropdown animation\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Inside Popover\n\nTo use `Cascader` inside a `Popover`, set `comboboxProps={{ withinPortal: false }}`:\n\n```tsx\nimport { Button, Cascader, Popover } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Popover width={320} position=\"bottom\" withArrow shadow=\"md\">\n      <Popover.Target>\n        <Button>Toggle popover</Button>\n      </Popover.Target>\n      <Popover.Dropdown>\n        <Cascader\n          withColumns={false}\n          label=\"Location\"\n          placeholder=\"Pick location\"\n          comboboxProps={{ withinPortal: false }}\n          data={data}\n        />\n      </Popover.Dropdown>\n    </Popover>\n  );\n}\n```\n\n\n## Input props\n\nCascader component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. Cascader documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n       variant=\"default\" size=\"sm\" radius=\"md\" label=\"Input label\" withAsterisk={false} description=\"Input description\" error=\"\"\n      withColumns={withColumns}\n      placeholder=\"Pick location\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Read only\n\nSet `readOnly` to make the input read only. When `readOnly` is set, `Cascader` will not open the\ndropdown and will not call the `onChange` function.\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      readOnly\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      defaultValue={['asia', 'jp', 'tokyo']}\n      data={data}\n    />\n  );\n}\n```\n\n\n## Disabled\n\nSet `disabled` to disable the input. When `disabled` is set, the user cannot interact with the\ninput and `Cascader` will not open the dropdown.\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      disabled\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Error state\n\n```tsx\nimport { Cascader, useMatches } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  const withColumns = useMatches({ base: false, sm: true });\n  return (\n    <Cascader\n      withColumns={withColumns}\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      error=\"Pick a valid location\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Success state\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      defaultValue={['asia', 'jp', 'tokyo']}\n      success=\"Looks good!\"\n      data={data}\n    />\n  );\n}\n```\n\n\n## Loading state\n\nSet the `loading` prop to display a loader in the right section instead of the chevron:\n\n```tsx\nimport { Cascader } from '@mantine/core';\nimport { data } from './data';\n\nfunction Demo() {\n  return (\n    <Cascader\n      label=\"Location\"\n      placeholder=\"Pick location\"\n      loading\n      data={data}\n    />\n  );\n}\n```\n\n\n## Accessibility\n\n`Cascader` columns are rendered as nested listboxes with `option` elements. To make the component\naccessible, set the `label` prop or pass `aria-label` to the component:\n\n```tsx\nimport { Cascader } from '@mantine/core';\n\n// Set aria-label when the input does not have a visible label\nfunction Demo() {\n  return <Cascader data={data} aria-label=\"Pick location\" />;\n}\n```\n\n## Keyboard interactions\n\n\n#### Props\n\n**Cascader props**\n\n| Prop | Type | Default | Description |\n|------|------|---------|-------------|\n| allowDeselect | boolean | - | If set, the selected value can be deselected by selecting it again |\n| changeOnSelect | boolean | - | If set, any intermediate option can be selected, not only leaf options |\n| checkIconPosition | \"left\" \\| \"right\" | - | Position of the check icon relative to the option label |\n| chevronColor | MantineColor | - | Controls the default chevron color |\n| clearButtonProps | InputClearButtonProps | - | Props passed down to the clear button |\n| clearSectionMode | ClearSectionMode | - | Determines how the clear button and `rightSection` are rendered |\n| clearable | boolean | - | If set, the clear button is displayed when a value is selected |\n| closeOnSelect | boolean | - | Determines whether the dropdown should be closed when a value is selected, defaults to `!allowDeselect` |\n| columnWidth | string \\| number | - | Width of each column |\n| comboboxProps | Record<string, any> | - | Props passed down to the underlying `Combobox` component |\n| data | CascaderOption[] | required | Hierarchical options data |\n| defaultDropdownOpened | boolean | - | Uncontrolled dropdown opened state |\n| defaultSearchValue | string | - | Uncontrolled search value |\n| defaultValue | string[] \\| null | - | Uncontrolled selected path from root to node |\n| description | React.ReactNode | - | Contents of `Input.Description` component. If not set, description is not displayed. |\n| descriptionProps | InputDescriptionProps | - | Props passed down to the `Input.Description` component |\n| disabled | boolean | - | Sets `disabled` attribute on the `input` element |\n| dropdownOpened | boolean | - | Controlled dropdown opened state |\n| error | React.ReactNode | - | Contents of `Input.Error` component. If not set, error is not displayed. |\n| errorProps | InputErrorProps | - | Props passed down to the `Input.Error` component |\n| expandTrigger | \"hover\" \\| \"click\" | - | Determines how the next column is opened |\n| filter | (query: string, options: CascaderOption[]) => boolean | - | Custom search filter, matched against the full option path |\n| formatValue | CascaderFormatValue | - | A function to format the selected path displayed in the input, should return a string |\n| hiddenInputProps | React.ComponentProps<\"input\"> | - | Props passed down to the hidden input |\n| inputContainer | (children: ReactNode) => ReactNode | - | Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. |\n| inputSize | string | - | HTML `size` attribute for the input element (number of visible characters) |\n| inputWrapperOrder | (\"input\" \\| \"label\" \\| \"description\" \\| \"error\")[] | - | Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. |\n| label | React.ReactNode | - | Contents of `Input.Label` component. If not set, label is not displayed. |\n| labelProps | InputLabelProps | - | Props passed down to the `Input.Label` component |\n| leftSection | React.ReactNode | - | Content section displayed on the left side of the input |\n| leftSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| leftSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `leftSection` element |\n| leftSectionWidth | React.CSSProperties[\"width\"] | - | Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height |\n| loading | boolean | - | Displays loading indicator in the left or right section |\n| loadingPosition | \"left\" \\| \"right\" | - | Position of the loading indicator |\n| maxDisplayedLevels | number | - | Maximum number of columns (levels) displayed next to each other, deeper levels replace earlier ones |\n| maxDropdownHeight | string \\| number | - | Max height of a column before it becomes scrollable |\n| nextLevelsControlLabel | string | - | `aria-label` and `title` of the control that reveals levels hidden after the visible ones by `maxDisplayedLevels` |\n| nothingFoundMessage | React.ReactNode | - | Message displayed when there are no options or search results |\n| onChange | (value: string[] \\| null, options: CascaderOption[]) => void | - | Called when the selected path changes with the path and the resolved option chain |\n| onClear | () => void | - | Called when the clear button is clicked |\n| onDropdownClose | () => void | - | Called when the dropdown closes |\n| onDropdownOpen | () => void | - | Called when the dropdown opens |\n| onSearchChange | (value: string) => void | - | Called when the search value changes |\n| openOnFocus | boolean | - | Opens the dropdown when the input is focused in `searchable` mode |\n| pointer | boolean | - | Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component=\"button\"` for Select/DatePicker). |\n| previousLevelsControlLabel | string | - | `aria-label` and `title` of the control that reveals levels hidden before the visible ones by `maxDisplayedLevels` |\n| radius | MantineRadius \\| number | - | Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem |\n| renderOption | (option: CascaderOption, level: number) => ReactNode | - | Custom rendering of an option in columns |\n| renderSearchOption | (query: string, options: CascaderOption[]) => ReactNode | - | Custom rendering of a search result row |\n| required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |\n| rightSection | React.ReactNode | - | Content section displayed on the right side of the input |\n| rightSectionPointerEvents | React.CSSProperties[\"pointerEvents\"] | - | Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). |\n| rightSectionProps | React.ComponentProps<\"div\"> | - | Props passed down to the `rightSection` element |\n| rightSectionWidth | React.CSSProperties[\"width\"] | - | Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height |\n| scrollAreaProps | ScrollAreaProps | - | Props passed down to the dropdown `ScrollArea` |\n| searchValue | string | - | Controlled search value |\n| searchable | boolean | - | If set, options can be searched by their flattened paths |\n| separator | React.ReactNode | - | Path separator displayed in the input and search results |\n| size | MantineSize | - | Controls input `height`, horizontal `padding`, and `font-size` |\n| success | React.ReactNode | - | Contents of `Input.Success` component. If not set, success is not displayed. |\n| successProps | InputSuccessProps & DataAttributes | - | Props passed down to the `Input.Success` component |\n| value | string[] \\| null | - | Controlled selected path from root to node |\n| withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |\n| withCheckIcon | boolean | - | If set, the check icon is displayed on the selected option |\n| withColumns | boolean | - | Renders the dropdown as cascading columns. When `false`, options are rendered as a flat list of paths, the same way as search results (useful for narrow/mobile layouts) |\n| withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |\n| withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |\n| wrapperProps | WrapperProps | - | Props passed down to the root element |\n\n\n#### Styles API\n\nCascader component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.\n\n**Cascader selectors**\n\n| Selector | Static selector | Description |\n|----------|----------------|-------------|\n| wrapper | .mantine-Cascader-wrapper | Root element of the Input |\n| input | .mantine-Cascader-input | Input element |\n| section | .mantine-Cascader-section | Left and right sections |\n| bottomSection | .mantine-Cascader-bottomSection | Bottom section element, rendered inside the input border at the bottom |\n| root | .mantine-Cascader-root | Root element |\n| label | .mantine-Cascader-label | Label element |\n| required | .mantine-Cascader-required | Required asterisk element, rendered inside label |\n| description | .mantine-Cascader-description | Description element |\n| error | .mantine-Cascader-error | Error element |\n| success | .mantine-Cascader-success | Success element |\n| columnsList | .mantine-Cascader-columnsList | Wrapper of all cascading columns in the dropdown |\n| columnsOverflow | .mantine-Cascader-columnsOverflow | Control displayed to reveal levels hidden by `maxDisplayedLevels` |\n| column | .mantine-Cascader-column | Single cascading column |\n| columnScroll | .mantine-Cascader-columnScroll | Scrollable options area of a column |\n| columnOption | .mantine-Cascader-columnOption | Option control inside a column |\n| columnOptionLabel | .mantine-Cascader-columnOptionLabel | Label of the column option |\n| columnOptionIcon | .mantine-Cascader-columnOptionIcon | Expand chevron of the column option |\n| columnOptionCheck | .mantine-Cascader-columnOptionCheck | Check icon displayed on the selected leaf option |\n| columnEmpty | .mantine-Cascader-columnEmpty | Empty state of a column |\n| flatOption | .mantine-Cascader-flatOption | Option content in the flat list (search results / `withColumns={false}`) |\n\n**Cascader data attributes**\n\n| Selector | Attribute | Condition | Value |\n|----------|-----------|-----------|-------|\n| columnOption | data-active | Option is highlighted in the column that is currently being navigated | - |\n| columnOption | data-in-path | Option is highlighted in one of the previous (ancestor) columns | - |\n| columnOption | data-selected | Option is the selected value | - |\n| columnOption | data-disabled | Option is disabled | - |\n",
+  "props": [
+    {
+      "name": "allowDeselect",
+      "description": "If set, the selected value can be deselected by selecting it again",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "changeOnSelect",
+      "description": "If set, any intermediate option can be selected, not only leaf options",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "checkIconPosition",
+      "description": "Position of the check icon relative to the option label",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "chevronColor",
+      "description": "Controls the default chevron color",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "MantineColor"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "clearButtonProps",
+      "description": "Props passed down to the clear button",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputClearButtonProps"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "clearSectionMode",
+      "description": "Determines how the clear button and <code>rightSection</code> are rendered",
+      "required": false,
+      "defaultValue": "'both'",
+      "type": {
+        "name": "ClearSectionMode",
+        "raw": "ClearSectionMode | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"both\""
+          },
+          {
+            "value": "\"rightSection\""
+          },
+          {
+            "value": "\"clear\""
+          }
+        ]
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "clearable",
+      "description": "If set, the clear button is displayed when a value is selected",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "closeOnSelect",
+      "description": "Determines whether the dropdown should be closed when a value is selected, defaults to <code>!allowDeselect</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "columnWidth",
+      "description": "Width of each column",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "comboboxProps",
+      "description": "Props passed down to the underlying <code>Combobox</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "Record<string, any>"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "data",
+      "description": "Hierarchical options data",
+      "required": true,
+      "defaultValue": null,
+      "type": {
+        "name": "CascaderOption[]"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "defaultDropdownOpened",
+      "description": "Uncontrolled dropdown opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "defaultSearchValue",
+      "description": "Uncontrolled search value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "defaultValue",
+      "description": "Uncontrolled selected path from root to node",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string[] | null"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "description",
+      "description": "Contents of <code>Input.Description</code> component. If not set, description is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "descriptionProps",
+      "description": "Props passed down to the <code>Input.Description</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputDescriptionProps"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "disabled",
+      "description": "Sets <code>disabled</code> attribute on the <code>input</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "dropdownOpened",
+      "description": "Controlled dropdown opened state",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "error",
+      "description": "Contents of <code>Input.Error</code> component. If not set, error is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "errorProps",
+      "description": "Props passed down to the <code>Input.Error</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputErrorProps"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "expandTrigger",
+      "description": "Determines how the next column is opened",
+      "required": false,
+      "defaultValue": "'click'",
+      "type": {
+        "name": "\"hover\" | \"click\"",
+        "raw": "\"hover\" | \"click\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"hover\""
+          },
+          {
+            "value": "\"click\""
+          }
+        ]
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "filter",
+      "description": "Custom search filter, matched against the full option path",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(query: string, options: CascaderOption[]) => boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "formatValue",
+      "description": "A function to format the selected path displayed in the input, should return a string",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "CascaderFormatValue"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "hiddenInputProps",
+      "description": "Props passed down to the hidden input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"input\">"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "inputContainer",
+      "description": "Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input.",
+      "required": false,
+      "defaultValue": "React.Fragment",
+      "type": {
+        "name": "(children: ReactNode) => ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "inputSize",
+      "description": "HTML <code>size</code> attribute for the input element (number of visible characters)",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "inputWrapperOrder",
+      "description": "Controls order and visibility of wrapper elements. Only elements included in this array will be rendered.",
+      "required": false,
+      "defaultValue": "['label', 'description', 'input', 'error']",
+      "type": {
+        "name": "(\"input\" | \"label\" | \"description\" | \"error\")[]"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "label",
+      "description": "Contents of <code>Input.Label</code> component. If not set, label is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "labelProps",
+      "description": "Props passed down to the <code>Input.Label</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputLabelProps"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "leftSection",
+      "description": "Content section displayed on the left side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "leftSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>leftSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "leftSectionProps",
+      "description": "Props passed down to the <code>leftSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "leftSectionWidth",
+      "description": "Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "loading",
+      "description": "Displays loading indicator in the left or right section",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "loadingPosition",
+      "description": "Position of the loading indicator",
+      "required": false,
+      "defaultValue": "'right'",
+      "type": {
+        "name": "\"left\" | \"right\"",
+        "raw": "\"left\" | \"right\" | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"left\""
+          },
+          {
+            "value": "\"right\""
+          }
+        ]
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "maxDisplayedLevels",
+      "description": "Maximum number of columns (levels) displayed next to each other, deeper levels replace earlier ones",
+      "required": false,
+      "defaultValue": "3",
+      "type": {
+        "name": "number"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "maxDropdownHeight",
+      "description": "Max height of a column before it becomes scrollable",
+      "required": false,
+      "defaultValue": "260",
+      "type": {
+        "name": "string | number"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "nextLevelsControlLabel",
+      "description": "<code>aria-label</code> and <code>title</code> of the control that reveals levels hidden after the visible ones by <code>maxDisplayedLevels</code>",
+      "required": false,
+      "defaultValue": "'Show next levels'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "nothingFoundMessage",
+      "description": "Message displayed when there are no options or search results",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "onChange",
+      "description": "Called when the selected path changes with the path and the resolved option chain",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string[] | null, options: CascaderOption[]) => void"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "onClear",
+      "description": "Called when the clear button is clicked",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "onDropdownClose",
+      "description": "Called when the dropdown closes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "onDropdownOpen",
+      "description": "Called when the dropdown opens",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "() => void"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "onSearchChange",
+      "description": "Called when the search value changes",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(value: string) => void"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "openOnFocus",
+      "description": "Opens the dropdown when the input is focused in <code>searchable</code> mode",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "pointer",
+      "description": "Determines whether the input should have <code>cursor: pointer</code> style. Use when input acts as a button-like trigger (e.g., <code>component=\"button\"</code> for Select/DatePicker).",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "previousLevelsControlLabel",
+      "description": "<code>aria-label</code> and <code>title</code> of the control that reveals levels hidden before the visible ones by <code>maxDisplayedLevels</code>",
+      "required": false,
+      "defaultValue": "'Show previous levels'",
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "radius",
+      "description": "Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem",
+      "required": false,
+      "defaultValue": "theme.defaultRadius",
+      "type": {
+        "name": "MantineRadius | number"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "renderOption",
+      "description": "Custom rendering of an option in columns",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(option: CascaderOption, level: number) => ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "renderSearchOption",
+      "description": "Custom rendering of a search result row",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "(query: string, options: CascaderOption[]) => ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "required",
+      "description": "Adds required attribute to the input and a red asterisk on the right side of label",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "rightSection",
+      "description": "Content section displayed on the right side of the input",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "rightSectionPointerEvents",
+      "description": "Sets <code>pointer-events</code> styles on the <code>rightSection</code> element. Use <code>'all'</code> when section contains interactive elements (buttons, links).",
+      "required": false,
+      "defaultValue": "'none'",
+      "type": {
+        "name": "React.CSSProperties[\"pointerEvents\"]",
+        "raw": "PointerEvents | undefined",
+        "value": [
+          {
+            "value": "undefined"
+          },
+          {
+            "value": "\"-moz-initial\""
+          },
+          {
+            "value": "\"inherit\""
+          },
+          {
+            "value": "\"initial\""
+          },
+          {
+            "value": "\"revert\""
+          },
+          {
+            "value": "\"revert-layer\""
+          },
+          {
+            "value": "\"unset\""
+          },
+          {
+            "value": "\"none\""
+          },
+          {
+            "value": "\"auto\""
+          },
+          {
+            "value": "\"all\""
+          },
+          {
+            "value": "\"fill\""
+          },
+          {
+            "value": "\"painted\""
+          },
+          {
+            "value": "\"stroke\""
+          },
+          {
+            "value": "\"visible\""
+          },
+          {
+            "value": "\"visibleFill\""
+          },
+          {
+            "value": "\"visiblePainted\""
+          },
+          {
+            "value": "\"visibleStroke\""
+          }
+        ]
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "rightSectionProps",
+      "description": "Props passed down to the <code>rightSection</code> element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ComponentProps<\"div\">"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "rightSectionWidth",
+      "description": "Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.CSSProperties[\"width\"]"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "scrollAreaProps",
+      "description": "Props passed down to the dropdown <code>ScrollArea</code>",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "ScrollAreaProps"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "searchValue",
+      "description": "Controlled search value",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "searchable",
+      "description": "If set, options can be searched by their flattened paths",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "separator",
+      "description": "Path separator displayed in the input and search results",
+      "required": false,
+      "defaultValue": "'/'",
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "size",
+      "description": "Controls input <code>height</code>, horizontal <code>padding</code>, and <code>font-size</code>",
+      "required": false,
+      "defaultValue": "'sm'",
+      "type": {
+        "name": "MantineSize"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "success",
+      "description": "Contents of <code>Input.Success</code> component. If not set, success is not displayed.",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "React.ReactNode"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "successProps",
+      "description": "Props passed down to the <code>Input.Success</code> component",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "InputSuccessProps & DataAttributes"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "value",
+      "description": "Controlled selected path from root to node",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "string[] | null"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "withAsterisk",
+      "description": "If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input.",
+      "required": false,
+      "defaultValue": "false",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "withCheckIcon",
+      "description": "If set, the check icon is displayed on the selected option",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "withColumns",
+      "description": "Renders the dropdown as cascading columns. When <code>false</code>, options are rendered as a flat list of paths, the same way as search results (useful for narrow/mobile layouts)",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "withErrorStyles",
+      "description": "Determines whether the input should have red border and red text color when the <code>error</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "withSuccessStyles",
+      "description": "Determines whether the input should have green border when the <code>success</code> prop is set",
+      "required": false,
+      "defaultValue": "true",
+      "type": {
+        "name": "boolean"
+      },
+      "sourceComponent": "Cascader"
+    },
+    {
+      "name": "wrapperProps",
+      "description": "Props passed down to the root element",
+      "required": false,
+      "defaultValue": null,
+      "type": {
+        "name": "WrapperProps"
+      },
+      "sourceComponent": "Cascader"
+    }
+  ]
+}

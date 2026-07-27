@@ -137,6 +137,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | barSize | number | - | Size of bars in px, `20` by default |
 | data | Record<string, any>[] | required | Chart data |
 | dataKey | string | required | Key from data object to use as data key |

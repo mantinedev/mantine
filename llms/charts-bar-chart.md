@@ -1394,6 +1394,39 @@ export const data = [
 ```
 
 
+## Brush
+
+Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
+brush handles to zoom into a subset of the data. Use the `brushProps` prop to pass props
+down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush) component,
+or render the `ChartBrush` component as a child for full control.
+
+```tsx
+import { BarChart } from '@mantine/charts';
+
+const data = [
+  { month: 'Jan', Smartphones: 1200, Laptops: 900 },
+  { month: 'Feb', Smartphones: 1400, Laptops: 1000 },
+  /* ...other data points */
+];
+
+function Demo() {
+  return (
+    <BarChart
+      h={300}
+      data={data}
+      dataKey="month"
+      withBrush
+      series={[
+        { name: 'Smartphones', color: 'violet.6' },
+        { name: 'Laptops', color: 'blue.6' },
+      ]}
+    />
+  );
+}
+```
+
+
 
 #### Props
 
@@ -1401,9 +1434,11 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accessibilityLayer | boolean | - | Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default |
 | barChartProps | (CartesianChartProps<unknown> & { ref?: Ref<SVGSVGElement>; }) \| undefined | - | Props passed down to recharts `BarChart` component |
 | barLabelColor | MantineColor | - | Controls color of the bar label, by default the value is determined by the chart orientation |
 | barProps | ((series: BarChartSeries) => Partial<Omit<Props, "ref">>) \| Partial<Omit<Props, "ref">> | - | Props passed down to recharts `Bar` component |
+| brushProps | RechartsProps | - | Props passed down to the `Brush` component |
 | children | React.ReactNode | - | Additional components that are rendered inside recharts `BarChart` component |
 | cursorFill | MantineColor | - | Fill of hovered bar section, by default value is based on color scheme |
 | data | Record<string, any>[] | required | Data used to display chart. |
@@ -1431,6 +1466,7 @@ export const data = [
 | valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
 | valueLabelProps | ((series: BarChartSeries) => Partial<Omit<Props, "ref">>) \| Partial<Props> | - | Props passed down to recharts `LabelList` component |
 | withBarValueLabel | boolean | - | Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` |
+| withBrush | boolean | - | Determines whether a brush (range selector) should be displayed under the chart, `false` by default |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, `false` by default |
 | withRightYAxis | boolean | - | Determines whether additional y-axis should be displayed on the right side of the chart, `false` by default |
 | withTooltip | boolean | - | Determines whether chart tooltip should be displayed, `true` by default |
@@ -1469,6 +1505,7 @@ BarChart component supports Styles API. With Styles API, you can customize style
 | tooltipLabel | .mantine-BarChart-tooltipLabel | Label of the tooltip |
 | referenceLine | .mantine-BarChart-referenceLine | Reference line |
 | axisLabel | .mantine-BarChart-axisLabel | X and Y axis labels |
+| brush | .mantine-BarChart-brush | Brush (range selector) root element |
 
 **BarChart CSS variables**
 

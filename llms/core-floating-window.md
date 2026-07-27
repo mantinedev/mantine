@@ -278,6 +278,94 @@ function Demo() {
 ```
 
 
+## Resize handle
+
+Use `FloatingWindow.ResizeHandle` compound component to add a resize handle to the floating window.
+The `dimensions` prop on `FloatingWindow` controls the resize behavior:
+
+* `initialWidth` / `initialHeight` – initial size of the window in px
+* `minWidth` / `minHeight` – minimum size the window can be resized to
+* `maxWidth` / `maxHeight` – maximum size the window can be resized to
+
+The resize handle respects `constrainToViewport` and `constrainOffset` props – the window
+cannot be resized beyond the viewport boundaries.
+
+`FloatingWindow.ResizeHandle` renders with `role="separator"` and supports keyboard interaction:
+use `Arrow Left`/`Arrow Right` keys to resize width and `Arrow Up`/`Arrow Down` keys to resize
+height in 10px steps. `Home`/`End` keys jump to the minimum/maximum size.
+
+```tsx
+import { NotchesIcon } from '@phosphor-icons/react';
+import { Button, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const [visible, handlers] = useDisclosure();
+
+  return (
+    <>
+      <Button onClick={handlers.toggle} variant="default">
+        {visible ? 'Hide' : 'Show'} floating window
+      </Button>
+
+      {visible && (
+        <FloatingWindow
+          withBorder
+          constrainOffset={40}
+          dimensions={{
+            initialWidth: 260,
+            maxWidth: 500,
+            minWidth: 180,
+            initialHeight: 260,
+            maxHeight: 400,
+            minHeight: 220,
+          }}
+          dragHandleSelector=".drag-handle"
+          excludeDragHandleSelector="button"
+          initialPosition={{ top: 300, left: 60 }}
+          style={{ overflow: 'hidden' }}
+        >
+          <Group
+            justify="space-between"
+            px="md"
+            py="sm"
+            className="drag-handle"
+            style={{ cursor: 'move' }}
+          >
+            <Text fw={500} fz="sm">
+              Resize demo
+            </Text>
+            <CloseButton onClick={handlers.close} />
+          </Group>
+          <Text fz="sm" px="md" pb="sm">
+            Drag the grip icon in the bottom-right corner to resize.
+            Use Arrow keys when the handle is focused:
+            Left/Right for width, Up/Down for height.
+          </Text>
+          <FloatingWindow.ResizeHandle
+            aria-label="Resize floating window"
+            style={{
+              position: 'absolute',
+              right: 0,
+              bottom: 0,
+              width: 20,
+              height: 20,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'nwse-resize',
+            }}
+          >
+            <NotchesIcon size={14} style={{ opacity: 0.5 }} />
+          </FloatingWindow.ResizeHandle>
+        </FloatingWindow>
+      )}
+    </>
+  );
+}
+```
+
+
 ## Lock axis
 
 Use the `axis` option to restrict movement to the specified axis:
@@ -384,6 +472,7 @@ function Demo() {
 | axis | "x" \| "y" | - | If set, restricts movement to the specified axis |
 | constrainOffset | number | - | The offset from the viewport edges when constraining the element. Requires `constrainToViewport: true`. |
 | constrainToViewport | boolean | - | If `true`, the element can only move within the current viewport boundaries. |
+| dimensions | FloatingWindowDimensions | - | Dimensions configuration for resizable floating window |
 | dragHandleSelector | string | - | Selector of an element that should be used to drag floating window. If not specified, the entire root element is used as a drag target. |
 | enabled | boolean | - | If `false`, the element can not be dragged. |
 | excludeDragHandleSelector | string | - | Selector of an element within `dragHandleSelector` that should be excluded from the drag event. |

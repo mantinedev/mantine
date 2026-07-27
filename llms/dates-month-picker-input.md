@@ -364,6 +364,19 @@ MonthPickerInput component supports [Input](https://mantine.dev/core/input) and 
 
 
 
+## Native level select
+
+```tsx
+import { MonthPickerInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MonthPickerInput label="Pick month" placeholder="Pick month" withNativeLevelSelect />
+  );
+}
+```
+
+
 ## Accessibility
 
 MonthPickerInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
@@ -449,6 +462,7 @@ MonthPickerInput provides better accessibility support when used in forms. Make 
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. |
 | withCellSpacing | boolean | - | Determines whether controls should be separated |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the `error` prop is set |
+| withNativeLevelSelect | boolean | - | Determines whether level select controls should be rendered as native `<select>` elements |
 | withSuccessStyles | boolean | - | Determines whether the input should have green border when the `success` prop is set |
 | wrapperProps | WrapperProps | - | Props passed down to the root element |
 | yearLabelFormat | string \| ((date: string) => string) | - | dayjs label format to display year label or a function that returns year label based on year value |
