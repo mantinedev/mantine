@@ -11,7 +11,7 @@ import { Text, Paper, Box } from '@mantine/core';
 function Demo() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { ref, entry } = useIntersection({
-    root: containerRef.current,
+    root: containerRef,
     threshold: 1,
   });
 
@@ -41,7 +41,7 @@ function Demo() {
 function Demo() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { ref, entry } = useIntersection({
-    root: containerRef.current,
+    root: containerRef,
     threshold: 1,
   });
 

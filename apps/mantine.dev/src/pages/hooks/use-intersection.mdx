@@ -25,6 +25,27 @@ useIntersection({
 });
 ```
 
+The `root` option also accepts a ref object. This is usually more convenient than
+a resolved element: the hook reads `ref.current` after the element is mounted, so
+you can pass the ref you already have without reading `.current` during render
+(which is `null` on the first render):
+
+```tsx
+import { useRef } from 'react';
+import { useIntersection } from '@mantine/hooks';
+
+function Demo() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { ref, entry } = useIntersection({ root: containerRef, threshold: 1 });
+
+  return (
+    <div ref={containerRef} style={{ overflowY: 'scroll', height: 300 }}>
+      <div ref={ref} />
+    </div>
+  );
+}
+```
+
 The hook returns a `ref` function that should be passed to the observed element, and the latest entry, as returned by the `IntersectionObserver`'s callback.
 See the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) documentation to learn everything about the options.
 
@@ -52,21 +73,29 @@ function Demo() {
 ## Definition
 
 ```tsx
+interface UseIntersectionOptions extends Omit<IntersectionObserverInit, 'root'> {
+  /** Element or ref object used as the observer root, defaults to the browser viewport */
+  root?: IntersectionObserverInit['root'] | React.RefObject<Element | null>;
+}
+
 interface UseIntersectionReturnValue<T> {
   ref: React.RefCallback<T | null>;
   entry: IntersectionObserverEntry | null;
 }
 
 function useIntersection<T extends HTMLElement = any>(
-  options?: IntersectionObserverInit,
+  options?: UseIntersectionOptions,
 ): UseIntersectionReturnValue<T>
 ```
 
 ## Exported types
 
-`UseIntersectionReturnValue` type is exported from `@mantine/hooks` package,
-you can import it in your application:
+`UseIntersectionOptions` and `UseIntersectionReturnValue` types are exported from
+`@mantine/hooks` package, you can import them in your application:
 
 ```tsx
-import type { UseIntersectionReturnValue } from '@mantine/hooks';
+import type {
+  UseIntersectionOptions,
+  UseIntersectionReturnValue,
+} from '@mantine/hooks';
 ```

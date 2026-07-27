@@ -1,41 +1,59 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+export interface UseIntersectionOptions extends Omit<IntersectionObserverInit, 'root'> {
+  /** Element or ref object used as the observer root, defaults to the browser viewport */
+  root?: IntersectionObserverInit['root'] | React.RefObject<Element | null>;
+}
 
 export interface UseIntersectionReturnValue<T> {
   ref: React.RefCallback<T | null>;
   entry: IntersectionObserverEntry | null;
 }
 
+function resolveRoot(root: UseIntersectionOptions['root']): IntersectionObserverInit['root'] {
+  if (root && 'current' in root) {
+    return root.current;
+  }
+
+  return root;
+}
+
 export function useIntersection<T extends HTMLElement = any>(
-  options?: IntersectionObserverInit
+  options?: UseIntersectionOptions
 ): UseIntersectionReturnValue<T> {
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
+  const [element, setElement] = useState<T | null>(null);
 
-  const observer = useRef<IntersectionObserver | null>(null);
+  const ref = useCallback<React.RefCallback<T | null>>((node) => {
+    setElement(node);
+  }, []);
 
-  const ref: React.RefCallback<T | null> = useCallback(
-    (element) => {
-      if (observer.current) {
-        observer.current.disconnect();
-        observer.current = null;
-      }
+  const root = resolveRoot(options?.root);
 
-      if (element === null) {
-        setEntry(null);
-        return;
-      }
+  useEffect(() => {
+    if (element === null) {
+      setEntry(null);
+      return undefined;
+    }
 
-      observer.current = new IntersectionObserver(([_entry]) => {
+    const observer = new IntersectionObserver(
+      ([_entry]) => {
         setEntry(_entry);
-      }, options);
+      },
+      { ...options, root }
+    );
 
-      observer.current.observe(element);
-    },
-    [options?.rootMargin, options?.root, options?.threshold]
-  );
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [element, root, options?.rootMargin, options?.threshold]);
 
   return { ref, entry };
 }
 
 export namespace useIntersection {
+  export type Options = UseIntersectionOptions;
   export type ReturnValue<T> = UseIntersectionReturnValue<T>;
 }
