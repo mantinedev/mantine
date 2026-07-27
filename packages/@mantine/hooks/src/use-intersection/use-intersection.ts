@@ -24,8 +24,9 @@ export function useIntersection<T extends HTMLElement = any>(
         return;
       }
 
-      observer.current = new IntersectionObserver(([_entry]) => {
-        setEntry(_entry);
+      observer.current = new IntersectionObserver((entries) => {
+        // Entries might be batched (e.g. when the callback is delayed across frames), so we need to use the last entry to get the most recent state
+        setEntry(entries[entries.length - 1]);
       }, options);
 
       observer.current.observe(element);
