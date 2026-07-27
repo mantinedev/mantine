@@ -49,6 +49,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
   {
     category: 'Changelog',
     pages: [
+      MDX_DATA.Changelog950,
       MDX_DATA.Changelog940,
       MDX_DATA.Changelog930,
       MDX_DATA.Changelog920,
@@ -314,6 +315,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.MultiSelect,
       MDX_DATA.ComboboxPopover,
       MDX_DATA.TreeSelect,
+      MDX_DATA.Cascader,
     ],
   },
   {
@@ -470,7 +472,9 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.Sparkline,
       MDX_DATA.Heatmap,
       MDX_DATA.BarsList,
+      MDX_DATA.BulletChart,
       MDX_DATA.Treemap,
+      MDX_DATA.SunburstChart,
       MDX_DATA.SankeyChart,
     ],
   },

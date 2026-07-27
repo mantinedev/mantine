@@ -1,4 +1,4 @@
-import { useImperativeHandle } from 'react';
+import { useImperativeHandle, useRef } from 'react';
 import {
   SetFloatingWindowPosition,
   useFloatingWindow,
@@ -17,6 +17,8 @@ import {
 } from '../../core';
 import { Paper, PaperBaseProps } from '../Paper';
 import { OptionalPortal, PortalProps } from '../Portal';
+import { FloatingWindowDimensions, FloatingWindowProvider } from './FloatingWindow.context';
+import { FloatingWindowResizeHandle } from './FloatingWindowResizeHandle';
 import classes from './FloatingWindow.module.css';
 
 export type FloatingWindowStylesNames = 'root';
@@ -39,18 +41,35 @@ export interface FloatingWindowProps
 
   /** `z-index` of the root element @default 400 */
   zIndex?: React.CSSProperties['zIndex'];
+
+  /** Dimensions configuration for resizable floating window */
+  dimensions?: FloatingWindowDimensions;
 }
 
 export type FloatingWindowFactory = Factory<{
   props: FloatingWindowProps;
   ref: HTMLDivElement;
   stylesNames: FloatingWindowStylesNames;
+  staticComponents: {
+    ResizeHandle: typeof FloatingWindowResizeHandle;
+  };
 }>;
 
 const defaultProps = {
   constrainToViewport: true,
   zIndex: getDefaultZIndex('overlay'),
 } satisfies Partial<FloatingWindowProps>;
+
+function clampDimension(value: number, min?: number, max?: number): number {
+  let v = value;
+  if (min != null) {
+    v = Math.max(v, min);
+  }
+  if (max != null) {
+    v = Math.min(v, max);
+  }
+  return v;
+}
 
 export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
   const props = useProps('FloatingWindow', defaultProps, _props);
@@ -76,9 +95,12 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
     withinPortal,
     portalProps,
     zIndex,
+    dimensions,
     ref,
     ...others
   } = props;
+
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const getStyles = useStyles<FloatingWindowFactory>({
     name: 'FloatingWindow',
@@ -109,24 +131,42 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
     floatingWindow.setPosition,
   ]);
 
+  const cssVars: Record<string, string | undefined> = {
+    '--floating-window-z-index': zIndex.toString(),
+  };
+
+  if (dimensions?.initialWidth != null) {
+    cssVars['--floating-window-width'] =
+      `${clampDimension(dimensions.initialWidth, dimensions.minWidth, dimensions.maxWidth)}px`;
+  }
+
+  if (dimensions?.initialHeight != null) {
+    cssVars['--floating-window-height'] =
+      `${clampDimension(dimensions.initialHeight, dimensions.minHeight, dimensions.maxHeight)}px`;
+  }
+
   return (
-    <OptionalPortal withinPortal={withinPortal} {...portalProps}>
-      <Paper
-        ref={useMergedRef(ref, floatingWindow.ref)}
-        mod={[{ dragging: floatingWindow.isDragging }, mod]}
-        {...getStyles('root')}
-        {...others}
-        __vars={{ '--floating-window-z-index': zIndex.toString() }}
-      />
-    </OptionalPortal>
+    <FloatingWindowProvider
+      value={{
+        rootRef,
+        dimensions,
+        constrainToViewport,
+        constrainOffset,
+      }}
+    >
+      <OptionalPortal withinPortal={withinPortal} {...portalProps}>
+        <Paper
+          ref={useMergedRef(ref, floatingWindow.ref, rootRef)}
+          mod={[{ dragging: floatingWindow.isDragging }, mod]}
+          {...getStyles('root')}
+          {...others}
+          __vars={cssVars}
+        />
+      </OptionalPortal>
+    </FloatingWindowProvider>
   );
 });
 
 FloatingWindow.displayName = '@mantine/core/FloatingWindow';
 FloatingWindow.classes = classes;
-
-export namespace FloatingWindow {
-  export type Props = FloatingWindowProps;
-  export type StylesNames = FloatingWindowStylesNames;
-  export type Factory = FloatingWindowFactory;
-}
+FloatingWindow.ResizeHandle = FloatingWindowResizeHandle;

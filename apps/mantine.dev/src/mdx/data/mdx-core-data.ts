@@ -1321,6 +1321,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/tree-select.mdx',
   },
 
+  Cascader: {
+    title: 'Cascader',
+    package: '@mantine/core',
+    slug: '/core/cascader',
+    props: ['Cascader'],
+    styles: ['Cascader'],
+    description: 'Select a path from hierarchical data with cascading columns',
+    source: '@mantine/core/src/components/Cascader/Cascader.tsx',
+    docs: 'core/cascader.mdx',
+    searchTags: 'cascading select, hierarchical select, drill down, miller columns, path picker',
+  },
+
   SemiCircleProgress: {
     title: 'SemiCircleProgress',
     package: '@mantine/core',

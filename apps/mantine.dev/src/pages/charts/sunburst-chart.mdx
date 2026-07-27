@@ -1,0 +1,78 @@
+import { SunburstChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.SunburstChart);
+
+## Usage
+
+`SunburstChart` is based on the [SunburstChart recharts component](https://recharts.org/en-US/api/SunburstChart).
+It displays hierarchical data as concentric rings, similar to a treemap plotted in polar coordinates:
+
+<Demo data={SunburstChartDemos.usage} />
+
+## Data format
+
+`SunburstChart` expects an array of objects. Each object must have a `name` and `color` property.
+Leaf nodes must have a `value` property. Parent nodes can have a `children` array:
+
+```tsx
+export const data = [
+  {
+    name: 'Frontend',
+    color: 'blue.6',
+    children: [
+      { name: 'React', value: 400 },
+      { name: 'Vue', value: 200 },
+      { name: 'Angular', value: 150 },
+    ],
+  },
+  {
+    name: 'Backend',
+    color: 'teal.6',
+    children: [
+      { name: 'Node', value: 300 },
+      { name: 'Python', value: 250 },
+    ],
+  },
+];
+```
+
+## Node color
+
+You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted. Children inherit the color of their parent node.
+
+<Demo data={SunburstChartDemos.color} />
+
+## Stroke color
+
+Use `strokeColor` to change the color of the stroke around each sector:
+
+<Demo data={SunburstChartDemos.strokeColor} />
+
+## Chart size
+
+Use `size` prop to control the width and height of the chart:
+
+<Demo data={SunburstChartDemos.size} />
+
+## Gap
+
+Use `gap` prop to control the spacing between sectors and rings:
+
+<Demo data={SunburstChartDemos.gap} />
+
+## Labels
+
+Set `withLabels` to display value labels inside each sector. It is recommended
+to increase `size` to give labels enough space:
+
+<Demo data={SunburstChartDemos.withLabels} />
+
+## Disable tooltip
+
+To disable the tooltip, set `withTooltip={false}`:
+
+<Demo data={SunburstChartDemos.noTooltip} />

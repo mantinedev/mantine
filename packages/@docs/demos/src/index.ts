@@ -27,6 +27,7 @@ export * as BreadcrumbsDemos from './demos/core/Breadcrumbs';
 export * as BurgerDemos from './demos/core/Burger';
 export * as ButtonDemos from './demos/core/Button';
 export * as CardDemos from './demos/core/Card';
+export * as CascaderDemos from './demos/core/Cascader';
 export * as CenterDemos from './demos/core/Center';
 export * as CheckboxDemos from './demos/core/Checkbox';
 export * as ChipDemos from './demos/core/Chip';
@@ -156,8 +157,10 @@ export * as RadialBarChartDemos from './demos/charts/RadialBarChart';
 export * as FunnelChartDemos from './demos/charts/FunnelChart';
 export * as HeatmapDemos from './demos/charts/Heatmap';
 export * as BarsListDemos from './demos/charts/BarsList';
+export * as BulletChartDemos from './demos/charts/BulletChart';
 export * as TreemapDemos from './demos/charts/Treemap';
 export * as SankeyChartDemos from './demos/charts/SankeyChart';
+export * as SunburstChartDemos from './demos/charts/SunburstChart';
 
 // @mantine/schedule
 export * as ScheduleDemos from './demos/schedule/Schedule';

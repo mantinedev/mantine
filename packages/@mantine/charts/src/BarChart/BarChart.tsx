@@ -31,6 +31,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
@@ -126,6 +127,7 @@ const defaultProps = {
   strokeDasharray: '5 5',
   gridAxis: 'x',
   type: 'default',
+  accessibilityLayer: true,
 } satisfies Partial<BarChartProps>;
 
 const varsResolver = createVarsResolver<BarChartFactory>(
@@ -220,6 +222,9 @@ export const BarChart = factory<BarChartFactory>((_props) => {
     gridColor,
     textColor,
     attributes,
+    accessibilityLayer,
+    withBrush,
+    brushProps,
     ...others
   } = props;
 
@@ -362,6 +367,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...barChartProps}
         >
           {withLegend && (
@@ -486,6 +492,14 @@ export const BarChart = factory<BarChartFactory>((_props) => {
 
           {bars}
           {referenceLinesItems}
+          {withBrush && (
+            <ChartBrush
+              dataKey={dataKey}
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+              {...brushProps}
+            />
+          )}
           {children}
         </ReChartsBarChart>
       </ResponsiveContainer>

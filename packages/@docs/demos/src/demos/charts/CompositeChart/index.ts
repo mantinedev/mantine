@@ -23,3 +23,4 @@ export { unit } from './CompositeChart.demo.unit';
 export { valueFormatter } from './CompositeChart.demo.valueFormatter';
 export { xAxisOffset } from './CompositeChart.demo.xAxisOffset';
 export { yScale } from './CompositeChart.demo.yScale';
+export { brush } from './CompositeChart.demo.brush';

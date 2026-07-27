@@ -115,6 +115,9 @@ export interface PieChartProps
   cellProps?:
     | ((series: PieChartCell) => Partial<Omit<React.SVGProps<SVGElement>, 'ref'>>)
     | Partial<Omit<React.SVGProps<SVGElement>, 'ref'>>;
+
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  accessibilityLayer?: boolean;
 }
 
 export type PieChartFactory = Factory<{
@@ -135,6 +138,7 @@ const defaultProps = {
   tooltipDataSource: 'all',
   labelsPosition: 'outside',
   labelsType: 'value',
+  accessibilityLayer: true,
 } satisfies Partial<PieChartProps>;
 
 const varsResolver = createVarsResolver<PieChartFactory>(
@@ -249,6 +253,7 @@ export const PieChart = factory<PieChartFactory>((_props) => {
     strokeColor,
     attributes,
     cellProps,
+    accessibilityLayer,
     ...others
   } = props;
 
@@ -280,7 +285,7 @@ export const PieChart = factory<PieChartFactory>((_props) => {
   return (
     <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
-        <ReChartsPieChart {...pieChartProps}>
+        <ReChartsPieChart accessibilityLayer={accessibilityLayer} {...pieChartProps}>
           <Pie
             data={pieData as any}
             innerRadius={0}

@@ -1,5 +1,6 @@
 export * from './ChartTooltip/index.js';
 export * from './ChartLegend/index.js';
+export * from './ChartBrush/index.js';
 export * from './AreaChart/index.js';
 export * from './BarChart/index.js';
 export * from './LineChart/index.js';
@@ -16,4 +17,6 @@ export * from './Heatmap/index.js';
 export * from './BarsList/index.js';
 export * from './Treemap/index.js';
 export * from './SankeyChart/index.js';
+export * from './SunburstChart/index.js';
+export * from './BulletChart/index.js';
 export * from './types';

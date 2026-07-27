@@ -29,6 +29,12 @@ export interface YearLevelGroupProps
 
   /** Determines whether the calendar should take the full width of its container @default false */
   fullWidth?: boolean;
+
+  /** Called when date is changed via native level select */
+  __onDateChange?: (date: DateStringValue) => void;
+
+  /** Disables native level selects when date changes would not take effect */
+  __disableNativeLevelSelect?: boolean;
 }
 
 export type YearLevelGroupFactory = Factory<{
@@ -68,6 +74,8 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
     previousDisabled,
     hasNextLevel,
     headerControlsOrder,
+    withNativeLevelSelect,
+    yearsSelectRange,
 
     // Other settings
     classNames,
@@ -75,6 +83,8 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
     unstyled,
     __staticSelector,
     __stopPropagation,
+    __onDateChange,
+    __disableNativeLevelSelect,
     numberOfColumns,
     levelControlAriaLabel,
     yearLabelFormat,
@@ -143,6 +153,10 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
           nextDisabled={nextDisabled}
           previousDisabled={previousDisabled}
           hasNextLevel={hasNextLevel}
+          withNativeLevelSelect={withNativeLevelSelect}
+          yearsSelectRange={yearsSelectRange}
+          __onDateChange={__onDateChange}
+          __disableNativeLevelSelect={__disableNativeLevelSelect}
           getMonthControlProps={getMonthControlProps}
           classNames={classNames}
           styles={styles}

@@ -80,6 +80,8 @@ export const CalendarHeaderStylesApi: StylesApiData<CalendarHeaderFactory> = {
     calendarHeaderControl: 'Previous/next calendar header controls',
     calendarHeaderControlIcon: 'Icon of previous/next calendar header controls',
     calendarHeaderLevel: 'Level control (changes levels when clicked, month -> year -> decade)',
+    calendarHeaderSelect:
+      'Native select element used for level navigation when withNativeLevelSelect is enabled',
   },
 
   vars: {

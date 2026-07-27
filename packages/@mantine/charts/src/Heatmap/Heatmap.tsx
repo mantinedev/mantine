@@ -54,6 +54,9 @@ export interface HeatmapProps
   /** If set, month labels are displayed @default false */
   withMonthLabels?: boolean;
 
+  /** Month labels position relative to the heatmap @default 'top' */
+  monthLabelsPosition?: 'top' | 'bottom';
+
   /** Month labels, array of 12 elements, can be used for localization */
   monthLabels?: string[];
 
@@ -121,6 +124,7 @@ export type HeatmapFactory = Factory<{
 const defaultProps = {
   monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   weekdayLabels: ['Sun', 'Mon', '', 'Wed', '', 'Fri', ''],
+  monthLabelsPosition: 'top',
   withOutsideDates: true,
   firstDayOfWeek: 1,
   rectSize: 10,
@@ -151,6 +155,7 @@ export const Heatmap = factory<HeatmapFactory>((_props) => {
     startDate,
     endDate,
     withMonthLabels,
+    monthLabelsPosition,
     withWeekdayLabels,
     weekdayLabels,
     withOutsideDates,
@@ -191,7 +196,10 @@ export const Heatmap = factory<HeatmapFactory>((_props) => {
   const [hoveredRect, setHoveredRect] = useState<HeatmapRectData | null>(null);
   const rectSizeWithGap = rectSize + gap;
   const weekdaysOffset = withWeekdayLabels ? weekdaysLabelsWidth : 0;
-  const monthsOffset = withMonthLabels ? monthsLabelsHeight : 0;
+  const monthsLabelAtTop = withMonthLabels && monthLabelsPosition === 'top';
+  const monthsLabelAtBottom = withMonthLabels && monthLabelsPosition === 'bottom';
+  const monthsOffset = monthsLabelAtTop ? monthsLabelsHeight : 0;
+  const monthsBottomHeight = monthsLabelAtBottom ? monthsLabelsHeight : 0;
   const [min, max] = getBoundaries({ data, domain });
   const rotatedWeekdayLabels = useMemo(
     () => rotateWeekdaysNames(weekdayLabels, firstDayOfWeek),
@@ -260,11 +268,15 @@ export const Heatmap = factory<HeatmapFactory>((_props) => {
 
           const monthLabel = monthLabels[month.month];
 
+          const monthLabelY = monthsLabelAtBottom
+            ? rectSizeWithGap * 7 + gap + monthsLabelsHeight - 4
+            : monthsLabelsHeight - 4;
+
           return (
             <text
               key={monthIndex}
               x={computeMonthLabelX(month.position, monthIndex)}
-              y={monthsLabelsHeight - 4}
+              y={monthLabelY}
               width={month.size * rectSizeWithGap}
               fontSize={fontSize}
               {...getStyles('monthLabel')}
@@ -296,6 +308,7 @@ export const Heatmap = factory<HeatmapFactory>((_props) => {
   const legendPadding = 10;
   const legendHeight = withLegend ? legendPadding + rectSize : 0;
   const svgWidth = rectSizeWithGap * totalColumns + gap + weekdaysOffset;
+  const svgHeight = rectSizeWithGap * 7 + gap + monthsOffset + monthsBottomHeight + legendHeight;
 
   const legendNode = withLegend
     ? (() => {
@@ -310,7 +323,8 @@ export const Heatmap = factory<HeatmapFactory>((_props) => {
         const totalLegendWidth = lessWidth + textGap + rectsWidth + textGap + moreWidth;
 
         const legendX = svgWidth - totalLegendWidth;
-        const legendY = rectSizeWithGap * 7 + gap + monthsOffset + legendPadding;
+        const legendY =
+          rectSizeWithGap * 7 + gap + monthsOffset + monthsBottomHeight + legendPadding;
 
         return (
           <g
@@ -355,13 +369,7 @@ export const Heatmap = factory<HeatmapFactory>((_props) => {
     : null;
 
   return (
-    <Box
-      component="svg"
-      width={svgWidth}
-      height={rectSizeWithGap * 7 + gap + monthsOffset + legendHeight}
-      {...getStyles('root')}
-      {...others}
-    >
+    <Box component="svg" width={svgWidth} height={svgHeight} {...getStyles('root')} {...others}>
       <Tooltip.Floating
         label={label}
         disabled={!withTooltip || !label}
