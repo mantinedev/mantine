@@ -7,7 +7,6 @@ import { $ } from 'zx';
 import packageJson from '../../package.json';
 import { getPath } from '../utils/get-path';
 import { createLogger } from '../utils/signale';
-import { openGithubRelease } from './open-github-release';
 import { setMantinePackagesVersion } from './set-mantine-packages-version';
 
 const logger = createLogger('release');
@@ -45,12 +44,9 @@ async function release() {
     getPath('scripts/plop/templates/package.json'),
   ]);
   await git.commit(`[release] Version: ${incrementedVersion}`);
-  await git.addTag(`v${incrementedVersion}`);
   await git.push();
 
   logger.success('Release commit pushed. GitHub Actions will publish after approval.');
-
-  openGithubRelease(incrementedVersion);
 }
 
 release();

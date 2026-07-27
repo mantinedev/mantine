@@ -1,4 +1,4 @@
-import { resolveDistTag, wouldMoveLatestBackward } from './resolve-dist-tag';
+import { getReleaseType, resolveDistTag, wouldMoveLatestBackward } from './resolve-dist-tag';
 
 describe('resolveDistTag', () => {
   it('returns latest for stable versions', () => {
@@ -35,5 +35,29 @@ describe('wouldMoveLatestBackward', () => {
     expect(wouldMoveLatestBackward('9.5.0', null)).toBe(false);
     expect(wouldMoveLatestBackward('9.5.0', '')).toBe(false);
     expect(wouldMoveLatestBackward('9.5.0', 'not-a-version')).toBe(false);
+  });
+});
+
+describe('getReleaseType', () => {
+  it('classifies patches (stable, non-zero patch component)', () => {
+    expect(getReleaseType('9.4.3')).toBe('patch');
+    expect(getReleaseType('9.4.10')).toBe('patch');
+    expect(getReleaseType('10.2.1')).toBe('patch');
+  });
+
+  it('classifies minor and major as minor_major (stable, .0)', () => {
+    expect(getReleaseType('9.5.0')).toBe('minor_major');
+    expect(getReleaseType('10.0.0')).toBe('minor_major');
+  });
+
+  it('classifies any prerelease', () => {
+    expect(getReleaseType('9.4.3-alpha.0')).toBe('prerelease');
+    expect(getReleaseType('9.5.0-beta.1')).toBe('prerelease');
+  });
+
+  it('treats an unparseable stable version as prerelease (publish-only, safe default)', () => {
+    expect(getReleaseType('not-a-version')).toBe('prerelease');
+    expect(getReleaseType('9.4')).toBe('prerelease');
+    expect(getReleaseType('abc')).toBe('prerelease');
   });
 });

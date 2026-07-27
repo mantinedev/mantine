@@ -17,10 +17,66 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
+  prepare:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       startsWith(github.event.head_commit.message, '[release] Version')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.detect.outputs.version }}
+      release_type: ${{ steps.detect.outputs.release_type }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Detect release
+        id: detect
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          RELEASE_TYPE=$(npx tsx scripts/release/print-release-type.ts)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "release_type=$RELEASE_TYPE" >> "$GITHUB_OUTPUT"
+
+  test:
+    needs: prepare
+    if: >-
+      (needs.prepare.outputs.release_type == 'patch' ||
+      needs.prepare.outputs.release_type == 'minor_major') && !inputs.package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Run tests
+        run: npm test
+
+  publish:
+    needs: [prepare, test]
+    if: >-
+      always() && needs.prepare.result == 'success' &&
+      (needs.test.result == 'success' || needs.test.result == 'skipped')
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -57,3 +113,81 @@ jobs:
           else
             npm run publish:ci
           fi
+
+  docs:
+    needs: [prepare, publish]
+    if: >-
+      (needs.prepare.outputs.release_type == 'patch' ||
+      needs.prepare.outputs.release_type == 'minor_major') && !inputs.package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Configure git for gh-pages
+        env:
+          GH_PAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GH_PAGES_TOKEN}@github.com/${{ github.repository }}.git"
+      - name: Build and deploy docs
+        run: npm run docs:deploy
+
+  announce:
+    needs: [prepare, publish]
+    if: >-
+      (needs.prepare.outputs.release_type == 'patch' ||
+      needs.prepare.outputs.release_type == 'minor_major') && !inputs.package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Generate patch changelog
+        if: needs.prepare.outputs.release_type == 'patch'
+        run: npx tsx scripts/release/generate-patch-notes.ts
+      - name: Generate minor/major changelog
+        if: needs.prepare.outputs.release_type == 'minor_major'
+        run: |
+          DASHED=$(node -e "console.log(require('./package.json').version.replace(/\\./g,'-'))")
+          DOTTED=$(node -p "require('./package.json').version")
+          npm run generate-changelog -- "$DASHED"
+          cp ".changelog/$DOTTED.md" .changelog/release-notes.md
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          gh release create "$VERSION" --title "$VERSION" --target "$GITHUB_SHA" --notes-file .changelog/release-notes.md
+      - name: Post to Discord
+        if: needs.prepare.outputs.release_type == 'patch'
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          CONTENT=$(cat .changelog/discord.md)
+          jq -n --arg content "$CONTENT" '{content: $content}' \
+            | curl -sf -X POST -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK_URL"
