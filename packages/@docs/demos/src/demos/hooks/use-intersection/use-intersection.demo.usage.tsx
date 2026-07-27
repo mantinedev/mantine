@@ -1,22 +1,23 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import { Box, Paper, Text } from '@mantine/core';
 import { useIntersection } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useRef } from 'react';
+import { useState } from 'react';
 import { useIntersection } from '@mantine/hooks';
 import { Text, Paper, Box } from '@mantine/core';
 
 function Demo() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+
   const { ref, entry } = useIntersection({
-    root: containerRef.current,
+    root: container,
     threshold: 1,
   });
 
   return (
-    <Paper ref={containerRef} h={300} style={{ overflowY: 'scroll' }}>
+    <Paper ref={setContainer} h={300} style={{ overflowY: 'scroll' }}>
       <Box pt={260} pb={280}>
         <Paper
           ref={ref}
@@ -39,14 +40,15 @@ function Demo() {
 `;
 
 function Demo() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+
   const { ref, entry } = useIntersection({
-    root: containerRef.current,
+    root: container,
     threshold: 1,
   });
 
   return (
-    <Paper ref={containerRef} h={300} style={{ overflowY: 'scroll' }}>
+    <Paper ref={setContainer} h={300} style={{ overflowY: 'scroll' }}>
       <Box pt={260} pb={280}>
         <Paper
           ref={ref}
