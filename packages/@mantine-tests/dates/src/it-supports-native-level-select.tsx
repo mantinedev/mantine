@@ -138,7 +138,7 @@ export function itSupportsNativeLevelSelect(
         <options.component
           {...options.props}
           withNativeLevelSelect
-          levelControlAriaLabel="change-level"
+          ariaLabels={{ monthLevelControl: 'change-level' }}
         />
       );
 

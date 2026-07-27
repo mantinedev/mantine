@@ -180,8 +180,9 @@ function Demo() {
 
         <Table.Tbody>
           {virtualItems.length > 0 && (
-            <tr>
+            <tr aria-hidden>
               <td
+                aria-hidden
                 colSpan={5}
                 style={{ height: virtualItems[0].start, padding: 0, border: 'none' }}
               />
@@ -202,8 +203,9 @@ function Demo() {
           })}
 
           {virtualItems.length > 0 && (
-            <tr>
+            <tr aria-hidden>
               <td
+                aria-hidden
                 colSpan={5}
                 style={{
                   height:
@@ -255,8 +257,9 @@ function Demo() {
 
         <Table.Tbody>
           {virtualItems.length > 0 && (
-            <tr>
+            <tr aria-hidden>
               <td
+                aria-hidden
                 colSpan={5}
                 style={{ height: virtualItems[0].start, padding: 0, border: 'none' }}
               />
@@ -277,8 +280,9 @@ function Demo() {
           })}
 
           {virtualItems.length > 0 && (
-            <tr>
+            <tr aria-hidden>
               <td
+                aria-hidden
                 colSpan={5}
                 style={{
                   height: virtualizer.getTotalSize() - virtualItems[virtualItems.length - 1].end,
