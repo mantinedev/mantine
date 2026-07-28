@@ -1,7 +1,8 @@
-import React, { CSSProperties, useEffectEvent, useRef, useState } from 'react';
+import React, { CSSProperties, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useDidUpdate } from '../use-did-update/use-did-update';
 import { mergeRefs } from '../use-merged-ref/use-merged-ref';
+import { useCallbackRef } from '../utils';
 
 function getAutoHeightDuration(height: number | string) {
   if (!height || typeof height === 'string') {
@@ -72,7 +73,7 @@ export function useCollapse({
     ...(keepMounted ? {} : { display: 'none' }),
   };
 
-  const onTransitionStartEvent = useEffectEvent(() => onTransitionStart?.());
+  const onTransitionStartEvent = useCallbackRef(() => onTransitionStart?.());
 
   const elementRef = useRef<HTMLElement>(null);
   const [styles, setStylesRaw] = useState<CSSProperties>(expanded ? {} : collapsedStyles);

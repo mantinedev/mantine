@@ -1,4 +1,5 @@
-import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useCallbackRef } from '../utils';
 
 export type ScrollDirection = 'up' | 'down' | 'unknown';
 
@@ -8,7 +9,7 @@ export function useScrollDirection(): ScrollDirection {
   const isResizingRef = useRef(false);
   const resizeTimerRef = useRef<number | undefined>(undefined);
 
-  const handleScroll = useEffectEvent(() => {
+  const handleScroll = useCallbackRef(() => {
     if (isResizingRef.current) {
       return;
     }
