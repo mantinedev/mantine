@@ -11,7 +11,7 @@ export function findPreviousReleaseIndex(messages: string[], currentVersion: str
 export function formatGithubNotes(messages: string[]): string {
   return messages
     .filter((message) => /\[@mantine/.test(message))
-    .map((message) => message.replace('[', '- `[').replace(']', ']`'))
+    .map((message) => message.replace(/^\[([^\]]+)\]/, '- `[$1]`'))
     .join('\n');
 }
 
