@@ -140,6 +140,8 @@ jobs:
           cache-dependency-path: '**/yarn.lock'
       - name: Install dependencies
         run: yarn --frozen-lockfile
+      - name: Build public packages
+        run: npm run build all
       - name: Configure git for gh-pages
         env:
           GH_PAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
