@@ -17,7 +17,11 @@ import {
 } from '../../core';
 import { Paper, PaperBaseProps } from '../Paper';
 import { OptionalPortal, PortalProps } from '../Portal';
-import { FloatingWindowDimensions, FloatingWindowProvider } from './FloatingWindow.context';
+import {
+  FloatingWindowDimensions,
+  FloatingWindowProvider,
+  FloatingWindowSize,
+} from './FloatingWindow.context';
 import { FloatingWindowResizeHandle } from './FloatingWindowResizeHandle';
 import classes from './FloatingWindow.module.css';
 
@@ -44,6 +48,15 @@ export interface FloatingWindowProps
 
   /** Dimensions configuration for resizable floating window */
   dimensions?: FloatingWindowDimensions;
+
+  /** Called when the window is resized with `FloatingWindow.ResizeHandle` */
+  onSizeChange?: (size: FloatingWindowSize) => void;
+
+  /** Called when the resize with `FloatingWindow.ResizeHandle` starts. Not called for keyboard resize. */
+  onResizeStart?: () => void;
+
+  /** Called when the resize with `FloatingWindow.ResizeHandle` stops. Not called for keyboard resize. */
+  onResizeEnd?: () => void;
 }
 
 export type FloatingWindowFactory = Factory<{
@@ -96,6 +109,9 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
     portalProps,
     zIndex,
     dimensions,
+    onSizeChange,
+    onResizeStart,
+    onResizeEnd,
     ref,
     ...others
   } = props;
@@ -152,6 +168,9 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
         dimensions,
         constrainToViewport,
         constrainOffset,
+        onSizeChange,
+        onResizeStart,
+        onResizeEnd,
       }}
     >
       <OptionalPortal withinPortal={withinPortal} {...portalProps}>
