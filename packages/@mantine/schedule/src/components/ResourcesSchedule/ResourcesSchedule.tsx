@@ -178,7 +178,7 @@ export interface ResourcesScheduleProps
     resourceId?: string | number;
   }) => void;
 
-  /** If true, events can be resized @default false */
+  /** If true, events can be resized by dragging their edges, resizing snaps to whole days in month view @default false */
   withEventResize?: boolean;
 
   /** Called when event is resized */
@@ -345,7 +345,16 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
           />
         );
       case 'month':
-        return <ResourcesMonthView {...commonProps} onDayClick={onDayClick} {...monthViewProps} />;
+        return (
+          <ResourcesMonthView
+            {...commonProps}
+            onDayClick={onDayClick}
+            withEventResize={mode === 'static' ? false : withEventResize}
+            onEventResize={onEventResize}
+            canResizeEvent={canResizeEvent}
+            {...monthViewProps}
+          />
+        );
       default:
         return null;
     }

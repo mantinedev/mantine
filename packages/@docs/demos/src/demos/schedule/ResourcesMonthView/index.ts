@@ -2,6 +2,7 @@ export { usage } from './ResourcesMonthView.demo.usage';
 export { staticMode } from './ResourcesMonthView.demo.staticMode';
 export { radius } from './ResourcesMonthView.demo.radius';
 export { dragDrop } from './ResourcesMonthView.demo.dragDrop';
+export { eventResize } from './ResourcesMonthView.demo.eventResize';
 export { eventForm } from './ResourcesMonthView.demo.eventForm';
 export { renderEvent } from './ResourcesMonthView.demo.renderEvent';
 export { renderResourceLabel } from './ResourcesMonthView.demo.renderResourceLabel';

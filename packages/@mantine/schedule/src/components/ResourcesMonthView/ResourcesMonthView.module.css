@@ -283,3 +283,65 @@
 .resourcesMonthView:where([data-event-interaction]) .resourcesMonthViewCell {
   pointer-events: none;
 }
+
+.resourcesMonthViewEventWrapper {
+  &:hover .resourcesMonthViewResizeHandle {
+    opacity: 0.5;
+  }
+
+  & .resourcesMonthViewResizeHandle:hover {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourcesMonthViewResizeHandle:where([data-active]) {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourcesMonthViewResizeHandle:not([data-active]) {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.resourcesMonthViewResizeHandle {
+  position: absolute;
+  top: 20%;
+  width: 4px;
+  height: 60%;
+  cursor: ew-resize;
+  z-index: 5;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 100ms ease;
+  pointer-events: all;
+  touch-action: none;
+  background-color: var(--event-color);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px -6px;
+  }
+
+  &:where([data-edge='start']) {
+    inset-inline-start: -2px;
+  }
+
+  &:where([data-edge='end']) {
+    inset-inline-end: -2px;
+  }
+}
+
+.resourcesMonthView:where([data-resizing]) {
+  & * {
+    cursor: ew-resize !important;
+  }
+
+  & .resourcesMonthViewEventWrapper:not([data-resizing]) {
+    pointer-events: none;
+
+    & .resourcesMonthViewResizeHandle {
+      opacity: 0;
+    }
+  }
+}
