@@ -50,9 +50,7 @@ jobs:
 
   test:
     needs: prepare
-    if: >-
-      (needs.prepare.outputs.release_type == 'patch' ||
-      needs.prepare.outputs.release_type == 'minor_major') && !inputs.package
+    if: ${{ !inputs.package }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
