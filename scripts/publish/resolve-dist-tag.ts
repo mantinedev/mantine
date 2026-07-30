@@ -2,6 +2,22 @@ export function resolveDistTag(version: string): 'latest' | 'next' {
   return version.includes('-') ? 'next' : 'latest';
 }
 
+export type ReleaseType = 'prerelease' | 'patch' | 'minor_major';
+
+export function getReleaseType(version: string): ReleaseType {
+  if (version.includes('-')) {
+    return 'prerelease';
+  }
+
+  const parsed = parseStableVersion(version);
+
+  if (parsed === null) {
+    return 'prerelease';
+  }
+
+  return parsed[2] === 0 ? 'minor_major' : 'patch';
+}
+
 function parseStableVersion(version: string): [number, number, number] | null {
   const core = version.split('-')[0].split('+')[0];
   const parts = core.split('.');
