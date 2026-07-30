@@ -122,6 +122,22 @@ describe('@mantine/core/PasswordInput', () => {
     expect(input.type).toBe('password');
   });
 
+    it('allows visibility toggle button to be reached with keyboard navigation', async () => {
+    const user = userEvent.setup();
+    render(<PasswordInput label="Password" />);
+
+      await user.tab();
+      await user.tab();
+
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+
+    expect(toggleButton).toHaveFocus();
+
+    await user.keyboard(' ');
+    expect(toggleButton).toHaveAttribute('aria-pressed', 'true');
+  });
+
+
   it('supports controlled visible prop', async () => {
     const { rerender } = render(<PasswordInput label="Password" visible={false} />);
 
