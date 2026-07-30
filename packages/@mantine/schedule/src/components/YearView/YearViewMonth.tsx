@@ -10,6 +10,7 @@ import {
   getWeekNumber,
   isSameMonth,
 } from '../../utils';
+import { getHiddenWeekendColumns, getVisibleWeekDays } from './get-visible-week-days';
 import { GroupedEvents } from './get-year-view-events/get-year-view-events';
 import type { YearViewFactory } from './YearView';
 
@@ -40,6 +41,9 @@ export interface YearViewMonthSettings {
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
+
+  /** If set, weekend days are displayed. When `false`, weekend columns are hidden and the month grid shrinks. @default true */
+  withWeekendDays?: boolean;
 
   /** Props passed down to the week number button */
   getWeekNumberProps?: (weekStartDate: DateStringValue) => Record<string, any>;
@@ -102,6 +106,7 @@ export function YearViewMonth({
   firstDayOfWeek,
   weekdayFormat,
   weekendDays,
+  withWeekendDays,
   getDayProps,
   onDayClick,
   onWeekNumberClick,
@@ -119,31 +124,49 @@ export function YearViewMonth({
   const theme = useMantineTheme();
   const today = dayjs();
 
+  const resolvedFirstDayOfWeek = ctx.getFirstDayOfWeek(firstDayOfWeek);
+  const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
+  const hiddenColumns = new Set(
+    getHiddenWeekendColumns({
+      weekendDays: resolvedWeekendDays,
+      firstDayOfWeek: resolvedFirstDayOfWeek,
+      withWeekendDays,
+    })
+  );
+
   const weekdays = withWeekDays
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
         format: weekdayFormat,
-        firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-      }).map((day, index) => (
-        <div {...getStyles('yearViewWeekday')} key={index}>
-          {day}
-        </div>
-      ))
+        firstDayOfWeek: resolvedFirstDayOfWeek,
+      })
+        .filter((_, index) => !hiddenColumns.has(index))
+        .map((day, index) => (
+          <div {...getStyles('yearViewWeekday')} key={index}>
+            {day}
+          </div>
+        ))
     : null;
 
   const weeks = getMonthDays({
     month: dayjs(month).format('YYYY-MM-DD'),
-    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    firstDayOfWeek: resolvedFirstDayOfWeek,
     consistentWeeks: true,
   }).map((week, weekIndex) => {
-    const days = week.map((date, dayIndex) => {
+    const visibleDays = getVisibleWeekDays({
+      week,
+      weekendDays: resolvedWeekendDays,
+      withWeekendDays,
+    });
+
+    const days = visibleDays.map((date, dayIndex) => {
       const outside = !isSameMonth(date, month);
 
       if (outside && !withOutsideDays) {
         return <div {...getStyles('yearViewDay')} data-day-placeholder key={date} />;
       }
 
-      const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
+      const weekend = resolvedWeekendDays.includes(dayjs(date).day() as DayOfWeek);
       const ariaLabel = dayjs(date)
         .locale(locale || ctx.locale)
         .format('MMMM D, YYYY');

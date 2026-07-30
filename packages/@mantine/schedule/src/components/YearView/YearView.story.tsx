@@ -179,3 +179,37 @@ export function StaticMode() {
     </div>
   );
 }
+
+export function WithoutWeekendDays() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearView date="2025-11-01" events={november2025Events} withWeekendDays={false} />
+    </div>
+  );
+}
+
+export function WithoutWeekendDaysWeekNumbers() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearView
+        date="2025-11-01"
+        events={november2025Events}
+        withWeekendDays={false}
+        withWeekNumbers
+      />
+    </div>
+  );
+}
+
+export function WithoutWeekendDaysSunday() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearView
+        date="2025-11-01"
+        events={november2025Events}
+        withWeekendDays={false}
+        firstDayOfWeek={0}
+      />
+    </div>
+  );
+}

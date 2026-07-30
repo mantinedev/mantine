@@ -28,6 +28,7 @@ import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYea
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { getHiddenWeekendColumns, getVisibleWeekDays } from './get-visible-week-days';
 import { getYearViewEvents } from './get-year-view-events/get-year-view-events';
 import { handleYearViewKeyDown, YearViewControlsRef } from './handle-year-view-key-down';
 import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
@@ -110,6 +111,7 @@ const defaultProps = {
   __staticSelector: 'YearView',
   monthLabelFormat: 'MMMM',
   withWeekDays: true,
+  withWeekendDays: true,
   highlightToday: true,
   withHeader: true,
   withOutsideDays: true,
@@ -136,6 +138,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     firstDayOfWeek,
     weekdayFormat,
     weekendDays,
+    withWeekendDays,
     onMonthClick,
     onDayClick,
     onWeekNumberClick,
@@ -212,15 +215,29 @@ export const YearView = factory<YearViewFactory>((_props) => {
   // [monthIndex][weekIndex][dayIndex]
   const daysRef = useRef<HTMLButtonElement[][][]>([]) as YearViewControlsRef;
 
+  const resolvedFirstDayOfWeek = ctx.getFirstDayOfWeek(firstDayOfWeek);
+  const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
+  const hiddenColumns = getHiddenWeekendColumns({
+    weekendDays: resolvedWeekendDays,
+    firstDayOfWeek: resolvedFirstDayOfWeek,
+    withWeekendDays,
+  });
+  const columnsCount = 7 - hiddenColumns.length;
+
   const getFirstDayIndex = (month: string): { weekIndex: number; dayIndex: number } | undefined => {
     const weeks = getMonthDays({
       month: dayjs(month).format('YYYY-MM-DD'),
-      firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+      firstDayOfWeek: resolvedFirstDayOfWeek,
       consistentWeeks: true,
     });
 
     for (let weekIndex = 0; weekIndex < weeks.length; weekIndex++) {
-      const week = weeks[weekIndex];
+      const week = getVisibleWeekDays({
+        week: weeks[weekIndex],
+        weekendDays: resolvedWeekendDays,
+        withWeekendDays,
+      });
+
       for (let dayIndex = 0; dayIndex < week.length; dayIndex++) {
         const dayDate = week[dayIndex];
         if (isSameMonth(dayDate, month)) {
@@ -254,6 +271,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
             ((date) => dayjs(date).locale(ctx.getLocale(locale)).format('dd').slice(0, 1))
           }
           weekendDays={weekendDays}
+          withWeekendDays={withWeekendDays}
           getDayProps={getDayProps}
           getWeekNumberProps={getWeekNumberProps}
           onMonthClick={onMonthClick}
@@ -287,7 +305,12 @@ export const YearView = factory<YearViewFactory>((_props) => {
     });
 
   return (
-    <Box {...getStyles('yearView')} mod={{ static: mode === 'static' }} {...others}>
+    <Box
+      {...getStyles('yearView')}
+      mod={{ static: mode === 'static', 'without-weekend-days': hiddenColumns.length > 0 }}
+      __vars={hiddenColumns.length > 0 ? { '--year-view-columns': `${columnsCount}` } : undefined}
+      {...others}
+    >
       {withHeader && (
         <ScheduleHeaderBase
           view="year"

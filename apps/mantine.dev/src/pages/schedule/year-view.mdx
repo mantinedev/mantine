@@ -22,6 +22,15 @@ Set `withWeekDays={false}` to hide the weekday names row in each month.
 
 <Demo data={YearViewDemos.withoutWeekDays} />
 
+## Hide weekend days
+
+Set `withWeekendDays={false}` to hide weekend days. Every month grid shrinks to
+the remaining columns and events that fall only on hidden days are not displayed.
+The days that are considered weekend are controlled by the `weekendDays` prop
+(or [DatesProvider](/dates/getting-started/#datesprovider), `[0, 6]` by default).
+
+<Demo data={YearViewDemos.withoutWeekendDays} />
+
 ## Hide outside days
 
 Set `withOutsideDays={false}` to hide days from adjacent months.

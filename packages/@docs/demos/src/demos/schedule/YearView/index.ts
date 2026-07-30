@@ -1,6 +1,7 @@
 export { usage } from './YearView.demo.usage';
 export { withWeekNumbers } from './YearView.demo.withWeekNumbers';
 export { withoutWeekDays } from './YearView.demo.withoutWeekDays';
+export { withoutWeekendDays } from './YearView.demo.withoutWeekendDays';
 export { withOutsideDays } from './YearView.demo.withOutsideDays';
 export { firstDayOfWeek } from './YearView.demo.firstDayOfWeek';
 export { weekdayFormat } from './YearView.demo.weekdayFormat';

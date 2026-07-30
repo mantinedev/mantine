@@ -12,6 +12,10 @@ export const Demo_withoutWeekDays = {
   name: '⭐ Demo: withoutWeekDays',
   render: renderDemo(demos.withoutWeekDays),
 };
+export const Demo_withoutWeekendDays = {
+  name: '⭐ Demo: withoutWeekendDays',
+  render: renderDemo(demos.withoutWeekendDays),
+};
 export const Demo_withOutsideDays = {
   name: '⭐ Demo: withOutsideDays',
   render: renderDemo(demos.withOutsideDays),
