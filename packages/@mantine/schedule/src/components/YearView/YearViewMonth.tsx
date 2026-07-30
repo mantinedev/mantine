@@ -2,7 +2,13 @@ import dayjs from 'dayjs';
 import { Box, GetStylesApi, getThemeColor, UnstyledButton, useMantineTheme } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { ScheduleLabelsOverride } from '../../labels';
-import { DateLabelFormat, DateStringValue, DayOfWeek, ScheduleMode } from '../../types';
+import {
+  DateLabelFormat,
+  DateStringValue,
+  DayOfWeek,
+  ScheduleEventData,
+  ScheduleMode,
+} from '../../types';
 import {
   formatDate,
   getMonthDays,
@@ -13,6 +19,11 @@ import {
 import { getHiddenWeekendColumns, getVisibleWeekDays } from './get-visible-week-days';
 import { GroupedEvents } from './get-year-view-events/get-year-view-events';
 import type { YearViewFactory } from './YearView';
+
+export type YearViewRenderDay = (
+  date: DateStringValue,
+  events: ScheduleEventData[]
+) => React.ReactNode;
 
 export interface YearViewDayKeydownPayload {
   weekIndex: number;
@@ -71,6 +82,13 @@ export interface YearViewMonthSettings {
 
   /** If true, days from adjacent months are displayed @default true */
   withOutsideDays?: boolean;
+
+  /**
+   * A function to replace the entire content of a day cell, called with the day date
+   * and the events grouped on that day – the same list that is used to render the default
+   * indicators. When set, default event indicators are not rendered.
+   */
+  renderDay?: YearViewRenderDay;
 }
 
 export interface YearViewMonthProps extends YearViewMonthSettings {
@@ -116,6 +134,7 @@ export function YearViewMonth({
   groupedEvents,
   mode,
   withOutsideDays,
+  renderDay,
   __getDayRef,
   __onDayKeyDown,
   firstDayIndex,
@@ -183,14 +202,25 @@ export function YearViewMonth({
         dayIndex === firstDayIndex.dayIndex;
       const isInTabOrder = mode !== 'static' && !outside && isFirstDayOfMonth;
 
-      const indicators = dayEvents.slice(0, 3).map((event) => (
-        <div
-          {...getStyles('yearViewDayIndicator', {
-            style: { backgroundColor: getThemeColor(event.color, theme) },
-          })}
-          key={event.id}
-        />
-      ));
+      const dayContent =
+        typeof renderDay === 'function' ? (
+          renderDay(dayjs(date).format('YYYY-MM-DD'), dayEvents)
+        ) : (
+          <>
+            {dayjs(date).format('D')}
+
+            <div {...getStyles('yearViewDayIndicators')}>
+              {dayEvents.slice(0, 3).map((event) => (
+                <div
+                  {...getStyles('yearViewDayIndicator', {
+                    style: { backgroundColor: getThemeColor(event.color, theme) },
+                  })}
+                  key={event.id}
+                />
+              ))}
+            </div>
+          </>
+        );
 
       return (
         <UnstyledButton
@@ -218,9 +248,7 @@ export function YearViewMonth({
                 }
           }
         >
-          {dayjs(date).format('D')}
-
-          <div {...getStyles('yearViewDayIndicators')}>{indicators}</div>
+          {dayContent}
         </UnstyledButton>
       );
     });

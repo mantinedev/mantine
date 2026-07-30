@@ -7,3 +7,4 @@ import type {
 
 export { YearView } from './YearView';
 export type { YearViewProps, YearViewFactory, YearViewStylesNames, YearViewCssVariables };
+export type { YearViewRenderDay } from './YearViewMonth';

@@ -147,6 +147,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     highlightToday,
     labels,
     withOutsideDays,
+    renderDay,
 
     // ScheduleHeader props
     withHeader,
@@ -281,6 +282,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
           groupedEvents={groupedEvents}
           mode={mode}
           withOutsideDays={withOutsideDays}
+          renderDay={renderDay}
           firstDayIndex={getFirstDayIndex(month)}
           __getDayRef={(weekIndex, dayIndex, node) => {
             if (!Array.isArray(daysRef.current[currentMonthIndex])) {
