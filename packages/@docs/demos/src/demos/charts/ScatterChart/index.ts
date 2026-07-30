@@ -1,6 +1,7 @@
 export { usage } from './ScatterChart.demo.usage';
 export { multipleSeries } from './ScatterChart.demo.multipleSeries';
 export { axisProps } from './ScatterChart.demo.axisProps';
+export { rightYAxis } from './ScatterChart.demo.rightYAxis';
 export { gridColor } from './ScatterChart.demo.gridColor';
 export { legend } from './ScatterChart.demo.legend';
 export { legendPosition } from './ScatterChart.demo.legendPosition';
