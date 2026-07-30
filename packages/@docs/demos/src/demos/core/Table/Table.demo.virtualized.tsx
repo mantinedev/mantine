@@ -163,7 +163,7 @@ function Demo() {
 
   return (
     <Table.ScrollContainer
-      minWidth={500}
+      minWidth={760}
       maxHeight={400}
       scrollAreaProps={{ viewportRef: setScrollParent }}
     >
@@ -172,7 +172,7 @@ function Demo() {
           <Table.Tr>
             <Table.Th w={50}>#</Table.Th>
             <Table.Th>Name</Table.Th>
-            <Table.Th>Email</Table.Th>
+            <Table.Th w={220}>Email</Table.Th>
             <Table.Th>Company</Table.Th>
             <Table.Th>City</Table.Th>
           </Table.Tr>
@@ -240,7 +240,7 @@ function Demo() {
 
   return (
     <Table.ScrollContainer
-      minWidth={500}
+      minWidth={760}
       maxHeight={400}
       scrollAreaProps={{ viewportRef: setScrollParent }}
     >
@@ -249,7 +249,7 @@ function Demo() {
           <Table.Tr>
             <Table.Th w={50}>#</Table.Th>
             <Table.Th>Name</Table.Th>
-            <Table.Th>Email</Table.Th>
+            <Table.Th w={220}>Email</Table.Th>
             <Table.Th>Company</Table.Th>
             <Table.Th>City</Table.Th>
           </Table.Tr>
