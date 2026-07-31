@@ -1,4 +1,4 @@
-import { AccordionDemos, BulletChartDemos, CascaderDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, ResourcesDayViewDemos, ScrollAreaDemos, SunburstChartDemos, TableDemos, TimelineDemos, AreaChartDemos } from '@docs/demos';
+import { AccordionDemos, BulletChartDemos, CascaderDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, ResourcesDayViewDemos, ScrollAreaDemos, SunburstChartDemos, TableDemos, TimelineDemos, TooltipDemos, AreaChartDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -147,3 +147,13 @@ New [Table](/core/table) example demonstrates how to use `Table.ScrollContainer`
 `@tanstack/react-virtual` to efficiently render large datasets with 5,000 rows.
 
 <Demo data={TableDemos.virtualized} />
+
+## Interactive tooltip
+
+[Tooltip](/core/tooltip) now supports the `interactive` prop that keeps the tooltip open while
+the pointer travels from the target element to the tooltip and rests over its content. Use it if
+the tooltip contains content that the user must be able to reach with a pointer, for example a link.
+It is also required by [WCAG 2.1 success criterion 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html),
+which states that content that appears on hover must remain visible while the pointer is over it.
+
+<Demo data={TooltipDemos.interactive} />
