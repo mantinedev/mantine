@@ -103,6 +103,13 @@ to open the next column on hover instead – selecting a leaf still requires a c
 
 <Demo data={CascaderDemos.hoverExpand} />
 
+With `expandTrigger="hover"`, the open column stays in place while the cursor moves diagonally
+toward it – options that the cursor passes over on the way do not replace it. Set
+`safeAreaPolygon={false}` to expand on every hover immediately, or pass an object to configure
+[Floating UI `safePolygon`](https://floating-ui.com/docs/useHover#safepolygon) options:
+
+<Demo data={CascaderDemos.safeAreaPolygon} />
+
 ## Flat list layout
 
 Cascading columns require horizontal space and are not ideal for narrow screens, which makes them

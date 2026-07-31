@@ -4,6 +4,7 @@ export { changeOnSelect } from './Cascader.demo.changeOnSelect';
 export { closeOnSelect } from './Cascader.demo.closeOnSelect';
 export { allowDeselect } from './Cascader.demo.allowDeselect';
 export { hoverExpand } from './Cascader.demo.hoverExpand';
+export { safeAreaPolygon } from './Cascader.demo.safeAreaPolygon';
 export { maxDisplayedLevels } from './Cascader.demo.maxDisplayedLevels';
 export { searchable } from './Cascader.demo.searchable';
 export { nothingFound } from './Cascader.demo.nothingFound';

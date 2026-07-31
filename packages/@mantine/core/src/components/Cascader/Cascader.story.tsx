@@ -121,3 +121,25 @@ export function Unstyled() {
     </div>
   );
 }
+
+export function SafeAreaPolygon() {
+  return (
+    <div style={{ padding: 40, maxWidth: 340 }}>
+      <Cascader
+        label="Safe area (default)"
+        placeholder="Hover to expand"
+        expandTrigger="hover"
+        data={data}
+      />
+
+      <Cascader
+        mt="xl"
+        label="Safe area disabled"
+        placeholder="Hover to expand"
+        expandTrigger="hover"
+        safeAreaPolygon={false}
+        data={data}
+      />
+    </div>
+  );
+}

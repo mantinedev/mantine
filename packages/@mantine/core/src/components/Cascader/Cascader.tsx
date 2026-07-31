@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useMemo } from 'react';
+import type { SafePolygonOptions } from '@floating-ui/react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -53,6 +54,8 @@ export interface CascaderFormatValueInput {
 
 export type CascaderFormatValue = (input: CascaderFormatValueInput) => React.ReactNode;
 
+export type CascaderSafeAreaPolygonOptions = Omit<SafePolygonOptions, 'blockPointerEvents'>;
+
 export type CascaderStylesNames =
   | __InputStylesNames
   | ComboboxLikeStylesNames
@@ -105,6 +108,9 @@ export interface CascaderProps
 
   /** Determines how the next column is opened @default 'click' */
   expandTrigger?: 'click' | 'hover';
+
+  /** Determines whether the next column stays open while the cursor moves toward it, applicable only when `expandTrigger="hover"`. Pass an object to configure safe polygon behavior. @default true */
+  safeAreaPolygon?: boolean | CascaderSafeAreaPolygonOptions;
 
   /** If set, options can be searched by their flattened paths @default false */
   searchable?: boolean;
@@ -200,6 +206,7 @@ export type CascaderFactory = Factory<{
 
 const defaultProps = {
   expandTrigger: 'click',
+  safeAreaPolygon: true,
   changeOnSelect: false,
   allowDeselect: true,
   withCheckIcon: true,
@@ -283,6 +290,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
     checkIconPosition,
     withColumns,
     expandTrigger,
+    safeAreaPolygon,
     searchable,
     searchValue,
     defaultSearchValue,
@@ -610,6 +618,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
           }}
           onPointerActivity={() => cascader.setKeyboardNav(false)}
           listId={listId}
+          safeAreaPolygon={expandTrigger === 'hover' ? safeAreaPolygon : false}
         />
       )}
     </Combobox.Dropdown>

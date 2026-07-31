@@ -30,6 +30,11 @@ export const Demo_hoverExpand = {
   render: renderDemo(demos.hoverExpand),
 };
 
+export const Demo_safeAreaPolygon = {
+  name: '⭐ Demo: safeAreaPolygon',
+  render: renderDemo(demos.safeAreaPolygon),
+};
+
 export const Demo_maxDisplayedLevels = {
   name: '⭐ Demo: maxDisplayedLevels',
   render: renderDemo(demos.maxDisplayedLevels),
