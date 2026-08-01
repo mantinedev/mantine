@@ -112,6 +112,20 @@ describe('@mantine/core/Checkbox', () => {
     expect(screen.getByRole('checkbox')).not.toHaveAttribute('data-error');
   });
 
+  it('sets data-label-position attribute on inner element based on labelPosition prop', () => {
+    const { container, rerender } = render(<Checkbox labelPosition="left" />);
+    expect(container.querySelector('.mantine-Checkbox-inner')).toHaveAttribute(
+      'data-label-position',
+      'left'
+    );
+
+    rerender(<Checkbox labelPosition="right" />);
+    expect(container.querySelector('.mantine-Checkbox-inner')).toHaveAttribute(
+      'data-label-position',
+      'right'
+    );
+  });
+
   it('has aria-describedby attribute with id of description element', () => {
     render(<Checkbox description="test-description" />);
     expect(screen.getByRole('checkbox')).toHaveAttribute(
