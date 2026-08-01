@@ -89,12 +89,14 @@ export const InputLabel = factory<InputLabelFactory>((_props) => {
 
   const ctx = use(InputWrapperContext);
   const getStyles = ctx?.getStyles || _getStyles;
+  const rootElement = (others as { component?: React.ElementType }).component || labelElement;
+  const supportsHtmlFor = typeof rootElement !== 'string' || rootElement === 'label';
 
   return (
     <Box
       {...getStyles('label', ctx?.getStyles ? { className, style } : undefined)}
       component={labelElement as 'label'}
-      htmlFor={labelElement === 'label' ? htmlFor : undefined}
+      htmlFor={supportsHtmlFor ? htmlFor : undefined}
       mod={[{ required }, mod]}
       onMouseDown={(event) => {
         onMouseDown?.(event);

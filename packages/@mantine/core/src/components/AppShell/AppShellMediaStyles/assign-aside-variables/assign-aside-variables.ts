@@ -26,7 +26,7 @@ export function assignAsideVariables({
   const collapsedAsideTransform = 'translateX(var(--app-shell-aside-width))';
   const collapsedAsideTransformRtl = 'translateX(calc(var(--app-shell-aside-width) * -1))';
 
-  if (aside?.breakpoint && !aside?.collapsed?.mobile) {
+  if (aside?.breakpoint !== undefined && !aside?.collapsed?.mobile) {
     maxMediaStyles[aside?.breakpoint] = maxMediaStyles[aside?.breakpoint] || {};
     if (mode === 'fixed') {
       maxMediaStyles[aside?.breakpoint]['--app-shell-aside-width'] = '100%';
@@ -58,7 +58,7 @@ export function assignAsideVariables({
     });
   }
 
-  if (aside?.breakpoint && mode === 'static') {
+  if (aside?.breakpoint !== undefined && mode === 'static') {
     minMediaStyles[aside.breakpoint] = minMediaStyles[aside.breakpoint] || {};
     minMediaStyles[aside.breakpoint]['--app-shell-aside-position'] = 'sticky';
     minMediaStyles[aside.breakpoint]['--app-shell-aside-grid-row'] = '2';

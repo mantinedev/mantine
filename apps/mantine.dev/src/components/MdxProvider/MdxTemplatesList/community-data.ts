@@ -87,6 +87,12 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     description: 'Bun + Vite + Mantine template',
   },
   {
+    type: 'vite',
+    name: 'electron-vite-template',
+    link: 'https://github.com/saulotarsobc/sc-electron-boilerplate',
+    description: 'Electron + Vite + React desktop app template',
+  },
+  {
     type: 'react-router',
     name: 'react-router-template',
     link: 'https://github.com/samui-build/react-router-mantine',

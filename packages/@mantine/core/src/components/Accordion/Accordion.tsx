@@ -87,6 +87,9 @@ export interface AccordionProps<Multiple extends boolean = false>
 
   /** If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. @default true */
   keepMounted?: boolean;
+
+  /** Controls how inactive panels content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles @default 'activity' */
+  keepMountedMode?: 'activity' | 'display-none';
 }
 
 export type AccordionFactory = Factory<{
@@ -115,6 +118,7 @@ const defaultProps = {
   variant: 'default',
   chevronSize: 'auto',
   chevronIconSize: 16,
+  keepMountedMode: 'activity',
 } satisfies Partial<AccordionProps>;
 
 const varsResolver = createVarsResolver<AccordionFactory>(
@@ -156,6 +160,7 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
     chevronIconSize,
     attributes,
     keepMounted,
+    keepMountedMode,
     ...others
   } = props;
 
@@ -223,6 +228,7 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
         variant,
         unstyled,
         keepMounted,
+        keepMountedMode,
       }}
     >
       <Box {...getStyles('root')} id={uid} {...others} variant={variant} data-accordion>

@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { GetStylesApi } from '../../core';
 import { AccordionChevron } from '../Accordion';
 import { CheckIcon } from '../Checkbox/CheckIcon';
 import { ScrollArea, ScrollAreaProps } from '../ScrollArea';
 import { UnstyledButton } from '../UnstyledButton';
-import type { CascaderOption, CascaderStylesNames } from './Cascader';
+import type {
+  CascaderOption,
+  CascaderSafeAreaPolygonOptions,
+  CascaderStylesNames,
+} from './Cascader';
 import { cascaderOptionHasChildren, getCascaderColumns } from './get-cascader-columns';
+import { useCascaderSafeArea } from './use-cascader-safe-area';
 
 type CascaderColumnsGetStyles = GetStylesApi<{ props: any; stylesNames: CascaderStylesNames }>;
 
@@ -31,6 +36,7 @@ export interface CascaderColumnsProps {
   onColumnsMouseLeave: (() => void) | undefined;
   onPointerActivity: (() => void) | undefined;
   listId: string | undefined;
+  safeAreaPolygon: boolean | CascaderSafeAreaPolygonOptions | undefined;
 }
 
 export function getCascaderOptionId(listId: string | undefined, level: number, value: string) {
@@ -59,6 +65,7 @@ export function CascaderColumns({
   onColumnsMouseLeave,
   onPointerActivity,
   listId,
+  safeAreaPolygon,
 }: CascaderColumnsProps) {
   const allColumns = getCascaderColumns(data, activePath);
   const totalColumns = allColumns.length;
@@ -88,11 +95,17 @@ export function CascaderColumns({
 
   const check = showCheckIcon ? <CheckIcon {...getStyles('columnOptionCheck')} /> : null;
 
+  const columnRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  const safeArea = useCascaderSafeArea({ safeAreaPolygon, onFlush: onOptionMouseEnter });
+
   return (
     <div
       {...getStyles('columnsList')}
       role="presentation"
-      onMouseLeave={onColumnsMouseLeave}
+      onMouseLeave={() => {
+        safeArea.disarm();
+        onColumnsMouseLeave?.();
+      }}
       onMouseMove={onPointerActivity}
     >
       {hiddenBefore > 0 && (
@@ -117,6 +130,9 @@ export function CascaderColumns({
         return (
           <div
             key={level}
+            ref={(node) => {
+              columnRefs.current[level] = node;
+            }}
             data-last={isLastColumn || undefined}
             {...getStyles('column', {
               style: columnWidth ? { width: columnWidth, minWidth: columnWidth } : undefined,
@@ -163,9 +179,41 @@ export function CascaderColumns({
                         }
                       }}
                       onMouseEnter={() => {
-                        if (!option.disabled) {
-                          onOptionMouseEnter(level, option);
+                        if (option.disabled) {
+                          return;
                         }
+
+                        if (safeArea.isBlocked(level)) {
+                          safeArea.setPending(level, option);
+                          return;
+                        }
+
+                        onOptionMouseEnter(level, option);
+                      }}
+                      onMouseLeave={(event) => {
+                        safeArea.clearPending(level, option);
+
+                        if (!safeArea.enabled || option.disabled) {
+                          return;
+                        }
+
+                        if (activePath[level] !== option.value) {
+                          return;
+                        }
+
+                        const floating = columnRefs.current[level + 1];
+
+                        if (!floating) {
+                          return;
+                        }
+
+                        safeArea.arm({
+                          level,
+                          reference: event.currentTarget,
+                          floating,
+                          clientX: event.clientX,
+                          clientY: event.clientY,
+                        });
                       }}
                       {...getStyles('columnOption')}
                     >

@@ -159,6 +159,10 @@ export const BulletChart = factory<BulletChartFactory>((_props) => {
   const maxRange = Math.max(...ranges.map((r) => r.value), 0);
   const formatValue = (v: number) => (valueFormatter ? valueFormatter(v) : v.toString());
 
+  // Clamp positions/sizes to the track so out-of-range values and targets never overflow it
+  const toPercentage = (v: number) =>
+    maxRange > 0 ? Math.max(0, Math.min((v / maxRange) * 100, 100)) : 0;
+
   const resolvedBarColor = barColor ? getThemeColor(barColor, theme) : 'var(--mantine-color-white)';
 
   const resolvedTargetColor = targetColor ? getThemeColor(targetColor, theme) : undefined;
@@ -166,7 +170,7 @@ export const BulletChart = factory<BulletChartFactory>((_props) => {
   const sortedRanges = [...ranges].sort((a, b) => b.value - a.value);
 
   const rangeBands = sortedRanges.map((range, index) => {
-    const percentage = maxRange > 0 ? (range.value / maxRange) * 100 : 0;
+    const percentage = toPercentage(range.value);
     const sizeStyle = isVertical
       ? { height: `${percentage}%`, bottom: 0 }
       : { width: `${percentage}%` };
@@ -185,7 +189,7 @@ export const BulletChart = factory<BulletChartFactory>((_props) => {
   });
 
   const rangeLabels = sortedRanges.map((range, index) => {
-    const percentage = maxRange > 0 ? (range.value / maxRange) * 100 : 0;
+    const percentage = toPercentage(range.value);
     const positionStyle = isVertical ? { bottom: `${percentage}%` } : { left: `${percentage}%` };
 
     return (
@@ -195,7 +199,7 @@ export const BulletChart = factory<BulletChartFactory>((_props) => {
     );
   });
 
-  const barPercentage = maxRange > 0 ? Math.min((value / maxRange) * 100, 100) : 0;
+  const barPercentage = toPercentage(value);
   const barSizeStyle = isVertical
     ? { height: `${barPercentage}%`, bottom: 0 }
     : { width: `${barPercentage}%` };
@@ -219,19 +223,21 @@ export const BulletChart = factory<BulletChartFactory>((_props) => {
     <div {...getStyles('barLabel', { style: barLabelPosition })}>{formatValue(value)}</div>
   );
 
+  const targetPercentage = target != null ? toPercentage(target) : 0;
+
   const targetElement =
     target != null ? (
       <div
         {...getStyles('target', {
           style: isVertical
             ? {
-                bottom: `${maxRange > 0 ? (target / maxRange) * 100 : 0}%`,
+                bottom: `${targetPercentage}%`,
                 width: `${targetRatio! * 100}%`,
                 height: rem(targetSize),
                 backgroundColor: resolvedTargetColor,
               }
             : {
-                left: `${maxRange > 0 ? (target / maxRange) * 100 : 0}%`,
+                left: `${targetPercentage}%`,
                 height: `${targetRatio! * 100}%`,
                 width: rem(targetSize),
                 backgroundColor: resolvedTargetColor,
@@ -244,9 +250,7 @@ export const BulletChart = factory<BulletChartFactory>((_props) => {
     target != null ? (
       <div
         {...getStyles('targetLabel', {
-          style: isVertical
-            ? { bottom: `${maxRange > 0 ? (target / maxRange) * 100 : 0}%` }
-            : { left: `${maxRange > 0 ? (target / maxRange) * 100 : 0}%` },
+          style: isVertical ? { bottom: `${targetPercentage}%` } : { left: `${targetPercentage}%` },
         })}
       >
         {formatValue(target)}

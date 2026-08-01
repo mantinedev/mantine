@@ -43,6 +43,11 @@ export interface TreeSelectRenderNodePayload {
   selected: boolean;
   checked: boolean;
   indeterminate: boolean;
+
+  /** Toggles the expanded state of the node. Can be used to build a custom expand control
+   * in `renderNode` without controlling the expanded state externally.
+   * No-op for nodes without children. */
+  expand: (event?: React.MouseEvent) => void;
 }
 
 export function TreeSelectOption({
@@ -63,9 +68,14 @@ export function TreeSelectOption({
 }: TreeSelectOptionProps) {
   const indentPx = (level - 1) * LEVEL_OFFSET;
 
-  const handleExpandClick = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
+  const handleExpandClick = (event?: React.MouseEvent) => {
+    event?.stopPropagation();
+    event?.preventDefault();
+
+    if (!hasChildren) {
+      return;
+    }
+
     onToggleExpand(node.value);
   };
 
@@ -74,7 +84,16 @@ export function TreeSelectOption({
   };
 
   const customContent = renderNode
-    ? renderNode({ node, level, expanded, hasChildren, selected, checked, indeterminate })
+    ? renderNode({
+        node,
+        level,
+        expanded,
+        hasChildren,
+        selected,
+        checked,
+        indeterminate,
+        expand: handleExpandClick,
+      })
     : null;
 
   const lineElements =

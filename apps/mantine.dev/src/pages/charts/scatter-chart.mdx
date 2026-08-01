@@ -35,6 +35,18 @@ can be used to change the orientation of the axis:
 
 <Demo data={ScatterChartDemos.axisProps} />
 
+## Right Y axis
+
+To display an additional Y axis on the right side of the chart, set the `withRightYAxis` prop.
+You can pass props down to the recharts [YAxis](https://recharts.org/en-US/api/YAxis)
+component with the `rightYAxisProps` prop and assign a label to the right Y axis with
+the `rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
+by setting `yAxisId: 'right'` in the `data` object – series that do not have `yAxisId`
+are bound to the left Y axis. Both axes use the same `dataKey.y` value, but their scales
+are calculated independently from the series assigned to them.
+
+<Demo data={ScatterChartDemos.rightYAxis} />
+
 ## Value formatter
 
 To format values in the tooltip and axis ticks, use the `valueFormat` prop. It accepts

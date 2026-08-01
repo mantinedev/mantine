@@ -104,6 +104,45 @@ export function AxisLabels() {
   );
 }
 
+const biaxialData = [
+  {
+    color: 'indigo.6',
+    name: 'Revenue',
+    data: Array.from({ length: 12 }, (_, index) => ({
+      month: index + 1,
+      value: 1200 + index * 190,
+    })),
+  },
+  {
+    color: 'teal.6',
+    name: 'Conversion rate',
+    yAxisId: 'right',
+    data: Array.from({ length: 12 }, (_, index) => ({
+      month: index + 1,
+      value: 3.4 + index * 0.35,
+    })),
+  },
+];
+
+export function RightYAxis() {
+  return (
+    <div style={{ padding: 40 }}>
+      <ScatterChart
+        data={biaxialData}
+        dataKey={{ x: 'month', y: 'value' }}
+        h={400}
+        withLegend
+        withRightYAxis
+        xAxisLabel="Month"
+        yAxisLabel="Revenue"
+        rightYAxisLabel="Conversion rate"
+        rightYAxisProps={{ unit: '%' }}
+        referenceLines={[{ y: 5, yAxisId: 'right', color: 'red.5', label: 'Target' }]}
+      />
+    </div>
+  );
+}
+
 export function ReferenceLines() {
   return (
     <div style={{ padding: 40 }}>

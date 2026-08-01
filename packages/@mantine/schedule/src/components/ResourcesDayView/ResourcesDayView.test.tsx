@@ -153,6 +153,20 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     expect(spy).toHaveBeenCalledWith(expect.any(String));
   });
 
+  it('navigates to getCurrentTime date when Today control is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <ResourcesDayView
+        {...defaultProps}
+        onDateChange={spy}
+        getCurrentTime={() => '2025-12-25 10:00:00'}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'Today' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-12-25 10:00:00')));
+  });
+
   it('view tabs call onViewChange with day, week, month', async () => {
     const spy = jest.fn();
     render(<ResourcesDayView {...defaultProps} onViewChange={spy} />);
@@ -260,6 +274,44 @@ describe('@mantine/schedule/ResourcesDayView', () => {
         '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicatorTimeBubble'
       )
     ).not.toBeInTheDocument();
+
+    jest.useRealTimers();
+  });
+
+  it('uses getCurrentTime to decide whether the indicator is displayed by default', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-16 10:30:00'));
+
+    const { container, rerender } = render(<ResourcesDayView {...defaultProps} />);
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicator')
+    ).not.toBeInTheDocument();
+
+    rerender(<ResourcesDayView {...defaultProps} getCurrentTime={() => '2025-01-15 10:30:00'} />);
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicator')
+    ).toBeInTheDocument();
+
+    jest.useRealTimers();
+  });
+
+  it('uses getCurrentTime for the current time bubble', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-15 11:15:00'));
+
+    const { container } = render(
+      <ResourcesDayView
+        {...defaultProps}
+        slotLabelFormat="HH:mm"
+        withCurrentTimeIndicator
+        withCurrentTimeBubble
+        getCurrentTime={() => '2025-01-15 09:30:00'}
+      />
+    );
+
+    expect(
+      container.querySelector(
+        '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicatorTimeBubble'
+      )
+    ).toHaveTextContent('09:30');
 
     jest.useRealTimers();
   });

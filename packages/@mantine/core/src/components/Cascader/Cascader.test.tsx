@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -54,6 +55,43 @@ const defaultProps: CascaderProps = {
   ...inputDefaultProps,
   data,
 };
+
+function mockRect(
+  element: Element,
+  rect: { left: number; top: number; right: number; bottom: number }
+) {
+  element.getBoundingClientRect = () =>
+    ({
+      ...rect,
+      x: rect.left,
+      y: rect.top,
+      width: rect.right - rect.left,
+      height: rect.bottom - rect.top,
+      toJSON: () => ({}),
+    }) as DOMRect;
+}
+
+function getColumns() {
+  return Array.from(document.querySelectorAll<HTMLElement>('.mantine-Cascader-column'));
+}
+
+function getColumnsList() {
+  return document.querySelector<HTMLElement>('.mantine-Cascader-columnsList')!;
+}
+
+function leaveOption(name: string, coords?: { clientX: number; clientY: number }) {
+  fireEvent.mouseOut(screen.getByRole('option', { name }), {
+    ...coords,
+    relatedTarget: getColumnsList(),
+  });
+}
+
+function armSafeArea() {
+  const asia = screen.getByRole('option', { name: 'Asia' });
+  mockRect(asia, { left: 0, top: 0, right: 200, bottom: 30 });
+  mockRect(getColumns()[1], { left: 200, top: 0, right: 400, bottom: 300 });
+  leaveOption('Asia', { clientX: 195, clientY: 15 });
+}
 
 describe('@mantine/core/Cascader', () => {
   tests.axe([
@@ -335,5 +373,120 @@ describe('@mantine/core/Cascader', () => {
     );
     await userEvent.click(screen.getByRole('option', { name: /Tokyo/ }));
     expect(spy).toHaveBeenCalledWith(null, []);
+  });
+
+  it('keeps the expanded column while the cursor travels toward it inside the safe area', () => {
+    render(
+      <Cascader
+        {...defaultProps}
+        dropdownOpened
+        expandTrigger="hover"
+        safeAreaPolygon={{ requireIntent: false }}
+      />
+    );
+
+    fireEvent.mouseOver(screen.getByRole('option', { name: 'Asia' }));
+    expect(screen.getByRole('option', { name: 'Japan' })).toBeVisible();
+
+    armSafeArea();
+    fireEvent.mouseOver(screen.getByRole('option', { name: 'Europe' }));
+    // Computed from armSafeArea's mocked rects (Asia: 0,0-200,30; next column: 200,0-400,300)
+    // and floating-ui's default buffer (0.5): at y=100 the safe-area polygon spans
+    // x≈196.29-200.5, so (198, 100) sits ~1.7px inside its left boundary. A future edit to
+    // the mocked rects or to floating-ui's default buffer can silently flip this assertion.
+    fireEvent.mouseMove(document, { clientX: 198, clientY: 100 });
+
+    expect(screen.getByRole('option', { name: 'Japan' })).toBeVisible();
+    expect(screen.queryByRole('option', { name: 'France' })).toBe(null);
+  });
+
+  it('keeps the expanded column with the default safeAreaPolygon config', () => {
+    // With the default `requireIntent: true`, a matched mousemove schedules a 40ms
+    // setTimeout inside floating-ui's safePolygon. Fake timers keep it from firing for
+    // real and flushing a state update outside `act()` after this test finishes.
+    jest.useFakeTimers();
+
+    try {
+      render(<Cascader {...defaultProps} dropdownOpened expandTrigger="hover" />);
+
+      fireEvent.mouseOver(screen.getByRole('option', { name: 'Asia' }));
+      expect(screen.getByRole('option', { name: 'Japan' })).toBeVisible();
+
+      armSafeArea();
+      fireEvent.mouseOver(screen.getByRole('option', { name: 'Europe' }));
+      fireEvent.mouseMove(document, { clientX: 198, clientY: 100 });
+
+      expect(screen.getByRole('option', { name: 'Japan' })).toBeVisible();
+      expect(screen.queryByRole('option', { name: 'France' })).toBe(null);
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
+  it('applies the suppressed option once the cursor leaves the safe area', () => {
+    render(
+      <Cascader
+        {...defaultProps}
+        dropdownOpened
+        expandTrigger="hover"
+        safeAreaPolygon={{ requireIntent: false }}
+      />
+    );
+
+    fireEvent.mouseOver(screen.getByRole('option', { name: 'Asia' }));
+    armSafeArea();
+    fireEvent.mouseOver(screen.getByRole('option', { name: 'Europe' }));
+    fireEvent.mouseMove(document, { clientX: 20, clientY: 250 });
+
+    expect(screen.getByRole('option', { name: 'France' })).toBeVisible();
+    expect(screen.queryByRole('option', { name: 'Japan' })).toBe(null);
+  });
+
+  it('does not apply a suppressed option the cursor has already left', () => {
+    render(
+      <Cascader
+        {...defaultProps}
+        dropdownOpened
+        expandTrigger="hover"
+        safeAreaPolygon={{ requireIntent: false }}
+      />
+    );
+
+    fireEvent.mouseOver(screen.getByRole('option', { name: 'Asia' }));
+    armSafeArea();
+    fireEvent.mouseOver(screen.getByRole('option', { name: 'Europe' }));
+    leaveOption('Europe');
+    fireEvent.mouseMove(document, { clientX: 20, clientY: 250 });
+
+    expect(screen.getByRole('option', { name: 'Japan' })).toBeVisible();
+    expect(screen.queryByRole('option', { name: 'France' })).toBe(null);
+  });
+
+  it('expands immediately when safeAreaPolygon is false', () => {
+    render(
+      <Cascader {...defaultProps} dropdownOpened expandTrigger="hover" safeAreaPolygon={false} />
+    );
+
+    fireEvent.mouseOver(screen.getByRole('option', { name: 'Asia' }));
+    armSafeArea();
+    fireEvent.mouseOver(screen.getByRole('option', { name: 'Europe' }));
+
+    expect(screen.getByRole('option', { name: 'France' })).toBeVisible();
+    expect(screen.queryByRole('option', { name: 'Japan' })).toBe(null);
+  });
+
+  it('does not arm the safe area when expandTrigger is click', async () => {
+    render(<Cascader {...defaultProps} dropdownOpened />);
+
+    await userEvent.click(screen.getByRole('option', { name: 'Asia' }));
+    expect(screen.getByRole('option', { name: 'Japan' })).toBeVisible();
+
+    const addEventListenerSpy = jest.spyOn(document, 'addEventListener');
+    try {
+      armSafeArea();
+      expect(addEventListenerSpy).not.toHaveBeenCalledWith('mousemove', expect.anything());
+    } finally {
+      addEventListenerSpy.mockRestore();
+    }
   });
 });

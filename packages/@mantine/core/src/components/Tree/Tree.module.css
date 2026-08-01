@@ -22,7 +22,8 @@
   padding: 0;
   outline: 0;
 
-  &:focus-visible {
+  &:focus-visible,
+  &[data-focus-ring]:focus {
     > .label {
       outline: 2px solid var(--mantine-primary-color-filled);
       outline-offset: 2px;

@@ -65,6 +65,29 @@ height in 10px steps. `Home`/`End` keys jump to the minimum/maximum size.
 
 <Demo data={FloatingWindowDemos.resizeHandle} />
 
+## Resize callbacks
+
+`FloatingWindow` supports the following resize callbacks, which mirror `onPositionChange`,
+`onDragStart` and `onDragEnd` used for dragging:
+
+- `onSizeChange` – called with the `{ width, height }` of the window every time it is resized
+- `onResizeStart` – called when the resize starts
+- `onResizeEnd` – called when the resize stops
+
+Sizes passed to `onSizeChange` are measured after the new size has been applied, so they are
+already clamped by the `dimensions` and viewport constraints and always match the actual size
+of the window. Both `width` and `height` are always provided, even if only one of the axes
+is resizable.
+
+`onSizeChange` is called for both pointer and keyboard resize. `onResizeStart` and `onResizeEnd`
+are called only for pointer resize – keyboard resize applies the new size immediately and
+has no start/end phase.
+
+All resize callbacks require the `dimensions` prop and `FloatingWindow.ResizeHandle` –
+they are not called if the window is not resizable.
+
+<Demo data={FloatingWindowDemos.resizeCallbacks} />
+
 ## Lock axis
 
 Use the `axis` option to restrict movement to the specified axis:

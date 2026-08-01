@@ -39,6 +39,7 @@ export interface ScatterChartSeries {
   color: MantineColor;
   name: string;
   data: Record<string, number>[];
+  yAxisId?: string;
 }
 
 export type ScatterChartStylesNames =
@@ -133,8 +134,10 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
     withTooltip,
     withXAxis,
     withYAxis,
+    withRightYAxis,
     xAxisProps,
     yAxisProps,
+    rightYAxisProps,
     orientation,
     scatterChartProps,
     legendProps,
@@ -152,6 +155,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
     gridColor,
     xAxisLabel,
     yAxisLabel,
+    rightYAxisLabel,
     unit,
     labels,
     valueFormatter,
@@ -273,6 +277,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
         key={index}
         isAnimationActive={false}
         fillOpacity={dimmed ? 0.1 : 1}
+        yAxisId={item.yAxisId || undefined}
         {...scatterProps}
       >
         {pointLabels && <LabelList dataKey={dataKey[pointLabels]} fontSize={8} dy={10} />}
@@ -281,6 +286,17 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
     );
   });
 
+  const sharedYAxisProps = {
+    type: 'number' as const,
+    axisLine: false,
+    dataKey: dataKey.y,
+    tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
+    allowDecimals: true,
+    unit: unit?.y,
+    tickFormatter: yFormatter,
+    ...getStyles('axis'),
+  };
+
   return (
     <Box {...getStyles('root')} onMouseLeave={handleMouseLeave} dir={dir || 'ltr'} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
@@ -288,7 +304,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
           margin={{
             bottom: xAxisLabel ? 30 : undefined,
             left: yAxisLabel ? 10 : undefined,
-            right: yAxisLabel ? 5 : undefined,
+            right: yAxisLabel || rightYAxisLabel ? 5 : undefined,
           }}
           accessibilityLayer={accessibilityLayer}
           {...scatterChartProps}
@@ -323,16 +339,9 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
             {xAxisProps?.children}
           </XAxis>
           <YAxis
-            type="number"
             hide={!withYAxis}
-            axisLine={false}
-            dataKey={dataKey.y}
-            tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
-            allowDecimals
-            unit={unit?.y}
-            tickFormatter={yFormatter}
-            {...getStyles('axis')}
+            {...sharedYAxisProps}
             {...yAxisProps}
           >
             {yAxisLabel && (
@@ -348,6 +357,29 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
               </Label>
             )}
             {yAxisProps?.children}
+          </YAxis>
+
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            hide={!withRightYAxis}
+            tick={{ transform: 'translate(10, 0)', fontSize: 12, fill: 'currentColor' }}
+            {...sharedYAxisProps}
+            {...rightYAxisProps}
+          >
+            {rightYAxisLabel && (
+              <Label
+                position="insideRight"
+                angle={90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {rightYAxisLabel}
+              </Label>
+            )}
+            {rightYAxisProps?.children}
           </YAxis>
 
           {withTooltip && (

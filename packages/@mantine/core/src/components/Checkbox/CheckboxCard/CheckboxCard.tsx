@@ -18,6 +18,7 @@ import classes from './CheckboxCard.module.css';
 
 export interface CheckboxCardContextValue {
   checked: boolean;
+  indeterminate?: boolean;
 }
 
 export const CheckboxCardContext = createContext<CheckboxCardContextValue | null>(null);
@@ -37,6 +38,9 @@ export interface CheckboxCardProps
 
   /** Called when value changes */
   onChange?: (checked: boolean) => void;
+
+  /** Indeterminate state of the checkbox. If set, `checked` prop is ignored and `aria-checked` is set to `mixed` */
+  indeterminate?: boolean;
 
   /** Adds border to the root element */
   withBorder?: boolean;
@@ -81,6 +85,7 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props) => {
     onClick,
     defaultChecked,
     onChange,
+    indeterminate,
     attributes,
     ...others
   } = props;
@@ -112,14 +117,14 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props) => {
   });
 
   return (
-    <CheckboxCardContext value={{ checked: _value }}>
+    <CheckboxCardContext value={{ checked: _value, indeterminate }}>
       {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus -- UnstyledButton renders a native <button> which is focusable */}
       <UnstyledButton
-        mod={[{ 'with-border': withBorder, checked: _value }, mod]}
+        mod={[{ 'with-border': withBorder, checked: _value, indeterminate }, mod]}
         {...getStyles('card')}
         {...others}
         role="checkbox"
-        aria-checked={_value}
+        aria-checked={indeterminate ? 'mixed' : _value}
         onClick={(event) => {
           onClick?.(event);
           ctx?.onChange(value || '');

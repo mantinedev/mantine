@@ -26,6 +26,7 @@ import { useHorizontalEventResize } from '../../hooks/use-horizontal-event-resiz
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
+  AnyDateValue,
   DateLabelFormat,
   DateStringValue,
   DateTimeStringValue,
@@ -114,6 +115,8 @@ export interface ResourcesWeekViewProps
   endTime?: string;
   /** Number of minutes for each interval in the week view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
   intervalMinutes?: number;
+  /** Minimum on-screen size of an event along the time axis, in px. Prevents very short events from collapsing. Larger values make brief events easier to see but extend them past their real start time. @default 1 */
+  minEventSize?: number;
   slotLabelFormat?: DateLabelFormat;
   radius?: MantineRadius;
   /** Date and time to scroll to on initial render, in `YYYY-MM-DD HH:mm:ss` format */
@@ -122,6 +125,10 @@ export interface ResourcesWeekViewProps
   locale?: string;
   withCurrentTimeIndicator?: boolean;
   withCurrentTimeBubble?: boolean;
+
+  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() */
+  getCurrentTime?: () => AnyDateValue;
+
   withHeader?: boolean;
   onViewChange?: (view: ScheduleViewLevel) => void;
   previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
@@ -225,6 +232,7 @@ const defaultProps = {
   endTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
   intervalMinutes: 60,
+  minEventSize: 1,
   withHeader: true,
   weekLabelFormat: 'MMM DD',
   weekdayFormat: 'ddd D',
@@ -267,6 +275,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     onDateChange,
     resources,
     intervalMinutes,
+    minEventSize,
     slotLabelFormat,
     radius,
     startScrollDateTime,
@@ -274,6 +283,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     locale,
     withCurrentTimeIndicator: _withCurrentTimeIndicator,
     withCurrentTimeBubble,
+    getCurrentTime,
     __staticSelector,
     withHeader,
     onViewChange,
@@ -376,25 +386,22 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
   const totalSlotsPerDay = slots.length;
 
-  const isToday = weekdays.some((day) => dayjs(day).isSame(dayjs(), 'day'));
+  const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
+  const now = resolveNow();
+  const isToday = weekdays.some((day) => dayjs(day).isSame(now, 'day'));
   const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
 
-  const [timeIndicatorOffset, setTimeIndicatorOffset] = useState(
-    getCurrentTimePosition({ startTime, endTime, intervalMinutes })
-  );
-  useInterval(
-    () => setTimeIndicatorOffset(getCurrentTimePosition({ startTime, endTime, intervalMinutes })),
-    60000,
-    { autoInvoke: true }
-  );
+  const [, setTimeIndicatorTick] = useState(0);
+  useInterval(() => setTimeIndicatorTick((tick) => tick + 1), 60000, { autoInvoke: true });
+  const timeIndicatorOffset = getCurrentTimePosition({ startTime, endTime, intervalMinutes, now });
 
-  const todayDayIndex = weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'day'));
+  const todayDayIndex = weekdays.findIndex((day) => dayjs(day).isSame(now, 'day'));
   const showTimeIndicator =
     withCurrentTimeIndicator &&
     todayDayIndex >= 0 &&
-    isInTimeRange({ date: dayjs().toDate(), startTime, endTime });
+    isInTimeRange({ date: now.toDate(), startTime, endTime });
   const formattedCurrentTime = withCurrentTimeBubble
-    ? formatDate({ locale: ctx.getLocale(locale), date: dayjs(), format: slotLabelFormat })
+    ? formatDate({ locale: ctx.getLocale(locale), date: now, format: slotLabelFormat })
     : '';
 
   type DropTargetSlot = { resourceId: string | number; slotIndex: number };
@@ -530,7 +537,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
   const dayLabels = weekdays.map((day) => {
     const d = dayjs(day);
-    const today = d.isSame(dayjs(), 'day') && highlightToday;
+    const today = d.isSame(now, 'day') && highlightToday;
     const weekend = ctx.getWeekendDays(weekendDays).includes(d.day() as DayOfWeek);
 
     return (
@@ -729,7 +736,11 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
             __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
             data-resizing={isThisEventResizing || undefined}
             style={{
-              ...getTimeAxisEventStyle({ start: eventLeft, span: eventWidth }),
+              ...getTimeAxisEventStyle({
+                start: eventLeft,
+                span: eventWidth,
+                minSize: minEventSize,
+              }),
               top: adjustPosition
                 ? `calc((100% - 22px) * ${event.position.column} / ${maxEventsPerTimeSlot})`
                 : `${event.position.offset}%`,
@@ -757,7 +768,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
                     }
                   : undefined
               }
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: '100%', padding: 0 }}
             />
             {isResizable && mode !== 'static' && (
               <>
@@ -986,7 +997,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
           navigationHandlers={{
             previous: () => previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
             next: () => nextWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
-            today: () => toDateString(dayjs()),
+            today: () => toDateString(resolveNow()),
           }}
           control={{
             miw: 180,

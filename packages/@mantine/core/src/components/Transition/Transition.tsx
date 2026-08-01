@@ -10,8 +10,8 @@ export interface TransitionProps {
 
   /**
    * Controls how the element is hidden when `keepMounted` is set:
-   * `'activity'` – hidden with React 19 `Activity` component,
-   * `'display-none'` – hidden with `display: none` styles
+   * `'activity'` - hidden with React 19 `Activity` component,
+   * `'display-none'` - hidden with `display: none` styles
    * @default 'activity'
    */
   keepMountedMode?: 'activity' | 'display-none';

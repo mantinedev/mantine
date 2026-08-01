@@ -2,7 +2,7 @@ import { DEFAULT_THEME, px, rem } from '../../../../core';
 import { AppShellProps } from '../../AppShell';
 import { assignAsideVariables } from './assign-aside-variables';
 
-function getTestObject(aside: AppShellProps['aside']) {
+function getTestObject(aside: AppShellProps['aside'], mode: 'fixed' | 'static' = 'fixed') {
   const baseStyles = {};
   const minMediaStyles = {};
   const maxMediaStyles = {};
@@ -13,7 +13,7 @@ function getTestObject(aside: AppShellProps['aside']) {
     maxMediaStyles,
     theme: DEFAULT_THEME,
     aside,
-    mode: 'fixed',
+    mode,
   });
 
   return { baseStyles, minMediaStyles, maxMediaStyles };
@@ -78,6 +78,17 @@ describe('@mantine/core/AppShell/assign-aside-variables', () => {
         lg: {
           '--app-shell-aside-width': rem(300),
           '--app-shell-aside-offset': rem(300),
+        },
+      });
+    });
+
+    it('supports breakpoint=0 in static mode', () => {
+      expect(getTestObject({ width: 100, breakpoint: 0 }, 'static').minMediaStyles).toStrictEqual({
+        0: {
+          '--app-shell-aside-position': 'sticky',
+          '--app-shell-aside-grid-row': '2',
+          '--app-shell-aside-grid-column': '3',
+          '--app-shell-main-column-end': '3',
         },
       });
     });

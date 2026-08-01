@@ -99,7 +99,9 @@ export const FlatTreeNode = memo(function FlatTreeNode({
           : [];
         const index = nodes.indexOf(event.currentTarget as HTMLElement);
         if (index !== -1) {
-          nodes[index + 1]?.focus();
+          const nextNode = nodes[index + 1];
+          nextNode?.setAttribute('data-focus-ring', 'true');
+          nextNode?.focus();
         }
       } else if (hasChildren) {
         tree.expand(node.value);
@@ -117,6 +119,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
         const parentElement = root?.querySelector<HTMLElement>(
           `[role=treeitem][data-value="${CSS.escape(parent)}"]`
         );
+        parentElement?.setAttribute('data-focus-ring', 'true');
         parentElement?.focus();
       }
     }
@@ -140,7 +143,9 @@ export const FlatTreeNode = memo(function FlatTreeNode({
       }
 
       const nextIndex = event.nativeEvent.code === 'ArrowDown' ? index + 1 : index - 1;
-      nodes[nextIndex]?.focus();
+      const nextNode = nodes[nextIndex];
+      nextNode?.setAttribute('data-focus-ring', 'true');
+      nextNode?.focus();
     }
 
     if (event.nativeEvent.code === 'Space') {
@@ -188,6 +193,11 @@ export const FlatTreeNode = memo(function FlatTreeNode({
       data-level={level}
       tabIndex={tabIndex}
       onKeyDown={handleKeyDown}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as HTMLElement)) {
+          event.currentTarget.removeAttribute('data-focus-ring');
+        }
+      }}
     >
       {linesPath?.map((state, idx) => {
         if (state === 'none') {
