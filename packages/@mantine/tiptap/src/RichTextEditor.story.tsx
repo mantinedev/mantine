@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { Color } from '@tiptap/extension-color';
+import { Details, DetailsContent, DetailsSummary } from '@tiptap/extension-details';
 import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';
 import SubScript from '@tiptap/extension-subscript';
@@ -113,6 +114,9 @@ function BasicEditor({
         types: ['heading', 'paragraph'],
       }),
       TableKit,
+      Details,
+      DetailsSummary,
+      DetailsContent,
       getTaskListExtension(TipTapTaskList),
       TaskItem.configure({ nested: true }),
     ],
@@ -201,6 +205,7 @@ function BasicEditor({
             <RichTextEditor.TaskList />
             <RichTextEditor.TaskListLift />
             <RichTextEditor.TaskListSink />
+            <RichTextEditor.Details />
           </RichTextEditor.ControlsGroup>
 
           <RichTextEditor.ControlsGroup>
@@ -543,6 +548,37 @@ export function Table() {
             <RichTextEditor.TableToggleHeaderColumn />
             <RichTextEditor.TableMergeCells />
             <RichTextEditor.TableSplitCell />
+          </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
+
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
+}
+
+export function DetailsControl() {
+  const editor = useEditor({
+    extensions: [StarterKit, Details, DetailsSummary, DetailsContent],
+    content: `
+      <details>
+        <summary>How do I install Mantine?</summary>
+        <p>Follow the getting started guide in the documentation to add Mantine to a new or existing project.</p>
+      </details>
+      <p></p>
+    `,
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor editor={editor}>
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Bold />
+            <RichTextEditor.Italic />
+          </RichTextEditor.ControlsGroup>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Details />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 

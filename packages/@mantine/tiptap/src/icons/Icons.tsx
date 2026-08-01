@@ -599,3 +599,15 @@ export function IconTableSplitCell(props: IconProps) {
     </IconBase>
   );
 }
+
+export function IconDetails(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M8 5l3 3l-3 3" />
+      <path d="M15 8l4 0" />
+      <path d="M5 15l14 0" />
+      <path d="M5 19l14 0" />
+    </IconBase>
+  );
+}

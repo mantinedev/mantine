@@ -59,6 +59,16 @@ controls are automatically disabled when the cursor is not inside a table:
 
 <Demo data={TipTapDemos.table} />
 
+## RichTextEditor Details control
+
+[RichTextEditor](/x/tiptap) now supports collapsible sections. Install and register the
+[Tiptap details extension](https://tiptap.dev/docs/editor/extensions/nodes/details) (`Details`,
+`DetailsSummary` and `DetailsContent`), then add `RichTextEditor.Details` to the toolbar. The control
+wraps the current block in a collapsible details node, or removes it when the cursor is already inside
+one:
+
+<Demo data={TipTapDemos.details} />
+
 ## GaugeChart component
 
 New [GaugeChart](/charts/gauge-chart) component – a radial gauge chart for KPI and status display.

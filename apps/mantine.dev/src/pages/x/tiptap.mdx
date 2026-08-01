@@ -226,6 +226,20 @@ cursor is not inside a table (or when the table extension is not installed):
 - `RichTextEditor.TableToggleHeaderRow` / `RichTextEditor.TableToggleHeaderColumn` – toggle header row/column
 - `RichTextEditor.TableMergeCells` / `RichTextEditor.TableSplitCell` – merge selected cells / split a merged cell
 
+## Details
+
+To add collapsible sections (`<details>`/`<summary>`), install the
+[Tiptap details extension](https://tiptap.dev/docs/editor/extensions/nodes/details) and register all
+three nodes it provides – `Details`, `DetailsSummary` and `DetailsContent`:
+
+<InstallScript packages="@tiptap/extension-details" />
+
+<Demo data={TipTapDemos.details} />
+
+`RichTextEditor.Details` toggles a collapsible section: it wraps the current block in a details node,
+or removes the details node when the cursor is already inside one. The control is automatically
+disabled when the details extension is not installed.
+
 ## Removing the paragraph wrapper
 
 Tiptap wraps the content of some nodes in a `<p>` element by default, producing markup like

@@ -175,6 +175,9 @@ export interface RichTextEditorLabels {
 
   /** RichTextEditor.TableSplitCell control aria-label */
   tableSplitCellControlLabel: string;
+
+  /** RichTextEditor.Details control aria-label */
+  detailsControlLabel: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -231,6 +234,9 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   tableToggleHeaderColumnControlLabel: 'Toggle header column',
   tableMergeCellsControlLabel: 'Merge cells',
   tableSplitCellControlLabel: 'Split cell',
+
+  // Details
+  detailsControlLabel: 'Toggle collapsible section',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',

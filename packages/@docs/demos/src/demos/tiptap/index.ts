@@ -8,6 +8,7 @@ export { icons } from './TipTap.demo.icons';
 export { placeholder } from './TipTap.demo.placeholder';
 export { tasks } from './TipTap.demo.tasks';
 export { table } from './TipTap.demo.table';
+export { details } from './TipTap.demo.details';
 export { typographyStyles } from './TipTap.demo.typographyStyles';
 export { subtleVariant } from './TipTap.demo.subtleVariant';
 export { sourceCodeSwitcher } from './TipTap.demo.sourceCodeSwitcher';

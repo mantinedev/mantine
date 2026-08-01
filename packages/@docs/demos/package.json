@@ -62,6 +62,7 @@
     "@mantinex/dev-icons": "workspace:*",
     "@mantinex/mantine-logo": "workspace:*",
     "@tiptap/core": "^3.27.3",
+    "@tiptap/extension-details": "^3.27.3",
     "@tiptap/extension-floating-menu": "^3.23.6",
     "@tiptap/extension-link": "^3.27.3",
     "@tiptap/extension-table": "^3.27.3",

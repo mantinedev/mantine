@@ -32,6 +32,10 @@ import {
   type RichTextEditorTableInsertControlProps,
 } from './RichTextEditorControl/RichTextEditorTableInsertControl';
 import {
+  RichTextEditorDetailsControl,
+  type RichTextEditorDetailsControlProps,
+} from './RichTextEditorControl/RichTextEditorDetailsControl';
+import {
   RichTextEditorControlsGroup,
   type RichTextEditorControlsGroupProps,
 } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
@@ -139,6 +143,7 @@ export type RichTextEditorFactory = Factory<{
     TableToggleHeaderColumn: typeof controls.TableToggleHeaderColumnControl;
     TableMergeCells: typeof controls.TableMergeCellsControl;
     TableSplitCell: typeof controls.TableSplitCellControl;
+    Details: typeof RichTextEditorDetailsControl;
   };
 }>;
 
@@ -263,6 +268,9 @@ RichTextEditor.TableToggleHeaderColumn = controls.TableToggleHeaderColumnControl
 RichTextEditor.TableMergeCells = controls.TableMergeCellsControl;
 RichTextEditor.TableSplitCell = controls.TableSplitCellControl;
 
+// Details control
+RichTextEditor.Details = RichTextEditorDetailsControl;
+
 export namespace RichTextEditor {
   export type Props = RichTextEditorProps;
   export type StylesNames = RichTextEditorStylesNames;
@@ -278,6 +286,7 @@ export namespace RichTextEditor {
     export type LinkProps = RichTextEditorLinkControlProps;
     export type SourceCodeProps = RichTextEditorSourceCodeControlProps;
     export type TableInsertProps = RichTextEditorTableInsertControlProps;
+    export type DetailsProps = RichTextEditorDetailsControlProps;
   }
 
   export namespace Content {

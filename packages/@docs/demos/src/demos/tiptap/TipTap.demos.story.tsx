@@ -53,6 +53,11 @@ export const Demo_table = {
   render: renderDemo(demos.table),
 };
 
+export const Demo_details = {
+  name: '⭐ Demo: details',
+  render: renderDemo(demos.details),
+};
+
 export const Demo_typographyStyles = {
   name: '⭐ Demo: typographyStyles',
   render: renderDemo(demos.typographyStyles),

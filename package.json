@@ -95,6 +95,7 @@
     "@tiptap/extension-code-block": "^3.27.3",
     "@tiptap/extension-code-block-lowlight": "^3.27.3",
     "@tiptap/extension-color": "^3.27.3",
+    "@tiptap/extension-details": "^3.27.3",
     "@tiptap/extension-highlight": "^3.27.3",
     "@tiptap/extension-history": "^3.27.3",
     "@tiptap/extension-link": "^3.27.3",
