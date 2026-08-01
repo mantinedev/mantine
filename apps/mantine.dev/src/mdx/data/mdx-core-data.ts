@@ -1018,6 +1018,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'menu bar, application menu, desktop menu, top menu, menubar, file edit view',
   },
 
+  Mentions: {
+    title: 'Mentions',
+    package: '@mantine/core',
+    slug: '/core/mentions',
+    props: ['Mentions', 'Mention'],
+    styles: ['Mentions'],
+    componentPrefix: 'Mentions',
+    description: 'Capture @-mentions in a textarea with a markup value and suggestions dropdown',
+    source: '@mantine/core/src/components/Mentions/Mentions.tsx',
+    docs: 'core/mentions.mdx',
+    searchTags: 'mention, mentions, tag people, at mention, autocomplete, suggestions, combobox',
+  },
+
   Progress: {
     title: 'Progress',
     package: '@mantine/core',
@@ -1139,6 +1152,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'img, picture, photo, thumbnail, figure',
   },
 
+  ImageCropper: {
+    title: 'ImageCropper',
+    package: '@mantine/core',
+    slug: '/core/image-cropper',
+    componentPrefix: 'ImageCropper',
+    props: ['ImageCropper'],
+    styles: ['ImageCropper'],
+    description: 'Interactive image crop, zoom, rotate and flip with canvas export',
+    source: '@mantine/core/src/components/ImageCropper/ImageCropper.tsx',
+    docs: 'core/image-cropper.mdx',
+    searchTags: 'crop, avatar, zoom, rotate, flip, canvas, upload, thumbnail, resize image',
+  },
+
   Card: {
     title: 'Card',
     package: '@mantine/core',
@@ -1162,6 +1188,32 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/PasswordInput/PasswordInput.tsx',
     docs: 'core/password-input.mdx',
     searchTags: 'password field, secret input, hidden input, passcode input, reveal password',
+  },
+
+  Persona: {
+    title: 'Persona',
+    package: '@mantine/core',
+    slug: '/core/persona',
+    componentPrefix: 'Persona',
+    props: ['Persona', 'PersonaAvatar', 'PersonaPresence', 'PersonaText'],
+    styles: ['Persona'],
+    description: 'Display a person identity: avatar, presence badge and stacked text lines',
+    source: '@mantine/core/src/components/Persona/Persona.tsx',
+    docs: 'core/persona.mdx',
+    searchTags: 'user, profile, presence, avatar, contact, people, identity, presence badge',
+  },
+
+  Stat: {
+    title: 'Stat',
+    package: '@mantine/core',
+    slug: '/core/stat',
+    componentPrefix: 'Stat',
+    props: ['Stat', 'StatLabel', 'StatValue', 'StatDiff', 'StatIcon', 'StatCountdown'],
+    styles: ['Stat'],
+    description: 'Display a key metric with a label, formatted value, trend and countdown',
+    source: '@mantine/core/src/components/Stat/Stat.tsx',
+    docs: 'core/stat.mdx',
+    searchTags: 'statistic, metric, kpi, dashboard, number, trend, countdown, stat',
   },
 
   PhoneInput: {
@@ -1428,6 +1480,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     description: 'Select with hierarchical tree data',
     source: '@mantine/core/src/components/TreeSelect/TreeSelect.tsx',
     docs: 'core/tree-select.mdx',
+  },
+
+  Cascader: {
+    title: 'Cascader',
+    package: '@mantine/core',
+    slug: '/core/cascader',
+    props: ['Cascader'],
+    styles: ['Cascader'],
+    description: 'Select a path from hierarchical data with cascading columns',
+    source: '@mantine/core/src/components/Cascader/Cascader.tsx',
+    docs: 'core/cascader.mdx',
+    searchTags: 'cascading select, hierarchical select, drill down, miller columns, path picker',
   },
 
   SemiCircleProgress: {

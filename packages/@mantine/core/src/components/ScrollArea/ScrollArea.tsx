@@ -114,6 +114,12 @@ export interface ScrollAreaProps
 
   /** Initial scroll position set on mount */
   startScrollPosition?: { x?: number; y?: number };
+
+  /**
+   * Pins the vertical scrollbar to a physical side (`left` or `right`) regardless of direction.
+   * By default, the scrollbar follows the inline-end edge (right in LTR, left in RTL).
+   */
+  verticalScrollbarPosition?: 'left' | 'right';
 }
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
@@ -217,6 +223,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
     onRightReached,
     overscrollBehavior,
     startScrollPosition,
+    verticalScrollbarPosition,
     attributes,
     ...others
   } = props;
@@ -340,6 +347,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
         data-offset-scrollbars={offsetScrollbars === true ? 'xy' : offsetScrollbars || undefined}
         data-scrollbars={scrollbars || undefined}
         data-scroll-fade={resolvedScrollFade || undefined}
+        data-vertical-scrollbar-position={verticalScrollbarPosition || undefined}
         data-horizontal-hidden={
           offsetScrollbars === 'present' && !horizontalThumbVisible ? 'true' : undefined
         }
@@ -393,6 +401,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
         <ScrollAreaScrollbar
           {...getStyles('scrollbar')}
           orientation="horizontal"
+          data-vertical-scrollbar-position={verticalScrollbarPosition || undefined}
           data-hidden={
             type === 'never' || (offsetScrollbars === 'present' && !horizontalThumbVisible)
               ? true
@@ -410,6 +419,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
         <ScrollAreaScrollbar
           {...getStyles('scrollbar')}
           orientation="vertical"
+          data-vertical-scrollbar-position={verticalScrollbarPosition || undefined}
           data-hidden={
             type === 'never' || (offsetScrollbars === 'present' && !verticalThumbVisible)
               ? true
@@ -425,6 +435,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
 
       <ScrollAreaCorner
         {...getStyles('corner')}
+        data-vertical-scrollbar-position={verticalScrollbarPosition || undefined}
         data-hovered={scrollbarHovered || undefined}
         data-hidden={type === 'never' || undefined}
       />
@@ -458,6 +469,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
     onBottomReached,
     onTopReached,
     startScrollPosition,
+    verticalScrollbarPosition,
     onOverflowChange,
     ...others
   } = useProps('ScrollAreaAutosize', defaultProps, props as ScrollAreaAutosizeProps);
@@ -538,6 +550,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
           onBottomReached={onBottomReached}
           onTopReached={onTopReached}
           startScrollPosition={startScrollPosition}
+          verticalScrollbarPosition={verticalScrollbarPosition}
           data-autosize="true"
         >
           {children}

@@ -1,6 +1,7 @@
 export * from './utils/index.js';
 
 export { useActiveElement } from './use-active-element/use-active-element.js';
+export { useBroadcastChannel } from './use-broadcast-channel/use-broadcast-channel.js';
 export {
   useBrowserLanguage,
   usePreferredLanguages,
@@ -108,9 +109,11 @@ export { useSplitter } from './use-splitter/use-splitter.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseActiveElementOptions } from './use-active-element/use-active-element';
+export type { UseBroadcastChannelReturnValue } from './use-broadcast-channel/use-broadcast-channel';
 export type {
   UseClipboardInput as UseClipboardOptions,
   UseClipboardReturnValue,
+  UseClipboardCopyValue,
 } from './use-clipboard/use-clipboard';
 export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';
 export type {

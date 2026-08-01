@@ -26,6 +26,15 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     searchTags: 'useActiveElement active element focus focused document.activeElement shadow dom',
   },
 
+  useBroadcastChannel: {
+    ...hDocs(
+      'useBroadcastChannel',
+      'Cross-tab and cross-context messaging with the BroadcastChannel API'
+    ),
+    searchTags:
+      'useBroadcastChannel broadcast channel cross tab message post structured clone same origin sync',
+  },
+
   useBrowserLanguage: {
     ...hDocs('useBrowserLanguage', 'Reads and subscribes to the browser language preferences'),
     searchTags:
@@ -37,7 +46,10 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Detects click and touch events outside of given element or elements group'
   ),
 
-  useClipboard: hDocs('useClipboard', 'Copy to clipboard with feedback timeout'),
+  useClipboard: {
+    ...hDocs('useClipboard', 'Copy text, images and blobs to the clipboard with feedback timeout'),
+    searchTags: 'useClipboard clipboard copy ClipboardItem image blob write writeText',
+  },
 
   useColorScheme: hDocs(
     'useColorScheme',

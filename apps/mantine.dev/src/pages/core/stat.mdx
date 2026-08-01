@@ -1,0 +1,171 @@
+import { StatDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Stat);
+
+## Usage
+
+`Stat` displays a single key metric: a label, a formatted value, an optional prefix/suffix
+and an optional trend indicator. It is the primitive to build dashboard stat rows, KPI cards
+and summary blocks. `Stat` composes existing Mantine components ([NumberFormatter](/core/number-formatter)
+for value formatting, [RollingNumber](/core/rolling-number) for animation and [Skeleton](/core/skeleton)
+for the loading state), so its formatting behavior matches the rest of the library.
+
+<Demo data={StatDemos.usage} />
+
+## Value formatting
+
+The `value` prop accepts a number or a string. Numeric values are formatted with
+[NumberFormatter](/core/number-formatter), so `Stat` supports the same formatting props:
+`thousandSeparator`, `decimalSeparator`, `decimalScale` and `fixedDecimalScale`. Use `prefix`
+and `suffix` to render units, currency or icons before and after the value:
+
+<Demo data={StatDemos.formatting} />
+
+To fully control value rendering, pass a `formatter` function. It receives the raw `value`
+and returns any React node, overriding `decimalScale`, separators and animation:
+
+```tsx
+import { Stat } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stat
+      label="Temperature"
+      value={21.5}
+      formatter={(value) => `${value} °C`}
+    />
+  );
+}
+```
+
+## Trend indicator
+
+Set the `diff` prop to display a trend delta below the value. Its sign selects the direction:
+a positive value renders an up arrow colored green, a negative value renders a down arrow
+colored red and zero renders a neutral, dimmed delta. By default the delta is formatted as a
+percentage:
+
+<Demo data={StatDemos.diff} />
+
+Use `diffFormatter` to customize the delta text and `withDiffIcon={false}` to hide the arrow:
+
+```tsx
+import { Stat } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stat
+      label="New customers"
+      value={482}
+      diff={38}
+      diffFormatter={(diff) => `${diff > 0 ? '+' : ''}${diff} this week`}
+    />
+  );
+}
+```
+
+## Icon
+
+Use the `icon` prop to render a leading icon or illustration next to the value:
+
+<Demo data={StatDemos.icon} />
+
+## Loading state
+
+Set the `loading` prop to display a [Skeleton](/core/skeleton) in place of the value while
+data is being fetched:
+
+<Demo data={StatDemos.loading} />
+
+## Animated value
+
+Set the `animate` prop to animate value changes with [RollingNumber](/core/rolling-number).
+Animation only applies to numeric values:
+
+<Demo data={StatDemos.animate} />
+
+## Countdown
+
+`Stat.Countdown` renders a live countdown to a target time. The `value` prop accepts a `Date`
+or a timestamp in milliseconds, and the `format` prop controls how the remaining time is
+displayed with dayjs-style tokens (`D`, `H`, `m`, `s`, `S`). Literal characters can be escaped
+with square brackets, for example `D[d] HH:mm:ss`:
+
+<Demo data={StatDemos.countdown} />
+
+The larger units roll into the leading token when it is absent from the format, so `mm:ss`
+displays the full remaining time in minutes and seconds. `Stat.Countdown` supports the same
+`label`, `prefix`, `suffix`, `icon`, `color` and `size` props as `Stat`:
+
+```tsx
+import { Stat } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stat.Countdown
+      label="Offer expires in"
+      value={Date.now() + 1000 * 60 * 15}
+      format="mm:ss"
+      onFinish={() => console.log('Countdown finished')}
+      onTick={(remainingMs) => console.log(remainingMs)}
+    />
+  );
+}
+```
+
+`onFinish` is called once when the target time is reached, and `onTick` is called on every
+tick with the remaining time in milliseconds.
+
+## Size
+
+`Stat` supports `xs`, `sm`, `md`, `lg` and `xl` sizes. The `size` prop scales the label, value,
+diff and icon. Change the `size` prop in the configurator above to see how it scales.
+
+## Color
+
+Set the `color` prop to change the value color. It accepts a value from `theme.colors` or any
+valid CSS color:
+
+```tsx
+import { Stat } from '@mantine/core';
+
+function Demo() {
+  return <Stat label="Active users" value={92_410} thousandSeparator color="blue" />;
+}
+```
+
+## Compound components
+
+For full control over the layout, use compound components instead of the shorthand props.
+`Stat.Icon` is placed next to the value, all other children are rendered in the body in the
+order they are declared:
+
+<Demo data={StatDemos.compound} />
+
+Available components:
+
+- `Stat.Icon` – leading icon wrapper
+- `Stat.Label` – caption displayed above the value
+- `Stat.Value` – value wrapper, accepts `prefix` and `suffix` props
+- `Stat.Diff` – trend delta, accepts a `value` prop (or custom children)
+
+## Example: dashboard stat row
+
+Compose multiple `Stat` components in a [SimpleGrid](/core/simple-grid) or
+[Group](/core/group) to build a stat row:
+
+<Demo data={StatDemos.statRow} />
+
+## Accessibility
+
+- `Stat.Countdown` renders the value as an `aria-live` region so screen readers announce the
+  remaining time. Fast countdowns that include millisecond tokens use `aria-live="off"` to
+  avoid spamming assistive technologies.
+- The trend direction is conveyed by the delta text and color; provide a descriptive `label`
+  so the metric is understandable without relying on color alone.
+
+<StylesApiSelectors component="Stat" />
+
+<Demo data={StatDemos.stylesApi} />

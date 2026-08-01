@@ -205,8 +205,13 @@ export function NotificationContainer({
   const isDragging = active || scrollDismissActive;
 
   const getStackedTransform = () => {
-    if (!isStackedLayout || isExiting) {
+    if (!isStackedLayout) {
       return 'var(--notifications-state-transform) translate3d(var(--notifications-swipe-offset), 0, 0)';
+    }
+
+    if (isExiting) {
+      const exitOffset = stackExpanded ? stackExpandedOffset || 0 : collapsedOffset;
+      return `translateY(${exitOffset}px) var(--notifications-state-transform) translate3d(var(--notifications-swipe-offset), 0, 0)`;
     }
 
     if (stackExpanded) {
@@ -222,7 +227,7 @@ export function NotificationContainer({
 
   const notificationStyle = {
     ...baseStyle,
-    ...(isStackedLayout && !isExiting ? { maxHeight: undefined } : {}),
+    ...(isStackedLayout ? { maxHeight: undefined } : {}),
     ['--notifications-state-transform' as string]:
       typeof baseStyle.transform === 'string' ? baseStyle.transform : 'translateX(0)',
     ['--notifications-state-opacity' as string]: String(baseOpacity),
@@ -233,7 +238,7 @@ export function NotificationContainer({
     transitionDuration: isDragging ? '0ms, 0ms, 0ms' : resolvedTransitionDuration,
     cursor: 'default',
     touchAction: 'pan-y',
-    ...(isStackedLayout && !isExiting
+    ...(isStackedLayout
       ? {
           gridArea: '1 / 1' as const,
           zIndex: isCollapsed ? (stackSize || 5) - stackIndex : (stackSize || 5) + 1,
@@ -242,7 +247,7 @@ export function NotificationContainer({
           transition: isDragging
             ? 'none'
             : `transform ${transitionDuration}ms cubic-bezier(.51,.3,0,1.21), opacity ${transitionDuration}ms ease`,
-          transitionDelay: isDragging ? '0ms' : `${staggerDelay}ms`,
+          transitionDelay: isDragging || isExiting ? '0ms' : `${staggerDelay}ms`,
         }
       : {}),
   } as React.CSSProperties;

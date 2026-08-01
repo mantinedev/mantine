@@ -1,0 +1,176 @@
+import { PersonaDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Persona);
+
+## Usage
+
+`Persona` displays a person identity: an [Avatar](/core/avatar), an optional presence
+badge and up to four stacked text lines. It composes existing Mantine components into a
+single primitive that is useful in people pickers, contact and chat lists, comment authors
+and profile headers. The most common way to use it is with shorthand props:
+
+<Demo data={PersonaDemos.usage} />
+
+## Avatar
+
+The `avatar` prop accepts [Avatar](/core/avatar) props (`src`, `color`, `radius`,
+`variant`, etc.) or a custom React node rendered in place of the avatar. When `avatar` is
+not set, an avatar with initials generated from the `name` prop is displayed. The avatar
+follows the same fallback chain as the `Avatar` component: image → initials → placeholder
+icon.
+
+<Demo data={PersonaDemos.initials} />
+
+By default, the avatar color is generated from the `name` prop (`color="initials"`). Pass a
+`color` in the `avatar` prop to override it, or provide a custom node for full control:
+
+```tsx
+import { Avatar, Persona } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      {/* Avatar with an image */}
+      <Persona name="Jane Doe" avatar={{ src: 'https://example.com/avatar.png' }} />
+
+      {/* Avatar with initials and a custom color */}
+      <Persona name="Jane Doe" avatar={{ color: 'blue' }} />
+
+      {/* Custom avatar node */}
+      <Persona name="Jane Doe" avatar={<Avatar color="grape">JD</Avatar>} />
+    </>
+  );
+}
+```
+
+## Presence
+
+The `presence` prop renders a status badge on the avatar. It accepts a status string or a
+configuration object. By default, `presence` is `'none'` and no badge is displayed – set it
+to one of the following statuses to show a badge:
+
+<Demo data={PersonaDemos.presence} />
+
+Statuses are colored by meaning (available → green, away → yellow, busy and do-not-disturb
+→ red, offline and unknown → gray, out-of-office → grape). Statuses that need a cue beyond
+color (`do-not-disturb`, `blocked`, `out-of-office`) also render a glyph, and the status is
+always exposed to assistive technologies via an `aria-label`.
+
+The configuration object supports `outOfOffice` and `processing` modifiers. `outOfOffice`
+renders the badge as a ring for any status, and `processing` adds a pulsing animation:
+
+```tsx
+import { Persona } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Persona name="Jane Doe" presence="available" />
+      <Persona name="Jane Doe" presence={{ status: 'available', outOfOffice: true }} />
+      <Persona name="Jane Doe" presence={{ status: 'available', processing: true }} />
+    </>
+  );
+}
+```
+
+## Presence only
+
+Set the `presenceOnly` prop to display the presence badge inline with the text, without an
+avatar. This is useful for status lists where an avatar is not needed:
+
+<Demo data={PersonaDemos.presenceOnly} />
+
+## Text lines
+
+`Persona` renders up to four text lines: `name` (primary), `secondaryText`, `tertiaryText`
+and `quaternaryText`. Only the lines that are set are rendered. Long lines are truncated
+with an ellipsis, so the component works well inside fixed-width containers such as picker
+options:
+
+```tsx
+import { Persona } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Persona
+      name="Vitaly Rtishchev"
+      secondaryText="Creator of Mantine"
+      tertiaryText="Available"
+      quaternaryText="Local time 4:32 PM"
+    />
+  );
+}
+```
+
+## Size
+
+`Persona` supports `xs`, `sm`, `md`, `lg` and `xl` sizes. The `size` prop scales the avatar,
+presence badge, text sizes and the gap between the avatar and the text. Change the `size`
+prop in the configurator above to see how it scales.
+
+## Text position and alignment
+
+Use the `textPosition` prop to control where the text is placed relative to the avatar:
+`after` (default), `before` or `below`. The `textAlignment` prop (`start` or `center`)
+controls how the text block is aligned. Change these props in the configurator above to see
+how they work.
+
+## Radius
+
+Set the `radius` prop to change the avatar `border-radius`. It accepts a value from
+`theme.radius` or any valid CSS value. By default, the avatar is circular.
+
+## Polymorphic component
+
+`Persona` is a [polymorphic component](/guides/polymorphic), its default root element is
+`div`. Set the `component` prop to render it as a link or a button, for example to build a
+clickable people-picker row:
+
+```tsx
+import { Persona } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Persona
+      component="a"
+      href="https://mantine.dev"
+      name="Vitaly Rtishchev"
+      secondaryText="Open profile"
+      presence="available"
+    />
+  );
+}
+```
+
+## Compound components
+
+For full control over the layout, use compound components instead of the shorthand props.
+`Persona.Avatar` and `Persona.Presence` are placed on the avatar, all other children are
+rendered in the text block:
+
+<Demo data={PersonaDemos.compound} />
+
+Available components:
+
+- `Persona.Avatar` – avatar element, accepts [Avatar](/core/avatar) props
+- `Persona.Presence` – presence badge, accepts a `presence` prop
+- `Persona.Text` – text line, `level` prop (`1`–`4`) controls its importance: `1` is the
+  primary line (person name), `2`–`4` are secondary lines
+
+## Example: people list
+
+<Demo data={PersonaDemos.people} />
+
+## Accessibility
+
+- The presence status is exposed to assistive technologies via the badge `aria-label`, so
+  the meaning does not rely on color alone.
+- When the root element is rendered as a link or a button with the `component` prop, make
+  sure it has an accessible name.
+- Provide an `alt` attribute in the `avatar` props when using an image avatar.
+
+<StylesApiSelectors component="Persona" />
+
+<Demo data={PersonaDemos.stylesApi} />

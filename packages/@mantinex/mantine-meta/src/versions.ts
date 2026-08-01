@@ -20,6 +20,13 @@ export const allVersions = [
     patches: [],
   },
   {
+    version: '9.12.0',
+    date: 'March 30, 2027',
+    github: 'https://github.com/mantinedev/mantine/releases/tag/9.12.0',
+    link: 'https://mantine.dev/changelog/9-12-0',
+    patches: [],
+  },
+  {
     version: '9.11.0',
     date: 'February 23, 2027',
     github: 'https://github.com/mantinedev/mantine/releases/tag/9.11.0',

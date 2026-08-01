@@ -1,0 +1,149 @@
+import { UseBroadcastChannelDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useBroadcastChannel);
+
+## Usage
+
+`use-broadcast-channel` is a reactive wrapper over the
+[BroadcastChannel API](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel).
+It lets you send messages between browsing contexts of the **same origin** – tabs, windows,
+iframes and workers – that subscribe to the same channel name. A message posted from one
+context is delivered to all others, which is useful for cross-tab synchronization: "you have
+been logged out in another tab", theme or cart updates, "a new version is available" and
+similar coordination.
+
+In the demo below both panels create a channel with the same name, so clicking a reaction in
+one panel updates the other. Open this page in a second browser tab to see the reactions sync
+across tabs as well:
+
+<Demo data={UseBroadcastChannelDemos.usage} />
+
+## Definition
+
+```tsx
+interface UseBroadcastChannelReturnValue<T> {
+  /** `true` if the BroadcastChannel API is available in the current environment */
+  supported: boolean;
+
+  /** The underlying BroadcastChannel instance, `null` on the server and after `close` */
+  channel: BroadcastChannel | null;
+
+  /** Data of the last message received from another context, `undefined` until a message arrives */
+  data: T | undefined;
+
+  /** Posts a message to all other contexts subscribed to the same channel name */
+  post: (data: T) => void;
+
+  /** The last `messageerror` event, `null` otherwise */
+  error: MessageEvent | null;
+
+  /** Closes the channel manually, after which `post` becomes a no-op until it is recreated */
+  close: () => void;
+}
+
+function useBroadcastChannel<T = any>(name: string): UseBroadcastChannelReturnValue<T>;
+```
+
+## Sending and receiving
+
+Call `post` to send a message to every other context subscribed to the same channel name. The
+`data` value updates whenever another context posts a message:
+
+```tsx
+import { useBroadcastChannel } from '@mantine/hooks';
+
+function Demo() {
+  const { data, post } = useBroadcastChannel<string>('notifications');
+
+  return (
+    <button type="button" onClick={() => post('Hello from another tab')}>
+      Last message: {data ?? 'none'}
+    </button>
+  );
+}
+```
+
+## Self-exclusion
+
+The BroadcastChannel API **does not deliver a message back to the context that sent it**. This
+means `data` only ever reflects messages received from *other* contexts, never your own `post`
+calls. If you need the posting context to update as well, update your local state directly in
+addition to calling `post`:
+
+```tsx
+import { useState } from 'react';
+import { useBroadcastChannel } from '@mantine/hooks';
+
+function Demo() {
+  const [value, setValue] = useState('light');
+  const { post } = useBroadcastChannel<string>('theme');
+
+  const setTheme = (theme: string) => {
+    setValue(theme); // update the current tab
+    post(theme); // update every other tab
+  };
+
+  // ...
+}
+```
+
+## Structured data
+
+`post` accepts any [structured-cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
+value – objects, arrays, `Map`, `Set`, `Date`, etc. – so there is no need to `JSON.stringify`
+the payload manually. Provide a type argument to `useBroadcastChannel` to type the message data:
+
+<Demo data={UseBroadcastChannelDemos.structuredData} />
+
+## Handling errors
+
+If a received message cannot be deserialized, the channel emits a `messageerror` event. The hook
+exposes the last such event through the `error` value:
+
+```tsx
+import { useBroadcastChannel } from '@mantine/hooks';
+
+function Demo() {
+  const { error } = useBroadcastChannel('data-sync');
+
+  if (error) {
+    return <div>Failed to read a broadcast message</div>;
+  }
+
+  // ...
+}
+```
+
+## Closing the channel
+
+The channel is created on mount and closed automatically on unmount or when the `name` changes.
+Call `close` to close it manually before that – for example once a one-off handshake is
+complete. After the channel is closed, `post` becomes a no-op and `channel` is `null` until the
+component remounts or the `name` changes.
+
+## Server-side rendering
+
+The hook is safe to use with server-side rendering. On the server (and in browsers without the
+BroadcastChannel API) `supported` is `false`, `channel` is `null` and `post` is a no-op, so no
+additional guards are required.
+
+## Difference from use-local-storage
+
+[use-local-storage](/hooks/use-local-storage) also synchronizes state across tabs, but through a
+different mechanism: it listens to the native `storage` event, which fires for **any** write to
+`localStorage`, including writes made by other code or browser devtools. `use-broadcast-channel`
+only delivers messages that were sent through the channel and does not persist anything. Use
+`use-local-storage` when you need persisted, storage-backed state, and `use-broadcast-channel`
+for general-purpose messaging (including non-serializable-to-string payloads or communication
+with workers and iframes). Compose the two if you need both persistence and messaging.
+
+## Definition of exported types
+
+`UseBroadcastChannelReturnValue` type is exported from the `@mantine/hooks` package, you can
+import it in your application:
+
+```tsx
+import type { UseBroadcastChannelReturnValue } from '@mantine/hooks';
+```

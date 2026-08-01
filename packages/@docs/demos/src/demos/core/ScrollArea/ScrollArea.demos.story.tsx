@@ -67,3 +67,8 @@ export const Demo_scrollFadeHorizontal = {
   name: '⭐ Demo: scrollFadeHorizontal',
   render: renderDemo(demos.scrollFadeHorizontal),
 };
+
+export const Demo_verticalScrollbarPosition = {
+  name: '⭐ Demo: verticalScrollbarPosition',
+  render: renderDemo(demos.verticalScrollbarPosition),
+};

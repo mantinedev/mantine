@@ -115,12 +115,16 @@ export function createControl({
     const _label = labels[label] as string;
     const editorState = useEditorState({
       editor: editor ?? null,
-      selector: (ctx) => {
-        // `ctx.editor` is `null` on the first render before `useEditor()` produces an
-        // instance, and `editor.commandManager` is set to `null` by `editor.destroy()`.
-        // Either state would make `isDisabled?.(ctx.editor)` (which typically calls
-        // `editor.can()`) throw, taking down the surrounding tree.
-        const safeEditor = ctx.editor && !ctx.editor.isDestroyed ? ctx.editor : null;
+      selector: () => {
+        // Read the editor from context rather than the `useEditorState` snapshot.
+        // The snapshot is not refreshed when the editor instance transitions from
+        // `null` to a real editor (e.g. with `immediatelyRender: false`), so relying
+        // on it keeps controls disabled until the first transaction, which usually
+        // only fires once the user focuses the editor.
+        // `editor.commandManager` is also set to `null` by `editor.destroy()`, which
+        // would make `isDisabled?.(editor)` (which typically calls `editor.can()`)
+        // throw, taking down the surrounding tree.
+        const safeEditor = editor && !editor.isDestroyed ? editor : null;
         return {
           active:
             safeEditor && isActive?.name
