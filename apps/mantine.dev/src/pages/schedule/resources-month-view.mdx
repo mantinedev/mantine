@@ -25,6 +25,26 @@ the `resourceId` of the target resource, allowing you to update the event's reso
 
 <Demo data={ResourcesMonthViewDemos.dragDrop} />
 
+## Event resize
+
+Enable event resizing with `withEventResize` prop. Events can be resized by dragging their start or
+end edges, and the `onEventResize` callback is called with the updated event start and end dates.
+
+<Demo data={ResourcesMonthViewDemos.eventResize} />
+
+Resizing snaps to whole days and preserves the event's original time of day: dragging the end edge
+of an event that ends at `17:00` onto another day keeps the `17:00` end time. Events that end
+exactly at midnight are treated as ending on the previous day, so their end stays exclusive after
+a resize.
+
+Resize handles are rendered only on the edges where the event actually starts and ends. An event
+that continues outside the displayed month, or that is split across rows, does not render a handle
+on those edges. Events hidden behind the "+N more" indicator cannot be resized.
+
+Resizing never changes the event's resource — drag the event itself to move it to another resource.
+
+Use `canResizeEvent` to control which events can be resized.
+
 ## Event form
 
 Click a day cell to create a new event, or click an existing event to edit it. Use `withDragSlotSelect`

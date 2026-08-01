@@ -183,6 +183,56 @@ describe('@mantine/core/PasswordInput', () => {
     expect(toggleButton).toBeDisabled();
   });
 
+  it('excludes visibility toggle button from tab order by default', () => {
+    render(<PasswordInput label="Password" />);
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+    expect(toggleButton).toHaveAttribute('tabindex', '-1');
+  });
+
+  it('includes visibility toggle button in tab order with visibilityToggleFocusable prop', () => {
+    render(<PasswordInput label="Password" visibilityToggleFocusable />);
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+    expect(toggleButton).toHaveAttribute('tabindex', '0');
+  });
+
+  it('allows tabIndex to be overridden via visibilityToggleButtonProps', () => {
+    render(
+      <PasswordInput
+        label="Password"
+        visibilityToggleFocusable
+        visibilityToggleButtonProps={{ tabIndex: -1 }}
+      />
+    );
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+    expect(toggleButton).toHaveAttribute('tabindex', '-1');
+  });
+
+  it('toggles visibility when Space is pressed on focused visibility toggle button', async () => {
+    const user = userEvent.setup();
+    render(<PasswordInput label="Password" visibilityToggleFocusable />);
+    const input = screen.getByLabelText('Password') as HTMLInputElement;
+    screen.getByRole('button', { name: 'Toggle password visibility' }).focus();
+
+    await user.keyboard(' ');
+    expect(input.type).toBe('text');
+
+    await user.keyboard(' ');
+    expect(input.type).toBe('password');
+  });
+
+  it('toggles visibility when Enter is pressed on focused visibility toggle button', async () => {
+    const user = userEvent.setup();
+    render(<PasswordInput label="Password" visibilityToggleFocusable />);
+    const input = screen.getByLabelText('Password') as HTMLInputElement;
+    screen.getByRole('button', { name: 'Toggle password visibility' }).focus();
+
+    await user.keyboard('{Enter}');
+    expect(input.type).toBe('text');
+
+    await user.keyboard('{Enter}');
+    expect(input.type).toBe('password');
+  });
+
   it('forwards dir to the input wrapper when it overrides parent direction (#8905)', () => {
     const { container } = render(
       <div dir="rtl">

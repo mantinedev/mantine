@@ -15,6 +15,7 @@ export { scrollAreaProps } from './ResourcesWeekView.demo.scrollAreaProps';
 export { timeRange } from './ResourcesWeekView.demo.timeRange';
 export { multiHourIntervals } from './ResourcesWeekView.demo.multiHourIntervals';
 export { currentTimeIndicator } from './ResourcesWeekView.demo.currentTimeIndicator';
+export { timezone } from './ResourcesWeekView.demo.timezone';
 export { firstDayOfWeek } from './ResourcesWeekView.demo.firstDayOfWeek';
 export { renderWeekLabel } from './ResourcesWeekView.demo.renderWeekLabel';
 export { maxEventsPerTimeSlot } from './ResourcesWeekView.demo.maxEventsPerTimeSlot';

@@ -5,6 +5,7 @@ import {
   flip,
   inline,
   offset,
+  safePolygon,
   shift,
   useClick,
   useDelayGroup,
@@ -34,6 +35,7 @@ interface UseTooltip {
   events?: { hover?: boolean; focus?: boolean; touch?: boolean; click?: boolean };
   closeOnClickOutside?: boolean;
   closeOnEscape?: boolean;
+  interactive?: boolean;
   inline?: boolean;
   strategy?: FloatingStrategy;
   middlewares?: TooltipMiddlewares;
@@ -134,6 +136,7 @@ export function useTooltip(settings: UseTooltip) {
       enabled: hoverEnabled,
       delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
       mouseOnly: !settings.events?.touch,
+      handleClose: settings.interactive ? safePolygon() : null,
     }),
     useFocus(context, { enabled: focusEnabled, visibleOnly: true }),
     useClick(context, { enabled: clickEnabled }),

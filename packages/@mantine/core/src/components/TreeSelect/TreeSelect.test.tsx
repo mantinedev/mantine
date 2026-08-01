@@ -363,6 +363,53 @@ describe('@mantine/core/TreeSelect', () => {
       expect(spy).toHaveBeenCalled();
       expect(spy.mock.calls[0][0]).toContain('fruits');
     });
+
+    it('exposes expand handler in renderNode payload to toggle expanded state', async () => {
+      render(
+        <TreeSelect
+          {...defaultProps}
+          dropdownOpened
+          renderNode={({ node, hasChildren, expand }) => (
+            <span>
+              {hasChildren && (
+                <button type="button" aria-label={`toggle-${node.value}`} onClick={expand} />
+              )}
+              {node.label}
+            </span>
+          )}
+        />
+      );
+
+      expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
+
+      await userEvent.click(screen.getByLabelText('toggle-fruits'));
+      expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
+
+      await userEvent.click(screen.getByLabelText('toggle-fruits'));
+      expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
+    });
+
+    it('renderNode expand handler is a no-op without side effects for leaf nodes', async () => {
+      const onExpandedChange = jest.fn();
+      const onChange = jest.fn();
+      render(
+        <TreeSelect
+          {...defaultProps}
+          dropdownOpened
+          onExpandedChange={onExpandedChange}
+          onChange={onChange}
+          renderNode={({ node, expand }) => (
+            <button type="button" aria-label={`toggle-${node.value}`} onClick={expand}>
+              {node.label}
+            </button>
+          )}
+        />
+      );
+
+      await userEvent.click(screen.getByLabelText('toggle-milk'));
+      expect(onExpandedChange).not.toHaveBeenCalled();
+      expect(onChange).not.toHaveBeenCalled();
+    });
   });
 
   describe('search', () => {

@@ -163,7 +163,7 @@ function Demo() {
 
   return (
     <Table.ScrollContainer
-      minWidth={500}
+      minWidth={760}
       maxHeight={400}
       scrollAreaProps={{ viewportRef: setScrollParent }}
     >
@@ -172,7 +172,7 @@ function Demo() {
           <Table.Tr>
             <Table.Th w={50}>#</Table.Th>
             <Table.Th>Name</Table.Th>
-            <Table.Th>Email</Table.Th>
+            <Table.Th w={220}>Email</Table.Th>
             <Table.Th>Company</Table.Th>
             <Table.Th>City</Table.Th>
           </Table.Tr>
@@ -180,8 +180,9 @@ function Demo() {
 
         <Table.Tbody>
           {virtualItems.length > 0 && (
-            <tr>
+            <tr aria-hidden>
               <td
+                aria-hidden
                 colSpan={5}
                 style={{ height: virtualItems[0].start, padding: 0, border: 'none' }}
               />
@@ -202,8 +203,9 @@ function Demo() {
           })}
 
           {virtualItems.length > 0 && (
-            <tr>
+            <tr aria-hidden>
               <td
+                aria-hidden
                 colSpan={5}
                 style={{
                   height:
@@ -238,7 +240,7 @@ function Demo() {
 
   return (
     <Table.ScrollContainer
-      minWidth={500}
+      minWidth={760}
       maxHeight={400}
       scrollAreaProps={{ viewportRef: setScrollParent }}
     >
@@ -247,7 +249,7 @@ function Demo() {
           <Table.Tr>
             <Table.Th w={50}>#</Table.Th>
             <Table.Th>Name</Table.Th>
-            <Table.Th>Email</Table.Th>
+            <Table.Th w={220}>Email</Table.Th>
             <Table.Th>Company</Table.Th>
             <Table.Th>City</Table.Th>
           </Table.Tr>
@@ -255,8 +257,9 @@ function Demo() {
 
         <Table.Tbody>
           {virtualItems.length > 0 && (
-            <tr>
+            <tr aria-hidden>
               <td
+                aria-hidden
                 colSpan={5}
                 style={{ height: virtualItems[0].start, padding: 0, border: 'none' }}
               />
@@ -277,8 +280,9 @@ function Demo() {
           })}
 
           {virtualItems.length > 0 && (
-            <tr>
+            <tr aria-hidden>
               <td
+                aria-hidden
                 colSpan={5}
                 style={{
                   height: virtualizer.getTotalSize() - virtualItems[virtualItems.length - 1].end,
