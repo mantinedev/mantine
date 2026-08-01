@@ -144,7 +144,7 @@ describe('@mantine/core/Drawer', () => {
       { env: 'default' }
     );
 
-    expect(container.querySelector('.mantine-Drawer-content')).toHaveStyle({
+    expect(container.querySelector('.mantine-Drawer-panel')).toHaveStyle({
       display: 'none',
     });
   });
@@ -162,7 +162,7 @@ describe('@mantine/core/Drawer', () => {
       { env: 'default' }
     );
 
-    expect(container.querySelector('.mantine-Drawer-content')).not.toHaveStyle({
+    expect(container.querySelector('.mantine-Drawer-panel')).not.toHaveStyle({
       display: 'none',
     });
   });
