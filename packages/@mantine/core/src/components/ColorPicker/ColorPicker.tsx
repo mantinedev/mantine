@@ -77,6 +77,9 @@ export interface __ColorPickerProps {
 
   /** Component size @default 'md' */
   size?: MantineSize | (string & {});
+
+  /** If set, the component takes 100% width of its container @default false */
+  fullWidth?: boolean;
 }
 
 export interface ColorPickerProps
@@ -86,9 +89,6 @@ export interface ColorPickerProps
     StylesApiProps<ColorPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   __staticSelector?: string;
-
-  /** If set, the component takes 100% width of its container @default false */
-  fullWidth?: boolean;
 
   /** If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard @default true */
   focusable?: boolean;

@@ -64,6 +64,9 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** If set, chevron rotation is disabled @default false */
   disableChevronRotation?: boolean;
 
+  /** If set, the open item cannot be collapsed by clicking it again, so one item always stays open. Only applies when `multiple` is `false`. @default false */
+  disableCollapse?: boolean;
+
   /** Position of the chevron relative to the item label @default right */
   chevronPosition?: AccordionChevronPosition;
 
@@ -84,6 +87,9 @@ export interface AccordionProps<Multiple extends boolean = false>
 
   /** If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. @default true */
   keepMounted?: boolean;
+
+  /** Controls how inactive panels content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles @default 'activity' */
+  keepMountedMode?: 'activity' | 'display-none';
 }
 
 export type AccordionFactory = Factory<{
@@ -107,10 +113,12 @@ const defaultProps = {
   multiple: false,
   loop: true,
   disableChevronRotation: false,
+  disableCollapse: false,
   chevronPosition: 'right',
   variant: 'default',
   chevronSize: 'auto',
   chevronIconSize: 16,
+  keepMountedMode: 'activity',
 } satisfies Partial<AccordionProps>;
 
 const varsResolver = createVarsResolver<AccordionFactory>(
@@ -142,6 +150,7 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
     loop,
     transitionDuration,
     disableChevronRotation,
+    disableCollapse,
     chevronPosition,
     chevronSize,
     order,
@@ -151,6 +160,7 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
     chevronIconSize,
     attributes,
     keepMounted,
+    keepMountedMode,
     ...others
   } = props;
 
@@ -166,6 +176,10 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
     Array.isArray(_value) ? _value.includes(itemValue) : itemValue === _value;
 
   const handleItemChange = (itemValue: string) => {
+    if (!Array.isArray(_value) && disableCollapse && itemValue === _value) {
+      return;
+    }
+
     const nextValue = Array.isArray(_value)
       ? _value.includes(itemValue)
         ? _value.filter((selectedValue) => selectedValue !== itemValue)
@@ -214,6 +228,7 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
         variant,
         unstyled,
         keepMounted,
+        keepMountedMode,
       }}
     >
       <Box {...getStyles('root')} id={uid} {...others} variant={variant} data-accordion>

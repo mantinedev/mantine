@@ -39,6 +39,26 @@ describe('@mantine/core/Tooltip', () => {
     expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
   });
 
+  it('does not set data-interactive attribute by default', () => {
+    render(<Tooltip {...defaultProps} />);
+    expect(screen.getByRole('tooltip')).not.toHaveAttribute('data-interactive');
+  });
+
+  it('sets data-interactive attribute when tooltip is opened with interactive prop', () => {
+    render(<Tooltip {...defaultProps} interactive />);
+    expect(screen.getByRole('tooltip')).toHaveAttribute('data-interactive');
+  });
+
+  it('does not set data-interactive attribute on a hidden tooltip with keepMounted prop', () => {
+    render(<Tooltip {...defaultProps} interactive opened={false} keepMounted />);
+    expect(screen.getByRole('tooltip', { hidden: true })).not.toHaveAttribute('data-interactive');
+  });
+
+  it('does not set data-interactive attribute on a disabled tooltip', () => {
+    render(<Tooltip {...defaultProps} interactive disabled keepMounted />);
+    expect(screen.getByRole('tooltip', { hidden: true })).not.toHaveAttribute('data-interactive');
+  });
+
   it('exposes TooltipGroup and TooltipFloating as static properties', () => {
     expect(Tooltip.Floating).toBe(TooltipFloating);
     expect(Tooltip.Group).toBe(TooltipGroup);

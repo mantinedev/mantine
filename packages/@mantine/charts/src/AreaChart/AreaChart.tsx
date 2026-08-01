@@ -6,6 +6,8 @@ import {
   Label,
   Legend,
   AreaChart as ReChartsAreaChart,
+  ReferenceArea,
+  ReferenceDot,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -27,6 +29,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
@@ -51,7 +54,7 @@ export interface AreaChartSeries extends ChartSeries {
   curveType?: AreaChartCurveType;
 }
 
-export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split';
+export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split' | 'stream';
 
 export type AreaChartCurveType =
   | 'bump'
@@ -77,7 +80,7 @@ export interface AreaChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: AreaChartSeries[];
 
-  /** Controls how chart areas are positioned relative to each other @default 'default' */
+  /** Controls how chart areas are positioned relative to each other. Set to `'stream'` to render a streamgraph. @default 'default' */
   type?: AreaChartType;
 
   /** Determines whether the chart area should be represented with a gradient instead of the solid color @default false */
@@ -133,8 +136,6 @@ export type AreaChartFactory = Factory<{
 }>;
 
 const defaultProps = {
-  withXAxis: true,
-  withYAxis: true,
   withDots: true,
   withTooltip: true,
   connectNulls: true,
@@ -148,6 +149,7 @@ const defaultProps = {
   type: 'default',
   splitColors: ['green.7', 'red.7'],
   orientation: 'horizontal',
+  accessibilityLayer: true,
 } satisfies Partial<AreaChartProps>;
 
 const varsResolver = createVarsResolver<AreaChartFactory>((theme, { textColor, gridColor }) => ({
@@ -170,8 +172,8 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     series,
     withGradient,
     dataKey,
-    withXAxis,
-    withYAxis,
+    withXAxis: withXAxisProp,
+    withYAxis: withYAxisProp,
     curveType,
     gridProps,
     withDots,
@@ -198,6 +200,8 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     onMouseLeave,
     orientation,
     referenceLines,
+    referenceAreas,
+    referenceDots,
     dir,
     valueFormatter,
     children,
@@ -211,6 +215,9 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     gridColor,
     textColor,
     attributes,
+    accessibilityLayer,
+    withBrush,
+    brushProps,
     ...others
   } = props;
 
@@ -221,7 +228,9 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
   const isAnimationActive = (tooltipAnimationDuration || 0) > 0;
   const _withGradient = typeof withGradient === 'boolean' ? withGradient : type === 'default';
-  const stacked = type === 'stacked' || type === 'percent';
+  const stacked = type === 'stacked' || type === 'percent' || type === 'stream';
+  const withXAxis = withXAxisProp ?? !(type === 'stream' && orientation === 'vertical');
+  const withYAxis = withYAxisProp ?? !(type === 'stream' && orientation === 'horizontal');
   const [highlightedArea, setHighlightedArea] = useState<string | number | null>(null);
   const shouldHighlight = highlightedArea !== null;
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -332,6 +341,50 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     );
   });
 
+  const referenceAreasItems = referenceAreas?.map((area, index) => {
+    const color = getThemeColor(area.color, theme);
+    return (
+      <ReferenceArea
+        key={index}
+        fill={area.color ? color : 'var(--chart-grid-color)'}
+        fillOpacity={0.2}
+        stroke={area.color ? color : 'var(--chart-grid-color)'}
+        strokeOpacity={0.6}
+        yAxisId={area.yAxisId || undefined}
+        {...area}
+        label={{
+          fill: area.color ? color : 'currentColor',
+          fontSize: 12,
+          position: area.labelPosition ?? 'insideTop',
+          ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+        }}
+        {...getStyles('referenceArea')}
+      />
+    );
+  });
+
+  const referenceDotsItems = referenceDots?.map((dot, index) => {
+    const color = getThemeColor(dot.color, theme);
+    return (
+      <ReferenceDot
+        key={index}
+        r={5}
+        fill={dot.color ? color : 'var(--chart-grid-color)'}
+        stroke="var(--mantine-color-body)"
+        strokeWidth={2}
+        yAxisId={dot.yAxisId || undefined}
+        {...dot}
+        label={{
+          fill: dot.color ? color : 'currentColor',
+          fontSize: 12,
+          position: dot.labelPosition ?? 'top',
+          ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+        }}
+        {...getStyles('referenceDot')}
+      />
+    );
+  });
+
   const tickFormatter = type === 'percent' ? valueToPercent : valueFormatter;
 
   const sharedYAxisProps = {
@@ -351,15 +404,17 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsAreaChart
           data={data}
-          stackOffset={type === 'percent' ? 'expand' : undefined}
+          stackOffset={type === 'percent' ? 'expand' : type === 'stream' ? 'wiggle' : undefined}
           layout={orientation}
           margin={{
             bottom: xAxisLabel ? 30 : undefined,
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...areaChartProps}
         >
+          {referenceAreasItems}
           {referenceLinesItems}
           {withLegend && (
             <Legend
@@ -491,6 +546,15 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
 
           {areas}
           {withDots && dotsAreas}
+          {referenceDotsItems}
+          {withBrush && (
+            <ChartBrush
+              dataKey={dataKey}
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+              {...brushProps}
+            />
+          )}
           {children}
         </ReChartsAreaChart>
       </ResponsiveContainer>

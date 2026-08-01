@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
+import { CaretRightIcon } from '@phosphor-icons/react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Button } from '../Button';
 import { Combobox } from '../Combobox';
+import { Group } from '../Group';
 import { useVirtualizedCombobox } from '../Combobox/use-combobox/use-virtualized-combobox';
 import { InputBase } from '../InputBase';
 import { ScrollArea } from '../ScrollArea';
@@ -76,6 +78,72 @@ export function SingleSelect() {
         placeholder="Select a technology"
         label="Single select"
         onChange={(value) => console.log('Selected:', value)}
+      />
+    </div>
+  );
+}
+
+const emptyChildrenData: TreeNodeData[] = [
+  {
+    label: 'Root',
+    value: 'root',
+    children: [
+      {
+        label: 'Child 1 (has children)',
+        value: 'child-1',
+        children: [{ label: 'Grandchild 1', value: 'grandchild-1' }],
+      },
+      { label: 'Child 2 (children: [])', value: 'child-2', children: [] },
+      {
+        label: 'Child 3 (children: [], hasChildren: false)',
+        value: 'child-3',
+        children: [],
+        hasChildren: false,
+      },
+      { label: 'Child 4 (leaf, no children key)', value: 'child-4' },
+    ],
+  },
+];
+
+export function EmptyChildren() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <TreeSelect
+        data={emptyChildrenData}
+        defaultExpandedValues={['root']}
+        label="Only Child 1 should show an expand chevron"
+        placeholder="Select an item"
+      />
+    </div>
+  );
+}
+
+export function RenderNodeExpand() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <TreeSelect
+        data={simpleData}
+        label="Custom renderNode with expand()"
+        placeholder="Select a technology"
+        expandOnClick={false}
+        renderNode={({ node, hasChildren, expanded, expand }) => (
+          <Group gap="xs" wrap="nowrap">
+            {hasChildren ? (
+              <CaretRightIcon
+                size={14}
+                onClick={expand}
+                style={{
+                  cursor: 'pointer',
+                  transform: expanded ? 'rotate(90deg)' : 'none',
+                  transition: 'transform 150ms ease',
+                }}
+              />
+            ) : (
+              <span style={{ display: 'inline-block', width: 14 }} />
+            )}
+            <span>{node.label}</span>
+          </Group>
+        )}
       />
     </div>
   );

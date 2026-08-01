@@ -449,6 +449,36 @@ describe('@mantine/core/ScrollArea', () => {
     const root = getViewport(container).parentElement as HTMLElement;
     expect(root.style.getPropertyValue('--scrollarea-fade-size')).toBe('2.5rem');
   });
+
+  it('sets data-vertical-scrollbar-position on viewport and scrollbars when verticalScrollbarPosition is set', () => {
+    const { container } = render(
+      <ScrollArea type="always" h={100} verticalScrollbarPosition="right">
+        <div style={{ height: 500, width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = container.querySelector('[data-scrollarea-viewport]');
+    const verticalScrollbar = container.querySelector('[data-orientation="vertical"]');
+    const horizontalScrollbar = container.querySelector('[data-orientation="horizontal"]');
+
+    expect(viewport).toHaveAttribute('data-vertical-scrollbar-position', 'right');
+    expect(verticalScrollbar).toHaveAttribute('data-vertical-scrollbar-position', 'right');
+    expect(horizontalScrollbar).toHaveAttribute('data-vertical-scrollbar-position', 'right');
+  });
+
+  it('does not set data-vertical-scrollbar-position when verticalScrollbarPosition is omitted', () => {
+    const { container } = render(
+      <ScrollArea type="always" h={100}>
+        <div style={{ height: 500, width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = container.querySelector('[data-scrollarea-viewport]');
+    const verticalScrollbar = container.querySelector('[data-orientation="vertical"]');
+
+    expect(viewport).not.toHaveAttribute('data-vertical-scrollbar-position');
+    expect(verticalScrollbar).not.toHaveAttribute('data-vertical-scrollbar-position');
+  });
 });
 
 describe('@mantine/core/ScrollAreaAutosize', () => {

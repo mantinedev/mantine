@@ -9,6 +9,15 @@
     outline: 0;
   }
 
+  :where(svg *) {
+    outline: 0;
+  }
+
+  svg:focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
+  }
+
   @mixin where-light {
     --chart-grid-color: rgba(173, 181, 189, 0.6);
     --chart-cursor-fill: rgba(173, 181, 189, 0.15);

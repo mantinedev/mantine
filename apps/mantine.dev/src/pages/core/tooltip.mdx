@@ -164,6 +164,16 @@ function Demo() {
 }
 ```
 
+## Interactive tooltip
+
+By default, the tooltip closes as soon as the pointer leaves the target element, and the tooltip body ignores pointer events. Set the `interactive` prop to keep the tooltip open while the pointer travels from the target to the tooltip and rests over its content:
+
+<Demo data={TooltipDemos.interactive} />
+
+Set `interactive` if the tooltip contains content that the user must be able to reach with a pointer, for example a link. It is also required by [WCAG 2.1 success criterion 1.4.13: Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html), which states that content that appears on hover must remain visible while the pointer is over it.
+
+Note that an interactive tooltip receives pointer events, which means that while it is open, it intercepts clicks and hover events of the elements that it overlaps. The tooltip stops receiving pointer events as soon as it starts closing. The `interactive` prop is not supported by `Tooltip.Floating`, which always follows the mouse.
+
 ## Multiline
 
 To enable multiline mode, set the `multiline` prop to enable line breaks and the `w` [style prop](/styles/style-props) to set the tooltip width:
@@ -219,11 +229,12 @@ The `Tooltip.Group` component can be used to sync open and close delays for mult
 
 ## Accessibility
 
-Tooltip follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/#tooltip):
+Tooltip follows the [WAI-ARIA tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/):
 
 - The tooltip body has `role="tooltip"` attribute
 - The target element has `aria-describedby` attribute
 - `Tooltip.Floating` is ignored by screen readers
+- Uncontrolled tooltips are dismissed with `Escape` without moving the pointer or focus
 
 By default, Tooltip is not triggered by focus events and thus users who use a screen reader
 or navigate with the keyboard will not be able to get tooltip content. Set the `events` prop to enable
@@ -239,6 +250,26 @@ function Demo() {
       label="Tooltip"
       events={{ hover: true, focus: true, touch: false }}
     >
+      <Button>Button with tooltip</Button>
+    </Tooltip>
+  );
+}
+```
+
+[WCAG 2.1 success criterion 1.4.13: Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html)
+additionally requires content that appears on hover to be dismissable, hoverable and persistent.
+Tooltip is persistent out of the box and dismissable if its opened state is not controlled
+(`Escape` closes it without moving the pointer – if you control the `opened` prop, you are responsible
+for handling `Escape` yourself). Tooltip is not hoverable by default – set the
+[interactive](#interactive-tooltip) prop to make the tooltip body hoverable:
+
+```tsx
+import { Button, Tooltip } from '@mantine/core';
+
+// Tooltip stays open while the pointer is over its content
+function Demo() {
+  return (
+    <Tooltip label="Tooltip" interactive>
       <Button>Button with tooltip</Button>
     </Tooltip>
   );

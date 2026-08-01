@@ -5,6 +5,7 @@ import {
   flip,
   inline,
   offset,
+  safePolygon,
   shift,
   useDelayGroup,
   useDismiss,
@@ -31,6 +32,7 @@ interface UseTooltip {
   arrowRef?: React.RefObject<HTMLDivElement | null>;
   arrowOffset?: number;
   events?: { hover: boolean; focus: boolean; touch: boolean };
+  interactive?: boolean;
   inline?: boolean;
   strategy?: FloatingStrategy;
   middlewares?: TooltipMiddlewares;
@@ -127,6 +129,7 @@ export function useTooltip(settings: UseTooltip) {
       enabled: settings.events?.hover,
       delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
       mouseOnly: !settings.events?.touch,
+      handleClose: settings.interactive ? safePolygon() : null,
     }),
     useFocus(context, { enabled: settings.events?.focus, visibleOnly: true }),
     useRole(context, { role: 'tooltip' }),

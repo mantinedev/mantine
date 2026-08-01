@@ -23,6 +23,11 @@ export const Demo_multiline = {
   render: renderDemo(demos.multiline),
 };
 
+export const Demo_interactive = {
+  name: '⭐ Demo: interactive',
+  render: renderDemo(demos.interactive),
+};
+
 export const Demo_transitions = {
   name: '⭐ Demo: transitions',
   render: renderDemo(demos.transitions),
