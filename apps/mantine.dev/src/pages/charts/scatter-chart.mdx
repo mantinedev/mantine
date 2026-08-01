@@ -35,6 +35,18 @@ can be used to change the orientation of the axis:
 
 <Demo data={ScatterChartDemos.axisProps} />
 
+## Right Y axis
+
+To display an additional Y axis on the right side of the chart, set the `withRightYAxis` prop.
+You can pass props down to the recharts [YAxis](https://recharts.org/en-US/api/YAxis)
+component with the `rightYAxisProps` prop and assign a label to the right Y axis with
+the `rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
+by setting `yAxisId: 'right'` in the `data` object – series that do not have `yAxisId`
+are bound to the left Y axis. Both axes use the same `dataKey.y` value, but their scales
+are calculated independently from the series assigned to them.
+
+<Demo data={ScatterChartDemos.rightYAxis} />
+
 ## Value formatter
 
 To format values in the tooltip and axis ticks, use the `valueFormat` prop. It accepts
@@ -132,3 +144,22 @@ Use the `referenceLines` prop to render reference lines. Reference lines are alw
 rendered behind the chart.
 
 <Demo data={ScatterChartDemos.referenceLines} />
+
+## Reference areas
+
+Use the `referenceAreas` prop to highlight a rectangular region of the chart. Each area is
+bounded by `x1`/`x2` (horizontal) and `y1`/`y2` (vertical) data values – omit one pair to span
+the full opposite axis, for example provide only `y1`/`y2` to highlight a target range across the
+entire width of the chart. Set `color` to any [theme color](/theming/colors/) or CSS color and
+`label` to display text inside the area. Reference areas are rendered behind the points.
+
+<Demo data={ScatterChartDemos.referenceAreas} />
+
+## Reference dots
+
+Use the `referenceDots` prop to mark individual points on the chart – a peak, an event, a record
+value or an anomaly. Each dot is positioned by `x` and `y` data coordinates and supports `r` (radius),
+`color` (any [theme color](/theming/colors/) or CSS color) and `label`. Reference dots are rendered on
+top of the points.
+
+<Demo data={ScatterChartDemos.referenceDots} />

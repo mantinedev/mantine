@@ -73,6 +73,16 @@ export const Demo_referenceLines = {
   render: renderDemo(demos.referenceLines),
 };
 
+export const Demo_referenceAreas = {
+  name: '⭐ Demo: referenceAreas',
+  render: renderDemo(demos.referenceAreas),
+};
+
+export const Demo_referenceDots = {
+  name: '⭐ Demo: referenceDots',
+  render: renderDemo(demos.referenceDots),
+};
+
 export const Demo_rightYAxis = {
   name: '⭐ Demo: rightYAxis',
   render: renderDemo(demos.rightYAxis),
@@ -126,4 +136,9 @@ export const Demo_xAxisOffset = {
 export const Demo_yScale = {
   name: '⭐ Demo: yScale',
   render: renderDemo(demos.yScale),
+};
+
+export const Demo_brush = {
+  name: '⭐ Demo: brush',
+  render: renderDemo(demos.brush),
 };

@@ -1,5 +1,6 @@
 import 'dayjs/locale/ru';
 
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { Stack, Text } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
@@ -176,6 +177,70 @@ export function StaticMode() {
 
         <YearView date="2025-11-01" events={november2025Events} mode="static" />
       </Stack>
+    </div>
+  );
+}
+
+export function WithoutWeekendDays() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearView date="2025-11-01" events={november2025Events} withWeekendDays={false} />
+    </div>
+  );
+}
+
+export function WithoutWeekendDaysWeekNumbers() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearView
+        date="2025-11-01"
+        events={november2025Events}
+        withWeekendDays={false}
+        withWeekNumbers
+      />
+    </div>
+  );
+}
+
+export function WithoutWeekendDaysSunday() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearView
+        date="2025-11-01"
+        events={november2025Events}
+        withWeekendDays={false}
+        firstDayOfWeek={0}
+      />
+    </div>
+  );
+}
+
+export function RenderDay() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearView
+        date="2025-11-01"
+        events={november2025Events}
+        renderDay={(date, events) => (
+          <>
+            {dayjs(date).date()}
+            {events.length > 0 && (
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  insetInlineEnd: 0,
+                  fontSize: 9,
+                  fontWeight: 700,
+                  color: 'var(--mantine-color-blue-filled)',
+                }}
+              >
+                {events.length}
+              </span>
+            )}
+          </>
+        )}
+      />
     </div>
   );
 }

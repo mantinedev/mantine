@@ -32,6 +32,9 @@ export interface YearLevelGroupProps
 
   /** Called when date is changed via native level select */
   __onDateChange?: (date: DateStringValue) => void;
+
+  /** Disables native level selects when date changes would not take effect */
+  __disableNativeLevelSelect?: boolean;
 }
 
 export type YearLevelGroupFactory = Factory<{
@@ -81,6 +84,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
     __staticSelector,
     __stopPropagation,
     __onDateChange,
+    __disableNativeLevelSelect,
     numberOfColumns,
     levelControlAriaLabel,
     yearLabelFormat,
@@ -152,6 +156,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
           withNativeLevelSelect={withNativeLevelSelect}
           yearsSelectRange={yearsSelectRange}
           __onDateChange={__onDateChange}
+          __disableNativeLevelSelect={__disableNativeLevelSelect}
           getMonthControlProps={getMonthControlProps}
           classNames={classNames}
           styles={styles}

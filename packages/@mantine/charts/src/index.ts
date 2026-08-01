@@ -1,5 +1,6 @@
 export * from './ChartTooltip/index.js';
 export * from './ChartLegend/index.js';
+export * from './ChartBrush/index.js';
 export * from './AreaChart/index.js';
 export * from './BarChart/index.js';
 export * from './LineChart/index.js';
@@ -10,6 +11,7 @@ export * from './RadarChart/index.js';
 export * from './ScatterChart/index.js';
 export * from './BubbleChart/index.js';
 export * from './CompositeChart/index.js';
+export * from './CandlestickChart/index.js';
 export * from './RadialBarChart/index.js';
 export * from './FunnelChart/index.js';
 export * from './Heatmap/index.js';

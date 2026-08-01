@@ -20,11 +20,22 @@ export interface FloatingWindowDimensions {
   maxHeight?: number;
 }
 
+export interface FloatingWindowSize {
+  /** Width of the floating window in px */
+  width: number;
+
+  /** Height of the floating window in px */
+  height: number;
+}
+
 export interface FloatingWindowContextValue {
   rootRef: React.RefObject<HTMLDivElement | null>;
   dimensions: FloatingWindowDimensions | undefined;
   constrainToViewport: boolean | undefined;
   constrainOffset: number | undefined;
+  onResizeStart: (() => void) | undefined;
+  onResizeEnd: (() => void) | undefined;
+  onSizeChange: ((size: FloatingWindowSize) => void) | undefined;
 }
 
 export const [FloatingWindowProvider, useFloatingWindowContext] =

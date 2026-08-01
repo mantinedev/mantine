@@ -41,7 +41,7 @@ function flattenTreeDataTo(
   for (let i = 0; i < data.length; i++) {
     const node = data[i];
     const isLast = i === data.length - 1;
-    const hasLoadedChildren = Array.isArray(node.children);
+    const hasLoadedChildren = Array.isArray(node.children) && node.children.length > 0;
     const hasAsyncChildren = !!node.hasChildren && !hasLoadedChildren;
     const hasChildren = hasLoadedChildren || hasAsyncChildren;
     const expanded = expandedState[node.value] || false;
