@@ -1,0 +1,186 @@
+.columnsList {
+  --cascader-column-width: 200px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  width: var(--cascader-column-width);
+  min-width: var(--cascader-column-width);
+  border-inline-end: rem(1px) solid var(--popover-border-color, var(--mantine-color-default-border));
+
+  /* Keep the border width reserved so revealing the next column does not shift the layout */
+  &:where([data-last]) {
+    border-inline-end-color: transparent;
+  }
+}
+
+.columnScroll {
+  flex: 1;
+  padding: var(--combobox-padding);
+}
+
+.columnsOverflow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  padding-inline: calc(var(--combobox-padding) / 2);
+  color: var(--mantine-color-dimmed);
+  cursor: pointer;
+  border-inline-end: rem(1px) solid var(--popover-border-color, var(--mantine-color-default-border));
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-7);
+    }
+  }
+
+  & > svg {
+    width: 0.9em;
+    height: 0.9em;
+    transform: rotate(90deg);
+  }
+
+  /* Round the corners that sit against the rounded dropdown edge so the hover background
+     does not overflow the dropdown corners */
+  &:where([data-position='start']) {
+    border-start-start-radius: var(--popover-radius, var(--mantine-radius-default));
+    border-end-start-radius: var(--popover-radius, var(--mantine-radius-default));
+  }
+
+  /* The divider on the left is provided by the previous column, so this control has none */
+  &:where([data-position='end']) {
+    border-inline-end-color: transparent;
+    border-start-end-radius: var(--popover-radius, var(--mantine-radius-default));
+    border-end-end-radius: var(--popover-radius, var(--mantine-radius-default));
+
+    & > svg {
+      transform: rotate(-90deg);
+    }
+  }
+
+  @mixin where-rtl {
+    & > svg {
+      transform: rotate(-90deg);
+    }
+
+    &:where([data-position='end']) > svg {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.columnOption {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  width: 100%;
+  padding: var(--combobox-option-padding);
+  font-size: var(--combobox-option-fz, var(--mantine-font-size-sm));
+  border-radius: var(--combobox-option-radius, var(--mantine-radius-default));
+  color: var(--mantine-color-text);
+  cursor: pointer;
+
+  @mixin hover {
+    &:where(:not([data-disabled], [data-active])) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
+      }
+
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-7);
+      }
+    }
+  }
+
+  /* Selected options in the ancestor columns (the navigation trail) */
+  &:where([data-in-path]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  /* Option in the column that is currently being navigated */
+  &:where([data-active]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-color-white);
+
+    @mixin hover {
+      background-color: var(--mantine-primary-color-filled-hover);
+    }
+  }
+
+  &:where([data-disabled]) {
+    color: var(--mantine-color-dimmed);
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.flatOption {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  width: 100%;
+}
+
+.columnOptionLabel {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.columnOptionIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.9em;
+  min-width: 0.9em;
+  height: 0.9em;
+  color: var(--mantine-color-dimmed);
+  transform: rotate(-90deg);
+
+  :where([data-active]) & {
+    color: inherit;
+  }
+
+  @mixin where-rtl {
+    transform: rotate(90deg);
+  }
+}
+
+.columnOptionCheck {
+  width: 0.8em;
+  min-width: 0.8em;
+  height: 0.8em;
+  opacity: 0.4;
+
+  :where([data-active]) &,
+  :where([data-combobox-selected]) & {
+    opacity: 1;
+  }
+}
+
+.columnEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--combobox-option-padding);
+  color: var(--mantine-color-dimmed);
+  font-size: var(--combobox-option-fz, var(--mantine-font-size-sm));
+  white-space: nowrap;
+}

@@ -56,6 +56,48 @@ export function itSupportsNativeLevelSelect(
       expect(yearSelect.value).toBe('2025');
     });
 
+    it('clamps native month select to minDate when an earlier month is selected', async () => {
+      const { container } = render(
+        <options.component
+          {...options.props}
+          defaultDate="2024-08-01"
+          minDate="2024-06-01"
+          withNativeLevelSelect
+        />
+      );
+
+      const monthSelect = container.querySelector(
+        'select[data-select="month"]'
+      ) as HTMLSelectElement;
+      expect(monthSelect.value).toBe('7');
+
+      await userEvent.selectOptions(monthSelect, '0');
+      expect(monthSelect.value).toBe('5');
+    });
+
+    it('keeps the displayed year selectable when it is outside the default range', () => {
+      const { container } = render(
+        <options.component {...options.props} defaultDate="1850-06-01" withNativeLevelSelect />
+      );
+
+      const yearSelect = container.querySelector('select[data-select="year"]') as HTMLSelectElement;
+      expect(yearSelect.value).toBe('1850');
+    });
+
+    it('renders year options when the year range is inverted', () => {
+      const { container } = render(
+        <options.component
+          {...options.props}
+          defaultDate="2024-06-01"
+          yearsSelectRange={[2030, 2020]}
+          withNativeLevelSelect
+        />
+      );
+
+      const yearSelect = container.querySelector('select[data-select="year"]') as HTMLSelectElement;
+      expect(within(yearSelect).getAllByRole('option').length).toBeGreaterThan(0);
+    });
+
     it('renders localized month names', () => {
       const { container } = render(
         <options.component {...options.props} withNativeLevelSelect locale="ru" />
@@ -68,12 +110,35 @@ export function itSupportsNativeLevelSelect(
       expect(options_list[0].textContent).not.toBe('January');
     });
 
+    it('disables native selects when date is controlled without onDateChange', () => {
+      const { container } = render(
+        <options.component {...options.props} date="2024-03-01" withNativeLevelSelect />
+      );
+
+      expect(container.querySelector('select[data-select="month"]')).toBeDisabled();
+      expect(container.querySelector('select[data-select="year"]')).toBeDisabled();
+    });
+
+    it('keeps native selects enabled when date is controlled with onDateChange', () => {
+      const { container } = render(
+        <options.component
+          {...options.props}
+          date="2024-03-01"
+          onDateChange={() => {}}
+          withNativeLevelSelect
+        />
+      );
+
+      expect(container.querySelector('select[data-select="month"]')).not.toBeDisabled();
+      expect(container.querySelector('select[data-select="year"]')).not.toBeDisabled();
+    });
+
     it('hides level button when native selects are shown', () => {
       const { container } = render(
         <options.component
           {...options.props}
           withNativeLevelSelect
-          levelControlAriaLabel="change-level"
+          ariaLabels={{ monthLevelControl: 'change-level' }}
         />
       );
 

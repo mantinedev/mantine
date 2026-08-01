@@ -328,6 +328,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.MultiSelect,
       MDX_DATA.ComboboxPopover,
       MDX_DATA.TreeSelect,
+      MDX_DATA.Cascader,
     ],
   },
   {
@@ -482,6 +483,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.BarChart,
       MDX_DATA.LineChart,
       MDX_DATA.CompositeChart,
+      MDX_DATA.CandlestickChart,
       MDX_DATA.DonutChart,
       MDX_DATA.PieChart,
       MDX_DATA.FunnelChart,

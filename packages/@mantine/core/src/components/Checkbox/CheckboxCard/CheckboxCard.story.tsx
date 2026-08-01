@@ -18,6 +18,17 @@ export function Usage() {
   );
 }
 
+export function Indeterminate() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CheckboxCard p="md" indeterminate>
+        <CheckboxIndicator />
+        Some label
+      </CheckboxCard>
+    </div>
+  );
+}
+
 export function WithinGroup() {
   const [value, setValue] = useState<string[]>(['1']);
 

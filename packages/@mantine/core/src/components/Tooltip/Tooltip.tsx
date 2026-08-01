@@ -80,6 +80,9 @@ export interface TooltipProps extends TooltipBaseProps {
   /** If set, the tooltip is closed when the `Escape` key is pressed, applies only to click mode @default true */
   closeOnEscape?: boolean;
 
+  /** If set, the tooltip stays open while the pointer moves from the target to the tooltip and remains over it. Required by [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html) if the tooltip contains interactive content. Note that an interactive tooltip intercepts pointer events of the content it overlaps @default false */
+  interactive?: boolean;
+
   /** Must be set if the tooltip target is an inline element */
   inline?: boolean;
 
@@ -174,6 +177,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     events,
     closeOnClickOutside,
     closeOnEscape,
+    interactive,
     zIndex,
     disabled,
     onClick,
@@ -207,6 +211,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     events,
     closeOnClickOutside,
     closeOnEscape,
+    interactive,
     arrowRef,
     arrowOffset,
     offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
@@ -251,6 +256,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
   }
 
   const tooltipStyles = getStyles('tooltip');
+  const interactiveMod = interactive && !disabled && !!tooltip.opened;
   const mergeStyles =
     arrowPosition === 'merge' && withArrow
       ? getArrowMergeDropdownStyles({ position: tooltip.placement, dir })
@@ -272,7 +278,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
                 {...others}
                 data-fixed={floatingStrategy === 'fixed' || undefined}
                 variant={variant}
-                mod={[{ multiline }, mod]}
+                mod={[{ multiline, interactive: interactiveMod }, mod]}
                 {...tooltipStyles}
                 {...tooltip.getFloatingProps({
                   ref: tooltip.floating,
@@ -327,7 +333,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
               {...others}
               data-fixed={floatingStrategy === 'fixed' || undefined}
               variant={variant}
-              mod={[{ multiline }, mod]}
+              mod={[{ multiline, interactive: interactiveMod }, mod]}
               {...tooltip.getFloatingProps({
                 ref: tooltip.floating,
                 className: getStyles('tooltip').className,

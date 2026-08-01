@@ -326,3 +326,63 @@ export function MultidayBarContinuity() {
     </Stack>
   );
 }
+
+export function EventResize() {
+  const [date, setDate] = useState(toDateString(new Date()));
+  const [resizeEvents, setResizeEvents] = useState<ScheduleEventData[]>([
+    {
+      id: 'single',
+      title: 'Single day',
+      start: `${today} 09:00:00`,
+      end: `${today} 17:00:00`,
+      color: 'blue',
+      resourceId: 'tokyo',
+      payload: {},
+    },
+    {
+      id: 'multi',
+      title: 'Multi day',
+      start: `${tomorrow} 09:00:00`,
+      end: `${nextWeek} 17:00:00`,
+      color: 'grape',
+      resourceId: 'paris',
+      payload: {},
+    },
+    {
+      id: 'all-day',
+      title: 'All day booking',
+      start: `${today} 00:00:00`,
+      end: `${dayjs().add(3, 'day').format('YYYY-MM-DD')} 00:00:00`,
+      color: 'teal',
+      resourceId: 'new-york',
+      payload: {},
+    },
+  ]);
+  const [lastAction, setLastAction] = useState('');
+
+  return (
+    <Stack gap="md" p="md">
+      <Text size="sm" c="dimmed">
+        Drag either edge of an event to change its span. Resizing snaps to whole days and keeps the
+        original time of day. The "All day booking" ends at midnight, so its end stays exclusive.
+      </Text>
+      <ResourcesMonthView
+        date={date}
+        onDateChange={setDate}
+        resources={resources}
+        events={resizeEvents}
+        startScrollDate={today}
+        withEventResize
+        onEventResize={({ eventId, newStart, newEnd, event }) => {
+          setResizeEvents((prev) =>
+            prev.map((item) =>
+              item.id === eventId ? { ...item, start: newStart, end: newEnd } : item
+            )
+          );
+          setLastAction(`Resized "${event.title}" to ${newStart} – ${newEnd}`);
+        }}
+      />
+      {lastAction && <Text size="sm">Last action: {lastAction}</Text>}
+    </Stack>
+  );
+}

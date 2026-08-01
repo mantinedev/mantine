@@ -117,6 +117,9 @@ export interface CalendarHeaderProps
 
   /** Max date constraint for native level select */
   __maxDate?: DateStringValue | Date;
+
+  /** Disables native level selects when date changes would not take effect (controlled `date` without `onDateChange`) */
+  __disableNativeLevelSelect?: boolean;
 }
 
 export type CalendarHeaderFactory = Factory<{
@@ -176,6 +179,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
     __onDateChange,
     __minDate,
     __maxDate,
+    __disableNativeLevelSelect,
     attributes,
     ...others
   } = props;
@@ -224,9 +228,26 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
   );
 
   const currentYear = new Date().getFullYear();
-  const minYear =
+  const displayedYear = __date ? dayjs(__date).year() : currentYear;
+  const rawMinYear =
     yearsSelectRange?.[0] ?? (__minDate ? dayjs(__minDate).year() : currentYear - 100);
-  const maxYear = yearsSelectRange?.[1] ?? (__maxDate ? dayjs(__maxDate).year() : currentYear + 50);
+  const rawMaxYear =
+    yearsSelectRange?.[1] ?? (__maxDate ? dayjs(__maxDate).year() : currentYear + 50);
+  // Guarantee a non-inverted range that always contains the currently displayed year, so the
+  // controlled <select> value always matches an <option> and the year list is never empty.
+  const minYear = Math.min(rawMinYear, rawMaxYear, displayedYear);
+  const maxYear = Math.max(rawMinYear, rawMaxYear, displayedYear);
+
+  const clampNativeSelectDate = (date: dayjs.Dayjs): DateStringValue => {
+    let result = date;
+    if (__minDate && result.isBefore(dayjs(__minDate), 'day')) {
+      result = dayjs(__minDate);
+    }
+    if (__maxDate && result.isAfter(dayjs(__maxDate), 'day')) {
+      result = dayjs(__maxDate);
+    }
+    return result.format('YYYY-MM-DD') as DateStringValue;
+  };
 
   const nativeLevelControl =
     withNativeLevelSelect && __date && __onDateChange && __calendarLevel !== 'decade' ? (
@@ -235,12 +256,12 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
           <select
             {...getStyles('calendarHeaderSelect')}
             data-select="month"
+            disabled={__disableNativeLevelSelect}
             value={dayjs(__date).month()}
             onChange={(event) => {
-              const newDate = dayjs(__date)
-                .month(parseInt(event.currentTarget.value, 10))
-                .format('YYYY-MM-DD');
-              __onDateChange(newDate as DateStringValue);
+              __onDateChange(
+                clampNativeSelectDate(dayjs(__date).month(parseInt(event.currentTarget.value, 10)))
+              );
             }}
             onMouseDown={preventFocus}
             aria-label={levelControlAriaLabel}
@@ -258,12 +279,12 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
         <select
           {...getStyles('calendarHeaderSelect')}
           data-select="year"
+          disabled={__disableNativeLevelSelect}
           value={dayjs(__date).year()}
           onChange={(event) => {
-            const newDate = dayjs(__date)
-              .year(parseInt(event.currentTarget.value, 10))
-              .format('YYYY-MM-DD');
-            __onDateChange(newDate as DateStringValue);
+            __onDateChange(
+              clampNativeSelectDate(dayjs(__date).year(parseInt(event.currentTarget.value, 10)))
+            );
           }}
           onMouseDown={preventFocus}
           aria-label={levelControlAriaLabel}
@@ -345,3 +366,11 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
 CalendarHeader.classes = classes;
 CalendarHeader.varsResolver = varsResolver;
 CalendarHeader.displayName = '@mantine/dates/CalendarHeader';
+
+export namespace CalendarHeader {
+  export type Props = CalendarHeaderProps;
+  export type StylesNames = CalendarHeaderStylesNames;
+  export type CssVariables = CalendarHeaderCssVariables;
+  export type Settings = CalendarHeaderSettings;
+  export type Factory = CalendarHeaderFactory;
+}

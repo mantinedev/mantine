@@ -8,21 +8,20 @@ export interface GetTimeAxisEventStyleInput {
   /** Axis along which time flows @default 'horizontal' */
   axis?: 'horizontal' | 'vertical';
 
-  /** Total gap subtracted from the visible size, in px @default 2 */
-  gap?: number;
-
-  /** Portion of the gap placed after the trailing edge, in px @default 1 */
-  trailingGap?: number;
+  /** Minimum visible size of the event along the time axis, in px. Prevents very short events from collapsing to zero. The minimum grows toward the trailing edge so the box never starts before the event's real start. @default 1 */
+  minSize?: number;
 }
 
 export interface HorizontalEventStyle {
+  left: string;
   right: string;
-  width: string;
+  minWidth: string;
 }
 
 export interface VerticalEventStyle {
+  top: string;
   bottom: string;
-  height: string;
+  minHeight: string;
 }
 
 export function getTimeAxisEventStyle(
@@ -35,13 +34,14 @@ export function getTimeAxisEventStyle({
   start,
   span,
   axis = 'horizontal',
-  gap = 2,
-  trailingGap = 1,
+  minSize = 1,
 }: GetTimeAxisEventStyleInput): HorizontalEventStyle | VerticalEventStyle {
   const end = start + span;
+  const leadingInset = `${start}%`;
+  const trailingInset = `${100 - end}%`;
+  const min = `${minSize}px`;
 
-  const inset = trailingGap ? `calc(${100 - end}% + ${trailingGap}px)` : `${100 - end}%`;
-  const size = `max(1px, calc(${span}% - ${gap}px))`;
-
-  return axis === 'vertical' ? { bottom: inset, height: size } : { right: inset, width: size };
+  return axis === 'vertical'
+    ? { top: leadingInset, bottom: trailingInset, minHeight: min }
+    : { left: leadingInset, right: trailingInset, minWidth: min };
 }
