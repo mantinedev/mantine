@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Box } from '../../core';
+import { Box, DirectionProvider } from '../../core';
 import { Button } from '../Button';
 import { Code } from '../Code';
 import { InputBase } from '../InputBase';
@@ -285,6 +285,43 @@ export function MaxUpdateDepthRepro() {
     <StrictMode>
       <CounterParent />
     </StrictMode>
+  );
+}
+
+function PositionExample({ dir }: { dir: 'ltr' | 'rtl' }) {
+  return (
+    <div dir={dir} style={{ display: 'flex', gap: 40, padding: 40 }}>
+      {(['left', 'right'] as const).map((position) => (
+        <div key={position}>
+          <p>
+            {dir} / verticalScrollbarPosition="{position}"
+          </p>
+          <div style={{ background: 'pink', maxWidth: 300 }}>
+            <ScrollArea
+              h={200}
+              type="always"
+              offsetScrollbars
+              scrollbars="xy"
+              verticalScrollbarPosition={position}
+            >
+              <div style={{ width: 600 }}>{content}</div>
+            </ScrollArea>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function VerticalScrollbarPosition() {
+  return <PositionExample dir="ltr" />;
+}
+
+export function VerticalScrollbarPositionRtl() {
+  return (
+    <DirectionProvider initialDirection="rtl" detectDirection={false}>
+      <PositionExample dir="rtl" />
+    </DirectionProvider>
   );
 }
 

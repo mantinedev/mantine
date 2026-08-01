@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { TextInput } from '../TextInput';
 import { Accordion } from './Accordion';
 
@@ -110,6 +111,47 @@ export function WithInputs() {
       </Accordion>
 
       <TextInput label="Text input" />
+    </div>
+  );
+}
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setSeconds((s) => s + 1), 1000);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div style={{ padding: 10, background: 'rgba(0,0,0,0.05)', borderRadius: 4 }}>
+      Timer running: {seconds}s
+    </div>
+  );
+}
+
+export function KeepMountedMode() {
+  return (
+    <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
+      <h3>keepMountedMode="display-none" (Timer keeps running when collapsed)</h3>
+      <Accordion keepMounted keepMountedMode="display-none" defaultValue="item-1">
+        <Accordion.Item value="item-1">
+          <Accordion.Control>Panel with Timer (Keep mounted display-none)</Accordion.Control>
+          <Accordion.Panel>
+            <Timer />
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+
+      <h3 style={{ marginTop: 40 }}>
+        keepMountedMode="activity" (Timer pauses/resets when collapsed)
+      </h3>
+      <Accordion keepMounted keepMountedMode="activity" defaultValue="item-1">
+        <Accordion.Item value="item-1">
+          <Accordion.Control>Panel with Timer (Keep mounted activity)</Accordion.Control>
+          <Accordion.Panel>
+            <Timer />
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
     </div>
   );
 }

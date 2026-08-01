@@ -124,7 +124,7 @@
   background-color: var(--event-bg);
   color: var(--event-color);
   pointer-events: all;
-  border-radius: var(--event-radius);
+  border-radius: min(var(--event-radius), 50%);
   font-weight: var(--mantine-font-weight-medium);
   font-size: 12px;
   line-height: 1;
@@ -151,6 +151,15 @@
   }
 
   &:where([data-auto-size]) {
+    @container (max-width: 12px) {
+      padding-inline: 0;
+    }
+
+    @container (min-width: 16px) {
+      width: calc(100% - 2px);
+      margin-inline: auto;
+    }
+
     @container (max-height: 18px) {
       font-size: 9px;
       padding-block: 0px;

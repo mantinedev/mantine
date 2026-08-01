@@ -42,3 +42,8 @@ export const Demo_resizeHandle = {
   name: '⭐ Demo: resizeHandle',
   render: renderDemo(demos.resizeHandle),
 };
+
+export const Demo_resizeCallbacks = {
+  name: '⭐ Demo: resizeCallbacks',
+  render: renderDemo(demos.resizeCallbacks),
+};

@@ -6,3 +6,4 @@ export { dragHandleSelector } from './FloatingWindow.demo.dragHandleSelector';
 export { enabled } from './FloatingWindow.demo.enabled';
 export { setPosition } from './FloatingWindow.demo.setPosition';
 export { resizeHandle } from './FloatingWindow.demo.resizeHandle';
+export { resizeCallbacks } from './FloatingWindow.demo.resizeCallbacks';

@@ -72,6 +72,42 @@ describe('@mantine/core/Drawer', () => {
     expect(Drawer.Title).toBe(DrawerTitle);
     expect(Drawer.CloseButton).toBe(DrawerCloseButton);
   });
+
+  it('applies display: none style when keepMountedMode is display-none and opened is false (transitionDuration is 0)', () => {
+    const { container } = render(
+      <Drawer
+        {...defaultProps}
+        opened={false}
+        keepMounted
+        keepMountedMode="display-none"
+        transitionProps={{ duration: 0 }}
+      />,
+      undefined,
+      { env: 'default' }
+    );
+
+    expect(container.querySelector('.mantine-Drawer-content')).toHaveStyle({
+      display: 'none',
+    });
+  });
+
+  it('does not apply display: none style when keepMountedMode is activity and opened is false (transitionDuration is 0)', () => {
+    const { container } = render(
+      <Drawer
+        {...defaultProps}
+        opened={false}
+        keepMounted
+        keepMountedMode="activity"
+        transitionProps={{ duration: 0 }}
+      />,
+      undefined,
+      { env: 'default' }
+    );
+
+    expect(container.querySelector('.mantine-Drawer-content')).not.toHaveStyle({
+      display: 'none',
+    });
+  });
 });
 
 describe('@mantine/core/DrawerRoot', () => {
