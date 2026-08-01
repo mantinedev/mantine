@@ -3,6 +3,12 @@
   border: 1px solid;
   border-radius: var(--mantine-radius-default);
 
+  /* Clip children to the rounded corners so the sticky toolbar and the content do not
+     overflow the rounded border (which caused square-corner cutouts when the sticky toolbar
+     reached the bottom edge). `clip` is used instead of `hidden` because it does not create a
+     scroll container, so `position: sticky` on the toolbar keeps working. */
+  overflow: clip;
+
   @mixin where-light {
     border-color: var(--mantine-color-gray-4);
   }
@@ -151,10 +157,103 @@
       font-weight: 700;
     }
   }
+
+  /* The table node view is wrapped in `.tableWrapper` inside the editor (it is not part of
+     `editor.getHTML()` output). Keep only functional styles here – horizontal scroll and
+     bottom spacing – so the table itself is styled directly and renders the same way when the
+     generated HTML is displayed with the Typography component. */
+  & :global(.tableWrapper) {
+    margin-bottom: var(--mantine-spacing-sm);
+    overflow-x: auto;
+  }
+
+  & :global(table) {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+    overflow: hidden;
+
+    @mixin where-light {
+      --rte-table-border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin where-dark {
+      --rte-table-border-color: var(--mantine-color-dark-4);
+    }
+  }
+
+  & :global(td),
+  & :global(th) {
+    position: relative;
+    min-width: 1em;
+    padding: 7px var(--mantine-spacing-xs);
+    border: 1px solid var(--rte-table-border-color);
+    vertical-align: top;
+    box-sizing: border-box;
+  }
+
+  & :global(th) {
+    text-align: start;
+  }
+
+  & :global(.selectedCell) {
+    background-color: color-mix(in srgb, var(--mantine-primary-color-light) 30%, transparent);
+  }
+
+  & :global(.column-resize-handle) {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: -2px;
+    width: 4px;
+    pointer-events: none;
+    background-color: var(--mantine-primary-color-filled);
+  }
+
+  /* ProseMirror gap cursor (appears when navigating above/below a table) renders
+     a hardcoded black caret – recolor it so it stays visible in both schemes */
+  & :global(.ProseMirror-gapcursor::after) {
+    border-top-color: var(--mantine-color-text);
+  }
 }
 
 .linkEditorDropdown {
   background-color: var(--mantine-color-body);
+}
+
+.tableInsertDropdown {
+  background-color: var(--mantine-color-body);
+  padding: var(--mantine-spacing-xs);
+}
+
+.tableInsertGrid {
+  display: grid;
+  grid-template-columns: repeat(var(--rte-table-insert-columns, 10), 1fr);
+  gap: 3px;
+}
+
+.tableInsertCell {
+  width: 20px;
+  height: 20px;
+
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-2);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-5);
+  }
+
+  &[data-active] {
+    background-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.tableInsertLabel {
+  margin-top: var(--mantine-spacing-xs);
+  text-align: center;
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
 }
 
 .control {
@@ -197,8 +296,7 @@
 
   &:where([data-disabled]) {
     cursor: not-allowed;
-    color: var(--mantine-color-disabled-color);
-    background-color: var(--mantine-color-disabled);
+    opacity: 0.5;
   }
 
   &:where([data-interactive]:not([data-disabled])) {
@@ -377,7 +475,7 @@
     width: 18px;
     height: 18px;
     border: 1px solid;
-    border-radius: var(--mantine-radius-default);
+    border-radius: var(--mantine-radius-sm);
     vertical-align: middle;
     position: relative;
 

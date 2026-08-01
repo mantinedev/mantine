@@ -1,4 +1,4 @@
-import { ActionBarDemos, AreaChartDemos, CandlestickChartDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, StepperDemos, WaffleChartDemos } from '@docs/demos';
+import { ActionBarDemos, AreaChartDemos, CandlestickChartDemos, CascaderDemos, FloatingWindowDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, PasswordInputDemos, ResourcesMonthViewDemos, ScatterChartDemos, StepperDemos, TipTapDemos, WaffleChartDemos, YearViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -48,6 +48,16 @@ for bulk selection actions. Designed to be controlled by table or checkbox
 selections, it provides a set of actions that can be performed on selected items.
 
 <Demo data={ActionBarDemos.usage} />
+
+## RichTextEditor table controls
+
+[RichTextEditor](/x/tiptap) now includes a set of controls for editing tables. Install and register the
+[Tiptap table extension](https://tiptap.dev/docs/editor/extensions/nodes/table) (`TableKit`), then add
+the controls to the toolbar. `RichTextEditor.TableInsert` opens a grid to pick the table size, and the
+other controls add/remove rows and columns, toggle header row/column and merge/split cells. All table
+controls are automatically disabled when the cursor is not inside a table:
+
+<Demo data={TipTapDemos.table} />
 
 ## GaugeChart component
 
@@ -114,3 +124,105 @@ for this type since its floating baseline makes the values not meaningful to rea
 to display the step label and description below the step icon:
 
 <Demo data={StepperDemos.labelPosition} />
+
+## Cascader safe area polygon
+
+[Cascader](/core/cascader) with `expandTrigger="hover"` now keeps the open column in place while the
+cursor moves diagonally toward it – options that the cursor passes over on the way no longer replace
+it. Set `safeAreaPolygon={false}` to expand on every hover immediately, or pass an object to configure
+[Floating UI `safePolygon`](https://floating-ui.com/docs/useHover#safepolygon) options:
+
+<Demo data={CascaderDemos.safeAreaPolygon} />
+
+## PasswordInput focusable visibility toggle
+
+[PasswordInput](/core/password-input) now supports the `visibilityToggleFocusable` prop that puts the
+visibility toggle in the tab order. The button then receives `tabindex="0"` and can be activated with
+<kbd>Enter</kbd> or <kbd>Space</kbd>:
+
+<Demo data={PasswordInputDemos.visibilityToggleFocusable} />
+
+## ColorInput fullWidth
+
+[ColorInput](/core/color-input) now supports the `fullWidth` prop: the dropdown matches the width of
+the input and the color picker inside it fills the available space.
+
+```tsx
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  return <ColorInput fullWidth label="Pick a color" placeholder="Pick a color" />;
+}
+```
+
+## FloatingWindow resize callbacks
+
+[FloatingWindow](/core/floating-window) now supports resize callbacks that mirror `onPositionChange`,
+`onDragStart` and `onDragEnd` used for dragging:
+
+- `onSizeChange` – called with the `{ width, height }` of the window every time it is resized
+- `onResizeStart` – called when the resize starts
+- `onResizeEnd` – called when the resize stops
+
+Sizes passed to `onSizeChange` are measured after the new size has been applied, so they are already
+clamped by the `dimensions` and viewport constraints and always match the actual size of the window:
+
+<Demo data={FloatingWindowDemos.resizeCallbacks} />
+
+## ScatterChart right Y axis
+
+[ScatterChart](/charts/scatter-chart) now supports the `withRightYAxis` prop that displays an
+additional Y axis on the right side of the chart, configurable with `rightYAxisProps` and
+`rightYAxisLabel`. Bind data series to the right Y axis by setting `yAxisId: 'right'` in the `data`
+object – series without `yAxisId` are bound to the left Y axis. Both axes use the same `dataKey.y`
+value, but their scales are calculated independently from the series assigned to them:
+
+<Demo data={ScatterChartDemos.rightYAxis} />
+
+## YearView renderDay
+
+[YearView](/schedule/year-view) now supports the `renderDay` prop that replaces the entire content of
+a day cell. The function is called with the day date in `YYYY-MM-DD` format and the events grouped on
+that day – the same list that is used to render the default indicators, but without the three items
+limit. This makes it possible to display counts, badges or icons instead of the default dots:
+
+<Demo data={YearViewDemos.renderDay} />
+
+## YearView hide weekend days
+
+[YearView](/schedule/year-view) now supports the `withWeekendDays` prop. Set `withWeekendDays={false}`
+to hide weekend days – every month grid shrinks to the remaining columns and events that fall only on
+hidden days are not displayed:
+
+<Demo data={YearViewDemos.withoutWeekendDays} />
+
+## ResourcesMonthView event resize
+
+[ResourcesMonthView](/schedule/resources-month-view) now supports the `withEventResize` prop. Events
+can be resized by dragging their start or end edges, and the `onEventResize` callback is called with
+the updated event start and end dates. Resizing snaps to whole days and preserves the event's original
+time of day. Use `canResizeEvent` to control which events can be resized:
+
+<Demo data={ResourcesMonthViewDemos.eventResize} />
+
+## use-scroll-spy scroll host ref
+
+[use-scroll-spy](/hooks/use-scroll-spy) `scrollHost` option now accepts a ref object in addition to a
+resolved `HTMLElement` – the hook reads `ref.current` internally once the element is mounted, so the
+scroll host does not need to exist on the first render:
+
+```tsx
+import { useRef } from 'react';
+import { useScrollSpy } from '@mantine/hooks';
+
+function Demo() {
+  const scrollHostRef = useRef<HTMLDivElement>(null);
+  const spy = useScrollSpy({ scrollHost: scrollHostRef });
+
+  return (
+    <div ref={scrollHostRef} style={{ overflowY: 'auto', height: 300 }}>
+      {/* Headings */}
+    </div>
+  );
+}
+```

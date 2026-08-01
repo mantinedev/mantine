@@ -102,6 +102,7 @@
     "@tiptap/extension-placeholder": "^3.27.3",
     "@tiptap/extension-subscript": "^3.27.3",
     "@tiptap/extension-superscript": "^3.27.3",
+    "@tiptap/extension-table": "^3.27.3",
     "@tiptap/extension-task-item": "^3.27.3",
     "@tiptap/extension-task-list": "^3.27.3",
     "@tiptap/extension-text-align": "^3.27.3",

@@ -64,6 +64,7 @@
     "@tiptap/core": "^3.27.3",
     "@tiptap/extension-floating-menu": "^3.23.6",
     "@tiptap/extension-link": "^3.27.3",
+    "@tiptap/extension-table": "^3.27.3",
     "@tiptap/pm": "^3.27.3",
     "@tiptap/react": "^3.27.3",
     "dayjs": "^1.11.21",

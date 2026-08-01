@@ -2373,6 +2373,7 @@ __metadata:
     "@tiptap/core": "npm:^3.27.3"
     "@tiptap/extension-floating-menu": "npm:^3.23.6"
     "@tiptap/extension-link": "npm:^3.27.3"
+    "@tiptap/extension-table": "npm:^3.27.3"
     "@tiptap/pm": "npm:^3.27.3"
     "@tiptap/react": "npm:^3.27.3"
     dayjs: "npm:^1.11.21"
@@ -6406,6 +6407,16 @@ __metadata:
     "@tiptap/core": 3.29.2
     "@tiptap/pm": 3.29.2
   checksum: 10c0/699724be62aa76802f4397b65965672e5e4694dbbbea5222d77a0a91f913fa24158e9863f0d80787369c6fbf85052560ca77de01ec16230bd4f2cfa5c46cf98d
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-table@npm:^3.27.3":
+  version: 3.29.2
+  resolution: "@tiptap/extension-table@npm:3.29.2"
+  peerDependencies:
+    "@tiptap/core": 3.29.2
+    "@tiptap/pm": 3.29.2
+  checksum: 10c0/d9b1df5931d6ba1897a5eb6f5c31be5cf2998e1501dca927a7970c69b23f9bcdb573b368df8f0d1694ca407afa9a00e90829f7eb6f99da4a41cb0e04961a1be7
   languageName: node
   linkType: hard
 
@@ -14186,6 +14197,7 @@ __metadata:
     "@tiptap/extension-placeholder": "npm:^3.27.3"
     "@tiptap/extension-subscript": "npm:^3.27.3"
     "@tiptap/extension-superscript": "npm:^3.27.3"
+    "@tiptap/extension-table": "npm:^3.27.3"
     "@tiptap/extension-task-item": "npm:^3.27.3"
     "@tiptap/extension-task-list": "npm:^3.27.3"
     "@tiptap/extension-text-align": "npm:^3.27.3"

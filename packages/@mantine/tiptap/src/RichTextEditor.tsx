@@ -28,6 +28,10 @@ import {
   type RichTextEditorSourceCodeControlProps,
 } from './RichTextEditorControl/RichTextEditorSourceCodeControl';
 import {
+  RichTextEditorTableInsertControl,
+  type RichTextEditorTableInsertControlProps,
+} from './RichTextEditorControl/RichTextEditorTableInsertControl';
+import {
   RichTextEditorControlsGroup,
   type RichTextEditorControlsGroupProps,
 } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
@@ -51,7 +55,11 @@ export type RichTextEditorStylesNames =
   | 'toolbar'
   | 'linkEditor'
   | 'linkEditorInput'
-  | 'linkEditorExternalControl';
+  | 'linkEditorExternalControl'
+  | 'tableInsertDropdown'
+  | 'tableInsertGrid'
+  | 'tableInsertCell'
+  | 'tableInsertLabel';
 
 export interface RichTextEditorProps
   extends BoxProps, StylesApiProps<RichTextEditorFactory>, ElementProps<'div'> {
@@ -119,6 +127,18 @@ export type RichTextEditorFactory = Factory<{
     TaskListSink: typeof controls.TaskListSinkControl;
     TaskListLift: typeof controls.TaskListLiftControl;
     SourceCode: typeof RichTextEditorSourceCodeControl;
+    TableInsert: typeof RichTextEditorTableInsertControl;
+    TableDelete: typeof controls.TableDeleteControl;
+    TableColumnBefore: typeof controls.TableColumnBeforeControl;
+    TableColumnAfter: typeof controls.TableColumnAfterControl;
+    TableColumnDelete: typeof controls.TableColumnDeleteControl;
+    TableRowBefore: typeof controls.TableRowBeforeControl;
+    TableRowAfter: typeof controls.TableRowAfterControl;
+    TableRowDelete: typeof controls.TableRowDeleteControl;
+    TableToggleHeaderRow: typeof controls.TableToggleHeaderRowControl;
+    TableToggleHeaderColumn: typeof controls.TableToggleHeaderColumnControl;
+    TableMergeCells: typeof controls.TableMergeCellsControl;
+    TableSplitCell: typeof controls.TableSplitCellControl;
   };
 }>;
 
@@ -229,6 +249,20 @@ RichTextEditor.TaskListSink = controls.TaskListSinkControl;
 RichTextEditor.TaskListLift = controls.TaskListLiftControl;
 RichTextEditor.SourceCode = RichTextEditorSourceCodeControl;
 
+// Table controls
+RichTextEditor.TableInsert = RichTextEditorTableInsertControl;
+RichTextEditor.TableDelete = controls.TableDeleteControl;
+RichTextEditor.TableColumnBefore = controls.TableColumnBeforeControl;
+RichTextEditor.TableColumnAfter = controls.TableColumnAfterControl;
+RichTextEditor.TableColumnDelete = controls.TableColumnDeleteControl;
+RichTextEditor.TableRowBefore = controls.TableRowBeforeControl;
+RichTextEditor.TableRowAfter = controls.TableRowAfterControl;
+RichTextEditor.TableRowDelete = controls.TableRowDeleteControl;
+RichTextEditor.TableToggleHeaderRow = controls.TableToggleHeaderRowControl;
+RichTextEditor.TableToggleHeaderColumn = controls.TableToggleHeaderColumnControl;
+RichTextEditor.TableMergeCells = controls.TableMergeCellsControl;
+RichTextEditor.TableSplitCell = controls.TableSplitCellControl;
+
 export namespace RichTextEditor {
   export type Props = RichTextEditorProps;
   export type StylesNames = RichTextEditorStylesNames;
@@ -243,6 +277,7 @@ export namespace RichTextEditor {
     export type ColorProps = RichTextEditorColorControlProps;
     export type LinkProps = RichTextEditorLinkControlProps;
     export type SourceCodeProps = RichTextEditorSourceCodeControlProps;
+    export type TableInsertProps = RichTextEditorTableInsertControlProps;
   }
 
   export namespace Content {

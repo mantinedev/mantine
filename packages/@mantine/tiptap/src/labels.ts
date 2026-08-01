@@ -136,6 +136,45 @@ export interface RichTextEditorLabels {
 
   /** Aria-label for task list lift task */
   tasksLiftLabel: string;
+
+  /** RichTextEditor.TableInsert control aria-label */
+  tableInsertControlLabel: string;
+
+  /** A function to get RichTextEditor.TableInsert grid cell aria-label based on selected size */
+  tableInsertLabel: (columns: number, rows: number) => string;
+
+  /** RichTextEditor.TableDelete control aria-label */
+  tableDeleteControlLabel: string;
+
+  /** RichTextEditor.TableColumnBefore control aria-label */
+  tableColumnBeforeControlLabel: string;
+
+  /** RichTextEditor.TableColumnAfter control aria-label */
+  tableColumnAfterControlLabel: string;
+
+  /** RichTextEditor.TableColumnDelete control aria-label */
+  tableColumnDeleteControlLabel: string;
+
+  /** RichTextEditor.TableRowBefore control aria-label */
+  tableRowBeforeControlLabel: string;
+
+  /** RichTextEditor.TableRowAfter control aria-label */
+  tableRowAfterControlLabel: string;
+
+  /** RichTextEditor.TableRowDelete control aria-label */
+  tableRowDeleteControlLabel: string;
+
+  /** RichTextEditor.TableToggleHeaderRow control aria-label */
+  tableToggleHeaderRowControlLabel: string;
+
+  /** RichTextEditor.TableToggleHeaderColumn control aria-label */
+  tableToggleHeaderColumnControlLabel: string;
+
+  /** RichTextEditor.TableMergeCells control aria-label */
+  tableMergeCellsControlLabel: string;
+
+  /** RichTextEditor.TableSplitCell control aria-label */
+  tableSplitCellControlLabel: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -177,6 +216,21 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   tasksControlLabel: 'Task list',
   tasksSinkLabel: 'Decrease task level',
   tasksLiftLabel: 'Increase task level',
+
+  // Table
+  tableInsertControlLabel: 'Insert table',
+  tableInsertLabel: (columns, rows) => `Insert ${columns} × ${rows} table`,
+  tableDeleteControlLabel: 'Delete table',
+  tableColumnBeforeControlLabel: 'Add column before',
+  tableColumnAfterControlLabel: 'Add column after',
+  tableColumnDeleteControlLabel: 'Delete column',
+  tableRowBeforeControlLabel: 'Add row before',
+  tableRowAfterControlLabel: 'Add row after',
+  tableRowDeleteControlLabel: 'Delete row',
+  tableToggleHeaderRowControlLabel: 'Toggle header row',
+  tableToggleHeaderColumnControlLabel: 'Toggle header column',
+  tableMergeCellsControlLabel: 'Merge cells',
+  tableSplitCellControlLabel: 'Split cell',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',
