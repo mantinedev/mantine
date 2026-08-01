@@ -204,6 +204,9 @@ export interface ResourcesWeekViewProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  eventResizeInterval?: number;
+
   recurrenceExpansionLimit?: number;
 
   /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 @default 2 */
@@ -313,6 +316,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    eventResizeInterval,
     onTimeSlotClick,
     onEventClick,
     withDragSlotSelect,
@@ -492,6 +496,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     startTime,
     endTime,
     intervalMinutes,
+    resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
   });

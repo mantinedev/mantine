@@ -1,4 +1,4 @@
-import { ActionBarDemos, AreaChartDemos, CandlestickChartDemos, CascaderDemos, FloatingWindowDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, PasswordInputDemos, ResourcesMonthViewDemos, ScatterChartDemos, StepperDemos, TipTapDemos, WaffleChartDemos, YearViewDemos } from '@docs/demos';
+import { ActionBarDemos, AreaChartDemos, CandlestickChartDemos, CascaderDemos, DayViewDemos, FloatingWindowDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, PasswordInputDemos, ResourcesMonthViewDemos, ScatterChartDemos, StepperDemos, TipTapDemos, WaffleChartDemos, YearViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -223,6 +223,14 @@ the updated event start and end dates. Resizing snaps to whole days and preserve
 time of day. Use `canResizeEvent` to control which events can be resized:
 
 <Demo data={ResourcesMonthViewDemos.eventResize} />
+
+## Schedule resize interval
+
+Time-grid Schedule views (`DayView`, `WeekView`, `ResourcesDayView`, `ResourcesWeekView`) now support
+an `eventResizeInterval` prop that sets the snap step used when resizing events, independent of the
+`intervalMinutes` grid size. For example, a 30-minute grid can allow 15-minute resize increments:
+
+<Demo data={DayViewDemos.eventResizeInterval} />
 
 ## use-scroll-spy scroll host ref
 

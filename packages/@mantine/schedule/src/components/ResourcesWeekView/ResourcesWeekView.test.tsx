@@ -1075,4 +1075,12 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
       expect(screen.getByRole('button', { name: /more/ })).toHaveClass('test-more-button');
     });
   });
+
+  describe('eventResizeInterval prop', () => {
+    it('renders without throwing when withEventResize and eventResizeInterval are set', () => {
+      expect(() =>
+        render(<ResourcesWeekView {...defaultProps} withEventResize eventResizeInterval={15} />)
+      ).not.toThrow();
+    });
+  });
 });

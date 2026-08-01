@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import { act, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -833,6 +834,61 @@ describe('@mantine/schedule/DayView', () => {
       const { container } = render(<DayView {...defaultProps} withAgenda />);
       const agendaButtons = container.querySelectorAll('[data-type="agenda"]');
       expect(agendaButtons).toHaveLength(2);
+    });
+  });
+
+  describe('eventResizeInterval prop', () => {
+    it('resizes on eventResizeInterval independently of intervalMinutes', () => {
+      const rect = {
+        top: 0,
+        left: 0,
+        right: 480,
+        bottom: 480,
+        width: 480,
+        height: 480,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      };
+      const spy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockReturnValue(rect as DOMRect);
+      const onEventResize = jest.fn();
+
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventResizeInterval={15}
+          withEventResize
+          onEventResize={onEventResize}
+          events={[
+            {
+              id: 1,
+              title: 'Event',
+              start: '2025-11-03 09:00:00',
+              end: '2025-11-03 09:30:00',
+              color: 'blue',
+              payload: {},
+            },
+          ]}
+        />
+      );
+
+      const handle = container.querySelector('[data-edge="bottom"]')!;
+      fireEvent.pointerDown(handle);
+      act(() => {
+        // clientY 165 = 165 min from 08:00 = 10:45, a 15-min boundary off the 30-min grid.
+        document.dispatchEvent(new MouseEvent('pointermove', { clientY: 165 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({ newEnd: '2025-11-03 10:45:00' })
+      );
+      spy.mockRestore();
     });
   });
 });

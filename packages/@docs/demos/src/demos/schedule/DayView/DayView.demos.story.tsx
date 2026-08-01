@@ -133,6 +133,11 @@ export const Demo_eventResize = {
   render: renderDemo(demos.eventResize),
 };
 
+export const Demo_eventResizeInterval = {
+  name: '⭐ Demo: eventResizeInterval',
+  render: renderDemo(demos.eventResizeInterval),
+};
+
 export const Demo_canResizeEvent = {
   name: '⭐ Demo: canResizeEvent',
   render: renderDemo(demos.canResizeEvent),

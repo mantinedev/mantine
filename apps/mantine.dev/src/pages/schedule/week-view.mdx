@@ -234,6 +234,14 @@ the resize. Use `canResizeEvent` to control which events can be resized.
 
 <Demo data={WeekViewDemos.eventResize} />
 
+## Resize interval
+
+By default events snap to `intervalMinutes` when resized. Set `eventResizeInterval` to use a
+different snap step for resizing – for example, a grid with 30-minute slots whose events can be
+resized in 15-minute increments:
+
+<Demo data={WeekViewDemos.eventResizeInterval} />
+
 ## Restrict resizable events
 
 Use `canResizeEvent` callback to control which events can be resized.

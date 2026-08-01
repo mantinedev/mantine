@@ -246,6 +246,9 @@ export interface DayViewProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  eventResizeInterval?: number;
+
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
 
@@ -352,6 +355,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    eventResizeInterval,
     recurrenceExpansionLimit,
     getTimeSlotProps,
     withAgenda,
@@ -536,6 +540,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     startTime,
     endTime,
     intervalMinutes,
+    resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
   });

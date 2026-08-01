@@ -948,4 +948,12 @@ describe('@mantine/schedule/WeekView', () => {
       expect(agendaButtons).toHaveLength(2);
     });
   });
+
+  describe('eventResizeInterval prop', () => {
+    it('renders without throwing when withEventResize and eventResizeInterval are set', () => {
+      expect(() =>
+        render(<WeekView {...defaultProps} withEventResize eventResizeInterval={15} />)
+      ).not.toThrow();
+    });
+  });
 });

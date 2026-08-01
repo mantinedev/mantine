@@ -1021,4 +1021,12 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     );
     expect(emptyGroupCells.length).toBe(1);
   });
+
+  describe('eventResizeInterval prop', () => {
+    it('renders without throwing when withEventResize and eventResizeInterval are set', () => {
+      expect(() =>
+        render(<ResourcesDayView {...defaultProps} withEventResize eventResizeInterval={15} />)
+      ).not.toThrow();
+    });
+  });
 });

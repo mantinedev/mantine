@@ -98,6 +98,14 @@ their left or right edges.
 
 <Demo data={ResourcesDayViewDemos.eventResize} />
 
+## Resize interval
+
+By default events snap to `intervalMinutes` when resized. Set `eventResizeInterval` to use a
+different snap step for resizing – for example, a grid with 30-minute slots whose events can be
+resized in 15-minute increments:
+
+<Demo data={ResourcesDayViewDemos.eventResizeInterval} />
+
 ## Event form
 
 Click on a time slot or drag to select a range to create a new event. Click on an

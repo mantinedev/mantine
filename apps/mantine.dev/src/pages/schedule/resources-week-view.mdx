@@ -175,6 +175,14 @@ days. To make an event cover several days, update its `start` and `end` dates di
 
 Use `canResizeEvent` to control which events can be resized.
 
+## Resize interval
+
+By default events snap to `intervalMinutes` when resized. Set `eventResizeInterval` to use a
+different snap step for resizing – for example, a grid with 30-minute slots whose events can be
+resized in 15-minute increments:
+
+<Demo data={ResourcesWeekViewDemos.eventResizeInterval} />
+
 ## Static mode
 
 Set `mode="static"` to disable all interactions. Events and time slots become non-interactive,
