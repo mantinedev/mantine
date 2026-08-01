@@ -2373,6 +2373,7 @@ __metadata:
     "@tiptap/core": "npm:^3.27.3"
     "@tiptap/extension-details": "npm:^3.27.3"
     "@tiptap/extension-floating-menu": "npm:^3.23.6"
+    "@tiptap/extension-invisible-characters": "npm:^3.27.3"
     "@tiptap/extension-link": "npm:^3.27.3"
     "@tiptap/extension-table": "npm:^3.27.3"
     "@tiptap/pm": "npm:^3.27.3"
@@ -6314,6 +6315,17 @@ __metadata:
     "@tiptap/core": 3.29.2
     "@tiptap/pm": 3.29.2
   checksum: 10c0/1dfba0876736b97ca73e97e2a5e93f743ea06904003d6d04a387a1c8e5c03bf5e94da68b54033948ea6d1c818efcf8c40e0e00417280a6b446886dd30505f2cf
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-invisible-characters@npm:^3.27.3":
+  version: 3.29.2
+  resolution: "@tiptap/extension-invisible-characters@npm:3.29.2"
+  peerDependencies:
+    "@tiptap/core": 3.29.2
+    "@tiptap/extension-text-style": 3.29.2
+    "@tiptap/pm": 3.29.2
+  checksum: 10c0/3238793b9dd874002c087211a1ca2b3c7c45737c1111960c9a9760ad501bd5caf62bf985417d9220f90d65dded50a7ae0b143c4c4825cd10356daf93b0627952
   languageName: node
   linkType: hard
 
@@ -14205,6 +14217,7 @@ __metadata:
     "@tiptap/extension-details": "npm:^3.27.3"
     "@tiptap/extension-highlight": "npm:^3.27.3"
     "@tiptap/extension-history": "npm:^3.27.3"
+    "@tiptap/extension-invisible-characters": "npm:^3.27.3"
     "@tiptap/extension-link": "npm:^3.27.3"
     "@tiptap/extension-list": "npm:^3.27.3"
     "@tiptap/extension-placeholder": "npm:^3.27.3"

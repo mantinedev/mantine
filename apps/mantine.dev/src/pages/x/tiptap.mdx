@@ -240,6 +240,20 @@ three nodes it provides – `Details`, `DetailsSummary` and `DetailsContent`:
 or removes the details node when the cursor is already inside one. The control is automatically
 disabled when the details extension is not installed.
 
+## Invisible characters
+
+To display formatting marks – spaces, paragraph breaks and hard breaks – install the
+[Tiptap invisible characters extension](https://tiptap.dev/docs/editor/extensions/functionality/invisiblecharacters)
+and register it. Set `visible: false` to hide the marks until the control is toggled:
+
+<InstallScript packages="@tiptap/extension-invisible-characters" />
+
+<Demo data={TipTapDemos.invisibleCharacters} />
+
+`RichTextEditor.InvisibleCharacters` toggles the visibility of formatting marks. The control reflects
+the current visibility as its active state and is automatically disabled when the extension is not
+installed.
+
 ## Removing the paragraph wrapper
 
 Tiptap wraps the content of some nodes in a `<p>` element by default, producing markup like

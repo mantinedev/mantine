@@ -3,6 +3,7 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { Color } from '@tiptap/extension-color';
 import { Details, DetailsContent, DetailsSummary } from '@tiptap/extension-details';
 import Highlight from '@tiptap/extension-highlight';
+import InvisibleCharacters from '@tiptap/extension-invisible-characters';
 import Placeholder from '@tiptap/extension-placeholder';
 import SubScript from '@tiptap/extension-subscript';
 import { Superscript } from '@tiptap/extension-superscript';
@@ -117,6 +118,7 @@ function BasicEditor({
       Details,
       DetailsSummary,
       DetailsContent,
+      InvisibleCharacters.configure({ visible: false }),
       getTaskListExtension(TipTapTaskList),
       TaskItem.configure({ nested: true }),
     ],
@@ -130,6 +132,7 @@ function BasicEditor({
         <RichTextEditor.Toolbar {...toolbarProps}>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.SourceCode />
+            <RichTextEditor.InvisibleCharacters />
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Blockquote />
@@ -579,6 +582,35 @@ export function DetailsControl() {
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Details />
+          </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
+
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
+}
+
+export function InvisibleCharactersControl() {
+  const editor = useEditor({
+    extensions: [StarterKit, InvisibleCharacters.configure({ visible: false })],
+    content: `
+      <p>Toggle the control to reveal spaces and paragraph breaks.</p>
+      <p>Each space becomes a dot and every paragraph ends with a pilcrow.</p>
+    `,
+    shouldRerenderOnTransaction: true,
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor editor={editor}>
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Bold />
+            <RichTextEditor.Italic />
+          </RichTextEditor.ControlsGroup>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.InvisibleCharacters />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 

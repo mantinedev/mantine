@@ -178,6 +178,9 @@ export interface RichTextEditorLabels {
 
   /** RichTextEditor.Details control aria-label */
   detailsControlLabel: string;
+
+  /** RichTextEditor.InvisibleCharacters control aria-label */
+  invisibleCharactersControlLabel: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -237,6 +240,9 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
 
   // Details
   detailsControlLabel: 'Toggle collapsible section',
+
+  // Invisible characters
+  invisibleCharactersControlLabel: 'Toggle invisible characters',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',

@@ -98,6 +98,7 @@
     "@tiptap/extension-details": "^3.27.3",
     "@tiptap/extension-highlight": "^3.27.3",
     "@tiptap/extension-history": "^3.27.3",
+    "@tiptap/extension-invisible-characters": "^3.27.3",
     "@tiptap/extension-link": "^3.27.3",
     "@tiptap/extension-list": "^3.27.3",
     "@tiptap/extension-placeholder": "^3.27.3",

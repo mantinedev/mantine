@@ -36,6 +36,10 @@ import {
   type RichTextEditorDetailsControlProps,
 } from './RichTextEditorControl/RichTextEditorDetailsControl';
 import {
+  RichTextEditorInvisibleCharactersControl,
+  type RichTextEditorInvisibleCharactersControlProps,
+} from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl';
+import {
   RichTextEditorControlsGroup,
   type RichTextEditorControlsGroupProps,
 } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
@@ -144,6 +148,7 @@ export type RichTextEditorFactory = Factory<{
     TableMergeCells: typeof controls.TableMergeCellsControl;
     TableSplitCell: typeof controls.TableSplitCellControl;
     Details: typeof RichTextEditorDetailsControl;
+    InvisibleCharacters: typeof RichTextEditorInvisibleCharactersControl;
   };
 }>;
 
@@ -271,6 +276,9 @@ RichTextEditor.TableSplitCell = controls.TableSplitCellControl;
 // Details control
 RichTextEditor.Details = RichTextEditorDetailsControl;
 
+// Invisible characters control
+RichTextEditor.InvisibleCharacters = RichTextEditorInvisibleCharactersControl;
+
 export namespace RichTextEditor {
   export type Props = RichTextEditorProps;
   export type StylesNames = RichTextEditorStylesNames;
@@ -287,6 +295,7 @@ export namespace RichTextEditor {
     export type SourceCodeProps = RichTextEditorSourceCodeControlProps;
     export type TableInsertProps = RichTextEditorTableInsertControlProps;
     export type DetailsProps = RichTextEditorDetailsControlProps;
+    export type InvisibleCharactersProps = RichTextEditorInvisibleCharactersControlProps;
   }
 
   export namespace Content {
