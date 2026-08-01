@@ -94,6 +94,9 @@ export interface FunnelChartProps
 
   /** Props passed down to recharts `FunnelChart` component */
   funnelChartProps?: React.ComponentProps<typeof RechartsFunnelChart>;
+
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  accessibilityLayer?: boolean;
 }
 
 export type FunnelChartFactory = Factory<{
@@ -110,6 +113,7 @@ const defaultProps = {
   withLabels: false,
   labelsPosition: 'right',
   tooltipDataSource: 'all',
+  accessibilityLayer: true,
 } satisfies Partial<FunnelChartProps>;
 
 const varsResolver = createVarsResolver<FunnelChartFactory>(
@@ -149,6 +153,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
     strokeColor,
     labelColor,
     attributes,
+    accessibilityLayer,
     ...others
   } = props;
 
@@ -178,7 +183,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
   return (
     <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
-        <RechartsFunnelChart {...funnelChartProps}>
+        <RechartsFunnelChart accessibilityLayer={accessibilityLayer} {...funnelChartProps}>
           <Funnel
             data={data.map((entry, index) => ({
               ...entry,

@@ -11,4 +11,9 @@
   & :where(:global(.recharts-surface)) {
     overflow: visible;
   }
+
+  svg:focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
+  }
 }

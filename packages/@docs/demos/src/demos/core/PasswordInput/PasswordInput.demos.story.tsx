@@ -33,6 +33,11 @@ export const Demo_controlledVisibility = {
   render: renderDemo(demos.controlledVisibility),
 };
 
+export const Demo_visibilityToggleFocusable = {
+  name: '⭐ Demo: visibilityToggleFocusable',
+  render: renderDemo(demos.visibilityToggleFocusable),
+};
+
 export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),

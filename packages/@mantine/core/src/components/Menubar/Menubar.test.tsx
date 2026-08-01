@@ -107,12 +107,14 @@ describe('@mantine/core/Menubar', () => {
     expectAllClosed();
   });
 
-  it('keeps only one menu open at a time and switches on click', async () => {
+  it('keeps only one menu open at a time and switches on click', () => {
     render(<TestContainer />);
-    await userEvent.click(getTarget('File'));
+    // fireEvent.click does not fire mouseover: covers clicks that are not
+    // preceded by hover (keyboard/assistive technology activation)
+    fireEvent.click(getTarget('File'));
     expectMenuOpen('New file');
 
-    await userEvent.click(getTarget('Edit'));
+    fireEvent.click(getTarget('Edit'));
     expectMenuOpen('Undo');
     expect(screen.queryByText('New file')).not.toBeInTheDocument();
     expect(screen.queryAllByRole('menu')).toHaveLength(1);
@@ -126,6 +128,18 @@ describe('@mantine/core/Menubar', () => {
     await userEvent.hover(getTarget('Edit'));
     expectMenuOpen('Undo');
     expect(screen.queryByText('New file')).not.toBeInTheDocument();
+  });
+
+  it('closes the menu on the first target click after switching menus with hover (trigger="click")', async () => {
+    render(<TestContainer />);
+    await userEvent.click(getTarget('File'));
+    expectMenuOpen('New file');
+
+    await userEvent.hover(getTarget('Edit'));
+    expectMenuOpen('Undo');
+
+    await userEvent.click(getTarget('Edit'));
+    expectAllClosed();
   });
 
   it('does not open a menu on hover when all menus are closed (trigger="click")', async () => {

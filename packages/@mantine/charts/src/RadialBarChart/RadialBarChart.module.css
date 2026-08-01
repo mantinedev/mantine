@@ -9,8 +9,14 @@
     --chart-cursor-color: var(--mantine-color-dark-4);
   }
 
-  :where(svg) {
+  :where(svg),
+  :where(svg *) {
     outline: 0;
+  }
+
+  svg:focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
   }
 }
 

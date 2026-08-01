@@ -60,6 +60,20 @@ to hide the time bubble label.
 
 <Demo data={ResourcesWeekViewDemos.currentTimeIndicator} />
 
+## Current time indicator in a different timezone
+
+`@mantine/schedule` works with timezone-agnostic `YYYY-MM-DD HH:mm:ss` strings and does not
+perform any timezone conversions on its own. By default, the current time indicator is positioned
+based on the user's local time.
+
+To display the indicator in a different timezone, use the `getCurrentTime` prop. It is a function
+that returns the current time and is called on every tick, so the indicator keeps updating
+automatically. In the example below, the current time is converted to the selected timezone with
+the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone) – switch the timezone to
+see the indicator and the time bubble move accordingly:
+
+<Demo data={ResourcesWeekViewDemos.timezone} />
+
 ## First day of week
 
 Use `firstDayOfWeek` to set the first day of the week. Set `weekdayFormat` to customize

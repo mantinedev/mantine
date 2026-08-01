@@ -67,6 +67,28 @@ describe('@mantine/core/InputWrapper', () => {
     expect(inputWrapperQueries.getLabel(container).tagName).toBe('DIV');
   });
 
+  it('supports changing root element of label, description, error and success with component prop', () => {
+    const { container } = render(
+      <InputWrapper
+        {...defaultProps}
+        labelProps={{ component: 'span' }}
+        descriptionProps={{ component: 'div' }}
+        errorProps={{ component: 'div' }}
+      />
+    );
+
+    expect(inputWrapperQueries.getLabel(container).tagName).toBe('SPAN');
+    expect(inputWrapperQueries.getLabel(container)).not.toHaveAttribute('for');
+    expect(inputWrapperQueries.getDescription(container).tagName).toBe('DIV');
+    expect(inputWrapperQueries.getError(container).tagName).toBe('DIV');
+
+    const { container: successContainer } = render(
+      <InputWrapper {...successProps} successProps={{ component: 'div' }} />
+    );
+
+    expect(inputWrapperQueries.getSuccess(successContainer).tagName).toBe('DIV');
+  });
+
   it('renders success message when success prop is set', () => {
     const { container } = render(<InputWrapper {...successProps} />);
     expect(inputWrapperQueries.getSuccess(container).textContent).toBe('test-success');

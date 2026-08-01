@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import { fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { ResourcesMonthView, ResourcesMonthViewProps } from './ResourcesMonthView';
@@ -15,12 +16,51 @@ const defaultProps: ResourcesMonthViewProps = {
   resources,
 };
 
-function eventRoot(node: HTMLElement): HTMLElement {
-  return node.closest('.mantine-ScheduleEvent-event') as HTMLElement;
+function eventWrapper(node: HTMLElement): HTMLElement {
+  return node.closest('.mantine-ResourcesMonthView-resourcesMonthViewEventWrapper') as HTMLElement;
 }
 
 function spanWidthPercent(node: HTMLElement): number {
-  return parseFloat(eventRoot(node).style.width.match(/([\d.]+)%/)![1]);
+  return parseFloat(eventWrapper(node).style.width.match(/([\d.]+)%/)![1]);
+}
+
+const DAY_CELL_WIDTH = 10;
+
+/** jsdom reports empty rects, day cells are laid out as a strip of `DAY_CELL_WIDTH` px columns */
+function stubDayCellRects(container: HTMLElement) {
+  container
+    .querySelectorAll('.mantine-ResourcesMonthView-resourcesMonthViewRowSlots')
+    .forEach((row) => {
+      row
+        .querySelectorAll('.mantine-ResourcesMonthView-resourcesMonthViewCell')
+        .forEach((cell, index) => {
+          (cell as HTMLElement).getBoundingClientRect = () =>
+            ({
+              left: index * DAY_CELL_WIDTH,
+              right: index * DAY_CELL_WIDTH + DAY_CELL_WIDTH,
+              width: DAY_CELL_WIDTH,
+              top: 0,
+              bottom: 20,
+              height: 20,
+            }) as DOMRect;
+        });
+    });
+}
+
+/**
+ * Moves the pointer to the horizontal center of the day cell at `dayIndex`.
+ * jsdom does not implement `PointerEvent`, `fireEvent.pointerMove` would drop `clientX`.
+ */
+function movePointerToDay(dayIndex: number) {
+  const clientX = dayIndex * DAY_CELL_WIDTH + DAY_CELL_WIDTH / 2;
+  fireEvent(document, new MouseEvent('pointermove', { clientX, bubbles: true }));
+}
+
+function resizeHandles(container: HTMLElement, edge?: 'start' | 'end') {
+  const selector = edge
+    ? `.mantine-ResourcesMonthView-resourcesMonthViewResizeHandle[data-edge="${edge}"]`
+    : '.mantine-ResourcesMonthView-resourcesMonthViewResizeHandle';
+  return container.querySelectorAll<HTMLElement>(selector);
 }
 
 describe('@mantine/schedule/ResourcesMonthView', () => {
@@ -460,7 +500,7 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
     const bars = screen.getAllByText('Multi Day');
     expect(bars).toHaveLength(1);
     expect(spanWidthPercent(bars[0])).toBeCloseTo((3 / 31) * 100, 1);
-    expect(eventRoot(bars[0]).style.height).not.toContain('18px');
+    expect(eventWrapper(bars[0]).style.height).not.toContain('18px');
   });
 
   it('keeps a multi-day event visible across all its days regardless of declaration order', () => {
@@ -502,7 +542,7 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
     expect(screen.getByText('+1 more')).toBeInTheDocument();
     // The span crosses a "+1 more" day, so the bar compresses to align with the shrunk rows below
     // it instead of overlapping them.
-    expect(eventRoot(bars[0]).style.height).toContain('100% - 18px');
+    expect(eventWrapper(bars[0]).style.height).toContain('100% - 18px');
   });
 
   it('keeps a short multi-day event visible across its days over longer same-day events', () => {
@@ -575,8 +615,8 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
     expect(barB).toHaveLength(1);
     expect(spanWidthPercent(barA[0])).toBeCloseTo((3 / 31) * 100, 1);
     expect(spanWidthPercent(barB[0])).toBeCloseTo((3 / 31) * 100, 1);
-    expect(eventRoot(barA[0]).style.top).toBe('calc(0% + 1px)');
-    expect(eventRoot(barB[0]).style.top).toBe('calc(50% + 1px)');
+    expect(eventWrapper(barA[0]).style.top).toBe('calc(0% + 1px)');
+    expect(eventWrapper(barB[0]).style.top).toBe('calc(50% + 1px)');
   });
 
   it('recurring events render instances', () => {
@@ -1033,5 +1073,339 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
     expect(notDraggable).toHaveLength(1);
     expect(draggable[0]).toHaveAttribute('title', 'Can Drag');
     expect(notDraggable[0]).toHaveAttribute('title', 'Cannot Drag');
+  });
+  describe('event resize', () => {
+    const resizeEvents = [
+      {
+        id: 'r1',
+        title: 'Resizable Event',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    it('withEventResize renders start and end handles', () => {
+      const { container } = render(
+        <ResourcesMonthView {...defaultProps} events={resizeEvents} withEventResize />
+      );
+
+      expect(resizeHandles(container)).toHaveLength(2);
+      expect(resizeHandles(container, 'start')).toHaveLength(1);
+      expect(resizeHandles(container, 'end')).toHaveLength(1);
+    });
+
+    it('does not render resize handles when withEventResize is not set', () => {
+      const { container } = render(<ResourcesMonthView {...defaultProps} events={resizeEvents} />);
+      expect(resizeHandles(container)).toHaveLength(0);
+    });
+
+    it('mode="static" suppresses resize handles', () => {
+      const { container } = render(
+        <ResourcesMonthView {...defaultProps} mode="static" events={resizeEvents} withEventResize />
+      );
+
+      expect(resizeHandles(container)).toHaveLength(0);
+    });
+
+    it('canResizeEvent suppresses resize handles for blocked events', () => {
+      const events = [
+        { ...resizeEvents[0], id: 'no-resize', title: 'No Resize' },
+        { ...resizeEvents[0], id: 'can-resize', title: 'Can Resize' },
+      ];
+
+      const { container } = render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={events}
+          withEventResize
+          canResizeEvent={(event) => event.id === 'can-resize'}
+        />
+      );
+
+      expect(resizeHandles(container)).toHaveLength(2);
+    });
+
+    it('renders only the end handle for an event that starts before the month', () => {
+      const events = [
+        {
+          id: 'hanging-start',
+          title: 'Hanging Start',
+          start: '2024-12-28 09:00:00',
+          end: '2025-01-05 17:00:00',
+          color: 'blue',
+          payload: {},
+          resourceId: 'room-a',
+        },
+      ];
+
+      const { container } = render(
+        <ResourcesMonthView {...defaultProps} events={events} withEventResize />
+      );
+
+      expect(resizeHandles(container)).toHaveLength(1);
+      expect(resizeHandles(container, 'end')).toHaveLength(1);
+      expect(resizeHandles(container, 'start')).toHaveLength(0);
+    });
+
+    it('calls onEventResize with the new end day, preserving the original end time', () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={resizeEvents}
+          withEventResize
+          onEventResize={spy}
+        />
+      );
+
+      stubDayCellRects(container);
+      fireEvent.pointerDown(resizeHandles(container, 'end')[0]);
+      movePointerToDay(19);
+      fireEvent.pointerUp(document);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          eventId: 'r1',
+          newStart: '2025-01-15 09:00:00',
+          newEnd: '2025-01-20 10:00:00',
+        })
+      );
+    });
+
+    it('calls onEventResize with the new start day, preserving the original start time', () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={resizeEvents}
+          withEventResize
+          onEventResize={spy}
+        />
+      );
+
+      stubDayCellRects(container);
+      fireEvent.pointerDown(resizeHandles(container, 'start')[0]);
+      movePointerToDay(9);
+      fireEvent.pointerUp(document);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          eventId: 'r1',
+          newStart: '2025-01-10 09:00:00',
+          newEnd: '2025-01-15 10:00:00',
+        })
+      );
+    });
+
+    it('keeps the end exclusive when the event ends at midnight', () => {
+      const spy = jest.fn();
+      const events = [
+        {
+          id: 'all-day',
+          title: 'All Day Booking',
+          start: '2025-01-10 00:00:00',
+          end: '2025-01-13 00:00:00',
+          color: 'blue',
+          payload: {},
+          resourceId: 'room-a',
+        },
+      ];
+
+      const { container } = render(
+        <ResourcesMonthView {...defaultProps} events={events} withEventResize onEventResize={spy} />
+      );
+
+      stubDayCellRects(container);
+      fireEvent.pointerDown(resizeHandles(container, 'end')[0]);
+      movePointerToDay(14);
+      fireEvent.pointerUp(document);
+
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          newStart: '2025-01-10 00:00:00',
+          newEnd: '2025-01-16 00:00:00',
+        })
+      );
+    });
+
+    it('does not call onEventResize when the range does not change', () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={resizeEvents}
+          withEventResize
+          onEventResize={spy}
+        />
+      );
+
+      stubDayCellRects(container);
+      fireEvent.pointerDown(resizeHandles(container, 'end')[0]);
+      movePointerToDay(14);
+      fireEvent.pointerUp(document);
+
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('previews the resized span while dragging', () => {
+      const { container } = render(
+        <ResourcesMonthView {...defaultProps} events={resizeEvents} withEventResize />
+      );
+
+      stubDayCellRects(container);
+      expect(spanWidthPercent(screen.getByText('Resizable Event'))).toBeCloseTo((1 / 31) * 100, 1);
+
+      fireEvent.pointerDown(resizeHandles(container, 'end')[0]);
+      movePointerToDay(18);
+
+      expect(spanWidthPercent(screen.getByText('Resizable Event'))).toBeCloseTo((5 / 31) * 100, 1);
+
+      fireEvent.pointerUp(document);
+    });
+
+    it('cancels the gesture without calling onEventResize on pointercancel', () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={resizeEvents}
+          withEventResize
+          onEventResize={spy}
+        />
+      );
+
+      stubDayCellRects(container);
+      fireEvent.pointerDown(resizeHandles(container, 'end')[0]);
+      movePointerToDay(19);
+      fireEvent.pointerCancel(document);
+
+      expect(spy).not.toHaveBeenCalled();
+      expect(spanWidthPercent(screen.getByText('Resizable Event'))).toBeCloseTo((1 / 31) * 100, 1);
+      expect(document.body.style.cursor).toBe('');
+    });
+
+    it('clamps to the last day of the month after navigating to a shorter month', () => {
+      const spy = jest.fn();
+      const events = [
+        {
+          id: 'feb',
+          title: 'February Event',
+          start: '2025-02-05 09:00:00',
+          end: '2025-02-05 10:00:00',
+          color: 'blue',
+          payload: {},
+          resourceId: 'room-a',
+        },
+      ];
+
+      const { container, rerender } = render(
+        <ResourcesMonthView
+          {...defaultProps}
+          date="2025-01-15"
+          events={events}
+          withEventResize
+          onEventResize={spy}
+        />
+      );
+
+      rerender(
+        <ResourcesMonthView
+          {...defaultProps}
+          date="2025-02-15"
+          events={events}
+          withEventResize
+          onEventResize={spy}
+        />
+      );
+
+      stubDayCellRects(container);
+      fireEvent.pointerDown(resizeHandles(container, 'end')[0]);
+      movePointerToDay(40);
+      fireEvent.pointerUp(document);
+
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          newStart: '2025-02-05 09:00:00',
+          newEnd: '2025-02-28 10:00:00',
+        })
+      );
+    });
+
+    it('merges Styles API styles with the wrapper positioning styles', () => {
+      render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={resizeEvents}
+          withEventResize
+          styles={{ resourcesMonthViewEventWrapper: { opacity: 0.5 } }}
+        />
+      );
+
+      const wrapper = eventWrapper(screen.getByText('Resizable Event'));
+      expect(wrapper.style.opacity).toBe('0.5');
+      expect(wrapper.style.width).toContain('%');
+    });
+
+    it('keeps the wrapper positioned when unstyled is set', () => {
+      render(
+        <ResourcesMonthView {...defaultProps} events={resizeEvents} withEventResize unstyled />
+      );
+
+      const wrapper = eventWrapper(screen.getByText('Resizable Event'));
+      expect(wrapper.className).not.toContain('resourcesMonthViewEventWrapper ');
+      expect(wrapper.style.position).toBe('absolute');
+      expect(wrapper.style.zIndex).toBe('3');
+      expect(wrapper.style.width).toContain('%');
+    });
+
+    it('hides the handle when the event edge falls on a hidden weekend day', () => {
+      // 2025-01-04 is a Saturday, 2025-01-08 is a Wednesday
+      const events = [
+        {
+          id: 'weekend-start',
+          title: 'Weekend Start',
+          start: '2025-01-04 09:00:00',
+          end: '2025-01-08 17:00:00',
+          color: 'blue',
+          payload: {},
+          resourceId: 'room-a',
+        },
+      ];
+
+      const { container } = render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={events}
+          withEventResize
+          withWeekendDays={false}
+        />
+      );
+
+      expect(resizeHandles(container, 'start')).toHaveLength(0);
+      expect(resizeHandles(container, 'end')).toHaveLength(1);
+    });
+
+    it('does not fire onEventClick for the click that ends a resize gesture', () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <ResourcesMonthView
+          {...defaultProps}
+          events={resizeEvents}
+          withEventResize
+          onEventClick={spy}
+        />
+      );
+
+      fireEvent.pointerDown(resizeHandles(container, 'end')[0]);
+      fireEvent.pointerUp(document);
+      fireEvent.click(screen.getByText('Resizable Event'));
+
+      expect(spy).not.toHaveBeenCalled();
+    });
   });
 });

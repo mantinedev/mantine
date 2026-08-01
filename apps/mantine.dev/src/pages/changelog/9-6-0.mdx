@@ -1,4 +1,4 @@
-import { ActionBarDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, StepperDemos, WaffleChartDemos } from '@docs/demos';
+import { ActionBarDemos, AreaChartDemos, CandlestickChartDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, StepperDemos, WaffleChartDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -69,6 +69,44 @@ New [MatrixChart](/charts/matrix-chart) component – a generic x/y heatmap with
 Each cell is colored based on a value, useful for visualizing patterns in two-dimensional categorical data.
 
 <Demo data={MatrixChartDemos.usage} />
+
+## CandlestickChart component
+
+New [CandlestickChart](/charts/candlestick-chart) component – a financial OHLC chart that displays
+open, high, low and close values as candles. Candles are colored based on their direction, the wick
+shows the high–low range and the body shows the open–close range. Supports custom colors, data keys,
+reference lines, axis labels and value formatting.
+
+<Demo data={CandlestickChartDemos.usage} />
+
+## Charts reference areas
+
+[AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart), [LineChart](/charts/line-chart),
+[CompositeChart](/charts/composite-chart) and [ScatterChart](/charts/scatter-chart) now support the
+`referenceAreas` prop that highlights a rectangular region of the plot – a weekend band, a target
+range, a threshold zone and similar annotations. Each area is bounded by `x1`/`x2` and/or `y1`/`y2`
+data values (omit one pair to span the full opposite axis) and supports a theme `color` and a `label`.
+
+<Demo data={AreaChartDemos.referenceAreas} />
+
+## Charts reference dots
+
+[AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart), [LineChart](/charts/line-chart),
+[CompositeChart](/charts/composite-chart) and [ScatterChart](/charts/scatter-chart) now support the
+`referenceDots` prop that marks individual points on the plot – a peak, an event, a record value or an
+anomaly. Each dot is positioned by `x`/`y` data coordinates and supports a radius, a theme `color` and a
+`label`. Reference dots are rendered on top of the chart series.
+
+<Demo data={AreaChartDemos.referenceDots} />
+
+## AreaChart streamgraph
+
+[AreaChart](/charts/area-chart) now supports `type="stream"` that renders a streamgraph (also known
+as ThemeRiver) – a stacked area chart whose baseline flows around a central axis instead of being
+fixed to zero, producing the characteristic organic "river" shape. The y-axis is hidden by default
+for this type since its floating baseline makes the values not meaningful to read off:
+
+<Demo data={AreaChartDemos.stream} />
 
 ## Stepper labelPosition
 

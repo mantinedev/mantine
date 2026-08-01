@@ -4,22 +4,11 @@ import { Tooltip } from './Tooltip';
 export default { title: 'Tooltip' };
 
 export function Usage() {
-  const [ref, setRef] = useState<HTMLButtonElement | null>(null);
   return (
     <div style={{ padding: 40 }}>
-      <Tooltip
-        position="bottom"
-        label="Tooltip label"
-        withArrow
-        color="cyan"
-        target={ref}
-        opened
-        withinPortal={false}
-        attributes={{ tooltip: { 'data-test-id': 'tooltip' } }}
-      />
-      <button type="button" ref={setRef} style={{ position: 'fixed', bottom: 100, left: 100 }}>
-        target
-      </button>
+      <Tooltip position="bottom" interactive label="Tooltip label">
+        <button>target</button>
+      </Tooltip>
     </div>
   );
 }
@@ -284,6 +273,35 @@ export function Fixed() {
         floatingStrategy="fixed"
       >
         <button type="button">target</button>
+      </Tooltip>
+    </div>
+  );
+}
+
+export function Interactive() {
+  return (
+    <div style={{ padding: 40 }}>
+      <button type="button" style={{ position: 'fixed', top: 40, left: 200, width: 300 }}>
+        Button under the tooltip – must stay clickable
+      </button>
+
+      <Tooltip
+        position="top"
+        offset={20}
+        interactive
+        withArrow
+        label={
+          <span>
+            Move the pointer here –{' '}
+            <a href="https://mantine.dev" style={{ color: 'inherit' }}>
+              link
+            </a>
+          </span>
+        }
+      >
+        <button type="button" style={{ position: 'fixed', top: 160, left: 200 }}>
+          Interactive tooltip
+        </button>
       </Tooltip>
     </div>
   );

@@ -2,7 +2,7 @@ import { DEFAULT_THEME, px, rem } from '../../../../core';
 import { AppShellProps } from '../../AppShell';
 import { assignNavbarVariables } from './assign-navbar-variables';
 
-function getTestObject(navbar: AppShellProps['navbar']) {
+function getTestObject(navbar: AppShellProps['navbar'], mode: 'fixed' | 'static' = 'fixed') {
   const baseStyles = {};
   const minMediaStyles = {};
   const maxMediaStyles = {};
@@ -13,7 +13,7 @@ function getTestObject(navbar: AppShellProps['navbar']) {
     maxMediaStyles,
     theme: DEFAULT_THEME,
     navbar,
-    mode: 'fixed',
+    mode,
   });
 
   return { baseStyles, minMediaStyles, maxMediaStyles };
@@ -77,6 +77,17 @@ describe('@mantine/core/AppShell/assign-navbar-variables', () => {
         lg: {
           '--app-shell-navbar-width': rem(300),
           '--app-shell-navbar-offset': rem(300),
+        },
+      });
+    });
+
+    it('supports breakpoint=0 in static mode', () => {
+      expect(getTestObject({ width: 100, breakpoint: 0 }, 'static').minMediaStyles).toStrictEqual({
+        0: {
+          '--app-shell-navbar-position': 'sticky',
+          '--app-shell-navbar-grid-row': '2',
+          '--app-shell-navbar-grid-column': '1',
+          '--app-shell-main-column-start': '2',
         },
       });
     });

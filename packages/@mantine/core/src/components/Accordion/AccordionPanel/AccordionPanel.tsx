@@ -23,6 +23,9 @@ export interface AccordionPanelProps
 
   /** If set, overrides the Accordion-level `keepMounted` value. When undefined (default), uses Accordion's `keepMounted` setting. */
   keepMounted?: boolean;
+
+  /** If set, overrides the Accordion-level `keepMountedMode` value. When undefined (default), uses Accordion's `keepMountedMode` setting. */
+  keepMountedMode?: 'activity' | 'display-none';
 }
 
 export type AccordionPanelFactory = Factory<{
@@ -33,11 +36,17 @@ export type AccordionPanelFactory = Factory<{
 }>;
 
 export const AccordionPanel = factory<AccordionPanelFactory>((props) => {
-  const { classNames, className, style, styles, vars, children, keepMounted, ...others } = useProps(
-    'AccordionPanel',
-    null,
-    props
-  );
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    vars,
+    children,
+    keepMounted,
+    keepMountedMode,
+    ...others
+  } = useProps('AccordionPanel', null, props);
 
   const { value } = useAccordionItemContext();
   const ctx = useAccordionContext();
@@ -51,6 +60,7 @@ export const AccordionPanel = factory<AccordionPanelFactory>((props) => {
       id={ctx.getRegionId(value)}
       aria-labelledby={ctx.getControlId(value)}
       keepMounted={keepMounted ?? ctx.keepMounted}
+      keepMountedMode={keepMountedMode ?? ctx.keepMountedMode}
       {...others}
     >
       <div {...ctx.getStyles('content', { classNames, styles })}>{children}</div>

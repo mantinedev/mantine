@@ -15,6 +15,8 @@ export const ResourcesMonthViewStylesApi: StylesApiData<ResourcesMonthViewFactor
     resourcesMonthViewResourceLabel: 'Resource label element',
     resourcesMonthViewRowSlots: 'Container for all day cells in a row',
     resourcesMonthViewCell: 'Individual day cell element',
+    resourcesMonthViewEventWrapper: 'Event wrapper element',
+    resourcesMonthViewResizeHandle: 'Event resize handle element',
     resourcesMonthViewInner: 'Inner container wrapping day labels and rows',
     resourcesMonthViewGroupColumn: 'Group label column element',
     resourcesMonthViewGroupColumnEmpty: 'Empty group column cell for ungrouped resources',

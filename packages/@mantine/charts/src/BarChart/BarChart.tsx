@@ -10,6 +10,8 @@ import {
   Legend,
   BarChart as ReChartsBarChart,
   Rectangle,
+  ReferenceArea,
+  ReferenceDot,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -31,6 +33,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
@@ -126,6 +129,7 @@ const defaultProps = {
   strokeDasharray: '5 5',
   gridAxis: 'x',
   type: 'default',
+  accessibilityLayer: true,
 } satisfies Partial<BarChartProps>;
 
 const varsResolver = createVarsResolver<BarChartFactory>(
@@ -198,6 +202,8 @@ export const BarChart = factory<BarChartFactory>((_props) => {
     gridProps,
     tooltipProps,
     referenceLines,
+    referenceAreas,
+    referenceDots,
     fillOpacity,
     barChartProps,
     type,
@@ -220,6 +226,9 @@ export const BarChart = factory<BarChartFactory>((_props) => {
     gridColor,
     textColor,
     attributes,
+    accessibilityLayer,
+    withBrush,
+    brushProps,
     ...others
   } = props;
 
@@ -331,6 +340,50 @@ export const BarChart = factory<BarChartFactory>((_props) => {
     );
   });
 
+  const referenceAreasItems = referenceAreas?.map((area, index) => {
+    const color = getThemeColor(area.color, theme);
+    return (
+      <ReferenceArea
+        key={index}
+        fill={area.color ? color : 'var(--chart-grid-color)'}
+        fillOpacity={0.2}
+        stroke={area.color ? color : 'var(--chart-grid-color)'}
+        strokeOpacity={0.6}
+        yAxisId={area.yAxisId || undefined}
+        {...area}
+        label={{
+          fill: area.color ? color : 'currentColor',
+          fontSize: 12,
+          position: area.labelPosition ?? 'insideTop',
+          ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+        }}
+        {...getStyles('referenceArea')}
+      />
+    );
+  });
+
+  const referenceDotsItems = referenceDots?.map((dot, index) => {
+    const color = getThemeColor(dot.color, theme);
+    return (
+      <ReferenceDot
+        key={index}
+        r={5}
+        fill={dot.color ? color : 'var(--chart-grid-color)'}
+        stroke="var(--mantine-color-body)"
+        strokeWidth={2}
+        yAxisId={dot.yAxisId || undefined}
+        {...dot}
+        label={{
+          fill: dot.color ? color : 'currentColor',
+          fontSize: 12,
+          position: dot.labelPosition ?? 'top',
+          ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+        }}
+        {...getStyles('referenceDot')}
+      />
+    );
+  });
+
   const sharedYAxisProps = {
     axisLine: false,
     ...(orientation === 'vertical'
@@ -362,8 +415,10 @@ export const BarChart = factory<BarChartFactory>((_props) => {
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...barChartProps}
         >
+          {referenceAreasItems}
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -486,6 +541,15 @@ export const BarChart = factory<BarChartFactory>((_props) => {
 
           {bars}
           {referenceLinesItems}
+          {referenceDotsItems}
+          {withBrush && (
+            <ChartBrush
+              dataKey={dataKey}
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+              {...brushProps}
+            />
+          )}
           {children}
         </ReChartsBarChart>
       </ResponsiveContainer>

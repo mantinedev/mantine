@@ -1,8 +1,11 @@
 import type {
+  BrushProps,
   CartesianGridProps,
   DotProps,
   LabelProps,
   LegendProps,
+  ReferenceAreaProps,
+  ReferenceDotProps,
   ReferenceLineProps,
   TooltipProps,
   XAxisProps,
@@ -11,6 +14,18 @@ import type {
 import type { MantineColor } from '@mantine/core';
 
 export interface ChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' | 'label'> {
+  color?: MantineColor;
+  label?: string | Omit<LabelProps, 'ref'>;
+  labelPosition?: LabelProps['position'];
+}
+
+export interface ChartReferenceAreaProps extends Omit<ReferenceAreaProps, 'ref' | 'label'> {
+  color?: MantineColor;
+  label?: string | Omit<LabelProps, 'ref'>;
+  labelPosition?: LabelProps['position'];
+}
+
+export interface ChartReferenceDotProps extends Omit<ReferenceDotProps, 'ref' | 'label'> {
   color?: MantineColor;
   label?: string | Omit<LabelProps, 'ref'>;
   labelPosition?: LabelProps['position'];
@@ -29,7 +44,10 @@ export type BaseChartStylesNames =
   | 'axis'
   | 'grid'
   | 'referenceLine'
-  | 'axisLabel';
+  | 'referenceArea'
+  | 'referenceDot'
+  | 'axisLabel'
+  | 'brush';
 
 export type ChartData = Record<string, any>[];
 
@@ -42,6 +60,12 @@ export interface GridChartBaseProps {
 
   /** Reference lines that should be displayed on the chart */
   referenceLines?: ChartReferenceLineProps[];
+
+  /** Reference areas that should be displayed on the chart */
+  referenceAreas?: ChartReferenceAreaProps[];
+
+  /** Reference dots that should be displayed on the chart */
+  referenceDots?: ChartReferenceDotProps[];
 
   /** Determines whether x-axis should be displayed, `true` by default */
   withXAxis?: boolean;
@@ -111,6 +135,15 @@ export interface GridChartBaseProps {
 
   /** Determines whether additional y-axis should be displayed on the right side of the chart, `false` by default */
   withRightYAxis?: boolean;
+
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  accessibilityLayer?: boolean;
+
+  /** Determines whether a brush (range selector) should be displayed under the chart, `false` by default */
+  withBrush?: boolean;
+
+  /** Props passed down to the `Brush` component */
+  brushProps?: Omit<BrushProps, 'ref'>;
 }
 
 export type MantineChartDotProps = Omit<DotProps, 'ref'> & { strokeWidth?: number };

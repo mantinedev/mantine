@@ -5,6 +5,8 @@ import {
   LabelList,
   Legend,
   ScatterChart as ReChartsScatterChart,
+  ReferenceArea,
+  ReferenceDot,
   ReferenceLine,
   ResponsiveContainer,
   Scatter,
@@ -37,11 +39,12 @@ export interface ScatterChartSeries {
   color: MantineColor;
   name: string;
   data: Record<string, number>[];
+  yAxisId?: string;
 }
 
 export type ScatterChartStylesNames =
   | 'scatter'
-  | BaseChartStylesNames
+  | Exclude<BaseChartStylesNames, 'brush'>
   | ChartLegendStylesNames
   | ChartTooltipStylesNames;
 
@@ -51,7 +54,10 @@ export type ScatterChartCssVariables = {
 
 export interface ScatterChartProps
   extends
-    Omit<GridChartBaseProps, 'dataKey' | 'data' | 'unit' | 'valueFormatter'>,
+    Omit<
+      GridChartBaseProps,
+      'dataKey' | 'data' | 'unit' | 'valueFormatter' | 'withBrush' | 'brushProps'
+    >,
     BoxProps,
     StylesApiProps<ScatterChartFactory>,
     ElementProps<'div'> {
@@ -101,6 +107,7 @@ const defaultProps = {
   tickLine: 'y',
   strokeDasharray: '5 5',
   gridAxis: 'x',
+  accessibilityLayer: true,
 } satisfies Partial<ScatterChartProps>;
 
 const varsResolver = createVarsResolver<ScatterChartFactory>((theme, { textColor, gridColor }) => ({
@@ -120,13 +127,17 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
     unstyled,
     vars,
     referenceLines,
+    referenceAreas,
+    referenceDots,
     dir,
     withLegend,
     withTooltip,
     withXAxis,
     withYAxis,
+    withRightYAxis,
     xAxisProps,
     yAxisProps,
+    rightYAxisProps,
     orientation,
     scatterChartProps,
     legendProps,
@@ -144,12 +155,14 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
     gridColor,
     xAxisLabel,
     yAxisLabel,
+    rightYAxisLabel,
     unit,
     labels,
     valueFormatter,
     scatterProps,
     pointLabels,
     attributes,
+    accessibilityLayer,
     ...others
   } = props;
 
@@ -213,6 +226,48 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
     );
   });
 
+  const referenceAreasItems = referenceAreas?.map((area, index) => {
+    const color = getThemeColor(area.color, theme);
+    return (
+      <ReferenceArea
+        key={index}
+        fill={area.color ? color : 'var(--chart-grid-color)'}
+        fillOpacity={0.2}
+        stroke={area.color ? color : 'var(--chart-grid-color)'}
+        strokeOpacity={0.6}
+        {...area}
+        label={{
+          fill: area.color ? color : 'currentColor',
+          fontSize: 12,
+          position: area.labelPosition ?? 'insideTop',
+          ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+        }}
+        {...getStyles('referenceArea')}
+      />
+    );
+  });
+
+  const referenceDotsItems = referenceDots?.map((dot, index) => {
+    const color = getThemeColor(dot.color, theme);
+    return (
+      <ReferenceDot
+        key={index}
+        r={5}
+        fill={dot.color ? color : 'var(--chart-grid-color)'}
+        stroke="var(--mantine-color-body)"
+        strokeWidth={2}
+        {...dot}
+        label={{
+          fill: dot.color ? color : 'currentColor',
+          fontSize: 12,
+          position: dot.labelPosition ?? 'top',
+          ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+        }}
+        {...getStyles('referenceDot')}
+      />
+    );
+  });
+
   const scatters = mappedData.map((item, index) => {
     const dimmed = shouldHighlight && highlightedArea !== item.name;
     return (
@@ -222,6 +277,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
         key={index}
         isAnimationActive={false}
         fillOpacity={dimmed ? 0.1 : 1}
+        yAxisId={item.yAxisId || undefined}
         {...scatterProps}
       >
         {pointLabels && <LabelList dataKey={dataKey[pointLabels]} fontSize={8} dy={10} />}
@@ -230,6 +286,17 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
     );
   });
 
+  const sharedYAxisProps = {
+    type: 'number' as const,
+    axisLine: false,
+    dataKey: dataKey.y,
+    tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
+    allowDecimals: true,
+    unit: unit?.y,
+    tickFormatter: yFormatter,
+    ...getStyles('axis'),
+  };
+
   return (
     <Box {...getStyles('root')} onMouseLeave={handleMouseLeave} dir={dir || 'ltr'} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
@@ -237,10 +304,12 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
           margin={{
             bottom: xAxisLabel ? 30 : undefined,
             left: yAxisLabel ? 10 : undefined,
-            right: yAxisLabel ? 5 : undefined,
+            right: yAxisLabel || rightYAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...scatterChartProps}
         >
+          {referenceAreasItems}
           <CartesianGrid
             strokeDasharray={strokeDasharray as string}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
@@ -270,16 +339,9 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
             {xAxisProps?.children}
           </XAxis>
           <YAxis
-            type="number"
             hide={!withYAxis}
-            axisLine={false}
-            dataKey={dataKey.y}
-            tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
-            allowDecimals
-            unit={unit?.y}
-            tickFormatter={yFormatter}
-            {...getStyles('axis')}
+            {...sharedYAxisProps}
             {...yAxisProps}
           >
             {yAxisLabel && (
@@ -295,6 +357,29 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
               </Label>
             )}
             {yAxisProps?.children}
+          </YAxis>
+
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            hide={!withRightYAxis}
+            tick={{ transform: 'translate(10, 0)', fontSize: 12, fill: 'currentColor' }}
+            {...sharedYAxisProps}
+            {...rightYAxisProps}
+          >
+            {rightYAxisLabel && (
+              <Label
+                position="insideRight"
+                angle={90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {rightYAxisLabel}
+              </Label>
+            )}
+            {rightYAxisProps?.children}
           </YAxis>
 
           {withTooltip && (
@@ -363,6 +448,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
 
           {referenceLinesItems}
           {scatters}
+          {referenceDotsItems}
         </ReChartsScatterChart>
       </ResponsiveContainer>
     </Box>

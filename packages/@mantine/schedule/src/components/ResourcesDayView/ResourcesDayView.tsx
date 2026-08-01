@@ -26,6 +26,7 @@ import { useHorizontalEventResize } from '../../hooks/use-horizontal-event-resiz
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
+  AnyDateValue,
   DateLabelFormat,
   DateStringValue,
   DateTimeStringValue,
@@ -118,6 +119,9 @@ export interface ResourcesDayViewProps
   /** Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
   intervalMinutes?: number;
 
+  /** Minimum on-screen size of an event along the time axis, in px. Prevents very short events from collapsing. Larger values make brief events easier to see but extend them past their real start time. @default 1 */
+  minEventSize?: number;
+
   /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm */
   slotLabelFormat?: DateLabelFormat;
 
@@ -138,6 +142,9 @@ export interface ResourcesDayViewProps
 
   /** If set, the time indicator displays the current time in the bubble @default true */
   withCurrentTimeBubble?: boolean;
+
+  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() */
+  getCurrentTime?: () => AnyDateValue;
 
   /** If set, the header is displayed @default true */
   withHeader?: boolean;
@@ -285,6 +292,7 @@ const defaultProps = {
   endTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
   intervalMinutes: 60,
+  minEventSize: 1,
   withHeader: true,
   headerFormat: 'MMMM D, YYYY',
   highlightBusinessHours: false,
@@ -323,6 +331,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     onDateChange,
     resources,
     intervalMinutes,
+    minEventSize,
     slotLabelFormat,
     radius,
     startScrollTime,
@@ -330,6 +339,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     locale,
     withCurrentTimeIndicator: _withCurrentTimeIndicator,
     withCurrentTimeBubble = true,
+    getCurrentTime,
     __staticSelector,
     withHeader,
     onViewChange,
@@ -518,21 +528,18 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   };
 
   const dateStr = dayjs(date).format('YYYY-MM-DD');
-  const isToday = dayjs(date).isSame(dayjs(), 'day');
+  const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
+  const now = resolveNow();
+  const isToday = dayjs(date).isSame(now, 'day');
   const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
 
-  const [timeIndicatorOffset, setTimeIndicatorOffset] = useState(
-    getCurrentTimePosition({ startTime, endTime, intervalMinutes })
-  );
-  useInterval(
-    () => setTimeIndicatorOffset(getCurrentTimePosition({ startTime, endTime, intervalMinutes })),
-    60000,
-    { autoInvoke: true }
-  );
+  const [, setTimeIndicatorTick] = useState(0);
+  useInterval(() => setTimeIndicatorTick((tick) => tick + 1), 60000, { autoInvoke: true });
+  const timeIndicatorOffset = getCurrentTimePosition({ startTime, endTime, intervalMinutes, now });
   const showTimeIndicator =
-    withCurrentTimeIndicator && isInTimeRange({ date: dayjs().toDate(), startTime, endTime });
+    withCurrentTimeIndicator && isInTimeRange({ date: now.toDate(), startTime, endTime });
   const formattedCurrentTime = withCurrentTimeBubble
-    ? formatDate({ locale: ctx.getLocale(locale), date: dayjs(), format: slotLabelFormat })
+    ? formatDate({ locale: ctx.getLocale(locale), date: now, format: slotLabelFormat })
     : '';
 
   const expandedEvents = useMemo(
@@ -720,7 +727,11 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
           data-resizing={isThisEventResizing || undefined}
           style={{
-            ...getTimeAxisEventStyle({ start: eventLeft, span: eventWidth }),
+            ...getTimeAxisEventStyle({
+              start: eventLeft,
+              span: eventWidth,
+              minSize: minEventSize,
+            }),
             top: adjustPosition
               ? `calc((100% - 22px) * ${event.position.column} / ${maxEventsPerTimeSlot})`
               : `${event.position.offset}%`,
@@ -748,7 +759,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
                   }
                 : undefined
             }
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%', padding: 0 }}
           />
           {isResizable && mode !== 'static' && (
             <>
@@ -938,7 +949,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           navigationHandlers={{
             previous: () => toDateString(dayjs(date).subtract(1, 'day')),
             next: () => toDateString(dayjs(date).add(1, 'day')),
-            today: () => toDateString(dayjs()),
+            today: () => toDateString(resolveNow()),
           }}
           control={{
             miw: 140,

@@ -121,6 +121,9 @@ export interface BubbleChartProps
 
   /** Function to format z axis values */
   valueFormatter?: (value: number) => string;
+
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  accessibilityLayer?: boolean;
 }
 
 export type BubbleChartFactory = Factory<{
@@ -133,6 +136,7 @@ export type BubbleChartFactory = Factory<{
 const defaultProps = {
   color: 'blue.6',
   withTooltip: true,
+  accessibilityLayer: true,
 } satisfies Partial<BubbleChartProps>;
 
 const varsResolver = createVarsResolver<BubbleChartFactory>((theme, { textColor, gridColor }) => ({
@@ -164,6 +168,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props) => {
     range,
     valueFormatter,
     attributes,
+    accessibilityLayer,
     ...others
   } = props;
 
@@ -188,7 +193,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props) => {
   return (
     <Box {...getStyles('root')} {...others}>
       <ResponsiveContainer>
-        <ScatterChart>
+        <ScatterChart accessibilityLayer={accessibilityLayer}>
           <XAxis
             type="category"
             dataKey={dataKey.x}

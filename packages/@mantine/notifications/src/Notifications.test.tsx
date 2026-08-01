@@ -501,6 +501,49 @@ describe('@mantine/core/Notifications', () => {
     expect(Number(style0.zIndex)).toBeLessThan(Number(style1.zIndex));
   });
 
+  it('keeps stacked styling while a stacked notification is exiting', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={100}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'exit-a', message: 'Exiting notification' }, store);
+      notifications.show({ id: 'exit-b', message: 'Remaining notification' }, store);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(200);
+    });
+
+    act(() => {
+      notifications.hide('exit-a', store);
+    });
+
+    // The notification is still mounted (transition in progress), now in the exiting state
+    const exiting = screen
+      .getAllByRole('alert')
+      .find((el) => el.textContent?.includes('Exiting notification'))!;
+
+    expect(exiting).toBeDefined();
+    // Stays inside the shared grid cell so the remaining notifications do not jump
+    expect(exiting.style.gridArea).toBe('1 / 1');
+    // Keeps a transition so the exit animation actually plays
+    expect(exiting.style.transition).not.toBe('');
+    // Does not instantly collapse its height (stacked notifications overlap, no space to collapse)
+    expect(exiting.style.maxHeight).not.toBe('0px');
+    // Exit animation starts immediately, without the entrance stagger delay
+    expect(exiting.style.transitionDelay).toBe('0ms');
+  });
+
   it('calls onOpen when notification is mounted', async () => {
     const onOpen = jest.fn();
     const consoleError = jest.spyOn(console, 'error');
@@ -731,5 +774,44 @@ describe('@mantine/core/Notifications', () => {
       expect(state.notifications.map((n) => n.id)).toEqual(['a']);
       expect(state.queue).toEqual([]);
     });
+  });
+
+  it('does not close notification on hover when autoClose is enabled', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications store={store} withinPortal={false} autoClose={3000} transitionDuration={10} />
+    );
+
+    act(() => {
+      notifications.show(
+        { id: 'hover-prevent-close', message: 'Hover me to pause autoClose' },
+        store
+      );
+    });
+
+    const notification = screen.getByRole('alert');
+
+    // Simulate hover
+    fireEvent.mouseEnter(notification);
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    // Notification should still be present because it is hovered
+    expect(store.getState().notifications).toHaveLength(1);
+    expect(screen.getByText('Hover me to pause autoClose')).toBeInTheDocument();
+
+    // Simulate mouse leave
+    fireEvent.mouseLeave(notification);
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    // Notification should now be closed
+    expect(store.getState().notifications).toHaveLength(0);
   });
 });

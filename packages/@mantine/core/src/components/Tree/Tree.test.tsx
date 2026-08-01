@@ -210,6 +210,36 @@ describe('@mantine/core/Tree', () => {
         })
       );
     });
+
+    it('passes hasChildren based on non-empty children/hasChildren flag', () => {
+      const renderNode = jest.fn(({ node }) => <div>{node.label}</div>);
+
+      const getHasChildren = (value: string) =>
+        renderNode.mock.calls.find(([payload]) => payload.node.value === value)?.[0].hasChildren;
+
+      render(
+        <Tree
+          data={[
+            {
+              label: 'Populated',
+              value: 'populated',
+              children: [{ label: 'Child', value: 'child' }],
+            },
+            { label: 'Empty', value: 'empty', children: [] },
+            { label: 'Empty explicit', value: 'empty-explicit', children: [], hasChildren: false },
+            { label: 'Async', value: 'async', hasChildren: true },
+            { label: 'Leaf', value: 'leaf' },
+          ]}
+          renderNode={renderNode}
+        />
+      );
+
+      expect(getHasChildren('populated')).toBe(true);
+      expect(getHasChildren('empty')).toBe(false);
+      expect(getHasChildren('empty-explicit')).toBe(false);
+      expect(getHasChildren('async')).toBe(true);
+      expect(getHasChildren('leaf')).toBe(false);
+    });
   });
 
   describe('Drag and drop', () => {

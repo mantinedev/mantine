@@ -1,0 +1,208 @@
+name: Publish packages
+
+on:
+  push:
+    branches: ['**'] # any branch: stable from master, alphas from 10.0 or ad-hoc branches
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Optional: publish only this package (e.g. @mantine/core)'
+        required: false
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: publish-packages
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      startsWith(github.event.head_commit.message, '[release] Version')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.detect.outputs.version }}
+      release_type: ${{ steps.detect.outputs.release_type }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Detect release
+        id: detect
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          RELEASE_TYPE=$(npx tsx scripts/release/print-release-type.ts)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "release_type=$RELEASE_TYPE" >> "$GITHUB_OUTPUT"
+
+  test:
+    needs: prepare
+    if: ${{ !inputs.package }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Generate files for docs
+        run: npm run setup
+      - name: Build public packages
+        run: npm run build all
+      - name: Run tests
+        run: npm test
+
+  publish:
+    needs: [prepare, test]
+    if: >-
+      always() && needs.prepare.result == 'success' &&
+      (needs.test.result == 'success' || needs.test.result == 'skipped')
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+
+      - name: Upgrade npm for trusted publishing (needs >= 11.5.1)
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build all packages
+        run: npm run build all
+
+      - name: Publish
+        env:
+          PACKAGE: ${{ inputs.package }}
+        run: |
+          if [ -n "$PACKAGE" ]; then
+            npm run publish:ci -- --package "$PACKAGE"
+          else
+            npm run publish:ci
+          fi
+
+  docs:
+    needs: [prepare, publish]
+    if: >-
+      needs.publish.result == 'success' &&
+      (needs.prepare.outputs.release_type == 'patch' ||
+      needs.prepare.outputs.release_type == 'minor_major') && !inputs.package
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Build public packages
+        run: npm run build all
+      - name: Build docs site
+        run: |
+          npm run docs:sponsors
+          npm run docs:build
+      - name: Set custom domain
+        run: echo "mantine.dev" > apps/mantine.dev/out/CNAME
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: apps/mantine.dev/out
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+
+  announce:
+    needs: [prepare, publish]
+    if: >-
+      needs.publish.result == 'success' &&
+      (needs.prepare.outputs.release_type == 'patch' ||
+      needs.prepare.outputs.release_type == 'minor_major') && !inputs.package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Generate patch changelog
+        if: needs.prepare.outputs.release_type == 'patch'
+        run: npx tsx scripts/release/generate-patch-notes.ts
+      - name: Generate minor/major changelog
+        if: needs.prepare.outputs.release_type == 'minor_major'
+        run: |
+          DASHED=$(node -e "console.log(require('./package.json').version.replace(/\\./g,'-'))")
+          DOTTED=$(node -p "require('./package.json').version")
+          npm run generate-changelog -- "$DASHED"
+          cp ".changelog/$DOTTED.md" .changelog/release-notes.md
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          gh release create "$VERSION" --title "$VERSION" --target "$GITHUB_SHA" --notes-file .changelog/release-notes.md
+      - name: Post to Discord
+        if: needs.prepare.outputs.release_type == 'patch'
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          CONTENT=$(cat .changelog/discord.md)
+          jq -n --arg content "$CONTENT" '{content: $content}' \
+            | curl -sf -X POST -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK_URL"

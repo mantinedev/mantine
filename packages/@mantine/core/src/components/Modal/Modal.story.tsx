@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { Card } from '../Card';
@@ -335,5 +336,85 @@ export function WithScrollArea() {
         Open modal
       </Button>
     </>
+  );
+}
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setSeconds((s) => s + 1), 1000);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div style={{ padding: 10, background: 'rgba(0,0,0,0.05)', borderRadius: 4 }}>
+      Timer running: {seconds}s
+    </div>
+  );
+}
+
+export function KeepMountedMode() {
+  const [displayNoneOpened, setDisplayNoneOpened] = useState(false);
+  const [activityOpened, setActivityOpened] = useState(false);
+  const refDisplayNone = useRef<HTMLInputElement>(null);
+  const refActivity = useRef<HTMLInputElement>(null);
+  const [refDisplayNoneVal, setRefDisplayNoneVal] = useState<string>('null');
+  const [refActivityVal, setRefActivityVal] = useState<string>('null');
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRefDisplayNoneVal(refDisplayNone.current ? 'active input ref' : 'null');
+      setRefActivityVal(refActivity.current ? 'active input ref' : 'null');
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{ padding: 40, maxWidth: 600 }}>
+      <h3>keepMountedMode="display-none"</h3>
+      <p style={{ fontSize: 13, color: 'gray' }}>
+        Timer keeps running and refs remain active when the modal is closed.
+      </p>
+      <Button onClick={() => setDisplayNoneOpened(true)}>Open display-none Modal</Button>
+      <div style={{ marginTop: 10, fontSize: 14 }}>
+        <strong>Current ref state:</strong> {refDisplayNoneVal}
+      </div>
+
+      <Modal
+        opened={displayNoneOpened}
+        onClose={() => setDisplayNoneOpened(false)}
+        title="keepMountedMode='display-none'"
+        keepMounted
+        keepMountedMode="display-none"
+      >
+        <Stack>
+          <Timer />
+          <input ref={refDisplayNone} placeholder="Type here..." />
+        </Stack>
+      </Modal>
+
+      <hr style={{ margin: '40px 0', border: 'none', borderTop: '1px solid #ccc' }} />
+
+      <h3>keepMountedMode="activity" (default)</h3>
+      <p style={{ fontSize: 13, color: 'gray' }}>
+        Timer pauses/resets and refs are set to null when the modal is closed.
+      </p>
+      <Button onClick={() => setActivityOpened(true)}>Open activity Modal</Button>
+      <div style={{ marginTop: 10, fontSize: 14 }}>
+        <strong>Current ref state:</strong> {refActivityVal}
+      </div>
+
+      <Modal
+        opened={activityOpened}
+        onClose={() => setActivityOpened(false)}
+        title="keepMountedMode='activity'"
+        keepMounted
+        keepMountedMode="activity"
+      >
+        <Stack>
+          <Timer />
+          <input ref={refActivity} placeholder="Type here..." />
+        </Stack>
+      </Modal>
+    </div>
   );
 }

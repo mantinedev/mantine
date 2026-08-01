@@ -139,6 +139,7 @@ export const ColorInput = factory<ColorInputFactory>((_props) => {
     leftSection,
     rightSection,
     swatchesPerRow,
+    fullWidth,
     ...others
   } = useInputProps('ColorInput', defaultProps, _props);
 
@@ -237,6 +238,7 @@ export const ColorInput = factory<ColorInputFactory>((_props) => {
         position="bottom-start"
         offset={5}
         opened={dropdownOpened}
+        width={fullWidth ? 'target' : undefined}
         {...popoverProps}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
@@ -307,6 +309,7 @@ export const ColorInput = factory<ColorInputFactory>((_props) => {
             classNames={resolvedClassNames}
             onColorSwatchClick={() => closeOnColorSwatchClick && setDropdownOpened(false)}
             attributes={wrapperProps.attributes}
+            fullWidth={fullWidth}
           />
         </Popover.Dropdown>
       </Popover>

@@ -22,20 +22,20 @@
     "@mantinex/mantine-logo": "workspace:*",
     "@mantinex/mantine-meta": "workspace:*",
     "@mdx-js/react": "^3.1.1",
-    "@next/mdx": "16.2.9",
+    "@next/mdx": "16.2.10",
     "@phosphor-icons/react": "^2.1.10",
     "dayjs": "^1.11.21",
     "fuse.js": "^7.4.2",
-    "next": "16.2.9",
+    "next": "16.2.10",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "rehype-slug": "^6.0.0",
-    "shiki": "^4.2.0"
+    "shiki": "^4.3.1"
   },
   "devDependencies": {
     "@mdx-js/loader": "^3.1.1",
     "@types/mdx": "2.0.14",
-    "@types/node": "^25.9.3",
+    "@types/node": "^26.1.0",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "typescript": "6.0.3"

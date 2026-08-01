@@ -1,0 +1,488 @@
+import {
+  Bar,
+  BarShapeProps,
+  CartesianGrid,
+  Label,
+  ComposedChart as ReChartsComposedChart,
+  ReferenceArea,
+  ReferenceDot,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import {
+  Box,
+  BoxProps,
+  createVarsResolver,
+  ElementProps,
+  factory,
+  Factory,
+  getThemeColor,
+  MantineColor,
+  StylesApiProps,
+  useMantineTheme,
+  useProps,
+  useResolvedStylesApi,
+  useStyles,
+} from '@mantine/core';
+import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
+import type { BaseChartStylesNames, GridChartBaseProps } from '../types';
+import classes from '../grid-chart.module.css';
+
+export interface CandlestickChartSeries {
+  /** Key of the data object for the open value */
+  open: string;
+
+  /** Key of the data object for the high value */
+  high: string;
+
+  /** Key of the data object for the low value */
+  low: string;
+
+  /** Key of the data object for the close value */
+  close: string;
+}
+
+export type CandlestickChartStylesNames = 'candle' | BaseChartStylesNames | ChartTooltipStylesNames;
+
+export type CandlestickChartCssVariables = {
+  root: '--chart-text-color' | '--chart-grid-color';
+};
+
+export interface CandlestickChartProps
+  extends
+    BoxProps,
+    Pick<
+      GridChartBaseProps,
+      | 'dataKey'
+      | 'withXAxis'
+      | 'withYAxis'
+      | 'xAxisProps'
+      | 'yAxisProps'
+      | 'gridProps'
+      | 'tickLine'
+      | 'strokeDasharray'
+      | 'gridAxis'
+      | 'unit'
+      | 'tooltipAnimationDuration'
+      | 'tooltipProps'
+      | 'withTooltip'
+      | 'textColor'
+      | 'gridColor'
+      | 'valueFormatter'
+      | 'xAxisLabel'
+      | 'yAxisLabel'
+      | 'referenceLines'
+      | 'referenceAreas'
+      | 'referenceDots'
+      | 'accessibilityLayer'
+    >,
+    StylesApiProps<CandlestickChartFactory>,
+    ElementProps<'div'> {
+  /** Data used to display chart */
+  data: Record<string, any>[];
+
+  /** Keys of the `data` object used to read open, high, low and close values @default `{ open: 'open', high: 'high', low: 'low', close: 'close' }` */
+  series?: CandlestickChartSeries;
+
+  /** Color of candles with `close >= open`, key of `theme.colors` or any valid CSS color @default 'teal.6' */
+  upColor?: MantineColor;
+
+  /** Color of candles with `close < open`, key of `theme.colors` or any valid CSS color @default 'red.6' */
+  downColor?: MantineColor;
+
+  /** Maximum candle width in px */
+  maxCandleWidth?: number;
+
+  /** Stroke width of the candle wick and body outline @default 1 */
+  candleStrokeWidth?: number;
+
+  /** Props passed down to recharts `ComposedChart` component */
+  composedChartProps?: React.ComponentProps<typeof ReChartsComposedChart>;
+
+  /** Additional components that are rendered inside recharts `ComposedChart` component */
+  children?: React.ReactNode;
+}
+
+export type CandlestickChartFactory = Factory<{
+  props: CandlestickChartProps;
+  ref: HTMLDivElement;
+  stylesNames: CandlestickChartStylesNames;
+  vars: CandlestickChartCssVariables;
+}>;
+
+const defaultProps = {
+  withXAxis: true,
+  withYAxis: true,
+  withTooltip: true,
+  tooltipAnimationDuration: 0,
+  tickLine: 'y',
+  strokeDasharray: '5 5',
+  gridAxis: 'x',
+  upColor: 'teal.6',
+  downColor: 'red.6',
+  candleStrokeWidth: 1,
+  series: { open: 'open', high: 'high', low: 'low', close: 'close' },
+  accessibilityLayer: true,
+} satisfies Partial<CandlestickChartProps>;
+
+const varsResolver = createVarsResolver<CandlestickChartFactory>(
+  (theme, { textColor, gridColor }) => ({
+    root: {
+      '--chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
+      '--chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
+    },
+  })
+);
+
+export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
+  const props = useProps('CandlestickChart', defaultProps, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    data,
+    series,
+    dataKey,
+    withTooltip,
+    withXAxis,
+    withYAxis,
+    gridAxis,
+    tickLine,
+    xAxisProps,
+    yAxisProps,
+    unit,
+    tooltipAnimationDuration,
+    strokeDasharray,
+    gridProps,
+    tooltipProps,
+    referenceLines,
+    referenceAreas,
+    referenceDots,
+    upColor,
+    downColor,
+    maxCandleWidth,
+    candleStrokeWidth,
+    dir,
+    valueFormatter,
+    children,
+    xAxisLabel,
+    yAxisLabel,
+    composedChartProps,
+    textColor,
+    gridColor,
+    mod,
+    attributes,
+    accessibilityLayer,
+    ...others
+  } = props;
+
+  const theme = useMantineTheme();
+  const seriesKeys = series!;
+  const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
+  const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
+
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<CandlestickChartFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
+  const getStyles = useStyles<CandlestickChartFactory>({
+    name: 'CandlestickChart',
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    attributes,
+    vars,
+    varsResolver,
+  });
+
+  const upColorResolved = getThemeColor(upColor, theme);
+  const downColorResolved = getThemeColor(downColor, theme);
+
+  const candleStyles = getStyles('candle');
+
+  const renderCandle = (shapeProps: BarShapeProps) => {
+    const { x, y, width, height, payload } = shapeProps as BarShapeProps & {
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+      payload: Record<string, any>;
+    };
+
+    const open = payload[seriesKeys.open];
+    const high = payload[seriesKeys.high];
+    const low = payload[seriesKeys.low];
+    const close = payload[seriesKeys.close];
+
+    if ([open, high, low, close].some((value) => typeof value !== 'number')) {
+      return <g />;
+    }
+
+    const color = close >= open ? upColorResolved : downColorResolved;
+    const range = high - low;
+    const ratio = range === 0 ? 0 : height / range;
+    const openY = y + (high - open) * ratio;
+    const closeY = y + (high - close) * ratio;
+    const bodyY = Math.min(openY, closeY);
+    const bodyHeight = Math.max(Math.abs(closeY - openY), 1);
+    const centerX = x + width / 2;
+
+    return (
+      <g {...candleStyles}>
+        <line
+          x1={centerX}
+          y1={y}
+          x2={centerX}
+          y2={y + height}
+          stroke={color}
+          strokeWidth={candleStrokeWidth}
+        />
+        <rect
+          x={x}
+          y={bodyY}
+          width={width}
+          height={bodyHeight}
+          fill={color}
+          stroke={color}
+          strokeWidth={candleStrokeWidth}
+        />
+      </g>
+    );
+  };
+
+  const numericLows = data
+    .map((item) => item[seriesKeys.low])
+    .filter((value): value is number => typeof value === 'number');
+  const numericHighs = data
+    .map((item) => item[seriesKeys.high])
+    .filter((value): value is number => typeof value === 'number');
+
+  let domain: [number, number] | undefined;
+  if (numericLows.length > 0 && numericHighs.length > 0) {
+    const dataMin = Math.min(...numericLows);
+    const dataMax = Math.max(...numericHighs);
+    const padding = (dataMax - dataMin) * 0.05 || 1;
+    domain = [dataMin - padding, dataMax + padding];
+  }
+
+  const referenceLinesItems = referenceLines?.map((line, index) => {
+    const color = getThemeColor(line.color, theme);
+    return (
+      <ReferenceLine
+        key={index}
+        stroke={line.color ? color : 'var(--chart-grid-color)'}
+        strokeWidth={1}
+        {...line}
+        label={{
+          fill: line.color ? color : 'currentColor',
+          fontSize: 12,
+          position: line.labelPosition ?? 'insideBottomLeft',
+          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
+        }}
+        {...getStyles('referenceLine')}
+      />
+    );
+  });
+
+  const referenceAreasItems = referenceAreas?.map((area, index) => {
+    const color = getThemeColor(area.color, theme);
+    return (
+      <ReferenceArea
+        key={index}
+        fill={area.color ? color : 'var(--chart-grid-color)'}
+        fillOpacity={0.2}
+        stroke={area.color ? color : 'var(--chart-grid-color)'}
+        strokeOpacity={0.6}
+        {...area}
+        label={{
+          fill: area.color ? color : 'currentColor',
+          fontSize: 12,
+          position: area.labelPosition ?? 'insideTop',
+          ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+        }}
+        {...getStyles('referenceArea')}
+      />
+    );
+  });
+
+  const referenceDotsItems = referenceDots?.map((dot, index) => {
+    const color = getThemeColor(dot.color, theme);
+    return (
+      <ReferenceDot
+        key={index}
+        r={5}
+        fill={dot.color ? color : 'var(--chart-grid-color)'}
+        stroke="var(--mantine-color-body)"
+        strokeWidth={2}
+        {...dot}
+        label={{
+          fill: dot.color ? color : 'currentColor',
+          fontSize: 12,
+          position: dot.labelPosition ?? 'top',
+          ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+        }}
+        {...getStyles('referenceDot')}
+      />
+    );
+  });
+
+  return (
+    <Box {...getStyles('root')} dir={dir || 'ltr'} mod={mod} {...others}>
+      <ResponsiveContainer {...getStyles('container')}>
+        <ReChartsComposedChart
+          data={data}
+          maxBarSize={maxCandleWidth}
+          margin={{
+            bottom: xAxisLabel ? 30 : undefined,
+            left: yAxisLabel ? 10 : undefined,
+            right: yAxisLabel ? 5 : undefined,
+          }}
+          accessibilityLayer={accessibilityLayer}
+          {...composedChartProps}
+        >
+          {referenceAreasItems}
+
+          <XAxis
+            hide={!withXAxis}
+            dataKey={dataKey}
+            tick={{ transform: 'translate(0, 10)', fontSize: 12, fill: 'currentColor' }}
+            stroke=""
+            interval="preserveStartEnd"
+            tickLine={withXTickLine ? { stroke: 'currentColor' } : false}
+            minTickGap={5}
+            {...getStyles('axis')}
+            {...xAxisProps}
+          >
+            {xAxisLabel && (
+              <Label position="insideBottom" offset={-20} fontSize={12} {...getStyles('axisLabel')}>
+                {xAxisLabel}
+              </Label>
+            )}
+            {xAxisProps?.children}
+          </XAxis>
+
+          <YAxis
+            orientation="left"
+            type="number"
+            domain={domain}
+            axisLine={false}
+            tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
+            hide={!withYAxis}
+            tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
+            allowDecimals
+            unit={unit}
+            tickFormatter={valueFormatter}
+            {...getStyles('axis')}
+            {...yAxisProps}
+          >
+            {yAxisLabel && (
+              <Label
+                position="insideLeft"
+                angle={-90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {yAxisLabel}
+              </Label>
+            )}
+            {yAxisProps?.children}
+          </YAxis>
+
+          <CartesianGrid
+            strokeDasharray={strokeDasharray as string}
+            vertical={gridAxis === 'y' || gridAxis === 'xy'}
+            horizontal={gridAxis === 'x' || gridAxis === 'xy'}
+            {...getStyles('grid')}
+            {...gridProps}
+          />
+
+          {withTooltip && (
+            <Tooltip
+              animationDuration={tooltipAnimationDuration}
+              isAnimationActive={tooltipAnimationDuration !== 0}
+              position={{ y: 0 }}
+              cursor={{
+                stroke: 'var(--chart-grid-color)',
+                strokeWidth: 1,
+                strokeDasharray,
+                fill: 'var(--chart-cursor-fill)',
+              }}
+              content={({ label, payload, labelFormatter }) => {
+                const entry = payload?.[0]?.payload as Record<string, any> | undefined;
+
+                if (!entry) {
+                  return null;
+                }
+
+                const open = entry[seriesKeys.open];
+                const close = entry[seriesKeys.close];
+                const color = getThemeColor(close >= open ? upColor : downColor, theme);
+
+                const ohlcPayload = [
+                  { name: 'Open', color, payload: { Open: open } },
+                  { name: 'High', color, payload: { High: entry[seriesKeys.high] } },
+                  { name: 'Low', color, payload: { Low: entry[seriesKeys.low] } },
+                  { name: 'Close', color, payload: { Close: close } },
+                ];
+
+                return (
+                  <ChartTooltip
+                    label={labelFormatter && payload ? labelFormatter(label, payload) : label}
+                    payload={ohlcPayload}
+                    unit={unit}
+                    showColor={false}
+                    classNames={resolvedClassNames}
+                    styles={resolvedStyles}
+                    valueFormatter={valueFormatter}
+                    attributes={attributes}
+                  />
+                );
+              }}
+              {...tooltipProps}
+            />
+          )}
+
+          <Bar
+            dataKey={(entry: Record<string, any>) => [
+              entry[seriesKeys.low],
+              entry[seriesKeys.high],
+            ]}
+            isAnimationActive={false}
+            legendType="none"
+            shape={renderCandle}
+          />
+
+          {referenceLinesItems}
+          {referenceDotsItems}
+          {children}
+        </ReChartsComposedChart>
+      </ResponsiveContainer>
+    </Box>
+  );
+});
+
+CandlestickChart.displayName = '@mantine/charts/CandlestickChart';
+CandlestickChart.classes = classes;
+CandlestickChart.varsResolver = varsResolver;
+
+export namespace CandlestickChart {
+  export type Props = CandlestickChartProps;
+  export type CssVariables = CandlestickChartCssVariables;
+  export type Factory = CandlestickChartFactory;
+  export type Series = CandlestickChartSeries;
+  export type StylesNames = CandlestickChartStylesNames;
+}

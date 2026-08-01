@@ -96,4 +96,27 @@ describe('@mantine/core/Tree/flatten-tree-data', () => {
     // B is collapsed; its children should not appear at all.
     expect(values).not.toContain('b1');
   });
+
+  it('treats an empty children array as no children', () => {
+    const emptyChildrenData: TreeNodeData[] = [
+      { value: 'populated', label: 'Populated', children: [{ value: 'child', label: 'Child' }] },
+      { value: 'empty', label: 'Empty', children: [] },
+      { value: 'empty-explicit', label: 'Empty explicit', children: [], hasChildren: false },
+      { value: 'async', label: 'Async', hasChildren: true },
+      { value: 'leaf', label: 'Leaf' },
+    ];
+
+    const flat = flattenTreeData(emptyChildrenData, {});
+    const hasChildrenByValue = Object.fromEntries(
+      flat.map((row) => [row.node.value, row.hasChildren])
+    );
+
+    expect(hasChildrenByValue).toEqual({
+      populated: true,
+      empty: false,
+      'empty-explicit': false,
+      async: true,
+      leaf: false,
+    });
+  });
 });

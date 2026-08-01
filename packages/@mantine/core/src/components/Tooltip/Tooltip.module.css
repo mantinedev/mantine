@@ -25,6 +25,10 @@
   &:where([data-fixed]) {
     position: fixed;
   }
+
+  &:where([data-interactive]) {
+    pointer-events: auto;
+  }
 }
 
 .arrow {

@@ -150,6 +150,88 @@ export const spendingsData = [
   },
 ];
 
+export const biaxialData = [
+  {
+    color: 'indigo.6',
+    name: 'Revenue',
+    data: [
+      { month: 1, value: 1200 },
+      { month: 2, value: 1400 },
+      { month: 3, value: 1350 },
+      { month: 4, value: 1800 },
+      { month: 5, value: 2100 },
+      { month: 6, value: 1950 },
+      { month: 7, value: 2400 },
+      { month: 8, value: 2650 },
+      { month: 9, value: 2300 },
+      { month: 10, value: 2800 },
+      { month: 11, value: 3100 },
+      { month: 12, value: 3400 },
+    ],
+  },
+  {
+    color: 'teal.6',
+    name: 'Conversion rate',
+    yAxisId: 'right',
+    data: [
+      { month: 1, value: 3.4 },
+      { month: 2, value: 3.9 },
+      { month: 3, value: 3.1 },
+      { month: 4, value: 4.2 },
+      { month: 5, value: 4.8 },
+      { month: 6, value: 4.1 },
+      { month: 7, value: 5.3 },
+      { month: 8, value: 5.9 },
+      { month: 9, value: 5.1 },
+      { month: 10, value: 6.2 },
+      { month: 11, value: 6.8 },
+      { month: 12, value: 7.4 },
+    ],
+  },
+];
+
+export const biaxialDataCode = `
+export const data = [
+  {
+    color: 'indigo.6',
+    name: 'Revenue',
+    data: [
+      { month: 1, value: 1200 },
+      { month: 2, value: 1400 },
+      { month: 3, value: 1350 },
+      { month: 4, value: 1800 },
+      { month: 5, value: 2100 },
+      { month: 6, value: 1950 },
+      { month: 7, value: 2400 },
+      { month: 8, value: 2650 },
+      { month: 9, value: 2300 },
+      { month: 10, value: 2800 },
+      { month: 11, value: 3100 },
+      { month: 12, value: 3400 },
+    ],
+  },
+  {
+    color: 'teal.6',
+    name: 'Conversion rate',
+    yAxisId: 'right',
+    data: [
+      { month: 1, value: 3.4 },
+      { month: 2, value: 3.9 },
+      { month: 3, value: 3.1 },
+      { month: 4, value: 4.2 },
+      { month: 5, value: 4.8 },
+      { month: 6, value: 4.1 },
+      { month: 7, value: 5.3 },
+      { month: 8, value: 5.9 },
+      { month: 9, value: 5.1 },
+      { month: 10, value: 6.2 },
+      { month: 11, value: 6.8 },
+      { month: 12, value: 7.4 },
+    ],
+  },
+];
+`;
+
 export const doubleDataCode = `
 export const data = [
   {

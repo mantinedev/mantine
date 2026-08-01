@@ -1,6 +1,7 @@
 .yearView {
   --year-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --year-view-font-size: var(--mantine-font-size-sm);
+  --year-view-columns: 7;
   container-type: inline-size;
 
   @mixin where-light {
@@ -132,7 +133,8 @@
 }
 
 .yearViewWeekday {
-  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  flex: 0 0
+    calc(100% / var(--year-view-columns) - var(--week-numbers-offset) / var(--year-view-columns));
   height: 36px;
   font-size: var(--year-view-font-size);
   font-weight: var(--mantine-font-weight-medium);
@@ -156,7 +158,8 @@
 }
 
 .yearViewDay {
-  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  flex: 0 0
+    calc(100% / var(--year-view-columns) - var(--week-numbers-offset) / var(--year-view-columns));
   padding: 4px;
   font-size: var(--year-view-font-size);
   color: var(--day-base-color);

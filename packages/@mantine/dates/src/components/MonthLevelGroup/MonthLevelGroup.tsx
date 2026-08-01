@@ -35,6 +35,9 @@ export interface MonthLevelGroupProps
 
   /** Called when date is changed via native level select */
   __onDateChange?: (date: DateStringValue) => void;
+
+  /** Disables native level selects when date changes would not take effect */
+  __disableNativeLevelSelect?: boolean;
 }
 
 export type MonthLevelGroupFactory = Factory<{
@@ -96,6 +99,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
     __staticSelector,
     __stopPropagation,
     __onDateChange,
+    __disableNativeLevelSelect,
     size,
     static: isStatic,
     fullWidth,
@@ -172,6 +176,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
           withNativeLevelSelect={withNativeLevelSelect}
           yearsSelectRange={yearsSelectRange}
           __onDateChange={__onDateChange}
+          __disableNativeLevelSelect={__disableNativeLevelSelect}
           classNames={classNames}
           styles={styles}
           unstyled={unstyled}

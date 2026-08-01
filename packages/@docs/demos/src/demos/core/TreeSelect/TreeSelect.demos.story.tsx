@@ -63,6 +63,11 @@ export const Demo_renderNode = {
   render: renderDemo(demos.renderNode),
 };
 
+export const Demo_renderNodeExpand = {
+  name: '⭐ Demo: renderNodeExpand',
+  render: renderDemo(demos.renderNodeExpand),
+};
+
 export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),

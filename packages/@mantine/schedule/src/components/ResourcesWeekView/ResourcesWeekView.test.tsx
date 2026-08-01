@@ -165,6 +165,20 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
     expect(spy).toHaveBeenCalledWith(expect.any(String));
   });
 
+  it('navigates to getCurrentTime date when Today control is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <ResourcesWeekView
+        {...defaultProps}
+        onDateChange={spy}
+        getCurrentTime={() => '2025-12-25 10:00:00'}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'Today' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-12-25 10:00:00')));
+  });
+
   it('calls onViewChange when view tab is clicked', async () => {
     const spy = jest.fn();
     render(<ResourcesWeekView {...defaultProps} onViewChange={spy} />);
@@ -297,6 +311,28 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
     jest.useRealTimers();
   });
 
+  it('marks today based on getCurrentTime', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-02-20 12:00:00'));
+
+    const { container, rerender } = render(<ResourcesWeekView {...defaultProps} highlightToday />);
+    expect(
+      container.querySelectorAll('.mantine-ResourcesWeekView-resourcesWeekViewDayLabel[data-today]')
+    ).toHaveLength(0);
+
+    rerender(
+      <ResourcesWeekView
+        {...defaultProps}
+        highlightToday
+        getCurrentTime={() => '2025-01-15 12:00:00'}
+      />
+    );
+    expect(
+      container.querySelectorAll('.mantine-ResourcesWeekView-resourcesWeekViewDayLabel[data-today]')
+    ).toHaveLength(1);
+
+    jest.useRealTimers();
+  });
+
   it('shows current time indicator when current time is within range', () => {
     jest.useFakeTimers().setSystemTime(new Date('2025-01-15 10:30:00'));
     const { container, rerender } = render(
@@ -339,6 +375,44 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
         '.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicatorTimeBubble'
       )
     ).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('uses getCurrentTime to decide whether the indicator is displayed by default', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-02-20 10:30:00'));
+
+    const { container, rerender } = render(<ResourcesWeekView {...defaultProps} />);
+    expect(
+      container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicator')
+    ).not.toBeInTheDocument();
+
+    rerender(<ResourcesWeekView {...defaultProps} getCurrentTime={() => '2025-01-15 10:30:00'} />);
+    expect(
+      container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicator')
+    ).toBeInTheDocument();
+
+    jest.useRealTimers();
+  });
+
+  it('uses getCurrentTime for the current time bubble', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-15 11:15:00'));
+
+    const { container } = render(
+      <ResourcesWeekView
+        {...defaultProps}
+        slotLabelFormat="HH:mm"
+        withCurrentTimeIndicator
+        withCurrentTimeBubble
+        getCurrentTime={() => '2025-01-15 09:30:00'}
+      />
+    );
+
+    expect(
+      container.querySelector(
+        '.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicatorTimeBubble'
+      )
+    ).toHaveTextContent('09:30');
+
     jest.useRealTimers();
   });
 

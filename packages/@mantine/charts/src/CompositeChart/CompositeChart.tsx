@@ -11,6 +11,8 @@ import {
   Line,
   LineProps,
   ComposedChart as ReChartsCompositeChart,
+  ReferenceArea,
+  ReferenceDot,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -31,6 +33,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
@@ -151,6 +154,7 @@ const defaultProps = {
   connectNulls: true,
   strokeWidth: 2,
   curveType: 'monotone',
+  accessibilityLayer: true,
 } satisfies Partial<CompositeChartProps>;
 
 const varsResolver = createVarsResolver<CompositeChartFactory>(
@@ -190,6 +194,8 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     gridProps,
     tooltipProps,
     referenceLines,
+    referenceAreas,
+    referenceDots,
     withDots,
     dotProps,
     activeDotProps,
@@ -213,6 +219,9 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     maxBarWidth,
     composedChartProps,
     attributes,
+    accessibilityLayer,
+    withBrush,
+    brushProps,
     ...others
   } = props;
 
@@ -386,6 +395,50 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     );
   });
 
+  const referenceAreasItems = referenceAreas?.map((area, index) => {
+    const color = getThemeColor(area.color, theme);
+    return (
+      <ReferenceArea
+        key={index}
+        fill={area.color ? color : 'var(--chart-grid-color)'}
+        fillOpacity={0.2}
+        stroke={area.color ? color : 'var(--chart-grid-color)'}
+        strokeOpacity={0.6}
+        yAxisId={area.yAxisId || undefined}
+        {...area}
+        label={{
+          fill: area.color ? color : 'currentColor',
+          fontSize: 12,
+          position: area.labelPosition ?? 'insideTop',
+          ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+        }}
+        {...getStyles('referenceArea')}
+      />
+    );
+  });
+
+  const referenceDotsItems = referenceDots?.map((dot, index) => {
+    const color = getThemeColor(dot.color, theme);
+    return (
+      <ReferenceDot
+        key={index}
+        r={5}
+        fill={dot.color ? color : 'var(--chart-grid-color)'}
+        stroke="var(--mantine-color-body)"
+        strokeWidth={2}
+        yAxisId={dot.yAxisId || undefined}
+        {...dot}
+        label={{
+          fill: dot.color ? color : 'currentColor',
+          fontSize: 12,
+          position: dot.labelPosition ?? 'top',
+          ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+        }}
+        {...getStyles('referenceDot')}
+      />
+    );
+  });
+
   const sharedYAxisProps = {
     axisLine: false,
     type: 'number' as const,
@@ -407,8 +460,10 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...composedChartProps}
         >
+          {referenceAreasItems}
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -527,6 +582,15 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
 
           {lines}
           {referenceLinesItems}
+          {referenceDotsItems}
+          {withBrush && (
+            <ChartBrush
+              dataKey={dataKey}
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+              {...brushProps}
+            />
+          )}
           {children}
         </ReChartsCompositeChart>
       </ResponsiveContainer>

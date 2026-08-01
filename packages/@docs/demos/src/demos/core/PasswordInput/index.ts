@@ -4,6 +4,7 @@ export { error } from './PasswordInput.demo.error';
 export { success } from './PasswordInput.demo.success';
 export { visibilityIcon } from './PasswordInput.demo.visibilityIcon';
 export { controlledVisibility } from './PasswordInput.demo.controlledVisibility';
+export { visibilityToggleFocusable } from './PasswordInput.demo.visibilityToggleFocusable';
 export { stylesApi } from './PasswordInput.demo.stylesApi';
 export { sections } from './PasswordInput.demo.sections';
 export { disabled } from './PasswordInput.demo.disabled';

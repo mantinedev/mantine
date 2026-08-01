@@ -17,6 +17,7 @@ export interface AccordionContextValue {
   variant: string | undefined;
   unstyled: boolean | undefined;
   keepMounted: boolean | undefined;
+  keepMountedMode: 'activity' | 'display-none' | undefined;
 }
 
 export const [AccordionProvider, useAccordionContext] = createSafeContext<AccordionContextValue>(

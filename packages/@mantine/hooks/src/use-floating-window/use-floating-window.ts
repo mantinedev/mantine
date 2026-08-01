@@ -78,6 +78,9 @@ export function useFloatingWindow<T extends HTMLElement>(
   const isDraggingRef = useRef(false);
   const initialized = useRef(false);
   const enabledRef = useRefValue(options.enabled);
+  const onPositionChangeRef = useRefValue(options.onPositionChange);
+  const onDragStartRef = useRefValue(options.onDragStart);
+  const onDragEndRef = useRefValue(options.onDragEnd);
 
   const setDragging = useCallback((value: boolean) => {
     setIsDragging(value);
@@ -153,12 +156,13 @@ export function useFloatingWindow<T extends HTMLElement>(
         y: point.clientY - rect.top,
       };
 
-      options.onDragStart?.();
+      onDragStartRef.current?.();
 
       document.addEventListener('mousemove', onMove, { signal });
       document.addEventListener('mouseup', onEnd, { signal });
       document.addEventListener('touchmove', onMove, { signal, passive: false });
       document.addEventListener('touchend', onEnd, { signal });
+      document.addEventListener('touchcancel', onEnd, { signal });
     };
 
     const onMove = (e: MouseEvent | TouchEvent) => {
@@ -191,7 +195,7 @@ export function useFloatingWindow<T extends HTMLElement>(
         ref.current.style.top = `${y}px`;
       }
 
-      options.onPositionChange?.({ x, y });
+      onPositionChangeRef.current?.({ x, y });
     };
 
     const onEnd = () => {
@@ -199,7 +203,7 @@ export function useFloatingWindow<T extends HTMLElement>(
         setDragging(false);
         document.body.style.userSelect = '';
         document.body.style.webkitUserSelect = '';
-        options.onDragEnd?.();
+        onDragEndRef.current?.();
       }
     };
 
@@ -214,9 +218,6 @@ export function useFloatingWindow<T extends HTMLElement>(
     options.constrainOffset,
     options.dragHandleSelector,
     options.axis,
-    options.onPositionChange,
-    options.onDragStart,
-    options.onDragEnd,
     options.initialPosition?.top,
     options.initialPosition?.left,
     options.initialPosition?.right,
@@ -282,9 +283,9 @@ export function useFloatingWindow<T extends HTMLElement>(
       pos.current = { x, y };
       el.style.left = `${x}px`;
       el.style.top = `${y}px`;
-      options.onPositionChange?.({ x, y });
+      onPositionChangeRef.current?.({ x, y });
     },
-    [options.constrainToViewport, options.constrainOffset, options.onPositionChange]
+    [options.constrainToViewport, options.constrainOffset]
   );
 
   return {

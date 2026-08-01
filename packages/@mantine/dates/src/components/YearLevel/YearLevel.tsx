@@ -47,6 +47,9 @@ export interface YearLevelProps
 
   /** Called when date is changed via native level select */
   __onDateChange?: (date: DateStringValue) => void;
+
+  /** Disables native level selects when date changes would not take effect */
+  __disableNativeLevelSelect?: boolean;
 }
 
 export type YearLevelFactory = Factory<{
@@ -99,6 +102,7 @@ export const YearLevel = factory<YearLevelFactory>((_props) => {
     __staticSelector,
     __stopPropagation,
     __onDateChange,
+    __disableNativeLevelSelect,
     size,
     classNames,
     styles,
@@ -149,6 +153,7 @@ export const YearLevel = factory<YearLevelFactory>((_props) => {
         __date={year}
         __locale={locale || ctx.locale}
         __onDateChange={__onDateChange}
+        __disableNativeLevelSelect={__disableNativeLevelSelect}
         __minDate={minDate}
         __maxDate={maxDate}
         nextIcon={nextIcon}

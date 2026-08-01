@@ -70,6 +70,40 @@ describe('@mantine/dates/clamp-time', () => {
     });
   });
 
+  it('omits seconds from timeString when withSeconds is false', () => {
+    expect(clampTime('12:30:45', '10:00:00', '15:00:00', false)).toEqual({
+      timeString: '12:30',
+      hours: 12,
+      minutes: 30,
+      seconds: 45,
+    });
+
+    expect(clampTime('16:30:45', '10:00:00', '15:00:00', false)).toEqual({
+      timeString: '15:00',
+      hours: 15,
+      minutes: 0,
+      seconds: 0,
+    });
+  });
+
+  it('keeps the value within range when the boundary has seconds and withSeconds is false', () => {
+    // min rounds up to the next minute so the result never falls below it
+    expect(clampTime('09:00', '09:00:30', undefined, false)).toEqual({
+      timeString: '09:01',
+      hours: 9,
+      minutes: 1,
+      seconds: 0,
+    });
+
+    // max rounds down to the previous minute so the result never exceeds it
+    expect(clampTime('17:05', undefined, '17:00:30', false)).toEqual({
+      timeString: '17:00',
+      hours: 17,
+      minutes: 0,
+      seconds: 0,
+    });
+  });
+
   it('handles both min and max as undefined', () => {
     expect(clampTime('12:30:45', undefined, undefined)).toEqual({
       timeString: '12:30:45',

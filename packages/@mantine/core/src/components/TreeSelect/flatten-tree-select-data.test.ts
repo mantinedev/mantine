@@ -73,6 +73,27 @@ describe('flattenTreeSelectData', () => {
     expect(result[3].hasChildren).toBe(false);
   });
 
+  it('treats an empty children array as no children', () => {
+    const emptyChildrenData: TreeNodeData[] = [
+      { value: 'populated', label: 'Populated', children: [{ value: 'child', label: 'Child' }] },
+      { value: 'empty', label: 'Empty', children: [] },
+      { value: 'empty-explicit', label: 'Empty explicit', children: [], hasChildren: false },
+      { value: 'async', label: 'Async', hasChildren: true },
+      { value: 'leaf', label: 'Leaf' },
+    ];
+
+    const result = flattenTreeSelectData(emptyChildrenData, {});
+    const hasChildrenByValue = Object.fromEntries(result.map((n) => [n.node.value, n.hasChildren]));
+
+    expect(hasChildrenByValue).toEqual({
+      populated: true,
+      empty: false,
+      'empty-explicit': false,
+      async: true,
+      leaf: false,
+    });
+  });
+
   it('marks expanded state correctly', () => {
     const result = flattenTreeSelectData(data, { fruits: true });
     expect(result[0].expanded).toBe(true);

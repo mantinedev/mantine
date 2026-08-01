@@ -273,10 +273,91 @@ describe('@mantine/core/Accordion', () => {
     expect(spy).toHaveBeenCalledWith([]);
   });
 
+  it('does not collapse the open item when disableCollapse is set (uncontrolled, multiple: false)', async () => {
+    const spy = jest.fn();
+    render(<Accordion {...defaultProps} defaultValue="item-1" disableCollapse onChange={spy} />);
+
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+
+    await userEvent.click(screen.getAllByRole('button')[0]);
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('does not collapse the open item when disableCollapse is set (controlled, multiple: false)', async () => {
+    const spy = jest.fn();
+    render(<Accordion {...defaultProps} value="item-1" disableCollapse onChange={spy} />);
+
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+
+    await userEvent.click(screen.getAllByRole('button')[0]);
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('switches to a different item when disableCollapse is set (multiple: false)', async () => {
+    const spy = jest.fn();
+    render(<Accordion {...defaultProps} defaultValue="item-1" disableCollapse onChange={spy} />);
+
+    await userEvent.click(screen.getAllByRole('button')[1]);
+    expect(spy).toHaveBeenCalledWith('item-2');
+    expect(screen.getByText('test-item-2')).toBeInTheDocument();
+    expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
+  });
+
+  it('ignores disableCollapse in multiple mode', async () => {
+    const spy = jest.fn();
+    render(
+      <Accordion
+        {...defaultProps}
+        multiple
+        defaultValue={['item-1']}
+        disableCollapse
+        onChange={spy}
+      />
+    );
+
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+
+    await userEvent.click(screen.getAllByRole('button')[0]);
+    expect(spy).toHaveBeenCalledWith([]);
+    expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
+  });
+
   it('exposes internal components as static properties', () => {
     expect(Accordion.Item).toBe(AccordionItem);
     expect(Accordion.Control).toBe(AccordionControl);
     expect(Accordion.Panel).toBe(AccordionPanel);
     expect(Accordion.Chevron).toBe(AccordionChevron);
+  });
+
+  it('supports keepMountedMode="display-none" on Accordion level', () => {
+    render(
+      <Accordion keepMounted keepMountedMode="display-none" transitionDuration={0}>
+        <Accordion.Item value="item-1">
+          <Accordion.Control>Label 1</Accordion.Control>
+          <Accordion.Panel>test-item-1</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    expect(screen.getByText('test-item-1').parentElement).toHaveStyle({
+      display: 'none',
+    });
+  });
+
+  it('supports keepMountedMode="display-none" override on AccordionPanel level', () => {
+    render(
+      <Accordion keepMounted keepMountedMode="activity" transitionDuration={0}>
+        <Accordion.Item value="item-1">
+          <Accordion.Control>Label 1</Accordion.Control>
+          <Accordion.Panel keepMountedMode="display-none">test-item-1</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    expect(screen.getByText('test-item-1').parentElement).toHaveStyle({
+      display: 'none',
+    });
   });
 });

@@ -121,6 +121,9 @@ export interface DonutChartProps
   cellProps?:
     | ((series: DonutChartCell) => Partial<Omit<React.SVGProps<SVGElement>, 'ref'>>)
     | Partial<Omit<React.SVGProps<SVGElement>, 'ref'>>;
+
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  accessibilityLayer?: boolean;
 }
 
 export type DonutChartFactory = Factory<{
@@ -141,6 +144,7 @@ const defaultProps = {
   endAngle: 360,
   labelsType: 'value',
   tooltipDataSource: 'all',
+  accessibilityLayer: true,
 } satisfies Partial<DonutChartProps>;
 
 const varsResolver = createVarsResolver<DonutChartFactory>(
@@ -230,6 +234,7 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
     labelsType,
     attributes,
     cellProps,
+    accessibilityLayer,
     ...others
   } = props;
 
@@ -261,7 +266,7 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
   return (
     <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
-        <ReChartsPieChart {...pieChartProps}>
+        <ReChartsPieChart accessibilityLayer={accessibilityLayer} {...pieChartProps}>
           <Pie
             data={pieData as any}
             innerRadius={size / 2 - thickness}

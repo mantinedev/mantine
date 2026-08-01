@@ -166,3 +166,21 @@ export function NextToInput() {
     <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 40 }}>{sizes}</div>
   );
 }
+
+export function ScaledAncestor() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ transform: 'scale(0.9)', transformOrigin: 'top left' }}>
+        <SegmentedControl
+          fullWidth
+          defaultValue="second"
+          data={[
+            { label: 'First', value: 'first' },
+            { label: 'Second', value: 'second' },
+            { label: 'Third', value: 'third' },
+          ]}
+        />
+      </div>
+    </div>
+  );
+}

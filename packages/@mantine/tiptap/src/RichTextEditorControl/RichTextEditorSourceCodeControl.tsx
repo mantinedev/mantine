@@ -17,7 +17,9 @@ export function RichTextEditorSourceCodeControl(props: RichTextEditorSourceCodeC
     if (isSourceCodeModeActive) {
       editor?.commands.setContent(editor.getText(), { emitUpdate: true });
     } else {
-      editor?.commands.setContent(`<textarea>${editor.getHTML()}</textarea>`);
+      editor?.commands.setContent(`<textarea>${editor.getHTML()}</textarea>`, {
+        emitUpdate: false,
+      });
     }
 
     const isSourceCodeModeActiveNew = !isSourceCodeModeActive;

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFormActions } from './actions';
 import { getInputOnChange } from './get-input-on-change';
 import { useFormErrors } from './hooks/use-form-errors/use-form-errors';
@@ -86,6 +86,13 @@ export function useForm<
   const [fieldKeys, setFieldKeys] = useState<Record<string, number>>({});
   const [submitting, setSubmitting] = useState(false);
   const validateGeneration = useRef(0);
+  const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+
+  useEffect(() => {
+    return () => {
+      Object.values(timers.current).forEach(clearTimeout);
+    };
+  }, []);
 
   const reset: Reset = useCallback(() => {
     $values.resetValues();
@@ -115,8 +122,6 @@ export function useForm<
   );
 
   const debouncedValidateField = useMemo(() => {
-    const timers: Record<string, ReturnType<typeof setTimeout>> = {};
-
     const handleValidation = (path: string) => {
       const signal = $validating.getAbortSignal(path);
       const result = validateFieldValue(
@@ -153,9 +158,9 @@ export function useForm<
     };
 
     return (path: string) => {
-      clearTimeout(timers[path]);
+      clearTimeout(timers.current[path]);
       if (validateDebounce > 0) {
-        timers[path] = setTimeout(() => handleValidation(path), validateDebounce);
+        timers.current[path] = setTimeout(() => handleValidation(path), validateDebounce);
       } else {
         handleValidation(path);
       }

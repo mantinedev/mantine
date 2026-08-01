@@ -20,12 +20,42 @@ The `use-scroll-spy` hook accepts an object with options:
 - `selector` - selector to get headings; by default it is `'h1, h2, h3, h4, h5, h6'`
 - `getDepth` - a function to retrieve the depth of a heading; by default depth is calculated based on the tag name
 - `getValue` - a function to retrieve the heading value; by default `element.textContent` is used
-- `scrollHost` - host element to attach scroll event listener, if not provided, `window` is used
+- `scrollHost` - host element (or a ref to it) to attach scroll event listener, if not provided, `window` is used
 - `offset` - offset from the top of the viewport to use when determining the active heading, by default `0` is used
 
 Example of using custom options to get headings with the `data-heading` attribute:
 
 <Demo data={UseScrollSpyDemos.selector} />
+
+## Custom scroll host
+
+By default, `use-scroll-spy` attaches the scroll event listener to `window`. If your
+headings are located inside a scrollable container, pass that element to the
+`scrollHost` option. You can pass either a resolved `HTMLElement` or a ref object –
+the hook reads `ref.current` internally once the element is mounted:
+
+```tsx
+import { useRef } from 'react';
+import { useScrollSpy } from '@mantine/hooks';
+
+function Demo() {
+  const scrollHostRef = useRef<HTMLDivElement>(null);
+  const spy = useScrollSpy({ scrollHost: scrollHostRef });
+
+  return (
+    <div ref={scrollHostRef} style={{ overflowY: 'auto', height: 300 }}>
+      {/* Headings */}
+    </div>
+  );
+}
+```
+
+The ref is resolved inside an effect after the component mounts, so the scroll host
+does not need to exist on the first render. Note that a plain ref object is not
+reactive – if you later point the ref at a different element, the hook keeps the
+listener on the original one. When the scroll host itself can change at runtime, pass
+the resolved element via state so that `scrollHost` changes identity and the hook
+re-runs with the new value.
 
 ## Reinitializing hook data
 
@@ -77,8 +107,8 @@ interface UseScrollSpyOptions {
   /** A function to retrieve heading value, by default `element.textContent` is used */
   getValue?: (element: HTMLElement) => string;
 
-  /** Host element to attach scroll event listener, if not provided, `window` is used */
-  scrollHost?: HTMLElement;
+  /** Host element or a ref to it to attach scroll event listener, if not provided, `window` is used */
+  scrollHost?: HTMLElement | React.RefObject<HTMLElement | null>;
 
   /** Offset from the top of the viewport to use when determining the active heading, `0` by default */
   offset?: number;

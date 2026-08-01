@@ -1,4 +1,6 @@
+import { render } from '@testing-library/react';
 import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
+import { MantineProvider } from '../../core';
 import { __InputStylesNames } from '../Input';
 import { ColorInput, ColorInputProps } from './ColorInput';
 
@@ -33,5 +35,16 @@ describe('@mantine/core/ColorInput', () => {
     component: ColorInput,
     props: defaultProps,
     componentName: 'ColorInput',
+  });
+
+  it('passes fullWidth prop to ColorPicker', () => {
+    const { container } = render(
+      <MantineProvider>
+        <ColorInput popoverProps={{ opened: true, withinPortal: false }} fullWidth />
+      </MantineProvider>
+    );
+    expect(
+      container.querySelector('.mantine-ColorInput-dropdown [data-full-width]')
+    ).toBeInTheDocument();
   });
 });

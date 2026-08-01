@@ -40,6 +40,9 @@ export interface PasswordInputProps
   /** Props passed down to the visibility toggle button */
   visibilityToggleButtonProps?: Record<string, any>;
 
+  /** If set, the visibility toggle button is focusable with keyboard @default `false` */
+  visibilityToggleFocusable?: boolean;
+
   /** If set, the input value is visible */
   visible?: boolean;
 
@@ -60,6 +63,7 @@ export type PasswordInputFactory = Factory<{
 
 const defaultProps = {
   visibilityToggleIcon: PasswordToggleIcon,
+  visibilityToggleFocusable: false,
   size: 'sm',
 } satisfies Partial<PasswordInputProps>;
 
@@ -107,6 +111,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
     onVisibilityChange,
     visibilityToggleIcon: VisibilityToggleIcon,
     visibilityToggleButtonProps,
+    visibilityToggleFocusable,
     rightSectionProps,
     leftSectionProps,
     leftSectionPointerEvents,
@@ -165,7 +170,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
       disabled={disabled}
       radius={radius}
       aria-pressed={_visible}
-      tabIndex={-1}
+      tabIndex={visibilityToggleFocusable ? 0 : -1}
       aria-label="Toggle password visibility"
       {...visibilityToggleButtonProps}
       variant={visibilityToggleButtonProps?.variant ?? 'subtle'}
@@ -183,7 +188,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
       }}
       onKeyDown={(event) => {
         visibilityToggleButtonProps?.onKeyDown?.(event);
-        if (event.key === ' ') {
+        if (event.key === ' ' || event.key === 'Enter') {
           event.preventDefault();
           toggleVisibility();
         }

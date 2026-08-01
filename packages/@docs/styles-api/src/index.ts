@@ -24,6 +24,7 @@ export * from './data/Burger.styles-api';
 export * from './data/Button.styles-api';
 export * from './data/Card.styles-api';
 export * from './data/Carousel.styles-api';
+export * from './data/Cascader.styles-api';
 export * from './data/Center.styles-api';
 export * from './data/Checkbox.styles-api';
 export * from './data/Chip.styles-api';

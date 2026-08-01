@@ -1,4 +1,4 @@
-import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import React, { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { randomId } from '../utils';
 
 function getHeadingsData(
@@ -51,6 +51,20 @@ function getDefaultValue(element: HTMLElement) {
   return element.textContent || '';
 }
 
+function resolveScrollHost(
+  scrollHost: HTMLElement | React.RefObject<HTMLElement | null> | undefined
+): HTMLElement | Window {
+  if (!scrollHost) {
+    return window;
+  }
+
+  if ('current' in scrollHost) {
+    return scrollHost.current || window;
+  }
+
+  return scrollHost;
+}
+
 export interface UseScrollSpyHeadingData {
   /** Heading depth, 1-6 */
   depth: number;
@@ -75,8 +89,8 @@ export interface UseScrollSpyOptions {
   /** A function to retrieve heading value, by default `element.textContent` is used */
   getValue?: (element: HTMLElement) => string;
 
-  /** Host element to attach scroll event listener, if not provided, `window` is used */
-  scrollHost?: HTMLElement;
+  /** Host element or a ref to it to attach scroll event listener, if not provided, `window` is used */
+  scrollHost?: HTMLElement | React.RefObject<HTMLElement | null>;
 
   /** Offset from the top of the viewport to use when determining the active heading, `0` by default */
   offset?: number;
@@ -136,7 +150,7 @@ export function useScrollSpy({
 
   useEffect(() => {
     initialize();
-    const _scrollHost = scrollHost || window;
+    const _scrollHost = resolveScrollHost(scrollHost);
     _scrollHost.addEventListener('scroll', handleScroll);
     return () => _scrollHost.removeEventListener('scroll', handleScroll);
   }, [scrollHost, selector, offset]);
