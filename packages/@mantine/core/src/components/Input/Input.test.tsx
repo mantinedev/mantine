@@ -105,6 +105,14 @@ describe('@mantine/core/Input', () => {
     expect(getInputWrapper(container)).not.toHaveAttribute('data-with-right-section');
   });
 
+  it('sets data-with-bottom-section attribute based on __bottomSection prop', () => {
+    const { rerender, container } = render(<Input __bottomSection="test" />);
+    expect(getInputWrapper(container)).toHaveAttribute('data-with-bottom-section');
+
+    rerender(<Input __bottomSection={null} />);
+    expect(getInputWrapper(container)).not.toHaveAttribute('data-with-bottom-section');
+  });
+
   it('sets data-pointer attribute based on pointer prop', () => {
     const { rerender, container } = render(<Input pointer />);
     expect(getInputWrapper(container)).toHaveAttribute('data-pointer');

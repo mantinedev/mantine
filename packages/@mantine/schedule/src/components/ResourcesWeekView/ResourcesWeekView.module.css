@@ -463,3 +463,12 @@
   left: calc(-1 * (var(--_time-bubble-width) / 2 - 1px));
   z-index: 3;
 }
+
+.resourcesWeekViewDragPreview {
+  pointer-events: none;
+  z-index: 3;
+  border-radius: var(--resources-week-view-radius);
+  border: 1px dashed var(--mantine-color-blue-filled);
+  background-color: var(--mantine-color-blue-light);
+  opacity: 0.6;
+}

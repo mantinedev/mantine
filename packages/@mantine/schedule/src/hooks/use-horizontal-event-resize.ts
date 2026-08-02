@@ -29,6 +29,7 @@ export interface UseHorizontalEventResizeInput {
   startTime: string;
   endTime: string;
   intervalMinutes: number;
+  resizeIntervalMinutes?: number;
   onEventResize?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -44,6 +45,7 @@ export function useHorizontalEventResize({
   startTime,
   endTime,
   intervalMinutes,
+  resizeIntervalMinutes,
   onEventResize,
   canResizeEvent,
 }: UseHorizontalEventResizeInput) {
@@ -57,16 +59,17 @@ export function useHorizontalEventResize({
   const startMinutes = parsedStartTime.hours * 60 + parsedStartTime.minutes;
   const endMinutes = parsedEndTime.hours * 60 + parsedEndTime.minutes;
   const clampedInterval = clampIntervalMinutes(intervalMinutes);
+  const clampedResizeInterval = clampIntervalMinutes(resizeIntervalMinutes ?? intervalMinutes);
   const literalRange = endMinutes - startMinutes;
   const totalMinutes = Math.ceil(literalRange / clampedInterval) * clampedInterval;
-  const minWidthPercent = (clampedInterval / totalMinutes) * 100;
+  const minWidthPercent = (clampedResizeInterval / totalMinutes) * 100;
 
   const clampAndSnap = useCallback(
     (minutes: number): number => {
-      const snapped = Math.round(minutes / clampedInterval) * clampedInterval;
+      const snapped = Math.round(minutes / clampedResizeInterval) * clampedResizeInterval;
       return Math.max(0, Math.min(literalRange, snapped));
     },
-    [literalRange, clampedInterval]
+    [literalRange, clampedResizeInterval]
   );
 
   const percentToDateTime = useCallback(

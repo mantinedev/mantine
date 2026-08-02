@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type KeyboardEvent, useState } from 'react';
 import {
   Checkbox,
   Combobox,
@@ -18,7 +18,9 @@ interface TreeNode {
 interface FlatNode {
   node: TreeNode;
   level: number;
+  parent: string | null;
   hasChildren: boolean;
+  expanded: boolean;
   isLastChild: boolean;
   lineGuides: boolean[];
 }
@@ -74,24 +76,30 @@ function flattenTree(
   nodes: TreeNode[],
   expandedState: Record<string, boolean>,
   level: number = 1,
-  parentGuides: boolean[] = []
+  parentGuides: boolean[] = [],
+  parent: string | null = null
 ): FlatNode[] {
   const result: FlatNode[] = [];
   nodes.forEach((node, index) => {
     const isLast = index === nodes.length - 1;
     const hasChildren = !!node.children?.length;
+    const isExpanded = !!expandedState[node.value];
     const childGuides = level >= 2 ? [...parentGuides, !isLast] : [];
 
     result.push({
       node,
       level,
+      parent,
       hasChildren,
+      expanded: isExpanded,
       isLastChild: isLast,
       lineGuides: level >= 2 ? parentGuides : [],
     });
 
-    if (hasChildren && expandedState[node.value]) {
-      result.push(...flattenTree(node.children!, expandedState, level + 1, childGuides));
+    if (hasChildren && isExpanded) {
+      result.push(
+        ...flattenTree(node.children!, expandedState, level + 1, childGuides, node.value)
+      );
     }
   });
   return result;
@@ -230,6 +238,7 @@ function TreeOption({
         <span
           role="button"
           tabIndex={0}
+          aria-label={isExpanded ? 'Collapse' : 'Expand'}
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
@@ -252,7 +261,8 @@ function TreeOption({
             height: 20,
             borderRadius: 'var(--mantine-radius-sm)',
             cursor: 'pointer',
-            color: 'var(--mantine-color-dimmed)',
+            color: 'inherit',
+            opacity: 0.6,
             transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
             transition: 'transform 150ms ease',
           }}
@@ -306,6 +316,41 @@ export function TreeMultiSelectCombobox() {
     }
   };
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Backspace' && selected.length > 0) {
+      setSelected((prev) => prev.slice(0, -1));
+    }
+
+    if (!combobox.dropdownOpened) {
+      return;
+    }
+
+    const index = combobox.getSelectedOptionIndex();
+    if (index < 0 || index >= flatNodes.length) {
+      return;
+    }
+
+    const current = flatNodes[index];
+
+    if (event.key === 'ArrowRight' && current.hasChildren && !current.expanded) {
+      event.preventDefault();
+      toggleExpand(current.node.value);
+    }
+
+    if (event.key === 'ArrowLeft') {
+      if (current.hasChildren && current.expanded) {
+        event.preventDefault();
+        toggleExpand(current.node.value);
+      } else if (current.parent) {
+        event.preventDefault();
+        const parentIndex = flatNodes.findIndex((n) => n.node.value === current.parent);
+        if (parentIndex >= 0) {
+          combobox.selectOption(parentIndex);
+        }
+      }
+    }
+  };
+
   const pills = selected.map((item) => (
     <Pill
       key={item}
@@ -328,14 +373,7 @@ export function TreeMultiSelectCombobox() {
           <Pill.Group>
             {pills.length > 0 ? pills : <Input.Placeholder>Pick technologies</Input.Placeholder>}
             <Combobox.EventsTarget>
-              <PillsInput.Field
-                type="hidden"
-                onKeyDown={(event) => {
-                  if (event.key === 'Backspace' && selected.length > 0) {
-                    setSelected((prev) => prev.slice(0, -1));
-                  }
-                }}
-              />
+              <PillsInput.Field type="hidden" onKeyDown={handleKeyDown} />
             </Combobox.EventsTarget>
           </Pill.Group>
         </PillsInput>
