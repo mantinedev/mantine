@@ -1,4 +1,4 @@
-import { act } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 import { render, renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import { Lightbox, LightboxProps } from './Lightbox';
 import { lightbox, lightboxStore } from './lightbox.store';
@@ -162,7 +162,7 @@ describe('@mantine/lightbox/Lightbox', () => {
 
   it('locks body scroll when opened', async () => {
     await renderWithAct(<Lightbox {...defaultProps} />);
-    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.body.hasAttribute('data-scroll-locked')).toBe(true);
   });
 
   it('restores body scroll when closed', async () => {
@@ -171,12 +171,14 @@ describe('@mantine/lightbox/Lightbox', () => {
       const result = render(<Lightbox {...defaultProps} />);
       rerender = (ui) => result.rerender(ui);
     });
-    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.body.hasAttribute('data-scroll-locked')).toBe(true);
 
     await act(async () => {
       rerender!(<Lightbox {...defaultProps} opened={false} />);
     });
-    expect(document.body.style.overflow).not.toBe('hidden');
+    await waitFor(() => {
+      expect(document.body.hasAttribute('data-scroll-locked')).toBe(false);
+    });
   });
 
   it('supports controlled currentIndex', async () => {

@@ -10,6 +10,7 @@ import {
   Factory,
   FocusTrap,
   Portal,
+  RemoveScroll,
   StylesApiProps,
   Transition,
   TransitionOverride,
@@ -21,6 +22,7 @@ import { LightboxContextProvider } from '../lightbox.context';
 import { lightboxStore, LightboxStore } from '../lightbox.store';
 import type { LightboxSlideData, ToolbarItem } from '../lightbox.types';
 import { useLightboxKeyboard } from '../hooks/use-lightbox-keyboard';
+import { useLightboxLockScroll } from '../hooks/use-lightbox-lock-scroll';
 import { useLightboxZoom } from '../hooks/use-lightbox-zoom';
 import classes from '../Lightbox.module.css';
 
@@ -331,17 +333,16 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     }
   }, [_currentIndex, embla, opened]);
 
-  useEffect(() => {
-    if (!opened) {
-      return undefined;
-    }
-
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
-  }, [opened]);
+  const shouldLockScroll = useLightboxLockScroll({
+    opened,
+    exitDuration:
+      typeof transitionProps?.exitDuration === 'number'
+        ? transitionProps.exitDuration
+        : typeof transitionProps?.duration === 'number'
+          ? transitionProps.duration
+          : transitionDuration,
+    exitDelay: typeof transitionProps?.exitDelay === 'number' ? transitionProps.exitDelay : 0,
+  });
 
   const transition: TransitionOverride = {
     transition: 'fade',
@@ -392,34 +393,36 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
           closeOnSwipeDown: !!closeOnSwipeDown,
         }}
       >
-        <Box {...getStyles('root')}>
-          <Transition mounted={opened} {...overlayTransition}>
-            {(overlayStyles) => <Box {...getStyles('overlay', { style: overlayStyles })} />}
-          </Transition>
+        <RemoveScroll enabled={shouldLockScroll}>
+          <Box {...getStyles('root')}>
+            <Transition mounted={opened} {...overlayTransition}>
+              {(overlayStyles) => <Box {...getStyles('overlay', { style: overlayStyles })} />}
+            </Transition>
 
-          <Transition mounted={opened} {...transition}>
-            {(contentStyles) => (
-              <FocusTrap active={opened}>
-                <Box
-                  {...getStyles('content', { style: contentStyles })}
-                  {...others}
-                  role="dialog"
-                  aria-modal="true"
-                  aria-roledescription="carousel"
-                  tabIndex={-1}
-                  mod={mod}
-                  onClick={(event) => {
-                    if (closeOnClickOutside && event.target === event.currentTarget) {
-                      onClose();
-                    }
-                  }}
-                >
-                  {children}
-                </Box>
-              </FocusTrap>
-            )}
-          </Transition>
-        </Box>
+            <Transition mounted={opened} {...transition}>
+              {(contentStyles) => (
+                <FocusTrap active={opened}>
+                  <Box
+                    {...getStyles('content', { style: contentStyles })}
+                    {...others}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-roledescription="carousel"
+                    tabIndex={-1}
+                    mod={mod}
+                    onClick={(event) => {
+                      if (closeOnClickOutside && event.target === event.currentTarget) {
+                        onClose();
+                      }
+                    }}
+                  >
+                    {children}
+                  </Box>
+                </FocusTrap>
+              )}
+            </Transition>
+          </Box>
+        </RemoveScroll>
       </LightboxContextProvider>
     </Portal>
   );
