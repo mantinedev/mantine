@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type KeyboardEvent, useState } from 'react';
 import { Checkbox, Combobox, Input, InputBase, ScrollArea, useCombobox } from '@mantine/core';
 
 interface TreeNode {
@@ -57,7 +57,9 @@ function ChevronIcon({ size = 16 }: { size?: number }) {
 interface FlatNode {
   node: TreeNode;
   level: number;
+  parent: string | null;
   hasChildren: boolean;
+  expanded: boolean;
   isLastChild: boolean;
   lineGuides: boolean[];
 }
@@ -66,24 +68,28 @@ function flattenTree(
   nodes: TreeNode[],
   expanded: Record<string, boolean>,
   level: number = 1,
-  parentGuides: boolean[] = []
+  parentGuides: boolean[] = [],
+  parent: string | null = null
 ): FlatNode[] {
   const result: FlatNode[] = [];
   nodes.forEach((node, index) => {
     const isLast = index === nodes.length - 1;
     const hasChildren = !!node.children?.length;
+    const isExpanded = !!expanded[node.value];
     const childGuides = level >= 2 ? [...parentGuides, !isLast] : [];
 
     result.push({
       node,
       level,
+      parent,
       hasChildren,
+      expanded: isExpanded,
       isLastChild: isLast,
       lineGuides: level >= 2 ? parentGuides : [],
     });
 
-    if (hasChildren && expanded[node.value]) {
-      result.push(...flattenTree(node.children!, expanded, level + 1, childGuides));
+    if (hasChildren && isExpanded) {
+      result.push(...flattenTree(node.children!, expanded, level + 1, childGuides, node.value));
     }
   });
   return result;
@@ -104,27 +110,12 @@ function findLabel(nodes: TreeNode[], value: string): string | null {
   return null;
 }
 
-function findNode(nodes: TreeNode[], value: string): TreeNode | null {
-  for (const node of nodes) {
-    if (node.value === value) {
-      return node;
-    }
-    if (node.children) {
-      const found = findNode(node.children, value);
-      if (found) {
-        return found;
-      }
-    }
-  }
-  return null;
-}
-
 export function TreeSelectCheckbox() {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
 
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState<string[]>([]);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   const toggleExpand = (nodeValue: string) => {
@@ -133,18 +124,39 @@ export function TreeSelectCheckbox() {
 
   const flatNodes = flattenTree(data, expanded);
 
-  const handleOptionSubmit = (val: string) => {
-    const node = findNode(data, val);
-    if (!node) {
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!combobox.dropdownOpened) {
       return;
     }
 
-    if (node.children?.length) {
-      toggleExpand(val);
-    } else {
-      setValue((prev) => (prev === val ? null : val));
-      combobox.closeDropdown();
+    const index = combobox.getSelectedOptionIndex();
+    if (index < 0 || index >= flatNodes.length) {
+      return;
     }
+
+    const current = flatNodes[index];
+
+    if (event.key === 'ArrowRight' && current.hasChildren && !current.expanded) {
+      event.preventDefault();
+      toggleExpand(current.node.value);
+    }
+
+    if (event.key === 'ArrowLeft') {
+      if (current.hasChildren && current.expanded) {
+        event.preventDefault();
+        toggleExpand(current.node.value);
+      } else if (current.parent) {
+        event.preventDefault();
+        const parentIndex = flatNodes.findIndex((n) => n.node.value === current.parent);
+        if (parentIndex >= 0) {
+          combobox.selectOption(parentIndex);
+        }
+      }
+    }
+  };
+
+  const handleOptionSubmit = (val: string) => {
+    setValue((prev) => (prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val]));
   };
 
   return (
@@ -156,10 +168,15 @@ export function TreeSelectCheckbox() {
           pointer
           rightSection={<Combobox.Chevron />}
           onClick={() => combobox.toggleDropdown()}
+          onKeyDown={handleKeyDown}
           rightSectionPointerEvents="none"
         >
-          {(value && findLabel(data, value)) || (
-            <Input.Placeholder>Pick a technology</Input.Placeholder>
+          {value.length > 0 ? (
+            <span style={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {value.map((val) => findLabel(data, val) ?? val).join(', ')}
+            </span>
+          ) : (
+            <Input.Placeholder>Pick technologies</Input.Placeholder>
           )}
         </InputBase>
       </Combobox.Target>
@@ -168,7 +185,7 @@ export function TreeSelectCheckbox() {
         <Combobox.Options>
           <ScrollArea.Autosize mah={250} type="scroll">
             {flatNodes.map(({ node, level, hasChildren, isLastChild, lineGuides }) => {
-              const isSelected = value === node.value;
+              const isSelected = value.includes(node.value);
               const isExpanded = !!expanded[node.value];
 
               const lineElements =
@@ -240,6 +257,22 @@ export function TreeSelectCheckbox() {
                   {lineElements}
                   {hasChildren && (
                     <span
+                      role="button"
+                      tabIndex={0}
+                      aria-label={isExpanded ? 'Collapse' : 'Expand'}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        toggleExpand(node.value);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          toggleExpand(node.value);
+                        }
+                      }}
+                      onMouseDown={(e) => e.preventDefault()}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -247,7 +280,10 @@ export function TreeSelectCheckbox() {
                         width: 20,
                         minWidth: 20,
                         height: 20,
-                        color: 'var(--mantine-color-dimmed)',
+                        borderRadius: 'var(--mantine-radius-sm)',
+                        cursor: 'pointer',
+                        color: 'inherit',
+                        opacity: 0.6,
                         transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
                         transition: 'transform 150ms ease',
                       }}

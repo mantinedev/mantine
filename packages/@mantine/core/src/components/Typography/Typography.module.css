@@ -228,6 +228,75 @@
     }
   }
 
+  & :where(details) {
+    margin-bottom: var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+    border: 1px solid var(--details-border-color);
+    border-radius: var(--mantine-radius-default);
+
+    @mixin where-light {
+      --details-border-color: var(--mantine-color-gray-3);
+      --details-summary-hover: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      --details-border-color: var(--mantine-color-dark-4);
+      --details-summary-hover: var(--mantine-color-dark-5);
+    }
+
+    /* The native marker is hidden and replaced with a small triangle control so only the control –
+       not the whole summary text – gets the hover affordance, matching the editor toggle button. */
+    & :where(summary) {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: var(--mantine-spacing-xs);
+      cursor: pointer;
+      font-weight: 600;
+      list-style: none;
+    }
+
+    & :where(summary)::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Control box: reserves space for the triangle and carries the hover background. */
+    & :where(summary)::before {
+      content: '';
+      flex-shrink: 0;
+      width: 1.25rem;
+      height: calc(1em * var(--mantine-line-height));
+      border-radius: var(--mantine-radius-sm);
+    }
+
+    & :where(summary:hover)::before {
+      background-color: var(--details-summary-hover);
+    }
+
+    /* Disclosure triangle centered over the control box (7px = half of the 20px box minus the 6px
+       triangle); rotates to point down when the details is open. */
+    & :where(summary)::after {
+      content: '';
+      position: absolute;
+      inset-inline-start: rem(7px);
+      top: 50%;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 5px 0 5px 6px;
+      border-color: transparent transparent transparent currentColor;
+      transform: translateY(-50%);
+    }
+
+    &:where([open]) > :where(summary)::after {
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    & :where(> *:last-child) {
+      margin-bottom: 0;
+    }
+  }
+
   & :where(blockquote) {
     font-size: var(--mantine-font-size-lg);
     line-height: var(--mantine-line-height);
