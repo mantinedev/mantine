@@ -55,6 +55,22 @@ Set `withSlideTransition` to animate slide changes:
 
 <Demo data={LightboxDemos.transition} />
 
+## Open and close transition
+
+By default, the lightbox fades in and out when it is opened and closed. Use `transitionProps` to
+change the animation of the content – the overlay always fades. `transitionProps` accepts the same
+options as the [Transition](/core/transition) component (`transition`, `duration`, `timingFunction`).
+Set `transitionProps={{ duration: 0 }}` to disable the animation:
+
+<Demo data={LightboxDemos.overlayTransition} />
+
+## Disable animations
+
+Set `transitionProps={{ duration: 0 }}` to open and close the lightbox instantly, without any
+animation:
+
+<Demo data={LightboxDemos.disableTransition} />
+
 ## Swipe to close
 
 On mobile, swiping down closes the lightbox. This is enabled by default.

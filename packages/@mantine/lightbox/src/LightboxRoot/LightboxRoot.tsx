@@ -11,6 +11,8 @@ import {
   FocusTrap,
   Portal,
   StylesApiProps,
+  Transition,
+  TransitionOverride,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -25,6 +27,7 @@ import classes from '../Lightbox.module.css';
 export type LightboxRootStylesNames =
   | 'root'
   | 'overlay'
+  | 'content'
   | 'toolbar'
   | 'toolbarGroup'
   | 'toolbarButton'
@@ -107,6 +110,9 @@ export interface LightboxRootProps
   /** Transition duration in milliseconds @default 200 */
   transitionDuration?: number;
 
+  /** Props passed down to the `Transition` component that animates the overlay and content, `{ transition: 'fade', duration: transitionDuration, timingFunction: 'ease' }` by default */
+  transitionProps?: TransitionOverride;
+
   /** Additional Embla carousel options */
   emblaOptions?: EmblaOptionsType;
 
@@ -173,6 +179,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     closeOnClickOutside,
     closeOnSwipeDown,
     transitionDuration,
+    transitionProps,
     emblaOptions,
     zoomMaxScale,
     withSlideTransition,
@@ -336,61 +343,84 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     };
   }, [opened]);
 
-  if (!opened) {
-    return null;
-  }
+  const transition: TransitionOverride = {
+    transition: 'fade',
+    duration: transitionDuration,
+    timingFunction: 'ease',
+    ...transitionProps,
+  };
+
+  const overlayTransition: TransitionOverride = {
+    transition: 'fade',
+    duration: transition.duration,
+    exitDuration: transition.exitDuration,
+    timingFunction: transition.timingFunction,
+    enterDelay: transition.enterDelay,
+    exitDelay: transition.exitDelay,
+    keepMounted: transition.keepMounted,
+  };
 
   return (
     <Portal>
-      <FocusTrap active>
-        <LightboxContextProvider
-          value={{
-            getStyles,
-            store: store!,
-            slides,
-            currentIndex: _currentIndex,
-            setIndex: (index: number) => {
-              setCurrentIndex(index);
-              embla?.scrollTo(index);
-            },
-            embla: embla ?? null,
-            emblaRef,
-            withZoom: !!withZoom,
-            withThumbnails: !!withThumbnails,
-            withFullscreen: !!withFullscreen,
-            withDownload: !!withDownload,
-            thumbnailsVisible,
-            toggleThumbnails,
-            isFullscreen,
-            toggleFullscreen,
-            zoomState: zoom.zoomState,
-            toggleZoom: zoom.toggleZoom,
-            getImageZoomProps: zoom.getImageProps,
-            onClose,
-            loop: !!loop,
-            withSlideTransition: !!withSlideTransition,
-            slideTransitionActive,
-            closeOnSwipeDown: !!closeOnSwipeDown,
-          }}
-        >
-          <Box
-            {...getStyles('root')}
-            {...others}
-            role="dialog"
-            aria-modal="true"
-            aria-roledescription="carousel"
-            tabIndex={-1}
-            mod={mod}
-            onClick={(event) => {
-              if (closeOnClickOutside && event.target === event.currentTarget) {
-                onClose();
-              }
-            }}
-          >
-            {children}
-          </Box>
-        </LightboxContextProvider>
-      </FocusTrap>
+      <LightboxContextProvider
+        value={{
+          getStyles,
+          store: store!,
+          slides,
+          currentIndex: _currentIndex,
+          setIndex: (index: number) => {
+            setCurrentIndex(index);
+            embla?.scrollTo(index);
+          },
+          embla: embla ?? null,
+          emblaRef,
+          withZoom: !!withZoom,
+          withThumbnails: !!withThumbnails,
+          withFullscreen: !!withFullscreen,
+          withDownload: !!withDownload,
+          thumbnailsVisible,
+          toggleThumbnails,
+          isFullscreen,
+          toggleFullscreen,
+          zoomState: zoom.zoomState,
+          toggleZoom: zoom.toggleZoom,
+          getImageZoomProps: zoom.getImageProps,
+          onClose,
+          loop: !!loop,
+          withSlideTransition: !!withSlideTransition,
+          slideTransitionActive,
+          closeOnSwipeDown: !!closeOnSwipeDown,
+        }}
+      >
+        <Box {...getStyles('root')}>
+          <Transition mounted={opened} {...overlayTransition}>
+            {(overlayStyles) => <Box {...getStyles('overlay', { style: overlayStyles })} />}
+          </Transition>
+
+          <Transition mounted={opened} {...transition}>
+            {(contentStyles) => (
+              <FocusTrap active={opened}>
+                <Box
+                  {...getStyles('content', { style: contentStyles })}
+                  {...others}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-roledescription="carousel"
+                  tabIndex={-1}
+                  mod={mod}
+                  onClick={(event) => {
+                    if (closeOnClickOutside && event.target === event.currentTarget) {
+                      onClose();
+                    }
+                  }}
+                >
+                  {children}
+                </Box>
+              </FocusTrap>
+            )}
+          </Transition>
+        </Box>
+      </LightboxContextProvider>
     </Portal>
   );
 });

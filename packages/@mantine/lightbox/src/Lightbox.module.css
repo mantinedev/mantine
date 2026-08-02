@@ -5,14 +5,7 @@
   --lightbox-toolbar-height: 56px;
   --lightbox-thumbnails-height: 100px;
 
-  position: fixed;
-  inset: 0;
-  z-index: var(--lightbox-z-index);
-  display: flex;
-  flex-direction: column;
-  background-color: var(--lightbox-overlay-color);
-  color: var(--mantine-color-white);
-  outline: none;
+  display: contents;
 }
 
 .overlay {
@@ -20,6 +13,16 @@
   inset: 0;
   z-index: var(--lightbox-z-index);
   background-color: var(--lightbox-overlay-color);
+}
+
+.content {
+  position: fixed;
+  inset: 0;
+  z-index: var(--lightbox-z-index);
+  display: flex;
+  flex-direction: column;
+  color: var(--mantine-color-white);
+  outline: none;
 }
 
 .toolbar {

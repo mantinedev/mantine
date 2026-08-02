@@ -3,8 +3,9 @@ import type { StylesApiData } from '../types';
 
 export const LightboxStylesApi: StylesApiData<LightboxFactory> = {
   selectors: {
-    root: 'Root element – full-screen overlay container',
+    root: 'Root element – holds CSS variables, renders overlay and content',
     overlay: 'Background overlay behind the lightbox',
+    content: 'Full-screen dialog container with all lightbox controls',
     toolbar: 'Top toolbar wrapper',
     toolbarGroup: 'Left/right toolbar button group',
     toolbarButton: 'Individual toolbar action button',

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Group, Stack } from '@mantine/core';
+import { Button, Group, Select, Stack } from '@mantine/core';
 import { Lightbox } from './Lightbox';
 import { lightbox } from './lightbox.store';
 import type { LightboxSlideData, ToolbarItem } from './lightbox.types';
@@ -353,6 +353,48 @@ export function CustomThumbRendering() {
         onClose={() => setOpened(false)}
         slides={customSlides}
         withThumbnails
+      />
+    </div>
+  );
+}
+
+export function OverlayTransition() {
+  const [opened, setOpened] = useState(false);
+  const [transition, setTransition] = useState<string | null>('pop');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Group align="flex-end">
+        <Select
+          label="Transition"
+          data={['fade', 'pop', 'scale', 'slide-up', 'slide-down', 'rotate-left']}
+          value={transition}
+          onChange={setTransition}
+          allowDeselect={false}
+        />
+        <Button onClick={() => setOpened(true)}>Open with transition</Button>
+      </Group>
+      <Lightbox
+        opened={opened}
+        onClose={() => setOpened(false)}
+        slides={slides}
+        transitionProps={{ transition: transition as any, duration: 400 }}
+      />
+    </div>
+  );
+}
+
+export function DisabledTransition() {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => setOpened(true)}>Open without animation</Button>
+      <Lightbox
+        opened={opened}
+        onClose={() => setOpened(false)}
+        slides={slides}
+        transitionProps={{ duration: 0 }}
       />
     </div>
   );

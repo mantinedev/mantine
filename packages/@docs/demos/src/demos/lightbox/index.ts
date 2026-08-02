@@ -8,4 +8,6 @@ export { custom } from './Lightbox.demo.custom';
 export { toolbar } from './Lightbox.demo.toolbar';
 export { loop } from './Lightbox.demo.loop';
 export { transition } from './Lightbox.demo.transition';
+export { overlayTransition } from './Lightbox.demo.overlayTransition';
+export { disableTransition } from './Lightbox.demo.disableTransition';
 export { swipeClose } from './Lightbox.demo.swipeClose';
