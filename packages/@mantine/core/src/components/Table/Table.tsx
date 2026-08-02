@@ -233,7 +233,7 @@ export const Table = factory<TableFactory>((_props) => {
     >
       <Box
         component="table"
-        mod={[{ 'data-with-table-border': withTableBorder, 'data-tabular-nums': tabularNums }, mod]}
+        mod={[{ withTableBorder, tabularNums }, mod]}
         {...getStyles('table')}
         {...others}
       >

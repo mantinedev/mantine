@@ -23,6 +23,7 @@ export const ResourcesScheduleStylesApi: StylesApiData<ResourcesScheduleFactory>
     resourcesDayViewCurrentTimeIndicatorTimeBubble:
       'ResourcesDayView current time indicator time bubble',
     resourcesDayViewEventWrapper: 'ResourcesDayView event wrapper',
+    resourcesDayViewDragPreview: 'ResourcesDayView drag preview ghost element',
     resourcesDayViewResizeHandle: 'ResourcesDayView event resize handle',
     resourcesDayViewGroupColumn: 'ResourcesDayView group label column',
     resourcesDayViewGroupColumnEmpty: 'ResourcesDayView empty group column cell',
@@ -49,6 +50,7 @@ export const ResourcesScheduleStylesApi: StylesApiData<ResourcesScheduleFactory>
     resourcesWeekViewCurrentTimeIndicatorTimeBubble:
       'ResourcesWeekView current time indicator time bubble',
     resourcesWeekViewEventWrapper: 'ResourcesWeekView event wrapper',
+    resourcesWeekViewDragPreview: 'ResourcesWeekView drag preview ghost element',
     resourcesWeekViewResizeHandle: 'ResourcesWeekView event resize handle',
     resourcesWeekViewGroupColumn: 'ResourcesWeekView group label column',
     resourcesWeekViewGroupColumnEmpty: 'ResourcesWeekView empty group column cell',

@@ -10,6 +10,9 @@ import type { RichTextEditorControlProps } from './RichTextEditorControl/RichTex
 import type { RichTextEditorImageUploadControlProps } from './RichTextEditorControl/RichTextEditorImageUploadControl';
 import type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
 import type { RichTextEditorSourceCodeControlProps } from './RichTextEditorControl/RichTextEditorSourceCodeControl';
+import type { RichTextEditorTableInsertControlProps } from './RichTextEditorControl/RichTextEditorTableInsertControl';
+import type { RichTextEditorDetailsControlProps } from './RichTextEditorControl/RichTextEditorDetailsControl';
+import type { RichTextEditorInvisibleCharactersControlProps } from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl';
 import type { RichTextEditorControlsGroupProps } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
 import type { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTextEditorToolbar';
 
@@ -33,6 +36,9 @@ export type {
   RichTextEditorImageUploadControlProps,
   RichTextEditorLinkControlProps,
   RichTextEditorSourceCodeControlProps,
+  RichTextEditorTableInsertControlProps,
+  RichTextEditorDetailsControlProps,
+  RichTextEditorInvisibleCharactersControlProps,
   RichTextEditorContentProps,
   RichTextEditorControlsGroupProps,
   RichTextEditorLabels,

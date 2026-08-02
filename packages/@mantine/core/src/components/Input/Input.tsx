@@ -361,9 +361,9 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
             pointer,
             disabled,
             multiline,
-            'data-with-right-section': !!_rightSection,
-            'data-with-left-section': !!_leftSection,
-            'data-with-bottom-section': !!__bottomSection,
+            withRightSection: !!_rightSection,
+            withLeftSection: !!_leftSection,
+            withBottomSection: !!__bottomSection,
           },
           mod,
         ]}

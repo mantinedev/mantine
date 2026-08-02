@@ -21,6 +21,8 @@ export const ResourcesDayViewStylesApi: StylesApiData<ResourcesDayViewFactory> =
     resourcesDayViewCurrentTimeIndicatorThumb: 'Current time indicator thumb',
     resourcesDayViewCurrentTimeIndicatorTimeBubble: 'Current time indicator time bubble',
     resourcesDayViewEventWrapper: 'Event wrapper element',
+    resourcesDayViewDragPreview:
+      'Ghost preview shown at the snapped position while dragging an event',
     resourcesDayViewResizeHandle: 'Event resize handle element',
     resourcesDayViewGroupColumn: 'Group label column element',
     resourcesDayViewGroupColumnEmpty: 'Empty group column cell for ungrouped resources',

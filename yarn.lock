@@ -2383,9 +2383,12 @@ __metadata:
     "@mantinex/dev-icons": "workspace:*"
     "@mantinex/mantine-logo": "workspace:*"
     "@tiptap/core": "npm:^3.27.3"
+    "@tiptap/extension-details": "npm:^3.27.3"
     "@tiptap/extension-floating-menu": "npm:^3.23.6"
     "@tiptap/extension-image": "npm:^3.27.3"
+    "@tiptap/extension-invisible-characters": "npm:^3.27.3"
     "@tiptap/extension-link": "npm:^3.27.3"
+    "@tiptap/extension-table": "npm:^3.27.3"
     "@tiptap/pm": "npm:^3.27.3"
     "@tiptap/react": "npm:^3.27.3"
     dayjs: "npm:^1.11.21"
@@ -4255,8 +4258,8 @@ __metadata:
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     embla-carousel: ">=8.0.0"
     embla-carousel-react: ">=8.0.0"
     react: ^19.2.0
@@ -4274,8 +4277,8 @@ __metadata:
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     react: ^19.2.0
     react-dom: ^19.2.0
     recharts: ">=3.2.1"
@@ -4293,8 +4296,8 @@ __metadata:
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     react: ^19.2.0
     react-dom: ^19.2.0
   languageName: unknown
@@ -4322,7 +4325,7 @@ __metadata:
     react-remove-scroll: "npm:^2.7.2"
     type-fest: "npm:^5.8.0"
   peerDependencies:
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/hooks": 9.5.1
     react: ^19.2.0
     react-dom: ^19.2.0
   languageName: unknown
@@ -4340,8 +4343,8 @@ __metadata:
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     dayjs: ">=1.0.0"
     react: ^19.2.0
     react-dom: ^19.2.0
@@ -4359,8 +4362,8 @@ __metadata:
     react-dom: "npm:19.2.7"
     react-dropzone: "npm:15.0.0"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     react: ^19.2.0
     react-dom: ^19.2.0
   languageName: unknown
@@ -4382,8 +4385,8 @@ __metadata:
     "@emotion/react": ^11.11.4
     "@emotion/serialize": ^1.1.4
     "@emotion/utils": ^1.2.1
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     react: ^19.2.0
     react-dom: ^19.2.0
   languageName: unknown
@@ -4447,8 +4450,8 @@ __metadata:
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     react: ^19.2.0
     react-dom: ^19.2.0
   languageName: unknown
@@ -4461,13 +4464,13 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "npm:9.5.1-alpha.1"
+    "@mantine/store": "npm:9.5.1"
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
     react-transition-group: "npm:4.4.5"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     react: ^19.2.0
     react-dom: ^19.2.0
   languageName: unknown
@@ -4480,12 +4483,12 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "npm:9.5.1-alpha.1"
+    "@mantine/store": "npm:9.5.1"
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     react: ^19.2.0
     react-dom: ^19.2.0
   languageName: unknown
@@ -4501,9 +4504,9 @@ __metadata:
     "@mantine/hooks": "workspace:*"
     rrule: "npm:^2.8.1"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/dates": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/dates": 9.5.1
+    "@mantine/hooks": 9.5.1
     react: ^19.2.0
     react-dom: ^19.2.0
   languageName: unknown
@@ -4516,12 +4519,12 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "npm:9.5.1-alpha.1"
+    "@mantine/store": "npm:9.5.1"
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     react: ^19.2.0
     react-dom: ^19.2.0
   languageName: unknown
@@ -4536,7 +4539,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/store@npm:9.5.1-alpha.1, @mantine/store@workspace:*, @mantine/store@workspace:packages/@mantine/store":
+"@mantine/store@npm:9.5.1, @mantine/store@workspace:*, @mantine/store@workspace:packages/@mantine/store":
   version: 0.0.0-use.local
   resolution: "@mantine/store@workspace:packages/@mantine/store"
   peerDependencies:
@@ -4554,8 +4557,8 @@ __metadata:
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
-    "@mantine/hooks": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     "@tiptap/extension-link": ">=3.3.0"
     "@tiptap/react": ">=3.3.0"
     react: ^19.2.0
@@ -4570,7 +4573,7 @@ __metadata:
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.5.1-alpha.1
+    "@mantine/core": 9.5.1
   languageName: unknown
   linkType: soft
 
@@ -6261,6 +6264,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-details@npm:^3.27.3":
+  version: 3.29.2
+  resolution: "@tiptap/extension-details@npm:3.29.2"
+  peerDependencies:
+    "@tiptap/core": 3.29.2
+    "@tiptap/extension-text-style": 3.29.2
+    "@tiptap/pm": 3.29.2
+  checksum: 10c0/07eb2661c1c194535aaa1dc86723ada24741192f6e5d239d7f558f81d880f4bb888dac04997197ef4db44fd774bf0ce378ea14cb66c8c0c6821373dd6ff47f1c
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-document@npm:^3.29.2":
   version: 3.29.2
   resolution: "@tiptap/extension-document@npm:3.29.2"
@@ -6362,6 +6376,17 @@ __metadata:
   peerDependencies:
     "@tiptap/core": 3.29.2
   checksum: 10c0/2cb168c8d3e291390e06f1916136ad4b3f8525270bd31b38a9bedb0b6b0498471b8547d5ca11042e4da818b0e37a42b4bc520eac002541444b5ec3fbac3cb566
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-invisible-characters@npm:^3.27.3":
+  version: 3.29.2
+  resolution: "@tiptap/extension-invisible-characters@npm:3.29.2"
+  peerDependencies:
+    "@tiptap/core": 3.29.2
+    "@tiptap/extension-text-style": 3.29.2
+    "@tiptap/pm": 3.29.2
+  checksum: 10c0/3238793b9dd874002c087211a1ca2b3c7c45737c1111960c9a9760ad501bd5caf62bf985417d9220f90d65dded50a7ae0b143c4c4825cd10356daf93b0627952
   languageName: node
   linkType: hard
 
@@ -6467,6 +6492,16 @@ __metadata:
     "@tiptap/core": 3.29.2
     "@tiptap/pm": 3.29.2
   checksum: 10c0/699724be62aa76802f4397b65965672e5e4694dbbbea5222d77a0a91f913fa24158e9863f0d80787369c6fbf85052560ca77de01ec16230bd4f2cfa5c46cf98d
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-table@npm:^3.27.3":
+  version: 3.29.2
+  resolution: "@tiptap/extension-table@npm:3.29.2"
+  peerDependencies:
+    "@tiptap/core": 3.29.2
+    "@tiptap/pm": 3.29.2
+  checksum: 10c0/d9b1df5931d6ba1897a5eb6f5c31be5cf2998e1501dca927a7970c69b23f9bcdb573b368df8f0d1694ca407afa9a00e90829f7eb6f99da4a41cb0e04961a1be7
   languageName: node
   linkType: hard
 
@@ -14230,14 +14265,17 @@ __metadata:
     "@tiptap/extension-code-block": "npm:^3.27.3"
     "@tiptap/extension-code-block-lowlight": "npm:^3.27.3"
     "@tiptap/extension-color": "npm:^3.27.3"
+    "@tiptap/extension-details": "npm:^3.27.3"
     "@tiptap/extension-highlight": "npm:^3.27.3"
     "@tiptap/extension-history": "npm:^3.27.3"
     "@tiptap/extension-image": "npm:^3.27.3"
+    "@tiptap/extension-invisible-characters": "npm:^3.27.3"
     "@tiptap/extension-link": "npm:^3.27.3"
     "@tiptap/extension-list": "npm:^3.27.3"
     "@tiptap/extension-placeholder": "npm:^3.27.3"
     "@tiptap/extension-subscript": "npm:^3.27.3"
     "@tiptap/extension-superscript": "npm:^3.27.3"
+    "@tiptap/extension-table": "npm:^3.27.3"
     "@tiptap/extension-task-item": "npm:^3.27.3"
     "@tiptap/extension-task-list": "npm:^3.27.3"
     "@tiptap/extension-text-align": "npm:^3.27.3"

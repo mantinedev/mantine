@@ -102,7 +102,7 @@ export const Title = factory<TitleFactory>((_props) => {
       {...getStyles('root')}
       component={`h${order}`}
       variant={variant}
-      mod={[{ order, 'data-line-clamp': typeof lineClamp === 'number' }, mod]}
+      mod={[{ order, lineClamp: typeof lineClamp === 'number' }, mod]}
       size={size}
       {...others}
     />
