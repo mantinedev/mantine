@@ -81,6 +81,14 @@ describe('@mantine/core/Table', () => {
     expect(screen.getByRole('table')).toHaveAttribute('data-with-table-border');
   });
 
+  it('sets data-tabular-nums attribute when tabularNums prop is set', () => {
+    const { rerender } = render(<Table tabularNums />);
+    expect(screen.getByRole('table')).toHaveAttribute('data-tabular-nums');
+
+    rerender(<Table tabularNums={false} />);
+    expect(screen.getByRole('table')).not.toHaveAttribute('data-tabular-nums');
+  });
+
   it('exposes Table.Caption, Table.Tbody, Table.Td, Table.Tfoot, Table.Th, Table.Tr, Table.Thead components', () => {
     expect(Table.Caption).toBe(TableCaption);
     expect(Table.Tbody).toBe(TableTbody);
