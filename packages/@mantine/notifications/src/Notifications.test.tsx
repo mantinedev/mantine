@@ -402,6 +402,329 @@ describe('@mantine/core/Notifications', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
+  describe('stacked', () => {
+    function getPositionRoot(container: HTMLElement, position: string) {
+      return container.querySelector(`[data-position="${position}"]`) as HTMLElement;
+    }
+
+    function getStackTransform(notification: HTMLElement) {
+      return notification.style.getPropertyValue('--notifications-stack-transform');
+    }
+
+    it('does not enable stacked layout by default', () => {
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications store={store} withinPortal={false} autoClose={false} />
+      );
+
+      act(() => {
+        notifications.show({ id: 'default-stacked', message: 'Default layout' }, store);
+      });
+
+      expect(getPositionRoot(container, 'bottom-right')).not.toHaveAttribute('data-stacked');
+    });
+
+    it('enables stacked layout with stacked prop', () => {
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications store={store} withinPortal={false} autoClose={false} stacked />
+      );
+
+      act(() => {
+        notifications.show({ id: 'stacked-prop', message: 'Stacked prop' }, store);
+      });
+
+      expect(getPositionRoot(container, 'bottom-right')).toHaveAttribute('data-stacked');
+    });
+
+    it('renders the newest equal-priority notification as the front item', () => {
+      const store = createNotificationsStore();
+      render(<Notifications store={store} withinPortal={false} autoClose={false} stacked />);
+
+      act(() => {
+        notifications.show({ id: 'first', message: 'First notification' }, store);
+        notifications.show({ id: 'second', message: 'Second notification' }, store);
+      });
+
+      expect(
+        screen.getAllByRole('alert', { hidden: true }).map((item) => item.textContent)
+      ).toEqual(['Second notification', 'First notification']);
+    });
+
+    it('keeps higher priority notifications in front of newer lower priority notifications', () => {
+      const store = createNotificationsStore();
+      render(<Notifications store={store} withinPortal={false} autoClose={false} stacked />);
+
+      act(() => {
+        notifications.show({ id: 'high', message: 'High priority', priority: 10 }, store);
+        notifications.show({ id: 'low', message: 'Low priority', priority: 0 }, store);
+      });
+
+      expect(
+        screen.getAllByRole('alert', { hidden: true }).map((item) => item.textContent)
+      ).toEqual(['High priority', 'Low priority']);
+    });
+
+    it('expands top-positioned stacks downward on hover', () => {
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={false}
+          stacked
+          position="top-right"
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'older', message: 'Older' }, store);
+        notifications.show({ id: 'newer', message: 'Newer' }, store);
+      });
+
+      const root = getPositionRoot(container, 'top-right');
+      const olderNotification = screen.getByText('Older').closest('[role="alert"]') as HTMLElement;
+      const newerNotification = screen.getByText('Newer').closest('[role="alert"]') as HTMLElement;
+
+      expect(root).toHaveAttribute('data-stacked');
+      expect(root.style.getPropertyValue('--notifications-stack-height')).toBe('88px');
+      expect(newerNotification.style.getPropertyValue('--notifications-state-transform')).toBe(
+        'translateY(0)'
+      );
+      expect(getStackTransform(olderNotification)).toContain('8px');
+      expect(olderNotification).toHaveAttribute('data-stack-preview', 'true');
+      expect(olderNotification).toHaveAttribute('aria-hidden', 'true');
+      expect(olderNotification).toHaveAttribute('inert');
+      expect(
+        olderNotification.style.getPropertyValue('--notifications-stack-content-opacity')
+      ).toBe('0');
+      expect(olderNotification).toHaveStyle({ height: '80px', overflow: 'hidden' });
+
+      fireEvent.mouseEnter(root);
+
+      expect(root).toHaveAttribute('data-expanded');
+      expect(root.style.getPropertyValue('--notifications-stack-height')).toBe('174px');
+      expect(getStackTransform(olderNotification)).toContain('94px');
+      expect(olderNotification).not.toHaveAttribute('data-stack-preview');
+      expect(olderNotification).not.toHaveAttribute('aria-hidden');
+      expect(olderNotification).not.toHaveAttribute('inert');
+      expect(
+        olderNotification.style.getPropertyValue('--notifications-stack-content-opacity')
+      ).toBe('1');
+
+      fireEvent.mouseLeave(root);
+
+      expect(root).not.toHaveAttribute('data-expanded');
+      expect(getStackTransform(olderNotification)).toContain('8px');
+    });
+
+    it('expands bottom-positioned stacks upward on hover', () => {
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={false}
+          stacked
+          position="bottom-right"
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'older', message: 'Older bottom' }, store);
+        notifications.show({ id: 'newer', message: 'Newer bottom' }, store);
+      });
+
+      const root = getPositionRoot(container, 'bottom-right');
+      const olderNotification = screen
+        .getByText('Older bottom')
+        .closest('[role="alert"]') as HTMLElement;
+
+      expect(getStackTransform(olderNotification)).toContain('-8px');
+
+      fireEvent.mouseEnter(root);
+
+      expect(root).toHaveAttribute('data-expanded');
+      expect(getStackTransform(olderNotification)).toContain('-94px');
+    });
+
+    it('expands stack on focus and collapses on blur', () => {
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications store={store} withinPortal={false} autoClose={false} stacked />
+      );
+
+      act(() => {
+        notifications.show({ id: 'older-focus', message: 'Older focus' }, store);
+        notifications.show({ id: 'newer-focus', message: 'Newer focus' }, store);
+      });
+
+      const root = getPositionRoot(container, 'bottom-right');
+
+      fireEvent.focus(root);
+      expect(root).toHaveAttribute('data-expanded');
+
+      fireEvent.blur(root, { relatedTarget: document.body });
+      expect(root).not.toHaveAttribute('data-expanded');
+    });
+
+    it('keeps stack expanded on mouse leave when focus remains inside', () => {
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications store={store} withinPortal={false} autoClose={false} stacked />
+      );
+
+      act(() => {
+        notifications.show({ id: 'older-focused', message: 'Older focused' }, store);
+        notifications.show({ id: 'newer-focused', message: 'Newer focused' }, store);
+      });
+
+      const root = getPositionRoot(container, 'bottom-right');
+      const closeButton = root.querySelector('button')!;
+
+      act(() => {
+        closeButton.focus();
+        fireEvent.mouseLeave(root);
+      });
+
+      expect(root).toHaveAttribute('data-expanded');
+    });
+
+    it('composes forwarded root handlers with stacked expansion handlers', () => {
+      const store = createNotificationsStore();
+      const onMouseEnter = jest.fn();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={false}
+          stacked
+          onMouseEnter={onMouseEnter}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'older-handler', message: 'Older handler' }, store);
+        notifications.show({ id: 'newer-handler', message: 'Newer handler' }, store);
+      });
+
+      const root = getPositionRoot(container, 'bottom-right');
+
+      fireEvent.mouseEnter(root);
+
+      expect(onMouseEnter).toHaveBeenCalledTimes(1);
+      expect(root).toHaveAttribute('data-expanded');
+    });
+
+    it('resumes auto close when stacked is disabled while expanded', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container, rerender } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={100}
+          transitionDuration={10}
+          stacked
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'older-toggle', message: 'Older toggle' }, store);
+        notifications.show({ id: 'newer-toggle', message: 'Newer toggle' }, store);
+      });
+
+      fireEvent.mouseEnter(getPositionRoot(container, 'bottom-right'));
+
+      rerender(
+        <Notifications store={store} withinPortal={false} autoClose={100} transitionDuration={10} />
+      );
+
+      act(() => {
+        jest.advanceTimersByTime(125);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+
+    it('displays new notifications in the stack immediately instead of queueing them', () => {
+      const store = createNotificationsStore();
+      render(
+        <Notifications store={store} withinPortal={false} autoClose={false} stacked limit={1} />
+      );
+
+      act(() => {
+        notifications.show({ id: 'older-visible', message: 'Older visible notification' }, store);
+        notifications.show({ id: 'newer-visible', message: 'Newer visible notification' }, store);
+      });
+
+      expect(screen.getByText('Older visible notification')).toBeInTheDocument();
+      expect(screen.getByText('Newer visible notification')).toBeInTheDocument();
+      expect(store.getState().queue).toEqual([]);
+    });
+
+    it('moves deep collapsed notifications farther into the stack and fades them out', () => {
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications store={store} withinPortal={false} autoClose={false} stacked />
+      );
+
+      act(() => {
+        Array(5)
+          .fill(0)
+          .forEach((_, index) => {
+            notifications.show({ id: `deep-${index}`, message: `Deep ${index}` }, store);
+          });
+      });
+
+      const deepestNotification = screen
+        .getByText('Deep 0')
+        .closest('[role="alert"]') as HTMLElement;
+
+      expect(getStackTransform(deepestNotification)).toContain('32px');
+      expect(deepestNotification.style.getPropertyValue('--notifications-stack-opacity')).toBe('0');
+      expect(deepestNotification).toHaveAttribute('aria-hidden', 'true');
+      expect(deepestNotification).toHaveAttribute('inert');
+
+      fireEvent.mouseEnter(getPositionRoot(container, 'bottom-right'));
+
+      expect(deepestNotification.style.getPropertyValue('--notifications-stack-opacity')).toBe('0');
+      expect(deepestNotification).toHaveAttribute('aria-hidden', 'true');
+      expect(deepestNotification).toHaveAttribute('inert');
+    });
+
+    it('allows dismissing the front stacked notification by dragging', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+
+      render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={false}
+          stacked
+          transitionDuration={10}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'older-drag', message: 'Older drag' }, store);
+        notifications.show({ id: 'newer-drag', message: 'Newer drag' }, store);
+      });
+
+      const notification = screen.getByText('Newer drag').closest('[role="alert"]')!;
+
+      act(() => {
+        pointerDown(notification, { clientX: 0, clientY: 0 });
+        pointerMove({ clientX: 200, clientY: 0 });
+        pointerUp({ clientX: 200, clientY: 0 });
+        jest.advanceTimersByTime(425);
+      });
+
+      expect(store.getState().notifications.map((item) => item.id)).toEqual(['older-drag']);
+    });
+  });
+
   describe('priority', () => {
     function createStoreWithLimit(limit: number) {
       const store = createNotificationsStore();

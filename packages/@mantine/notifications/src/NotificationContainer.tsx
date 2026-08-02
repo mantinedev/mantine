@@ -16,6 +16,7 @@ interface NotificationContainerProps extends NotificationProps {
   paused: boolean;
   onHoverStart?: () => void;
   onHoverEnd?: () => void;
+  onHeightChange?: (id: string, height: number | null) => void;
   ref?: React.Ref<HTMLDivElement>;
 }
 
@@ -29,6 +30,7 @@ export function NotificationContainer({
   paused,
   onHoverStart,
   onHoverEnd,
+  onHeightChange,
   ref,
   style,
   ...others
@@ -169,6 +171,7 @@ export function NotificationContainer({
   const resolvedStyle = getStyleObject(style, theme);
   const resolvedDataStyle = getStyleObject(dataStyle, theme);
   const baseStyle = { ...resolvedStyle, ...resolvedDataStyle };
+  const baseCssVariables = baseStyle as Record<string, string | number | undefined>;
   const baseOpacity = typeof baseStyle.opacity === 'number' ? baseStyle.opacity : 1;
   const swipeOpacity = dismissed ? 0 : 1 - Math.min(Math.abs(offset) / 200, 1) * 0.6;
   const resolvedTransitionDuration =
@@ -179,11 +182,16 @@ export function NotificationContainer({
     ['--notifications-state-transform' as string]:
       typeof baseStyle.transform === 'string' ? baseStyle.transform : 'translateX(0)',
     ['--notifications-state-opacity' as string]: String(baseOpacity),
+    ['--notifications-stack-transform' as string]:
+      baseCssVariables['--notifications-stack-transform'] ?? 'translate3d(0, 0, 0)',
+    ['--notifications-stack-opacity' as string]:
+      baseCssVariables['--notifications-stack-opacity'] ?? '1',
     ['--notifications-swipe-offset' as string]: `${offset}px`,
     ['--notifications-swipe-opacity' as string]: String(swipeOpacity),
     transform:
-      'var(--notifications-state-transform) translate3d(var(--notifications-swipe-offset), 0, 0)',
-    opacity: 'calc(var(--notifications-state-opacity) * var(--notifications-swipe-opacity))',
+      'var(--notifications-state-transform) var(--notifications-stack-transform) translate3d(var(--notifications-swipe-offset), 0, 0)',
+    opacity:
+      'calc(var(--notifications-state-opacity) * var(--notifications-stack-opacity) * var(--notifications-swipe-opacity))',
     transitionDuration:
       active || scrollDismissActive ? '0ms, 0ms, 0ms' : resolvedTransitionDuration,
     cursor: 'default',
@@ -280,6 +288,37 @@ export function NotificationContainer({
       cancelScrollDismissReset();
     };
   }, []);
+
+  useEffect(() => {
+    if (!data.id || !onHeightChange) {
+      return undefined;
+    }
+
+    const node = notificationRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    const updateHeight = () => {
+      const originalHeight = node.style.height;
+      node.style.height = 'auto';
+      onHeightChange(data.id!, node.offsetHeight);
+      node.style.height = originalHeight;
+    };
+    updateHeight();
+
+    if (typeof ResizeObserver === 'undefined') {
+      return () => onHeightChange(data.id!, null);
+    }
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+      onHeightChange(data.id!, null);
+    };
+  }, [data.id, onHeightChange]);
 
   useEffect(() => {
     data.onOpen?.(data);

@@ -35,6 +35,65 @@
     bottom: var(--mantine-spacing-md);
     right: var(--mantine-spacing-md);
   }
+
+  &:where([data-stacked]) {
+    height: var(--notifications-stack-height);
+    transition-property: height;
+    transition-duration: var(--notifications-stack-transition-duration);
+    transition-timing-function: ease;
+
+    & .notification {
+      --notifications-stack-content-opacity: 1;
+
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-top: 0;
+      transform-origin: center;
+      will-change: transform, opacity;
+
+      &::before {
+        transition-property: opacity;
+        transition-duration: var(--notifications-stack-transition-duration);
+        transition-timing-function: ease;
+      }
+
+      & > * {
+        opacity: var(--notifications-stack-content-opacity);
+        transition-property: opacity;
+        transition-duration: var(--notifications-stack-transition-duration);
+        transition-timing-function: ease;
+      }
+    }
+
+    & .notification[data-stack-preview] {
+      pointer-events: none;
+
+      &::before {
+        opacity: 0;
+      }
+    }
+
+    & .notification + .notification {
+      margin-top: 0;
+    }
+  }
+
+  &:where([data-stacked][data-position='top-center']),
+  &:where([data-stacked][data-position='top-left']),
+  &:where([data-stacked][data-position='top-right']) {
+    & .notification {
+      top: 0;
+    }
+  }
+
+  &:where([data-stacked][data-position='bottom-center']),
+  &:where([data-stacked][data-position='bottom-left']),
+  &:where([data-stacked][data-position='bottom-right']) {
+    & .notification {
+      bottom: 0;
+    }
+  }
 }
 
 .notification {
