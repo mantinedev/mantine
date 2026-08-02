@@ -47,6 +47,8 @@ export type {
   LightboxVideoSlideTrack,
   LightboxCustomSlide,
   ToolbarItem,
+  ToolbarItems,
+  ToolbarItemsPayload,
 } from './lightbox.types.js';
 
 export { Lightbox } from './Lightbox.js';

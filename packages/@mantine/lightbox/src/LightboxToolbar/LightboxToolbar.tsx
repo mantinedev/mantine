@@ -9,7 +9,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useLightboxContext } from '../lightbox.context';
-import type { ToolbarItem } from '../lightbox.types';
+import type { ToolbarItem, ToolbarItems } from '../lightbox.types';
 import {
   createCloseToolbarItem,
   createDownloadToolbarItem,
@@ -22,8 +22,8 @@ export type LightboxToolbarStylesNames = 'toolbar' | 'toolbarGroup' | 'toolbarBu
 
 export interface LightboxToolbarProps
   extends BoxProps, CompoundStylesApiProps<LightboxToolbarFactory>, ElementProps<'div'> {
-  /** Custom toolbar items, overrides default toolbar actions */
-  toolbarItems?: ToolbarItem[];
+  /** Custom toolbar items, overrides default toolbar actions. Can be a function that receives the current lightbox state and handlers. */
+  toolbarItems?: ToolbarItems;
 }
 
 export type LightboxToolbarFactory = Factory<{
@@ -59,7 +59,23 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
 
   defaultItems.push(createCloseToolbarItem(ctx.onClose));
 
-  const items = toolbarItems ?? defaultItems;
+  const items =
+    typeof toolbarItems === 'function'
+      ? toolbarItems({
+          slides: ctx.slides,
+          currentIndex: ctx.currentIndex,
+          setIndex: ctx.setIndex,
+          next: ctx.next,
+          prev: ctx.prev,
+          close: ctx.onClose,
+          thumbnailsVisible: ctx.thumbnailsVisible,
+          toggleThumbnails: ctx.toggleThumbnails,
+          isFullscreen: ctx.isFullscreen,
+          toggleFullscreen: ctx.toggleFullscreen,
+          zoomed: ctx.zoomState.isZoomed,
+          toggleZoom: ctx.toggleZoom,
+        })
+      : (toolbarItems ?? defaultItems);
   const leftItems = items.filter((item) => item.position === 'left');
   const rightItems = items.filter((item) => item.position !== 'left');
 

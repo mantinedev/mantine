@@ -70,6 +70,7 @@ Use the following props to control built-in interactions:
 - `closeOnSwipeDown` – closes the lightbox on mobile swipe down, `true` by default
 - `withKeyboardEvents` – enables keyboard shortcuts (arrows, `F`/`T`/`Z`), `true` by default; `Escape` always closes the lightbox
 - `returnFocus` – returns focus to the last active element when the lightbox is closed, `true` by default
+- `withInitialFocusPlaceholder` – adds a hidden focusable element at the start of the lightbox content so that the first toolbar button does not receive visible focus when the lightbox is opened with a pointer, `true` by default
 
 ## Zoom
 
@@ -82,7 +83,8 @@ pinch to adjust. Use `zoomMaxScale` to change the maximum zoom scale (`3` by def
 ## Thumbnails
 
 Enable the bottom thumbnail strip with `withThumbnails`. Click a thumbnail to navigate to that slide.
-Toggle visibility at runtime with the `T` keyboard shortcut or the toolbar button:
+Toggle visibility at runtime with the `T` keyboard shortcut or the toolbar button – the strip is
+animated with the `transitionDuration` prop value:
 
 <Demo data={LightboxDemos.thumbnails} />
 
@@ -224,6 +226,28 @@ Use `renderThumb` to customize the thumbnail as well:
 
 Override the default toolbar items with the `toolbarItems` prop. Each item has
 a `key`, `icon`, `label`, `onClick`, and optional `position` (`'left'` or `'right'`).
+
+`toolbarItems` can be either an array or a function that receives the current lightbox state and
+handlers – use the function form to build items that depend on the internal state, for example
+the thumbnails, fullscreen and zoom toggles. The function receives the following payload:
+
+```tsx
+interface ToolbarItemsPayload {
+  slides: LightboxSlideData[];
+  currentIndex: number;
+  setIndex: (index: number) => void;
+  next: () => void;
+  prev: () => void;
+  close: () => void;
+  thumbnailsVisible: boolean;
+  toggleThumbnails: () => void;
+  isFullscreen: boolean;
+  toggleFullscreen: () => void;
+  zoomed: boolean;
+  toggleZoom: () => void;
+}
+```
+
 Use the built-in toolbar item factories for common actions:
 
 <Demo data={LightboxDemos.toolbar} />
@@ -268,6 +292,7 @@ Available sub-components:
 ## Accessibility
 
 - Focus is trapped within the lightbox when opened and returned to the last active element when it is closed (`returnFocus` prop)
+- Focus is moved to a hidden placeholder element instead of the first toolbar button when the lightbox is opened, so that no focus ring is displayed for pointer users (`withInitialFocusPlaceholder` prop)
 - The content element has `role="dialog"` with `aria-modal="true"` and `aria-label="Gallery"` – pass `aria-label` to change the dialog accessible name
 - Always set the `alt` property on image slides – without it the image is treated as decorative by screen readers; for video slides set the `label` property
 - All interactive elements have `aria-label` attributes; the `label` property is required for custom toolbar items

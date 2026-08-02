@@ -101,3 +101,43 @@ export interface ToolbarItem {
   /** Position in the toolbar, `'right'` by default */
   position?: 'left' | 'right';
 }
+
+export interface ToolbarItemsPayload {
+  /** Array of slide data objects */
+  slides: LightboxSlideData[];
+
+  /** Index of the currently displayed slide */
+  currentIndex: number;
+
+  /** Sets the current slide index */
+  setIndex: (index: number) => void;
+
+  /** Navigates to the next slide */
+  next: () => void;
+
+  /** Navigates to the previous slide */
+  prev: () => void;
+
+  /** Closes the lightbox */
+  close: () => void;
+
+  /** Determines whether the thumbnails strip is currently visible */
+  thumbnailsVisible: boolean;
+
+  /** Toggles thumbnails strip visibility */
+  toggleThumbnails: () => void;
+
+  /** Determines whether the document is currently displayed in fullscreen mode */
+  isFullscreen: boolean;
+
+  /** Toggles fullscreen mode */
+  toggleFullscreen: () => void;
+
+  /** Determines whether the current image is zoomed in */
+  zoomed: boolean;
+
+  /** Toggles zoom of the current image */
+  toggleZoom: () => void;
+}
+
+export type ToolbarItems = ToolbarItem[] | ((payload: ToolbarItemsPayload) => ToolbarItem[]);

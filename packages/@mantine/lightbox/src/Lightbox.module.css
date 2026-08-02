@@ -132,18 +132,18 @@
 }
 
 .thumbnails {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: var(--lightbox-thumbnails-height);
-  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  display: block;
+  padding: 0 var(--mantine-spacing-md);
   flex-shrink: 0;
   overflow: hidden;
 }
 
 .thumbnailsViewport {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  height: var(--lightbox-thumbnails-height);
   overflow: hidden;
-  height: 100%;
 }
 
 .thumbnailsContainer {

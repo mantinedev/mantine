@@ -14,14 +14,14 @@ import { LightboxSlides } from './LightboxSlides/LightboxSlides';
 import { LightboxThumbnails } from './LightboxThumbnails/LightboxThumbnails';
 import { LightboxToolbar } from './LightboxToolbar/LightboxToolbar';
 import { lightbox } from './lightbox.store';
-import type { ToolbarItem } from './lightbox.types';
+import type { ToolbarItems } from './lightbox.types';
 import classes from './Lightbox.module.css';
 
 export type LightboxStylesNames = LightboxRootStylesNames;
 
 export interface LightboxProps extends Omit<LightboxRootProps, 'children'> {
-  /** Custom toolbar items, overrides default toolbar */
-  toolbarItems?: ToolbarItem[];
+  /** Custom toolbar items, overrides default toolbar. Can be a function that receives the current lightbox state and handlers. */
+  toolbarItems?: ToolbarItems;
 
   /** Shows previous/next navigation arrows @default true */
   withNavigation?: boolean;

@@ -48,14 +48,14 @@ describe('@mantine/lightbox/LightboxToolbar', () => {
         <LightboxThumbnails />
       </LightboxWrapper>
     );
-    expect(screen.getByLabelText('Go to slide 1')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Go to slide 1' })).toBeInTheDocument();
 
     await userEvent.click(screen.getByLabelText('Hide thumbnails'));
-    expect(screen.queryByLabelText('Go to slide 1')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Go to slide 1' })).not.toBeInTheDocument();
     expect(screen.getByLabelText('Show thumbnails')).toBeInTheDocument();
 
     await userEvent.keyboard('t');
-    expect(screen.getByLabelText('Go to slide 1')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Go to slide 1' })).toBeInTheDocument();
     expect(screen.getByLabelText('Hide thumbnails')).toBeInTheDocument();
   });
 
@@ -127,6 +127,37 @@ describe('@mantine/lightbox/LightboxToolbar', () => {
 
     await userEvent.click(screen.getByLabelText('My action'));
     expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('supports toolbarItems as a function that receives lightbox state and handlers', async () => {
+    await renderWithAct(
+      <LightboxWrapper withThumbnails>
+        <LightboxToolbar
+          toolbarItems={(payload) => [
+            {
+              key: 'thumbnails',
+              icon: <span>T</span>,
+              label: payload.thumbnailsVisible ? 'Hide thumbnails' : 'Show thumbnails',
+              onClick: payload.toggleThumbnails,
+            },
+            {
+              key: 'index',
+              icon: <span>I</span>,
+              label: `Slide ${payload.currentIndex + 1} of ${payload.slides.length}`,
+              onClick: payload.next,
+            },
+          ]}
+        />
+        <LightboxThumbnails />
+      </LightboxWrapper>
+    );
+
+    expect(screen.getByLabelText('Slide 1 of 3')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Go to slide 1' })).toBeInTheDocument();
+
+    await userEvent.click(screen.getByLabelText('Hide thumbnails'));
+    expect(screen.queryByRole('button', { name: 'Go to slide 1' })).not.toBeInTheDocument();
+    expect(screen.getByLabelText('Show thumbnails')).toBeInTheDocument();
   });
 
   it('has accessible live region for slide announcements', async () => {

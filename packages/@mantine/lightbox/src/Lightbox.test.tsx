@@ -184,6 +184,18 @@ describe('@mantine/lightbox/Lightbox', () => {
     expect(screen.getByLabelText('Hide thumbnails')).toBeInTheDocument();
   });
 
+  it('renders initial focus placeholder by default', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} />);
+    const placeholder = getLightbox().querySelector('[data-autofocus]');
+    expect(placeholder).toBeInTheDocument();
+    expect(placeholder).toHaveAttribute('tabindex', '-1');
+  });
+
+  it('does not render initial focus placeholder when withInitialFocusPlaceholder is false', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} withInitialFocusPlaceholder={false} />);
+    expect(getLightbox().querySelector('[data-autofocus]')).not.toBeInTheDocument();
+  });
+
   it('renders fullscreen toggle when withFullscreen is true', async () => {
     await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
     expect(screen.getByLabelText('Enter fullscreen')).toBeInTheDocument();

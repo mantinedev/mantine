@@ -8,6 +8,7 @@ import {
   Lightbox,
   LightboxSlideData,
   ToolbarItem,
+  ToolbarItemsPayload,
 } from '@mantine/lightbox';
 import { MantineDemo } from '@mantinex/demo';
 import { images } from './_images';
@@ -23,6 +24,7 @@ import {
   Lightbox,
   LightboxSlideData,
   ToolbarItem,
+  ToolbarItemsPayload,
 } from '@mantine/lightbox';
 
 const images = [
@@ -41,36 +43,28 @@ function InfoIcon() {
   );
 }
 
+// toolbarItems as a function receives the current lightbox state and handlers
+const toolbarItems = (payload: ToolbarItemsPayload): ToolbarItem[] => [
+  // Built-in factories for common actions
+  createThumbnailsToolbarItem(payload.toggleThumbnails, payload.thumbnailsVisible),
+  createFullscreenToolbarItem(payload.toggleFullscreen, payload.isFullscreen),
+  createDownloadToolbarItem(images[payload.currentIndex]),
+  // Fully custom toolbar item
+  {
+    key: 'info',
+    icon: <InfoIcon />,
+    label: 'Image info',
+    position: 'right',
+    onClick: () => {
+      // eslint-disable-next-line no-alert
+      alert(\`Viewing image \${payload.currentIndex + 1} of \${payload.slides.length}\`);
+    },
+  },
+  createCloseToolbarItem(payload.close),
+];
+
 function Demo() {
   const [opened, setOpened] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [thumbnailsVisible, setThumbnailsVisible] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  const toolbarItems: ToolbarItem[] = [
-    // Built-in factories for common actions
-    createThumbnailsToolbarItem(
-      () => setThumbnailsVisible((v) => !v),
-      thumbnailsVisible
-    ),
-    createFullscreenToolbarItem(
-      () => setIsFullscreen((v) => !v),
-      isFullscreen
-    ),
-    createDownloadToolbarItem(slides[index]?.src || ''),
-    // Fully custom toolbar item
-    {
-      key: 'info',
-      icon: <InfoIcon />,
-      label: 'Image info',
-      position: 'right',
-      onClick: () => {
-        // eslint-disable-next-line no-alert
-        alert(\`Viewing image \${index + 1} of \${slides.length}\`);
-      },
-    },
-    createCloseToolbarItem(() => setOpened(false)),
-  ];
 
   return (
     <>
@@ -78,8 +72,6 @@ function Demo() {
         opened={opened}
         onClose={() => setOpened(false)}
         slides={slides}
-        currentIndex={index}
-        onIndexChange={setIndex}
         withThumbnails
         toolbarItems={toolbarItems}
       />
@@ -92,7 +84,8 @@ function Demo() {
 }
 `;
 
-const slides: LightboxSlideData[] = images.slice(0, 3).map((src) => ({ src }));
+const demoImages = images.slice(0, 3);
+const slides: LightboxSlideData[] = demoImages.map((src) => ({ src }));
 
 function InfoIcon() {
   return (
@@ -108,28 +101,25 @@ function InfoIcon() {
   );
 }
 
+const toolbarItems = (payload: ToolbarItemsPayload): ToolbarItem[] => [
+  createThumbnailsToolbarItem(payload.toggleThumbnails, payload.thumbnailsVisible),
+  createFullscreenToolbarItem(payload.toggleFullscreen, payload.isFullscreen),
+  createDownloadToolbarItem(demoImages[payload.currentIndex]),
+  {
+    key: 'info',
+    icon: <InfoIcon />,
+    label: 'Image info',
+    position: 'right',
+    onClick: () => {
+      // eslint-disable-next-line no-alert
+      alert(`Viewing image ${payload.currentIndex + 1} of ${payload.slides.length}`);
+    },
+  },
+  createCloseToolbarItem(payload.close),
+];
+
 function Demo() {
   const [opened, setOpened] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [thumbnailsVisible, setThumbnailsVisible] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  const toolbarItems: ToolbarItem[] = [
-    createThumbnailsToolbarItem(() => setThumbnailsVisible((v) => !v), thumbnailsVisible),
-    createFullscreenToolbarItem(() => setIsFullscreen((v) => !v), isFullscreen),
-    createDownloadToolbarItem(images.slice(0, 3)[index] || ''),
-    {
-      key: 'info',
-      icon: <InfoIcon />,
-      label: 'Image info',
-      position: 'right',
-      onClick: () => {
-        // eslint-disable-next-line no-alert
-        alert(`Viewing image ${index + 1} of ${slides.length}`);
-      },
-    },
-    createCloseToolbarItem(() => setOpened(false)),
-  ];
 
   return (
     <>
@@ -137,8 +127,6 @@ function Demo() {
         opened={opened}
         onClose={() => setOpened(false)}
         slides={slides}
-        currentIndex={index}
-        onIndexChange={setIndex}
         withThumbnails
         toolbarItems={toolbarItems}
       />

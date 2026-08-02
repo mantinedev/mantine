@@ -116,6 +116,9 @@ export interface LightboxRootProps
   /** Determines whether focus should be returned to the last active element when the lightbox is closed @default true */
   returnFocus?: boolean;
 
+  /** Adds a hidden focusable element at the start of the lightbox content – prevents the first toolbar button from receiving visible focus when the lightbox is opened with a pointer. Set to `false` if you need custom focus management. @default true */
+  withInitialFocusPlaceholder?: boolean;
+
   /** Determines whether the lightbox should be rendered inside `Portal` @default true */
   withinPortal?: boolean;
 
@@ -153,6 +156,7 @@ export const lightboxRootDefaultProps = {
   closeOnSwipeDown: true,
   withKeyboardEvents: true,
   returnFocus: true,
+  withInitialFocusPlaceholder: true,
   withinPortal: true,
   transitionDuration: 200,
   zoomMaxScale: 3,
@@ -194,6 +198,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     closeOnSwipeDown,
     withKeyboardEvents,
     returnFocus,
+    withInitialFocusPlaceholder,
     withinPortal,
     transitionDuration,
     transitionProps,
@@ -402,6 +407,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
           onClose,
           loop: !!loop,
           closeOnSwipeDown: !!closeOnSwipeDown,
+          transitionDuration: transitionDuration!,
         }}
       >
         <RemoveScroll enabled={shouldLockScroll}>
@@ -430,6 +436,8 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
                       }
                     }}
                   >
+                    {withInitialFocusPlaceholder && <FocusTrap.InitialFocus />}
+
                     <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
                       {`Slide ${_currentIndex + 1} of ${slides.length}${currentSlideLabel ? `: ${currentSlideLabel}` : ''}`}
                     </VisuallyHidden>

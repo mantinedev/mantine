@@ -28,6 +28,7 @@ export interface LightboxContextValue {
   onClose: () => void;
   loop: boolean;
   closeOnSwipeDown: boolean;
+  transitionDuration: number;
 }
 
 export const [LightboxContextProvider, useLightboxContext] =
