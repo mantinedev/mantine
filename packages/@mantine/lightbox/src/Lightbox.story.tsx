@@ -384,6 +384,23 @@ export function OverlayTransition() {
   );
 }
 
+export function CloseOnClickOutside() {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => setOpened(true)}>Open with close on click outside</Button>
+      <Lightbox
+        opened={opened}
+        onClose={() => setOpened(false)}
+        slides={slides}
+        closeOnClickOutside
+        withThumbnails
+      />
+    </div>
+  );
+}
+
 export function DisabledTransition() {
   const [opened, setOpened] = useState(false);
 

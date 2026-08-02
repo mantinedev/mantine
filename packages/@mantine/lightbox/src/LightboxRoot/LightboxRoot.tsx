@@ -9,6 +9,7 @@ import {
   factory,
   Factory,
   FocusTrap,
+  MantineTransition,
   OptionalPortal,
   RemoveScroll,
   StylesApiProps,
@@ -104,7 +105,7 @@ export interface LightboxRootProps
   /** Enables infinite loop navigation @default false */
   loop?: boolean;
 
-  /** Closes lightbox when clicking outside slide content @default true */
+  /** Closes lightbox when the empty space around the slide content is clicked @default false */
   closeOnClickOutside?: boolean;
 
   /** Closes lightbox when swiping down on mobile @default true */
@@ -125,7 +126,7 @@ export interface LightboxRootProps
   /** Transition duration in milliseconds @default 200 */
   transitionDuration?: number;
 
-  /** Props passed down to the `Transition` component that animates the overlay and content, `{ transition: 'fade', duration: transitionDuration, timingFunction: 'ease' }` by default */
+  /** Props passed down to the `Transition` component that animates the content, the overlay always fades. By default, the content is scaled from 95% to 100% while fading in. */
   transitionProps?: TransitionOverride;
 
   /** Additional Embla carousel options */
@@ -152,7 +153,7 @@ export const lightboxRootDefaultProps = {
   withFullscreen: false,
   withDownload: false,
   loop: false,
-  closeOnClickOutside: true,
+  closeOnClickOutside: false,
   closeOnSwipeDown: true,
   withKeyboardEvents: true,
   returnFocus: true,
@@ -162,6 +163,13 @@ export const lightboxRootDefaultProps = {
   zoomMaxScale: 3,
   withSlideTransition: false,
 } satisfies Partial<LightboxRootProps>;
+
+const defaultContentTransition: MantineTransition = {
+  common: { transformOrigin: 'center center' },
+  in: { opacity: 1, transform: 'scale(1)' },
+  out: { opacity: 0, transform: 'scale(0.95)' },
+  transitionProperty: 'transform, opacity',
+};
 
 const varsResolver = createVarsResolver<LightboxRootFactory>((_, { transitionDuration }) => ({
   root: {
@@ -353,7 +361,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   });
 
   const transition: TransitionOverride = {
-    transition: 'fade',
+    transition: defaultContentTransition,
     duration: transitionDuration,
     timingFunction: 'ease',
     ...transitionProps,
@@ -406,6 +414,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
           getImageZoomProps: zoom.getImageProps,
           onClose,
           loop: !!loop,
+          closeOnClickOutside: !!closeOnClickOutside,
           closeOnSwipeDown: !!closeOnSwipeDown,
           transitionDuration: transitionDuration!,
         }}

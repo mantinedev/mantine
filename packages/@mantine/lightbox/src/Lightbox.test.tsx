@@ -141,21 +141,36 @@ describe('@mantine/lightbox/Lightbox', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onClose when clicking the backdrop', async () => {
+  it('calls onClose when clicking the backdrop with closeOnClickOutside', async () => {
     const onClose = jest.fn();
-    await renderWithAct(<Lightbox {...defaultProps} onClose={onClose} />);
+    await renderWithAct(<Lightbox {...defaultProps} onClose={onClose} closeOnClickOutside />);
 
     await userEvent.click(getLightbox());
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('does not call onClose when closeOnClickOutside is false', async () => {
+  it('calls onClose when clicking the empty space around the slide with closeOnClickOutside', async () => {
     const onClose = jest.fn();
-    await renderWithAct(
-      <Lightbox {...defaultProps} onClose={onClose} closeOnClickOutside={false} />
-    );
+    await renderWithAct(<Lightbox {...defaultProps} onClose={onClose} closeOnClickOutside />);
+
+    await userEvent.click(screen.getByLabelText('Slide 1 of 3'));
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not call onClose when the slide image is clicked with closeOnClickOutside', async () => {
+    const onClose = jest.fn();
+    await renderWithAct(<Lightbox {...defaultProps} onClose={onClose} closeOnClickOutside />);
+
+    await userEvent.click(screen.getByRole('img', { name: 'First image' }));
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('does not call onClose when clicking outside slide content by default', async () => {
+    const onClose = jest.fn();
+    await renderWithAct(<Lightbox {...defaultProps} onClose={onClose} />);
 
     await userEvent.click(getLightbox());
+    await userEvent.click(screen.getByLabelText('Slide 1 of 3'));
     expect(onClose).not.toHaveBeenCalled();
   });
 

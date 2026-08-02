@@ -67,3 +67,8 @@ export const Demo_swipeClose = {
   name: '⭐ Demo: swipeClose',
   render: renderDemo(demos.swipeClose),
 };
+
+export const Demo_closeOnClickOutside = {
+  name: '⭐ Demo: closeOnClickOutside',
+  render: renderDemo(demos.closeOnClickOutside),
+};

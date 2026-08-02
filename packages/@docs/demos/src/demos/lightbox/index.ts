@@ -11,3 +11,4 @@ export { transition } from './Lightbox.demo.transition';
 export { overlayTransition } from './Lightbox.demo.overlayTransition';
 export { disableTransition } from './Lightbox.demo.disableTransition';
 export { swipeClose } from './Lightbox.demo.swipeClose';
+export { closeOnClickOutside } from './Lightbox.demo.closeOnClickOutside';

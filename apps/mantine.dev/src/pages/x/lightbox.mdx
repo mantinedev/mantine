@@ -66,7 +66,7 @@ Use the following props to control built-in interactions:
 
 - `withNavigation` – shows previous/next arrow buttons, `true` by default
 - `loop` – enables infinite loop navigation, `false` by default
-- `closeOnClickOutside` – closes the lightbox when the area outside the slide content is clicked, `true` by default
+- `closeOnClickOutside` – closes the lightbox when the empty space around the slide content is clicked, `false` by default
 - `closeOnSwipeDown` – closes the lightbox on mobile swipe down, `true` by default
 - `withKeyboardEvents` – enables keyboard shortcuts (arrows, `F`/`T`/`Z`), `true` by default; `Escape` always closes the lightbox
 - `returnFocus` – returns focus to the last active element when the lightbox is closed, `true` by default
@@ -132,10 +132,11 @@ function Demo() {
 
 ## Open and close transition
 
-By default, the lightbox fades in and out when it is opened and closed. Use `transitionProps` to
-change the animation of the content – the overlay always fades. `transitionProps` accepts the same
-options as the [Transition](/core/transition) component (`transition`, `duration`, `timingFunction`).
-Use `transitionDuration` as a shorthand to change only the duration (`200` by default):
+By default, the overlay fades in and the content pops in – it is scaled from 95% to 100% while
+fading. Use `transitionProps` to change the animation of the content – the overlay always fades.
+`transitionProps` accepts the same options as the [Transition](/core/transition) component
+(`transition`, `duration`, `timingFunction`). Use `transitionDuration` as a shorthand to change only
+the duration (`200` by default):
 
 <Demo data={LightboxDemos.overlayTransition} />
 
@@ -152,6 +153,15 @@ On mobile, swiping down closes the lightbox. This is enabled by default.
 Set `closeOnSwipeDown={false}` to disable:
 
 <Demo data={LightboxDemos.swipeClose} />
+
+## Click outside to close
+
+Set `closeOnClickOutside` to close the lightbox when the empty space around the current slide
+content is clicked – clicks on the image, video or any custom slide content are ignored, as well as
+clicks on the toolbar, navigation buttons, caption and thumbnails. The option is disabled by default
+to prevent accidental closing:
+
+<Demo data={LightboxDemos.closeOnClickOutside} />
 
 ## Store API
 

@@ -32,7 +32,7 @@ export type LightboxSlideFactory = Factory<{
 }>;
 
 export const LightboxSlide = factory<LightboxSlideFactory>((props) => {
-  const { classNames, className, style, styles, vars, slide, index, ...others } = useProps(
+  const { classNames, className, style, styles, vars, slide, index, onClick, ...others } = useProps(
     'LightboxSlide',
     null,
     props
@@ -60,6 +60,16 @@ export const LightboxSlide = factory<LightboxSlideFactory>((props) => {
       role="group"
       aria-roledescription="slide"
       aria-label={`Slide ${index + 1} of ${ctx.slides.length}`}
+      onClick={(event) => {
+        onClick?.(event);
+        if (
+          ctx.closeOnClickOutside &&
+          !event.defaultPrevented &&
+          event.target === event.currentTarget
+        ) {
+          ctx.onClose();
+        }
+      }}
     >
       {renderContent()}
     </Box>

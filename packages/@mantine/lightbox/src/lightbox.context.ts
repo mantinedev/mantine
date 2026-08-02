@@ -27,6 +27,7 @@ export interface LightboxContextValue {
   getImageZoomProps: () => Record<string, any>;
   onClose: () => void;
   loop: boolean;
+  closeOnClickOutside: boolean;
   closeOnSwipeDown: boolean;
   transitionDuration: number;
 }
