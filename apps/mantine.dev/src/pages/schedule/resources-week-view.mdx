@@ -30,6 +30,14 @@ assignment. Events can be dragged across both resources and days.
 
 <Demo data={ResourcesWeekViewDemos.dragDrop} />
 
+## Drag interval
+
+By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
+to use a different snap step for dragging – for example, a grid with 30-minute slots whose events
+can be moved in 15-minute increments. A ghost preview shows where the event will land:
+
+<Demo data={ResourcesWeekViewDemos.eventDragInterval} />
+
 ## Event form
 
 Use `onTimeSlotClick`, `onSlotDragEnd`, and `onEventClick` callbacks to open a form
@@ -174,6 +182,14 @@ Resizing is constrained to the day the event belongs to: an event cannot be resi
 days. To make an event cover several days, update its `start` and `end` dates directly in your data.
 
 Use `canResizeEvent` to control which events can be resized.
+
+## Resize interval
+
+By default events snap to `intervalMinutes` when resized. Set `eventResizeInterval` to use a
+different snap step for resizing – for example, a grid with 30-minute slots whose events can be
+resized in 15-minute increments:
+
+<Demo data={ResourcesWeekViewDemos.eventResizeInterval} />
 
 ## Static mode
 
