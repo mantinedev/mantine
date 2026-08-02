@@ -344,9 +344,9 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
   {
     id: 'TreeSelectCheckbox',
     name: 'Tree select with checkboxes',
-    description: 'Single-select tree with checkbox indicators and expand-on-click',
+    description: 'Multi-select tree where each node is independently checkable',
     fullDescription:
-      'A tree select with checkbox indicators. Clicking a parent node expands or collapses it, clicking a leaf node selects it.',
+      'A multi-select tree with checkbox indicators. Each node, including parent groups, is an independent value that can be checked or unchecked – selecting a parent does not affect its children. Expand or collapse groups with the chevron or the Left and Right arrow keys.',
     type: 'treeselect',
   },
   {
