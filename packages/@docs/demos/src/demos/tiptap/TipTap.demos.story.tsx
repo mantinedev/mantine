@@ -48,6 +48,21 @@ export const Demo_tasks = {
   render: renderDemo(demos.tasks),
 };
 
+export const Demo_table = {
+  name: '⭐ Demo: table',
+  render: renderDemo(demos.table),
+};
+
+export const Demo_details = {
+  name: '⭐ Demo: details',
+  render: renderDemo(demos.details),
+};
+
+export const Demo_invisibleCharacters = {
+  name: '⭐ Demo: invisibleCharacters',
+  render: renderDemo(demos.invisibleCharacters),
+};
+
 export const Demo_typographyStyles = {
   name: '⭐ Demo: typographyStyles',
   render: renderDemo(demos.typographyStyles),
