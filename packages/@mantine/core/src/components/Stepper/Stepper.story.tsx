@@ -177,6 +177,25 @@ export function LabelPositionBottom() {
   );
 }
 
+export function LabelPositionBottomLongLabels() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stepper active={1} labelPosition="bottom">
+        <Stepper.Step label="Short" description="One line" />
+        <Stepper.Step
+          label="A considerably longer step label that has to wrap"
+          description="And a description that is also quite long and wraps onto several lines"
+        />
+        <Stepper.Step label="Final step" description="Get full access" />
+      </Stepper>
+
+      <div style={{ background: 'var(--mantine-color-blue-1)', padding: 8 }}>
+        Content below the steps – must not be overlapped by wrapped labels
+      </div>
+    </div>
+  );
+}
+
 export function RightIconPosition() {
   const [active, setActive] = useState(1);
   const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));

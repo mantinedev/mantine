@@ -69,7 +69,7 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
         key={index}
         {...ctx.getStyles('thumbnail')}
         data-active={index === ctx.currentIndex || undefined}
-        aria-label={`Go to slide ${index + 1}`}
+        aria-label={ctx.labels.thumbnailLabel(index + 1, ctx.slides.length)}
         aria-current={index === ctx.currentIndex || undefined}
         onClick={() => ctx.setIndex(index)}
       >

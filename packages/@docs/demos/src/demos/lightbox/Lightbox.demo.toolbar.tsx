@@ -46,9 +46,9 @@ function InfoIcon() {
 // toolbarItems as a function receives the current lightbox state and handlers
 const toolbarItems = (payload: ToolbarItemsPayload): ToolbarItem[] => [
   // Built-in factories for common actions
-  createThumbnailsToolbarItem(payload.toggleThumbnails, payload.thumbnailsVisible),
-  createFullscreenToolbarItem(payload.toggleFullscreen, payload.isFullscreen),
-  createDownloadToolbarItem(images[payload.currentIndex]),
+  createThumbnailsToolbarItem(payload.toggleThumbnails, payload.thumbnailsVisible, payload.labels),
+  createFullscreenToolbarItem(payload.toggleFullscreen, payload.isFullscreen, payload.labels),
+  createDownloadToolbarItem(images[payload.currentIndex], payload.labels),
   // Fully custom toolbar item
   {
     key: 'info',
@@ -60,7 +60,7 @@ const toolbarItems = (payload: ToolbarItemsPayload): ToolbarItem[] => [
       alert(\`Viewing image \${payload.currentIndex + 1} of \${payload.slides.length}\`);
     },
   },
-  createCloseToolbarItem(payload.close),
+  createCloseToolbarItem(payload.close, payload.labels),
 ];
 
 function Demo() {
@@ -102,9 +102,9 @@ function InfoIcon() {
 }
 
 const toolbarItems = (payload: ToolbarItemsPayload): ToolbarItem[] => [
-  createThumbnailsToolbarItem(payload.toggleThumbnails, payload.thumbnailsVisible),
-  createFullscreenToolbarItem(payload.toggleFullscreen, payload.isFullscreen),
-  createDownloadToolbarItem(demoImages[payload.currentIndex]),
+  createThumbnailsToolbarItem(payload.toggleThumbnails, payload.thumbnailsVisible, payload.labels),
+  createFullscreenToolbarItem(payload.toggleFullscreen, payload.isFullscreen, payload.labels),
+  createDownloadToolbarItem(demoImages[payload.currentIndex], payload.labels),
   {
     key: 'info',
     icon: <InfoIcon />,
@@ -115,7 +115,7 @@ const toolbarItems = (payload: ToolbarItemsPayload): ToolbarItem[] => [
       alert(`Viewing image ${payload.currentIndex + 1} of ${payload.slides.length}`);
     },
   },
-  createCloseToolbarItem(payload.close),
+  createCloseToolbarItem(payload.close, payload.labels),
 ];
 
 function Demo() {

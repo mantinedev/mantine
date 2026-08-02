@@ -299,11 +299,47 @@ Available sub-components:
 - `Lightbox.CloseButton` — standalone close button
 - `Lightbox.Provider` — store-mode mount point
 
+## Labels
+
+All strings rendered by the lightbox are defined in the `labels` prop. Pass the labels
+that you want to change – the rest fall back to the default English values, which are
+exported as `DEFAULT_LABELS`:
+
+```tsx
+import { Lightbox } from '@mantine/lightbox';
+
+function Demo() {
+  return (
+    <Lightbox
+      opened
+      onClose={() => {}}
+      slides={[]}
+      labels={{
+        lightboxLabel: 'Galerie',
+        slideLabel: (index, total) => `Bild ${index} von ${total}`,
+        thumbnailLabel: (index) => `Zu Bild ${index} wechseln`,
+        previousSlideLabel: 'Vorheriges Bild',
+        nextSlideLabel: 'Nächstes Bild',
+        enterFullscreenLabel: 'Vollbild aktivieren',
+        exitFullscreenLabel: 'Vollbild beenden',
+        showThumbnailsLabel: 'Miniaturansichten anzeigen',
+        hideThumbnailsLabel: 'Miniaturansichten ausblenden',
+        downloadLabel: 'Herunterladen',
+        closeLabel: 'Schließen',
+      }}
+    />
+  );
+}
+```
+
+To change labels for all lightboxes in your application, set `labels` in
+[default props](/theming/default-props) of the `Lightbox` component.
+
 ## Accessibility
 
 - Focus is trapped within the lightbox when opened and returned to the last active element when it is closed (`returnFocus` prop)
 - Focus is moved to a hidden placeholder element instead of the first toolbar button when the lightbox is opened, so that no focus ring is displayed for pointer users (`withInitialFocusPlaceholder` prop)
-- The content element has `role="dialog"` with `aria-modal="true"` and `aria-label="Gallery"` – pass `aria-label` to change the dialog accessible name
+- The content element has `role="dialog"` with `aria-modal="true"` and an accessible name from `labels.lightboxLabel` – pass `aria-label` to override it for a single lightbox
 - Always set the `alt` property on image slides – without it the image is treated as decorative by screen readers; for video slides set the `label` property
 - All interactive elements have `aria-label` attributes; the `label` property is required for custom toolbar items
 - `aria-live="polite"` region announces slide changes (including the current slide `alt`/`label`) to screen readers

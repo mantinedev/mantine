@@ -10,6 +10,9 @@ export interface LightboxState {
 
   /** Index of the current slide */
   currentIndex: number;
+
+  /** Determines whether `next` and `prev` actions wrap around, synced from the `loop` prop of `Lightbox.Provider` */
+  loop: boolean;
 }
 
 export type LightboxStore = MantineStore<LightboxState>;
@@ -20,6 +23,7 @@ export const createLightboxStore = () =>
     opened: false,
     slides: [],
     currentIndex: 0,
+    loop: false,
   });
 
 /** Subscribes to the given lightbox store and returns its current state */
@@ -58,17 +62,25 @@ export function closeLightboxAction(store: LightboxStore) {
 export function nextLightboxAction(store: LightboxStore) {
   updateLightboxStateAction((state) => {
     const nextIndex = state.currentIndex + 1;
-    return {
-      currentIndex: nextIndex < state.slides.length ? nextIndex : state.currentIndex,
-    };
+
+    if (nextIndex < state.slides.length) {
+      return { currentIndex: nextIndex };
+    }
+
+    return { currentIndex: state.loop && state.slides.length > 0 ? 0 : state.currentIndex };
   }, store);
 }
 
 export function prevLightboxAction(store: LightboxStore) {
   updateLightboxStateAction((state) => {
     const prevIndex = state.currentIndex - 1;
+
+    if (prevIndex >= 0) {
+      return { currentIndex: prevIndex };
+    }
+
     return {
-      currentIndex: prevIndex >= 0 ? prevIndex : state.currentIndex,
+      currentIndex: state.loop && state.slides.length > 0 ? state.slides.length - 1 : 0,
     };
   }, store);
 }

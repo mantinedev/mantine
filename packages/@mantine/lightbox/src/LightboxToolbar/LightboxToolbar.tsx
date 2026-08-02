@@ -46,18 +46,22 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
   const defaultItems: ToolbarItem[] = [];
 
   if (ctx.withThumbnails) {
-    defaultItems.push(createThumbnailsToolbarItem(ctx.toggleThumbnails, ctx.thumbnailsVisible));
+    defaultItems.push(
+      createThumbnailsToolbarItem(ctx.toggleThumbnails, ctx.thumbnailsVisible, ctx.labels)
+    );
   }
 
   if (ctx.withFullscreen) {
-    defaultItems.push(createFullscreenToolbarItem(ctx.toggleFullscreen, ctx.isFullscreen));
+    defaultItems.push(
+      createFullscreenToolbarItem(ctx.toggleFullscreen, ctx.isFullscreen, ctx.labels)
+    );
   }
 
   if (ctx.withDownload && currentSlide && currentSlide.type !== 'custom') {
-    defaultItems.push(createDownloadToolbarItem(currentSlide.src));
+    defaultItems.push(createDownloadToolbarItem(currentSlide.src, ctx.labels));
   }
 
-  defaultItems.push(createCloseToolbarItem(ctx.onClose));
+  defaultItems.push(createCloseToolbarItem(ctx.onClose, ctx.labels));
 
   const items =
     typeof toolbarItems === 'function'
@@ -74,6 +78,7 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
           toggleFullscreen: ctx.toggleFullscreen,
           zoomed: ctx.zoomState.isZoomed,
           toggleZoom: ctx.toggleZoom,
+          labels: ctx.labels,
         })
       : (toolbarItems ?? defaultItems);
   const leftItems = items.filter((item) => item.position === 'left');

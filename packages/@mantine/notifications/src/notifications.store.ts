@@ -40,9 +40,6 @@ export interface NotificationData
   /** Called when notification opens */
   onOpen?: (props: NotificationData) => void;
 
-  /** Determines whether auto close progress bar is displayed, @default false */
-  withAutoCloseProgress?: boolean;
-
   /** Custom render function that replaces the default notification, overrides `renderNotification` from `Notifications`. Set to `null` to use default rendering when a global `renderNotification` is set. */
   renderNotification?: ((notification: NotificationData) => React.ReactNode) | null;
 }

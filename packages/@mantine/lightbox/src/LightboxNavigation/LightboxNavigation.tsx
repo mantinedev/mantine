@@ -76,7 +76,7 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
     <Box {...ctx.getStyles('navigation', { className, style, classNames, styles })} {...others}>
       <UnstyledButton
         {...ctx.getStyles('navigationButton')}
-        aria-label="Previous slide"
+        aria-label={ctx.labels.previousSlideLabel}
         aria-disabled={!canPrev || undefined}
         data-inactive={!canPrev || undefined}
         mod="reduce-motion"
@@ -88,7 +88,7 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
 
       <UnstyledButton
         {...ctx.getStyles('navigationButton')}
-        aria-label="Next slide"
+        aria-label={ctx.labels.nextSlideLabel}
         aria-disabled={!canNext || undefined}
         data-inactive={!canNext || undefined}
         mod="reduce-motion"

@@ -26,9 +26,9 @@ import {
   useReducedMotion,
   useUncontrolled,
 } from '@mantine/hooks';
+import { DEFAULT_LABELS } from '../default-labels';
 import { LightboxContextProvider } from '../lightbox.context';
-import { lightboxStore, LightboxStore } from '../lightbox.store';
-import type { LightboxSlideData } from '../lightbox.types';
+import type { LightboxLabels, LightboxSlideData } from '../lightbox.types';
 import { useLightboxKeyboard } from '../hooks/use-lightbox-keyboard';
 import { useLightboxLockScroll } from '../hooks/use-lightbox-lock-scroll';
 import { useLightboxZoom } from '../hooks/use-lightbox-zoom';
@@ -87,8 +87,8 @@ export interface LightboxRootProps
   /** Called when the current slide index changes */
   onIndexChange?: (index: number) => void;
 
-  /** Lightbox store, can be used to create multiple instances @default lightboxStore */
-  store?: LightboxStore;
+  /** Labels used in the component, used for accessibility and localization */
+  labels?: Partial<LightboxLabels>;
 
   /** Enables image zoom on click/pinch @default false */
   withZoom?: boolean;
@@ -147,7 +147,6 @@ export type LightboxRootFactory = Factory<{
 }>;
 
 export const lightboxRootDefaultProps = {
-  store: lightboxStore,
   withZoom: false,
   withThumbnails: false,
   withFullscreen: false,
@@ -196,7 +195,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     slides,
     currentIndex,
     onIndexChange,
-    store,
+    labels,
     withZoom,
     withThumbnails,
     withFullscreen,
@@ -224,7 +223,6 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     name: 'Lightbox',
     classes,
     props,
-    className,
     classNames,
     styles,
     unstyled,
@@ -232,6 +230,8 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     vars,
     varsResolver,
   });
+
+  const _labels = { ...DEFAULT_LABELS, ...labels };
 
   const [_currentIndex, setCurrentIndex] = useUncontrolled({
     value: currentIndex,
@@ -390,7 +390,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
       <LightboxContextProvider
         value={{
           getStyles,
-          store: store!,
+          labels: _labels,
           slides,
           currentIndex: _currentIndex,
           setIndex: (index: number) => {
@@ -430,13 +430,14 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
                 <FocusTrap active={opened} innerRef={ref}>
                   <Box
                     {...getStyles('content', {
+                      className,
                       style: style ? [style, contentStyles] : contentStyles,
                     })}
-                    aria-label="Gallery"
-                    {...others}
                     role="dialog"
                     aria-modal="true"
+                    aria-label={_labels.lightboxLabel}
                     tabIndex={-1}
+                    {...others}
                     mod={mod}
                     onClick={(event) => {
                       onClick?.(event);
@@ -448,7 +449,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
                     {withInitialFocusPlaceholder && <FocusTrap.InitialFocus />}
 
                     <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
-                      {`Slide ${_currentIndex + 1} of ${slides.length}${currentSlideLabel ? `: ${currentSlideLabel}` : ''}`}
+                      {`${_labels.slideLabel(_currentIndex + 1, slides.length)}${currentSlideLabel ? `: ${currentSlideLabel}` : ''}`}
                     </VisuallyHidden>
                     {children}
                   </Box>

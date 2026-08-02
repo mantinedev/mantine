@@ -85,6 +85,41 @@ export interface LightboxCustomSlide {
 
 export type LightboxSlideData = LightboxImageSlide | LightboxVideoSlide | LightboxCustomSlide;
 
+export interface LightboxLabels {
+  /** Accessible label of the lightbox dialog */
+  lightboxLabel: string;
+
+  /** Accessible label of a slide, called with 1-based slide index and total number of slides */
+  slideLabel: (index: number, total: number) => string;
+
+  /** Accessible label of the previous slide button */
+  previousSlideLabel: string;
+
+  /** Accessible label of the next slide button */
+  nextSlideLabel: string;
+
+  /** Accessible label of a thumbnail, called with 1-based slide index and total number of slides */
+  thumbnailLabel: (index: number, total: number) => string;
+
+  /** Label of the fullscreen toolbar button when the document is not in fullscreen mode */
+  enterFullscreenLabel: string;
+
+  /** Label of the fullscreen toolbar button when the document is in fullscreen mode */
+  exitFullscreenLabel: string;
+
+  /** Label of the thumbnails toolbar button when the thumbnails strip is hidden */
+  showThumbnailsLabel: string;
+
+  /** Label of the thumbnails toolbar button when the thumbnails strip is visible */
+  hideThumbnailsLabel: string;
+
+  /** Label of the download toolbar button */
+  downloadLabel: string;
+
+  /** Label of the close toolbar button */
+  closeLabel: string;
+}
+
 export interface ToolbarItem {
   /** Unique key for the toolbar item */
   key: string;
@@ -138,6 +173,9 @@ export interface ToolbarItemsPayload {
 
   /** Toggles zoom of the current image */
   toggleZoom: () => void;
+
+  /** Labels of the lightbox, `labels` prop merged with the default labels */
+  labels: LightboxLabels;
 }
 
 export type ToolbarItems = ToolbarItem[] | ((payload: ToolbarItemsPayload) => ToolbarItem[]);

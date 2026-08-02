@@ -1,5 +1,5 @@
-import React from 'react';
-import type { ToolbarItem } from '../lightbox.types';
+import { DEFAULT_LABELS } from '../default-labels';
+import type { LightboxLabels, ToolbarItem } from '../lightbox.types';
 
 function IconEnterFullscreen() {
   return (
@@ -73,22 +73,27 @@ function IconClose() {
 
 export function createFullscreenToolbarItem(
   toggle: () => void,
-  isFullscreen: boolean
+  isFullscreen: boolean,
+  labels: LightboxLabels = DEFAULT_LABELS
 ): ToolbarItem {
   return {
     key: 'fullscreen',
     icon: isFullscreen ? <IconExitFullscreen /> : <IconEnterFullscreen />,
-    label: isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen',
+    label: isFullscreen ? labels.exitFullscreenLabel : labels.enterFullscreenLabel,
     onClick: toggle,
     position: 'right',
   };
 }
 
-export function createThumbnailsToolbarItem(toggle: () => void, visible: boolean): ToolbarItem {
+export function createThumbnailsToolbarItem(
+  toggle: () => void,
+  visible: boolean,
+  labels: LightboxLabels = DEFAULT_LABELS
+): ToolbarItem {
   return {
     key: 'thumbnails',
     icon: <IconThumbnails />,
-    label: visible ? 'Hide thumbnails' : 'Show thumbnails',
+    label: visible ? labels.hideThumbnailsLabel : labels.showThumbnailsLabel,
     onClick: toggle,
     position: 'left',
   };
@@ -105,16 +110,16 @@ function parseDownloadUrl(src: string): URL | null {
   }
 }
 
-let downloadInProgress = false;
+const downloadsInProgress = new Set<string>();
 
 function downloadFile(src: string) {
   const parsed = parseDownloadUrl(src);
 
-  if (!parsed || downloadInProgress) {
+  if (!parsed || downloadsInProgress.has(src)) {
     return;
   }
 
-  downloadInProgress = true;
+  downloadsInProgress.add(src);
 
   fetch(src)
     .then((res) => res.blob())
@@ -133,25 +138,31 @@ function downloadFile(src: string) {
       window.open(src, '_blank', 'noopener,noreferrer');
     })
     .finally(() => {
-      downloadInProgress = false;
+      downloadsInProgress.delete(src);
     });
 }
 
-export function createDownloadToolbarItem(src: string): ToolbarItem {
+export function createDownloadToolbarItem(
+  src: string,
+  labels: LightboxLabels = DEFAULT_LABELS
+): ToolbarItem {
   return {
     key: 'download',
     icon: <IconDownload />,
-    label: 'Download',
+    label: labels.downloadLabel,
     onClick: () => downloadFile(src),
     position: 'right',
   };
 }
 
-export function createCloseToolbarItem(onClose: () => void): ToolbarItem {
+export function createCloseToolbarItem(
+  onClose: () => void,
+  labels: LightboxLabels = DEFAULT_LABELS
+): ToolbarItem {
   return {
     key: 'close',
     icon: <IconClose />,
-    label: 'Close',
+    label: labels.closeLabel,
     onClick: onClose,
     position: 'right',
   };

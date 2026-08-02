@@ -76,9 +76,19 @@ export type AreaChartCSSVariables = {
 };
 
 export interface AreaChartProps
-  extends BoxProps, GridChartBaseProps, StylesApiProps<AreaChartFactory>, ElementProps<'div'> {
+  extends
+    BoxProps,
+    Omit<GridChartBaseProps, 'withXAxis' | 'withYAxis'>,
+    StylesApiProps<AreaChartFactory>,
+    ElementProps<'div'> {
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: AreaChartSeries[];
+
+  /** Determines whether x-axis should be displayed. Defaults to `false` for `type="stream"` with `orientation="vertical"` – the floating baseline makes the values not meaningful to read off. @default true */
+  withXAxis?: boolean;
+
+  /** Determines whether y-axis should be displayed. Defaults to `false` for `type="stream"` with `orientation="horizontal"` – the floating baseline makes the values not meaningful to read off. @default true */
+  withYAxis?: boolean;
 
   /** Controls how chart areas are positioned relative to each other. Set to `'stream'` to render a streamgraph. @default 'default' */
   type?: AreaChartType;

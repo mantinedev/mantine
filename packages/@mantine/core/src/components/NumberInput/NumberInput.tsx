@@ -710,7 +710,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       if (selectAllOnFocus) {
-        setTimeout(() => event.currentTarget.select(), 0);
+        window.setTimeout(() => inputRef.current?.select(), 0);
       }
       onFocus?.(event);
     };

@@ -56,10 +56,10 @@ export const LightboxSlide = factory<LightboxSlideFactory>((props) => {
   return (
     <Box
       {...ctx.getStyles('slide', { className, style, classNames, styles })}
-      {...others}
       role="group"
       aria-roledescription="slide"
-      aria-label={`Slide ${index + 1} of ${ctx.slides.length}`}
+      aria-label={ctx.labels.slideLabel(index + 1, ctx.slides.length)}
+      {...others}
       onClick={(event) => {
         onClick?.(event);
         if (

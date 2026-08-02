@@ -38,7 +38,7 @@ const systemProps: LightboxProps = {
 describe('@mantine/lightbox/Lightbox', () => {
   afterEach(async () => {
     await act(async () => {
-      lightboxStore.setState({ opened: false, slides: [], currentIndex: 0 });
+      lightboxStore.setState({ opened: false, slides: [], currentIndex: 0, loop: false });
     });
   });
 
@@ -337,7 +337,7 @@ describe('@mantine/lightbox/Lightbox keyboard', () => {
 describe('@mantine/lightbox/Lightbox store', () => {
   afterEach(async () => {
     await act(async () => {
-      lightboxStore.setState({ opened: false, slides: [], currentIndex: 0 });
+      lightboxStore.setState({ opened: false, slides: [], currentIndex: 0, loop: false });
     });
   });
 

@@ -1,6 +1,7 @@
 import type {
   CandlestickChartCssVariables,
   CandlestickChartFactory,
+  CandlestickChartLabels,
   CandlestickChartProps,
   CandlestickChartSeries,
   CandlestickChartStylesNames,
@@ -13,5 +14,6 @@ export type {
   CandlestickChartStylesNames,
   CandlestickChartCssVariables,
   CandlestickChartFactory,
+  CandlestickChartLabels,
   CandlestickChartSeries,
 };
