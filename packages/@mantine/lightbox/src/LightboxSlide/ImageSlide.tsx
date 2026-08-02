@@ -8,16 +8,18 @@ interface ImageSlideProps {
 
 export function ImageSlide({ slide, active }: ImageSlideProps) {
   const ctx = useLightboxContext();
-  const zoomProps = active && ctx.withZoom ? ctx.getImageZoomProps() : {};
+  const { style: zoomStyle, ...zoomProps } =
+    active && ctx.withZoom ? ctx.getImageZoomProps() : { style: undefined };
 
   return (
     <img
-      {...ctx.getStyles('slideImage')}
+      {...ctx.getStyles('slideImage', { style: zoomStyle })}
       src={slide.src}
       alt={slide.alt ?? ''}
       srcSet={slide.srcSet}
       sizes={slide.sizes}
       draggable={false}
+      data-reduce-motion="true"
       {...zoomProps}
     />
   );

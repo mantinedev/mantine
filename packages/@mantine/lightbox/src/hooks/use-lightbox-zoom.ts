@@ -20,17 +20,38 @@ const INITIAL_ZOOM_STATE: ZoomState = {
   isZoomed: false,
 };
 
+function clampTranslate(state: ZoomState, image: HTMLImageElement | null): ZoomState {
+  if (!image) {
+    return state;
+  }
+
+  const maxX = (image.offsetWidth * (state.scale - 1)) / 2;
+  const maxY = (image.offsetHeight * (state.scale - 1)) / 2;
+
+  return {
+    ...state,
+    translateX: Math.max(-maxX, Math.min(maxX, state.translateX)),
+    translateY: Math.max(-maxY, Math.min(maxY, state.translateY)),
+  };
+}
+
 export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightboxZoomInput) {
   const [zoomState, setZoomState] = useState<ZoomState>(INITIAL_ZOOM_STATE);
+  const [isDragging, setIsDragging] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
-  const isDragging = useRef(false);
+  const isZoomedRef = useRef(false);
   const didDrag = useRef(false);
   const dragStart = useRef({ x: 0, y: 0 });
   const translateStart = useRef({ x: 0, y: 0 });
   const lastPinchDistance = useRef<number | null>(null);
 
+  useEffect(() => {
+    isZoomedRef.current = zoomState.isZoomed;
+  }, [zoomState.isZoomed]);
+
   const resetZoom = useCallback(() => {
     setZoomState(INITIAL_ZOOM_STATE);
+    setIsDragging(false);
   }, []);
 
   useEffect(() => {
@@ -48,41 +69,83 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     );
   }, [enabled, maxScale]);
 
-  const handleWheel = useCallback(
-    (event: React.WheelEvent) => {
-      if (!enabled) {
-        return;
-      }
-      event.preventDefault();
+  const zoomAtPoint = useCallback(
+    (deltaScale: number, clientX?: number, clientY?: number) => {
       setZoomState((prev) => {
-        const delta = event.deltaY > 0 ? -0.2 : 0.2;
-        const nextScale = Math.max(1, Math.min(maxScale, prev.scale + delta));
+        const nextScale = Math.max(1, Math.min(maxScale, prev.scale + deltaScale));
         if (nextScale === 1) {
           return INITIAL_ZOOM_STATE;
         }
-        return { ...prev, scale: nextScale, isZoomed: true };
+
+        const image = imageRef.current;
+        let translateX = prev.translateX;
+        let translateY = prev.translateY;
+
+        if (image && clientX !== undefined && clientY !== undefined) {
+          const rect = image.getBoundingClientRect();
+          const scaleRatio = nextScale / prev.scale;
+          const offsetX = clientX - (rect.left + rect.width / 2) + prev.translateX;
+          const offsetY = clientY - (rect.top + rect.height / 2) + prev.translateY;
+          translateX = offsetX * (1 - scaleRatio) + prev.translateX * scaleRatio;
+          translateY = offsetY * (1 - scaleRatio) + prev.translateY * scaleRatio;
+        }
+
+        return clampTranslate({ scale: nextScale, translateX, translateY, isZoomed: true }, image);
       });
     },
-    [enabled, maxScale]
+    [maxScale]
   );
+
+  const panZoom = useCallback((deltaX: number, deltaY: number) => {
+    if (!isZoomedRef.current) {
+      return false;
+    }
+    setZoomState((prev) =>
+      clampTranslate(
+        { ...prev, translateX: prev.translateX + deltaX, translateY: prev.translateY + deltaY },
+        imageRef.current
+      )
+    );
+    return true;
+  }, []);
+
+  const zoomAtPointRef = useRef(zoomAtPoint);
+
+  useEffect(() => {
+    zoomAtPointRef.current = zoomAtPoint;
+  }, [zoomAtPoint]);
+
+  const handleNativeWheel = useRef((event: WheelEvent) => {
+    event.preventDefault();
+    zoomAtPointRef.current(event.deltaY > 0 ? -0.2 : 0.2, event.clientX, event.clientY);
+  });
+
+  const setImageRef = useCallback((node: HTMLImageElement | null) => {
+    imageRef.current?.removeEventListener('wheel', handleNativeWheel.current);
+    imageRef.current = node;
+    node?.addEventListener('wheel', handleNativeWheel.current, { passive: false });
+  }, []);
 
   const handlePointerDown = useCallback(
     (event: React.PointerEvent) => {
       if (!zoomState.isZoomed || !enabled) {
         return;
       }
-      isDragging.current = true;
+      setIsDragging(true);
       didDrag.current = false;
       dragStart.current = { x: event.clientX, y: event.clientY };
       translateStart.current = { x: zoomState.translateX, y: zoomState.translateY };
-      (event.target as HTMLElement)?.setPointerCapture(event.pointerId);
+      const target = event.target as HTMLElement;
+      if (typeof target?.setPointerCapture === 'function') {
+        target.setPointerCapture(event.pointerId);
+      }
     },
     [zoomState.isZoomed, zoomState.translateX, zoomState.translateY, enabled]
   );
 
   const handlePointerMove = useCallback(
     (event: React.PointerEvent) => {
-      if (!isDragging.current || !enabled) {
+      if (!isDragging || !enabled) {
         return;
       }
       const dx = event.clientX - dragStart.current.x;
@@ -90,17 +153,22 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
       if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
         didDrag.current = true;
       }
-      setZoomState((prev) => ({
-        ...prev,
-        translateX: translateStart.current.x + dx,
-        translateY: translateStart.current.y + dy,
-      }));
+      setZoomState((prev) =>
+        clampTranslate(
+          {
+            ...prev,
+            translateX: translateStart.current.x + dx,
+            translateY: translateStart.current.y + dy,
+          },
+          imageRef.current
+        )
+      );
     },
-    [enabled]
+    [isDragging, enabled]
   );
 
   const handlePointerUp = useCallback(() => {
-    isDragging.current = false;
+    setIsDragging(false);
   }, []);
 
   const handleTouchMove = useCallback(
@@ -109,24 +177,21 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
         lastPinchDistance.current = null;
         return;
       }
-      event.preventDefault();
       const touch1 = event.touches[0];
       const touch2 = event.touches[1];
       const distance = Math.hypot(touch1.clientX - touch2.clientX, touch1.clientY - touch2.clientY);
 
       if (lastPinchDistance.current !== null) {
         const delta = (distance - lastPinchDistance.current) * 0.01;
-        setZoomState((prev) => {
-          const nextScale = Math.max(1, Math.min(maxScale, prev.scale + delta));
-          if (nextScale === 1) {
-            return INITIAL_ZOOM_STATE;
-          }
-          return { ...prev, scale: nextScale, isZoomed: true };
-        });
+        zoomAtPoint(
+          delta,
+          (touch1.clientX + touch2.clientX) / 2,
+          (touch1.clientY + touch2.clientY) / 2
+        );
       }
       lastPinchDistance.current = distance;
     },
-    [enabled, maxScale]
+    [enabled, zoomAtPoint]
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -152,15 +217,13 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
 
   const getImageProps = useCallback(
     () => ({
-      ref: imageRef,
+      ref: setImageRef,
       style: {
         transform: `scale(${zoomState.scale}) translate(${zoomState.translateX / zoomState.scale}px, ${zoomState.translateY / zoomState.scale}px)`,
-        transition: isDragging.current ? 'none' : undefined,
       },
       'data-zoom-enabled': enabled || undefined,
       'data-zoomed': zoomState.isZoomed || undefined,
-      'data-dragging': isDragging.current || undefined,
-      onWheel: handleWheel,
+      'data-dragging': isDragging || undefined,
       onPointerDown: handlePointerDown,
       onPointerMove: handlePointerMove,
       onPointerUp: handlePointerUp,
@@ -171,7 +234,9 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     }),
     [
       zoomState,
-      handleWheel,
+      isDragging,
+      enabled,
+      setImageRef,
       handlePointerDown,
       handlePointerMove,
       handlePointerUp,
@@ -186,6 +251,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     zoomState: { scale: zoomState.scale, isZoomed: zoomState.isZoomed },
     toggleZoom,
     resetZoom,
+    panZoom,
     getImageProps,
   };
 }

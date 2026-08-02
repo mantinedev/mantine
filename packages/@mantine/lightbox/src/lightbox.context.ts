@@ -10,6 +10,8 @@ export interface LightboxContextValue {
   slides: LightboxSlideData[];
   currentIndex: number;
   setIndex: (index: number) => void;
+  next: () => void;
+  prev: () => void;
   embla: EmblaCarouselType | null;
   emblaRef: React.RefCallback<HTMLDivElement> | null;
   withZoom: boolean;
@@ -25,8 +27,6 @@ export interface LightboxContextValue {
   getImageZoomProps: () => Record<string, any>;
   onClose: () => void;
   loop: boolean;
-  withSlideTransition: boolean;
-  slideTransitionActive: boolean;
   closeOnSwipeDown: boolean;
 }
 

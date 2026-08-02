@@ -22,10 +22,60 @@ Click any image to open the lightbox:
 
 <Demo data={LightboxDemos.usage} />
 
+## Slide data
+
+The `slides` prop accepts an array of `LightboxSlideData` objects. There are three slide types –
+image (default), video and custom:
+
+```tsx
+import type { LightboxSlideData } from '@mantine/lightbox';
+
+const slides: LightboxSlideData[] = [
+  // Image slide (default type)
+  {
+    src: 'image.png', // Image URL
+    alt: 'Mountain lake', // Alt text, always set it for screen readers
+    caption: 'Mountain lake at sunrise', // Caption displayed below the slide
+    thumbSrc: 'image-small.png', // Custom thumbnail URL, `src` is used if not set
+    srcSet: 'image-2x.png 2x', // Optional srcset for responsive images
+    sizes: '(max-width: 600px) 100vw, 50vw', // Optional sizes attribute
+  },
+
+  // Video slide
+  {
+    type: 'video',
+    src: 'video.mp4',
+    label: 'Product demo', // Accessible video label
+    poster: 'poster.png', // Poster image, also used as thumbnail
+    autoPlay: true, // Auto-play when the slide becomes active
+    tracks: [{ src: 'captions.vtt', kind: 'captions', srcLang: 'en', label: 'English' }],
+  },
+
+  // Custom slide
+  {
+    type: 'custom',
+    render: ({ active }) => <div>Custom content</div>,
+    renderThumb: () => <span>Thumb</span>, // Custom thumbnail content
+  },
+];
+```
+
+## Navigation and close behavior
+
+Use the following props to control built-in interactions:
+
+- `withNavigation` – shows previous/next arrow buttons, `true` by default
+- `loop` – enables infinite loop navigation, `false` by default
+- `closeOnClickOutside` – closes the lightbox when the area outside the slide content is clicked, `true` by default
+- `closeOnSwipeDown` – closes the lightbox on mobile swipe down, `true` by default
+- `withKeyboardEvents` – enables keyboard shortcuts (arrows, `F`/`T`/`Z`), `true` by default; `Escape` always closes the lightbox
+- `returnFocus` – returns focus to the last active element when the lightbox is closed, `true` by default
+
 ## Zoom
 
 Enable image zoom with the `withZoom` prop. On desktop, click an image to zoom in, scroll wheel to
-adjust zoom level, and drag to pan when zoomed. On mobile, double-tap to zoom and pinch to adjust:
+adjust zoom level, and drag or use arrow keys to pan when zoomed. On mobile, double-tap to zoom and
+pinch to adjust. Use `zoomMaxScale` to change the maximum zoom scale (`3` by default):
 
 <Demo data={LightboxDemos.zoom} />
 
@@ -50,17 +100,40 @@ Set `loop` to enable infinite wrapping at the ends of the slide list:
 
 ## Slide transition
 
-By default, programmatic navigation (arrow buttons, keyboard) snaps instantly.
-Set `withSlideTransition` to animate slide changes:
+By default, programmatic navigation (arrow buttons, keyboard, controlled index changes) snaps
+instantly. Set `withSlideTransition` to animate slide changes. The animation is handled by embla –
+use `emblaOptions={{ duration: 40 }}` to change its speed (embla duration is not in milliseconds,
+values between 20 and 60 are recommended):
 
 <Demo data={LightboxDemos.transition} />
+
+## Embla options
+
+The carousel behavior can be customized with the `emblaOptions` prop – it is passed directly to the
+underlying [embla carousel](https://www.embla-carousel.com/api/options/) instance. For example, you
+can change drag behavior or scroll animation speed:
+
+```tsx
+import { Lightbox } from '@mantine/lightbox';
+
+function Demo() {
+  return (
+    <Lightbox
+      opened
+      onClose={() => {}}
+      slides={[]}
+      emblaOptions={{ dragFree: false, duration: 30, align: 'center' }}
+    />
+  );
+}
+```
 
 ## Open and close transition
 
 By default, the lightbox fades in and out when it is opened and closed. Use `transitionProps` to
 change the animation of the content – the overlay always fades. `transitionProps` accepts the same
 options as the [Transition](/core/transition) component (`transition`, `duration`, `timingFunction`).
-Set `transitionProps={{ duration: 0 }}` to disable the animation:
+Use `transitionDuration` as a shorthand to change only the duration (`200` by default):
 
 <Demo data={LightboxDemos.overlayTransition} />
 
@@ -81,24 +154,57 @@ Set `closeOnSwipeDown={false}` to disable:
 ## Store API
 
 Mount `Lightbox.Provider` once in your app and open the lightbox from anywhere
-using the `lightbox` store actions:
+using the static `Lightbox` methods (aliases of the default `lightbox` store actions):
 
 ```tsx
-import { lightbox } from '@mantine/lightbox';
+import { Lightbox } from '@mantine/lightbox';
 
 // Open with slides and optional start index
-lightbox.open({ slides, startIndex: 2 });
+Lightbox.open({ slides, startIndex: 2 });
 
 // Close
-lightbox.close();
+Lightbox.close();
 
 // Navigate
-lightbox.next();
-lightbox.prev();
-lightbox.setIndex(5);
+Lightbox.next();
+Lightbox.prev();
+Lightbox.setIndex(5);
 ```
 
 <Demo data={LightboxDemos.store} />
+
+## Multiple lightboxes
+
+By default, `Lightbox.Provider` and the static `Lightbox.open/close/next/prev/setIndex` methods
+use the shared `lightboxStore`. To run several independent lightboxes, create an isolated store
+with actions bound to it using `createLightbox` and pass the store to the `store` prop:
+
+```tsx
+import { Button } from '@mantine/core';
+import { createLightbox, Lightbox } from '@mantine/lightbox';
+
+const [productStore, productLightbox] = createLightbox();
+
+function Demo() {
+  return (
+    <>
+      <Lightbox.Provider store={productStore} withThumbnails />
+      <Button onClick={() => productLightbox.open({ slides })}>Open product gallery</Button>
+    </>
+  );
+}
+```
+
+To subscribe to the state of any lightbox store in a component, use the `useLightboxStore` hook:
+
+```tsx
+import { lightboxStore, useLightboxStore } from '@mantine/lightbox';
+
+function Demo() {
+  const { opened, currentIndex, slides } = useLightboxStore(lightboxStore);
+  return <div>Current slide: {currentIndex + 1}</div>;
+}
+```
 
 ## Video slides
 
@@ -131,7 +237,7 @@ import { Lightbox } from '@mantine/lightbox';
 
 function CustomLightbox({ opened, onClose, slides }) {
   return (
-    <Lightbox.Root opened={opened} onClose={onClose} slides={slides} withZoom>
+    <Lightbox.Root opened={opened} onClose={onClose} slides={slides} withZoom withThumbnails>
       <Lightbox.Toolbar />
       <Lightbox.Slides>
         {slides.map((slide, index) => (
@@ -146,6 +252,8 @@ function CustomLightbox({ opened, onClose, slides }) {
 }
 ```
 
+Note that `Lightbox.Thumbnails` renders only when `withThumbnails` is set on `Lightbox.Root`.
+
 Available sub-components:
 - `Lightbox.Root` — overlay, portal, focus trap, scroll lock, keyboard handling
 - `Lightbox.Toolbar` — top bar with actions and slide counter
@@ -159,21 +267,28 @@ Available sub-components:
 
 ## Accessibility
 
-- Focus is trapped within the lightbox when opened
-- `role="dialog"` with `aria-modal="true"` on the root element
-- All interactive elements have `aria-label` attributes
-- `aria-live="polite"` region announces slide changes to screen readers
+- Focus is trapped within the lightbox when opened and returned to the last active element when it is closed (`returnFocus` prop)
+- The content element has `role="dialog"` with `aria-modal="true"` and `aria-label="Gallery"` – pass `aria-label` to change the dialog accessible name
+- Always set the `alt` property on image slides – without it the image is treated as decorative by screen readers; for video slides set the `label` property
+- All interactive elements have `aria-label` attributes; the `label` property is required for custom toolbar items
+- `aria-live="polite"` region announces slide changes (including the current slide `alt`/`label`) to screen readers
 - Body scroll is locked when the lightbox is open
 
 ## Keyboard shortcuts
 
+`Escape` always closes the lightbox. Other shortcuts are active when `withKeyboardEvents` is set
+(default) and are ignored when focus is inside an input, textarea, video or other interactive
+element. `F`/`T`/`Z` only work when the corresponding feature is enabled:
+
 <KeyboardEventsTable
   data={[
     { key: 'Escape', description: 'Close lightbox' },
-    { key: 'ArrowLeft', description: 'Previous slide' },
-    { key: 'ArrowRight', description: 'Next slide' },
-    { key: 'F', description: 'Toggle fullscreen' },
-    { key: 'T', description: 'Toggle thumbnails' },
-    { key: 'Z', description: 'Toggle zoom' },
+    { key: 'ArrowLeft', description: 'Previous slide, pan left when zoomed' },
+    { key: 'ArrowRight', description: 'Next slide, pan right when zoomed' },
+    { key: 'ArrowUp', description: 'Pan up when zoomed' },
+    { key: 'ArrowDown', description: 'Pan down when zoomed' },
+    { key: 'F', description: 'Toggle fullscreen (requires withFullscreen)' },
+    { key: 'T', description: 'Toggle thumbnails (requires withThumbnails)' },
+    { key: 'Z', description: 'Toggle zoom (requires withZoom)' },
   ]}
 />

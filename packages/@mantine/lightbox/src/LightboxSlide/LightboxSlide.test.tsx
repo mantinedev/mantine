@@ -1,4 +1,4 @@
-import { renderWithAct, screen } from '@mantine-tests/core';
+import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import type { LightboxSlideData } from '../lightbox.types';
 import { LightboxSlide } from './LightboxSlide';
 import { LightboxWrapper } from '../test-utils';
@@ -109,5 +109,59 @@ describe('@mantine/lightbox/LightboxSlide', () => {
       </LightboxWrapper>
     );
     expect(screen.getByRole('img')).not.toHaveAttribute('data-zoom-enabled');
+  });
+
+  it('toggles zoom on double-click', async () => {
+    const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo' };
+    await renderWithAct(
+      <LightboxWrapper slides={[slide]} currentIndex={0} withZoom>
+        <LightboxSlide slide={slide} index={0} />
+      </LightboxWrapper>
+    );
+    const img = screen.getByRole('img');
+    expect(img).not.toHaveAttribute('data-zoomed');
+
+    await userEvent.dblClick(img);
+    expect(img).toHaveAttribute('data-zoomed');
+
+    await userEvent.dblClick(img);
+    expect(img).not.toHaveAttribute('data-zoomed');
+  });
+
+  it('toggles zoom with Z shortcut', async () => {
+    const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo' };
+    await renderWithAct(
+      <LightboxWrapper slides={[slide]} currentIndex={0} withZoom>
+        <LightboxSlide slide={slide} index={0} />
+      </LightboxWrapper>
+    );
+    const img = screen.getByRole('img');
+
+    await userEvent.keyboard('z');
+    expect(img).toHaveAttribute('data-zoomed');
+
+    await userEvent.keyboard('z');
+    expect(img).not.toHaveAttribute('data-zoomed');
+  });
+
+  it('renders video slide tracks and label', async () => {
+    const slide: LightboxSlideData = {
+      type: 'video',
+      src: 'video.mp4',
+      label: 'Demo video',
+      tracks: [{ src: 'captions.vtt', kind: 'captions', srcLang: 'en', label: 'English' }],
+    };
+    await renderWithAct(
+      <LightboxWrapper slides={[slide]}>
+        <LightboxSlide slide={slide} index={0} />
+      </LightboxWrapper>
+    );
+
+    const video = document.querySelector('video');
+    expect(video).toHaveAttribute('aria-label', 'Demo video');
+    const track = document.querySelector('track');
+    expect(track).toHaveAttribute('src', 'captions.vtt');
+    expect(track).toHaveAttribute('kind', 'captions');
+    expect(track).toHaveAttribute('srclang', 'en');
   });
 });

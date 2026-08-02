@@ -4379,12 +4379,12 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "npm:9.0.2"
-    react: "npm:19.2.4"
-    react-dom: "npm:19.2.4"
+    "@mantine/store": "npm:9.5.1"
+    react: "npm:19.2.7"
+    react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.0.1
-    "@mantine/hooks": 9.0.1
+    "@mantine/core": 9.5.1
+    "@mantine/hooks": 9.5.1
     embla-carousel: ">=8.0.0"
     embla-carousel-react: ">=8.0.0"
     react: ^19.2.0
@@ -4488,15 +4488,6 @@ __metadata:
     react-dom: ^19.2.0
   languageName: unknown
   linkType: soft
-
-"@mantine/store@npm:9.0.2":
-  version: 9.0.2
-  resolution: "@mantine/store@npm:9.0.2"
-  peerDependencies:
-    react: ^19.2.0
-  checksum: 10c0/6ff85677c858df85881682f608f0bc9004a7c48c04bc47a23af0cf54802b6c713a5b8e96765a15ab83ff6eae365d704be2a4c4fde1d1b545dec3de86f6ede291
-  languageName: node
-  linkType: hard
 
 "@mantine/store@npm:9.5.1, @mantine/store@workspace:*, @mantine/store@workspace:packages/@mantine/store":
   version: 0.0.0-use.local
@@ -17572,17 +17563,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:19.2.4":
-  version: 19.2.4
-  resolution: "react-dom@npm:19.2.4"
-  dependencies:
-    scheduler: "npm:^0.27.0"
-  peerDependencies:
-    react: ^19.2.4
-  checksum: 10c0/f0c63f1794dedb154136d4d0f59af00b41907f4859571c155940296808f4b94bf9c0c20633db75b5b2112ec13d8d7dd4f9bf57362ed48782f317b11d05a44f35
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:19.2.7":
   version: 19.2.7
   resolution: "react-dom@npm:19.2.7"
@@ -17744,13 +17724,6 @@ __metadata:
     react: ">=16 || >=17 || >= 18 || >= 19"
     react-dom: ">=16 || >=17 || >= 18 || >=19"
   checksum: 10c0/56795b3734feab17844fcceab2c41240b6241c7652c20efddec3207474596f2f305766ae46b5c114fd14a385a0b50ea1e9c2a2d8b77e9e53fa4dc98945360130
-  languageName: node
-  linkType: hard
-
-"react@npm:19.2.4":
-  version: 19.2.4
-  resolution: "react@npm:19.2.4"
-  checksum: 10c0/cd2c9ff67a720799cc3b38a516009986f7fc4cb8d3e15716c6211cf098d1357ee3e348ab05ad0600042bbb0fd888530ba92e329198c92eafa0994f5213396596
   languageName: node
   linkType: hard
 

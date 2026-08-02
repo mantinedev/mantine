@@ -23,12 +23,32 @@ export interface LightboxImageSlide {
   sizes?: string;
 }
 
+export interface LightboxVideoSlideTrack {
+  /** WebVTT track source URL */
+  src: string;
+
+  /** Track kind, `'subtitles'` by default */
+  kind?: string;
+
+  /** Track language code, for example `'en'` */
+  srcLang?: string;
+
+  /** Track label displayed in the video player captions menu */
+  label?: string;
+
+  /** Whether the track should be enabled by default */
+  default?: boolean;
+}
+
 export interface LightboxVideoSlide {
   /** Slide type, must be `'video'` */
   type: 'video';
 
   /** Video source URL */
   src: string;
+
+  /** Video accessible label, announced by screen readers */
+  label?: string;
 
   /** Custom thumbnail URL */
   thumbSrc?: string;
@@ -41,6 +61,9 @@ export interface LightboxVideoSlide {
 
   /** Video poster image URL */
   poster?: string;
+
+  /** Subtitle/caption tracks rendered as `<track>` elements */
+  tracks?: LightboxVideoSlideTrack[];
 }
 
 export interface LightboxCustomSlide {

@@ -5,6 +5,7 @@ import { LightboxNavigation } from './LightboxNavigation/LightboxNavigation';
 import { LightboxProviderComponent } from './LightboxProvider/LightboxProvider';
 import {
   LightboxRoot,
+  lightboxRootDefaultProps,
   LightboxRootProps,
   LightboxRootStylesNames,
 } from './LightboxRoot/LightboxRoot';
@@ -12,7 +13,7 @@ import { LightboxSlide } from './LightboxSlide/LightboxSlide';
 import { LightboxSlides } from './LightboxSlides/LightboxSlides';
 import { LightboxThumbnails } from './LightboxThumbnails/LightboxThumbnails';
 import { LightboxToolbar } from './LightboxToolbar/LightboxToolbar';
-import { lightbox, lightboxStore } from './lightbox.store';
+import { lightbox } from './lightbox.store';
 import type { ToolbarItem } from './lightbox.types';
 import classes from './Lightbox.module.css';
 
@@ -22,7 +23,10 @@ export interface LightboxProps extends Omit<LightboxRootProps, 'children'> {
   /** Custom toolbar items, overrides default toolbar */
   toolbarItems?: ToolbarItem[];
 
-  /** Custom children to override default lightbox layout */
+  /** Shows previous/next navigation arrows @default true */
+  withNavigation?: boolean;
+
+  /** Custom lightbox layout, overrides the default layout built from compound components */
   children?: React.ReactNode;
 }
 
@@ -49,36 +53,31 @@ export type LightboxFactory = Factory<{
 }>;
 
 const defaultProps = {
-  withZoom: false,
-  withThumbnails: false,
-  withFullscreen: false,
-  withDownload: false,
-  loop: false,
+  ...lightboxRootDefaultProps,
   withNavigation: true,
-  closeOnClickOutside: true,
-  closeOnSwipeDown: true,
-  transitionDuration: 200,
-  zoomMaxScale: 3,
-  store: lightboxStore,
 } satisfies Partial<LightboxProps>;
 
 export const Lightbox = factory<LightboxFactory>((_props) => {
   const props = useProps('Lightbox', defaultProps, _props);
-  const { slides, toolbarItems, withNavigation, ...others } = props;
+  const { slides, toolbarItems, withNavigation, children, ...others } = props;
 
   return (
     <LightboxRoot {...others} slides={slides}>
-      <LightboxToolbar toolbarItems={toolbarItems} />
+      {children ?? (
+        <>
+          <LightboxToolbar toolbarItems={toolbarItems} />
 
-      <LightboxSlides>
-        {slides.map((slide, index) => (
-          <LightboxSlide key={index} slide={slide} index={index} />
-        ))}
-      </LightboxSlides>
+          <LightboxSlides>
+            {slides.map((slide, index) => (
+              <LightboxSlide key={index} slide={slide} index={index} />
+            ))}
+          </LightboxSlides>
 
-      {withNavigation && <LightboxNavigation />}
-      <LightboxCaption />
-      <LightboxThumbnails />
+          {withNavigation && <LightboxNavigation />}
+          <LightboxCaption />
+          <LightboxThumbnails />
+        </>
+      )}
     </LightboxRoot>
   );
 });

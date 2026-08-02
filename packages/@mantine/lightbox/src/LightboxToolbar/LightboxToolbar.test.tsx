@@ -1,5 +1,6 @@
 import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import type { LightboxSlideData, ToolbarItem } from '../lightbox.types';
+import { LightboxThumbnails } from '../LightboxThumbnails/LightboxThumbnails';
 import { LightboxToolbar } from './LightboxToolbar';
 import { LightboxWrapper } from '../test-utils';
 
@@ -37,6 +38,24 @@ describe('@mantine/lightbox/LightboxToolbar', () => {
         <LightboxToolbar />
       </LightboxWrapper>
     );
+    expect(screen.getByLabelText('Hide thumbnails')).toBeInTheDocument();
+  });
+
+  it('toggles thumbnails visibility with toolbar button and T shortcut', async () => {
+    await renderWithAct(
+      <LightboxWrapper withThumbnails>
+        <LightboxToolbar />
+        <LightboxThumbnails />
+      </LightboxWrapper>
+    );
+    expect(screen.getByLabelText('Go to slide 1')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByLabelText('Hide thumbnails'));
+    expect(screen.queryByLabelText('Go to slide 1')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('Show thumbnails')).toBeInTheDocument();
+
+    await userEvent.keyboard('t');
+    expect(screen.getByLabelText('Go to slide 1')).toBeInTheDocument();
     expect(screen.getByLabelText('Hide thumbnails')).toBeInTheDocument();
   });
 

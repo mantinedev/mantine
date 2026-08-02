@@ -94,26 +94,55 @@ export function createThumbnailsToolbarItem(toggle: () => void, visible: boolean
   };
 }
 
+const ALLOWED_DOWNLOAD_PROTOCOLS = ['http:', 'https:', 'blob:', 'data:'];
+
+function parseDownloadUrl(src: string): URL | null {
+  try {
+    const url = new URL(src, window.location.href);
+    return ALLOWED_DOWNLOAD_PROTOCOLS.includes(url.protocol) ? url : null;
+  } catch {
+    return null;
+  }
+}
+
+let downloadInProgress = false;
+
+function downloadFile(src: string) {
+  const parsed = parseDownloadUrl(src);
+
+  if (!parsed || downloadInProgress) {
+    return;
+  }
+
+  downloadInProgress = true;
+
+  fetch(src)
+    .then((res) => res.blob())
+    .then((blob) => {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download =
+        (parsed.protocol === 'data:' ? '' : parsed.pathname.split('/').pop()) || 'download';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    })
+    .catch(() => {
+      window.open(src, '_blank', 'noopener,noreferrer');
+    })
+    .finally(() => {
+      downloadInProgress = false;
+    });
+}
+
 export function createDownloadToolbarItem(src: string): ToolbarItem {
   return {
     key: 'download',
     icon: <IconDownload />,
     label: 'Download',
-    onClick: () => {
-      fetch(src)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = src.split('/').pop() || 'download';
-          link.click();
-          URL.revokeObjectURL(url);
-        })
-        .catch(() => {
-          window.open(src, '_blank');
-        });
-    },
+    onClick: () => downloadFile(src),
     position: 'right',
   };
 }

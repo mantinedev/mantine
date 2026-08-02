@@ -126,6 +126,7 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/lightbox/src',
     license: 'MIT',
     docs: 'x/lightbox.mdx',
+    searchTags: 'gallery, image viewer, media viewer, photo gallery, carousel, zoom, fullscreen',
   },
 
   TipTap: {

@@ -50,21 +50,6 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
     }
   }, [ctx.currentIndex, thumbsEmbla]);
 
-  useEffect(() => {
-    if (!ctx.embla || !thumbsEmbla) {
-      return undefined;
-    }
-
-    const onSelect = () => {
-      thumbsEmbla.scrollTo(ctx.embla!.selectedScrollSnap());
-    };
-
-    ctx.embla.on('select', onSelect);
-    return () => {
-      ctx.embla!.off('select', onSelect);
-    };
-  }, [ctx.embla, thumbsEmbla]);
-
   if (!ctx.thumbnailsVisible) {
     return null;
   }
@@ -82,7 +67,7 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
         {...ctx.getStyles('thumbnail')}
         data-active={index === ctx.currentIndex || undefined}
         aria-label={`Go to slide ${index + 1}`}
-        aria-selected={index === ctx.currentIndex}
+        aria-current={index === ctx.currentIndex || undefined}
         onClick={() => ctx.setIndex(index)}
       >
         {hasCustomThumb ? (

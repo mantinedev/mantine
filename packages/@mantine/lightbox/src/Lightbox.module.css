@@ -82,14 +82,6 @@
 .slidesContainer {
   display: flex;
   height: 100%;
-
-  &[data-slide-transition] {
-    transition: transform var(--lightbox-transition-duration) ease;
-
-    @media (prefers-reduced-motion) {
-      transition: none;
-    }
-  }
 }
 
 .slide {
@@ -110,8 +102,8 @@
   -webkit-user-drag: none;
   transition: transform var(--lightbox-transition-duration) ease;
 
-  @media (prefers-reduced-motion) {
-    transition: none;
+  &[data-zoom-enabled] {
+    touch-action: none;
   }
 
   &[data-zoomed] {
@@ -137,7 +129,6 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  outline: none;
 }
 
 .thumbnails {
@@ -215,10 +206,6 @@
   pointer-events: all;
   opacity: 0.7;
   transition: opacity var(--lightbox-transition-duration) ease;
-
-  @media (prefers-reduced-motion) {
-    transition: none;
-  }
 
   @mixin hover {
     opacity: 1;

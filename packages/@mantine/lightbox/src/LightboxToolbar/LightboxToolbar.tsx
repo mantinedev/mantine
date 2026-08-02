@@ -7,7 +7,6 @@ import {
   Factory,
   UnstyledButton,
   useProps,
-  VisuallyHidden,
 } from '@mantine/core';
 import { useLightboxContext } from '../lightbox.context';
 import type { ToolbarItem } from '../lightbox.types';
@@ -79,11 +78,7 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
         ))}
       </div>
 
-      <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
-        {`Slide ${ctx.currentIndex + 1} of ${ctx.slides.length}`}
-      </VisuallyHidden>
-
-      <span {...ctx.getStyles('counter')}>
+      <span {...ctx.getStyles('counter')} aria-hidden="true">
         {ctx.currentIndex + 1} / {ctx.slides.length}
       </span>
 

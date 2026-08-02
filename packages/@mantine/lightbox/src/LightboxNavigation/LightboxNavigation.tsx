@@ -67,17 +67,21 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
   );
 
   const ctx = useLightboxContext();
-  const canPrev = ctx.loop || ctx.currentIndex > 0;
-  const canNext = ctx.loop || ctx.currentIndex < ctx.slides.length - 1;
+  const canPrev = ctx.embla ? ctx.embla.canScrollPrev() : ctx.loop || ctx.currentIndex > 0;
+  const canNext = ctx.embla
+    ? ctx.embla.canScrollNext()
+    : ctx.loop || ctx.currentIndex < ctx.slides.length - 1;
 
   return (
     <Box {...ctx.getStyles('navigation', { className, style, classNames, styles })} {...others}>
       <UnstyledButton
         {...ctx.getStyles('navigationButton')}
         aria-label="Previous slide"
+        aria-disabled={!canPrev || undefined}
         data-inactive={!canPrev || undefined}
+        mod="reduce-motion"
         tabIndex={canPrev ? 0 : -1}
-        onClick={() => ctx.embla?.scrollPrev()}
+        onClick={ctx.prev}
       >
         <ChevronLeft />
       </UnstyledButton>
@@ -85,9 +89,11 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
       <UnstyledButton
         {...ctx.getStyles('navigationButton')}
         aria-label="Next slide"
+        aria-disabled={!canNext || undefined}
         data-inactive={!canNext || undefined}
+        mod="reduce-motion"
         tabIndex={canNext ? 0 : -1}
-        onClick={() => ctx.embla?.scrollNext()}
+        onClick={ctx.next}
       >
         <ChevronRight />
       </UnstyledButton>

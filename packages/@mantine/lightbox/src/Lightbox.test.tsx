@@ -1,7 +1,7 @@
-import { act, waitFor } from '@testing-library/react';
-import { render, renderWithAct, screen, userEvent } from '@mantine-tests/core';
-import { Lightbox, LightboxProps } from './Lightbox';
-import { lightbox, lightboxStore } from './lightbox.store';
+import { act, fireEvent, waitFor } from '@testing-library/react';
+import { render, renderWithAct, screen, tests, userEvent } from '@mantine-tests/core';
+import { Lightbox, LightboxProps, LightboxStylesNames } from './Lightbox';
+import { createLightbox, lightbox, lightboxStore } from './lightbox.store';
 import type { LightboxSlideData } from './lightbox.types';
 import { LightboxCaption } from './LightboxCaption/LightboxCaption';
 import { LightboxCloseButton } from './LightboxCloseButton/LightboxCloseButton';
@@ -28,12 +28,52 @@ function getLightbox() {
   return screen.getByRole('dialog');
 }
 
+const systemProps: LightboxProps = {
+  ...defaultProps,
+  withinPortal: false,
+  withThumbnails: true,
+  transitionProps: { duration: 0 },
+};
+
 describe('@mantine/lightbox/Lightbox', () => {
   afterEach(async () => {
     await act(async () => {
       lightboxStore.setState({ opened: false, slides: [], currentIndex: 0 });
     });
   });
+
+  tests.itSupportsSystemProps<LightboxProps, LightboxStylesNames>({
+    component: Lightbox,
+    props: systemProps,
+    displayName: '@mantine/lightbox/Lightbox',
+    stylesApiSelectors: [
+      'root',
+      'overlay',
+      'content',
+      'toolbar',
+      'toolbarGroup',
+      'toolbarButton',
+      'counter',
+      'slides',
+      'slidesViewport',
+      'slidesContainer',
+      'slide',
+      'slideImage',
+      'caption',
+      'navigation',
+      'navigationButton',
+      'thumbnails',
+      'thumbnailsViewport',
+      'thumbnailsContainer',
+      'thumbnail',
+      'thumbnailImage',
+    ],
+    selector: '.mantine-Lightbox-content',
+    sizeSelector: '.mantine-Lightbox-content',
+    variantSelector: '.mantine-Lightbox-content',
+  });
+
+  tests.axe([<Lightbox {...systemProps} key="default" />]);
 
   it('has correct displayName', () => {
     expect(Lightbox.displayName).toBe('@mantine/lightbox/Lightbox');
@@ -154,12 +194,6 @@ describe('@mantine/lightbox/Lightbox', () => {
     expect(screen.getByLabelText('Download')).toBeInTheDocument();
   });
 
-  it('does not render download button for custom slides', async () => {
-    const customSlides: LightboxSlideData[] = [{ type: 'custom', render: () => <div>Custom</div> }];
-    await renderWithAct(<Lightbox {...defaultProps} slides={customSlides} withDownload />);
-    expect(screen.queryByLabelText('Download')).not.toBeInTheDocument();
-  });
-
   it('locks body scroll when opened', async () => {
     await renderWithAct(<Lightbox {...defaultProps} />);
     expect(document.body.hasAttribute('data-scroll-locked')).toBe(true);
@@ -195,48 +229,71 @@ describe('@mantine/lightbox/Lightbox', () => {
     expect(screen.getByText('Caption 2')).toBeInTheDocument();
   });
 
-  it('renders video slides with video element', async () => {
-    const videoSlides: LightboxSlideData[] = [
-      { type: 'video', src: 'video.mp4', poster: 'poster.jpg' },
-    ];
-    await renderWithAct(<Lightbox {...defaultProps} slides={videoSlides} />);
+  it('does not call onClose when clicking slide content', async () => {
+    const onClose = jest.fn();
+    await renderWithAct(<Lightbox {...defaultProps} onClose={onClose} />);
 
-    const video = document.querySelector('video');
-    expect(video).toBeInTheDocument();
-    expect(video).toHaveAttribute('src', 'video.mp4');
-    expect(video).toHaveAttribute('poster', 'poster.jpg');
+    await userEvent.click(screen.getAllByRole('img')[0]);
+    expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('renders custom slides with render function', async () => {
-    const customSlides: LightboxSlideData[] = [
-      { type: 'custom', render: ({ active }) => <div>Custom {active ? 'active' : ''}</div> },
-    ];
-    await renderWithAct(<Lightbox {...defaultProps} slides={customSlides} />);
-    expect(screen.getByText('Custom active')).toBeInTheDocument();
-  });
-
-  it('renders custom toolbar items when provided', async () => {
+  it('renders custom children instead of default layout', async () => {
     await renderWithAct(
-      <Lightbox
-        {...defaultProps}
-        toolbarItems={[
-          { key: 'custom', icon: <span>Icon</span>, label: 'Custom action', onClick: jest.fn() },
-        ]}
-      />
+      <Lightbox {...defaultProps}>
+        <div data-testid="custom-layout">Custom layout</div>
+      </Lightbox>
     );
-    expect(screen.getByLabelText('Custom action')).toBeInTheDocument();
+    expect(screen.getByTestId('custom-layout')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Previous slide')).not.toBeInTheDocument();
+  });
+});
+
+describe('@mantine/lightbox/Lightbox swipe close', () => {
+  function swipe(element: Element, from: { x: number; y: number }, to: { x: number; y: number }) {
+    fireEvent.touchStart(element, {
+      touches: [{ clientX: from.x, clientY: from.y }],
+      changedTouches: [{ clientX: from.x, clientY: from.y }],
+    });
+    fireEvent.touchEnd(element, {
+      touches: [],
+      changedTouches: [{ clientX: to.x, clientY: to.y }],
+    });
+  }
+
+  it('calls onClose on swipe down over threshold', async () => {
+    const onClose = jest.fn();
+    await renderWithAct(<Lightbox {...defaultProps} onClose={onClose} />);
+
+    swipe(
+      document.querySelector('.mantine-Lightbox-slides')!,
+      { x: 100, y: 100 },
+      { x: 100, y: 250 }
+    );
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('does not show zoom cursor when withZoom is false', async () => {
-    await renderWithAct(<Lightbox {...defaultProps} />);
-    const image = screen.getAllByRole('img')[0];
-    expect(image).not.toHaveAttribute('data-zoom-enabled');
+  it('does not call onClose when closeOnSwipeDown is false', async () => {
+    const onClose = jest.fn();
+    await renderWithAct(<Lightbox {...defaultProps} onClose={onClose} closeOnSwipeDown={false} />);
+
+    swipe(
+      document.querySelector('.mantine-Lightbox-slides')!,
+      { x: 100, y: 100 },
+      { x: 100, y: 250 }
+    );
+    expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('shows zoom attributes when withZoom is true', async () => {
-    await renderWithAct(<Lightbox {...defaultProps} withZoom />);
-    const image = screen.getAllByRole('img')[0];
-    expect(image).toHaveAttribute('data-zoom-enabled');
+  it('does not call onClose for mostly horizontal swipes', async () => {
+    const onClose = jest.fn();
+    await renderWithAct(<Lightbox {...defaultProps} onClose={onClose} />);
+
+    swipe(
+      document.querySelector('.mantine-Lightbox-slides')!,
+      { x: 100, y: 100 },
+      { x: 300, y: 250 }
+    );
+    expect(onClose).not.toHaveBeenCalled();
   });
 });
 
@@ -343,5 +400,43 @@ describe('@mantine/lightbox/Lightbox store', () => {
       lightbox.setIndex(2);
     });
     expect(lightboxStore.getState().currentIndex).toBe(2);
+  });
+
+  it('store open clamps out of range startIndex', () => {
+    act(() => {
+      lightbox.open({ slides, startIndex: 10 });
+    });
+    expect(lightboxStore.getState().currentIndex).toBe(2);
+  });
+
+  it('store setIndex clamps out of range values', () => {
+    act(() => {
+      lightbox.open({ slides });
+    });
+
+    act(() => {
+      lightbox.setIndex(10);
+    });
+    expect(lightboxStore.getState().currentIndex).toBe(2);
+
+    act(() => {
+      lightbox.setIndex(-5);
+    });
+    expect(lightboxStore.getState().currentIndex).toBe(0);
+  });
+
+  it('supports multiple independent lightboxes via createLightbox', async () => {
+    const [customStore, customActions] = createLightbox();
+    await renderWithAct(<Lightbox.Provider store={customStore} />);
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    await act(async () => {
+      customActions.open({ slides });
+    });
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(customStore.getState().opened).toBe(true);
+    expect(lightboxStore.getState().opened).toBe(false);
   });
 });

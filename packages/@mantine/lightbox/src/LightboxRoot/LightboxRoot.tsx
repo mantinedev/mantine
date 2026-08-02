@@ -9,18 +9,25 @@ import {
   factory,
   Factory,
   FocusTrap,
-  Portal,
+  OptionalPortal,
   RemoveScroll,
   StylesApiProps,
   Transition,
   TransitionOverride,
+  useMantineTheme,
   useProps,
   useStyles,
+  VisuallyHidden,
 } from '@mantine/core';
-import { useFullscreenDocument, useUncontrolled } from '@mantine/hooks';
+import {
+  useFocusReturn,
+  useFullscreenDocument,
+  useReducedMotion,
+  useUncontrolled,
+} from '@mantine/hooks';
 import { LightboxContextProvider } from '../lightbox.context';
 import { lightboxStore, LightboxStore } from '../lightbox.store';
-import type { LightboxSlideData, ToolbarItem } from '../lightbox.types';
+import type { LightboxSlideData } from '../lightbox.types';
 import { useLightboxKeyboard } from '../hooks/use-lightbox-keyboard';
 import { useLightboxLockScroll } from '../hooks/use-lightbox-lock-scroll';
 import { useLightboxZoom } from '../hooks/use-lightbox-zoom';
@@ -94,20 +101,23 @@ export interface LightboxRootProps
   /** Adds download button to toolbar @default false */
   withDownload?: boolean;
 
-  /** Custom toolbar items, overrides default toolbar */
-  toolbarItems?: ToolbarItem[];
-
   /** Enables infinite loop navigation @default false */
   loop?: boolean;
-
-  /** Shows previous/next navigation arrows @default true */
-  withNavigation?: boolean;
 
   /** Closes lightbox when clicking outside slide content @default true */
   closeOnClickOutside?: boolean;
 
   /** Closes lightbox when swiping down on mobile @default true */
   closeOnSwipeDown?: boolean;
+
+  /** Determines whether keyboard shortcuts (arrows, `F`/`T`/`Z`) are active, `Escape` always closes the lightbox @default true */
+  withKeyboardEvents?: boolean;
+
+  /** Determines whether focus should be returned to the last active element when the lightbox is closed @default true */
+  returnFocus?: boolean;
+
+  /** Determines whether the lightbox should be rendered inside `Portal` @default true */
+  withinPortal?: boolean;
 
   /** Transition duration in milliseconds @default 200 */
   transitionDuration?: number;
@@ -132,16 +142,18 @@ export type LightboxRootFactory = Factory<{
   vars: LightboxCssVariables;
 }>;
 
-const defaultProps = {
+export const lightboxRootDefaultProps = {
   store: lightboxStore,
   withZoom: false,
   withThumbnails: false,
   withFullscreen: false,
   withDownload: false,
   loop: false,
-  withNavigation: true,
   closeOnClickOutside: true,
   closeOnSwipeDown: true,
+  withKeyboardEvents: true,
+  returnFocus: true,
+  withinPortal: true,
   transitionDuration: 200,
   zoomMaxScale: 3,
   withSlideTransition: false,
@@ -158,7 +170,7 @@ const varsResolver = createVarsResolver<LightboxRootFactory>((_, { transitionDur
 }));
 
 export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
-  const props = useProps('LightboxRoot', defaultProps, _props);
+  const props = useProps('LightboxRoot', lightboxRootDefaultProps, _props);
   const {
     classNames,
     className,
@@ -180,15 +192,18 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     loop,
     closeOnClickOutside,
     closeOnSwipeDown,
+    withKeyboardEvents,
+    returnFocus,
+    withinPortal,
     transitionDuration,
     transitionProps,
     emblaOptions,
     zoomMaxScale,
     withSlideTransition,
-    withNavigation,
-    toolbarItems,
     attributes,
     mod,
+    onClick,
+    ref,
     ...others
   } = props;
 
@@ -197,7 +212,6 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     classes,
     props,
     className,
-    style,
     classNames,
     styles,
     unstyled,
@@ -214,19 +228,22 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   });
 
   const zoomIsActive = useRef(false);
-  const prevOpenedRef = useRef(opened);
-  const startIndexRef = useRef(_currentIndex);
   const currentIndexRef = useRef(_currentIndex);
+  const setCurrentIndexRef = useRef(setCurrentIndex);
 
-  currentIndexRef.current = _currentIndex;
+  const [startIndex, setStartIndex] = useState(_currentIndex);
+  const [prevOpened, setPrevOpened] = useState(opened);
 
-  if (opened && !prevOpenedRef.current) {
-    startIndexRef.current = _currentIndex;
+  if (opened !== prevOpened) {
+    setPrevOpened(opened);
+    if (opened) {
+      setStartIndex(_currentIndex);
+    }
   }
 
   const [emblaRef, embla] = useEmblaCarousel({
     loop,
-    startIndex: startIndexRef.current,
+    startIndex,
     watchDrag: withZoom ? () => !zoomIsActive.current : true,
     ...emblaOptions,
   });
@@ -248,56 +265,44 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     currentIndex: _currentIndex,
   });
 
-  zoomIsActive.current = zoom.zoomState.isZoomed;
+  useEffect(() => {
+    currentIndexRef.current = _currentIndex;
+    setCurrentIndexRef.current = setCurrentIndex;
+    zoomIsActive.current = zoom.zoomState.isZoomed;
+  });
 
-  const [slidePhase, setSlidePhase] = useState<'idle' | 'dragging' | 'snapping'>('idle');
+  const { resetZoom } = zoom;
 
   useEffect(() => {
-    if (!embla) {
-      return undefined;
+    if (!opened) {
+      resetZoom();
+      setThumbnailsVisible(!!withThumbnails);
     }
+  }, [opened, resetZoom, withThumbnails]);
 
-    const onPointerDown = () => {
-      setSlidePhase('dragging');
-    };
-
-    const onPointerUp = () => {
-      setSlidePhase('snapping');
-    };
-
-    const onSettle = () => {
-      setSlidePhase('idle');
-    };
-
-    embla.on('pointerDown', onPointerDown);
-    embla.on('pointerUp', onPointerUp);
-    embla.on('settle', onSettle);
-    return () => {
-      embla.off('pointerDown', onPointerDown);
-      embla.off('pointerUp', onPointerUp);
-      embla.off('settle', onSettle);
-    };
-  }, [embla]);
-
-  const slideTransitionActive =
-    slidePhase === 'snapping' || (slidePhase === 'idle' && !!withSlideTransition);
+  const theme = useMantineTheme();
+  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
+  const animateSlides = !!withSlideTransition && !reduceMotion;
 
   const handleNext = useCallback(() => {
-    embla?.scrollNext();
-  }, [embla]);
+    embla?.scrollNext(!animateSlides);
+  }, [embla, animateSlides]);
 
   const handlePrev = useCallback(() => {
-    embla?.scrollPrev();
-  }, [embla]);
+    embla?.scrollPrev(!animateSlides);
+  }, [embla, animateSlides]);
 
   useLightboxKeyboard({
     opened,
+    enabled: withKeyboardEvents!,
     onClose,
     onNext: handleNext,
     onPrev: handlePrev,
     onToggleFullscreen: withFullscreen ? toggleFullscreen : undefined,
     onToggleThumbnails: withThumbnails ? toggleThumbnails : undefined,
     onToggleZoom: withZoom ? zoom.toggleZoom : undefined,
+    onZoomPan: withZoom ? zoom.panZoom : undefined,
   });
 
   useEffect(() => {
@@ -306,7 +311,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     }
 
     const onSelect = () => {
-      setCurrentIndex(embla.selectedScrollSnap());
+      setCurrentIndexRef.current(embla.selectedScrollSnap());
     };
 
     const onReInit = () => {
@@ -321,17 +326,15 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
       embla.off('select', onSelect);
       embla.off('reInit', onReInit);
     };
-  }, [embla, setCurrentIndex]);
-
-  useEffect(() => {
-    prevOpenedRef.current = opened;
-  }, [opened]);
+  }, [embla]);
 
   useEffect(() => {
     if (embla && opened && embla.selectedScrollSnap() !== _currentIndex) {
-      embla.scrollTo(_currentIndex, false);
+      embla.scrollTo(_currentIndex, !animateSlides);
     }
-  }, [_currentIndex, embla, opened]);
+  }, [_currentIndex, embla, opened, animateSlides]);
+
+  useFocusReturn({ opened, shouldReturnFocus: returnFocus });
 
   const shouldLockScroll = useLightboxLockScroll({
     opened,
@@ -361,8 +364,16 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     keepMounted: transition.keepMounted,
   };
 
+  const currentSlide = slides[_currentIndex];
+  const currentSlideLabel =
+    currentSlide?.type === 'video'
+      ? currentSlide.label
+      : currentSlide?.type === 'custom'
+        ? undefined
+        : currentSlide?.alt;
+
   return (
-    <Portal>
+    <OptionalPortal withinPortal={withinPortal}>
       <LightboxContextProvider
         value={{
           getStyles,
@@ -371,8 +382,10 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
           currentIndex: _currentIndex,
           setIndex: (index: number) => {
             setCurrentIndex(index);
-            embla?.scrollTo(index);
+            embla?.scrollTo(index, !animateSlides);
           },
+          next: handleNext,
+          prev: handlePrev,
           embla: embla ?? null,
           emblaRef,
           withZoom: !!withZoom,
@@ -388,8 +401,6 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
           getImageZoomProps: zoom.getImageProps,
           onClose,
           loop: !!loop,
-          withSlideTransition: !!withSlideTransition,
-          slideTransitionActive,
           closeOnSwipeDown: !!closeOnSwipeDown,
         }}
       >
@@ -401,21 +412,27 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
 
             <Transition mounted={opened} {...transition}>
               {(contentStyles) => (
-                <FocusTrap active={opened}>
+                <FocusTrap active={opened} innerRef={ref}>
                   <Box
-                    {...getStyles('content', { style: contentStyles })}
+                    {...getStyles('content', {
+                      style: style ? [style, contentStyles] : contentStyles,
+                    })}
+                    aria-label="Gallery"
                     {...others}
                     role="dialog"
                     aria-modal="true"
-                    aria-roledescription="carousel"
                     tabIndex={-1}
                     mod={mod}
                     onClick={(event) => {
+                      onClick?.(event);
                       if (closeOnClickOutside && event.target === event.currentTarget) {
                         onClose();
                       }
                     }}
                   >
+                    <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
+                      {`Slide ${_currentIndex + 1} of ${slides.length}${currentSlideLabel ? `: ${currentSlideLabel}` : ''}`}
+                    </VisuallyHidden>
                     {children}
                   </Box>
                 </FocusTrap>
@@ -424,7 +441,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
           </Box>
         </RemoveScroll>
       </LightboxContextProvider>
-    </Portal>
+    </OptionalPortal>
   );
 });
 
