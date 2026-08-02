@@ -1,7 +1,7 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
-import { fireEvent } from '@testing-library/react';
+import { createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -1081,6 +1081,120 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
       expect(() =>
         render(<ResourcesWeekView {...defaultProps} withEventResize eventResizeInterval={15} />)
       ).not.toThrow();
+    });
+  });
+
+  describe('eventDragInterval prop', () => {
+    const dragEvents = [
+      {
+        id: 1,
+        title: 'E',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'dragOver' | 'drop', clientX?: number) => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      if (clientX !== undefined) {
+        Object.defineProperty(event, 'clientX', { value: clientX, configurable: true });
+      }
+      fireEvent(node, event);
+    };
+
+    // Give the target row's slots distinct 30px-wide rects (clientX 165 -> slot 5, +15px -> 10:45).
+    const mockRowSlotRects = (row: Element) => {
+      Array.from(
+        row.querySelectorAll('.mantine-ResourcesWeekView-resourcesWeekViewRowSlot')
+      ).forEach((node, i) => {
+        (node as HTMLElement).getBoundingClientRect = () =>
+          ({
+            top: 0,
+            bottom: 30,
+            left: i * 30,
+            right: (i + 1) * 30,
+            width: 30,
+            height: 30,
+            x: i * 30,
+            y: 0,
+            toJSON: () => {},
+          }) as DOMRect;
+      });
+    };
+
+    it('drops on eventDragInterval independently of intervalMinutes', () => {
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <ResourcesWeekView
+          date="2025-01-15"
+          resources={resources}
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={onEventDrop}
+          events={dragEvents}
+        />
+      );
+
+      const row = container.querySelectorAll(
+        '.mantine-ResourcesWeekView-resourcesWeekViewRowSlots'
+      )[0];
+      mockRowSlotRects(row);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(row, 'drop', 165);
+
+      expect(onEventDrop).toHaveBeenCalledWith(
+        expect.objectContaining({ newStart: expect.stringContaining('10:45:00') })
+      );
+    });
+
+    it('shows a drag ghost at the snapped position and clears it', () => {
+      const { container } = render(
+        <ResourcesWeekView
+          date="2025-01-15"
+          resources={resources}
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={jest.fn()}
+          events={dragEvents}
+        />
+      );
+
+      const row = container.querySelectorAll(
+        '.mantine-ResourcesWeekView-resourcesWeekViewRowSlots'
+      )[0];
+      mockRowSlotRects(row);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(row, 'dragOver', 165);
+
+      expect(
+        container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewDragPreview')
+      ).toBeInTheDocument();
+
+      fireEvent.dragLeave(row);
+      expect(
+        container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewDragPreview')
+      ).not.toBeInTheDocument();
     });
   });
 });

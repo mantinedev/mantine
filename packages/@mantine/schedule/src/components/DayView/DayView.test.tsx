@@ -1,7 +1,7 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
-import { act, fireEvent } from '@testing-library/react';
+import { act, createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -889,6 +889,146 @@ describe('@mantine/schedule/DayView', () => {
         expect.objectContaining({ newEnd: '2025-11-03 10:45:00' })
       );
       spy.mockRestore();
+    });
+  });
+
+  describe('eventDragInterval prop', () => {
+    const dragEvents = [
+      {
+        id: 1,
+        title: 'E',
+        start: '2025-11-03 09:00:00',
+        end: '2025-11-03 09:30:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    // Give each time slot a distinct 30px rect so getSlotIndexFromDragPoint resolves
+    // a real slot and a real sub-slot offset (blanket rects would collapse to slot 0).
+    const mockSlotRects = (container: HTMLElement) => {
+      const slots = Array.from(
+        container.querySelectorAll('.mantine-DayView-dayViewSlot:not([data-all-day])')
+      );
+      slots.forEach((node, i) => {
+        (node as HTMLElement).getBoundingClientRect = () =>
+          ({
+            top: i * 30,
+            bottom: (i + 1) * 30,
+            left: 0,
+            right: 480,
+            width: 480,
+            height: 30,
+            x: 0,
+            y: i * 30,
+            toJSON: () => {},
+          }) as DOMRect;
+      });
+    };
+
+    // jsdom drops the `dataTransfer` passed to fireEvent, so build the event and attach
+    // it (plus clientY) explicitly — the drop path needs `types` to include application/json.
+    const fireDrag = (node: Element, type: 'dragStart' | 'dragOver' | 'drop', clientY?: number) => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      if (clientY !== undefined) {
+        Object.defineProperty(event, 'clientY', { value: clientY, configurable: true });
+      }
+      fireEvent(node, event);
+    };
+
+    it('drops on eventDragInterval independently of intervalMinutes', () => {
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={onEventDrop}
+          events={dragEvents}
+        />
+      );
+
+      mockSlotRects(container);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+      const slotsContainer = container.querySelector('.mantine-DayView-dayViewTimeSlots')!;
+
+      // clientY 165 lands in the 10:30 slot (slot 5 of 30px), +15px = 10:45,
+      // a 15-min boundary the 30-min grid alone cannot produce.
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(slotsContainer, 'drop', 165);
+
+      expect(onEventDrop).toHaveBeenCalledWith(
+        expect.objectContaining({ newStart: '2025-11-03 10:45:00' })
+      );
+    });
+
+    it('shows a drag ghost at the snapped position and clears it', () => {
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={jest.fn()}
+          events={dragEvents}
+        />
+      );
+
+      mockSlotRects(container);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+      const slotsContainer = container.querySelector('.mantine-DayView-dayViewTimeSlots')!;
+
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(slotsContainer, 'dragOver', 165);
+
+      expect(container.querySelector('.mantine-DayView-dayViewDragPreview')).toBeInTheDocument();
+      // The slot cell highlight is suppressed while the ghost outline is shown.
+      expect(
+        container.querySelector('.mantine-DayView-dayViewSlot[data-drop-target]')
+      ).not.toBeInTheDocument();
+
+      fireEvent.dragLeave(slotsContainer);
+      expect(
+        container.querySelector('.mantine-DayView-dayViewDragPreview')
+      ).not.toBeInTheDocument();
+    });
+
+    it('does not render a ghost when eventDragInterval is unset', () => {
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          withEventsDragAndDrop
+          onEventDrop={jest.fn()}
+          events={dragEvents}
+        />
+      );
+
+      mockSlotRects(container);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+      const slotsContainer = container.querySelector('.mantine-DayView-dayViewTimeSlots')!;
+
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(slotsContainer, 'dragOver', 165);
+
+      expect(
+        container.querySelector('.mantine-DayView-dayViewDragPreview')
+      ).not.toBeInTheDocument();
     });
   });
 });

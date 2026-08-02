@@ -138,6 +138,11 @@ export const Demo_eventResizeInterval = {
   render: renderDemo(demos.eventResizeInterval),
 };
 
+export const Demo_eventDragInterval = {
+  name: '⭐ Demo: eventDragInterval',
+  render: renderDemo(demos.eventDragInterval),
+};
+
 export const Demo_recurringEvents = {
   name: '⭐ Demo: recurringEvents',
   render: renderDemo(demos.recurringEvents),

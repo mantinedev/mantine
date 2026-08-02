@@ -3,6 +3,7 @@ export { allDayEvents } from './ResourcesDayView.demo.allDayEvents';
 export { dragDrop } from './ResourcesDayView.demo.dragDrop';
 export { eventResize } from './ResourcesDayView.demo.eventResize';
 export { eventResizeInterval } from './ResourcesDayView.demo.eventResizeInterval';
+export { eventDragInterval } from './ResourcesDayView.demo.eventDragInterval';
 export { eventForm } from './ResourcesDayView.demo.eventForm';
 export { staticMode } from './ResourcesDayView.demo.staticMode';
 export { businessHours } from './ResourcesDayView.demo.businessHours';

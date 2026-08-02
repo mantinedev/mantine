@@ -147,6 +147,14 @@ event drops. All-day events cannot be dragged.
 
 <Demo data={DayViewDemos.dragDrop} />
 
+## Drag interval
+
+By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
+to use a different snap step for dragging – for example, a grid with 30-minute slots whose events
+can be moved in 15-minute increments. A ghost preview shows where the event will land:
+
+<Demo data={DayViewDemos.eventDragInterval} />
+
 ## External drag and drop
 
 Use `onExternalEventDrop` to allow dragging items from outside the component into

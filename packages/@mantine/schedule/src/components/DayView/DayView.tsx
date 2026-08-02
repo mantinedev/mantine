@@ -42,6 +42,7 @@ import {
   expandRecurringEvents,
   formatDate,
   getBusinessHoursMod,
+  getDayPosition,
   getDayTimeIntervals,
   getTimeAxisEventStyle,
   getVisibleEvents,
@@ -80,6 +81,7 @@ export type DayViewStylesNames =
   | 'dayViewSlotLabel'
   | 'dayViewSlotLabels'
   | 'dayViewBackgroundEvent'
+  | 'dayViewDragPreview'
   | MoreEventsStylesNames
   | ScheduleEventStylesNames
   | Exclude<CombinedScheduleHeaderStylesNames, MonthYearSelectStylesNames>
@@ -197,6 +199,9 @@ export interface DayViewProps
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  eventDragInterval?: number;
 
   /** Called when any event drag starts */
   onEventDragStart?: (event: ScheduleEventData) => void;
@@ -342,6 +347,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
+    eventDragInterval,
     onEventDragStart,
     onEventDragEnd,
     onTimeSlotClick,
@@ -429,6 +435,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
     viewportRef.current.scrollTo({ left: 0, top: slotRect.top - viewportRect.top });
   }, []);
 
+  const dragOffsetRef = useRef<{ offset: number; size: number }>({ offset: 0, size: 0 });
+
   const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent) => {
     const slotIndex = slotsRef.current.findIndex((slotNode) => {
       if (!slotNode) {
@@ -440,6 +448,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
     });
 
     if (slotIndex >= 0) {
+      const rect = slotsRef.current[slotIndex]!.getBoundingClientRect();
+      dragOffsetRef.current = { offset: event.clientY - rect.top, size: rect.height };
       return slotIndex;
     }
 
@@ -454,10 +464,12 @@ export const DayView = factory<DayViewFactory>((_props) => {
     const lastRect = lastSlot.getBoundingClientRect();
 
     if (event.clientY < firstRect.top) {
+      dragOffsetRef.current = { offset: 0, size: firstRect.height };
       return 0;
     }
 
     if (event.clientY > lastRect.bottom) {
+      dragOffsetRef.current = { offset: lastRect.height, size: lastRect.height };
       return slotsRef.current.length - 1;
     }
 
@@ -510,10 +522,44 @@ export const DayView = factory<DayViewFactory>((_props) => {
         return;
       }
       const slotDate = dayjs(date).format('YYYY-MM-DD');
-      onExternalEventDrop(e.dataTransfer, `${slotDate} ${slots[slotIndex].startTime}`);
+      const slotTime = slots[slotIndex].startTime;
+
+      if (eventDragInterval == null) {
+        onExternalEventDrop(e.dataTransfer, `${slotDate} ${slotTime}`);
+        return;
+      }
+
+      const slotStart = `${slotDate} ${slotTime}`;
+      const { start } = calculateDropTime({
+        draggedEvent: { start: slotStart, end: slotStart } as ScheduleEventData,
+        targetDate: date,
+        targetSlotTime: slotTime,
+        intervalMinutes,
+        dragIntervalMinutes: eventDragInterval,
+        slotOffset: dragOffsetRef.current.offset,
+        slotSize: dragOffsetRef.current.size,
+        startTime,
+        endTime,
+      });
+      onExternalEventDrop(e.dataTransfer, dayjs(start).format('YYYY-MM-DD HH:mm:ss'));
     },
-    [onExternalEventDrop, date, slots]
+    [onExternalEventDrop, date, slots, eventDragInterval, intervalMinutes, startTime, endTime]
   );
+
+  const getDropTimeForSlot = (slotIndex: number, draggedEvent: ScheduleEventData) => {
+    const slotTime = slots[slotIndex].startTime;
+    return calculateDropTime({
+      draggedEvent,
+      targetDate: date,
+      targetSlotTime: slotTime,
+      intervalMinutes,
+      dragIntervalMinutes: eventDragInterval,
+      slotOffset: eventDragInterval == null ? undefined : dragOffsetRef.current.offset,
+      slotSize: eventDragInterval == null ? undefined : dragOffsetRef.current.size,
+      startTime,
+      endTime,
+    });
+  };
 
   const dragDrop = useDragDropHandlers({
     enabled: withEventsDragAndDrop,
@@ -522,17 +568,25 @@ export const DayView = factory<DayViewFactory>((_props) => {
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
-    calculateDropTarget: (slotIndex: number, draggedEvent: ScheduleEventData) => {
-      const slotTime = slots[slotIndex].startTime;
-      return calculateDropTime({
-        draggedEvent,
-        targetDate: date,
-        targetSlotTime: slotTime,
-        intervalMinutes,
-      });
-    },
+    calculateDropTarget: getDropTimeForSlot,
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
+
+  const updateDragPreview = (slotIndex: number) => {
+    const draggedEvent = dragDrop.dragContextValue.draggedEvent;
+    if (eventDragInterval == null || !draggedEvent) {
+      return;
+    }
+    const { start, end } = getDropTimeForSlot(slotIndex, draggedEvent);
+    const newStart = dayjs(start).format('YYYY-MM-DD HH:mm:ss');
+    if (dragDrop.dragPreview?.start !== newStart) {
+      dragDrop.setDragPreview({
+        start: newStart,
+        end: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
+        target: slotIndex,
+      });
+    }
+  };
 
   const eventResize = useEventResize({
     enabled: withEventResize,
@@ -629,8 +683,10 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const dayGroup = dayjs(date).format('YYYY-MM-DD');
 
+  const suppressDropHighlight = eventDragInterval != null && dragDrop.dragContextValue.isDragging;
+
   const items = slots.map((slot, index) => {
-    const isDropTarget = dragDrop.isDropTarget(index);
+    const isDropTarget = !suppressDropHighlight && dragDrop.isDropTarget(index);
     const isDragSelected = slotDragSelect.isSlotSelected(index, dayGroup);
     const slotStart = `${dayGroup} ${slot.startTime}` as DateTimeStringValue;
     const slotEnd = `${dayGroup} ${slot.endTime}` as DateTimeStringValue;
@@ -895,6 +951,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                         const slotIndex = getSlotIndexFromDragPoint(event);
                         if (slotIndex !== null) {
                           dragDrop.handleDragOver(event, slotIndex);
+                          updateDragPreview(slotIndex);
                         }
                       }
                     : undefined
@@ -914,6 +971,32 @@ export const DayView = factory<DayViewFactory>((_props) => {
                 {backgroundTimedEventNodes}
 
                 {eventsNodes}
+
+                {dragDrop.dragPreview && dragDrop.dragContextValue.draggedEvent && (
+                  <Box
+                    {...getStyles('dayViewDragPreview', {
+                      style: (() => {
+                        const { top, height } = getDayPosition({
+                          event: {
+                            ...dragDrop.dragContextValue.draggedEvent,
+                            start: dragDrop.dragPreview.start,
+                            end: dragDrop.dragPreview.end,
+                          },
+                          startTime,
+                          endTime,
+                          intervalMinutes,
+                        });
+                        return {
+                          position: 'absolute',
+                          insetInlineStart: 0,
+                          insetInlineEnd: 0,
+                          top: `${top}%`,
+                          height: `${height}%`,
+                        };
+                      })(),
+                    })}
+                  />
+                )}
 
                 {showCurrentTimeIndicator && (
                   <CurrentTimeIndicator

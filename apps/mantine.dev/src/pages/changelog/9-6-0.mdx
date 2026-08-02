@@ -232,6 +232,15 @@ an `eventResizeInterval` prop that sets the snap step used when resizing events,
 
 <Demo data={DayViewDemos.eventResizeInterval} />
 
+## Schedule drag interval
+
+Time-grid Schedule views (`DayView`, `WeekView`, `ResourcesDayView`, `ResourcesWeekView`) now support
+an `eventDragInterval` prop that sets the snap step used when moving events by drag and drop,
+independent of the `intervalMinutes` grid size. For example, a 30-minute grid can allow 15-minute
+drag increments. A ghost preview shows where the event will land while dragging:
+
+<Demo data={DayViewDemos.eventDragInterval} />
+
 ## use-scroll-spy scroll host ref
 
 [use-scroll-spy](/hooks/use-scroll-spy) `scrollHost` option now accepts a ref object in addition to a

@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import { createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -954,6 +955,111 @@ describe('@mantine/schedule/WeekView', () => {
       expect(() =>
         render(<WeekView {...defaultProps} withEventResize eventResizeInterval={15} />)
       ).not.toThrow();
+    });
+  });
+
+  describe('eventDragInterval prop', () => {
+    const dragEvents = [
+      {
+        id: 1,
+        title: 'E',
+        start: '2025-11-03 09:00:00',
+        end: '2025-11-03 09:30:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'dragOver' | 'drop', clientY?: number) => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      if (clientY !== undefined) {
+        Object.defineProperty(event, 'clientY', { value: clientY, configurable: true });
+      }
+      fireEvent(node, event);
+    };
+
+    // Give the target day column's slots distinct 30px rects (clientY 165 -> slot 5, +15px -> 10:45).
+    const mockDaySlotRects = (dayColumn: Element) => {
+      Array.from(dayColumn.querySelectorAll('.mantine-WeekView-weekViewDaySlot')).forEach(
+        (node, i) => {
+          (node as HTMLElement).getBoundingClientRect = () =>
+            ({
+              top: i * 30,
+              bottom: (i + 1) * 30,
+              left: 0,
+              right: 100,
+              width: 100,
+              height: 30,
+              x: 0,
+              y: i * 30,
+              toJSON: () => {},
+            }) as DOMRect;
+        }
+      );
+    };
+
+    it('drops on eventDragInterval independently of intervalMinutes', () => {
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <WeekView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={onEventDrop}
+          events={dragEvents}
+        />
+      );
+
+      const dayColumn = container.querySelectorAll('.mantine-WeekView-weekViewDaySlots')[0];
+      mockDaySlotRects(dayColumn);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(dayColumn, 'drop', 165);
+
+      expect(onEventDrop).toHaveBeenCalledWith(
+        expect.objectContaining({ newStart: expect.stringContaining('10:45:00') })
+      );
+    });
+
+    it('shows a drag ghost at the snapped position and clears it', () => {
+      const { container } = render(
+        <WeekView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={jest.fn()}
+          events={dragEvents}
+        />
+      );
+
+      const dayColumn = container.querySelectorAll('.mantine-WeekView-weekViewDaySlots')[0];
+      mockDaySlotRects(dayColumn);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(dayColumn, 'dragOver', 165);
+
+      expect(container.querySelector('.mantine-WeekView-weekViewDragPreview')).toBeInTheDocument();
+
+      fireEvent.dragLeave(dayColumn);
+      expect(
+        container.querySelector('.mantine-WeekView-weekViewDragPreview')
+      ).not.toBeInTheDocument();
     });
   });
 });

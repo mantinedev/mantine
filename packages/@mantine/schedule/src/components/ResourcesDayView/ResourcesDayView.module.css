@@ -428,3 +428,12 @@
     }
   }
 }
+
+.resourcesDayViewDragPreview {
+  pointer-events: none;
+  z-index: 3;
+  border-radius: var(--resources-day-view-radius);
+  border: 1px dashed var(--mantine-color-blue-filled);
+  background-color: var(--mantine-color-blue-light);
+  opacity: 0.6;
+}

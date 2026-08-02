@@ -43,6 +43,7 @@ import {
   expandRecurringEvents,
   formatDate,
   getBusinessHoursMod,
+  getDayPosition,
   getDayTimeIntervals,
   getTimeAxisEventStyle,
   getWeekDays,
@@ -91,6 +92,7 @@ export type WeekViewStylesNames =
   | 'weekViewWeekLabel'
   | 'weekViewWeekNumber'
   | 'weekViewBackgroundEvent'
+  | 'weekViewDragPreview'
   | CurrentTimeIndicatorStylesNames
   | CombinedScheduleHeaderStylesNames
   | AgendaViewStylesNames;
@@ -224,6 +226,9 @@ export interface WeekViewProps
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  eventDragInterval?: number;
 
   /** Called when any event drag starts */
   onEventDragStart?: (event: ScheduleEventData) => void;
@@ -385,6 +390,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
+    eventDragInterval,
     onEventDragStart,
     onEventDragEnd,
     onTimeSlotClick,
@@ -450,15 +456,51 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
   type DropTargetSlot = { day: string; slotIndex: number };
 
+  const dragOffsetRef = useRef<{ offset: number; size: number }>({ offset: 0, size: 0 });
+
+  const getDropTimeForSlot = (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
+    const slotTime = slots[target.slotIndex].startTime;
+    return calculateDropTime({
+      draggedEvent,
+      targetDate: target.day,
+      targetSlotTime: slotTime,
+      intervalMinutes,
+      dragIntervalMinutes: eventDragInterval,
+      slotOffset: eventDragInterval == null ? undefined : dragOffsetRef.current.offset,
+      slotSize: eventDragInterval == null ? undefined : dragOffsetRef.current.size,
+      startTime,
+      endTime,
+    });
+  };
+
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, target: DropTargetSlot) => {
       if (!onExternalEventDrop) {
         return;
       }
       const slotDate = dayjs(target.day).format('YYYY-MM-DD');
-      onExternalEventDrop(e.dataTransfer, `${slotDate} ${slots[target.slotIndex].startTime}`);
+      const slotTime = slots[target.slotIndex].startTime;
+
+      if (eventDragInterval == null) {
+        onExternalEventDrop(e.dataTransfer, `${slotDate} ${slotTime}`);
+        return;
+      }
+
+      const slotStart = `${slotDate} ${slotTime}`;
+      const { start } = calculateDropTime({
+        draggedEvent: { start: slotStart, end: slotStart } as ScheduleEventData,
+        targetDate: target.day,
+        targetSlotTime: slotTime,
+        intervalMinutes,
+        dragIntervalMinutes: eventDragInterval,
+        slotOffset: dragOffsetRef.current.offset,
+        slotSize: dragOffsetRef.current.size,
+        startTime,
+        endTime,
+      });
+      onExternalEventDrop(e.dataTransfer, dayjs(start).format('YYYY-MM-DD HH:mm:ss'));
     },
-    [onExternalEventDrop, slots]
+    [onExternalEventDrop, slots, eventDragInterval, intervalMinutes, startTime, endTime]
   );
 
   const handleExternalAllDayDrop = useCallback(
@@ -478,17 +520,30 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
-    calculateDropTarget: (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
-      const slotTime = slots[target.slotIndex].startTime;
-      return calculateDropTime({
-        draggedEvent,
-        targetDate: target.day,
-        targetSlotTime: slotTime,
-        intervalMinutes,
-      });
-    },
+    calculateDropTarget: getDropTimeForSlot,
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
+
+  const updateDragPreview = (target: DropTargetSlot) => {
+    const draggedEvent = dragDrop.dragContextValue.draggedEvent;
+    if (eventDragInterval == null || !draggedEvent) {
+      return;
+    }
+    const { start, end } = getDropTimeForSlot(target, draggedEvent);
+    const newStart = dayjs(start).format('YYYY-MM-DD HH:mm:ss');
+    if (
+      dragDrop.dragPreview?.start !== newStart ||
+      dragDrop.dragPreview?.target.day !== target.day
+    ) {
+      dragDrop.setDragPreview({
+        start: newStart,
+        end: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
+        target,
+      });
+    }
+  };
+
+  const suppressDropHighlight = eventDragInterval != null && dragDrop.dragContextValue.isDragging;
 
   const allDayDragDrop = useDragDropHandlers<string>({
     enabled: withEventsDragAndDrop,
@@ -659,6 +714,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     });
 
     if (slotIndex >= 0) {
+      const rect = daySlots[slotIndex]!.getBoundingClientRect();
+      dragOffsetRef.current = { offset: event.clientY - rect.top, size: rect.height };
       return slotIndex;
     }
 
@@ -673,10 +730,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     const lastRect = lastSlot.getBoundingClientRect();
 
     if (event.clientY < firstRect.top) {
+      dragOffsetRef.current = { offset: 0, size: firstRect.height };
       return 0;
     }
 
     if (event.clientY > lastRect.bottom) {
+      dragOffsetRef.current = { offset: lastRect.height, size: lastRect.height };
       return daySlots.length - 1;
     }
 
@@ -900,6 +959,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           const slotIndex = getSlotIndexFromDragPoint(event, dayIdx);
           if (slotIndex !== null) {
             dragDrop.handleDragOver(event, { day: dayStr, slotIndex });
+            updateDragPreview({ day: dayStr, slotIndex });
           }
         }}
         onDaySlotsDragLeave={dragDrop.handleDragLeave}
@@ -910,7 +970,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           }
         }}
         dropTargetSlotIndex={
-          dragDrop.dropTarget?.day === day ? dragDrop.dropTarget.slotIndex : undefined
+          !suppressDropHighlight && dragDrop.dropTarget?.day === day
+            ? dragDrop.dropTarget.slotIndex
+            : undefined
         }
         withDragSlotSelect={withDragSlotSelect}
         onSlotPointerDown={slotDragSelect.handleSlotPointerDown}
@@ -922,6 +984,31 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       >
         {backgroundEventNodes}
         {dayEvents}
+        {dragDrop.dragPreview?.target.day === day && dragDrop.dragContextValue.draggedEvent && (
+          <Box
+            {...getStyles('weekViewDragPreview', {
+              style: (() => {
+                const { top, height } = getDayPosition({
+                  event: {
+                    ...dragDrop.dragContextValue.draggedEvent,
+                    start: dragDrop.dragPreview.start,
+                    end: dragDrop.dragPreview.end,
+                  },
+                  startTime,
+                  endTime,
+                  intervalMinutes,
+                });
+                return {
+                  position: 'absolute',
+                  insetInlineStart: 0,
+                  insetInlineEnd: 0,
+                  top: `${top}%`,
+                  height: `${height}%`,
+                };
+              })(),
+            })}
+          />
+        )}
       </WeekViewDay>
     );
   });

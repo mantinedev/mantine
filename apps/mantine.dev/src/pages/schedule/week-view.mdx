@@ -200,6 +200,14 @@ Enable drag and drop by setting `withDragDrop` prop. Events can be dragged to di
 
 <Demo data={WeekViewDemos.dragDrop} />
 
+## Drag interval
+
+By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
+to use a different snap step for dragging – for example, a grid with 30-minute slots whose events
+can be moved in 15-minute increments. A ghost preview shows where the event will land:
+
+<Demo data={WeekViewDemos.eventDragInterval} />
+
 ## Restrict draggable events
 
 Use `canDragEvent` callback to control which events can be dragged.

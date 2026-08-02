@@ -16,6 +16,7 @@ export { dragDrop } from './DayView.demo.dragDrop';
 export { canDragEvent } from './DayView.demo.canDragEvent';
 export { eventResize } from './DayView.demo.eventResize';
 export { eventResizeInterval } from './DayView.demo.eventResizeInterval';
+export { eventDragInterval } from './DayView.demo.eventDragInterval';
 export { canResizeEvent } from './DayView.demo.canResizeEvent';
 export { renderEventBody } from './DayView.demo.renderEventBody';
 export { renderEvent } from './DayView.demo.renderEvent';
