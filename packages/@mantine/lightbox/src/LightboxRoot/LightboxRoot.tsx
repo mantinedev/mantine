@@ -205,11 +205,19 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   });
 
   const zoomIsActive = useRef(false);
-  const prevOpenedRef = useRef(false);
+  const prevOpenedRef = useRef(opened);
+  const startIndexRef = useRef(_currentIndex);
+  const currentIndexRef = useRef(_currentIndex);
+
+  currentIndexRef.current = _currentIndex;
+
+  if (opened && !prevOpenedRef.current) {
+    startIndexRef.current = _currentIndex;
+  }
 
   const [emblaRef, embla] = useEmblaCarousel({
     loop,
-    startIndex: _currentIndex,
+    startIndex: startIndexRef.current,
     watchDrag: withZoom ? () => !zoomIsActive.current : true,
     ...emblaOptions,
   });
@@ -292,24 +300,28 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
       setCurrentIndex(embla.selectedScrollSnap());
     };
 
+    const onReInit = () => {
+      if (embla.selectedScrollSnap() !== currentIndexRef.current) {
+        embla.scrollTo(currentIndexRef.current, true);
+      }
+    };
+
     embla.on('select', onSelect);
+    embla.on('reInit', onReInit);
     return () => {
       embla.off('select', onSelect);
+      embla.off('reInit', onReInit);
     };
   }, [embla, setCurrentIndex]);
 
   useEffect(() => {
-    if (embla && opened) {
-      embla.scrollTo(_currentIndex, true);
-    }
+    prevOpenedRef.current = opened;
   }, [opened]);
 
   useEffect(() => {
     if (embla && opened && embla.selectedScrollSnap() !== _currentIndex) {
-      const isJustOpened = !prevOpenedRef.current;
-      embla.scrollTo(_currentIndex, isJustOpened);
+      embla.scrollTo(_currentIndex, false);
     }
-    prevOpenedRef.current = opened;
   }, [_currentIndex, embla, opened]);
 
   useEffect(() => {
