@@ -13,8 +13,8 @@ import { CheckIcon } from '../../Checkbox';
 import { Loader } from '../../Loader';
 import { Transition } from '../../Transition';
 import { UnstyledButton } from '../../UnstyledButton';
-import type { StepFragmentComponent } from '../Stepper';
 import { useStepperContext } from '../Stepper.context';
+import type { StepFragmentComponent } from '../StepperRoot/StepperRoot';
 import classes from '../Stepper.module.css';
 
 const getStepFragment = (

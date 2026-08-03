@@ -8,6 +8,16 @@ export const Demo_usage = {
   render: renderDemo(demos.usage),
 };
 
+export const Demo_compound = {
+  name: '⭐ Demo: compound',
+  render: renderDemo(demos.compound),
+};
+
+export const Demo_compoundSticky = {
+  name: '⭐ Demo: compoundSticky',
+  render: renderDemo(demos.compoundSticky),
+};
+
 export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),

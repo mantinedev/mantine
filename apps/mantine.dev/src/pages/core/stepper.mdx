@@ -8,6 +8,29 @@ export default Layout(MDX_DATA.Stepper);
 
 <Demo data={StepperDemos.usage} />
 
+## Compound components
+
+`Stepper` component children must follow a strict structure: `Stepper.Step` and `Stepper.Completed`
+components must be direct children of the `Stepper` component. If you need full control over the layout,
+use compound components instead:
+
+- `Stepper.Root` accepts the same props as `Stepper` and renders its children as is
+- `Stepper.Steps` renders the steps list, `Stepper.Step` components must be its direct children
+- `Stepper.Content` renders its children when the step with the associated 0-based `step` index is active
+- `Stepper.Completed` renders its children when `active` is greater than or equal to its `step` prop; `step` is required with `Stepper.Root` and set automatically by `Stepper`
+
+<Demo data={StepperDemos.compound} />
+
+`useStepperContext` hook provides the current step index and the total number of steps. The `stepsCount`
+value is detected automatically from `Stepper.Steps` children in client-side applications. Set the
+`stepsCount` prop on `Stepper.Root` only when server-side rendering the step count.
+
+Unlike the `Stepper` component, compound components do not restrict the layout structure –
+you can wrap them with any elements. For example, you can pin step indicators to the top of
+the screen while the content below is scrolled independently:
+
+<Demo data={StepperDemos.compoundSticky} />
+
 ## Allow step select
 
 To disable step selection, set the `allowStepSelect` prop on the `Stepper.Step` component.
