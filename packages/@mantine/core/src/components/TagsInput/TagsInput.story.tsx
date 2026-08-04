@@ -136,3 +136,36 @@ export function WithData() {
     </div>
   );
 }
+
+export function MaxDisplayedValues() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <h3>Max displayed: 2</h3>
+      <TagsInput
+        defaultValue={['React', 'Angular', 'Svelte', 'Vue']}
+        maxDisplayedValues={2}
+        placeholder="Enter tags"
+      />
+
+      <h3 style={{ marginTop: 20 }}>Max displayed: 2 with custom format function</h3>
+      <TagsInput
+        defaultValue={['React', 'Angular', 'Svelte', 'Vue']}
+        maxDisplayedValues={2}
+        maxDisplayedValuesContent={(overflow) => `and ${overflow} other tags`}
+        placeholder="Enter tags"
+      />
+    </div>
+  );
+}
+
+export function HidePlaceholder() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <h3>hidePlaceholder: true</h3>
+      <TagsInput placeholder="Placeholder goes away once tag is entered" hidePlaceholder />
+
+      <h3 style={{ marginTop: 20 }}>hidePlaceholder: false</h3>
+      <TagsInput placeholder="Placeholder stays when tag is entered" hidePlaceholder={false} />
+    </div>
+  );
+}

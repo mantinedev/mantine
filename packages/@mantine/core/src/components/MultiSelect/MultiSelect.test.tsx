@@ -517,4 +517,82 @@ describe('@mantine/core/MultiSelect', () => {
       }
     });
   });
+
+  describe('maxDisplayedValues', () => {
+    it('limits displayed values and shows overflow count', () => {
+      const { container } = render(
+        <MultiSelect
+          {...defaultProps}
+          data={['a', 'b', 'c', 'd']}
+          value={['a', 'b', 'c', 'd']}
+          maxDisplayedValues={2}
+        />
+      );
+
+      const pills = container.querySelectorAll('.mantine-Pill-root');
+      expect(pills).toHaveLength(3);
+      expect(pills[0]).toHaveTextContent('a');
+      expect(pills[1]).toHaveTextContent('b');
+      expect(pills[2]).toHaveTextContent('+2 more');
+    });
+
+    it('supports custom overflow content', () => {
+      const { container } = render(
+        <MultiSelect
+          {...defaultProps}
+          data={['a', 'b', 'c', 'd']}
+          value={['a', 'b', 'c', 'd']}
+          maxDisplayedValues={2}
+          maxDisplayedValuesContent="others"
+        />
+      );
+      const pills = container.querySelectorAll('.mantine-Pill-root');
+      expect(pills[2]).toHaveTextContent('others');
+    });
+
+    it('supports custom overflow content function', () => {
+      const { container } = render(
+        <MultiSelect
+          {...defaultProps}
+          data={['a', 'b', 'c', 'd']}
+          value={['a', 'b', 'c', 'd']}
+          maxDisplayedValues={2}
+          maxDisplayedValuesContent={(overflow) => `and ${overflow} others`}
+        />
+      );
+      const pills = container.querySelectorAll('.mantine-Pill-root');
+      expect(pills[2]).toHaveTextContent('and 2 others');
+    });
+  });
+
+  describe('hidePlaceholder', () => {
+    it('hides placeholder when there are selected values and hidePlaceholder is true', () => {
+      const { rerender } = render(
+        <MultiSelect {...defaultProps} placeholder="test-placeholder" value={[]} hidePlaceholder />
+      );
+      expect(screen.getByPlaceholderText('test-placeholder')).toBeInTheDocument();
+
+      rerender(
+        <MultiSelect
+          {...defaultProps}
+          placeholder="test-placeholder"
+          value={['test-1']}
+          hidePlaceholder
+        />
+      );
+      expect(screen.queryByPlaceholderText('test-placeholder')).not.toBeInTheDocument();
+    });
+
+    it('does not hide placeholder when there are selected values and hidePlaceholder is false', () => {
+      render(
+        <MultiSelect
+          {...defaultProps}
+          placeholder="test-placeholder"
+          value={['test-1']}
+          hidePlaceholder={false}
+        />
+      );
+      expect(screen.getByPlaceholderText('test-placeholder')).toBeInTheDocument();
+    });
+  });
 });
