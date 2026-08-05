@@ -15,3 +15,4 @@ export { disabledLink } from './Button.demo.disabledLink';
 export { stylesApi } from './Button.demo.stylesApi';
 export { autoContrast } from './Button.demo.autoContrast';
 export { groupSection } from './Button.demo.groupSection';
+export { nativeTooltip } from './Button.demo.nativeTooltip';
