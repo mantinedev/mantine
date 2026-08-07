@@ -651,4 +651,46 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(25.5);
     expectValue('25,5');
   });
+
+  // jsdom does not insert clipboard text on paste, so these tests assert that the
+  // paste event is not intercepted (value/onChange untouched) — in the browser the
+  // native paste then goes through react-number-format, which handles grouping
+  it('does not treat thousandSeparator as a decimal separator in pasted values', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator="," />);
+
+    focusInput();
+    fireEvent.paste(getInput(), {
+      clipboardData: { getData: () => '1,234,567' },
+    });
+
+    expect(spy).not.toHaveBeenCalled();
+    expectValue('');
+  });
+
+  it('does not treat thousandSeparator={true} as a decimal separator in pasted values', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator />);
+
+    focusInput();
+    fireEvent.paste(getInput(), {
+      clipboardData: { getData: () => '1,234,567' },
+    });
+
+    expect(spy).not.toHaveBeenCalled();
+    expectValue('');
+  });
+
+  it('converts allowed decimal separators in pasted values when thousandSeparator is a different character', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator=" " allowedDecimalSeparators={[',']} />);
+
+    focusInput();
+    fireEvent.paste(getInput(), {
+      clipboardData: { getData: () => '25,5' },
+    });
+
+    expect(spy).toHaveBeenLastCalledWith(25.5);
+    expectValue('25.5');
+  });
 });
