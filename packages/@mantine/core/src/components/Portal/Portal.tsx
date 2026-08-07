@@ -41,6 +41,8 @@ export interface PortalProps extends BasePortalProps {
   children: React.ReactNode;
 }
 
+let cachedSharedPortalNode: HTMLElement | null = null;
+
 function getTargetNode({ target, reuseTargetNode, ...others }: BasePortalProps): HTMLElement {
   if (target) {
     if (typeof target === 'string') {
@@ -51,15 +53,21 @@ function getTargetNode({ target, reuseTargetNode, ...others }: BasePortalProps):
   }
 
   if (reuseTargetNode) {
+    if (cachedSharedPortalNode && document.body.contains(cachedSharedPortalNode)) {
+      return cachedSharedPortalNode;
+    }
+
     const existingNode = document.querySelector<HTMLElement>('[data-mantine-shared-portal-node]');
 
     if (existingNode) {
+      cachedSharedPortalNode = existingNode;
       return existingNode;
     }
 
     const node = createPortalNode(others);
     node.setAttribute('data-mantine-shared-portal-node', 'true');
     document.body.appendChild(node);
+    cachedSharedPortalNode = node;
     return node;
   }
 
