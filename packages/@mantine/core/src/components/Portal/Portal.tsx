@@ -53,8 +53,12 @@ function getTargetNode({ target, reuseTargetNode, ...others }: BasePortalProps):
   }
 
   if (reuseTargetNode) {
-    if (cachedSharedPortalNode && document.body.contains(cachedSharedPortalNode)) {
-      return cachedSharedPortalNode;
+    if (cachedSharedPortalNode) {
+      if (document.body.contains(cachedSharedPortalNode)) {
+        return cachedSharedPortalNode;
+      }
+
+      cachedSharedPortalNode = null;
     }
 
     const existingNode = document.querySelector<HTMLElement>('[data-mantine-shared-portal-node]');
