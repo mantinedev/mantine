@@ -7,10 +7,9 @@ import {
   Factory,
   UnstyledButton,
   useProps,
-  VisuallyHidden,
 } from '@mantine/core';
 import { useLightboxContext } from '../lightbox.context';
-import type { ToolbarItem } from '../lightbox.types';
+import type { ToolbarItem, ToolbarItems } from '../lightbox.types';
 import {
   createCloseToolbarItem,
   createDownloadToolbarItem,
@@ -23,8 +22,8 @@ export type LightboxToolbarStylesNames = 'toolbar' | 'toolbarGroup' | 'toolbarBu
 
 export interface LightboxToolbarProps
   extends BoxProps, CompoundStylesApiProps<LightboxToolbarFactory>, ElementProps<'div'> {
-  /** Custom toolbar items, overrides default toolbar actions */
-  toolbarItems?: ToolbarItem[];
+  /** Custom toolbar items, overrides default toolbar actions. Can be a function that receives the current lightbox state and handlers. */
+  toolbarItems?: ToolbarItems;
 }
 
 export type LightboxToolbarFactory = Factory<{
@@ -47,20 +46,41 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
   const defaultItems: ToolbarItem[] = [];
 
   if (ctx.withThumbnails) {
-    defaultItems.push(createThumbnailsToolbarItem(ctx.toggleThumbnails, ctx.thumbnailsVisible));
+    defaultItems.push(
+      createThumbnailsToolbarItem(ctx.toggleThumbnails, ctx.thumbnailsVisible, ctx.labels)
+    );
   }
 
   if (ctx.withFullscreen) {
-    defaultItems.push(createFullscreenToolbarItem(ctx.toggleFullscreen, ctx.isFullscreen));
+    defaultItems.push(
+      createFullscreenToolbarItem(ctx.toggleFullscreen, ctx.isFullscreen, ctx.labels)
+    );
   }
 
   if (ctx.withDownload && currentSlide && currentSlide.type !== 'custom') {
-    defaultItems.push(createDownloadToolbarItem(currentSlide.src));
+    defaultItems.push(createDownloadToolbarItem(currentSlide.src, ctx.labels));
   }
 
-  defaultItems.push(createCloseToolbarItem(ctx.onClose));
+  defaultItems.push(createCloseToolbarItem(ctx.onClose, ctx.labels));
 
-  const items = toolbarItems ?? defaultItems;
+  const items =
+    typeof toolbarItems === 'function'
+      ? toolbarItems({
+          slides: ctx.slides,
+          currentIndex: ctx.currentIndex,
+          setIndex: ctx.setIndex,
+          next: ctx.next,
+          prev: ctx.prev,
+          close: ctx.onClose,
+          thumbnailsVisible: ctx.thumbnailsVisible,
+          toggleThumbnails: ctx.toggleThumbnails,
+          isFullscreen: ctx.isFullscreen,
+          toggleFullscreen: ctx.toggleFullscreen,
+          zoomed: ctx.zoomState.isZoomed,
+          toggleZoom: ctx.toggleZoom,
+          labels: ctx.labels,
+        })
+      : (toolbarItems ?? defaultItems);
   const leftItems = items.filter((item) => item.position === 'left');
   const rightItems = items.filter((item) => item.position !== 'left');
 
@@ -79,11 +99,7 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
         ))}
       </div>
 
-      <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
-        {`Slide ${ctx.currentIndex + 1} of ${ctx.slides.length}`}
-      </VisuallyHidden>
-
-      <span {...ctx.getStyles('counter')}>
+      <span {...ctx.getStyles('counter')} aria-hidden="true">
         {ctx.currentIndex + 1} / {ctx.slides.length}
       </span>
 

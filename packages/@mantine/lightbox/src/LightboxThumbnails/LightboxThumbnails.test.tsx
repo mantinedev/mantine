@@ -1,4 +1,4 @@
-import { renderWithAct, screen } from '@mantine-tests/core';
+import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import type { LightboxSlideData } from '../lightbox.types';
 import { LightboxThumbnails } from './LightboxThumbnails';
 import { LightboxWrapper } from '../test-utils';
@@ -35,14 +35,27 @@ describe('@mantine/lightbox/LightboxThumbnails', () => {
     expect(screen.getByLabelText('Go to slide 3')).not.toHaveAttribute('data-active');
   });
 
-  it('sets aria-selected on active thumbnail', async () => {
+  it('sets aria-current on active thumbnail', async () => {
     await renderWithAct(
       <LightboxWrapper withThumbnails currentIndex={0}>
         <LightboxThumbnails />
       </LightboxWrapper>
     );
-    expect(screen.getByLabelText('Go to slide 1')).toHaveAttribute('aria-selected', 'true');
-    expect(screen.getByLabelText('Go to slide 2')).toHaveAttribute('aria-selected', 'false');
+    expect(screen.getByLabelText('Go to slide 1')).toHaveAttribute('aria-current', 'true');
+    expect(screen.getByLabelText('Go to slide 2')).not.toHaveAttribute('aria-current');
+  });
+
+  it('changes current slide when thumbnail is clicked', async () => {
+    const onIndexChange = jest.fn();
+    await renderWithAct(
+      <LightboxWrapper withThumbnails onIndexChange={onIndexChange}>
+        <LightboxThumbnails />
+      </LightboxWrapper>
+    );
+
+    await userEvent.click(screen.getByLabelText('Go to slide 2'));
+    expect(onIndexChange).toHaveBeenCalledWith(1);
+    expect(screen.getByLabelText('Go to slide 2')).toHaveAttribute('data-active');
   });
 
   it('renders thumbnail images with thumbSrc', async () => {
