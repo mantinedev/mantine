@@ -35,3 +35,46 @@ By default, `ActionBar` does not close when `Escape` key is pressed. Set `closeO
 to enable this behavior:
 
 <Demo data={ActionBarDemos.closeOnEscape} />
+
+## Transitions
+
+`ActionBar` is animated with the [Transition](/core/transition) component,
+`{ transition: 'pop', duration: 200 }` by default. Use `transitionProps` to change
+the transition, its duration and timing function:
+
+```tsx
+import { ActionBar, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ActionBar opened transitionProps={{ transition: 'slide-up', duration: 300 }}>
+      <Button>Delete</Button>
+    </ActionBar>
+  );
+}
+```
+
+## keepMounted
+
+By default, the action bar is removed from the DOM when it is closed. Set `keepMounted`
+to keep it mounted and hide it with `display: none` instead – for example, if the bar
+contains form state that must be preserved between openings:
+
+```tsx
+import { ActionBar, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ActionBar opened={false} keepMounted>
+      <Button>Delete</Button>
+    </ActionBar>
+  );
+}
+```
+
+## Rendering in a portal
+
+`ActionBar` is rendered inside [Portal](/core/portal) by default – this way it is not
+affected by `overflow` and `transform` styles of its parent elements. Set
+`withinPortal={false}` to render it in place, and use `portalProps` to pass props
+down to the `Portal` component.

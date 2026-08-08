@@ -24,10 +24,22 @@ export function VideoSlide({ slide, active }: VideoSlideProps) {
       {...ctx.getStyles('slideVideo')}
       src={slide.src}
       poster={slide.poster}
+      aria-label={slide.label}
       autoPlay={active && slide.autoPlay}
       controls
       playsInline
-    />
+    >
+      {slide.tracks?.map((track, index) => (
+        <track
+          key={index}
+          src={track.src}
+          kind={track.kind ?? 'subtitles'}
+          srcLang={track.srcLang}
+          label={track.label}
+          default={track.default}
+        />
+      ))}
+    </video>
     /* eslint-enable jsx-a11y/media-has-caption */
   );
 }
