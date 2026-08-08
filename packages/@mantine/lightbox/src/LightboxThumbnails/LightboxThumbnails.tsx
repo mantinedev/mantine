@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import {
-  Box,
   BoxProps,
+  Collapse,
   CompoundStylesApiProps,
   ElementProps,
   factory,
@@ -21,7 +21,10 @@ export type LightboxThumbnailsStylesNames =
   | 'thumbnailImage';
 
 export interface LightboxThumbnailsProps
-  extends BoxProps, CompoundStylesApiProps<LightboxThumbnailsFactory>, ElementProps<'div'> {}
+  extends
+    BoxProps,
+    CompoundStylesApiProps<LightboxThumbnailsFactory>,
+    ElementProps<'div', 'onTransitionEnd' | 'onTransitionStart'> {}
 
 export type LightboxThumbnailsFactory = Factory<{
   props: LightboxThumbnailsProps;
@@ -50,22 +53,7 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
     }
   }, [ctx.currentIndex, thumbsEmbla]);
 
-  useEffect(() => {
-    if (!ctx.embla || !thumbsEmbla) {
-      return undefined;
-    }
-
-    const onSelect = () => {
-      thumbsEmbla.scrollTo(ctx.embla!.selectedScrollSnap());
-    };
-
-    ctx.embla.on('select', onSelect);
-    return () => {
-      ctx.embla!.off('select', onSelect);
-    };
-  }, [ctx.embla, thumbsEmbla]);
-
-  if (!ctx.thumbnailsVisible) {
+  if (!ctx.withThumbnails && !ctx.thumbnailsVisible) {
     return null;
   }
 
@@ -81,8 +69,8 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
         key={index}
         {...ctx.getStyles('thumbnail')}
         data-active={index === ctx.currentIndex || undefined}
-        aria-label={`Go to slide ${index + 1}`}
-        aria-selected={index === ctx.currentIndex}
+        aria-label={ctx.labels.thumbnailLabel(index + 1, ctx.slides.length)}
+        aria-current={index === ctx.currentIndex || undefined}
         onClick={() => ctx.setIndex(index)}
       >
         {hasCustomThumb ? (
@@ -95,11 +83,17 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
   });
 
   return (
-    <Box {...ctx.getStyles('thumbnails', { className, style, classNames, styles })} {...others}>
+    <Collapse
+      expanded={ctx.thumbnailsVisible}
+      transitionDuration={ctx.transitionDuration}
+      keepMounted={false}
+      {...ctx.getStyles('thumbnails', { className, style, classNames, styles })}
+      {...others}
+    >
       <div {...ctx.getStyles('thumbnailsViewport')} ref={thumbsRef}>
         <div {...ctx.getStyles('thumbnailsContainer')}>{thumbnails}</div>
       </div>
-    </Box>
+    </Collapse>
   );
 });
 

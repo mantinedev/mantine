@@ -4468,9 +4468,9 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "npm:9.2.2"
-    react: "npm:19.2.6"
-    react-dom: "npm:19.2.6"
+    "@mantine/store": "npm:9.5.1"
+    react: "npm:19.2.7"
+    react-dom: "npm:19.2.7"
   peerDependencies:
     "@mantine/core": ">=9.0.0"
     "@mantine/hooks": ">=9.0.0"
@@ -4577,15 +4577,6 @@ __metadata:
     react-dom: ^19.2.0
   languageName: unknown
   linkType: soft
-
-"@mantine/store@npm:9.2.2":
-  version: 9.2.2
-  resolution: "@mantine/store@npm:9.2.2"
-  peerDependencies:
-    react: ^19.2.0
-  checksum: 10c0/bd2978ba5123e68071704ac410213a2f68366241d9e2dcc94d8343d19b9411e6cbd808ff353e855309e5da0f2409bc345d876e39e53994a30e451e4777b01ccd
-  languageName: node
-  linkType: hard
 
 "@mantine/store@npm:9.5.1, @mantine/store@workspace:*, @mantine/store@workspace:packages/@mantine/store":
   version: 0.0.0-use.local
@@ -10142,9 +10133,11 @@ __metadata:
     "@mantine/dropzone": "workspace:*"
     "@mantine/form": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    "@mantine/lightbox": "workspace:*"
     "@mantine/modals": "workspace:*"
     "@mantine/notifications": "workspace:*"
     "@mantine/nprogress": "workspace:*"
+    "@mantine/schedule": "workspace:*"
     "@mantine/spotlight": "workspace:*"
     "@mantine/store": "workspace:*"
     "@mantine/tiptap": "workspace:*"

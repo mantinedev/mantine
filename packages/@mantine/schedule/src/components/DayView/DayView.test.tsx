@@ -1031,4 +1031,56 @@ describe('@mantine/schedule/DayView', () => {
       ).not.toBeInTheDocument();
     });
   });
+
+  describe('background events', () => {
+    const backgroundEventProps: DayViewProps = {
+      date: '2025-11-03',
+      events: [
+        {
+          id: 'bg-1',
+          title: 'Unavailable',
+          start: '2025-11-03 12:00:00',
+          end: '2025-11-03 13:00:00',
+          color: 'gray',
+          display: 'background',
+        },
+      ],
+    };
+
+    it('renders background events as non-interactive divs by default', async () => {
+      const spy = jest.fn();
+      const { container } = render(<DayView {...backgroundEventProps} onEventClick={spy} />);
+      const bgEvent = container.querySelector('.mantine-DayView-dayViewBackgroundEvent')!;
+
+      expect(bgEvent).toBeInTheDocument();
+      expect(bgEvent.tagName).toBe('DIV');
+      expect(bgEvent).toHaveTextContent('Unavailable');
+
+      await userEvent.click(bgEvent);
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('calls onEventClick when a background event is clicked with withInteractiveBackgroundEvents', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <DayView {...backgroundEventProps} withInteractiveBackgroundEvents onEventClick={spy} />
+      );
+      const bgEvent = container.querySelector('.mantine-DayView-dayViewBackgroundEvent')!;
+
+      expect(bgEvent.tagName).toBe('BUTTON');
+      expect(bgEvent).toHaveAttribute('data-interactive');
+
+      await userEvent.click(bgEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls[0][0].id).toBe('bg-1');
+    });
+
+    it('does not make background events interactive in static mode', () => {
+      const { container } = render(
+        <DayView {...backgroundEventProps} withInteractiveBackgroundEvents mode="static" />
+      );
+      const bgEvent = container.querySelector('.mantine-DayView-dayViewBackgroundEvent')!;
+      expect(bgEvent.tagName).toBe('DIV');
+    });
+  });
 });

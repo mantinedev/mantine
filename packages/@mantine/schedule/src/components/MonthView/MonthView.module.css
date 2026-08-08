@@ -291,6 +291,20 @@
   font-weight: var(--mantine-font-weight-medium);
   padding: 3px 4px;
   color: var(--bg-event-color);
+
+  &:where([data-interactive]) {
+    pointer-events: auto;
+    cursor: pointer;
+    user-select: none;
+
+    @mixin hover {
+      background-color: var(--bg-event-hover);
+    }
+  }
+}
+
+.monthView:where([data-event-interaction], [data-slot-dragging]) .monthViewBackgroundEvent {
+  pointer-events: none;
 }
 
 .monthViewEvents {
