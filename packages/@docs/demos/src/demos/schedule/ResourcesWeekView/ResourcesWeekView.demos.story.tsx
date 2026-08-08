@@ -13,6 +13,11 @@ export const Demo_allDayEvents = {
   render: renderDemo(demos.allDayEvents),
 };
 
+export const Demo_interactiveBackgroundEvents = {
+  name: '⭐ Demo: interactiveBackgroundEvents',
+  render: renderDemo(demos.interactiveBackgroundEvents),
+};
+
 export const Demo_dragDrop = {
   name: '⭐ Demo: dragDrop',
   render: renderDemo(demos.dragDrop),
