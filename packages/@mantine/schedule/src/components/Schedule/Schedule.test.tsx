@@ -352,4 +352,32 @@ describe('@mantine/schedule/Schedule', () => {
       expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
     });
   });
+
+  it('forwards withInteractiveBackgroundEvents to the day view', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <Schedule
+        date="2025-11-03"
+        view="day"
+        withInteractiveBackgroundEvents
+        onEventClick={spy}
+        events={[
+          {
+            id: 'bg-1',
+            title: 'Unavailable',
+            start: '2025-11-03 12:00:00',
+            end: '2025-11-03 13:00:00',
+            color: 'gray',
+            display: 'background',
+          },
+        ]}
+      />
+    );
+
+    const bgEvent = container.querySelector('.mantine-DayView-dayViewBackgroundEvent')!;
+    expect(bgEvent.tagName).toBe('BUTTON');
+
+    await userEvent.click(bgEvent);
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 });

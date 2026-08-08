@@ -57,6 +57,7 @@ import {
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
+import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
@@ -241,6 +242,9 @@ export interface ResourcesDayViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  withInteractiveBackgroundEvents?: boolean;
+
   /** If set, enables drag-to-select time slot ranges @default false */
   withDragSlotSelect?: boolean;
 
@@ -311,6 +315,7 @@ const defaultProps = {
   withEventResize: false,
   mode: 'default',
   maxEventsPerTimeSlot: 2,
+  withInteractiveBackgroundEvents: false,
 } satisfies Partial<ResourcesDayViewProps>;
 
 const varsResolver = createVarsResolver<ResourcesDayViewFactory>(
@@ -377,6 +382,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     onEventDragEnd,
     onTimeSlotClick,
     onEventClick,
+    withInteractiveBackgroundEvents,
     withDragSlotSelect,
     onSlotDragEnd,
     mode,
@@ -724,47 +730,32 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     });
   };
 
+  const interactiveBackgroundEvents = withInteractiveBackgroundEvents && mode !== 'static';
+
   const rows = orderedResources.map((resource, resourceIndex) => {
     const allBgEvents = [
       ...(resourceEvents.backgroundTimedEvents[resource.id] || []),
       ...(resourceEvents.backgroundAllDayEvents[resource.id] || []),
     ];
 
-    // oxlint-disable-next-line react/jsx-key
-    const backgroundEventNodes = allBgEvents.map((event) => {
-      const colors = theme.variantColorResolver({
-        color: event.color || theme.primaryColor,
-        theme,
-        variant: 'light',
-        autoContrast: true,
-      });
-
-      const bgEventBody =
-        typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-      const bgEventProps = {
-        key: `bg-${event.id}`,
-        ...getStyles('resourcesDayViewBackgroundEvent', {
+    const backgroundEventNodes = allBgEvents.map((event) => (
+      <ScheduleBackgroundEvent
+        key={`bg-${event.id}`}
+        event={event}
+        renderEvent={renderEvent}
+        renderEventBody={renderEventBody}
+        interactive={interactiveBackgroundEvents}
+        onEventClick={onEventClick}
+        {...getStyles('resourcesDayViewBackgroundEvent', {
           style: {
             left: `${event.position.top}%`,
             width: `${event.position.height}%`,
             top: 0,
             height: '100%',
           },
-        }),
-        __vars: {
-          '--bg-event-bg': colors.background,
-          '--bg-event-color': colors.color,
-        },
-        children: bgEventBody,
-      };
-
-      if (typeof renderEvent === 'function') {
-        return renderEvent(event, bgEventProps as any);
-      }
-
-      return <Box {...bgEventProps} />;
-    });
+        })}
+      />
+    ));
 
     const allRegularEvents = (resourceEvents.regularEvents[resource.id] || []).filter(
       (event) => !isAllDayEvent({ event, date })

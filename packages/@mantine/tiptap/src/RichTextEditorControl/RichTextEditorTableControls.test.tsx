@@ -76,7 +76,7 @@ describe('@mantine/tiptap/RichTextEditor table controls', () => {
     await waitFor(() => expect(editor).not.toBeNull());
 
     act(() => {
-      editor!.chain().focus('start').run();
+      editor!.chain().focus('start', { scrollIntoView: false }).run();
     });
 
     await waitFor(() => expect(columnBefore).not.toBeDisabled());

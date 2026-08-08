@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { CheckIcon, CopyIcon, LightbulbFilamentIcon, RobotIcon } from '@phosphor-icons/react';
-import { ActionIcon, Affix, Card, Stack, Text, Tooltip } from '@mantine/core';
+import { ActionIcon, Affix, Card, RemoveScroll, Stack, Text, Tooltip } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { Frontmatter } from '@/types';
 import classes from './MdxLlmAffix.module.css';
@@ -34,7 +34,11 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
   };
 
   return (
-    <Affix position={{ bottom: 20, right: 20 }} visibleFrom="sm">
+    <Affix
+      position={{ bottom: 20, right: 20 }}
+      visibleFrom="sm"
+      className={RemoveScroll.classNames.fullWidth}
+    >
       <Card className={classes.root}>
         <Text className={classes.title}>LLM</Text>
 

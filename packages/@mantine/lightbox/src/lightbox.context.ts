@@ -1,15 +1,16 @@
 import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { EmblaCarouselType } from 'embla-carousel';
 import type { LightboxRootFactory } from './LightboxRoot/LightboxRoot';
-import type { LightboxStore } from './lightbox.store';
-import type { LightboxSlideData } from './lightbox.types';
+import type { LightboxLabels, LightboxSlideData } from './lightbox.types';
 
 export interface LightboxContextValue {
   getStyles: GetStylesApi<LightboxRootFactory>;
-  store: LightboxStore;
+  labels: LightboxLabels;
   slides: LightboxSlideData[];
   currentIndex: number;
   setIndex: (index: number) => void;
+  next: () => void;
+  prev: () => void;
   embla: EmblaCarouselType | null;
   emblaRef: React.RefCallback<HTMLDivElement> | null;
   withZoom: boolean;
@@ -25,9 +26,9 @@ export interface LightboxContextValue {
   getImageZoomProps: () => Record<string, any>;
   onClose: () => void;
   loop: boolean;
-  withSlideTransition: boolean;
-  slideTransitionActive: boolean;
+  closeOnClickOutside: boolean;
   closeOnSwipeDown: boolean;
+  transitionDuration: number;
 }
 
 export const [LightboxContextProvider, useLightboxContext] =

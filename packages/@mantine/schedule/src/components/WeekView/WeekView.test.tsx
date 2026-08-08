@@ -1062,4 +1062,114 @@ describe('@mantine/schedule/WeekView', () => {
       ).not.toBeInTheDocument();
     });
   });
+
+  describe('background events', () => {
+    const backgroundEventProps: WeekViewProps = {
+      date: '2025-11-03 00:00:00',
+      events: [
+        {
+          id: 'bg-1',
+          title: 'Unavailable',
+          start: '2025-11-03 12:00:00',
+          end: '2025-11-03 13:00:00',
+          color: 'gray',
+          display: 'background',
+        },
+      ],
+    };
+
+    it('renders background events as non-interactive divs by default', async () => {
+      const spy = jest.fn();
+      const { container } = render(<WeekView {...backgroundEventProps} onEventClick={spy} />);
+      const bgEvent = container.querySelector('.mantine-WeekView-weekViewBackgroundEvent')!;
+
+      expect(bgEvent.tagName).toBe('DIV');
+      await userEvent.click(bgEvent);
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('calls onEventClick when a background event is clicked with withInteractiveBackgroundEvents', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <WeekView {...backgroundEventProps} withInteractiveBackgroundEvents onEventClick={spy} />
+      );
+      const bgEvent = container.querySelector('.mantine-WeekView-weekViewBackgroundEvent')!;
+
+      expect(bgEvent.tagName).toBe('BUTTON');
+      await userEvent.click(bgEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls[0][0].id).toBe('bg-1');
+    });
+
+    it('does not make background events interactive in static mode', () => {
+      const { container } = render(
+        <WeekView {...backgroundEventProps} withInteractiveBackgroundEvents mode="static" />
+      );
+      expect(container.querySelector('.mantine-WeekView-weekViewBackgroundEvent')!.tagName).toBe(
+        'DIV'
+      );
+    });
+  });
+
+  describe('all-day drag interaction mod', () => {
+    const allDayDragEvent = {
+      id: 'all-day-1',
+      title: 'Conference',
+      start: '2025-11-03 00:00:00',
+      end: '2025-11-04 00:00:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const timedDragEvent = {
+      id: 'timed-1',
+      title: 'Standup',
+      start: '2025-11-03 09:00:00',
+      end: '2025-11-03 09:30:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const fireDragStart = (node: Element) => {
+      const event = createEvent.dragStart(node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      fireEvent(node, event);
+    };
+
+    it('adds data-all-day-dragging on weekViewRoot while an all-day event is being dragged, and removes it on drag end', () => {
+      const { container } = render(
+        <WeekView {...defaultProps} withEventsDragAndDrop events={[allDayDragEvent]} />
+      );
+
+      const root = container.querySelector('.mantine-WeekView-weekViewRoot')!;
+      expect(root).not.toHaveAttribute('data-all-day-dragging');
+
+      const eventNode = container.querySelector('[data-event-id="all-day-1"]')!;
+      fireDragStart(eventNode);
+      expect(root).toHaveAttribute('data-all-day-dragging');
+
+      fireEvent.dragEnd(eventNode);
+      expect(root).not.toHaveAttribute('data-all-day-dragging');
+    });
+
+    it('does not add data-all-day-dragging while a timed (non all-day) event is being dragged', () => {
+      const { container } = render(
+        <WeekView {...defaultProps} withEventsDragAndDrop events={[timedDragEvent]} />
+      );
+
+      const root = container.querySelector('.mantine-WeekView-weekViewRoot')!;
+      const eventNode = container.querySelector('[data-event-id="timed-1"]')!;
+      fireDragStart(eventNode);
+
+      expect(root).toHaveAttribute('data-event-interaction');
+      expect(root).not.toHaveAttribute('data-all-day-dragging');
+    });
+  });
 });

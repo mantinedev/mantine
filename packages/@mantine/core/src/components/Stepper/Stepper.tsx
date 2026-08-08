@@ -102,7 +102,7 @@ export interface StepperProps
   /** Determines whether steps should wrap to the next line if no space is available @default true */
   wrap?: boolean;
 
-  /** Controls position of the step label and description relative to the step icon @default 'right' */
+  /** Controls position of the step label and description relative to the step icon. Ignored if `orientation="vertical"` is set. @default 'right' */
   labelPosition?: 'right' | 'bottom';
 
   /** When true, automatically adjusts the icon color in completed steps to ensure sufficient contrast against the step background color */
@@ -275,14 +275,21 @@ export const Stepper = factory<StepperFactory>((_props) => {
   );
 
   return (
-    <StepperProvider value={{ getStyles, orientation, iconPosition, labelPosition }}>
+    <StepperProvider
+      value={{
+        getStyles,
+        orientation,
+        iconPosition,
+        labelPosition: orientation === 'vertical' ? undefined : labelPosition,
+      }}
+    >
       <Box {...getStyles('root')} size={size} {...others}>
         <Box
           {...getStyles('steps')}
           mod={{
             orientation,
             'icon-position': iconPosition,
-            'label-position': labelPosition,
+            'label-position': orientation === 'vertical' ? undefined : labelPosition,
             wrap: wrap && orientation !== 'vertical',
           }}
         >
