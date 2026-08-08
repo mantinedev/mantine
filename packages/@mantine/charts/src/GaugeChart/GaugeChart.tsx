@@ -34,7 +34,7 @@ export interface GaugeChartProps
     BoxProps,
     StylesApiProps<GaugeChartFactory>,
     ElementProps<'svg', 'display' | 'opacity' | 'viewBox' | 'width' | 'height' | 'target'> {
-  /** Current value to display */
+  /** Current value to display. Fills the arc from `min` up to `value`, unless `sections` is set – then the arc is colored by thresholds and the value is displayed only in the center label. */
   value: number;
 
   /** Minimum value of the gauge, @default 0 */
@@ -43,10 +43,10 @@ export interface GaugeChartProps
   /** Maximum value of the gauge, @default 100 */
   max?: number;
 
-  /** Optional target marker value */
+  /** Value marked on the arc with a line marker, use to display a goal or the current value of a gauge with `sections` */
   target?: number;
 
-  /** Colored sections of the gauge arc, if not provided uses single color */
+  /** Threshold sections of the gauge arc, each section is filled from the previous section upper bound to its own `value`. If set, the arc is not filled based on `value`. */
   sections?: GaugeChartSection[];
 
   /** Arc thickness in px, @default 12 */
@@ -79,7 +79,7 @@ export interface GaugeChartProps
   /** Thickness of the target marker, @default 2 */
   targetSize?: number;
 
-  /** Whether to round arc endpoints, @default false */
+  /** Whether to round arc endpoints. Not applied to `sections` – rounded caps of adjacent sections would overlap each other. @default false */
   roundCaps?: boolean;
 }
 
@@ -321,6 +321,7 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
 
   const formatValue = valueFormatter || ((v: number) => String(v));
   const labelContent = label !== undefined ? label : formatValue(value);
+  const clampedValue = Math.max(min!, Math.min(max!, value));
 
   return (
     <Box
@@ -328,6 +329,11 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
       viewBox={`${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`}
       {...getStyles('root')}
       variant={variant}
+      role="meter"
+      aria-valuenow={clampedValue}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-valuetext={formatValue(value)}
       {...others}
     >
       <path
@@ -346,8 +352,7 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
         <div
           {...getStyles('label', {
             style: {
-              paddingLeft: cx - bbox.x - bbox.width / 2,
-              paddingTop: cy - bbox.y - bbox.height / 2,
+              transform: `translate(${cx - bbox.x - bbox.width / 2}px, ${cy - bbox.y - bbox.height / 2}px)`,
             },
           })}
         >
