@@ -50,3 +50,17 @@ Examples:
 - `[mantine.dev] Update report issues link` – Change related to documentation website
 - `[@mantine/core] Button: Add theme focus styles` – Change in @mantine/core package at Button component
 - `[@mantine/hooks] use-list-state: Add remove handler` – Change in @mantine/hooks package at use-list-state hook
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitLab at `rtivital/mantine-private` (the `gitlab` remote), driven by the `glab` CLI — not the public GitHub issues on `origin`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five canonical triage labels, used verbatim on the GitLab tracker. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — one `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
