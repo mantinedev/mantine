@@ -1,5 +1,5 @@
-import React from 'react';
-import type { ToolbarItem } from '../lightbox.types';
+import { DEFAULT_LABELS } from '../default-labels';
+import type { LightboxLabels, ToolbarItem } from '../lightbox.types';
 
 function IconEnterFullscreen() {
   return (
@@ -73,56 +73,96 @@ function IconClose() {
 
 export function createFullscreenToolbarItem(
   toggle: () => void,
-  isFullscreen: boolean
+  isFullscreen: boolean,
+  labels: LightboxLabels = DEFAULT_LABELS
 ): ToolbarItem {
   return {
     key: 'fullscreen',
     icon: isFullscreen ? <IconExitFullscreen /> : <IconEnterFullscreen />,
-    label: isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen',
+    label: isFullscreen ? labels.exitFullscreenLabel : labels.enterFullscreenLabel,
     onClick: toggle,
     position: 'right',
   };
 }
 
-export function createThumbnailsToolbarItem(toggle: () => void, visible: boolean): ToolbarItem {
+export function createThumbnailsToolbarItem(
+  toggle: () => void,
+  visible: boolean,
+  labels: LightboxLabels = DEFAULT_LABELS
+): ToolbarItem {
   return {
     key: 'thumbnails',
     icon: <IconThumbnails />,
-    label: visible ? 'Hide thumbnails' : 'Show thumbnails',
+    label: visible ? labels.hideThumbnailsLabel : labels.showThumbnailsLabel,
     onClick: toggle,
     position: 'left',
   };
 }
 
-export function createDownloadToolbarItem(src: string): ToolbarItem {
+const ALLOWED_DOWNLOAD_PROTOCOLS = ['http:', 'https:', 'blob:', 'data:'];
+
+function parseDownloadUrl(src: string): URL | null {
+  try {
+    const url = new URL(src, window.location.href);
+    return ALLOWED_DOWNLOAD_PROTOCOLS.includes(url.protocol) ? url : null;
+  } catch {
+    return null;
+  }
+}
+
+const downloadsInProgress = new Set<string>();
+
+function downloadFile(src: string) {
+  const parsed = parseDownloadUrl(src);
+
+  if (!parsed || downloadsInProgress.has(src)) {
+    return;
+  }
+
+  downloadsInProgress.add(src);
+
+  fetch(src)
+    .then((res) => res.blob())
+    .then((blob) => {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download =
+        (parsed.protocol === 'data:' ? '' : parsed.pathname.split('/').pop()) || 'download';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    })
+    .catch(() => {
+      window.open(src, '_blank', 'noopener,noreferrer');
+    })
+    .finally(() => {
+      downloadsInProgress.delete(src);
+    });
+}
+
+export function createDownloadToolbarItem(
+  src: string,
+  labels: LightboxLabels = DEFAULT_LABELS
+): ToolbarItem {
   return {
     key: 'download',
     icon: <IconDownload />,
-    label: 'Download',
-    onClick: () => {
-      fetch(src)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = src.split('/').pop() || 'download';
-          link.click();
-          URL.revokeObjectURL(url);
-        })
-        .catch(() => {
-          window.open(src, '_blank');
-        });
-    },
+    label: labels.downloadLabel,
+    onClick: () => downloadFile(src),
     position: 'right',
   };
 }
 
-export function createCloseToolbarItem(onClose: () => void): ToolbarItem {
+export function createCloseToolbarItem(
+  onClose: () => void,
+  labels: LightboxLabels = DEFAULT_LABELS
+): ToolbarItem {
   return {
     key: 'close',
     icon: <IconClose />,
-    label: 'Close',
+    label: labels.closeLabel,
     onClick: onClose,
     position: 'right',
   };

@@ -44,9 +44,15 @@ export type {
   LightboxSlideData,
   LightboxImageSlide,
   LightboxVideoSlide,
+  LightboxVideoSlideTrack,
   LightboxCustomSlide,
+  LightboxLabels,
   ToolbarItem,
+  ToolbarItems,
+  ToolbarItemsPayload,
 } from './lightbox.types.js';
+
+export { DEFAULT_LABELS } from './default-labels.js';
 
 export { Lightbox } from './Lightbox.js';
 export { LightboxRoot } from './LightboxRoot/LightboxRoot.js';

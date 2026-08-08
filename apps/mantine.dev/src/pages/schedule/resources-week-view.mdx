@@ -22,6 +22,18 @@ the top of the column and stack when there are several; all-day events with
 
 <Demo data={ResourcesWeekViewDemos.allDayEvents} />
 
+## Interactive background events
+
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
+background event calls `onEventClick` with the event object, the same as for regular events –
+use `event.display === 'background'` to tell them apart in the handler.
+
+Note that an interactive background event covers the time slots underneath it: clicks and
+drag-to-select in its range go to the event instead of the grid. Background events still
+cannot be dragged or resized.
+
+<Demo data={ResourcesWeekViewDemos.interactiveBackgroundEvents} />
+
 ## Drag and drop
 
 Enable cross-resource drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback

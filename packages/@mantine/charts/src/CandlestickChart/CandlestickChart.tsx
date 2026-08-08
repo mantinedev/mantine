@@ -45,6 +45,20 @@ export interface CandlestickChartSeries {
   close: string;
 }
 
+export interface CandlestickChartLabels {
+  /** Label of the open value displayed in the tooltip */
+  open: string;
+
+  /** Label of the high value displayed in the tooltip */
+  high: string;
+
+  /** Label of the low value displayed in the tooltip */
+  low: string;
+
+  /** Label of the close value displayed in the tooltip */
+  close: string;
+}
+
 export type CandlestickChartStylesNames = 'candle' | BaseChartStylesNames | ChartTooltipStylesNames;
 
 export type CandlestickChartCssVariables = {
@@ -87,6 +101,9 @@ export interface CandlestickChartProps
   /** Keys of the `data` object used to read open, high, low and close values @default `{ open: 'open', high: 'high', low: 'low', close: 'close' }` */
   series?: CandlestickChartSeries;
 
+  /** Labels of open, high, low and close values displayed in the tooltip @default `{ open: 'Open', high: 'High', low: 'Low', close: 'Close' }` */
+  labels?: Partial<CandlestickChartLabels>;
+
   /** Color of candles with `close >= open`, key of `theme.colors` or any valid CSS color @default 'teal.6' */
   upColor?: MantineColor;
 
@@ -125,6 +142,7 @@ const defaultProps = {
   downColor: 'red.6',
   candleStrokeWidth: 1,
   series: { open: 'open', high: 'high', low: 'low', close: 'close' },
+  labels: { open: 'Open', high: 'High', low: 'Low', close: 'Close' },
   accessibilityLayer: true,
 } satisfies Partial<CandlestickChartProps>;
 
@@ -148,6 +166,7 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
     vars,
     data,
     series,
+    labels,
     dataKey,
     withTooltip,
     withXAxis,
@@ -184,6 +203,13 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
 
   const theme = useMantineTheme();
   const seriesKeys = series!;
+  const seriesLabels = { open: 'Open', high: 'High', low: 'Low', close: 'Close', ...labels };
+  const tooltipSeries = [
+    { name: 'open', label: seriesLabels.open },
+    { name: 'high', label: seriesLabels.high },
+    { name: 'low', label: seriesLabels.low },
+    { name: 'close', label: seriesLabels.close },
+  ];
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
 
@@ -433,16 +459,17 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
                 const color = getThemeColor(close >= open ? upColor : downColor, theme);
 
                 const ohlcPayload = [
-                  { name: 'Open', color, payload: { Open: open } },
-                  { name: 'High', color, payload: { High: entry[seriesKeys.high] } },
-                  { name: 'Low', color, payload: { Low: entry[seriesKeys.low] } },
-                  { name: 'Close', color, payload: { Close: close } },
+                  { name: 'open', color, payload: { open } },
+                  { name: 'high', color, payload: { high: entry[seriesKeys.high] } },
+                  { name: 'low', color, payload: { low: entry[seriesKeys.low] } },
+                  { name: 'close', color, payload: { close } },
                 ];
 
                 return (
                   <ChartTooltip
                     label={labelFormatter && payload ? labelFormatter(label, payload) : label}
                     payload={ohlcPayload}
+                    series={tooltipSeries}
                     unit={unit}
                     showColor={false}
                     classNames={resolvedClassNames}
@@ -483,6 +510,7 @@ export namespace CandlestickChart {
   export type Props = CandlestickChartProps;
   export type CssVariables = CandlestickChartCssVariables;
   export type Factory = CandlestickChartFactory;
+  export type Labels = CandlestickChartLabels;
   export type Series = CandlestickChartSeries;
   export type StylesNames = CandlestickChartStylesNames;
 }

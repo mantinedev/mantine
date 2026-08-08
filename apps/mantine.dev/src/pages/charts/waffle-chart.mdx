@@ -6,24 +6,55 @@ export default Layout(MDX_DATA.WaffleChart);
 
 ## Usage
 
+`WaffleChart` displays parts of a whole as a grid of colored cells. Each segment
+of the `data` array is allocated a number of cells proportional to its `value`,
+which makes proportions easier to compare than in a pie or donut chart.
+
+Unlike most charts in `@mantine/charts`, `WaffleChart` does not use
+[recharts](https://recharts.org/) – the grid is rendered as a plain `svg` element.
+
 <Demo data={WaffleChartDemos.usage} />
 
+## Total
+
+By default, the sum of all `value` fields is treated as 100% and the entire grid
+is filled. Set `total` to a larger number to leave the remaining cells empty –
+this is useful to display progress towards a goal. Values smaller than the sum of
+the data are ignored.
+
 ## Tooltip
+
+Set `withTooltip` to display a tooltip when a cell is hovered. Use `getTooltipLabel`
+to customize its content – the function receives the segment and the number of cells
+allocated to it:
 
 <Demo data={WaffleChartDemos.tooltip} />
 
 ## Legend
 
+Legend is displayed at the bottom of the chart by default. Use `legendPosition`
+to move it to the `top`, `left` or `right` side, or set `withLegend={false}` to hide it:
+
 <Demo data={WaffleChartDemos.legend} />
 
 ## Gap and grid size
+
+`rows` and `columns` control the number of cells in the grid (10 × 10 by default),
+`gap` controls the distance between them and `cellRadius` the border radius of each cell.
+Set `size` to control the width of the chart – if it is not set, the width is calculated
+from the number of columns.
 
 <Demo data={WaffleChartDemos.gap} />
 
 ## Fill direction
 
+`fillDirection` controls the order in which cells are filled:
+
 <Demo data={WaffleChartDemos.fillDirection} />
 
 ## Empty cells color
+
+Cells that are not allocated to any segment use `--waffle-empty-color` – set the
+`emptyColor` prop to change it:
 
 <Demo data={WaffleChartDemos.emptyColor} />

@@ -1,5 +1,6 @@
 export { usage } from './ResourcesDayView.demo.usage';
 export { allDayEvents } from './ResourcesDayView.demo.allDayEvents';
+export { interactiveBackgroundEvents } from './ResourcesDayView.demo.interactiveBackgroundEvents';
 export { dragDrop } from './ResourcesDayView.demo.dragDrop';
 export { eventResize } from './ResourcesDayView.demo.eventResize';
 export { eventResizeInterval } from './ResourcesDayView.demo.eventResizeInterval';

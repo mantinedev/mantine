@@ -5,7 +5,7 @@ import { images } from './_images';
 
 const code = `
 import { Button, Group } from '@mantine/core';
-import { Lightbox, lightbox, LightboxSlideData } from '@mantine/lightbox';
+import { Lightbox, LightboxSlideData } from '@mantine/lightbox';
 
 const slides: LightboxSlideData[] = [
   { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png', caption: 'Slide 1' },
@@ -21,13 +21,13 @@ function Demo() {
       <Lightbox.Provider withThumbnails />
 
       <Group>
-        <Button onClick={() => lightbox.open({ slides })}>
+        <Button onClick={() => Lightbox.open({ slides })}>
           Open lightbox
         </Button>
 
         <Button
           variant="default"
-          onClick={() => lightbox.open({ slides, startIndex: 2 })}
+          onClick={() => Lightbox.open({ slides, startIndex: 2 })}
         >
           Open at slide 3
         </Button>

@@ -24,7 +24,9 @@ Key features:
 - **Store API** – mount once, open from anywhere (same pattern as Spotlight and Notifications)
 - **Video slides** – native video player with auto-pause on navigation
 - **Custom slides** – render anything with custom thumbnails
+- **Transitions** – animated open and close with configurable `transitionProps` (same API as Modal)
 - **Keyboard shortcuts** – Escape, arrows, F/T/Z for fullscreen/thumbnails/zoom
+- **Localization** – every string is defined in the `labels` prop
 
 ## Notifications custom rendering
 
@@ -104,7 +106,7 @@ Each cell is colored based on a value, useful for visualizing patterns in two-di
 New [CandlestickChart](/charts/candlestick-chart) component – a financial OHLC chart that displays
 open, high, low and close values as candles. Candles are colored based on their direction, the wick
 shows the high–low range and the body shows the open–close range. Supports custom colors, data keys,
-reference lines, axis labels and value formatting.
+reference lines, axis labels, tooltip labels and value formatting.
 
 <Demo data={CandlestickChartDemos.usage} />
 
@@ -262,3 +264,12 @@ function Demo() {
   );
 }
 ```
+
+## Interactive background events
+
+Schedule views (`DayView`, `WeekView`, `MonthView`, `ResourcesDayView`, `ResourcesWeekView`) now
+support `withInteractiveBackgroundEvents` prop – background events (`display: 'background'`)
+become clickable and trigger `onEventClick`, which makes it possible to open an edit modal for
+unavailability blocks and similar events:
+
+<Demo data={DayViewDemos.interactiveBackgroundEvents} />

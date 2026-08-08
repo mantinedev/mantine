@@ -14,7 +14,6 @@ import {
   ScrollAreaProps,
   StylesApiProps,
   UnstyledButton,
-  useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -45,6 +44,7 @@ import {
 import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
+import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
@@ -187,6 +187,9 @@ export interface MonthViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  withInteractiveBackgroundEvents?: boolean;
+
   /** If set, enables drag-to-select day ranges @default false */
   withDragSlotSelect?: boolean;
 
@@ -244,6 +247,7 @@ const defaultProps = {
   withEventsDragAndDrop: false,
   withDragSlotSelect: false,
   mode: 'default',
+  withInteractiveBackgroundEvents: false,
 } satisfies Partial<MonthViewProps>;
 
 export const MonthView = factory<MonthViewFactory>((_props) => {
@@ -292,6 +296,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     onEventDragStart,
     onEventDragEnd,
     onEventClick,
+    withInteractiveBackgroundEvents,
     withDragSlotSelect,
     onSlotDragEnd,
     labels,
@@ -336,7 +341,6 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     radius,
   };
 
-  const theme = useMantineTheme();
   const ctx = useDatesContext();
 
   const resolvedFirstDayOfWeek = ctx.getFirstDayOfWeek(firstDayOfWeek);
@@ -565,18 +569,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     const weekNumberProps = getWeekNumberProps?.(dayjs(week[0]).format('YYYY-MM-DD')) || {};
     const weekNumber = getWeekNumber(week);
 
+    const interactiveBackgroundEvents = withInteractiveBackgroundEvents && mode !== 'static';
+
     const backgroundEventNodes = (monthEvents.backgroundByWeek[weekIndex] || []).flatMap(
       (event) => {
-        const colors = theme.variantColorResolver({
-          color: event.color || theme.primaryColor,
-          theme,
-          variant: 'light',
-          autoContrast: true,
-        });
-
-        const bgEventBody =
-          typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
         const startColumn = Math.round(event.position.startOffset / (100 / 7));
         const span = Math.max(1, Math.round(event.position.width / (100 / 7)));
         const spans =
@@ -589,29 +585,22 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
                 columnsCount
               );
 
-        return spans.map((spanPosition, spanIndex) => {
-          const bgEventProps = {
-            key: `bg-${event.id}-${weekIndex}-${spanIndex}`,
-            ...getStyles('monthViewBackgroundEvent', {
+        return spans.map((spanPosition, spanIndex) => (
+          <ScheduleBackgroundEvent
+            key={`bg-${event.id}-${weekIndex}-${spanIndex}`}
+            event={event}
+            renderEvent={renderEvent}
+            renderEventBody={renderEventBody}
+            interactive={interactiveBackgroundEvents}
+            onEventClick={onEventClick}
+            {...getStyles('monthViewBackgroundEvent', {
               style: {
                 left: `calc(${spanPosition.startOffset}% + 2px)`,
                 width: `calc(${spanPosition.width}% - 3px)`,
               },
-            }),
-            __vars: {
-              '--bg-event-bg': colors.background,
-              '--bg-event-color': colors.color,
-            },
-            children: bgEventBody,
-          };
-
-          if (typeof renderEvent === 'function') {
-            return renderEvent(event, bgEventProps as any);
-          }
-
-          const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
-          return <Box key={bgEventKey} {...restBgEventProps} />;
-        });
+            })}
+          />
+        ));
       }
     );
 

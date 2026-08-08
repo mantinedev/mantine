@@ -13,7 +13,11 @@ export function useLightboxSwipeClose({ enabled, onClose, isZoomed }: UseLightbo
 
   const handleTouchStart = useCallback(
     (event: React.TouchEvent) => {
-      if (!enabled || isZoomed || event.touches.length !== 1) {
+      if (!enabled || isZoomed) {
+        return;
+      }
+      if (event.touches.length !== 1) {
+        touchStart.current = null;
         return;
       }
       touchStart.current = {
@@ -26,7 +30,7 @@ export function useLightboxSwipeClose({ enabled, onClose, isZoomed }: UseLightbo
 
   const handleTouchEnd = useCallback(
     (event: React.TouchEvent) => {
-      if (!enabled || !touchStart.current || event.changedTouches.length !== 1) {
+      if (!enabled || isZoomed || !touchStart.current || event.changedTouches.length !== 1) {
         touchStart.current = null;
         return;
       }
@@ -40,7 +44,7 @@ export function useLightboxSwipeClose({ enabled, onClose, isZoomed }: UseLightbo
 
       touchStart.current = null;
     },
-    [enabled, onClose]
+    [enabled, isZoomed, onClose]
   );
 
   return { handleTouchStart, handleTouchEnd };

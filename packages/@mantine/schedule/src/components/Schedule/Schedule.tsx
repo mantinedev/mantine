@@ -70,7 +70,8 @@ type ScheduleCommonProps =
   | 'withEventResize'
   | 'onEventResize'
   | 'canResizeEvent'
-  | 'recurrenceExpansionLimit';
+  | 'recurrenceExpansionLimit'
+  | 'withInteractiveBackgroundEvents';
 
 type ScheduleViewProps<T> = Partial<Omit<T, ScheduleCommonProps>>;
 
@@ -176,6 +177,9 @@ export interface ScheduleProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  withInteractiveBackgroundEvents?: boolean;
+
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
 
@@ -251,6 +255,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    withInteractiveBackgroundEvents,
     recurrenceExpansionLimit,
     mode,
     layout,
@@ -336,11 +341,35 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
   const desktopContent = (() => {
     switch (_view) {
       case 'day':
-        return <DayView {...commonProps} {...dayViewProps} />;
+        return (
+          <DayView
+            {...commonProps}
+            withInteractiveBackgroundEvents={
+              mode === 'static' ? false : withInteractiveBackgroundEvents
+            }
+            {...dayViewProps}
+          />
+        );
       case 'week':
-        return <WeekView {...commonProps} {...weekViewProps} />;
+        return (
+          <WeekView
+            {...commonProps}
+            withInteractiveBackgroundEvents={
+              mode === 'static' ? false : withInteractiveBackgroundEvents
+            }
+            {...weekViewProps}
+          />
+        );
       case 'month':
-        return <MonthView {...commonProps} {...monthViewProps} />;
+        return (
+          <MonthView
+            {...commonProps}
+            withInteractiveBackgroundEvents={
+              mode === 'static' ? false : withInteractiveBackgroundEvents
+            }
+            {...monthViewProps}
+          />
+        );
       case 'year':
         return <YearView {...commonProps} onMonthClick={handleMonthClick} {...yearViewProps} />;
       default:

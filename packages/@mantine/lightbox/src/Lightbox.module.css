@@ -5,14 +5,7 @@
   --lightbox-toolbar-height: 56px;
   --lightbox-thumbnails-height: 100px;
 
-  position: fixed;
-  inset: 0;
-  z-index: var(--lightbox-z-index);
-  display: flex;
-  flex-direction: column;
-  background-color: var(--lightbox-overlay-color);
-  color: var(--mantine-color-white);
-  outline: none;
+  display: contents;
 }
 
 .overlay {
@@ -20,6 +13,16 @@
   inset: 0;
   z-index: var(--lightbox-z-index);
   background-color: var(--lightbox-overlay-color);
+}
+
+.content {
+  position: fixed;
+  inset: 0;
+  z-index: var(--lightbox-z-index);
+  display: flex;
+  flex-direction: column;
+  color: var(--mantine-color-white);
+  outline: none;
 }
 
 .toolbar {
@@ -79,14 +82,6 @@
 .slidesContainer {
   display: flex;
   height: 100%;
-
-  &[data-slide-transition] {
-    transition: transform var(--lightbox-transition-duration) ease;
-
-    @media (prefers-reduced-motion) {
-      transition: none;
-    }
-  }
 }
 
 .slide {
@@ -107,8 +102,8 @@
   -webkit-user-drag: none;
   transition: transform var(--lightbox-transition-duration) ease;
 
-  @media (prefers-reduced-motion) {
-    transition: none;
+  &[data-zoom-enabled] {
+    touch-action: none;
   }
 
   &[data-zoomed] {
@@ -134,22 +129,21 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  outline: none;
 }
 
 .thumbnails {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: var(--lightbox-thumbnails-height);
-  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  display: block;
+  padding: 0 var(--mantine-spacing-md);
   flex-shrink: 0;
   overflow: hidden;
 }
 
 .thumbnailsViewport {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  height: var(--lightbox-thumbnails-height);
   overflow: hidden;
-  height: 100%;
 }
 
 .thumbnailsContainer {
@@ -212,10 +206,6 @@
   pointer-events: all;
   opacity: 0.7;
   transition: opacity var(--lightbox-transition-duration) ease;
-
-  @media (prefers-reduced-motion) {
-    transition: none;
-  }
 
   @mixin hover {
     opacity: 1;

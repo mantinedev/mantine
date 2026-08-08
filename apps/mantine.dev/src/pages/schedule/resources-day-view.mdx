@@ -21,6 +21,18 @@ tint the whole row.
 
 <Demo data={ResourcesDayViewDemos.allDayEvents} />
 
+## Interactive background events
+
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
+background event calls `onEventClick` with the event object, the same as for regular events –
+use `event.display === 'background'` to tell them apart in the handler.
+
+Note that an interactive background event covers the time slots underneath it: clicks and
+drag-to-select in its range go to the event instead of the grid. Background events still
+cannot be dragged or resized.
+
+<Demo data={ResourcesDayViewDemos.interactiveBackgroundEvents} />
+
 ## Time range and intervals
 
 Use `startTime`, `endTime` and `intervalMinutes` props to control the visible time range

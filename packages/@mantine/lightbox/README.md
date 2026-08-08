@@ -10,10 +10,10 @@ Full-screen media lightbox with carousel navigation
 
 ```bash
 # With yarn
-yarn add @mantine/lightbox
+yarn add @mantine/lightbox @mantine/core @mantine/hooks embla-carousel embla-carousel-react
 
 # With npm
-npm install @mantine/lightbox
+npm install @mantine/lightbox @mantine/core @mantine/hooks embla-carousel embla-carousel-react
 ```
 
 ## License

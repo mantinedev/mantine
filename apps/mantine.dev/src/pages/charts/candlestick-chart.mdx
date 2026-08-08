@@ -68,6 +68,25 @@ It accepts a function that takes a number value as an argument and returns a for
 
 <Demo data={CandlestickChartDemos.valueFormatter} />
 
+## Tooltip labels
+
+The tooltip displays open, high, low and close values with English labels by default.
+Use the `labels` prop to change them:
+
+```tsx
+import { CandlestickChart } from '@mantine/charts';
+
+function Demo() {
+  return (
+    <CandlestickChart
+      data={data}
+      dataKey="date"
+      labels={{ open: 'Ouverture', high: 'Haut', low: 'Bas', close: 'Clôture' }}
+    />
+  );
+}
+```
+
 ## Axis labels
 
 Use `xAxisLabel` and `yAxisLabel` props to display axis labels:

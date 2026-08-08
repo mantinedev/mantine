@@ -82,9 +82,6 @@ export const RichTextEditorTableInsertControl = factory<RichTextEditorTableInser
     const [opened, { open, close }] = useDisclosure(false);
     const [selected, setSelected] = useState({ columns: 0, rows: 0 });
 
-    // `insertTable` is only available when the table extension is registered. Read the editor
-    // from context (not the `useEditorState` snapshot) so the control reflects the live editor
-    // on init, matching the behavior of the controls created with `createControl`.
     const commandDisabled = useEditorState({
       editor: editor ?? null,
       selector: () => {
@@ -93,8 +90,6 @@ export const RichTextEditorTableInsertControl = factory<RichTextEditorTableInser
       },
     });
 
-    // Disable when the caller requests it, or when the command is unavailable (the table
-    // extension is not registered), so `disabled` passed by the consumer is still honored.
     const disabled = disabledProp || (commandDisabled ?? true);
 
     const { resolvedClassNames, resolvedStyles } =
