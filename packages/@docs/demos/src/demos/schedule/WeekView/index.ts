@@ -31,6 +31,7 @@ export { bidirectionalDragDrop } from './WeekView.demo.bidirectionalDragDrop';
 export { recurringEvents } from './WeekView.demo.recurringEvents';
 export { backgroundEvents } from './WeekView.demo.backgroundEvents';
 export { backgroundEventsCustomStyle } from './WeekView.demo.backgroundEventsCustomStyle';
+export { interactiveBackgroundEvents } from './WeekView.demo.interactiveBackgroundEvents';
 export { customHeader } from './WeekView.demo.customHeader';
 export { localization } from './WeekView.demo.localization';
 export { radius } from './WeekView.demo.radius';

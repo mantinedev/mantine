@@ -282,11 +282,23 @@ See [Recurring events guide](/schedule/recurring-events) for full documentation.
 
 ## Background events
 
-Set `display="background"` on an event to render it as a full-width, semi-transparent,
-non-interactive block behind regular events. Background events are useful for marking
-unavailability, lunch breaks, focus time, or other blocked periods.
+Set `display="background"` on an event to render it as a full-width, semi-transparent block
+behind regular events. By default it cannot be clicked, dragged, or resized. Background events
+are useful for marking unavailability, lunch breaks, focus time, or other blocked periods.
 
 <Demo data={WeekViewDemos.backgroundEvents} />
+
+## Interactive background events
+
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
+background event calls `onEventClick` with the event object, the same as for regular events –
+use `event.display === 'background'` to tell them apart in the handler.
+
+Note that an interactive background event covers the time slots underneath it: clicks and
+drag-to-select in its range go to the event instead of the grid. Background events still
+cannot be dragged or resized.
+
+<Demo data={WeekViewDemos.interactiveBackgroundEvents} />
 
 ## Custom background event styles with drag and drop blocking
 

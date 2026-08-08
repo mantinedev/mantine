@@ -1143,4 +1143,64 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       ).not.toBeInTheDocument();
     });
   });
+
+  describe('background events', () => {
+    const backgroundEventProps: ResourcesDayViewProps = {
+      ...defaultProps,
+      events: [
+        {
+          id: 'bg-1',
+          title: 'Unavailable',
+          start: '2025-01-15 09:00:00',
+          end: '2025-01-15 10:00:00',
+          color: 'gray',
+          display: 'background',
+          resourceId: 'room-a',
+        },
+      ],
+    };
+
+    it('renders background events as non-interactive divs by default', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <ResourcesDayView {...backgroundEventProps} onEventClick={spy} />
+      );
+      const bgEvent = container.querySelector(
+        '.mantine-ResourcesDayView-resourcesDayViewBackgroundEvent'
+      )!;
+
+      expect(bgEvent.tagName).toBe('DIV');
+      await userEvent.click(bgEvent);
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('calls onEventClick when a background event is clicked with withInteractiveBackgroundEvents', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <ResourcesDayView
+          {...backgroundEventProps}
+          withInteractiveBackgroundEvents
+          onEventClick={spy}
+        />
+      );
+      const bgEvent = container.querySelector(
+        '.mantine-ResourcesDayView-resourcesDayViewBackgroundEvent'
+      )!;
+
+      expect(bgEvent.tagName).toBe('BUTTON');
+      await userEvent.click(bgEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls[0][0].id).toBe('bg-1');
+    });
+
+    it('does not make background events interactive in static mode', () => {
+      const { container } = render(
+        <ResourcesDayView {...backgroundEventProps} withInteractiveBackgroundEvents mode="static" />
+      );
+      expect(
+        container.querySelector('.mantine-ResourcesDayView-resourcesDayViewBackgroundEvent')!
+          .tagName
+      ).toBe('DIV');
+    });
+  });
 });

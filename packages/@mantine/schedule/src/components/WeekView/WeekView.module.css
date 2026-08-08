@@ -168,6 +168,22 @@
   font-weight: var(--mantine-font-weight-medium);
   padding: 3px 4px;
   color: var(--bg-event-color);
+
+  &:where([data-interactive]) {
+    pointer-events: auto;
+    cursor: pointer;
+    user-select: none;
+
+    @mixin hover {
+      background-color: var(--bg-event-hover);
+    }
+  }
+}
+
+.weekView:where([data-slot-dragging]) .weekViewBackgroundEvent,
+.weekViewRoot:where([data-event-interaction]) .weekViewBackgroundEvent,
+.weekViewRoot:where([data-all-day-dragging]) .weekViewBackgroundEvent {
+  pointer-events: none;
 }
 
 .weekViewDaySlots {

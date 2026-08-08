@@ -441,6 +441,38 @@ describe('@mantine/schedule/ResourcesSchedule', () => {
     expect(canDragSpy).toHaveBeenCalled();
   });
 
+  it('forwards withInteractiveBackgroundEvents to the day view', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <ResourcesSchedule
+        {...defaultProps}
+        defaultView="day"
+        withInteractiveBackgroundEvents
+        onEventClick={spy}
+        dayViewProps={{ startTime: '08:00:00', endTime: '12:00:00', intervalMinutes: 60 }}
+        events={[
+          {
+            id: 'bg-1',
+            title: 'Unavailable',
+            start: '2025-01-15 09:00:00',
+            end: '2025-01-15 10:00:00',
+            color: 'gray',
+            display: 'background',
+            resourceId: 'room-a',
+          },
+        ]}
+      />
+    );
+
+    const bgEvent = container.querySelector(
+      '.mantine-ResourcesDayView-resourcesDayViewBackgroundEvent'
+    )!;
+    expect(bgEvent.tagName).toBe('BUTTON');
+
+    await userEvent.click(bgEvent);
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
   it('events render correctly after switching views', async () => {
     const events = [
       {

@@ -264,3 +264,12 @@ function Demo() {
   );
 }
 ```
+
+## Interactive background events
+
+Schedule views (`DayView`, `WeekView`, `MonthView`, `ResourcesDayView`, `ResourcesWeekView`) now
+support `withInteractiveBackgroundEvents` prop – background events (`display: 'background'`)
+become clickable and trigger `onEventClick`, which makes it possible to open an edit modal for
+unavailability blocks and similar events:
+
+<Demo data={DayViewDemos.interactiveBackgroundEvents} />

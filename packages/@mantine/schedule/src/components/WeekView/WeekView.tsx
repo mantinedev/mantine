@@ -15,7 +15,6 @@ import {
   ScrollAreaAutosizeProps,
   StylesApiProps,
   UnstyledButton,
-  useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -59,6 +58,7 @@ import {
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
+import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
@@ -249,6 +249,9 @@ export interface WeekViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  withInteractiveBackgroundEvents?: boolean;
+
   /** If set, enables drag-to-select time slot ranges @default false */
   withDragSlotSelect?: boolean;
 
@@ -328,6 +331,7 @@ const defaultProps = {
   withDragSlotSelect: false,
   withEventResize: false,
   mode: 'default',
+  withInteractiveBackgroundEvents: false,
 } satisfies Partial<WeekViewProps>;
 
 const varsResolver = createVarsResolver<WeekViewFactory>(
@@ -396,6 +400,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     onTimeSlotClick,
     onAllDaySlotClick,
     onEventClick,
+    withInteractiveBackgroundEvents,
     withDragSlotSelect,
     onSlotDragEnd,
     mode,
@@ -443,7 +448,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     radius,
   };
 
-  const theme = useMantineTheme();
   const [scrolled, setScrolled] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
@@ -828,45 +832,30 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     </UnstyledButton>
   ));
 
+  const interactiveBackgroundEvents = withInteractiveBackgroundEvents && mode !== 'static';
+
   const days = weekdays.map((day, dayIndex) => {
     const allBgEvents = weekEvents.backgroundEvents[day] || [];
 
     const backgroundEventNodes = allBgEvents
       .filter((event) => !event.position.allDay)
-      .map((event) => {
-        const colors = theme.variantColorResolver({
-          color: event.color || theme.primaryColor,
-          theme,
-          variant: 'light',
-          autoContrast: true,
-        });
-
-        const bgEventBody =
-          typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-        const bgEventProps = {
-          key: `bg-${event.id}`,
-          ...getStyles('weekViewBackgroundEvent', {
+      .map((event) => (
+        <ScheduleBackgroundEvent
+          key={`bg-${event.id}`}
+          event={event}
+          renderEvent={renderEvent}
+          renderEventBody={renderEventBody}
+          interactive={interactiveBackgroundEvents}
+          onEventClick={onEventClick}
+          {...getStyles('weekViewBackgroundEvent', {
             style: {
               top: `${event.position.top}%`,
               height: `${event.position.height}%`,
               width: '100%',
             },
-          }),
-          __vars: {
-            '--bg-event-bg': colors.background,
-            '--bg-event-color': colors.color,
-          },
-          children: bgEventBody,
-        };
-
-        if (typeof renderEvent === 'function') {
-          return renderEvent(event, bgEventProps as any);
-        }
-
-        const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
-        return <Box key={bgEventKey} {...restBgEventProps} />;
-      });
+          })}
+        />
+      ));
 
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
       const eventIsAllDay = isAllDayEvent({ event, date: day });
@@ -1070,41 +1059,24 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     const dayWidth = 100 / weekdays.length;
     const dayOffset = dayIndex * dayWidth;
 
-    return allDayBgEvents.map((event) => {
-      const colors = theme.variantColorResolver({
-        color: event.color || theme.primaryColor,
-        theme,
-        variant: 'light',
-        autoContrast: true,
-      });
-
-      const bgEventBody =
-        typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-      const bgEventProps = {
-        key: `bg-allday-${event.id}-${day}`,
-        ...getStyles('weekViewBackgroundEvent', {
+    return allDayBgEvents.map((event) => (
+      <ScheduleBackgroundEvent
+        key={`bg-allday-${event.id}-${day}`}
+        event={event}
+        renderEvent={renderEvent}
+        renderEventBody={renderEventBody}
+        interactive={interactiveBackgroundEvents}
+        onEventClick={onEventClick}
+        {...getStyles('weekViewBackgroundEvent', {
           style: {
             top: 0,
             height: '100%',
             left: `${dayOffset}%`,
             width: `${dayWidth}%`,
           },
-        }),
-        __vars: {
-          '--bg-event-bg': colors.background,
-          '--bg-event-color': colors.color,
-        },
-        children: bgEventBody,
-      };
-
-      if (typeof renderEvent === 'function') {
-        return renderEvent(event, bgEventProps as any);
-      }
-
-      const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
-      return <Box key={bgEventKey} {...restBgEventProps} />;
-    });
+        })}
+      />
+    ));
   });
 
   // Extra rows show on hover = total rows - 2 visible rows (starts from 0, so -1)
@@ -1174,6 +1146,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             'with-weekends': withWeekendDays,
             'hide-sub-hour-grid-lines': !withSubHourGridLines,
             'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
+            'all-day-dragging': allDayDragDrop.dragContextValue.isDragging,
           }}
         >
           <ScrollArea.Autosize

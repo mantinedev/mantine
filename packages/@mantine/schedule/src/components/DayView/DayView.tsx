@@ -15,7 +15,6 @@ import {
   ScrollAreaAutosizeProps,
   StylesApiProps,
   UnstyledButton,
-  useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -56,6 +55,7 @@ import {
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
+import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import {
   RenderEvent,
   RenderEventBody,
@@ -222,6 +222,9 @@ export interface DayViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  withInteractiveBackgroundEvents?: boolean;
+
   /** If set, enables drag-to-select time slot ranges @default false */
   withDragSlotSelect?: boolean;
 
@@ -291,6 +294,7 @@ const defaultProps = {
   withDragSlotSelect: false,
   withEventResize: false,
   mode: 'default',
+  withInteractiveBackgroundEvents: false,
 } satisfies Partial<DayViewProps>;
 
 const varsResolver = createVarsResolver<DayViewFactory>(
@@ -353,6 +357,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     onTimeSlotClick,
     onAllDaySlotClick,
     onEventClick,
+    withInteractiveBackgroundEvents,
     withDragSlotSelect,
     onSlotDragEnd,
     mode,
@@ -399,7 +404,6 @@ export const DayView = factory<DayViewFactory>((_props) => {
     radius,
   };
 
-  const theme = useMantineTheme();
   const ctx = useDatesContext();
   const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
   const showCurrentTimeIndicator =
@@ -768,51 +772,31 @@ export const DayView = factory<DayViewFactory>((_props) => {
     return acc;
   }, []);
 
-  const backgroundAllDayEventNodes = eventsData.backgroundAllDayEvents.map((event) => {
-    const colors = theme.variantColorResolver({
-      color: event.color || theme.primaryColor,
-      theme,
-      variant: 'light',
-      autoContrast: true,
-    });
+  const interactiveBackgroundEvents = withInteractiveBackgroundEvents && mode !== 'static';
 
-    const bgEventBody =
-      typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-    const bgEventProps = {
-      key: `bg-allday-${event.id}`,
-      ...getStyles('dayViewBackgroundEvent', {
+  const backgroundAllDayEventNodes = eventsData.backgroundAllDayEvents.map((event) => (
+    <ScheduleBackgroundEvent
+      key={`bg-allday-${event.id}`}
+      event={event}
+      renderEvent={renderEvent}
+      renderEventBody={renderEventBody}
+      interactive={interactiveBackgroundEvents}
+      onEventClick={onEventClick}
+      {...getStyles('dayViewBackgroundEvent', {
         style: { top: 0, height: '100%', width: '100%' },
-      }),
-      __vars: {
-        '--bg-event-bg': colors.background,
-        '--bg-event-color': colors.color,
-      },
-      children: bgEventBody,
-    };
+      })}
+    />
+  ));
 
-    if (typeof renderEvent === 'function') {
-      return renderEvent(event, bgEventProps as any);
-    }
-
-    const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
-    return <Box key={bgEventKey} {...restBgEventProps} />;
-  });
-
-  const backgroundTimedEventNodes = eventsData.backgroundTimedEvents.map((event) => {
-    const colors = theme.variantColorResolver({
-      color: event.color || theme.primaryColor,
-      theme,
-      variant: 'light',
-      autoContrast: true,
-    });
-
-    const bgEventBody =
-      typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-    const bgEventProps = {
-      key: event.id,
-      ...getStyles('dayViewBackgroundEvent', {
+  const backgroundTimedEventNodes = eventsData.backgroundTimedEvents.map((event) => (
+    <ScheduleBackgroundEvent
+      key={event.id}
+      event={event}
+      renderEvent={renderEvent}
+      renderEventBody={renderEventBody}
+      interactive={interactiveBackgroundEvents}
+      onEventClick={onEventClick}
+      {...getStyles('dayViewBackgroundEvent', {
         style: {
           ...getTimeAxisEventStyle({
             start: event.position.top,
@@ -821,21 +805,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
           }),
           width: '100%',
         },
-      }),
-      __vars: {
-        '--bg-event-bg': colors.background,
-        '--bg-event-color': colors.color,
-      },
-      children: bgEventBody,
-    };
-
-    if (typeof renderEvent === 'function') {
-      return renderEvent(event, bgEventProps as any);
-    }
-
-    const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
-    return <Box key={bgEventKey} {...restBgEventProps} />;
-  });
+      })}
+    />
+  ));
 
   const content = (
     <Box

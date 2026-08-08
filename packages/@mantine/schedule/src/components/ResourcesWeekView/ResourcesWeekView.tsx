@@ -61,6 +61,7 @@ import {
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { getOverlapClusters } from '../ResourcesDayView/get-overlap-clusters/get-overlap-clusters';
+import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
@@ -182,6 +183,8 @@ export interface ResourcesWeekViewProps
     resourceId?: string | number;
   }) => void;
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  withInteractiveBackgroundEvents?: boolean;
   withDragSlotSelect?: boolean;
   onSlotDragEnd?: (data: {
     rangeStart: DateTimeStringValue;
@@ -254,6 +257,7 @@ const defaultProps = {
   highlightToday: true,
   mode: 'default',
   maxEventsPerTimeSlot: 2,
+  withInteractiveBackgroundEvents: false,
 } satisfies Partial<ResourcesWeekViewProps>;
 
 const varsResolver = createVarsResolver<ResourcesWeekViewFactory>(
@@ -325,6 +329,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     eventResizeInterval,
     onTimeSlotClick,
     onEventClick,
+    withInteractiveBackgroundEvents,
     withDragSlotSelect,
     onSlotDragEnd,
     mode,
@@ -728,6 +733,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
   const dayWidthPercent = 100 / weekdays.length;
 
+  const interactiveBackgroundEvents = withInteractiveBackgroundEvents && mode !== 'static';
+
   const rows = orderedResources.map((resource, resourceIndex) => {
     const eventNodes: React.ReactNode[] = [];
     const resourceAllDayBars = weekViewEvents.allDayBars[resource.id] ?? [];
@@ -746,38 +753,24 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         ...(dayEvents.backgroundAllDayEvents[resource.id] || []),
       ];
       for (const event of bgEvents) {
-        const colors = theme.variantColorResolver({
-          color: event.color || theme.primaryColor,
-          theme,
-          variant: 'light',
-          autoContrast: true,
-        });
-
-        const bgEventBody =
-          typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-        const bgEventProps = {
-          key: `bg-${event.id}-${day}`,
-          ...getStyles('resourcesWeekViewBackgroundEvent', {
-            style: {
-              left: `${dayOffsetPercent + (event.position.top / 100) * dayWidthPercent}%`,
-              width: `${(event.position.height / 100) * dayWidthPercent}%`,
-              top: 0,
-              height: '100%',
-            },
-          }),
-          __vars: {
-            '--bg-event-bg': colors.background,
-            '--bg-event-color': colors.color,
-          },
-          children: bgEventBody,
-        };
-
-        if (typeof renderEvent === 'function') {
-          eventNodes.push(renderEvent(event, bgEventProps as any));
-        } else {
-          eventNodes.push(<Box {...bgEventProps} />);
-        }
+        eventNodes.push(
+          <ScheduleBackgroundEvent
+            key={`bg-${event.id}-${day}`}
+            event={event}
+            renderEvent={renderEvent}
+            renderEventBody={renderEventBody}
+            interactive={interactiveBackgroundEvents}
+            onEventClick={onEventClick}
+            {...getStyles('resourcesWeekViewBackgroundEvent', {
+              style: {
+                left: `${dayOffsetPercent + (event.position.top / 100) * dayWidthPercent}%`,
+                width: `${(event.position.height / 100) * dayWidthPercent}%`,
+                top: 0,
+                height: '100%',
+              },
+            })}
+          />
+        );
       }
 
       const allRegularEvents = (dayEvents.regularEvents[resource.id] || []).filter(

@@ -72,7 +72,8 @@ type ResourcesScheduleCommonProps =
   | 'withEventResize'
   | 'onEventResize'
   | 'canResizeEvent'
-  | 'recurrenceExpansionLimit';
+  | 'recurrenceExpansionLimit'
+  | 'withInteractiveBackgroundEvents';
 
 type ResourcesScheduleViewProps<T> = Partial<Omit<T, ResourcesScheduleCommonProps>>;
 
@@ -192,6 +193,9 @@ export interface ResourcesScheduleProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  withInteractiveBackgroundEvents?: boolean;
+
   /** Max number of generated recurring instances @default 2000 */
   recurrenceExpansionLimit?: number;
 
@@ -252,6 +256,7 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    withInteractiveBackgroundEvents,
     recurrenceExpansionLimit,
     mode,
     dayViewProps,
@@ -330,6 +335,9 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
             withEventResize={mode === 'static' ? false : withEventResize}
             onEventResize={onEventResize}
             canResizeEvent={canResizeEvent}
+            withInteractiveBackgroundEvents={
+              mode === 'static' ? false : withInteractiveBackgroundEvents
+            }
             {...dayViewProps}
           />
         );
@@ -341,6 +349,9 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
             withEventResize={mode === 'static' ? false : withEventResize}
             onEventResize={onEventResize}
             canResizeEvent={canResizeEvent}
+            withInteractiveBackgroundEvents={
+              mode === 'static' ? false : withInteractiveBackgroundEvents
+            }
             {...weekViewProps}
           />
         );
