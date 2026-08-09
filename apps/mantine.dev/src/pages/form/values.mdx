@@ -203,6 +203,62 @@ function Demo() {
 }
 ```
 
+## form.useWatchValue
+
+`form.useWatchValue` subscribes to a single field and returns its current value.
+Unlike `form.watch`, which takes a callback, it returns the value directly and
+rerenders the component in which it is called when that field changes. Use it
+when you need a form value during render – for example, to show a section of the
+form conditionally:
+
+<Demo data={FormDemos.watchValue} />
+
+`form.useWatchValue` works the same way in both controlled and uncontrolled
+modes. In uncontrolled mode, reading a value with `form.getValues()` during
+render does not rerender the component when the value changes – use
+`form.useWatchValue` instead:
+
+```tsx
+import { Collapse } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { shipsInternationally: false },
+  });
+
+  // ❌ Does not rerender the component when the value changes
+  const staleValue = form.getValues().shipsInternationally;
+
+  // ✅ Rerenders the component when the value changes
+  const shipsInternationally = form.useWatchValue('shipsInternationally');
+
+  return <Collapse expanded={shipsInternationally}>{/* ... */}</Collapse>;
+}
+```
+
+Only the component that calls `form.useWatchValue` is rerendered, and only when
+the value of the given field changes – changes to other fields do not trigger a
+rerender.
+
+Note that `form.useWatchValue` is a hook – all hook rules apply. For example,
+you cannot call it conditionally or inside loops.
+
+```tsx
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '' },
+  });
+
+  // ❌ This will not work
+  if (Math.random() > 0.5) {
+    const name = form.useWatchValue('name');
+  }
+}
+```
+
 ## form.watch with arrays
 
 `form.watch` works with array fields – the callback is triggered when any
