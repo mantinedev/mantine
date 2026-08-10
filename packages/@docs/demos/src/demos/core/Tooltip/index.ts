@@ -2,7 +2,7 @@ export { configurator } from './Tooltip.demo.configurator';
 export { controlled } from './Tooltip.demo.controlled';
 export { arrow } from './Tooltip.demo.arrow';
 export { multiline } from './Tooltip.demo.multiline';
-export { interactive } from './Tooltip.demo.interactive';
+export { hoverable } from './Tooltip.demo.hoverable';
 export { transitions } from './Tooltip.demo.transitions';
 export { delay } from './Tooltip.demo.delay';
 export { floating } from './Tooltip.demo.floating';

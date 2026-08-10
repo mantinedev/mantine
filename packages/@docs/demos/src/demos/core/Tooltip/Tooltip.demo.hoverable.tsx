@@ -7,7 +7,7 @@ import { Button, Tooltip } from '@mantine/core';
 function Demo() {
   return (
     <Tooltip
-      interactive
+      hoverable
       withArrow
       multiline
       w={220}
@@ -22,7 +22,7 @@ function Demo() {
 function Demo() {
   return (
     <Tooltip
-      interactive
+      hoverable
       withArrow
       multiline
       w={220}
@@ -33,7 +33,7 @@ function Demo() {
   );
 }
 
-export const interactive: MantineDemo = {
+export const hoverable: MantineDemo = {
   type: 'code',
   code,
   centered: true,
