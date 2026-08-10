@@ -170,7 +170,9 @@ By default, the tooltip closes as soon as the pointer leaves the target element,
 
 <Demo data={TooltipDemos.interactive} />
 
-Set `interactive` if the tooltip contains content that the user must be able to reach with a pointer, for example a link. It is also required by [WCAG 2.1 success criterion 1.4.13: Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html), which states that content that appears on hover must remain visible while the pointer is over it.
+The `interactive` prop satisfies the _hoverable_ condition of [WCAG 2.1 success criterion 1.4.13: Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html), so the pointer can reach the tooltip body without dismissing it, for example to read or select its content.
+
+Do not put interactive or focusable content (links, buttons, inputs) inside a tooltip. Interactive content should be put in a [Popover](/core/popover) instead, which is reachable by mouse, keyboard, and touch.
 
 Note that an interactive tooltip receives pointer events, which means that while it is open, it intercepts clicks and hover events of the elements that it overlaps. The tooltip stops receiving pointer events as soon as it starts closing. The `interactive` prop is not supported by `Tooltip.Floating`, which always follows the mouse.
 
