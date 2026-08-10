@@ -293,6 +293,73 @@ describe('@mantine/form/watch', () => {
     );
   });
 
+  it('calls subscriber function when field changes due to form reset', () => {
+    const hook = renderHook(() =>
+      useForm({ mode: 'uncontrolled', initialValues: { a: 'initial', b: '' } })
+    );
+    const spy = jest.fn();
+
+    act(() => renderHook(() => hook.result.current.watch('a', spy)));
+    act(() => hook.result.current.setFieldValue('a', 'changed'));
+    spy.mockClear();
+
+    act(() => hook.result.current.reset());
+
+    expect(spy).toHaveBeenCalledWith({
+      previousValue: 'changed',
+      value: 'initial',
+      touched: false,
+      dirty: false,
+    });
+  });
+
+  it('does not call subscriber function on reset when the field value is unchanged', () => {
+    const hook = renderHook(() =>
+      useForm({ mode: 'uncontrolled', initialValues: { a: 'initial', b: '' } })
+    );
+    const spy = jest.fn();
+
+    act(() => renderHook(() => hook.result.current.watch('a', spy)));
+    act(() => hook.result.current.setFieldValue('b', 'changed'));
+    spy.mockClear();
+
+    act(() => hook.result.current.reset());
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('calls subscriber function when field changes due to resetField', () => {
+    const hook = renderHook(() =>
+      useForm({ mode: 'uncontrolled', initialValues: { a: 'initial', b: '' } })
+    );
+    const spy = jest.fn();
+
+    act(() => renderHook(() => hook.result.current.watch('a', spy)));
+    act(() => hook.result.current.setFieldValue('a', 'changed'));
+    spy.mockClear();
+
+    act(() => hook.result.current.resetField('a'));
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({ previousValue: 'changed', value: 'initial' })
+    );
+  });
+
+  it('does not call subscriber function when another field is reset with resetField', () => {
+    const hook = renderHook(() =>
+      useForm({ mode: 'uncontrolled', initialValues: { a: 'initial', b: '' } })
+    );
+    const spy = jest.fn();
+
+    act(() => renderHook(() => hook.result.current.watch('a', spy)));
+    act(() => hook.result.current.setFieldValue('b', 'changed'));
+    spy.mockClear();
+
+    act(() => hook.result.current.resetField('b'));
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('cascadeUpdates notifies child watcher on list operations', () => {
     const hook = renderHook(() =>
       useForm({
