@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useDidUpdate, useReducedMotion } from '@mantine/hooks';
-import { useMantineTheme } from '../../core';
+import { useMantineEnv, useMantineTheme } from '../../core';
 
 export type TransitionStatus =
   | 'entered'
@@ -36,10 +36,12 @@ export function useTransition({
   enterDelay,
   exitDelay,
 }: UseTransition) {
+  const env = useMantineEnv();
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
-  const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
-  const [transitionDuration, setTransitionDuration] = useState(reduceMotion ? 0 : duration);
+  const skipTransition =
+    env === 'test' || (theme.respectReducedMotion ? shouldReduceMotion : false);
+  const [transitionDuration, setTransitionDuration] = useState(skipTransition ? 0 : duration);
   const [transitionStatus, setStatus] = useState<TransitionStatus>(mounted ? 'entered' : 'exited');
   const transitionTimeoutRef = useRef<number>(-1);
   const delayTimeoutRef = useRef<number>(-1);
@@ -55,7 +57,7 @@ export function useTransition({
     clearAllTimeouts();
     const preHandler = shouldMount ? onEnter : onExit;
     const handler = shouldMount ? onEntered : onExited;
-    const newTransitionDuration = reduceMotion ? 0 : shouldMount ? duration : exitDuration;
+    const newTransitionDuration = skipTransition ? 0 : shouldMount ? duration : exitDuration;
     setTransitionDuration(newTransitionDuration);
 
     if (newTransitionDuration === 0) {
@@ -82,7 +84,7 @@ export function useTransition({
   const handleTransitionWithDelay = (shouldMount: boolean) => {
     clearAllTimeouts();
     const delay = shouldMount ? enterDelay : exitDelay;
-    if (typeof delay !== 'number') {
+    if (env === 'test' || typeof delay !== 'number') {
       handleStateChange(shouldMount);
       return;
     }
