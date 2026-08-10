@@ -74,7 +74,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Determines which events will be used to show tooltip @default { hover: true, focus: false, touch: false } */
   events?: { hover: boolean; focus: boolean; touch: boolean };
 
-  /** If set, the tooltip stays open while the pointer moves from the target to the tooltip and remains over it. Required by [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html) if the tooltip contains interactive content. Note that an interactive tooltip intercepts pointer events of the content it overlaps @default false */
+  /** If set, the tooltip stays open while the pointer moves from the target to the tooltip and remains over it. Required by [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html). Note that an interactive tooltip intercepts pointer events of the content it overlaps @default false */
   interactive?: boolean;
 
   /** Must be set if the tooltip target is an inline element */
