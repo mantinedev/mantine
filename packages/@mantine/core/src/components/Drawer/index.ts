@@ -4,6 +4,7 @@ import type { DrawerBodyProps } from './DrawerBody';
 import type { DrawerCloseButtonProps } from './DrawerCloseButton';
 import type { DrawerContentProps } from './DrawerContent';
 import type { DrawerHeaderProps } from './DrawerHeader';
+import type { DrawerFooterProps, DrawerFooterStylesNames } from './DrawerFooter';
 import type { DrawerOverlayProps } from './DrawerOverlay';
 import type { DrawerRootProps } from './DrawerRoot';
 import type { DrawerStackProps } from './DrawerStack';
@@ -15,6 +16,7 @@ export { DrawerBody } from './DrawerBody';
 export { DrawerCloseButton } from './DrawerCloseButton';
 export { DrawerContent } from './DrawerContent';
 export { DrawerHeader } from './DrawerHeader';
+export { DrawerFooter } from './DrawerFooter';
 export { DrawerOverlay } from './DrawerOverlay';
 export { DrawerTitle } from './DrawerTitle';
 export { DrawerStack, DrawerStackContext } from './DrawerStack';
@@ -30,6 +32,8 @@ export type {
   DrawerCloseButtonProps,
   DrawerContentProps,
   DrawerHeaderProps,
+  DrawerFooterProps,
+  DrawerFooterStylesNames,
   DrawerOverlayProps,
   DrawerTitleProps,
   DrawerStackProps,

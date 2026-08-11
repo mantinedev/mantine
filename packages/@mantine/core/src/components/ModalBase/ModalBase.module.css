@@ -20,6 +20,18 @@
   transition: padding-inline-end 100ms;
 }
 
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mb-padding, var(--mantine-spacing-md));
+  position: sticky;
+  bottom: 0;
+  background-color: var(--mantine-color-body);
+  z-index: 1000;
+}
+
 .inner {
   position: fixed;
   width: 100%;

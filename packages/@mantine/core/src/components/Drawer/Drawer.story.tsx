@@ -282,3 +282,28 @@ export function KeepMountedMode() {
     </div>
   );
 }
+
+export function WithFooter() {
+  const [opened, { open, close }] = useDisclosure(true);
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open Drawer</Button>
+      <Drawer.Root opened={opened} onClose={close} size="md">
+        <Drawer.Overlay />
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title>Drawer with Footer</Drawer.Title>
+            <Drawer.CloseButton />
+          </Drawer.Header>
+          <Drawer.Body>{content}</Drawer.Body>
+          <Drawer.Footer style={{ borderTop: '1px solid var(--mantine-color-default-border)' }}>
+            <Button variant="default" onClick={close}>
+              Cancel
+            </Button>
+            <Button onClick={close}>Submit Action</Button>
+          </Drawer.Footer>
+        </Drawer.Content>
+      </Drawer.Root>
+    </div>
+  );
+}
