@@ -146,7 +146,7 @@
     }
 
     --input-color: var(--mantine-color-error);
-    --input-placeholder-color: var(--mantine-color-error);
+    --input-placeholder-color: var(--mantine-color-placeholder-error);
     --input-section-color: var(--mantine-color-error);
   }
 
