@@ -5,7 +5,7 @@ export default Layout(MDX_DATA.useDisclosure);
 
 ## Usage
 
-The `use-disclosure` hook manages boolean state. It provides `open`, `close`, and `toggle` handlers
+The `use-disclosure` hook manages boolean state. It provides `open`, `close`, `toggle`, and `set` handlers
 and accepts optional `onOpen` and `onClose` callbacks. You can use it to manage controlled modals,
 popovers, and other similar components:
 
@@ -23,6 +23,9 @@ function Demo() {
 
   // Sets opened to true if it was false and vice versa
   handlers.toggle();
+
+  // Sets opened to the given value
+  handlers.set(true);
 }
 ```
 
