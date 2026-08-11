@@ -87,7 +87,7 @@ export interface DonutChartProps
   /** Controls thickness of the chart segments @default 20 */
   thickness?: number;
 
-  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default 80 */
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default 160 */
   size?: number;
 
   /** Controls width of segments stroke @default 1 */
