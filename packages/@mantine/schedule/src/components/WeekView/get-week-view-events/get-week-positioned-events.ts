@@ -154,8 +154,6 @@ export function getWeekPositionedEvents({
     if (!columnMap.has(columnKey)) {
       columnMap.set(columnKey, []);
     }
-    // Resolve the all-day flag here, where we have the week context, so columnHasConflict
-    // does not recompute isAllDayEvent on every pairwise comparison.
     columnMap.get(columnKey)!.push({ event, allDay: isActuallyAllDay });
 
     const verticalPosition = allDay
