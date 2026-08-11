@@ -1,3 +1,4 @@
+import { Select } from '../Select';
 import { FloatingWindow } from './FloatingWindow';
 
 export default { title: 'FloatingWindow' };
@@ -25,6 +26,26 @@ export function Usage() {
       <p>{lorem}</p>
       <p>{lorem}</p>
     </div>
+  );
+}
+
+export function SelectDropdown() {
+  return (
+    <FloatingWindow
+      p="md"
+      w={320}
+      h={256}
+      withBorder
+      shadow="md"
+      initialPosition={{ top: 100, left: 100 }}
+    >
+      <Select
+        label="Your favorite library"
+        placeholder="Pick value"
+        data={['React', 'Angular', 'Vue', 'Svelte']}
+        defaultDropdownOpened
+      />
+    </FloatingWindow>
   );
 }
 
