@@ -23,9 +23,9 @@ export const Demo_multiline = {
   render: renderDemo(demos.multiline),
 };
 
-export const Demo_interactive = {
-  name: '⭐ Demo: interactive',
-  render: renderDemo(demos.interactive),
+export const Demo_hoverable = {
+  name: '⭐ Demo: hoverable',
+  render: renderDemo(demos.hoverable),
 };
 
 export const Demo_transitions = {
