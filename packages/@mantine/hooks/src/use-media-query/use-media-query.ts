@@ -10,7 +10,12 @@ function getInitialValue(query: string, initialValue?: boolean) {
   }
 
   if (typeof window !== 'undefined' && 'matchMedia' in window) {
-    return window.matchMedia(query).matches;
+    try {
+      return window.matchMedia(query).matches;
+    } catch (e) {
+      // Safari iframe compatibility issue
+      return false;
+    }
   }
 
   return false;
