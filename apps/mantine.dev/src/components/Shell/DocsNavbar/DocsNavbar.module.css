@@ -28,6 +28,10 @@
   }
 }
 
+.navbar .categories {
+  padding-inline-start: 4px;
+}
+
 .link {
   display: block;
   font-size: var(--mantine-font-size-sm);
