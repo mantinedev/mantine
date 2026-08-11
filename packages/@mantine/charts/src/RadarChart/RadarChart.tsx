@@ -121,6 +121,9 @@ export interface RadarChartProps
 
   /** Additional components that are rendered inside recharts `RadarChart` component */
   children?: React.ReactNode;
+
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  accessibilityLayer?: boolean;
 }
 
 export type RadarChartFactory = Factory<{
@@ -137,6 +140,7 @@ const defaultProps = {
   withTooltip: false,
   withDots: false,
   tooltipAnimationDuration: 0,
+  accessibilityLayer: true,
 } satisfies Partial<RadarChartProps>;
 
 const varsResolver = createVarsResolver<RadarChartFactory>((theme, { gridColor, textColor }) => ({
@@ -178,6 +182,7 @@ export const RadarChart = factory<RadarChartFactory>((_props) => {
     activeDotProps,
     legendProps,
     attributes,
+    accessibilityLayer,
     ...others
   } = props;
 
@@ -249,7 +254,11 @@ export const RadarChart = factory<RadarChartFactory>((_props) => {
   return (
     <Box {...getStyles('root')} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
-        <ReChartsRadarChart data={data} {...radarChartProps}>
+        <ReChartsRadarChart
+          data={data}
+          accessibilityLayer={accessibilityLayer}
+          {...radarChartProps}
+        >
           {withPolarGrid && <PolarGrid stroke="var(--chart-grid-color)" {...polarGridProps} />}
           {withPolarAngleAxis && <PolarAngleAxis dataKey={dataKey} {...polarAngleAxisProps} />}
           {withPolarRadiusAxis && (

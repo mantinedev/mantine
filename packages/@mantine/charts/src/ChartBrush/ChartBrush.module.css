@@ -1,0 +1,16 @@
+.brush {
+  & :where(text) {
+    font-size: var(--mantine-font-size-xs);
+    fill: var(--chart-text-color, var(--mantine-color-dimmed));
+    font-family: var(--mantine-font-family);
+  }
+
+  & :where(:global(.recharts-brush-slide)) {
+    fill: var(--mantine-primary-color-light);
+    fill-opacity: 1;
+  }
+
+  & :where(:global(.recharts-brush-traveller)) rect {
+    fill: var(--mantine-primary-color-filled);
+  }
+}

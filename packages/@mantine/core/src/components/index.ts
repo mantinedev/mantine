@@ -34,6 +34,7 @@ export * from './Breadcrumbs';
 export * from './Burger';
 export * from './Button';
 export * from './Card';
+export * from './Cascader';
 export * from './Center';
 export * from './Checkbox';
 export * from './Chip';

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  externalInputFill,
   inputDefaultProps,
   inputStylesApiSelectors,
   render,
@@ -355,5 +356,139 @@ describe('@mantine/core/Select', () => {
     // Type backspace to remove last character
     await userEvent.type(screen.getByRole('combobox'), '{backspace}');
     expect(screen.getByRole('combobox')).toHaveValue('Angula');
+  });
+
+  describe('external input changes (autofill)', () => {
+    const autofillProps: SelectProps = {
+      ...defaultProps,
+      searchable: true,
+      name: 'test-select',
+      data: ['Germany', 'Armenia'],
+    };
+
+    const getHiddenInput = () => document.querySelector('input[name="test-select"]');
+
+    it('selects the option with a matching label', async () => {
+      render(<Select {...autofillProps} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Germany');
+      expect(screen.getByRole('combobox')).toHaveValue('Germany');
+      expect(getHiddenInput()).toHaveValue('Germany');
+    });
+
+    it('ignores label casing and surrounding whitespace when matching', async () => {
+      render(<Select {...autofillProps} />);
+      await externalInputFill(screen.getByRole('combobox'), '  gERMANY ');
+      expect(screen.getByRole('combobox')).toHaveValue('Germany');
+      expect(getHiddenInput()).toHaveValue('Germany');
+    });
+
+    it('matches options nested in groups', async () => {
+      render(
+        <Select {...autofillProps} data={[{ group: 'Europe', items: ['Germany', 'Georgia'] }]} />
+      );
+      await externalInputFill(screen.getByRole('combobox'), 'Georgia');
+      expect(screen.getByRole('combobox')).toHaveValue('Georgia');
+      expect(getHiddenInput()).toHaveValue('Georgia');
+    });
+
+    it('does not display a value that was not selected when the label does not match', async () => {
+      render(<Select {...autofillProps} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Georgia');
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(getHiddenInput()).toHaveValue('');
+    });
+
+    it('restores the label of the selected option when the label does not match', async () => {
+      render(<Select {...autofillProps} defaultValue="Armenia" />);
+      await externalInputFill(screen.getByRole('combobox'), 'Georgia');
+      expect(screen.getByRole('combobox')).toHaveValue('Armenia');
+      expect(getHiddenInput()).toHaveValue('Armenia');
+    });
+
+    it('does not deselect the option when its own label is filled in', async () => {
+      render(<Select {...autofillProps} defaultValue="Armenia" allowDeselect />);
+      await externalInputFill(screen.getByRole('combobox'), 'Armenia');
+      expect(screen.getByRole('combobox')).toHaveValue('Armenia');
+      expect(getHiddenInput()).toHaveValue('Armenia');
+    });
+
+    it('does not select anything when several options share the filled in label', async () => {
+      render(
+        <Select
+          {...autofillProps}
+          data={[
+            { value: '1', label: 'John Smith' },
+            { value: '2', label: 'John Smith' },
+          ]}
+        />
+      );
+
+      await externalInputFill(screen.getByRole('combobox'), 'John Smith');
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(getHiddenInput()).toHaveValue('');
+    });
+
+    it('does not select disabled options', async () => {
+      render(
+        <Select
+          {...autofillProps}
+          data={[{ value: 'Germany', label: 'Germany', disabled: true }]}
+        />
+      );
+      await externalInputFill(screen.getByRole('combobox'), 'Germany');
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(getHiddenInput()).toHaveValue('');
+    });
+
+    it('calls onChange with the matched option', async () => {
+      const spy = jest.fn();
+      render(<Select {...autofillProps} onChange={spy} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Germany');
+      expect(spy).toHaveBeenCalledWith('Germany', { value: 'Germany', label: 'Germany' });
+    });
+
+    it('does not call onChange when the label does not match', async () => {
+      const spy = jest.fn();
+      render(<Select {...autofillProps} onChange={spy} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Georgia');
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('does not call onSearchChange with the filled in value when the label does not match', async () => {
+      const spy = jest.fn();
+      render(<Select {...autofillProps} onSearchChange={spy} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Georgia');
+      expect(spy).not.toHaveBeenCalledWith('Georgia');
+    });
+
+    it('does not open the dropdown', async () => {
+      render(<Select {...autofillProps} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Georgia');
+      expect(screen.queryByRole('option')).toBe(null);
+    });
+
+    it('does not display phantom text in a non-searchable Select', async () => {
+      render(<Select {...autofillProps} searchable={false} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Georgia');
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(getHiddenInput()).toHaveValue('');
+    });
+
+    it('does not change the value of a readOnly Select', async () => {
+      render(<Select {...autofillProps} readOnly defaultValue="Armenia" />);
+      await externalInputFill(screen.getByRole('combobox'), 'Germany');
+      expect(screen.getByRole('combobox')).toHaveValue('Armenia');
+      expect(getHiddenInput()).toHaveValue('Armenia');
+    });
+
+    it('does not interfere with typing', async () => {
+      render(<Select {...autofillProps} />);
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.type(screen.getByRole('combobox'), 'Germ');
+      expect(screen.getByRole('combobox')).toHaveValue('Germ');
+      expect(screen.getByRole('option', { name: 'Germany' })).toBeVisible();
+      expect(screen.queryByRole('option', { name: 'Armenia' })).toBe(null);
+      expect(getHiddenInput()).toHaveValue('');
+    });
   });
 });

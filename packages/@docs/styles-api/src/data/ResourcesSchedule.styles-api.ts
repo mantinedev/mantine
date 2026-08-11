@@ -64,6 +64,8 @@ export const ResourcesScheduleStylesApi: StylesApiData<ResourcesScheduleFactory>
     resourcesMonthViewResourceLabel: 'ResourcesMonthView resource label',
     resourcesMonthViewRowSlots: 'ResourcesMonthView day cells container',
     resourcesMonthViewCell: 'ResourcesMonthView day cell',
+    resourcesMonthViewEventWrapper: 'ResourcesMonthView event wrapper',
+    resourcesMonthViewResizeHandle: 'ResourcesMonthView event resize handle',
     resourcesMonthViewInner: 'ResourcesMonthView inner container',
     resourcesMonthViewGroupColumn: 'ResourcesMonthView group label column',
     resourcesMonthViewGroupColumnEmpty: 'ResourcesMonthView empty group column cell',

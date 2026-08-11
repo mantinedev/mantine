@@ -119,6 +119,9 @@ export interface ResourcesDayViewProps
   /** Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
   intervalMinutes?: number;
 
+  /** Minimum on-screen size of an event along the time axis, in px. Prevents very short events from collapsing. Larger values make brief events easier to see but extend them past their real start time. @default 1 */
+  minEventSize?: number;
+
   /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm */
   slotLabelFormat?: DateLabelFormat;
 
@@ -289,6 +292,7 @@ const defaultProps = {
   endTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
   intervalMinutes: 60,
+  minEventSize: 1,
   withHeader: true,
   headerFormat: 'MMMM D, YYYY',
   highlightBusinessHours: false,
@@ -327,6 +331,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     onDateChange,
     resources,
     intervalMinutes,
+    minEventSize,
     slotLabelFormat,
     radius,
     startScrollTime,
@@ -722,7 +727,11 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
           data-resizing={isThisEventResizing || undefined}
           style={{
-            ...getTimeAxisEventStyle({ start: eventLeft, span: eventWidth }),
+            ...getTimeAxisEventStyle({
+              start: eventLeft,
+              span: eventWidth,
+              minSize: minEventSize,
+            }),
             top: adjustPosition
               ? `calc((100% - 22px) * ${event.position.column} / ${maxEventsPerTimeSlot})`
               : `${event.position.offset}%`,
@@ -750,7 +759,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
                   }
                 : undefined
             }
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%', padding: 0 }}
           />
           {isResizable && mode !== 'static' && (
             <>

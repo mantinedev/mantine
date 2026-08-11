@@ -1,0 +1,155 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+  width: 100%;
+
+  &[data-orientation='vertical'] {
+    flex-direction: column;
+    width: auto;
+    height: 100%;
+  }
+}
+
+.label {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  white-space: nowrap;
+  color: var(--mantine-color-text);
+}
+
+.trackWrapper {
+  position: relative;
+  flex: 1;
+  padding-top: calc(var(--mantine-font-size-xs) + rem(4px));
+  padding-bottom: calc(var(--mantine-font-size-xs) + rem(4px));
+
+  &[data-orientation='vertical'] {
+    flex: 1;
+    height: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: calc(var(--mantine-font-size-xs) + 40px);
+    padding-right: calc(var(--mantine-font-size-xs) + 40px);
+  }
+}
+
+.track {
+  position: relative;
+  height: var(--bullet-size);
+  border-radius: var(--mantine-radius-sm);
+  overflow: hidden;
+
+  [data-orientation='vertical'] > & {
+    width: var(--bullet-size);
+    height: 100%;
+  }
+}
+
+.range {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: var(--mantine-radius-sm);
+
+  [data-orientation='vertical'] > .track > & {
+    top: auto;
+    left: 0;
+    width: 100%;
+    height: auto;
+    border-radius: var(--mantine-radius-sm);
+  }
+}
+
+.bar {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: var(--bullet-bar-size);
+  transform: translateY(-50%);
+  border-radius: 0 var(--mantine-radius-xs) var(--mantine-radius-xs) 0;
+  z-index: 1;
+
+  [data-orientation='vertical'] > .track > & {
+    top: auto;
+    left: 50%;
+    width: var(--bullet-bar-size);
+    height: auto;
+    transform: translateX(-50%);
+    border-radius: var(--mantine-radius-xs) var(--mantine-radius-xs) 0 0;
+  }
+}
+
+.target {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  z-index: 2;
+  border-radius: var(--mantine-radius-xs);
+
+  @mixin where-light {
+    background-color: var(--mantine-color-dark-filled);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-white);
+  }
+
+  [data-orientation='vertical'] > .track > & {
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%);
+  }
+}
+
+.rangeLabel {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-dimmed);
+  white-space: nowrap;
+  line-height: 1;
+
+  [data-orientation='vertical'] > & {
+    top: auto;
+    left: auto;
+    right: 0;
+    transform: translateY(50%);
+  }
+}
+
+.barLabel {
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-text);
+  white-space: nowrap;
+  line-height: 1;
+
+  [data-orientation='vertical'] > & {
+    bottom: auto;
+    left: 0;
+    transform: translateY(50%);
+  }
+}
+
+.targetLabel {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-dimmed);
+  white-space: nowrap;
+  line-height: 1;
+
+  [data-orientation='vertical'] > & {
+    top: auto;
+    left: auto;
+    right: 0;
+    transform: translateY(50%);
+  }
+}

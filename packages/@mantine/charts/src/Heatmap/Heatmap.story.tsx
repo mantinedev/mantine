@@ -84,6 +84,37 @@ export function WithLegend() {
   );
 }
 
+export function MonthLabelsBottom() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Heatmap
+        data={convertedRandomValues}
+        rectSize={10}
+        gap={1}
+        withWeekdayLabels
+        withMonthLabels
+        monthLabelsPosition="bottom"
+      />
+    </div>
+  );
+}
+
+export function MonthLabelsBottomWithLegend() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Heatmap
+        data={convertedRandomValues}
+        rectSize={10}
+        gap={1}
+        withWeekdayLabels
+        withMonthLabels
+        monthLabelsPosition="bottom"
+        withLegend
+      />
+    </div>
+  );
+}
+
 export function WithLegendCustomLabels() {
   return (
     <div style={{ padding: 40 }}>

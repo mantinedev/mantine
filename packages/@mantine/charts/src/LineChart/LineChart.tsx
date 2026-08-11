@@ -28,6 +28,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useId } from '@mantine/hooks';
+import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
@@ -144,6 +145,7 @@ const defaultProps = {
     { offset: 0, color: 'red' },
     { offset: 100, color: 'blue' },
   ],
+  accessibilityLayer: true,
 } satisfies Partial<LineChartProps>;
 
 const varsResolver = createVarsResolver<LineChartFactory>((theme, { textColor, gridColor }) => ({
@@ -204,6 +206,9 @@ export const LineChart = factory<LineChartFactory>((_props) => {
     withPointLabels,
     attributes,
     gridColor,
+    accessibilityLayer,
+    withBrush,
+    brushProps,
     ...others
   } = props;
 
@@ -336,6 +341,7 @@ export const LineChart = factory<LineChartFactory>((_props) => {
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...lineChartProps}
         >
           {type === 'gradient' && (
@@ -468,6 +474,14 @@ export const LineChart = factory<LineChartFactory>((_props) => {
 
           {lines}
           {referenceLinesItems}
+          {withBrush && (
+            <ChartBrush
+              dataKey={dataKey}
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+              {...brushProps}
+            />
+          )}
           {children}
         </ReChartsLineChart>
       </ResponsiveContainer>

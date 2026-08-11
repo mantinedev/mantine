@@ -249,6 +249,13 @@ export type Watch<out Values, out Field extends LooseKeys<Values> = LooseKeys<Va
   subscriber: FormFieldSubscriber<TValues, TField>
 ) => void;
 
+export type UseWatchValue<out Values, out Field extends LooseKeys<Values> = LooseKeys<Values>> = <
+  TValues extends Values,
+  TField extends Field,
+>(
+  path: TField
+) => FormPathValue<TValues, TField>;
+
 export type Key<Values> = <Field extends LooseKeys<Values>>(path: Field) => string;
 
 export type GetInputNode<Values> = <NodeType extends HTMLElement, Field extends LooseKeys<Values>>(
@@ -320,6 +327,7 @@ interface _UseFormReturnType<out Values, out TransformedValues = Values, Rules =
   getTouched: GetStatus;
   getDirty: GetStatus;
   watch: Watch<Values>;
+  useWatchValue: UseWatchValue<Values>;
   key: Key<Values>;
   getInputNode: GetInputNode<Values>;
   resetField: <Field extends LooseKeys<Values>>(path: Field) => void;

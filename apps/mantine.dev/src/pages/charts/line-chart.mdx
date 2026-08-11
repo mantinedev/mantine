@@ -236,3 +236,12 @@ rendered behind the chart.
 Use the `ReferenceArea` component from recharts to display a reference area:
 
 <Demo data={LineChartDemos.referenceArea} />
+
+## Brush
+
+Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
+brush handles to zoom into a subset of the data. Use the `brushProps` prop to pass props
+down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush) component,
+or render the `ChartBrush` component as a child for full control.
+
+<Demo data={LineChartDemos.brush} />

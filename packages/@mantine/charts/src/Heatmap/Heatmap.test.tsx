@@ -115,6 +115,69 @@ describe('@mantine/core/Heatmap', () => {
     expect(height2).toBeGreaterThan(height1);
   });
 
+  it('renders month labels at the top by default', () => {
+    const { container } = render(
+      <Heatmap
+        data={{}}
+        startDate={new Date(2024, 0, 1)}
+        endDate={new Date(2024, 11, 31)}
+        withMonthLabels
+      />
+    );
+
+    const svg = container.querySelector('svg')!;
+    const monthLabels = svg.querySelectorAll('.mantine-Heatmap-monthLabel');
+    expect(monthLabels.length).toBeGreaterThan(0);
+
+    const firstLabelY = Number(monthLabels[0].getAttribute('y'));
+    expect(firstLabelY).toBeLessThan(14);
+  });
+
+  it('renders month labels at the bottom when monthLabelsPosition is "bottom"', () => {
+    const { container } = render(
+      <Heatmap
+        data={{}}
+        startDate={new Date(2024, 0, 1)}
+        endDate={new Date(2024, 11, 31)}
+        withMonthLabels
+        monthLabelsPosition="bottom"
+      />
+    );
+
+    const svg = container.querySelector('svg')!;
+    const monthLabels = svg.querySelectorAll('.mantine-Heatmap-monthLabel');
+    expect(monthLabels.length).toBeGreaterThan(0);
+
+    const firstLabelY = Number(monthLabels[0].getAttribute('y'));
+    expect(firstLabelY).toBeGreaterThan(50);
+  });
+
+  it('does not add top offset when monthLabelsPosition is "bottom"', () => {
+    const commonProps: HeatmapProps = {
+      data: {},
+      startDate: new Date(2024, 0, 1),
+      endDate: new Date(2024, 11, 31),
+      withMonthLabels: true,
+    };
+
+    const { container: cTop } = render(<Heatmap {...commonProps} />);
+    const { container: cBottom } = render(
+      <Heatmap {...commonProps} monthLabelsPosition="bottom" />
+    );
+
+    const allWeeksTop = cTop.querySelector('[data-id="all-weeks"]')!;
+    const allWeeksBottom = cBottom.querySelector('[data-id="all-weeks"]')!;
+
+    const translateTop = allWeeksTop.getAttribute('transform')!;
+    const translateBottom = allWeeksBottom.getAttribute('transform')!;
+
+    const yTop = Number(translateTop.match(/translate\((\d+),\s*(\d+)\)/)![2]);
+    const yBottom = Number(translateBottom.match(/translate\((\d+),\s*(\d+)\)/)![2]);
+
+    expect(yTop).toBeGreaterThan(0);
+    expect(yBottom).toBe(0);
+  });
+
   it('marks first legend rect as empty', () => {
     const { container } = render(<Heatmap data={{}} withLegend />);
     const legendGroup = container.querySelector('[data-id="legend"]')!;

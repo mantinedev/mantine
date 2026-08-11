@@ -21,3 +21,11 @@ export function Unstyled() {
     </div>
   );
 }
+
+export function FullWidth() {
+  return (
+    <div style={{ padding: 40 }}>
+      <ColorInput label="Full width color picker" fullWidth popoverProps={{ opened: true }} />
+    </div>
+  );
+}

@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import tz from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { useState } from 'react';
-import { Select, Stack, Text } from '@mantine/core';
+import { Button, Group, NumberInput, Select, Stack, Text } from '@mantine/core';
 import { ScheduleEventData, ScheduleResourceData } from '../../types';
 import { toDateString } from '../../utils';
 import { ResourcesWeekView } from './ResourcesWeekView';
@@ -413,6 +413,118 @@ export function ManyOverlappingEvents() {
       startTime="08:00:00"
       endTime="18:00:00"
     />
+  );
+}
+
+const shortEventResources: ScheduleResourceData[] = [
+  { id: 'tokyo', label: 'Tokyo' },
+  { id: 'paris', label: 'Paris' },
+  { id: 'new-york', label: 'New York' },
+];
+
+const shortEvents: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: '',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:01:00`,
+    color: 'red',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 2,
+    title: '',
+    start: `${today} 09:01:00`,
+    end: `${today} 09:03:00`,
+    color: 'green',
+    resourceId: 'tokyo',
+  },
+  {
+    id: 3,
+    title: '',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:02:00`,
+    color: 'red',
+    resourceId: 'paris',
+  },
+  {
+    id: 4,
+    title: '',
+    start: `${today} 09:02:00`,
+    end: `${today} 09:03:00`,
+    color: 'green',
+    resourceId: 'paris',
+  },
+  {
+    id: 5,
+    title: '',
+    start: `${today} 09:00:00`,
+    end: `${today} 09:03:00`,
+    color: 'green',
+    resourceId: 'new-york',
+  },
+];
+
+const shortEventIntervals = [1, 5, 10, 15, 30, 60, 120];
+
+export function ShortEvents() {
+  const [zoomIndex, setZoomIndex] = useState(shortEventIntervals.indexOf(60));
+  const [minEventSize, setMinEventSize] = useState<number>(1);
+  const intervalMinutes = shortEventIntervals[zoomIndex];
+
+  return (
+    <Stack gap="md" p="md">
+      <div>
+        <Text size="sm" fw={500}>
+          Short events (intervalMinutes = {intervalMinutes})
+        </Text>
+        <Text size="xs" c="dimmed">
+          These 1-2 minute events start at 09:00-09:02 on the current day. With the default
+          `minEventSize={1}` they render at their true (near sub-pixel) width, so they appear as
+          thin slivers. Increase `minEventSize` to make brief events easier to see – the box always
+          grows from the event's start toward its end, so an event is never displayed before its
+          real start time.
+        </Text>
+      </div>
+
+      <ResourcesWeekView
+        date={today}
+        resources={shortEventResources}
+        events={shortEvents}
+        rowHeight={26}
+        startTime="08:00:00"
+        endTime="10:00:00"
+        intervalMinutes={intervalMinutes}
+        minEventSize={minEventSize}
+        withHeader={false}
+        withCurrentTimeIndicator={false}
+      />
+
+      <Group align="flex-end">
+        <Button
+          onClick={() => setZoomIndex((index) => Math.max(index - 1, 0))}
+          disabled={zoomIndex === 0}
+        >
+          Zoom in
+        </Button>
+        <Button
+          onClick={() =>
+            setZoomIndex((index) => Math.min(index + 1, shortEventIntervals.length - 1))
+          }
+          disabled={zoomIndex === shortEventIntervals.length - 1}
+        >
+          Zoom out
+        </Button>
+        <NumberInput
+          label="minEventSize"
+          value={minEventSize}
+          onChange={(value) => setMinEventSize(Number(value) || 0)}
+          min={0}
+          max={40}
+          w={140}
+        />
+      </Group>
+    </Stack>
   );
 }
 

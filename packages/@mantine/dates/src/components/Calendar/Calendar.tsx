@@ -252,6 +252,8 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     onPreviousMonth,
     static: isStatic,
     enableKeyboardNavigation,
+    withNativeLevelSelect,
+    yearsSelectRange,
     fullWidth,
     attributes,
     ref,
@@ -271,12 +273,14 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     onChange: onLevelChange,
   });
 
-  const [_date, setDate] = useUncontrolledDates({
+  const [_date, setDate, dateControlled] = useUncontrolledDates({
     type: 'default',
     value: toDateString(date),
     defaultValue: toDateString(defaultDate),
     onChange: onDateChange as any,
   });
+
+  const disableNativeLevelSelect = dateControlled && !onDateChange;
 
   useImperativeHandle(__setDateRef, () => (date: DateStringValue) => {
     setDate(date);
@@ -443,12 +447,16 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           monthLabelFormat={monthLabelFormat}
           __onDayClick={__onDayClick}
           __onDayMouseEnter={__onDayMouseEnter}
+          __onDateChange={setDate}
+          __disableNativeLevelSelect={disableNativeLevelSelect}
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
           static={isStatic}
           withCellSpacing={withCellSpacing}
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
+          withNativeLevelSelect={withNativeLevelSelect}
+          yearsSelectRange={yearsSelectRange}
           headerControlsOrder={headerControlsOrder}
           fullWidth={fullWidth}
           {...stylesApiProps}
@@ -480,9 +488,13 @@ export const Calendar = factory<CalendarFactory>((_props) => {
             setLevel(clampLevel('month', minLevel, maxLevel));
             onMonthSelect?.(payload);
           }}
+          __onDateChange={setDate}
+          __disableNativeLevelSelect={disableNativeLevelSelect}
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
+          withNativeLevelSelect={withNativeLevelSelect}
+          yearsSelectRange={yearsSelectRange}
           headerControlsOrder={headerControlsOrder}
           fullWidth={fullWidth}
           {...stylesApiProps}

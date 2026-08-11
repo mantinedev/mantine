@@ -31,6 +31,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
@@ -151,6 +152,7 @@ const defaultProps = {
   connectNulls: true,
   strokeWidth: 2,
   curveType: 'monotone',
+  accessibilityLayer: true,
 } satisfies Partial<CompositeChartProps>;
 
 const varsResolver = createVarsResolver<CompositeChartFactory>(
@@ -213,6 +215,9 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     maxBarWidth,
     composedChartProps,
     attributes,
+    accessibilityLayer,
+    withBrush,
+    brushProps,
     ...others
   } = props;
 
@@ -407,6 +412,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...composedChartProps}
         >
           {withLegend && (
@@ -527,6 +533,14 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
 
           {lines}
           {referenceLinesItems}
+          {withBrush && (
+            <ChartBrush
+              dataKey={dataKey}
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+              {...brushProps}
+            />
+          )}
           {children}
         </ReChartsCompositeChart>
       </ResponsiveContainer>

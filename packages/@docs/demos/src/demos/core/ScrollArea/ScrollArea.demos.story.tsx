@@ -57,3 +57,8 @@ export const Demo_startScrollPosition = {
   name: '⭐ Demo: startScrollPosition',
   render: renderDemo(demos.startScrollPosition),
 };
+
+export const Demo_verticalScrollbarPosition = {
+  name: '⭐ Demo: verticalScrollbarPosition',
+  render: renderDemo(demos.verticalScrollbarPosition),
+};

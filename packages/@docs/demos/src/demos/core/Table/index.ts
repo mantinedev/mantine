@@ -11,3 +11,4 @@ export { data } from './Table.demo.data';
 export { stickyHeader } from './Table.demo.stickyHeader';
 export { vertical } from './Table.demo.vertical';
 export { tabularNums } from './Table.demo.tabularNums';
+export { virtualized } from './Table.demo.virtualized';

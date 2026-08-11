@@ -179,6 +179,17 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     searchTags: 'progress bars list, ranked bars, leaderboard chart, progress list',
   },
 
+  BulletChart: {
+    title: 'BulletChart',
+    props: ['BulletChart'],
+    styles: ['BulletChart'],
+    package: '@mantine/charts',
+    slug: '/charts/bullet-chart',
+    description: 'Compact KPI chart with value, target, and qualitative ranges',
+    source: '@mantine/charts/src/BulletChart/BulletChart.tsx',
+    docs: 'charts/bullet-chart.mdx',
+  },
+
   Treemap: {
     title: 'Treemap',
     props: ['Treemap'],
@@ -189,6 +200,17 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/charts/src/Treemap/Treemap.tsx',
     docs: 'charts/treemap.mdx',
     searchTags: 'hierarchical chart, nested rectangles, tree map, proportional blocks, recharts',
+  },
+
+  SunburstChart: {
+    title: 'SunburstChart',
+    props: ['SunburstChart'],
+    styles: ['SunburstChart'],
+    package: '@mantine/charts',
+    slug: '/charts/sunburst-chart',
+    description: 'Sunburst chart component for hierarchical data',
+    source: '@mantine/charts/src/SunburstChart/SunburstChart.tsx',
+    docs: 'charts/sunburst-chart.mdx',
   },
 
   SankeyChart: {

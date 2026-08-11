@@ -273,6 +273,57 @@ describe('@mantine/core/Accordion', () => {
     expect(spy).toHaveBeenCalledWith([]);
   });
 
+  it('does not collapse the open item when disableCollapse is set (uncontrolled, multiple: false)', async () => {
+    const spy = jest.fn();
+    render(<Accordion {...defaultProps} defaultValue="item-1" disableCollapse onChange={spy} />);
+
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+
+    await userEvent.click(screen.getAllByRole('button')[0]);
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('does not collapse the open item when disableCollapse is set (controlled, multiple: false)', async () => {
+    const spy = jest.fn();
+    render(<Accordion {...defaultProps} value="item-1" disableCollapse onChange={spy} />);
+
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+
+    await userEvent.click(screen.getAllByRole('button')[0]);
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('switches to a different item when disableCollapse is set (multiple: false)', async () => {
+    const spy = jest.fn();
+    render(<Accordion {...defaultProps} defaultValue="item-1" disableCollapse onChange={spy} />);
+
+    await userEvent.click(screen.getAllByRole('button')[1]);
+    expect(spy).toHaveBeenCalledWith('item-2');
+    expect(screen.getByText('test-item-2')).toBeInTheDocument();
+    expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
+  });
+
+  it('ignores disableCollapse in multiple mode', async () => {
+    const spy = jest.fn();
+    render(
+      <Accordion
+        {...defaultProps}
+        multiple
+        defaultValue={['item-1']}
+        disableCollapse
+        onChange={spy}
+      />
+    );
+
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+
+    await userEvent.click(screen.getAllByRole('button')[0]);
+    expect(spy).toHaveBeenCalledWith([]);
+    expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
+  });
+
   it('exposes internal components as static properties', () => {
     expect(Accordion.Item).toBe(AccordionItem);
     expect(Accordion.Control).toBe(AccordionControl);

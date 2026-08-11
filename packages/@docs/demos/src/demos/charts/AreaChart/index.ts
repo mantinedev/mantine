@@ -32,3 +32,5 @@ export { rightYAxis } from './AreaChart.demo.rightYAxis';
 export { pointLabels } from './AreaChart.demo.pointLabels';
 export { referenceArea } from './AreaChart.demo.referenceArea';
 export { curveType } from './AreaChart.demo.curveType';
+export { brush } from './AreaChart.demo.brush';
+export { brushProps } from './AreaChart.demo.brushProps';

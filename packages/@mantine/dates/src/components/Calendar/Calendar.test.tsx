@@ -58,6 +58,7 @@ describe('@mantine/dates/Calendar', () => {
   });
 
   datesTests.itSupportsMonthProps({ component: Calendar, props: defaultProps });
+  datesTests.itSupportsNativeLevelSelect({ component: Calendar, props: defaultProps });
   datesTests.itHandlesMonthKeyboardEvents({
     component: Calendar,
     props: defaultProps,

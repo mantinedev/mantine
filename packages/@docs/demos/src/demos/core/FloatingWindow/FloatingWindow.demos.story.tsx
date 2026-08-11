@@ -37,3 +37,13 @@ export const Demo_setPosition = {
   name: '⭐ Demo: setPosition',
   render: renderDemo(demos.setPosition),
 };
+
+export const Demo_resizeHandle = {
+  name: '⭐ Demo: resizeHandle',
+  render: renderDemo(demos.resizeHandle),
+};
+
+export const Demo_resizeCallbacks = {
+  name: '⭐ Demo: resizeCallbacks',
+  render: renderDemo(demos.resizeCallbacks),
+};

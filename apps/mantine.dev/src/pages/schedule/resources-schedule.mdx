@@ -52,9 +52,9 @@ receives the `resourceId` of the target resource.
 
 ## Event resize
 
-Enable event resizing with `withEventResize` prop. Event resize is available in day and week views
-where events can be resized by dragging their left or right edges. In week view, resizing is
-constrained to the event's own day.
+Enable event resizing with `withEventResize` prop. Events can be resized by dragging their left or
+right edges in all three views. In week view, resizing is constrained to the event's own day. In
+month view, resizing snaps to whole days and preserves the event's original time of day.
 
 <Demo data={ResourcesScheduleDemos.eventResize} />
 

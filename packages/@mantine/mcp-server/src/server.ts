@@ -180,7 +180,7 @@ async function handleRequest(client: MantineMcpDataClient, request: JsonRpcReque
             version: '9',
           },
         });
-        return;
+        break;
       }
 
       case 'notifications/initialized': {

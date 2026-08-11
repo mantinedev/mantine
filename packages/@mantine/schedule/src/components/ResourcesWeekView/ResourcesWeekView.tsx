@@ -115,6 +115,8 @@ export interface ResourcesWeekViewProps
   endTime?: string;
   /** Number of minutes for each interval in the week view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
   intervalMinutes?: number;
+  /** Minimum on-screen size of an event along the time axis, in px. Prevents very short events from collapsing. Larger values make brief events easier to see but extend them past their real start time. @default 1 */
+  minEventSize?: number;
   slotLabelFormat?: DateLabelFormat;
   radius?: MantineRadius;
   /** Date and time to scroll to on initial render, in `YYYY-MM-DD HH:mm:ss` format */
@@ -230,6 +232,7 @@ const defaultProps = {
   endTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
   intervalMinutes: 60,
+  minEventSize: 1,
   withHeader: true,
   weekLabelFormat: 'MMM DD',
   weekdayFormat: 'ddd D',
@@ -272,6 +275,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     onDateChange,
     resources,
     intervalMinutes,
+    minEventSize,
     slotLabelFormat,
     radius,
     startScrollDateTime,
@@ -732,7 +736,11 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
             __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
             data-resizing={isThisEventResizing || undefined}
             style={{
-              ...getTimeAxisEventStyle({ start: eventLeft, span: eventWidth }),
+              ...getTimeAxisEventStyle({
+                start: eventLeft,
+                span: eventWidth,
+                minSize: minEventSize,
+              }),
               top: adjustPosition
                 ? `calc((100% - 22px) * ${event.position.column} / ${maxEventsPerTimeSlot})`
                 : `${event.position.offset}%`,
@@ -760,7 +768,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
                     }
                   : undefined
               }
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: '100%', padding: 0 }}
             />
             {isResizable && mode !== 'static' && (
               <>

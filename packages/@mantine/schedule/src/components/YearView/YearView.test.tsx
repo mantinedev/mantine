@@ -3,6 +3,7 @@ import 'dayjs/locale/ru';
 import dayjs from 'dayjs';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { DateStringValue, ScheduleEventData } from '../../types';
 import { getWeekNumber, toDateString } from '../../utils';
 import { YearView, YearViewProps, YearViewStylesNames } from './YearView';
 
@@ -69,6 +70,133 @@ describe('@mantine/schedule/YearView', () => {
     expect(days[1]).toHaveAttribute('data-weekend'); // Dec 31, 2024 (Tuesday)
     expect(days[2]).not.toHaveAttribute('data-weekend'); // Jan 1, 2025 (Wednesday)
     expect(days[days.length - 1]).not.toHaveAttribute('data-weekend'); // Feb 9, 2025 (Sunday)
+  });
+
+  describe('withWeekendDays', () => {
+    const getFirstMonth = (container: HTMLElement) =>
+      container.querySelector('.mantine-YearView-yearViewMonth') as HTMLElement;
+
+    const getVisibleDayButton = (name: string) => {
+      const buttons = screen.getAllByRole('button', { name });
+      return buttons.find((button) => !button.hasAttribute('data-outside')) || buttons[0];
+    };
+
+    it('renders all 7 columns by default', () => {
+      const { container } = render(<YearView {...defaultProps} />);
+      const january = getFirstMonth(container);
+
+      expect(january.querySelectorAll('.mantine-YearView-yearViewWeekday')).toHaveLength(7);
+      expect(january.querySelectorAll('.mantine-YearView-yearViewDay')).toHaveLength(42);
+    });
+
+    it('hides weekend days when withWeekendDays is false', () => {
+      const { container } = render(
+        <YearView {...defaultProps} withWeekendDays={false} weekdayFormat="dddd" />
+      );
+      const january = getFirstMonth(container);
+      const weekdays = january.querySelectorAll('.mantine-YearView-yearViewWeekday');
+      const days = january.querySelectorAll('.mantine-YearView-yearViewDay');
+
+      expect(weekdays).toHaveLength(5);
+      expect(weekdays[0].textContent).toStrictEqual('Monday');
+      expect(weekdays[weekdays.length - 1].textContent).toStrictEqual('Friday');
+      expect(days).toHaveLength(30);
+      days.forEach((day) => {
+        expect(day).not.toHaveAttribute('data-weekend');
+      });
+    });
+
+    it('sets --year-view-columns variable to the number of visible columns', () => {
+      const { container } = render(<YearView {...defaultProps} withWeekendDays={false} />);
+      const root = container.querySelector('.mantine-YearView-yearView') as HTMLElement;
+
+      expect(root).toHaveAttribute('data-without-weekend-days');
+      expect(root.style.getPropertyValue('--year-view-columns')).toBe('5');
+    });
+
+    it('respects custom weekendDays when hiding weekend days', () => {
+      const { container } = render(
+        <YearView
+          {...defaultProps}
+          withWeekendDays={false}
+          weekendDays={[1, 2]}
+          weekdayFormat="dddd"
+        />
+      );
+      const january = getFirstMonth(container);
+      const weekdays = january.querySelectorAll('.mantine-YearView-yearViewWeekday');
+
+      expect(weekdays).toHaveLength(5);
+      expect(weekdays[0].textContent).toStrictEqual('Wednesday');
+      expect(weekdays[weekdays.length - 1].textContent).toStrictEqual('Sunday');
+      expect(january.querySelectorAll('.mantine-YearView-yearViewDay')).toHaveLength(30);
+    });
+
+    it('hides weekend days relative to firstDayOfWeek', () => {
+      const { container } = render(
+        <YearView
+          {...defaultProps}
+          withWeekendDays={false}
+          firstDayOfWeek={0}
+          weekdayFormat="dddd"
+        />
+      );
+      const weekdays = getFirstMonth(container).querySelectorAll(
+        '.mantine-YearView-yearViewWeekday'
+      );
+
+      expect(weekdays).toHaveLength(5);
+      expect(weekdays[0].textContent).toStrictEqual('Monday');
+      expect(weekdays[weekdays.length - 1].textContent).toStrictEqual('Friday');
+    });
+
+    it('does not render indicators for events that occur only on hidden weekend days', () => {
+      const events = [
+        {
+          id: 'weekday',
+          title: 'Standup',
+          start: '2025-11-05 10:00:00',
+          end: '2025-11-05 11:00:00',
+          color: 'blue',
+          payload: {},
+        },
+        {
+          id: 'weekend-only',
+          title: 'Weekend Brunch',
+          start: '2025-11-08 10:00:00',
+          end: '2025-11-08 11:00:00',
+          color: 'red',
+          payload: {},
+        },
+      ];
+
+      render(<YearView {...defaultProps} withWeekendDays={false} events={events} />);
+
+      // Nov 5 is Wednesday, Nov 8 is Saturday
+      const nov5 = getVisibleDayButton('November 5, 2025');
+      expect(nov5.querySelectorAll('.mantine-YearView-yearViewDayIndicator')).toHaveLength(1);
+      expect(screen.queryByRole('button', { name: 'November 8, 2025' })).not.toBeInTheDocument();
+    });
+
+    it('keeps keyboard navigation working after toggling withWeekendDays at runtime', async () => {
+      const { rerender } = render(<YearView {...defaultProps} />);
+      rerender(<YearView {...defaultProps} withWeekendDays={false} />);
+
+      // Nov 7 is Friday, the last visible column in a Monday-start week
+      const friday = getVisibleDayButton('November 7, 2025');
+      friday.focus();
+      await userEvent.keyboard('{ArrowRight}');
+
+      expect(getVisibleDayButton('November 10, 2025')).toHaveFocus();
+    });
+
+    it('keeps the first day of each month in tab order when weekend days are hidden', () => {
+      // Nov 1 2025 is a Saturday, so the first focusable day is Nov 3 (Monday)
+      render(<YearView {...defaultProps} withWeekendDays={false} />);
+
+      expect(getVisibleDayButton('November 3, 2025')).toHaveAttribute('tabIndex', '0');
+      expect(getVisibleDayButton('November 4, 2025')).toHaveAttribute('tabIndex', '-1');
+    });
   });
 
   it('displays week numbers when withWeekNumbers is set', () => {
@@ -432,6 +560,89 @@ describe('@mantine/schedule/YearView', () => {
     const nov5Buttons = screen.getAllByRole('button', { name: 'November 5, 2025' });
     const indicators = nov5Buttons[0].querySelectorAll('.mantine-YearView-yearViewDayIndicator');
     expect(indicators).toHaveLength(3);
+  });
+
+  describe('renderDay', () => {
+    const nov5Events = Array.from({ length: 5 }, (_, index) => ({
+      id: `${index + 1}`,
+      title: `Event ${index + 1}`,
+      start: `2025-11-05 0${index + 8}:00:00`,
+      end: `2025-11-05 0${index + 8}:30:00`,
+      color: 'blue',
+      payload: {},
+    }));
+
+    const getVisibleDayButton = (name: string) => {
+      const buttons = screen.getAllByRole('button', { name });
+      return buttons.find((button) => !button.hasAttribute('data-outside')) || buttons[0];
+    };
+
+    it('replaces the entire day cell content', () => {
+      render(<YearView {...defaultProps} renderDay={(date) => `[${dayjs(date).date()}]`} />);
+
+      const nov5 = getVisibleDayButton('November 5, 2025');
+      expect(nov5.textContent).toBe('[5]');
+    });
+
+    it('does not render default indicators when renderDay is set', () => {
+      const { container } = render(
+        <YearView {...defaultProps} events={nov5Events} renderDay={() => 'custom'} />
+      );
+
+      expect(container.querySelectorAll('.mantine-YearView-yearViewDayIndicator')).toHaveLength(0);
+      expect(container.querySelectorAll('.mantine-YearView-yearViewDayIndicators')).toHaveLength(0);
+    });
+
+    it('receives the date as a YYYY-MM-DD string', () => {
+      const spy = jest.fn((_date: DateStringValue, _events: ScheduleEventData[]) => null);
+      render(<YearView {...defaultProps} renderDay={spy} />);
+
+      expect(spy).toHaveBeenCalledWith('2025-11-05', expect.any(Array));
+    });
+
+    it('receives all events of the day, not capped at 3 like the default indicators', () => {
+      const spy = jest.fn((_date: DateStringValue, _events: ScheduleEventData[]) => null);
+      render(<YearView {...defaultProps} events={nov5Events} renderDay={spy} />);
+
+      const nov5Call = spy.mock.calls.find((call) => call[0] === '2025-11-05')!;
+      expect(nov5Call[1]).toHaveLength(5);
+
+      const nov6Call = spy.mock.calls.find((call) => call[0] === '2025-11-06')!;
+      expect(nov6Call[1]).toHaveLength(0);
+    });
+
+    it('is called for outside days but not for placeholders when withOutsideDays is false', () => {
+      const withOutside = jest.fn((_date: DateStringValue, _events: ScheduleEventData[]) => null);
+      const { unmount } = render(
+        <YearView {...defaultProps} withOutsideDays renderDay={withOutside} />
+      );
+      // Dec 30 2024 is an outside day in the January 2025 grid
+      expect(withOutside.mock.calls.some((call) => call[0] === '2024-12-30')).toBe(true);
+      unmount();
+
+      const withoutOutside = jest.fn(
+        (_date: DateStringValue, _events: ScheduleEventData[]) => null
+      );
+      render(<YearView {...defaultProps} withOutsideDays={false} renderDay={withoutOutside} />);
+      expect(withoutOutside.mock.calls.some((call) => call[0] === '2024-12-30')).toBe(false);
+    });
+
+    it('keeps day interactions and aria-label intact', async () => {
+      const spy = jest.fn();
+      render(<YearView {...defaultProps} onDayClick={spy} renderDay={() => 'custom'} />);
+
+      const nov5 = getVisibleDayButton('November 5, 2025');
+      await userEvent.click(nov5);
+      expect(spy).toHaveBeenCalledWith('2025-11-05', expect.any(Object));
+    });
+
+    it('renders default content when renderDay is not set', () => {
+      render(<YearView {...defaultProps} events={nov5Events} />);
+
+      const nov5 = getVisibleDayButton('November 5, 2025');
+      expect(nov5.textContent).toBe('5');
+      expect(nov5.querySelectorAll('.mantine-YearView-yearViewDayIndicator')).toHaveLength(3);
+    });
   });
 
   it('supports custom labels prop for header elements', () => {

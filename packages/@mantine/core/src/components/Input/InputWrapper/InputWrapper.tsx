@@ -10,6 +10,7 @@ import {
   Factory,
   getFontSize,
   MantineFontSize,
+  PlaceholderPolymorphicProps,
   rem,
   StylesApiProps,
   useProps,
@@ -75,16 +76,16 @@ export interface __InputWrapperProps {
   withAsterisk?: boolean;
 
   /** Props passed down to the `Input.Label` component */
-  labelProps?: InputLabelProps & DataAttributes;
+  labelProps?: InputLabelProps & DataAttributes & PlaceholderPolymorphicProps;
 
   /** Props passed down to the `Input.Description` component */
-  descriptionProps?: InputDescriptionProps & DataAttributes;
+  descriptionProps?: InputDescriptionProps & DataAttributes & PlaceholderPolymorphicProps;
 
   /** Props passed down to the `Input.Error` component */
-  errorProps?: InputErrorProps & DataAttributes;
+  errorProps?: InputErrorProps & DataAttributes & PlaceholderPolymorphicProps;
 
   /** Props passed down to the `Input.Success` component */
-  successProps?: InputSuccessProps & DataAttributes;
+  successProps?: InputSuccessProps & DataAttributes & PlaceholderPolymorphicProps;
 
   /** Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. @default React.Fragment */
   inputContainer?: (children: React.ReactNode) => React.ReactNode;
