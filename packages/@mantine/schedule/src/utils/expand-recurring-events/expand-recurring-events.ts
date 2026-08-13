@@ -71,12 +71,47 @@ function getOccurrenceStartsInRange(
 
   try {
     const options = RRule.parseString(getRRuleString(event.recurrence.rrule));
-    options.dtstart = dtstart.toDate();
+    options.dtstart = new Date(Date.UTC(
+      dtstart.year(),
+      dtstart.month(),
+      dtstart.date(),
+      dtstart.hour(),
+      dtstart.minute(),
+      dtstart.second()
+    ));
     const rule = new RRule(options);
 
-    const searchStart = rangeStart.subtract(Math.max(0, durationMs), 'millisecond').toDate();
-    const results = rule.between(searchStart, rangeEnd.toDate(), true);
-    return results.slice(0, expansionLimit).map((value) => dayjs(value));
+    const searchStart = new Date(Date.UTC(
+      rangeStart.year(),
+      rangeStart.month(),
+      rangeStart.date(),
+      rangeStart.hour(),
+      rangeStart.minute(),
+      rangeStart.second()
+    )).valueOf();
+    const searchEnd = new Date(Date.UTC(
+      rangeEnd.year(),
+      rangeEnd.month(),
+      rangeEnd.date(),
+      rangeEnd.hour(),
+      rangeEnd.minute(),
+      rangeEnd.second()
+    )).valueOf();
+    const results = rule.between(
+      new Date(searchStart - Math.max(0, durationMs)),
+      new Date(searchEnd),
+      true
+    );
+    return results.slice(0, expansionLimit).map((value) =>
+      dayjs(new Date(
+        value.getUTCFullYear(),
+        value.getUTCMonth(),
+        value.getUTCDate(),
+        value.getUTCHours(),
+        value.getUTCMinutes(),
+        value.getUTCSeconds()
+      ))
+    );
   } catch {
     return [];
   }
