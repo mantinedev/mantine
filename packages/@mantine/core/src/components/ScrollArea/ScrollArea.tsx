@@ -1,6 +1,6 @@
-import { useCallback, useEffectEvent, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
-import { useIsomorphicEffect } from '@mantine/hooks';
+import { useCallbackRef, useIsomorphicEffect } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -387,7 +387,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
   const overflowingRef = useRef(false);
   const didMountRef = useRef(false);
 
-  const handleOverflowCheck = useEffectEvent(() => {
+  const handleOverflowCheck = useCallbackRef(() => {
     const el = viewportObserverRef.current;
     if (!el || !onOverflowChange) {
       return;
