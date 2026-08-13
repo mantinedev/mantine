@@ -14,6 +14,7 @@
 
 .categories {
   padding-inline-end: var(--mantine-spacing-md);
+  padding-inline-start: 4px;
 
   &:first-of-type {
     padding-top: var(--mantine-spacing-xl);
