@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Rating, RatingProps, RatingStylesNames } from './Rating';
@@ -69,6 +70,29 @@ describe('@mantine/core/Rating', () => {
     const targetInput = inputs.find((input) => (input as HTMLInputElement).value === '2.5');
 
     await userEvent.click(targetInput!.nextElementSibling as HTMLElement);
+
+    expect(spy).toHaveBeenCalledWith(0);
+  });
+
+  it('clears rating on touch when tapping the same value with allowClear=true', () => {
+    const spy = jest.fn();
+    const { container } = render(<Rating allowClear onChange={spy} defaultValue={3} />);
+
+    const root = container.querySelector('[class*="root"]')!;
+    root.getBoundingClientRect = () =>
+      ({
+        left: 0,
+        right: 500,
+        width: 500,
+        top: 0,
+        bottom: 0,
+        height: 0,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      }) as DOMRect;
+
+    fireEvent.touchStart(root, { touches: [{ clientX: 250 }] });
 
     expect(spy).toHaveBeenCalledWith(0);
   });
