@@ -109,17 +109,28 @@ function getPopoverMiddlewares(
             if (typeof middlewaresOptions.size === 'object' && !!middlewaresOptions.size.apply) {
               middlewaresOptions.size.apply({ rects, availableWidth, availableHeight, ...rest });
             } else {
-              Object.assign(styles, {
-                maxWidth: `${availableWidth}px`,
-                maxHeight: `${availableHeight}px`,
-              });
+              // Avoid redundant style writes when the values did not change.
+              // Writing the same (or a rounding-noise-level different) size is
+              // not required and can trigger a ResizeObserver layout loop in
+              // Firefox when the reference element lives in a flex container
+              // (e.g. MultiSelect inside a flex box without an explicit
+              // flex-basis) – see https://github.com/mantinedev/mantine/issues/9121
+              const maxWidth = `${availableWidth}px`;
+              const maxHeight = `${availableHeight}px`;
+              if (styles.maxWidth !== maxWidth || styles.maxHeight !== maxHeight) {
+                Object.assign(styles, { maxWidth, maxHeight });
+              }
             }
           }
 
           if (options.width === 'target') {
-            Object.assign(styles, {
-              width: `${rects.reference.width}px`,
-            });
+            const width = `${rects.reference.width}px`;
+
+            // Same guard as above: only write the width when it actually
+            // changed to avoid triggering an endless ResizeObserver loop.
+            if (styles.width !== width) {
+              Object.assign(styles, { width });
+            }
           }
         },
       })
