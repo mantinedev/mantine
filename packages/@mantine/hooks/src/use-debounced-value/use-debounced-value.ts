@@ -43,11 +43,16 @@ export function useDebouncedValue<T = any>(
       if (!cooldownRef.current && options.leading) {
         cooldownRef.current = true;
         setValue(value);
+        // Clear any lingering trailing timer before starting the cooldown
+        // window, so an orphaned timer cannot later fire with a stale value.
+        window.clearTimeout(timeoutRef.current!);
         timeoutRef.current = window.setTimeout(() => {
           cooldownRef.current = false;
         }, wait);
       } else {
-        cancel();
+        // Only clear the timer — do not reset cooldownRef, so the
+        // leading edge does not re-fire mid-burst (see #9119).
+        window.clearTimeout(timeoutRef.current!);
         timeoutRef.current = window.setTimeout(() => {
           cooldownRef.current = false;
           setValue(value);
