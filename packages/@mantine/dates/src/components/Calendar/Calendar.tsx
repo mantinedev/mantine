@@ -304,9 +304,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
   const fallbackDateRef = useRef<DateStringValue | null>(null);
   if (fallbackDateRef.current === null) {
     const now = new Date();
-    fallbackDateRef.current = (
-      minDate && dayjs(now).isAfter(minDate) ? minDate : dayjs(now).format('YYYY-MM-DD')
-    ) as DateStringValue;
+    fallbackDateRef.current = dayjs(now).format('YYYY-MM-DD') as DateStringValue;
   }
   const currentDate = _date || fallbackDateRef.current;
 
