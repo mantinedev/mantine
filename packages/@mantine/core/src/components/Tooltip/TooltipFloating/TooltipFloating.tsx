@@ -132,8 +132,8 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props) => {
               ...getStyleObject(style, theme),
               zIndex: zIndex as React.CSSProperties['zIndex'],
               display: !disabled && opened ? 'block' : 'none',
-              top: (y && Math.round(y)) ?? '',
-              left: (x && Math.round(x)) ?? '',
+              top: Number.isFinite(y) ? Math.round(y!) : '',
+              left: Number.isFinite(x) ? Math.round(x!) : '',
             },
           })}
           variant={variant}
