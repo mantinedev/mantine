@@ -1,7 +1,8 @@
+import { Box, type BoxProps, type ElementProps } from '@mantine/core';
 import { Activity } from 'react';
 import { useOptionalStepperContext } from '../Stepper.context';
 
-export interface StepperCompletedProps {
+export interface StepperCompletedProps extends BoxProps, ElementProps<'div'> {
   /** Content displayed when all steps are completed */
   children: React.ReactNode;
 
@@ -9,7 +10,7 @@ export interface StepperCompletedProps {
   step?: number;
 }
 
-export const StepperCompleted: React.FC<StepperCompletedProps> = ({ children, step }) => {
+export const StepperCompleted: React.FC<StepperCompletedProps> = ({ children, step, className, style, ...others }) => {
   const ctx = useOptionalStepperContext();
 
   if (!ctx || step === undefined) {
@@ -17,16 +18,17 @@ export const StepperCompleted: React.FC<StepperCompletedProps> = ({ children, st
   }
 
   const active = ctx.active >= step;
-
+  const content = (
+    <Box {...ctx.getStyles('content', { className, style })} {...others}>
+      {children}
+    </Box>
+  );
   if (ctx.keepMounted) {
-    return (
-      <Activity mode={active ? 'visible' : 'hidden'}>
-        <div {...ctx.getStyles('content')}>{children}</div>
-      </Activity>
-    );
+    return <Activity mode={active ? 'visible' : 'hidden'}>{content}</Activity>;
   }
 
-  return active ? <div {...ctx.getStyles('content')}>{children}</div> : null;
+  return active ? content : null;
+
 };
 
 StepperCompleted.displayName = '@mantine/core/StepperCompleted';
