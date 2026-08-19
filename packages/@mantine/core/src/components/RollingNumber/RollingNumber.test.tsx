@@ -126,7 +126,9 @@ describe('@mantine/core/RollingNumber', () => {
     const { container } = render(<RollingNumber value={5} />);
     const column = container.querySelector('.mantine-RollingNumber-digitColumn');
     expect(column!.children).toHaveLength(12);
-    const cells = Array.from(column!.children).map((c) => c.textContent);
+    const cells = Array.from(column!.children).map(
+      (c) => c.textContent || c.getAttribute('data-value')
+    );
     expect(cells).toEqual(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1']);
   });
 
@@ -192,5 +194,13 @@ describe('@mantine/core/RollingNumber', () => {
       'aria-label',
       '$ 1,000,000 USD'
     );
+  });
+
+  it('renders clean textContent matching formatted value without off-screen digits', () => {
+    const { container } = render(
+      <RollingNumber value={1234.56} thousandSeparator prefix="$ " suffix=" USD" />
+    );
+    const root = container.querySelector('.mantine-RollingNumber-root');
+    expect(root?.textContent).toBe('$ 1,234.56 USD');
   });
 });

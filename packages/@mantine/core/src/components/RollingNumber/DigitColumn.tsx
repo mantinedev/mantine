@@ -34,7 +34,7 @@ export function DigitColumn({
   const columnStyles = getStyles('digitColumn');
 
   return (
-    <span {...digitStyles} data-empty={empty || undefined} aria-hidden="true">
+    <span {...digitStyles} data-empty={empty || undefined}>
       <span
         key={digit}
         {...columnStyles}
@@ -46,9 +46,14 @@ export function DigitColumn({
         }}
         data-direction={direction}
       >
-        {STRIP_CELLS.map((d, i) => (
-          <span key={i}>{d}</span>
-        ))}
+        {STRIP_CELLS.map((d, i) => {
+          const isActive = !empty && i === digitIndex;
+          return (
+            <span key={i} data-value={isActive ? undefined : d}>
+              {isActive ? d : null}
+            </span>
+          );
+        })}
       </span>
     </span>
   );

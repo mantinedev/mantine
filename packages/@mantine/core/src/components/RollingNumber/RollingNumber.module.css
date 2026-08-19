@@ -34,6 +34,10 @@
     align-items: center;
     justify-content: center;
     height: 1em;
+
+    &::before {
+      content: attr(data-value);
+    }
   }
 }
 

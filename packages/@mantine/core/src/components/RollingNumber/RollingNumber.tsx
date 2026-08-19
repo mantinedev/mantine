@@ -158,31 +158,28 @@ export const RollingNumber = factory<RollingNumberFactory>((_props) => {
       aria-label={accessibleValue}
       {...others}
     >
-      {slots.map((slot) => {
-        if (slot.type === 'digit') {
-          return (
-            <DigitColumn
-              key={slot.key}
-              digit={slot.digit}
-              previousDigit={slot.previousDigit}
-              getStyles={getStyles}
-              empty={slot.empty}
-              valueDirection={valueDirection}
-            />
-          );
-        }
+      <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
+        {slots.map((slot) => {
+          if (slot.type === 'digit') {
+            return (
+              <DigitColumn
+                key={slot.key}
+                digit={slot.digit}
+                previousDigit={slot.previousDigit}
+                getStyles={getStyles}
+                empty={slot.empty}
+                valueDirection={valueDirection}
+              />
+            );
+          }
 
-        return (
-          <span
-            key={slot.key}
-            {...getStyles('char')}
-            data-empty={slot.empty || undefined}
-            aria-hidden="true"
-          >
-            {slot.char}
-          </span>
-        );
-      })}
+          return (
+            <span key={slot.key} {...getStyles('char')} data-empty={slot.empty || undefined}>
+              {slot.empty ? null : slot.char}
+            </span>
+          );
+        })}
+      </span>
     </Box>
   );
 });
