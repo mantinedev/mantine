@@ -1,4 +1,5 @@
 import { useClipboard } from '@mantine/hooks';
+import { normalizeCode } from '../../normalize-code';
 import { CodeHighlightControl } from '../CodeHighlightControl/CodeHighlightControl';
 import { CopyIcon } from './CopyIcon';
 
@@ -17,7 +18,7 @@ export function CopyCodeButton({
 
   return (
     <CodeHighlightControl
-      onClick={() => clipboard.copy(code.trim())}
+      onClick={() => clipboard.copy(normalizeCode(code))}
       variant="none"
       tooltipLabel={clipboard.copied ? copiedLabel : copyLabel}
       aria-label={clipboard.copied ? copiedLabel : `${copyLabel} code`}

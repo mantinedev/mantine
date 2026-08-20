@@ -23,6 +23,7 @@ import {
   useHighlight,
   type CodeHighlightAdapter,
 } from '../CodeHighlightProvider/CodeHighlightProvider';
+import { normalizeCode } from '../normalize-code';
 import type {
   CodeHighlightDefaultLanguage,
   CodeHighlightTabsCode,
@@ -220,15 +221,16 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
 
   const colorScheme = useComputedColorScheme();
   const highlight = useHighlight();
+  const normalizedCode = normalizeCode(code);
   const highlightedCode = highlight({
-    code: code.trim(),
+    code: normalizedCode,
     language,
     colorScheme: codeColorScheme ?? colorScheme,
   });
 
   const codeContent = highlightedCode.isHighlighted
     ? { dangerouslySetInnerHTML: { __html: highlightedCode.highlightedCode } }
-    : { children: code.trim() };
+    : { children: normalizedCode };
 
   if (__inline) {
     return (
@@ -285,12 +287,9 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
           <div {...getStyles('codeWrapper')}>
             {withLineNumbers && (
               <div {...getStyles('lineNumbers')} data-with-offset={__withOffset || undefined}>
-                {code
-                  .trim()
-                  .split('\n')
-                  .map((_, i) => (
-                    <div key={i}>{i + 1}</div>
-                  ))}
+                {normalizedCode.split('\n').map((_, i) => (
+                  <div key={i}>{i + 1}</div>
+                ))}
               </div>
             )}
             <pre {...getStyles('pre')} data-with-offset={__withOffset || undefined}>
