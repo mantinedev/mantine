@@ -275,6 +275,25 @@ describe('@mantine/dates/DateTimePicker', () => {
     expect(getTimePicker()).toHaveFocus();
   });
 
+  it('keeps focus on hours input when typing a single digit after selecting a date', async () => {
+    const { container } = render(<DateTimePicker {...defaultProps} />);
+    await clickInput(container);
+    // Select a date — this triggers handleDefaultDateChange, which focuses hours input
+    // and also triggers re-render via useDidUpdate (startTimeValue update)
+    await userEvent.click(container.querySelector('table button')!);
+
+    const hoursInput = getTimePicker();
+    expect(hoursInput).toHaveFocus();
+    // After re-render, focus is preserved but selection may be lost.
+    // Type '1' as if the cursor is at the end of "00" (the default time value).
+    // Without the fix, "001" triggers startsWith('00') and jumps to minutes.
+    await userEvent.keyboard('1');
+
+    // Expect hours to still have focus and value to be "01"
+    expect(hoursInput).toHaveFocus();
+    expect(hoursInput).toHaveValue('01');
+  });
+
   it('renders clear button based on clearable prop and current value', () => {
     const { rerender } = render(<DateTimePicker {...defaultProps} value="2022-04-11" clearable />);
 

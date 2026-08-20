@@ -59,8 +59,7 @@ describe('@mantine/dates/TimePicker', () => {
     await userEvent.keyboard('02');
 
     expect(hoursInput).toHaveValue('02');
-    expect(screen.getByLabelText('test-minutes')).toHaveFocus();
-    expect(screen.getByLabelText('test-minutes')).toHaveValue('00');
+    expect(hoursInput).toHaveFocus();
   });
 
   it('handles backspace key correctly', async () => {

@@ -56,7 +56,7 @@ export function SpinInput({
 
       onChange(clampedValue);
 
-      if (!disableAutoAdvance && (clampedValue > maxDigit || value.startsWith('00'))) {
+      if (!disableAutoAdvance && (clampedValue > maxDigit || value === '00')) {
         onNextInput?.();
       }
     }
