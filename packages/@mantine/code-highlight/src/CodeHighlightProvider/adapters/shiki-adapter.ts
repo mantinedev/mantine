@@ -22,14 +22,45 @@ export function stripShikiCodeBlocks(data: string) {
 
 interface CreateShikiAdapterOptions {
   forceColorScheme?: 'dark' | 'light' | (string & {});
+
+  /** Resolves grammar of a language that is not loaded in the highlighter yet.
+   * Returned value is passed to shiki `highlighter.loadLanguage`: it can be a language name
+   * (bundled highlighters), a language registration or a function that imports one.
+   * Return `null` or `undefined` if the language is not supported. */
+  resolveLanguage?: (language: string) => any;
+}
+
+const specialLanguages = ['text', 'plaintext', 'txt', 'ansi'];
+
+function isLanguageAvailable(ctx: any, language: string | undefined) {
+  if (!language || specialLanguages.includes(language)) {
+    return true;
+  }
+
+  if (typeof ctx.getLoadedLanguages !== 'function') {
+    return true;
+  }
+
+  return ctx.getLoadedLanguages().includes(language);
 }
 
 export const createShikiAdapter = (
   loadShiki: () => Promise<any>,
-  { forceColorScheme }: CreateShikiAdapterOptions = {}
+  { forceColorScheme, resolveLanguage }: CreateShikiAdapterOptions = {}
 ): CodeHighlightAdapter => {
   return {
     loadContext: loadShiki,
+
+    loadLanguage: resolveLanguage
+      ? (ctx, language) => {
+          if (isLanguageAvailable(ctx, language)) {
+            return undefined;
+          }
+
+          const grammar = resolveLanguage(language);
+          return grammar ? ctx.loadLanguage(grammar) : undefined;
+        }
+      : undefined,
     getHighlighter: (ctx) => {
       if (!ctx) {
         return ({ code }) => ({ highlightedCode: code, isHighlighted: false });

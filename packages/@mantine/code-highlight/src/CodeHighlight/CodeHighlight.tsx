@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import cx from 'clsx';
 import {
   Box,
@@ -21,6 +22,7 @@ import {
 import { useUncontrolled } from '@mantine/hooks';
 import {
   useHighlight,
+  useLoadLanguage,
   type CodeHighlightAdapter,
 } from '../CodeHighlightProvider/CodeHighlightProvider';
 import type {
@@ -220,6 +222,12 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
 
   const colorScheme = useComputedColorScheme();
   const highlight = useHighlight();
+  const loadLanguage = useLoadLanguage();
+
+  useEffect(() => {
+    loadLanguage(language);
+  }, [language, loadLanguage]);
+
   const highlightedCode = highlight({
     code: code.trim(),
     language,

@@ -85,6 +85,61 @@ After that, you can use the `CodeHighlight` component in your application:
 
 All further code highlighting examples on this page use the shiki adapter.
 
+## Lazy languages loading
+
+Shiki loads grammars of all languages that are given to the highlighter in advance. If your
+application highlights code in dozens of languages, all of these grammars are downloaded before
+the first code block can be highlighted.
+
+To load grammars on demand, pass `resolveLanguage` option to `createShikiAdapter`. It is called
+with the language of a code block that is not loaded in the highlighter yet, and its return value
+is passed to shiki `highlighter.loadLanguage`. Code is highlighted once the grammar is loaded,
+until then it is displayed as plain text:
+
+```tsx
+import { createShikiAdapter } from '@mantine/code-highlight';
+
+async function loadShiki() {
+  const { createHighlighter } = await import('shiki');
+  return createHighlighter({ langs: ['tsx'], themes: [] });
+}
+
+// Bundled highlighter resolves grammars by language name on its own
+const shikiAdapter = createShikiAdapter(loadShiki, {
+  resolveLanguage: (language) => language,
+});
+```
+
+Highlighters created with `shiki/core` do not bundle grammars – return a function that imports
+the grammar of the given language instead:
+
+```tsx
+import { createShikiAdapter } from '@mantine/code-highlight';
+
+const grammars: Record<string, () => Promise<any>> = {
+  python: () => import('@shikijs/langs/python'),
+  ruby: () => import('@shikijs/langs/ruby'),
+};
+
+async function loadShiki() {
+  const { createHighlighterCore } = await import('shiki/core');
+  const { createJavaScriptRegexEngine } = await import('shiki/engine/javascript');
+
+  return createHighlighterCore({
+    langs: [],
+    themes: [],
+    engine: createJavaScriptRegexEngine(),
+  });
+}
+
+const shikiAdapter = createShikiAdapter(loadShiki, {
+  resolveLanguage: (language) => grammars[language],
+});
+```
+
+If `resolveLanguage` returns `null` or `undefined`, the language is considered unsupported and
+its code is displayed as plain text.
+
 ## Usage with highlight.js
 
 [Highlight.js](https://highlightjs.org/) provides less accurate highlighting compared to shiki,
