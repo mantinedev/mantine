@@ -67,6 +67,10 @@ export const createShikiAdapter = (
       }
 
       return ({ code, language, colorScheme }) => {
+        if (!isLanguageAvailable(ctx, language)) {
+          return { highlightedCode: code, isHighlighted: false };
+        }
+
         let _colorScheme: any = colorScheme;
 
         if (colorScheme === 'light') {

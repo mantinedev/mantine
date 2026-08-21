@@ -9,6 +9,31 @@ function createShikiMock(loadedLanguages: string[]) {
 }
 
 describe('@mantine/code-highlight/createShikiAdapter', () => {
+  it('does not highlight code with language that is not loaded', () => {
+    const shiki = createShikiMock(['tsx']);
+    const adapter = createShikiAdapter(() => Promise.resolve(shiki));
+    const highlight = adapter.getHighlighter(shiki);
+
+    expect(highlight({ code: 'test', language: 'python', colorScheme: 'light' })).toStrictEqual({
+      highlightedCode: 'test',
+      isHighlighted: false,
+    });
+
+    expect(highlight({ code: 'test', language: 'tsx', colorScheme: 'light' }).isHighlighted).toBe(
+      true
+    );
+  });
+
+  it('highlights plain text languages without loading grammar', () => {
+    const shiki = createShikiMock([]);
+    const adapter = createShikiAdapter(() => Promise.resolve(shiki));
+    const highlight = adapter.getHighlighter(shiki);
+
+    expect(highlight({ code: 'test', language: 'text', colorScheme: 'light' }).isHighlighted).toBe(
+      true
+    );
+  });
+
   it('resolves grammar of languages that are not loaded yet', () => {
     const shiki = createShikiMock(['tsx']);
     const resolveLanguage = jest.fn((language: string) => `${language}-grammar`);
