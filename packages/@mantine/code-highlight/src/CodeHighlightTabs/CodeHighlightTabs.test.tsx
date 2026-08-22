@@ -1,4 +1,4 @@
-import { tests } from '@mantine-tests/core';
+import { render, tests } from '@mantine-tests/core';
 import {
   CodeHighlightTabs,
   CodeHighlightTabsProps,
@@ -28,5 +28,21 @@ describe('@mantine/code-highlight/CodeHighlightTabs', () => {
       'scrollarea',
       'showCodeButton',
     ],
+  });
+
+  it('forwards withFirstLineIndentation to the code block', () => {
+    const code = [{ fileName: 'Demo.tsx', code: '    first\nsecond\n', language: 'tsx' }];
+
+    const { container: trimmed } = render(<CodeHighlightTabs code={code} />);
+    expect(trimmed.querySelector('.mantine-CodeHighlightTabs-code')?.textContent).toBe(
+      'first\nsecond'
+    );
+
+    const { container: indented } = render(
+      <CodeHighlightTabs code={code} withFirstLineIndentation />
+    );
+    expect(indented.querySelector('.mantine-CodeHighlightTabs-code')?.textContent).toBe(
+      '    first\nsecond'
+    );
   });
 });
