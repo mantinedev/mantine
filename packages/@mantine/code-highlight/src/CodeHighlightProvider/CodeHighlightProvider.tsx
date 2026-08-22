@@ -68,6 +68,7 @@ export function CodeHighlightAdapterProvider({
   const requestedLanguages = useRef<Set<string>>(new Set());
   const currentEpoch = useRef(0);
   const previousAdapter = useRef(adapter);
+  const contextRequestedFor = useRef<CodeHighlightAdapter | null>(null);
 
   const isCurrentContext = contextState.adapter === adapter;
   const ctx = isCurrentContext ? contextState.ctx : null;
@@ -84,9 +85,11 @@ export function CodeHighlightAdapterProvider({
       setEpoch(currentEpoch.current);
     }
 
-    if (!adapter.loadContext) {
+    if (!adapter.loadContext || contextRequestedFor.current === adapter) {
       return;
     }
+
+    contextRequestedFor.current = adapter;
 
     const loadedWith = currentEpoch.current;
 
