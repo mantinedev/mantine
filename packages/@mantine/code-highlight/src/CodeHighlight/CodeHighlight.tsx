@@ -26,6 +26,7 @@ import {
   useLoadLanguage,
   type CodeHighlightAdapter,
 } from '../CodeHighlightProvider/CodeHighlightProvider';
+import { normalizeCode } from '../normalize-code';
 import type {
   CodeHighlightDefaultLanguage,
   CodeHighlightTabsCode,
@@ -115,6 +116,10 @@ export interface CodeHighlightSettings {
 
   /** Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here */
   codeColorScheme?: 'dark' | 'light' | (string & {});
+
+  /** If set, indentation of the first line of the code is preserved. By default, it is removed
+   *  along with the rest of the leading and trailing whitespace. @default false */
+  withFirstLineIndentation?: boolean;
 }
 
 export interface CodeHighlightProps
@@ -189,6 +194,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
     controls,
     language,
     codeColorScheme,
+    withFirstLineIndentation,
     __withOffset,
     __inline,
     __staticSelector,
@@ -230,20 +236,18 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
     loadLanguage(language);
   }, [language, loadLanguage]);
 
-  const trimmedCode = code.trim();
+  const normalizedCode = normalizeCode(code, { withFirstLineIndentation });
   const resolvedColorScheme = codeColorScheme ?? colorScheme;
   const languageLoaded = isLanguageLoaded(language);
 
   const highlightedCode = useMemo(
-    () => highlight({ code: trimmedCode, language, colorScheme: resolvedColorScheme }),
-    // `languageLoaded` is not used by the highlighter, it invalidates the result of the
-    // previous call once the grammar of the language has been loaded
-    [highlight, trimmedCode, language, resolvedColorScheme, languageLoaded]
+    () => highlight({ code: normalizedCode, language, colorScheme: resolvedColorScheme }),
+    [highlight, normalizedCode, language, resolvedColorScheme, languageLoaded]
   );
 
   const codeContent = highlightedCode.isHighlighted
     ? { dangerouslySetInnerHTML: { __html: highlightedCode.highlightedCode } }
-    : { children: trimmedCode };
+    : { children: normalizedCode };
 
   if (__inline) {
     return (
@@ -283,7 +287,11 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
               />
             )}
             {withCopyButton && (
-              <CopyCodeButton code={code} copiedLabel={copiedLabel} copyLabel={copyLabel} />
+              <CopyCodeButton
+                code={normalizedCode}
+                copiedLabel={copiedLabel}
+                copyLabel={copyLabel}
+              />
             )}
           </div>
         )}
@@ -300,7 +308,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
           <div {...getStyles('codeWrapper')}>
             {withLineNumbers && (
               <div {...getStyles('lineNumbers')} data-with-offset={__withOffset || undefined}>
-                {trimmedCode.split('\n').map((_, i) => (
+                {normalizedCode.split('\n').map((_, i) => (
                   <div key={i}>{i + 1}</div>
                 ))}
               </div>
