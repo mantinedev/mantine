@@ -148,7 +148,8 @@ warning is logged to the console once per language – either add the language t
 option of the highlighter, or load it on demand with `resolveLanguage`.
 
 If a grammar fails to load (for example, a dynamic import fails), the code stays plain text and
-the language is loaded again the next time a code block with that language is rendered.
+the failure is not cached – the language is requested again the next time a code block with that
+language is mounted.
 
 ## Usage with highlight.js
 
