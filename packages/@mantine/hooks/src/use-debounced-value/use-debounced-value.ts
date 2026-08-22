@@ -24,9 +24,13 @@ export function useDebouncedValue<T = any>(
   const latestValueRef = useRef(value);
   latestValueRef.current = value;
 
-  const cancel = useCallback(() => {
+  const clearTimer = useCallback(() => {
     window.clearTimeout(timeoutRef.current!);
     timeoutRef.current = null;
+  }, []);
+
+  const cancel = useCallback(() => {
+    clearTimer();
     cooldownRef.current = false;
   }, []);
 
@@ -40,19 +44,15 @@ export function useDebouncedValue<T = any>(
 
   useEffect(() => {
     if (mountedRef.current) {
+      clearTimer();
+
       if (!cooldownRef.current && options.leading) {
         cooldownRef.current = true;
         setValue(value);
-        // Clear any lingering trailing timer before starting the cooldown
-        // window, so an orphaned timer cannot later fire with a stale value.
-        window.clearTimeout(timeoutRef.current!);
         timeoutRef.current = window.setTimeout(() => {
           cooldownRef.current = false;
         }, wait);
       } else {
-        // Only clear the timer — do not reset cooldownRef, so the
-        // leading edge does not re-fire mid-burst (see #9119).
-        window.clearTimeout(timeoutRef.current!);
         timeoutRef.current = window.setTimeout(() => {
           cooldownRef.current = false;
           setValue(value);

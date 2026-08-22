@@ -126,5 +126,81 @@ describe('useDebouncedValue', () => {
       rerender({ value: 'c' });
       expect(result.current[0]).toBe('c');
     });
+
+    test('emits only the leading and the final value during a long burst', () => {
+      const emitted: string[] = [];
+      const { rerender } = renderHook(
+        ({ value }) => {
+          const [debounced] = useDebouncedValue(value, 500, { leading: true });
+          if (emitted[emitted.length - 1] !== debounced) {
+            emitted.push(debounced);
+          }
+          return debounced;
+        },
+        {
+          initialProps: { value: '' },
+        }
+      );
+
+      ['a', 'ab', 'abc', 'abcd', 'abcde'].forEach((value) => {
+        rerender({ value });
+        act(() => jest.advanceTimersByTime(100));
+      });
+
+      act(() => jest.advanceTimersByTime(500));
+
+      // the leading edge must not re-fire mid-burst, and the trailing edge
+      // must emit the latest value rather than a superseded one
+      expect(emitted).toEqual(['', 'a', 'abcde']);
+    });
+
+    test('the trailing update is scheduled from the last change', () => {
+      const { result, rerender } = renderHook(
+        ({ value }) => useDebouncedValue(value, 200, { leading: true }),
+        {
+          initialProps: { value: 'a' },
+        }
+      );
+
+      rerender({ value: 'b' });
+      expect(result.current[0]).toBe('b');
+
+      act(() => jest.advanceTimersByTime(150));
+      rerender({ value: 'c' });
+
+      act(() => jest.advanceTimersByTime(199));
+      expect(result.current[0]).toBe('b');
+
+      act(() => jest.advanceTimersByTime(1));
+      expect(result.current[0]).toBe('c');
+    });
+
+    test('flush is not followed by a stale update', () => {
+      const emitted: string[] = [];
+      const { result, rerender } = renderHook(
+        ({ value }) => {
+          const debounced = useDebouncedValue(value, 200, { leading: true });
+          if (emitted[emitted.length - 1] !== debounced[0]) {
+            emitted.push(debounced[0]);
+          }
+          return debounced;
+        },
+        {
+          initialProps: { value: '' },
+        }
+      );
+
+      rerender({ value: 'a' });
+      rerender({ value: 'ab' });
+      rerender({ value: 'abc' });
+
+      act(() => {
+        result.current[2].flush();
+      });
+      expect(result.current[0]).toBe('abc');
+
+      act(() => jest.advanceTimersByTime(1000));
+      expect(emitted).toEqual(['', 'a', 'abc']);
+    });
   });
 });
