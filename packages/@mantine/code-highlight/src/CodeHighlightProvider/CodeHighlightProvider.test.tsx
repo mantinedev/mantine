@@ -200,6 +200,84 @@ describe('@mantine/code-highlight/CodeHighlightProvider', () => {
     expect(screen.getByTestId('highlighted-code')).toBeInTheDocument();
   });
 
+  it('loads languages for adapters that do not have loadContext', async () => {
+    let grammarLoaded = false;
+
+    const adapter: CodeHighlightAdapter = {
+      loadLanguage: jest.fn(() =>
+        Promise.resolve().then(() => {
+          grammarLoaded = true;
+        })
+      ),
+      getHighlighter:
+        () =>
+        ({ code }) => {
+          if (!grammarLoaded) {
+            return { highlightedCode: code, isHighlighted: false };
+          }
+
+          return {
+            highlightedCode: `<span data-testid="highlighted-code">${code}</span>`,
+            isHighlighted: true,
+          };
+        },
+    };
+
+    render(
+      <CodeHighlightAdapterProvider adapter={adapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+      </CodeHighlightAdapterProvider>
+    );
+
+    expect(await screen.findByTestId('highlighted-code')).toBeInTheDocument();
+    expect(adapter.loadLanguage).toHaveBeenCalledWith(null, 'tsx');
+  });
+
+  it('does not load languages with the context of a replaced adapter', async () => {
+    const { adapter: staleAdapter } = createLazyAdapter();
+
+    let resolveFreshContext: (ctx: any) => void = () => {};
+    const freshContext = new Promise<any>((resolve) => {
+      resolveFreshContext = resolve;
+    });
+
+    const freshAdapter: CodeHighlightAdapter = {
+      loadContext: () => freshContext,
+      loadLanguage: jest.fn(() => Promise.resolve()),
+      getHighlighter:
+        () =>
+        ({ code }) => ({ highlightedCode: code, isHighlighted: false }),
+    };
+
+    const { rerender } = render(
+      <CodeHighlightAdapterProvider adapter={staleAdapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+      </CodeHighlightAdapterProvider>
+    );
+
+    await screen.findByTestId('highlighted-code');
+
+    rerender(
+      <>
+        <CodeHighlightAdapterProvider adapter={freshAdapter}>
+          <CodeHighlight code="const a = 1" language="tsx" />
+          <CodeHighlight code="print(1)" language="python" />
+        </CodeHighlightAdapterProvider>
+      </>
+    );
+
+    expect(freshAdapter.loadLanguage).not.toHaveBeenCalled();
+
+    await act(async () => {
+      resolveFreshContext({ name: 'fresh' });
+      await freshContext;
+    });
+
+    await waitFor(() => expect(freshAdapter.loadLanguage).toHaveBeenCalledTimes(2));
+    expect(freshAdapter.loadLanguage).toHaveBeenCalledWith({ name: 'fresh' }, 'tsx');
+    expect(freshAdapter.loadLanguage).toHaveBeenCalledWith({ name: 'fresh' }, 'python');
+  });
+
   it('does not call loadLanguage if adapter does not support it', async () => {
     const adapter: CodeHighlightAdapter = {
       loadContext: () => Promise.resolve({}),

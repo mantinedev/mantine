@@ -57,25 +57,54 @@ export function CodeHighlightAdapterProvider({
   adapter,
   children,
 }: CodeHighlightAdapterProviderProps) {
-  const [ctx, setCtx] = useState<any>(null);
+  const [contextState, setContextState] = useState<{
+    adapter: CodeHighlightAdapter;
+    ctx: any;
+    loaded: boolean;
+  }>({ adapter, ctx: null, loaded: false });
+
   const [loadedLanguages, setLoadedLanguages] = useState<string[]>([]);
+  const [epoch, setEpoch] = useState(0);
   const requestedLanguages = useRef<Set<string>>(new Set());
-  const generation = useRef(0);
+  const currentEpoch = useRef(0);
+  const previousAdapter = useRef(adapter);
+
+  const isCurrentContext = contextState.adapter === adapter;
+  const ctx = isCurrentContext ? contextState.ctx : null;
+  const isContextLoaded = adapter.loadContext ? isCurrentContext && contextState.loaded : true;
+
   const highlight = useMemo(() => adapter.getHighlighter(ctx), [adapter, ctx]);
 
   useEffect(() => {
-    generation.current += 1;
-    requestedLanguages.current.clear();
-    setLoadedLanguages([]);
-
-    if (adapter.loadContext) {
-      adapter.loadContext().then(setCtx);
+    if (previousAdapter.current !== adapter) {
+      previousAdapter.current = adapter;
+      currentEpoch.current += 1;
+      requestedLanguages.current.clear();
+      setLoadedLanguages([]);
+      setEpoch(currentEpoch.current);
     }
+
+    if (!adapter.loadContext) {
+      return;
+    }
+
+    const loadedWith = currentEpoch.current;
+
+    adapter.loadContext().then((loadedCtx) => {
+      if (loadedWith === currentEpoch.current) {
+        setContextState({ adapter, ctx: loadedCtx, loaded: true });
+      }
+    });
   }, [adapter]);
 
   const loadLanguage = useCallback(
     (language: string | undefined) => {
-      if (!ctx || !language || !adapter.loadLanguage || requestedLanguages.current.has(language)) {
+      if (
+        !isContextLoaded ||
+        !language ||
+        !adapter.loadLanguage ||
+        requestedLanguages.current.has(language)
+      ) {
         return;
       }
 
@@ -87,24 +116,24 @@ export function CodeHighlightAdapterProvider({
 
       requestedLanguages.current.add(language);
 
-      const loadedWith = generation.current;
+      const loadedWith = currentEpoch.current;
 
       languagePromise.then(
         () => {
-          if (loadedWith === generation.current) {
+          if (loadedWith === currentEpoch.current) {
             setLoadedLanguages((current) =>
               current.includes(language) ? current : [...current, language]
             );
           }
         },
         () => {
-          if (loadedWith === generation.current) {
+          if (loadedWith === currentEpoch.current) {
             requestedLanguages.current.delete(language);
           }
         }
       );
     },
-    [adapter, ctx]
+    [adapter, ctx, isContextLoaded, epoch]
   );
 
   const isLanguageLoaded = useCallback(
