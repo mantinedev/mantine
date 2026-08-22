@@ -1,3 +1,4 @@
+import { getEnv } from '@mantine/core';
 import type { CodeHighlightAdapter } from '../CodeHighlightProvider';
 import { dark, light } from './shiki-themes';
 
@@ -48,6 +49,20 @@ export const createShikiAdapter = (
   loadShiki: () => Promise<any>,
   { forceColorScheme, resolveLanguage }: CreateShikiAdapterOptions = {}
 ): CodeHighlightAdapter => {
+  const warnedLanguages = new Set<string>();
+
+  const warnUnavailableLanguage = (language: string, reason: string) => {
+    if (getEnv() === 'production' || warnedLanguages.has(language)) {
+      return;
+    }
+
+    warnedLanguages.add(language);
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[@mantine/code-highlight] Language \`${language}\` ${reason}, code is rendered as plain text.`
+    );
+  };
+
   return {
     loadContext: loadShiki,
 
@@ -58,7 +73,13 @@ export const createShikiAdapter = (
           }
 
           const grammar = resolveLanguage(language);
-          return grammar ? ctx.loadLanguage(grammar) : undefined;
+
+          if (!grammar) {
+            warnUnavailableLanguage(language, 'was not resolved by `resolveLanguage` option');
+            return undefined;
+          }
+
+          return ctx.loadLanguage(grammar);
         }
       : undefined,
     getHighlighter: (ctx) => {
@@ -68,6 +89,13 @@ export const createShikiAdapter = (
 
       return ({ code, language, colorScheme }) => {
         if (!isLanguageAvailable(ctx, language)) {
+          if (!resolveLanguage) {
+            warnUnavailableLanguage(
+              language!,
+              'is not loaded in the highlighter – add it to `langs` option or use `resolveLanguage` option to load it on demand'
+            );
+          }
+
           return { highlightedCode: code, isHighlighted: false };
         }
 

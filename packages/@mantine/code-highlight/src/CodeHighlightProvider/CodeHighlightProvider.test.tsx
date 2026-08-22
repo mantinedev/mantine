@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import { render, screen } from '@mantine-tests/core';
 import { CodeHighlight } from '../CodeHighlight/CodeHighlight';
 import { CodeHighlightAdapterProvider, type CodeHighlightAdapter } from './CodeHighlightProvider';
@@ -15,24 +16,30 @@ function createLazyAdapter() {
     });
   });
 
+  const highlighter = jest.fn(({ code, language }: any) => {
+    if (!language || !loadedLanguages.has(language)) {
+      return { highlightedCode: code, isHighlighted: false };
+    }
+
+    return {
+      highlightedCode: `<span data-testid="highlighted-code">${code}</span>`,
+      isHighlighted: true,
+    };
+  });
+
   const adapter: CodeHighlightAdapter = {
     loadContext: () => Promise.resolve({ name: 'test-highlighter' }),
     loadLanguage,
     getHighlighter: (ctx) => {
-      return ({ code, language }) => {
-        if (!ctx || !language || !loadedLanguages.has(language)) {
-          return { highlightedCode: code, isHighlighted: false };
-        }
+      if (!ctx) {
+        return ({ code }) => ({ highlightedCode: code, isHighlighted: false });
+      }
 
-        return {
-          highlightedCode: `<span data-testid="highlighted-code">${code}</span>`,
-          isHighlighted: true,
-        };
-      };
+      return highlighter;
     },
   };
 
-  return { adapter, loadLanguage };
+  return { adapter, loadLanguage, highlighter };
 }
 
 describe('@mantine/code-highlight/CodeHighlightProvider', () => {
@@ -62,6 +69,60 @@ describe('@mantine/code-highlight/CodeHighlightProvider', () => {
     expect(await screen.findAllByTestId('highlighted-code')).toHaveLength(2);
     expect(loadLanguage).toHaveBeenCalledTimes(1);
     expect(loadLanguage).toHaveBeenCalledWith({ name: 'test-highlighter' }, 'tsx');
+  });
+
+  it('retries loading a language after a failed attempt', async () => {
+    const loadLanguage = jest
+      .fn()
+      .mockImplementationOnce(() => Promise.reject(new Error('Failed to load grammar')))
+      .mockImplementationOnce(() => Promise.resolve());
+
+    const adapter: CodeHighlightAdapter = {
+      loadContext: () => Promise.resolve({}),
+      loadLanguage,
+      getHighlighter:
+        () =>
+        ({ code }) => ({ highlightedCode: code, isHighlighted: false }),
+    };
+
+    const { unmount } = render(
+      <CodeHighlightAdapterProvider adapter={adapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+      </CodeHighlightAdapterProvider>
+    );
+
+    await waitFor(() => expect(loadLanguage).toHaveBeenCalledTimes(1));
+    unmount();
+
+    render(
+      <CodeHighlightAdapterProvider adapter={adapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+      </CodeHighlightAdapterProvider>
+    );
+
+    await waitFor(() => expect(loadLanguage).toHaveBeenCalledTimes(2));
+  });
+
+  it('does not re-highlight code blocks of languages that were not loaded', async () => {
+    const { adapter, highlighter } = createLazyAdapter();
+
+    render(
+      <CodeHighlightAdapterProvider adapter={adapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+        <CodeHighlight code="print(1)" language="python" />
+      </CodeHighlightAdapterProvider>
+    );
+
+    await screen.findAllByTestId('highlighted-code');
+    await waitFor(() => expect(highlighter).toHaveBeenCalledTimes(4));
+
+    const tsxCalls = highlighter.mock.calls.filter(([input]: any) => input.language === 'tsx');
+    const pythonCalls = highlighter.mock.calls.filter(
+      ([input]: any) => input.language === 'python'
+    );
+
+    expect(tsxCalls).toHaveLength(2);
+    expect(pythonCalls).toHaveLength(2);
   });
 
   it('does not call loadLanguage if adapter does not support it', async () => {

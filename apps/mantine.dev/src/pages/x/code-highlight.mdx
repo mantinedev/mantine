@@ -140,6 +140,16 @@ const shikiAdapter = createShikiAdapter(loadShiki, {
 If `resolveLanguage` returns `null` or `undefined`, the language is considered unsupported and
 its code is displayed as plain text.
 
+## Unavailable languages
+
+If a code block uses a language that is not loaded in the highlighter and cannot be loaded on
+demand, its code is displayed as plain text instead of throwing an error. In development, a
+warning is logged to the console once per language – either add the language to the `langs`
+option of the highlighter, or load it on demand with `resolveLanguage`.
+
+If a grammar fails to load (for example, a dynamic import fails), the code stays plain text and
+the language is loaded again the next time a code block with that language is rendered.
+
 ## Usage with highlight.js
 
 [Highlight.js](https://highlightjs.org/) provides less accurate highlighting compared to shiki,

@@ -9,6 +9,16 @@ function createShikiMock(loadedLanguages: string[]) {
 }
 
 describe('@mantine/code-highlight/createShikiAdapter', () => {
+  let warn: jest.SpyInstance;
+
+  beforeEach(() => {
+    warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    warn.mockRestore();
+  });
+
   it('does not highlight code with language that is not loaded', () => {
     const shiki = createShikiMock(['tsx']);
     const adapter = createShikiAdapter(() => Promise.resolve(shiki));
@@ -22,6 +32,33 @@ describe('@mantine/code-highlight/createShikiAdapter', () => {
     expect(highlight({ code: 'test', language: 'tsx', colorScheme: 'light' }).isHighlighted).toBe(
       true
     );
+  });
+
+  it('warns once per language that is not loaded and cannot be loaded on demand', () => {
+    const shiki = createShikiMock(['tsx']);
+    const adapter = createShikiAdapter(() => Promise.resolve(shiki));
+    const highlight = adapter.getHighlighter(shiki);
+
+    highlight({ code: 'test', language: 'python', colorScheme: 'light' });
+    highlight({ code: 'test', language: 'python', colorScheme: 'light' });
+    highlight({ code: 'test', language: 'ruby', colorScheme: 'light' });
+    highlight({ code: 'test', language: 'tsx', colorScheme: 'light' });
+
+    expect(warn).toHaveBeenCalledTimes(2);
+    expect(warn.mock.calls[0][0]).toContain('`python`');
+    expect(warn.mock.calls[1][0]).toContain('`ruby`');
+  });
+
+  it('does not warn about languages that are loaded on demand', () => {
+    const shiki = createShikiMock(['tsx']);
+    const adapter = createShikiAdapter(() => Promise.resolve(shiki), {
+      resolveLanguage: (language) => language,
+    });
+
+    adapter.loadLanguage!(shiki, 'python');
+    adapter.getHighlighter(shiki)({ code: 'test', language: 'python', colorScheme: 'light' });
+
+    expect(warn).not.toHaveBeenCalled();
   });
 
   it('highlights plain text languages without loading grammar', () => {
@@ -54,5 +91,7 @@ describe('@mantine/code-highlight/createShikiAdapter', () => {
 
     expect(adapter.loadLanguage!(shiki, 'python')).toBeUndefined();
     expect(shiki.loadLanguage).not.toHaveBeenCalled();
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn.mock.calls[0][0]).toContain('`python`');
   });
 });

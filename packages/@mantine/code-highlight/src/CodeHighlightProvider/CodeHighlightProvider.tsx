@@ -32,14 +32,20 @@ interface CodeHighlightProviderContext {
   adapter: CodeHighlightAdapter;
   highlight: Highlighter;
   loadLanguage: (language: string | undefined) => void;
+  isLanguageLoaded: (language: string | undefined) => boolean;
 }
 
 function noop() {}
+
+function alwaysTrue() {
+  return true;
+}
 
 export const CodeHighlightContext = createContext<CodeHighlightProviderContext>({
   adapter: plainTextAdapter,
   highlight: plainTextAdapter.getHighlighter(null),
   loadLanguage: noop,
+  isLanguageLoaded: alwaysTrue,
 });
 
 export interface CodeHighlightAdapterProviderProps {
@@ -52,12 +58,13 @@ export function CodeHighlightAdapterProvider({
   children,
 }: CodeHighlightAdapterProviderProps) {
   const [ctx, setCtx] = useState<any>(null);
-  const [, setLoadedLanguagesCount] = useState(0);
+  const [loadedLanguages, setLoadedLanguages] = useState<string[]>([]);
   const requestedLanguages = useRef<Set<string>>(new Set());
   const highlight = useMemo(() => adapter.getHighlighter(ctx), [adapter, ctx]);
 
   useEffect(() => {
     requestedLanguages.current.clear();
+    setLoadedLanguages([]);
 
     if (adapter.loadContext) {
       adapter.loadContext().then(setCtx);
@@ -77,17 +84,31 @@ export function CodeHighlightAdapterProvider({
       }
 
       requestedLanguages.current.add(language);
-      const rerender = () => setLoadedLanguagesCount((count) => count + 1);
-      languagePromise.then(rerender, rerender);
+
+      languagePromise.then(
+        () =>
+          setLoadedLanguages((current) =>
+            current.includes(language) ? current : [...current, language]
+          ),
+        () => {
+          requestedLanguages.current.delete(language);
+        }
+      );
     },
     [adapter, ctx]
   );
 
-  return (
-    <CodeHighlightContext value={{ adapter, highlight, loadLanguage }}>
-      {children}
-    </CodeHighlightContext>
+  const isLanguageLoaded = useCallback(
+    (language: string | undefined) => !language || loadedLanguages.includes(language),
+    [loadedLanguages]
   );
+
+  const value = useMemo(
+    () => ({ adapter, highlight, loadLanguage, isLanguageLoaded }),
+    [adapter, highlight, loadLanguage, isLanguageLoaded]
+  );
+
+  return <CodeHighlightContext value={value}>{children}</CodeHighlightContext>;
 }
 
 export function useHighlight() {
@@ -98,4 +119,11 @@ export function useHighlight() {
 export function useLoadLanguage() {
   const ctx = use(CodeHighlightContext);
   return ctx?.loadLanguage || noop;
+}
+
+/** Returns `true` if the adapter has finished loading the given language asynchronously.
+ *  Used to re-highlight the code once a lazily loaded grammar becomes available. */
+export function useIsLanguageLoaded() {
+  const ctx = use(CodeHighlightContext);
+  return ctx?.isLanguageLoaded || alwaysTrue;
 }
