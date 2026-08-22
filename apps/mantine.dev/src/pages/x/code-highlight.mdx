@@ -222,6 +222,18 @@ Set `withLineNumbers` prop to display line numbers alongside the code:
 
 <Demo data={CodeHighlightDemos.lineNumbers} />
 
+## First line indentation
+
+`CodeHighlight` trims the code before rendering it, so the indentation of the **first** line
+is removed while every other line keeps it. Set `withFirstLineIndentation` prop to preserve it –
+this is useful for blocks whose first line is intentionally indented, for example column-aligned
+text or a wrapped shell command:
+
+<Demo data={CodeHighlightDemos.firstLineIndentation} />
+
+Blank lines at the start and trailing whitespace are removed in both cases. The prop also
+controls the code that is copied by the copy button.
+
 ## Expandable code
 
 If the code snippet is too long, you can make it expandable with `withExpandButton`
