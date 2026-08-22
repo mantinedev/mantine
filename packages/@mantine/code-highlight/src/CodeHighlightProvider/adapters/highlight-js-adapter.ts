@@ -1,4 +1,3 @@
-import { normalizeCode } from '../../normalize-code';
 import type { CodeHighlightAdapter } from '../CodeHighlightProvider';
 
 export function createHighlightJsAdapter(hljs: any): CodeHighlightAdapter {
@@ -8,7 +7,7 @@ export function createHighlightJsAdapter(hljs: any): CodeHighlightAdapter {
       ({ code, language }) => {
         const lang = hljs.getLanguage(language) ? language : 'plaintext';
         return {
-          highlightedCode: hljs.highlight(normalizeCode(code), { language: lang }).value,
+          highlightedCode: hljs.highlight(code, { language: lang }).value,
           isHighlighted: true,
           codeElementProps: { className: `hljs ${lang}` },
         };

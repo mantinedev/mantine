@@ -36,6 +36,10 @@ export interface InlineCodeHighlightProps
 
   /** Adds border to the root element @default false */
   withBorder?: boolean;
+
+  /** If set, indentation of the first line of the code is preserved. By default, it is removed
+   *  along with the rest of the leading and trailing whitespace. @default false */
+  withFirstLineIndentation?: boolean;
 }
 
 export type InlineCodeHighlightFactory = Factory<{

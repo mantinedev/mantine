@@ -113,6 +113,10 @@ export interface CodeHighlightSettings {
 
   /** Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here */
   codeColorScheme?: 'dark' | 'light' | (string & {});
+
+  /** If set, indentation of the first line of the code is preserved. By default, it is removed
+   *  along with the rest of the leading and trailing whitespace. @default false */
+  withFirstLineIndentation?: boolean;
 }
 
 export interface CodeHighlightProps
@@ -187,6 +191,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
     controls,
     language,
     codeColorScheme,
+    withFirstLineIndentation,
     __withOffset,
     __inline,
     __staticSelector,
@@ -221,7 +226,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
 
   const colorScheme = useComputedColorScheme();
   const highlight = useHighlight();
-  const normalizedCode = normalizeCode(code);
+  const normalizedCode = normalizeCode(code, { withFirstLineIndentation });
   const highlightedCode = highlight({
     code: normalizedCode,
     language,
@@ -270,7 +275,11 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
               />
             )}
             {withCopyButton && (
-              <CopyCodeButton code={code} copiedLabel={copiedLabel} copyLabel={copyLabel} />
+              <CopyCodeButton
+                code={normalizedCode}
+                copiedLabel={copiedLabel}
+                copyLabel={copyLabel}
+              />
             )}
           </div>
         )}
