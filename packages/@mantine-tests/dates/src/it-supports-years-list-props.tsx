@@ -46,6 +46,8 @@ const customFormatYearsNames = [
   'Jan 29',
 ];
 
+const functionFormatYearsNames = defaultYearsNames.map((year) => `#${year}`);
+
 function expectYearNames(container: HTMLElement, monthNames: string[]) {
   expect(
     Array.from(container.querySelectorAll('table button')).map((node) => node.textContent)
@@ -80,6 +82,16 @@ export function itSupportsYearsListProps(options: Options, name = 'supports year
         <options.component {...options.props} yearsListFormat="MMM YY" />
       );
       expectYearNames(container, customFormatYearsNames);
+    });
+
+    it('supports yearsListFormat as a function', () => {
+      const { container } = render(
+        <options.component
+          {...options.props}
+          yearsListFormat={(date: string) => `#${dayjs(date).year()}`}
+        />
+      );
+      expectYearNames(container, functionFormatYearsNames);
     });
 
     it('disables years if they are before minDate', () => {
