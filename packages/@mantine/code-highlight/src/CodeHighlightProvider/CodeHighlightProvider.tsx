@@ -79,6 +79,7 @@ export function CodeHighlightAdapterProvider({
   useEffect(() => {
     if (previousAdapter.current !== adapter) {
       previousAdapter.current = adapter;
+      contextRequestedFor.current = null;
       currentEpoch.current += 1;
       requestedLanguages.current.clear();
       setLoadedLanguages([]);

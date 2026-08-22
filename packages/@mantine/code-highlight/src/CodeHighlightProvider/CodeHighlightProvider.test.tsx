@@ -301,6 +301,46 @@ describe('@mantine/code-highlight/CodeHighlightProvider', () => {
     expect(loadLanguage).toHaveBeenCalledWith({}, 'tsx');
   });
 
+  it('requests the context again when an adapter is used after being replaced', async () => {
+    const contexts: { resolve: (ctx: any) => void }[] = [];
+
+    const loadContext = jest.fn(
+      () =>
+        new Promise<any>((resolve) => {
+          contexts.push({ resolve });
+        })
+    );
+
+    const { adapter: adapterA } = createLazyAdapter();
+    adapterA.loadContext = loadContext;
+
+    const adapterB: CodeHighlightAdapter = {
+      getHighlighter:
+        () =>
+        ({ code }) => ({ highlightedCode: code, isHighlighted: false }),
+    };
+
+    const tree = (adapter: CodeHighlightAdapter) => (
+      <CodeHighlightAdapterProvider adapter={adapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+      </CodeHighlightAdapterProvider>
+    );
+
+    const { rerender } = render(tree(adapterA));
+    await waitFor(() => expect(loadContext).toHaveBeenCalledTimes(1));
+
+    rerender(<>{tree(adapterB)}</>);
+    rerender(<>{tree(adapterA)}</>);
+
+    await waitFor(() => expect(loadContext).toHaveBeenCalledTimes(2));
+
+    await act(async () => {
+      contexts[1].resolve({ name: 'test-highlighter' });
+    });
+
+    expect(await screen.findByTestId('highlighted-code')).toBeInTheDocument();
+  });
+
   it('does not call loadLanguage if adapter does not support it', async () => {
     const adapter: CodeHighlightAdapter = {
       loadContext: () => Promise.resolve({}),
