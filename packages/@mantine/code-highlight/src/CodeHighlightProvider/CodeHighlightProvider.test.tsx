@@ -1,4 +1,4 @@
-import { waitFor } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 import { render, screen } from '@mantine-tests/core';
 import { CodeHighlight } from '../CodeHighlight/CodeHighlight';
 import { CodeHighlightAdapterProvider, type CodeHighlightAdapter } from './CodeHighlightProvider';
@@ -123,6 +123,81 @@ describe('@mantine/code-highlight/CodeHighlightProvider', () => {
 
     expect(tsxCalls).toHaveLength(2);
     expect(pythonCalls).toHaveLength(2);
+  });
+
+  it('ignores pending language loads of a replaced adapter', async () => {
+    let resolveStaleLoad: () => void = () => {};
+    const staleLoad = new Promise<void>((resolve) => {
+      resolveStaleLoad = resolve;
+    });
+
+    const staleAdapter: CodeHighlightAdapter = {
+      loadContext: () => Promise.resolve({ name: 'stale' }),
+      loadLanguage: jest.fn(() => staleLoad),
+      getHighlighter:
+        () =>
+        ({ code }) => ({ highlightedCode: code, isHighlighted: false }),
+    };
+
+    let resolveFreshLoad: () => void = () => {};
+    const freshLoad = new Promise<void>((resolve) => {
+      resolveFreshLoad = resolve;
+    });
+
+    let freshGrammarLoaded = false;
+
+    const freshAdapter: CodeHighlightAdapter = {
+      loadContext: () => Promise.resolve({ name: 'fresh' }),
+      loadLanguage: jest.fn(() => freshLoad),
+      getHighlighter:
+        (ctx) =>
+        ({ code }) => {
+          if (!ctx || !freshGrammarLoaded) {
+            return { highlightedCode: code, isHighlighted: false };
+          }
+
+          return {
+            highlightedCode: `<span data-testid="highlighted-code">${code}</span>`,
+            isHighlighted: true,
+          };
+        },
+    };
+
+    const { rerender } = render(
+      <CodeHighlightAdapterProvider adapter={staleAdapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+      </CodeHighlightAdapterProvider>
+    );
+
+    await waitFor(() => expect(staleAdapter.loadLanguage).toHaveBeenCalledTimes(1));
+
+    // wrapped in a fragment to match the tree that `render` creates, otherwise the provider
+    // is remounted instead of receiving a new adapter
+    rerender(
+      <>
+        <CodeHighlightAdapterProvider adapter={freshAdapter}>
+          <CodeHighlight code="const a = 1" language="tsx" />
+        </CodeHighlightAdapterProvider>
+      </>
+    );
+
+    await waitFor(() => expect(freshAdapter.loadLanguage).toHaveBeenCalledTimes(1));
+
+    await act(async () => {
+      resolveStaleLoad();
+      await staleLoad;
+    });
+
+    expect(screen.queryByTestId('highlighted-code')).toBe(null);
+
+    freshGrammarLoaded = true;
+
+    await act(async () => {
+      resolveFreshLoad();
+      await freshLoad;
+    });
+
+    expect(screen.getByTestId('highlighted-code')).toBeInTheDocument();
   });
 
   it('does not call loadLanguage if adapter does not support it', async () => {

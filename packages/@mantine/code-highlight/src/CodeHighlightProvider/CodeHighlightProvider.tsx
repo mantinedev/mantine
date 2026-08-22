@@ -60,9 +60,11 @@ export function CodeHighlightAdapterProvider({
   const [ctx, setCtx] = useState<any>(null);
   const [loadedLanguages, setLoadedLanguages] = useState<string[]>([]);
   const requestedLanguages = useRef<Set<string>>(new Set());
+  const generation = useRef(0);
   const highlight = useMemo(() => adapter.getHighlighter(ctx), [adapter, ctx]);
 
   useEffect(() => {
+    generation.current += 1;
     requestedLanguages.current.clear();
     setLoadedLanguages([]);
 
@@ -85,13 +87,20 @@ export function CodeHighlightAdapterProvider({
 
       requestedLanguages.current.add(language);
 
+      const loadedWith = generation.current;
+
       languagePromise.then(
-        () =>
-          setLoadedLanguages((current) =>
-            current.includes(language) ? current : [...current, language]
-          ),
         () => {
-          requestedLanguages.current.delete(language);
+          if (loadedWith === generation.current) {
+            setLoadedLanguages((current) =>
+              current.includes(language) ? current : [...current, language]
+            );
+          }
+        },
+        () => {
+          if (loadedWith === generation.current) {
+            requestedLanguages.current.delete(language);
+          }
         }
       );
     },
