@@ -1,3 +1,4 @@
+import { useEffect, useMemo } from 'react';
 import cx from 'clsx';
 import {
   Box,
@@ -21,6 +22,8 @@ import {
 import { useUncontrolled } from '@mantine/hooks';
 import {
   useHighlight,
+  useIsLanguageLoaded,
+  useLoadLanguage,
   type CodeHighlightAdapter,
 } from '../CodeHighlightProvider/CodeHighlightProvider';
 import { normalizeCode } from '../normalize-code';
@@ -226,12 +229,21 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
 
   const colorScheme = useComputedColorScheme();
   const highlight = useHighlight();
+  const loadLanguage = useLoadLanguage();
+  const isLanguageLoaded = useIsLanguageLoaded();
+
+  useEffect(() => {
+    loadLanguage(language);
+  }, [language, loadLanguage]);
+
   const normalizedCode = normalizeCode(code, { withFirstLineIndentation });
-  const highlightedCode = highlight({
-    code: normalizedCode,
-    language,
-    colorScheme: codeColorScheme ?? colorScheme,
-  });
+  const resolvedColorScheme = codeColorScheme ?? colorScheme;
+  const languageLoaded = isLanguageLoaded(language);
+
+  const highlightedCode = useMemo(
+    () => highlight({ code: normalizedCode, language, colorScheme: resolvedColorScheme }),
+    [highlight, normalizedCode, language, resolvedColorScheme, languageLoaded]
+  );
 
   const codeContent = highlightedCode.isHighlighted
     ? { dangerouslySetInnerHTML: { __html: highlightedCode.highlightedCode } }
