@@ -79,7 +79,12 @@ export const createShikiAdapter = (
             return undefined;
           }
 
-          return ctx.loadLanguage(grammar);
+          try {
+            return ctx.loadLanguage(grammar);
+          } catch (error) {
+            warnUnavailableLanguage(language, 'could not be loaded by the highlighter');
+            return Promise.reject(error);
+          }
         }
       : undefined,
     getHighlighter: (ctx) => {

@@ -83,6 +83,24 @@ describe('@mantine/code-highlight/createShikiAdapter', () => {
     expect(shiki.loadLanguage).toHaveBeenCalledWith('python-grammar');
   });
 
+  it('converts synchronous loadLanguage errors into a rejected promise', async () => {
+    const shiki = createShikiMock([]);
+    shiki.loadLanguage = jest.fn(() => {
+      throw new Error('Language `python` is not included in this bundle.');
+    });
+
+    const adapter = createShikiAdapter(() => Promise.resolve(shiki), {
+      resolveLanguage: (language) => language,
+    });
+
+    const result = adapter.loadLanguage!(shiki, 'python');
+
+    expect(result).toBeInstanceOf(Promise);
+    await expect(result).rejects.toThrow('is not included in this bundle');
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn.mock.calls[0][0]).toContain('`python`');
+  });
+
   it('does not load grammar of unsupported languages', () => {
     const shiki = createShikiMock([]);
     const adapter = createShikiAdapter(() => Promise.resolve(shiki), {
