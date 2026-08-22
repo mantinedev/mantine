@@ -278,6 +278,29 @@ describe('@mantine/code-highlight/CodeHighlightProvider', () => {
     expect(freshAdapter.loadLanguage).toHaveBeenCalledWith({ name: 'fresh' }, 'python');
   });
 
+  it('calls loadLanguage once per language when there is nothing to load', async () => {
+    const loadLanguage = jest.fn(() => undefined);
+
+    const adapter: CodeHighlightAdapter = {
+      loadContext: () => Promise.resolve({}),
+      loadLanguage,
+      getHighlighter:
+        () =>
+        ({ code }) => ({ highlightedCode: code, isHighlighted: false }),
+    };
+
+    render(
+      <CodeHighlightAdapterProvider adapter={adapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+        <CodeHighlight code="const b = 2" language="tsx" />
+        <CodeHighlight code="const c = 3" language="tsx" />
+      </CodeHighlightAdapterProvider>
+    );
+
+    await waitFor(() => expect(loadLanguage).toHaveBeenCalledTimes(1));
+    expect(loadLanguage).toHaveBeenCalledWith({}, 'tsx');
+  });
+
   it('does not call loadLanguage if adapter does not support it', async () => {
     const adapter: CodeHighlightAdapter = {
       loadContext: () => Promise.resolve({}),

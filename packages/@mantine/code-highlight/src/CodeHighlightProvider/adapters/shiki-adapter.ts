@@ -31,7 +31,7 @@ interface CreateShikiAdapterOptions {
   resolveLanguage?: (language: string) => any;
 }
 
-const specialLanguages = ['text', 'plaintext', 'txt', 'ansi'];
+const specialLanguages = ['text', 'plaintext', 'txt', 'plain', 'ansi'];
 
 function isLanguageAvailable(ctx: any, language: string | undefined) {
   if (!language || specialLanguages.includes(language)) {
@@ -79,11 +79,15 @@ export const createShikiAdapter = (
             return undefined;
           }
 
-          try {
-            return ctx.loadLanguage(grammar);
-          } catch (error) {
+          const onLoadError = (error: any) => {
             warnUnavailableLanguage(language, 'could not be loaded by the highlighter');
-            return Promise.reject(error);
+            throw error;
+          };
+
+          try {
+            return Promise.resolve(ctx.loadLanguage(grammar)).catch(onLoadError);
+          } catch (error) {
+            return Promise.reject(error).catch(onLoadError);
           }
         }
       : undefined,

@@ -110,11 +110,11 @@ export function CodeHighlightAdapterProvider({
 
       const languagePromise = adapter.loadLanguage(ctx, language);
 
+      requestedLanguages.current.add(language);
+
       if (!languagePromise) {
         return;
       }
-
-      requestedLanguages.current.add(language);
 
       const loadedWith = currentEpoch.current;
 

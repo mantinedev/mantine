@@ -66,9 +66,11 @@ describe('@mantine/code-highlight/createShikiAdapter', () => {
     const adapter = createShikiAdapter(() => Promise.resolve(shiki));
     const highlight = adapter.getHighlighter(shiki);
 
-    expect(highlight({ code: 'test', language: 'text', colorScheme: 'light' }).isHighlighted).toBe(
-      true
-    );
+    ['text', 'plaintext', 'txt', 'plain', 'ansi'].forEach((language) => {
+      expect(highlight({ code: 'test', language, colorScheme: 'light' }).isHighlighted).toBe(true);
+    });
+
+    expect(warn).not.toHaveBeenCalled();
   });
 
   it('resolves grammar of languages that are not loaded yet', () => {
@@ -97,6 +99,19 @@ describe('@mantine/code-highlight/createShikiAdapter', () => {
 
     expect(result).toBeInstanceOf(Promise);
     await expect(result).rejects.toThrow('is not included in this bundle');
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn.mock.calls[0][0]).toContain('`python`');
+  });
+
+  it('warns when grammar loading rejects asynchronously', async () => {
+    const shiki = createShikiMock([]);
+    shiki.loadLanguage = jest.fn(() => Promise.reject(new Error('Failed to fetch chunk')));
+
+    const adapter = createShikiAdapter(() => Promise.resolve(shiki), {
+      resolveLanguage: (language) => language,
+    });
+
+    await expect(adapter.loadLanguage!(shiki, 'python')).rejects.toThrow('Failed to fetch chunk');
     expect(warn).toHaveBeenCalledTimes(1);
     expect(warn.mock.calls[0][0]).toContain('`python`');
   });
