@@ -72,19 +72,19 @@ export const createShikiAdapter = (
             return undefined;
           }
 
-          const grammar = resolveLanguage(language);
-
-          if (!grammar) {
-            warnUnavailableLanguage(language, 'was not resolved by `resolveLanguage` option');
-            return undefined;
-          }
-
           const onLoadError = (error: any) => {
             warnUnavailableLanguage(language, 'could not be loaded by the highlighter');
             throw error;
           };
 
           try {
+            const grammar = resolveLanguage(language);
+
+            if (!grammar) {
+              warnUnavailableLanguage(language, 'was not resolved by `resolveLanguage` option');
+              return undefined;
+            }
+
             return Promise.resolve(ctx.loadLanguage(grammar)).catch(onLoadError);
           } catch (error) {
             return Promise.reject(error).catch(onLoadError);

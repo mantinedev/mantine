@@ -59,18 +59,19 @@ export function CodeHighlightAdapterProvider({
 }: CodeHighlightAdapterProviderProps) {
   const [contextState, setContextState] = useState<{
     adapter: CodeHighlightAdapter;
+    epoch: number;
     ctx: any;
     loaded: boolean;
-  }>({ adapter, ctx: null, loaded: false });
+  }>({ adapter, epoch: 0, ctx: null, loaded: false });
 
   const [loadedLanguages, setLoadedLanguages] = useState<string[]>([]);
   const [epoch, setEpoch] = useState(0);
   const requestedLanguages = useRef<Set<string>>(new Set());
   const currentEpoch = useRef(0);
   const previousAdapter = useRef(adapter);
-  const contextRequestedFor = useRef<CodeHighlightAdapter | null>(null);
+  const contextRequestedFor = useRef<number | null>(null);
 
-  const isCurrentContext = contextState.adapter === adapter;
+  const isCurrentContext = contextState.adapter === adapter && contextState.epoch === epoch;
   const ctx = isCurrentContext ? contextState.ctx : null;
   const isContextLoaded = adapter.loadContext ? isCurrentContext && contextState.loaded : true;
 
@@ -79,24 +80,22 @@ export function CodeHighlightAdapterProvider({
   useEffect(() => {
     if (previousAdapter.current !== adapter) {
       previousAdapter.current = adapter;
-      contextRequestedFor.current = null;
       currentEpoch.current += 1;
       requestedLanguages.current.clear();
       setLoadedLanguages([]);
       setEpoch(currentEpoch.current);
     }
 
-    if (!adapter.loadContext || contextRequestedFor.current === adapter) {
+    if (!adapter.loadContext || contextRequestedFor.current === currentEpoch.current) {
       return;
     }
 
-    contextRequestedFor.current = adapter;
-
     const loadedWith = currentEpoch.current;
+    contextRequestedFor.current = loadedWith;
 
     adapter.loadContext().then((loadedCtx) => {
       if (loadedWith === currentEpoch.current) {
-        setContextState({ adapter, ctx: loadedCtx, loaded: true });
+        setContextState({ adapter, epoch: loadedWith, ctx: loadedCtx, loaded: true });
       }
     });
   }, [adapter]);

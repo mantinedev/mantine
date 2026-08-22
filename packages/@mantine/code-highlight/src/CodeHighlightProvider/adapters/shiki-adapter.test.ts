@@ -116,6 +116,22 @@ describe('@mantine/code-highlight/createShikiAdapter', () => {
     expect(warn.mock.calls[0][0]).toContain('`python`');
   });
 
+  it('converts resolveLanguage exceptions into a rejected promise', async () => {
+    const shiki = createShikiMock([]);
+    const adapter = createShikiAdapter(() => Promise.resolve(shiki), {
+      resolveLanguage: () => {
+        throw new Error('resolver blew up');
+      },
+    });
+
+    const result = adapter.loadLanguage!(shiki, 'python');
+
+    expect(result).toBeInstanceOf(Promise);
+    await expect(result).rejects.toThrow('resolver blew up');
+    expect(shiki.loadLanguage).not.toHaveBeenCalled();
+    expect(warn).toHaveBeenCalledTimes(1);
+  });
+
   it('does not load grammar of unsupported languages', () => {
     const shiki = createShikiMock([]);
     const adapter = createShikiAdapter(() => Promise.resolve(shiki), {

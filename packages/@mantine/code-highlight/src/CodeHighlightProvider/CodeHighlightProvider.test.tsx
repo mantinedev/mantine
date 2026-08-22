@@ -341,6 +341,65 @@ describe('@mantine/code-highlight/CodeHighlightProvider', () => {
     expect(await screen.findByTestId('highlighted-code')).toBeInTheDocument();
   });
 
+  it('does not load languages into the previous context of a reused adapter', async () => {
+    const contexts: { resolve: (ctx: any) => void }[] = [];
+    const loadContext = jest.fn(
+      () =>
+        new Promise<any>((resolve) => {
+          contexts.push({ resolve });
+        })
+    );
+
+    const loadedLanguages = new Set<string>();
+    const loadLanguage = jest.fn((_ctx: any, language: string) =>
+      Promise.resolve().then(() => {
+        loadedLanguages.add(language);
+      })
+    );
+
+    const adapterA: CodeHighlightAdapter = {
+      loadContext,
+      loadLanguage,
+      getHighlighter:
+        () =>
+        ({ code }) => ({ highlightedCode: code, isHighlighted: false }),
+    };
+
+    const adapterB: CodeHighlightAdapter = {
+      getHighlighter:
+        () =>
+        ({ code }) => ({ highlightedCode: code, isHighlighted: false }),
+    };
+
+    const tree = (adapter: CodeHighlightAdapter) => (
+      <CodeHighlightAdapterProvider adapter={adapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+      </CodeHighlightAdapterProvider>
+    );
+
+    const { rerender } = render(tree(adapterA));
+
+    await waitFor(() => expect(loadContext).toHaveBeenCalledTimes(1));
+    await act(async () => {
+      contexts[0].resolve({ name: 'first' });
+    });
+    await waitFor(() => expect(loadLanguage).toHaveBeenCalledTimes(1));
+
+    rerender(<>{tree(adapterB)}</>);
+    rerender(<>{tree(adapterA)}</>);
+
+    await waitFor(() => expect(loadContext).toHaveBeenCalledTimes(2));
+
+    expect(loadLanguage).toHaveBeenCalledTimes(1);
+
+    await act(async () => {
+      contexts[1].resolve({ name: 'second' });
+    });
+
+    await waitFor(() => expect(loadLanguage).toHaveBeenCalledTimes(2));
+    expect(loadLanguage).toHaveBeenLastCalledWith({ name: 'second' }, 'tsx');
+  });
+
   it('does not call loadLanguage if adapter does not support it', async () => {
     const adapter: CodeHighlightAdapter = {
       loadContext: () => Promise.resolve({}),
