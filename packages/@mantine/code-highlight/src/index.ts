@@ -31,6 +31,7 @@ export { useCodeHighlightContext } from './CodeHighlight/CodeHighlight.context.j
 export {
   CodeHighlightAdapterProvider,
   useHighlight,
+  useLoadLanguage,
 } from './CodeHighlightProvider/CodeHighlightProvider.js';
 
 export { createHighlightJsAdapter } from './CodeHighlightProvider/adapters/highlight-js-adapter.js';
