@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 interface UseLightboxZoomInput {
   enabled: boolean;
@@ -72,20 +72,31 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     setIsDragging(false);
   }, []);
 
-  useEffect(() => {
-    resetZoom();
-  }, [currentIndex, resetZoom]);
+  const [prevIndex, setPrevIndex] = useState(currentIndex);
+  const [prevEnabled, setPrevEnabled] = useState(enabled);
 
+  // Reset during render rather than from an effect: the new slide is then painted at scale
+  // 1 in the same commit instead of flashing the previous slide's zoom for one frame.
+  //
   // Turning zoom off has to clear the state as well – the image loses its handlers, but a
   // lingering `isZoomed` keeps the carousel's `watchDrag` guard rejecting drags, so the
   // lightbox would silently stop being swipeable.
+  if (currentIndex !== prevIndex || enabled !== prevEnabled) {
+    setPrevIndex(currentIndex);
+    setPrevEnabled(enabled);
+
+    if (currentIndex !== prevIndex || !enabled) {
+      setZoomState(INITIAL_ZOOM_STATE);
+      setIsDragging(false);
+    }
+  }
+
   useEffect(() => {
     if (!enabled) {
-      resetZoom();
       lastPinchDistance.current = null;
       didDrag.current = false;
     }
-  }, [enabled, resetZoom]);
+  }, [enabled]);
 
   const toggleZoom = useCallback(() => {
     if (!enabled) {
@@ -315,11 +326,22 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     ]
   );
 
-  return {
-    zoomState: { scale: zoomState.scale, isZoomed: zoomState.isZoomed },
-    toggleZoom,
-    resetZoom,
-    panZoom,
-    getImageProps,
-  };
+  // Both objects are memoized: the lightbox context is built from them, and returning fresh
+  // objects on every render would make that context change identity on every root render,
+  // re-rendering every slide, thumbnail and custom render function along with it.
+  const publicZoomState = useMemo(
+    () => ({ scale: zoomState.scale, isZoomed: zoomState.isZoomed }),
+    [zoomState.scale, zoomState.isZoomed]
+  );
+
+  return useMemo(
+    () => ({
+      zoomState: publicZoomState,
+      toggleZoom,
+      resetZoom,
+      panZoom,
+      getImageProps,
+    }),
+    [publicZoomState, toggleZoom, resetZoom, panZoom, getImageProps]
+  );
 }

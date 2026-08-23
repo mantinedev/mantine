@@ -135,6 +135,10 @@ anomaly. Each dot is positioned by `x`/`y` data coordinates and supports a radiu
 
 <Demo data={AreaChartDemos.referenceDots} />
 
+Note that `referenceLines` in [AreaChart](/charts/area-chart) are now rendered on top of the areas
+instead of behind them, which makes them consistent with `BarChart`, `LineChart`, `CompositeChart`
+and `ScatterChart`, where reference lines were already painted over the series.
+
 ## AreaChart streamgraph
 
 [AreaChart](/charts/area-chart) now supports `type="stream"` that renders a streamgraph (also known

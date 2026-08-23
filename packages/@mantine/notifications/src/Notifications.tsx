@@ -35,11 +35,18 @@ import {
   notifications,
   NotificationsStore,
   notificationsStore,
+  SequencedNotificationData,
   useNotifications,
 } from './notifications.store';
 import classes from './Notifications.module.css';
 
 const Transition: any = _Transition;
+
+/** Vertical gap between notifications of an expanded stack, in px */
+const STACK_EXPANDED_GAP = 16;
+
+/** Offset step used for a notification that has not been measured yet, in px */
+const FALLBACK_NOTIFICATION_HEIGHT = 80;
 
 export type NotificationsStylesNames = 'root' | 'notification';
 export type NotificationsCssVariables = {
@@ -252,17 +259,47 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     }
   }, [pinnedCount, pinnedPosition, layout]);
 
-  // Expanded offsets are measured from `offsetHeight` during render, so a notification that
-  // grows afterwards (image loads, async content, viewport reflow) would leave the ones
-  // after it overlapping or gapped until something else triggers a render.
+  // Expanded stack offsets need the height of every notification. Measuring during render
+  // would force a layout pass on every hover, focus and store update, so heights are cached
+  // here and refreshed from the ResizeObserver – which also covers a notification that grows
+  // after mount (image loads, async content, viewport reflow) and would otherwise leave the
+  // ones after it overlapping or gapped until something else triggered a render.
   const resizeObserver = useRef<ResizeObserver | null>(null);
+  const measuredHeights = useRef<Record<string, number>>({});
+  const observedIds = useRef(new WeakMap<Element, string>());
+
+  const measureNotification = useCallback((id: string, element: HTMLElement) => {
+    const height = element.offsetHeight;
+
+    if (measuredHeights.current[id] === height) {
+      return false;
+    }
+
+    measuredHeights.current[id] = height;
+    return true;
+  }, []);
 
   useEffect(() => {
     if (layout !== 'stacked' || typeof ResizeObserver === 'undefined') {
       return undefined;
     }
 
-    const observer = new ResizeObserver(() => forceUpdate());
+    const observer = new ResizeObserver((entries) => {
+      let changed = false;
+
+      entries.forEach((entry) => {
+        const id = observedIds.current.get(entry.target);
+
+        if (id && measureNotification(id, entry.target as HTMLElement)) {
+          changed = true;
+        }
+      });
+
+      if (changed) {
+        forceUpdate();
+      }
+    });
+
     resizeObserver.current = observer;
     Object.values(refs.current).forEach((element) => element && observer.observe(element));
 
@@ -270,31 +307,40 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
       observer.disconnect();
       resizeObserver.current = null;
     };
-  }, [layout, forceUpdate]);
+  }, [layout, forceUpdate, measureNotification]);
 
   const refCallbacks = useRef<Record<string, (node: HTMLDivElement | null) => void>>({});
 
-  const getNotificationRef = useCallback((id: string) => {
-    if (!refCallbacks.current[id]) {
-      refCallbacks.current[id] = (node: HTMLDivElement | null) => {
-        const previous = refs.current[id];
+  const getNotificationRef = useCallback(
+    (id: string) => {
+      if (!refCallbacks.current[id]) {
+        refCallbacks.current[id] = (node: HTMLDivElement | null) => {
+          const previous = refs.current[id];
 
-        if (previous && previous !== node) {
-          resizeObserver.current?.unobserve(previous);
-        }
+          if (previous && previous !== node) {
+            resizeObserver.current?.unobserve(previous);
+            observedIds.current.delete(previous);
+          }
 
-        if (node) {
-          refs.current[id] = node;
-          resizeObserver.current?.observe(node);
-        } else {
-          delete refs.current[id];
-          delete refCallbacks.current[id];
-        }
-      };
-    }
+          if (node) {
+            refs.current[id] = node;
+            observedIds.current.set(node, id);
+            // Measured here rather than during render – the commit phase is where a layout
+            // read is already paid for, and the ResizeObserver keeps the value fresh after.
+            measureNotification(id, node);
+            resizeObserver.current?.observe(node);
+          } else {
+            delete refs.current[id];
+            delete refCallbacks.current[id];
+            delete measuredHeights.current[id];
+          }
+        };
+      }
 
-    return refCallbacks.current[id];
-  }, []);
+      return refCallbacks.current[id];
+    },
+    [measureNotification]
+  );
 
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -335,31 +381,39 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
       const expandedOffsets: number[] = new Array(groupLength).fill(0);
       const stackExpanded = layout === 'stacked' && !!expandedPositions[pos];
 
+      // `grouped[pos]` is sorted by priority descending, with equal priorities in insertion
+      // order. A stack is rendered front to back, so `stackOrder[0]` is the notification in
+      // front: the most urgent one, and the newest among equal priorities – only the
+      // tie-break is reversed here. Taking the front from the end of the priority-sorted
+      // array instead would put the *lowest* priority notification in front and leave an
+      // urgent one inert behind it.
+      // Rendering front first also keeps DOM order matching the visual stack – otherwise a
+      // forward Tab from the front notification (the only focusable one while collapsed)
+      // skips past the ones it just un-inerted and leaves the region. Placement is
+      // unaffected: stacked notifications share one grid cell and are positioned by
+      // transform and an explicit z-index.
+      const stackOrder =
+        layout === 'stacked'
+          ? [...(grouped[pos] as SequencedNotificationData[])].sort(
+              (a, b) =>
+                (b.priority ?? 0) - (a.priority ?? 0) || (b.__sequence ?? 0) - (a.__sequence ?? 0)
+            )
+          : grouped[pos];
+
       if (stackExpanded && groupLength > 0) {
         const direction = pos.startsWith('top') ? 1 : -1;
-        const gap = 16;
         let cumOffset = 0;
 
-        for (let i = groupLength - 1; i >= 0; i--) {
+        for (let i = 0; i < groupLength; i += 1) {
           expandedOffsets[i] = cumOffset * direction;
-          const el = refs.current[grouped[pos][i].id!];
-          cumOffset += (el?.offsetHeight || 80) + gap;
+          cumOffset +=
+            (measuredHeights.current[stackOrder[i].id!] || FALLBACK_NOTIFICATION_HEIGHT) +
+            STACK_EXPANDED_GAP;
         }
       }
 
-      // The front notification of a stack is the newest one, which is last in the data. In
-      // the stacked layout it is rendered first so DOM order matches the visual stack –
-      // otherwise a forward Tab from the front notification (the only focusable one while
-      // collapsed) skips past the ones it just un-inerted and leaves the region. Placement
-      // is unaffected: stacked notifications all share one grid cell and are positioned by
-      // transform and an explicit z-index.
-      const renderOrder = Array.from({ length: groupLength }, (_, i) =>
-        layout === 'stacked' ? groupLength - 1 - i : i
-      );
-
-      acc[pos] = renderOrder.map((index) => {
-        const { style: notificationStyle, ...notification } = grouped[pos][index];
-        const stackIndex = layout === 'stacked' ? groupLength - 1 - index : index;
+      acc[pos] = stackOrder.map((item, stackIndex) => {
+        const { style: notificationStyle, ...notification } = item;
 
         return (
           <Transition
@@ -394,7 +448,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
                 stackSize={groupLength}
                 stackPosition={pos}
                 stackExpanded={stackExpanded}
-                stackExpandedOffset={expandedOffsets[index]}
+                stackExpandedOffset={expandedOffsets[stackIndex]}
                 transitionState={state}
                 {...getStyles('notification', {
                   style: {

@@ -98,9 +98,11 @@
     max-width: calc(var(--stepper-icon-size) * 4);
     overflow: visible;
 
-    /* With the label below the icon, `iconPosition="right"` means the icon goes last */
+    /* `labelPosition="bottom"` wins over `iconPosition`: the two describe the same axis, and
+       `column-reverse` here would move the label above the icon – the opposite of what the
+       prop name promises. */
     &:where([data-icon-position='right']) {
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
   }
 }

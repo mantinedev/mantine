@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import { createEvent, fireEvent } from '@testing-library/react';
+import { act, createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -1076,10 +1076,59 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
   });
 
   describe('eventResizeInterval prop', () => {
-    it('renders without throwing when withEventResize and eventResizeInterval are set', () => {
-      expect(() =>
-        render(<ResourcesWeekView {...defaultProps} withEventResize eventResizeInterval={15} />)
-      ).not.toThrow();
+    it('resizes on eventResizeInterval independently of intervalMinutes', () => {
+      // The resize container is the whole resource row: 7 days x 240 minutes. 1680px makes
+      // it exactly 1px per minute, so a day starts at `dayIndex * 240`.
+      const rect = {
+        top: 0,
+        left: 0,
+        right: 1680,
+        bottom: 240,
+        width: 1680,
+        height: 240,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      };
+      const spy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockReturnValue(rect as DOMRect);
+      const onEventResize = jest.fn();
+
+      const { container } = render(
+        <ResourcesWeekView
+          {...defaultProps}
+          intervalMinutes={60}
+          eventResizeInterval={15}
+          withEventResize
+          onEventResize={onEventResize}
+          events={[
+            {
+              id: 1,
+              title: 'Event',
+              start: '2025-01-15 09:00:00',
+              end: '2025-01-15 10:00:00',
+              color: 'blue',
+              payload: {},
+              resourceId: 'room-a',
+            },
+          ]}
+        />
+      );
+
+      const handle = container.querySelector('[data-edge="end"]')!;
+      fireEvent.pointerDown(handle);
+      act(() => {
+        // 2025-01-15 is a Wednesday, so its column starts at 2 * 240 = 480px. +165 min
+        // lands on 10:45 - a 15-min boundary the 60-min grid interval could not produce
+        document.dispatchEvent(new MouseEvent('pointermove', { clientX: 645 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({ newEnd: '2025-01-15 10:45:00' })
+      );
+      spy.mockRestore();
     });
   });
 

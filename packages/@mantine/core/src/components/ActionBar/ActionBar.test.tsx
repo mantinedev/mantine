@@ -119,4 +119,25 @@ describe('@mantine/core/ActionBar', () => {
     await userEvent.click(screen.getByRole('button'));
     expect(calls).toStrictEqual(['click', 'close']);
   });
+
+  it('forwards unstyled to ActionBar.CloseButton', () => {
+    const { rerender } = render(
+      <ActionBar opened>
+        <ActionBar.CloseButton />
+      </ActionBar>
+    );
+
+    // `unstyled` keeps the static `mantine-*` selectors and drops the CSS module classes
+    expect(screen.getByRole('button').className).toContain('mantine-focus-auto');
+
+    rerender(
+      <>
+        <ActionBar opened unstyled>
+          <ActionBar.CloseButton />
+        </ActionBar>
+      </>
+    );
+
+    expect(screen.getByRole('button').className).not.toContain('mantine-focus-auto');
+  });
 });

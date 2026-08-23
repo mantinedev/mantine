@@ -4,8 +4,10 @@ export function isRenderableValue(value: unknown): value is number {
 
 interface GetCandlestickDomainInput {
   data: Record<string, any>[];
-  lowKey: string;
+  openKey: string;
   highKey: string;
+  lowKey: string;
+  closeKey: string;
 }
 
 /**
@@ -14,11 +16,17 @@ interface GetCandlestickDomainInput {
  * reach the bounds produces a `NaN` domain that blanks the entire chart instead of just
  * the offending row. Bounds are reduced iteratively rather than spread into
  * `Math.min`/`Math.max`, which throws on large datasets.
+ *
+ * A row counts only when all four OHLC values are renderable, which is the same condition
+ * the candle shape uses. Taking `low`/`high` independently would let a half-filled row
+ * stretch the domain toward a candle that is never drawn, squashing the real ones.
  */
 export function getCandlestickDomain({
   data,
-  lowKey,
+  openKey,
   highKey,
+  lowKey,
+  closeKey,
 }: GetCandlestickDomainInput): [number, number] | undefined {
   let dataMin = Infinity;
   let dataMax = -Infinity;
@@ -27,11 +35,15 @@ export function getCandlestickDomain({
     const low = item[lowKey];
     const high = item[highKey];
 
-    if (isRenderableValue(low) && low < dataMin) {
+    if (![item[openKey], high, low, item[closeKey]].every(isRenderableValue)) {
+      continue;
+    }
+
+    if (low < dataMin) {
       dataMin = low;
     }
 
-    if (isRenderableValue(high) && high > dataMax) {
+    if (high > dataMax) {
       dataMax = high;
     }
   }

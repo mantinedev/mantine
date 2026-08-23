@@ -148,6 +148,36 @@ describe('@mantine/lightbox/LightboxSlide', () => {
     expect(img).not.toHaveAttribute('data-zoomed');
   });
 
+  it('toggles zoom on double-tap but not on a single tap', async () => {
+    const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo' };
+    await renderWithAct(
+      <LightboxWrapper slides={[slide]} currentIndex={0} withZoom>
+        <LightboxSlide slide={slide} index={0} />
+      </LightboxWrapper>
+    );
+    const img = screen.getByRole('img');
+
+    // `userEvent.dblClick` emits mouse input, where the first plain click already toggles
+    // zoom – the touch path has to be driven with a real `pointerType: 'touch'` sequence or
+    // the mobile double-tap handler is never exercised.
+    const tap = async () => {
+      await act(async () => {
+        fireEvent.pointerDown(img, { pointerType: 'touch' });
+        fireEvent.pointerUp(img, { pointerType: 'touch' });
+        fireEvent.click(img, { detail: 1 });
+      });
+    };
+
+    await tap();
+    expect(img).not.toHaveAttribute('data-zoomed');
+
+    await tap();
+    await act(async () => {
+      fireEvent.doubleClick(img);
+    });
+    expect(img).toHaveAttribute('data-zoomed');
+  });
+
   it('toggles zoom with Z shortcut', async () => {
     const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo' };
     await renderWithAct(

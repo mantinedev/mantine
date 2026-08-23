@@ -38,6 +38,9 @@
     "./styles.css": "./styles.css",
     "./styles.layer.css": "./styles.layer.css"
   },
+  "engines": {
+    "node": ">=22"
+  },
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",

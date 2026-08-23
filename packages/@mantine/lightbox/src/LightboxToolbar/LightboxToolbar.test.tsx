@@ -151,8 +151,13 @@ describe('@mantine/lightbox/LightboxToolbar', () => {
       await Promise.resolve();
 
       expect(global.URL.createObjectURL).not.toHaveBeenCalled();
-      // Falls back to opening the URL rather than saving the error page as the image
-      expect(clickedAnchors.every((anchor) => !anchor.hasAttribute('download'))).toBe(true);
+      // Falls back to opening the URL rather than saving the error page as the image.
+      // Asserted on the exact anchor - `every` on an empty array would also pass if the
+      // failed download silently did nothing at all.
+      expect(clickedAnchors).toHaveLength(1);
+      expect(clickedAnchors[0].getAttribute('href')).toBe('/local/photo.jpg');
+      expect(clickedAnchors[0].target).toBe('_blank');
+      expect(clickedAnchors[0].hasAttribute('download')).toBe(false);
     });
 
     it('saves same-origin sources as a blob with a decoded file name', async () => {

@@ -46,10 +46,14 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
 
   const { dir } = useDirection();
 
+  // The second carousel is only built when the strip can actually be shown – `active: false`
+  // makes Embla skip its listeners and measurements entirely, so a lightbox without
+  // thumbnails does not pay for an instance it never renders.
   const [thumbsRef, thumbsEmbla] = useEmblaCarousel({
     containScroll: 'keepSnaps',
     dragFree: true,
     direction: dir,
+    active: ctx.withThumbnails,
   });
 
   useEffect(() => {
@@ -58,7 +62,7 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
     }
   }, [ctx.currentIndex, thumbsEmbla]);
 
-  if (!ctx.withThumbnails && !ctx.thumbnailsVisible) {
+  if (!ctx.withThumbnails) {
     return null;
   }
 

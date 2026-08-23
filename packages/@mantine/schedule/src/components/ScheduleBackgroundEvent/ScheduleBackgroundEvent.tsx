@@ -28,11 +28,8 @@ export interface ScheduleBackgroundEventProps extends BoxProps, ElementProps<'di
 }
 
 export function ScheduleBackgroundEvent(props: ScheduleBackgroundEventProps) {
-  const { event, interactive, onEventClick, renderEvent, renderEventBody, ...others } = useProps(
-    'ScheduleBackgroundEvent',
-    null,
-    props
-  );
+  const { event, interactive, onEventClick, renderEvent, renderEventBody, mod, ...others } =
+    useProps('ScheduleBackgroundEvent', null, props);
 
   const theme = useMantineTheme();
 
@@ -79,10 +76,12 @@ export function ScheduleBackgroundEvent(props: ScheduleBackgroundEventProps) {
       '--bg-event-hover': colors.hover,
     },
     children: typeof renderEventBody === 'function' ? renderEventBody(event) : event.title,
+    // Composed rather than replaced – `mod` is a public prop, and overwriting it would
+    // silently drop the caller's data modifiers whenever `interactive` is set.
+    mod: interactive ? [mod, { interactive: true }] : mod,
     ...(interactive
       ? {
           'data-event-id': event.id,
-          mod: { interactive: true },
           title: event.title,
           onClick: (e: React.MouseEvent<HTMLButtonElement>) => onEventClick?.(event, e),
           onDragEnter: () => setDragPassthrough(true),

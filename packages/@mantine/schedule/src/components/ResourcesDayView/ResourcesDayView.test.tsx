@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import { createEvent, fireEvent } from '@testing-library/react';
+import { act, createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -1022,10 +1022,57 @@ describe('@mantine/schedule/ResourcesDayView', () => {
   });
 
   describe('eventResizeInterval prop', () => {
-    it('renders without throwing when withEventResize and eventResizeInterval are set', () => {
-      expect(() =>
-        render(<ResourcesDayView {...defaultProps} withEventResize eventResizeInterval={15} />)
-      ).not.toThrow();
+    it('resizes on eventResizeInterval independently of intervalMinutes', () => {
+      const rect = {
+        top: 0,
+        left: 0,
+        right: 240,
+        bottom: 240,
+        width: 240,
+        height: 240,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      };
+      const spy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockReturnValue(rect as DOMRect);
+      const onEventResize = jest.fn();
+
+      const { container } = render(
+        <ResourcesDayView
+          {...defaultProps}
+          intervalMinutes={60}
+          eventResizeInterval={15}
+          withEventResize
+          onEventResize={onEventResize}
+          events={[
+            {
+              id: 1,
+              title: 'Event',
+              start: '2025-01-15 09:00:00',
+              end: '2025-01-15 10:00:00',
+              color: 'blue',
+              payload: {},
+              resourceId: 'room-a',
+            },
+          ]}
+        />
+      );
+
+      const handle = container.querySelector('[data-edge="end"]')!;
+      fireEvent.pointerDown(handle);
+      act(() => {
+        // 240px spans 08:00-12:00, so clientX 165 = 165 min from 08:00 = 10:45 - a 15-min
+        // boundary that the 60-min grid interval could not produce
+        document.dispatchEvent(new MouseEvent('pointermove', { clientX: 165 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({ newEnd: '2025-01-15 10:45:00' })
+      );
+      spy.mockRestore();
     });
   });
 

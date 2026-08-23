@@ -37,10 +37,13 @@ export function RichTextEditorDetailsControl(props: RichTextEditorDetailsControl
       {...props}
       active={active}
       disabled={disabled}
-      onClick={() => {
-        if (!editor || editor.isDestroyed) {
+      onClick={(event) => {
+        props.onClick?.(event);
+
+        if (event.defaultPrevented || !editor || editor.isDestroyed) {
           return;
         }
+
         const chain = (editor as any).chain().focus();
         if ((editor.can() as any).unsetDetails?.()) {
           chain.unsetDetails().run();

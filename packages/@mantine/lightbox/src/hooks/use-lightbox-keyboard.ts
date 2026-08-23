@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 interface UseLightboxKeyboardInput {
   opened: boolean;
   enabled: boolean;
+  /** Text direction of the lightbox, arrow keys follow it the same way the navigation buttons do */
+  dir: 'ltr' | 'rtl';
   onClose: () => void;
   onNext: () => void;
   onPrev: () => void;
@@ -51,6 +53,7 @@ const ZOOM_PAN_STEP = 50;
 export function useLightboxKeyboard({
   opened,
   enabled,
+  dir,
   onClose,
   onNext,
   onPrev,
@@ -63,6 +66,13 @@ export function useLightboxKeyboard({
     if (!opened) {
       return undefined;
     }
+
+    // Slides advance along the reading direction, so in RTL the next slide is the one to the
+    // left – the arrow keys follow the same rule as the navigation chevrons, which are
+    // already mirrored. Zoom panning stays physical: an arrow always moves the image the way
+    // it points.
+    const onLeadingArrow = dir === 'rtl' ? onNext : onPrev;
+    const onTrailingArrow = dir === 'rtl' ? onPrev : onNext;
 
     const handler = (event: KeyboardEvent) => {
       if (event.defaultPrevented) {
@@ -96,13 +106,13 @@ export function useLightboxKeyboard({
         case 'ArrowLeft':
           event.preventDefault();
           if (!onZoomPan?.(ZOOM_PAN_STEP, 0)) {
-            onPrev();
+            onLeadingArrow();
           }
           break;
         case 'ArrowRight':
           event.preventDefault();
           if (!onZoomPan?.(-ZOOM_PAN_STEP, 0)) {
-            onNext();
+            onTrailingArrow();
           }
           break;
         case 'ArrowUp':
@@ -146,6 +156,7 @@ export function useLightboxKeyboard({
   }, [
     opened,
     enabled,
+    dir,
     onClose,
     onNext,
     onPrev,

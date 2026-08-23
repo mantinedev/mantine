@@ -11,6 +11,7 @@ interface DetailsTestEditorProps {
   content?: string;
   disabled?: boolean;
   onEditor?: (editor: Editor | null) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 function DetailsTestEditor({
@@ -18,6 +19,7 @@ function DetailsTestEditor({
   content,
   disabled,
   onEditor,
+  onClick,
 }: DetailsTestEditorProps) {
   const editor = useEditor({
     extensions: withDetails ? [StarterKit, Details, DetailsSummary, DetailsContent] : [StarterKit],
@@ -30,7 +32,7 @@ function DetailsTestEditor({
   return (
     <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar>
-        <RichTextEditor.Details disabled={disabled} />
+        <RichTextEditor.Details disabled={disabled} onClick={onClick} />
       </RichTextEditor.Toolbar>
       <RichTextEditor.Content />
     </RichTextEditor>
@@ -123,5 +125,38 @@ describe('@mantine/tiptap/RichTextEditorDetailsControl', () => {
 
     await waitFor(() => expect(control).not.toHaveAttribute('aria-pressed', 'true'));
     expect(control).not.toBeDisabled();
+  });
+
+  it('calls the onClick passed by the consumer and still toggles the node', async () => {
+    const onClick = jest.fn();
+    let editor: Editor | null = null;
+
+    render(<DetailsTestEditor onClick={onClick} onEditor={(e) => (editor = e)} />);
+
+    const control = await screen.findByLabelText(label);
+    await waitFor(() => expect(editor).not.toBeNull());
+
+    await userEvent.click(control);
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(editor!.isActive('details')).toBe(true));
+  });
+
+  it('skips the editor command when the consumer prevents the default', async () => {
+    let editor: Editor | null = null;
+
+    render(
+      <DetailsTestEditor
+        onClick={(event) => event.preventDefault()}
+        onEditor={(e) => (editor = e)}
+      />
+    );
+
+    const control = await screen.findByLabelText(label);
+    await waitFor(() => expect(editor).not.toBeNull());
+
+    await userEvent.click(control);
+
+    expect(editor!.isActive('details')).toBe(false);
   });
 });

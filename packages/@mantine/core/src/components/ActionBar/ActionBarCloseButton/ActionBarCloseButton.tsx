@@ -29,12 +29,13 @@ const defaultProps: Partial<ActionBarCloseButtonProps> = {};
 
 export const ActionBarCloseButton = factory<ActionBarCloseButtonFactory>((_props) => {
   const props = useProps('ActionBarCloseButton', defaultProps, _props);
-  const { classNames, className, style, styles, onClick, ...others } = props;
+  const { classNames, className, style, styles, unstyled, onClick, ...others } = props;
   const ctx = useActionBarContext();
 
   return (
     <CloseButton
       {...ctx.getStyles('closeButton', { className, style, classNames, styles })}
+      unstyled={unstyled ?? ctx.unstyled}
       {...others}
       onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
         onClick?.(event);

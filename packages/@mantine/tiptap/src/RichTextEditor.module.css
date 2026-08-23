@@ -3,11 +3,18 @@
   border: 1px solid;
   border-radius: var(--mantine-radius-default);
 
-  /* Clip children to the rounded corners so the sticky toolbar and the content do not
-     overflow the rounded border (which caused square-corner cutouts when the sticky toolbar
-     reached the bottom edge). `clip` is used instead of `hidden` because it does not create a
-     scroll container, so `position: sticky` on the toolbar keeps working. */
-  overflow: clip;
+  /* Clip children to the rounded corners so the sticky toolbar does not overflow the rounded
+     border (which caused square-corner cutouts when the sticky toolbar reached the bottom
+     edge). `clip` is used instead of `hidden` because it does not create a scroll container,
+     so `position: sticky` on the toolbar keeps working.
+
+     Scoped to editors that actually have a sticky toolbar: clipping is also a Floating UI
+     boundary, and Tiptap appends `BubbleMenu` and `FloatingMenu` inside the editor rather
+     than into a portal, so an unconditional clip would constrain every floating menu to the
+     editor box even when there is nothing to clip. */
+  &:where(:has(> [data-sticky])) {
+    overflow: clip;
+  }
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-4);

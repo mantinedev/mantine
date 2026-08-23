@@ -35,10 +35,13 @@ export function RichTextEditorInvisibleCharactersControl(
       {...props}
       active={active}
       disabled={disabled}
-      onClick={() => {
-        if (!editor || editor.isDestroyed) {
+      onClick={(event) => {
+        props.onClick?.(event);
+
+        if (event.defaultPrevented || !editor || editor.isDestroyed) {
           return;
         }
+
         (editor as any).chain().focus().toggleInvisibleCharacters().run();
       }}
     />

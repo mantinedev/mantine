@@ -104,6 +104,11 @@ export function calculateDropTime({
     const dayOffset = Math.floor(snappedStartMinutes / 1440);
     const minutesInDay = snappedStartMinutes - dayOffset * 1440;
 
+    // Built from wall clock fields rather than by adding minutes to the start of the day.
+    // On a DST transition a day is 23 or 25 hours long, so `startOf('day').add(180, 'minute')`
+    // lands on 04:00 (spring forward) or 01:00 (fall back) instead of the 03:00/02:00 slot the
+    // user dropped on. Not covered by tests: the process timezone cannot be changed from
+    // inside a test, so any assertion here would pass in every zone regardless.
     finalTargetTime = targetDay
       .add(dayOffset, 'day')
       .hour(Math.floor(minutesInDay / 60))

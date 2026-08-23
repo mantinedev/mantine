@@ -63,12 +63,15 @@ export function useHorizontalEventResize({
   const literalRange = endMinutes - startMinutes;
   const totalMinutes = Math.ceil(literalRange / clampedInterval) * clampedInterval;
 
+  // Snapped in absolute minutes from midnight so resized edges land on the same grid as
+  // dragged events – see the matching comment in `use-event-resize`.
   const clampAndSnap = useCallback(
     (minutes: number): number => {
-      const snapped = Math.round(minutes / clampedResizeInterval) * clampedResizeInterval;
-      return Math.max(0, Math.min(literalRange, snapped));
+      const snapped =
+        Math.round((startMinutes + minutes) / clampedResizeInterval) * clampedResizeInterval;
+      return Math.max(0, Math.min(literalRange, snapped - startMinutes));
     },
-    [literalRange, clampedResizeInterval]
+    [literalRange, clampedResizeInterval, startMinutes]
   );
 
   const percentToDateTime = useCallback(
@@ -85,13 +88,14 @@ export function useHorizontalEventResize({
 
   const snapEdgeMinutes = useCallback(
     (minutes: number, direction: 'up' | 'down'): number => {
+      const absolute = startMinutes + minutes;
       const snapped =
         direction === 'up'
-          ? Math.ceil(minutes / clampedResizeInterval) * clampedResizeInterval
-          : Math.floor(minutes / clampedResizeInterval) * clampedResizeInterval;
-      return Math.max(0, Math.min(literalRange, snapped));
+          ? Math.ceil(absolute / clampedResizeInterval) * clampedResizeInterval
+          : Math.floor(absolute / clampedResizeInterval) * clampedResizeInterval;
+      return Math.max(0, Math.min(literalRange, snapped - startMinutes));
     },
-    [literalRange, clampedResizeInterval]
+    [literalRange, clampedResizeInterval, startMinutes]
   );
 
   const percentToMinutes = useCallback(

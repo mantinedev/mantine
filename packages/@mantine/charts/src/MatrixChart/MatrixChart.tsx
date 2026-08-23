@@ -356,16 +356,24 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     </g>
   ) : null;
 
-  // Individual cells carry no accessible information, so a labelled chart is announced as
-  // one image instead of letting assistive tech walk a grid of anonymous rectangles.
+  // Individual cells carry no accessible information, so the chart is announced as one image
+  // rather than letting assistive tech walk a grid of anonymous rectangles. Listing every
+  // cell would be unusable on a large matrix, so the generated summary describes its shape
+  // and value range instead – the same approach as `WaffleChart`, bounded for a 2D grid.
+  // A caller-supplied `aria-label` or `aria-labelledby` always wins.
   const isLabelled = others['aria-label'] !== undefined || others['aria-labelledby'] !== undefined;
+  const gridLabel =
+    xValues.length > 0 && yValues.length > 0
+      ? `Heatmap, ${xValues.length} columns by ${yValues.length} rows, values from ${min} to ${max}`
+      : undefined;
 
   return (
     <Box
       component="svg"
       width={svgWidth}
       height={svgHeight}
-      role={isLabelled ? 'img' : undefined}
+      role={isLabelled || gridLabel ? 'img' : undefined}
+      aria-label={isLabelled ? undefined : gridLabel}
       {...getStyles('root')}
       {...others}
     >

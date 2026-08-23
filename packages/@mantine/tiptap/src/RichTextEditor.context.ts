@@ -1,12 +1,12 @@
 import { Editor } from '@tiptap/react';
 import { createSafeContext, GetStylesApi } from '@mantine/core';
-import { RichTextEditorLabels } from './labels';
+import { ResolvedRichTextEditorLabels } from './labels';
 import type { RichTextEditorFactory } from './RichTextEditor';
 
 interface RichTextEditorContext {
   getStyles: GetStylesApi<RichTextEditorFactory>;
   editor: Editor | null;
-  labels: RichTextEditorLabels;
+  labels: ResolvedRichTextEditorLabels;
   withCodeHighlightStyles: boolean | undefined;
   withTypographyStyles: boolean | undefined;
   unstyled: boolean | undefined;

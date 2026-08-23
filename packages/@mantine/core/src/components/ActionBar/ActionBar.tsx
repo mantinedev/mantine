@@ -1,4 +1,5 @@
 import { useEffect, useEffectEvent } from 'react';
+import { RemoveScroll } from 'react-remove-scroll';
 import {
   BoxProps,
   ElementProps,
@@ -141,10 +142,23 @@ export const ActionBar = factory<ActionBarFactory>((_props) => {
       withinPortal={withinPortal}
       portalProps={portalProps}
       unstyled={unstyled}
+      // The default position is anchored to both edges, so the bar is a full width fixed
+      // element. Without this it shifts by the scrollbar width whenever a Modal or Drawer
+      // locks scrolling – which is exactly the flow ActionBar exists for (select rows, run a
+      // bulk action, confirm it in a modal).
+      className={RemoveScroll.classNames.fullWidth}
     >
-      <Transition keepMounted={keepMounted} mounted={opened} {...transitionProps}>
+      {/* `keepMountedMode` is pinned to `display-none`: the documented contract is that the
+          bar stays in the DOM and is merely hidden, and `Transition`'s default `activity`
+          mode tears down the effects of everything inside it instead. */}
+      <Transition
+        keepMounted={keepMounted}
+        keepMountedMode="display-none"
+        mounted={opened}
+        {...transitionProps}
+      >
         {(transitionStyles) => (
-          <ActionBarProvider value={{ onClose, getStyles }}>
+          <ActionBarProvider value={{ onClose, getStyles, unstyled }}>
             <Paper
               unstyled={unstyled}
               {...getStyles('root', { style: transitionStyles })}

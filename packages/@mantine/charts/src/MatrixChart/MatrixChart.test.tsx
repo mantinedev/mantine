@@ -198,8 +198,18 @@ describe('@mantine/charts/MatrixChart', () => {
     expect(container.querySelector('svg')).toHaveAttribute('role', 'img');
   });
 
-  it('does not set a role when no accessible name is given', () => {
+  it('generates a data summary when no accessible name is given', () => {
+    // Listing every cell would be unusable on a large matrix, so the summary describes the
+    // shape and the value range instead
     const { container } = render(<MatrixChart data={testData} />);
-    expect(container.querySelector('svg')).not.toHaveAttribute('role');
+    const svg = container.querySelector('svg')!;
+
+    expect(svg).toHaveAttribute('role', 'img');
+    expect(svg).toHaveAttribute('aria-label', 'Heatmap, 2 columns by 2 rows, values from 1 to 5');
+  });
+
+  it('prefers a caller label over the generated summary', () => {
+    const { container } = render(<MatrixChart data={testData} aria-label="Activity" />);
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'Activity');
   });
 });

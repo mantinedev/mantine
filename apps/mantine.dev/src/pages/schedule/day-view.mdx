@@ -246,6 +246,11 @@ Note that an interactive background event covers the time slots underneath it: c
 drag-to-select in its range go to the event instead of the grid. Background events still
 cannot be dragged or resized.
 
+The prop is supported by `DayView`, `WeekView`, `MonthView`, `ResourcesDayView` and
+`ResourcesWeekView`. `YearView` and the `MobileMonthView` that `Schedule` renders with
+`layout="responsive"` on small screens do not display background events at all, so the prop
+has no effect there.
+
 <Demo data={DayViewDemos.interactiveBackgroundEvents} />
 
 ## Custom background event styles with drag and drop blocking

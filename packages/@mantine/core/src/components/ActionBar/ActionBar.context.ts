@@ -4,6 +4,7 @@ import type { ActionBarFactory } from './ActionBar';
 export interface ActionBarContextValue {
   onClose?: () => void;
   getStyles: GetStylesApi<ActionBarFactory>;
+  unstyled: boolean | undefined;
 }
 
 export const [ActionBarProvider, useActionBarContext] = createSafeContext<ActionBarContextValue>(

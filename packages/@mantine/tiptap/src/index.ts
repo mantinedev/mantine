@@ -1,4 +1,4 @@
-import type { RichTextEditorLabels } from './labels';
+import type { ResolvedRichTextEditorLabels, RichTextEditorLabels } from './labels';
 import type {
   RichTextEditorFactory,
   RichTextEditorProps,
@@ -40,4 +40,5 @@ export type {
   RichTextEditorContentProps,
   RichTextEditorControlsGroupProps,
   RichTextEditorLabels,
+  ResolvedRichTextEditorLabels,
 };

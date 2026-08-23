@@ -73,6 +73,7 @@ export const RichTextEditorTableInsertControl = factory<RichTextEditorTableInser
       withHeaderRow,
       popoverProps,
       disabled: disabledProp,
+      onClick,
       ...others
     } = props;
 
@@ -144,7 +145,19 @@ export const RichTextEditorTableInsertControl = factory<RichTextEditorTableInser
             title={ctx.labels.tableInsertControlLabel}
             active={opened}
             disabled={disabled}
-            onClick={opened ? handleClose : open}
+            onClick={(event) => {
+              onClick?.(event);
+
+              if (event.defaultPrevented) {
+                return;
+              }
+
+              if (opened) {
+                handleClose();
+              } else {
+                open();
+              }
+            }}
             classNames={resolvedClassNames}
             styles={resolvedStyles}
             className={className}

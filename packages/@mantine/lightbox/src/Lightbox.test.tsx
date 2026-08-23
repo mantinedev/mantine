@@ -46,7 +46,15 @@ function mockFullscreenApi() {
     get: () => fullscreenElement,
   });
 
+  let requestGate: { promise: Promise<void>; resolve: () => void } | null = null;
+
   document.documentElement.requestFullscreen = jest.fn(async () => {
+    // A genuinely pending request: nothing is fullscreen yet and the promise is unresolved,
+    // which is the state the browser is in between the click and the transition finishing.
+    if (requestGate) {
+      await requestGate.promise;
+    }
+
     fullscreenElement = document.documentElement;
     if (!deferred) {
       notify();
@@ -64,6 +72,25 @@ function mockFullscreenApi() {
     /** Applies fullscreen without dispatching `fullscreenchange`, so React state stays stale */
     deferConfirmation: () => {
       deferred = true;
+    },
+    /** Makes `requestFullscreen` return a promise that stays pending until `settleRequest` */
+    deferRequest: () => {
+      let resolve!: () => void;
+      const promise = new Promise<void>((r) => {
+        resolve = r;
+      });
+      requestGate = { promise, resolve };
+    },
+    settleRequest: async () => {
+      const gate = requestGate;
+      requestGate = null;
+      await act(async () => {
+        gate?.resolve();
+        // Drain the request promise itself and the handlers chained onto it
+        await Promise.resolve();
+        await Promise.resolve();
+        await Promise.resolve();
+      });
     },
     confirm: () => act(() => notify()),
     enterExternally: () => act(() => setFullscreenElement(document.documentElement)),
@@ -715,6 +742,35 @@ describe('@mantine/lightbox/Lightbox store', () => {
           </>
         );
       });
+
+      expect(fullscreen.exitSpy).toHaveBeenCalled();
+      expect(fullscreen.element).toBe(null);
+    });
+
+    it('exits fullscreen entered by a request that was still pending when it closed', async () => {
+      // The real race: `requestFullscreen` has not resolved yet, so nothing is fullscreen
+      // when the lightbox closes and there is nothing to exit at that point. The browser
+      // then completes the request, and the exit has to be retried – otherwise the page is
+      // left fullscreen with no lightbox on top of it.
+      fullscreen.deferRequest();
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+
+      expect(fullscreen.element).toBe(null);
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      // Still nothing to exit - the request has not completed
+      expect(fullscreen.element).toBe(null);
+
+      await fullscreen.settleRequest();
 
       expect(fullscreen.exitSpy).toHaveBeenCalled();
       expect(fullscreen.element).toBe(null);

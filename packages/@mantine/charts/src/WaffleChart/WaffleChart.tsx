@@ -220,8 +220,19 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
   const resolvedGap = Math.max(0, gap!);
 
   const totalCells = resolvedRows * resolvedColumns;
-  const cellSize = size
-    ? Math.max(0, (size - (resolvedColumns - 1) * resolvedGap) / resolvedColumns)
+
+  // `size` is the total width of the grid, gaps included. When the gaps alone would exceed
+  // it, the gap shrinks too – clamping only the cell size would render a grid wider than
+  // the caller asked for. `size != null` rather than a truthiness check so `size={0}` is
+  // honored instead of silently falling back to the default cell size.
+  const hasSize = size != null;
+  const gapTotal = (resolvedColumns - 1) * resolvedGap;
+  const effectiveGap =
+    hasSize && gapTotal > size! && resolvedColumns > 1
+      ? size! / (resolvedColumns - 1)
+      : resolvedGap;
+  const cellSize = hasSize
+    ? Math.max(0, (size! - (resolvedColumns - 1) * effectiveGap) / resolvedColumns)
     : DEFAULT_CELL_SIZE;
   const allocated = allocateCells(data, totalCells, total);
 
@@ -232,8 +243,8 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
     }
   }
 
-  const svgWidth = resolvedColumns * cellSize + (resolvedColumns - 1) * resolvedGap;
-  const svgHeight = resolvedRows * cellSize + (resolvedRows - 1) * resolvedGap;
+  const svgWidth = resolvedColumns * cellSize + (resolvedColumns - 1) * effectiveGap;
+  const svgHeight = resolvedRows * cellSize + (resolvedRows - 1) * effectiveGap;
 
   const cellElements = allocated.map((cell, index) => {
     let row: number;
@@ -253,8 +264,8 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
       col = index % resolvedColumns;
     }
 
-    const x = col * (cellSize + resolvedGap);
-    const y = row * (cellSize + resolvedGap);
+    const x = col * (cellSize + effectiveGap);
+    const y = row * (cellSize + effectiveGap);
     const segmentIndex = cell.segmentIndex;
     const isEmpty = segmentIndex < 0;
     const color = isEmpty ? undefined : getThemeColor(data[segmentIndex].color, theme);
@@ -325,9 +336,18 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
   // exposes segment names but not their values – this gives assistive tech one readable
   // summary of the data regardless of whether the legend is rendered. Values are reported
   // as they are drawn, so a clamped negative or non-finite value is announced as 0.
-  const gridLabel = data
+  const segmentsLabel = data
     .map((segment) => `${segment.name}: ${normalizeSegmentValue(segment.value)}`)
     .join(', ');
+
+  // The denominator is what makes the filled/empty split readable – without it a listener
+  // hears "Completed: 68" while a sighted user sees 68 of 100 cells filled.
+  const segmentsTotal = data.reduce(
+    (acc, segment) => acc + normalizeSegmentValue(segment.value),
+    0
+  );
+  const effectiveTotal = total != null ? Math.max(total, segmentsTotal) : segmentsTotal;
+  const gridLabel = segmentsLabel ? `${segmentsLabel} of ${effectiveTotal}` : '';
 
   // A plain div has an implicit `generic` role, which cannot carry an accessible name, so
   // a caller-supplied label would be dropped. Promoting the root to a group lets their

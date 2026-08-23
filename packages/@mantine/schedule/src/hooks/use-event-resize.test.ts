@@ -174,4 +174,48 @@ describe('@mantine/schedule/use-event-resize', () => {
     const [hours, minutes] = newEnd.split(' ')[1].split(':').map(Number);
     expect(hours * 60 + minutes - 9 * 60).toBe(Math.round(previewEndMinutes));
   });
+
+  it('snaps to the same absolute grid as drag and drop when startTime is off-grid', () => {
+    const onEventResize = jest.fn();
+    const offGridEvent: ScheduleEventData = {
+      ...event,
+      start: '2024-01-15 08:10:00',
+      end: '2024-01-15 08:40:00',
+    };
+
+    const { result } = renderHook(() =>
+      useEventResize({
+        enabled: true,
+        startTime: '08:10:00',
+        endTime: '17:00:00',
+        intervalMinutes: 30,
+        onEventResize,
+      })
+    );
+
+    act(() => {
+      result.current.handleResizeStart({
+        event: offGridEvent,
+        edge: 'bottom',
+        container: makeContainer(),
+        originalTop: 0,
+        originalHeight: (30 / 530) * 100,
+        eventDate: '2024-01-15',
+        pointerEvent: { preventDefault() {}, stopPropagation() {} } as any,
+      });
+    });
+    act(() => {
+      // 80px of a 480px canvas over a 530 minute range = ~88 min past 08:10 = ~09:38
+      document.dispatchEvent(new MouseEvent('pointermove', { clientY: 80 }));
+    });
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointerup'));
+    });
+
+    // Snapped on the wall clock (:00/:30), the grid `calculateDropTime` uses for drags -
+    // snapping relative to `startTime` would land on 09:40 instead.
+    expect(onEventResize).toHaveBeenCalledWith(
+      expect.objectContaining({ newEnd: '2024-01-15 09:30:00' })
+    );
+  });
 });

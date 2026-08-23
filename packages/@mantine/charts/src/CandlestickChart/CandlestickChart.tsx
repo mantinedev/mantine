@@ -29,6 +29,7 @@ import {
 } from '@mantine/core';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, GridChartBaseProps } from '../types';
+import { getCandleGeometry } from './get-candle-geometry/get-candle-geometry';
 import {
   getCandlestickDomain,
   isRenderableValue,
@@ -254,23 +255,23 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
       payload: Record<string, any>;
     };
 
-    const open = payload[seriesKeys.open];
-    const high = payload[seriesKeys.high];
-    const low = payload[seriesKeys.low];
-    const close = payload[seriesKeys.close];
+    const geometry = getCandleGeometry({
+      x,
+      y,
+      width,
+      height,
+      open: payload[seriesKeys.open],
+      high: payload[seriesKeys.high],
+      low: payload[seriesKeys.low],
+      close: payload[seriesKeys.close],
+    });
 
-    if (![open, high, low, close].every(isRenderableValue)) {
+    if (geometry === null) {
       return <g />;
     }
 
-    const color = close >= open ? upColorResolved : downColorResolved;
-    const range = high - low;
-    const ratio = range === 0 ? 0 : height / range;
-    const openY = y + (high - open) * ratio;
-    const closeY = y + (high - close) * ratio;
-    const bodyY = Math.min(openY, closeY);
-    const bodyHeight = Math.max(Math.abs(closeY - openY), 1);
-    const centerX = x + width / 2;
+    const { centerX, bodyY, bodyHeight, isUp } = geometry;
+    const color = isUp ? upColorResolved : downColorResolved;
 
     return (
       <g {...candleStyles}>
@@ -297,8 +298,10 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
 
   const domain = getCandlestickDomain({
     data,
-    lowKey: seriesKeys.low,
+    openKey: seriesKeys.open,
     highKey: seriesKeys.high,
+    lowKey: seriesKeys.low,
+    closeKey: seriesKeys.close,
   });
 
   const referenceLinesItems = referenceLines?.map(

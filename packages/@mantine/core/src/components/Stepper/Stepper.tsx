@@ -87,7 +87,7 @@ export interface StepperProps
   /** Stepper orientation @default 'horizontal' */
   orientation?: 'vertical' | 'horizontal';
 
-  /** Icon position relative to the step body @default 'left' */
+  /** Icon position relative to the step body. Ignored if `labelPosition="bottom"` is set – with the label below the icon there is no left/right to place it on. @default 'left' */
   iconPosition?: 'right' | 'left';
 
   /** Controls size of various Stepper elements */
@@ -102,7 +102,7 @@ export interface StepperProps
   /** Determines whether steps should wrap to the next line if no space is available @default true */
   wrap?: boolean;
 
-  /** Controls position of the step label and description relative to the step icon. Ignored if `orientation="vertical"` is set. @default 'right' */
+  /** Controls position of the step label and description relative to the step icon. Takes precedence over `iconPosition`. Ignored if `orientation="vertical"` is set. @default 'right' */
   labelPosition?: 'right' | 'bottom';
 
   /** When true, automatically adjusts the icon color in completed steps to ensure sufficient contrast against the step background color */

@@ -87,4 +87,25 @@ describe('@mantine/dropzone/Dropzone', () => {
       relativePath: './a.png',
     });
   });
+
+  it('normalizes files returned by a custom getFilesFromEvent', async () => {
+    const onDrop = jest.fn();
+    const { container } = render(
+      <Dropzone
+        onDrop={onDrop}
+        // A custom aggregator may return plain `File` objects, but `onDrop` is typed with
+        // `FileWithPath` whose `path`/`relativePath` are required - they have to be real
+        getFilesFromEvent={async () => [createFile('custom.png')]}
+      />
+    );
+
+    await userEvent.upload(container.querySelector('input')!, [createFile('a.png')]);
+
+    await waitFor(() => expect(onDrop).toHaveBeenCalledTimes(1));
+    expect(onDrop.mock.calls[0][0][0]).toMatchObject({
+      name: 'custom.png',
+      path: './custom.png',
+      relativePath: './custom.png',
+    });
+  });
 });

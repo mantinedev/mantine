@@ -251,9 +251,11 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
   const needleLength = thickness! * 1.5;
 
   // The needle sticks out past the arc radius, and a round cap adds half of its own
-  // width on top of that – both contribute at the same time.
+  // width on top of that – both contribute at the same time. Only reserved when there is a
+  // target to draw, otherwise every gauge without one would get an oversized viewBox and
+  // render its arc smaller than the requested `size`.
   const needleExtent = needleLength / 2 + (roundCaps ? targetSize! / 2 : 0);
-  const strokePadding = Math.max(thickness! / 2, needleExtent);
+  const strokePadding = target != null ? Math.max(thickness! / 2, needleExtent) : thickness! / 2;
 
   // A gauge cannot span more than a full turn – a larger range would wrap the arc onto
   // itself and make later sections overwrite earlier ones.
@@ -365,10 +367,14 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
   const formattedValue = formatValue(clampedValue);
   const labelContent = label !== undefined ? label : formattedValue;
 
-  // A meter with no accessible name is announced as "meter" and nothing else. A string
-  // `label` names the metric ("CPU usage"), so it is used unless one is given explicitly.
-  // The default label is the formatted value, which would only repeat `aria-valuetext`.
-  const ariaLabel = others['aria-label'] ?? (typeof label === 'string' ? label : undefined);
+  // A meter with no accessible name is announced as "meter" and nothing else, so there is
+  // always a name. A string `label` names the metric ("CPU usage") and is used unless an
+  // explicit `aria-label` is given; the generic fallback covers the rest. The default label
+  // is the formatted value, which would only repeat `aria-valuetext`.
+  const ariaLabel =
+    others['aria-labelledby'] !== undefined
+      ? undefined
+      : (others['aria-label'] ?? (typeof label === 'string' ? label : undefined) ?? 'Gauge');
 
   return (
     <Box

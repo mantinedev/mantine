@@ -101,6 +101,41 @@ describe('@mantine/core/Notifications', () => {
     expect(screen.queryByText('Swipe me away')).not.toBeInTheDocument();
   });
 
+  it('auto closes a focused notification in the default layout', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications store={store} withinPortal={false} autoClose={1000} transitionDuration={10} />
+    );
+
+    act(() => {
+      notifications.show({ id: 'focused', message: 'Focused notification' }, store);
+    });
+
+    const notification = screen.getByRole('alert');
+
+    // Focus tracking exists only to keep a collapsed stack expanded – in the default layout
+    // it must not hold a notification open, which is what happens whenever a user clicks an
+    // action button inside it.
+    act(() => {
+      fireEvent.focus(notification);
+      fireEvent.focusIn(notification);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(1200);
+    });
+
+    expect(store.getState().notifications).toHaveLength(0);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(screen.queryByText('Focused notification')).not.toBeInTheDocument();
+  });
+
   it('preserves dismiss animation when notification has custom style', () => {
     jest.useFakeTimers();
     const store = createNotificationsStore();
@@ -412,6 +447,70 @@ describe('@mantine/core/Notifications', () => {
     expect(screen.getByText('Custom per notification')).toBeInTheDocument();
   });
 
+  it('restores default rendering with renderNotification: null over a global renderer', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        renderNotification={(notification) => (
+          <div data-testid="global-custom">{notification.message}</div>
+        )}
+      />
+    );
+
+    act(() => {
+      notifications.show(
+        { id: 'opted-out', message: 'Default rendering', renderNotification: null },
+        store
+      );
+      notifications.show({ id: 'global', message: 'Global rendering' }, store);
+    });
+
+    // The opt-out notification uses the standard Mantine notification …
+    expect(
+      screen.getByText('Default rendering').closest('.mantine-Notification-root')
+    ).not.toBeNull();
+    // … while the other one still goes through the global renderer
+    expect(screen.getByTestId('global-custom')).toHaveTextContent('Global rendering');
+    expect(screen.queryAllByTestId('global-custom')).toHaveLength(1);
+  });
+
+  it('forwards div props to the custom rendering wrapper', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+    const onClick = jest.fn();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        renderNotification={(notification) => <div>{notification.message}</div>}
+      />
+    );
+
+    act(() => {
+      notifications.show(
+        { id: 'dom-props', message: 'With props', onClick, lang: 'fr', mt: 'md' } as any,
+        store
+      );
+    });
+
+    const wrapper = screen.getByText('With props').parentElement!;
+    expect(wrapper).toHaveAttribute('lang', 'fr');
+    // Style props are not DOM attributes and must not leak onto the element
+    expect(wrapper).not.toHaveAttribute('mt');
+
+    fireEvent.click(wrapper);
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
   it('preserves dismiss interaction with renderNotification', () => {
     jest.useFakeTimers();
     const store = createNotificationsStore();
@@ -645,6 +744,70 @@ describe('@mantine/core/Notifications', () => {
       const state = store.getState();
       expect(state.notifications.map((n) => n.id)).toEqual(['urgent']);
       expect(state.queue.map((n) => n.id)).toEqual(['normal']);
+    });
+
+    it('puts the highest priority notification in front of a stack', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+
+      render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={false}
+          transitionDuration={10}
+          layout="stacked"
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'low', message: 'low priority', priority: 0 }, store);
+        notifications.show({ id: 'urgent', message: 'urgent', priority: 10 }, store);
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(50);
+      });
+
+      const alerts = screen.getAllByRole('alert');
+      const low = alerts.find((alert) => alert.textContent?.includes('low priority'))!;
+      const urgent = alerts.find((alert) => alert.textContent?.includes('urgent'))!;
+
+      // The urgent notification is the visible, interactive front card
+      expect(Number(urgent.style.zIndex)).toBeGreaterThan(Number(low.style.zIndex));
+      expect(urgent.hasAttribute('inert')).toBe(false);
+      expect(low.hasAttribute('inert')).toBe(true);
+    });
+
+    it('keeps the newest notification in front of a stack for equal priorities', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+
+      render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={false}
+          transitionDuration={10}
+          layout="stacked"
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'older', message: 'older' }, store);
+        notifications.show({ id: 'newer', message: 'newer' }, store);
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(50);
+      });
+
+      const alerts = screen.getAllByRole('alert');
+      const older = alerts.find((alert) => alert.textContent?.includes('older'))!;
+      const newer = alerts.find((alert) => alert.textContent?.includes('newer'))!;
+
+      expect(Number(newer.style.zIndex)).toBeGreaterThan(Number(older.style.zIndex));
+      expect(newer.hasAttribute('inert')).toBe(false);
     });
 
     it('applies priority independently per position', () => {
@@ -1014,7 +1177,13 @@ describe('@mantine/core/Notifications', () => {
 
     expect(getInertCount()).toBe(1);
 
-    const front = container.querySelectorAll('.mantine-Notification-root')[1];
+    // Synthetic events ignore `inert` hit-testing, so the front notification has to be
+    // selected by the absence of `inert` – picking it by DOM index would let this pass
+    // while the notification a real touch user can reach is not wired up.
+    const front = Array.from(container.querySelectorAll('.mantine-Notification-root')).find(
+      (root) => !root.hasAttribute('inert')
+    )!;
+    expect(front).toBeDefined();
     act(() => {
       fireEvent.pointerDown(front, { pointerType: 'touch' });
     });

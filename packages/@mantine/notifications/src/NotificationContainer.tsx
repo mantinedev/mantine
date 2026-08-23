@@ -1,5 +1,11 @@
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
-import { getStyleObject, Notification, NotificationProps, useMantineTheme } from '@mantine/core';
+import {
+  extractStyleProps,
+  getStyleObject,
+  Notification,
+  NotificationProps,
+  useMantineTheme,
+} from '@mantine/core';
 import { useDrag, useMergedRef } from '@mantine/hooks';
 import { getAutoClose } from './get-auto-close/get-auto-close';
 import { NotificationData } from './notifications.store';
@@ -30,14 +36,42 @@ interface NotificationContainerProps extends NotificationProps {
 
 const MAX_VISIBLE_STACK_DEPTH = 4;
 
-const FORWARDED_DOM_PROPS = ['id', 'tabIndex'];
+/**
+ * Props that belong to the default `Notification` rendering or to the Styles API and must
+ * not reach the plain `div` used for custom rendering. Everything else is a valid div prop
+ * and is forwarded – an allow list would silently drop supported props like `onClick`,
+ * `dir`, `lang` or `hidden`.
+ */
+const NON_DOM_PROPS = new Set([
+  'classNames',
+  'styles',
+  'unstyled',
+  'vars',
+  'attributes',
+  'variant',
+  'color',
+  'radius',
+  'icon',
+  'title',
+  'loading',
+  'withBorder',
+  'withCloseButton',
+  'closeButtonProps',
+  'className',
+  'style',
+  'role',
+  'ref',
+  'children',
+  'mod',
+]);
 
-function pickDomAttributes(props: Record<string, any>) {
+function pickDomProps(props: Record<string, any>) {
+  // Mantine style props (`mt`, `bg`, `w`, …) are valid `NotificationProps` but are not DOM
+  // attributes, so they are separated out rather than leaked onto the element.
+  const { rest } = extractStyleProps(props);
+
   return Object.fromEntries(
-    Object.entries(props).filter(
-      ([key]) =>
-        key.startsWith('data-') || key.startsWith('aria-') || FORWARDED_DOM_PROPS.includes(key)
-    )
+    Object.entries(rest).filter(([key, value]) => !NON_DOM_PROPS.has(key) && value !== undefined)
   );
 }
 
@@ -95,7 +129,6 @@ export function NotificationContainer({
   // hovered or focused never fires `mouseleave` or `blur`, which would otherwise leave the
   // stack expanded and auto close paused forever.
   const contributedActiveRef = useRef(false);
-  const releaseActiveRef = useRef<() => void>(() => {});
   const offsetRef = useRef(0);
   const isCloseDisabled = allowClose === false;
 
@@ -111,14 +144,14 @@ export function NotificationContainer({
     }
   };
 
-  releaseActiveRef.current = () => {
+  const releaseActive = useEffectEvent(() => {
     if (contributedActiveRef.current) {
       contributedActiveRef.current = false;
       onHoverEnd?.();
     }
-  };
+  });
 
-  useEffect(() => () => releaseActiveRef.current(), []);
+  useEffect(() => () => releaseActive(), []);
 
   const cancelAutoClose = () => window.clearTimeout(autoCloseTimeout.current);
   const cancelHide = () => window.clearTimeout(hideTimeout.current);
@@ -136,8 +169,15 @@ export function NotificationContainer({
     cancelScrollDismissReset();
   };
 
+  // `handleAutoClose` is also called from timeouts scheduled in earlier renders, so the
+  // latest `paused` is read through a ref. Written in an effect rather than during render –
+  // this effect is declared before every effect that calls `handleAutoClose`, so it is
+  // always up to date by the time they run.
   const pausedRef = useRef(paused);
-  pausedRef.current = paused;
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  });
 
   const handleAutoClose = () => {
     if (
@@ -318,20 +358,27 @@ export function NotificationContainer({
   };
 
   // Keyboard users never trigger the hover handlers, and touch devices have no hover at
-  // all – both need a way to expand a collapsed stack.
-  const handleFocusCapture = () => {
-    focusedRef.current = true;
-    cancelAutoClose();
-    syncActive();
-  };
+  // all – both need a way to expand a collapsed stack. Scoped to the stacked layout: its
+  // only purpose is keeping the stack expanded, and applying it everywhere would silently
+  // change the default layout, where a notification that merely contains the focused
+  // element (an action button the user just clicked) would stop auto closing.
+  const handleFocusCapture = isStackedLayout
+    ? () => {
+        focusedRef.current = true;
+        cancelAutoClose();
+        syncActive();
+      }
+    : undefined;
 
-  const handleBlurCapture = () => {
-    focusedRef.current = false;
-    if (!scrollDismissActive) {
-      handleAutoClose();
-    }
-    syncActive();
-  };
+  const handleBlurCapture = isStackedLayout
+    ? () => {
+        focusedRef.current = false;
+        if (!scrollDismissActive) {
+          handleAutoClose();
+        }
+        syncActive();
+      }
+    : undefined;
 
   const handlePointerDownCapture = (event: React.PointerEvent) => {
     // Explicitly opt in for touch and pen: hover already covers the mouse, and an unknown
@@ -436,32 +483,47 @@ export function NotificationContainer({
     return cancelAutoClose;
   }, [paused]);
 
+  const consumerProps: Record<string, any> = { ...others, ...notificationProps };
+
+  // The interaction handlers below are internal, but the same events are part of the public
+  // props of both `Notifications` and every notification – they are composed with whatever
+  // the consumer passed instead of replacing it.
   const interactionProps = {
     style: notificationStyle,
     // A collapsed notification is hidden behind the one in front of it – `pointer-events`
     // alone does not take its controls out of the tab order or hide them from a screen
     // reader, so it is fully inert until the stack is expanded.
     inert: isCollapsed,
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
-    onFocusCapture: handleFocusCapture,
-    onBlurCapture: handleBlurCapture,
-    onPointerDownCapture: handlePointerDownCapture,
+    onMouseEnter: (event: React.MouseEvent<HTMLDivElement>) => {
+      consumerProps.onMouseEnter?.(event);
+      handleMouseEnter();
+    },
+    onMouseLeave: (event: React.MouseEvent<HTMLDivElement>) => {
+      consumerProps.onMouseLeave?.(event);
+      handleMouseLeave();
+    },
+    onFocusCapture: (event: React.FocusEvent<HTMLDivElement>) => {
+      consumerProps.onFocusCapture?.(event);
+      handleFocusCapture?.();
+    },
+    onBlurCapture: (event: React.FocusEvent<HTMLDivElement>) => {
+      consumerProps.onBlurCapture?.(event);
+      handleBlurCapture?.();
+    },
+    onPointerDownCapture: (event: React.PointerEvent<HTMLDivElement>) => {
+      consumerProps.onPointerDownCapture?.(event);
+      handlePointerDownCapture(event);
+    },
   };
 
   if (renderNotification) {
-    const forwardedAttributes = {
-      ...pickDomAttributes(others),
-      ...pickDomAttributes(notificationProps),
-    };
-
     const classNames = [others.className, notificationProps.className].filter(Boolean).join(' ');
 
     return (
       <div
         ref={mergedRef}
         role={notificationProps.role || others.role || 'alert'}
-        {...forwardedAttributes}
+        {...pickDomProps(consumerProps)}
         className={classNames || undefined}
         {...interactionProps}
       >

@@ -79,7 +79,7 @@ describe('@mantine/charts/WaffleChart', () => {
     // Without normalization the NaN poisons the sum and no segment gets any cell at all
     const filled = getCells(container).filter((cell) => !cell.hasAttribute('data-empty'));
     expect(filled).toHaveLength(100);
-    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 50, B: 0');
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 50, B: 0 of 50');
   });
 
   it('keeps every cell inside the svg viewport', () => {
@@ -131,7 +131,7 @@ describe('@mantine/charts/WaffleChart', () => {
     const grid = container.querySelector('svg')!;
 
     expect(grid).toHaveAttribute('role', 'img');
-    expect(grid).toHaveAttribute('aria-label', 'A: 40, B: 60');
+    expect(grid).toHaveAttribute('aria-label', 'A: 40, B: 60 of 100');
   });
 
   it('promotes the root to a group so a caller label is announced', () => {
@@ -142,7 +142,7 @@ describe('@mantine/charts/WaffleChart', () => {
     expect(root).toHaveAttribute('role', 'group');
     expect(root).toHaveAttribute('aria-label', 'Storage usage');
     // The grid keeps the generated data summary rather than being overwritten by it
-    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 60');
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 60 of 100');
   });
 
   it('supports aria-labelledby without losing the data summary', () => {
@@ -156,7 +156,7 @@ describe('@mantine/charts/WaffleChart', () => {
 
     expect(root).toHaveAttribute('role', 'group');
     expect(root).toHaveAttribute('aria-labelledby', 'waffle-title');
-    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 60');
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 60 of 100');
   });
 
   it('does not add a role to the root when there is no caller label', () => {
@@ -182,11 +182,35 @@ describe('@mantine/charts/WaffleChart', () => {
       />
     );
 
-    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 0');
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 0 of 40');
   });
 
   it('hides the legend from assistive tech because the grid label repeats it', () => {
     const { container } = render(<WaffleChart {...defaultProps} withLegend />);
     expect(container.querySelector('.mantine-WaffleChart-legend')).toHaveAttribute('aria-hidden');
+  });
+
+  it('reports the explicit total in the grid label', () => {
+    // 68 of 100 fills 68 cells and leaves 32 empty - the denominator is what makes that
+    // split readable to someone who cannot see the grid
+    const { container } = render(
+      <WaffleChart data={[{ name: 'Completed', value: 68, color: 'blue.6' }]} total={100} />
+    );
+
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'Completed: 68 of 100');
+  });
+
+  it('honors size when the gaps alone would exceed it', () => {
+    const { container } = render(
+      <WaffleChart {...defaultProps} rows={10} columns={10} gap={2} size={10} />
+    );
+
+    expect(getSvgSize(container).width).toBeCloseTo(10, 5);
+  });
+
+  it('treats size={0} as an explicit size rather than falling back to the default', () => {
+    const { container } = render(<WaffleChart {...defaultProps} gap={0} size={0} />);
+
+    expect(getSvgSize(container).width).toBe(0);
   });
 });

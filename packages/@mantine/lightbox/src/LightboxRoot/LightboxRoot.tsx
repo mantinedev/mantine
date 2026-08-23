@@ -304,6 +304,11 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   const fullscreenRequestedRef = useRef(false);
   const ownsFullscreenRef = useRef(false);
 
+  // A `requestFullscreen` that is still in flight, and whether it should be undone as soon
+  // as it settles because the lightbox closed in the meantime.
+  const pendingFullscreenRef = useRef<Promise<void> | null>(null);
+  const exitOnSettleRef = useRef(false);
+
   // Embla compares options by function source, so the `watchDrag` closure above must stay
   // textually stable – the current user options are read through this ref instead.
   const emblaOptionsRef = useRef(emblaOptions);
@@ -397,9 +402,27 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
       ownsFullscreenRef.current = false;
     }
 
-    toggleFullscreenFn().catch(() => {
-      fullscreenRequestedRef.current = false;
-    });
+    const request = toggleFullscreenFn()
+      .then(() => {
+        // Closing while `requestFullscreen` is still pending cannot exit anything yet – the
+        // browser has not entered fullscreen. The exit has to be retried once the request
+        // settles, or the page is left fullscreen with no lightbox on top of it.
+        if (pendingFullscreenRef.current === request && exitOnSettleRef.current) {
+          exitOnSettleRef.current = false;
+          exitDocumentFullscreen();
+        }
+      })
+      .catch(() => {
+        fullscreenRequestedRef.current = false;
+        exitOnSettleRef.current = false;
+      })
+      .finally(() => {
+        if (pendingFullscreenRef.current === request) {
+          pendingFullscreenRef.current = null;
+        }
+      });
+
+    pendingFullscreenRef.current = request;
   }, [toggleFullscreenFn, isFullscreen]);
 
   useEffect(() => {
@@ -415,6 +438,11 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   const exitOwnedFullscreen = useCallback(() => {
     if (!ownsFullscreenRef.current && !fullscreenRequestedRef.current) {
       return;
+    }
+
+    // A request that has not settled yet cannot be exited now – it is exited when it does.
+    if (pendingFullscreenRef.current !== null && fullscreenRequestedRef.current) {
+      exitOnSettleRef.current = true;
     }
 
     fullscreenRequestedRef.current = false;
@@ -463,6 +491,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   useLightboxKeyboard({
     opened,
     enabled: withKeyboardEvents!,
+    dir,
     onClose,
     onNext: handleNext,
     onPrev: handlePrev,
@@ -626,7 +655,6 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   return (
     <OptionalPortal withinPortal={withinPortal}>
       <LightboxContextProvider value={contextValue}>
-        {' '}
         <RemoveScroll enabled={shouldLockScroll}>
           <Box {...getStyles('root')}>
             <Transition mounted={opened} {...overlayTransition}>
@@ -657,7 +685,9 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
                     {withInitialFocusPlaceholder && <FocusTrap.InitialFocus />}
 
                     <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
-                      {`${_labels.slideLabel(_currentIndex + 1, slides.length)}${currentSlideLabel ? `: ${currentSlideLabel}` : ''}`}
+                      {slides.length > 0
+                        ? `${_labels.slideLabel(_currentIndex + 1, slides.length)}${currentSlideLabel ? `: ${currentSlideLabel}` : ''}`
+                        : null}
                     </VisuallyHidden>
                     {children}
                   </Box>

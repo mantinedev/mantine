@@ -308,6 +308,25 @@ describe('@mantine/lightbox/LightboxRoot embla integration', () => {
     expect(onIndexChange).toHaveBeenCalledWith(1);
   });
 
+  it('follows the reading direction for arrow keys in RTL', async () => {
+    const onIndexChange = jest.fn();
+
+    await renderWithAct(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <Lightbox {...defaultProps} currentIndex={1} onIndexChange={onIndexChange} />
+      </DirectionProvider>
+    );
+
+    // Slides advance leftwards in RTL, matching the mirrored navigation chevrons - in LTR
+    // this same key would move to slide 0
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(onIndexChange).toHaveBeenLastCalledWith(2);
+
+    // ...and the right arrow goes back
+    await userEvent.keyboard('{ArrowRight}');
+    expect(onIndexChange).toHaveBeenLastCalledWith(1);
+  });
+
   it('keeps loop and startIndex managed but honors watchDrag inside emblaOptions breakpoints', async () => {
     const breakpointWatchDrag = jest.fn(() => true);
 

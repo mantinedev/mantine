@@ -101,8 +101,10 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
         ))}
       </div>
 
+      {/* An empty gallery has no slide to count – rendering the counter anyway would show
+          an impossible "1 / 0". */}
       <span {...ctx.getStyles('counter', stylesApiProps)} aria-hidden="true">
-        {ctx.currentIndex + 1} / {ctx.slides.length}
+        {ctx.slides.length > 0 ? `${ctx.currentIndex + 1} / ${ctx.slides.length}` : null}
       </span>
 
       <div {...ctx.getStyles('toolbarGroup', stylesApiProps)}>

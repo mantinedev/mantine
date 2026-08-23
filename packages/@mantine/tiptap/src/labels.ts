@@ -138,52 +138,59 @@ export interface RichTextEditorLabels {
   tasksLiftLabel: string;
 
   /** RichTextEditor.TableInsert control aria-label */
-  tableInsertControlLabel: string;
+  tableInsertControlLabel?: string;
 
   /** A function to get RichTextEditor.TableInsert grid cell aria-label based on selected size */
-  tableInsertLabel: (columns: number, rows: number) => string;
+  tableInsertLabel?: (columns: number, rows: number) => string;
 
   /** RichTextEditor.TableDelete control aria-label */
-  tableDeleteControlLabel: string;
+  tableDeleteControlLabel?: string;
 
   /** RichTextEditor.TableColumnBefore control aria-label */
-  tableColumnBeforeControlLabel: string;
+  tableColumnBeforeControlLabel?: string;
 
   /** RichTextEditor.TableColumnAfter control aria-label */
-  tableColumnAfterControlLabel: string;
+  tableColumnAfterControlLabel?: string;
 
   /** RichTextEditor.TableColumnDelete control aria-label */
-  tableColumnDeleteControlLabel: string;
+  tableColumnDeleteControlLabel?: string;
 
   /** RichTextEditor.TableRowBefore control aria-label */
-  tableRowBeforeControlLabel: string;
+  tableRowBeforeControlLabel?: string;
 
   /** RichTextEditor.TableRowAfter control aria-label */
-  tableRowAfterControlLabel: string;
+  tableRowAfterControlLabel?: string;
 
   /** RichTextEditor.TableRowDelete control aria-label */
-  tableRowDeleteControlLabel: string;
+  tableRowDeleteControlLabel?: string;
 
   /** RichTextEditor.TableToggleHeaderRow control aria-label */
-  tableToggleHeaderRowControlLabel: string;
+  tableToggleHeaderRowControlLabel?: string;
 
   /** RichTextEditor.TableToggleHeaderColumn control aria-label */
-  tableToggleHeaderColumnControlLabel: string;
+  tableToggleHeaderColumnControlLabel?: string;
 
   /** RichTextEditor.TableMergeCells control aria-label */
-  tableMergeCellsControlLabel: string;
+  tableMergeCellsControlLabel?: string;
 
   /** RichTextEditor.TableSplitCell control aria-label */
-  tableSplitCellControlLabel: string;
+  tableSplitCellControlLabel?: string;
 
   /** RichTextEditor.Details control aria-label */
-  detailsControlLabel: string;
+  detailsControlLabel?: string;
 
   /** RichTextEditor.InvisibleCharacters control aria-label */
-  invisibleCharactersControlLabel: string;
+  invisibleCharactersControlLabel?: string;
 }
 
-export const DEFAULT_LABELS: RichTextEditorLabels = {
+/**
+ * Labels after they have been merged with `DEFAULT_LABELS` – every entry is guaranteed to be
+ * present. `RichTextEditorLabels` itself keeps the newer entries optional so that a fully
+ * typed localization object written against an earlier version still compiles.
+ */
+export type ResolvedRichTextEditorLabels = Required<RichTextEditorLabels>;
+
+export const DEFAULT_LABELS: ResolvedRichTextEditorLabels = {
   // Controls labels
   linkControlLabel: 'Link',
   colorPickerControlLabel: 'Text color',

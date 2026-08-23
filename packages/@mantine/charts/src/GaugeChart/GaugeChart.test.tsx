@@ -58,18 +58,39 @@ describe('@mantine/charts/GaugeChart', () => {
     );
     const [, , width, height] = getViewBox(container);
 
-    // Arc diameter (188) plus stroke padding (9) on both sides
-    expect(width).toBeCloseTo(206, 5);
-    expect(height).toBeCloseTo(206, 5);
+    // Arc diameter (188) plus half the stroke (6) on both sides - with no `target` there is
+    // no needle to reserve room for, so the gauge fills exactly the requested size
+    expect(width).toBeCloseTo(200, 5);
+    expect(height).toBeCloseTo(200, 5);
+  });
+
+  it('reserves room for the target needle only when a target is set', () => {
+    const withoutTarget = render(
+      <GaugeChart {...defaultProps} size={200} thickness={12} startAngle={0} endAngle={360} />
+    );
+    const withTarget = render(
+      <GaugeChart
+        {...defaultProps}
+        target={80}
+        size={200}
+        thickness={12}
+        startAngle={0}
+        endAngle={360}
+      />
+    );
+
+    expect(getViewBox(withoutTarget.container)[2]).toBeCloseTo(200, 5);
+    // The needle sticks out past the arc, so the viewBox has to grow to contain it
+    expect(getViewBox(withTarget.container)[2]).toBeCloseTo(206, 5);
   });
 
   it('excludes cardinal points that are outside the arc from the viewBox', () => {
     const { container } = render(<GaugeChart {...defaultProps} size={200} thickness={12} />);
     const [, , width, height] = getViewBox(container);
 
-    expect(width).toBeCloseTo(206, 5);
+    expect(width).toBeCloseTo(200, 5);
     // Default -120/120 arc does not reach the bottom of the circle
-    expect(height).toBeCloseTo(159, 5);
+    expect(height).toBeCloseTo(153, 5);
     expect(height).toBeLessThan(width);
   });
 
@@ -229,14 +250,24 @@ describe('@mantine/charts/GaugeChart', () => {
     expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'CPU usage');
   });
 
-  it('does not use the default value label as the accessible name', () => {
+  it('falls back to a generic name rather than leaving the meter unnamed', () => {
+    // `role="meter"` requires an accessible name - without one it is announced as just
+    // "meter". The formatted value is not used, it would only repeat `aria-valuetext`.
     const { container } = render(<GaugeChart value={72} />);
-    expect(container.querySelector('svg')).not.toHaveAttribute('aria-label');
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'Gauge');
   });
 
   it('does not use a non-string label as the accessible name', () => {
     const { container } = render(<GaugeChart value={72} label={<span>72%</span>} />);
-    expect(container.querySelector('svg')).not.toHaveAttribute('aria-label');
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'Gauge');
+  });
+
+  it('defers to aria-labelledby instead of adding a generic name', () => {
+    const { container } = render(<GaugeChart value={72} aria-labelledby="gauge-title" />);
+    const svg = container.querySelector('svg')!;
+
+    expect(svg).toHaveAttribute('aria-labelledby', 'gauge-title');
+    expect(svg).not.toHaveAttribute('aria-label');
   });
 
   it('prefers an explicit aria-label', () => {
