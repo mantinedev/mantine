@@ -28,11 +28,11 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
+import type { BaseChartStylesNames, GridChartBaseProps } from '../types';
 import {
   getCandlestickDomain,
   isRenderableValue,
 } from './get-candlestick-domain/get-candlestick-domain';
-import type { BaseChartStylesNames, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
 
 export interface CandlestickChartDataKeys {

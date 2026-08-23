@@ -1,6 +1,5 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { act, createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';

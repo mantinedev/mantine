@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import type { LightboxSlideStylesApiProps } from './LightboxSlide';
 import { useLightboxContext } from '../lightbox.context';
 import type { LightboxVideoSlide } from '../lightbox.types';
+import type { LightboxSlideStylesApiProps } from './LightboxSlide';
 
 interface VideoSlideProps {
   slide: LightboxVideoSlide;

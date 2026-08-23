@@ -50,9 +50,9 @@ import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYea
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { getMonthViewEvents } from './get-month-view-events/get-month-view-events';
 import { getRenderableMonthEventSegments } from './get-renderable-month-event-segments';
 import { clipSpanToVisibleColumns, getVisibleColumnMap } from './get-visible-columns';
-import { getMonthViewEvents } from './get-month-view-events/get-month-view-events';
 import { handleMonthViewKeyDown, MonthViewControlsRef } from './handle-month-view-key-down';
 import classes from './MonthView.module.css';
 

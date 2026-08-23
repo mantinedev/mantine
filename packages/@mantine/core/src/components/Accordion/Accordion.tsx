@@ -18,10 +18,10 @@ import { AccordionProvider } from './Accordion.context';
 import { AccordionChevronPosition, AccordionHeadingOrder, AccordionValue } from './Accordion.types';
 import { AccordionChevron } from './AccordionChevron';
 import { AccordionControl, type AccordionControlProps } from './AccordionControl/AccordionControl';
+import type { AccordionItemContextValue } from './AccordionItem.context';
 import { AccordionItem, type AccordionItemProps } from './AccordionItem/AccordionItem';
 import { AccordionPanel, type AccordionPanelProps } from './AccordionPanel/AccordionPanel';
 import classes from './Accordion.module.css';
-import type { AccordionItemContextValue } from './AccordionItem.context';
 export type AccordionStylesNames =
   | 'root'
   | 'content'

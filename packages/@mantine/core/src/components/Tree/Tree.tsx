@@ -15,8 +15,8 @@ import {
 } from '../../core';
 import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import { TreeNode } from './TreeNode';
-import type { TreeAllowDrop, TreeDragHandleProps } from './use-tree-node-drag-drop';
 import { TreeController, useTree } from './use-tree';
+import type { TreeAllowDrop, TreeDragHandleProps } from './use-tree-node-drag-drop';
 import classes from './Tree.module.css';
 
 export interface TreeNodeData {

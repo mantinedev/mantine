@@ -1,6 +1,6 @@
 import { renderWithAct, screen } from '@mantine-tests/core';
-import { LightboxNavigation } from './LightboxNavigation';
 import { LightboxWrapper, testSlides } from '../test-utils';
+import { LightboxNavigation } from './LightboxNavigation';
 
 describe('@mantine/lightbox/LightboxNavigation', () => {
   it('renders previous and next buttons', async () => {

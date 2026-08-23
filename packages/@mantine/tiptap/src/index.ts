@@ -7,11 +7,11 @@ import type {
 import type { RichTextEditorContentProps } from './RichTextEditorContent/RichTextEditorContent';
 import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
 import type { RichTextEditorControlProps } from './RichTextEditorControl/RichTextEditorControl';
+import type { RichTextEditorDetailsControlProps } from './RichTextEditorControl/RichTextEditorDetailsControl';
+import type { RichTextEditorInvisibleCharactersControlProps } from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl';
 import type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
 import type { RichTextEditorSourceCodeControlProps } from './RichTextEditorControl/RichTextEditorSourceCodeControl';
 import type { RichTextEditorTableInsertControlProps } from './RichTextEditorControl/RichTextEditorTableInsertControl';
-import type { RichTextEditorDetailsControlProps } from './RichTextEditorControl/RichTextEditorDetailsControl';
-import type { RichTextEditorInvisibleCharactersControlProps } from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl';
 import type { RichTextEditorControlsGroupProps } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
 import type { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTextEditorToolbar';
 

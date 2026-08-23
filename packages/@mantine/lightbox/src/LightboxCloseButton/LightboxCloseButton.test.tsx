@@ -1,6 +1,6 @@
 import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
-import { LightboxCloseButton } from './LightboxCloseButton';
 import { LightboxWrapper } from '../test-utils';
+import { LightboxCloseButton } from './LightboxCloseButton';
 
 describe('@mantine/lightbox/LightboxCloseButton', () => {
   it('uses closeLabel as aria-label', async () => {

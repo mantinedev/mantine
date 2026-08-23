@@ -1,4 +1,3 @@
-import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -8,8 +7,9 @@ import {
   Factory,
   useProps,
 } from '@mantine/core';
-import { useLightboxContext } from '../lightbox.context';
+import { useMergedRef } from '@mantine/hooks';
 import { useLightboxSwipeClose } from '../hooks/use-lightbox-swipe-close';
+import { useLightboxContext } from '../lightbox.context';
 import classes from '../Lightbox.module.css';
 
 export type LightboxSlidesStylesNames = 'slides' | 'slidesViewport' | 'slidesContainer';

@@ -1,8 +1,8 @@
 import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import type { LightboxSlideData, ToolbarItem } from '../lightbox.types';
 import { LightboxThumbnails } from '../LightboxThumbnails/LightboxThumbnails';
-import { LightboxToolbar } from './LightboxToolbar';
 import { LightboxWrapper } from '../test-utils';
+import { LightboxToolbar } from './LightboxToolbar';
 
 describe('@mantine/lightbox/LightboxToolbar', () => {
   it('renders slide counter', async () => {

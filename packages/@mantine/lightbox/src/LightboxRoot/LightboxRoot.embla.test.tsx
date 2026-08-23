@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { act } from '@testing-library/react';
-import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import { DirectionProvider } from '@mantine/core';
+import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import { Lightbox } from '../Lightbox';
 
 /**

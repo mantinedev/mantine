@@ -6,11 +6,11 @@ import type { LightboxSlideData } from './lightbox.types';
 import { LightboxCaption } from './LightboxCaption/LightboxCaption';
 import { LightboxCloseButton } from './LightboxCloseButton/LightboxCloseButton';
 import { LightboxNavigation } from './LightboxNavigation/LightboxNavigation';
+import { LightboxRoot } from './LightboxRoot/LightboxRoot';
 import { LightboxSlide } from './LightboxSlide/LightboxSlide';
 import { LightboxSlides } from './LightboxSlides/LightboxSlides';
 import { LightboxThumbnails } from './LightboxThumbnails/LightboxThumbnails';
 import { LightboxToolbar } from './LightboxToolbar/LightboxToolbar';
-import { LightboxRoot } from './LightboxRoot/LightboxRoot';
 
 const slides: LightboxSlideData[] = [
   { src: 'image1.jpg', alt: 'First image', caption: 'Caption 1' },

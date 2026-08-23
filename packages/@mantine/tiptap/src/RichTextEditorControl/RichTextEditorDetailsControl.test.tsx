@@ -1,8 +1,8 @@
+import { act, waitFor } from '@testing-library/react';
 import { Details, DetailsContent, DetailsSummary } from '@tiptap/extension-details';
 import { NodeSelection } from '@tiptap/pm/state';
 import { Editor, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { act, waitFor } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { RichTextEditor } from '../RichTextEditor';
 

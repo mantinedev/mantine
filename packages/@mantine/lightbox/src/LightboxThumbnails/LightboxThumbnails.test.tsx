@@ -1,7 +1,7 @@
 import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import type { LightboxSlideData } from '../lightbox.types';
-import { LightboxThumbnails } from './LightboxThumbnails';
 import { LightboxWrapper } from '../test-utils';
+import { LightboxThumbnails } from './LightboxThumbnails';
 
 describe('@mantine/lightbox/LightboxThumbnails', () => {
   it('renders thumbnails when withThumbnails is true', async () => {

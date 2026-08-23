@@ -15,12 +15,12 @@ import { Affix, AffixBaseProps } from '../Affix';
 import { Paper, PaperBaseProps } from '../Paper';
 import { Transition, TransitionOverride } from '../Transition';
 import { ActionBarProvider } from './ActionBar.context';
-import classes from './ActionBar.module.css';
 import {
   ActionBarCloseButton,
   ActionBarCloseButtonStylesNames,
 } from './ActionBarCloseButton/ActionBarCloseButton';
 import { ActionBarDivider, ActionBarDividerStylesNames } from './ActionBarDivider/ActionBarDivider';
+import classes from './ActionBar.module.css';
 
 export type ActionBarStylesNames =
   | 'root'

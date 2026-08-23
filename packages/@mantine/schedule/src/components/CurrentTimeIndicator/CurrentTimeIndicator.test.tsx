@@ -1,6 +1,5 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import utc from 'dayjs/plugin/utc';
 import { DatesProvider } from '@mantine/dates';
 import { render, tests } from '@mantine-tests/core';

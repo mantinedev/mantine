@@ -1,6 +1,6 @@
 import { Button, Group, Text } from '@mantine/core';
-import { createNotificationsStore, showNotification } from './notifications.store';
 import { Notifications } from './Notifications';
+import { createNotificationsStore, showNotification } from './notifications.store';
 
 export default { title: 'Notifications' };
 
