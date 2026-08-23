@@ -63,5 +63,8 @@ Cells that are not allocated to any segment use `--waffle-empty-color` – set t
 
 The grid is exposed to screen readers as a single image labelled with every segment name and value,
 so the data is available whether or not the legend is displayed. The legend itself is `aria-hidden`
-because it repeats those names visually. Set `aria-label` on the chart to describe what the values
-represent – it labels the chart as a whole and does not replace the generated grid label.
+because it repeats those names visually.
+
+Set `aria-label` (or `aria-labelledby`) to describe what the values represent. The chart root then
+becomes a labelled group – a plain `div` cannot carry an accessible name – and your label is
+announced alongside the generated data summary rather than replacing it.
