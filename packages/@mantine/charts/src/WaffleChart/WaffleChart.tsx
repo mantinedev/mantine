@@ -123,14 +123,18 @@ function allocateCells(
   gridCells: number,
   totalValue?: number
 ): AllocatedCell[] {
-  const sum = data.reduce((acc, d) => acc + d.value, 0);
+  // A part-to-whole chart has no meaning for negative values, and letting them through
+  // would allocate more cells than the grid can hold.
+  const values = data.map((d) => Math.max(0, d.value));
+  const sum = values.reduce((acc, value) => acc + value, 0);
+
   if (sum === 0) {
     return Array.from({ length: gridCells }, () => ({ segmentIndex: -1 }));
   }
 
   const denominator = totalValue != null ? Math.max(totalValue, sum) : sum;
   const filledTarget = Math.round((sum / denominator) * gridCells);
-  const raw = data.map((d) => (d.value / sum) * filledTarget);
+  const raw = values.map((value) => (value / sum) * filledTarget);
   const floored = raw.map(Math.floor);
   const remainder = filledTarget - floored.reduce((a, b) => a + b, 0);
 
@@ -142,7 +146,7 @@ function allocateCells(
 
   const cells: AllocatedCell[] = [];
   data.forEach((_, i) => {
-    for (let j = 0; j < floored[i]; j++) {
+    for (let j = 0; j < floored[i] && cells.length < gridCells; j++) {
       cells.push({ segmentIndex: i });
     }
   });
@@ -204,8 +208,14 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
   );
   const [hoveredLegendIndex, setHoveredLegendIndex] = useState<number | null>(null);
 
-  const totalCells = rows! * columns!;
-  const cellSize = size ? (size - (columns! - 1) * gap!) / columns! : DEFAULT_CELL_SIZE;
+  const resolvedRows = Math.max(1, Math.floor(rows!));
+  const resolvedColumns = Math.max(1, Math.floor(columns!));
+  const resolvedGap = Math.max(0, gap!);
+
+  const totalCells = resolvedRows * resolvedColumns;
+  const cellSize = size
+    ? Math.max(0, (size - (resolvedColumns - 1) * resolvedGap) / resolvedColumns)
+    : DEFAULT_CELL_SIZE;
   const allocated = allocateCells(data, totalCells, total);
 
   const cellCounts = new Map<number, number>();
@@ -215,29 +225,29 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
     }
   }
 
-  const svgWidth = columns! * cellSize + (columns! - 1) * gap!;
-  const svgHeight = rows! * cellSize + (rows! - 1) * gap!;
+  const svgWidth = resolvedColumns * cellSize + (resolvedColumns - 1) * resolvedGap;
+  const svgHeight = resolvedRows * cellSize + (resolvedRows - 1) * resolvedGap;
 
   const cellElements = allocated.map((cell, index) => {
     let row: number;
     let col: number;
 
     if (fillDirection === 'top-to-bottom') {
-      col = Math.floor(index / rows!);
-      row = index % rows!;
+      col = Math.floor(index / resolvedRows);
+      row = index % resolvedRows;
     } else if (fillDirection === 'bottom-to-top') {
-      col = Math.floor(index / rows!);
-      row = rows! - 1 - (index % rows!);
+      col = Math.floor(index / resolvedRows);
+      row = resolvedRows - 1 - (index % resolvedRows);
     } else if (fillDirection === 'right-to-left') {
-      row = Math.floor(index / columns!);
-      col = columns! - 1 - (index % columns!);
+      row = Math.floor(index / resolvedColumns);
+      col = resolvedColumns - 1 - (index % resolvedColumns);
     } else {
-      row = Math.floor(index / columns!);
-      col = index % columns!;
+      row = Math.floor(index / resolvedColumns);
+      col = index % resolvedColumns;
     }
 
-    const x = col * (cellSize + gap!);
-    const y = row * (cellSize + gap!);
+    const x = col * (cellSize + resolvedGap);
+    const y = row * (cellSize + resolvedGap);
     const segmentIndex = cell.segmentIndex;
     const isEmpty = segmentIndex < 0;
     const color = isEmpty ? undefined : getThemeColor(data[segmentIndex].color, theme);

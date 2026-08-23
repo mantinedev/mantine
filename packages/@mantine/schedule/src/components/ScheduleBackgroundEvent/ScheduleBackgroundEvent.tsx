@@ -2,11 +2,11 @@ import { Box, BoxProps, ElementProps, UnstyledButton, useMantineTheme } from '@m
 import { ScheduleEventData } from '../../types';
 import { RenderEvent, RenderEventBody } from '../ScheduleEvent/ScheduleEvent';
 
-export interface ScheduleBackgroundEventProps extends BoxProps, ElementProps<'div'> {
+export interface ScheduleBackgroundEventProps extends BoxProps, ElementProps<'div', 'onClick'> {
   /** Background event to display */
   event: ScheduleEventData;
 
-  /** If set, the event is rendered as a button and can be clicked @default false */
+  /** If set, the root element is a `button` instead of a `div` and the event can be clicked @default false */
   interactive?: boolean;
 
   /** Called when the event is clicked, only when `interactive` is set */
@@ -54,13 +54,17 @@ export function ScheduleBackgroundEvent({
       : null),
   };
 
+  // The root element switches between a div and a button depending on `interactive`, so
+  // the shared prop bag cannot satisfy both element types at once.
+  const rootProps = eventProps as Parameters<RenderEvent>[1];
+
   if (typeof renderEvent === 'function') {
-    return renderEvent(event, eventProps as any);
+    return renderEvent(event, rootProps);
   }
 
   return interactive ? (
-    <UnstyledButton {...(eventProps as any)} />
+    <UnstyledButton {...rootProps} />
   ) : (
-    <Box {...(eventProps as any)} />
+    <Box {...(rootProps as React.ComponentPropsWithoutRef<'div'>)} />
   );
 }

@@ -814,4 +814,203 @@ describe('@mantine/core/Notifications', () => {
     // Notification should now be closed
     expect(store.getState().notifications).toHaveLength(0);
   });
+
+  it('marks collapsed stacked notifications as inert', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+    });
+
+    const roots = Array.from(container.querySelectorAll('.mantine-Notification-root'));
+    expect(roots).toHaveLength(2);
+
+    // The newest notification is in front and stays interactive, the one behind it does not
+    const inertCount = roots.filter((root) => root.hasAttribute('inert')).length;
+    expect(inertCount).toBe(1);
+  });
+
+  it('expands the stack when focus moves into a notification', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+    });
+
+    const getInertCount = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      ).length;
+
+    expect(getInertCount()).toBe(1);
+
+    const front = container.querySelectorAll('.mantine-Notification-root')[1];
+    act(() => {
+      fireEvent.focus(front);
+    });
+
+    expect(getInertCount()).toBe(0);
+  });
+
+  it('pins the stack open on a touch tap and releases it on an outside tap', () => {
+    // jsdom has no PointerEvent, so React reports `pointerType` as null unless one exists
+    class MockPointerEvent extends MouseEvent {
+      pointerType: string;
+
+      constructor(type: string, props: MouseEventInit & { pointerType?: string } = {}) {
+        super(type, props);
+        this.pointerType = props.pointerType ?? 'mouse';
+      }
+    }
+    const originalPointerEvent = (window as any).PointerEvent;
+    (window as any).PointerEvent = MockPointerEvent;
+
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+    });
+
+    const getInertCount = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      ).length;
+
+    expect(getInertCount()).toBe(1);
+
+    const front = container.querySelectorAll('.mantine-Notification-root')[1];
+    act(() => {
+      fireEvent.pointerDown(front, { pointerType: 'touch' });
+    });
+    expect(getInertCount()).toBe(0);
+
+    // A mouse press elsewhere collapses it again
+    act(() => {
+      fireEvent.pointerDown(document.body, { pointerType: 'touch' });
+    });
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+    expect(getInertCount()).toBe(1);
+
+    (window as any).PointerEvent = originalPointerEvent;
+  });
+
+  it('does not expand the stack on a mouse pointer press', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+    });
+
+    const front = container.querySelectorAll('.mantine-Notification-root')[1];
+    act(() => {
+      fireEvent.pointerDown(front, { pointerType: 'mouse' });
+    });
+
+    const inertCount = Array.from(container.querySelectorAll('.mantine-Notification-root')).filter(
+      (root) => root.hasAttribute('inert')
+    ).length;
+    expect(inertCount).toBe(1);
+  });
+
+  it('releases the expanded stack when a focused notification is dismissed', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+    });
+
+    const getInertCount = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      ).length;
+
+    const front = container.querySelectorAll('.mantine-Notification-root')[1];
+    act(() => {
+      fireEvent.focus(front);
+    });
+    expect(getInertCount()).toBe(0);
+
+    // The focused notification is removed without ever firing a blur event
+    act(() => {
+      notifications.hide('b', store);
+      jest.advanceTimersByTime(100);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
+    // The remaining notification is the only one left, so nothing is collapsed behind it,
+    // but the stack must no longer be held open by the dismissed notification
+    expect(container.querySelectorAll('.mantine-Notification-root')).toHaveLength(1);
+
+    act(() => {
+      notifications.show({ id: 'c', message: 'Third' }, store);
+      jest.advanceTimersByTime(300);
+    });
+
+    expect(getInertCount()).toBe(1);
+  });
 });

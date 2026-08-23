@@ -67,10 +67,10 @@ export interface MatrixChartProps
   /** Cell border radius, @default 2 */
   cellRadius?: number;
 
-  /** Whether to show tooltip on hover, @default false */
+  /** If set, tooltip is displayed on cell hover, requires `getTooltipLabel` to be set @default false */
   withTooltip?: boolean;
 
-  /** Custom tooltip label formatter */
+  /** A function to generate tooltip label based on the hovered cell, required for the tooltip to be visible */
   getTooltipLabel?: (cell: MatrixChartCell) => React.ReactNode;
 
   /** Props passed down to the `Tooltip.Floating` component */
@@ -82,7 +82,7 @@ export interface MatrixChartProps
   /** Width reserved for y-axis labels, @default 60 */
   yLabelsWidth?: number;
 
-  /** Height reserved for x-axis labels, @default 30 */
+  /** Height reserved for x-axis labels, @default 60 */
   xLabelsHeight?: number;
 
   /** X-axis label position, @default 'bottom' */

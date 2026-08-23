@@ -71,6 +71,11 @@ one:
 
 <Demo data={TipTapDemos.details} />
 
+To support the control, [Typography](/core/typography) now styles `details` and `summary` elements –
+a border, padding and a custom disclosure triangle. This applies to all `details` elements inside
+`Typography`, not just those created by the editor. All of the new selectors have zero specificity
+(`:where()`), so they can be overridden without `!important`.
+
 ## RichTextEditor InvisibleCharacters control
 
 [RichTextEditor](/x/tiptap) can now display formatting marks. Install and register the

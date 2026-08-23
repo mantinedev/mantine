@@ -168,17 +168,22 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
   const previousLength = useRef<number>(0);
   const [hoveredCount, setHoveredCount] = useState(0);
   const [stackExpanded, setStackExpanded] = useState(false);
+  const [stackPinned, setStackPinned] = useState(false);
   const collapseTimeout = useRef<number>(-1);
 
   const handleHoverStart = useCallback(() => setHoveredCount((c) => c + 1), []);
   const handleHoverEnd = useCallback(() => setHoveredCount((c) => Math.max(0, c - 1)), []);
+
+  // Touch devices have no hover, so tapping the stack pins it open until the next tap
+  // outside of it. Without this the notifications behind the first one are unreachable.
+  const handleExpandRequest = useCallback(() => setStackPinned(true), []);
 
   useEffect(() => {
     if (layout !== 'stacked') {
       return undefined;
     }
 
-    if (hoveredCount > 0) {
+    if (hoveredCount > 0 || stackPinned) {
       window.clearTimeout(collapseTimeout.current);
       setStackExpanded(true);
     } else if (stackExpanded) {
@@ -188,7 +193,32 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     }
 
     return () => window.clearTimeout(collapseTimeout.current);
-  }, [hoveredCount, layout]);
+  }, [hoveredCount, stackPinned, layout]);
+
+  useEffect(() => {
+    if (!stackPinned) {
+      return undefined;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node | null;
+      const insideStack =
+        target !== null && Object.values(refs.current).some((element) => element?.contains(target));
+
+      if (!insideStack) {
+        setStackPinned(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, [stackPinned]);
+
+  useEffect(() => {
+    if (data.notifications.length === 0 || layout !== 'stacked') {
+      setStackPinned(false);
+    }
+  }, [data.notifications.length, layout]);
 
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -268,6 +298,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
               }
               onHoverStart={handleHoverStart}
               onHoverEnd={handleHoverEnd}
+              onExpandRequest={handleExpandRequest}
               renderNotification={
                 'renderNotification' in notification
                   ? notification.renderNotification
