@@ -1,7 +1,7 @@
 import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import type { LightboxSlideData } from '../lightbox.types';
 import { LightboxSlide } from './LightboxSlide';
-import { LightboxWrapper } from '../test-utils';
+import { LightboxWrapper, testSlides } from '../test-utils';
 
 describe('@mantine/lightbox/LightboxSlide', () => {
   it('renders image slide with correct src and alt', async () => {
@@ -163,5 +163,44 @@ describe('@mantine/lightbox/LightboxSlide', () => {
     expect(track).toHaveAttribute('src', 'captions.vtt');
     expect(track).toHaveAttribute('kind', 'captions');
     expect(track).toHaveAttribute('srclang', 'en');
+  });
+
+  it('sets inert attribute on inactive slides only', async () => {
+    await renderWithAct(
+      <LightboxWrapper currentIndex={1}>
+        {testSlides.map((slide, index) => (
+          <LightboxSlide key={index} slide={slide} index={index} data-testid={`slide-${index}`} />
+        ))}
+      </LightboxWrapper>
+    );
+
+    expect(screen.getByTestId('slide-0')).toHaveAttribute('inert');
+    expect(screen.getByTestId('slide-1')).not.toHaveAttribute('inert');
+    expect(screen.getByTestId('slide-2')).toHaveAttribute('inert');
+  });
+
+  it('loads the active image eagerly and inactive images lazily', async () => {
+    await renderWithAct(
+      <LightboxWrapper currentIndex={1}>
+        {testSlides.map((slide, index) => (
+          <LightboxSlide key={index} slide={slide} index={index} />
+        ))}
+      </LightboxWrapper>
+    );
+
+    expect(screen.getByRole('img', { name: 'First image' })).toHaveAttribute('loading', 'lazy');
+    expect(screen.getByRole('img', { name: 'Second image' })).toHaveAttribute('loading', 'eager');
+    expect(screen.getByRole('img', { name: 'Third image' })).toHaveAttribute('loading', 'lazy');
+  });
+
+  it('allows overriding loading attribute per slide', async () => {
+    const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo', loading: 'lazy' };
+    await renderWithAct(
+      <LightboxWrapper slides={[slide]} currentIndex={0}>
+        <LightboxSlide slide={slide} index={0} />
+      </LightboxWrapper>
+    );
+
+    expect(screen.getByRole('img', { name: 'Photo' })).toHaveAttribute('loading', 'lazy');
   });
 });

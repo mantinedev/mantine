@@ -59,6 +59,7 @@ export const LightboxSlide = factory<LightboxSlideFactory>((props) => {
       role="group"
       aria-roledescription="slide"
       aria-label={ctx.labels.slideLabel(index + 1, ctx.slides.length)}
+      inert={!active}
       {...others}
       onClick={(event) => {
         onClick?.(event);

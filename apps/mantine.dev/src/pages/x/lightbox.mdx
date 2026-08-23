@@ -39,6 +39,7 @@ const slides: LightboxSlideData[] = [
     thumbSrc: 'image-small.png', // Custom thumbnail URL, `src` is used if not set
     srcSet: 'image-2x.png 2x', // Optional srcset for responsive images
     sizes: '(max-width: 600px) 100vw, 50vw', // Optional sizes attribute
+    loading: 'lazy', // Optional loading attribute, see below
   },
 
   // Video slide
@@ -57,6 +58,26 @@ const slides: LightboxSlideData[] = [
     render: ({ active }) => <div>Custom content</div>,
     renderThumb: () => <span>Thumb</span>, // Custom thumbnail content
   },
+];
+```
+
+### Image loading
+
+All slides are mounted at once, so images are loaded lazily by default – only the active slide uses
+`loading="eager"`, every other slide uses `loading="lazy"` and is downloaded by the browser as it
+comes into view. This way opening a gallery with a large number of slides does not start a download
+for every image at once. Thumbnails are always lazy – note that `thumbSrc` falls back to `src`, so
+set it to a smaller image if the originals are large.
+
+Set the `loading` property on an image slide to override this per slide, for example to eagerly
+preload the slide next to the one that is opened first:
+
+```tsx
+import type { LightboxSlideData } from '@mantine/lightbox';
+
+const slides: LightboxSlideData[] = [
+  { src: 'image-1.png', alt: 'First' },
+  { src: 'image-2.png', alt: 'Second', loading: 'eager' },
 ];
 ```
 
@@ -343,7 +364,9 @@ To change labels for all lightboxes in your application, set `labels` in
 - Always set the `alt` property on image slides – without it the image is treated as decorative by screen readers; for video slides set the `label` property
 - All interactive elements have `aria-label` attributes; the `label` property is required for custom toolbar items
 - `aria-live="polite"` region announces slide changes (including the current slide `alt`/`label`) to screen readers
+- Inactive slides are `inert` – their content is hidden from screen readers and removed from the tab order, so only the current slide is reachable
 - Body scroll is locked when the lightbox is open
+- Fullscreen mode entered from the toolbar is exited automatically when the lightbox is closed
 
 ## Keyboard shortcuts
 

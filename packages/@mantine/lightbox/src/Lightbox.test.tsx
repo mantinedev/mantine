@@ -28,6 +28,55 @@ function getLightbox() {
   return screen.getByRole('dialog');
 }
 
+function mockFullscreenApi() {
+  const originalRequest = document.documentElement.requestFullscreen;
+  const originalExit = document.exitFullscreen;
+  let fullscreenElement: Element | null = null;
+  let deferred = false;
+
+  const notify = () => document.documentElement.dispatchEvent(new Event('fullscreenchange'));
+
+  const setFullscreenElement = (element: Element | null) => {
+    fullscreenElement = element;
+    notify();
+  };
+
+  Object.defineProperty(document, 'fullscreenElement', {
+    configurable: true,
+    get: () => fullscreenElement,
+  });
+
+  document.documentElement.requestFullscreen = jest.fn(async () => {
+    fullscreenElement = document.documentElement;
+    if (!deferred) {
+      notify();
+    }
+  });
+
+  document.exitFullscreen = jest.fn(async () => {
+    setFullscreenElement(null);
+  });
+
+  return {
+    get element() {
+      return fullscreenElement;
+    },
+    /** Applies fullscreen without dispatching `fullscreenchange`, so React state stays stale */
+    deferConfirmation: () => {
+      deferred = true;
+    },
+    confirm: () => act(() => notify()),
+    enterExternally: () => act(() => setFullscreenElement(document.documentElement)),
+    exitExternally: () => act(() => setFullscreenElement(null)),
+    exitSpy: document.exitFullscreen as jest.Mock,
+    restore: () => {
+      document.documentElement.requestFullscreen = originalRequest;
+      document.exitFullscreen = originalExit;
+      Reflect.deleteProperty(document, 'fullscreenElement');
+    },
+  };
+}
+
 const systemProps: LightboxProps = {
   ...defaultProps,
   withinPortal: false,
@@ -465,5 +514,127 @@ describe('@mantine/lightbox/Lightbox store', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(customStore.getState().opened).toBe(true);
     expect(lightboxStore.getState().opened).toBe(false);
+  });
+
+  describe('fullscreen cleanup', () => {
+    let fullscreen: ReturnType<typeof mockFullscreenApi>;
+
+    beforeEach(() => {
+      fullscreen = mockFullscreenApi();
+    });
+
+    afterEach(() => {
+      fullscreen.restore();
+    });
+
+    it('exits fullscreen that it entered when the lightbox is closed', async () => {
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+      expect(fullscreen.element).toBe(document.documentElement);
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
+      expect(fullscreen.element).toBe(null);
+    });
+
+    it('exits fullscreen that it entered when the lightbox unmounts', async () => {
+      const { unmount } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+      expect(fullscreen.element).toBe(document.documentElement);
+
+      await act(async () => {
+        unmount();
+      });
+
+      expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
+      expect(fullscreen.element).toBe(null);
+    });
+
+    it('does not exit fullscreen that it did not enter', async () => {
+      await fullscreen.enterExternally();
+
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      expect(fullscreen.exitSpy).not.toHaveBeenCalled();
+      expect(fullscreen.element).toBe(document.documentElement);
+    });
+
+    it('does not exit fullscreen when the user already left it manually', async () => {
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+      await userEvent.click(screen.getByLabelText('Exit fullscreen'));
+      expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not exit fullscreen re-entered by something else after a manual exit', async () => {
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+      await act(() => fullscreen.exitExternally());
+      await fullscreen.enterExternally();
+      expect(fullscreen.exitSpy).not.toHaveBeenCalled();
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      expect(fullscreen.exitSpy).not.toHaveBeenCalled();
+      expect(fullscreen.element).toBe(document.documentElement);
+    });
+
+    it('exits fullscreen requested before the browser confirmed the request', async () => {
+      fullscreen.deferConfirmation();
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+
+      // The document is fullscreen, but `fullscreenchange` has not fired yet, so React
+      // state still says it is not - the lightbox is responsible for it regardless.
+      expect(fullscreen.element).toBe(document.documentElement);
+      expect(screen.getByLabelText('Enter fullscreen')).toBeInTheDocument();
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      expect(fullscreen.exitSpy).toHaveBeenCalled();
+      expect(fullscreen.element).toBe(null);
+    });
   });
 });

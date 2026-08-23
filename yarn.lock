@@ -4379,12 +4379,12 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "npm:9.5.1"
+    "@mantine/store": "npm:9.5.2"
     react: "npm:19.2.7"
     react-dom: "npm:19.2.7"
   peerDependencies:
-    "@mantine/core": 9.5.1
-    "@mantine/hooks": 9.5.1
+    "@mantine/core": 9.5.2
+    "@mantine/hooks": 9.5.2
     embla-carousel: ">=8.0.0"
     embla-carousel-react: ">=8.0.0"
     react: ^19.2.0
@@ -4488,15 +4488,6 @@ __metadata:
     react-dom: ^19.2.0
   languageName: unknown
   linkType: soft
-
-"@mantine/store@npm:9.5.1":
-  version: 9.5.1
-  resolution: "@mantine/store@npm:9.5.1"
-  peerDependencies:
-    react: ^19.2.0
-  checksum: 10c0/20a0d0a27831df897c4b0652fd18e1c3045723256102528cb1e603c85d6b68206652ddc845c603105dcc8aa5bbafb9f626870c3a4a13e03cd81f628c67795527
-  languageName: node
-  linkType: hard
 
 "@mantine/store@npm:9.5.2, @mantine/store@workspace:*, @mantine/store@workspace:packages/@mantine/store":
   version: 0.0.0-use.local

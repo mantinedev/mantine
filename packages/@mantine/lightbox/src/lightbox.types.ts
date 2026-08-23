@@ -21,6 +21,9 @@ export interface LightboxImageSlide {
 
   /** Image `sizes` attribute for responsive images */
   sizes?: string;
+
+  /** Image `loading` attribute, `'eager'` for the active slide and `'lazy'` for all other slides by default */
+  loading?: 'eager' | 'lazy';
 }
 
 export interface LightboxVideoSlideTrack {

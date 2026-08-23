@@ -76,7 +76,13 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
         {hasCustomThumb ? (
           slide.renderThumb!()
         ) : thumbSrc ? (
-          <img {...ctx.getStyles('thumbnailImage')} src={thumbSrc} alt="" draggable={false} />
+          <img
+            {...ctx.getStyles('thumbnailImage')}
+            src={thumbSrc}
+            alt=""
+            loading="lazy"
+            draggable={false}
+          />
         ) : null}
       </UnstyledButton>
     );

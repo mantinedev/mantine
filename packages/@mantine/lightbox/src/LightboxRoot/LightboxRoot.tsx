@@ -170,6 +170,19 @@ const defaultContentTransition: MantineTransition = {
   transitionProperty: 'transform, opacity',
 };
 
+function exitDocumentFullscreen() {
+  const _document = document as any;
+  const exit =
+    _document.exitFullscreen ||
+    _document.msExitFullscreen ||
+    _document.webkitExitFullscreen ||
+    _document.mozCancelFullScreen;
+
+  if (typeof exit === 'function') {
+    Promise.resolve(exit.call(_document)).catch(() => {});
+  }
+}
+
 const varsResolver = createVarsResolver<LightboxRootFactory>((_, { transitionDuration }) => ({
   root: {
     '--lightbox-transition-duration': `${transitionDuration}ms`,
@@ -243,6 +256,8 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   const zoomIsActive = useRef(false);
   const currentIndexRef = useRef(_currentIndex);
   const setCurrentIndexRef = useRef(setCurrentIndex);
+  const fullscreenRequestedRef = useRef(false);
+  const ownsFullscreenRef = useRef(false);
 
   const [startIndex, setStartIndex] = useState(_currentIndex);
   const [prevOpened, setPrevOpened] = useState(opened);
@@ -269,8 +284,35 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   }, []);
 
   const toggleFullscreen = useCallback(() => {
-    toggleFullscreenFn();
-  }, [toggleFullscreenFn]);
+    fullscreenRequestedRef.current = !isFullscreen;
+    if (isFullscreen) {
+      ownsFullscreenRef.current = false;
+    }
+
+    toggleFullscreenFn().catch(() => {
+      fullscreenRequestedRef.current = false;
+    });
+  }, [toggleFullscreenFn, isFullscreen]);
+
+  useEffect(() => {
+    if (!isFullscreen) {
+      fullscreenRequestedRef.current = false;
+      ownsFullscreenRef.current = false;
+    } else if (fullscreenRequestedRef.current) {
+      fullscreenRequestedRef.current = false;
+      ownsFullscreenRef.current = true;
+    }
+  }, [isFullscreen]);
+
+  const exitOwnedFullscreen = useCallback(() => {
+    if (!ownsFullscreenRef.current && !fullscreenRequestedRef.current) {
+      return;
+    }
+
+    fullscreenRequestedRef.current = false;
+    ownsFullscreenRef.current = false;
+    exitDocumentFullscreen();
+  }, []);
 
   const zoom = useLightboxZoom({
     enabled: !!withZoom,
@@ -290,8 +332,11 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     if (!opened) {
       resetZoom();
       setThumbnailsVisible(!!withThumbnails);
+      exitOwnedFullscreen();
     }
-  }, [opened, resetZoom, withThumbnails]);
+  }, [opened, resetZoom, withThumbnails, exitOwnedFullscreen]);
+
+  useEffect(() => exitOwnedFullscreen, [exitOwnedFullscreen]);
 
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();

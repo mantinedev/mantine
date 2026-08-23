@@ -18,6 +18,7 @@ export function ImageSlide({ slide, active }: ImageSlideProps) {
       alt={slide.alt ?? ''}
       srcSet={slide.srcSet}
       sizes={slide.sizes}
+      loading={slide.loading ?? (active ? 'eager' : 'lazy')}
       draggable={false}
       data-reduce-motion="true"
       {...zoomProps}
