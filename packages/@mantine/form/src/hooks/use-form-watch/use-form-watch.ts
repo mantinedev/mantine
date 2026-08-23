@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useSyncExternalStore } from 'react';
 import { getPath } from '../../paths';
 import { FormPathValue, LooseKeys } from '../../paths.types';
-import { FormFieldSubscriber, Watch } from '../../types';
+import { FormFieldSubscriber, UseWatchValue, Watch } from '../../types';
 import { $FormStatus } from '../use-form-status/use-form-status';
 import { $FormValues, SetValuesSubscriberPayload } from '../use-form-values/use-form-values';
 
@@ -14,6 +14,7 @@ interface UseFormWatchInput<out Values extends Record<PropertyKey, any>> {
 export interface $FormWatch<Values extends Record<PropertyKey, any>> {
   subscribers: React.RefObject<Record<string, FormFieldSubscriber<Values, any>[]>>;
   watch: Watch<Values, any>;
+  useWatchValue: UseWatchValue<Values>;
   getFieldSubscribers: (path: any) => ((input: SetValuesSubscriberPayload<Values>) => void)[];
   notifyWatchSubscribers: (previousValues: Values) => void;
 }
@@ -33,6 +34,28 @@ export function useFormWatch<
         subscribers.current[path] = subscribers.current[path].filter((cb) => cb !== callback);
       };
     }, [callback]);
+  }, []);
+
+  const useWatchValue: UseWatchValue<Values> = useCallback((path) => {
+    const subscribe = useCallback(
+      (listener: () => void) => {
+        const registry: Record<string, FormFieldSubscriber<Values, any>[]> = subscribers.current;
+        const key = String(path);
+        const subscriber: FormFieldSubscriber<Values, any> = () => listener();
+
+        registry[key] = registry[key] || [];
+        registry[key].push(subscriber);
+
+        return () => {
+          registry[key] = registry[key].filter((cb) => cb !== subscriber);
+        };
+      },
+      [path]
+    );
+
+    const getSnapshot = useCallback(() => getPath(path, $values.refValues.current), [path]);
+
+    return useSyncExternalStore(subscribe, getSnapshot, getSnapshot) as any;
   }, []);
 
   const getFieldSubscribers = useCallback((path: Field) => {
@@ -90,6 +113,7 @@ export function useFormWatch<
   return {
     subscribers,
     watch,
+    useWatchValue,
     getFieldSubscribers,
     notifyWatchSubscribers,
   };

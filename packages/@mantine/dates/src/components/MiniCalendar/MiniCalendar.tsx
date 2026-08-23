@@ -16,6 +16,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
+import { DateLabelFormat } from '../../types';
 import { toDateString } from '../../utils';
 import { useDatesContext } from '../DatesProvider';
 import classes from './MiniCalendar.module.css';
@@ -58,8 +59,8 @@ export interface MiniCalendarProps
   /** Number of days to display in the calendar @default 7 */
   numberOfDays?: number;
 
-  /** Dayjs format string for month label @default MMM */
-  monthLabelFormat?: string;
+  /** `dayjs` format for month label or a function that returns month label based on the date value @default "MMM" */
+  monthLabelFormat?: DateLabelFormat;
 
   /** Called when the next button is clicked */
   onNext?: () => void;
@@ -204,7 +205,11 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props) => {
             style: dayProps?.style,
           })}
         >
-          <span {...getStyles('dayMonth')}>{date.locale(_locale).format(monthLabelFormat)}</span>
+          <span {...getStyles('dayMonth')}>
+            {typeof monthLabelFormat === 'function'
+              ? monthLabelFormat(toDateString(date))
+              : date.locale(_locale).format(monthLabelFormat)}
+          </span>
           <span {...getStyles('dayNumber')}>{date.date()}</span>
         </UnstyledButton>
       );

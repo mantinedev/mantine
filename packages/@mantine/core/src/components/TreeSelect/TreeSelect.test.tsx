@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  externalInputFill,
   inputDefaultProps,
   inputStylesApiSelectors,
   render,
@@ -715,6 +716,45 @@ describe('@mantine/core/TreeSelect', () => {
       await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
       expect(document.querySelector('input[name="test"]')).toHaveValue('apple');
       expect(input).toHaveValue('');
+    });
+  });
+
+  describe('external input changes (autofill)', () => {
+    const getHiddenInput = () => document.querySelector('input[name="test"]');
+
+    it('does not display phantom text in single mode', async () => {
+      render(
+        <TreeSelect {...defaultProps} searchable name="test" defaultValue="apple" data={treeData} />
+      );
+
+      await externalInputFill(screen.getByRole('textbox'), 'Broccoli');
+      expect(screen.getByRole('textbox')).toHaveValue('Apple');
+      expect(getHiddenInput()).toHaveValue('apple');
+    });
+
+    it('does not display phantom text in multiple mode', async () => {
+      render(
+        <TreeSelect {...defaultProps} searchable mode="multiple" name="test" data={treeData} />
+      );
+
+      await externalInputFill(screen.getByRole('textbox'), 'Broccoli');
+      expect(screen.getByRole('textbox')).toHaveValue('');
+      expect(getHiddenInput()).toHaveValue('');
+    });
+
+    it('does not open the dropdown', async () => {
+      render(<TreeSelect {...defaultProps} searchable name="test" data={treeData} />);
+      await externalInputFill(screen.getByRole('textbox'), 'Broccoli');
+      expect(screen.queryByRole('option')).toBe(null);
+    });
+
+    it('does not interfere with typing', async () => {
+      render(<TreeSelect {...defaultProps} searchable name="test" data={treeData} />);
+      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.type(screen.getByRole('textbox'), 'Broc');
+      expect(screen.getByRole('textbox')).toHaveValue('Broc');
+      expect(screen.getByRole('option', { name: 'Broccoli' })).toBeVisible();
+      expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
     });
   });
 });
