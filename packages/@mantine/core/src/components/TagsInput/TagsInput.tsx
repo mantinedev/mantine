@@ -27,6 +27,7 @@ import {
   useCombobox,
   usePillsReorder,
 } from '../Combobox';
+import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
   __InputStylesNames,
@@ -561,7 +562,13 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
                   }}
                   onPaste={handlePaste}
                   value={_searchValue}
-                  onChange={(event) => handleSearchChange(event.currentTarget.value)}
+                  onChange={(event) => {
+                    if (isExternalInputChange(event)) {
+                      return;
+                    }
+
+                    handleSearchChange(event.currentTarget.value);
+                  }}
                   required={required && _value.length === 0}
                   disabled={disabled}
                   readOnly={readOnly}

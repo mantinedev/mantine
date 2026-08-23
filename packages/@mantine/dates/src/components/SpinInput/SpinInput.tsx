@@ -1,4 +1,5 @@
-import { clamp } from '@mantine/hooks';
+import { useRef } from 'react';
+import { clamp, useDidUpdate, useMergedRef } from '@mantine/hooks';
 import { padTime } from '../TimePicker/utils/pad-time/pad-time';
 
 interface SpinInputProps extends Omit<React.ComponentProps<'input'>, 'onChange' | 'value'> {
@@ -35,11 +36,31 @@ export function SpinInput({
   disableAutoAdvance = false,
   padValue,
   maxDigits,
+  ref,
   ...others
 }: SpinInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const mergedRef = useMergedRef(inputRef, ref);
+  const emittedValueRef = useRef<number | null | undefined>(undefined);
   const hasMax = Number.isFinite(max);
   const maxDigit = hasMax ? getMaxDigit(max) : Infinity;
   const arrowsMax = hasMax ? max + 1 - step : max;
+
+  const emitChange = (newValue: number | null) => {
+    emittedValueRef.current = newValue;
+    onChange(newValue);
+  };
+
+  const selectOnExternalChange = () => {
+    const isExternalChange = value !== emittedValueRef.current;
+    emittedValueRef.current = undefined;
+
+    if (isExternalChange && document.activeElement === inputRef.current) {
+      inputRef.current?.select();
+    }
+  };
+
+  useDidUpdate(selectOnExternalChange, [value]);
 
   const handleChange = (value: string) => {
     if (readOnly) {
@@ -58,7 +79,7 @@ export function SpinInput({
       const clampedValue =
         allowTemporaryZero && parsedValue === 0 && min > 0 ? 0 : clamp(parsedValue, min, max);
 
-      onChange(clampedValue);
+      emitChange(clampedValue);
 
       if (maxDigits && clearValue.length >= maxDigits) {
         onNextInput?.();
@@ -86,19 +107,19 @@ export function SpinInput({
 
     if (event.key === 'Home') {
       event.preventDefault();
-      onChange(min);
+      emitChange(min);
     }
 
     if (event.key === 'End' && hasMax) {
       event.preventDefault();
-      onChange(max);
+      emitChange(max);
     }
 
     if (event.key === 'Backspace' || event.key === 'Delete') {
       event.preventDefault();
 
       if (value !== null) {
-        onChange(null);
+        emitChange(null);
       } else {
         onPreviousInput?.();
       }
@@ -117,19 +138,20 @@ export function SpinInput({
     if (event.key === 'ArrowUp') {
       event.preventDefault();
       const newValue = value === null ? min : clamp(value + step, min, arrowsMax);
-      onChange(newValue);
+      emitChange(newValue);
     }
 
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       const fallback = hasMax ? arrowsMax : min;
       const newValue = value === null ? fallback : clamp(value - step, min, arrowsMax);
-      onChange(newValue);
+      emitChange(newValue);
     }
   };
 
   return (
     <input
+      ref={mergedRef}
       type="text"
       // eslint-disable-next-line jsx-a11y/no-redundant-roles -- input type="text" has implicit role textbox, not spinbutton; the role is required here because this text input acts as a spinbutton
       role="spinbutton"
