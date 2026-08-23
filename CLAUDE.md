@@ -2,18 +2,22 @@
 
 ## Finalizing Your Work
 
-Choose these commands to run after finalizing your work:
+Run these after every edit cycle — they take seconds:
 
 ```bash
-# Always run these commands before finalizing your work
-npm run typecheck
 npx oxlint -c oxlint.config.mjs path/to/changed/files
 npm run format:write:files path/to/changed/files
-npm run build
 
 # Run tests for specific path related to your changes
 npm run jest @mantine/charts
 npm run jest path/to/changed/file.test.ts
+```
+
+Run these **once**, before pushing or handing the work back — not after every commit:
+
+```bash
+npm run typecheck   # ~30s
+npm run build       # ~5-20s
 
 # Run stylelint only if you have made changes to styles or CSS files
 npm run stylelint
@@ -21,6 +25,8 @@ npm run stylelint
 # Run this script if you've changed dependencies in any package.json
 npm run syncpack
 ```
+
+When a task produces several commits, a single typecheck + build pass at the end covers all of them. `npm run jest` is ~2s per package, so run it as often as you like — it catches most real breakage long before typecheck would.
 
 After running the commands above, check if `codex` CLI is available (`command -v codex`). If it is, run `/codex-code-review` to get an automated code review of unstaged changes and apply fixes.
 
@@ -31,6 +37,19 @@ After running the commands above, check if `codex` CLI is available (`command -v
 - **Always preserve documentation comments** on interfaces, types, and function parameters (JSDoc-style comments with `/** */`)
 - The codebase prefers clean, self-documenting code for implementation
 - Type definitions and public APIs should maintain their documentation comments
+
+## Tests
+
+**Verifying a new regression test:** temporarily revert the fix, confirm the test fails, then restore the fix. Do this for tests that cover async, timing or lifecycle behavior — that is where a test silently passes for the wrong reason. Skip it for straightforward assertions, where it is pure overhead.
+
+**`rerender` remounts unless the tree shape matches.** `render()` from `@mantine-tests/core` wraps its argument in a fragment, but `rerender(ui)` does not. Passing a differently shaped tree unmounts and remounts the subtree instead of updating it, so tests that change a prop silently test a fresh mount instead. Wrap `rerender` arguments in `<>...</>` to match:
+
+```tsx
+const { rerender } = render(<Provider adapter={a}>...</Provider>);
+rerender(<><Provider adapter={b}>...</Provider></>);
+```
+
+**`StrictMode` does not double-invoke effects** in the jest environment, so a test that relies on it to reproduce a double-mount bug will pass whether or not the bug is fixed.
 
 ## Commit conventions
 

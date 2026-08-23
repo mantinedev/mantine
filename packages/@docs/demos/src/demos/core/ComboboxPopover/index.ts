@@ -16,3 +16,4 @@ export { formSubmission } from './ComboboxPopover.demo.formSubmission';
 export { sort } from './ComboboxPopover.demo.sort';
 export { limit } from './ComboboxPopover.demo.limit';
 export { dropdownWidth } from './ComboboxPopover.demo.dropdownWidth';
+export { stylesApi } from './ComboboxPopover.demo.stylesApi';

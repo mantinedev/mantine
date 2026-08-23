@@ -53,3 +53,8 @@ export const Demo_lineNumbers = {
   name: '⭐ Demo: lineNumbers',
   render: renderDemo(demos.lineNumbers),
 };
+
+export const Demo_firstLineIndentation = {
+  name: '⭐ Demo: firstLineIndentation',
+  render: renderDemo(demos.firstLineIndentation),
+};

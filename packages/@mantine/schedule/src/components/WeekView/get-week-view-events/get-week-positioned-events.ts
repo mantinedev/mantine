@@ -12,7 +12,7 @@ import { calculateAllDayEventOffset } from './calculate-all-day-event-offset';
 import { calculateAllDayEventWidth } from './calculate-all-day-event-width';
 import { calculateEventDays } from './calculate-event-days';
 import { calculateRegularEventOverlaps } from './calculate-regular-event-overlaps';
-import { findAvailableColumn } from './find-available-column';
+import { ColumnEvent, findAvailableColumn } from './find-available-column';
 import { getEventEndDate } from './get-event-end-date';
 import { getHangingStatus } from './get-hanging-status';
 
@@ -70,8 +70,8 @@ export function getWeekPositionedEvents({
     backgroundEvents: Object.fromEntries(weekDays.map((day) => [day, []])),
   };
 
-  const columns = new Map<string, ScheduleEventData[]>();
-  const allDayColumns = new Map<string, ScheduleEventData[]>();
+  const columns = new Map<string, ColumnEvent[]>();
+  const allDayColumns = new Map<string, ColumnEvent[]>();
   const sorted = sortEvents(events);
 
   for (const event of sorted) {
@@ -148,14 +148,13 @@ export function getWeekPositionedEvents({
       columns: columnMap,
       event,
       allDay,
-      allWeekDays: weekDays,
     });
 
     const columnKey = `col-${column}`;
     if (!columnMap.has(columnKey)) {
       columnMap.set(columnKey, []);
     }
-    columnMap.get(columnKey)!.push(event);
+    columnMap.get(columnKey)!.push({ event, allDay: isActuallyAllDay });
 
     const verticalPosition = allDay
       ? { top: 0, height: 100 }

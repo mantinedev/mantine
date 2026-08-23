@@ -187,7 +187,7 @@ function SearchableDropdown({
   );
 }
 
-export type ComboboxPopoverStylesNames = ComboboxLikeStylesNames;
+export type ComboboxPopoverStylesNames = ComboboxLikeStylesNames | 'search';
 
 export interface ComboboxPopoverProps<
   Multiple extends boolean = false,

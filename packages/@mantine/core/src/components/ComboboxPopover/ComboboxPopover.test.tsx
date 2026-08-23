@@ -266,6 +266,20 @@ describe('@mantine/core/ComboboxPopover', () => {
     expect(screen.getAllByRole('option')).toHaveLength(3);
   });
 
+  it('supports search Styles API selector', async () => {
+    render(
+      <ComboboxPopover
+        data={['React', 'Angular']}
+        searchable
+        classNames={{ search: 'test-search' }}
+      >
+        {target}
+      </ComboboxPopover>
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.getByPlaceholderText('Search...')).toHaveClass('test-search');
+  });
+
   it('renders without errors with controlled component', () => {
     const Wrapper = () => {
       const [value, setValue] = useState<string | null>(null);

@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
+import {
+  externalInputFill,
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  tests,
+} from '@mantine-tests/core';
 import { TagsInput, TagsInputProps, TagsInputStylesNames } from './TagsInput';
 
 const defaultProps: TagsInputProps = {
@@ -420,6 +426,30 @@ describe('@mantine/core/TagsInput', () => {
       pills[pills.length - 1].focus();
       await userEvent.keyboard('{ArrowRight}');
       expect(screen.getByRole('combobox')).toHaveFocus();
+    });
+  });
+
+  describe('external input changes (autofill)', () => {
+    it('does not display phantom text', async () => {
+      render(<TagsInput {...defaultProps} name="test" />);
+      await externalInputFill(screen.getByRole('combobox'), 'test-1');
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(document.querySelector('input[name="test"]')).toHaveValue('');
+    });
+
+    it('does not turn an external fill into a tag on blur', async () => {
+      render(<TagsInput {...defaultProps} name="test" acceptValueOnBlur />);
+      await externalInputFill(screen.getByRole('combobox'), 'test-1');
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.tab();
+      expect(document.querySelector('input[name="test"]')).toHaveValue('');
+    });
+
+    it('does not interfere with typing', async () => {
+      render(<TagsInput {...defaultProps} name="test" />);
+      await userEvent.type(screen.getByRole('combobox'), 'new-tag{enter}');
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(document.querySelector('input[name="test"]')).toHaveValue('new-tag');
     });
   });
 });

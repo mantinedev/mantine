@@ -13,6 +13,7 @@ import type {
   InlineCodeHighlightStylesNames,
 } from './CodeHighlight/InlineCodeHighlight';
 import type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider';
+import type { NormalizeCodeOptions } from './normalize-code';
 import type {
   CodeHighlightDefaultLanguage,
   CodeHighlightTabsCode,
@@ -38,6 +39,7 @@ export { JsonViewer, serializePath as serializeJsonViewerPath } from './JsonView
 export {
   CodeHighlightAdapterProvider,
   useHighlight,
+  useLoadLanguage,
 } from './CodeHighlightProvider/CodeHighlightProvider.js';
 
 export { createHighlightJsAdapter } from './CodeHighlightProvider/adapters/highlight-js-adapter.js';
@@ -46,6 +48,8 @@ export {
   stripShikiCodeBlocks,
 } from './CodeHighlightProvider/adapters/shiki-adapter.js';
 export { plainTextAdapter } from './CodeHighlightProvider/adapters/plain-text-adapter.js';
+
+export { normalizeCode } from './normalize-code.js';
 
 export type {
   CodeHighlightProps,
@@ -69,4 +73,5 @@ export type {
   JsonViewerCssVariables,
   JsonViewerFactory,
   JsonViewerHighlightType,
+  NormalizeCodeOptions,
 };

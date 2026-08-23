@@ -43,6 +43,37 @@ function getExdateSet(recurrence: ScheduleRecurrenceData | undefined) {
   return new Set(values);
 }
 
+function toWallClockDate(value: dayjs.Dayjs) {
+  return new Date(
+    Date.UTC(
+      value.year(),
+      value.month(),
+      value.date(),
+      value.hour(),
+      value.minute(),
+      value.second(),
+      value.millisecond()
+    )
+  );
+}
+
+function fromWallClockDate(value: Date) {
+  const result = new Date(2000, 0, 1, 12);
+  result.setFullYear(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate());
+  result.setHours(
+    value.getUTCHours(),
+    value.getUTCMinutes(),
+    value.getUTCSeconds(),
+    value.getUTCMilliseconds()
+  );
+
+  return dayjs(result);
+}
+
+function getWallClockDurationMs(start: dayjs.Dayjs, end: dayjs.Dayjs) {
+  return toWallClockDate(end).getTime() - toWallClockDate(start).getTime();
+}
+
 function getRRuleString(rule: string) {
   const normalized = rule.trim();
   if (!normalized.includes('\n')) {
@@ -71,12 +102,12 @@ function getOccurrenceStartsInRange(
 
   try {
     const options = RRule.parseString(getRRuleString(event.recurrence.rrule));
-    options.dtstart = dtstart.toDate();
+    options.dtstart = toWallClockDate(dtstart);
     const rule = new RRule(options);
 
-    const searchStart = rangeStart.subtract(Math.max(0, durationMs), 'millisecond').toDate();
-    const results = rule.between(searchStart, rangeEnd.toDate(), true);
-    return results.slice(0, expansionLimit).map((value) => dayjs(value));
+    const searchStart = new Date(toWallClockDate(rangeStart).getTime() - Math.max(0, durationMs));
+    const results = rule.between(searchStart, toWallClockDate(rangeEnd), true);
+    return results.slice(0, expansionLimit);
   } catch {
     return [];
   }
@@ -96,9 +127,8 @@ function isEventInRange(event: ScheduleEventData, rangeStart: dayjs.Dayjs, range
 function createGeneratedInstance(
   event: ScheduleEventData,
   occurrenceStart: dayjs.Dayjs,
-  durationMs: number
+  occurrenceEnd: dayjs.Dayjs
 ): ScheduleEventData {
-  const occurrenceEnd = occurrenceStart.add(durationMs, 'millisecond');
   const recurrenceId = occurrenceStart.format('YYYY-MM-DD HH:mm:ss');
   const { recurrence, ...eventWithoutRecurrence } = event;
 
@@ -173,7 +203,7 @@ export function expandRecurringEvents({
       continue;
     }
 
-    const durationMs = eventEnd.diff(dayjs(event.start), 'millisecond');
+    const durationMs = getWallClockDurationMs(dayjs(event.start), eventEnd);
     if (durationMs < 0) {
       continue;
     }
@@ -181,7 +211,8 @@ export function expandRecurringEvents({
     const exdate = getExdateSet(event.recurrence);
     const starts = getOccurrenceStartsInRange(event, start, end, expansionLimit, durationMs);
 
-    for (const occurrenceStart of starts) {
+    for (const wallClockStart of starts) {
+      const occurrenceStart = fromWallClockDate(wallClockStart);
       const recurrenceId = occurrenceStart.format('YYYY-MM-DD HH:mm:ss');
       if (exdate.has(recurrenceId)) {
         continue;
@@ -197,7 +228,8 @@ export function expandRecurringEvents({
         continue;
       }
 
-      const generated = createGeneratedInstance(event, occurrenceStart, durationMs);
+      const occurrenceEnd = fromWallClockDate(new Date(wallClockStart.getTime() + durationMs));
+      const generated = createGeneratedInstance(event, occurrenceStart, occurrenceEnd);
       if (overlapsRange(dayjs(generated.start), dayjs(generated.end), start, end)) {
         output.push(validateEvent(generated));
       }

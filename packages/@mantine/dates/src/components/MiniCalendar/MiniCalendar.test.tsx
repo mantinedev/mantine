@@ -113,6 +113,18 @@ describe('@mantine/dates/MiniCalendar', () => {
     expect(screen.getByText('January')).toBeInTheDocument();
   });
 
+  it('supports monthLabelFormat as a function', () => {
+    render(
+      <MiniCalendar
+        {...defaultProps}
+        date="2025-01-01"
+        monthLabelFormat={(date) => `Test ${date}`}
+        numberOfDays={1}
+      />
+    );
+    expect(screen.getByText('Test 2025-01-01')).toBeInTheDocument();
+  });
+
   it('supports getDayProps', () => {
     const { container } = render(
       <MiniCalendar

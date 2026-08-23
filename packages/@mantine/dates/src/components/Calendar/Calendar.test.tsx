@@ -401,6 +401,54 @@ describe('@mantine/dates/Calendar', () => {
     expect(document.body).toHaveFocus();
   });
 
+  it('displays current month if minDate/maxDate do not exclude it', () => {
+    render(
+      <Calendar
+        {...defaultProps}
+        defaultDate={undefined}
+        minDate={dayjs().subtract(2, 'year').format('YYYY-MM-DD')}
+        maxDate={dayjs().add(2, 'year').format('YYYY-MM-DD')}
+      />
+    );
+
+    expectHeaderLevel('month', dayjs().format('MMMM YYYY'));
+  });
+
+  it('displays minDate month if minDate is in the future', () => {
+    const minDate = dayjs().add(2, 'year');
+    render(
+      <Calendar {...defaultProps} defaultDate={undefined} minDate={minDate.format('YYYY-MM-DD')} />
+    );
+
+    expectHeaderLevel('month', minDate.format('MMMM YYYY'));
+  });
+
+  it('displays maxDate month if maxDate is in the past', () => {
+    const maxDate = dayjs().subtract(2, 'year');
+    render(
+      <Calendar {...defaultProps} defaultDate={undefined} maxDate={maxDate.format('YYYY-MM-DD')} />
+    );
+
+    expectHeaderLevel('month', maxDate.format('MMMM YYYY'));
+  });
+
+  it('does not change displayed month when minDate is updated dynamically', () => {
+    const { rerender } = render(<Calendar {...defaultProps} defaultDate={undefined} />);
+    expectHeaderLevel('month', dayjs().format('MMMM YYYY'));
+
+    rerender(
+      <>
+        <Calendar
+          {...defaultProps}
+          defaultDate={undefined}
+          minDate={dayjs().add(2, 'year').format('YYYY-MM-DD')}
+        />
+      </>
+    );
+
+    expectHeaderLevel('month', dayjs().format('MMMM YYYY'));
+  });
+
   it('only adds first non-disabled date in month to tab order', async () => {
     render(
       <Calendar

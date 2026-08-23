@@ -34,6 +34,10 @@ globally with [DatesProvider](/dates/getting-started).
 
 <Demo data={MiniCalendarDemos.locale} />
 
+Alternatively, pass a function to the `monthLabelFormat` prop to format month labels
+with `Intl.DateTimeFormat` instead of dayjs – see
+[formatting without dayjs](/dates/getting-started/#formatting-without-dayjs).
+
 ## Accessibility
 
 Use `nextControlProps` and `previousControlProps` to add `aria-label` and other props to navigation buttons:

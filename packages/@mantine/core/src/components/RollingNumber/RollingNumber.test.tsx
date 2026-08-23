@@ -13,7 +13,7 @@ describe('@mantine/core/RollingNumber', () => {
     varsResolver: true,
     children: false,
     displayName: '@mantine/core/RollingNumber',
-    stylesApiSelectors: ['root', 'digit', 'digitColumn', 'char'],
+    stylesApiSelectors: ['root', 'copyValue', 'digit', 'digitColumn', 'char'],
   });
 
   it('renders digits for the given value', () => {
@@ -182,6 +182,59 @@ describe('@mantine/core/RollingNumber', () => {
     const digits = container.querySelectorAll('.mantine-RollingNumber-digit');
     expect(digits).toHaveLength(4);
     expect(digits[0]).toHaveAttribute('data-empty');
+  });
+
+  it('renders the formatted value in a single selectable node for copying', () => {
+    const { container } = render(
+      <RollingNumber value={1234.56} thousandSeparator prefix="$ " suffix=" USD" />
+    );
+    expect(container.querySelector('.mantine-RollingNumber-copyValue')?.textContent).toBe(
+      '$ 1,234.56 USD'
+    );
+  });
+
+  it('keeps the copy value in sync with the current value', () => {
+    const { container, rerender } = render(<RollingNumber value={1000} thousandSeparator />);
+    rerender(
+      <>
+        <RollingNumber value={999} thousandSeparator />
+      </>
+    );
+    expect(container.querySelector('.mantine-RollingNumber-copyValue')?.textContent).toBe('999');
+  });
+
+  it('renders a copy value that matches the accessible label exactly', () => {
+    const { container } = render(
+      <RollingNumber
+        value={1234.5}
+        thousandSeparator="  "
+        prefix="  $  "
+        suffix="  USD  "
+        decimalScale={2}
+        fixedDecimalScale
+      />
+    );
+    const root = container.querySelector('.mantine-RollingNumber-root');
+    expect(container.querySelector('.mantine-RollingNumber-copyValue')?.textContent).toBe(
+      root?.getAttribute('aria-label')
+    );
+  });
+
+  it('hides the copy value from assistive technology', () => {
+    const { container } = render(<RollingNumber value={42} />);
+    expect(container.querySelector('.mantine-RollingNumber-copyValue')).toHaveAttribute(
+      'aria-hidden',
+      'true'
+    );
+  });
+
+  it('hides animated digits and chars from assistive technology', () => {
+    const { container } = render(<RollingNumber value={42} prefix="$ " />);
+    const animated = container.querySelectorAll(
+      '.mantine-RollingNumber-digit, .mantine-RollingNumber-char'
+    );
+    expect(animated.length).toBeGreaterThan(0);
+    animated.forEach((el) => expect(el).toHaveAttribute('aria-hidden', 'true'));
   });
 
   it('includes aria-label with thousand separators', () => {

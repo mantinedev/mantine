@@ -13,7 +13,7 @@ import {
 import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue } from '../../types';
-import { toDateString } from '../../utils';
+import { getDefaultClampedDate, toDateString } from '../../utils';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { MonthLevelSettings } from '../MonthLevel';
@@ -303,10 +303,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
 
   const fallbackDateRef = useRef<DateStringValue | null>(null);
   if (fallbackDateRef.current === null) {
-    const now = new Date();
-    fallbackDateRef.current = (
-      minDate && dayjs(now).isAfter(minDate) ? minDate : dayjs(now).format('YYYY-MM-DD')
-    ) as DateStringValue;
+    fallbackDateRef.current = getDefaultClampedDate({ minDate, maxDate });
   }
   const currentDate = _date || fallbackDateRef.current;
 

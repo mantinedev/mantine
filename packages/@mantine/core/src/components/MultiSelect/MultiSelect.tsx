@@ -27,6 +27,8 @@ import {
   useCombobox,
   usePillsReorder,
 } from '../Combobox';
+import { getOptionByLabel } from '../Combobox/get-options-lockup/get-option-by-label';
+import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
   __InputStylesNames,
@@ -533,6 +535,25 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
                   onKeyDown={handleInputKeydown}
                   value={_searchValue}
                   onChange={(event) => {
+                    if (isExternalInputChange(event)) {
+                      if (!readOnly) {
+                        const externalOption = getOptionByLabel(
+                          optionsLockup,
+                          event.currentTarget.value
+                        );
+
+                        if (
+                          externalOption &&
+                          !_value.includes(externalOption.value as any) &&
+                          _value.length < maxValues
+                        ) {
+                          setValue([..._value, externalOption.value] as any);
+                        }
+                      }
+
+                      return;
+                    }
+
                     handleSearchChange(event.currentTarget.value);
                     searchable && combobox.openDropdown();
                     selectFirstOptionOnChange && combobox.selectFirstOption();

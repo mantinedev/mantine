@@ -801,5 +801,69 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
 
       expect(result.regularEvents['2025-01-13 00:00:00']).toHaveLength(1);
     });
+
+    it('does not assign a separate column to an all-day event that overlaps a multiday event', () => {
+      const events = [
+        testUtils.createEvent({ id: 1, start: '2025-01-13 09:00:00', end: '2025-01-14 12:00:00' }),
+        testUtils.createEvent({ id: 2, start: '2025-01-14 00:00:00', end: '2025-01-15 00:00:00' }),
+      ];
+
+      const result = getWeekPositionedEvents({
+        date: testWeekStart,
+        events,
+      });
+
+      expect(result.allDayEvents).toHaveLength(2);
+      expect(result.allDayEvents.find((e) => e.id === 1)!.position.column).toBe(0);
+      expect(result.allDayEvents.find((e) => e.id === 2)!.position.column).toBe(0);
+    });
+
+    it('assigns separate columns to overlapping all-day events', () => {
+      const events = [
+        testUtils.createEvent({ id: 1, start: '2025-01-13 00:00:00', end: '2025-01-14 00:00:00' }),
+        testUtils.createEvent({ id: 2, start: '2025-01-13 00:00:00', end: '2025-01-13 23:59:59' }),
+      ];
+
+      const result = getWeekPositionedEvents({
+        date: testWeekStart,
+        events,
+      });
+
+      expect(result.allDayEvents).toHaveLength(2);
+      expect(result.allDayEvents.find((e) => e.id === 1)!.position.column).toBe(0);
+      expect(result.allDayEvents.find((e) => e.id === 2)!.position.column).toBe(1);
+    });
+
+    it('positions events according to their current start and end when event objects are reused', () => {
+      const event = testUtils.createEvent({
+        id: 1,
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+      });
+
+      const otherEvent = testUtils.createEvent({
+        id: 2,
+        start: '2025-01-15 14:00:00',
+        end: '2025-01-15 15:00:00',
+      });
+
+      getWeekPositionedEvents({ date: testWeekStart, events: [event, otherEvent] });
+
+      event.start = '2025-01-15 14:30:00';
+      event.end = '2025-01-15 15:30:00';
+
+      const result = getWeekPositionedEvents({ date: testWeekStart, events: [event, otherEvent] });
+      const dayEvents = result.regularEvents['2025-01-15 00:00:00'];
+
+      expect(dayEvents.find((e) => e.id === 1)!.position).toMatchObject({
+        column: 1,
+        overlaps: 2,
+      });
+
+      expect(dayEvents.find((e) => e.id === 2)!.position).toMatchObject({
+        column: 0,
+        overlaps: 2,
+      });
+    });
   });
 });

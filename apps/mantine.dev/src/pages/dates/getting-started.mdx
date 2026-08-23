@@ -65,6 +65,60 @@ This will ensure that every month has 6 weeks, even if outside days are not in t
 
 <Demo data={DatesProviderDemos.consistentWeeks} />
 
+## Formatting without dayjs
+
+All formatting props accept a function in addition to a [dayjs format](https://day.js.org/docs/en/display/format) string.
+The function receives the date as a `YYYY-MM-DD` string (or `YYYY-MM-DD HH:mm:ss` for components that include time)
+and returns the label to display. Use it to format dates with [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+instead of dayjs – this way you do not need to import `dayjs/locale/*` modules for every language that your application supports:
+
+<Demo data={DatesProviderDemos.intlFormatting} />
+
+The following props accept a function:
+
+| Prop | Components |
+| --- | --- |
+| `valueFormatter` | `DatePickerInput`, `MonthPickerInput`, `YearPickerInput` |
+| `valueFormat` | `DateInput`, `DateTimePicker`, `InlineDateTimePicker` |
+| `monthLabelFormat` | `Calendar`, `DatePicker`, `DateInput`, `MiniCalendar`, `MonthLevel` and all components that use them |
+| `yearLabelFormat` | `Calendar`, `DatePicker`, `YearLevel` and all components that use them |
+| `decadeLabelFormat` | `Calendar`, `DatePicker`, `DecadeLevel` and all components that use them |
+| `weekdayFormat` | `Calendar`, `DatePicker`, `Month`, `WeekdaysRow` and all components that use them |
+| `monthsListFormat` | `Calendar`, `MonthPicker`, `MonthsList` and all components that use them |
+| `yearsListFormat` | `Calendar`, `YearPicker`, `YearsList` and all components that use them |
+
+Note that `DateInput.valueFormat` is also used to parse user input. When it is set to a function,
+the component can no longer parse arbitrary formats – set the [dateParser](/dates/date-input/#date-parser)
+prop to handle typed values.
+
+To apply formatters to all instances of a component, define them in
+[theme.components](/theming/default-props) instead of setting them on every usage:
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+import { DateFormatter } from '@mantine/dates';
+
+const valueFormatter: DateFormatter = ({ date, locale }) =>
+  typeof date === 'string'
+    ? new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(new Date(`${date}T00:00:00`))
+    : '';
+
+const theme = createTheme({
+  components: {
+    DatePickerInput: {
+      defaultProps: { valueFormatter },
+    },
+  },
+});
+
+function App() {
+  return <MantineProvider theme={theme}>{/* Your app */}</MantineProvider>;
+}
+```
+
+Formatters do not remove the dayjs dependency – it is still used internally for date parsing and
+arithmetic. What they do remove is the need to import a dayjs locale module per supported language.
+
 ## Custom parse format
 
 Some components like [DateInput](/dates/date-input) require the [custom parse format](https://day.js.org/docs/en/plugin/custom-parse-format)

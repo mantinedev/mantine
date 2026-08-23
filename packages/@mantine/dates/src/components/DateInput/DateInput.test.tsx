@@ -336,6 +336,31 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, '11/04/2022');
   });
 
+  it('supports valueFormat as a function', () => {
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        defaultValue="2022-04-11"
+        valueFormat={(date) => `formatted ${date}`}
+      />
+    );
+    expectValue(container, 'formatted 2022-04-11');
+  });
+
+  it('parses user input with dateParser when valueFormat is a function', async () => {
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        valueFormat={(date) => `formatted ${date}`}
+        dateParser={(input) => (input === 'secret-date' ? '2022-04-11' : null)}
+      />
+    );
+
+    await userEvent.type(getInput(container), 'secret-date');
+    await userEvent.tab();
+    expectValue(container, 'formatted 2022-04-11');
+  });
+
   it('does not update value on blur if fixOnBlur={false}', async () => {
     const { container } = render(
       <DateInput {...defaultProps} fixOnBlur={false} defaultValue="2022-04-11" />

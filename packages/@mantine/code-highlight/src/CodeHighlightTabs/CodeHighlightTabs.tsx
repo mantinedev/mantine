@@ -98,6 +98,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props) => {
     controls,
     codeColorScheme,
     withLineNumbers,
+    withFirstLineIndentation,
     attributes,
     ...others
   } = props;
@@ -190,6 +191,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props) => {
         controls={controls}
         codeColorScheme={codeColorScheme}
         withLineNumbers={withLineNumbers}
+        withFirstLineIndentation={withFirstLineIndentation}
         __withOffset
         __staticSelector="CodeHighlightTabs"
         classNames={resolvedClassNames}
