@@ -62,7 +62,6 @@ export function useHorizontalEventResize({
   const clampedResizeInterval = clampIntervalMinutes(resizeIntervalMinutes ?? intervalMinutes);
   const literalRange = endMinutes - startMinutes;
   const totalMinutes = Math.ceil(literalRange / clampedInterval) * clampedInterval;
-  const minWidthPercent = (clampedResizeInterval / totalMinutes) * 100;
 
   const clampAndSnap = useCallback(
     (minutes: number): number => {
@@ -84,13 +83,25 @@ export function useHorizontalEventResize({
     [totalMinutes, startMinutes, clampAndSnap]
   );
 
-  const snapPercent = useCallback(
-    (percent: number): number => {
-      const minutes = (percent / 100) * totalMinutes;
-      const snappedMinutes = clampAndSnap(minutes);
-      return (snappedMinutes / totalMinutes) * 100;
+  const snapEdgeMinutes = useCallback(
+    (minutes: number, direction: 'up' | 'down'): number => {
+      const snapped =
+        direction === 'up'
+          ? Math.ceil(minutes / clampedResizeInterval) * clampedResizeInterval
+          : Math.floor(minutes / clampedResizeInterval) * clampedResizeInterval;
+      return Math.max(0, Math.min(literalRange, snapped));
     },
-    [totalMinutes, clampAndSnap]
+    [literalRange, clampedResizeInterval]
+  );
+
+  const percentToMinutes = useCallback(
+    (percent: number): number => (percent / 100) * totalMinutes,
+    [totalMinutes]
+  );
+
+  const minutesToPercent = useCallback(
+    (minutes: number): number => (minutes / totalMinutes) * 100,
+    [totalMinutes]
   );
 
   const handleResizeStart = useCallback(
@@ -170,22 +181,22 @@ export function useHorizontalEventResize({
         dayIndex: state.dayIndex,
         dayCount: state.dayCount,
       });
-      const snappedPercent = snapPercent(rawPercent);
+      const draggedMinutes = clampAndSnap(percentToMinutes(rawPercent));
 
       let newLeft = state.originalLeft;
       let newWidth = state.originalWidth;
 
       if (state.edge === 'end') {
-        // A resize interval coarser than the space left after the event would push the
-        // preview past the end of the canvas.
-        const available = 100 - state.originalLeft;
-        const minWidth = Math.min(minWidthPercent, available);
-        newWidth = Math.max(minWidth, snappedPercent - state.originalLeft);
+        const leftMinutes = percentToMinutes(state.originalLeft);
+        const minEndMinutes = snapEdgeMinutes(leftMinutes + clampedResizeInterval, 'up');
+        const endMinutes = Math.max(draggedMinutes, minEndMinutes);
+        newWidth = Math.max(0, minutesToPercent(endMinutes) - state.originalLeft);
       } else {
-        const originalRight = state.originalLeft + state.originalWidth;
-        const minWidth = Math.min(minWidthPercent, originalRight);
-        newLeft = Math.min(snappedPercent, originalRight - minWidth);
-        newWidth = originalRight - newLeft;
+        const rightMinutes = percentToMinutes(state.originalLeft + state.originalWidth);
+        const maxStartMinutes = snapEdgeMinutes(rightMinutes - clampedResizeInterval, 'down');
+        const startMinutesValue = Math.min(draggedMinutes, maxStartMinutes);
+        newLeft = minutesToPercent(startMinutesValue);
+        newWidth = Math.max(0, state.originalLeft + state.originalWidth - newLeft);
       }
 
       resizeRef.current = { ...state, currentLeft: newLeft, currentWidth: newWidth };

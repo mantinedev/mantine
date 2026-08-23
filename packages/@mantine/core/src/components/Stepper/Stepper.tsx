@@ -288,8 +288,8 @@ export const Stepper = factory<StepperFactory>((_props) => {
           {...getStyles('steps')}
           mod={{
             orientation,
-            'icon-position': iconPosition,
-            'label-position': orientation === 'vertical' ? undefined : labelPosition,
+            iconPosition,
+            labelPosition: orientation === 'vertical' ? undefined : labelPosition,
             wrap: wrap && orientation !== 'vertical',
           }}
         >

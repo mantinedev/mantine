@@ -45,10 +45,27 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
   const translateStart = useRef({ x: 0, y: 0 });
   const lastPinchDistance = useRef<number | null>(null);
   const lastPointerType = useRef<string>('mouse');
+  const lastClickPointerType = useRef<string>('mouse');
+  const [isAdjusting, setIsAdjusting] = useState(false);
+  const adjustTimeout = useRef<number>(-1);
 
   useEffect(() => {
     isZoomedRef.current = zoomState.isZoomed;
   }, [zoomState.isZoomed]);
+
+  const beginAdjust = useCallback(() => {
+    setIsAdjusting(true);
+    window.clearTimeout(adjustTimeout.current);
+    adjustTimeout.current = window.setTimeout(() => setIsAdjusting(false), 120);
+  }, []);
+
+  const beginAdjustRef = useRef(beginAdjust);
+
+  useEffect(() => {
+    beginAdjustRef.current = beginAdjust;
+  }, [beginAdjust]);
+
+  useEffect(() => () => window.clearTimeout(adjustTimeout.current), []);
 
   const resetZoom = useCallback(() => {
     setZoomState(INITIAL_ZOOM_STATE);
@@ -135,6 +152,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     }
 
     event.preventDefault();
+    beginAdjustRef.current();
     zoomAtPointRef.current(event.deltaY > 0 ? -0.2 : 0.2, event.clientX, event.clientY);
   });
 
@@ -191,6 +209,12 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     setIsDragging(false);
   }, []);
 
+  const handlePointerCancel = useCallback(() => {
+    setIsDragging(false);
+    didDrag.current = false;
+    lastPinchDistance.current = null;
+  }, []);
+
   const handleTouchMove = useCallback(
     (event: React.TouchEvent) => {
       if (!enabled || event.touches.length !== 2) {
@@ -202,6 +226,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
       const distance = Math.hypot(touch1.clientX - touch2.clientX, touch1.clientY - touch2.clientY);
 
       if (lastPinchDistance.current !== null) {
+        beginAdjust();
         const delta = (distance - lastPinchDistance.current) * 0.01;
         zoomAtPoint(
           delta,
@@ -211,7 +236,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
       }
       lastPinchDistance.current = distance;
     },
-    [enabled, zoomAtPoint]
+    [enabled, zoomAtPoint, beginAdjust]
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -219,8 +244,8 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
   }, []);
 
   const handleClick = useCallback(
-    (_event: React.MouseEvent) => {
-      if (!enabled) {
+    (event: React.MouseEvent) => {
+      if (!enabled || event.detail > 1) {
         return;
       }
       if (didDrag.current) {
@@ -235,6 +260,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
       // so a later click without a preceding pointerdown is not treated as a touch.
       const pointerType = lastPointerType.current;
       lastPointerType.current = 'mouse';
+      lastClickPointerType.current = pointerType;
 
       if (pointerType === 'touch') {
         return;
@@ -245,6 +271,14 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     [enabled, toggleZoom]
   );
 
+  const handleDoubleClick = useCallback(() => {
+    if (!enabled || lastClickPointerType.current !== 'touch') {
+      return;
+    }
+
+    toggleZoom();
+  }, [enabled, toggleZoom]);
+
   const getImageProps = useCallback(
     () => ({
       ref: setImageRef,
@@ -253,25 +287,29 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
       },
       'data-zoom-enabled': enabled || undefined,
       'data-zoomed': zoomState.isZoomed || undefined,
-      'data-dragging': isDragging || undefined,
+      'data-dragging': isDragging || isAdjusting || undefined,
       onPointerDown: handlePointerDown,
       onPointerMove: handlePointerMove,
       onPointerUp: handlePointerUp,
+      onPointerCancel: handlePointerCancel,
+      onLostPointerCapture: handlePointerUp,
       onClick: handleClick,
-      onDoubleClick: toggleZoom,
+      onDoubleClick: handleDoubleClick,
       onTouchMove: handleTouchMove,
       onTouchEnd: handleTouchEnd,
     }),
     [
       zoomState,
       isDragging,
+      isAdjusting,
       enabled,
       setImageRef,
       handlePointerDown,
       handlePointerMove,
       handlePointerUp,
+      handlePointerCancel,
       handleClick,
-      toggleZoom,
+      handleDoubleClick,
       handleTouchMove,
       handleTouchEnd,
     ]

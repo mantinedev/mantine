@@ -11,7 +11,7 @@ function Demo() {
     <MatrixChart
       data={data}
       xLabels={xLabels}
-      yLabels={yLabels}
+      yLabels={yLabels} withYLabels
       withXLabels
       domain={[0, 50]}
     />
@@ -21,7 +21,14 @@ function Demo() {
 
 function Demo() {
   return (
-    <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withXLabels domain={[0, 50]} />
+    <MatrixChart
+      data={data}
+      xLabels={xLabels}
+      yLabels={yLabels}
+      withYLabels
+      withXLabels
+      domain={[0, 50]}
+    />
   );
 }
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { EmblaOptionsType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 import {
@@ -134,8 +134,9 @@ export interface LightboxRootProps
   transitionProps?: TransitionOverride;
 
   /** Additional Embla carousel options. `loop` and `startIndex` are controlled by the
-   * `loop` and `currentIndex` props and cannot be set here; a `watchDrag` callback is
-   * still called, but dragging is always disabled while the image is zoomed. */
+   * `loop` and `currentIndex` props and cannot be set here, at the top level or in
+   * `breakpoints`; a `watchDrag` option is still honored at both levels, but dragging is
+   * always disabled while the image is zoomed. */
   emblaOptions?: EmblaOptionsType;
 
   /** Maximum zoom scale @default 3 */
@@ -168,6 +169,28 @@ export const lightboxRootDefaultProps = {
   zoomMaxScale: 3,
   withSlideTransition: false,
 } satisfies Partial<LightboxRootProps>;
+
+type WatchDragOption = EmblaOptionsType['watchDrag'];
+
+function createBreakpointWatchDrag(
+  query: string,
+  zoomIsActive: React.RefObject<boolean>,
+  watchDragRef: React.RefObject<Record<string, WatchDragOption>>
+): WatchDragOption {
+  return (emblaApi, event) => {
+    if (zoomIsActive.current) {
+      return false;
+    }
+
+    const option = watchDragRef.current[query];
+
+    if (typeof option === 'function') {
+      return option(emblaApi, event);
+    }
+
+    return option ?? true;
+  };
+}
 
 const defaultContentTransition: MantineTransition = {
   common: { transformOrigin: 'center center' },
@@ -253,7 +276,15 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     varsResolver,
   });
 
-  const _labels = { ...DEFAULT_LABELS, ...labels };
+  const _labels = useMemo(() => ({ ...DEFAULT_LABELS, ...labels }), [labels]);
+
+  const getStylesRef = useRef(getStyles);
+  getStylesRef.current = getStyles;
+
+  const stableGetStyles = useCallback<typeof getStyles>(
+    (...args) => getStylesRef.current(...args),
+    []
+  );
 
   const [_currentIndex, setCurrentIndex] = useUncontrolled({
     value: currentIndex,
@@ -289,11 +320,42 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
 
   const { dir } = useDirection();
 
+  const breakpointWatchDragRef = useRef<Record<string, WatchDragOption>>({});
+
+  const resolvedEmblaOptions = useMemo(() => {
+    if (!emblaOptions?.breakpoints) {
+      breakpointWatchDragRef.current = {};
+      return emblaOptions;
+    }
+
+    const watchDragOptions: Record<string, WatchDragOption> = {};
+
+    const breakpoints = Object.fromEntries(
+      Object.entries(emblaOptions.breakpoints).map(([query, value]) => {
+        const { loop: _loop, startIndex: _startIndex, watchDrag, ...rest } = value ?? {};
+        watchDragOptions[query] = watchDrag;
+
+        return [
+          query,
+          watchDrag === undefined
+            ? rest
+            : {
+                ...rest,
+                watchDrag: createBreakpointWatchDrag(query, zoomIsActive, breakpointWatchDragRef),
+              },
+        ];
+      })
+    );
+
+    breakpointWatchDragRef.current = watchDragOptions;
+    return { ...emblaOptions, breakpoints };
+  }, [emblaOptions]);
+
   const [emblaRef, embla] = useEmblaCarousel({
     // Placed before the user options so `emblaOptions.direction` can still override it,
     // the same way `@mantine/carousel` wires direction up.
     direction: dir,
-    ...emblaOptions,
+    ...resolvedEmblaOptions,
     loop,
     startIndex,
     watchDrag: (emblaApi, event) => {
@@ -486,6 +548,16 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     keepMounted: transition.keepMounted,
   };
 
+  const setIndex = useCallback(
+    (index: number) => {
+      setCurrentIndexRef.current(index);
+      suppressSelectRef.current = index;
+      embla?.scrollTo(index, !animateSlides);
+      suppressSelectRef.current = null;
+    },
+    [embla, animateSlides]
+  );
+
   const currentSlide = slides[_currentIndex];
   const currentSlideLabel =
     currentSlide?.type === 'video'
@@ -494,43 +566,67 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
         ? undefined
         : currentSlide?.alt;
 
+  const contextValue = useMemo(
+    () => ({
+      getStyles: stableGetStyles,
+      labels: _labels,
+      opened,
+      slides,
+      currentIndex: _currentIndex,
+      setIndex,
+      next: handleNext,
+      prev: handlePrev,
+      embla: embla ?? null,
+      emblaRef,
+      withZoom: !!withZoom,
+      withThumbnails: !!withThumbnails,
+      withFullscreen: !!withFullscreen,
+      withDownload: !!withDownload,
+      thumbnailsVisible,
+      toggleThumbnails,
+      isFullscreen,
+      toggleFullscreen,
+      zoomState: zoom.zoomState,
+      toggleZoom: zoom.toggleZoom,
+      getImageZoomProps: zoom.getImageProps,
+      onClose,
+      loop: !!loop,
+      closeOnClickOutside: !!closeOnClickOutside,
+      closeOnSwipeDown: !!closeOnSwipeDown,
+      transitionDuration: transitionDuration!,
+    }),
+    [
+      stableGetStyles,
+      _labels,
+      opened,
+      slides,
+      _currentIndex,
+      setIndex,
+      handleNext,
+      handlePrev,
+      embla,
+      emblaRef,
+      withZoom,
+      withThumbnails,
+      withFullscreen,
+      withDownload,
+      thumbnailsVisible,
+      toggleThumbnails,
+      isFullscreen,
+      toggleFullscreen,
+      zoom,
+      onClose,
+      loop,
+      closeOnClickOutside,
+      closeOnSwipeDown,
+      transitionDuration,
+    ]
+  );
+
   return (
     <OptionalPortal withinPortal={withinPortal}>
-      <LightboxContextProvider
-        value={{
-          getStyles,
-          labels: _labels,
-          opened,
-          slides,
-          currentIndex: _currentIndex,
-          setIndex: (index: number) => {
-            setCurrentIndex(index);
-            suppressSelectRef.current = index;
-            embla?.scrollTo(index, !animateSlides);
-            suppressSelectRef.current = null;
-          },
-          next: handleNext,
-          prev: handlePrev,
-          embla: embla ?? null,
-          emblaRef,
-          withZoom: !!withZoom,
-          withThumbnails: !!withThumbnails,
-          withFullscreen: !!withFullscreen,
-          withDownload: !!withDownload,
-          thumbnailsVisible,
-          toggleThumbnails,
-          isFullscreen,
-          toggleFullscreen,
-          zoomState: zoom.zoomState,
-          toggleZoom: zoom.toggleZoom,
-          getImageZoomProps: zoom.getImageProps,
-          onClose,
-          loop: !!loop,
-          closeOnClickOutside: !!closeOnClickOutside,
-          closeOnSwipeDown: !!closeOnSwipeDown,
-          transitionDuration: transitionDuration!,
-        }}
-      >
+      <LightboxContextProvider value={contextValue}>
+        {' '}
         <RemoveScroll enabled={shouldLockScroll}>
           <Box {...getStyles('root')}>
             <Transition mounted={opened} {...overlayTransition}>

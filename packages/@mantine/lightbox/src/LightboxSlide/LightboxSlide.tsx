@@ -15,6 +15,11 @@ import classes from '../Lightbox.module.css';
 
 export type LightboxSlideStylesNames = 'slide' | 'slideImage' | 'slideVideo';
 
+export interface LightboxSlideStylesApiProps {
+  classNames?: CompoundStylesApiProps<LightboxSlideFactory>['classNames'];
+  styles?: CompoundStylesApiProps<LightboxSlideFactory>['styles'];
+}
+
 export interface LightboxSlideProps
   extends BoxProps, CompoundStylesApiProps<LightboxSlideFactory>, ElementProps<'div'> {
   /** Slide data object */
@@ -41,16 +46,18 @@ export const LightboxSlide = factory<LightboxSlideFactory>((props) => {
   const ctx = useLightboxContext();
   const active = ctx.currentIndex === index;
 
+  const stylesApiProps = { classNames, styles };
+
   const renderContent = () => {
     if (slide.type === 'video') {
-      return <VideoSlide slide={slide} active={active} />;
+      return <VideoSlide slide={slide} active={active} stylesApiProps={stylesApiProps} />;
     }
 
     if (slide.type === 'custom') {
       return slide.render({ active });
     }
 
-    return <ImageSlide slide={slide} active={active} />;
+    return <ImageSlide slide={slide} active={active} stylesApiProps={stylesApiProps} />;
   };
 
   return (

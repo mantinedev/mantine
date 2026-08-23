@@ -339,4 +339,31 @@ describe('@mantine/lightbox/LightboxSlide', () => {
     expect(play).not.toHaveBeenCalled();
     jest.restoreAllMocks();
   });
+
+  it('applies local classNames and styles to slideImage and slideVideo', async () => {
+    const imageSlide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo' };
+    const videoSlide: LightboxSlideData = { type: 'video', src: 'clip.mp4', label: 'Clip' };
+
+    await renderWithAct(
+      <LightboxWrapper slides={[imageSlide, videoSlide]}>
+        <LightboxSlide
+          slide={imageSlide}
+          index={0}
+          classNames={{ slideImage: 'test-image-class' }}
+          styles={{ slideImage: { opacity: 0.5 } }}
+        />
+        <LightboxSlide
+          slide={videoSlide}
+          index={1}
+          classNames={{ slideVideo: 'test-video-class' }}
+        />
+      </LightboxWrapper>
+    );
+
+    const img = screen.getByRole('img');
+    expect(img).toHaveClass('test-image-class');
+    expect(img).toHaveStyle({ opacity: '0.5' });
+
+    expect(document.querySelector('video')).toHaveClass('test-video-class');
+  });
 });

@@ -153,4 +153,29 @@ describe('@mantine/schedule/calculateDropTime', () => {
     expect(result.start.getHours()).toBe(16);
     expect(result.start.getMinutes()).toBe(0);
   });
+  describe('daylight saving time (asserts wall clock; exercises DST only under TZ=America/New_York)', () => {
+    it('snaps to the wall clock time of the slot across a spring forward transition', () => {
+      const result = calculateDropTime({
+        draggedEvent: { ...event, start: '2024-03-10 09:00:00', end: '2024-03-10 10:00:00' },
+        targetDate: '2024-03-10',
+        targetSlotTime: '03:00:00',
+        dragIntervalMinutes: 15,
+      });
+
+      expect(result.start.getHours()).toBe(3);
+      expect(result.start.getMinutes()).toBe(0);
+    });
+
+    it('snaps to the wall clock time of the slot across a fall back transition', () => {
+      const result = calculateDropTime({
+        draggedEvent: { ...event, start: '2024-11-03 09:00:00', end: '2024-11-03 10:00:00' },
+        targetDate: '2024-11-03',
+        targetSlotTime: '02:00:00',
+        dragIntervalMinutes: 15,
+      });
+
+      expect(result.start.getHours()).toBe(2);
+      expect(result.start.getMinutes()).toBe(0);
+    });
+  });
 });

@@ -1,3 +1,4 @@
+import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -46,6 +47,8 @@ export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
   const ctx = useLightboxContext();
   const stylesApiProps = { classNames, styles };
 
+  const viewportRef = useMergedRef(ctx.emblaRef, emblaRef);
+
   const { handleTouchStart, handleTouchEnd } = useLightboxSwipeClose({
     enabled: ctx.closeOnSwipeDown,
     onClose: ctx.onClose,
@@ -68,7 +71,7 @@ export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
         handleTouchEnd(event);
       }}
     >
-      <div {...ctx.getStyles('slidesViewport', stylesApiProps)} ref={emblaRef ?? ctx.emblaRef}>
+      <div {...ctx.getStyles('slidesViewport', stylesApiProps)} ref={viewportRef}>
         <div {...ctx.getStyles('slidesContainer', stylesApiProps)}>{children}</div>
       </div>
     </Box>

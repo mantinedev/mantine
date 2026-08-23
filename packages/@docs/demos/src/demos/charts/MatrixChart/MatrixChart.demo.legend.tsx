@@ -11,7 +11,7 @@ function Demo() {
     <MatrixChart
       data={data}
       xLabels={xLabels}
-      yLabels={yLabels}
+      yLabels={yLabels} withYLabels
       withXLabels
       withLegend
     />
@@ -20,7 +20,16 @@ function Demo() {
 `;
 
 function Demo() {
-  return <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withXLabels withLegend />;
+  return (
+    <MatrixChart
+      data={data}
+      xLabels={xLabels}
+      yLabels={yLabels}
+      withYLabels
+      withXLabels
+      withLegend
+    />
+  );
 }
 
 export const legend: MantineDemo = {

@@ -35,7 +35,7 @@ import {
 import type { BaseChartStylesNames, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
 
-export interface CandlestickChartSeries {
+export interface CandlestickChartDataKeys {
   /** Key of the data object for the open value */
   open: string;
 
@@ -106,7 +106,7 @@ export interface CandlestickChartProps
   data: Record<string, any>[];
 
   /** Keys of the `data` object used to read open, high, low and close values @default `{ open: 'open', high: 'high', low: 'low', close: 'close' }` */
-  series?: CandlestickChartSeries;
+  dataKeys?: CandlestickChartDataKeys;
 
   /** Labels of open, high, low and close values displayed in the tooltip @default `{ open: 'Open', high: 'High', low: 'Low', close: 'Close' }` */
   labels?: Partial<CandlestickChartLabels>;
@@ -148,7 +148,7 @@ const defaultProps = {
   upColor: 'teal.6',
   downColor: 'red.6',
   candleStrokeWidth: 1,
-  series: { open: 'open', high: 'high', low: 'low', close: 'close' },
+  dataKeys: { open: 'open', high: 'high', low: 'low', close: 'close' },
   labels: { open: 'Open', high: 'High', low: 'Low', close: 'Close' },
   accessibilityLayer: true,
 } satisfies Partial<CandlestickChartProps>;
@@ -172,7 +172,7 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
     unstyled,
     vars,
     data,
-    series,
+    dataKeys: dataKeysProp,
     labels,
     dataKey,
     withTooltip,
@@ -209,7 +209,7 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
   } = props;
 
   const theme = useMantineTheme();
-  const seriesKeys = series!;
+  const seriesKeys = dataKeysProp!;
   const seriesLabels = { open: 'Open', high: 'High', low: 'Low', close: 'Close', ...labels };
   const tooltipSeries = [
     { name: 'open', label: seriesLabels.open },
@@ -530,6 +530,6 @@ export namespace CandlestickChart {
   export type CssVariables = CandlestickChartCssVariables;
   export type Factory = CandlestickChartFactory;
   export type Labels = CandlestickChartLabels;
-  export type Series = CandlestickChartSeries;
+  export type DataKeys = CandlestickChartDataKeys;
   export type StylesNames = CandlestickChartStylesNames;
 }

@@ -30,6 +30,17 @@ interface NotificationContainerProps extends NotificationProps {
 
 const MAX_VISIBLE_STACK_DEPTH = 4;
 
+const FORWARDED_DOM_PROPS = ['id', 'tabIndex'];
+
+function pickDomAttributes(props: Record<string, any>) {
+  return Object.fromEntries(
+    Object.entries(props).filter(
+      ([key]) =>
+        key.startsWith('data-') || key.startsWith('aria-') || FORWARDED_DOM_PROPS.includes(key)
+    )
+  );
+}
+
 export function NotificationContainer({
   data,
   onHide,
@@ -439,18 +450,19 @@ export function NotificationContainer({
   };
 
   if (renderNotification) {
-    // `others` carries Notification props such as `title` and `icon` that are not valid
-    // DOM attributes, so only the styles API output is forwarded to the wrapper element.
-    const stylesApiAttributes = Object.fromEntries(
-      Object.entries(others).filter(([key]) => key.startsWith('data-'))
-    );
+    const forwardedAttributes = {
+      ...pickDomAttributes(others),
+      ...pickDomAttributes(notificationProps),
+    };
+
+    const classNames = [others.className, notificationProps.className].filter(Boolean).join(' ');
 
     return (
       <div
         ref={mergedRef}
-        role={others.role || 'alert'}
-        className={others.className as string}
-        {...stylesApiAttributes}
+        role={notificationProps.role || others.role || 'alert'}
+        {...forwardedAttributes}
+        className={classNames || undefined}
         {...interactionProps}
       >
         {renderNotification(data)}

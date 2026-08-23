@@ -30,8 +30,10 @@ interface MatrixChartCell {
 ## Labels
 
 Use `xLabels` and `yLabels` props to provide axis labels. Set `withXLabels` to display
-x-axis labels along the bottom (or top with `xLabelsPosition="top"`). `yLabels` are
-displayed on the left side when provided.
+x-axis labels along the bottom (or top with `xLabelsPosition="top"`), and `withYLabels` to
+display y-axis labels on the left side. Both label arrays are optional – when they are not
+provided, the labels are taken from the `x` and `y` values of `data` in the order they first
+appear.
 
 <Demo data={MatrixChartDemos.labels} />
 

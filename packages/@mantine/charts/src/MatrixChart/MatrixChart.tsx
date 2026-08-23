@@ -103,6 +103,9 @@ export interface MatrixChartProps
   /** If set, x-axis labels are displayed, @default false */
   withXLabels?: boolean;
 
+  /** If set, y-axis labels are displayed, @default false */
+  withYLabels?: boolean;
+
   /** Rotation angle for x-axis labels in degrees, @default -90 */
   xLabelsRotation?: number;
 }
@@ -148,8 +151,8 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     yLabels: yLabelsProp,
     domain,
     colors,
-    cellSize = 20,
-    gap = 1,
+    cellSize,
+    gap,
     cellRadius,
     withTooltip,
     getTooltipLabel,
@@ -163,6 +166,7 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     withLegend,
     legendLabels,
     withXLabels,
+    withYLabels,
     xLabelsRotation,
     attributes,
     ...others
@@ -192,17 +196,19 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
 
   const theme = useMantineTheme();
 
-  const resolvedColors = useMemo(
-    () => colors!.map((color) => getThemeColor(color, theme)),
-    [colors, theme]
-  );
+  const resolvedColors = useMemo(() => {
+    const palette = colors && colors.length > 0 ? colors : defaultProps.colors;
+    return palette.map((color) => getThemeColor(color, theme));
+  }, [colors, theme]);
 
   const resolvedEmptyColor = emptyColor ? getThemeColor(emptyColor, theme) : undefined;
 
-  const cellSizeWithGap = cellSize + gap;
+  const resolvedCellSize = cellSize!;
+  const resolvedGap = gap!;
+  const cellSizeWithGap = resolvedCellSize + resolvedGap;
 
   const hasXLabels = withXLabels === true && xValues.length > 0;
-  const hasYLabels = yLabelsProp !== undefined && yLabelsProp.length > 0;
+  const hasYLabels = withYLabels === true && yValues.length > 0;
   const isRotated = xLabelsRotation !== 0 && xLabelsRotation !== undefined;
 
   const yOffset = hasYLabels ? yLabelsWidth! : 0;
@@ -211,18 +217,18 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
   const xTopOffset = xLabelAtTop ? xLabelsHeight! : 0;
   const xBottomHeight = xLabelAtBottom ? xLabelsHeight! : 0;
 
-  const legendHeight = withLegend ? LEGEND_PADDING + cellSize : 0;
+  const legendHeight = withLegend ? LEGEND_PADDING + resolvedCellSize : 0;
 
-  const gridWidth = Math.max(0, xValues.length * cellSizeWithGap - gap);
-  const gridHeight = Math.max(0, yValues.length * cellSizeWithGap - gap);
+  const gridWidth = Math.max(0, xValues.length * cellSizeWithGap - resolvedGap);
+  const gridHeight = Math.max(0, yValues.length * cellSizeWithGap - resolvedGap);
 
   const legendWidth = withLegend
     ? getLegendWidth({
         legendLabels: legendLabels!,
         fontSize: fontSize!,
-        colorsCount: (colors || []).length,
-        cellSize,
-        gap,
+        colorsCount: resolvedColors.length,
+        cellSize: resolvedCellSize,
+        gap: resolvedGap,
       })
     : 0;
 
@@ -248,8 +254,8 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
           key={`${colIndex}-${rowIndex}`}
           x={yOffset + colIndex * cellSizeWithGap}
           y={xTopOffset + rowIndex * cellSizeWithGap}
-          width={cellSize}
-          height={cellSize}
+          width={resolvedCellSize}
+          height={resolvedCellSize}
           rx={cellRadius}
           fill={fill}
           data-empty={(isEmpty && !emptyColor) || undefined}
@@ -270,7 +276,7 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
         <text
           key={index}
           x={yOffset - 8}
-          y={xTopOffset + index * cellSizeWithGap + cellSize / 2}
+          y={xTopOffset + index * cellSizeWithGap + resolvedCellSize / 2}
           fontSize={fontSize}
           textAnchor="end"
           dominantBaseline="central"
@@ -283,7 +289,7 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
 
   const xLabelNodes = hasXLabels
     ? xValues.map((label, index) => {
-        const x = yOffset + index * cellSizeWithGap + cellSize / 2;
+        const x = yOffset + index * cellSizeWithGap + resolvedCellSize / 2;
         const y = xLabelAtTop ? xLabelsHeight! - 8 : xTopOffset + gridHeight + 8;
 
         return (
@@ -310,7 +316,7 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
   const moreLabel = legendLabels![1];
   const lessWidth = lessLabel.length * charWidth;
   const allColors = [resolvedEmptyColor, ...resolvedColors];
-  const rectsWidth = allColors.length * cellSize + (allColors.length - 1) * gap;
+  const rectsWidth = allColors.length * resolvedCellSize + (allColors.length - 1) * resolvedGap;
   const legendX = svgWidth - legendWidth;
   const legendY = xTopOffset + gridHeight + xBottomHeight + LEGEND_PADDING;
 
@@ -318,7 +324,7 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     <g transform={`translate(${legendX}, ${legendY})`} data-id="legend" {...getStyles('legend')}>
       <text
         x={0}
-        y={cellSize / 2}
+        y={resolvedCellSize / 2}
         fontSize={fontSize}
         dominantBaseline="central"
         {...getStyles('legendLabel')}
@@ -328,10 +334,10 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
       {allColors.map((color, i) => (
         <rect
           key={i}
-          x={lessWidth + TEXT_GAP + i * (cellSize + gap)}
+          x={lessWidth + TEXT_GAP + i * (resolvedCellSize + resolvedGap)}
           y={0}
-          width={cellSize}
-          height={cellSize}
+          width={resolvedCellSize}
+          height={resolvedCellSize}
           rx={cellRadius}
           fill={color}
           data-empty={color === undefined || undefined}
@@ -340,7 +346,7 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
       ))}
       <text
         x={lessWidth + TEXT_GAP + rectsWidth + TEXT_GAP}
-        y={cellSize / 2}
+        y={resolvedCellSize / 2}
         fontSize={fontSize}
         dominantBaseline="central"
         {...getStyles('legendLabel')}
@@ -365,11 +371,14 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     >
       <Tooltip.Floating
         label={label}
-        disabled={!withTooltip || !label}
+        disabled={!withTooltip || label == null}
         position="top"
         {...tooltipProps}
       >
-        <g data-id="all-cells">
+        <g
+          data-id="all-cells"
+          onPointerLeave={withTooltip ? () => setHoveredCell(null) : undefined}
+        >
           {withTooltip && (
             <rect
               fill="transparent"

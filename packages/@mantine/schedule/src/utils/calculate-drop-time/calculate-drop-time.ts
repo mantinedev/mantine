@@ -101,7 +101,14 @@ export function calculateDropTime({
       }
     }
 
-    finalTargetTime = targetDay.add(snappedStartMinutes, 'minute');
+    const dayOffset = Math.floor(snappedStartMinutes / 1440);
+    const minutesInDay = snappedStartMinutes - dayOffset * 1440;
+
+    finalTargetTime = targetDay
+      .add(dayOffset, 'day')
+      .hour(Math.floor(minutesInDay / 60))
+      .minute(minutesInDay % 60)
+      .second(0);
   } else if (offset > 0 && size > 0) {
     const offsetRatio = offset / size;
     const offsetMinutes = Math.round(offsetRatio * intervalMinutes);

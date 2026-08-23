@@ -431,7 +431,6 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
           {...areaChartProps}
         >
           {referenceAreasItems}
-          {referenceLinesItems}
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -562,6 +561,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
 
           {areas}
           {withDots && dotsAreas}
+          {referenceLinesItems}
           {referenceDotsItems}
           {withBrush && (
             <ChartBrush

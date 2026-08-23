@@ -307,4 +307,35 @@ describe('@mantine/lightbox/LightboxRoot embla integration', () => {
 
     expect(onIndexChange).toHaveBeenCalledWith(1);
   });
+
+  it('keeps loop and startIndex managed but honors watchDrag inside emblaOptions breakpoints', async () => {
+    const breakpointWatchDrag = jest.fn(() => true);
+
+    await renderWithAct(
+      <Lightbox
+        {...defaultProps}
+        loop
+        emblaOptions={{
+          breakpoints: {
+            '(min-width: 768px)': {
+              loop: false,
+              startIndex: 2,
+              watchDrag: breakpointWatchDrag,
+              align: 'center',
+            },
+          },
+        }}
+      />
+    );
+
+    const breakpoint = mockEmblaMain().options.breakpoints['(min-width: 768px)'];
+
+    expect(breakpoint).not.toHaveProperty('loop');
+    expect(breakpoint).not.toHaveProperty('startIndex');
+    expect(breakpoint.align).toBe('center');
+    expect(typeof breakpoint.watchDrag).toBe('function');
+
+    expect(breakpoint.watchDrag({}, {})).toBe(true);
+    expect(breakpointWatchDrag).toHaveBeenCalled();
+  });
 });

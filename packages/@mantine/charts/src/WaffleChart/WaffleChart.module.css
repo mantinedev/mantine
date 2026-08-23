@@ -10,6 +10,8 @@
 }
 
 .cell {
+  rx: var(--waffle-cell-radius);
+
   &[data-empty] {
     fill: var(--waffle-empty-color, var(--mantine-color-default-border));
   }

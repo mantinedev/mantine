@@ -1146,4 +1146,147 @@ describe('@mantine/core/Notifications', () => {
     expect(scales.length).toBeGreaterThan(0);
     scales.forEach((scale) => expect(scale).toBeGreaterThan(0));
   });
+  it('does not re-observe notification nodes on every render in stacked layout', () => {
+    jest.useFakeTimers();
+    const originalResizeObserver = (global as any).ResizeObserver;
+    const observed: Element[] = [];
+    let deliverEntries: (() => void) | null = null;
+
+    (global as any).ResizeObserver = class {
+      constructor(cb: ResizeObserverCallback) {
+        deliverEntries = () => cb([], this as any);
+      }
+
+      observe(element: Element) {
+        observed.push(element);
+      }
+
+      unobserve() {}
+      disconnect() {}
+    };
+
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'ro-1', message: 'First' }, store);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(10);
+    });
+
+    const observedAfterMount = observed.length;
+    expect(observedAfterMount).toBeGreaterThan(0);
+
+    act(() => deliverEntries!());
+    expect(observed).toHaveLength(observedAfterMount);
+
+    act(() => deliverEntries!());
+    expect(observed).toHaveLength(observedAfterMount);
+
+    (global as any).ResizeObserver = originalResizeObserver;
+  });
+
+  it('forwards role, id and accessibility attributes to custom rendered notifications', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        attributes={{ notification: { 'aria-label': 'Upload complete' } }}
+        renderNotification={(notification) => (
+          <div data-testid="custom-a11y">{notification.message}</div>
+        )}
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'custom-a11y-id', role: 'status', message: 'Done' }, store);
+    });
+
+    const wrapper = screen.getByTestId('custom-a11y').parentElement!;
+    expect(wrapper).toHaveAttribute('role', 'status');
+    expect(wrapper).toHaveAttribute('id', 'custom-a11y-id');
+    expect(wrapper).toHaveAttribute('aria-label', 'Upload complete');
+  });
+
+  it('releases the stack pin when its own position runs out of notifications', () => {
+    // jsdom has no PointerEvent, so React reports `pointerType` as null unless one exists
+    class MockPointerEvent extends MouseEvent {
+      pointerType: string;
+
+      constructor(type: string, props: MouseEventInit & { pointerType?: string } = {}) {
+        super(type, props);
+        this.pointerType = props.pointerType ?? 'mouse';
+      }
+    }
+    const originalPointerEvent = (window as any).PointerEvent;
+    (window as any).PointerEvent = MockPointerEvent;
+
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'tr-1', position: 'top-right', message: 'Right one' }, store);
+      notifications.show({ id: 'tr-2', position: 'top-right', message: 'Right two' }, store);
+      notifications.show({ id: 'tl-1', position: 'top-left', message: 'Left one' }, store);
+    });
+
+    const getInertCount = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      ).length;
+
+    const rightStack = container.querySelector('[data-position="top-right"]')!;
+    const front = rightStack.querySelectorAll('.mantine-Notification-root')[1];
+
+    act(() => {
+      fireEvent.pointerDown(front, { pointerType: 'touch' });
+    });
+    expect(getInertCount()).toBe(0);
+
+    act(() => {
+      notifications.hide('tr-1', store);
+      notifications.hide('tr-2', store);
+    });
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
+    act(() => {
+      notifications.show({ id: 'tr-3', position: 'top-right', message: 'Right three' }, store);
+      notifications.show({ id: 'tr-4', position: 'top-right', message: 'Right four' }, store);
+    });
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
+    expect(getInertCount()).toBe(1);
+
+    (window as any).PointerEvent = originalPointerEvent;
+  });
 });

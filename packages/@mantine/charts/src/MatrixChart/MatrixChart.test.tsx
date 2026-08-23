@@ -11,6 +11,7 @@ const testData = [
 const defaultProps: MatrixChartProps = {
   data: testData,
   yLabels: ['Row1', 'Row2'],
+  withYLabels: true,
   withXLabels: true,
   xLabels: ['A', 'B'],
   withLegend: true,
@@ -117,7 +118,9 @@ describe('@mantine/charts/MatrixChart', () => {
   });
 
   it('renders y-axis labels', () => {
-    const { container } = render(<MatrixChart data={testData} yLabels={['Row1', 'Row2']} />);
+    const { container } = render(
+      <MatrixChart data={testData} yLabels={['Row1', 'Row2']} withYLabels />
+    );
     const yLabels = container.querySelectorAll('.mantine-MatrixChart-yLabel');
     expect(yLabels).toHaveLength(2);
     expect(yLabels[0].textContent).toBe('Row1');

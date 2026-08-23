@@ -242,11 +242,15 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     return () => document.removeEventListener('pointerdown', handlePointerDown);
   }, [pinnedPosition]);
 
+  const pinnedCount = pinnedPosition
+    ? getGroupedNotifications(data.notifications, position)[pinnedPosition].length
+    : 0;
+
   useEffect(() => {
-    if (data.notifications.length === 0 || layout !== 'stacked') {
+    if (layout !== 'stacked' || (pinnedPosition !== null && pinnedCount === 0)) {
       setPinnedPosition(null);
     }
-  }, [data.notifications.length, layout]);
+  }, [pinnedCount, pinnedPosition, layout]);
 
   // Expanded offsets are measured from `offsetHeight` during render, so a notification that
   // grows afterwards (image loads, async content, viewport reflow) would leave the ones
@@ -267,6 +271,30 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
       resizeObserver.current = null;
     };
   }, [layout, forceUpdate]);
+
+  const refCallbacks = useRef<Record<string, (node: HTMLDivElement | null) => void>>({});
+
+  const getNotificationRef = useCallback((id: string) => {
+    if (!refCallbacks.current[id]) {
+      refCallbacks.current[id] = (node: HTMLDivElement | null) => {
+        const previous = refs.current[id];
+
+        if (previous && previous !== node) {
+          resizeObserver.current?.unobserve(previous);
+        }
+
+        if (node) {
+          refs.current[id] = node;
+          resizeObserver.current?.observe(node);
+        } else {
+          delete refs.current[id];
+          delete refCallbacks.current[id];
+        }
+      };
+    }
+
+    return refCallbacks.current[id];
+  }, []);
 
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -342,20 +370,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
           >
             {(state: TransitionStatus) => (
               <NotificationContainer
-                ref={(node) => {
-                  const previous = refs.current[notification.id!];
-
-                  if (previous && previous !== node) {
-                    resizeObserver.current?.unobserve(previous);
-                  }
-
-                  if (node) {
-                    refs.current[notification.id!] = node;
-                    resizeObserver.current?.observe(node);
-                  } else {
-                    delete refs.current[notification.id!];
-                  }
-                }}
+                ref={getNotificationRef(notification.id!)}
                 data={notification}
                 onHide={(id) => hideNotification(id, store)}
                 autoClose={autoClose}

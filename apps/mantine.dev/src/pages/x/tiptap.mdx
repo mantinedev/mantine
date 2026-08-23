@@ -213,11 +213,13 @@ and register it with the editor. `TableKit` bundles all required node extensions
 
 <Demo data={TipTapDemos.table} />
 
-`RichTextEditor` provides the following table controls. They are automatically disabled when the
-cursor is not inside a table (or when the table extension is not installed):
+`RichTextEditor` provides the following table controls. All of them are disabled when the table
+extension is not installed, and every control except `RichTextEditor.TableInsert` is additionally
+disabled while the cursor is not inside a table:
 
-- `RichTextEditor.TableInsert` – inserts a table, opens a grid to pick its size. Supports `maxColumns`,
-  `maxRows`, `withHeaderRow` and `popoverProps` props.
+- `RichTextEditor.TableInsert` – inserts a table, opens a grid to pick its size. Enabled outside of a
+  table, since that is where a new table is inserted. Supports `maxColumns`, `maxRows`,
+  `withHeaderRow` and `popoverProps` props.
 - `RichTextEditor.TableDelete` – deletes the entire table
 - `RichTextEditor.TableColumnBefore` / `RichTextEditor.TableColumnAfter` – add a column before/after
 - `RichTextEditor.TableColumnDelete` – deletes the current column

@@ -9,6 +9,7 @@ interface TableTestEditorProps {
   withTable?: boolean;
   content?: string;
   insertDisabled?: boolean;
+  columnBeforeDisabled?: boolean;
   onEditor?: (editor: Editor | null) => void;
 }
 
@@ -16,6 +17,7 @@ function TableTestEditor({
   withTable = true,
   content,
   insertDisabled,
+  columnBeforeDisabled,
   onEditor,
 }: TableTestEditorProps) {
   const editor = useEditor({
@@ -30,7 +32,7 @@ function TableTestEditor({
     <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar>
         <RichTextEditor.TableInsert disabled={insertDisabled} />
-        <RichTextEditor.TableColumnBefore />
+        <RichTextEditor.TableColumnBefore disabled={columnBeforeDisabled} />
         <RichTextEditor.TableRowAfter />
         <RichTextEditor.TableDelete />
       </RichTextEditor.Toolbar>
@@ -121,5 +123,15 @@ describe('@mantine/tiptap/RichTextEditor table controls', () => {
     const headerCells = html.match(/<th/g) ?? [];
     expect(rows).toHaveLength(2);
     expect(headerCells).toHaveLength(3);
+  });
+
+  it('does not let disabled={false} enable a control whose command is unavailable', async () => {
+    render(<TableTestEditor withTable={false} columnBeforeDisabled={false} />);
+
+    await waitFor(() =>
+      expect(screen.getByLabelText('Add column before')).toHaveAttribute('data-disabled')
+    );
+
+    expect(screen.getByLabelText('Add column before')).toBeDisabled();
   });
 });

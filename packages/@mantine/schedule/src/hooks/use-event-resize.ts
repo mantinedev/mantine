@@ -59,7 +59,6 @@ export function useEventResize({
   const clampedResizeInterval = clampIntervalMinutes(resizeIntervalMinutes ?? intervalMinutes);
   const literalRange = endMinutes - startMinutes;
   const totalMinutes = Math.ceil(literalRange / clampedInterval) * clampedInterval;
-  const minHeightPercent = (clampedResizeInterval / totalMinutes) * 100;
 
   const clampAndSnap = useCallback(
     (minutes: number): number => {
@@ -81,13 +80,25 @@ export function useEventResize({
     [totalMinutes, startMinutes, clampAndSnap]
   );
 
-  const snapPercent = useCallback(
-    (percent: number): number => {
-      const minutes = (percent / 100) * totalMinutes;
-      const snappedMinutes = clampAndSnap(minutes);
-      return (snappedMinutes / totalMinutes) * 100;
+  const snapEdgeMinutes = useCallback(
+    (minutes: number, direction: 'up' | 'down'): number => {
+      const snapped =
+        direction === 'up'
+          ? Math.ceil(minutes / clampedResizeInterval) * clampedResizeInterval
+          : Math.floor(minutes / clampedResizeInterval) * clampedResizeInterval;
+      return Math.max(0, Math.min(literalRange, snapped));
     },
-    [totalMinutes, clampAndSnap]
+    [literalRange, clampedResizeInterval]
+  );
+
+  const percentToMinutes = useCallback(
+    (percent: number): number => (percent / 100) * totalMinutes,
+    [totalMinutes]
+  );
+
+  const minutesToPercent = useCallback(
+    (minutes: number): number => (minutes / totalMinutes) * 100,
+    [totalMinutes]
   );
 
   const handleResizeStart = useCallback(
@@ -154,22 +165,22 @@ export function useEventResize({
       const containerRect = state.container.getBoundingClientRect();
       const relativeY = e.clientY - containerRect.top;
       const rawPercent = Math.max(0, Math.min(100, (relativeY / containerRect.height) * 100));
-      const snappedPercent = snapPercent(rawPercent);
+      const draggedMinutes = clampAndSnap(percentToMinutes(rawPercent));
 
       let newTop = state.originalTop;
       let newHeight = state.originalHeight;
 
       if (state.edge === 'bottom') {
-        // A resize interval coarser than the space left below the event would push the
-        // preview past the bottom of the canvas.
-        const available = 100 - state.originalTop;
-        const minHeight = Math.min(minHeightPercent, available);
-        newHeight = Math.max(minHeight, snappedPercent - state.originalTop);
+        const topMinutes = percentToMinutes(state.originalTop);
+        const minEndMinutes = snapEdgeMinutes(topMinutes + clampedResizeInterval, 'up');
+        const endMinutes = Math.max(draggedMinutes, minEndMinutes);
+        newHeight = Math.max(0, minutesToPercent(endMinutes) - state.originalTop);
       } else {
-        const originalBottom = state.originalTop + state.originalHeight;
-        const minHeight = Math.min(minHeightPercent, originalBottom);
-        newTop = Math.min(snappedPercent, originalBottom - minHeight);
-        newHeight = originalBottom - newTop;
+        const bottomMinutes = percentToMinutes(state.originalTop + state.originalHeight);
+        const maxStartMinutes = snapEdgeMinutes(bottomMinutes - clampedResizeInterval, 'down');
+        const startMinutesValue = Math.min(draggedMinutes, maxStartMinutes);
+        newTop = minutesToPercent(startMinutesValue);
+        newHeight = Math.max(0, state.originalTop + state.originalHeight - newTop);
       }
 
       resizeRef.current = { ...state, currentTop: newTop, currentHeight: newHeight };

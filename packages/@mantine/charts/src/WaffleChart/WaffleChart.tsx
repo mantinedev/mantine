@@ -41,7 +41,7 @@ export type WaffleChartStylesNames =
   | 'legendLabel';
 
 export type WaffleChartCssVariables = {
-  root: '--waffle-gap' | '--waffle-cell-radius' | '--waffle-empty-color';
+  root: '--waffle-cell-radius' | '--waffle-empty-color';
 };
 
 export interface WaffleChartProps
@@ -105,9 +105,8 @@ const defaultProps = {
 } satisfies Partial<WaffleChartProps>;
 
 const varsResolver = createVarsResolver<WaffleChartFactory>(
-  (theme, { gap, cellRadius, emptyColor }) => ({
+  (theme, { cellRadius, emptyColor }) => ({
     root: {
-      '--waffle-gap': rem(gap),
       '--waffle-cell-radius': rem(cellRadius),
       '--waffle-empty-color': emptyColor ? getThemeColor(emptyColor, theme) : undefined,
     },

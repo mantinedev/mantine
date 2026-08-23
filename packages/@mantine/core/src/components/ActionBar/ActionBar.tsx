@@ -1,4 +1,4 @@
-import { useWindowEvent } from '@mantine/hooks';
+import { useEffect, useEffectEvent } from 'react';
 import {
   BoxProps,
   ElementProps,
@@ -52,6 +52,9 @@ export interface ActionBarProps
   /** Determines whether the action bar should be closed when `Escape` key is pressed, `false` by default */
   closeOnEscape?: boolean;
 
+  /** `aria-label` of the actions group, `'Actions'` by default */
+  'aria-label'?: string;
+
   /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node, `false` by default */
   keepMounted?: boolean;
 
@@ -76,6 +79,7 @@ const defaultProps = {
   transitionProps: { transition: 'pop', duration: 200 },
   closeOnEscape: false,
   withinPortal: true,
+  'aria-label': 'Actions',
   zIndex: getDefaultZIndex('modal'),
 } satisfies Partial<ActionBarProps>;
 
@@ -115,15 +119,20 @@ export const ActionBar = factory<ActionBarFactory>((_props) => {
     vars,
   });
 
-  useWindowEvent(
-    'keydown',
-    (event) => {
-      if (event.key === 'Escape' && closeOnEscape && !event.isComposing && opened) {
-        onClose?.();
-      }
-    },
-    { passive: true }
-  );
+  const handleEscape = useEffectEvent((event: KeyboardEvent) => {
+    if (event.key === 'Escape' && !event.isComposing) {
+      onClose?.();
+    }
+  });
+
+  useEffect(() => {
+    if (!closeOnEscape || !opened) {
+      return undefined;
+    }
+
+    window.addEventListener('keydown', handleEscape, { passive: true });
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [closeOnEscape, opened]);
 
   return (
     <Affix

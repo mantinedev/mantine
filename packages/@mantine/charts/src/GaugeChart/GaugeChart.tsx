@@ -26,7 +26,7 @@ export interface GaugeChartSection {
 export type GaugeChartStylesNames = 'root' | 'track' | 'section' | 'needle' | 'label';
 
 export type GaugeChartCssVariables = {
-  root: '--gauge-size' | '--gauge-thickness';
+  root: '--gauge-size';
 };
 
 export interface GaugeChartProps
@@ -101,10 +101,9 @@ const defaultProps = {
   targetSize: 2,
 } satisfies Partial<GaugeChartProps>;
 
-const varsResolver = createVarsResolver<GaugeChartFactory>((_theme, { size, thickness }) => ({
+const varsResolver = createVarsResolver<GaugeChartFactory>((_theme, { size }) => ({
   root: {
     '--gauge-size': rem(size),
-    '--gauge-thickness': rem(thickness),
   },
 }));
 
@@ -163,15 +162,16 @@ function getArcBoundingBox(
   r: number,
   startAngle: number,
   endAngle: number,
-  padding: number
+  padding: number,
+  labelReserve: number
 ) {
   const startPt = polarToCartesian(cx, cy, r, startAngle);
   const endPt = polarToCartesian(cx, cy, r, endAngle);
 
-  let minX = Math.min(startPt.x, endPt.x);
-  let maxX = Math.max(startPt.x, endPt.x);
-  let minY = Math.min(startPt.y, endPt.y);
-  let maxY = Math.max(startPt.y, endPt.y);
+  let minX = Math.min(startPt.x, endPt.x, cx - labelReserve);
+  let maxX = Math.max(startPt.x, endPt.x, cx + labelReserve);
+  let minY = Math.min(startPt.y, endPt.y, cy - labelReserve);
+  let maxY = Math.max(startPt.y, endPt.y, cy + labelReserve);
 
   const cardinals = [
     { angle: 0, x: cx, y: cy - r },
@@ -260,7 +260,16 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
   const span = endAngle! - startAngle!;
   const resolvedEndAngle = startAngle! + Math.max(-360, Math.min(360, span));
 
-  const bbox = getArcBoundingBox(cx, cy, r, startAngle!, resolvedEndAngle, strokePadding);
+  const labelReserve = Math.max(thickness!, svgSize * 0.11);
+  const bbox = getArcBoundingBox(
+    cx,
+    cy,
+    r,
+    startAngle!,
+    resolvedEndAngle,
+    strokePadding,
+    labelReserve
+  );
 
   const resolvedTrackColor = trackColor
     ? getThemeColor(trackColor, theme)
@@ -365,6 +374,7 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
     <Box
       component="svg"
       viewBox={`${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`}
+      __vars={{ '--gauge-aspect-ratio': `${bbox.width} / ${bbox.height}` }}
       {...getStyles('root')}
       variant={variant}
       role="meter"

@@ -1,13 +1,15 @@
 import { useEffect, useRef } from 'react';
+import type { LightboxSlideStylesApiProps } from './LightboxSlide';
 import { useLightboxContext } from '../lightbox.context';
 import type { LightboxVideoSlide } from '../lightbox.types';
 
 interface VideoSlideProps {
   slide: LightboxVideoSlide;
   active: boolean;
+  stylesApiProps?: LightboxSlideStylesApiProps;
 }
 
-export function VideoSlide({ slide, active }: VideoSlideProps) {
+export function VideoSlide({ slide, active, stylesApiProps }: VideoSlideProps) {
   const ctx = useLightboxContext();
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -40,7 +42,7 @@ export function VideoSlide({ slide, active }: VideoSlideProps) {
     /* eslint-disable jsx-a11y/media-has-caption */
     <video
       ref={videoRef}
-      {...ctx.getStyles('slideVideo')}
+      {...ctx.getStyles('slideVideo', stylesApiProps)}
       src={slide.src}
       poster={slide.poster}
       aria-label={slide.label}
