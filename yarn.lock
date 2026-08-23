@@ -2372,17 +2372,22 @@ __metadata:
     "@mantinex/mantine-logo": "workspace:*"
     "@tiptap/core": "npm:^3.30.2"
     "@tiptap/extension-details": "npm:^3.30.2"
-    "@tiptap/extension-floating-menu": "npm:^3.30.2"
     "@tiptap/extension-invisible-characters": "npm:^3.30.2"
     "@tiptap/extension-link": "npm:^3.30.2"
     "@tiptap/extension-table": "npm:^3.30.2"
+    "@tiptap/extension-text-style": "npm:^3.30.2"
     "@tiptap/pm": "npm:^3.30.2"
     "@tiptap/react": "npm:^3.30.2"
+    "@types/react": "npm:19.2.18"
+    "@types/react-dom": "npm:19.2.4"
     dayjs: "npm:^1.11.23"
+    embla-carousel: "npm:^8.6.0"
     embla-carousel-react: "npm:^8.6.0"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
+    react-is: "npm:^19.2.0"
     recharts: "npm:^3.10.1"
+    shiki: "npm:^4.4.3"
   peerDependencies:
     react: ^19.2.0
     react-dom: ^19.2.0
@@ -2408,10 +2413,14 @@ __metadata:
     "@tiptap/extension-link": "npm:^3.30.2"
     "@tiptap/pm": "npm:^3.30.2"
     "@tiptap/react": "npm:^3.30.2"
+    "@types/react": "npm:19.2.18"
+    "@types/react-dom": "npm:19.2.4"
     dayjs: "npm:^1.11.23"
+    embla-carousel: "npm:^8.6.0"
     embla-carousel-react: "npm:^8.6.0"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
+    react-is: "npm:^19.2.0"
     recharts: "npm:^3.10.1"
     shiki: "npm:^4.4.3"
   peerDependencies:
@@ -4636,6 +4645,9 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    dayjs: "npm:^1.11.23"
+    react: "npm:19.2.8"
+    react-dom: "npm:19.2.8"
     rrule: "npm:^2.8.1"
   peerDependencies:
     "@mantine/core": 9.5.2
@@ -4709,6 +4721,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:19.2.8"
+    react-dom: "npm:19.2.8"
   peerDependencies:
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
@@ -6667,7 +6681,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extensions@npm:3.30.2":
+"@tiptap/extensions@npm:3.30.2, @tiptap/extensions@npm:^3.30.2":
   version: 3.30.2
   resolution: "@tiptap/extensions@npm:3.30.2"
   peerDependencies:
@@ -10174,6 +10188,7 @@ __metadata:
     "@tiptap/extension-color": "npm:^3.30.2"
     "@tiptap/extension-highlight": "npm:^3.30.2"
     "@tiptap/extension-link": "npm:^3.30.2"
+    "@tiptap/extension-list": "npm:^3.30.2"
     "@tiptap/extension-placeholder": "npm:^3.30.2"
     "@tiptap/extension-subscript": "npm:^3.30.2"
     "@tiptap/extension-superscript": "npm:^3.30.2"
@@ -10182,6 +10197,7 @@ __metadata:
     "@tiptap/extension-text-align": "npm:^3.30.2"
     "@tiptap/extension-text-style": "npm:^3.30.2"
     "@tiptap/extension-underline": "npm:^3.30.2"
+    "@tiptap/extensions": "npm:^3.30.2"
     "@tiptap/pm": "npm:^3.30.2"
     "@tiptap/react": "npm:^3.30.2"
     "@tiptap/starter-kit": "npm:^3.30.2"
@@ -10189,6 +10205,7 @@ __metadata:
     "@types/github-slugger": "npm:^2.0.0"
     "@types/node": "npm:^26.2.0"
     "@types/react": "npm:19.2.18"
+    "@types/react-dom": "npm:19.2.4"
     chroma-js: "npm:^3.2.0"
     dayjs: "npm:^1.11.23"
     embla-carousel: "npm:^8.6.0"
@@ -10203,6 +10220,7 @@ __metadata:
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-dropzone: "npm:20.1.1"
+    react-is: "npm:^19.2.0"
     react-number-format: "npm:^5.4.5"
     recharts: "npm:^3.10.1"
     rehype-slug: "npm:^6.0.0"
@@ -14461,6 +14479,7 @@ __metadata:
     "@tiptap/extension-text-align": "npm:^3.30.2"
     "@tiptap/extension-text-style": "npm:^3.30.2"
     "@tiptap/extension-underline": "npm:^3.30.2"
+    "@tiptap/extensions": "npm:^3.30.2"
     "@tiptap/pm": "npm:^3.30.2"
     "@tiptap/react": "npm:^3.30.2"
     "@tiptap/starter-kit": "npm:^3.30.2"
@@ -14518,6 +14537,7 @@ __metadata:
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
     react-dropzone: "npm:20.1.1"
+    react-is: "npm:^19.2.0"
     react-number-format: "npm:^5.4.5"
     react-remove-scroll: "npm:^2.7.2"
     react-transition-group: "npm:4.4.5"
@@ -14546,6 +14566,7 @@ __metadata:
     unified: "npm:^11.0.5"
     unist-util-visit: "npm:^5.1.0"
     version-next: "npm:^1.0.2"
+    webpack: "npm:5.102.1"
     wrangler: "npm:^4.125.0"
     yargs: "npm:^18.1.0"
     zx: "npm:^8.8.5"
@@ -21406,7 +21427,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:5":
+"webpack@npm:5, webpack@npm:5.102.1":
   version: 5.102.1
   resolution: "webpack@npm:5.102.1"
   dependencies:

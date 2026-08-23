@@ -110,6 +110,7 @@
     "@tiptap/extension-text-align": "^3.30.2",
     "@tiptap/extension-text-style": "^3.30.2",
     "@tiptap/extension-underline": "^3.30.2",
+    "@tiptap/extensions": "^3.30.2",
     "@tiptap/pm": "^3.30.2",
     "@tiptap/react": "^3.30.2",
     "@tiptap/starter-kit": "^3.30.2",
@@ -127,6 +128,7 @@
     "lowlight": "^3.3.0",
     "react": "19.2.8",
     "react-dropzone": "20.1.1",
+    "react-is": "^19.2.0",
     "react-number-format": "^5.4.5",
     "react-remove-scroll": "^2.7.2",
     "react-transition-group": "4.4.5",
@@ -205,6 +207,7 @@
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0",
     "version-next": "^1.0.2",
+    "webpack": "5.102.1",
     "wrangler": "^4.125.0",
     "yargs": "^18.1.0",
     "zx": "^8.8.5"

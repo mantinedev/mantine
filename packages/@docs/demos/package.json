@@ -63,16 +63,21 @@
     "@mantinex/mantine-logo": "workspace:*",
     "@tiptap/core": "^3.30.2",
     "@tiptap/extension-details": "^3.30.2",
-    "@tiptap/extension-floating-menu": "^3.30.2",
     "@tiptap/extension-invisible-characters": "^3.30.2",
     "@tiptap/extension-link": "^3.30.2",
     "@tiptap/extension-table": "^3.30.2",
+    "@tiptap/extension-text-style": "^3.30.2",
     "@tiptap/pm": "^3.30.2",
     "@tiptap/react": "^3.30.2",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
     "dayjs": "^1.11.23",
+    "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "recharts": "^3.10.1"
+    "react-is": "^19.2.0",
+    "recharts": "^3.10.1",
+    "shiki": "^4.4.3"
   }
 }
