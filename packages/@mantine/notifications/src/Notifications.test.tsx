@@ -1013,4 +1013,35 @@ describe('@mantine/core/Notifications', () => {
 
     expect(getInertCount()).toBe(1);
   });
+
+  it('does not invert deeply stacked notifications', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        limit={40}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      for (let i = 0; i < 40; i += 1) {
+        notifications.show({ id: `n-${i}`, message: `Message ${i}` }, store);
+      }
+    });
+
+    const scales = Array.from(container.querySelectorAll('.mantine-Notification-root'))
+      .map((root) => (root as HTMLElement).style.transform)
+      .map((transform) => transform.match(/scale\(([-\d.]+)\)/)?.[1])
+      .filter(Boolean)
+      .map(Number);
+
+    expect(scales.length).toBeGreaterThan(0);
+    scales.forEach((scale) => expect(scale).toBeGreaterThan(0));
+  });
 });

@@ -116,6 +116,36 @@ describe('@mantine/charts/WaffleChart', () => {
     expect(grid).toHaveAttribute('aria-label', 'A: 40, B: 60');
   });
 
+  it('promotes the root to a group so a caller label is announced', () => {
+    const { container } = render(<WaffleChart {...defaultProps} aria-label="Storage usage" />);
+    const root = container.querySelector('.mantine-WaffleChart-root')!;
+
+    // A plain div cannot carry an accessible name
+    expect(root).toHaveAttribute('role', 'group');
+    expect(root).toHaveAttribute('aria-label', 'Storage usage');
+    // The grid keeps the generated data summary rather than being overwritten by it
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 60');
+  });
+
+  it('supports aria-labelledby without losing the data summary', () => {
+    const { container } = render(
+      <>
+        <span id="waffle-title">Storage usage</span>
+        <WaffleChart {...defaultProps} aria-labelledby="waffle-title" />
+      </>
+    );
+    const root = container.querySelector('.mantine-WaffleChart-root')!;
+
+    expect(root).toHaveAttribute('role', 'group');
+    expect(root).toHaveAttribute('aria-labelledby', 'waffle-title');
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 60');
+  });
+
+  it('does not add a role to the root when there is no caller label', () => {
+    const { container } = render(<WaffleChart {...defaultProps} />);
+    expect(container.querySelector('.mantine-WaffleChart-root')).not.toHaveAttribute('role');
+  });
+
   it('does not label the grid when there is no data', () => {
     const { container } = render(<WaffleChart data={[]} />);
     const grid = container.querySelector('svg')!;

@@ -322,6 +322,12 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
     .map((segment) => `${segment.name}: ${Math.max(0, segment.value)}`)
     .join(', ');
 
+  // A plain div has an implicit `generic` role, which cannot carry an accessible name, so
+  // a caller-supplied label would be dropped. Promoting the root to a group lets their
+  // label describe the chart while the grid keeps the generated data summary.
+  const hasCallerLabel =
+    others['aria-label'] !== undefined || others['aria-labelledby'] !== undefined;
+
   const grid = (
     <Box
       component="svg"
@@ -345,6 +351,7 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
       {...getStyles('root')}
       variant={variant}
       mod={{ 'legend-position': withLegend ? legendPosition : undefined, vertical: isVertical }}
+      role={hasCallerLabel ? 'group' : undefined}
       {...others}
     >
       {withLegend && (legendPosition === 'top' || legendPosition === 'left') && (

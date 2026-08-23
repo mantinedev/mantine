@@ -28,6 +28,10 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
+import {
+  getCandlestickDomain,
+  isRenderableValue,
+} from './get-candlestick-domain/get-candlestick-domain';
 import type { BaseChartStylesNames, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
 
@@ -255,7 +259,7 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
     const low = payload[seriesKeys.low];
     const close = payload[seriesKeys.close];
 
-    if ([open, high, low, close].some((value) => typeof value !== 'number')) {
+    if (![open, high, low, close].every(isRenderableValue)) {
       return <g />;
     }
 
@@ -291,20 +295,11 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
     );
   };
 
-  const numericLows = data
-    .map((item) => item[seriesKeys.low])
-    .filter((value): value is number => typeof value === 'number');
-  const numericHighs = data
-    .map((item) => item[seriesKeys.high])
-    .filter((value): value is number => typeof value === 'number');
-
-  let domain: [number, number] | undefined;
-  if (numericLows.length > 0 && numericHighs.length > 0) {
-    const dataMin = Math.min(...numericLows);
-    const dataMax = Math.max(...numericHighs);
-    const padding = (dataMax - dataMin) * 0.05 || 1;
-    domain = [dataMin - padding, dataMax + padding];
-  }
+  const domain = getCandlestickDomain({
+    data,
+    lowKey: seriesKeys.low,
+    highKey: seriesKeys.high,
+  });
 
   const referenceLinesItems = referenceLines?.map(
     ({ color: lineColor, labelPosition, ...line }, index) => {
@@ -465,6 +460,17 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
 
                 const open = entry[seriesKeys.open];
                 const close = entry[seriesKeys.close];
+
+                // Rows the candle renderer skipped must not produce a tooltip either,
+                // otherwise `valueFormatter` is handed undefined or a string.
+                if (
+                  ![open, close, entry[seriesKeys.high], entry[seriesKeys.low]].every(
+                    isRenderableValue
+                  )
+                ) {
+                  return null;
+                }
+
                 const color = getThemeColor(close >= open ? upColor : downColor, theme);
 
                 const ohlcPayload = [
@@ -493,10 +499,14 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
           )}
 
           <Bar
-            dataKey={(entry: Record<string, any>) => [
-              entry[seriesKeys.low],
-              entry[seriesKeys.high],
-            ]}
+            dataKey={(entry: Record<string, any>) => {
+              const low = entry[seriesKeys.low];
+              const high = entry[seriesKeys.high];
+
+              // Recharts derives its own data domain from these values, so a row the
+              // candle renderer would skip must not be handed to it either.
+              return isRenderableValue(low) && isRenderableValue(high) ? [low, high] : null;
+            }}
             isAnimationActive={false}
             legendType="none"
             shape={renderCandle}

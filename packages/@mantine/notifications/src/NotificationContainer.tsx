@@ -28,6 +28,8 @@ interface NotificationContainerProps extends NotificationProps {
   transitionState?: string;
 }
 
+const MAX_VISIBLE_STACK_DEPTH = 4;
+
 export function NotificationContainer({
   data,
   onHide,
@@ -232,7 +234,12 @@ export function NotificationContainer({
   const isCollapsed = isStacked && !stackExpanded;
   const isExiting = transitionState === 'exiting' || transitionState === 'exited';
   const stackDirection = stackPosition?.startsWith('top') ? 1 : -1;
-  const collapsedOffset = isCollapsed ? stackIndex * 10 * stackDirection : 0;
+
+  // Only a few layers are visible behind the front notification – without a cap the scale
+  // below reaches 0 at 34 stacked notifications and inverts beyond that, which `limit` can
+  // easily exceed.
+  const stackDepth = Math.min(stackIndex ?? 0, MAX_VISIBLE_STACK_DEPTH);
+  const collapsedOffset = isCollapsed ? stackDepth * 10 * stackDirection : 0;
   const staggerDelay = isStackedLayout ? (stackIndex || 0) * 30 : 0;
   const isDragging = active || scrollDismissActive;
 
@@ -251,7 +258,7 @@ export function NotificationContainer({
     }
 
     if (isStacked) {
-      return `scale(${1 - stackIndex * 0.03}) translateY(${collapsedOffset}px)`;
+      return `scale(${1 - stackDepth * 0.03}) translateY(${collapsedOffset}px)`;
     }
 
     return 'var(--notifications-state-transform) translate3d(var(--notifications-swipe-offset), 0, 0)';
