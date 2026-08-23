@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "csstype": "^3.2.3",
-    "html-react-parser": "^5.2.17"
+    "html-react-parser": "^6.1.7"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
