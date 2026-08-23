@@ -1,6 +1,7 @@
 import {
   Accept,
   DropEvent,
+  DropzoneOptions,
   FileError,
   FileRejection,
   FileWithPath,
@@ -85,7 +86,7 @@ export interface DropzoneProps
   /** Name of the form control. Submitted with the form as part of a name/value pair. */
   name?: string;
 
-  /** Maximum number of files that can be picked at once */
+  /** Maximum number of files that can be picked at once, files over the limit are rejected */
   maxFiles?: number;
 
   /** Set to autofocus the root element */
@@ -125,7 +126,9 @@ export interface DropzoneProps
   useFsAccessApi?: boolean;
 
   /** Use this to provide a custom file aggregator */
-  getFilesFromEvent?: (event: DropEvent) => Promise<Array<File | DataTransferItem>>;
+  getFilesFromEvent?: (
+    event: DropEvent | FileSystemFileHandle[]
+  ) => Promise<Array<File | DataTransferItem>>;
 
   /** Custom validation function. It must return null if there's no errors. */
   validator?: <T extends File>(file: T) => FileError | FileError[] | null;
@@ -253,8 +256,8 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject, isDragActive, open } =
     useDropzone({
-      onDrop: onDropAny,
-      onDropAccepted: onDrop,
+      onDrop: onDropAny as DropzoneOptions['onDrop'],
+      onDropAccepted: onDrop as DropzoneOptions['onDropAccepted'],
       onDropRejected: onReject,
       disabled: disabled || loading,
       accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,

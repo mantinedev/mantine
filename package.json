@@ -8,7 +8,7 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "repository": "https://github.com/mantinedev/mantine.git",
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22"
   },
   "workspaces": [
     "packages/**/*",
@@ -126,7 +126,7 @@
     "klona": "^2.0.6",
     "lowlight": "^3.3.0",
     "react": "19.2.8",
-    "react-dropzone": "15.0.0",
+    "react-dropzone": "20.1.1",
     "react-number-format": "^5.4.5",
     "react-remove-scroll": "^2.7.2",
     "react-transition-group": "4.4.5",

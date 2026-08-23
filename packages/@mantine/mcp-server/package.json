@@ -35,7 +35,7 @@
     "directory": "packages/@mantine/mcp-server"
   },
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22"
   },
   "bin": "./bin/mcp-server.cjs"
 }

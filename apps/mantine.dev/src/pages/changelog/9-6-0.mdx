@@ -278,3 +278,23 @@ become clickable and trigger `onEventClick`, which makes it possible to open an 
 unavailability blocks and similar events:
 
 <Demo data={DayViewDemos.interactiveBackgroundEvents} />
+
+## Dropzone react-dropzone 20
+
+[Dropzone](/x/dropzone) now depends on `react-dropzone` 20 (previously 15). The upgrade brings several
+behavior and type changes:
+
+- `maxFiles` no longer rejects the entire batch when more files are picked than the limit allows.
+Files up to the limit are now accepted and the rest are rejected. For example, picking 3 files with
+`maxFiles={2}` calls `onDrop` with the first 2 files and `onReject` with the third – previously all 3
+files were rejected and `onDrop` was called with an empty array.
+- `FileWithPath` type now has required `path` and `relativePath` properties, they were optional
+before. The default file aggregator always sets both values, so `onDrop` files can be read without
+optional chaining. If you provide a custom `getFilesFromEvent` that returns plain `File` objects,
+these properties are not set at runtime.
+- `getFilesFromEvent` prop now receives `DropEvent | FileSystemFileHandle[]` instead of `DropEvent` –
+the File System Access API path passes file handles to the aggregator. Update the parameter type of
+custom aggregators to accept both.
+- `react-dropzone` 20 requires Node.js 22 or later. Mantine now requires Node.js 22 as well –
+Node.js 20 reached end of life in April 2026. This affects your development environment only,
+browser support is not changed.
