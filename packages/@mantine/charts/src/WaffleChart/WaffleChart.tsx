@@ -314,8 +314,23 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
 
   const isVertical = legendPosition === 'left' || legendPosition === 'right';
 
+  // The cells carry no accessible information on their own, and the legend (when shown)
+  // exposes segment names but not their values – this gives assistive tech one readable
+  // summary of the data regardless of whether the legend is rendered. Values are reported
+  // as they are drawn, so a clamped negative value is announced as 0.
+  const gridLabel = data
+    .map((segment) => `${segment.name}: ${Math.max(0, segment.value)}`)
+    .join(', ');
+
   const grid = (
-    <Box component="svg" width={svgWidth} height={svgHeight} {...getStyles('grid')}>
+    <Box
+      component="svg"
+      width={svgWidth}
+      height={svgHeight}
+      role={gridLabel ? 'img' : undefined}
+      aria-label={gridLabel || undefined}
+      {...getStyles('grid')}
+    >
       <Tooltip.Floating label={tooltipLabel} disabled={!withTooltip || !hoveredCell} position="top">
         <g onMouseLeave={withTooltip ? () => setHoveredCell(null) : undefined}>
           {withTooltip && <rect fill="transparent" width={svgWidth} height={svgHeight} />}
@@ -333,11 +348,15 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
       {...others}
     >
       {withLegend && (legendPosition === 'top' || legendPosition === 'left') && (
-        <div {...getStyles('legend')}>{legendItems}</div>
+        <div {...getStyles('legend')} aria-hidden>
+          {legendItems}
+        </div>
       )}
       {grid}
       {withLegend && (legendPosition === 'bottom' || legendPosition === 'right') && (
-        <div {...getStyles('legend')}>{legendItems}</div>
+        <div {...getStyles('legend')} aria-hidden>
+          {legendItems}
+        </div>
       )}
     </Box>
   );

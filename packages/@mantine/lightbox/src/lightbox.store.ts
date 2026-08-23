@@ -30,7 +30,8 @@ export const createLightboxStore = () =>
 export const useLightboxStore = (store: LightboxStore) => useStore(store);
 
 function clampIndex(index: number, slidesCount: number) {
-  return Math.max(0, Math.min(index, Math.max(0, slidesCount - 1)));
+  const normalized = Number.isFinite(index) ? Math.round(index) : 0;
+  return Math.max(0, Math.min(normalized, Math.max(0, slidesCount - 1)));
 }
 
 export function updateLightboxStateAction(

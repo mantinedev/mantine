@@ -58,6 +58,7 @@ export const LightboxSlide = factory<LightboxSlideFactory>((props) => {
       {...ctx.getStyles('slide', { className, style, classNames, styles })}
       role="group"
       aria-roledescription="slide"
+      data-lightbox-slide
       aria-label={ctx.labels.slideLabel(index + 1, ctx.slides.length)}
       inert={!active}
       {...others}

@@ -160,10 +160,15 @@ export function useEventResize({
       let newHeight = state.originalHeight;
 
       if (state.edge === 'bottom') {
-        newHeight = Math.max(minHeightPercent, snappedPercent - state.originalTop);
+        // A resize interval coarser than the space left below the event would push the
+        // preview past the bottom of the canvas.
+        const available = 100 - state.originalTop;
+        const minHeight = Math.min(minHeightPercent, available);
+        newHeight = Math.max(minHeight, snappedPercent - state.originalTop);
       } else {
         const originalBottom = state.originalTop + state.originalHeight;
-        newTop = Math.min(snappedPercent, originalBottom - minHeightPercent);
+        const minHeight = Math.min(minHeightPercent, originalBottom);
+        newTop = Math.min(snappedPercent, originalBottom - minHeight);
         newHeight = originalBottom - newTop;
       }
 

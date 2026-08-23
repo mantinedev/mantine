@@ -124,4 +124,33 @@ describe('@mantine/schedule/calculateDropTime', () => {
     });
     expect(end.getTime() - start.getTime()).toBe(60 * 60 * 1000);
   });
+
+  it('keeps the start inside the range when the drag interval is coarser than it', () => {
+    const result = calculateDropTime({
+      draggedEvent: { ...event, start: '2024-01-01 09:30:00', end: '2024-01-01 09:45:00' },
+      targetDate: '2024-01-01',
+      targetSlotTime: '09:30:00',
+      dragIntervalMinutes: 60,
+      startTime: '09:30:00',
+      endTime: '10:00:00',
+    });
+
+    // Neither 09:00 nor 10:00 is inside 09:30-10:00, so the range start is used
+    expect(result.start.getHours()).toBe(9);
+    expect(result.start.getMinutes()).toBe(30);
+  });
+
+  it('still clamps normally when the range contains a snap point', () => {
+    const result = calculateDropTime({
+      draggedEvent: { ...event, start: '2024-01-01 09:00:00', end: '2024-01-01 09:30:00' },
+      targetDate: '2024-01-01',
+      targetSlotTime: '23:00:00',
+      dragIntervalMinutes: 60,
+      startTime: '09:00:00',
+      endTime: '17:00:00',
+    });
+
+    expect(result.start.getHours()).toBe(16);
+    expect(result.start.getMinutes()).toBe(0);
+  });
 });

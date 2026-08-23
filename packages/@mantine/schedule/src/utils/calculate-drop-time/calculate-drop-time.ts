@@ -79,17 +79,26 @@ export function calculateDropTime({
     const rawStartMinutes = slotStartMinutes + offsetRatio * gridInterval;
     let snappedStartMinutes = Math.round(rawStartMinutes / clampedDrag) * clampedDrag;
 
-    if (endTime) {
-      const parsedEnd = parseTimeString(endTime);
-      const endMinutes = parsedEnd.hours * 60 + parsedEnd.minutes;
-      const maxStart = Math.floor((endMinutes - 1) / clampedDrag) * clampedDrag;
-      snappedStartMinutes = Math.min(snappedStartMinutes, maxStart);
-    }
-    if (startTime) {
-      const parsedStart = parseTimeString(startTime);
-      const startMinutes = parsedStart.hours * 60 + parsedStart.minutes;
-      const minStart = Math.ceil(startMinutes / clampedDrag) * clampedDrag;
-      snappedStartMinutes = Math.max(snappedStartMinutes, minStart);
+    const parsedEnd = endTime ? parseTimeString(endTime) : null;
+    const parsedStart = startTime ? parseTimeString(startTime) : null;
+    const maxStart = parsedEnd
+      ? Math.floor((parsedEnd.hours * 60 + parsedEnd.minutes - 1) / clampedDrag) * clampedDrag
+      : null;
+    const minStart = parsedStart
+      ? Math.ceil((parsedStart.hours * 60 + parsedStart.minutes) / clampedDrag) * clampedDrag
+      : null;
+
+    if (minStart !== null && maxStart !== null && minStart > maxStart) {
+      // The snap grid is coarser than the displayed range, so no snapped start falls
+      // inside it – the start of the range is the only sensible drop target.
+      snappedStartMinutes = parsedStart!.hours * 60 + parsedStart!.minutes;
+    } else {
+      if (maxStart !== null) {
+        snappedStartMinutes = Math.min(snappedStartMinutes, maxStart);
+      }
+      if (minStart !== null) {
+        snappedStartMinutes = Math.max(snappedStartMinutes, minStart);
+      }
     }
 
     finalTargetTime = targetDay.add(snappedStartMinutes, 'minute');

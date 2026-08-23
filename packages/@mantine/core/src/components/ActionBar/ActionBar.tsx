@@ -139,6 +139,7 @@ export const ActionBar = factory<ActionBarFactory>((_props) => {
             <Paper
               unstyled={unstyled}
               {...getStyles('root', { style: transitionStyles })}
+              role="group"
               {...others}
             >
               {children}

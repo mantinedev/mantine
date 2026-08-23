@@ -107,4 +107,38 @@ describe('@mantine/charts/WaffleChart', () => {
     expect(width).toBeGreaterThanOrEqual(0);
     expect(height).toBeGreaterThanOrEqual(0);
   });
+
+  it('labels the grid with every segment name and value', () => {
+    const { container } = render(<WaffleChart {...defaultProps} withLegend={false} />);
+    const grid = container.querySelector('svg')!;
+
+    expect(grid).toHaveAttribute('role', 'img');
+    expect(grid).toHaveAttribute('aria-label', 'A: 40, B: 60');
+  });
+
+  it('does not label the grid when there is no data', () => {
+    const { container } = render(<WaffleChart data={[]} />);
+    const grid = container.querySelector('svg')!;
+
+    expect(grid).not.toHaveAttribute('role');
+    expect(grid).not.toHaveAttribute('aria-label');
+  });
+
+  it('reports clamped values in the grid label', () => {
+    const { container } = render(
+      <WaffleChart
+        data={[
+          { name: 'A', value: 40, color: 'blue.6' },
+          { name: 'B', value: -10, color: 'red.6' },
+        ]}
+      />
+    );
+
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 0');
+  });
+
+  it('hides the legend from assistive tech because the grid label repeats it', () => {
+    const { container } = render(<WaffleChart {...defaultProps} withLegend />);
+    expect(container.querySelector('.mantine-WaffleChart-legend')).toHaveAttribute('aria-hidden');
+  });
 });

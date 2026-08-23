@@ -176,10 +176,15 @@ export function useHorizontalEventResize({
       let newWidth = state.originalWidth;
 
       if (state.edge === 'end') {
-        newWidth = Math.max(minWidthPercent, snappedPercent - state.originalLeft);
+        // A resize interval coarser than the space left after the event would push the
+        // preview past the end of the canvas.
+        const available = 100 - state.originalLeft;
+        const minWidth = Math.min(minWidthPercent, available);
+        newWidth = Math.max(minWidth, snappedPercent - state.originalLeft);
       } else {
         const originalRight = state.originalLeft + state.originalWidth;
-        newLeft = Math.min(snappedPercent, originalRight - minWidthPercent);
+        const minWidth = Math.min(minWidthPercent, originalRight);
+        newLeft = Math.min(snappedPercent, originalRight - minWidth);
         newWidth = originalRight - newLeft;
       }
 

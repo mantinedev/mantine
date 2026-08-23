@@ -68,6 +68,7 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
       <UnstyledButton
         key={index}
         {...ctx.getStyles('thumbnail')}
+        mod="reduce-motion"
         data-active={index === ctx.currentIndex || undefined}
         aria-label={ctx.labels.thumbnailLabel(index + 1, ctx.slides.length)}
         aria-current={index === ctx.currentIndex || undefined}

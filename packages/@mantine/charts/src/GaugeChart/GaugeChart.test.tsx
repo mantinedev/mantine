@@ -201,4 +201,26 @@ describe('@mantine/charts/GaugeChart', () => {
     expect(svg).toHaveAttribute('aria-valuemin', '0');
     expect(svg).toHaveAttribute('aria-valuemax', '100');
   });
+
+  it('names the meter from a string label', () => {
+    const { container } = render(<GaugeChart value={72} label="CPU usage" />);
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'CPU usage');
+  });
+
+  it('does not use the default value label as the accessible name', () => {
+    const { container } = render(<GaugeChart value={72} />);
+    expect(container.querySelector('svg')).not.toHaveAttribute('aria-label');
+  });
+
+  it('does not use a non-string label as the accessible name', () => {
+    const { container } = render(<GaugeChart value={72} label={<span>72%</span>} />);
+    expect(container.querySelector('svg')).not.toHaveAttribute('aria-label');
+  });
+
+  it('prefers an explicit aria-label', () => {
+    const { container } = render(
+      <GaugeChart value={72} label="CPU usage" aria-label="Processor utilisation" />
+    );
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'Processor utilisation');
+  });
 });

@@ -1,4 +1,5 @@
 import type {
+  GaugeChartCssVariables,
   GaugeChartFactory,
   GaugeChartProps,
   GaugeChartSection,
@@ -7,11 +8,18 @@ import type {
 
 export { GaugeChart } from './GaugeChart';
 
-export type { GaugeChartProps, GaugeChartStylesNames, GaugeChartFactory, GaugeChartSection };
+export type {
+  GaugeChartProps,
+  GaugeChartStylesNames,
+  GaugeChartCssVariables,
+  GaugeChartFactory,
+  GaugeChartSection,
+};
 
 export namespace GaugeChart {
   export type Props = GaugeChartProps;
   export type StylesNames = GaugeChartStylesNames;
+  export type CssVariables = GaugeChartCssVariables;
   export type Factory = GaugeChartFactory;
   export type Section = GaugeChartSection;
 }

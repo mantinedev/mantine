@@ -17,6 +17,9 @@ triggers the `onClose` callback.
 
 <Demo data={ActionBarDemos.usage} />
 
+`ActionBar` root has `role="group"` and the divider has `role="separator"` so that assistive
+technologies announce the controls as one bar. Set `aria-label` to describe what the actions apply to.
+
 ## With ActionIcon buttons
 
 <Demo data={ActionBarDemos.withActions} />

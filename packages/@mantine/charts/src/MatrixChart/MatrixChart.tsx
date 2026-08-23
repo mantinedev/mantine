@@ -348,8 +348,19 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     </g>
   ) : null;
 
+  // Individual cells carry no accessible information, so a labelled chart is announced as
+  // one image instead of letting assistive tech walk a grid of anonymous rectangles.
+  const isLabelled = others['aria-label'] !== undefined || others['aria-labelledby'] !== undefined;
+
   return (
-    <Box component="svg" width={svgWidth} height={svgHeight} {...getStyles('root')} {...others}>
+    <Box
+      component="svg"
+      width={svgWidth}
+      height={svgHeight}
+      role={isLabelled ? 'img' : undefined}
+      {...getStyles('root')}
+      {...others}
+    >
       <Tooltip.Floating
         label={label}
         disabled={!withTooltip || !label}

@@ -58,3 +58,10 @@ Cells that are not allocated to any segment use `--waffle-empty-color` – set t
 `emptyColor` prop to change it:
 
 <Demo data={WaffleChartDemos.emptyColor} />
+
+## Accessibility
+
+The grid is exposed to screen readers as a single image labelled with every segment name and value,
+so the data is available whether or not the legend is displayed. The legend itself is `aria-hidden`
+because it repeats those names visually. Set `aria-label` on the chart to describe what the values
+represent – it labels the chart as a whole and does not replace the generated grid label.

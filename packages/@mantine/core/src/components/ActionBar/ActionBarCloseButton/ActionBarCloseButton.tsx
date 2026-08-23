@@ -1,11 +1,20 @@
-import { factory, Factory, useProps } from '../../../core';
+import { type ClassNames, factory, Factory, type Styles, useProps } from '../../../core';
 import { CloseButton, type CloseButtonProps } from '../../CloseButton';
 import { useActionBarContext } from '../ActionBar.context';
 import classes from '../ActionBar.module.css';
 
 export type ActionBarCloseButtonStylesNames = 'closeButton';
 
-export interface ActionBarCloseButtonProps extends CloseButtonProps {
+export interface ActionBarCloseButtonProps extends Omit<
+  CloseButtonProps,
+  'classNames' | 'styles' | 'vars'
+> {
+  /** Classes for the `closeButton` selector of the parent `ActionBar` */
+  classNames?: ClassNames<ActionBarCloseButtonFactory>;
+
+  /** Styles for the `closeButton` selector of the parent `ActionBar` */
+  styles?: Styles<ActionBarCloseButtonFactory>;
+
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -20,17 +29,17 @@ const defaultProps: Partial<ActionBarCloseButtonProps> = {};
 
 export const ActionBarCloseButton = factory<ActionBarCloseButtonFactory>((_props) => {
   const props = useProps('ActionBarCloseButton', defaultProps, _props);
-  const { className, style, onClick, ...others } = props;
+  const { classNames, className, style, styles, onClick, ...others } = props;
   const ctx = useActionBarContext();
 
   return (
     <CloseButton
-      {...ctx.getStyles('closeButton', { className, style })}
-      onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-        ctx.onClose?.();
-        onClick?.(event);
-      }}
+      {...ctx.getStyles('closeButton', { className, style, classNames, styles })}
       {...others}
+      onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+        onClick?.(event);
+        ctx.onClose?.();
+      }}
     />
   );
 });

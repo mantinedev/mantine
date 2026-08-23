@@ -292,4 +292,51 @@ describe('@mantine/lightbox/LightboxSlide', () => {
 
     expect(screen.getByRole('img', { name: 'Photo' })).toHaveAttribute('loading', 'lazy');
   });
+
+  it('starts playback when an autoPlay video becomes the active slide', async () => {
+    const play = jest.fn().mockResolvedValue(undefined);
+    const pause = jest.fn();
+    jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockImplementation(play);
+    jest.spyOn(window.HTMLMediaElement.prototype, 'pause').mockImplementation(pause);
+
+    const videoSlide: LightboxSlideData = { type: 'video', src: 'video.mp4', autoPlay: true };
+    const slides: LightboxSlideData[] = [{ src: 'first.jpg', alt: 'First' }, videoSlide];
+
+    const { rerender } = await renderWithAct(
+      <LightboxWrapper slides={slides} currentIndex={0}>
+        <LightboxSlide slide={videoSlide} index={1} />
+      </LightboxWrapper>
+    );
+
+    expect(play).not.toHaveBeenCalled();
+
+    await act(async () => {
+      rerender(
+        <>
+          <LightboxWrapper slides={slides} currentIndex={1}>
+            <LightboxSlide slide={videoSlide} index={1} />
+          </LightboxWrapper>
+        </>
+      );
+    });
+
+    expect(play).toHaveBeenCalled();
+    jest.restoreAllMocks();
+  });
+
+  it('does not start playback for a video without autoPlay', async () => {
+    const play = jest.fn().mockResolvedValue(undefined);
+    jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockImplementation(play);
+    jest.spyOn(window.HTMLMediaElement.prototype, 'pause').mockImplementation(jest.fn());
+
+    const videoSlide: LightboxSlideData = { type: 'video', src: 'video.mp4' };
+    await renderWithAct(
+      <LightboxWrapper slides={[videoSlide]} currentIndex={0}>
+        <LightboxSlide slide={videoSlide} index={0} />
+      </LightboxWrapper>
+    );
+
+    expect(play).not.toHaveBeenCalled();
+    jest.restoreAllMocks();
+  });
 });

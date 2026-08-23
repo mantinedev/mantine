@@ -12,8 +12,39 @@ interface UseLightboxKeyboardInput {
   onZoomPan?: (deltaX: number, deltaY: number) => boolean;
 }
 
-const INTERACTIVE_ELEMENTS_SELECTOR =
+/** Elements that consume typing wherever they are, including the lightbox chrome */
+const TEXT_ENTRY_SELECTOR =
   'input, textarea, select, video, audio, [contenteditable]:not([contenteditable="false"])';
+
+/**
+ * Elements that consume arrow keys and letter shortcuts only inside slide content – the
+ * lightbox toolbar and navigation are buttons too, and keyboard shortcuts have to keep
+ * working while one of them has focus.
+ */
+const SLIDE_WIDGET_SELECTOR = [
+  'button',
+  'a[href]',
+  '[role="button"]',
+  '[role="link"]',
+  '[role="checkbox"]',
+  '[role="radio"]',
+  '[role="menuitem"]',
+  '[role="option"]',
+  '[role="slider"]',
+  '[role="spinbutton"]',
+  '[role="switch"]',
+  '[role="tab"]',
+  '[role="textbox"]',
+  '[role="combobox"]',
+  '[role="listbox"]',
+  '[role="menu"]',
+  '[role="menubar"]',
+  '[role="tablist"]',
+  '[role="tree"]',
+  '[role="treeitem"]',
+  '[role="grid"]',
+  '[role="gridcell"]',
+].join(', ');
 
 const ZOOM_PAN_STEP = 50;
 
@@ -48,8 +79,17 @@ export function useLightboxKeyboard({
         return;
       }
 
-      if (event.target instanceof Element && event.target.closest(INTERACTIVE_ELEMENTS_SELECTOR)) {
-        return;
+      if (event.target instanceof Element) {
+        if (event.target.closest(TEXT_ENTRY_SELECTOR)) {
+          return;
+        }
+
+        if (
+          event.target.closest('[data-lightbox-slide]') &&
+          event.target.closest(SLIDE_WIDGET_SELECTOR)
+        ) {
+          return;
+        }
       }
 
       switch (event.key) {

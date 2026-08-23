@@ -229,4 +229,31 @@ describe('@mantine/lightbox/LightboxRoot embla integration', () => {
     await renderWithAct(<Lightbox {...defaultProps} />);
     expect(mockEmblaMain().options.watchDrag(mockEmblaMain(), new Event('pointerdown'))).toBe(true);
   });
+
+  it('does not intercept arrow keys while a control inside a slide is focused', async () => {
+    const onIndexChange = jest.fn();
+    const customSlides = [
+      { type: 'custom', render: () => <button type="button">Inner</button> },
+      { src: 'image2.jpg', alt: 'Second image' },
+    ];
+
+    await renderWithAct(
+      <Lightbox {...defaultProps} slides={customSlides} onIndexChange={onIndexChange} />
+    );
+
+    screen.getByRole('button', { name: 'Inner' }).focus();
+    await userEvent.keyboard('{ArrowRight}');
+
+    expect(onIndexChange).not.toHaveBeenCalled();
+  });
+
+  it('still handles arrow keys while a lightbox toolbar button is focused', async () => {
+    const onIndexChange = jest.fn();
+    await renderWithAct(<Lightbox {...defaultProps} onIndexChange={onIndexChange} />);
+
+    screen.getByLabelText('Next slide').focus();
+    await userEvent.keyboard('{ArrowRight}');
+
+    expect(onIndexChange).toHaveBeenCalledWith(1);
+  });
 });

@@ -81,3 +81,17 @@ Set `withLegend` prop to display a color legend below the chart. Use `legendLabe
 to customize the legend text.
 
 <Demo data={MatrixChartDemos.legend} />
+
+## Accessibility
+
+Matrix cells are decorative `rect` elements – they carry no text for screen readers. Set `aria-label`
+(or `aria-labelledby`) to describe what the chart shows; the chart is then exposed as a single labelled
+image instead of a grid of anonymous shapes:
+
+```tsx
+import { MatrixChart } from '@mantine/charts';
+
+function Demo() {
+  return <MatrixChart data={[]} aria-label="Deployments per service and weekday" />;
+}
+```

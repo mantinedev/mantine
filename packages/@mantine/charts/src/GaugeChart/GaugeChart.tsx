@@ -351,6 +351,11 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
   const labelContent = label !== undefined ? label : formatValue(value);
   const clampedValue = Math.max(min!, Math.min(max!, value));
 
+  // A meter with no accessible name is announced as "meter" and nothing else. A string
+  // `label` names the metric ("CPU usage"), so it is used unless one is given explicitly.
+  // The default label is the formatted value, which would only repeat `aria-valuetext`.
+  const ariaLabel = others['aria-label'] ?? (typeof label === 'string' ? label : undefined);
+
   return (
     <Box
       component="svg"
@@ -358,6 +363,7 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
       {...getStyles('root')}
       variant={variant}
       role="meter"
+      aria-label={ariaLabel}
       aria-valuenow={clampedValue}
       aria-valuemin={min}
       aria-valuemax={max}

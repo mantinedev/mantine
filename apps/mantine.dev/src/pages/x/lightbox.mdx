@@ -388,8 +388,9 @@ To change labels for all lightboxes in your application, set `labels` in
 ## Keyboard shortcuts
 
 `Escape` always closes the lightbox. Other shortcuts are active when `withKeyboardEvents` is set
-(default) and are ignored when focus is inside an input, textarea, video or other interactive
-element. `F`/`T`/`Z` only work when the corresponding feature is enabled:
+(default). They are ignored when focus is inside an input, textarea or media element anywhere in the
+lightbox, and when focus is on a button, link or other widget inside slide content – so controls in
+custom slides keep their own keyboard handling. `F`/`T`/`Z` only work when the corresponding feature is enabled:
 
 <KeyboardEventsTable
   data={[

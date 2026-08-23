@@ -561,6 +561,26 @@ describe('@mantine/lightbox/Lightbox store', () => {
     expect(screen.getByLabelText('Previous slide')).toHaveAttribute('data-inactive');
   });
 
+  it('normalizes fractional and non-finite indices in the store', async () => {
+    await renderWithAct(<Lightbox.Provider />);
+
+    await act(async () => {
+      lightbox.open({ slides });
+      lightbox.setIndex(1.6);
+    });
+    expect(lightboxStore.getState().currentIndex).toBe(2);
+
+    await act(async () => {
+      lightbox.setIndex(NaN);
+    });
+    expect(lightboxStore.getState().currentIndex).toBe(0);
+
+    await act(async () => {
+      lightbox.open({ slides, startIndex: 1.2 });
+    });
+    expect(lightboxStore.getState().currentIndex).toBe(1);
+  });
+
   describe('fullscreen cleanup', () => {
     let fullscreen: ReturnType<typeof mockFullscreenApi>;
 

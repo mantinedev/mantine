@@ -91,6 +91,7 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
           <UnstyledButton
             key={item.key}
             {...ctx.getStyles('toolbarButton')}
+            mod="reduce-motion"
             aria-label={item.label}
             onClick={item.onClick}
           >
@@ -108,6 +109,7 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
           <UnstyledButton
             key={item.key}
             {...ctx.getStyles('toolbarButton')}
+            mod="reduce-motion"
             aria-label={item.label}
             onClick={item.onClick}
           >

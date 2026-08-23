@@ -189,4 +189,14 @@ describe('@mantine/charts/MatrixChart', () => {
 
     expect(fills).toStrictEqual(['var(--mantine-color-gray-3)', 'var(--mantine-color-blue-6)']);
   });
+
+  it('exposes a labelled chart as a single image', () => {
+    const { container } = render(<MatrixChart data={testData} aria-label="Activity" />);
+    expect(container.querySelector('svg')).toHaveAttribute('role', 'img');
+  });
+
+  it('does not set a role when no accessible name is given', () => {
+    const { container } = render(<MatrixChart data={testData} />);
+    expect(container.querySelector('svg')).not.toHaveAttribute('role');
+  });
 });

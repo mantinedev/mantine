@@ -83,4 +83,40 @@ describe('@mantine/core/ActionBar', () => {
     expect(screen.getByText('test-keep-mounted')).toBeInTheDocument();
     expect(container.querySelector('.mantine-ActionBar-root')).toHaveStyle({ display: 'none' });
   });
+
+  it('exposes the bar as a group and the divider as a separator', () => {
+    render(
+      <ActionBar opened>
+        <div>content</div>
+        <ActionBar.Divider />
+      </ActionBar>
+    );
+
+    expect(screen.getByRole('group')).toBeInTheDocument();
+    const separator = screen.getByRole('separator');
+    expect(separator).toHaveAttribute('aria-orientation', 'vertical');
+  });
+
+  it('allows overriding the default roles', () => {
+    render(
+      <ActionBar opened role="toolbar">
+        <ActionBar.Divider role="presentation" />
+      </ActionBar>
+    );
+
+    expect(screen.getByRole('toolbar')).toBeInTheDocument();
+    expect(screen.queryByRole('separator')).not.toBeInTheDocument();
+  });
+
+  it('calls the given onClick before onClose on ActionBar.CloseButton', async () => {
+    const calls: string[] = [];
+    render(
+      <ActionBar opened onClose={() => calls.push('close')}>
+        <ActionBar.CloseButton onClick={() => calls.push('click')} />
+      </ActionBar>
+    );
+
+    await userEvent.click(screen.getByRole('button'));
+    expect(calls).toStrictEqual(['click', 'close']);
+  });
 });

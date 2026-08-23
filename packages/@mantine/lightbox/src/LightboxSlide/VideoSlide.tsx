@@ -12,10 +12,24 @@ export function VideoSlide({ slide, active }: VideoSlideProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (!active && videoRef.current) {
-      videoRef.current.pause();
+    const video = videoRef.current;
+
+    if (!video) {
+      return;
     }
-  }, [active]);
+
+    if (!active) {
+      video.pause();
+      return;
+    }
+
+    // All slides are mounted up front, so the `autoPlay` attribute only ever fires for the
+    // slide that happens to be active on mount – playback has to be started explicitly
+    // when an already mounted video becomes the current slide.
+    if (slide.autoPlay) {
+      video.play().catch(() => {});
+    }
+  }, [active, slide.autoPlay]);
 
   return (
     /* eslint-disable jsx-a11y/media-has-caption */
@@ -26,6 +40,7 @@ export function VideoSlide({ slide, active }: VideoSlideProps) {
       poster={slide.poster}
       aria-label={slide.label}
       autoPlay={active && slide.autoPlay}
+      data-active={active || undefined}
       controls
       playsInline
     >
