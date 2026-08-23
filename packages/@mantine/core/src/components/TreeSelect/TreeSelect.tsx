@@ -13,6 +13,7 @@ import {
   useStyles,
 } from '../../core';
 import { Combobox, ComboboxLikeStylesNames, useCombobox } from '../Combobox';
+import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
   __InputStylesNames,
@@ -910,6 +911,10 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
                     onKeyDown={handleKeyDown}
                     value={_searchValue}
                     onChange={(event) => {
+                      if (isExternalInputChange(event)) {
+                        return;
+                      }
+
                       handleSearchChange(event.currentTarget.value);
                       if (searchable) {
                         combobox.openDropdown();
@@ -975,6 +980,10 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
             readOnly={readOnly || !searchable}
             value={searchable ? _searchValue : singleDisplayLabel}
             onChange={(event) => {
+              if (isExternalInputChange(event)) {
+                return;
+              }
+
               handleSearchChange(event.currentTarget.value);
               combobox.openDropdown();
             }}

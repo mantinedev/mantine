@@ -1,5 +1,6 @@
 import { fireEvent } from '@testing-library/react';
 import {
+  externalInputFill,
   inputDefaultProps,
   inputStylesApiSelectors,
   render,
@@ -488,5 +489,26 @@ describe('@mantine/core/Cascader', () => {
     } finally {
       addEventListenerSpy.mockRestore();
     }
+  });
+
+  describe('external input changes (autofill)', () => {
+    it('does not display phantom text', async () => {
+      render(<Cascader {...defaultProps} searchable defaultValue={['asia', 'jp', 'tokyo']} />);
+      await externalInputFill(screen.getByRole('textbox'), 'Paris');
+      expect(screen.getByRole('textbox')).toHaveValue('Asia / Japan / Tokyo');
+    });
+
+    it('does not open the dropdown', async () => {
+      render(<Cascader {...defaultProps} searchable />);
+      await externalInputFill(screen.getByRole('textbox'), 'Paris');
+      expect(screen.queryByRole('option')).toBe(null);
+    });
+
+    it('does not interfere with typing', async () => {
+      render(<Cascader {...defaultProps} searchable />);
+      await userEvent.type(screen.getByRole('textbox'), 'Paris');
+      expect(screen.getByRole('textbox')).toHaveValue('Paris');
+      expect(screen.getByRole('option', { name: 'Europe / France / Paris' })).toBeVisible();
+    });
   });
 });

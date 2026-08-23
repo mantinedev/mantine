@@ -14,7 +14,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { CloseButton } from '../CloseButton';
+import { __CloseButtonProps, CloseButton } from '../CloseButton';
 import { Loader, LoaderProps } from '../Loader';
 import classes from './Notification.module.css';
 
@@ -60,7 +60,7 @@ export interface NotificationProps
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
-  closeButtonProps?: ElementProps<'button'> & DataAttributes;
+  closeButtonProps?: __CloseButtonProps & ElementProps<'button'> & DataAttributes;
 
   /** Props passed down to the `Loader` component */
   loaderProps?: LoaderProps;

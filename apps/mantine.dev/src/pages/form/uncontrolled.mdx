@@ -111,6 +111,86 @@ const form = useForm({
 });
 ```
 
+## Conditional fields
+
+The most common case where uncontrolled mode is surprising is rendering a part
+of the form conditionally. `form.getValues()` returns the current values, but it
+does not subscribe the component to changes – the value is read once and the
+component is never rerendered, so the condition never updates:
+
+```tsx
+import { Checkbox, Collapse, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { shipsInternationally: false, country: '' },
+  });
+
+  // ❌ Does not work: the component is not rerendered when the checkbox is toggled,
+  // the collapsed section never opens
+  const shipsInternationally = form.getValues().shipsInternationally;
+
+  return (
+    <>
+      <Checkbox
+        label="Ships internationally"
+        key={form.key('shipsInternationally')}
+        {...form.getInputProps('shipsInternationally', {
+          type: 'checkbox',
+        })}
+      />
+      <Collapse expanded={shipsInternationally}>
+        <TextInput
+          label="Country"
+          key={form.key('country')}
+          {...form.getInputProps('country')}
+        />
+      </Collapse>
+    </>
+  );
+}
+```
+
+Use [form.useWatchValue](/form/values/#formusewatchvalue) instead – it
+subscribes to a single field and rerenders the component when that field
+changes:
+
+```tsx
+import { Checkbox, Collapse, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { shipsInternationally: false, country: '' },
+  });
+
+  // ✅ Works: the component is rerendered when the checkbox is toggled
+  const shipsInternationally = form.useWatchValue('shipsInternationally');
+
+  return (
+    <>
+      <Checkbox
+        label="Ships internationally"
+        key={form.key('shipsInternationally')}
+        {...form.getInputProps('shipsInternationally', {
+          type: 'checkbox',
+        })}
+      />
+      <Collapse expanded={shipsInternationally}>
+        <TextInput
+          label="Country"
+          key={form.key('country')}
+          {...form.getInputProps('country')}
+        />
+      </Collapse>
+    </>
+  );
+}
+```
+
 ## form.getInputProps
 
 [form.getInputProps](/form/get-input-props/) returns different props for controlled
