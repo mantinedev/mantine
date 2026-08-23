@@ -92,6 +92,7 @@ export { wait } from './wait';
 export { patchConsoleError, patchConsoleWarn, autoPatchWarn } from './patch-console-error';
 export { createContextContainer } from './create-context-container';
 export { inputDefaultProps, inputStylesApiSelectors } from './inputs/inputs-test-props';
+export { externalInputFill } from './inputs/external-input-fill';
 export * from './queries';
 export { screen } from '@testing-library/react';
 export { userEvent };

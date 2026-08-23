@@ -76,8 +76,8 @@ export interface DateInputProps
   /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentProps<'button'>;
 
-  /** `dayjs` format to display input value, `"MMMM D, YYYY"` by default  */
-  valueFormat?: string;
+  /** `dayjs` format to display input value, or a function that receives the value as a `YYYY-MM-DD` string and returns the formatted value. A function cannot be used to parse user input – set `dateParser` prop to support formats other than `YYYY-MM-DD`. @default "MMMM D, YYYY" */
+  valueFormat?: string | ((date: DateStringValue) => string);
 
   /** If set to `true`, the time part of the value is preserved. Set this to `true` when `valueFormat` includes time (e.g. `"YYYY-MM-DD HH:mm"`). @default false */
   withTime?: boolean;
@@ -175,17 +175,28 @@ export const DateInput = factory<DateInputFactory>((_props) => {
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
   const defaultDateParser = (val: string): DateStringValue | null => {
+    if (typeof valueFormat === 'function') {
+      return dateStringParser(val, withTime);
+    }
+
     const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
     return Number.isNaN(parsedDate.getTime())
-      ? dateStringParser(val)
+      ? dateStringParser(val, withTime)
       : dayjs(parsedDate).format(withTime ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD');
   };
 
   const _dateParser = dateParser || defaultDateParser;
   const _allowDeselect = allowDeselect !== undefined ? allowDeselect : clearable;
 
-  const formatValue = (val: DateStringValue) =>
-    val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
+  const formatValue = (val: DateStringValue) => {
+    if (!val) {
+      return '';
+    }
+
+    return typeof valueFormat === 'function'
+      ? valueFormat(val)
+      : dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat);
+  };
 
   const [_value, setValue, controlled] = useUncontrolledDates({
     type: 'default',
