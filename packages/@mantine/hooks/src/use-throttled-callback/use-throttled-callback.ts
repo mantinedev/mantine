@@ -12,7 +12,13 @@ export function useThrottledCallbackWithClearTimeout<T extends (...args: any[]) 
   const waitRef = useRef(wait);
   const timeoutRef = useRef<number>(-1);
 
-  const clearTimeout = () => window.clearTimeout(timeoutRef.current);
+  const clearTimeout = () => {
+    window.clearTimeout(timeoutRef.current);
+    timeoutRef.current = -1;
+    active.current = true;
+    latestInArgsRef.current = null;
+    latestOutArgsRef.current = null;
+  };
 
   const callThrottledCallback = useCallback(
     (...args: Parameters<T>) => {
