@@ -23,7 +23,7 @@ export type LightboxCloseButtonFactory = Factory<{
 }>;
 
 export const LightboxCloseButton = factory<LightboxCloseButtonFactory>((props) => {
-  const { classNames, className, style, styles, vars, ...others } = useProps(
+  const { classNames, className, style, styles, vars, onClick, ...others } = useProps(
     'LightboxCloseButton',
     null,
     props
@@ -34,11 +34,14 @@ export const LightboxCloseButton = factory<LightboxCloseButtonFactory>((props) =
   return (
     <CloseButton
       {...ctx.getStyles('closeButton', { className, style, classNames, styles })}
-      {...others}
-      aria-label="Close lightbox"
-      onClick={ctx.onClose}
+      aria-label={ctx.labels.closeLabel}
       variant="subtle"
       size="lg"
+      {...others}
+      onClick={(event) => {
+        onClick?.(event);
+        ctx.onClose();
+      }}
     />
   );
 });

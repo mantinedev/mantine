@@ -30,11 +30,18 @@ export type LightboxSlidesFactory = Factory<{
 }>;
 
 export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
-  const { classNames, className, style, styles, vars, emblaRef, children, ...others } = useProps(
-    'LightboxSlides',
-    null,
-    props
-  );
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    vars,
+    emblaRef,
+    children,
+    onTouchStart,
+    onTouchEnd,
+    ...others
+  } = useProps('LightboxSlides', null, props);
 
   const ctx = useLightboxContext();
 
@@ -49,10 +56,16 @@ export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
       {...ctx.getStyles('slides', { className, style, classNames, styles })}
       role="region"
       aria-roledescription="carousel"
-      aria-label="Slides"
+      aria-label={ctx.labels.slidesLabel}
       {...others}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
+      onTouchStart={(event) => {
+        onTouchStart?.(event);
+        handleTouchStart(event);
+      }}
+      onTouchEnd={(event) => {
+        onTouchEnd?.(event);
+        handleTouchEnd(event);
+      }}
     >
       <div {...ctx.getStyles('slidesViewport')} ref={emblaRef ?? ctx.emblaRef}>
         <div {...ctx.getStyles('slidesContainer')}>{children}</div>

@@ -44,6 +44,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
   const dragStart = useRef({ x: 0, y: 0 });
   const translateStart = useRef({ x: 0, y: 0 });
   const lastPinchDistance = useRef<number | null>(null);
+  const lastPointerType = useRef<string>('mouse');
 
   useEffect(() => {
     isZoomedRef.current = zoomState.isZoomed;
@@ -116,6 +117,12 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
   }, [zoomAtPoint]);
 
   const handleNativeWheel = useRef((event: WheelEvent) => {
+    // Horizontal trackpad gestures report deltaY === 0 – zooming on those would both
+    // hijack the gesture and pick a direction at random.
+    if (event.deltaY === 0) {
+      return;
+    }
+
     event.preventDefault();
     zoomAtPointRef.current(event.deltaY > 0 ? -0.2 : 0.2, event.clientX, event.clientY);
   });
@@ -128,6 +135,8 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
 
   const handlePointerDown = useCallback(
     (event: React.PointerEvent) => {
+      lastPointerType.current = event.pointerType;
+
       if (!zoomState.isZoomed || !enabled) {
         return;
       }
@@ -207,9 +216,19 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
         didDrag.current = false;
         return;
       }
-      if ('ontouchstart' in window) {
+
+      // Touch taps are handled by the carousel (swipe) and by double-tap to zoom –
+      // reacting to the synthetic click as well would fight with both. This checks the
+      // input that produced the click rather than whether the device supports touch, so
+      // a mouse still zooms on a touchscreen laptop. The recorded type is consumed here
+      // so a later click without a preceding pointerdown is not treated as a touch.
+      const pointerType = lastPointerType.current;
+      lastPointerType.current = 'mouse';
+
+      if (pointerType === 'touch') {
         return;
       }
+
       toggleZoom();
     },
     [enabled, toggleZoom]

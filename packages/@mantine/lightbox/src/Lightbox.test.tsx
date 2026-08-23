@@ -516,6 +516,51 @@ describe('@mantine/lightbox/Lightbox store', () => {
     expect(lightboxStore.getState().opened).toBe(false);
   });
 
+  it('clamps the current index when slides are removed', async () => {
+    const onIndexChange = jest.fn();
+    const { rerender } = await renderWithAct(
+      <Lightbox {...defaultProps} withThumbnails onIndexChange={onIndexChange} />
+    );
+
+    await userEvent.click(screen.getByLabelText('Go to slide 3'));
+    onIndexChange.mockClear();
+
+    await act(async () => {
+      rerender(
+        <>
+          <Lightbox {...defaultProps} slides={slides.slice(0, 2)} onIndexChange={onIndexChange} />
+        </>
+      );
+    });
+
+    expect(onIndexChange).toHaveBeenCalledWith(1);
+    expect(screen.getByText('2 / 2')).toBeInTheDocument();
+  });
+
+  it('uses slidesLabel for the carousel region', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} labels={{ slidesLabel: 'Galeria' }} />);
+    expect(screen.getByRole('region', { name: 'Galeria' })).toBeInTheDocument();
+  });
+
+  it('sets z-index CSS variable from the zIndex prop', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} withinPortal={false} zIndex={900} />);
+    const root = document.querySelector('.mantine-Lightbox-root') as HTMLElement;
+    expect(root.style.getPropertyValue('--lightbox-z-index')).toBe('900');
+  });
+
+  it('does not set the z-index CSS variable when zIndex is not provided', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} withinPortal={false} />);
+    const root = document.querySelector('.mantine-Lightbox-root') as HTMLElement;
+    expect(root.style.getPropertyValue('--lightbox-z-index')).toBe('');
+  });
+
+  it('does not let emblaOptions override loop', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} loop={false} emblaOptions={{ loop: true }} />);
+
+    // With loop disabled the first slide has no previous slide to scroll to
+    expect(screen.getByLabelText('Previous slide')).toHaveAttribute('data-inactive');
+  });
+
   describe('fullscreen cleanup', () => {
     let fullscreen: ReturnType<typeof mockFullscreenApi>;
 

@@ -123,13 +123,18 @@ export interface LightboxRootProps
   /** Determines whether the lightbox should be rendered inside `Portal` @default true */
   withinPortal?: boolean;
 
+  /** `z-index` of the overlay and content elements, `400` by default */
+  zIndex?: string | number;
+
   /** Transition duration in milliseconds @default 200 */
   transitionDuration?: number;
 
   /** Props passed down to the `Transition` component that animates the content, the overlay always fades. By default, the content is scaled from 95% to 100% while fading in. */
   transitionProps?: TransitionOverride;
 
-  /** Additional Embla carousel options */
+  /** Additional Embla carousel options. `loop` and `startIndex` are controlled by the
+   * `loop` and `currentIndex` props and cannot be set here; a `watchDrag` callback is
+   * still called, but dragging is always disabled while the image is zoomed. */
   emblaOptions?: EmblaOptionsType;
 
   /** Maximum zoom scale @default 3 */
@@ -183,15 +188,17 @@ function exitDocumentFullscreen() {
   }
 }
 
-const varsResolver = createVarsResolver<LightboxRootFactory>((_, { transitionDuration }) => ({
-  root: {
-    '--lightbox-transition-duration': `${transitionDuration}ms`,
-    '--lightbox-overlay-color': undefined,
-    '--lightbox-z-index': undefined,
-    '--lightbox-toolbar-height': undefined,
-    '--lightbox-thumbnails-height': undefined,
-  },
-}));
+const varsResolver = createVarsResolver<LightboxRootFactory>(
+  (_, { transitionDuration, zIndex }) => ({
+    root: {
+      '--lightbox-transition-duration': `${transitionDuration}ms`,
+      '--lightbox-overlay-color': undefined,
+      '--lightbox-z-index': zIndex !== undefined ? `${zIndex}` : undefined,
+      '--lightbox-toolbar-height': undefined,
+      '--lightbox-thumbnails-height': undefined,
+    },
+  })
+);
 
 export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   const props = useProps('LightboxRoot', lightboxRootDefaultProps, _props);
@@ -220,6 +227,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     returnFocus,
     withInitialFocusPlaceholder,
     withinPortal,
+    zIndex,
     transitionDuration,
     transitionProps,
     emblaOptions,
@@ -256,8 +264,17 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   const zoomIsActive = useRef(false);
   const currentIndexRef = useRef(_currentIndex);
   const setCurrentIndexRef = useRef(setCurrentIndex);
+
+  // Embla emits `select` synchronously from `scrollTo`. When the scroll was requested for
+  // an index the consumer already knows about, that echo is suppressed for the duration
+  // of the call so `onIndexChange` is not reported twice for one navigation.
+  const suppressSelectRef = useRef<number | null>(null);
   const fullscreenRequestedRef = useRef(false);
   const ownsFullscreenRef = useRef(false);
+
+  // Embla compares options by function source, so the `watchDrag` closure above must stay
+  // textually stable – the current user options are read through this ref instead.
+  const emblaOptionsRef = useRef(emblaOptions);
 
   const [startIndex, setStartIndex] = useState(_currentIndex);
   const [prevOpened, setPrevOpened] = useState(opened);
@@ -270,10 +287,23 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   }
 
   const [emblaRef, embla] = useEmblaCarousel({
+    ...emblaOptions,
     loop,
     startIndex,
-    watchDrag: withZoom ? () => !zoomIsActive.current : true,
-    ...emblaOptions,
+    watchDrag: (emblaApi, event) => {
+      // The zoom gesture lock always wins – dragging a zoomed image pans it
+      // instead of changing the slide.
+      if (zoomIsActive.current) {
+        return false;
+      }
+
+      const userWatchDrag = emblaOptionsRef.current?.watchDrag;
+      if (typeof userWatchDrag === 'function') {
+        return userWatchDrag(emblaApi, event);
+      }
+
+      return userWatchDrag ?? true;
+    },
   });
 
   const [thumbnailsVisible, setThumbnailsVisible] = useState(!!withThumbnails);
@@ -324,6 +354,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     currentIndexRef.current = _currentIndex;
     setCurrentIndexRef.current = setCurrentIndex;
     zoomIsActive.current = zoom.zoomState.isZoomed;
+    emblaOptionsRef.current = emblaOptions;
   });
 
   const { resetZoom } = zoom;
@@ -369,12 +400,18 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     }
 
     const onSelect = () => {
-      setCurrentIndexRef.current(embla.selectedScrollSnap());
+      const selected = embla.selectedScrollSnap();
+
+      if (selected !== suppressSelectRef.current) {
+        setCurrentIndexRef.current(selected);
+      }
     };
 
     const onReInit = () => {
       if (embla.selectedScrollSnap() !== currentIndexRef.current) {
+        suppressSelectRef.current = currentIndexRef.current;
         embla.scrollTo(currentIndexRef.current, true);
+        suppressSelectRef.current = null;
       }
     };
 
@@ -388,9 +425,20 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
 
   useEffect(() => {
     if (embla && opened && embla.selectedScrollSnap() !== _currentIndex) {
+      // `_currentIndex` is already what the consumer asked for – do not echo it back
+      suppressSelectRef.current = _currentIndex;
       embla.scrollTo(_currentIndex, !animateSlides);
+      suppressSelectRef.current = null;
     }
   }, [_currentIndex, embla, opened, animateSlides]);
+
+  // Slides can be replaced or shortened while the lightbox is open – without this the
+  // index can point past the end, leaving no active slide and a counter like "3 / 2".
+  useEffect(() => {
+    if (slides.length > 0 && _currentIndex > slides.length - 1) {
+      setCurrentIndexRef.current(slides.length - 1);
+    }
+  }, [slides.length, _currentIndex]);
 
   useFocusReturn({ opened, shouldReturnFocus: returnFocus });
 
@@ -440,7 +488,9 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
           currentIndex: _currentIndex,
           setIndex: (index: number) => {
             setCurrentIndex(index);
+            suppressSelectRef.current = index;
             embla?.scrollTo(index, !animateSlides);
+            suppressSelectRef.current = null;
           },
           next: handleNext,
           prev: handlePrev,

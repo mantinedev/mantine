@@ -95,6 +95,9 @@ export interface LightboxLabels {
   /** Accessible label of a slide, called with 1-based slide index and total number of slides */
   slideLabel: (index: number, total: number) => string;
 
+  /** Accessible label of the slides carousel region */
+  slidesLabel: string;
+
   /** Accessible label of the previous slide button */
   previousSlideLabel: string;
 

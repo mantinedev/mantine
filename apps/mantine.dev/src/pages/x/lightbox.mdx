@@ -134,7 +134,11 @@ values between 20 and 60 are recommended):
 
 The carousel behavior can be customized with the `emblaOptions` prop – it is passed directly to the
 underlying [embla carousel](https://www.embla-carousel.com/api/options/) instance. For example, you
-can change drag behavior or scroll animation speed:
+can change drag behavior or scroll animation speed.
+
+`loop` and `startIndex` are managed by the `loop` and `currentIndex` props and cannot be set through
+`emblaOptions`. A `watchDrag` callback is still called, but dragging is always disabled while the
+image is zoomed, so the zoom gesture is not interrupted:
 
 ```tsx
 import { Lightbox } from '@mantine/lightbox';
@@ -148,6 +152,18 @@ function Demo() {
       emblaOptions={{ dragFree: false, duration: 30, align: 'center' }}
     />
   );
+}
+```
+
+## z-index
+
+`zIndex` controls the `z-index` of the overlay and the content elements, `400` by default:
+
+```tsx
+import { Lightbox } from '@mantine/lightbox';
+
+function Demo() {
+  return <Lightbox opened onClose={() => {}} slides={[]} zIndex={1000} />;
 }
 ```
 
@@ -338,6 +354,7 @@ function Demo() {
       labels={{
         lightboxLabel: 'Galerie',
         slideLabel: (index, total) => `Bild ${index} von ${total}`,
+        slidesLabel: 'Bilder',
         thumbnailLabel: (index) => `Zu Bild ${index} wechseln`,
         previousSlideLabel: 'Vorheriges Bild',
         nextSlideLabel: 'Nächstes Bild',

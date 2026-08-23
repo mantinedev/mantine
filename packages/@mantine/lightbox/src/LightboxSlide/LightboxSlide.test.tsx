@@ -1,9 +1,29 @@
+import { act, fireEvent } from '@testing-library/react';
 import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import type { LightboxSlideData } from '../lightbox.types';
 import { LightboxSlide } from './LightboxSlide';
 import { LightboxWrapper, testSlides } from '../test-utils';
 
+class MockPointerEvent extends MouseEvent {
+  pointerType: string;
+
+  constructor(type: string, props: MouseEventInit & { pointerType?: string } = {}) {
+    super(type, props);
+    this.pointerType = props.pointerType ?? 'mouse';
+  }
+}
+
 describe('@mantine/lightbox/LightboxSlide', () => {
+  const originalPointerEvent = (window as any).PointerEvent;
+
+  beforeAll(() => {
+    (window as any).PointerEvent = MockPointerEvent;
+  });
+
+  afterAll(() => {
+    (window as any).PointerEvent = originalPointerEvent;
+  });
+
   it('renders image slide with correct src and alt', async () => {
     const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'A photo' };
     await renderWithAct(
@@ -163,6 +183,75 @@ describe('@mantine/lightbox/LightboxSlide', () => {
     expect(track).toHaveAttribute('src', 'captions.vtt');
     expect(track).toHaveAttribute('kind', 'captions');
     expect(track).toHaveAttribute('srclang', 'en');
+  });
+
+  it('does not zoom on horizontal wheel gestures', async () => {
+    const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo' };
+    await renderWithAct(
+      <LightboxWrapper slides={[slide]} currentIndex={0} withZoom>
+        <LightboxSlide slide={slide} index={0} />
+      </LightboxWrapper>
+    );
+    const img = screen.getByRole('img');
+
+    // Horizontal trackpad gestures report deltaY === 0
+    const horizontal = new WheelEvent('wheel', { deltaX: -120, deltaY: 0, bubbles: true });
+    await act(async () => {
+      img.dispatchEvent(horizontal);
+    });
+
+    expect(img).not.toHaveAttribute('data-zoomed');
+  });
+
+  it('zooms on vertical wheel gestures', async () => {
+    const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo' };
+    await renderWithAct(
+      <LightboxWrapper slides={[slide]} currentIndex={0} withZoom>
+        <LightboxSlide slide={slide} index={0} />
+      </LightboxWrapper>
+    );
+    const img = screen.getByRole('img');
+
+    const vertical = new WheelEvent('wheel', { deltaY: -120, bubbles: true });
+    await act(async () => {
+      img.dispatchEvent(vertical);
+    });
+
+    expect(img).toHaveAttribute('data-zoomed');
+  });
+
+  it('toggles zoom on a mouse click', async () => {
+    const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo' };
+    await renderWithAct(
+      <LightboxWrapper slides={[slide]} currentIndex={0} withZoom>
+        <LightboxSlide slide={slide} index={0} />
+      </LightboxWrapper>
+    );
+    const img = screen.getByRole('img');
+
+    await act(async () => {
+      fireEvent.pointerDown(img, { pointerType: 'mouse' });
+      fireEvent.click(img);
+    });
+
+    expect(img).toHaveAttribute('data-zoomed');
+  });
+
+  it('does not toggle zoom on the synthetic click that follows a touch tap', async () => {
+    const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo' };
+    await renderWithAct(
+      <LightboxWrapper slides={[slide]} currentIndex={0} withZoom>
+        <LightboxSlide slide={slide} index={0} />
+      </LightboxWrapper>
+    );
+    const img = screen.getByRole('img');
+
+    await act(async () => {
+      fireEvent.pointerDown(img, { pointerType: 'touch' });
+      fireEvent.click(img);
+    });
+
+    expect(img).not.toHaveAttribute('data-zoomed');
   });
 
   it('sets inert attribute on inactive slides only', async () => {
