@@ -24,21 +24,48 @@ export const allVersions = [
     date: 'July 28, 2026',
     github: 'https://github.com/mantinedev/mantine/releases/tag/9.5.0',
     link: 'https://mantine.dev/changelog/9-5-0',
-    patches: [],
+    patches: [
+      {
+        version: '9.5.2',
+        date: 'August 22, 2026',
+      },
+      {
+        version: '9.5.1',
+        date: 'August 2, 2026',
+      },
+    ],
   },
   {
     version: '9.4.0',
     date: 'June 23, 2026',
     github: 'https://github.com/mantinedev/mantine/releases/tag/9.4.0',
     link: 'https://mantine.dev/changelog/9-4-0',
-    patches: [],
+    patches: [
+      {
+        version: '9.4.2',
+        date: 'July 21, 2026',
+      },
+      {
+        version: '9.4.1',
+        date: 'June 28, 2026',
+      },
+    ],
   },
   {
     version: '9.3.0',
     date: 'June 2, 2026',
     github: 'https://github.com/mantinedev/mantine/releases/tag/9.3.0',
     link: 'https://mantine.dev/changelog/9-3-0',
-    patches: [],
+    patches: [
+      {
+        version: '9.3.2',
+        date: 'June 16, 2026',
+      },
+      {
+        version: '9.3.1',
+        date: 'June 8, 2026',
+      },
+    ],
   },
   {
     version: '9.2.0',
