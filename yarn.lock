@@ -8954,10 +8954,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^5, chalk@npm:^5.6.2":
+"chalk@npm:^5":
   version: 5.6.2
   resolution: "chalk@npm:5.6.2"
   checksum: 10c0/99a4b0f0e7991796b1e7e3f52dceb9137cae2a9dfc8fc0784a550dc4c558e15ab32ed70b14b21b52beb2679b4892b41a0aa44249bcb996f01e125d58477c6976
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "chalk@npm:6.0.0"
+  checksum: 10c0/47fd9028aa66fa532295525fe3ac5aec5e467e0d86847d4b5f6e01f9c9bb70b6fd1edca79cddc78a0f31a357baa65cc752d30c6557d025904207d113c82d8962
   languageName: node
   linkType: hard
 
@@ -14471,7 +14478,7 @@ __metadata:
     "@types/rimraf": "npm:^4.0.5"
     "@types/signale": "npm:^1"
     "@types/yargs": "npm:^17.0.35"
-    chalk: "npm:^5.6.2"
+    chalk: "npm:^6.0.0"
     chroma-js: "npm:^3.2.0"
     clsx: "npm:^2.1.1"
     csstype: "npm:^3.2.3"
