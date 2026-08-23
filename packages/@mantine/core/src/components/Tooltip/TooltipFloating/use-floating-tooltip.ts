@@ -40,6 +40,10 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
 
   const handleMouseMove = useCallback(
     ({ clientX, clientY }: MouseEvent | React.MouseEvent<T, MouseEvent>) => {
+      if (!Number.isFinite(clientX) || !Number.isFinite(clientY)) {
+        return;
+      }
+
       refs.setPositionReference({
         getBoundingClientRect() {
           return {
