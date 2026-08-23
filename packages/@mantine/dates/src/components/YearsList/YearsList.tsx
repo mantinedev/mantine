@@ -11,7 +11,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { ControlsGroupSettings, DateStringValue } from '../../types';
+import { ControlsGroupSettings, DateLabelFormat, DateStringValue } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { PickerControl, PickerControlProps } from '../PickerControl';
 import { getYearInTabOrder } from './get-year-in-tab-order/get-year-in-tab-order';
@@ -32,8 +32,8 @@ export interface YearsListSettings extends ControlsGroupSettings {
   /** Determines whether propagation for Escape key should be stopped */
   __stopPropagation?: boolean;
 
-  /** dayjs format for years list @default 'YYYY' */
-  yearsListFormat?: string;
+  /** `dayjs` format for years list or a function that returns year label based on the date value @default "YYYY" */
+  yearsListFormat?: DateLabelFormat;
 
   /** Passes props down to year picker control based on date */
   getYearControlProps?: (date: DateStringValue) => Partial<PickerControlProps> & DataAttributes;
@@ -163,7 +163,9 @@ export const YearsList = factory<YearsListFactory>((_props) => {
             tabIndex={__preventFocus || !isYearInTabOrder ? -1 : 0}
           >
             {controlProps?.children ??
-              dayjs(year).locale(ctx.getLocale(locale)).format(yearsListFormat)}
+              (typeof yearsListFormat === 'function'
+                ? yearsListFormat(year)
+                : dayjs(year).locale(ctx.getLocale(locale)).format(yearsListFormat))}
           </PickerControl>
         </td>
       );

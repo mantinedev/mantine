@@ -8,6 +8,7 @@ import { useFormValidating } from './hooks/use-form-validating/use-form-validati
 import { useFormValues } from './hooks/use-form-values/use-form-values';
 import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
 import { getDataPath, getPath } from './paths';
+import { LooseKeys } from './paths.types';
 import {
   FormErrors,
   FormRulesRecord,
@@ -95,12 +96,14 @@ export function useForm<
   }, []);
 
   const reset: Reset = useCallback(() => {
+    const previousValues = $values.refValues.current;
     $values.resetValues();
     $errors.clearErrors();
     $status.resetDirty();
     $status.resetTouched();
     $validating.clearValidating();
     mode === 'uncontrolled' && setFormKey((key) => key + 1);
+    $watch.notifyWatchSubscribers(previousValues);
   }, []);
 
   const handleValuesChanges = useCallback(
@@ -411,6 +414,7 @@ export function useForm<
   const resetField = useCallback(
     (path: PropertyKey) => {
       $values.resetField(path, [
+        ...$watch.getFieldSubscribers(path as LooseKeys<Values>),
         mode !== 'controlled'
           ? () =>
               setFieldKeys((keys) => ({
@@ -425,6 +429,7 @@ export function useForm<
 
   const form = {
     watch: $watch.watch,
+    useWatchValue: $watch.useWatchValue,
 
     initialized: $values.initialized.current,
     values: mode === 'uncontrolled' ? $values.refValues.current : $values.stateValues,

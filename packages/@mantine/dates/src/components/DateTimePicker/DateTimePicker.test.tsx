@@ -275,6 +275,17 @@ describe('@mantine/dates/DateTimePicker', () => {
     expect(getTimePicker()).toHaveFocus();
   });
 
+  // https://github.com/mantinedev/mantine/issues/9128
+  it('selects TimePicker hours value after date was selected', async () => {
+    const { container } = render(<DateTimePicker {...defaultProps} />);
+    await clickInput(container);
+    await userEvent.click(container.querySelector('table button')!);
+
+    await userEvent.keyboard('1');
+    expect(getTimePicker()).toHaveFocus();
+    expect(getTimePicker()).toHaveValue('01');
+  });
+
   it('renders clear button based on clearable prop and current value', () => {
     const { rerender } = render(<DateTimePicker {...defaultProps} value="2022-04-11" clearable />);
 

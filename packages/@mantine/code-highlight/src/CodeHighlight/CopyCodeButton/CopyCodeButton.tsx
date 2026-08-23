@@ -17,7 +17,7 @@ export function CopyCodeButton({
 
   return (
     <CodeHighlightControl
-      onClick={() => clipboard.copy(code.trim())}
+      onClick={() => clipboard.copy(code)}
       variant="none"
       tooltipLabel={clipboard.copied ? copiedLabel : copyLabel}
       aria-label={clipboard.copied ? copiedLabel : `${copyLabel} code`}

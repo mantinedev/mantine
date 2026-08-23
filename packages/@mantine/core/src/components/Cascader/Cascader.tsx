@@ -15,6 +15,7 @@ import {
 } from '../../core';
 import { CheckIcon } from '../Checkbox/CheckIcon';
 import { Combobox, ComboboxLikeStylesNames, useCombobox } from '../Combobox';
+import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
   __InputStylesNames,
@@ -678,7 +679,13 @@ export const Cascader = factory<CascaderFactory>((_props) => {
             disabled={disabled}
             readOnly={readOnly || !searchable}
             value={searchable ? _searchValue : displayString}
-            onChange={(event) => handleSearchChange(event.currentTarget.value)}
+            onChange={(event) => {
+              if (isExternalInputChange(event)) {
+                return;
+              }
+
+              handleSearchChange(event.currentTarget.value);
+            }}
             onFocus={(event) => {
               if (openOnFocus && searchable && canInteract) {
                 combobox.openDropdown();
