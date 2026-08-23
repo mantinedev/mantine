@@ -1,6 +1,7 @@
 export * from './types';
 
 export * from './data/Accordion.styles-api';
+export * from './data/ActionBar.styles-api';
 export * from './data/ActionIcon.styles-api';
 export * from './data/AgendaView.styles-api';
 export * from './data/Affix.styles-api';
@@ -22,6 +23,7 @@ export * from './data/BulletChart.styles-api';
 export * from './data/BubbleChart.styles-api';
 export * from './data/Burger.styles-api';
 export * from './data/Button.styles-api';
+export * from './data/CandlestickChart.styles-api';
 export * from './data/Card.styles-api';
 export * from './data/Carousel.styles-api';
 export * from './data/Cascader.styles-api';

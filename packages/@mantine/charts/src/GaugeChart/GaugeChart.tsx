@@ -114,10 +114,20 @@ function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
 }
 
 function describeArc(cx: number, cy: number, r: number, startAngle: number, endAngle: number) {
-  const start = polarToCartesian(cx, cy, r, endAngle);
-  const end = polarToCartesian(cx, cy, r, startAngle);
-  const largeArc = endAngle - startAngle <= 180 ? 0 : 1;
-  return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} 0 ${end.x} ${end.y}`;
+  const delta = endAngle - startAngle;
+  const sweep = delta >= 0 ? 1 : 0;
+  const start = polarToCartesian(cx, cy, r, startAngle);
+
+  // A single arc command cannot express a full circle – its endpoints would be identical
+  // and nothing would be rendered, so it is split into two half-circle arcs.
+  if (Math.abs(delta) >= 360) {
+    const mid = polarToCartesian(cx, cy, r, startAngle + (delta >= 0 ? 180 : -180));
+    return `M ${start.x} ${start.y} A ${r} ${r} 0 0 ${sweep} ${mid.x} ${mid.y} A ${r} ${r} 0 0 ${sweep} ${start.x} ${start.y}`;
+  }
+
+  const end = polarToCartesian(cx, cy, r, endAngle);
+  const largeArc = Math.abs(delta) > 180 ? 1 : 0;
+  return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} ${sweep} ${end.x} ${end.y}`;
 }
 
 function valueToAngle(
@@ -135,14 +145,16 @@ function valueToAngle(
 }
 
 function isAngleInArc(angle: number, start: number, end: number) {
-  const normalized = ((angle % 360) + 360) % 360;
-  const nStart = ((start % 360) + 360) % 360;
-  const nEnd = ((end % 360) + 360) % 360;
+  const delta = end - start;
 
-  if (nStart <= nEnd) {
-    return normalized >= nStart && normalized <= nEnd;
+  if (Math.abs(delta) >= 360) {
+    return true;
   }
-  return normalized >= nStart || normalized <= nEnd;
+
+  // Distance from the start angle measured along the direction the arc sweeps,
+  // so that descending ranges (endAngle < startAngle) are handled the same way.
+  const distance = delta >= 0 ? angle - start : start - angle;
+  return ((distance % 360) + 360) % 360 <= Math.abs(delta);
 }
 
 function getArcBoundingBox(
@@ -237,25 +249,41 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
   const r = (svgSize - thickness!) / 2;
   const strokeLinecap = roundCaps ? 'round' : 'butt';
   const needleLength = thickness! * 1.5;
-  const strokePadding = Math.max(thickness! / 2, needleLength / 2, targetSize! / 2);
 
-  const bbox = getArcBoundingBox(cx, cy, r, startAngle!, endAngle!, strokePadding);
+  // The needle sticks out past the arc radius, and a round cap adds half of its own
+  // width on top of that – both contribute at the same time.
+  const needleExtent = needleLength / 2 + (roundCaps ? targetSize! / 2 : 0);
+  const strokePadding = Math.max(thickness! / 2, needleExtent);
+
+  // A gauge cannot span more than a full turn – a larger range would wrap the arc onto
+  // itself and make later sections overwrite earlier ones.
+  const span = endAngle! - startAngle!;
+  const resolvedEndAngle = startAngle! + Math.max(-360, Math.min(360, span));
+
+  const bbox = getArcBoundingBox(cx, cy, r, startAngle!, resolvedEndAngle, strokePadding);
 
   const resolvedTrackColor = trackColor
     ? getThemeColor(trackColor, theme)
     : 'var(--mantine-color-default-border)';
 
-  const trackPath = describeArc(cx, cy, r, startAngle!, endAngle!);
+  const trackPath = describeArc(cx, cy, r, startAngle!, resolvedEndAngle);
 
   const sectionElements =
     sections && sections.length > 0 ? (
       (() => {
         const sortedSections = [...sections].sort((a, b) => a.value - b.value);
+        const direction = resolvedEndAngle >= startAngle! ? 1 : -1;
         let prevAngle = startAngle!;
 
         return sortedSections.map((section, index) => {
-          const sectionEndAngle = valueToAngle(section.value, min!, max!, startAngle!, endAngle!);
-          if (sectionEndAngle <= prevAngle) {
+          const sectionEndAngle = valueToAngle(
+            section.value,
+            min!,
+            max!,
+            startAngle!,
+            resolvedEndAngle
+          );
+          if ((sectionEndAngle - prevAngle) * direction <= 0) {
             return null;
           }
           const path = describeArc(cx, cy, r, prevAngle, sectionEndAngle);
@@ -283,7 +311,7 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
           cy,
           r,
           startAngle!,
-          valueToAngle(value, min!, max!, startAngle!, endAngle!)
+          valueToAngle(value, min!, max!, startAngle!, resolvedEndAngle)
         )}
         fill="none"
         stroke={
@@ -297,7 +325,7 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
   const needleElement =
     target != null
       ? (() => {
-          const targetAngle = valueToAngle(target, min!, max!, startAngle!, endAngle!);
+          const targetAngle = valueToAngle(target, min!, max!, startAngle!, resolvedEndAngle);
           const inner = polarToCartesian(cx, cy, r - needleLength / 2, targetAngle);
           const outer = polarToCartesian(cx, cy, r + needleLength / 2, targetAngle);
           const resolvedTargetColor = targetColor

@@ -5,10 +5,12 @@ import {
   ElementProps,
   factory,
   Factory,
+  getThemeColor,
   MantineColor,
   StylesApiProps,
   Tooltip,
   TooltipFloatingProps,
+  useMantineTheme,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -188,6 +190,15 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
   const cellMap = useMemo(() => buildCellMap(data), [data]);
   const [min, max] = useMemo(() => getDomain(data, domain), [data, domain]);
 
+  const theme = useMantineTheme();
+
+  const resolvedColors = useMemo(
+    () => colors!.map((color) => getThemeColor(color, theme)),
+    [colors, theme]
+  );
+
+  const resolvedEmptyColor = emptyColor ? getThemeColor(emptyColor, theme) : undefined;
+
   const cellSizeWithGap = cellSize + gap;
 
   const hasXLabels = withXLabels === true && xValues.length > 0;
@@ -225,8 +236,8 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
       const isEmpty = value === null;
 
       const fill = isEmpty
-        ? emptyColor || undefined
-        : getHeatColor({ value, min, max, colors: colors! });
+        ? resolvedEmptyColor
+        : getHeatColor({ value, min, max, colors: resolvedColors });
 
       const extraProps = getCellProps && cell ? getCellProps(cell) : {};
 
@@ -296,7 +307,7 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
   const lessLabel = legendLabels![0];
   const moreLabel = legendLabels![1];
   const lessWidth = lessLabel.length * charWidth;
-  const allColors = [emptyColor || undefined, ...(colors || [])];
+  const allColors = [resolvedEmptyColor, ...resolvedColors];
   const rectsWidth = allColors.length * cellSize + (allColors.length - 1) * gap;
   const legendX = svgWidth - legendWidth;
   const legendY = xTopOffset + gridHeight + xBottomHeight + LEGEND_PADDING;

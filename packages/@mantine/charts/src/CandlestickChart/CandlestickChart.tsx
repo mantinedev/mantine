@@ -59,7 +59,10 @@ export interface CandlestickChartLabels {
   close: string;
 }
 
-export type CandlestickChartStylesNames = 'candle' | BaseChartStylesNames | ChartTooltipStylesNames;
+export type CandlestickChartStylesNames =
+  | 'candle'
+  | Exclude<BaseChartStylesNames, 'brush'>
+  | ChartTooltipStylesNames;
 
 export type CandlestickChartCssVariables = {
   root: '--chart-text-color' | '--chart-grid-color';

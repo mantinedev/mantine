@@ -145,4 +145,48 @@ describe('@mantine/charts/MatrixChart', () => {
     expect(Number(svg.getAttribute('width'))).toBeGreaterThanOrEqual(0);
     expect(Number(svg.getAttribute('height'))).toBeGreaterThanOrEqual(0);
   });
+
+  it('resolves Mantine color values in colors prop', () => {
+    const { container } = render(
+      <MatrixChart data={testData} colors={['blue.2', 'blue.6']} domain={[1, 5]} />
+    );
+    const fills = Array.from(container.querySelectorAll('.mantine-MatrixChart-cell')).map((cell) =>
+      cell.getAttribute('fill')
+    );
+
+    expect(fills).toContain('var(--mantine-color-blue-2)');
+    expect(fills).toContain('var(--mantine-color-blue-6)');
+  });
+
+  it('resolves Mantine color value in emptyColor prop', () => {
+    const { container } = render(<MatrixChart data={testData} emptyColor="gray.3" />);
+    const fills = Array.from(container.querySelectorAll('.mantine-MatrixChart-cell')).map((cell) =>
+      cell.getAttribute('fill')
+    );
+
+    expect(fills).toContain('var(--mantine-color-gray-3)');
+  });
+
+  it('passes through raw CSS color values', () => {
+    const { container } = render(
+      <MatrixChart data={testData} colors={['#ff0000']} emptyColor="rgb(0, 0, 255)" />
+    );
+    const fills = Array.from(container.querySelectorAll('.mantine-MatrixChart-cell')).map((cell) =>
+      cell.getAttribute('fill')
+    );
+
+    expect(fills).toContain('#ff0000');
+    expect(fills).toContain('rgb(0, 0, 255)');
+  });
+
+  it('resolves Mantine color values in the legend', () => {
+    const { container } = render(
+      <MatrixChart data={testData} colors={['blue.6']} emptyColor="gray.3" withLegend />
+    );
+    const fills = Array.from(container.querySelectorAll('.mantine-MatrixChart-legendRect')).map(
+      (rect) => rect.getAttribute('fill')
+    );
+
+    expect(fills).toStrictEqual(['var(--mantine-color-gray-3)', 'var(--mantine-color-blue-6)']);
+  });
 });
