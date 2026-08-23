@@ -6,6 +6,7 @@ import type { LightboxLabels, LightboxSlideData } from './lightbox.types';
 export interface LightboxContextValue {
   getStyles: GetStylesApi<LightboxRootFactory>;
   labels: LightboxLabels;
+  opened: boolean;
   slides: LightboxSlideData[];
   currentIndex: number;
   setIndex: (index: number) => void;

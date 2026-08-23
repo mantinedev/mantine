@@ -248,6 +248,24 @@ describe('@mantine/lightbox/Lightbox', () => {
     expect(screen.getByLabelText('Hide thumbnails')).toBeInTheDocument();
   });
 
+  it('hides the thumbnails strip when withThumbnails is turned off while opened', async () => {
+    const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withThumbnails />);
+    expect(screen.getByLabelText('Go to slide 1')).toBeInTheDocument();
+
+    await act(async () => {
+      rerender(
+        <>
+          <Lightbox {...defaultProps} withThumbnails={false} />
+        </>
+      );
+    });
+
+    // The toolbar toggle disappears with the feature, so a strip left behind would be
+    // stuck on screen with no way to collapse it
+    expect(screen.queryByLabelText('Hide thumbnails')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Go to slide 1')).not.toBeInTheDocument();
+  });
+
   it('renders initial focus placeholder by default', async () => {
     await renderWithAct(<Lightbox {...defaultProps} />);
     const placeholder = getLightbox().querySelector('[data-autofocus]');

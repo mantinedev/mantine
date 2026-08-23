@@ -44,6 +44,7 @@ export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
   } = useProps('LightboxSlides', null, props);
 
   const ctx = useLightboxContext();
+  const stylesApiProps = { classNames, styles };
 
   const { handleTouchStart, handleTouchEnd } = useLightboxSwipeClose({
     enabled: ctx.closeOnSwipeDown,
@@ -67,8 +68,8 @@ export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
         handleTouchEnd(event);
       }}
     >
-      <div {...ctx.getStyles('slidesViewport')} ref={emblaRef ?? ctx.emblaRef}>
-        <div {...ctx.getStyles('slidesContainer')}>{children}</div>
+      <div {...ctx.getStyles('slidesViewport', stylesApiProps)} ref={emblaRef ?? ctx.emblaRef}>
+        <div {...ctx.getStyles('slidesContainer', stylesApiProps)}>{children}</div>
       </div>
     </Box>
   );

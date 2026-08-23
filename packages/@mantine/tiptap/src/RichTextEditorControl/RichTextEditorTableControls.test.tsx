@@ -89,6 +89,21 @@ describe('@mantine/tiptap/RichTextEditor table controls', () => {
     await waitFor(() => expect(insert).toBeDisabled());
   });
 
+  it('renders the TableInsert picker in a portal so it is not clipped by the editor root', async () => {
+    // The editor root sets `overflow: clip`, so a non-portaled dropdown taller than the
+    // editor is cut off. Portals are disabled in the default test env, hence `env: 'default'`.
+    const { container } = render(<TableTestEditor />, undefined, { env: 'default' });
+
+    const insertControl = await screen.findByLabelText('Insert table');
+    await userEvent.click(insertControl);
+
+    const cell = await screen.findByLabelText('Insert 1 × 1 table');
+    const editorRoot = container.querySelector('[class*="RichTextEditor-root"]');
+
+    expect(editorRoot).not.toBeNull();
+    expect(editorRoot!.contains(cell)).toBe(false);
+  });
+
   it('inserts a table with the size selected in the grid picker', async () => {
     let editor: Editor | null = null;
     render(<TableTestEditor onEditor={(e) => (editor = e)} />);

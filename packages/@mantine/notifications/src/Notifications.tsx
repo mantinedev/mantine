@@ -166,37 +166,65 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
   const shouldReduceMotion = useReducedMotion();
   const refs = useRef<Record<string, HTMLDivElement>>({});
   const previousLength = useRef<number>(0);
-  const [hoveredCount, setHoveredCount] = useState(0);
-  const [stackExpanded, setStackExpanded] = useState(false);
-  const [stackPinned, setStackPinned] = useState(false);
-  const collapseTimeout = useRef<number>(-1);
+  // Every position renders its own stack, so hover, expansion and pinning are tracked per
+  // position – a single shared flag made hovering one corner expand all six of them.
+  const [hoveredCounts, setHoveredCounts] = useState<Partial<Record<NotificationPosition, number>>>(
+    {}
+  );
+  const [expandedPositions, setExpandedPositions] = useState<
+    Partial<Record<NotificationPosition, boolean>>
+  >({});
+  const [pinnedPosition, setPinnedPosition] = useState<NotificationPosition | null>(null);
+  const collapseTimeouts = useRef<Partial<Record<NotificationPosition, number>>>({});
 
-  const handleHoverStart = useCallback(() => setHoveredCount((c) => c + 1), []);
-  const handleHoverEnd = useCallback(() => setHoveredCount((c) => Math.max(0, c - 1)), []);
+  // `pauseResetOnHover="all"` is documented as pausing every notification when any one of
+  // them is hovered, so this stays global while the stack state above does not.
+  const hoveredCount = Object.values(hoveredCounts).reduce((acc, count) => acc + (count ?? 0), 0);
+
+  const handleHoverStart = useCallback(
+    (pos: NotificationPosition) =>
+      setHoveredCounts((current) => ({ ...current, [pos]: (current[pos] ?? 0) + 1 })),
+    []
+  );
+
+  const handleHoverEnd = useCallback(
+    (pos: NotificationPosition) =>
+      setHoveredCounts((current) => ({ ...current, [pos]: Math.max(0, (current[pos] ?? 0) - 1) })),
+    []
+  );
 
   // Touch devices have no hover, so tapping the stack pins it open until the next tap
   // outside of it. Without this the notifications behind the first one are unreachable.
-  const handleExpandRequest = useCallback(() => setStackPinned(true), []);
+  const handleExpandRequest = useCallback(
+    (pos: NotificationPosition) => setPinnedPosition(pos),
+    []
+  );
 
   useEffect(() => {
     if (layout !== 'stacked') {
       return undefined;
     }
 
-    if (hoveredCount > 0 || stackPinned) {
-      window.clearTimeout(collapseTimeout.current);
-      setStackExpanded(true);
-    } else if (stackExpanded) {
-      collapseTimeout.current = window.setTimeout(() => {
-        setStackExpanded(false);
-      }, 200);
-    }
+    const timeouts = collapseTimeouts.current;
 
-    return () => window.clearTimeout(collapseTimeout.current);
-  }, [hoveredCount, stackPinned, layout]);
+    positions.forEach((pos) => {
+      if ((hoveredCounts[pos] ?? 0) > 0 || pinnedPosition === pos) {
+        window.clearTimeout(timeouts[pos]);
+        setExpandedPositions((current) => (current[pos] ? current : { ...current, [pos]: true }));
+      } else {
+        timeouts[pos] = window.setTimeout(() => {
+          setExpandedPositions((current) =>
+            current[pos] ? { ...current, [pos]: false } : current
+          );
+        }, 200);
+      }
+    });
+
+    return () => positions.forEach((pos) => window.clearTimeout(timeouts[pos]));
+  }, [hoveredCounts, pinnedPosition, layout]);
 
   useEffect(() => {
-    if (!stackPinned) {
+    if (!pinnedPosition) {
       return undefined;
     }
 
@@ -206,19 +234,39 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
         target !== null && Object.values(refs.current).some((element) => element?.contains(target));
 
       if (!insideStack) {
-        setStackPinned(false);
+        setPinnedPosition(null);
       }
     };
 
     document.addEventListener('pointerdown', handlePointerDown);
     return () => document.removeEventListener('pointerdown', handlePointerDown);
-  }, [stackPinned]);
+  }, [pinnedPosition]);
 
   useEffect(() => {
     if (data.notifications.length === 0 || layout !== 'stacked') {
-      setStackPinned(false);
+      setPinnedPosition(null);
     }
   }, [data.notifications.length, layout]);
+
+  // Expanded offsets are measured from `offsetHeight` during render, so a notification that
+  // grows afterwards (image loads, async content, viewport reflow) would leave the ones
+  // after it overlapping or gapped until something else triggers a render.
+  const resizeObserver = useRef<ResizeObserver | null>(null);
+
+  useEffect(() => {
+    if (layout !== 'stacked' || typeof ResizeObserver === 'undefined') {
+      return undefined;
+    }
+
+    const observer = new ResizeObserver(() => forceUpdate());
+    resizeObserver.current = observer;
+    Object.values(refs.current).forEach((element) => element && observer.observe(element));
+
+    return () => {
+      observer.disconnect();
+      resizeObserver.current = null;
+    };
+  }, [layout, forceUpdate]);
 
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -257,8 +305,9 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     (acc, pos) => {
       const groupLength = grouped[pos].length;
       const expandedOffsets: number[] = new Array(groupLength).fill(0);
+      const stackExpanded = layout === 'stacked' && !!expandedPositions[pos];
 
-      if (layout === 'stacked' && stackExpanded && groupLength > 0) {
+      if (stackExpanded && groupLength > 0) {
         const direction = pos.startsWith('top') ? 1 : -1;
         const gap = 16;
         let cumOffset = 0;
@@ -270,62 +319,84 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
         }
       }
 
-      acc[pos] = grouped[pos].map(({ style: notificationStyle, ...notification }, index) => (
-        <Transition
-          key={notification.id}
-          timeout={duration}
-          onEnter={() => refs.current[notification.id!].offsetHeight}
-          nodeRef={{ current: refs.current[notification.id!] }}
-        >
-          {(state: TransitionStatus) => (
-            <NotificationContainer
-              ref={(node) => {
-                if (node) {
-                  refs.current[notification.id!] = node;
-                } else {
-                  delete refs.current[notification.id!];
+      // The front notification of a stack is the newest one, which is last in the data. In
+      // the stacked layout it is rendered first so DOM order matches the visual stack –
+      // otherwise a forward Tab from the front notification (the only focusable one while
+      // collapsed) skips past the ones it just un-inerted and leaves the region. Placement
+      // is unaffected: stacked notifications all share one grid cell and are positioned by
+      // transform and an explicit z-index.
+      const renderOrder = Array.from({ length: groupLength }, (_, i) =>
+        layout === 'stacked' ? groupLength - 1 - i : i
+      );
+
+      acc[pos] = renderOrder.map((index) => {
+        const { style: notificationStyle, ...notification } = grouped[pos][index];
+        const stackIndex = layout === 'stacked' ? groupLength - 1 - index : index;
+
+        return (
+          <Transition
+            key={notification.id}
+            timeout={duration}
+            onEnter={() => refs.current[notification.id!].offsetHeight}
+            nodeRef={{ current: refs.current[notification.id!] }}
+          >
+            {(state: TransitionStatus) => (
+              <NotificationContainer
+                ref={(node) => {
+                  const previous = refs.current[notification.id!];
+
+                  if (previous && previous !== node) {
+                    resizeObserver.current?.unobserve(previous);
+                  }
+
+                  if (node) {
+                    refs.current[notification.id!] = node;
+                    resizeObserver.current?.observe(node);
+                  } else {
+                    delete refs.current[notification.id!];
+                  }
+                }}
+                data={notification}
+                onHide={(id) => hideNotification(id, store)}
+                autoClose={autoClose}
+                transitionDuration={duration}
+                allowDragDismiss={allowDragDismiss}
+                allowScrollDismiss={allowScrollDismiss}
+                paused={
+                  (pauseResetOnHover === 'all' ? hoveredCount > 0 : false) ||
+                  (layout === 'stacked' && !stackExpanded && stackIndex > 0)
                 }
-              }}
-              data={notification}
-              onHide={(id) => hideNotification(id, store)}
-              autoClose={autoClose}
-              transitionDuration={duration}
-              allowDragDismiss={allowDragDismiss}
-              allowScrollDismiss={allowScrollDismiss}
-              paused={
-                (pauseResetOnHover === 'all' ? hoveredCount > 0 : false) ||
-                (layout === 'stacked' && !stackExpanded && groupLength - 1 - index > 0)
-              }
-              onHoverStart={handleHoverStart}
-              onHoverEnd={handleHoverEnd}
-              onExpandRequest={handleExpandRequest}
-              renderNotification={
-                'renderNotification' in notification
-                  ? notification.renderNotification
-                  : renderNotification
-              }
-              layout={layout}
-              stackIndex={layout === 'stacked' ? groupLength - 1 - index : index}
-              stackSize={groupLength}
-              stackPosition={pos}
-              stackExpanded={stackExpanded}
-              stackExpandedOffset={expandedOffsets[index]}
-              transitionState={state}
-              {...getStyles('notification', {
-                style: {
-                  ...getNotificationStateStyles({
-                    state,
-                    position: pos,
-                    transitionDuration: duration,
-                    maxHeight: notificationMaxHeight,
-                  }),
-                  ...notificationStyle,
-                },
-              })}
-            />
-          )}
-        </Transition>
-      ));
+                onHoverStart={() => handleHoverStart(pos)}
+                onHoverEnd={() => handleHoverEnd(pos)}
+                onExpandRequest={() => handleExpandRequest(pos)}
+                renderNotification={
+                  'renderNotification' in notification
+                    ? notification.renderNotification
+                    : renderNotification
+                }
+                layout={layout}
+                stackIndex={stackIndex}
+                stackSize={groupLength}
+                stackPosition={pos}
+                stackExpanded={stackExpanded}
+                stackExpandedOffset={expandedOffsets[index]}
+                transitionState={state}
+                {...getStyles('notification', {
+                  style: {
+                    ...getNotificationStateStyles({
+                      state,
+                      position: pos,
+                      transitionDuration: duration,
+                      maxHeight: notificationMaxHeight,
+                    }),
+                    ...notificationStyle,
+                  },
+                })}
+              />
+            )}
+          </Transition>
+        );
+      });
 
       return acc;
     },

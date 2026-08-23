@@ -112,6 +112,30 @@ function parseDownloadUrl(src: string): URL | null {
 
 const downloadsInProgress = new Set<string>();
 
+function getDownloadFileName(parsed: URL) {
+  if (parsed.protocol === 'data:') {
+    return 'download';
+  }
+
+  const lastSegment = parsed.pathname.split('/').pop() || '';
+
+  try {
+    return decodeURIComponent(lastSegment) || 'download';
+  } catch {
+    return lastSegment || 'download';
+  }
+}
+
+function openInNewTab(src: string) {
+  const link = document.createElement('a');
+  link.href = src;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
 function downloadFile(src: string) {
   const parsed = parseDownloadUrl(src);
 
@@ -119,23 +143,43 @@ function downloadFile(src: string) {
     return;
   }
 
+  // A cross-origin fetch fails unless the host sends CORS headers, and by the time it
+  // rejects the user activation from the click is gone, so the fallback is popup-blocked.
+  // Navigating straight away keeps the gesture. The `download` attribute is ignored for
+  // cross-origin URLs anyway, so nothing is lost by skipping the blob round-trip.
+  const isCrossOrigin =
+    (parsed.protocol === 'http:' || parsed.protocol === 'https:') &&
+    parsed.origin !== window.location.origin;
+
+  if (isCrossOrigin) {
+    openInNewTab(src);
+    return;
+  }
+
   downloadsInProgress.add(src);
 
   fetch(src)
-    .then((res) => res.blob())
+    .then((res) => {
+      // Without this an error page is happily turned into a blob and saved under the
+      // media file name.
+      if (!res.ok) {
+        throw new Error(`Failed to download ${src}: ${res.status}`);
+      }
+
+      return res.blob();
+    })
     .then((blob) => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download =
-        (parsed.protocol === 'data:' ? '' : parsed.pathname.split('/').pop()) || 'download';
+      link.download = getDownloadFileName(parsed);
       document.body.appendChild(link);
       link.click();
       link.remove();
       window.setTimeout(() => URL.revokeObjectURL(url), 1000);
     })
     .catch(() => {
-      window.open(src, '_blank', 'noopener,noreferrer');
+      openInNewTab(src);
     })
     .finally(() => {
       downloadsInProgress.delete(src);

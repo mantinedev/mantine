@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Box, BoxProps, ElementProps, UnstyledButton, useMantineTheme } from '@mantine/core';
+import {
+  Box,
+  BoxProps,
+  ElementProps,
+  UnstyledButton,
+  useMantineTheme,
+  useProps,
+} from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { RenderEvent, RenderEventBody } from '../ScheduleEvent/ScheduleEvent';
 
@@ -20,14 +27,13 @@ export interface ScheduleBackgroundEventProps extends BoxProps, ElementProps<'di
   renderEventBody?: RenderEventBody;
 }
 
-export function ScheduleBackgroundEvent({
-  event,
-  interactive,
-  onEventClick,
-  renderEvent,
-  renderEventBody,
-  ...others
-}: ScheduleBackgroundEventProps) {
+export function ScheduleBackgroundEvent(props: ScheduleBackgroundEventProps) {
+  const { event, interactive, onEventClick, renderEvent, renderEventBody, ...others } = useProps(
+    'ScheduleBackgroundEvent',
+    null,
+    props
+  );
+
   const theme = useMantineTheme();
 
   // An interactive background event captures pointer events so it can be clicked, which
@@ -104,3 +110,5 @@ export function ScheduleBackgroundEvent({
     <Box {...(rootProps as React.ComponentPropsWithoutRef<'div'>)} />
   );
 }
+
+ScheduleBackgroundEvent.displayName = '@mantine/schedule/ScheduleBackgroundEvent';

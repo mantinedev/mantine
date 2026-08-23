@@ -11,6 +11,11 @@ export function VideoSlide({ slide, active }: VideoSlideProps) {
   const ctx = useLightboxContext();
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // With `transitionProps.keepMounted` the slides stay mounted while the lightbox is
+  // closed, so playback has to follow `opened` as well – otherwise a hidden autoplay video
+  // starts on its own and keeps playing after the lightbox is dismissed.
+  const playing = active && ctx.opened;
+
   useEffect(() => {
     const video = videoRef.current;
 
@@ -18,7 +23,7 @@ export function VideoSlide({ slide, active }: VideoSlideProps) {
       return;
     }
 
-    if (!active) {
+    if (!playing) {
       video.pause();
       return;
     }
@@ -29,7 +34,7 @@ export function VideoSlide({ slide, active }: VideoSlideProps) {
     if (slide.autoPlay) {
       video.play().catch(() => {});
     }
-  }, [active, slide.autoPlay]);
+  }, [playing, slide.autoPlay]);
 
   return (
     /* eslint-disable jsx-a11y/media-has-caption */
@@ -39,7 +44,7 @@ export function VideoSlide({ slide, active }: VideoSlideProps) {
       src={slide.src}
       poster={slide.poster}
       aria-label={slide.label}
-      autoPlay={active && slide.autoPlay}
+      autoPlay={playing && slide.autoPlay}
       data-active={active || undefined}
       controls
       playsInline

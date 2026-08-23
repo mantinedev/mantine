@@ -496,9 +496,10 @@ describe('@mantine/core/Notifications', () => {
     const alerts = screen.getAllByRole('alert');
     expect(alerts).toHaveLength(2);
 
-    const style0 = alerts[0].style;
-    const style1 = alerts[1].style;
-    expect(Number(style0.zIndex)).toBeLessThan(Number(style1.zIndex));
+    // The newest notification is the one in front, regardless of where it sits in the DOM
+    const behind = alerts.find((alert) => alert.textContent?.includes('First stacked'))!;
+    const front = alerts.find((alert) => alert.textContent?.includes('Second stacked'))!;
+    expect(Number(behind.style.zIndex)).toBeLessThan(Number(front.style.zIndex));
   });
 
   it('keeps stacked styling while a stacked notification is exiting', () => {
@@ -868,12 +869,111 @@ describe('@mantine/core/Notifications', () => {
 
     expect(getInertCount()).toBe(1);
 
-    const front = container.querySelectorAll('.mantine-Notification-root')[1];
+    const front = Array.from(container.querySelectorAll('.mantine-Notification-root')).find(
+      (root) => !root.hasAttribute('inert')
+    )!;
     act(() => {
       fireEvent.focus(front);
     });
 
     expect(getInertCount()).toBe(0);
+  });
+
+  it('renders the front stacked notification first in the DOM', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'Older' }, store);
+      notifications.show({ id: 'b', message: 'Newer' }, store);
+    });
+
+    const roots = Array.from(container.querySelectorAll('.mantine-Notification-root'));
+    expect(roots).toHaveLength(2);
+
+    // The front notification is the only focusable one while the stack is collapsed. If it
+    // came last, a forward Tab from it would skip the notifications it un-inerts on focus
+    // and leave the region entirely.
+    expect(roots[0].textContent).toContain('Newer');
+    expect(roots[0].hasAttribute('inert')).toBe(false);
+    expect(roots[1].textContent).toContain('Older');
+    expect(roots[1].hasAttribute('inert')).toBe(true);
+  });
+
+  it('keeps the default layout in chronological DOM order', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications store={store} withinPortal={false} autoClose={false} transitionDuration={10} />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'Older' }, store);
+      notifications.show({ id: 'b', message: 'Newer' }, store);
+    });
+
+    const roots = Array.from(container.querySelectorAll('.mantine-Notification-root'));
+    expect(roots[0].textContent).toContain('Older');
+    expect(roots[1].textContent).toContain('Newer');
+  });
+
+  it('expands only the stack that is interacted with', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'tl-a', message: 'Top left first', position: 'top-left' }, store);
+      notifications.show({ id: 'tl-b', message: 'Top left second', position: 'top-left' }, store);
+      notifications.show(
+        { id: 'br-a', message: 'Bottom right first', position: 'bottom-right' },
+        store
+      );
+      notifications.show(
+        { id: 'br-b', message: 'Bottom right second', position: 'bottom-right' },
+        store
+      );
+    });
+
+    const getInertCount = (position: string) =>
+      Array.from(
+        container.querySelectorAll(`[data-position="${position}"] .mantine-Notification-root`)
+      ).filter((root) => root.hasAttribute('inert')).length;
+
+    expect(getInertCount('top-left')).toBe(1);
+    expect(getInertCount('bottom-right')).toBe(1);
+
+    const topLeftFront = Array.from(
+      container.querySelectorAll('[data-position="top-left"] .mantine-Notification-root')
+    ).find((root) => !root.hasAttribute('inert'))!;
+
+    act(() => {
+      fireEvent.focus(topLeftFront);
+    });
+
+    // Only the hovered/focused corner expands – the other stack stays collapsed
+    expect(getInertCount('top-left')).toBe(0);
+    expect(getInertCount('bottom-right')).toBe(1);
   });
 
   it('pins the stack open on a touch tap and releases it on an outside tap', () => {
@@ -986,7 +1086,9 @@ describe('@mantine/core/Notifications', () => {
         root.hasAttribute('inert')
       ).length;
 
-    const front = container.querySelectorAll('.mantine-Notification-root')[1];
+    const front = Array.from(container.querySelectorAll('.mantine-Notification-root')).find(
+      (root) => !root.hasAttribute('inert')
+    )!;
     act(() => {
       fireEvent.focus(front);
     });

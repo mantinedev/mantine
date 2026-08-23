@@ -118,14 +118,22 @@ interface AllocatedCell {
   segmentIndex: number;
 }
 
+/**
+ * A part-to-whole chart has no meaning for negative values, and letting them through would
+ * allocate more cells than the grid can hold. Non-finite values are normalized to zero as
+ * well – `Math.max(0, NaN)` is `NaN`, which would poison the sum and leave every segment
+ * without cells instead of dropping just the offending one.
+ */
+function normalizeSegmentValue(value: number) {
+  return Number.isFinite(value) ? Math.max(0, value) : 0;
+}
+
 function allocateCells(
   data: WaffleChartCell[],
   gridCells: number,
   totalValue?: number
 ): AllocatedCell[] {
-  // A part-to-whole chart has no meaning for negative values, and letting them through
-  // would allocate more cells than the grid can hold.
-  const values = data.map((d) => Math.max(0, d.value));
+  const values = data.map((d) => normalizeSegmentValue(d.value));
   const sum = values.reduce((acc, value) => acc + value, 0);
 
   if (sum === 0) {
@@ -317,9 +325,9 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
   // The cells carry no accessible information on their own, and the legend (when shown)
   // exposes segment names but not their values – this gives assistive tech one readable
   // summary of the data regardless of whether the legend is rendered. Values are reported
-  // as they are drawn, so a clamped negative value is announced as 0.
+  // as they are drawn, so a clamped negative or non-finite value is announced as 0.
   const gridLabel = data
-    .map((segment) => `${segment.name}: ${Math.max(0, segment.value)}`)
+    .map((segment) => `${segment.name}: ${normalizeSegmentValue(segment.value)}`)
     .join(', ');
 
   // A plain div has an implicit `generic` role, which cannot carry an accessible name, so

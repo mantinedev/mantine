@@ -132,7 +132,6 @@ export const RichTextEditorTableInsertControl = factory<RichTextEditorTableInser
         trapFocus
         shadow="md"
         position="bottom-end"
-        withinPortal={false}
         {...popoverProps}
         opened={opened}
         onChange={(value) => !value && handleClose()}

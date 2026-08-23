@@ -6,6 +6,7 @@ import {
   factory,
   Factory,
   UnstyledButton,
+  useDirection,
   useProps,
 } from '@mantine/core';
 import { useLightboxContext } from '../lightbox.context';
@@ -67,6 +68,13 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
   );
 
   const ctx = useLightboxContext();
+  const { dir } = useDirection();
+
+  // Embla is direction-aware, so "previous" is the leading edge of the reading direction –
+  // the chevrons have to follow it rather than always pointing left/right.
+  const PrevIcon = dir === 'rtl' ? ChevronRight : ChevronLeft;
+  const NextIcon = dir === 'rtl' ? ChevronLeft : ChevronRight;
+
   const canPrev = ctx.embla ? ctx.embla.canScrollPrev() : ctx.loop || ctx.currentIndex > 0;
   const canNext = ctx.embla
     ? ctx.embla.canScrollNext()
@@ -83,7 +91,7 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
         tabIndex={canPrev ? 0 : -1}
         onClick={ctx.prev}
       >
-        <ChevronLeft />
+        <PrevIcon />
       </UnstyledButton>
 
       <UnstyledButton
@@ -95,7 +103,7 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
         tabIndex={canNext ? 0 : -1}
         onClick={ctx.next}
       >
-        <ChevronRight />
+        <NextIcon />
       </UnstyledButton>
     </Box>
   );

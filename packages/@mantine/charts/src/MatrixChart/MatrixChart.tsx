@@ -233,7 +233,9 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     xValues.map((xVal, colIndex) => {
       const cell = cellMap.get(getCellKey(xVal, yVal));
       const value = cell?.value ?? null;
-      const isEmpty = value === null;
+      // Non-finite values are excluded from the domain, so they cannot be interpolated
+      // to a color either – they are treated the same way as missing cells.
+      const isEmpty = value === null || !Number.isFinite(value);
 
       const fill = isEmpty
         ? resolvedEmptyColor

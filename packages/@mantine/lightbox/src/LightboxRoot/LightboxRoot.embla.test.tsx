@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { act } from '@testing-library/react';
 import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
+import { DirectionProvider } from '@mantine/core';
 import { Lightbox } from '../Lightbox';
 
 /**
@@ -20,6 +21,18 @@ let mockEmblaInstances = [];
 
 function mockEmblaMain() {
   return mockEmblaInstances.find((instance) => 'watchDrag' in instance.options);
+}
+
+function mockEmblaThumbs() {
+  return mockEmblaInstances.find((instance) => !('watchDrag' in instance.options));
+}
+
+function renderRtl(ui) {
+  return renderWithAct(
+    <DirectionProvider initialDirection="rtl" detectDirection={false}>
+      {ui}
+    </DirectionProvider>
+  );
 }
 
 function mockCreateEmbla(options) {
@@ -208,6 +221,44 @@ describe('@mantine/lightbox/LightboxRoot embla integration', () => {
     expect(mockEmblaMain().options.startIndex).toBe(1);
     // Options the component does not manage are still forwarded
     expect(mockEmblaMain().options.align).toBe('start');
+  });
+
+  it('passes the ltr direction to both carousels by default', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} withThumbnails />);
+
+    expect(mockEmblaMain().options.direction).toBe('ltr');
+    expect(mockEmblaThumbs().options.direction).toBe('ltr');
+  });
+
+  it('passes the rtl direction to both carousels', async () => {
+    // Without this embla computes ltr snaps while the CSS lays the slides out rtl, so
+    // dragging and prev/next resolve the wrong slide
+    await renderRtl(<Lightbox {...defaultProps} withThumbnails />);
+
+    expect(mockEmblaMain().options.direction).toBe('rtl');
+    expect(mockEmblaThumbs().options.direction).toBe('rtl');
+  });
+
+  it('lets emblaOptions override the resolved direction', async () => {
+    await renderRtl(<Lightbox {...defaultProps} emblaOptions={{ direction: 'ltr' }} />);
+    expect(mockEmblaMain().options.direction).toBe('ltr');
+  });
+
+  it('mirrors the navigation chevrons in rtl', async () => {
+    const getChevronPoints = (label) =>
+      screen.getByLabelText(label).querySelector('polyline').getAttribute('points');
+
+    const { unmount } = await renderWithAct(<Lightbox {...defaultProps} />);
+    const ltrPrev = getChevronPoints('Previous slide');
+    const ltrNext = getChevronPoints('Next slide');
+    expect(ltrPrev).not.toBe(ltrNext);
+    unmount();
+
+    mockEmblaInstances = [];
+    await renderRtl(<Lightbox {...defaultProps} />);
+
+    expect(getChevronPoints('Previous slide')).toBe(ltrNext);
+    expect(getChevronPoints('Next slide')).toBe(ltrPrev);
   });
 
   it('calls a user-supplied watchDrag callback', async () => {

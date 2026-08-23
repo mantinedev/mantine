@@ -15,6 +15,7 @@ import {
   StylesApiProps,
   Transition,
   TransitionOverride,
+  useDirection,
   useMantineTheme,
   useProps,
   useStyles,
@@ -286,7 +287,12 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     }
   }
 
+  const { dir } = useDirection();
+
   const [emblaRef, embla] = useEmblaCarousel({
+    // Placed before the user options so `emblaOptions.direction` can still override it,
+    // the same way `@mantine/carousel` wires direction up.
+    direction: dir,
     ...emblaOptions,
     loop,
     startIndex,
@@ -307,6 +313,16 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   });
 
   const [thumbnailsVisible, setThumbnailsVisible] = useState(!!withThumbnails);
+  const [prevWithThumbnails, setPrevWithThumbnails] = useState(withThumbnails);
+
+  // Toggling the feature while the lightbox is open used to leave the strip expanded with
+  // no way to collapse it – the toolbar button that toggles it is only rendered while
+  // `withThumbnails` is set.
+  if (withThumbnails !== prevWithThumbnails) {
+    setPrevWithThumbnails(withThumbnails);
+    setThumbnailsVisible(!!withThumbnails);
+  }
+
   const { toggle: toggleFullscreenFn, fullscreen: isFullscreen } = useFullscreenDocument();
 
   const toggleThumbnails = useCallback(() => {
@@ -484,6 +500,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
         value={{
           getStyles,
           labels: _labels,
+          opened,
           slides,
           currentIndex: _currentIndex,
           setIndex: (index: number) => {

@@ -64,6 +64,24 @@ describe('@mantine/charts/WaffleChart', () => {
     expect(filled).toHaveLength(100);
   });
 
+  it('treats non-finite values as zero without emptying the whole grid', () => {
+    const { container } = render(
+      <WaffleChart
+        data={[
+          { name: 'A', value: 50, color: 'blue.6' },
+          { name: 'B', value: NaN, color: 'red.6' },
+        ]}
+        rows={10}
+        columns={10}
+      />
+    );
+
+    // Without normalization the NaN poisons the sum and no segment gets any cell at all
+    const filled = getCells(container).filter((cell) => !cell.hasAttribute('data-empty'));
+    expect(filled).toHaveLength(100);
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 50, B: 0');
+  });
+
   it('keeps every cell inside the svg viewport', () => {
     const { container } = render(<WaffleChart {...defaultProps} rows={10} columns={10} />);
     const { width, height } = getSvgSize(container);

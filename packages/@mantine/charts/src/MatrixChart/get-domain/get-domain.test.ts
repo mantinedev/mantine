@@ -47,4 +47,32 @@ describe('getDomain', () => {
     ];
     expect(getDomain(data)).toEqual([-3, -1]);
   });
+
+  it('ignores NaN and Infinity values', () => {
+    const data = [
+      { x: 'a', y: '1', value: 10 },
+      { x: 'b', y: '1', value: NaN },
+      { x: 'c', y: '1', value: Infinity },
+      { x: 'd', y: '1', value: -Infinity },
+      { x: 'e', y: '1', value: 4 },
+    ];
+    expect(getDomain(data)).toEqual([4, 10]);
+  });
+
+  it('returns [0, 0] when all values are non-finite', () => {
+    const data = [
+      { x: 'a', y: '1', value: NaN },
+      { x: 'b', y: '1', value: Infinity },
+    ];
+    expect(getDomain(data)).toEqual([0, 0]);
+  });
+
+  it('does not throw on datasets larger than the argument limit', () => {
+    const data = Array.from({ length: 200_000 }, (_, index) => ({
+      x: `x-${index}`,
+      y: '1',
+      value: index,
+    }));
+    expect(getDomain(data)).toEqual([0, 199_999]);
+  });
 });

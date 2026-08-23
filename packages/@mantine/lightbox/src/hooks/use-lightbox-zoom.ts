@@ -59,6 +59,17 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     resetZoom();
   }, [currentIndex, resetZoom]);
 
+  // Turning zoom off has to clear the state as well – the image loses its handlers, but a
+  // lingering `isZoomed` keeps the carousel's `watchDrag` guard rejecting drags, so the
+  // lightbox would silently stop being swipeable.
+  useEffect(() => {
+    if (!enabled) {
+      resetZoom();
+      lastPinchDistance.current = null;
+      didDrag.current = false;
+    }
+  }, [enabled, resetZoom]);
+
   const toggleZoom = useCallback(() => {
     if (!enabled) {
       return;

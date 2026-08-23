@@ -202,6 +202,28 @@ describe('@mantine/charts/GaugeChart', () => {
     expect(svg).toHaveAttribute('aria-valuemax', '100');
   });
 
+  it('reports the clamped value in aria-valuetext and the default label', () => {
+    const { container } = render(<GaugeChart value={150} min={0} max={100} />);
+    const svg = container.querySelector('svg')!;
+
+    // aria-valuetext is the readable equivalent of aria-valuenow, and the default label
+    // shows what the arc draws – all three have to agree on the clamped value
+    expect(svg).toHaveAttribute('aria-valuenow', '100');
+    expect(svg).toHaveAttribute('aria-valuetext', '100');
+    expect(svg).toHaveTextContent('100');
+    expect(svg).not.toHaveTextContent('150');
+  });
+
+  it('passes the clamped value to valueFormatter', () => {
+    const valueFormatter = jest.fn((v: number) => `${v}%`);
+    const { container } = render(
+      <GaugeChart value={150} min={0} max={100} valueFormatter={valueFormatter} />
+    );
+
+    expect(valueFormatter).toHaveBeenCalledWith(100);
+    expect(container.querySelector('svg')).toHaveAttribute('aria-valuetext', '100%');
+  });
+
   it('names the meter from a string label', () => {
     const { container } = render(<GaugeChart value={72} label="CPU usage" />);
     expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'CPU usage');

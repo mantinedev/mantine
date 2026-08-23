@@ -348,8 +348,13 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
       : null;
 
   const formatValue = valueFormatter || ((v: number) => String(v));
-  const labelContent = label !== undefined ? label : formatValue(value);
+
+  // The arc is drawn from the clamped value, and `aria-valuetext` is defined as the
+  // human-readable equivalent of `aria-valuenow` – reporting the raw value in either the
+  // default label or `aria-valuetext` would contradict both the arc and `aria-valuenow`.
   const clampedValue = Math.max(min!, Math.min(max!, value));
+  const formattedValue = formatValue(clampedValue);
+  const labelContent = label !== undefined ? label : formattedValue;
 
   // A meter with no accessible name is announced as "meter" and nothing else. A string
   // `label` names the metric ("CPU usage"), so it is used unless one is given explicitly.
@@ -367,7 +372,7 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
       aria-valuenow={clampedValue}
       aria-valuemin={min}
       aria-valuemax={max}
-      aria-valuetext={formatValue(value)}
+      aria-valuetext={formattedValue}
       {...others}
     >
       <path

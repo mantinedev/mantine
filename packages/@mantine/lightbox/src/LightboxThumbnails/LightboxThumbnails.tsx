@@ -8,6 +8,7 @@ import {
   factory,
   Factory,
   UnstyledButton,
+  useDirection,
   useProps,
 } from '@mantine/core';
 import { useLightboxContext } from '../lightbox.context';
@@ -41,10 +42,14 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
   );
 
   const ctx = useLightboxContext();
+  const stylesApiProps = { classNames, styles };
+
+  const { dir } = useDirection();
 
   const [thumbsRef, thumbsEmbla] = useEmblaCarousel({
     containScroll: 'keepSnaps',
     dragFree: true,
+    direction: dir,
   });
 
   useEffect(() => {
@@ -67,7 +72,7 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
     return (
       <UnstyledButton
         key={index}
-        {...ctx.getStyles('thumbnail')}
+        {...ctx.getStyles('thumbnail', stylesApiProps)}
         mod="reduce-motion"
         data-active={index === ctx.currentIndex || undefined}
         aria-label={ctx.labels.thumbnailLabel(index + 1, ctx.slides.length)}
@@ -78,7 +83,7 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
           slide.renderThumb!()
         ) : thumbSrc ? (
           <img
-            {...ctx.getStyles('thumbnailImage')}
+            {...ctx.getStyles('thumbnailImage', stylesApiProps)}
             src={thumbSrc}
             alt=""
             loading="lazy"
@@ -97,8 +102,8 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
       {...ctx.getStyles('thumbnails', { className, style, classNames, styles })}
       {...others}
     >
-      <div {...ctx.getStyles('thumbnailsViewport')} ref={thumbsRef}>
-        <div {...ctx.getStyles('thumbnailsContainer')}>{thumbnails}</div>
+      <div {...ctx.getStyles('thumbnailsViewport', stylesApiProps)} ref={thumbsRef}>
+        <div {...ctx.getStyles('thumbnailsContainer', stylesApiProps)}>{thumbnails}</div>
       </div>
     </Collapse>
   );

@@ -87,6 +87,94 @@ describe('@mantine/lightbox/LightboxToolbar', () => {
     expect(screen.queryByLabelText('Download')).not.toBeInTheDocument();
   });
 
+  describe('download', () => {
+    const originalFetch = global.fetch;
+    let clickedAnchors: HTMLAnchorElement[] = [];
+    let originalClick: () => void;
+
+    beforeEach(() => {
+      clickedAnchors = [];
+      originalClick = HTMLAnchorElement.prototype.click;
+      HTMLAnchorElement.prototype.click = function click(this: HTMLAnchorElement) {
+        clickedAnchors.push(this);
+      };
+      global.URL.createObjectURL = jest.fn(() => 'blob:mock');
+      global.URL.revokeObjectURL = jest.fn();
+    });
+
+    afterEach(() => {
+      HTMLAnchorElement.prototype.click = originalClick;
+      global.fetch = originalFetch;
+    });
+
+    it('navigates directly for cross-origin sources instead of fetching', async () => {
+      // A cross-origin fetch nearly always fails on CORS, and the popup fallback that used
+      // to follow it is blocked because the click activation is already gone by then
+      const fetchSpy = jest.fn();
+      global.fetch = fetchSpy as any;
+
+      await renderWithAct(
+        <LightboxWrapper
+          withDownload
+          slides={[{ src: 'https://cdn.example.com/photo.jpg', alt: 'Remote' }]}
+        >
+          <LightboxToolbar />
+        </LightboxWrapper>
+      );
+
+      await userEvent.click(screen.getByLabelText('Download'));
+
+      expect(fetchSpy).not.toHaveBeenCalled();
+      expect(clickedAnchors).toHaveLength(1);
+      expect(clickedAnchors[0].href).toBe('https://cdn.example.com/photo.jpg');
+      expect(clickedAnchors[0].target).toBe('_blank');
+      expect(clickedAnchors[0].hasAttribute('download')).toBe(false);
+    });
+
+    it('does not save the response body when the request fails', async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: false,
+          status: 404,
+          blob: () => Promise.resolve(new Blob(['<html>Not found</html>'])),
+        })
+      ) as any;
+
+      await renderWithAct(
+        <LightboxWrapper withDownload slides={[{ src: '/local/photo.jpg', alt: 'Local' }]}>
+          <LightboxToolbar />
+        </LightboxWrapper>
+      );
+
+      await userEvent.click(screen.getByLabelText('Download'));
+      await Promise.resolve();
+      await Promise.resolve();
+
+      expect(global.URL.createObjectURL).not.toHaveBeenCalled();
+      // Falls back to opening the URL rather than saving the error page as the image
+      expect(clickedAnchors.every((anchor) => !anchor.hasAttribute('download'))).toBe(true);
+    });
+
+    it('saves same-origin sources as a blob with a decoded file name', async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({ ok: true, status: 200, blob: () => Promise.resolve(new Blob(['x'])) })
+      ) as any;
+
+      await renderWithAct(
+        <LightboxWrapper withDownload slides={[{ src: '/local/my%20photo.jpg', alt: 'Local' }]}>
+          <LightboxToolbar />
+        </LightboxWrapper>
+      );
+
+      await userEvent.click(screen.getByLabelText('Download'));
+      await Promise.resolve();
+      await Promise.resolve();
+
+      expect(global.URL.createObjectURL).toHaveBeenCalled();
+      expect(clickedAnchors[0].getAttribute('download')).toBe('my photo.jpg');
+    });
+  });
+
   it('renders custom toolbar items instead of defaults when provided', async () => {
     const items: ToolbarItem[] = [
       {
