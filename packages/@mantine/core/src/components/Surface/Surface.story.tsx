@@ -22,16 +22,7 @@ export function NestedSurfaces() {
         <Surface p="xl" radius="md" mt="md">
           Level 2
           <Surface p="xl" radius="md" mt="md">
-            Level 3
-            <Surface p="xl" radius="md" mt="md">
-              Level 4
-              <Surface p="xl" radius="md" mt="md">
-                Level 5
-                <Surface p="xl" radius="md" mt="md">
-                  Level 5 (clamped)
-                </Surface>
-              </Surface>
-            </Surface>
+            Level 2 (clamped)
           </Surface>
         </Surface>
       </Surface>
@@ -42,10 +33,10 @@ export function NestedSurfaces() {
 export function ExplicitLevel() {
   return (
     <div style={{ padding: 40, maxWidth: 600 }}>
-      <Surface p="xl" radius="md" level={4}>
-        Explicit level 4
+      <Surface p="xl" radius="md" level={2}>
+        Explicit level 2
         <Surface p="xl" radius="md" mt="md" level="-1">
-          Relative level -1 (resolves to 3)
+          Relative level -1 (resolves to 1)
         </Surface>
       </Surface>
     </div>

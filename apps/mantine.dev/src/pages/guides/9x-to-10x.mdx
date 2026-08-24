@@ -1,3 +1,4 @@
+import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -49,30 +50,33 @@ background color (luminance threshold `0.2`).
 
 The following components are affected:
 
-| Component | Affected element |
-|-----------|-----------------|
-| `Button` | button label text |
-| `ActionIcon` | icon color |
-| `ActionIconGroupSection` | icon color |
-| `Badge` | badge label text (filled variant) |
-| `ThemeIcon` | icon color |
-| `Alert` | alert icon color |
-| `Avatar` | initials text |
-| `Chip` | chip label text |
-| `NavLink` | label/icon when active |
-| `TableOfContents` | active link color |
-| `Toggle` | toggle label |
-| `Tooltip` | tooltip label text |
-| `Tabs` | active tab indicator color |
-| `Pagination` | active page button text |
-| `Radio` / `RadioIndicator` | radio icon |
-| `Checkbox` / `CheckboxIndicator` | checkmark icon |
-| `Indicator` | indicator label text |
-| `Progress` | section label text |
-| `Stepper` | step icon |
-| `SegmentedControl` | active segment label |
-| `Timeline` | bullet icon |
-| `Toolbar` / `ToolbarToggle` / `ToolbarToggleItem` | toolbar item icon/label |
+<DataTable
+  head={['Component', 'Affected element']}
+  data={[
+    [<Code>Button</Code>, 'button label text'],
+    [<Code>ActionIcon</Code>, 'icon color'],
+    [<Code>ActionIconGroupSection</Code>, 'icon color'],
+    [<Code>Badge</Code>, 'badge label text (filled variant)'],
+    [<Code>ThemeIcon</Code>, 'icon color'],
+    [<Code>Alert</Code>, 'alert icon color'],
+    [<Code>Avatar</Code>, 'initials text'],
+    [<Code>Chip</Code>, 'chip label text'],
+    [<Code>NavLink</Code>, 'label/icon when active'],
+    [<Code>TableOfContents</Code>, 'active link color'],
+    [<Code>Toggle</Code>, 'toggle label'],
+    [<Code>Tooltip</Code>, 'tooltip label text'],
+    [<Code>Tabs</Code>, 'active tab indicator color'],
+    [<Code>Pagination</Code>, 'active page button text'],
+    ['Radio / RadioIndicator', 'radio icon'],
+    ['Checkbox / CheckboxIndicator', 'checkmark icon'],
+    [<Code>Indicator</Code>, 'indicator label text'],
+    [<Code>Progress</Code>, 'section label text'],
+    [<Code>Stepper</Code>, 'step icon'],
+    [<Code>SegmentedControl</Code>, 'active segment label'],
+    [<Code>Timeline</Code>, 'bullet icon'],
+    ['Toolbar / ToolbarToggle / ToolbarToggleItem', 'toolbar item icon/label'],
+  ]}
+/>
 
 To restore the v9 behaviour, disable `autoContrast` globally:
 
@@ -172,19 +176,66 @@ shade-level overrides continue to work.
 
 Key role variables:
 
-| Variable | Purpose |
-|----------|---------|
-| `--mantine-color-border` | Default border |
-| `--mantine-color-border-subtle` | Subtle/light border |
-| `--mantine-color-border-strong` | Emphasized border |
-| `--mantine-color-divider` | Divider lines |
-| `--mantine-color-hover` | Hover background |
-| `--mantine-color-active` | Active/pressed background |
-| `--mantine-color-selected` | Selected item background |
-| `--mantine-color-track` | Track background (Slider, Switch, etc.) |
-| `--mantine-color-text-muted` | Muted/secondary text |
-| `--mantine-color-surface-0..5` | Surface elevation levels |
-| `--mantine-color-surface-recessed` | Inset/sunken surface (code blocks, troughs) |
+<DataTable
+  head={['Variable', 'Purpose']}
+  data={[
+    [<Code>--mantine-color-border</Code>, 'Default border'],
+    [<Code>--mantine-color-border-subtle</Code>, 'Subtle/light border'],
+    [<Code>--mantine-color-border-strong</Code>, 'Emphasized border'],
+    [<Code>--mantine-color-divider</Code>, 'Divider lines'],
+    [<Code>--mantine-color-hover</Code>, 'Hover background'],
+    [<Code>--mantine-color-active</Code>, 'Active/pressed background'],
+    [<Code>--mantine-color-selected</Code>, 'Selected item background'],
+    [<Code>--mantine-color-track</Code>, 'Track background (Slider, Switch, etc.)'],
+    [<Code>--mantine-color-text-muted</Code>, 'Muted/secondary text'],
+    [<Code>--mantine-color-surface-page</Code>, 'Page/app background (aliased by --mantine-color-body)'],
+    [<Code>--mantine-color-surface-panel</Code>, 'Raised container background (cards, popovers, notifications) and default buttons via --mantine-color-default; more components migrate to this token incrementally'],
+    [<Code>--mantine-color-surface-panel-2</Code>, 'Second raised step for nested surfaces'],
+    [<Code>--mantine-color-surface-sunken</Code>, 'Inset/sunken surface (code blocks, slider tracks)'],
+  ]}
+/>
+
+These tokens are backed by a new `--mantine-color-neutral-0..9` scheme-agnostic ladder (index `N`
+means the same role in both color schemes). See the [full token reference](/theming/colors) for the
+complete ladder and surface defaults.
+
+### Customizing surfaces and the dark ramp
+
+Two new theme-level tools give first-class control over the values above, in place of raw CSS
+variable overrides:
+
+The `surfaces` theme key overrides surface backgrounds per color scheme:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  surfaces: {
+    dark: {
+      panel: '#101113',
+    },
+  },
+});
+```
+
+The `tintColors` function mixes a color into every shade of a `MantineColorsTuple`, useful for
+tinting `darkColors` and friends. Target the **dark** ramp only – tinting light neutrals forces
+surfaces darker and breaks the flat light look:
+
+```tsx
+import { tintColors, darkColors, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    dark: tintColors(darkColors, '#5c7cfa', 0.15),
+  },
+});
+```
+
+`tintColors` returns CSS `color-mix(in oklab, ...)` strings that are resolved by the browser, not
+concrete color values – the result cannot be fed into functions that expect a resolved color (such
+as `darken`), and it appears as a `color-mix(...)` expression, not a hex/rgb value, in computed
+styles.
 
 ### Warning and info color mappings
 

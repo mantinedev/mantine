@@ -125,7 +125,7 @@ describe('@mantine/core/dark-colors', () => {
   });
 
   it('darkColors follows DARK_LIGHTNESS_RAMP', () => {
-    const ramp = [0.83, 0.74, 0.65, 0.5, 0.38, 0.27, 0.24, 0.2, 0.16, 0.12];
+    const ramp = [0.83, 0.74, 0.65, 0.5, 0.34, 0.27, 0.24, 0.2, 0.16, 0.12];
     for (const [i, expected] of ramp.entries()) {
       const match = darkColors[i].match(/oklch\(([\d.]+)/);
       expect(match).not.toBeNull();

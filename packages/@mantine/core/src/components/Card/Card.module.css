@@ -15,13 +15,7 @@
     flex-direction: column;
   }
 
-  @mixin where-light {
-    background-color: var(--mantine-color-white);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-6);
-  }
+  background-color: var(--mantine-color-surface-panel);
 }
 
 .section {

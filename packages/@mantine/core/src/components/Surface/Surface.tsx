@@ -15,8 +15,14 @@ import {
 import { SurfaceDepthContext, useSurfaceDepth } from './Surface.context';
 import classes from './Surface.module.css';
 
-const MIN_SURFACE_LEVEL = 1;
-const MAX_SURFACE_LEVEL = 5;
+const MIN_SURFACE_LEVEL = 0;
+const MAX_SURFACE_LEVEL = 2;
+
+const SURFACE_LEVEL_VARS = [
+  '--mantine-color-surface-page',
+  '--mantine-color-surface-panel',
+  '--mantine-color-surface-panel-2',
+] as const;
 
 export type SurfaceStylesNames = 'root';
 export type SurfaceCssVariables = {
@@ -33,7 +39,7 @@ export interface SurfaceBaseProps {
   /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** Explicit surface depth level. Accepts an absolute number/string (`1`–`5`) or a relative value (`'+1'`, `'-1'`) applied against the parent surface level. When set, overrides `autoDepth`. */
+  /** Explicit surface depth level. Accepts an absolute number/string (`0`–`2`) or a relative value (`'+1'`, `'-1'`) applied against the parent surface level. When set, overrides `autoDepth`. */
   level?: number | string;
 
   /** Determines whether the surface level is automatically incremented by 1 relative to the parent surface, `true` by default */
@@ -115,7 +121,7 @@ export const Surface = polymorphicFactory<SurfaceFactory>((_props) => {
       <Box
         mod={[{ 'data-with-border': withBorder, 'data-mantine-surface-level': resolvedLevel }, mod]}
         {...getStyles('root', {
-          style: { '--surface-bg': `var(--mantine-color-surface-${resolvedLevel})` },
+          style: { '--surface-bg': `var(${SURFACE_LEVEL_VARS[resolvedLevel]})` },
         })}
         variant={variant}
         {...others}

@@ -1,5 +1,6 @@
 import { ThemingDemos } from '@docs/demos';
 import { ThemeColors } from '@/components/ThemeColors';
+import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -226,26 +227,51 @@ surfaces, and text uniformly:
 
 Key role variables and their defaults:
 
-| Variable | Light | Dark |
-|----------|-------|------|
-| `--mantine-color-border` | `gray-3` | `dark-4` |
-| `--mantine-color-border-subtle` | `gray-2` | `dark-5` |
-| `--mantine-color-border-strong` | `gray-4` | `dark-3` |
-| `--mantine-color-divider` | `gray-3` | `dark-4` |
-| `--mantine-color-hover` | `gray-0` | `dark-6` |
-| `--mantine-color-active` | `gray-1` | `dark-5` |
-| `--mantine-color-track` | `gray-2` | `dark-4` |
-| `--mantine-color-text-muted` | `gray-6` | `dark-2` |
-| `--mantine-color-surface-0` | `white` | `dark-8` |
-| `--mantine-color-surface-1` | `white` | `dark-7` |
-| `--mantine-color-surface-2` | `gray-0` | `dark-6` |
-| `--mantine-color-surface-3` | `gray-1` | `dark-5` |
-| `--mantine-color-surface-4` | `gray-2` | `dark-4` |
-| `--mantine-color-surface-5` | `gray-2` | `dark-4` |
-| `--mantine-color-surface-recessed` | `gray-0` | `dark-9` |
+<DataTable
+  head={['Variable', 'Light', 'Dark']}
+  data={[
+    [<Code>--mantine-color-border</Code>, <Code>gray-3</Code>, <Code>dark-4</Code>],
+    [<Code>--mantine-color-border-subtle</Code>, <Code>gray-2</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-border-strong</Code>, <Code>gray-4</Code>, <Code>dark-3</Code>],
+    [<Code>--mantine-color-divider</Code>, <Code>gray-3</Code>, <Code>dark-4</Code>],
+    [<Code>--mantine-color-hover</Code>, <Code>gray-0</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-active</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-track</Code>, <Code>gray-2</Code>, <Code>dark-4</Code>],
+    [<Code>--mantine-color-text-muted</Code>, <Code>gray-6</Code>, <Code>dark-2</Code>],
+    [<Code>--mantine-color-surface-page</Code>, <Code>white</Code>, <Code>dark-7</Code>],
+    [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-8</Code>],
+  ]}
+/>
 
 Role variables are defined as `var()` references to the underlying shade variables, so overriding
-`--mantine-color-gray-3` still cascades into `--mantine-color-border`.
+`--mantine-color-gray-3` still cascades into `--mantine-color-border`. `--mantine-color-body` is
+aliased to `--mantine-color-surface-page`, so overriding the latter also updates the page background.
+
+## Neutral color ladder
+
+A `--mantine-color-neutral-0..9` scale backs the role and surface tokens above. The ladder is
+scheme-agnostic by role – index `N` means the same thing in both color schemes – while the
+underlying shade differs so contrast holds in both. Use `var(--mantine-color-neutral-N)` in custom
+CSS when you need a neutral shade that adapts to the color scheme without hardcoding separate
+`gray-N`/`dark-N` pairs:
+
+<DataTable
+  head={['Variable', 'Role', 'Light', 'Dark']}
+  data={[
+    [<Code>--mantine-color-neutral-0</Code>, 'Page', <Code>white</Code>, <Code>dark-7</Code>],
+    [<Code>--mantine-color-neutral-1</Code>, 'Panel', <Code>white</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-neutral-2</Code>, 'Hover / raised', <Code>gray-0</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-neutral-3</Code>, 'Active / track', <Code>gray-2</Code>, <Code>dark-4</Code>],
+    [<Code>--mantine-color-neutral-4</Code>, 'Border', <Code>gray-3</Code>, <Code>dark-4</Code>],
+    [<Code>--mantine-color-neutral-5</Code>, 'Border strong / disabled', <Code>gray-5</Code>, <Code>dark-3</Code>],
+    [<Code>--mantine-color-neutral-6</Code>, 'Dimmed', <Code>gray-6</Code>, <Code>dark-2</Code>],
+    [<Code>--mantine-color-neutral-7</Code>, 'Secondary text', <Code>gray-7</Code>, <Code>dark-1</Code>],
+    [<Code>--mantine-color-neutral-8</Code>, 'Text', <Code>black</Code>, <Code>dark-0</Code>],
+    [<Code>--mantine-color-neutral-9</Code>, 'Max contrast', <Code>black</Code>, <Code>white</Code>],
+  ]}
+/>
 
 ## Dark neutral flavors
 
@@ -268,12 +294,40 @@ const theme = createTheme({
 });
 ```
 
-| Export | Description |
-|--------|-------------|
-| `darkColors` | Neutral (near-zero chroma) |
-| `darkColdColors` | Slightly cool-tinted |
-| `darkWarmColors` | Slightly warm-tinted |
-| `darkTintedColors` | Primary-color hue mixed in |
+<DataTable
+  head={['Export', 'Description']}
+  data={[
+    [<Code>darkColors</Code>, 'Neutral (near-zero chroma)'],
+    [<Code>darkColdColors</Code>, 'Slightly cool-tinted'],
+    [<Code>darkWarmColors</Code>, 'Slightly warm-tinted'],
+    [<Code>darkTintedColors</Code>, 'Primary-color hue mixed in'],
+  ]}
+/>
+
+## tintColors
+
+Use the `tintColors` function to mix a color into every shade of a `MantineColorsTuple`, useful for
+building a custom-tinted dark ramp without hand-editing 10 shades. It targets the **dark** ramp –
+tinting light neutrals forces surfaces darker and breaks the flat light look, so keep tinting to
+dark:
+
+```tsx
+import { tintColors, darkColors, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    dark: tintColors(darkColors, '#5c7cfa', 0.15),
+  },
+});
+```
+
+`strength` (default `0.1`) controls how much of the tint is mixed in. Middle shades of the tuple
+receive proportionally more tint than the shades near either end of the ramp.
+
+`tintColors` returns CSS `color-mix(in oklab, ...)` strings that are resolved by the browser, not
+concrete color values – the result cannot be fed into functions that expect a resolved color (such
+as `darken`), and it appears as a `color-mix(...)` expression, not a hex/rgb value, in computed
+styles.
 
 ## Surface component
 
@@ -293,6 +347,28 @@ function Demo() {
   );
 }
 ```
+
+Depth can also be set explicitly with the `level` prop, either as an absolute `0`–`2` value or as a
+relative string like `level="+1"`/`level="-1"` that steps from the parent surface's level. Either
+form overrides `autoDepth` and clamps to the `0`–`2` range.
+
+Surface backgrounds can be overridden per color scheme with the `surfaces` theme key, without
+touching CSS variables directly:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  surfaces: {
+    dark: {
+      panel: '#101113',
+    },
+  },
+});
+```
+
+Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, and `sunken` keys, matching the four
+surface tokens documented above.
 
 ## Color prop
 

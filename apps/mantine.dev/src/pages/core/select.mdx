@@ -24,13 +24,15 @@ This is useful for async operations like API calls, searches, or validations:
 
 The `Select` value must be a primitive type (string, number, or boolean).
 The `onChange` function is called with a primitive value as a single argument.
+The empty value is `null`, not an empty string – with `value=''` the component
+is treated as non-empty: the clear button is displayed and search logic misbehaves.
 
 ```tsx
 import { useState } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
-  const [value, setValue] = useState<string | null>('');
+  const [value, setValue] = useState<string | null>(null);
   return <Select data={[]} value={value} onChange={setValue} />;
 }
 ```

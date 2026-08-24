@@ -26,6 +26,9 @@ export interface MantineTheme {
   /** Object of colors, key is color name, value is an array of at least 10 strings (colors) */
   colors: MantineThemeColors;
 
+  /** Per-scheme overrides for surface color tokens @default {} */
+  surfaces: MantineThemeSurfaces;
+
   /** Index of theme.colors[color].
    *  Primary shade is used in all components to determine which color from theme.colors[color] should be used.
    *  Can be either a number (0–9) or an object to specify different color shades for light and dark color schemes.
@@ -227,6 +230,25 @@ export type MantineFontWeightsValues = Record<MantineFontWeight, string>;
 
 export interface MantineThemeOther {
   [key: string]: any;
+}
+
+export interface MantineThemeSurfaceValues {
+  /** Background of the app/page, `--mantine-color-surface-page` */
+  page?: string;
+
+  /** Background of raised containers (cards, popovers, notifications) and default buttons via `--mantine-color-default`, `--mantine-color-surface-panel`. More components will migrate to this token incrementally. */
+  panel?: string;
+
+  /** Background of the second raised step used by nested surfaces, `--mantine-color-surface-panel-2` */
+  panel2?: string;
+
+  /** Background of below-page wells and tracks, `--mantine-color-surface-sunken` */
+  sunken?: string;
+}
+
+export interface MantineThemeSurfaces {
+  light?: MantineThemeSurfaceValues;
+  dark?: MantineThemeSurfaceValues;
 }
 
 export interface MantineGradient {

@@ -1,4 +1,5 @@
 import { DataGridDemos, DrawerDemos, ModalDemos } from '@docs/demos';
+import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -125,34 +126,63 @@ consistently without touching individual component styles.
 
 New variables (values differ per color scheme):
 
-| Token | Light default | Dark default |
-|-------|---------------|--------------|
-| `--mantine-color-border` | `gray-3` | `dark-4` |
-| `--mantine-color-border-subtle` | `gray-2` | `dark-5` |
-| `--mantine-color-border-strong` | `gray-4` | `dark-3` |
-| `--mantine-color-divider` | `gray-3` | `dark-4` |
-| `--mantine-color-hover` | `gray-0` | `dark-6` |
-| `--mantine-color-active` | `gray-1` | `dark-5` |
-| `--mantine-color-selected` | `gray-1` | `dark-5` |
-| `--mantine-color-track` | `gray-2` | `dark-4` |
-| `--mantine-color-text-muted` | `gray-6` | `dark-2` |
-| `--mantine-color-surface-0` | `white` | `dark-8` |
-| `--mantine-color-surface-1` | `white` | `dark-7` |
-| `--mantine-color-surface-2` | `gray-0` | `dark-6` |
-| `--mantine-color-surface-3` | `gray-1` | `dark-5` |
-| `--mantine-color-surface-4` | `gray-2` | `dark-4` |
-| `--mantine-color-surface-5` | `gray-2` | `dark-4` |
-| `--mantine-color-surface-recessed` | `gray-0` | `dark-9` |
+<DataTable
+  head={['Token', 'Light default', 'Dark default']}
+  data={[
+    [<Code>--mantine-color-border</Code>, <Code>gray-3</Code>, <Code>dark-4</Code>],
+    [<Code>--mantine-color-border-subtle</Code>, <Code>gray-2</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-border-strong</Code>, <Code>gray-4</Code>, <Code>dark-3</Code>],
+    [<Code>--mantine-color-divider</Code>, <Code>gray-3</Code>, <Code>dark-4</Code>],
+    [<Code>--mantine-color-hover</Code>, <Code>gray-0</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-active</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-selected</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-track</Code>, <Code>gray-2</Code>, <Code>dark-4</Code>],
+    [<Code>--mantine-color-text-muted</Code>, <Code>gray-6</Code>, <Code>dark-2</Code>],
+    [<Code>--mantine-color-surface-page</Code>, <Code>white</Code>, <Code>dark-7</Code>],
+    [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-8</Code>],
+  ]}
+/>
 
 Role variables are defined as `var()` references to the underlying shade variables, so overriding
 `--mantine-color-gray-3` (for example) still cascades into `--mantine-color-border` automatically.
+`--mantine-color-body` is aliased to `--mantine-color-surface-page`, so overriding the latter also
+updates the page background.
+
+### Neutral color ladder
+
+A new `--mantine-color-neutral-0..9` scale backs the role and surface tokens above. The ladder is
+scheme-agnostic by role – index `N` means the same thing in both color schemes – while the
+underlying shade differs so contrast holds in both:
+
+<DataTable
+  head={['Index', 'Role', 'Light', 'Dark']}
+  data={[
+    ['0', 'Page', <Code>white</Code>, <Code>dark-7</Code>],
+    ['1', 'Panel', <Code>white</Code>, <Code>dark-6</Code>],
+    ['2', 'Hover / raised', <Code>gray-0</Code>, <Code>dark-5</Code>],
+    ['3', 'Active / track', <Code>gray-2</Code>, <Code>dark-4</Code>],
+    ['4', 'Border', <Code>gray-3</Code>, <Code>dark-4</Code>],
+    ['5', 'Border strong / disabled', <Code>gray-5</Code>, <Code>dark-3</Code>],
+    ['6', 'Dimmed', <Code>gray-6</Code>, <Code>dark-2</Code>],
+    ['7', 'Secondary text', <Code>gray-7</Code>, <Code>dark-1</Code>],
+    ['8', 'Text', <Code>black</Code>, <Code>dark-0</Code>],
+    ['9', 'Max contrast', <Code>black</Code>, <Code>white</Code>],
+  ]}
+/>
+
+Use `var(--mantine-color-neutral-N)` in custom CSS when you need a neutral shade that adapts to the
+color scheme without hardcoding separate `gray-N`/`dark-N` pairs.
 
 ### Surface component
 
-A new `Surface` component replaces `Paper` as the depth-aware background primitive. In dark mode,
-each nested `Surface` steps one shade lighter, giving your UI natural elevation layers (up to 5
-levels plus a `recessed` level for inset elements like code blocks and slider tracks). In light mode,
-the surface is near-flat and relies on shadows and borders.
+A new `Surface` component replaces `Paper` as the depth-aware background primitive. `Surface` has
+3 levels – `0` (page), `1` (panel, the default for a standalone `Surface`), and `2` (panel-2) – and
+in dark mode each level is one shade lighter, giving your UI natural elevation layers. In light mode
+surfaces are near-flat and rely on shadows and borders instead of tone. A separate
+`--mantine-color-surface-sunken` token (not a `Surface` level) covers inset elements like code
+blocks and slider tracks.
 
 `Surface` is a strict superset of `Paper` (`shadow`, `radius`, `withBorder`, padding, polymorphic
 `component` prop) and can be used as a drop-in replacement. `Paper` is deprecated in v10 and will be
@@ -166,7 +196,7 @@ function Demo() {
   return <Surface level={2} p="md">Content on elevation level 2</Surface>;
 }
 
-// Automatic depth stepping (each nested Surface steps up one level)
+// Automatic depth stepping (each nested Surface steps up one level, clamped at level 2)
 function Demo() {
   return (
     <Surface autoDepth p="md">
@@ -179,17 +209,42 @@ function Demo() {
 }
 ```
 
+`level` also accepts a relative string, `"+1"` or `"-1"`, which steps up or down from the parent
+surface's level instead of setting an absolute value. Like an absolute `level`, a relative `level`
+always overrides `autoDepth`, and both forms clamp to the `0`–`2` range.
+
+Surface backgrounds can be overridden per color scheme with the `surfaces` theme key, without
+touching CSS variables directly:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  surfaces: {
+    dark: {
+      panel: '#101113',
+    },
+  },
+});
+```
+
+Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, and `sunken` keys, matching the four
+surface tokens documented above.
+
 ### Dark neutral flavors
 
 Four pre-built dark neutral color tuples are exported from `@mantine/core` and can be assigned to
 `theme.colors.dark` to change the overall tone of the dark scheme:
 
-| Export | Description |
-|--------|-------------|
-| `darkColors` | Neutral (near-zero chroma) |
-| `darkColdColors` | Slightly cool-tinted |
-| `darkWarmColors` | Slightly warm-tinted |
-| `darkTintedColors` | Primary-color hue mixed in |
+<DataTable
+  head={['Export', 'Description']}
+  data={[
+    [<Code>darkColors</Code>, 'Neutral (near-zero chroma)'],
+    [<Code>darkColdColors</Code>, 'Slightly cool-tinted'],
+    [<Code>darkWarmColors</Code>, 'Slightly warm-tinted'],
+    [<Code>darkTintedColors</Code>, 'Primary-color hue mixed in'],
+  ]}
+/>
 
 ```tsx
 import { darkWarmColors, createTheme } from '@mantine/core';
@@ -200,6 +255,31 @@ const theme = createTheme({
   },
 });
 ```
+
+### tintColors utility
+
+A new `tintColors` function mixes a color into every shade of a `MantineColorsTuple`, useful for
+building a custom-tinted dark ramp without hand-editing 10 shades. It targets the **dark** ramp –
+tinting light neutrals forces surfaces darker and breaks the flat light look, so keep tinting to
+dark:
+
+```tsx
+import { tintColors, darkColors, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    dark: tintColors(darkColors, '#5c7cfa', 0.15),
+  },
+});
+```
+
+`strength` (default `0.1`) controls how much of the tint is mixed in. Middle shades of the tuple
+receive proportionally more tint than the shades near either end of the ramp.
+
+`tintColors` returns CSS `color-mix(in oklab, ...)` strings that are resolved by the browser, not
+concrete color values – the result cannot be fed into functions that expect a resolved color (such
+as `darken`), and it appears as a `color-mix(...)` expression, not a hex/rgb value, in computed
+styles.
 
 ### OKLCH colors generator
 

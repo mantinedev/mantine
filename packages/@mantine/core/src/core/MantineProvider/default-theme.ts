@@ -13,6 +13,7 @@ export const DEFAULT_THEME: MantineTheme = {
   white: '#fff',
   black: '#000',
   colors: DEFAULT_COLORS,
+  surfaces: {},
   primaryShade: { light: 6, dark: 7 },
   primaryColor: 'blue',
   variantColorResolver: defaultVariantColorsResolver,

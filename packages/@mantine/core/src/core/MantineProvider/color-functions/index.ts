@@ -7,6 +7,7 @@ export { toRgba } from './to-rgba/to-rgba';
 export { rgba, alpha } from './rgba/rgba';
 export { darken } from './darken/darken';
 export { lighten } from './lighten/lighten';
+export { tintColors } from './tint-colors/tint-colors';
 export { luminance, isLightColor } from './luminance/luminance';
 export {
   getContrastColor,

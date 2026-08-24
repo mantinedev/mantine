@@ -34,6 +34,9 @@ interface MantineTheme {
   /** Object of colors; key is color name, value is an array of at least 10 strings (colors) */
   colors: MantineThemeColors;
 
+  /** Per-scheme overrides for surface color tokens; default `{}` */
+  surfaces: MantineThemeSurfaces;
+
   /** Index of theme.colors[color].
    *  Primary shade is used in all components to determine which color from theme.colors[color] should be used.
    *  Can be either a number (0–9) or an object to specify different color shades for light and dark color schemes.
@@ -245,6 +248,25 @@ except for [Spotlight](/x/spotlight) and [@mantine/dates](/dates/getting-started
 It is used only if `theme.autoContrast` is set to `true`. The default value is `0.2`.
 
 <Demo data={ThemingDemos.luminanceThreshold} />
+
+### surfaces
+
+`theme.surfaces` overrides surface color tokens per color scheme. Each scheme (`light`/`dark`)
+accepts `page`, `panel`, `panel2`, and `sunken` keys, which map to `--mantine-color-surface-page`,
+`--mantine-color-surface-panel`, `--mantine-color-surface-panel-2`, and `--mantine-color-surface-sunken`
+respectively. See the [colors guide](/theming/colors) for the full token reference.
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  surfaces: {
+    dark: {
+      panel: '#101113',
+    },
+  },
+});
+```
 
 ### focusRing
 
