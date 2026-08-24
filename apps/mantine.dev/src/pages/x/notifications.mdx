@@ -184,6 +184,27 @@ function Demo() {
 }
 ```
 
+## Stacked notifications
+
+Set `stacked` on the `Notifications` component to display notifications in a compact stack.
+The front notification remains visible, older notifications are shown as previews behind it,
+and the stack expands on hover or focus.
+
+```tsx
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return <Notifications stacked />;
+}
+```
+
+Stacked notifications work with all supported positions. Top positions expand down,
+bottom positions expand up. In stacked mode, new notifications are displayed immediately
+at the front of the stack instead of waiting in the queue; older notifications move behind the
+front notification and fade out when they are too deep in the stack.
+
+<Demo data={NotificationsDemos.stacked} />
+
 ## Limit and queue
 
 You can limit the maximum number of notifications that are displayed at a time by setting
