@@ -1,4 +1,5 @@
 .root {
+  position: relative;
   display: inline-flex;
   align-items: baseline;
   overflow: hidden;
@@ -8,12 +9,27 @@
   }
 }
 
+.copyValue {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  white-space: pre;
+  color: transparent;
+  forced-color-adjust: none;
+}
+
 .digit {
+  position: relative;
+  z-index: 2;
   display: inline-block;
   width: 1ch;
   height: 1em;
   overflow: hidden;
   line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
   transition:
     width var(--rn-duration) var(--rn-timing-function),
     opacity var(--rn-duration) var(--rn-timing-function);
@@ -38,9 +54,14 @@
 }
 
 .char {
+  position: relative;
+  z-index: 2;
   display: inline-block;
   overflow: hidden;
   white-space: pre;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
   transition: opacity var(--rn-duration) var(--rn-timing-function);
 
   &[data-empty] {

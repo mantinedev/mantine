@@ -2,16 +2,6 @@ import { testUtils } from '../../../test-utils';
 import { findAvailableColumn } from './find-available-column';
 
 describe('@mantine/schedule/find-available-column', () => {
-  const allWeekDays = [
-    '2025-01-13 00:00:00',
-    '2025-01-14 00:00:00',
-    '2025-01-15 00:00:00',
-    '2025-01-16 00:00:00',
-    '2025-01-17 00:00:00',
-    '2025-01-18 00:00:00',
-    '2025-01-19 00:00:00',
-  ];
-
   it('returns column 0 when no columns exist', () => {
     const columns = new Map();
     const event = testUtils.createEvent({
@@ -19,7 +9,7 @@ describe('@mantine/schedule/find-available-column', () => {
       end: '2025-01-15 12:00:00',
     });
 
-    const result = findAvailableColumn({ columns, event, allDay: false, allWeekDays });
+    const result = findAvailableColumn({ columns, event, allDay: false });
 
     expect(result).toBe(0);
   });
@@ -37,9 +27,9 @@ describe('@mantine/schedule/find-available-column', () => {
       end: '2025-01-15 12:00:00',
     });
 
-    columns.set('col-0', [event1]);
+    columns.set('col-0', [{ event: event1, allDay: false }]);
 
-    const result = findAvailableColumn({ columns, event: event2, allDay: false, allWeekDays });
+    const result = findAvailableColumn({ columns, event: event2, allDay: false });
 
     expect(result).toBe(0);
   });
@@ -57,9 +47,9 @@ describe('@mantine/schedule/find-available-column', () => {
       end: '2025-01-15 13:00:00',
     });
 
-    columns.set('col-0', [event1]);
+    columns.set('col-0', [{ event: event1, allDay: false }]);
 
-    const result = findAvailableColumn({ columns, event: event2, allDay: false, allWeekDays });
+    const result = findAvailableColumn({ columns, event: event2, allDay: false });
 
     expect(result).toBe(1);
   });
@@ -82,10 +72,10 @@ describe('@mantine/schedule/find-available-column', () => {
       end: '2025-01-15 13:00:00',
     });
 
-    columns.set('col-0', [event1]);
-    columns.set('col-1', [event2]);
+    columns.set('col-0', [{ event: event1, allDay: false }]);
+    columns.set('col-1', [{ event: event2, allDay: false }]);
 
-    const result = findAvailableColumn({ columns, event: event3, allDay: false, allWeekDays });
+    const result = findAvailableColumn({ columns, event: event3, allDay: false });
 
     expect(result).toBe(2);
   });
@@ -103,9 +93,9 @@ describe('@mantine/schedule/find-available-column', () => {
       end: '2025-01-16 00:00:00',
     });
 
-    columns.set('col-0', [event1]);
+    columns.set('col-0', [{ event: event1, allDay: false }]);
 
-    const result = findAvailableColumn({ columns, event: event2, allDay: true, allWeekDays });
+    const result = findAvailableColumn({ columns, event: event2, allDay: true });
 
     expect(result).toBe(0);
   });
@@ -123,9 +113,9 @@ describe('@mantine/schedule/find-available-column', () => {
       end: '2025-01-16 00:00:00',
     });
 
-    columns.set('col-0', [event1]);
+    columns.set('col-0', [{ event: event1, allDay: true }]);
 
-    const result = findAvailableColumn({ columns, event: event2, allDay: true, allWeekDays });
+    const result = findAvailableColumn({ columns, event: event2, allDay: true });
 
     expect(result).toBe(1);
   });
@@ -143,13 +133,12 @@ describe('@mantine/schedule/find-available-column', () => {
       end: '2025-01-15 12:00:00',
     });
 
-    allDayColumns.set('col-0', [event1]);
+    allDayColumns.set('col-0', [{ event: event1, allDay: true }]);
 
     const result = findAvailableColumn({
       columns: allDayColumns,
       event: event2,
       allDay: false,
-      allWeekDays,
     });
 
     expect(result).toBe(0);

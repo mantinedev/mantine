@@ -13,6 +13,7 @@ import type {
   InlineCodeHighlightStylesNames,
 } from './CodeHighlight/InlineCodeHighlight';
 import type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider';
+import type { NormalizeCodeOptions } from './normalize-code';
 import type {
   CodeHighlightDefaultLanguage,
   CodeHighlightTabsCode,
@@ -30,6 +31,7 @@ export { useCodeHighlightContext } from './CodeHighlight/CodeHighlight.context.j
 export {
   CodeHighlightAdapterProvider,
   useHighlight,
+  useLoadLanguage,
 } from './CodeHighlightProvider/CodeHighlightProvider.js';
 
 export { createHighlightJsAdapter } from './CodeHighlightProvider/adapters/highlight-js-adapter.js';
@@ -38,6 +40,8 @@ export {
   stripShikiCodeBlocks,
 } from './CodeHighlightProvider/adapters/shiki-adapter.js';
 export { plainTextAdapter } from './CodeHighlightProvider/adapters/plain-text-adapter.js';
+
+export { normalizeCode } from './normalize-code.js';
 
 export type {
   CodeHighlightProps,
@@ -56,4 +60,5 @@ export type {
   CodeHighlightControlProps,
   CodeHighlightContextValue,
   CodeHighlightAdapter,
+  NormalizeCodeOptions,
 };
