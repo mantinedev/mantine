@@ -32,8 +32,8 @@ export const positionConfigurator: MantineDemo = {
     {
       prop: 'position',
       type: 'select',
-      initialValue: 'bottom',
-      libraryValue: 'bottom',
+      initialValue: 'bottom-end',
+      libraryValue: 'bottom-end',
       data: [
         { label: 'bottom', value: 'bottom' },
         { label: 'bottom-start', value: 'bottom-start' },

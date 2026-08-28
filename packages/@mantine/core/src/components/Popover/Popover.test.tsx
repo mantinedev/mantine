@@ -129,6 +129,21 @@ describe('@mantine/core/Popover', () => {
     expect(container.querySelectorAll('.mantine-Popover-arrow')).toHaveLength(0);
   });
 
+  it('updates placement when position prop changes dynamically', async () => {
+    const { rerender } = render(<TestContainer opened position="bottom" />);
+    expect(screen.getByRole('dialog')).toHaveAttribute('data-position', 'bottom');
+
+    await act(async () => {
+      rerender(
+        <>
+          <TestContainer opened position="top-end" />
+        </>
+      );
+    });
+    expect(screen.getByRole('dialog')).toHaveAttribute('data-position', 'top-end');
+  });
+
+
   it('exposes PopoverTarget and PopoverDropdown as static properties', () => {
     expect(Popover.Dropdown).toBe(PopoverDropdown);
     expect(Popover.Target).toBe(PopoverTarget);
