@@ -34,6 +34,30 @@ describe('@mantine/schedule/is-event-in-time-range', () => {
     expect(isEventInTimeRange({ event, startTime: '10:00', endTime: '22:00' })).toBe(false);
   });
 
+  it('returns true for same-day event that ends at exclusive midnight', () => {
+    const event = testUtils.createEvent({
+      start: `${testUtils.testDate} 17:15:00`,
+      end: '2025-01-16 00:00:00',
+    });
+    expect(isEventInTimeRange({ event, startTime: '00:00:00', endTime: '23:59:59' })).toBe(true);
+  });
+
+  it('returns true for event that ends one minute before midnight', () => {
+    const event = testUtils.createEvent({
+      start: `${testUtils.testDate} 17:15:00`,
+      end: `${testUtils.testDate} 23:59:00`,
+    });
+    expect(isEventInTimeRange({ event, startTime: '00:00:00', endTime: '23:59:59' })).toBe(true);
+  });
+
+  it('returns false for event that ends at exclusive midnight and starts after time window end', () => {
+    const event = testUtils.createEvent({
+      start: `${testUtils.testDate} 23:00:00`,
+      end: '2025-01-16 00:00:00',
+    });
+    expect(isEventInTimeRange({ event, startTime: '10:00', endTime: '22:00' })).toBe(false);
+  });
+
   it('returns true for event that starts before and ends after time window start', () => {
     const event = testUtils.createEvent({
       start: `${testUtils.testDate} 08:00:00`,
