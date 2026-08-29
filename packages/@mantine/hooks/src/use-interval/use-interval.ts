@@ -26,14 +26,15 @@ export function useInterval(
 ): UseIntervalReturnValue {
   const [active, setActive] = useState(false);
   const intervalRef = useRef<number | null>(null);
-  const fnRef = useRef<() => void>(null);
+  const fnRef = useRef(fn);
+  fnRef.current = fn;
   const intervalValueRef = useRef(interval);
   intervalValueRef.current = interval;
 
   const start = useCallback(() => {
     setActive((old) => {
       if (!old && !intervalRef.current) {
-        intervalRef.current = window.setInterval(fnRef.current!, intervalValueRef.current);
+        intervalRef.current = window.setInterval(() => fnRef.current(), intervalValueRef.current);
       }
       return true;
     });
@@ -57,17 +58,20 @@ export function useInterval(
         return false;
       }
       if (!intervalRef.current) {
-        intervalRef.current = window.setInterval(fnRef.current!, intervalValueRef.current);
+        intervalRef.current = window.setInterval(() => fnRef.current(), intervalValueRef.current);
       }
       return true;
     });
   }, []);
 
+  // `fn` is deliberately not a dependency. The interval calls through `fnRef`, so it
+  // always runs the latest callback without being torn down; restarting on every new
+  // `fn` identity meant an inline arrow reset the timer on each render, and a component
+  // re-rendering faster than `interval` never reached a tick at all.
   useEffect(() => {
-    fnRef.current = fn;
     active && start();
     return stop;
-  }, [fn, active, interval]);
+  }, [active, interval]);
 
   useEffect(() => {
     if (autoInvoke) {
