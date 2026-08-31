@@ -151,6 +151,15 @@ export function usePopover(options: UsePopoverOptions) {
     }
   }
 
+  const previousPositionRef = useRef(options.position);
+  if (options.position !== previousPositionRef.current) {
+    previousPositionRef.current = options.position;
+    measuredAfterShowRef.current = false;
+    if (lockedPlacement !== null) {
+      setLockedPlacement(null);
+    }
+  }
+
   const resetLockedPlacement = useCallback(() => setLockedPlacement(null), []);
 
   const onClose = () => {
@@ -178,14 +187,6 @@ export function usePopover(options: UsePopoverOptions) {
     whileElementsMounted: !options.keepMounted ? autoUpdate : undefined,
   });
 
-  // Reset locked placement & measurement flag, and trigger position update in Floating UI when position prop changes dynamically.
-  // Running this inside useDidUpdate ensures tear-safe behavior under React 18+ concurrent rendering.
-  useDidUpdate(() => {
-    setLockedPlacement(null);
-    measuredAfterShowRef.current = false;
-    floating.update();
-  }, [options.position]);
-
   useEffect(() => {
     if (!options.keepMounted) {
       return undefined;
@@ -207,16 +208,13 @@ export function usePopover(options: UsePopoverOptions) {
     floating.elements.floating,
   ]);
 
-  // Measure popover element after show or when lockedPlacement is reset.
-  // Note: we do not early-return when lockedPlacement !== null so that when position changes
-  // and lockedPlacement is reset to null while open, the placement can be re-locked once positioned.
   useIsomorphicEffect(() => {
     if (!_opened) {
       measuredAfterShowRef.current = false;
       return;
     }
 
-    if (!lockEnabled) {
+    if (!lockEnabled || lockedPlacement !== null) {
       return;
     }
 
@@ -231,7 +229,7 @@ export function usePopover(options: UsePopoverOptions) {
       return;
     }
 
-    if (floating.isPositioned && lockedPlacement === null) {
+    if (floating.isPositioned) {
       setLockedPlacement(floating.placement);
     }
   }, [

@@ -129,20 +129,29 @@ describe('@mantine/core/Popover', () => {
     expect(container.querySelectorAll('.mantine-Popover-arrow')).toHaveLength(0);
   });
 
-  it('updates placement when position prop changes dynamically', async () => {
+  it('updates dropdown placement when position prop changes while opened', async () => {
+    const offsetHeight = jest
+      .spyOn(HTMLElement.prototype, 'offsetHeight', 'get')
+      .mockReturnValue(100);
+    const offsetWidth = jest
+      .spyOn(HTMLElement.prototype, 'offsetWidth', 'get')
+      .mockReturnValue(100);
+
     const { rerender } = render(<TestContainer opened position="bottom" />);
+    await act(() => Promise.resolve());
     expect(screen.getByRole('dialog')).toHaveAttribute('data-position', 'bottom');
 
-    await act(async () => {
-      rerender(
-        <>
-          <TestContainer opened position="top-end" />
-        </>
-      );
-    });
+    rerender(
+      <>
+        <TestContainer opened position="top-end" />
+      </>
+    );
+    await act(() => Promise.resolve());
     expect(screen.getByRole('dialog')).toHaveAttribute('data-position', 'top-end');
-  });
 
+    offsetHeight.mockRestore();
+    offsetWidth.mockRestore();
+  });
 
   it('exposes PopoverTarget and PopoverDropdown as static properties', () => {
     expect(Popover.Dropdown).toBe(PopoverDropdown);
