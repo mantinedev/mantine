@@ -1,6 +1,6 @@
 {
   "name": "@mantine/lightbox",
-  "version": "9.5.2",
+  "version": "9.6.0",
   "description": "Full-screen media lightbox with carousel navigation",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
@@ -43,15 +43,15 @@
     "directory": "packages/@mantine/lightbox"
   },
   "peerDependencies": {
-    "@mantine/core": "9.5.2",
-    "@mantine/hooks": "9.5.2",
+    "@mantine/core": "9.6.0",
+    "@mantine/hooks": "9.6.0",
     "embla-carousel": ">=8.0.0",
     "embla-carousel-react": ">=8.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "dependencies": {
-    "@mantine/store": "9.5.2"
+    "@mantine/store": "9.6.0"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
