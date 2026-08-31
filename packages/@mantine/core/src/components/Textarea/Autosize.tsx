@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useEffectEvent, useLayoutEffect, useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
@@ -188,6 +188,8 @@ export function TextareaAutosize({
     }
   };
 
+  const handleResize = useEffectEvent(resizeTextarea);
+
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (!isControlled) {
       resizeTextarea();
@@ -218,7 +220,7 @@ export function TextareaAutosize({
       if (libRef.current && libRef.current.offsetWidth !== widthRef.current) {
         widthRef.current = libRef.current.offsetWidth;
         cancelAnimationFrame(frame);
-        frame = requestAnimationFrame(resizeTextarea);
+        frame = requestAnimationFrame(handleResize);
       }
     });
 
