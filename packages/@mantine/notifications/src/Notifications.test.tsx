@@ -1440,7 +1440,7 @@ describe('@mantine/core/Notifications', () => {
     expect(getInertCount()).toBe(1);
   });
 
-  it('resumes auto close after the last notification of a hovered stack is dismissed', () => {
+  it('keeps a hovered stack paused while the dismissed notification is still exiting', () => {
     jest.useFakeTimers();
     const store = createNotificationsStore();
 
@@ -1449,7 +1449,7 @@ describe('@mantine/core/Notifications', () => {
         store={store}
         withinPortal={false}
         autoClose={1000}
-        transitionDuration={10}
+        transitionDuration={250}
         layout="stacked"
       />
     );
@@ -1458,37 +1458,40 @@ describe('@mantine/core/Notifications', () => {
       notifications.show({ id: 'only', message: 'Only' }, store);
     });
 
-    const front = container.querySelector('.mantine-Notification-root')!;
-
     act(() => {
-      fireEvent.mouseEnter(front);
+      fireEvent.mouseEnter(container.querySelector('.mantine-Notification-root')!);
     });
 
     act(() => {
-      fireEvent.click(front.querySelector('button')!);
+      fireEvent.click(
+        container.querySelector('.mantine-Notification-root')!.querySelector('button')!
+      );
     });
 
-    act(() => {
-      jest.advanceTimersByTime(50);
-    });
-
-    act(() => {
-      jest.advanceTimersByTime(500);
-    });
-
+    // The store is empty here but the dismissed notification is still mounted and still under
+    // the pointer, so the stack is very much still hovered.
     expect(store.getState().notifications).toHaveLength(0);
+    expect(container.querySelectorAll('.mantine-Notification-root')).toHaveLength(1);
 
-    // An empty stack has nothing left to hit-test, so no `mouseleave` is guaranteed. If its
-    // hover is not released, every notification shown afterwards stays paused forever.
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+
     act(() => {
       notifications.show({ id: 'next', message: 'Next' }, store);
+    });
+
+    // Split so the auto close timer, which is only scheduled once the exiting notification
+    // has unmounted, actually gets a window to run in.
+    act(() => {
+      jest.advanceTimersByTime(300);
     });
 
     act(() => {
       jest.advanceTimersByTime(2000);
     });
 
-    expect(store.getState().notifications).toHaveLength(0);
+    expect(store.getState().notifications).toHaveLength(1);
   });
 
   it('releases the group hover when the stacked layout is switched off', () => {

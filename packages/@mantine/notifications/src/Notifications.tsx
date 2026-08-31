@@ -205,7 +205,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     []
   );
 
-  // A stacked stack is also tracked on the group element that wraps it, not only on the
+  // Stacked hover is also tracked on the group element that wraps a stack, not only on the
   // individual notifications. When the hovered notification unmounts, React does not deliver
   // `onMouseEnter` to the one that slides under a stationary pointer: the browser dispatches
   // only a `mouseover` for the new target (no `mouseout`, the old node is gone), and the
@@ -283,30 +283,16 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     }
   }, [pinnedCount, pinnedPosition, layout]);
 
-  // The group element outlives the notifications inside it, and loses its handlers entirely
-  // when `layout` stops being `stacked`, so neither case is guaranteed to produce the
-  // `mouseleave` that would release it. A stack that is empty or no longer stacked cannot be
-  // hovered, so it is released explicitly – otherwise it would keep auto close paused for
-  // every notification shown after it.
-  const releasedGroups = positions
-    .filter((pos) => layout !== 'stacked' || grouped[pos].length === 0)
-    .join(' ');
-
+  // Leaving the stacked layout takes the handlers below out of the tree, so nothing can ever
+  // deliver the `mouseleave` that would release the group and a stale flag would keep auto
+  // close paused forever. Emptying a stack needs no such handling – the browser drops the
+  // hover on its own once the last notification is removed, and releasing it here instead
+  // would fire while the dismissed notification is still exiting under the pointer.
   useEffect(() => {
-    setHoveredGroups((current) => {
-      const next = { ...current };
-      let changed = false;
-
-      releasedGroups.split(' ').forEach((pos) => {
-        if (next[pos as NotificationPosition]) {
-          next[pos as NotificationPosition] = false;
-          changed = true;
-        }
-      });
-
-      return changed ? next : current;
-    });
-  }, [releasedGroups]);
+    if (layout !== 'stacked') {
+      setHoveredGroups((current) => (Object.values(current).some(Boolean) ? {} : current));
+    }
+  }, [layout]);
 
   // Expanded stack offsets need the height of every notification. Measuring during render
   // would force a layout pass on every hover, focus and store update, so heights are cached
