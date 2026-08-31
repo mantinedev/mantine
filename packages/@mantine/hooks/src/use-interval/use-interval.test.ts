@@ -97,7 +97,6 @@ describe('@mantine/hooks/use-interval', () => {
 
   it('should not restart the interval when fn identity changes between renders', () => {
     const fn = jest.fn();
-    // A fresh inline arrow on every render, which is how the hook is usually called.
     const { result, rerender } = renderHook(() => useInterval(() => fn(), defaultTimeout));
 
     act(() => {
@@ -112,8 +111,23 @@ describe('@mantine/hooks/use-interval', () => {
       jest.advanceTimersByTime(defaultTimeout / 2);
     });
 
-    // Restarting on the re-render would have reset the timer half way, so the tick
-    // would never arrive for a component that re-renders faster than `interval`.
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(result.current.active).toBe(true);
+  });
+
+  it('should keep ticking with autoInvoke when the component re-renders faster than the interval', () => {
+    const fn = jest.fn();
+    const { result, rerender } = renderHook(() =>
+      useInterval(() => fn(), defaultTimeout, { autoInvoke: true })
+    );
+
+    for (let i = 0; i < 6; i += 1) {
+      act(() => {
+        jest.advanceTimersByTime(defaultTimeout / 4);
+      });
+      rerender();
+    }
+
     expect(fn).toHaveBeenCalledTimes(1);
     expect(result.current.active).toBe(true);
   });
