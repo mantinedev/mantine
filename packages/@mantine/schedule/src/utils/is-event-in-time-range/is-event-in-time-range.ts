@@ -34,7 +34,7 @@ export function isEventInTimeRange({ event, startTime, endTime }: IsEventInTimeR
 
   const eventStart = dayjs(event.start);
   const eventEnd = dayjs(event.end);
-  const endsAtNextDayStart = eventEnd.isSame(eventStart.startOf('day').add(1, 'day'));
+  const endsAtNextDayStart = eventEnd.isSame(eventStart.startOf('day').add(1, 'day'), 'second');
   const eventStartMinutes = eventStart.hour() * 60 + eventStart.minute();
   const eventEndMinutes = endsAtNextDayStart ? 24 * 60 : eventEnd.hour() * 60 + eventEnd.minute();
 
