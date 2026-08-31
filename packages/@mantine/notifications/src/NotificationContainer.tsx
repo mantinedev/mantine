@@ -331,7 +331,10 @@ export function NotificationContainer({
     ...(isStackedLayout
       ? {
           gridArea: '1 / 1' as const,
-          zIndex: isCollapsed ? (stackSize || 5) - stackIndex : (stackSize || 5) + 1,
+          // `z-index` is not animatable, so it must not depend on `stackExpanded` – flipping
+          // the stack to a single layer on hover repaints every notification in front of the
+          // first one a frame before the reveal transform has moved anything.
+          zIndex: (stackSize || 5) - (stackIndex ?? 0),
           pointerEvents: isCollapsed ? ('none' as const) : undefined,
           alignSelf: stackDirection === 1 ? ('start' as const) : ('end' as const),
           transition: isDragging

@@ -181,12 +181,17 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
   const [expandedPositions, setExpandedPositions] = useState<
     Partial<Record<NotificationPosition, boolean>>
   >({});
+  const [hoveredGroups, setHoveredGroups] = useState<
+    Partial<Record<NotificationPosition, boolean>>
+  >({});
   const [pinnedPosition, setPinnedPosition] = useState<NotificationPosition | null>(null);
   const collapseTimeouts = useRef<Partial<Record<NotificationPosition, number>>>({});
 
   // `pauseResetOnHover="all"` is documented as pausing every notification when any one of
   // them is hovered, so this stays global while the stack state above does not.
-  const hoveredCount = Object.values(hoveredCounts).reduce((acc, count) => acc + (count ?? 0), 0);
+  const hoveredCount =
+    Object.values(hoveredCounts).reduce((acc, count) => acc + (count ?? 0), 0) +
+    Object.values(hoveredGroups).filter(Boolean).length;
 
   const handleHoverStart = useCallback(
     (pos: NotificationPosition) =>
@@ -198,6 +203,26 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     (pos: NotificationPosition) =>
       setHoveredCounts((current) => ({ ...current, [pos]: Math.max(0, (current[pos] ?? 0) - 1) })),
     []
+  );
+
+  // A stacked stack is also tracked on the group element that wraps it, not only on the
+  // individual notifications. When the hovered notification unmounts, React does not deliver
+  // `onMouseEnter` to the one that slides under a stationary pointer: the browser dispatches
+  // only a `mouseover` for the new target (no `mouseout`, the old node is gone), and the
+  // enter/leave plugin drops it because its `relatedTarget` still resolves to a React
+  // instance. The group is hovered throughout, so its state needs no event to stay correct
+  // and the stack stays open until the pointer really leaves.
+  // Kept apart from the notification counter above so that it can be released on its own –
+  // the group has no unmount hook to fall back on the way a notification does.
+  const getGroupHoverProps = useCallback(
+    (pos: NotificationPosition) =>
+      layout === 'stacked'
+        ? {
+            onMouseEnter: () => setHoveredGroups((current) => ({ ...current, [pos]: true })),
+            onMouseLeave: () => setHoveredGroups((current) => ({ ...current, [pos]: false })),
+          }
+        : {},
+    [layout]
   );
 
   // Touch devices have no hover, so tapping the stack pins it open until the next tap
@@ -215,7 +240,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     const timeouts = collapseTimeouts.current;
 
     positions.forEach((pos) => {
-      if ((hoveredCounts[pos] ?? 0) > 0 || pinnedPosition === pos) {
+      if ((hoveredCounts[pos] ?? 0) > 0 || hoveredGroups[pos] || pinnedPosition === pos) {
         window.clearTimeout(timeouts[pos]);
         setExpandedPositions((current) => (current[pos] ? current : { ...current, [pos]: true }));
       } else {
@@ -228,7 +253,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     });
 
     return () => positions.forEach((pos) => window.clearTimeout(timeouts[pos]));
-  }, [hoveredCounts, pinnedPosition, layout]);
+  }, [hoveredCounts, hoveredGroups, pinnedPosition, layout]);
 
   useEffect(() => {
     if (!pinnedPosition) {
@@ -249,15 +274,39 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     return () => document.removeEventListener('pointerdown', handlePointerDown);
   }, [pinnedPosition]);
 
-  const pinnedCount = pinnedPosition
-    ? getGroupedNotifications(data.notifications, position)[pinnedPosition].length
-    : 0;
+  const grouped = getGroupedNotifications(data.notifications, position);
+  const pinnedCount = pinnedPosition ? grouped[pinnedPosition].length : 0;
 
   useEffect(() => {
     if (layout !== 'stacked' || (pinnedPosition !== null && pinnedCount === 0)) {
       setPinnedPosition(null);
     }
   }, [pinnedCount, pinnedPosition, layout]);
+
+  // The group element outlives the notifications inside it, and loses its handlers entirely
+  // when `layout` stops being `stacked`, so neither case is guaranteed to produce the
+  // `mouseleave` that would release it. A stack that is empty or no longer stacked cannot be
+  // hovered, so it is released explicitly – otherwise it would keep auto close paused for
+  // every notification shown after it.
+  const releasedGroups = positions
+    .filter((pos) => layout !== 'stacked' || grouped[pos].length === 0)
+    .join(' ');
+
+  useEffect(() => {
+    setHoveredGroups((current) => {
+      const next = { ...current };
+      let changed = false;
+
+      releasedGroups.split(' ').forEach((pos) => {
+        if (next[pos as NotificationPosition]) {
+          next[pos as NotificationPosition] = false;
+          changed = true;
+        }
+      });
+
+      return changed ? next : current;
+    });
+  }, [releasedGroups]);
 
   // Expanded stack offsets need the height of every notification. Measuring during render
   // would force a layout pass on every hover, focus and store update, so heights are cached
@@ -374,7 +423,6 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     previousLength.current = data.notifications.length;
   }, [data.notifications]);
 
-  const grouped = getGroupedNotifications(data.notifications, position);
   const groupedComponents = positions.reduce(
     (acc, pos) => {
       const groupLength = grouped[pos].length;
@@ -475,11 +523,15 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
   return (
     <OptionalPortal withinPortal={withinPortal} {...portalProps}>
       <Box {...getStyles('root')} data-position="top-center" data-layout={layout} {...others}>
-        <TransitionGroup>{groupedComponents['top-center']}</TransitionGroup>
+        <TransitionGroup {...getGroupHoverProps('top-center')}>
+          {groupedComponents['top-center']}
+        </TransitionGroup>
       </Box>
 
       <Box {...getStyles('root')} data-position="top-left" data-layout={layout} {...others}>
-        <TransitionGroup>{groupedComponents['top-left']}</TransitionGroup>
+        <TransitionGroup {...getGroupHoverProps('top-left')}>
+          {groupedComponents['top-left']}
+        </TransitionGroup>
       </Box>
 
       <Box
@@ -488,7 +540,9 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
         data-layout={layout}
         {...others}
       >
-        <TransitionGroup>{groupedComponents['top-right']}</TransitionGroup>
+        <TransitionGroup {...getGroupHoverProps('top-right')}>
+          {groupedComponents['top-right']}
+        </TransitionGroup>
       </Box>
 
       <Box
@@ -497,15 +551,21 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
         data-layout={layout}
         {...others}
       >
-        <TransitionGroup>{groupedComponents['bottom-right']}</TransitionGroup>
+        <TransitionGroup {...getGroupHoverProps('bottom-right')}>
+          {groupedComponents['bottom-right']}
+        </TransitionGroup>
       </Box>
 
       <Box {...getStyles('root')} data-position="bottom-left" data-layout={layout} {...others}>
-        <TransitionGroup>{groupedComponents['bottom-left']}</TransitionGroup>
+        <TransitionGroup {...getGroupHoverProps('bottom-left')}>
+          {groupedComponents['bottom-left']}
+        </TransitionGroup>
       </Box>
 
       <Box {...getStyles('root')} data-position="bottom-center" data-layout={layout} {...others}>
-        <TransitionGroup>{groupedComponents['bottom-center']}</TransitionGroup>
+        <TransitionGroup {...getGroupHoverProps('bottom-center')}>
+          {groupedComponents['bottom-center']}
+        </TransitionGroup>
       </Box>
     </OptionalPortal>
   );

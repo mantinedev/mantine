@@ -1315,6 +1315,228 @@ describe('@mantine/core/Notifications', () => {
     expect(scales.length).toBeGreaterThan(0);
     scales.forEach((scale) => expect(scale).toBeGreaterThan(0));
   });
+
+  it('keeps the stacked z-index order when the stack expands', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+      notifications.show({ id: 'c', message: 'Third' }, store);
+    });
+
+    // DOM order is front to back, so the z-index has to strictly decrease along it.
+    const getZIndexes = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).map((root) =>
+        Number((root as HTMLElement).style.zIndex)
+      );
+
+    const collapsed = getZIndexes();
+    expect(collapsed).toHaveLength(3);
+    expect(collapsed[0]).toBeGreaterThan(collapsed[1]);
+    expect(collapsed[1]).toBeGreaterThan(collapsed[2]);
+
+    const front = Array.from(container.querySelectorAll('.mantine-Notification-root')).find(
+      (root) => !root.hasAttribute('inert')
+    )!;
+
+    act(() => {
+      fireEvent.mouseEnter(front);
+    });
+
+    expect(
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      )
+    ).toHaveLength(0);
+
+    // `z-index` is not animatable, so an expanded stack that flattens to a single layer
+    // repaints every notification in front of the first one before the reveal transform
+    // has moved anything.
+    const expanded = getZIndexes();
+    expect(expanded).toEqual(collapsed);
+  });
+
+  it('keeps the stack expanded when the hovered notification is dismissed', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+      notifications.show({ id: 'c', message: 'Third' }, store);
+    });
+
+    const group = container.querySelector('[data-position="bottom-right"]')!.firstElementChild!;
+    const getInertCount = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      ).length;
+
+    const front = Array.from(container.querySelectorAll('.mantine-Notification-root')).find(
+      (root) => !root.hasAttribute('inert')
+    )!;
+
+    // Entering the front notification enters the group that wraps it as well – the pointer
+    // cannot reach a notification without being over its stack.
+    act(() => {
+      fireEvent.mouseEnter(front);
+    });
+
+    expect(getInertCount()).toBe(0);
+
+    act(() => {
+      fireEvent.click(front.querySelector('button')!);
+    });
+
+    // Split from the collapse window below on purpose: the collapse timeout is only
+    // scheduled once the dismissed notification has unmounted, so a single
+    // `advanceTimersByTime` would finish before that timer exists and the assertion would
+    // pass whether or not the stack stayed expanded.
+    act(() => {
+      jest.advanceTimersByTime(50);
+    });
+
+    expect(container.querySelectorAll('.mantine-Notification-root')).toHaveLength(2);
+
+    act(() => {
+      jest.advanceTimersByTime(500);
+    });
+
+    // The dismissed notification released its own hover on unmount and the browser never
+    // delivers `onMouseEnter` to the one that takes its place under a stationary pointer,
+    // so the group is the only thing that still knows the stack is hovered.
+    expect(getInertCount()).toBe(0);
+
+    act(() => {
+      fireEvent.mouseLeave(group);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(500);
+    });
+
+    expect(getInertCount()).toBe(1);
+  });
+
+  it('resumes auto close after the last notification of a hovered stack is dismissed', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={1000}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'only', message: 'Only' }, store);
+    });
+
+    const front = container.querySelector('.mantine-Notification-root')!;
+
+    act(() => {
+      fireEvent.mouseEnter(front);
+    });
+
+    act(() => {
+      fireEvent.click(front.querySelector('button')!);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(50);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(500);
+    });
+
+    expect(store.getState().notifications).toHaveLength(0);
+
+    // An empty stack has nothing left to hit-test, so no `mouseleave` is guaranteed. If its
+    // hover is not released, every notification shown afterwards stays paused forever.
+    act(() => {
+      notifications.show({ id: 'next', message: 'Next' }, store);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    expect(store.getState().notifications).toHaveLength(0);
+  });
+
+  it('releases the group hover when the stacked layout is switched off', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container, rerender } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={1000}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+    });
+
+    act(() => {
+      fireEvent.mouseEnter(container.querySelector('.mantine-Notification-root')!);
+    });
+
+    // The group is dropped from the tree along with its handlers, so it never gets the
+    // `mouseleave` that would release it.
+    rerender(
+      <>
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          layout="default"
+        />
+      </>
+    );
+
+    act(() => {
+      fireEvent.mouseLeave(container.querySelector('.mantine-Notification-root')!);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    expect(store.getState().notifications).toHaveLength(0);
+  });
   it('does not re-observe notification nodes on every render in stacked layout', () => {
     jest.useFakeTimers();
     const originalResizeObserver = (global as any).ResizeObserver;
