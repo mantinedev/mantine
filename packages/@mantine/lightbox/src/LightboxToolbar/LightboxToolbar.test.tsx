@@ -55,7 +55,7 @@ describe('@mantine/lightbox/LightboxToolbar', () => {
     expect(screen.getByLabelText('Show thumbnails')).toBeInTheDocument();
 
     await userEvent.keyboard('t');
-    expect(screen.getByRole('button', { name: 'Go to slide 1' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Go to slide 1' })).toBeInTheDocument();
     expect(screen.getByLabelText('Hide thumbnails')).toBeInTheDocument();
   });
 

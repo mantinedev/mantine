@@ -2,6 +2,7 @@ import React, { CSSProperties, useEffectEvent, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useDidUpdate } from '../use-did-update/use-did-update';
 import { mergeRefs } from '../use-merged-ref/use-merged-ref';
+import { isMeasured } from './use-collapse';
 
 function getAutoWidthDuration(width: number | string) {
   if (!width || typeof width === 'string') {
@@ -75,6 +76,7 @@ export function useHorizontalCollapse({
   };
 
   const onTransitionStartEvent = useEffectEvent(() => onTransitionStart?.());
+  const onTransitionEndEvent = useEffectEvent(() => onTransitionEnd?.());
 
   const elementRef = useRef<HTMLElement>(null);
   const [styles, setStylesRaw] = useState<CSSProperties>(expanded ? {} : collapsedStyles);
@@ -94,7 +96,12 @@ export function useHorizontalCollapse({
     };
   };
 
+  const transitionRef = useRef(0);
+
   useDidUpdate(() => {
+    transitionRef.current += 1;
+    const transitionId = transitionRef.current;
+    const isCurrentTransition = () => transitionRef.current === transitionId;
     const shouldTransition = transitionDuration !== 0;
 
     if (shouldTransition) {
@@ -103,19 +110,53 @@ export function useHorizontalCollapse({
 
     if (expanded) {
       window.requestAnimationFrame(() => {
+        if (!isCurrentTransition() || !elementRef.current) {
+          return;
+        }
+
         flushSync(() => setState('entering'));
         mergeStyles({ willChange: 'width', display: 'block', overflow: 'hidden' });
         window.requestAnimationFrame(() => {
+          if (!isCurrentTransition() || !elementRef.current) {
+            return;
+          }
+
           const width = getElementWidth(elementRef);
+
+          if (!isMeasured(width)) {
+            setStyles({});
+            setState('entered');
+            onTransitionEndEvent();
+            return;
+          }
+
           mergeStyles({ ...getTransitionStyles(width), width });
         });
       });
     } else {
       window.requestAnimationFrame(() => {
+        if (!isCurrentTransition() || !elementRef.current) {
+          return;
+        }
+
         flushSync(() => setState('exiting'));
         const width = getElementWidth(elementRef);
+
+        if (!isMeasured(width)) {
+          setStyles(collapsedStyles);
+          setState('exited');
+          onTransitionEndEvent();
+          return;
+        }
+
         mergeStyles({ ...getTransitionStyles(width), willChange: 'width', width });
-        window.requestAnimationFrame(() => mergeStyles({ width: 0, overflow: 'hidden' }));
+        window.requestAnimationFrame(() => {
+          if (!isCurrentTransition() || !elementRef.current) {
+            return;
+          }
+
+          mergeStyles({ width: 0, overflow: 'hidden' });
+        });
       });
     }
   }, [expanded]);
@@ -135,11 +176,11 @@ export function useHorizontalCollapse({
       }
 
       setState('entered');
-      onTransitionEnd?.();
+      onTransitionEndEvent();
     } else if (styles.width === 0) {
       setStyles(collapsedStyles);
       setState('exited');
-      onTransitionEnd?.();
+      onTransitionEndEvent();
     }
   };
 
