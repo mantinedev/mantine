@@ -1,5 +1,5 @@
-import '@mantine/code-highlight/styles.css';
 import '@mantine/core/styles.css';
+import '@mantine/code-highlight/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/dropzone/styles.css';
 import '@mantinex/demo/styles.css';

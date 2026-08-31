@@ -21,7 +21,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { useInterval, useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
+import { useInterval, useIsomorphicEffect, useMergedRef, useMounted } from '@mantine/hooks';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useHorizontalEventResize } from '../../hooks/use-horizontal-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
@@ -602,11 +602,14 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   const isToday = dayjs(date).isSame(now, 'day');
   const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
 
+  const mounted = useMounted();
   const [, setTimeIndicatorTick] = useState(0);
   useInterval(() => setTimeIndicatorTick((tick) => tick + 1), 60000, { autoInvoke: true });
   const timeIndicatorOffset = getCurrentTimePosition({ startTime, endTime, intervalMinutes, now });
   const showTimeIndicator =
-    withCurrentTimeIndicator && isInTimeRange({ date: now.toDate(), startTime, endTime });
+    mounted &&
+    withCurrentTimeIndicator &&
+    isInTimeRange({ date: now.toDate(), startTime, endTime });
   const formattedCurrentTime = withCurrentTimeBubble
     ? formatDate({ locale: ctx.getLocale(locale), date: now, format: slotLabelFormat })
     : '';
