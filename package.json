@@ -177,7 +177,7 @@
     "new-github-release-url": "^2.0.0",
     "next": "16.3.2",
     "open": "^11.0.1",
-    "oxc-config-mantine": "^1.0.2",
+    "oxc-config-mantine": "^1.0.3",
     "oxfmt": "^0.64.0",
     "oxlint": "^1.79.0",
     "postcss": "^8.5.26",
