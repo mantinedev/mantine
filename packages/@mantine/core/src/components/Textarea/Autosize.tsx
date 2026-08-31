@@ -212,15 +212,26 @@ export function TextareaAutosize({
 
     widthRef.current = node.offsetWidth;
 
+    // The observer watches the textarea itself; writing its height inside
+    // the callback changes the size of an element whose notification is
+    // being delivered, which browsers report as
+    // "ResizeObserver loop completed with undelivered notifications"
+    // (a window `error` event). Defer the write to the next frame instead.
+    let frame = 0;
+
     const observer = new ResizeObserver(() => {
       if (libRef.current && libRef.current.offsetWidth !== widthRef.current) {
         widthRef.current = libRef.current.offsetWidth;
-        resizeTextarea();
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(resizeTextarea);
       }
     });
 
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {
