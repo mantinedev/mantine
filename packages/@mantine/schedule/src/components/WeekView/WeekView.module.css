@@ -188,6 +188,18 @@
 
 .weekViewDaySlots {
   position: relative;
+
+  /* Cascade events stack with an unbounded z-index, keep them out of the sticky header's layer */
+  &:where(:has([data-cascade])) {
+    isolation: isolate;
+
+    /* Drag and resize feedback must stay above every cascade column */
+    --event-cascade-interaction-z-index: 999;
+
+    .weekViewDragPreview {
+      z-index: var(--event-cascade-interaction-z-index);
+    }
+  }
 }
 
 .weekViewDaySlot {

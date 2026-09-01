@@ -1,4 +1,5 @@
-import { useWindowEvent } from '@mantine/hooks';
+import { useEffect, useEffectEvent } from 'react';
+import { RemoveScroll } from 'react-remove-scroll';
 import {
   BoxProps,
   ElementProps,
@@ -15,12 +16,12 @@ import { Affix, AffixBaseProps } from '../Affix';
 import { Paper, PaperBaseProps } from '../Paper';
 import { Transition, TransitionOverride } from '../Transition';
 import { ActionBarProvider } from './ActionBar.context';
-import classes from './ActionBar.module.css';
 import {
   ActionBarCloseButton,
   ActionBarCloseButtonStylesNames,
 } from './ActionBarCloseButton/ActionBarCloseButton';
 import { ActionBarDivider, ActionBarDividerStylesNames } from './ActionBarDivider/ActionBarDivider';
+import classes from './ActionBar.module.css';
 
 export type ActionBarStylesNames =
   | 'root'
@@ -52,6 +53,9 @@ export interface ActionBarProps
   /** Determines whether the action bar should be closed when `Escape` key is pressed, `false` by default */
   closeOnEscape?: boolean;
 
+  /** `aria-label` of the actions group, `'Actions'` by default */
+  'aria-label'?: string;
+
   /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node, `false` by default */
   keepMounted?: boolean;
 
@@ -76,6 +80,7 @@ const defaultProps = {
   transitionProps: { transition: 'pop', duration: 200 },
   closeOnEscape: false,
   withinPortal: true,
+  'aria-label': 'Actions',
   zIndex: getDefaultZIndex('modal'),
 } satisfies Partial<ActionBarProps>;
 
@@ -115,15 +120,20 @@ export const ActionBar = factory<ActionBarFactory>((_props) => {
     vars,
   });
 
-  useWindowEvent(
-    'keydown',
-    (event) => {
-      if (event.key === 'Escape' && closeOnEscape && !event.isComposing && opened) {
-        onClose?.();
-      }
-    },
-    { passive: true }
-  );
+  const handleEscape = useEffectEvent((event: KeyboardEvent) => {
+    if (event.key === 'Escape' && !event.isComposing) {
+      onClose?.();
+    }
+  });
+
+  useEffect(() => {
+    if (!closeOnEscape || !opened) {
+      return undefined;
+    }
+
+    window.addEventListener('keydown', handleEscape, { passive: true });
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [closeOnEscape, opened]);
 
   return (
     <Affix
@@ -132,13 +142,27 @@ export const ActionBar = factory<ActionBarFactory>((_props) => {
       withinPortal={withinPortal}
       portalProps={portalProps}
       unstyled={unstyled}
+      // The default position is anchored to both edges, so the bar is a full width fixed
+      // element. Without this it shifts by the scrollbar width whenever a Modal or Drawer
+      // locks scrolling – which is exactly the flow ActionBar exists for (select rows, run a
+      // bulk action, confirm it in a modal).
+      className={RemoveScroll.classNames.fullWidth}
     >
-      <Transition keepMounted={keepMounted} mounted={opened} {...transitionProps}>
+      {/* `keepMountedMode` is pinned to `display-none`: the documented contract is that the
+          bar stays in the DOM and is merely hidden, and `Transition`'s default `activity`
+          mode tears down the effects of everything inside it instead. */}
+      <Transition
+        keepMounted={keepMounted}
+        keepMountedMode="display-none"
+        mounted={opened}
+        {...transitionProps}
+      >
         {(transitionStyles) => (
-          <ActionBarProvider value={{ onClose, getStyles }}>
+          <ActionBarProvider value={{ onClose, getStyles, unstyled }}>
             <Paper
               unstyled={unstyled}
               {...getStyles('root', { style: transitionStyles })}
+              role="group"
               {...others}
             >
               {children}

@@ -29,9 +29,14 @@ import {
 } from '@mantine/core';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, GridChartBaseProps } from '../types';
+import { getCandleGeometry } from './get-candle-geometry/get-candle-geometry';
+import {
+  getCandlestickDomain,
+  isRenderableValue,
+} from './get-candlestick-domain/get-candlestick-domain';
 import classes from '../grid-chart.module.css';
 
-export interface CandlestickChartSeries {
+export interface CandlestickChartDataKeys {
   /** Key of the data object for the open value */
   open: string;
 
@@ -59,7 +64,10 @@ export interface CandlestickChartLabels {
   close: string;
 }
 
-export type CandlestickChartStylesNames = 'candle' | BaseChartStylesNames | ChartTooltipStylesNames;
+export type CandlestickChartStylesNames =
+  | 'candle'
+  | Exclude<BaseChartStylesNames, 'brush'>
+  | ChartTooltipStylesNames;
 
 export type CandlestickChartCssVariables = {
   root: '--chart-text-color' | '--chart-grid-color';
@@ -99,7 +107,7 @@ export interface CandlestickChartProps
   data: Record<string, any>[];
 
   /** Keys of the `data` object used to read open, high, low and close values @default `{ open: 'open', high: 'high', low: 'low', close: 'close' }` */
-  series?: CandlestickChartSeries;
+  dataKeys?: CandlestickChartDataKeys;
 
   /** Labels of open, high, low and close values displayed in the tooltip @default `{ open: 'Open', high: 'High', low: 'Low', close: 'Close' }` */
   labels?: Partial<CandlestickChartLabels>;
@@ -141,7 +149,7 @@ const defaultProps = {
   upColor: 'teal.6',
   downColor: 'red.6',
   candleStrokeWidth: 1,
-  series: { open: 'open', high: 'high', low: 'low', close: 'close' },
+  dataKeys: { open: 'open', high: 'high', low: 'low', close: 'close' },
   labels: { open: 'Open', high: 'High', low: 'Low', close: 'Close' },
   accessibilityLayer: true,
 } satisfies Partial<CandlestickChartProps>;
@@ -165,7 +173,7 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
     unstyled,
     vars,
     data,
-    series,
+    dataKeys: dataKeysProp,
     labels,
     dataKey,
     withTooltip,
@@ -202,7 +210,7 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
   } = props;
 
   const theme = useMantineTheme();
-  const seriesKeys = series!;
+  const seriesKeys = dataKeysProp!;
   const seriesLabels = { open: 'Open', high: 'High', low: 'Low', close: 'Close', ...labels };
   const tooltipSeries = [
     { name: 'open', label: seriesLabels.open },
@@ -247,23 +255,23 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
       payload: Record<string, any>;
     };
 
-    const open = payload[seriesKeys.open];
-    const high = payload[seriesKeys.high];
-    const low = payload[seriesKeys.low];
-    const close = payload[seriesKeys.close];
+    const geometry = getCandleGeometry({
+      x,
+      y,
+      width,
+      height,
+      open: payload[seriesKeys.open],
+      high: payload[seriesKeys.high],
+      low: payload[seriesKeys.low],
+      close: payload[seriesKeys.close],
+    });
 
-    if ([open, high, low, close].some((value) => typeof value !== 'number')) {
+    if (geometry === null) {
       return <g />;
     }
 
-    const color = close >= open ? upColorResolved : downColorResolved;
-    const range = high - low;
-    const ratio = range === 0 ? 0 : height / range;
-    const openY = y + (high - open) * ratio;
-    const closeY = y + (high - close) * ratio;
-    const bodyY = Math.min(openY, closeY);
-    const bodyHeight = Math.max(Math.abs(closeY - openY), 1);
-    const centerX = x + width / 2;
+    const { centerX, bodyY, bodyHeight, isUp } = geometry;
+    const color = isUp ? upColorResolved : downColorResolved;
 
     return (
       <g {...candleStyles}>
@@ -288,81 +296,80 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
     );
   };
 
-  const numericLows = data
-    .map((item) => item[seriesKeys.low])
-    .filter((value): value is number => typeof value === 'number');
-  const numericHighs = data
-    .map((item) => item[seriesKeys.high])
-    .filter((value): value is number => typeof value === 'number');
-
-  let domain: [number, number] | undefined;
-  if (numericLows.length > 0 && numericHighs.length > 0) {
-    const dataMin = Math.min(...numericLows);
-    const dataMax = Math.max(...numericHighs);
-    const padding = (dataMax - dataMin) * 0.05 || 1;
-    domain = [dataMin - padding, dataMax + padding];
-  }
-
-  const referenceLinesItems = referenceLines?.map((line, index) => {
-    const color = getThemeColor(line.color, theme);
-    return (
-      <ReferenceLine
-        key={index}
-        stroke={line.color ? color : 'var(--chart-grid-color)'}
-        strokeWidth={1}
-        {...line}
-        label={{
-          fill: line.color ? color : 'currentColor',
-          fontSize: 12,
-          position: line.labelPosition ?? 'insideBottomLeft',
-          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
-        }}
-        {...getStyles('referenceLine')}
-      />
-    );
+  const domain = getCandlestickDomain({
+    data,
+    openKey: seriesKeys.open,
+    highKey: seriesKeys.high,
+    lowKey: seriesKeys.low,
+    closeKey: seriesKeys.close,
   });
 
-  const referenceAreasItems = referenceAreas?.map((area, index) => {
-    const color = getThemeColor(area.color, theme);
-    return (
-      <ReferenceArea
-        key={index}
-        fill={area.color ? color : 'var(--chart-grid-color)'}
-        fillOpacity={0.2}
-        stroke={area.color ? color : 'var(--chart-grid-color)'}
-        strokeOpacity={0.6}
-        {...area}
-        label={{
-          fill: area.color ? color : 'currentColor',
-          fontSize: 12,
-          position: area.labelPosition ?? 'insideTop',
-          ...(typeof area.label === 'object' ? area.label : { value: area.label }),
-        }}
-        {...getStyles('referenceArea')}
-      />
-    );
-  });
+  const referenceLinesItems = referenceLines?.map(
+    ({ color: lineColor, labelPosition, ...line }, index) => {
+      const color = getThemeColor(lineColor, theme);
+      return (
+        <ReferenceLine
+          key={index}
+          stroke={lineColor ? color : 'var(--chart-grid-color)'}
+          strokeWidth={1}
+          {...line}
+          label={{
+            fill: lineColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'insideBottomLeft',
+            ...(typeof line.label === 'object' ? line.label : { value: line.label }),
+          }}
+          {...getStyles('referenceLine')}
+        />
+      );
+    }
+  );
 
-  const referenceDotsItems = referenceDots?.map((dot, index) => {
-    const color = getThemeColor(dot.color, theme);
-    return (
-      <ReferenceDot
-        key={index}
-        r={5}
-        fill={dot.color ? color : 'var(--chart-grid-color)'}
-        stroke="var(--mantine-color-body)"
-        strokeWidth={2}
-        {...dot}
-        label={{
-          fill: dot.color ? color : 'currentColor',
-          fontSize: 12,
-          position: dot.labelPosition ?? 'top',
-          ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
-        }}
-        {...getStyles('referenceDot')}
-      />
-    );
-  });
+  const referenceAreasItems = referenceAreas?.map(
+    ({ color: areaColor, labelPosition, ...area }, index) => {
+      const color = getThemeColor(areaColor, theme);
+      return (
+        <ReferenceArea
+          key={index}
+          fill={areaColor ? color : 'var(--chart-grid-color)'}
+          fillOpacity={0.2}
+          stroke={areaColor ? color : 'var(--chart-grid-color)'}
+          strokeOpacity={0.6}
+          {...area}
+          label={{
+            fill: areaColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'insideTop',
+            ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+          }}
+          {...getStyles('referenceArea')}
+        />
+      );
+    }
+  );
+
+  const referenceDotsItems = referenceDots?.map(
+    ({ color: dotColor, labelPosition, ...dot }, index) => {
+      const color = getThemeColor(dotColor, theme);
+      return (
+        <ReferenceDot
+          key={index}
+          r={5}
+          fill={dotColor ? color : 'var(--chart-grid-color)'}
+          stroke="var(--mantine-color-body)"
+          strokeWidth={2}
+          {...dot}
+          label={{
+            fill: dotColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'top',
+            ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+          }}
+          {...getStyles('referenceDot')}
+        />
+      );
+    }
+  );
 
   return (
     <Box {...getStyles('root')} dir={dir || 'ltr'} mod={mod} {...others}>
@@ -456,6 +463,17 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
 
                 const open = entry[seriesKeys.open];
                 const close = entry[seriesKeys.close];
+
+                // Rows the candle renderer skipped must not produce a tooltip either,
+                // otherwise `valueFormatter` is handed undefined or a string.
+                if (
+                  ![open, close, entry[seriesKeys.high], entry[seriesKeys.low]].every(
+                    isRenderableValue
+                  )
+                ) {
+                  return null;
+                }
+
                 const color = getThemeColor(close >= open ? upColor : downColor, theme);
 
                 const ohlcPayload = [
@@ -484,10 +502,14 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
           )}
 
           <Bar
-            dataKey={(entry: Record<string, any>) => [
-              entry[seriesKeys.low],
-              entry[seriesKeys.high],
-            ]}
+            dataKey={(entry: Record<string, any>) => {
+              const low = entry[seriesKeys.low];
+              const high = entry[seriesKeys.high];
+
+              // Recharts derives its own data domain from these values, so a row the
+              // candle renderer would skip must not be handed to it either.
+              return isRenderableValue(low) && isRenderableValue(high) ? [low, high] : null;
+            }}
             isAnimationActive={false}
             legendType="none"
             shape={renderCandle}
@@ -511,6 +533,6 @@ export namespace CandlestickChart {
   export type CssVariables = CandlestickChartCssVariables;
   export type Factory = CandlestickChartFactory;
   export type Labels = CandlestickChartLabels;
-  export type Series = CandlestickChartSeries;
+  export type DataKeys = CandlestickChartDataKeys;
   export type StylesNames = CandlestickChartStylesNames;
 }

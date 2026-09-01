@@ -97,6 +97,86 @@ export const overlappingEvents: ScheduleEventData[] = [
   },
 ];
 
+export const denseOverlappingEvents: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: 'Product sync',
+    start: `${startOfWeek} 09:00:00`,
+    end: `${startOfWeek} 12:00:00`,
+    color: 'blue',
+  },
+  {
+    id: 2,
+    title: 'Design review',
+    start: `${startOfWeek} 09:30:00`,
+    end: `${startOfWeek} 11:30:00`,
+    color: 'violet',
+  },
+  {
+    id: 3,
+    title: 'Customer call',
+    start: `${startOfWeek} 10:00:00`,
+    end: `${startOfWeek} 11:00:00`,
+    color: 'cyan',
+  },
+  {
+    id: 4,
+    title: 'Sprint planning',
+    start: `${startOfWeek} 10:00:00`,
+    end: `${startOfWeek} 12:30:00`,
+    color: 'teal',
+  },
+  {
+    id: 5,
+    title: 'Interview: frontend',
+    start: `${startOfWeek} 10:30:00`,
+    end: `${startOfWeek} 11:30:00`,
+    color: 'green',
+  },
+  {
+    id: 6,
+    title: 'Budget review',
+    start: `${startOfWeek} 10:45:00`,
+    end: `${startOfWeek} 12:00:00`,
+    color: 'orange',
+  },
+  {
+    id: 7,
+    title: '1:1 with Anna',
+    start: `${startOfWeek} 11:00:00`,
+    end: `${startOfWeek} 11:45:00`,
+    color: 'red',
+  },
+  {
+    id: 8,
+    title: 'Release retro',
+    start: `${startOfWeek} 11:15:00`,
+    end: `${startOfWeek} 12:45:00`,
+    color: 'grape',
+  },
+  {
+    id: 9,
+    title: 'Roadmap workshop',
+    start: `${dayAfterStartOfWeek} 09:00:00`,
+    end: `${dayAfterStartOfWeek} 11:00:00`,
+    color: 'indigo',
+  },
+  {
+    id: 10,
+    title: 'Support triage',
+    start: `${dayAfterStartOfWeek} 09:30:00`,
+    end: `${dayAfterStartOfWeek} 10:30:00`,
+    color: 'pink',
+  },
+  {
+    id: 11,
+    title: 'Marketing sync',
+    start: `${dayAfterStartOfWeek} 10:00:00`,
+    end: `${dayAfterStartOfWeek} 11:30:00`,
+    color: 'lime',
+  },
+];
+
 export const businessEvents: ScheduleEventData[] = [
   {
     id: 1,

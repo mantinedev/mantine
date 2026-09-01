@@ -32,6 +32,7 @@ import {
   DateStringValue,
   DateTimeStringValue,
   ScheduleEventData,
+  ScheduleEventOverlapMode,
   ScheduleMode,
   ScheduleViewLevel,
 } from '../../types';
@@ -116,6 +117,12 @@ export interface DayViewProps
 
   /** If set, grid lines are displayed for intervals smaller than one hour, for example 15 and 30 minutes intervals @default true */
   withSubHourGridLines?: boolean;
+
+  /** Determines how events that overlap in time are laid out: `columns` splits the available width between them, `cascade` indents each event and stacks it over the previous one @default 'columns' */
+  eventOverlapMode?: ScheduleEventOverlapMode;
+
+  /** Time in ms the pointer must rest on an event before it is raised above the events covering it, only used with `eventOverlapMode="cascade"` @default 600 */
+  eventOverlapRaiseDelay?: number;
 
   /** If set, the all-day slot is displayed below the header @default true */
   withAllDaySlot?: boolean;
@@ -295,6 +302,8 @@ const defaultProps = {
   withEventResize: false,
   mode: 'default',
   withInteractiveBackgroundEvents: false,
+  eventOverlapMode: 'columns',
+  eventOverlapRaiseDelay: 600,
 } satisfies Partial<DayViewProps>;
 
 const varsResolver = createVarsResolver<DayViewFactory>(
@@ -322,6 +331,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
     endTime,
     intervalMinutes,
     withSubHourGridLines,
+    eventOverlapMode,
+    eventOverlapRaiseDelay,
     withAllDaySlot,
     date,
     locale,
@@ -518,6 +529,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     startTime,
     endTime,
     intervalMinutes,
+    eventOverlapMode,
   });
 
   const handleExternalDrop = useCallback(
@@ -651,6 +663,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
             : undefined
         }
         {...stylesApiProps}
+        mod={{ cascade: eventOverlapMode === 'cascade' }}
         style={{
           ...stylesApiProps.styles?.event,
           top: `${eventTop}%`,
@@ -658,6 +671,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
           insetInlineStart: `${event.position.offset}%`,
           width: `${event.position.width}%`,
           position: 'absolute',
+          '--event-z-index': event.position.column + 3,
+          '--event-z-index-raised': event.position.overlaps + 3,
         }}
       />
     );
@@ -812,6 +827,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const content = (
     <Box
       {...getStyles('dayView')}
+      __vars={{ '--event-raise-delay': `${eventOverlapRaiseDelay}ms` }}
       mod={{
         static: mode === 'static',
         'slot-dragging': slotDragSelect.isDragging,

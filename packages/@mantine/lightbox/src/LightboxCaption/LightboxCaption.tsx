@@ -41,7 +41,11 @@ export const LightboxCaption = factory<LightboxCaptionFactory>((props) => {
   }
 
   return (
-    <Box {...ctx.getStyles('caption', { className, style, classNames, styles })} {...others}>
+    <Box
+      {...ctx.getStyles('caption', { className, style, classNames, styles })}
+      mod="reduce-motion"
+      {...others}
+    >
       {caption}
     </Box>
   );

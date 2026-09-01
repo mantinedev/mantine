@@ -1,6 +1,7 @@
 import {
   Accept,
   DropEvent,
+  DropzoneOptions,
   FileError,
   FileRejection,
   FileWithPath,
@@ -32,6 +33,45 @@ import type {
 } from './DropzoneFullScreen';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
 import classes from './Dropzone.module.css';
+
+/**
+ * `FileWithPath` declares `path` and `relativePath` as required, and `onDrop`/`onReject` are
+ * typed with it. The default aggregator always sets both, but a custom `getFilesFromEvent`
+ * may return plain `File` objects, which would make those types a lie at runtime. Custom
+ * aggregator results are normalized here using the same convention as `file-selector`, so the
+ * files handed to the callbacks always match their type.
+ */
+function toFileWithPath(file: File) {
+  const target = file as FileWithPath & { path?: string; relativePath?: string };
+  const { webkitRelativePath } = file;
+  const path =
+    typeof webkitRelativePath === 'string' && webkitRelativePath.length > 0
+      ? webkitRelativePath
+      : `./${file.name}`;
+
+  if (typeof target.path !== 'string') {
+    Object.defineProperty(file, 'path', { value: path, writable: false, configurable: true });
+  }
+
+  if (typeof target.relativePath !== 'string') {
+    Object.defineProperty(file, 'relativePath', {
+      value: path,
+      writable: false,
+      configurable: true,
+    });
+  }
+
+  return file;
+}
+
+function withNormalizedPaths(
+  getFilesFromEvent: NonNullable<DropzoneProps['getFilesFromEvent']>
+): NonNullable<DropzoneProps['getFilesFromEvent']> {
+  return async (event) => {
+    const files = await getFilesFromEvent(event);
+    return files.map((file) => (file instanceof File ? toFileWithPath(file) : file));
+  };
+}
 
 export type DropzoneStylesNames = 'root' | 'inner';
 export type DropzoneVariant = 'filled' | 'light';
@@ -85,7 +125,7 @@ export interface DropzoneProps
   /** Name of the form control. Submitted with the form as part of a name/value pair. */
   name?: string;
 
-  /** Maximum number of files that can be picked at once */
+  /** Maximum number of files that can be picked at once, files over the limit are rejected */
   maxFiles?: number;
 
   /** Set to autofocus the root element */
@@ -125,7 +165,9 @@ export interface DropzoneProps
   useFsAccessApi?: boolean;
 
   /** Use this to provide a custom file aggregator */
-  getFilesFromEvent?: (event: DropEvent) => Promise<Array<File | DataTransferItem>>;
+  getFilesFromEvent?: (
+    event: DropEvent | FileSystemFileHandle[]
+  ) => Promise<Array<File | DataTransferItem>>;
 
   /** Custom validation function. It must return null if there's no errors. */
   validator?: <T extends File>(file: T) => FileError | FileError[] | null;
@@ -253,8 +295,8 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject, isDragActive, open } =
     useDropzone({
-      onDrop: onDropAny,
-      onDropAccepted: onDrop,
+      onDrop: onDropAny as DropzoneOptions['onDrop'],
+      onDropAccepted: onDrop as DropzoneOptions['onDropAccepted'],
       onDropRejected: onReject,
       disabled: disabled || loading,
       accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,
@@ -274,7 +316,7 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
       preventDropOnDocument,
       useFsAccessApi,
       validator,
-      ...(getFilesFromEvent ? { getFilesFromEvent } : null),
+      ...(getFilesFromEvent ? { getFilesFromEvent: withNormalizedPaths(getFilesFromEvent) } : null),
     });
 
   assignRef(openRef, open);

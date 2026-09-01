@@ -27,7 +27,7 @@ function Demo() {
       h={300}
       data={data}
       dataKey="day"
-      series={{ open: 'o', high: 'h', low: 'l', close: 'c' }}
+      dataKeys={{ open: 'o', high: 'h', low: 'l', close: 'c' }}
     />
   );
 }
@@ -39,12 +39,12 @@ function Demo() {
       h={300}
       data={data}
       dataKey="day"
-      series={{ open: 'o', high: 'h', low: 'l', close: 'c' }}
+      dataKeys={{ open: 'o', high: 'h', low: 'l', close: 'c' }}
     />
   );
 }
 
-export const series: MantineDemo = {
+export const dataKeys: MantineDemo = {
   type: 'code',
   component: Demo,
   code: [

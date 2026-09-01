@@ -75,7 +75,7 @@ export function Usage() {
 export function Labels() {
   return (
     <div style={{ padding: 40 }}>
-      <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withXLabels />
+      <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withYLabels withXLabels />
     </div>
   );
 }
@@ -87,6 +87,7 @@ export function Tooltip() {
         data={data}
         xLabels={xLabels}
         yLabels={yLabels}
+        withYLabels
         withTooltip
         getTooltipLabel={({ x, y, value }) =>
           `${y} ${x}: ${value === null ? 'No data' : `${value} visitors`}`
@@ -103,6 +104,7 @@ export function Colors() {
         data={data}
         xLabels={xLabels}
         yLabels={yLabels}
+        withYLabels
         colors={[
           'var(--mantine-color-orange-2)',
           'var(--mantine-color-orange-4)',
@@ -117,7 +119,14 @@ export function Colors() {
 export function CellSize() {
   return (
     <div style={{ padding: 40 }}>
-      <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} cellSize={30} gap={3} />
+      <MatrixChart
+        data={data}
+        xLabels={xLabels}
+        yLabels={yLabels}
+        withYLabels
+        cellSize={30}
+        gap={3}
+      />
     </div>
   );
 }
@@ -125,7 +134,7 @@ export function CellSize() {
 export function Legend() {
   return (
     <div style={{ padding: 40 }}>
-      <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withLegend />
+      <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withYLabels withLegend />
     </div>
   );
 }

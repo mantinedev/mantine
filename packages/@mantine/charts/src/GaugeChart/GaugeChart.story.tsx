@@ -68,3 +68,43 @@ export function RoundCaps() {
     </div>
   );
 }
+
+export function FullCircle() {
+  return (
+    <div style={{ display: 'flex', gap: 20 }}>
+      <GaugeChart value={72} startAngle={0} endAngle={360} size={160} />
+      <GaugeChart value={72} startAngle={-180} endAngle={180} size={160} />
+      <GaugeChart
+        value={72}
+        startAngle={0}
+        endAngle={360}
+        size={160}
+        sections={[
+          { value: 33, color: 'green.6' },
+          { value: 66, color: 'yellow.6' },
+          { value: 100, color: 'red.6' },
+        ]}
+      />
+    </div>
+  );
+}
+
+export function CounterClockwise() {
+  return (
+    <div style={{ display: 'flex', gap: 20 }}>
+      <GaugeChart value={72} startAngle={120} endAngle={-120} size={160} />
+      <GaugeChart
+        value={72}
+        startAngle={120}
+        endAngle={-120}
+        size={160}
+        target={40}
+        sections={[
+          { value: 33, color: 'green.6' },
+          { value: 66, color: 'yellow.6' },
+          { value: 100, color: 'red.6' },
+        ]}
+      />
+    </div>
+  );
+}

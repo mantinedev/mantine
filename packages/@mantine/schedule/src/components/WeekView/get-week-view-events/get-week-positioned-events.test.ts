@@ -84,6 +84,151 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
     });
   });
 
+  describe('cascade overlap mode', () => {
+    const testDay = '2025-01-15';
+
+    it('indents overlapping events instead of splitting the width between them', () => {
+      const result = getWeekPositionedEvents({
+        date: testWeekStart,
+        eventOverlapMode: 'cascade',
+        events: [
+          testUtils.createEvent({
+            id: 1,
+            start: `${testDay} 10:00:00`,
+            end: `${testDay} 12:00:00`,
+          }),
+          testUtils.createEvent({
+            id: 2,
+            start: `${testDay} 10:30:00`,
+            end: `${testDay} 12:00:00`,
+          }),
+          testUtils.createEvent({
+            id: 3,
+            start: `${testDay} 11:00:00`,
+            end: `${testDay} 12:00:00`,
+          }),
+        ],
+      });
+
+      const dayEvents = result.regularEvents[`${testDay} 00:00:00`];
+
+      expect(dayEvents[0].position).toMatchObject({ offset: 0, width: 100, overlaps: 3 });
+      expect(dayEvents[1].position).toMatchObject({ offset: 20, width: 80, overlaps: 3 });
+      expect(dayEvents[2].position).toMatchObject({ offset: 40, width: 60, overlaps: 3 });
+    });
+
+    it('keeps the default columns mode splitting the width', () => {
+      const result = getWeekPositionedEvents({
+        date: testWeekStart,
+        events: [
+          testUtils.createEvent({
+            id: 1,
+            start: `${testDay} 10:00:00`,
+            end: `${testDay} 12:00:00`,
+          }),
+          testUtils.createEvent({
+            id: 2,
+            start: `${testDay} 10:30:00`,
+            end: `${testDay} 12:00:00`,
+          }),
+        ],
+      });
+
+      const dayEvents = result.regularEvents[`${testDay} 00:00:00`];
+
+      expect(dayEvents[0].position).toMatchObject({ offset: 0, width: 50 });
+      expect(dayEvents[1].position).toMatchObject({ offset: 50, width: 50 });
+    });
+
+    it('sizes the indent from the whole transitive cluster so events do not drift apart', () => {
+      // A and C never overlap each other, but both overlap B
+      const result = getWeekPositionedEvents({
+        date: testWeekStart,
+        eventOverlapMode: 'cascade',
+        events: [
+          testUtils.createEvent({
+            id: 1,
+            start: `${testDay} 10:00:00`,
+            end: `${testDay} 11:00:00`,
+          }),
+          testUtils.createEvent({
+            id: 2,
+            start: `${testDay} 10:30:00`,
+            end: `${testDay} 11:30:00`,
+          }),
+          testUtils.createEvent({
+            id: 3,
+            start: `${testDay} 11:00:00`,
+            end: `${testDay} 12:00:00`,
+          }),
+        ],
+      });
+
+      const dayEvents = result.regularEvents[`${testDay} 00:00:00`];
+
+      expect(dayEvents.every((event) => event.position.overlaps === 2)).toBe(true);
+      expect(dayEvents[0].position.offset).toBe(0);
+      expect(dayEvents[1].position.offset).toBe(20);
+      expect(dayEvents[2].position.offset).toBe(0);
+    });
+
+    it('lays out each day independently so a dense day does not indent a quiet one', () => {
+      const otherDay = '2025-01-16';
+
+      const result = getWeekPositionedEvents({
+        date: testWeekStart,
+        eventOverlapMode: 'cascade',
+        events: [
+          testUtils.createEvent({
+            id: 1,
+            start: `${testDay} 10:00:00`,
+            end: `${testDay} 12:00:00`,
+          }),
+          testUtils.createEvent({
+            id: 2,
+            start: `${testDay} 10:30:00`,
+            end: `${testDay} 12:00:00`,
+          }),
+          testUtils.createEvent({
+            id: 3,
+            start: `${otherDay} 10:00:00`,
+            end: `${otherDay} 12:00:00`,
+          }),
+        ],
+      });
+
+      expect(result.regularEvents[`${testDay} 00:00:00`][1].position).toMatchObject({
+        offset: 20,
+        overlaps: 2,
+      });
+      expect(result.regularEvents[`${otherDay} 00:00:00`][0].position).toMatchObject({
+        offset: 0,
+        width: 100,
+        overlaps: 1,
+      });
+    });
+
+    it('squeezes the indent so the last event keeps a readable width in a dense cluster', () => {
+      const result = getWeekPositionedEvents({
+        date: testWeekStart,
+        eventOverlapMode: 'cascade',
+        events: Array.from({ length: 8 }, (_, index) =>
+          testUtils.createEvent({
+            id: index + 1,
+            start: `${testDay} 10:00:00`,
+            end: `${testDay} 12:00:00`,
+          })
+        ),
+      });
+
+      const dayEvents = result.regularEvents[`${testDay} 00:00:00`];
+
+      expect(dayEvents[0].position.offset).toBe(0);
+      expect(dayEvents[7].position.offset).toBeCloseTo(40, 5);
+      expect(dayEvents[7].position.width).toBeCloseTo(60, 5);
+    });
+  });
+
   describe('all-day events', () => {
     it('separates all-day single-day events from regular events', () => {
       const events = [

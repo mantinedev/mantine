@@ -7,12 +7,12 @@ import { MatrixChart } from '@mantine/charts';
 import { data, xLabels, yLabels } from './data';
 
 function Demo() {
-  return <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withXLabels />;
+  return <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withYLabels withXLabels />;
 }
 `;
 
 function Demo() {
-  return <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withXLabels />;
+  return <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withYLabels withXLabels />;
 }
 
 export const labels: MantineDemo = {

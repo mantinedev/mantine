@@ -63,6 +63,7 @@ export { LightboxThumbnails } from './LightboxThumbnails/LightboxThumbnails.js';
 export { LightboxNavigation } from './LightboxNavigation/LightboxNavigation.js';
 export { LightboxCaption } from './LightboxCaption/LightboxCaption.js';
 export { LightboxCloseButton } from './LightboxCloseButton/LightboxCloseButton.js';
+export { LightboxProviderComponent } from './LightboxProvider/LightboxProvider.js';
 
 export {
   createFullscreenToolbarItem,

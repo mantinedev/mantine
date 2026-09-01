@@ -1,6 +1,5 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { useState } from 'react';
 import { Button, Stack } from '@mantine/core';
 import { DatesRangeValue, DateStringValue } from '../../types';

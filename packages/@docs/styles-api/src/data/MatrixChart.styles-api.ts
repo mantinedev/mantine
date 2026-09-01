@@ -12,6 +12,14 @@ export const MatrixChartStylesApi: StylesApiData<MatrixChartFactory> = {
     legendRect: 'Legend color rect',
   },
 
-  vars: {},
+  vars: {
+    root: {
+      '--matrix-level-1': 'Controls color of the cells in the lowest value range',
+      '--matrix-level-2': 'Controls color of the cells in the second value range',
+      '--matrix-level-3': 'Controls color of the cells in the third value range',
+      '--matrix-level-4': 'Controls color of the cells in the highest value range',
+      '--matrix-empty-bg': 'Controls background color of empty cells',
+    },
+  },
   modifiers: [],
 };

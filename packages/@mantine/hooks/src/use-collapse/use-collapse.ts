@@ -15,6 +15,10 @@ export function getElementHeight(elementRef: React.RefObject<HTMLElement | null>
   return elementRef.current ? elementRef.current.scrollHeight : 'auto';
 }
 
+export function isMeasured(size: number | string): size is number {
+  return typeof size === 'number' && size > 0;
+}
+
 export interface UseCollapseInput {
   /** Expanded state  */
   expanded: boolean;
@@ -73,6 +77,7 @@ export function useCollapse({
   };
 
   const onTransitionStartEvent = useEffectEvent(() => onTransitionStart?.());
+  const onTransitionEndEvent = useEffectEvent(() => onTransitionEnd?.());
 
   const elementRef = useRef<HTMLElement>(null);
   const [styles, setStylesRaw] = useState<CSSProperties>(expanded ? {} : collapsedStyles);
@@ -92,7 +97,12 @@ export function useCollapse({
     };
   };
 
+  const transitionRef = useRef(0);
+
   useDidUpdate(() => {
+    transitionRef.current += 1;
+    const transitionId = transitionRef.current;
+    const isCurrentTransition = () => transitionRef.current === transitionId;
     const shouldTransition = transitionDuration !== 0;
 
     if (shouldTransition) {
@@ -101,19 +111,53 @@ export function useCollapse({
 
     if (expanded) {
       window.requestAnimationFrame(() => {
+        if (!isCurrentTransition() || !elementRef.current) {
+          return;
+        }
+
         flushSync(() => setState('entering'));
         mergeStyles({ willChange: 'height', display: 'block', overflow: 'hidden' });
         window.requestAnimationFrame(() => {
+          if (!isCurrentTransition() || !elementRef.current) {
+            return;
+          }
+
           const height = getElementHeight(elementRef);
+
+          if (!isMeasured(height)) {
+            setStyles({});
+            setState('entered');
+            onTransitionEndEvent();
+            return;
+          }
+
           mergeStyles({ ...getTransitionStyles(height), height });
         });
       });
     } else {
       window.requestAnimationFrame(() => {
+        if (!isCurrentTransition() || !elementRef.current) {
+          return;
+        }
+
         flushSync(() => setState('exiting'));
         const height = getElementHeight(elementRef);
+
+        if (!isMeasured(height)) {
+          setStyles(collapsedStyles);
+          setState('exited');
+          onTransitionEndEvent();
+          return;
+        }
+
         mergeStyles({ ...getTransitionStyles(height), willChange: 'height', height });
-        window.requestAnimationFrame(() => mergeStyles({ height: 0, overflow: 'hidden' }));
+        window.requestAnimationFrame(() => {
+          if (!isCurrentTransition() || !elementRef.current) {
+            return;
+          }
+
+          mergeStyles({ height: 0, overflow: 'hidden' });
+        });
       });
     }
   }, [expanded]);
@@ -133,11 +177,11 @@ export function useCollapse({
       }
 
       setState('entered');
-      onTransitionEnd?.();
+      onTransitionEndEvent();
     } else if (styles.height === 0) {
       setStyles(collapsedStyles);
       setState('exited');
-      onTransitionEnd?.();
+      onTransitionEndEvent();
     }
   };
 

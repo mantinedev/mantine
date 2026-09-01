@@ -17,15 +17,23 @@ import {
   type RichTextEditorContentProps,
 } from './RichTextEditorContent/RichTextEditorContent';
 import * as controls from './RichTextEditorControl';
+import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
 import {
   RichTextEditorControl,
   type RichTextEditorControlProps,
 } from './RichTextEditorControl/RichTextEditorControl';
-import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
+import {
+  RichTextEditorDetailsControl,
+  type RichTextEditorDetailsControlProps,
+} from './RichTextEditorControl/RichTextEditorDetailsControl';
 import {
   RichTextEditorImageUploadControl,
   type RichTextEditorImageUploadControlProps,
 } from './RichTextEditorControl/RichTextEditorImageUploadControl';
+import {
+  RichTextEditorInvisibleCharactersControl,
+  type RichTextEditorInvisibleCharactersControlProps,
+} from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl';
 import type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
 import {
   RichTextEditorSourceCodeControl,
@@ -35,14 +43,6 @@ import {
   RichTextEditorTableInsertControl,
   type RichTextEditorTableInsertControlProps,
 } from './RichTextEditorControl/RichTextEditorTableInsertControl';
-import {
-  RichTextEditorDetailsControl,
-  type RichTextEditorDetailsControlProps,
-} from './RichTextEditorControl/RichTextEditorDetailsControl';
-import {
-  RichTextEditorInvisibleCharactersControl,
-  type RichTextEditorInvisibleCharactersControlProps,
-} from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl';
 import {
   RichTextEditorControlsGroup,
   type RichTextEditorControlsGroupProps,

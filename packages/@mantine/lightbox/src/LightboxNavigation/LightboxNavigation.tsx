@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -6,6 +7,7 @@ import {
   factory,
   Factory,
   UnstyledButton,
+  useDirection,
   useProps,
 } from '@mantine/core';
 import { useLightboxContext } from '../lightbox.context';
@@ -67,15 +69,53 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
   );
 
   const ctx = useLightboxContext();
-  const canPrev = ctx.embla ? ctx.embla.canScrollPrev() : ctx.loop || ctx.currentIndex > 0;
-  const canNext = ctx.embla
-    ? ctx.embla.canScrollNext()
-    : ctx.loop || ctx.currentIndex < ctx.slides.length - 1;
+  const stylesApiProps = { classNames, styles };
+  const { dir } = useDirection();
+
+  // Embla is direction-aware, so "previous" is the leading edge of the reading direction –
+  // the chevrons have to follow it rather than always pointing left/right.
+  const PrevIcon = dir === 'rtl' ? ChevronRight : ChevronLeft;
+  const NextIcon = dir === 'rtl' ? ChevronLeft : ChevronRight;
+
+  const fallbackCanPrev = ctx.loop ? ctx.slides.length > 1 : ctx.currentIndex > 0;
+  const fallbackCanNext = ctx.loop
+    ? ctx.slides.length > 1
+    : ctx.currentIndex < ctx.slides.length - 1;
+
+  const [scrollState, setScrollState] = useState<{ canPrev: boolean; canNext: boolean } | null>(
+    null
+  );
+
+  const { embla } = ctx;
+
+  useEffect(() => {
+    if (!embla) {
+      setScrollState(null);
+      return undefined;
+    }
+
+    const update = () =>
+      setScrollState({ canPrev: embla.canScrollPrev(), canNext: embla.canScrollNext() });
+
+    update();
+    embla.on('select', update);
+    embla.on('reInit', update);
+    embla.on('settle', update);
+
+    return () => {
+      embla.off('select', update);
+      embla.off('reInit', update);
+      embla.off('settle', update);
+    };
+  }, [embla]);
+
+  const canPrev = scrollState ? scrollState.canPrev : fallbackCanPrev;
+  const canNext = scrollState ? scrollState.canNext : fallbackCanNext;
 
   return (
     <Box {...ctx.getStyles('navigation', { className, style, classNames, styles })} {...others}>
       <UnstyledButton
-        {...ctx.getStyles('navigationButton')}
+        {...ctx.getStyles('navigationButton', stylesApiProps)}
         aria-label={ctx.labels.previousSlideLabel}
         aria-disabled={!canPrev || undefined}
         data-inactive={!canPrev || undefined}
@@ -83,11 +123,11 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
         tabIndex={canPrev ? 0 : -1}
         onClick={ctx.prev}
       >
-        <ChevronLeft />
+        <PrevIcon />
       </UnstyledButton>
 
       <UnstyledButton
-        {...ctx.getStyles('navigationButton')}
+        {...ctx.getStyles('navigationButton', stylesApiProps)}
         aria-label={ctx.labels.nextSlideLabel}
         aria-disabled={!canNext || undefined}
         data-inactive={!canNext || undefined}
@@ -95,7 +135,7 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
         tabIndex={canNext ? 0 : -1}
         onClick={ctx.next}
       >
-        <ChevronRight />
+        <NextIcon />
       </UnstyledButton>
     </Box>
   );

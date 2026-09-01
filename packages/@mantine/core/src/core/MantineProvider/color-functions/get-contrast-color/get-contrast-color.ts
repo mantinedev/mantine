@@ -1,5 +1,5 @@
-import type { MantineColor, MantineColorScheme, MantineTheme } from '../../theme.types';
 import { isVirtualColor } from '../../MantineCssVariables/virtual-color/virtual-color';
+import type { MantineColor, MantineColorScheme, MantineTheme } from '../../theme.types';
 import { getPrimaryShade } from '../get-primary-shade/get-primary-shade';
 import { parseThemeColor } from '../parse-theme-color/parse-theme-color';
 

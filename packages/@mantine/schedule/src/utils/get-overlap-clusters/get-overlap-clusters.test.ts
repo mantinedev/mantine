@@ -1,5 +1,5 @@
-import { testUtils } from '../../../test-utils';
-import { getDayPositionedEvents } from '../../DayView/get-day-view-events/get-day-positioned-events';
+import { getDayPositionedEvents } from '../../components/DayView/get-day-view-events/get-day-positioned-events';
+import { testUtils } from '../../test-utils';
 import { getOverlapClusters } from './get-overlap-clusters';
 
 function positionEvents(events: ReturnType<typeof testUtils.createEvent>[]) {

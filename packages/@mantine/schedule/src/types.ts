@@ -147,6 +147,9 @@ export type ScheduleEventData<Payload extends EventPayload = EventPayload> =
   | (ScheduleRecurringSeriesEventData<Payload> & ScheduleEventRuntimeMeta)
   | (ScheduleRecurringOverrideEventData<Payload> & ScheduleEventRuntimeMeta);
 
+/** Controls how events that overlap in time are laid out along the horizontal axis */
+export type ScheduleEventOverlapMode = 'columns' | 'cascade';
+
 export interface DayEventPositionData {
   /** All day events */
   allDay: boolean;

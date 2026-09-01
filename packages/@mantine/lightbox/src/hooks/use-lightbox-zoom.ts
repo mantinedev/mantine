@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 interface UseLightboxZoomInput {
   enabled: boolean;
@@ -44,19 +44,59 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
   const dragStart = useRef({ x: 0, y: 0 });
   const translateStart = useRef({ x: 0, y: 0 });
   const lastPinchDistance = useRef<number | null>(null);
+  const lastPointerType = useRef<string>('mouse');
+  const lastClickPointerType = useRef<string>('mouse');
+  const [isAdjusting, setIsAdjusting] = useState(false);
+  const adjustTimeout = useRef<number>(-1);
 
   useEffect(() => {
     isZoomedRef.current = zoomState.isZoomed;
   }, [zoomState.isZoomed]);
+
+  const beginAdjust = useCallback(() => {
+    setIsAdjusting(true);
+    window.clearTimeout(adjustTimeout.current);
+    adjustTimeout.current = window.setTimeout(() => setIsAdjusting(false), 120);
+  }, []);
+
+  const beginAdjustRef = useRef(beginAdjust);
+
+  useEffect(() => {
+    beginAdjustRef.current = beginAdjust;
+  }, [beginAdjust]);
+
+  useEffect(() => () => window.clearTimeout(adjustTimeout.current), []);
 
   const resetZoom = useCallback(() => {
     setZoomState(INITIAL_ZOOM_STATE);
     setIsDragging(false);
   }, []);
 
+  const [prevIndex, setPrevIndex] = useState(currentIndex);
+  const [prevEnabled, setPrevEnabled] = useState(enabled);
+
+  // Reset during render rather than from an effect: the new slide is then painted at scale
+  // 1 in the same commit instead of flashing the previous slide's zoom for one frame.
+  //
+  // Turning zoom off has to clear the state as well – the image loses its handlers, but a
+  // lingering `isZoomed` keeps the carousel's `watchDrag` guard rejecting drags, so the
+  // lightbox would silently stop being swipeable.
+  if (currentIndex !== prevIndex || enabled !== prevEnabled) {
+    setPrevIndex(currentIndex);
+    setPrevEnabled(enabled);
+
+    if (currentIndex !== prevIndex || !enabled) {
+      setZoomState(INITIAL_ZOOM_STATE);
+      setIsDragging(false);
+    }
+  }
+
   useEffect(() => {
-    resetZoom();
-  }, [currentIndex, resetZoom]);
+    if (!enabled) {
+      lastPinchDistance.current = null;
+      didDrag.current = false;
+    }
+  }, [enabled]);
 
   const toggleZoom = useCallback(() => {
     if (!enabled) {
@@ -116,7 +156,14 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
   }, [zoomAtPoint]);
 
   const handleNativeWheel = useRef((event: WheelEvent) => {
+    // Horizontal trackpad gestures report deltaY === 0 – zooming on those would both
+    // hijack the gesture and pick a direction at random.
+    if (event.deltaY === 0) {
+      return;
+    }
+
     event.preventDefault();
+    beginAdjustRef.current();
     zoomAtPointRef.current(event.deltaY > 0 ? -0.2 : 0.2, event.clientX, event.clientY);
   });
 
@@ -128,6 +175,8 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
 
   const handlePointerDown = useCallback(
     (event: React.PointerEvent) => {
+      lastPointerType.current = event.pointerType;
+
       if (!zoomState.isZoomed || !enabled) {
         return;
       }
@@ -171,6 +220,12 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
     setIsDragging(false);
   }, []);
 
+  const handlePointerCancel = useCallback(() => {
+    setIsDragging(false);
+    didDrag.current = false;
+    lastPinchDistance.current = null;
+  }, []);
+
   const handleTouchMove = useCallback(
     (event: React.TouchEvent) => {
       if (!enabled || event.touches.length !== 2) {
@@ -182,6 +237,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
       const distance = Math.hypot(touch1.clientX - touch2.clientX, touch1.clientY - touch2.clientY);
 
       if (lastPinchDistance.current !== null) {
+        beginAdjust();
         const delta = (distance - lastPinchDistance.current) * 0.01;
         zoomAtPoint(
           delta,
@@ -191,7 +247,7 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
       }
       lastPinchDistance.current = distance;
     },
-    [enabled, zoomAtPoint]
+    [enabled, zoomAtPoint, beginAdjust]
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -199,21 +255,40 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
   }, []);
 
   const handleClick = useCallback(
-    (_event: React.MouseEvent) => {
-      if (!enabled) {
+    (event: React.MouseEvent) => {
+      if (!enabled || event.detail > 1) {
         return;
       }
       if (didDrag.current) {
         didDrag.current = false;
         return;
       }
-      if ('ontouchstart' in window) {
+
+      // Touch taps are handled by the carousel (swipe) and by double-tap to zoom –
+      // reacting to the synthetic click as well would fight with both. This checks the
+      // input that produced the click rather than whether the device supports touch, so
+      // a mouse still zooms on a touchscreen laptop. The recorded type is consumed here
+      // so a later click without a preceding pointerdown is not treated as a touch.
+      const pointerType = lastPointerType.current;
+      lastPointerType.current = 'mouse';
+      lastClickPointerType.current = pointerType;
+
+      if (pointerType === 'touch') {
         return;
       }
+
       toggleZoom();
     },
     [enabled, toggleZoom]
   );
+
+  const handleDoubleClick = useCallback(() => {
+    if (!enabled || lastClickPointerType.current !== 'touch') {
+      return;
+    }
+
+    toggleZoom();
+  }, [enabled, toggleZoom]);
 
   const getImageProps = useCallback(
     () => ({
@@ -223,35 +298,50 @@ export function useLightboxZoom({ enabled, maxScale, currentIndex }: UseLightbox
       },
       'data-zoom-enabled': enabled || undefined,
       'data-zoomed': zoomState.isZoomed || undefined,
-      'data-dragging': isDragging || undefined,
+      'data-dragging': isDragging || isAdjusting || undefined,
       onPointerDown: handlePointerDown,
       onPointerMove: handlePointerMove,
       onPointerUp: handlePointerUp,
+      onPointerCancel: handlePointerCancel,
+      onLostPointerCapture: handlePointerUp,
       onClick: handleClick,
-      onDoubleClick: toggleZoom,
+      onDoubleClick: handleDoubleClick,
       onTouchMove: handleTouchMove,
       onTouchEnd: handleTouchEnd,
     }),
     [
       zoomState,
       isDragging,
+      isAdjusting,
       enabled,
       setImageRef,
       handlePointerDown,
       handlePointerMove,
       handlePointerUp,
+      handlePointerCancel,
       handleClick,
-      toggleZoom,
+      handleDoubleClick,
       handleTouchMove,
       handleTouchEnd,
     ]
   );
 
-  return {
-    zoomState: { scale: zoomState.scale, isZoomed: zoomState.isZoomed },
-    toggleZoom,
-    resetZoom,
-    panZoom,
-    getImageProps,
-  };
+  // Both objects are memoized: the lightbox context is built from them, and returning fresh
+  // objects on every render would make that context change identity on every root render,
+  // re-rendering every slide, thumbnail and custom render function along with it.
+  const publicZoomState = useMemo(
+    () => ({ scale: zoomState.scale, isZoomed: zoomState.isZoomed }),
+    [zoomState.scale, zoomState.isZoomed]
+  );
+
+  return useMemo(
+    () => ({
+      zoomState: publicZoomState,
+      toggleZoom,
+      resetZoom,
+      panZoom,
+      getImageProps,
+    }),
+    [publicZoomState, toggleZoom, resetZoom, panZoom, getImageProps]
+  );
 }

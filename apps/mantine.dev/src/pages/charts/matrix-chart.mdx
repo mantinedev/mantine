@@ -30,8 +30,10 @@ interface MatrixChartCell {
 ## Labels
 
 Use `xLabels` and `yLabels` props to provide axis labels. Set `withXLabels` to display
-x-axis labels along the bottom (or top with `xLabelsPosition="top"`). `yLabels` are
-displayed on the left side when provided.
+x-axis labels along the bottom (or top with `xLabelsPosition="top"`), and `withYLabels` to
+display y-axis labels on the left side. Both label arrays are optional – when they are not
+provided, the labels are taken from the `x` and `y` values of `data` in the order they first
+appear.
 
 <Demo data={MatrixChartDemos.labels} />
 
@@ -81,3 +83,17 @@ Set `withLegend` prop to display a color legend below the chart. Use `legendLabe
 to customize the legend text.
 
 <Demo data={MatrixChartDemos.legend} />
+
+## Accessibility
+
+Matrix cells are decorative `rect` elements – they carry no text for screen readers. Set `aria-label`
+(or `aria-labelledby`) to describe what the chart shows; the chart is then exposed as a single labelled
+image instead of a grid of anonymous shapes:
+
+```tsx
+import { MatrixChart } from '@mantine/charts';
+
+function Demo() {
+  return <MatrixChart data={[]} aria-label="Deployments per service and weekday" />;
+}
+```

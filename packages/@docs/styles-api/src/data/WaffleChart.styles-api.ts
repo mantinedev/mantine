@@ -13,8 +13,7 @@ export const WaffleChartStylesApi: StylesApiData<WaffleChartFactory> = {
   },
   vars: {
     root: {
-      '--waffle-gap': 'Controls gap between cells',
-      '--waffle-cell-radius': 'Controls cell border radius',
+      '--waffle-cell-radius': 'Controls cell and legend swatch border radius',
       '--waffle-empty-color': 'Controls empty cell background color',
     },
   },

@@ -999,6 +999,7 @@ npm install ${packageList}
         '@mantine/tiptap',
         '@mantine/dropzone',
         '@mantine/carousel',
+        '@mantine/lightbox',
         '@mantine/nprogress',
         '@mantine/notifications',
         '@mantine/charts',

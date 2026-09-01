@@ -292,7 +292,7 @@
       transform: translateY(-50%) rotate(90deg);
     }
 
-    & :where(> *:last-child) {
+    & > :where(*:last-child) {
       margin-bottom: 0;
     }
   }

@@ -4,6 +4,7 @@ export { intervalMinutes } from './DayView.demo.intervalMinutes';
 export { subHourGridLines } from './DayView.demo.subHourGridLines';
 export { allDayEvents } from './DayView.demo.allDayEvents';
 export { overlappingEvents } from './DayView.demo.overlappingEvents';
+export { eventOverlapMode } from './DayView.demo.eventOverlapMode';
 export { currentTimeIndicator } from './DayView.demo.currentTimeIndicator';
 export { timezone } from './DayView.demo.timezone';
 export { businessHours } from './DayView.demo.businessHours';

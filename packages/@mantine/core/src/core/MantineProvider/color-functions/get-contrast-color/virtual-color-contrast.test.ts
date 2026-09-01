@@ -1,8 +1,8 @@
-import { colorsTuple } from '../colors-tuple/colors-tuple';
 import { DEFAULT_THEME } from '../../default-theme';
 import { defaultCssVariablesResolver } from '../../MantineCssVariables/default-css-variables-resolver';
 import { virtualColor } from '../../MantineCssVariables/virtual-color/virtual-color';
 import { mergeMantineTheme } from '../../merge-mantine-theme/merge-mantine-theme';
+import { colorsTuple } from '../colors-tuple/colors-tuple';
 import { defaultVariantColorsResolver } from '../default-variant-colors-resolver/default-variant-colors-resolver';
 
 const theme = mergeMantineTheme(DEFAULT_THEME, {

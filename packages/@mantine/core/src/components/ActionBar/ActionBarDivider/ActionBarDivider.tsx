@@ -26,11 +26,25 @@ const defaultProps: Partial<ActionBarDividerProps> = {};
 
 export const ActionBarDivider = factory<ActionBarDividerFactory>((_props) => {
   const props = useProps('ActionBarDivider', defaultProps, _props);
-  const { classNames, className, style, styles, vars, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    vars,
+    role,
+    'aria-orientation': ariaOrientation,
+    ...others
+  } = props;
   const ctx = useActionBarContext();
 
   return (
-    <Box {...ctx.getStyles('divider', { className, classNames, style, styles })} {...others} />
+    <Box
+      {...ctx.getStyles('divider', { className, classNames, style, styles })}
+      role={role ?? 'separator'}
+      aria-orientation={ariaOrientation ?? 'vertical'}
+      {...others}
+    />
   );
 });
 

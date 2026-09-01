@@ -1,5 +1,4 @@
 import 'dayjs/locale/ru';
-
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { ResourcesSchedule, ResourcesScheduleProps } from './ResourcesSchedule';

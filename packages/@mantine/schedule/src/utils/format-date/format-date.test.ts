@@ -1,5 +1,4 @@
 import 'dayjs/locale/ru';
-
 import { formatDate } from './format-date';
 
 describe('@mantine/schedule/format-date', () => {

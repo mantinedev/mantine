@@ -25,7 +25,9 @@ export type MenuSubFactory = Factory<{
   props: MenuSubProps;
 }>;
 
-export interface MenuSubProps extends __PopoverProps {
+/** `Menu.Sub` dropdown is always rendered inside the parent dropdown: hover tracking and outside
+ * clicks detection rely on it being a DOM descendant of the menu it belongs to. */
+export interface MenuSubProps extends Omit<__PopoverProps, 'withinPortal' | 'portalProps'> {
   children: React.ReactNode;
 
   /** Controlled opened state */
@@ -172,11 +174,11 @@ export function MenuSub(_props: MenuSubProps) {
       <Popover
         opened={opened}
         onChange={(nextOpened) => (nextOpened ? handleOpen() : handleClose())}
-        withinPortal={false}
         withArrow={false}
         id={id}
         position={position}
         {...others}
+        withinPortal={false}
       >
         {children}
       </Popover>

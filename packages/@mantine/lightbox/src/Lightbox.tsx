@@ -1,4 +1,6 @@
 import { factory, Factory, useProps } from '@mantine/core';
+import { lightbox } from './lightbox.store';
+import type { ToolbarItems } from './lightbox.types';
 import { LightboxCaption } from './LightboxCaption/LightboxCaption';
 import { LightboxCloseButton } from './LightboxCloseButton/LightboxCloseButton';
 import { LightboxNavigation } from './LightboxNavigation/LightboxNavigation';
@@ -13,8 +15,6 @@ import { LightboxSlide } from './LightboxSlide/LightboxSlide';
 import { LightboxSlides } from './LightboxSlides/LightboxSlides';
 import { LightboxThumbnails } from './LightboxThumbnails/LightboxThumbnails';
 import { LightboxToolbar } from './LightboxToolbar/LightboxToolbar';
-import { lightbox } from './lightbox.store';
-import type { ToolbarItems } from './lightbox.types';
 import classes from './Lightbox.module.css';
 
 export type LightboxStylesNames = LightboxRootStylesNames;

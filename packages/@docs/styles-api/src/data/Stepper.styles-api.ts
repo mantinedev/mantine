@@ -34,5 +34,11 @@ export const StepperStylesApi: StylesApiData<StepperFactory> = {
   modifiers: [
     { modifier: 'data-progress', selector: 'stepIcon', condition: 'Step is current' },
     { modifier: 'data-completed', selector: 'stepIcon', condition: 'Step is completed' },
+    {
+      modifier: 'data-label-position',
+      selector: ['steps', 'step'],
+      condition: '`labelPosition` prop is set and `orientation` is not `vertical`',
+      value: '`right` or `bottom`',
+    },
   ],
 };

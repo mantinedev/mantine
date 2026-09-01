@@ -38,6 +38,20 @@ After running the commands above, check if `codex` CLI is available (`command -v
 - The codebase prefers clean, self-documenting code for implementation
 - Type definitions and public APIs should maintain their documentation comments
 
+## Writing MDX Files
+
+**Markdown table syntax does not work.** The docs MDX pipeline (`apps/mantine.dev`, `apps/help.mantine.dev`) does not include `remark-gfm`, so pipe tables render as literal text on the page. Write tabular content either as a `<DataTable />` (available in every `apps/mantine.dev` mdx file without an import, see `MdxDataTable`) or as a regular list:
+
+```mdx
+<DataTable
+  head={['Prop', 'Components']}
+  data={[
+    ['valueFormat', '`DateInput`, `DateTimePicker`'],
+    ['weekdayFormat', '`Calendar`, `DatePicker`'],
+  ]}
+/>
+```
+
 ## Tests
 
 **Verifying a new regression test:** temporarily revert the fix, confirm the test fails, then restore the fix. Do this for tests that cover async, timing or lifecycle behavior — that is where a test silently passes for the wrong reason. Skip it for straightforward assertions, where it is pure overhead.

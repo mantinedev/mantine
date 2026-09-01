@@ -11,7 +11,7 @@ function Demo() {
     <MatrixChart
       data={data}
       xLabels={xLabels}
-      yLabels={yLabels}
+      yLabels={yLabels} withYLabels
       withXLabels
       cellSize={30}
       gap={3}
@@ -27,6 +27,7 @@ function Demo() {
       data={data}
       xLabels={xLabels}
       yLabels={yLabels}
+      withYLabels
       withXLabels
       cellSize={30}
       gap={3}

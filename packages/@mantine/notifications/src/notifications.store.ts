@@ -53,7 +53,7 @@ export interface NotificationsState {
 
 export type NotificationsStore = MantineStore<NotificationsState>;
 
-interface SequencedNotificationData extends NotificationData {
+export interface SequencedNotificationData extends NotificationData {
   __sequence?: number;
 }
 

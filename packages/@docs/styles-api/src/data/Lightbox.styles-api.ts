@@ -31,7 +31,7 @@ export const LightboxStylesApi: StylesApiData<LightboxFactory> = {
     root: {
       '--lightbox-transition-duration': 'Controls transition duration of all animations',
       '--lightbox-overlay-color': 'Controls background overlay color',
-      '--lightbox-z-index': 'Controls `z-index` of the root element',
+      '--lightbox-z-index': 'Controls `z-index` of the overlay and content elements',
       '--lightbox-toolbar-height': 'Controls toolbar height',
       '--lightbox-thumbnails-height': 'Controls thumbnails strip height',
     },
@@ -62,11 +62,6 @@ export const LightboxStylesApi: StylesApiData<LightboxFactory> = {
       modifier: 'data-dragging',
       selector: 'slideImage',
       condition: 'Image is being dragged while zoomed',
-    },
-    {
-      modifier: 'data-slide-transition',
-      selector: 'slidesContainer',
-      condition: 'Slide transition animation is active',
     },
   ],
 };
