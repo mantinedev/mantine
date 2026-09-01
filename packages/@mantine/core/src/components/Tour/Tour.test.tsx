@@ -1,4 +1,5 @@
-import { render, screen, userEvent } from '@mantine-tests/core';
+import { act } from '@testing-library/react';
+import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
 import { Tour } from './Tour';
 
 function DefaultTour(props: Partial<Tour.Props>) {
@@ -35,33 +36,47 @@ describe('@mantine/core/Tour', () => {
     document.body.removeChild(container);
   });
 
-  it('renders nothing when active is false', () => {
-    render(<DefaultTour active={false} />);
+  it('renders nothing when active is false', async () => {
+    await renderWithAct(<DefaultTour active={false} />);
     expect(screen.queryByText('Step 1 Title')).not.toBeInTheDocument();
   });
 
-  it('renders tooltip when active is true', () => {
-    render(<DefaultTour />);
+  it('renders tooltip when active is true', async () => {
+    await renderWithAct(<DefaultTour />);
     expect(screen.getByText('Step 1 Title')).toBeInTheDocument();
   });
 
-  it('displays current step title and content', () => {
-    render(<DefaultTour />);
+  it('does not trigger React warnings while positioning the tooltip', async () => {
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const { rerender } = await renderWithAct(<DefaultTour step={0} />);
+
+    await act(async () => {
+      rerender(<DefaultTour step={1} />);
+    });
+
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  it('displays current step title and content', async () => {
+    await renderWithAct(<DefaultTour />);
     expect(screen.getByText('Step 1 Title')).toBeInTheDocument();
     expect(screen.getByText('Step 1 Content')).toBeInTheDocument();
   });
 
-  it('displays correct step when step prop changes', () => {
-    const { rerender } = render(<DefaultTour step={0} />);
+  it('displays correct step when step prop changes', async () => {
+    const { rerender } = await renderWithAct(<DefaultTour step={0} />);
     expect(screen.getByText('Step 1 Title')).toBeInTheDocument();
 
-    rerender(<DefaultTour step={1} />);
+    await act(async () => {
+      rerender(<DefaultTour step={1} />);
+    });
     expect(screen.getByText('Step 2 Title')).toBeInTheDocument();
   });
 
   it('calls onStepChange when next button is clicked', async () => {
     const onStepChange = jest.fn();
-    render(<DefaultTour step={0} onStepChange={onStepChange} />);
+    await renderWithAct(<DefaultTour step={0} onStepChange={onStepChange} />);
 
     await userEvent.click(screen.getByText('Next'));
     expect(onStepChange).toHaveBeenCalledWith(1);
@@ -69,43 +84,43 @@ describe('@mantine/core/Tour', () => {
 
   it('calls onStepChange when back button is clicked', async () => {
     const onStepChange = jest.fn();
-    render(<DefaultTour step={1} onStepChange={onStepChange} />);
+    await renderWithAct(<DefaultTour step={1} onStepChange={onStepChange} />);
 
     await userEvent.click(screen.getByText('Back'));
     expect(onStepChange).toHaveBeenCalledWith(0);
   });
 
-  it('does not render back button on first step', () => {
-    render(<DefaultTour step={0} />);
+  it('does not render back button on first step', async () => {
+    await renderWithAct(<DefaultTour step={0} />);
     expect(screen.queryByText('Back')).not.toBeInTheDocument();
   });
 
-  it('renders close label instead of next on last step', () => {
-    render(<DefaultTour step={2} />);
+  it('renders close label instead of next on last step', async () => {
+    await renderWithAct(<DefaultTour step={2} />);
     expect(screen.queryByText('Next')).not.toBeInTheDocument();
     expect(screen.getAllByText('Close').length).toBeGreaterThanOrEqual(1);
   });
 
   it('calls onClose when skip button is clicked', async () => {
     const onClose = jest.fn();
-    render(<DefaultTour onClose={onClose} />);
+    await renderWithAct(<DefaultTour onClose={onClose} />);
 
     await userEvent.click(screen.getByText('Skip'));
     expect(onClose).toHaveBeenCalled();
   });
 
-  it('hides close button when withCloseButton is false', () => {
-    render(<DefaultTour withCloseButton={false} />);
+  it('hides close button when withCloseButton is false', async () => {
+    await renderWithAct(<DefaultTour withCloseButton={false} />);
     expect(screen.queryByLabelText('Close')).not.toBeInTheDocument();
   });
 
-  it('displays step counter', () => {
-    render(<DefaultTour step={1} />);
+  it('displays step counter', async () => {
+    await renderWithAct(<DefaultTour step={1} />);
     expect(screen.getByText('2 of 3')).toBeInTheDocument();
   });
 
-  it('uses custom labels', () => {
-    render(
+  it('uses custom labels', async () => {
+    await renderWithAct(
       <DefaultTour
         step={1}
         labels={{
@@ -123,8 +138,8 @@ describe('@mantine/core/Tour', () => {
     expect(screen.getByText('2 de 3')).toBeInTheDocument();
   });
 
-  it('renders centered tooltip when step has no target', () => {
-    render(
+  it('renders centered tooltip when step has no target', async () => {
+    await renderWithAct(
       <Tour active withOverlay={false} step={0}>
         <Tour.Step title="No Target Step">No target content</Tour.Step>
       </Tour>
@@ -152,7 +167,7 @@ describe('@mantine/core/Tour', () => {
   describe('keyboard navigation', () => {
     it('navigates to next step with ArrowRight', async () => {
       const onStepChange = jest.fn();
-      render(<DefaultTour step={0} onStepChange={onStepChange} />);
+      await renderWithAct(<DefaultTour step={0} onStepChange={onStepChange} />);
 
       await userEvent.keyboard('{ArrowRight}');
       expect(onStepChange).toHaveBeenCalledWith(1);
@@ -160,7 +175,7 @@ describe('@mantine/core/Tour', () => {
 
     it('navigates to previous step with ArrowLeft', async () => {
       const onStepChange = jest.fn();
-      render(<DefaultTour step={1} onStepChange={onStepChange} />);
+      await renderWithAct(<DefaultTour step={1} onStepChange={onStepChange} />);
 
       await userEvent.keyboard('{ArrowLeft}');
       expect(onStepChange).toHaveBeenCalledWith(0);
@@ -168,7 +183,7 @@ describe('@mantine/core/Tour', () => {
 
     it('does not go below step 0 with ArrowLeft', async () => {
       const onStepChange = jest.fn();
-      render(<DefaultTour step={0} onStepChange={onStepChange} />);
+      await renderWithAct(<DefaultTour step={0} onStepChange={onStepChange} />);
 
       await userEvent.keyboard('{ArrowLeft}');
       expect(onStepChange).not.toHaveBeenCalled();
@@ -176,7 +191,7 @@ describe('@mantine/core/Tour', () => {
 
     it('does not go beyond last step with ArrowRight', async () => {
       const onStepChange = jest.fn();
-      render(<DefaultTour step={2} onStepChange={onStepChange} />);
+      await renderWithAct(<DefaultTour step={2} onStepChange={onStepChange} />);
 
       await userEvent.keyboard('{ArrowRight}');
       expect(onStepChange).not.toHaveBeenCalled();
@@ -184,7 +199,7 @@ describe('@mantine/core/Tour', () => {
 
     it('closes tour with Escape', async () => {
       const onClose = jest.fn();
-      render(<DefaultTour onClose={onClose} />);
+      await renderWithAct(<DefaultTour onClose={onClose} />);
 
       await userEvent.keyboard('{Escape}');
       expect(onClose).toHaveBeenCalled();
@@ -193,7 +208,7 @@ describe('@mantine/core/Tour', () => {
     it('does not respond to keyboard when withKeyboardNavigation is false', async () => {
       const onStepChange = jest.fn();
       const onClose = jest.fn();
-      render(
+      await renderWithAct(
         <DefaultTour
           step={0}
           onStepChange={onStepChange}
@@ -208,7 +223,7 @@ describe('@mantine/core/Tour', () => {
 
     it('does not close with Escape when closeOnEscape is false', async () => {
       const onClose = jest.fn();
-      render(<DefaultTour onClose={onClose} closeOnEscape={false} />);
+      await renderWithAct(<DefaultTour onClose={onClose} closeOnEscape={false} />);
 
       await userEvent.keyboard('{Escape}');
       expect(onClose).not.toHaveBeenCalled();
@@ -216,25 +231,27 @@ describe('@mantine/core/Tour', () => {
   });
 
   describe('lifecycle callbacks', () => {
-    it('calls onStepOpen on initial mount', () => {
+    it('calls onStepOpen on initial mount', async () => {
       const onStepOpen = jest.fn();
-      render(<DefaultTour onStepOpen={onStepOpen} />);
+      await renderWithAct(<DefaultTour onStepOpen={onStepOpen} />);
       expect(onStepOpen).toHaveBeenCalledWith(0);
     });
 
-    it('calls onStepOpen with new step index when step changes via rerender', () => {
+    it('calls onStepOpen with new step index when step changes via rerender', async () => {
       const onStepOpen = jest.fn();
-      const { rerender } = render(<DefaultTour step={0} onStepOpen={onStepOpen} />);
+      const { rerender } = await renderWithAct(<DefaultTour step={0} onStepOpen={onStepOpen} />);
 
       onStepOpen.mockClear();
 
-      rerender(<DefaultTour step={1} onStepOpen={onStepOpen} />);
+      await act(async () => {
+        rerender(<DefaultTour step={1} onStepOpen={onStepOpen} />);
+      });
       expect(onStepOpen).toHaveBeenCalledWith(1);
     });
 
     it('calls onStepClose for active step when tour closes', async () => {
       const onStepClose = jest.fn();
-      render(<DefaultTour step={1} onStepClose={onStepClose} />);
+      await renderWithAct(<DefaultTour step={1} onStepClose={onStepClose} />);
 
       onStepClose.mockClear();
 
@@ -242,9 +259,9 @@ describe('@mantine/core/Tour', () => {
       expect(onStepClose).toHaveBeenCalledWith(1);
     });
 
-    it('calls per-step onStepOpen callback', () => {
+    it('calls per-step onStepOpen callback', async () => {
       const stepOpen = jest.fn();
-      render(
+      await renderWithAct(
         <Tour active withOverlay={false} step={0}>
           <Tour.Step target="#target-1" title="S1" onStepOpen={stepOpen}>
             Content
@@ -256,18 +273,20 @@ describe('@mantine/core/Tour', () => {
   });
 
   describe('overlay', () => {
-    it('renders overlay when withOverlay is true', () => {
-      const { container: renderContainer } = render(<DefaultTour withOverlay />);
+    it('renders overlay when withOverlay is true', async () => {
+      const { container: renderContainer } = await renderWithAct(<DefaultTour withOverlay />);
       expect(renderContainer.querySelector('svg[role="presentation"]')).toBeInTheDocument();
     });
 
-    it('does not render overlay when withOverlay is false', () => {
-      const { container: renderContainer } = render(<DefaultTour withOverlay={false} />);
+    it('does not render overlay when withOverlay is false', async () => {
+      const { container: renderContainer } = await renderWithAct(
+        <DefaultTour withOverlay={false} />
+      );
       expect(renderContainer.querySelector('svg[role="presentation"]')).not.toBeInTheDocument();
     });
 
-    it('sets data-with-overlay-interaction when withOverlayInteraction is true', () => {
-      const { container: renderContainer } = render(
+    it('sets data-with-overlay-interaction when withOverlayInteraction is true', async () => {
+      const { container: renderContainer } = await renderWithAct(
         <DefaultTour withOverlay withOverlayInteraction />
       );
       const overlay = renderContainer.querySelector('svg[role="presentation"]')!;
@@ -276,38 +295,38 @@ describe('@mantine/core/Tour', () => {
   });
 
   describe('scrolling', () => {
-    it('calls scrollIntoView on target element by default', () => {
+    it('calls scrollIntoView on target element by default', async () => {
       const scrollIntoView = jest.fn();
       const targetEl = document.getElementById('target-1')!;
       targetEl.scrollIntoView = scrollIntoView;
 
-      render(<DefaultTour />);
+      await renderWithAct(<DefaultTour />);
       expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' });
     });
 
-    it('uses custom scrollToHandler when provided', () => {
+    it('uses custom scrollToHandler when provided', async () => {
       const scrollToHandler = jest.fn();
       const targetEl = document.getElementById('target-1')!;
       targetEl.scrollIntoView = jest.fn();
 
-      render(<DefaultTour scrollToHandler={scrollToHandler} />);
+      await renderWithAct(<DefaultTour scrollToHandler={scrollToHandler} />);
       expect(scrollToHandler).toHaveBeenCalledWith(targetEl);
       expect(targetEl.scrollIntoView).not.toHaveBeenCalled();
     });
 
-    it('does not scroll when withScrollIntoView is false', () => {
+    it('does not scroll when withScrollIntoView is false', async () => {
       const scrollIntoView = jest.fn();
       const targetEl = document.getElementById('target-1')!;
       targetEl.scrollIntoView = scrollIntoView;
 
-      render(<DefaultTour withScrollIntoView={false} />);
+      await renderWithAct(<DefaultTour withScrollIntoView={false} />);
       expect(scrollIntoView).not.toHaveBeenCalled();
     });
   });
 
   describe('per-step overrides', () => {
-    it('hides overlay for step with withOverlay={false}', () => {
-      const { container: renderContainer } = render(
+    it('hides overlay for step with withOverlay={false}', async () => {
+      const { container: renderContainer } = await renderWithAct(
         <Tour active withOverlay step={0}>
           <Tour.Step target="#target-1" title="S1" withOverlay={false}>
             Content

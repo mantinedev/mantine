@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -274,6 +275,8 @@ export const Tour = factory<TourFactory>((_props) => {
     stepComponent: TourStep,
   });
 
+  const tooltipMergedRef = useMergedRef(floatingRefs.setFloating, tooltipRef);
+
   const getStyles = useStyles<TourFactory>({
     name: 'Tour',
     classes,
@@ -402,7 +405,12 @@ export const Tour = factory<TourFactory>((_props) => {
             }}
             timingFunction={transitionProps?.timingFunction}
           >
-            {(transitionStyles) => (
+            {({
+              transitionProperty,
+              transitionDuration,
+              transitionTimingFunction,
+              ...transitionStyles
+            }) => (
               <FocusTrap
                 active={
                   showTooltip &&
@@ -410,10 +418,7 @@ export const Tour = factory<TourFactory>((_props) => {
                   !!resolvedWithOverlay &&
                   !withOverlayInteraction
                 }
-                innerRef={(node: HTMLDivElement | null) => {
-                  floatingRefs.setFloating(node);
-                  (tooltipRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
-                }}
+                innerRef={tooltipMergedRef}
               >
                 <Box
                   {...getStyles('tooltip')}
@@ -430,12 +435,12 @@ export const Tour = factory<TourFactory>((_props) => {
                     ...transitionStyles,
                     width: constrainedWidth,
                     transition: [
-                      ...(transitionStyles.transitionProperty
-                        ? transitionStyles.transitionProperty
+                      ...(transitionProperty
+                        ? transitionProperty
                             .split(',')
                             .map(
                               (prop: string) =>
-                                `${prop.trim()} ${transitionStyles.transitionDuration} ${transitionStyles.transitionTimingFunction || 'ease'}`
+                                `${prop.trim()} ${transitionDuration} ${transitionTimingFunction || 'ease'}`
                             )
                         : []),
                       hasPositioned
@@ -447,9 +452,6 @@ export const Tour = factory<TourFactory>((_props) => {
                     ]
                       .filter(Boolean)
                       .join(', '),
-                    transitionProperty: undefined,
-                    transitionDuration: undefined,
-                    transitionTimingFunction: undefined,
                   }}
                 >
                   {withCloseButton && <TourCloseButton />}
