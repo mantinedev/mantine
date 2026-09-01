@@ -1,4 +1,4 @@
-import { Changelog970Demos, TipTapDemos } from '@docs/demos';
+import { Changelog970Demos, TipTapDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -55,3 +55,19 @@ Images can be uploaded via toolbar button, drag and drop, or paste.
 During upload, a local preview is shown with a loading indicator.
 
 <Demo data={TipTapDemos.imageUpload} />
+
+## Schedule event overlap mode
+
+[DayView](/schedule/day-view) and [WeekView](/schedule/week-view) now support `eventOverlapMode` prop
+that controls how events overlapping in time share the horizontal space. The default `columns` mode
+splits the available width evenly between them, which becomes unreadable once a large number of events
+overlap. The new `cascade` mode indents each event and stacks it over the previous one, so every event
+keeps a readable width no matter how many of them overlap:
+
+<Demo data={WeekViewDemos.eventOverlapMode} />
+
+The indent shrinks automatically as the group grows, so the event on top always keeps at least 60% of
+the available width. Covered events can still be read and used: rest the pointer on one and it is
+raised above the events covering it, which also makes its resize handles reachable. Keyboard users get
+the same result by focusing the event with `Tab`. `eventOverlapRaiseDelay` prop controls how long the
+pointer must rest on an event before it is raised, in milliseconds (`600` by default).
