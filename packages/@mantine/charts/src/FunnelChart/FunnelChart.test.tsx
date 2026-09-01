@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { FunnelChart, FunnelChartProps, FunnelChartStylesNames } from './FunnelChart';
 
 const data = [
@@ -13,8 +13,6 @@ const defaultProps: FunnelChartProps = {
 };
 
 describe('@mantine/charts/FunnelChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<FunnelChartProps, FunnelChartStylesNames>({
     component: FunnelChart,
     props: defaultProps,

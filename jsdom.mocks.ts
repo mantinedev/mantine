@@ -53,6 +53,19 @@ console.error = (...data) => {
   originalConsoleError(...data);
 };
 
+// recharts ResponsiveContainer measures its parent with ResizeObserver, which is stubbed in jsdom,
+// so every chart test logs a zero size warning.
+const originalConsoleWarn = console.warn;
+console.warn = (...data) => {
+  if (
+    typeof data[0]?.toString === 'function' &&
+    data[0].toString().includes('of chart should be greater than 0')
+  ) {
+    return;
+  }
+  originalConsoleWarn(...data);
+};
+
 class IntersectionObserver {
   observe() {}
   unobserve() {}

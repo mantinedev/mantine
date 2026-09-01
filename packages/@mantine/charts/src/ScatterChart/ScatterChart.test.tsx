@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { ScatterChart, ScatterChartProps, ScatterChartStylesNames } from './ScatterChart';
 
 const defaultProps: ScatterChartProps = {
@@ -7,8 +7,6 @@ const defaultProps: ScatterChartProps = {
 };
 
 describe('@mantine/charts/ScatterChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<ScatterChartProps, ScatterChartStylesNames>({
     component: ScatterChart,
     props: defaultProps,
