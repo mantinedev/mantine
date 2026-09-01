@@ -62,7 +62,7 @@
     "lint": "npm run oxlint && npm run stylelint",
     "oxlint": "npx oxlint -c oxlint.config.mjs packages apps/mantine.dev/src apps/help.mantine.dev/src scripts",
     "stylelint": "stylelint \"**/*.css\" --cache",
-    "syncpack": "syncpack list-mismatches",
+    "syncpack": "syncpack lint --dependency-types prod,dev",
     "syncpack:fix": "syncpack fix-mismatches",
     "syncpack:format": "syncpack format",
     "format:test": "oxfmt -c oxfmt.config.mjs --check \"**/*.{ts,tsx,css}\"",

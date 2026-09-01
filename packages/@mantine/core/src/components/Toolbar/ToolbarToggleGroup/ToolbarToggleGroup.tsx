@@ -9,11 +9,11 @@ import {
   useProps,
 } from '../../../core';
 import { useToolbarContext } from '../Toolbar.context';
-import classes from '../Toolbar.module.css';
 import {
   ToolbarToggleGroupProvider,
   type ToolbarToggleGroupContextValue,
 } from './ToolbarToggleGroup.context';
+import classes from '../Toolbar.module.css';
 
 export type ToolbarToggleGroupStylesNames = 'group';
 

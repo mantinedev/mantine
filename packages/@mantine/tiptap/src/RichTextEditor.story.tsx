@@ -22,9 +22,9 @@ import ts from 'highlight.js/lib/languages/typescript';
 import html from 'highlight.js/lib/languages/xml';
 import { createLowlight } from 'lowlight';
 import { AppShell } from '@mantine/core';
-import { getUploadImageExtension } from './extensions/UploadImage';
 import { Link } from './extensions/Link';
 import { getTaskListExtension } from './extensions/TaskList';
+import { getUploadImageExtension } from './extensions/UploadImage';
 import { RichTextEditor, RichTextEditorProps } from './RichTextEditor';
 import { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTextEditorToolbar';
 

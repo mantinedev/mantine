@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { CopyButton, type GetStylesApi, Tooltip, UnstyledButton } from '@mantine/core';
 import {
-  handleJsonViewerKeyDown,
-  type JsonViewerFactory,
-  type JsonViewerHighlightType,
-} from './JsonViewer';
-import {
   formatValue,
   getTypeLabel,
   getValueType,
   safeStringify,
   serializePath,
 } from './json-viewer-utils';
+import {
+  handleJsonViewerKeyDown,
+  type JsonViewerFactory,
+  type JsonViewerHighlightType,
+} from './JsonViewer';
 
 export interface JsonViewerNodeProps {
   value: any;

@@ -13,8 +13,8 @@ import {
 } from '../../../core';
 import { OptionalPortal, type PortalProps } from '../../Portal';
 import type { TransitionOverride } from '../../Transition';
-import { defaultLabels, TourLabels, TourProvider } from '../Tour.context';
 import type { TourStylesNames, TourCssVariables } from '../Tour';
+import { defaultLabels, TourLabels, TourProvider } from '../Tour.context';
 import classes from '../Tour.module.css';
 
 export interface TourRootProps

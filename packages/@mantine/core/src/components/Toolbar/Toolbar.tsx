@@ -16,7 +16,6 @@ import {
   useStyles,
 } from '../../core';
 import { ToolbarProvider } from './Toolbar.context';
-import classes from './Toolbar.module.css';
 import { ToolbarDivider, ToolbarDividerStylesNames } from './ToolbarDivider/ToolbarDivider';
 import { ToolbarGroup, ToolbarGroupStylesNames } from './ToolbarGroup/ToolbarGroup';
 import { ToolbarToggle, ToolbarToggleStylesNames } from './ToolbarToggle/ToolbarToggle';
@@ -26,6 +25,7 @@ import {
   ToolbarToggleItemStylesNames,
 } from './ToolbarToggleItem/ToolbarToggleItem';
 import { useToolbarNavigation } from './use-toolbar-navigation';
+import classes from './Toolbar.module.css';
 
 export type ToolbarStylesNames =
   | 'root'

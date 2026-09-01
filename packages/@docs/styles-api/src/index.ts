@@ -144,6 +144,7 @@ export * from './data/Title.styles-api';
 export * from './data/Toggle.styles-api';
 export * from './data/Toolbar.styles-api';
 export * from './data/Tooltip.styles-api';
+export * from './data/Tour.styles-api';
 export * from './data/Tree.styles-api';
 export * from './data/TreeSelect.styles-api';
 export * from './data/Treemap.styles-api';

@@ -1,8 +1,8 @@
 import type { TourCssVariables, TourFactory, TourProps, TourStylesNames } from './Tour';
+import type { TourContextValue, TourLabels } from './Tour.context';
 import type { TourBeaconProps } from './TourBeacon/TourBeacon';
 import type { TourBodyProps } from './TourBody/TourBody';
 import type { TourCloseButtonProps } from './TourCloseButton/TourCloseButton';
-import type { TourContextValue, TourLabels } from './Tour.context';
 import type { TourNavigationProps } from './TourNavigation/TourNavigation';
 import type { TourOverlayProps } from './TourOverlay/TourOverlay';
 import type { TourRootProps } from './TourRoot/TourRoot';
