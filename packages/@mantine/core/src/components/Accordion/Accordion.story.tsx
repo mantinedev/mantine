@@ -156,3 +156,24 @@ export function KeepMountedMode() {
     </div>
   );
 }
+
+export function VariantsWithOrder() {
+  return (
+    <>
+      {(['default', 'contained', 'filled', 'separated'] as const).map((variant) => (
+        <Accordion
+          key={variant}
+          defaultValue="flex"
+          style={{ maxWidth: 400 }}
+          mx="auto"
+          mt={50}
+          variant={variant}
+          radius="lg"
+          order={3}
+        >
+          {_items}
+        </Accordion>
+      ))}
+    </>
+  );
+}
