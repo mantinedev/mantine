@@ -1,4 +1,4 @@
-import { getHotkeyMatcher, parseHotkey } from './parse-hotkey';
+import { getHotkeyHandler, getHotkeyMatcher, parseHotkey } from './parse-hotkey';
 
 describe('@mantine/hooks/use-hot-key/parse-hotkey', () => {
   it('should parse hotkey correctly', () => {
@@ -196,5 +196,31 @@ describe('@mantine/hooks/use-hot-key/parse-hotkey', () => {
         })
       )
     ).toBe(true);
+  });
+});
+
+describe('@mantine/hooks/use-hot-key/get-hotkey-handler', () => {
+  it('calls preventDefault by default when options are not provided', () => {
+    const handler = jest.fn();
+    const event = new KeyboardEvent('keydown', { ctrlKey: true, key: 'S', cancelable: true });
+    getHotkeyHandler([['ctrl+S', handler]])(event);
+    expect(handler).toHaveBeenCalled();
+    expect(event.defaultPrevented).toBe(true);
+  });
+
+  it('calls preventDefault by default when only usePhysicalKeys option is provided', () => {
+    const handler = jest.fn();
+    const event = new KeyboardEvent('keydown', { code: 'KeyA', cancelable: true });
+    getHotkeyHandler([['A', handler, { usePhysicalKeys: true }]])(event);
+    expect(handler).toHaveBeenCalled();
+    expect(event.defaultPrevented).toBe(true);
+  });
+
+  it('does not call preventDefault when preventDefault option is false', () => {
+    const handler = jest.fn();
+    const event = new KeyboardEvent('keydown', { ctrlKey: true, key: 'S', cancelable: true });
+    getHotkeyHandler([['ctrl+S', handler, { preventDefault: false }]])(event);
+    expect(handler).toHaveBeenCalled();
+    expect(event.defaultPrevented).toBe(false);
   });
 });
