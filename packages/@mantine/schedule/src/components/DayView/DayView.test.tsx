@@ -1082,4 +1082,102 @@ describe('@mantine/schedule/DayView', () => {
       expect(bgEvent.tagName).toBe('DIV');
     });
   });
+
+  describe('eventOverlapMode', () => {
+    const overlappingEvents = [
+      {
+        id: 1,
+        title: 'First',
+        start: '2025-11-03 10:00:00',
+        end: '2025-11-03 12:00:00',
+        color: 'blue',
+      },
+      {
+        id: 2,
+        title: 'Second',
+        start: '2025-11-03 10:30:00',
+        end: '2025-11-03 12:00:00',
+        color: 'violet',
+      },
+      {
+        id: 3,
+        title: 'Third',
+        start: '2025-11-03 11:00:00',
+        end: '2025-11-03 12:00:00',
+        color: 'cyan',
+      },
+    ];
+
+    const getEventStyles = (container: HTMLElement) =>
+      Array.from(container.querySelectorAll<HTMLElement>('[data-event-id]')).map((element) => ({
+        insetInlineStart: element.style.insetInlineStart,
+        width: element.style.width,
+        zIndex: element.style.getPropertyValue('--event-z-index'),
+        zIndexRaised: element.style.getPropertyValue('--event-z-index-raised'),
+        cascade: element.hasAttribute('data-cascade'),
+      }));
+
+    it('splits the available width between overlapping events by default', () => {
+      const { container } = render(<DayView date="2025-11-03" events={overlappingEvents} />);
+
+      expect(getEventStyles(container)).toStrictEqual([
+        {
+          insetInlineStart: '0%',
+          width: '33.33333333333333%',
+          zIndex: '3',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+        {
+          insetInlineStart: '33.333333333333336%',
+          width: '33.33333333333333%',
+          zIndex: '4',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+        {
+          insetInlineStart: '66.66666666666667%',
+          width: '33.33333333333333%',
+          zIndex: '5',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+      ]);
+    });
+
+    it('indents and stacks overlapping events when eventOverlapMode is cascade', () => {
+      const { container } = render(
+        <DayView date="2025-11-03" events={overlappingEvents} eventOverlapMode="cascade" />
+      );
+
+      expect(getEventStyles(container)).toStrictEqual([
+        { insetInlineStart: '0%', width: '100%', zIndex: '3', zIndexRaised: '6', cascade: true },
+        { insetInlineStart: '20%', width: '80%', zIndex: '4', zIndexRaised: '6', cascade: true },
+        { insetInlineStart: '40%', width: '60%', zIndex: '5', zIndexRaised: '6', cascade: true },
+      ]);
+    });
+
+    it('applies the default raise delay of 600ms', () => {
+      const { container } = render(
+        <DayView date="2025-11-03" events={overlappingEvents} eventOverlapMode="cascade" />
+      );
+      const root = container.querySelector('.mantine-DayView-dayView') as HTMLElement;
+
+      expect(root.style.getPropertyValue('--event-raise-delay')).toBe('600ms');
+    });
+
+    it('supports a custom eventOverlapRaiseDelay', () => {
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          events={overlappingEvents}
+          eventOverlapMode="cascade"
+          eventOverlapRaiseDelay={250}
+        />
+      );
+      const root = container.querySelector('.mantine-DayView-dayView') as HTMLElement;
+
+      expect(root.style.getPropertyValue('--event-raise-delay')).toBe('250ms');
+    });
+  });
 });

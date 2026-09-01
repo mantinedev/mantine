@@ -194,6 +194,41 @@ When multiple events overlap in time, they are automatically positioned side by 
 
 <Demo data={WeekViewDemos.overlappingEvents} />
 
+## Overlap mode
+
+`eventOverlapMode` prop controls how events that overlap in time share the horizontal space:
+
+- `columns` (default) – the available width is split evenly between the overlapping events. Every event
+  is fully visible, but each one gets narrower as more events overlap.
+- `cascade` – each event is indented from the previous one and drawn on top of it, extending to the
+  right edge of the group. Events keep a readable width no matter how many of them overlap, at the cost
+  of covering the events underneath.
+
+Prefer `cascade` when your data regularly produces large groups of simultaneous events, where `columns`
+would shrink each event to an unreadable sliver.
+
+<Demo data={WeekViewDemos.eventOverlapMode} />
+
+The indent shrinks automatically as the group grows, so the event on top always keeps at least 60% of
+the available width.
+
+Covered events can still be read and interacted with: rest the pointer on one and it is raised above
+the events covering it, which also makes its resize handles reachable. Keyboard users get the same
+result by focusing the event with `Tab`, without any delay.
+
+`eventOverlapRaiseDelay` prop controls how long the pointer must rest on an event before it is raised,
+in milliseconds. The default of `600` is long enough that moving the pointer across a group to reach a
+specific event does not raise the events it passes over. Set a smaller value to make covered events
+reveal themselves sooner:
+
+```tsx
+import { WeekView } from '@mantine/schedule';
+
+function Demo() {
+  return <WeekView date={new Date()} eventOverlapMode="cascade" eventOverlapRaiseDelay={250} />;
+}
+```
+
 ## Drag and drop
 
 Enable drag and drop by setting `withDragDrop` prop. Events can be dragged to different days and times.

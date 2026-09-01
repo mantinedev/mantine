@@ -1,8 +1,8 @@
-import { DayPositionedEventData } from '../../../types';
-import { isEventsOverlap } from '../../../utils';
+import { ScheduleEventData } from '../../types';
+import { isEventsOverlap } from '../is-events-overlap/is-events-overlap';
 
-export function getOverlapClusters(events: DayPositionedEventData[]): DayPositionedEventData[][] {
-  const clusters: DayPositionedEventData[][] = [];
+export function getOverlapClusters<T extends ScheduleEventData>(events: T[]): T[][] {
+  const clusters: T[][] = [];
   const assigned = new Set<number>();
 
   for (let i = 0; i < events.length; i++) {
@@ -10,7 +10,7 @@ export function getOverlapClusters(events: DayPositionedEventData[]): DayPositio
       continue;
     }
 
-    const cluster: DayPositionedEventData[] = [events[i]];
+    const cluster: T[] = [events[i]];
     assigned.add(i);
 
     let j = 0;

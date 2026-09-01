@@ -48,6 +48,7 @@ import {
   getGroupToResourceIdMap,
   getIndexFromDragPoint,
   getOrderedResources,
+  getOverlapClusters,
   getTimeAxisEventStyle,
   handleResourcesGridKeyDown,
   isAllDayEvent,
@@ -62,7 +63,6 @@ import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/Sc
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
-import { getOverlapClusters } from './get-overlap-clusters/get-overlap-clusters';
 import { getResourcesDayViewEvents } from './get-resources-day-view-events/get-resources-day-view-events';
 import { ResourcesDayViewRow } from './ResourcesDayViewColumn';
 import classes from './ResourcesDayView.module.css';

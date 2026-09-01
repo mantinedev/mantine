@@ -93,6 +93,11 @@ export const Demo_overlappingEvents = {
   render: renderDemo(demos.overlappingEvents),
 };
 
+export const Demo_eventOverlapMode = {
+  name: '⭐ Demo: eventOverlapMode',
+  render: renderDemo(demos.eventOverlapMode),
+};
+
 export const Demo_dragDrop = {
   name: '⭐ Demo: dragDrop',
   render: renderDemo(demos.dragDrop),

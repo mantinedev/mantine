@@ -51,6 +51,7 @@ export function Variants() {
         mx="auto"
         mt={50}
         variant="contained"
+        radius="lg"
       >
         {_items}
       </Accordion>

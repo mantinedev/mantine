@@ -48,6 +48,7 @@ import {
   getGroupToResourceIdMap,
   getIndexFromDragPoint,
   getOrderedResources,
+  getOverlapClusters,
   getTimeAxisEventStyle,
   getWeekDays,
   handleResourcesGridKeyDown,
@@ -60,7 +61,6 @@ import {
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
-import { getOverlapClusters } from '../ResourcesDayView/get-overlap-clusters/get-overlap-clusters';
 import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';

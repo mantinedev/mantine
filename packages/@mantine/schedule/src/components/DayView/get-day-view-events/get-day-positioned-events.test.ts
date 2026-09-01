@@ -62,6 +62,104 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
     });
   });
 
+  describe('cascade overlap mode', () => {
+    it('indents overlapping events instead of splitting the width between them', () => {
+      const result = getDayPositionedEvents({
+        date: testDate,
+        eventOverlapMode: 'cascade',
+        events: [
+          testUtils.createEvent({
+            id: 1,
+            start: `${testDate} 10:00:00`,
+            end: `${testDate} 12:00:00`,
+          }),
+          testUtils.createEvent({
+            id: 2,
+            start: `${testDate} 10:30:00`,
+            end: `${testDate} 12:00:00`,
+          }),
+          testUtils.createEvent({
+            id: 3,
+            start: `${testDate} 11:00:00`,
+            end: `${testDate} 12:00:00`,
+          }),
+        ],
+      });
+
+      expect(result[0].position).toMatchObject({ offset: 0, width: 100, overlaps: 3 });
+      expect(result[1].position).toMatchObject({ offset: 20, width: 80, overlaps: 3 });
+      expect(result[2].position).toMatchObject({ offset: 40, width: 60, overlaps: 3 });
+    });
+
+    it('keeps the default columns mode splitting the width', () => {
+      const result = getDayPositionedEvents({
+        date: testDate,
+        events: [
+          testUtils.createEvent({
+            id: 1,
+            start: `${testDate} 10:00:00`,
+            end: `${testDate} 12:00:00`,
+          }),
+          testUtils.createEvent({
+            id: 2,
+            start: `${testDate} 10:30:00`,
+            end: `${testDate} 12:00:00`,
+          }),
+        ],
+      });
+
+      expect(result[0].position).toMatchObject({ offset: 0, width: 50 });
+      expect(result[1].position).toMatchObject({ offset: 50, width: 50 });
+    });
+
+    it('still lays out all-day events at full width', () => {
+      const result = getDayPositionedEvents({
+        date: testDate,
+        eventOverlapMode: 'cascade',
+        events: [
+          testUtils.createEvent({
+            id: 1,
+            start: `${testDate} 00:00:00`,
+            end: `${testDate} 23:59:59`,
+          }),
+          testUtils.createEvent({
+            id: 2,
+            start: `${testDate} 10:00:00`,
+            end: `${testDate} 12:00:00`,
+          }),
+          testUtils.createEvent({
+            id: 3,
+            start: `${testDate} 10:30:00`,
+            end: `${testDate} 12:00:00`,
+          }),
+        ],
+      });
+
+      const allDay = result.find((event) => event.id === 1)!;
+      expect(allDay.position).toMatchObject({ allDay: true, offset: 0, width: 100, overlaps: 1 });
+      expect(result.find((event) => event.id === 2)!.position).toMatchObject({ offset: 0 });
+      expect(result.find((event) => event.id === 3)!.position).toMatchObject({ offset: 20 });
+    });
+
+    it('squeezes the indent so the last event keeps a readable width in a dense cluster', () => {
+      const result = getDayPositionedEvents({
+        date: testDate,
+        eventOverlapMode: 'cascade',
+        events: Array.from({ length: 8 }, (_, index) =>
+          testUtils.createEvent({
+            id: index + 1,
+            start: `${testDate} 10:00:00`,
+            end: `${testDate} 12:00:00`,
+          })
+        ),
+      });
+
+      expect(result[0].position.offset).toBe(0);
+      expect(result[7].position.offset).toBeCloseTo(40, 5);
+      expect(result[7].position.width).toBeCloseTo(60, 5);
+    });
+  });
+
   describe('all-day events', () => {
     it('identifies all-day events correctly', () => {
       const events = [

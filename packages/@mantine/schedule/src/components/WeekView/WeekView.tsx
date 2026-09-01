@@ -33,6 +33,7 @@ import {
   DateTimeStringValue,
   DayOfWeek,
   ScheduleEventData,
+  ScheduleEventOverlapMode,
   ScheduleMode,
   ScheduleViewLevel,
 } from '../../types';
@@ -137,6 +138,12 @@ export interface WeekViewProps
 
   /** If set to false, weekend days are hidden @default true */
   withWeekendDays?: boolean;
+
+  /** Determines how events that overlap in time are laid out: `columns` splits the available width between them, `cascade` indents each event and stacks it over the previous one @default 'columns' */
+  eventOverlapMode?: ScheduleEventOverlapMode;
+
+  /** Time in ms the pointer must rest on an event before it is raised above the events covering it, only used with `eventOverlapMode="cascade"` @default 600 */
+  eventOverlapRaiseDelay?: number;
 
   /** If set to true, highlights today in the weekday row @default false */
   highlightToday?: boolean;
@@ -332,6 +339,8 @@ const defaultProps = {
   withEventResize: false,
   mode: 'default',
   withInteractiveBackgroundEvents: false,
+  eventOverlapMode: 'columns',
+  eventOverlapRaiseDelay: 600,
 } satisfies Partial<WeekViewProps>;
 
 const varsResolver = createVarsResolver<WeekViewFactory>(
@@ -362,6 +371,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withSubHourGridLines,
     slotLabelFormat,
     withWeekendDays,
+    eventOverlapMode,
+    eventOverlapRaiseDelay,
     weekendDays,
     firstDayOfWeek,
     weekdayFormat,
@@ -639,6 +650,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     weekendDays: ctx.getWeekendDays(weekendDays),
     withWeekendDays,
+    eventOverlapMode,
   });
 
   const timeValues = slots.reduce<React.ReactNode[]>((acc, interval) => {
@@ -905,6 +917,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
                 }
               : undefined
           }
+          mod={{ cascade: eventOverlapMode === 'cascade' }}
           style={{
             position: 'absolute',
             ...getTimeAxisEventStyle({
@@ -914,6 +927,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             }),
             left: `${event.position.offset}%`,
             width: `${event.position.width}%`,
+            '--event-z-index': event.position.column + 3,
+            '--event-z-index-raised': event.position.overlaps + 3,
           }}
         />
       );
@@ -1136,6 +1151,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         <Box
           {...getStyles('weekViewRoot')}
           __vars={{
+            '--event-raise-delay': `${eventOverlapRaiseDelay}ms`,
             '--indicator-offset-index':
               currentWeekdayIndex === -1 ? undefined : `${currentWeekdayIndex + 1}`,
             '--number-of-days': withWeekendDays
