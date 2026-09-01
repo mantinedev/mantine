@@ -13,7 +13,6 @@ import type {
   InlineCodeHighlightStylesNames,
 } from './CodeHighlight/InlineCodeHighlight';
 import type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider';
-import type { NormalizeCodeOptions } from './normalize-code';
 import type {
   CodeHighlightDefaultLanguage,
   CodeHighlightTabsCode,
@@ -21,6 +20,7 @@ import type {
   CodeHighlightTabsProps,
   CodeHighlightTabsStylesNames,
 } from './CodeHighlightTabs/CodeHighlightTabs';
+import type { NormalizeCodeOptions } from './normalize-code';
 
 export { CodeHighlight } from './CodeHighlight/CodeHighlight.js';
 export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight.js';

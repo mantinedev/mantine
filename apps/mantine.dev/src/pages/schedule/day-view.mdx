@@ -140,12 +140,55 @@ Use `radius` prop to control the border radius of the day view container.
 
 <Demo data={DayViewDemos.radius} />
 
+## Overlap mode
+
+`eventOverlapMode` prop controls how events that overlap in time share the horizontal space:
+
+- `columns` (default) – the available width is split evenly between the overlapping events. Every event
+  is fully visible, but each one gets narrower as more events overlap.
+- `cascade` – each event is indented from the previous one and drawn on top of it, extending to the
+  right edge of the group. Events keep a readable width no matter how many of them overlap, at the cost
+  of covering the events underneath.
+
+Prefer `cascade` when your data regularly produces large groups of simultaneous events, where `columns`
+would shrink each event to an unreadable sliver.
+
+<Demo data={DayViewDemos.eventOverlapMode} />
+
+The indent shrinks automatically as the group grows, so the event on top always keeps at least 60% of
+the available width.
+
+Covered events can still be read and interacted with: rest the pointer on one and it is raised above
+the events covering it, which also makes its resize handles reachable. Keyboard users get the same
+result by focusing the event with `Tab`, without any delay.
+
+`eventOverlapRaiseDelay` prop controls how long the pointer must rest on an event before it is raised,
+in milliseconds. The default of `600` is long enough that moving the pointer across a group to reach a
+specific event does not raise the events it passes over. Set a smaller value to make covered events
+reveal themselves sooner:
+
+```tsx
+import { DayView } from '@mantine/schedule';
+
+function Demo() {
+  return <DayView date={new Date()} eventOverlapMode="cascade" eventOverlapRaiseDelay={250} />;
+}
+```
+
 ## Drag and drop
 
 Enable drag and drop by setting `withDragDrop` prop. Use `onEventDrop` callback to handle
 event drops. All-day events cannot be dragged.
 
 <Demo data={DayViewDemos.dragDrop} />
+
+## Drag interval
+
+By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
+to use a different snap step for dragging – for example, a grid with 30-minute slots whose events
+can be moved in 15-minute increments. A ghost preview shows where the event will land:
+
+<Demo data={DayViewDemos.eventDragInterval} />
 
 ## External drag and drop
 
@@ -181,6 +224,14 @@ the resize.
 
 <Demo data={DayViewDemos.eventResize} />
 
+## Resize interval
+
+By default events snap to `intervalMinutes` when resized. Set `eventResizeInterval` to use a
+different snap step for resizing – for example, a grid with 30-minute slots whose events can be
+resized in 15-minute increments:
+
+<Demo data={DayViewDemos.eventResizeInterval} />
+
 ## Selective resize permissions
 
 Use `canResizeEvent` callback to control which events can be resized. This is useful for
@@ -215,10 +266,27 @@ See [Recurring events guide](/schedule/recurring-events) for full documentation.
 
 Set `display="background"` on an event to render it as a full-width, semi-transparent,
 non-interactive block behind regular events. Background events are useful for marking
-unavailability, lunch breaks, focus time, or other blocked periods. They cannot be
-clicked, dragged, or resized.
+unavailability, lunch breaks, focus time, or other blocked periods. By default they
+cannot be clicked, dragged, or resized.
 
 <Demo data={DayViewDemos.backgroundEvents} />
+
+## Interactive background events
+
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
+background event calls `onEventClick` with the event object, the same as for regular events –
+use `event.display === 'background'` to tell them apart in the handler.
+
+Note that an interactive background event covers the time slots underneath it: clicks and
+drag-to-select in its range go to the event instead of the grid. Background events still
+cannot be dragged or resized.
+
+The prop is supported by `DayView`, `WeekView`, `MonthView`, `ResourcesDayView` and
+`ResourcesWeekView`. `YearView` and the `MobileMonthView` that `Schedule` renders with
+`layout="responsive"` on small screens do not display background events at all, so the prop
+has no effect there.
+
+<Demo data={DayViewDemos.interactiveBackgroundEvents} />
 
 ## Custom background event styles with drag and drop blocking
 

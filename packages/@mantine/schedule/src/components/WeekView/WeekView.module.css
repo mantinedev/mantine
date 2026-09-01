@@ -168,10 +168,38 @@
   font-weight: var(--mantine-font-weight-medium);
   padding: 3px 4px;
   color: var(--bg-event-color);
+
+  &:where([data-interactive]) {
+    pointer-events: auto;
+    cursor: pointer;
+    user-select: none;
+
+    @mixin hover {
+      background-color: var(--bg-event-hover);
+    }
+  }
+}
+
+.weekView:where([data-slot-dragging]) .weekViewBackgroundEvent,
+.weekViewRoot:where([data-event-interaction]) .weekViewBackgroundEvent,
+.weekViewRoot:where([data-all-day-dragging]) .weekViewBackgroundEvent {
+  pointer-events: none;
 }
 
 .weekViewDaySlots {
   position: relative;
+
+  /* Cascade events stack with an unbounded z-index, keep them out of the sticky header's layer */
+  &:where(:has([data-cascade])) {
+    isolation: isolate;
+
+    /* Drag and resize feedback must stay above every cascade column */
+    --event-cascade-interaction-z-index: 999;
+
+    .weekViewDragPreview {
+      z-index: var(--event-cascade-interaction-z-index);
+    }
+  }
 }
 
 .weekViewDaySlot {
@@ -345,4 +373,13 @@
       }
     }
   }
+}
+
+.weekViewDragPreview {
+  pointer-events: none;
+  z-index: 3;
+  border-radius: var(--week-view-radius);
+  border: 1px dashed var(--mantine-color-blue-filled);
+  background-color: var(--mantine-color-blue-light);
+  opacity: 0.6;
 }

@@ -1,0 +1,83 @@
+import { ActionBarDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ActionBar);
+
+## Usage
+
+`ActionBar` is a fixed-position bottom bar that appears when items are selected,
+providing contextual bulk actions. It is built using [Affix](/core/affix), [Transition](/core/transition)
+and [Paper](/core/paper) components.
+
+Content inside `ActionBar` is composed freely using existing Mantine components
+(`Button`, `ActionIcon`, `Group`, `Text`, etc.). Use `ActionBar.Divider` to
+add a vertical divider and `ActionBar.CloseButton` to add a close button that
+triggers the `onClose` callback.
+
+<Demo data={ActionBarDemos.usage} />
+
+`ActionBar` root has `role="group"` and the divider has `role="separator"` so that assistive
+technologies announce the controls as one bar. Set `aria-label` to describe what the actions apply to.
+
+## With ActionIcon buttons
+
+<Demo data={ActionBarDemos.withActions} />
+
+## Placement
+
+By default, `ActionBar` is centered at the bottom of the screen. You can change
+the position with the `position` prop. When using non-centered positions, set
+`styles={{ root: { marginInline: 0 } }}` to remove the auto centering.
+
+<Demo data={ActionBarDemos.placement} />
+
+## Close on Escape
+
+By default, `ActionBar` does not close when `Escape` key is pressed. Set `closeOnEscape`
+to enable this behavior:
+
+<Demo data={ActionBarDemos.closeOnEscape} />
+
+## Transitions
+
+`ActionBar` is animated with the [Transition](/core/transition) component,
+`{ transition: 'pop', duration: 200 }` by default. Use `transitionProps` to change
+the transition, its duration and timing function:
+
+```tsx
+import { ActionBar, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ActionBar opened transitionProps={{ transition: 'slide-up', duration: 300 }}>
+      <Button>Delete</Button>
+    </ActionBar>
+  );
+}
+```
+
+## keepMounted
+
+By default, the action bar is removed from the DOM when it is closed. Set `keepMounted`
+to keep it mounted and hide it with `display: none` instead – for example, if the bar
+contains form state that must be preserved between openings:
+
+```tsx
+import { ActionBar, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ActionBar opened={false} keepMounted>
+      <Button>Delete</Button>
+    </ActionBar>
+  );
+}
+```
+
+## Rendering in a portal
+
+`ActionBar` is rendered inside [Portal](/core/portal) by default – this way it is not
+affected by `overflow` and `transform` styles of its parent elements. Set
+`withinPortal={false}` to render it in place, and use `portalProps` to pass props
+down to the `Portal` component.

@@ -1,0 +1,99 @@
+import { MatrixChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.MatrixChart);
+
+## Usage
+
+`MatrixChart` is a generic x/y heatmap with categorical axes. Each cell is colored based on a value.
+Data is an array of objects with `x`, `y`, and `value` properties.
+
+<Demo data={MatrixChartDemos.usage} />
+
+## Data format
+
+Data is an array of `MatrixChartCell` objects:
+
+```tsx
+interface MatrixChartCell {
+  x: string;
+  y: string;
+  value: number | null;
+}
+```
+
+- `x` – column identifier
+- `y` – row identifier
+- `value` – numeric value for color interpolation, `null` for empty cells
+
+## Labels
+
+Use `xLabels` and `yLabels` props to provide axis labels. Set `withXLabels` to display
+x-axis labels along the bottom (or top with `xLabelsPosition="top"`), and `withYLabels` to
+display y-axis labels on the left side. Both label arrays are optional – when they are not
+provided, the labels are taken from the `x` and `y` values of `data` in the order they first
+appear.
+
+<Demo data={MatrixChartDemos.labels} />
+
+## X-axis labels rotation
+
+By default, x-axis labels are rotated -90 degrees. Use `xLabelsRotation` prop to change the angle.
+Set it to `0` for horizontal labels or `-45` for angled labels.
+
+<Demo data={MatrixChartDemos.xLabelsRotation} />
+
+## Tooltip
+
+Set `withTooltip` prop and provide `getTooltipLabel` function to display a tooltip on cell hover.
+
+<Demo data={MatrixChartDemos.tooltip} />
+
+## Colors
+
+Use `colors` prop to customize the color palette. Colors are interpolated based on the cell value
+within the domain range.
+
+<Demo data={MatrixChartDemos.colors} />
+
+## Values domain
+
+By default, domain is auto-calculated from data min/max values. Use `domain` prop to set
+a custom `[min, max]` range for color interpolation.
+
+<Demo data={MatrixChartDemos.domain} />
+
+## Cell size and gap
+
+Use `cellSize` and `gap` props to control cell dimensions and spacing. `cellRadius` controls
+the border radius of cells.
+
+<Demo data={MatrixChartDemos.cellSize} />
+
+## Pass props to cells
+
+Use `getCellProps` callback to add custom props to individual cells based on their data.
+
+<Demo data={MatrixChartDemos.getCellProps} />
+
+## Legend
+
+Set `withLegend` prop to display a color legend below the chart. Use `legendLabels` prop
+to customize the legend text.
+
+<Demo data={MatrixChartDemos.legend} />
+
+## Accessibility
+
+Matrix cells are decorative `rect` elements – they carry no text for screen readers. Set `aria-label`
+(or `aria-labelledby`) to describe what the chart shows; the chart is then exposed as a single labelled
+image instead of a grid of anonymous shapes:
+
+```tsx
+import { MatrixChart } from '@mantine/charts';
+
+function Demo() {
+  return <MatrixChart data={[]} aria-label="Deployments per service and weekday" />;
+}
+```

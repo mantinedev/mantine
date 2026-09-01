@@ -14,7 +14,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { useInterval } from '@mantine/hooks';
+import { useInterval, useMounted } from '@mantine/hooks';
 import { AnyDateValue, DateLabelFormat } from '../../types';
 import { formatDate, getCurrentTimePosition, isInTimeRange } from '../../utils';
 import classes from './CurrentTimeIndicator.module.css';
@@ -137,6 +137,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   });
 
   const ctx = useDatesContext();
+  const mounted = useMounted();
   const [, setTick] = useState(0);
   useInterval(() => setTick((tick) => tick + 1), 1000 * 60, {
     autoInvoke: true,
@@ -148,7 +149,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     ? formatDate({ locale: ctx.getLocale(locale), date: now, format: currentTimeFormat })
     : '';
 
-  if (!isInTimeRange({ date: now, startTime, endTime })) {
+  if (!mounted || !isInTimeRange({ date: now, startTime, endTime })) {
     return null;
   }
 

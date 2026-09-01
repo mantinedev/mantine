@@ -25,6 +25,7 @@ export * from './components/ResourcesSchedule';
 export * from './components/AgendaView';
 
 // Supporting components
+export * from './components/ScheduleBackgroundEvent';
 export * from './components/ScheduleEvent';
 export * from './components/ScheduleHeader';
 export * from './components/CurrentTimeIndicator';

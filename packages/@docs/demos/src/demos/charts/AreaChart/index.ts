@@ -1,5 +1,6 @@
 export { stacked } from './AreaChart.demo.stacked';
 export { percent } from './AreaChart.demo.percent';
+export { stream } from './AreaChart.demo.stream';
 export { usage } from './AreaChart.demo.usage';
 export { legend } from './AreaChart.demo.legend';
 export { legendPosition } from './AreaChart.demo.legendPosition';
@@ -30,7 +31,8 @@ export { rotateLabels } from './AreaChart.demo.rotateLabels';
 export { axisLabels } from './AreaChart.demo.axisLabels';
 export { rightYAxis } from './AreaChart.demo.rightYAxis';
 export { pointLabels } from './AreaChart.demo.pointLabels';
-export { referenceArea } from './AreaChart.demo.referenceArea';
+export { referenceAreas } from './AreaChart.demo.referenceAreas';
+export { referenceDots } from './AreaChart.demo.referenceDots';
 export { curveType } from './AreaChart.demo.curveType';
 export { brush } from './AreaChart.demo.brush';
 export { brushProps } from './AreaChart.demo.brushProps';

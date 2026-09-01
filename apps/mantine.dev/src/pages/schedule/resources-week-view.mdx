@@ -22,6 +22,18 @@ the top of the column and stack when there are several; all-day events with
 
 <Demo data={ResourcesWeekViewDemos.allDayEvents} />
 
+## Interactive background events
+
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
+background event calls `onEventClick` with the event object, the same as for regular events –
+use `event.display === 'background'` to tell them apart in the handler.
+
+Note that an interactive background event covers the time slots underneath it: clicks and
+drag-to-select in its range go to the event instead of the grid. Background events still
+cannot be dragged or resized.
+
+<Demo data={ResourcesWeekViewDemos.interactiveBackgroundEvents} />
+
 ## Drag and drop
 
 Enable cross-resource drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback
@@ -29,6 +41,14 @@ receives the target `resourceId` as the fifth argument, allowing you to update t
 assignment. Events can be dragged across both resources and days.
 
 <Demo data={ResourcesWeekViewDemos.dragDrop} />
+
+## Drag interval
+
+By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
+to use a different snap step for dragging – for example, a grid with 30-minute slots whose events
+can be moved in 15-minute increments. A ghost preview shows where the event will land:
+
+<Demo data={ResourcesWeekViewDemos.eventDragInterval} />
 
 ## Event form
 
@@ -174,6 +194,14 @@ Resizing is constrained to the day the event belongs to: an event cannot be resi
 days. To make an event cover several days, update its `start` and `end` dates directly in your data.
 
 Use `canResizeEvent` to control which events can be resized.
+
+## Resize interval
+
+By default events snap to `intervalMinutes` when resized. Set `eventResizeInterval` to use a
+different snap step for resizing – for example, a grid with 30-minute slots whose events can be
+resized in 15-minute increments:
+
+<Demo data={ResourcesWeekViewDemos.eventResizeInterval} />
 
 ## Static mode
 

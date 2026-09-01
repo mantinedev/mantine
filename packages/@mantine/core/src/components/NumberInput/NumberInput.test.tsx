@@ -1,5 +1,5 @@
 import { createRef } from 'react';
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -317,10 +317,7 @@ describe('@mantine/core/NumberInput', () => {
     const input = getInput() as HTMLInputElement;
 
     focusInput();
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 10));
-    });
-    expect(input.selectionStart).toBe(0);
+    await waitFor(() => expect(input.selectionStart).toBe(0));
     expect(input.selectionEnd).toBe(3);
   });
 

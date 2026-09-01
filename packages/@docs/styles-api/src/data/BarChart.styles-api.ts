@@ -21,6 +21,8 @@ export const BarChartStylesApi: StylesApiData<BarChartFactory> = {
     tooltipItemData: 'Tooltip item data',
     tooltipLabel: 'Label of the tooltip',
     referenceLine: 'Reference line',
+    referenceArea: 'Reference area',
+    referenceDot: 'Reference dot',
     axisLabel: 'X and Y axis labels',
     brush: 'Brush (range selector) root element',
   },

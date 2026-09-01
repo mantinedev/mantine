@@ -14,13 +14,14 @@ import {
   ScrollArea,
   ScrollAreaProps,
   StylesApiProps,
+  useDirection,
   useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { useInterval, useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
+import { useInterval, useIsomorphicEffect, useMergedRef, useMounted } from '@mantine/hooks';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useHorizontalEventResize } from '../../hooks/use-horizontal-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
@@ -41,11 +42,13 @@ import {
   calculateDropTime,
   formatDate,
   getBusinessHoursMod,
+  getDayPosition,
   getCurrentTimePosition,
   getDayTimeIntervals,
   getGroupToResourceIdMap,
   getIndexFromDragPoint,
   getOrderedResources,
+  getOverlapClusters,
   getTimeAxisEventStyle,
   getWeekDays,
   handleResourcesGridKeyDown,
@@ -58,7 +61,7 @@ import {
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
-import { getOverlapClusters } from '../ResourcesDayView/get-overlap-clusters/get-overlap-clusters';
+import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
@@ -91,6 +94,7 @@ export type ResourcesWeekViewStylesNames =
   | 'resourcesWeekViewCurrentTimeIndicatorThumb'
   | 'resourcesWeekViewCurrentTimeIndicatorTimeBubble'
   | 'resourcesWeekViewEventWrapper'
+  | 'resourcesWeekViewDragPreview'
   | 'resourcesWeekViewResizeHandle'
   | 'resourcesWeekViewGroupColumn'
   | 'resourcesWeekViewGroupColumnEmpty'
@@ -168,6 +172,8 @@ export interface ResourcesWeekViewProps
     resourceId?: string | number;
   }) => void;
   canDragEvent?: (event: ScheduleEventData) => boolean;
+  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  eventDragInterval?: number;
   onEventDragStart?: (event: ScheduleEventData) => void;
   onEventDragEnd?: () => void;
   onTimeSlotClick?: (data: {
@@ -177,6 +183,8 @@ export interface ResourcesWeekViewProps
     resourceId?: string | number;
   }) => void;
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  withInteractiveBackgroundEvents?: boolean;
   withDragSlotSelect?: boolean;
   onSlotDragEnd?: (data: {
     rangeStart: DateTimeStringValue;
@@ -203,6 +211,9 @@ export interface ResourcesWeekViewProps
 
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  eventResizeInterval?: number;
 
   recurrenceExpansionLimit?: number;
 
@@ -246,6 +257,7 @@ const defaultProps = {
   highlightToday: true,
   mode: 'default',
   maxEventsPerTimeSlot: 2,
+  withInteractiveBackgroundEvents: false,
 } satisfies Partial<ResourcesWeekViewProps>;
 
 const varsResolver = createVarsResolver<ResourcesWeekViewFactory>(
@@ -308,13 +320,16 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
+    eventDragInterval,
     onEventDragStart,
     onEventDragEnd,
     withEventResize,
     onEventResize,
     canResizeEvent,
+    eventResizeInterval,
     onTimeSlotClick,
     onEventClick,
+    withInteractiveBackgroundEvents,
     withDragSlotSelect,
     onSlotDragEnd,
     mode,
@@ -363,6 +378,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   };
 
   const theme = useMantineTheme();
+  const { dir } = useDirection();
   const [scrolled, setScrolled] = useState(false);
   const [scrolledX, setScrolledX] = useState(false);
   const ctx = useDatesContext();
@@ -391,12 +407,14 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const isToday = weekdays.some((day) => dayjs(day).isSame(now, 'day'));
   const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
 
+  const mounted = useMounted();
   const [, setTimeIndicatorTick] = useState(0);
   useInterval(() => setTimeIndicatorTick((tick) => tick + 1), 60000, { autoInvoke: true });
   const timeIndicatorOffset = getCurrentTimePosition({ startTime, endTime, intervalMinutes, now });
 
   const todayDayIndex = weekdays.findIndex((day) => dayjs(day).isSame(now, 'day'));
   const showTimeIndicator =
+    mounted &&
     withCurrentTimeIndicator &&
     todayDayIndex >= 0 &&
     isInTimeRange({ date: now.toDate(), startTime, endTime });
@@ -405,6 +423,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     : '';
 
   type DropTargetSlot = { resourceId: string | number; slotIndex: number };
+
+  const dragOffsetRef = useRef<{ offset: number; size: number }>({ offset: 0, size: 0 });
 
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, target: DropTargetSlot) => {
@@ -415,17 +435,63 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       const slotInDay = target.slotIndex % totalSlotsPerDay;
       const slotDay = weekdays[dayIndex];
       if (slotDay) {
+        const slotDate = dayjs(slotDay).format('YYYY-MM-DD');
+        const slotTime = slots[slotInDay].startTime;
+        let dropDateTime: string = `${slotDate} ${slotTime}`;
+
+        if (eventDragInterval != null) {
+          const { start } = calculateDropTime({
+            draggedEvent: { start: dropDateTime, end: dropDateTime } as ScheduleEventData,
+            targetDate: slotDate,
+            targetSlotTime: slotTime,
+            intervalMinutes,
+            dragIntervalMinutes: eventDragInterval,
+            slotOffset: dragOffsetRef.current.offset,
+            slotSize: dragOffsetRef.current.size,
+            startTime,
+            endTime,
+          });
+          dropDateTime = dayjs(start).format('YYYY-MM-DD HH:mm:ss');
+        }
+
         onExternalEventDrop({
           dataTransfer: e.dataTransfer,
-          dropDateTime: `${dayjs(slotDay).format('YYYY-MM-DD')} ${slots[slotInDay].startTime}`,
+          dropDateTime,
           resourceId: target.resourceId,
         });
       }
     },
-    [onExternalEventDrop, slots, weekdays, totalSlotsPerDay]
+    [
+      onExternalEventDrop,
+      slots,
+      weekdays,
+      totalSlotsPerDay,
+      eventDragInterval,
+      intervalMinutes,
+      startTime,
+      endTime,
+    ]
   );
 
   const lastDropResourceId = useRef<string | number | undefined>(undefined);
+
+  const getDropTimeForSlot = (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
+    const dayIndex = Math.floor(target.slotIndex / totalSlotsPerDay);
+    const slotInDay = target.slotIndex % totalSlotsPerDay;
+    const slotTime = slots[slotInDay].startTime;
+    const targetDay = weekdays[dayIndex] || weekdays[0];
+    return calculateDropTime({
+      draggedEvent,
+      targetDate: targetDay,
+      targetSlotTime: slotTime,
+      intervalMinutes,
+      dragIntervalMinutes: eventDragInterval,
+      slotOffset: eventDragInterval == null ? undefined : dragOffsetRef.current.offset,
+      slotSize: eventDragInterval == null ? undefined : dragOffsetRef.current.size,
+      startTime,
+      endTime,
+    });
+  };
 
   const handleInternalEventDrop = useCallback(
     (data: {
@@ -448,19 +514,31 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     onEventDragEnd,
     calculateDropTarget: (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
       lastDropResourceId.current = target.resourceId;
-      const dayIndex = Math.floor(target.slotIndex / totalSlotsPerDay);
-      const slotInDay = target.slotIndex % totalSlotsPerDay;
-      const slotTime = slots[slotInDay].startTime;
-      const targetDay = weekdays[dayIndex] || weekdays[0];
-      return calculateDropTime({
-        draggedEvent,
-        targetDate: targetDay,
-        targetSlotTime: slotTime,
-        intervalMinutes,
-      });
+      return getDropTimeForSlot(target, draggedEvent);
     },
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
+
+  const updateDragPreview = (target: DropTargetSlot) => {
+    const draggedEvent = dragDrop.dragContextValue.draggedEvent;
+    if (eventDragInterval == null || !draggedEvent) {
+      return;
+    }
+    const { start, end } = getDropTimeForSlot(target, draggedEvent);
+    const newStart = dayjs(start).format('YYYY-MM-DD HH:mm:ss');
+    if (
+      dragDrop.dragPreview?.start !== newStart ||
+      dragDrop.dragPreview?.target.resourceId !== target.resourceId
+    ) {
+      dragDrop.setDragPreview({
+        start: newStart,
+        end: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
+        target,
+      });
+    }
+  };
+
+  const suppressDropHighlight = eventDragInterval != null && dragDrop.dragContextValue.isDragging;
 
   const groupToResourceId = useMemo(() => getGroupToResourceIdMap(resources), [resources]);
 
@@ -492,6 +570,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     startTime,
     endTime,
     intervalMinutes,
+    resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
   });
@@ -622,9 +701,24 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     });
   }, []);
 
-  const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, resourceIndex: number) => {
-    return getIndexFromDragPoint(slotsRef.current[resourceIndex] ?? [], event.clientX);
-  }, []);
+  const getSlotIndexFromDragPoint = useCallback(
+    (event: React.DragEvent, resourceIndex: number) => {
+      const daySlots = slotsRef.current[resourceIndex] ?? [];
+      const index = getIndexFromDragPoint(daySlots, event.clientX);
+      if (index !== null) {
+        const rect = daySlots[index]?.getBoundingClientRect();
+        if (rect) {
+          const rawOffset = dir === 'rtl' ? rect.right - event.clientX : event.clientX - rect.left;
+          dragOffsetRef.current = {
+            offset: Math.max(0, Math.min(rect.width, rawOffset)),
+            size: rect.width,
+          };
+        }
+      }
+      return index;
+    },
+    [dir]
+  );
 
   const handleSlotKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
@@ -640,6 +734,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   };
 
   const dayWidthPercent = 100 / weekdays.length;
+
+  const interactiveBackgroundEvents = withInteractiveBackgroundEvents && mode !== 'static';
 
   const rows = orderedResources.map((resource, resourceIndex) => {
     const eventNodes: React.ReactNode[] = [];
@@ -659,38 +755,24 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         ...(dayEvents.backgroundAllDayEvents[resource.id] || []),
       ];
       for (const event of bgEvents) {
-        const colors = theme.variantColorResolver({
-          color: event.color || theme.primaryColor,
-          theme,
-          variant: 'light',
-          autoContrast: true,
-        });
-
-        const bgEventBody =
-          typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-        const bgEventProps = {
-          key: `bg-${event.id}-${day}`,
-          ...getStyles('resourcesWeekViewBackgroundEvent', {
-            style: {
-              left: `${dayOffsetPercent + (event.position.top / 100) * dayWidthPercent}%`,
-              width: `${(event.position.height / 100) * dayWidthPercent}%`,
-              top: 0,
-              height: '100%',
-            },
-          }),
-          __vars: {
-            '--bg-event-bg': colors.background,
-            '--bg-event-color': colors.color,
-          },
-          children: bgEventBody,
-        };
-
-        if (typeof renderEvent === 'function') {
-          eventNodes.push(renderEvent(event, bgEventProps as any));
-        } else {
-          eventNodes.push(<Box {...bgEventProps} />);
-        }
+        eventNodes.push(
+          <ScheduleBackgroundEvent
+            key={`bg-${event.id}-${day}`}
+            event={event}
+            renderEvent={renderEvent}
+            renderEventBody={renderEventBody}
+            interactive={interactiveBackgroundEvents}
+            onEventClick={onEventClick}
+            {...getStyles('resourcesWeekViewBackgroundEvent', {
+              style: {
+                left: `${dayOffsetPercent + (event.position.top / 100) * dayWidthPercent}%`,
+                width: `${(event.position.height / 100) * dayWidthPercent}%`,
+                top: 0,
+                height: '100%',
+              },
+            })}
+          />
+        );
       }
 
       const allRegularEvents = (dayEvents.regularEvents[resource.id] || []).filter(
@@ -939,6 +1021,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
           const slotIndex = getSlotIndexFromDragPoint(event, resIdx);
           if (slotIndex !== null) {
             dragDrop.handleDragOver(event, { resourceId, slotIndex });
+            updateDragPreview({ resourceId, slotIndex });
           }
         }}
         onRowSlotsDragLeave={dragDrop.handleDragLeave}
@@ -949,7 +1032,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
           }
         }}
         dropTargetSlotIndex={
-          dragDrop.dropTarget?.resourceId === resource.id
+          !suppressDropHighlight && dragDrop.dropTarget?.resourceId === resource.id
             ? dragDrop.dropTarget.slotIndex
             : undefined
         }
@@ -966,6 +1049,41 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         allDayCount={maxAllDayCount}
       >
         {eventNodes}
+        {dragDrop.dragPreview?.target.resourceId === resource.id &&
+          dragDrop.dragContextValue.draggedEvent && (
+            <Box
+              {...getStyles('resourcesWeekViewDragPreview', {
+                style: (() => {
+                  const previewDayIndex = Math.floor(
+                    dragDrop.dragPreview.target.slotIndex / totalSlotsPerDay
+                  );
+                  const { top, height } = getDayPosition({
+                    event: {
+                      ...dragDrop.dragContextValue.draggedEvent,
+                      start: dragDrop.dragPreview.start,
+                      end: dragDrop.dragPreview.end,
+                    },
+                    startTime,
+                    endTime,
+                    intervalMinutes,
+                  });
+                  const dayOffsetPercent = (previewDayIndex / weekdays.length) * 100;
+                  const eventLeft = dayOffsetPercent + (top / 100) * dayWidthPercent;
+                  const eventWidth = (height / 100) * dayWidthPercent;
+                  return {
+                    position: 'absolute',
+                    insetBlockStart: 0,
+                    insetBlockEnd: 0,
+                    ...getTimeAxisEventStyle({
+                      start: eventLeft,
+                      span: eventWidth,
+                      axis: 'horizontal',
+                    }),
+                  };
+                })(),
+              })}
+            />
+          )}
       </ResourcesWeekViewRow>
     );
   });

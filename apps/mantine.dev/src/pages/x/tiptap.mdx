@@ -203,6 +203,95 @@ To use tasks, you will need to install additional packages:
 
 <Demo data={TipTapDemos.tasks} />
 
+## Table
+
+To add tables support, install the [Tiptap table extension](https://tiptap.dev/docs/editor/extensions/nodes/table)
+and register it with the editor. `TableKit` bundles all required node extensions (`Table`, `TableRow`,
+`TableHeader` and `TableCell`) in one package:
+
+<InstallScript packages="@tiptap/extension-table" />
+
+<Demo data={TipTapDemos.table} />
+
+`RichTextEditor` provides the following table controls. All of them are disabled when the table
+extension is not installed, and every control except `RichTextEditor.TableInsert` is additionally
+disabled while the cursor is not inside a table:
+
+- `RichTextEditor.TableInsert` – inserts a table, opens a grid to pick its size. Enabled outside of a
+  table, since that is where a new table is inserted. Supports `maxColumns`, `maxRows`,
+  `withHeaderRow` and `popoverProps` props.
+- `RichTextEditor.TableDelete` – deletes the entire table
+- `RichTextEditor.TableColumnBefore` / `RichTextEditor.TableColumnAfter` – add a column before/after
+- `RichTextEditor.TableColumnDelete` – deletes the current column
+- `RichTextEditor.TableRowBefore` / `RichTextEditor.TableRowAfter` – add a row before/after
+- `RichTextEditor.TableRowDelete` – deletes the current row
+- `RichTextEditor.TableToggleHeaderRow` / `RichTextEditor.TableToggleHeaderColumn` – toggle header row/column
+- `RichTextEditor.TableMergeCells` / `RichTextEditor.TableSplitCell` – merge selected cells / split a merged cell
+
+## Details
+
+To add collapsible sections (`<details>`/`<summary>`), install the
+[Tiptap details extension](https://tiptap.dev/docs/editor/extensions/nodes/details) and register all
+three nodes it provides – `Details`, `DetailsSummary` and `DetailsContent`:
+
+<InstallScript packages="@tiptap/extension-details" />
+
+<Demo data={TipTapDemos.details} />
+
+`RichTextEditor.Details` toggles a collapsible section: it wraps the current block in a details node,
+or removes the details node when the cursor is already inside one. The control is automatically
+disabled when the details extension is not installed.
+
+## Invisible characters
+
+To display formatting marks – spaces, paragraph breaks and hard breaks – install the
+[Tiptap invisible characters extension](https://tiptap.dev/docs/editor/extensions/functionality/invisiblecharacters)
+and register it. Set `visible: false` to hide the marks until the control is toggled:
+
+<InstallScript packages="@tiptap/extension-invisible-characters" />
+
+<Demo data={TipTapDemos.invisibleCharacters} />
+
+`RichTextEditor.InvisibleCharacters` toggles the visibility of formatting marks. The control reflects
+the current visibility as its active state and is automatically disabled when the extension is not
+installed.
+
+## Removing the paragraph wrapper
+
+Tiptap wraps the content of some nodes in a `<p>` element by default, producing markup like
+`<td><p>Text</p></td>` for table cells or `<li><p>Text</p></li>` for list items. This is defined by
+the node schema (`content: 'block+'` for table cells, `content: 'paragraph block*'` for list items),
+not by `@mantine/tiptap` – the editor only renders the markup that the schema produces.
+
+If you prefer the text to be placed directly in the node, override its `content` to `inline*` by
+extending the corresponding extension. For table cells:
+
+```tsx
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { TableKit, TableCell, TableHeader } from '@tiptap/extension-table';
+
+const editor = useEditor({
+  extensions: [
+    StarterKit,
+    TableKit.configure({ tableCell: false, tableHeader: false }),
+    TableCell.extend({ content: 'inline*' }),
+    TableHeader.extend({ content: 'inline*' }),
+  ],
+});
+// → <td>Text</td> instead of <td><p>Text</p></td>
+```
+
+`inline*` content restricts these nodes to inline content only: they can no longer contain multiple
+paragraphs, blockquotes or other block nodes. Keep the default block content unless you specifically
+need single-line inline nodes.
+
+The same technique applies to list items (`ListItem.extend({ content: 'inline*' })`), but be careful:
+`inline*` list items cannot hold a nested list, so **list nesting breaks** – the <kbd>Tab</kbd>
+shortcut and indent controls (like `RichTextEditor.TaskListSink`) will throw a `TransformError`. Only
+remove the wrapper from lists when you also disable nesting (for example, remove the list keyboard
+shortcuts and do not render indent controls).
+
 ## Typography styles
 
 By default, `RichTextEditor` renders content with [Typography](/core/typography/) and some additional styles.

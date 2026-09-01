@@ -300,6 +300,27 @@ function Demo() {
 }
 ```
 
+## Custom notification rendering
+
+Use `renderNotification` prop on `Notifications` component or per notification in `notifications.show`/`notifications.update`
+to completely replace the default notification with custom content. All animations (enter, exit, drag dismiss, scroll dismiss)
+are preserved for custom notifications:
+
+<Demo data={NotificationsDemos.renderNotification} />
+
+## Stacked layout
+
+Set `layout="stacked"` on the `Notifications` component to display notifications in a stacked layout
+where only the latest notification is fully visible, and older notifications peek out behind it.
+
+The stack expands when it is hovered with a mouse, when keyboard focus moves into it, and when it is
+tapped on a touch device – a tap outside collapses it again. While collapsed, the notifications behind
+the first one are `inert`: they are not focusable and are hidden from screen readers.
+
+Note: the stacked demo uses a separate store to avoid affecting other notifications on the page.
+
+<Demo data={NotificationsDemos.stacked} />
+
 ## Subscribe to notifications state
 
 You can subscribe to notification state changes with the `useNotifications` hook.

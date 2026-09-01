@@ -1,6 +1,6 @@
 {
   "name": "@mantine/core",
-  "version": "9.5.2",
+  "version": "9.6.0",
   "description": "React components library focused on usability, accessibility and developer experience",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
@@ -43,12 +43,12 @@
     "directory": "packages/@mantine/core"
   },
   "peerDependencies": {
-    "@mantine/hooks": "9.5.2",
+    "@mantine/hooks": "9.6.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.27.19",
+    "@floating-ui/react": "^0.27.20",
     "clsx": "^2.1.1",
     "react-number-format": "^5.4.5",
     "react-remove-scroll": "^2.7.2",
@@ -57,7 +57,7 @@
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   }
 }

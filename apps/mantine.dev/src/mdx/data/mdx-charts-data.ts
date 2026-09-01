@@ -143,6 +143,18 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     searchTags: 'mixed chart, combined chart, composed chart, multi type chart, recharts',
   },
 
+  CandlestickChart: {
+    title: 'CandlestickChart',
+    props: ['CandlestickChart'],
+    styles: ['CandlestickChart'],
+    package: '@mantine/charts',
+    slug: '/charts/candlestick-chart',
+    description: 'Financial OHLC candlestick chart',
+    source: '@mantine/charts/src/CandlestickChart/CandlestickChart.tsx',
+    docs: 'charts/candlestick-chart.mdx',
+    searchTags: 'financial chart, ohlc chart, stock chart, trading chart, candlestick, recharts',
+  },
+
   RadialBarChart: {
     title: 'RadialBarChart',
     props: ['RadialBarChart'],
@@ -190,6 +202,28 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     docs: 'charts/bullet-chart.mdx',
   },
 
+  GaugeChart: {
+    title: 'GaugeChart',
+    props: ['GaugeChart'],
+    styles: ['GaugeChart'],
+    package: '@mantine/charts',
+    slug: '/charts/gauge-chart',
+    description: 'Radial gauge chart for KPI and status display',
+    source: '@mantine/charts/src/GaugeChart/GaugeChart.tsx',
+    docs: 'charts/gauge-chart.mdx',
+  },
+
+  WaffleChart: {
+    title: 'WaffleChart',
+    props: ['WaffleChart'],
+    styles: ['WaffleChart'],
+    package: '@mantine/charts',
+    slug: '/charts/waffle-chart',
+    description: 'Part-to-whole grid chart with colored cells',
+    source: '@mantine/charts/src/WaffleChart/WaffleChart.tsx',
+    docs: 'charts/waffle-chart.mdx',
+  },
+
   Treemap: {
     title: 'Treemap',
     props: ['Treemap'],
@@ -211,6 +245,17 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     description: 'Sunburst chart component for hierarchical data',
     source: '@mantine/charts/src/SunburstChart/SunburstChart.tsx',
     docs: 'charts/sunburst-chart.mdx',
+  },
+
+  MatrixChart: {
+    title: 'MatrixChart',
+    props: ['MatrixChart'],
+    styles: ['MatrixChart'],
+    package: '@mantine/charts',
+    slug: '/charts/matrix-chart',
+    description: 'Generic x/y heatmap with categorical axes',
+    source: '@mantine/charts/src/MatrixChart/MatrixChart.tsx',
+    docs: 'charts/matrix-chart.mdx',
   },
 
   SankeyChart: {

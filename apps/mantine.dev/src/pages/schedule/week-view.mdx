@@ -194,11 +194,54 @@ When multiple events overlap in time, they are automatically positioned side by 
 
 <Demo data={WeekViewDemos.overlappingEvents} />
 
+## Overlap mode
+
+`eventOverlapMode` prop controls how events that overlap in time share the horizontal space:
+
+- `columns` (default) – the available width is split evenly between the overlapping events. Every event
+  is fully visible, but each one gets narrower as more events overlap.
+- `cascade` – each event is indented from the previous one and drawn on top of it, extending to the
+  right edge of the group. Events keep a readable width no matter how many of them overlap, at the cost
+  of covering the events underneath.
+
+Prefer `cascade` when your data regularly produces large groups of simultaneous events, where `columns`
+would shrink each event to an unreadable sliver.
+
+<Demo data={WeekViewDemos.eventOverlapMode} />
+
+The indent shrinks automatically as the group grows, so the event on top always keeps at least 60% of
+the available width.
+
+Covered events can still be read and interacted with: rest the pointer on one and it is raised above
+the events covering it, which also makes its resize handles reachable. Keyboard users get the same
+result by focusing the event with `Tab`, without any delay.
+
+`eventOverlapRaiseDelay` prop controls how long the pointer must rest on an event before it is raised,
+in milliseconds. The default of `600` is long enough that moving the pointer across a group to reach a
+specific event does not raise the events it passes over. Set a smaller value to make covered events
+reveal themselves sooner:
+
+```tsx
+import { WeekView } from '@mantine/schedule';
+
+function Demo() {
+  return <WeekView date={new Date()} eventOverlapMode="cascade" eventOverlapRaiseDelay={250} />;
+}
+```
+
 ## Drag and drop
 
 Enable drag and drop by setting `withDragDrop` prop. Events can be dragged to different days and times.
 
 <Demo data={WeekViewDemos.dragDrop} />
+
+## Drag interval
+
+By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
+to use a different snap step for dragging – for example, a grid with 30-minute slots whose events
+can be moved in 15-minute increments. A ghost preview shows where the event will land:
+
+<Demo data={WeekViewDemos.eventDragInterval} />
 
 ## Restrict draggable events
 
@@ -234,6 +277,14 @@ the resize. Use `canResizeEvent` to control which events can be resized.
 
 <Demo data={WeekViewDemos.eventResize} />
 
+## Resize interval
+
+By default events snap to `intervalMinutes` when resized. Set `eventResizeInterval` to use a
+different snap step for resizing – for example, a grid with 30-minute slots whose events can be
+resized in 15-minute increments:
+
+<Demo data={WeekViewDemos.eventResizeInterval} />
+
 ## Restrict resizable events
 
 Use `canResizeEvent` callback to control which events can be resized.
@@ -266,11 +317,23 @@ See [Recurring events guide](/schedule/recurring-events) for full documentation.
 
 ## Background events
 
-Set `display="background"` on an event to render it as a full-width, semi-transparent,
-non-interactive block behind regular events. Background events are useful for marking
-unavailability, lunch breaks, focus time, or other blocked periods.
+Set `display="background"` on an event to render it as a full-width, semi-transparent block
+behind regular events. By default it cannot be clicked, dragged, or resized. Background events
+are useful for marking unavailability, lunch breaks, focus time, or other blocked periods.
 
 <Demo data={WeekViewDemos.backgroundEvents} />
+
+## Interactive background events
+
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
+background event calls `onEventClick` with the event object, the same as for regular events –
+use `event.display === 'background'` to tell them apart in the handler.
+
+Note that an interactive background event covers the time slots underneath it: clicks and
+drag-to-select in its range go to the event instead of the grid. Background events still
+cannot be dragged or resized.
+
+<Demo data={WeekViewDemos.interactiveBackgroundEvents} />
 
 ## Custom background event styles with drag and drop blocking
 

@@ -30,4 +30,6 @@ export { overlay } from './BarChart.demo.overlay';
 export { getBarColor } from './BarChart.demo.getBarColor';
 export { valueLabelProps } from './BarChart.demo.valueLabelProps';
 export { referenceArea } from './BarChart.demo.referenceArea';
+export { referenceAreas } from './BarChart.demo.referenceAreas';
+export { referenceDots } from './BarChart.demo.referenceDots';
 export { brush } from './BarChart.demo.brush';

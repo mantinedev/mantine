@@ -352,6 +352,16 @@
   font-weight: var(--mantine-font-weight-medium);
   padding: 3px 4px;
   color: var(--bg-event-color);
+
+  &:where([data-interactive]) {
+    pointer-events: auto;
+    cursor: pointer;
+    user-select: none;
+
+    @mixin hover {
+      background-color: var(--bg-event-hover);
+    }
+  }
 }
 
 .resourcesDayViewAllDayEvent {
@@ -415,6 +425,11 @@
   pointer-events: none;
 }
 
+.resourcesDayView:where([data-event-interaction], [data-slot-dragging])
+  .resourcesDayViewBackgroundEvent {
+  pointer-events: none;
+}
+
 .resourcesDayView:where([data-resizing]) {
   & * {
     cursor: ew-resize !important;
@@ -427,4 +442,13 @@
       opacity: 0;
     }
   }
+}
+
+.resourcesDayViewDragPreview {
+  pointer-events: none;
+  z-index: 3;
+  border-radius: var(--resources-day-view-radius);
+  border: 1px dashed var(--mantine-color-blue-filled);
+  background-color: var(--mantine-color-blue-light);
+  opacity: 0.6;
 }

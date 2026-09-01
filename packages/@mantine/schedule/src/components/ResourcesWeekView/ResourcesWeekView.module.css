@@ -326,6 +326,16 @@
   font-weight: var(--mantine-font-weight-medium);
   padding: 3px 4px;
   color: var(--bg-event-color);
+
+  &:where([data-interactive]) {
+    pointer-events: auto;
+    cursor: pointer;
+    user-select: none;
+
+    @mixin hover {
+      background-color: var(--bg-event-hover);
+    }
+  }
 }
 
 .resourcesWeekViewAllDayEvent {
@@ -385,6 +395,11 @@
 }
 
 .resourcesWeekView:where([data-event-interaction]) .resourcesWeekViewRowSlot {
+  pointer-events: none;
+}
+
+.resourcesWeekView:where([data-event-interaction], [data-slot-dragging])
+  .resourcesWeekViewBackgroundEvent {
   pointer-events: none;
 }
 
@@ -462,4 +477,13 @@
   text-transform: uppercase;
   left: calc(-1 * (var(--_time-bubble-width) / 2 - 1px));
   z-index: 3;
+}
+
+.resourcesWeekViewDragPreview {
+  pointer-events: none;
+  z-index: 3;
+  border-radius: var(--resources-week-view-radius);
+  border: 1px dashed var(--mantine-color-blue-filled);
+  background-color: var(--mantine-color-blue-light);
+  opacity: 0.6;
 }

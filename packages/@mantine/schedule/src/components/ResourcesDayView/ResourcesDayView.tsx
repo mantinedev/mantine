@@ -14,13 +14,14 @@ import {
   ScrollArea,
   ScrollAreaProps,
   StylesApiProps,
+  useDirection,
   useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { useInterval, useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
+import { useInterval, useIsomorphicEffect, useMergedRef, useMounted } from '@mantine/hooks';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useHorizontalEventResize } from '../../hooks/use-horizontal-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
@@ -41,11 +42,13 @@ import {
   expandRecurringEvents,
   formatDate,
   getBusinessHoursMod,
+  getDayPosition,
   getCurrentTimePosition,
   getDayTimeIntervals,
   getGroupToResourceIdMap,
   getIndexFromDragPoint,
   getOrderedResources,
+  getOverlapClusters,
   getTimeAxisEventStyle,
   handleResourcesGridKeyDown,
   isAllDayEvent,
@@ -55,11 +58,11 @@ import {
 } from '../../utils';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
+import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
-import { getOverlapClusters } from './get-overlap-clusters/get-overlap-clusters';
 import { getResourcesDayViewEvents } from './get-resources-day-view-events/get-resources-day-view-events';
 import { ResourcesDayViewRow } from './ResourcesDayViewColumn';
 import classes from './ResourcesDayView.module.css';
@@ -83,6 +86,7 @@ export type ResourcesDayViewStylesNames =
   | 'resourcesDayViewCurrentTimeIndicatorThumb'
   | 'resourcesDayViewCurrentTimeIndicatorTimeBubble'
   | 'resourcesDayViewEventWrapper'
+  | 'resourcesDayViewDragPreview'
   | 'resourcesDayViewResizeHandle'
   | 'resourcesDayViewGroupColumn'
   | 'resourcesDayViewGroupColumnEmpty'
@@ -218,6 +222,9 @@ export interface ResourcesDayViewProps
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  eventDragInterval?: number;
+
   /** Called when any event drag starts */
   onEventDragStart?: (event: ScheduleEventData) => void;
 
@@ -234,6 +241,9 @@ export interface ResourcesDayViewProps
 
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  withInteractiveBackgroundEvents?: boolean;
 
   /** If set, enables drag-to-select time slot ranges @default false */
   withDragSlotSelect?: boolean;
@@ -269,6 +279,9 @@ export interface ResourcesDayViewProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  eventResizeInterval?: number;
+
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
 
@@ -302,6 +315,7 @@ const defaultProps = {
   withEventResize: false,
   mode: 'default',
   maxEventsPerTimeSlot: 2,
+  withInteractiveBackgroundEvents: false,
 } satisfies Partial<ResourcesDayViewProps>;
 
 const varsResolver = createVarsResolver<ResourcesDayViewFactory>(
@@ -363,10 +377,12 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
+    eventDragInterval,
     onEventDragStart,
     onEventDragEnd,
     onTimeSlotClick,
     onEventClick,
+    withInteractiveBackgroundEvents,
     withDragSlotSelect,
     onSlotDragEnd,
     mode,
@@ -374,6 +390,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    eventResizeInterval,
     recurrenceExpansionLimit,
     maxEventsPerTimeSlot: _maxEventsPerTimeSlot,
     moreEventsProps,
@@ -413,6 +430,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   };
 
   const theme = useMantineTheme();
+  const { dir } = useDirection();
   const [scrolled, setScrolled] = useState(false);
   const [scrolledX, setScrolledX] = useState(false);
   const ctx = useDatesContext();
@@ -425,22 +443,57 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
 
   type DropTargetSlot = { resourceId: string | number; slotIndex: number };
 
+  const dragOffsetRef = useRef<{ offset: number; size: number }>({ offset: 0, size: 0 });
+
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, target: DropTargetSlot) => {
       if (!onExternalEventDrop) {
         return;
       }
       const slotDate = dayjs(date).format('YYYY-MM-DD');
+      const slotTime = slots[target.slotIndex].startTime;
+      let dropDateTime: string = `${slotDate} ${slotTime}`;
+
+      if (eventDragInterval != null) {
+        const { start } = calculateDropTime({
+          draggedEvent: { start: dropDateTime, end: dropDateTime } as ScheduleEventData,
+          targetDate: slotDate,
+          targetSlotTime: slotTime,
+          intervalMinutes,
+          dragIntervalMinutes: eventDragInterval,
+          slotOffset: dragOffsetRef.current.offset,
+          slotSize: dragOffsetRef.current.size,
+          startTime,
+          endTime,
+        });
+        dropDateTime = dayjs(start).format('YYYY-MM-DD HH:mm:ss');
+      }
+
       onExternalEventDrop({
         dataTransfer: e.dataTransfer,
-        dropDateTime: `${slotDate} ${slots[target.slotIndex].startTime}`,
+        dropDateTime,
         resourceId: target.resourceId,
       });
     },
-    [onExternalEventDrop, slots, date]
+    [onExternalEventDrop, slots, date, eventDragInterval, intervalMinutes, startTime, endTime]
   );
 
   const lastDropResourceId = useRef<string | number | undefined>(undefined);
+
+  const getDropTimeForSlot = (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
+    const slotTime = slots[target.slotIndex].startTime;
+    return calculateDropTime({
+      draggedEvent,
+      targetDate: dayjs(date).format('YYYY-MM-DD'),
+      targetSlotTime: slotTime,
+      intervalMinutes,
+      dragIntervalMinutes: eventDragInterval,
+      slotOffset: eventDragInterval == null ? undefined : dragOffsetRef.current.offset,
+      slotSize: eventDragInterval == null ? undefined : dragOffsetRef.current.size,
+      startTime,
+      endTime,
+    });
+  };
 
   const handleInternalEventDrop = useCallback(
     (data: {
@@ -463,16 +516,31 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     onEventDragEnd,
     calculateDropTarget: (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
       lastDropResourceId.current = target.resourceId;
-      const slotTime = slots[target.slotIndex].startTime;
-      return calculateDropTime({
-        draggedEvent,
-        targetDate: dayjs(date).format('YYYY-MM-DD'),
-        targetSlotTime: slotTime,
-        intervalMinutes,
-      });
+      return getDropTimeForSlot(target, draggedEvent);
     },
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
+
+  const updateDragPreview = (target: DropTargetSlot) => {
+    const draggedEvent = dragDrop.dragContextValue.draggedEvent;
+    if (eventDragInterval == null || !draggedEvent) {
+      return;
+    }
+    const { start, end } = getDropTimeForSlot(target, draggedEvent);
+    const newStart = dayjs(start).format('YYYY-MM-DD HH:mm:ss');
+    if (
+      dragDrop.dragPreview?.start !== newStart ||
+      dragDrop.dragPreview?.target.resourceId !== target.resourceId
+    ) {
+      dragDrop.setDragPreview({
+        start: newStart,
+        end: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
+        target,
+      });
+    }
+  };
+
+  const suppressDropHighlight = eventDragInterval != null && dragDrop.dragContextValue.isDragging;
 
   const groupToResourceId = useMemo(() => getGroupToResourceIdMap(resources), [resources]);
 
@@ -497,6 +565,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     startTime,
     endTime,
     intervalMinutes,
+    resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
   });
@@ -533,11 +602,14 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   const isToday = dayjs(date).isSame(now, 'day');
   const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
 
+  const mounted = useMounted();
   const [, setTimeIndicatorTick] = useState(0);
   useInterval(() => setTimeIndicatorTick((tick) => tick + 1), 60000, { autoInvoke: true });
   const timeIndicatorOffset = getCurrentTimePosition({ startTime, endTime, intervalMinutes, now });
   const showTimeIndicator =
-    withCurrentTimeIndicator && isInTimeRange({ date: now.toDate(), startTime, endTime });
+    mounted &&
+    withCurrentTimeIndicator &&
+    isInTimeRange({ date: now.toDate(), startTime, endTime });
   const formattedCurrentTime = withCurrentTimeBubble
     ? formatDate({ locale: ctx.getLocale(locale), date: now, format: slotLabelFormat })
     : '';
@@ -629,9 +701,24 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     });
   }, []);
 
-  const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, resourceIndex: number) => {
-    return getIndexFromDragPoint(slotsRef.current[resourceIndex] ?? [], event.clientX);
-  }, []);
+  const getSlotIndexFromDragPoint = useCallback(
+    (event: React.DragEvent, resourceIndex: number) => {
+      const daySlots = slotsRef.current[resourceIndex] ?? [];
+      const index = getIndexFromDragPoint(daySlots, event.clientX);
+      if (index !== null) {
+        const rect = daySlots[index]?.getBoundingClientRect();
+        if (rect) {
+          const rawOffset = dir === 'rtl' ? rect.right - event.clientX : event.clientX - rect.left;
+          dragOffsetRef.current = {
+            offset: Math.max(0, Math.min(rect.width, rawOffset)),
+            size: rect.width,
+          };
+        }
+      }
+      return index;
+    },
+    [dir]
+  );
 
   const handleSlotKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
@@ -646,47 +733,32 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     });
   };
 
+  const interactiveBackgroundEvents = withInteractiveBackgroundEvents && mode !== 'static';
+
   const rows = orderedResources.map((resource, resourceIndex) => {
     const allBgEvents = [
       ...(resourceEvents.backgroundTimedEvents[resource.id] || []),
       ...(resourceEvents.backgroundAllDayEvents[resource.id] || []),
     ];
 
-    // oxlint-disable-next-line react/jsx-key
-    const backgroundEventNodes = allBgEvents.map((event) => {
-      const colors = theme.variantColorResolver({
-        color: event.color || theme.primaryColor,
-        theme,
-        variant: 'light',
-        autoContrast: true,
-      });
-
-      const bgEventBody =
-        typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-      const bgEventProps = {
-        key: `bg-${event.id}`,
-        ...getStyles('resourcesDayViewBackgroundEvent', {
+    const backgroundEventNodes = allBgEvents.map((event) => (
+      <ScheduleBackgroundEvent
+        key={`bg-${event.id}`}
+        event={event}
+        renderEvent={renderEvent}
+        renderEventBody={renderEventBody}
+        interactive={interactiveBackgroundEvents}
+        onEventClick={onEventClick}
+        {...getStyles('resourcesDayViewBackgroundEvent', {
           style: {
             left: `${event.position.top}%`,
             width: `${event.position.height}%`,
             top: 0,
             height: '100%',
           },
-        }),
-        __vars: {
-          '--bg-event-bg': colors.background,
-          '--bg-event-color': colors.color,
-        },
-        children: bgEventBody,
-      };
-
-      if (typeof renderEvent === 'function') {
-        return renderEvent(event, bgEventProps as any);
-      }
-
-      return <Box {...bgEventProps} />;
-    });
+        })}
+      />
+    ));
 
     const allRegularEvents = (resourceEvents.regularEvents[resource.id] || []).filter(
       (event) => !isAllDayEvent({ event, date })
@@ -892,6 +964,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           const slotIndex = getSlotIndexFromDragPoint(event, resIdx);
           if (slotIndex !== null) {
             dragDrop.handleDragOver(event, { resourceId, slotIndex });
+            updateDragPreview({ resourceId, slotIndex });
           }
         }}
         onRowSlotsDragLeave={dragDrop.handleDragLeave}
@@ -902,7 +975,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           }
         }}
         dropTargetSlotIndex={
-          dragDrop.dropTarget?.resourceId === resource.id
+          !suppressDropHighlight && dragDrop.dropTarget?.resourceId === resource.id
             ? dragDrop.dropTarget.slotIndex
             : undefined
         }
@@ -922,6 +995,31 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
         {allDayEventNodes}
         {regularEvents}
         {moreEventsForResource}
+        {dragDrop.dragPreview?.target.resourceId === resource.id &&
+          dragDrop.dragContextValue.draggedEvent && (
+            <Box
+              {...getStyles('resourcesDayViewDragPreview', {
+                style: (() => {
+                  const { top, height } = getDayPosition({
+                    event: {
+                      ...dragDrop.dragContextValue.draggedEvent,
+                      start: dragDrop.dragPreview.start,
+                      end: dragDrop.dragPreview.end,
+                    },
+                    startTime,
+                    endTime,
+                    intervalMinutes,
+                  });
+                  return {
+                    position: 'absolute',
+                    insetBlockStart: 0,
+                    insetBlockEnd: 0,
+                    ...getTimeAxisEventStyle({ start: top, span: height, axis: 'horizontal' }),
+                  };
+                })(),
+              })}
+            />
+          )}
       </ResourcesDayViewRow>
     );
   });

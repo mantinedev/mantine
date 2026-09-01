@@ -51,6 +51,7 @@ export function Variants() {
         mx="auto"
         mt={50}
         variant="contained"
+        radius="lg"
       >
         {_items}
       </Accordion>
@@ -153,5 +154,26 @@ export function KeepMountedMode() {
         </Accordion.Item>
       </Accordion>
     </div>
+  );
+}
+
+export function VariantsWithOrder() {
+  return (
+    <>
+      {(['default', 'contained', 'filled', 'separated'] as const).map((variant) => (
+        <Accordion
+          key={variant}
+          defaultValue="flex"
+          style={{ maxWidth: 400 }}
+          mx="auto"
+          mt={50}
+          variant={variant}
+          radius="lg"
+          order={3}
+        >
+          {_items}
+        </Accordion>
+      ))}
+    </>
   );
 }

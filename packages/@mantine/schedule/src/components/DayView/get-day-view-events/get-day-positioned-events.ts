@@ -1,5 +1,16 @@
-import { AnyDateValue, DayPositionedEventData, ScheduleEventData } from '../../../types';
-import { getDayPosition, isAllDayEvent, isEventsOverlap, sortEvents } from '../../../utils';
+import {
+  AnyDateValue,
+  DayPositionedEventData,
+  ScheduleEventData,
+  ScheduleEventOverlapMode,
+} from '../../../types';
+import {
+  applyCascadeLayout,
+  getDayPosition,
+  isAllDayEvent,
+  isEventsOverlap,
+  sortEvents,
+} from '../../../utils';
 
 interface ColumnHasConflictOptions {
   columns: ScheduleEventData[][];
@@ -48,6 +59,9 @@ interface GetDayPositionedEventsInput {
 
   /** Number of minutes per time slot, used to align the canvas to whole slots */
   intervalMinutes?: number;
+
+  /** Determines how events that overlap in time are laid out @default 'columns' */
+  eventOverlapMode?: ScheduleEventOverlapMode;
 }
 
 export function getDayPositionedEvents({
@@ -56,6 +70,7 @@ export function getDayPositionedEvents({
   endTime,
   intervalMinutes,
   date,
+  eventOverlapMode = 'columns',
 }: GetDayPositionedEventsInput) {
   const columns: ScheduleEventData[][] = [];
   const positioned: DayPositionedEventData[] = [];
@@ -96,12 +111,22 @@ export function getDayPositionedEvents({
     });
   }
   for (const positionedEvent of positioned) {
-    const { allDay, column } = positionedEvent.position;
-
-    if (allDay) {
+    if (positionedEvent.position.allDay) {
       positionedEvent.position.overlaps = 1;
       positionedEvent.position.width = 100;
       positionedEvent.position.offset = 0;
+    }
+  }
+
+  if (eventOverlapMode === 'cascade') {
+    applyCascadeLayout(positioned);
+    return positioned;
+  }
+
+  for (const positionedEvent of positioned) {
+    const { allDay, column } = positionedEvent.position;
+
+    if (allDay) {
       continue;
     }
 

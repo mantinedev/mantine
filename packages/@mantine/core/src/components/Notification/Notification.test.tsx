@@ -50,4 +50,38 @@ describe('@mantine/core/Notification', () => {
     const { container } = render(<Notification {...defaultProps} title="test-title" />);
     expect(container.querySelector('.mantine-Notification-title')).toHaveTextContent('test-title');
   });
+
+  it('sets data-with-border attribute based on withBorder prop', () => {
+    const { container, rerender } = render(<Notification {...defaultProps} withBorder />);
+    expect(container.querySelector('.mantine-Notification-root')).toHaveAttribute(
+      'data-with-border'
+    );
+
+    rerender(<Notification {...defaultProps} withBorder={false} />);
+    expect(container.querySelector('.mantine-Notification-root')).not.toHaveAttribute(
+      'data-with-border'
+    );
+  });
+
+  it('sets data-with-icon attribute based on icon prop', () => {
+    const { container, rerender } = render(<Notification {...defaultProps} icon="test-icon" />);
+    expect(container.querySelector('.mantine-Notification-root')).toHaveAttribute('data-with-icon');
+
+    rerender(<Notification {...defaultProps} icon={null} loading={false} />);
+    expect(container.querySelector('.mantine-Notification-root')).not.toHaveAttribute(
+      'data-with-icon'
+    );
+  });
+
+  it('sets data-with-title attribute on description based on title prop', () => {
+    const { container, rerender } = render(<Notification {...defaultProps} title="test-title" />);
+    expect(container.querySelector('.mantine-Notification-description')).toHaveAttribute(
+      'data-with-title'
+    );
+
+    rerender(<Notification {...defaultProps} title={null} />);
+    expect(container.querySelector('.mantine-Notification-description')).not.toHaveAttribute(
+      'data-with-title'
+    );
+  });
 });

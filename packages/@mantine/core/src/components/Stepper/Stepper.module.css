@@ -32,6 +32,10 @@
     gap: var(--mantine-spacing-md) 0;
   }
 
+  &:where([data-label-position='bottom']) {
+    align-items: flex-start;
+  }
+
   &:where([data-orientation='vertical']) {
     flex-direction: column;
 
@@ -59,6 +63,10 @@
   &:where([data-active]) {
     background-color: var(--stepper-color);
   }
+
+  .steps:where([data-label-position='bottom']) & {
+    margin-top: calc((var(--stepper-icon-size) - var(--stepper-outline-thickness)) / 2);
+  }
 }
 
 .content {
@@ -81,6 +89,21 @@
 
   &:where([data-icon-position='right']) {
     flex-direction: row-reverse;
+  }
+
+  &:where([data-label-position='bottom']) {
+    flex-direction: column;
+    align-items: center;
+    min-width: var(--stepper-icon-size);
+    max-width: calc(var(--stepper-icon-size) * 4);
+    overflow: visible;
+
+    /* `labelPosition="bottom"` wins over `iconPosition`: the two describe the same axis, and
+       `column-reverse` here would move the label above the icon – the opposite of what the
+       prop name promises. */
+    &:where([data-icon-position='right']) {
+      flex-direction: column;
+    }
   }
 }
 
@@ -186,6 +209,12 @@
   &:where([data-icon-position='right']) {
     text-align: end;
     margin-inline-end: var(--mantine-spacing-sm);
+  }
+
+  .step:where([data-label-position='bottom']) & {
+    align-items: center;
+    text-align: center;
+    margin: calc(var(--mantine-spacing-xs) / 2) 0 0;
   }
 }
 

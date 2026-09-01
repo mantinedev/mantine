@@ -28,6 +28,11 @@ export const Demo_overlappingEvents = {
   render: renderDemo(demos.overlappingEvents),
 };
 
+export const Demo_eventOverlapMode = {
+  name: '⭐ Demo: eventOverlapMode',
+  render: renderDemo(demos.eventOverlapMode),
+};
+
 export const Demo_currentTimeIndicator = {
   name: '⭐ Demo: currentTimeIndicator',
   render: renderDemo(demos.currentTimeIndicator),
@@ -133,6 +138,16 @@ export const Demo_eventResize = {
   render: renderDemo(demos.eventResize),
 };
 
+export const Demo_eventResizeInterval = {
+  name: '⭐ Demo: eventResizeInterval',
+  render: renderDemo(demos.eventResizeInterval),
+};
+
+export const Demo_eventDragInterval = {
+  name: '⭐ Demo: eventDragInterval',
+  render: renderDemo(demos.eventDragInterval),
+};
+
 export const Demo_canResizeEvent = {
   name: '⭐ Demo: canResizeEvent',
   render: renderDemo(demos.canResizeEvent),
@@ -151,6 +166,11 @@ export const Demo_backgroundEvents = {
 export const Demo_backgroundEventsCustomStyle = {
   name: '⭐ Demo: backgroundEventsCustomStyle',
   render: renderDemo(demos.backgroundEventsCustomStyle),
+};
+
+export const Demo_interactiveBackgroundEvents = {
+  name: '⭐ Demo: interactiveBackgroundEvents',
+  render: renderDemo(demos.interactiveBackgroundEvents),
 };
 
 export const Demo_customHeader = {

@@ -26,6 +26,7 @@ export interface UseEventResizeInput {
   startTime: string;
   endTime: string;
   intervalMinutes: number;
+  resizeIntervalMinutes?: number;
   onEventResize?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -41,6 +42,7 @@ export function useEventResize({
   startTime,
   endTime,
   intervalMinutes,
+  resizeIntervalMinutes,
   onEventResize,
   canResizeEvent,
 }: UseEventResizeInput) {
@@ -54,16 +56,22 @@ export function useEventResize({
   const startMinutes = parsedStartTime.hours * 60 + parsedStartTime.minutes;
   const endMinutes = parsedEndTime.hours * 60 + parsedEndTime.minutes;
   const clampedInterval = clampIntervalMinutes(intervalMinutes);
+  const clampedResizeInterval = clampIntervalMinutes(resizeIntervalMinutes ?? intervalMinutes);
   const literalRange = endMinutes - startMinutes;
   const totalMinutes = Math.ceil(literalRange / clampedInterval) * clampedInterval;
-  const minHeightPercent = (clampedInterval / totalMinutes) * 100;
 
+  // Snapping happens in absolute minutes from midnight – the same grid `calculateDropTime`
+  // uses for drag and drop. Snapping relative to `startTime` would put resized edges on a
+  // different grid than dragged events whenever `startTime` is not a multiple of the interval
+  // (with `startTime="08:10"` and a 30 minute step, drops land on :00/:30 but resizes on
+  // :10/:40, so the two operations could never align an event).
   const clampAndSnap = useCallback(
     (minutes: number): number => {
-      const snapped = Math.round(minutes / clampedInterval) * clampedInterval;
-      return Math.max(0, Math.min(literalRange, snapped));
+      const snapped =
+        Math.round((startMinutes + minutes) / clampedResizeInterval) * clampedResizeInterval;
+      return Math.max(0, Math.min(literalRange, snapped - startMinutes));
     },
-    [literalRange, clampedInterval]
+    [literalRange, clampedResizeInterval, startMinutes]
   );
 
   const percentToDateTime = useCallback(
@@ -78,13 +86,26 @@ export function useEventResize({
     [totalMinutes, startMinutes, clampAndSnap]
   );
 
-  const snapPercent = useCallback(
-    (percent: number): number => {
-      const minutes = (percent / 100) * totalMinutes;
-      const snappedMinutes = clampAndSnap(minutes);
-      return (snappedMinutes / totalMinutes) * 100;
+  const snapEdgeMinutes = useCallback(
+    (minutes: number, direction: 'up' | 'down'): number => {
+      const absolute = startMinutes + minutes;
+      const snapped =
+        direction === 'up'
+          ? Math.ceil(absolute / clampedResizeInterval) * clampedResizeInterval
+          : Math.floor(absolute / clampedResizeInterval) * clampedResizeInterval;
+      return Math.max(0, Math.min(literalRange, snapped - startMinutes));
     },
-    [totalMinutes, clampAndSnap]
+    [literalRange, clampedResizeInterval, startMinutes]
+  );
+
+  const percentToMinutes = useCallback(
+    (percent: number): number => (percent / 100) * totalMinutes,
+    [totalMinutes]
+  );
+
+  const minutesToPercent = useCallback(
+    (minutes: number): number => (minutes / totalMinutes) * 100,
+    [totalMinutes]
   );
 
   const handleResizeStart = useCallback(
@@ -151,17 +172,22 @@ export function useEventResize({
       const containerRect = state.container.getBoundingClientRect();
       const relativeY = e.clientY - containerRect.top;
       const rawPercent = Math.max(0, Math.min(100, (relativeY / containerRect.height) * 100));
-      const snappedPercent = snapPercent(rawPercent);
+      const draggedMinutes = clampAndSnap(percentToMinutes(rawPercent));
 
       let newTop = state.originalTop;
       let newHeight = state.originalHeight;
 
       if (state.edge === 'bottom') {
-        newHeight = Math.max(minHeightPercent, snappedPercent - state.originalTop);
+        const topMinutes = percentToMinutes(state.originalTop);
+        const minEndMinutes = snapEdgeMinutes(topMinutes + clampedResizeInterval, 'up');
+        const endMinutes = Math.max(draggedMinutes, minEndMinutes);
+        newHeight = Math.max(0, minutesToPercent(endMinutes) - state.originalTop);
       } else {
-        const originalBottom = state.originalTop + state.originalHeight;
-        newTop = Math.min(snappedPercent, originalBottom - minHeightPercent);
-        newHeight = originalBottom - newTop;
+        const bottomMinutes = percentToMinutes(state.originalTop + state.originalHeight);
+        const maxStartMinutes = snapEdgeMinutes(bottomMinutes - clampedResizeInterval, 'down');
+        const startMinutesValue = Math.min(draggedMinutes, maxStartMinutes);
+        newTop = minutesToPercent(startMinutesValue);
+        newHeight = Math.max(0, state.originalTop + state.originalHeight - newTop);
       }
 
       resizeRef.current = { ...state, currentTop: newTop, currentHeight: newHeight };

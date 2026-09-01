@@ -4,6 +4,8 @@ import type {
   DotProps,
   LabelProps,
   LegendProps,
+  ReferenceAreaProps,
+  ReferenceDotProps,
   ReferenceLineProps,
   TooltipProps,
   XAxisProps,
@@ -12,6 +14,18 @@ import type {
 import type { MantineColor } from '@mantine/core';
 
 export interface ChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' | 'label'> {
+  color?: MantineColor;
+  label?: string | Omit<LabelProps, 'ref'>;
+  labelPosition?: LabelProps['position'];
+}
+
+export interface ChartReferenceAreaProps extends Omit<ReferenceAreaProps, 'ref' | 'label'> {
+  color?: MantineColor;
+  label?: string | Omit<LabelProps, 'ref'>;
+  labelPosition?: LabelProps['position'];
+}
+
+export interface ChartReferenceDotProps extends Omit<ReferenceDotProps, 'ref' | 'label'> {
   color?: MantineColor;
   label?: string | Omit<LabelProps, 'ref'>;
   labelPosition?: LabelProps['position'];
@@ -30,6 +44,8 @@ export type BaseChartStylesNames =
   | 'axis'
   | 'grid'
   | 'referenceLine'
+  | 'referenceArea'
+  | 'referenceDot'
   | 'axisLabel'
   | 'brush';
 
@@ -44,6 +60,12 @@ export interface GridChartBaseProps {
 
   /** Reference lines that should be displayed on the chart */
   referenceLines?: ChartReferenceLineProps[];
+
+  /** Reference areas that should be displayed on the chart */
+  referenceAreas?: ChartReferenceAreaProps[];
+
+  /** Reference dots that should be displayed on the chart */
+  referenceDots?: ChartReferenceDotProps[];
 
   /** Determines whether x-axis should be displayed, `true` by default */
   withXAxis?: boolean;

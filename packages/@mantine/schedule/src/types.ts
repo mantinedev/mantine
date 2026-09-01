@@ -96,7 +96,7 @@ interface ScheduleEventBase<Payload extends EventPayload = EventPayload> {
   /** Event variant, default is `'light'` */
   variant?: 'filled' | 'light';
 
-  /** Event display mode. Background events render as full-width, non-interactive blocks behind regular events. @default 'default' */
+  /** Event display mode. Background events render as full-width blocks behind regular events, non-interactive unless `withInteractiveBackgroundEvents` is set on the view. @default 'default' */
   display?: 'default' | 'background';
 
   /** Additional event data, defined by the user, not used internally by the library */
@@ -146,6 +146,9 @@ export type ScheduleEventData<Payload extends EventPayload = EventPayload> =
   | (ScheduleSingleEventData<Payload> & ScheduleEventRuntimeMeta)
   | (ScheduleRecurringSeriesEventData<Payload> & ScheduleEventRuntimeMeta)
   | (ScheduleRecurringOverrideEventData<Payload> & ScheduleEventRuntimeMeta);
+
+/** Controls how events that overlap in time are laid out along the horizontal axis */
+export type ScheduleEventOverlapMode = 'columns' | 'cascade';
 
 export interface DayEventPositionData {
   /** All day events */

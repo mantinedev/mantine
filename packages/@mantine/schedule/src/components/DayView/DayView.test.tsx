@@ -1,6 +1,6 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import { act, createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -833,6 +833,351 @@ describe('@mantine/schedule/DayView', () => {
       const { container } = render(<DayView {...defaultProps} withAgenda />);
       const agendaButtons = container.querySelectorAll('[data-type="agenda"]');
       expect(agendaButtons).toHaveLength(2);
+    });
+  });
+
+  describe('eventResizeInterval prop', () => {
+    it('resizes on eventResizeInterval independently of intervalMinutes', () => {
+      const rect = {
+        top: 0,
+        left: 0,
+        right: 480,
+        bottom: 480,
+        width: 480,
+        height: 480,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      };
+      const spy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockReturnValue(rect as DOMRect);
+      const onEventResize = jest.fn();
+
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventResizeInterval={15}
+          withEventResize
+          onEventResize={onEventResize}
+          events={[
+            {
+              id: 1,
+              title: 'Event',
+              start: '2025-11-03 09:00:00',
+              end: '2025-11-03 09:30:00',
+              color: 'blue',
+              payload: {},
+            },
+          ]}
+        />
+      );
+
+      const handle = container.querySelector('[data-edge="bottom"]')!;
+      fireEvent.pointerDown(handle);
+      act(() => {
+        // clientY 165 = 165 min from 08:00 = 10:45, a 15-min boundary off the 30-min grid.
+        document.dispatchEvent(new MouseEvent('pointermove', { clientY: 165 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({ newEnd: '2025-11-03 10:45:00' })
+      );
+      spy.mockRestore();
+    });
+  });
+
+  describe('eventDragInterval prop', () => {
+    const dragEvents = [
+      {
+        id: 1,
+        title: 'E',
+        start: '2025-11-03 09:00:00',
+        end: '2025-11-03 09:30:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    // Give each time slot a distinct 30px rect so getSlotIndexFromDragPoint resolves
+    // a real slot and a real sub-slot offset (blanket rects would collapse to slot 0).
+    const mockSlotRects = (container: HTMLElement) => {
+      const slots = Array.from(
+        container.querySelectorAll('.mantine-DayView-dayViewSlot:not([data-all-day])')
+      );
+      slots.forEach((node, i) => {
+        (node as HTMLElement).getBoundingClientRect = () =>
+          ({
+            top: i * 30,
+            bottom: (i + 1) * 30,
+            left: 0,
+            right: 480,
+            width: 480,
+            height: 30,
+            x: 0,
+            y: i * 30,
+            toJSON: () => {},
+          }) as DOMRect;
+      });
+    };
+
+    // jsdom drops the `dataTransfer` passed to fireEvent, so build the event and attach
+    // it (plus clientY) explicitly — the drop path needs `types` to include application/json.
+    const fireDrag = (node: Element, type: 'dragStart' | 'dragOver' | 'drop', clientY?: number) => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      if (clientY !== undefined) {
+        Object.defineProperty(event, 'clientY', { value: clientY, configurable: true });
+      }
+      fireEvent(node, event);
+    };
+
+    it('drops on eventDragInterval independently of intervalMinutes', () => {
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={onEventDrop}
+          events={dragEvents}
+        />
+      );
+
+      mockSlotRects(container);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+      const slotsContainer = container.querySelector('.mantine-DayView-dayViewTimeSlots')!;
+
+      // clientY 165 lands in the 10:30 slot (slot 5 of 30px), +15px = 10:45,
+      // a 15-min boundary the 30-min grid alone cannot produce.
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(slotsContainer, 'drop', 165);
+
+      expect(onEventDrop).toHaveBeenCalledWith(
+        expect.objectContaining({ newStart: '2025-11-03 10:45:00' })
+      );
+    });
+
+    it('shows a drag ghost at the snapped position and clears it', () => {
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={jest.fn()}
+          events={dragEvents}
+        />
+      );
+
+      mockSlotRects(container);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+      const slotsContainer = container.querySelector('.mantine-DayView-dayViewTimeSlots')!;
+
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(slotsContainer, 'dragOver', 165);
+
+      expect(container.querySelector('.mantine-DayView-dayViewDragPreview')).toBeInTheDocument();
+      // The slot cell highlight is suppressed while the ghost outline is shown.
+      expect(
+        container.querySelector('.mantine-DayView-dayViewSlot[data-drop-target]')
+      ).not.toBeInTheDocument();
+
+      fireEvent.dragLeave(slotsContainer);
+      expect(
+        container.querySelector('.mantine-DayView-dayViewDragPreview')
+      ).not.toBeInTheDocument();
+    });
+
+    it('does not render a ghost when eventDragInterval is unset', () => {
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          withEventsDragAndDrop
+          onEventDrop={jest.fn()}
+          events={dragEvents}
+        />
+      );
+
+      mockSlotRects(container);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+      const slotsContainer = container.querySelector('.mantine-DayView-dayViewTimeSlots')!;
+
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(slotsContainer, 'dragOver', 165);
+
+      expect(
+        container.querySelector('.mantine-DayView-dayViewDragPreview')
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  describe('background events', () => {
+    const backgroundEventProps: DayViewProps = {
+      date: '2025-11-03',
+      events: [
+        {
+          id: 'bg-1',
+          title: 'Unavailable',
+          start: '2025-11-03 12:00:00',
+          end: '2025-11-03 13:00:00',
+          color: 'gray',
+          display: 'background',
+        },
+      ],
+    };
+
+    it('renders background events as non-interactive divs by default', async () => {
+      const spy = jest.fn();
+      const { container } = render(<DayView {...backgroundEventProps} onEventClick={spy} />);
+      const bgEvent = container.querySelector('.mantine-DayView-dayViewBackgroundEvent')!;
+
+      expect(bgEvent).toBeInTheDocument();
+      expect(bgEvent.tagName).toBe('DIV');
+      expect(bgEvent).toHaveTextContent('Unavailable');
+
+      await userEvent.click(bgEvent);
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('calls onEventClick when a background event is clicked with withInteractiveBackgroundEvents', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <DayView {...backgroundEventProps} withInteractiveBackgroundEvents onEventClick={spy} />
+      );
+      const bgEvent = container.querySelector('.mantine-DayView-dayViewBackgroundEvent')!;
+
+      expect(bgEvent.tagName).toBe('BUTTON');
+      expect(bgEvent).toHaveAttribute('data-interactive');
+
+      await userEvent.click(bgEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls[0][0].id).toBe('bg-1');
+    });
+
+    it('does not make background events interactive in static mode', () => {
+      const { container } = render(
+        <DayView {...backgroundEventProps} withInteractiveBackgroundEvents mode="static" />
+      );
+      const bgEvent = container.querySelector('.mantine-DayView-dayViewBackgroundEvent')!;
+      expect(bgEvent.tagName).toBe('DIV');
+    });
+  });
+
+  describe('eventOverlapMode', () => {
+    const overlappingEvents = [
+      {
+        id: 1,
+        title: 'First',
+        start: '2025-11-03 10:00:00',
+        end: '2025-11-03 12:00:00',
+        color: 'blue',
+      },
+      {
+        id: 2,
+        title: 'Second',
+        start: '2025-11-03 10:30:00',
+        end: '2025-11-03 12:00:00',
+        color: 'violet',
+      },
+      {
+        id: 3,
+        title: 'Third',
+        start: '2025-11-03 11:00:00',
+        end: '2025-11-03 12:00:00',
+        color: 'cyan',
+      },
+    ];
+
+    const getEventStyles = (container: HTMLElement) =>
+      Array.from(container.querySelectorAll<HTMLElement>('[data-event-id]')).map((element) => ({
+        insetInlineStart: element.style.insetInlineStart,
+        width: element.style.width,
+        zIndex: element.style.getPropertyValue('--event-z-index'),
+        zIndexRaised: element.style.getPropertyValue('--event-z-index-raised'),
+        cascade: element.hasAttribute('data-cascade'),
+      }));
+
+    it('splits the available width between overlapping events by default', () => {
+      const { container } = render(<DayView date="2025-11-03" events={overlappingEvents} />);
+
+      expect(getEventStyles(container)).toStrictEqual([
+        {
+          insetInlineStart: '0%',
+          width: '33.33333333333333%',
+          zIndex: '3',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+        {
+          insetInlineStart: '33.333333333333336%',
+          width: '33.33333333333333%',
+          zIndex: '4',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+        {
+          insetInlineStart: '66.66666666666667%',
+          width: '33.33333333333333%',
+          zIndex: '5',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+      ]);
+    });
+
+    it('indents and stacks overlapping events when eventOverlapMode is cascade', () => {
+      const { container } = render(
+        <DayView date="2025-11-03" events={overlappingEvents} eventOverlapMode="cascade" />
+      );
+
+      expect(getEventStyles(container)).toStrictEqual([
+        { insetInlineStart: '0%', width: '100%', zIndex: '3', zIndexRaised: '6', cascade: true },
+        { insetInlineStart: '20%', width: '80%', zIndex: '4', zIndexRaised: '6', cascade: true },
+        { insetInlineStart: '40%', width: '60%', zIndex: '5', zIndexRaised: '6', cascade: true },
+      ]);
+    });
+
+    it('applies the default raise delay of 600ms', () => {
+      const { container } = render(
+        <DayView date="2025-11-03" events={overlappingEvents} eventOverlapMode="cascade" />
+      );
+      const root = container.querySelector('.mantine-DayView-dayView') as HTMLElement;
+
+      expect(root.style.getPropertyValue('--event-raise-delay')).toBe('600ms');
+    });
+
+    it('supports a custom eventOverlapRaiseDelay', () => {
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          events={overlappingEvents}
+          eventOverlapMode="cascade"
+          eventOverlapRaiseDelay={250}
+        />
+      );
+      const root = container.querySelector('.mantine-DayView-dayView') as HTMLElement;
+
+      expect(root.style.getPropertyValue('--event-raise-delay')).toBe('250ms');
     });
   });
 });

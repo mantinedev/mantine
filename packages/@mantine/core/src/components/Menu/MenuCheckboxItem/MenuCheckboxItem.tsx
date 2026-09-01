@@ -10,8 +10,8 @@ import {
   useProps,
 } from '../../../core';
 import { CheckIcon } from '../../Checkbox/CheckIcon';
-import { MenuCheckboxGroupContext } from '../MenuCheckboxGroup/MenuCheckboxGroup.context';
 import { useMenuContext } from '../Menu.context';
+import { MenuCheckboxGroupContext } from '../MenuCheckboxGroup/MenuCheckboxGroup.context';
 import { MenuSelectableItem } from '../MenuSelectableItem/MenuSelectableItem';
 import classes from '../Menu.module.css';
 

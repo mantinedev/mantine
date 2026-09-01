@@ -26,11 +26,11 @@ import { MenuRadioGroup, type MenuRadioGroupProps } from './MenuRadioGroup/MenuR
 import { MenuRadioItem, type MenuRadioItemProps } from './MenuRadioItem/MenuRadioItem';
 import { MenuSearch, type MenuSearchProps } from './MenuSearch/MenuSearch';
 import { MenuSub, type MenuSubProps } from './MenuSub/MenuSub';
-import { MenuTarget, type MenuTargetProps } from './MenuTarget/MenuTarget';
-import classes from './Menu.module.css';
 import type { MenuSubDropdownProps } from './MenuSubDropdown/MenuSubDropdown';
 import type { MenuSubItemProps } from './MenuSubItem/MenuSubItem';
 import type { MenuSubTargetProps } from './MenuSubTarget/MenuSubTarget';
+import { MenuTarget, type MenuTargetProps } from './MenuTarget/MenuTarget';
+import classes from './Menu.module.css';
 
 export type MenuStylesNames =
   | 'item'

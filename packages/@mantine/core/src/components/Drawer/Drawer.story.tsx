@@ -3,8 +3,8 @@ import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { useModalsStack } from '../Modal';
 import { ScrollArea } from '../ScrollArea';
-import { Tabs } from '../Tabs';
 import { Stack as MantineStack } from '../Stack';
+import { Tabs } from '../Tabs';
 import { Drawer } from './Drawer';
 
 export default { title: 'Drawer' };
