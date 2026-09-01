@@ -493,3 +493,57 @@ export function SubMenuRadioValidation() {
     </div>
   );
 }
+
+export function NestedSubIgnoresWithinPortal() {
+  const [pinned, setPinned] = useState<Record<string, string>>({ a: 'false', b: 'false' });
+
+  return (
+    <div style={{ padding: 60 }}>
+      <Menu width={220} position="bottom-start">
+        <Menu.Target>
+          <Button>Pin columns</Button>
+        </Menu.Target>
+
+        <Menu.Dropdown>
+          <Menu.Item>Reset</Menu.Item>
+          {/* withinPortal is intentionally not supported and must be ignored */}
+          <Menu.Sub {...({ withinPortal: true } as any)}>
+            <Menu.Sub.Target>
+              <Menu.Sub.Item>Pin</Menu.Sub.Item>
+            </Menu.Sub.Target>
+
+            <Menu.Sub.Dropdown>
+              <Menu.Item closeMenuOnClick={false}>Unpin all</Menu.Item>
+              <Menu.Divider />
+              {['a', 'b'].map((id) => (
+                <Menu.Sub key={id} {...({ withinPortal: true } as any)}>
+                  <Menu.Sub.Target>
+                    <Menu.Sub.Item>Column {id}</Menu.Sub.Item>
+                  </Menu.Sub.Target>
+
+                  <Menu.Sub.Dropdown>
+                    <Menu.RadioGroup
+                      value={pinned[id]}
+                      onChange={(value) => setPinned((current) => ({ ...current, [id]: value }))}
+                    >
+                      <Menu.RadioItem value="start" closeMenuOnClick={false}>
+                        Pinned left
+                      </Menu.RadioItem>
+                      <Menu.RadioItem value="end" closeMenuOnClick={false}>
+                        Pinned right
+                      </Menu.RadioItem>
+                      <Menu.RadioItem value="false" closeMenuOnClick={false}>
+                        Unpinned
+                      </Menu.RadioItem>
+                    </Menu.RadioGroup>
+                  </Menu.Sub.Dropdown>
+                </Menu.Sub>
+              ))}
+            </Menu.Sub.Dropdown>
+          </Menu.Sub>
+          <Menu.Item>Other</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </div>
+  );
+}
