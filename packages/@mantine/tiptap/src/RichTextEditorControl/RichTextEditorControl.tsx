@@ -137,8 +137,9 @@ export function createControl({
       },
     });
 
+    const { disabled: disabledProp, ...restProps } = props;
     const active = editorState?.active ?? false;
-    const disabled = editorState?.disabled ?? true;
+    const disabled = (editorState?.disabled ?? true) || !!disabledProp;
 
     return (
       <RichTextEditorControlBase
@@ -146,15 +147,22 @@ export function createControl({
         title={_label}
         active={active}
         icon={props.icon || icon}
+        {...restProps}
         disabled={disabled}
-        {...props}
         onClick={() => {
           // Mirror the selector's guard so a click landing during teardown does not
           // invoke commands on a `null`/destroyed editor.
           if (!editor || editor.isDestroyed) {
             return;
           }
-          (editor as any).chain().focus()[operation.name](operation.attributes).run();
+
+          const chain = (editor as any).chain().focus();
+
+          if (typeof chain[operation.name] !== 'function') {
+            return;
+          }
+
+          chain[operation.name](operation.attributes).run();
         }}
       />
     );

@@ -18,6 +18,16 @@ Set it to `0` to collapse all nodes, or to a higher number to expand more levels
 
 <Demo data={JsonViewerDemos.expandDepth} />
 
+`defaultExpandDepth` is applied once, to the `value` that is present when the component mounts. If `value` arrives later (for example, from an async request), the expanded state is not recomputed. To re-apply the default depth when data changes, remount the component with a `key` that changes together with the data, or manage expansion yourself with the controlled `expandedPaths` and `onExpandedPathsChange` props:
+
+```tsx
+import { JsonViewer } from '@mantine/code-highlight';
+
+function Demo({ data }: { data: unknown }) {
+  return <JsonViewer key={JSON.stringify(data)} value={data} defaultExpandDepth={2} />;
+}
+```
+
 ## Root name
 
 Use `rootName` prop to display a label for the root node. Set it to `false` (default) to hide it:
@@ -39,7 +49,7 @@ to display the number of items in arrays and objects:
 
 ## Copy button
 
-Set `withCopy` prop to display a copy to clipboard button:
+Set `withCopy` prop to display a copy to clipboard button next to each node. The button is revealed when the row is hovered or focused; pressing `Ctrl + C` (`⌘ + C` on macOS) while a row is focused copies that node's value as well. `BigInt` values are copied as strings and circular references are replaced with `"[Circular]"`:
 
 <Demo data={JsonViewerDemos.withCopy} />
 
@@ -93,3 +103,10 @@ Set `withChevrons` prop to display expand/collapse chevrons next to collapsible 
 - `→` – expand a collapsed node, or move focus to the first child if already expanded
 - `←` – collapse an expanded node, or move focus to the parent node if already collapsed
 - `Enter` / `Space` – toggle expand/collapse on collapsible nodes, trigger `onValueSelect` on primitive nodes
+- `Ctrl + C` / `⌘ + C` – copy the focused node value when `withCopy` prop is set
+
+## Accessibility
+
+`JsonViewer` renders its content as an ARIA tree: the container has `role="tree"`, every row is a `role="treeitem"`, collapsible rows expose their state with `aria-expanded` and nested rows are wrapped in `role="group"` containers. `rootName` prop is used as the accessible name of the tree; when it is not set, the tree is labelled `JSON`.
+
+The component always renders left-to-right, regardless of the [direction](/styles/rtl) set on the application, because JSON is code and indentation, chevrons and line numbers are positioned physically.

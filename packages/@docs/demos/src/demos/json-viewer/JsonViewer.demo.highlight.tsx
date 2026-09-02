@@ -23,8 +23,13 @@ const highlightItems = {
   [serializeJsonViewerPath(['author', 'url'])]: 'added' as const,
 };
 
+const dataCode = `
+export const data = ${JSON.stringify(jsonData, null, 2)};
+`;
+
 const code = `
 import { JsonViewer, serializeJsonViewerPath } from '@mantine/code-highlight';
+import { data } from './data';
 
 const highlightItems = {
   [serializeJsonViewerPath(['version'])]: 'added',
@@ -50,5 +55,8 @@ function Demo() {
 export const highlight: MantineDemo = {
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { fileName: 'Demo.tsx', language: 'tsx', code },
+    { fileName: 'data.ts', language: 'tsx', code: dataCode },
+  ],
 };

@@ -41,6 +41,7 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
   );
 
   const ctx = useLightboxContext();
+  const stylesApiProps = { classNames, styles };
   const currentSlide = ctx.slides[ctx.currentIndex];
 
   const defaultItems: ToolbarItem[] = [];
@@ -86,11 +87,12 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
 
   return (
     <Box {...ctx.getStyles('toolbar', { className, style, classNames, styles })} {...others}>
-      <div {...ctx.getStyles('toolbarGroup')}>
+      <div {...ctx.getStyles('toolbarGroup', stylesApiProps)}>
         {leftItems.map((item) => (
           <UnstyledButton
             key={item.key}
-            {...ctx.getStyles('toolbarButton')}
+            {...ctx.getStyles('toolbarButton', stylesApiProps)}
+            mod="reduce-motion"
             aria-label={item.label}
             onClick={item.onClick}
           >
@@ -99,15 +101,18 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
         ))}
       </div>
 
-      <span {...ctx.getStyles('counter')} aria-hidden="true">
-        {ctx.currentIndex + 1} / {ctx.slides.length}
+      {/* An empty gallery has no slide to count – rendering the counter anyway would show
+          an impossible "1 / 0". */}
+      <span {...ctx.getStyles('counter', stylesApiProps)} aria-hidden="true">
+        {ctx.slides.length > 0 ? `${ctx.currentIndex + 1} / ${ctx.slides.length}` : null}
       </span>
 
-      <div {...ctx.getStyles('toolbarGroup')}>
+      <div {...ctx.getStyles('toolbarGroup', stylesApiProps)}>
         {rightItems.map((item) => (
           <UnstyledButton
             key={item.key}
-            {...ctx.getStyles('toolbarButton')}
+            {...ctx.getStyles('toolbarButton', stylesApiProps)}
+            mod="reduce-motion"
             aria-label={item.label}
             onClick={item.onClick}
           >

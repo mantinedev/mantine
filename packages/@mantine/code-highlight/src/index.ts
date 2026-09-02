@@ -13,7 +13,6 @@ import type {
   InlineCodeHighlightStylesNames,
 } from './CodeHighlight/InlineCodeHighlight';
 import type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider';
-import type { NormalizeCodeOptions } from './normalize-code';
 import type {
   CodeHighlightDefaultLanguage,
   CodeHighlightTabsCode,
@@ -21,6 +20,7 @@ import type {
   CodeHighlightTabsProps,
   CodeHighlightTabsStylesNames,
 } from './CodeHighlightTabs/CodeHighlightTabs';
+import type { DiffCssVariables, DiffFactory, DiffProps, DiffStylesNames } from './Diff/Diff';
 import type {
   JsonViewerCssVariables,
   JsonViewerFactory,
@@ -28,7 +28,7 @@ import type {
   JsonViewerProps,
   JsonViewerStylesNames,
 } from './JsonViewer/JsonViewer';
-import type { DiffCssVariables, DiffFactory, DiffProps, DiffStylesNames } from './Diff/Diff';
+import type { NormalizeCodeOptions } from './normalize-code';
 
 export { CodeHighlight } from './CodeHighlight/CodeHighlight.js';
 export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight.js';

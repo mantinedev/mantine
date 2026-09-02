@@ -1,5 +1,4 @@
 import 'dayjs/locale/ru';
-
 import { getMonthsList } from './get-months-list';
 
 describe('@mantine/schedule/get-months-list', () => {

@@ -1,4 +1,5 @@
-import { useId } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
+import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -24,6 +25,7 @@ import { TourRoot, type TourRootProps } from './TourRoot/TourRoot';
 import { TourStep, type TourStepProps } from './TourStep/TourStep';
 import { TourTitle, type TourTitleProps } from './TourTitle/TourTitle';
 import { TourTooltip, type TourTooltipProps } from './TourTooltip/TourTooltip';
+import { useTooltipAutoFocus } from './use-tooltip-auto-focus';
 import { useTour } from './use-tour';
 import classes from './Tour.module.css';
 
@@ -81,7 +83,7 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** Whether to display the overlay @default true */
   withOverlay?: boolean;
 
-  /** Whether target elements can be interacted with through the overlay @default false */
+  /** Whether target elements can be interacted with through the overlay, disables `closeOnOverlayClick` @default false */
   withOverlayInteraction?: boolean;
 
   /** Whether to display the close button @default true */
@@ -105,7 +107,7 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** Whether pressing Escape closes the tour @default true */
   closeOnEscape?: boolean;
 
-  /** Whether clicking the overlay closes the tour @default false */
+  /** Whether clicking the overlay closes the tour, has no effect when `withOverlayInteraction` is set (the overlay does not receive clicks) @default false */
   closeOnOverlayClick?: boolean;
 
   /** Labels for tour UI elements */
@@ -135,7 +137,7 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** Shadow for the tooltip */
   tooltipShadow?: string;
 
-  /** Tour steps as children – use Tour.Step components */
+  /** Tour steps – `Tour.Step` elements must be direct children (arrays are supported, Fragments and wrapper components are not) */
   children?: React.ReactNode;
 }
 
@@ -192,6 +194,12 @@ const varsResolver = createVarsResolver<TourFactory>(
   })
 );
 
+const noop = () => {};
+
+function getBeaconLabel(label: string, title: React.ReactNode) {
+  return typeof title === 'string' || typeof title === 'number' ? `${label}: ${title}` : label;
+}
+
 export const Tour = factory<TourFactory>((_props) => {
   const props = useProps('Tour', defaultProps, _props);
   const {
@@ -235,7 +243,13 @@ export const Tour = factory<TourFactory>((_props) => {
 
   const labels: TourLabels = { ...defaultLabels, ...labelsProp };
   const spotlightPaddingValue = spotlightPadding!;
-  const maskId = useId();
+  const id = useId();
+  const maskId = `${id}-mask`;
+  const titleId = `${id}-title`;
+  const bodyId = `${id}-body`;
+  const [titleMounted, setTitleMounted] = useState(false);
+  const [bodyMounted, setBodyMounted] = useState(false);
+  const beaconToFocusRef = useRef<number | null>(null);
 
   const {
     steps,
@@ -251,8 +265,6 @@ export const Tour = factory<TourFactory>((_props) => {
     isCentered,
     constrainedWidth,
     hasPositioned,
-    centeredPos,
-    tooltipRef,
     showTooltip,
     lastActiveTargetRef,
   } = useTour({
@@ -274,6 +286,21 @@ export const Tour = factory<TourFactory>((_props) => {
     stepComponent: TourStep,
   });
 
+  useEffect(() => {
+    if (!active) {
+      beaconToFocusRef.current = null;
+    }
+  }, [active]);
+
+  const resolvedSpotlightPadding = displayStep?.spotlightPadding ?? spotlightPaddingValue;
+  const resolvedSpotlightRadius = displayStep?.spotlightRadius ?? spotlightRadius ?? 4;
+  const resolvedWithOverlay = displayStep?.withOverlay ?? withOverlay;
+  const focusTrapActive =
+    showTooltip && mode === 'guided' && !!resolvedWithOverlay && !withOverlayInteraction;
+
+  const autoFocusRef = useTooltipAutoFocus(!focusTrapActive);
+  const tooltipMergedRef = useMergedRef(floatingRefs.setFloating, autoFocusRef);
+
   const getStyles = useStyles<TourFactory>({
     name: 'Tour',
     classes,
@@ -287,10 +314,6 @@ export const Tour = factory<TourFactory>((_props) => {
     vars,
     varsResolver,
   });
-
-  const resolvedSpotlightPadding = displayStep?.spotlightPadding ?? spotlightPaddingValue;
-  const resolvedSpotlightRadius = displayStep?.spotlightRadius ?? spotlightRadius ?? 4;
-  const resolvedWithOverlay = displayStep?.withOverlay ?? withOverlay;
 
   return (
     <TourProvider
@@ -317,6 +340,13 @@ export const Tour = factory<TourFactory>((_props) => {
         closeOnEscape: closeOnEscape!,
         closeOnOverlayClick: closeOnOverlayClick!,
         labels,
+        titleId,
+        bodyId,
+        titleMounted,
+        bodyMounted,
+        setTitleMounted,
+        setBodyMounted,
+        setTargetElement: noop,
       }}
     >
       <OptionalPortal {...portalProps} withinPortal={withinPortal}>
@@ -383,10 +413,15 @@ export const Tour = factory<TourFactory>((_props) => {
                   key={index}
                   target={stepData.target}
                   onClick={() => {
+                    beaconToFocusRef.current = index;
                     setBeaconOpenStep(index);
                     setCurrentStep(index);
                   }}
-                  ariaLabel={labels.beacon}
+                  ariaLabel={getBeaconLabel(labels.beacon, stepData.title)}
+                  withInitialFocus={beaconToFocusRef.current === index}
+                  onInitialFocus={() => {
+                    beaconToFocusRef.current = null;
+                  }}
                   pulseStyles={getStyles('beaconPulse')}
                   {...getStyles('beacon')}
                 />
@@ -402,56 +437,49 @@ export const Tour = factory<TourFactory>((_props) => {
             }}
             timingFunction={transitionProps?.timingFunction}
           >
-            {(transitionStyles) => (
-              <FocusTrap
-                active={
-                  showTooltip &&
-                  mode === 'guided' &&
-                  !!resolvedWithOverlay &&
-                  !withOverlayInteraction
-                }
-                innerRef={(node: HTMLDivElement | null) => {
-                  floatingRefs.setFloating(node);
-                  (tooltipRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
-                }}
-              >
+            {({
+              transitionProperty,
+              transitionDuration,
+              transitionTimingFunction,
+              ...transitionStyles
+            }) => (
+              <FocusTrap active={focusTrapActive} innerRef={tooltipMergedRef}>
                 <Box
                   {...getStyles('tooltip')}
+                  role="dialog"
                   tabIndex={-1}
+                  aria-labelledby={titleMounted ? titleId : undefined}
+                  aria-label={
+                    titleMounted
+                      ? undefined
+                      : labels.stepCounter(displayStepIndex + 1, steps.length)
+                  }
+                  aria-describedby={bodyMounted ? bodyId : undefined}
                   data-centered={isCentered || undefined}
                   style={{
                     ...getStyles('tooltip').style,
-                    ...(isCentered
-                      ? (centeredPos ?? {
-                          top: window.innerHeight / 2,
-                          left: (window.innerWidth - constrainedWidth) / 2,
-                        })
-                      : floatingStyles),
+                    ...(isCentered ? {} : floatingStyles),
                     ...transitionStyles,
                     width: constrainedWidth,
                     transition: [
-                      ...(transitionStyles.transitionProperty
-                        ? transitionStyles.transitionProperty
+                      ...(transitionProperty
+                        ? transitionProperty
                             .split(',')
                             .map(
                               (prop: string) =>
-                                `${prop.trim()} ${transitionStyles.transitionDuration} ${transitionStyles.transitionTimingFunction || 'ease'}`
+                                `${prop.trim()} ${transitionDuration} ${transitionTimingFunction || 'ease'}`
                             )
                         : []),
-                      hasPositioned
-                        ? `top ${stepTransitionDuration}ms cubic-bezier(0.16, 1, 0.3, 1)`
-                        : null,
-                      hasPositioned
-                        ? `left ${stepTransitionDuration}ms cubic-bezier(0.16, 1, 0.3, 1)`
-                        : null,
-                    ]
-                      .filter(Boolean)
-                      .join(', '),
-                    transitionProperty: undefined,
-                    transitionDuration: undefined,
-                    transitionTimingFunction: undefined,
+                      ...(hasPositioned
+                        ? ['top', 'left', 'translate'].map(
+                            (prop) =>
+                              `${prop} ${stepTransitionDuration}ms cubic-bezier(0.16, 1, 0.3, 1)`
+                          )
+                        : []),
+                    ].join(', '),
                   }}
                 >
+                  {focusTrapActive && <FocusTrap.InitialFocus />}
                   {withCloseButton && <TourCloseButton />}
                   {displayStep?.title && <TourTitle>{displayStep.title}</TourTitle>}
                   {displayStep?.children && <TourBody>{displayStep.children}</TourBody>}

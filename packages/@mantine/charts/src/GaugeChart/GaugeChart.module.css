@@ -1,6 +1,7 @@
 .root {
   width: var(--gauge-size);
-  height: var(--gauge-size);
+  height: auto;
+  aspect-ratio: var(--gauge-aspect-ratio, 1);
 }
 
 .label {

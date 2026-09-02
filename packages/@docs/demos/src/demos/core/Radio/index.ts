@@ -10,3 +10,4 @@ export { card } from './Radio.demo.card';
 export { cardGroup } from './Radio.demo.cardGroup';
 export { indicator } from './Radio.demo.indicator';
 export { disabled } from './Radio.demo.disabled';
+export { lightVariant } from './Radio.demo.lightVariant';

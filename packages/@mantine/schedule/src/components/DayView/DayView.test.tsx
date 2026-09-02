@@ -1,6 +1,5 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { act, createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
@@ -1081,6 +1080,186 @@ describe('@mantine/schedule/DayView', () => {
       );
       const bgEvent = container.querySelector('.mantine-DayView-dayViewBackgroundEvent')!;
       expect(bgEvent.tagName).toBe('DIV');
+    });
+  });
+
+  describe('eventOverlapMode', () => {
+    const overlappingEvents = [
+      {
+        id: 1,
+        title: 'First',
+        start: '2025-11-03 10:00:00',
+        end: '2025-11-03 12:00:00',
+        color: 'blue',
+      },
+      {
+        id: 2,
+        title: 'Second',
+        start: '2025-11-03 10:30:00',
+        end: '2025-11-03 12:00:00',
+        color: 'violet',
+      },
+      {
+        id: 3,
+        title: 'Third',
+        start: '2025-11-03 11:00:00',
+        end: '2025-11-03 12:00:00',
+        color: 'cyan',
+      },
+    ];
+
+    const getEventStyles = (container: HTMLElement) =>
+      Array.from(container.querySelectorAll<HTMLElement>('[data-event-id]')).map((element) => ({
+        insetInlineStart: element.style.insetInlineStart,
+        width: element.style.width,
+        zIndex: element.style.getPropertyValue('--event-z-index'),
+        zIndexRaised: element.style.getPropertyValue('--event-z-index-raised'),
+        cascade: element.hasAttribute('data-cascade'),
+      }));
+
+    it('splits the available width between overlapping events by default', () => {
+      const { container } = render(<DayView date="2025-11-03" events={overlappingEvents} />);
+
+      expect(getEventStyles(container)).toStrictEqual([
+        {
+          insetInlineStart: '0%',
+          width: '33.33333333333333%',
+          zIndex: '3',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+        {
+          insetInlineStart: '33.333333333333336%',
+          width: '33.33333333333333%',
+          zIndex: '4',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+        {
+          insetInlineStart: '66.66666666666667%',
+          width: '33.33333333333333%',
+          zIndex: '5',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+      ]);
+    });
+
+    it('indents and stacks overlapping events when eventOverlapMode is cascade', () => {
+      const { container } = render(
+        <DayView date="2025-11-03" events={overlappingEvents} eventOverlapMode="cascade" />
+      );
+
+      expect(getEventStyles(container)).toStrictEqual([
+        { insetInlineStart: '0%', width: '100%', zIndex: '3', zIndexRaised: '6', cascade: true },
+        { insetInlineStart: '20%', width: '80%', zIndex: '4', zIndexRaised: '6', cascade: true },
+        { insetInlineStart: '40%', width: '60%', zIndex: '5', zIndexRaised: '6', cascade: true },
+      ]);
+    });
+
+    it('applies the default raise delay of 600ms', () => {
+      const { container } = render(
+        <DayView date="2025-11-03" events={overlappingEvents} eventOverlapMode="cascade" />
+      );
+      const root = container.querySelector('.mantine-DayView-dayView') as HTMLElement;
+
+      expect(root.style.getPropertyValue('--event-raise-delay')).toBe('600ms');
+    });
+
+    it('supports a custom eventOverlapRaiseDelay', () => {
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          events={overlappingEvents}
+          eventOverlapMode="cascade"
+          eventOverlapRaiseDelay={250}
+        />
+      );
+      const root = container.querySelector('.mantine-DayView-dayView') as HTMLElement;
+
+      expect(root.style.getPropertyValue('--event-raise-delay')).toBe('250ms');
+    });
+  });
+
+  describe('drop validation', () => {
+    const movingEvent = {
+      id: 1,
+      title: 'Moving',
+      start: '2025-11-03 09:00:00',
+      end: '2025-11-03 09:30:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const blockingEvent = {
+      id: 2,
+      title: 'Blocking',
+      start: '2025-11-03 08:00:00',
+      end: '2025-11-03 09:00:00',
+      color: 'red',
+      payload: {},
+    };
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'drop') => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      Object.defineProperty(event, 'clientX', { value: 0, configurable: true });
+      Object.defineProperty(event, 'clientY', { value: 0, configurable: true });
+      fireEvent(node, event);
+    };
+
+    // jsdom reports empty rects, so the drop resolves to the first slot (08:00).
+    const dropOnFirstSlot = (props: Partial<DayViewProps>) => {
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          withEventsDragAndDrop
+          events={[movingEvent, blockingEvent]}
+          {...props}
+        />
+      );
+
+      fireDrag(container.querySelector('[data-event-id="1"]')!, 'dragStart');
+      fireDrag(container.querySelector('.mantine-DayView-dayViewTimeSlots')!, 'drop');
+    };
+
+    it('calls onEventDrop when the placement is allowed', () => {
+      const onEventDrop = jest.fn();
+      dropOnFirstSlot({ onEventDrop, preventEventOverlap: true, events: [movingEvent] });
+
+      expect(onEventDrop).toHaveBeenCalledTimes(1);
+      expect(onEventDrop.mock.calls[0][0]).toMatchObject({
+        eventId: 1,
+        newStart: '2025-11-03 08:00:00',
+      });
+    });
+
+    it('does not call onEventDrop when preventEventOverlap finds a conflict', () => {
+      const onEventDrop = jest.fn();
+      const onEventPlacementRejected = jest.fn();
+      dropOnFirstSlot({ onEventDrop, onEventPlacementRejected, preventEventOverlap: true });
+
+      expect(onEventDrop).not.toHaveBeenCalled();
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0].conflicts[0].id).toBe(2);
+    });
+
+    it('does not call onEventDrop when canDropEvent returns false', () => {
+      const onEventDrop = jest.fn();
+      const canDropEvent = jest.fn(() => false);
+      dropOnFirstSlot({ onEventDrop, canDropEvent });
+
+      expect(canDropEvent).toHaveBeenCalledTimes(1);
+      expect(onEventDrop).not.toHaveBeenCalled();
     });
   });
 });

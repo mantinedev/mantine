@@ -13,9 +13,9 @@ export const Demo_colors = {
   render: renderDemo(demos.colors),
 };
 
-export const Demo_series = {
-  name: '⭐ Demo: series',
-  render: renderDemo(demos.series),
+export const Demo_dataKeys = {
+  name: '⭐ Demo: dataKeys',
+  render: renderDemo(demos.dataKeys),
 };
 
 export const Demo_referenceLines = {

@@ -21,6 +21,16 @@ export const MDX_CODE_HIGHLIGHT_DATA: Record<string, Frontmatter> = {
     source: '@mantine/code-highlight/src',
     license: 'MIT',
     docs: 'code-highlight/code-highlight.mdx',
+    searchTags: 'syntax highlighting, prism, shiki, highlight.js, code block, snippet',
+  },
+
+  CodeHighlightMoved: {
+    title: 'CodeHighlight',
+    slug: '/x/code-highlight',
+    docs: 'x/code-highlight.mdx',
+    hideHeader: true,
+    hideInSearch: true,
+    hideSiblings: true,
   },
 
   JsonViewer: {
@@ -34,6 +44,7 @@ export const MDX_CODE_HIGHLIGHT_DATA: Record<string, Frontmatter> = {
     source: '@mantine/code-highlight/src/JsonViewer/JsonViewer.tsx',
     license: 'MIT',
     docs: 'code-highlight/json-viewer.mdx',
+    searchTags: 'json tree, json explorer, json view',
   },
 
   Diff: {

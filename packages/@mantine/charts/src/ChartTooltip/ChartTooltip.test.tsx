@@ -1,4 +1,4 @@
-import { patchConsoleWarn, render } from '@mantine-tests/core';
+import { render } from '@mantine-tests/core';
 import { ChartTooltip } from './ChartTooltip';
 
 const payload = [
@@ -164,14 +164,6 @@ const nestedSeries = [
 ];
 
 describe('@mantine/charts/ChartToolTip', () => {
-  beforeAll(() => {
-    patchConsoleWarn();
-  });
-
-  afterAll(() => {
-    patchConsoleWarn.release();
-  });
-
   it('accurately renders Tooltip label and data with default shallow names', async () => {
     const { container } = render(<ChartTooltip label="Mar 26" payload={payload} series={series} />);
     expect(container.querySelectorAll('.mantine-ChartTooltip-tooltipItem')).toHaveLength(3);

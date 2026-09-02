@@ -19,6 +19,10 @@ import NestedAppShellCode from './NestedAppShell/code.json';
 import { NestedAppShell } from './NestedAppShell/NestedAppShell';
 import NoTransitionsCode from './NoTransitions/code.json';
 import { NoTransitions } from './NoTransitions/NoTransitions';
+import ResizableAltLayoutCode from './ResizableAltLayout/code.json';
+import { ResizableAltLayout } from './ResizableAltLayout/ResizableAltLayout';
+import ResizableAppShellCode from './ResizableAppShell/code.json';
+import { ResizableAppShell } from './ResizableAppShell/ResizableAppShell';
 import ResponsiveSizesCode from './ResponsiveSizes/code.json';
 import { ResponsiveSizes } from './ResponsiveSizes/ResponsiveSizes';
 import StaticModeCode from './StaticMode/code.json';
@@ -81,6 +85,14 @@ export const APP_SHELL_EXAMPLES_COMPONENTS: Record<string, AppShellExampleCompon
   NestedAppShell: {
     component: NestedAppShell,
     code: NestedAppShellCode as AppShellExampleComponent['code'],
+  },
+  ResizableAppShell: {
+    component: ResizableAppShell,
+    code: ResizableAppShellCode as AppShellExampleComponent['code'],
+  },
+  ResizableAltLayout: {
+    component: ResizableAltLayout,
+    code: ResizableAltLayoutCode as AppShellExampleComponent['code'],
   },
 };
 

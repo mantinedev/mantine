@@ -29,12 +29,6 @@ import type {
   InputErrorStylesNames,
 } from './InputError/InputError';
 import type {
-  InputSuccessCssVariables,
-  InputSuccessFactory,
-  InputSuccessProps,
-  InputSuccessStylesNames,
-} from './InputSuccess/InputSuccess';
-import type {
   InputLabelCssVariables,
   InputLabelFactory,
   InputLabelProps,
@@ -45,6 +39,12 @@ import type {
   InputPlaceholderProps,
   InputPlaceholderStylesNames,
 } from './InputPlaceholder/InputPlaceholder';
+import type {
+  InputSuccessCssVariables,
+  InputSuccessFactory,
+  InputSuccessProps,
+  InputSuccessStylesNames,
+} from './InputSuccess/InputSuccess';
 import type {
   __InputWrapperProps,
   InputWrapperFactory,
