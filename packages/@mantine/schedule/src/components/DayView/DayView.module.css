@@ -46,6 +46,18 @@
 .dayViewTimeSlots {
   position: relative;
 
+  /* Cascade events stack with an unbounded z-index, keep them out of the sticky header's layer */
+  &:where(:has([data-cascade])) {
+    isolation: isolate;
+
+    /* Drag and resize feedback must stay above every cascade column */
+    --event-cascade-interaction-z-index: 999;
+
+    .dayViewDragPreview {
+      z-index: var(--event-cascade-interaction-z-index);
+    }
+  }
+
   &:where(:first-of-type) .dayViewSlot:where([data-first]) {
     border-top-color: transparent;
   }
@@ -241,4 +253,10 @@
   border: 1px dashed var(--mantine-color-blue-filled);
   background-color: var(--mantine-color-blue-light);
   opacity: 0.6;
+
+  &:where([data-invalid]) {
+    border-color: var(--mantine-color-error);
+    background-color: transparent;
+    opacity: 0.4;
+  }
 }

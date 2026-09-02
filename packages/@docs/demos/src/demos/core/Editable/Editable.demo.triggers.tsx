@@ -1,5 +1,5 @@
-import { ActionIcon, Editable, Group } from '@mantine/core';
 import { CheckIcon, PencilSimpleIcon, XIcon } from '@phosphor-icons/react';
+import { ActionIcon, Editable, Group } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `

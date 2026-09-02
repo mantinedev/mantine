@@ -1,7 +1,5 @@
 import dayjs from 'dayjs';
-
 import 'dayjs/locale/ru';
-
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useState } from 'react';
 import { Button, Group, TextInput } from '@mantine/core';

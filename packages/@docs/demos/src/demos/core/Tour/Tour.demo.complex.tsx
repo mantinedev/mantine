@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Bell, GearSix, MagnifyingGlass } from '@phosphor-icons/react';
 import {
   ActionIcon,
   Avatar,
@@ -17,7 +18,6 @@ import {
   TextInput,
   Tour,
 } from '@mantine/core';
-import { Bell, GearSix, MagnifyingGlass } from '@phosphor-icons/react';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `

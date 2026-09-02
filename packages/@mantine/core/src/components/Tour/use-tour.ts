@@ -1,9 +1,10 @@
-import { Children, useCallback, useEffect, useRef, useState } from 'react';
+import { Children, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { autoUpdate, flip, offset, shift, size, useFloating } from '@floating-ui/react';
-import { useFocusReturn, useHotkeys, useUncontrolled } from '@mantine/hooks';
-import type { FloatingPosition } from '../../utils/Floating';
+import { useFocusReturn, useHotkeys, useUncontrolled, type HotkeyItem } from '@mantine/hooks';
+import { useDirection } from '../../core';
+import { getFloatingPosition } from '../../utils/Floating';
 import type { TourStepProps } from './TourStep/TourStep';
-import { useTargetRect, type TargetRect } from './use-target-rect';
+import { useTargetRect, type TargetRect, type TourTarget } from './use-target-rect';
 
 export interface UseTourInput {
   active?: boolean;
@@ -40,12 +41,8 @@ export interface UseTourReturn {
   isCentered: boolean;
   constrainedWidth: number;
   hasPositioned: boolean;
-  centeredPos: { top: number; left: number } | null;
-  tooltipRef: React.RefObject<HTMLDivElement | null>;
   showTooltip: boolean;
-  lastActiveTargetRef: React.MutableRefObject<
-    string | React.RefObject<HTMLElement | null> | undefined
-  >;
+  lastActiveTargetRef: React.MutableRefObject<TourTarget>;
 }
 
 export function useTour({
@@ -73,6 +70,8 @@ export function useTour({
     }
   });
 
+  const { dir } = useDirection();
+
   const [currentStep, setCurrentStep] = useUncontrolled({
     value: stepProp,
     defaultValue: defaultStep,
@@ -82,27 +81,61 @@ export function useTour({
 
   const [beaconOpenStep, setBeaconOpenStep] = useState<number | null>(null);
 
-  const previousStepRef = useRef(currentStep);
-  const previousBeaconOpenStepRef = useRef<number | null>(null);
+  const showTooltip =
+    !!active && (mode === 'guided' || (mode === 'beacon' && beaconOpenStep !== null));
+  const displayStepIndex =
+    mode === 'beacon' && beaconOpenStep !== null ? beaconOpenStep : currentStep;
+  const displayStep = steps[displayStepIndex] || null;
+  const openStep = showTooltip && displayStepIndex >= 0 ? displayStepIndex : null;
 
-  const close = useCallback(() => {
-    onStepClose?.(currentStep);
-    steps[currentStep]?.onStepClose?.();
+  const reportedStepRef = useRef<number | null>(null);
+
+  const emitStepClose = useEffectEvent((step: number) => {
+    onStepClose?.(step);
+    steps[step]?.onStepClose?.();
+  });
+
+  const emitStepOpen = useEffectEvent((step: number) => {
+    onStepOpen?.(step);
+    steps[step]?.onStepOpen?.();
+  });
+
+  useEffect(() => {
+    const previousStep = reportedStepRef.current;
+
+    if (previousStep === openStep) {
+      return;
+    }
+
+    reportedStepRef.current = openStep;
+
+    if (previousStep !== null) {
+      emitStepClose(previousStep);
+    }
+
+    if (openStep !== null) {
+      emitStepOpen(openStep);
+    }
+  }, [openStep]);
+
+  const close = () => {
+    const openedStep = reportedStepRef.current;
+
+    if (openedStep !== null) {
+      reportedStepRef.current = null;
+      onStepClose?.(openedStep);
+      steps[openedStep]?.onStepClose?.();
+    }
+
     setBeaconOpenStep(null);
     onClose?.();
-  }, [onClose, onStepClose, currentStep]);
+  };
 
   useFocusReturn({ opened: !!active, shouldReturnFocus: true });
 
-  const activeStep = steps[currentStep] || null;
-  const activeTarget =
-    mode === 'beacon'
-      ? beaconOpenStep !== null
-        ? steps[beaconOpenStep]?.target
-        : undefined
-      : activeStep?.target;
+  const activeTarget = showTooltip ? displayStep?.target : undefined;
 
-  const lastActiveTargetRef = useRef(activeTarget);
+  const lastActiveTargetRef = useRef<TourTarget>(undefined);
   if (active) {
     lastActiveTargetRef.current = activeTarget;
   }
@@ -110,93 +143,71 @@ export function useTour({
   const resolvedTarget = active ? activeTarget : lastActiveTargetRef.current;
   const { rect: targetRect, element: targetElement } = useTargetRect(resolvedTarget);
 
-  useEffect(() => {
-    if (!active) {
-      return;
+  const scrollTargetIntoView = useEffectEvent((element: HTMLElement) => {
+    if (scrollToHandler) {
+      scrollToHandler(element);
+    } else {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-
-    const prevStep = previousStepRef.current;
-    previousStepRef.current = currentStep;
-
-    if (prevStep !== currentStep) {
-      onStepClose?.(prevStep);
-      steps[prevStep]?.onStepClose?.();
-      onStepOpen?.(currentStep);
-    }
-
-    activeStep?.onStepOpen?.();
-  }, [active, currentStep]);
-
-  useEffect(() => {
-    if (active) {
-      onStepOpen?.(currentStep);
-    }
-  }, [active]);
-
-  useEffect(() => {
-    if (!active) {
-      return;
-    }
-
-    const prevBeaconStep = previousBeaconOpenStepRef.current;
-    previousBeaconOpenStepRef.current = beaconOpenStep;
-
-    if (prevBeaconStep !== beaconOpenStep) {
-      if (prevBeaconStep !== null) {
-        onStepClose?.(prevBeaconStep);
-        steps[prevBeaconStep]?.onStepClose?.();
-      }
-      if (beaconOpenStep !== null) {
-        onStepOpen?.(beaconOpenStep);
-        steps[beaconOpenStep]?.onStepOpen?.();
-      }
-    }
-  }, [active, beaconOpenStep]);
+  });
 
   useEffect(() => {
     if (active && withScrollIntoView && targetElement) {
-      if (scrollToHandler) {
-        scrollToHandler(targetElement);
-      } else {
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      scrollTargetIntoView(targetElement);
     }
-  }, [active, targetElement, withScrollIntoView, scrollToHandler]);
+  }, [active, targetElement, withScrollIntoView]);
 
-  const hotkeyHandlers: [string, () => void][] = [];
+  const isInsideTarget = (event: KeyboardEvent) =>
+    !!targetElement && event.target instanceof Node && targetElement.contains(event.target);
+
+  const goToNextStep = (event: KeyboardEvent) => {
+    if (isInsideTarget(event)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      close();
+    }
+  };
+
+  const goToPreviousStep = (event: KeyboardEvent) => {
+    if (isInsideTarget(event)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const hotkeyHandlers: HotkeyItem[] = [];
+
+  if (active && closeOnEscape) {
+    hotkeyHandlers.push(['Escape', close]);
+  }
 
   if (active && mode === 'guided' && withKeyboardNavigation) {
-    if (closeOnEscape) {
-      hotkeyHandlers.push(['Escape', close]);
-    }
     hotkeyHandlers.push([
-      'ArrowRight',
-      () => {
-        if (currentStep < steps.length - 1) {
-          setCurrentStep(currentStep + 1);
-        }
-      },
+      dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight',
+      goToNextStep,
+      { preventDefault: false },
     ]);
     hotkeyHandlers.push([
-      'ArrowLeft',
-      () => {
-        if (currentStep > 0) {
-          setCurrentStep(currentStep - 1);
-        }
-      },
+      dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft',
+      goToPreviousStep,
+      { preventDefault: false },
     ]);
-  } else if (active && closeOnEscape) {
-    hotkeyHandlers.push(['Escape', close]);
   }
 
   useHotkeys(hotkeyHandlers);
 
-  const displayStep =
-    mode === 'beacon' && beaconOpenStep !== null ? steps[beaconOpenStep] : activeStep;
-  const displayStepIndex =
-    mode === 'beacon' && beaconOpenStep !== null ? beaconOpenStep : currentStep;
-
-  const stepPosition: FloatingPosition = displayStep?.position || 'bottom';
+  const stepPosition = getFloatingPosition(dir, displayStep?.position || 'bottom');
 
   const [constrainedWidth, setConstrainedWidth] = useState(maxWidth!);
 
@@ -219,7 +230,6 @@ export function useTour({
   });
 
   const isCentered = !targetElement;
-  const tooltipRef = useRef<HTMLDivElement>(null);
   const [hasPositioned, setHasPositioned] = useState(false);
 
   useEffect(() => {
@@ -234,34 +244,6 @@ export function useTour({
 
     return () => cancelAnimationFrame(timer);
   }, [active]);
-
-  const [centeredPos, setCenteredPos] = useState<{ top: number; left: number } | null>(null);
-
-  useEffect(() => {
-    if (!isCentered) {
-      return;
-    }
-
-    const el = tooltipRef.current;
-    if (!el) {
-      return;
-    }
-
-    const update = () => {
-      const height = el.offsetHeight;
-      setCenteredPos({
-        top: (window.innerHeight - height) / 2,
-        left: (window.innerWidth - constrainedWidth) / 2,
-      });
-    };
-
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, [isCentered, constrainedWidth, displayStepIndex]);
-
-  const showTooltip =
-    !!active && (mode === 'guided' || (mode === 'beacon' && beaconOpenStep !== null));
 
   return {
     steps,
@@ -279,8 +261,6 @@ export function useTour({
     isCentered,
     constrainedWidth,
     hasPositioned,
-    centeredPos,
-    tooltipRef,
     showTooltip,
     lastActiveTargetRef,
   };

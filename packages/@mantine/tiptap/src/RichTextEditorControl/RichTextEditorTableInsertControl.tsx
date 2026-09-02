@@ -38,8 +38,9 @@ export interface RichTextEditorTableInsertControlProps
   /** Determines whether the inserted table should have a header row @default true */
   withHeaderRow?: boolean;
 
-  /** Props passed down to the Popover component */
-  popoverProps?: Partial<PopoverProps>;
+  /** Props passed down to the `Popover` component. `opened` and `onChange` are controlled
+   * by the control itself and cannot be overridden. */
+  popoverProps?: Partial<Omit<PopoverProps, 'opened' | 'onChange'>>;
 }
 
 export type RichTextEditorTableInsertControlFactory = Factory<{
@@ -72,6 +73,7 @@ export const RichTextEditorTableInsertControl = factory<RichTextEditorTableInser
       withHeaderRow,
       popoverProps,
       disabled: disabledProp,
+      onClick,
       ...others
     } = props;
 
@@ -131,10 +133,9 @@ export const RichTextEditorTableInsertControl = factory<RichTextEditorTableInser
         trapFocus
         shadow="md"
         position="bottom-end"
-        withinPortal={false}
+        {...popoverProps}
         opened={opened}
         onChange={(value) => !value && handleClose()}
-        {...popoverProps}
       >
         <Popover.Target>
           <RichTextEditorControlBase
@@ -144,7 +145,19 @@ export const RichTextEditorTableInsertControl = factory<RichTextEditorTableInser
             title={ctx.labels.tableInsertControlLabel}
             active={opened}
             disabled={disabled}
-            onClick={opened ? handleClose : open}
+            onClick={(event) => {
+              onClick?.(event);
+
+              if (event.defaultPrevented) {
+                return;
+              }
+
+              if (opened) {
+                handleClose();
+              } else {
+                open();
+              }
+            }}
             classNames={resolvedClassNames}
             styles={resolvedStyles}
             className={className}

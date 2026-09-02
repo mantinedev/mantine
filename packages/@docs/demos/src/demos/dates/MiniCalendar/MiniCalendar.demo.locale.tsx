@@ -1,5 +1,4 @@
 import 'dayjs/locale/ru';
-
 import { MiniCalendar } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 

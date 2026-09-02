@@ -26,13 +26,24 @@ const defaultProps: Partial<ToolbarDividerProps> = {};
 
 export const ToolbarDivider = factory<ToolbarDividerFactory>((_props) => {
   const props = useProps('ToolbarDivider', defaultProps, _props);
-  const { classNames, className, style, styles, vars, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    vars,
+    'aria-orientation': ariaOrientation,
+    ...others
+  } = props;
   const ctx = useToolbarContext();
 
   return (
     <Box
       {...others}
       role="separator"
+      aria-orientation={
+        ariaOrientation ?? (ctx.orientation === 'horizontal' ? 'vertical' : 'horizontal')
+      }
       {...ctx.getStyles('divider', { className, classNames, style, styles })}
       data-orientation={ctx.orientation === 'horizontal' ? 'horizontal' : 'vertical'}
     />

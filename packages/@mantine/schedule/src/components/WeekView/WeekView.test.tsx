@@ -1,7 +1,6 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
-import { createEvent, fireEvent } from '@testing-library/react';
+import 'dayjs/locale/ru';
+import { act, createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -951,10 +950,57 @@ describe('@mantine/schedule/WeekView', () => {
   });
 
   describe('eventResizeInterval prop', () => {
-    it('renders without throwing when withEventResize and eventResizeInterval are set', () => {
-      expect(() =>
-        render(<WeekView {...defaultProps} withEventResize eventResizeInterval={15} />)
-      ).not.toThrow();
+    it('resizes on eventResizeInterval independently of intervalMinutes', () => {
+      const rect = {
+        top: 0,
+        left: 0,
+        right: 480,
+        bottom: 480,
+        width: 480,
+        height: 480,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      };
+      const spy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockReturnValue(rect as DOMRect);
+      const onEventResize = jest.fn();
+
+      const { container } = render(
+        <WeekView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventResizeInterval={15}
+          withEventResize
+          onEventResize={onEventResize}
+          events={[
+            {
+              id: 1,
+              title: 'Event',
+              start: '2025-11-03 09:00:00',
+              end: '2025-11-03 09:30:00',
+              color: 'blue',
+              payload: {},
+            },
+          ]}
+        />
+      );
+
+      const handle = container.querySelector('[data-edge="bottom"]')!;
+      fireEvent.pointerDown(handle);
+      act(() => {
+        // clientY 165 = 165 min from 08:00 = 10:45, a 15-min boundary off the 30-min grid
+        document.dispatchEvent(new MouseEvent('pointermove', { clientY: 165 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({ newEnd: '2025-11-03 10:45:00' })
+      );
+      spy.mockRestore();
     });
   });
 
@@ -1170,6 +1216,390 @@ describe('@mantine/schedule/WeekView', () => {
 
       expect(root).toHaveAttribute('data-event-interaction');
       expect(root).not.toHaveAttribute('data-all-day-dragging');
+    });
+  });
+
+  describe('eventOverlapMode', () => {
+    const overlappingEvents = [
+      {
+        id: 1,
+        title: 'First',
+        start: '2025-11-03 10:00:00',
+        end: '2025-11-03 12:00:00',
+        color: 'blue',
+      },
+      {
+        id: 2,
+        title: 'Second',
+        start: '2025-11-03 10:30:00',
+        end: '2025-11-03 12:00:00',
+        color: 'violet',
+      },
+      {
+        id: 3,
+        title: 'Third',
+        start: '2025-11-03 11:00:00',
+        end: '2025-11-03 12:00:00',
+        color: 'cyan',
+      },
+    ];
+
+    const getEventStyles = (container: HTMLElement) =>
+      Array.from(container.querySelectorAll<HTMLElement>('[data-event-id]')).map((element) => ({
+        left: element.style.left,
+        width: element.style.width,
+        zIndex: element.style.getPropertyValue('--event-z-index'),
+        zIndexRaised: element.style.getPropertyValue('--event-z-index-raised'),
+        cascade: element.hasAttribute('data-cascade'),
+      }));
+
+    it('splits the available width between overlapping events by default', () => {
+      const { container } = render(<WeekView {...defaultProps} events={overlappingEvents} />);
+
+      expect(getEventStyles(container)).toStrictEqual([
+        {
+          left: '0%',
+          width: '33.333333333333336%',
+          zIndex: '3',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+        {
+          left: '33.333333333333336%',
+          width: '33.333333333333336%',
+          zIndex: '4',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+        {
+          left: '66.66666666666667%',
+          width: '33.333333333333336%',
+          zIndex: '5',
+          zIndexRaised: '6',
+          cascade: false,
+        },
+      ]);
+    });
+
+    it('indents and stacks overlapping events when eventOverlapMode is cascade', () => {
+      const { container } = render(
+        <WeekView {...defaultProps} events={overlappingEvents} eventOverlapMode="cascade" />
+      );
+
+      expect(getEventStyles(container)).toStrictEqual([
+        { left: '0%', width: '100%', zIndex: '3', zIndexRaised: '6', cascade: true },
+        { left: '20%', width: '80%', zIndex: '4', zIndexRaised: '6', cascade: true },
+        { left: '40%', width: '60%', zIndex: '5', zIndexRaised: '6', cascade: true },
+      ]);
+    });
+
+    it('applies the default raise delay of 600ms', () => {
+      const { container } = render(
+        <WeekView {...defaultProps} events={overlappingEvents} eventOverlapMode="cascade" />
+      );
+      const root = container.querySelector('.mantine-WeekView-weekViewRoot') as HTMLElement;
+
+      expect(root.style.getPropertyValue('--event-raise-delay')).toBe('600ms');
+    });
+
+    it('supports a custom eventOverlapRaiseDelay', () => {
+      const { container } = render(
+        <WeekView
+          {...defaultProps}
+          events={overlappingEvents}
+          eventOverlapMode="cascade"
+          eventOverlapRaiseDelay={250}
+        />
+      );
+      const root = container.querySelector('.mantine-WeekView-weekViewRoot') as HTMLElement;
+
+      expect(root.style.getPropertyValue('--event-raise-delay')).toBe('250ms');
+    });
+  });
+
+  describe('drop validation', () => {
+    const movingEvent = {
+      id: 1,
+      title: 'Moving',
+      start: '2025-11-03 09:00:00',
+      end: '2025-11-03 09:30:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const blockingEvent = {
+      id: 2,
+      title: 'Blocking',
+      start: '2025-11-03 10:45:00',
+      end: '2025-11-03 11:15:00',
+      color: 'red',
+      payload: {},
+    };
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'dragOver' | 'drop', clientY?: number) => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      if (clientY !== undefined) {
+        Object.defineProperty(event, 'clientY', { value: clientY, configurable: true });
+      }
+      fireEvent(node, event);
+    };
+
+    const mockDaySlotRects = (dayColumn: Element) => {
+      Array.from(dayColumn.querySelectorAll('.mantine-WeekView-weekViewDaySlot')).forEach(
+        (node, i) => {
+          (node as HTMLElement).getBoundingClientRect = () =>
+            ({
+              top: i * 30,
+              bottom: (i + 1) * 30,
+              left: 0,
+              right: 100,
+              width: 100,
+              height: 30,
+              x: 0,
+              y: i * 30,
+              toJSON: () => {},
+            }) as DOMRect;
+        }
+      );
+    };
+
+    // clientY 165 snaps the dragged event to 10:45, which collides with `blockingEvent`.
+    const dropOnBlockedSlot = (props: Partial<WeekViewProps>) => {
+      const { container } = render(
+        <WeekView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          events={[movingEvent, blockingEvent]}
+          {...props}
+        />
+      );
+
+      const dayColumn = container.querySelectorAll('.mantine-WeekView-weekViewDaySlots')[0];
+      mockDaySlotRects(dayColumn);
+
+      fireDrag(container.querySelector('[data-event-id="1"]')!, 'dragStart');
+      fireDrag(dayColumn, 'drop', 165);
+    };
+
+    it('does not call onEventDrop when preventEventOverlap finds a conflict', () => {
+      const onEventDrop = jest.fn();
+      dropOnBlockedSlot({ onEventDrop, preventEventOverlap: true });
+
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+
+    it('calls onEventPlacementRejected with the conflicting event', () => {
+      const onEventPlacementRejected = jest.fn();
+      dropOnBlockedSlot({
+        onEventDrop: jest.fn(),
+        onEventPlacementRejected,
+        preventEventOverlap: true,
+      });
+
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
+        action: 'drop',
+        reason: 'overlap',
+        start: '2025-11-03 10:45:00',
+      });
+      expect(onEventPlacementRejected.mock.calls[0][0].conflicts).toHaveLength(1);
+      expect(onEventPlacementRejected.mock.calls[0][0].conflicts[0].id).toBe(2);
+    });
+
+    it('calls onEventDrop when preventEventOverlap is not set', () => {
+      const onEventDrop = jest.fn();
+      dropOnBlockedSlot({ onEventDrop });
+
+      expect(onEventDrop).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not call onEventDrop when canDropEvent returns false', () => {
+      const onEventDrop = jest.fn();
+      dropOnBlockedSlot({ onEventDrop, canDropEvent: () => false });
+
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+
+    const dragOverSlot = (props: Partial<WeekViewProps>, clientY: number) => {
+      const { container } = render(
+        <WeekView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={jest.fn()}
+          events={[movingEvent, blockingEvent]}
+          {...props}
+        />
+      );
+
+      const dayColumn = container.querySelectorAll('.mantine-WeekView-weekViewDaySlots')[0];
+      mockDaySlotRects(dayColumn);
+
+      fireDrag(container.querySelector('[data-event-id="1"]')!, 'dragStart');
+      fireDrag(dayColumn, 'dragOver', clientY);
+
+      return container.querySelector('.mantine-WeekView-weekViewDragPreview');
+    };
+
+    it('marks the drag ghost as invalid over a conflicting slot', () => {
+      const ghost = dragOverSlot({ preventEventOverlap: true }, 165);
+
+      expect(ghost).toBeInTheDocument();
+      expect(ghost).toHaveAttribute('data-invalid');
+    });
+
+    it('does not mark the drag ghost as invalid over a free slot', () => {
+      const ghost = dragOverSlot({ preventEventOverlap: true }, 15);
+
+      expect(ghost).toBeInTheDocument();
+      expect(ghost).not.toHaveAttribute('data-invalid');
+    });
+
+    it('never marks the drag ghost as invalid when validation is off', () => {
+      const ghost = dragOverSlot({}, 165);
+
+      expect(ghost).toBeInTheDocument();
+      expect(ghost).not.toHaveAttribute('data-invalid');
+    });
+  });
+
+  describe('resize validation', () => {
+    const rect = {
+      top: 0,
+      left: 0,
+      right: 480,
+      bottom: 480,
+      width: 480,
+      height: 480,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    };
+
+    const resizingEvent = {
+      id: 1,
+      title: 'Resizing',
+      start: '2025-11-03 09:00:00',
+      end: '2025-11-03 09:30:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const blockingEvent = {
+      id: 2,
+      title: 'Blocking',
+      start: '2025-11-03 10:00:00',
+      end: '2025-11-03 11:00:00',
+      color: 'red',
+      payload: {},
+    };
+
+    // 480px for 08:00–16:00: clientY 165 drags the bottom edge of the 09:00 event to 10:45.
+    const resizeBottomEdgeTo1045 = (props: Partial<WeekViewProps>) => {
+      const spy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockReturnValue(rect as DOMRect);
+      const { container } = render(
+        <WeekView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventResizeInterval={15}
+          withEventResize
+          events={[resizingEvent, blockingEvent]}
+          {...props}
+        />
+      );
+
+      const isInvalid = () =>
+        container.querySelector('[data-event-id="1"]')!.hasAttribute('data-invalid');
+
+      fireEvent.pointerDown(container.querySelector('[data-event-id="1"] [data-edge="bottom"]')!);
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointermove', { clientY: 165 }));
+      });
+      const invalidWhileResizing = isInvalid();
+
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+      const invalidAfterRelease = isInvalid();
+
+      spy.mockRestore();
+      return { invalidWhileResizing, invalidAfterRelease };
+    };
+
+    it('commits the resize when the new range is allowed', () => {
+      const onEventResize = jest.fn();
+      const { invalidWhileResizing } = resizeBottomEdgeTo1045({
+        onEventResize,
+        preventEventOverlap: true,
+        events: [resizingEvent],
+      });
+
+      expect(invalidWhileResizing).toBe(false);
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({ newEnd: '2025-11-03 10:45:00' })
+      );
+    });
+
+    it('marks the resizing event as invalid and rejects the resize when preventEventOverlap finds a conflict', () => {
+      const onEventResize = jest.fn();
+      const onEventPlacementRejected = jest.fn();
+      const { invalidWhileResizing, invalidAfterRelease } = resizeBottomEdgeTo1045({
+        onEventResize,
+        onEventPlacementRejected,
+        preventEventOverlap: true,
+      });
+
+      expect(invalidWhileResizing).toBe(true);
+      expect(invalidAfterRelease).toBe(false);
+      expect(onEventResize).not.toHaveBeenCalled();
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
+        action: 'resize',
+        edge: 'end',
+        reason: 'overlap',
+        start: '2025-11-03 09:00:00',
+        end: '2025-11-03 10:45:00',
+      });
+      expect(onEventPlacementRejected.mock.calls[0][0].conflicts[0].id).toBe(2);
+    });
+
+    it('rejects the resize when canResizeEventTo returns false', () => {
+      const onEventResize = jest.fn();
+      const onEventPlacementRejected = jest.fn();
+      const { invalidWhileResizing } = resizeBottomEdgeTo1045({
+        onEventResize,
+        onEventPlacementRejected,
+        canResizeEventTo: () => false,
+        events: [resizingEvent],
+      });
+
+      expect(invalidWhileResizing).toBe(true);
+      expect(onEventResize).not.toHaveBeenCalled();
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
+        action: 'resize',
+        reason: 'rejected',
+        conflicts: [],
+      });
     });
   });
 });

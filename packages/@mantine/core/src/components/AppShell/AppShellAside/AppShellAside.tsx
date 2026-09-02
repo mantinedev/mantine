@@ -1,5 +1,6 @@
 import cx from 'clsx';
 import { RemoveScroll } from 'react-remove-scroll';
+import { useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -11,6 +12,7 @@ import {
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
 import { AppShellCompoundProps } from '../AppShell.types';
+import { AppShellResizeHandle } from '../AppShellResizeHandle/AppShellResizeHandle';
 import classes from '../AppShell.module.css';
 
 export type AppShellAsideStylesNames = 'aside';
@@ -43,24 +45,50 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props) => {
   } = useProps('AppShellAside', null, _props);
 
   const ctx = useAppShellContext();
+  const sectionId = useId(others.id);
 
   if (ctx.disabled) {
     return null;
   }
 
+  const isResizable = ctx.resize?.aside.enabled ?? false;
+  const boxProps = ctx.getStyles('aside', {
+    className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
+    classNames,
+    styles,
+    style,
+  });
+
+  if (!isResizable) {
+    return (
+      <Box
+        component="aside"
+        mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
+        {...boxProps}
+        {...others}
+        __vars={{ '--app-shell-aside-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
+      />
+    );
+  }
+
+  const { children, dangerouslySetInnerHTML, ...rest } = others;
+
   return (
     <Box
       component="aside"
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
-      {...ctx.getStyles('aside', {
-        className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
-        classNames,
-        styles,
-        style,
-      })}
-      {...others}
+      {...boxProps}
+      {...rest}
       __vars={{ '--app-shell-aside-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
-    />
+      id={sectionId}
+    >
+      {dangerouslySetInnerHTML ? (
+        <div style={{ display: 'contents' }} dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
+      ) : (
+        children
+      )}
+      <AppShellResizeHandle section="aside" sectionId={sectionId} />
+    </Box>
   );
 });
 

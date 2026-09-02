@@ -68,6 +68,11 @@ export const Demo_renderNodeExpand = {
   render: renderDemo(demos.renderNodeExpand),
 };
 
+export const Demo_renderPill = {
+  name: '⭐ Demo: renderPill',
+  render: renderDemo(demos.renderPill),
+};
+
 export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),

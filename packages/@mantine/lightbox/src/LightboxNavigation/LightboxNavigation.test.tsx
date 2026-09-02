@@ -1,6 +1,6 @@
 import { renderWithAct, screen } from '@mantine-tests/core';
-import { LightboxNavigation } from './LightboxNavigation';
 import { LightboxWrapper, testSlides } from '../test-utils';
+import { LightboxNavigation } from './LightboxNavigation';
 
 describe('@mantine/lightbox/LightboxNavigation', () => {
   it('renders previous and next buttons', async () => {
@@ -70,5 +70,23 @@ describe('@mantine/lightbox/LightboxNavigation', () => {
     );
     expect(screen.getByLabelText('Previous slide')).not.toHaveAttribute('data-inactive');
     expect(screen.getByLabelText('Next slide')).not.toHaveAttribute('data-inactive');
+  });
+
+  it('applies local classNames and styles to navigation buttons', async () => {
+    await renderWithAct(
+      <LightboxWrapper currentIndex={1}>
+        <LightboxNavigation
+          classNames={{ navigationButton: 'test-nav-button' }}
+          styles={{ navigationButton: { opacity: 0.5 } }}
+        />
+      </LightboxWrapper>
+    );
+
+    const buttons = screen.getAllByRole('button');
+    expect(buttons).toHaveLength(2);
+    buttons.forEach((button) => {
+      expect(button).toHaveClass('test-nav-button');
+      expect(button).toHaveStyle({ opacity: '0.5' });
+    });
   });
 });

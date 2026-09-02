@@ -1,5 +1,6 @@
 import { rem } from '../../../../core';
 import type { AppShellProps } from '../../AppShell';
+import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { assignFooterVariables } from './assign-footer-variables';
 
 function getTestObject(footer: AppShellProps['footer']) {
@@ -15,6 +16,26 @@ function getTestObject(footer: AppShellProps['footer']) {
   });
 
   return { baseStyles, minMediaStyles, maxMediaStyles };
+}
+
+function getResizedTestObject(
+  footer: AppShellProps['footer'],
+  resizedSize: number | undefined,
+  resizable = true
+) {
+  const baseStyles: CSSVariables = {};
+  const minMediaStyles: MediaQueryVariables = {};
+
+  assignFooterVariables({
+    baseStyles,
+    minMediaStyles,
+    footer,
+    mode: 'fixed',
+    resizedSize,
+    resizable,
+  });
+
+  return { baseStyles, minMediaStyles };
 }
 
 describe('@mantine/core/AppShell/assign-footer-variables', () => {
@@ -85,5 +106,43 @@ describe('@mantine/core/AppShell/assign-footer-variables', () => {
         },
       });
     });
+  });
+});
+
+describe('@mantine/core/AppShell/assign-footer-variables resize', () => {
+  it('emits the resized size instead of the configured height', () => {
+    const { baseStyles } = getResizedTestObject({ height: 100 }, 420);
+
+    expect(baseStyles).toMatchObject({
+      '--app-shell-footer-height': rem(420),
+      '--app-shell-footer-offset': rem(420),
+    });
+  });
+
+  it('respects offset: false when resized', () => {
+    const { baseStyles } = getResizedTestObject({ height: 100, offset: false }, 420);
+
+    expect(baseStyles['--app-shell-footer-height']).toBe(rem(420));
+    expect(baseStyles['--app-shell-footer-offset']).toBeUndefined();
+  });
+
+  it('skips responsive rules when the section is resized', () => {
+    const { minMediaStyles } = getResizedTestObject({ height: { base: 100, md: 200 } }, 420);
+
+    expect(minMediaStyles.md?.['--app-shell-footer-height']).toBeUndefined();
+  });
+
+  it('hides the handle when the footer is collapsed', () => {
+    const { baseStyles } = getResizedTestObject({ height: 100, collapsed: true }, undefined);
+
+    expect(baseStyles).toMatchObject({
+      '--app-shell-footer-resize-handle-display': 'none',
+    });
+  });
+
+  it('emits no handle variable when the section is not resizable', () => {
+    const { baseStyles } = getResizedTestObject({ height: 100, collapsed: true }, undefined, false);
+
+    expect(baseStyles['--app-shell-footer-resize-handle-display']).toBeUndefined();
   });
 });

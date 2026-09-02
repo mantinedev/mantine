@@ -1,5 +1,5 @@
-import { Stack, Text } from '@mantine/core';
 import { Diff } from '@mantine/code-highlight';
+import { Stack, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const previousValue = 'The quick brown fox jumps over the lazy dog.';

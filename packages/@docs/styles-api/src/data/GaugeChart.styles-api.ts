@@ -12,8 +12,7 @@ export const GaugeChartStylesApi: StylesApiData<GaugeChartFactory> = {
 
   vars: {
     root: {
-      '--gauge-size': 'Controls chart width and height',
-      '--gauge-thickness': 'Controls arc thickness',
+      '--gauge-size': 'Controls chart width, height is derived from the arc proportions',
     },
   },
   modifiers: [],

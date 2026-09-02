@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -15,6 +14,9 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { useUncontrolled } from '@mantine/hooks';
+import { useEmojiGridNavigation } from '../../hooks/use-emoji-grid-navigation';
+import { useEmojiSearch } from '../../hooks/use-emoji-search';
 import {
   DEFAULT_LABELS,
   EmojiPickerData,
@@ -23,8 +25,6 @@ import {
   FlattenedRowItem,
 } from '../../types';
 import { applySkinTone, filterSupportedEmojis, flattenEmojiData } from '../../utils';
-import { useEmojiGridNavigation } from '../../hooks/use-emoji-grid-navigation';
-import { useEmojiSearch } from '../../hooks/use-emoji-search';
 import { EmojiPickerProvider } from './EmojiPicker.context';
 import { EmojiPickerCategoryNav } from './EmojiPickerCategoryNav';
 import { EmojiPickerGrid } from './EmojiPickerGrid';

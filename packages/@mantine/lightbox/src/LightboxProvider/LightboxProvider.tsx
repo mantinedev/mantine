@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { factory, Factory, useProps } from '@mantine/core';
-import { lightboxActions, LightboxStore, lightboxStore, useLightboxStore } from '../lightbox.store';
 import { Lightbox, LightboxProps } from '../Lightbox';
+import { lightboxActions, LightboxStore, lightboxStore, useLightboxStore } from '../lightbox.store';
 
 export interface LightboxProviderProps extends Omit<
   LightboxProps,

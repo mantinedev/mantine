@@ -7,8 +7,9 @@ import {
   Factory,
   useProps,
 } from '@mantine/core';
-import { useLightboxContext } from '../lightbox.context';
+import { useMergedRef } from '@mantine/hooks';
 import { useLightboxSwipeClose } from '../hooks/use-lightbox-swipe-close';
+import { useLightboxContext } from '../lightbox.context';
 import classes from '../Lightbox.module.css';
 
 export type LightboxSlidesStylesNames = 'slides' | 'slidesViewport' | 'slidesContainer';
@@ -30,13 +31,23 @@ export type LightboxSlidesFactory = Factory<{
 }>;
 
 export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
-  const { classNames, className, style, styles, vars, emblaRef, children, ...others } = useProps(
-    'LightboxSlides',
-    null,
-    props
-  );
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    vars,
+    emblaRef,
+    children,
+    onTouchStart,
+    onTouchEnd,
+    ...others
+  } = useProps('LightboxSlides', null, props);
 
   const ctx = useLightboxContext();
+  const stylesApiProps = { classNames, styles };
+
+  const viewportRef = useMergedRef(ctx.emblaRef, emblaRef);
 
   const { handleTouchStart, handleTouchEnd } = useLightboxSwipeClose({
     enabled: ctx.closeOnSwipeDown,
@@ -49,13 +60,19 @@ export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
       {...ctx.getStyles('slides', { className, style, classNames, styles })}
       role="region"
       aria-roledescription="carousel"
-      aria-label="Slides"
+      aria-label={ctx.labels.slidesLabel}
       {...others}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
+      onTouchStart={(event) => {
+        onTouchStart?.(event);
+        handleTouchStart(event);
+      }}
+      onTouchEnd={(event) => {
+        onTouchEnd?.(event);
+        handleTouchEnd(event);
+      }}
     >
-      <div {...ctx.getStyles('slidesViewport')} ref={emblaRef ?? ctx.emblaRef}>
-        <div {...ctx.getStyles('slidesContainer')}>{children}</div>
+      <div {...ctx.getStyles('slidesViewport', stylesApiProps)} ref={viewportRef}>
+        <div {...ctx.getStyles('slidesContainer', stylesApiProps)}>{children}</div>
       </div>
     </Box>
   );

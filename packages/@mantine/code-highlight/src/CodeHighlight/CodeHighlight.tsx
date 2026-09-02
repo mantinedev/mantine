@@ -26,7 +26,6 @@ import {
   useLoadLanguage,
   type CodeHighlightAdapter,
 } from '../CodeHighlightProvider/CodeHighlightProvider';
-import { normalizeCode } from '../normalize-code';
 import type {
   CodeHighlightDefaultLanguage,
   CodeHighlightTabsCode,
@@ -34,12 +33,7 @@ import type {
   CodeHighlightTabsProps,
   CodeHighlightTabsStylesNames,
 } from '../CodeHighlightTabs/CodeHighlightTabs';
-import type {
-  InlineCodeHighlightCssVariables,
-  InlineCodeHighlightFactory,
-  InlineCodeHighlightProps,
-  InlineCodeHighlightStylesNames,
-} from './InlineCodeHighlight';
+import { normalizeCode } from '../normalize-code';
 import {
   CodeHighlightContextProvider,
   type CodeHighlightContextValue,
@@ -50,6 +44,12 @@ import {
 } from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
 import { ExpandCodeButton } from './ExpandCodeButton/ExpandCodeButton';
+import type {
+  InlineCodeHighlightCssVariables,
+  InlineCodeHighlightFactory,
+  InlineCodeHighlightProps,
+  InlineCodeHighlightStylesNames,
+} from './InlineCodeHighlight';
 import classes from '../CodeHighlight.module.css';
 
 export type CodeHighlightStylesNames =

@@ -9,13 +9,13 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { EditableProvider } from './Editable.context';
 import { EditableArea } from './EditableArea';
 import { EditableCancelTrigger } from './EditableCancelTrigger';
 import { EditableControl } from './EditableControl';
 import { EditableEditTrigger } from './EditableEditTrigger';
 import { EditableInput } from './EditableInput';
 import { EditablePreview } from './EditablePreview';
-import { EditableProvider } from './Editable.context';
 import { EditableSubmitTrigger } from './EditableSubmitTrigger';
 import { EditableTextarea } from './EditableTextarea';
 import {

@@ -1,7 +1,20 @@
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
-import { JsonViewer, JsonViewerProps, JsonViewerStylesNames } from './JsonViewer';
+import { JsonViewer, JsonViewerProps, JsonViewerStylesNames, serializePath } from './JsonViewer';
 
 const longString = 'a'.repeat(50);
+
+function mockClipboard() {
+  const writeText = jest.fn(() => Promise.resolve());
+  Object.defineProperty(window.navigator, 'clipboard', {
+    value: { writeText },
+    configurable: true,
+  });
+  return writeText;
+}
+
+function getRow(text: RegExp | string) {
+  return screen.getByText(text).closest<HTMLElement>('[data-jv-node]')!;
+}
 
 const defaultProps: JsonViewerProps = {
   value: {
@@ -279,5 +292,420 @@ describe('@mantine/code-highlight/JsonViewer', () => {
   it('renders empty array', () => {
     render(<JsonViewer value={[]} defaultExpandDepth={1} withSize />);
     expect(screen.getByText('0 items')).toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('renders a named tree with a treeitem for every navigable row', () => {
+      const { container } = render(
+        <JsonViewer value={{ user: { name: 'John' }, tags: ['a'] }} defaultExpandDepth={2} />
+      );
+
+      expect(screen.getByRole('tree', { name: 'JSON' })).toBeInTheDocument();
+      const rows = container.querySelectorAll('[data-jv-node]');
+      expect(rows.length).toBe(5);
+      expect(screen.getAllByRole('treeitem')).toHaveLength(5);
+      rows.forEach((row) => expect(row).toHaveAttribute('role', 'treeitem'));
+    });
+
+    it('uses rootName as the tree accessible name', () => {
+      render(<JsonViewer value={{ a: 1 }} rootName="response" />);
+      expect(screen.getByRole('tree', { name: 'response' })).toBeInTheDocument();
+    });
+
+    it('sets aria-expanded on collapsible rows and wraps children in role=group', async () => {
+      const { container } = render(
+        <JsonViewer value={{ nested: { val: 'revealed' } }} defaultExpandDepth={1} />
+      );
+
+      const nestedRow = getRow(/nested/);
+      expect(nestedRow.tagName).toBe('DIV');
+      expect(nestedRow).toHaveAttribute('aria-expanded', 'false');
+      expect(nestedRow).toHaveAttribute('aria-level', '2');
+      expect(getRow(/nested/).closest('[role="group"]')).toBe(
+        container.querySelector('[role="group"]')
+      );
+
+      await userEvent.click(nestedRow);
+
+      expect(nestedRow).toHaveAttribute('aria-expanded', 'true');
+      const groups = container.querySelectorAll('[role="group"]');
+      expect(groups).toHaveLength(2);
+      expect(groups[1].contains(getRow(/"revealed"/))).toBe(true);
+      expect(getRow(/"revealed"/)).toHaveAttribute('aria-level', '3');
+    });
+
+    it('sets aria-expanded and aria-level on array chunk rows', async () => {
+      render(
+        <JsonViewer
+          value={Array.from({ length: 6 }, (_, i) => i)}
+          groupArraysAfterLength={3}
+          defaultExpandDepth={1}
+        />
+      );
+
+      const chunk = getRow('[0...2]');
+      expect(chunk).toHaveAttribute('role', 'treeitem');
+      expect(chunk).toHaveAttribute('aria-expanded', 'true');
+      expect(chunk).toHaveAttribute('aria-level', '2');
+      expect(getRow('1')).toHaveAttribute('aria-level', '3');
+
+      await userEvent.click(chunk);
+      expect(chunk).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('does not emit aria-selected unless onValueSelect is provided', () => {
+      const { rerender } = render(<JsonViewer value={{ name: 'x' }} />);
+      expect(getRow(/"x"/)).not.toHaveAttribute('aria-selected');
+
+      rerender(
+        <>
+          <JsonViewer value={{ name: 'x' }} onValueSelect={() => {}} />
+        </>
+      );
+      expect(getRow(/"x"/)).toHaveAttribute('aria-selected', 'false');
+    });
+
+    it('marks line numbers as aria-hidden', () => {
+      const { container } = render(<JsonViewer value={{ a: 1 }} withLineNumbers />);
+      expect(container.querySelector('.mantine-JsonViewer-lineNumbers')).toHaveAttribute(
+        'aria-hidden',
+        'true'
+      );
+    });
+
+    it('renders per-node copy control as a native button that is not nested in a button', () => {
+      render(<JsonViewer value={{ a: { b: 1 } }} defaultExpandDepth={2} withCopy />);
+
+      const controls = document.querySelectorAll<HTMLElement>('[data-jv-copy]');
+      expect(controls.length).toBe(3);
+      controls.forEach((control) => {
+        expect(control.tagName).toBe('BUTTON');
+        expect(control).toHaveAttribute('tabindex', '-1');
+        expect(control.parentElement!.closest('button')).toBeNull();
+      });
+    });
+
+    it('copies the focused row value with Ctrl+C', async () => {
+      const writeText = mockClipboard();
+      render(<JsonViewer value={{ user: { name: 'John' } }} defaultExpandDepth={1} withCopy />);
+
+      getRow(/user/).focus();
+      await userEvent.keyboard('{Control>}c{/Control}');
+
+      expect(writeText).toHaveBeenCalledWith('{\n  "name": "John"\n}');
+    });
+
+    it('copies the focused row value with Meta+C', async () => {
+      const writeText = mockClipboard();
+      render(<JsonViewer value={{ name: 'John' }} defaultExpandDepth={1} withCopy />);
+
+      getRow(/"John"/).focus();
+      await userEvent.keyboard('{Meta>}c{/Meta}');
+
+      expect(writeText).toHaveBeenCalledWith('"John"');
+    });
+
+    it('does not intercept Ctrl+C without withCopy', async () => {
+      const writeText = mockClipboard();
+      render(<JsonViewer value={{ name: 'John' }} defaultExpandDepth={1} />);
+
+      getRow(/"John"/).focus();
+      await userEvent.keyboard('{Control>}c{/Control}');
+
+      expect(writeText).not.toHaveBeenCalled();
+    });
+
+    it('does not toggle the row when the copy button is activated with keyboard', async () => {
+      mockClipboard();
+      render(<JsonViewer value={{ nested: { val: 'x' } }} defaultExpandDepth={2} withCopy />);
+
+      const control = getRow(/nested/).querySelector<HTMLElement>('[data-jv-copy]')!;
+      control.focus();
+      await userEvent.keyboard('{Enter}');
+
+      expect(screen.getByText(/"x"/)).toBeInTheDocument();
+    });
+  });
+
+  describe('keyboard navigation', () => {
+    it('moves focus with ArrowDown and ArrowUp', async () => {
+      render(<JsonViewer value={{ a: 1, b: 2 }} defaultExpandDepth={1} />);
+
+      const root = document.querySelector<HTMLElement>('[data-root]')!;
+      root.focus();
+      await userEvent.keyboard('{ArrowDown}');
+      expect(document.activeElement).toBe(getRow(/^a/));
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(document.activeElement).toBe(getRow(/^b/));
+
+      await userEvent.keyboard('{ArrowUp}');
+      expect(document.activeElement).toBe(getRow(/^a/));
+    });
+
+    it('expands a collapsed node with ArrowRight and enters it on second press', async () => {
+      render(<JsonViewer value={{ nested: { val: 'revealed' } }} defaultExpandDepth={1} />);
+
+      getRow(/nested/).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByText(/"revealed"/)).toBeInTheDocument();
+      expect(document.activeElement).toBe(getRow(/nested/));
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(document.activeElement).toBe(getRow(/"revealed"/));
+    });
+
+    it('collapses an expanded node with ArrowLeft and moves to parent from a leaf', async () => {
+      render(<JsonViewer value={{ nested: { val: 'revealed' } }} defaultExpandDepth={2} />);
+
+      getRow(/"revealed"/).focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(document.activeElement).toBe(getRow(/nested/));
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.queryByText(/"revealed"/)).not.toBeInTheDocument();
+    });
+
+    it('toggles collapsible rows with Enter and Space', async () => {
+      render(<JsonViewer value={{ nested: { val: 'revealed' } }} defaultExpandDepth={1} />);
+
+      getRow(/nested/).focus();
+      await userEvent.keyboard('{Enter}');
+      expect(screen.getByText(/"revealed"/)).toBeInTheDocument();
+
+      await userEvent.keyboard(' ');
+      expect(screen.queryByText(/"revealed"/)).not.toBeInTheDocument();
+    });
+
+    it('calls onValueSelect on Enter for primitive rows', async () => {
+      const onValueSelect = jest.fn();
+      render(
+        <JsonViewer value={{ name: 'test' }} defaultExpandDepth={1} onValueSelect={onValueSelect} />
+      );
+
+      getRow(/"test"/).focus();
+      await userEvent.keyboard('{Enter}');
+
+      expect(onValueSelect).toHaveBeenCalledWith(['name'], 'test');
+    });
+  });
+
+  describe('controlled expansion', () => {
+    it('does not move state on its own when expandedPaths is controlled', async () => {
+      const onExpandedPathsChange = jest.fn();
+      const value = { nested: { val: 'revealed' } };
+      const { rerender } = render(
+        <JsonViewer
+          value={value}
+          expandedPaths={['']}
+          onExpandedPathsChange={onExpandedPathsChange}
+        />
+      );
+
+      expect(screen.queryByText(/"revealed"/)).not.toBeInTheDocument();
+      await userEvent.click(getRow(/nested/));
+
+      expect(onExpandedPathsChange).toHaveBeenCalledWith(['', serializePath(['nested'])]);
+      expect(screen.queryByText(/"revealed"/)).not.toBeInTheDocument();
+
+      rerender(
+        <>
+          <JsonViewer
+            value={value}
+            expandedPaths={['', serializePath(['nested'])]}
+            onExpandedPathsChange={onExpandedPathsChange}
+          />
+        </>
+      );
+
+      expect(screen.getByText(/"revealed"/)).toBeInTheDocument();
+    });
+
+    it('expands everything and disables collapsing with allExpanded', async () => {
+      render(
+        <JsonViewer
+          value={{ nested: { deep: { val: 'found' } } }}
+          defaultExpandDepth={0}
+          allExpanded
+          withControls
+        />
+      );
+
+      expect(screen.getByText(/"found"/)).toBeInTheDocument();
+      expect(screen.queryByText('Collapse all')).not.toBeInTheDocument();
+
+      await userEvent.click(getRow(/nested/));
+      expect(screen.getByText(/"found"/)).toBeInTheDocument();
+
+      getRow(/nested/).focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByText(/"found"/)).toBeInTheDocument();
+    });
+  });
+
+  describe('non-JSON values', () => {
+    it('renders circular references as [Circular] with allExpanded', () => {
+      const cyclic: any = { a: { b: 1 } };
+      cyclic.self = cyclic;
+      cyclic.a.parent = cyclic;
+
+      render(<JsonViewer value={cyclic} allExpanded withTypes />);
+
+      expect(screen.getAllByText('[Circular]')).toHaveLength(2);
+      expect(screen.getAllByText('circular')).toHaveLength(2);
+      expect(screen.getByText('1')).toBeInTheDocument();
+    });
+
+    it('expand all terminates on circular references', async () => {
+      const cyclic: any = { a: { b: 1 } };
+      cyclic.self = cyclic;
+
+      render(<JsonViewer value={cyclic} defaultExpandDepth={0} withControls />);
+      await userEvent.click(screen.getByText('Expand all'));
+
+      expect(screen.getByText('1')).toBeInTheDocument();
+      expect(screen.getByText('[Circular]')).toBeInTheDocument();
+    });
+
+    it('copies bigint and circular values with the copy-all button', async () => {
+      const writeText = mockClipboard();
+      const cyclic: any = { id: BigInt(1) };
+      cyclic.self = cyclic;
+
+      render(<JsonViewer value={cyclic} withCopyButton />);
+      await userEvent.click(screen.getByLabelText('Copy JSON'));
+
+      expect(writeText).toHaveBeenCalledWith('{\n  "id": "1",\n  "self": "[Circular]"\n}');
+    });
+
+    it('copies bigint values with the per-node copy button', async () => {
+      const writeText = mockClipboard();
+      render(<JsonViewer value={{ id: BigInt(1) }} withCopy />);
+
+      const control = getRow(/^id/).querySelector<HTMLElement>('[data-jv-copy]')!;
+      await userEvent.click(control);
+
+      expect(writeText).toHaveBeenCalledWith('"1"');
+    });
+  });
+
+  describe('props', () => {
+    it('applies data-highlight for highlightItems paths', () => {
+      const { container } = render(
+        <JsonViewer
+          value={{ a: 1, b: { c: 2 } }}
+          defaultExpandDepth={2}
+          highlightItems={{
+            [serializePath(['a'])]: 'added',
+            [serializePath(['b', 'c'])]: 'removed',
+          }}
+        />
+      );
+
+      expect(container.querySelectorAll('[data-highlight="added"]')).toHaveLength(1);
+      expect(container.querySelectorAll('[data-highlight="removed"]')).toHaveLength(1);
+      expect(container.querySelector('[data-highlight="added"]')!.textContent).toContain('a');
+    });
+
+    it('renders one line number per row', () => {
+      const { container } = render(
+        <JsonViewer value={{ a: 1, b: 2 }} defaultExpandDepth={1} withLineNumbers />
+      );
+
+      const rows = container.querySelectorAll('[data-jv-row]');
+      expect(rows.length).toBe(4);
+      expect(container.querySelectorAll('.mantine-JsonViewer-lineNumbers > div')).toHaveLength(4);
+    });
+
+    it('renders line numbers with classNamesPrefix and without static classes', () => {
+      const { container } = render(
+        <JsonViewer value={{ a: 1, b: 2 }} defaultExpandDepth={1} withLineNumbers />,
+        undefined,
+        { classNamesPrefix: 'app', withStaticClasses: false }
+      );
+
+      const rows = container.querySelectorAll('[data-jv-row]');
+      expect(rows.length).toBe(4);
+      expect(container.querySelectorAll('[aria-hidden="true"] > div')).toHaveLength(4);
+    });
+
+    it('renders chevrons only with withChevrons', () => {
+      const { container, rerender } = render(
+        <JsonViewer value={{ a: { b: 1 } }} defaultExpandDepth={1} />
+      );
+      expect(container.querySelector('.mantine-JsonViewer-toggle')).toBeNull();
+
+      rerender(
+        <>
+          <JsonViewer value={{ a: { b: 1 } }} defaultExpandDepth={1} withChevrons />
+        </>
+      );
+      expect(container.querySelector('.mantine-JsonViewer-toggle')).toBeInTheDocument();
+    });
+
+    it('renders copy-all button only with withCopyButton and copies the value', async () => {
+      const writeText = mockClipboard();
+      const { rerender } = render(<JsonViewer value={{ a: 1 }} />);
+      expect(screen.queryByLabelText('Copy JSON')).not.toBeInTheDocument();
+
+      rerender(
+        <>
+          <JsonViewer value={{ a: 1 }} withCopyButton />
+        </>
+      );
+      await userEvent.click(screen.getByLabelText('Copy JSON'));
+      expect(writeText).toHaveBeenCalledWith('{\n  "a": 1\n}');
+    });
+
+    it('renders array chunks with groupArraysAfterLength', async () => {
+      render(
+        <JsonViewer
+          value={Array.from({ length: 7 }, (_, i) => i)}
+          groupArraysAfterLength={3}
+          defaultExpandDepth={1}
+        />
+      );
+
+      expect(screen.getByText('[0...2]')).toBeInTheDocument();
+      expect(screen.getByText('[3...5]')).toBeInTheDocument();
+      expect(screen.getByText('[6...6]')).toBeInTheDocument();
+      expect(screen.getByText('4')).toBeInTheDocument();
+
+      await userEvent.click(getRow('[3...5]'));
+      expect(screen.queryByText('4')).not.toBeInTheDocument();
+      expect(screen.getByText('1')).toBeInTheDocument();
+    });
+
+    it('supports a custom sortKeys comparator', () => {
+      const { container } = render(
+        <JsonViewer
+          value={{ alpha: 1, middle: 2, zebra: 3 }}
+          defaultExpandDepth={1}
+          sortKeys={(a, b) => b.localeCompare(a)}
+        />
+      );
+
+      const keys = Array.from(container.querySelectorAll('[data-key]')).map((el) =>
+        el.textContent?.replace(/[":, ]/g, '')
+      );
+      expect(keys).toEqual(['zebra', 'middle', 'alpha']);
+    });
+
+    it('renders custom labels', async () => {
+      render(
+        <JsonViewer
+          value={{ a: 1 }}
+          withControls
+          withCopy
+          expandAllLabel="Open"
+          collapseAllLabel="Close"
+          copyLabel="Grab"
+        />
+      );
+
+      expect(screen.getByText('Open')).toBeInTheDocument();
+      expect(screen.getByText('Close')).toBeInTheDocument();
+      expect(screen.getAllByLabelText('Grab').length).toBeGreaterThan(0);
+    });
   });
 });

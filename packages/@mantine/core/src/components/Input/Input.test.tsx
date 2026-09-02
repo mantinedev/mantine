@@ -5,8 +5,8 @@ import { InputClearButton } from './InputClearButton/InputClearButton';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
-import { InputSuccess } from './InputSuccess/InputSuccess';
 import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
+import { InputSuccess } from './InputSuccess/InputSuccess';
 import { InputWrapper } from './InputWrapper/InputWrapper';
 
 const defaultProps: InputProps = {
