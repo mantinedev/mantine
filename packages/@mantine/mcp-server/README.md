@@ -15,7 +15,12 @@ npx @mantine/mcp-server
 
 ## Tools
 
-- `list_items`
-- `get_item_doc`
-- `get_item_props`
-- `search_docs`
+- `search_docs` – search all documentation; returns ranked matches, often pointing at a specific section
+- `get_item_doc` – outline by default, one section with `section`, whole page with `full: true`
+- `get_item_props` – component props, or a hook's TypeScript signature
+- `list_items` – filter by `kind`, `group`, `category`, `package` or `query`
+- `get_api` – resolve a symbol (`useForm`, `useDisclosure`) to its signature
+
+## Coverage
+
+405 documents: components, hooks, `@mantine/form`, styling, theming, framework and migration guides, and FAQ pages. Changelogs are not indexed.

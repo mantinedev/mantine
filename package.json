@@ -88,6 +88,7 @@
     "@emotion/server": "^11.11.0",
     "@emotion/utils": "^1.4.2",
     "@floating-ui/react": "^0.27.20",
+    "@modelcontextprotocol/server": "2.0.0",
     "@phosphor-icons/react": "^2.1.10",
     "@shikijs/transformers": "^4.4.3",
     "@tanstack/react-virtual": "^3.14.10",
@@ -135,7 +136,8 @@
     "react-transition-group": "4.4.5",
     "recharts": "^3.10.1",
     "shiki": "^4.4.3",
-    "type-fest": "^5.8.0"
+    "type-fest": "^5.8.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@dnd-kit/core": "^6.3.1",

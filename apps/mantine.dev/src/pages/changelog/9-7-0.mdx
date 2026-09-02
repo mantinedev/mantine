@@ -71,3 +71,32 @@ the available width. Covered events can still be read and used: rest the pointer
 raised above the events covering it, which also makes its resize handles reachable. Keyboard users get
 the same result by focusing the event with `Tab`. `eventOverlapRaiseDelay` prop controls how long the
 pointer must rest on an event before it is raised, in milliseconds (`600` by default).
+
+## @mantine/mcp-server documentation coverage
+
+[@mantine/mcp-server](https://www.npmjs.com/package/@mantine/mcp-server) now exposes 405 documentation
+pages instead of 164. Previously only components were indexed – hooks, [@mantine/form](/form/use-form),
+styling, theming, guides and [help.mantine.dev](https://help.mantine.dev) FAQ pages are now included as
+well. Changelog pages are deliberately excluded to keep search results focused on current APIs.
+
+Documentation is now retrieved by section rather than by whole page. `get_item_doc` returns a page
+outline (description, import statement and the list of section headings) by default, a single section
+with the `section` argument, or the entire page with `full: true`. Requesting `useForm` this way returns
+about 1KB instead of 9KB, and the largest pages drop from roughly 89KB to 4KB.
+
+Other improvements:
+
+- **New `get_api` tool** – resolves a symbol such as `useForm` or `useDisclosure` to its TypeScript
+  signature and exported types without knowing which page documents it
+- **Ranked search** – `search_docs` results point at the specific section that matched, so a query like
+  "validate a form with zod" resolves to the `zod` section of the schema validation page
+- **Search synonyms** – queries now match the search keywords maintained in the documentation, so
+  "command palette" finds [Spotlight](/x/spotlight)
+- **More filters** – `list_items` accepts `group`, `category` and `package` in addition to `kind`
+- **Hook signatures** – `get_item_props` returns the TypeScript signature for hooks, and points at the
+  relevant section for pages that document their API in prose
+
+The server was also migrated to the official Model Context Protocol SDK, so the protocol version is
+negotiated with the client instead of being pinned.
+
+For setup details, supported tools, and client-specific instructions, see [Mantine with LLMs](/guides/llms).

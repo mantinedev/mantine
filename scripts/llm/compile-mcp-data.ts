@@ -1,132 +1,27 @@
 #!/usr/bin/env tsx
 import path from 'node:path';
-import glob from 'fast-glob';
 import fs from 'fs-extra';
+import { collectNavPages, PageEntry } from './mcp/page-source';
+import { createSearchText } from './mcp/search-text';
+import { SNIPPET_LENGTH, splitSections } from './mcp/sections';
+import { extractExportedTypeNames, extractSignature } from './mcp/signatures';
 
-interface CompilerConfig {
-  rootDir: string;
-  siteUrl: string;
-  mdxDataPath: string;
-  propsDataPath: string;
-  publicPath: string;
-}
-
-interface MdxEntry {
-  id: string;
-  name: string;
-  kind: 'component' | 'hook';
-  packageName: string;
-  route: string;
-  description: string;
-  source?: string;
-  docs?: string;
-  propsRefs: string[];
-}
-
-interface IndexItem {
-  id: string;
-  name: string;
-  kind: 'component' | 'hook';
-  package: string;
-  route: string;
-  description: string;
-  propsCount: number;
-  llmUrl: string;
-  componentDataUrl: string;
-  searchText: string;
-}
-
-interface ComponentData extends Omit<IndexItem, 'componentDataUrl'> {
-  source?: string;
-  docs?: string;
-  markdown: string;
-  props: Array<{
-    name: string;
-    description?: string;
-    required?: boolean;
-    defaultValue?: unknown;
-    type?: unknown;
-    sourceComponent: string;
-  }>;
-}
-
-const config: CompilerConfig = {
+const config = {
   rootDir: process.cwd(),
-  siteUrl: process.env.MCP_DOCS_SITE_URL || process.env.LLM_DOCS_SITE_URL || 'https://mantine.dev',
-  mdxDataPath: './apps/mantine.dev/src/mdx/data',
+  siteUrl: (
+    process.env.MCP_DOCS_SITE_URL ||
+    process.env.LLM_DOCS_SITE_URL ||
+    'https://mantine.dev'
+  ).replace(/\/+$/, ''),
+  helpSiteUrl: (process.env.MCP_HELP_SITE_URL || 'https://help.mantine.dev').replace(/\/+$/, ''),
   propsDataPath: './apps/mantine.dev/src/.docgen/docgen.json',
-  publicPath: './apps/mantine.dev/public',
+  llmsPath: './apps/mantine.dev/public/llms',
+  publicMcpPath: './apps/mantine.dev/public/mcp',
+  helpLlmsPrefix: 'q-',
 };
 
-function getRouteFileName(route: string, extension: string) {
-  const trimmed = route.replace(/^\/+/, '');
-  const base = trimmed === '' ? 'index' : trimmed.replace(/\//g, '-');
-  return `${base}.${extension}`;
-}
-
-function parseArrayLiteral(content: string, key: string): string[] {
-  const match = content.match(new RegExp(`${key}:\\s*\\[([^\\]]*)\\]`));
-  if (!match) {
-    return [];
-  }
-
-  return match[1]
-    .split(',')
-    .map((item) => item.trim().replace(/^['"]|['"]$/g, ''))
-    .filter(Boolean);
-}
-
-function parseMdxEntries(fileContent: string): MdxEntry[] {
-  const exportMatch = fileContent.match(/export const MDX_\w+_DATA[^=]*=\s*{([\s\S]*?)};/);
-  if (!exportMatch) {
-    return [];
-  }
-
-  const dataContent = exportMatch[1];
-  const componentRegex = /(\w+):\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}/g;
-  const result: MdxEntry[] = [];
-
-  let match: RegExpExecArray | null;
-  while ((match = componentRegex.exec(dataContent)) !== null) {
-    const id = match[1];
-    const block = match[2];
-
-    const packageMatch = block.match(/package:\s*['"](@mantine\/[^'"]+)['"]/);
-    const slugMatch = block.match(/slug:\s*['"]([^'"]+)['"]/);
-    const titleMatch = block.match(/title:\s*['"]([^'"]+)['"]/);
-
-    if (!packageMatch || !slugMatch || !titleMatch) {
-      continue;
-    }
-
-    const packageName = packageMatch[1];
-    const route = slugMatch[1];
-    const name = titleMatch[1];
-    const descriptionMatch = block.match(/description:\s*['"]([^'"]+)['"]/);
-    const sourceMatch = block.match(/source:\s*['"]([^'"]+)['"]/);
-    const docsMatch = block.match(/docs:\s*['"]([^'"]+)['"]/);
-    const propsRefs = parseArrayLiteral(block, 'props');
-
-    const kind: 'component' | 'hook' = packageName === '@mantine/hooks' ? 'hook' : 'component';
-
-    result.push({
-      id,
-      name,
-      kind,
-      packageName,
-      route,
-      description: descriptionMatch ? descriptionMatch[1] : '',
-      source: sourceMatch?.[1],
-      docs: docsMatch?.[1],
-      propsRefs,
-    });
-  }
-
-  return result;
-}
-
 function normalizeProps(propsData: Record<string, any>, componentNames: string[]) {
-  const result: ComponentData['props'] = [];
+  const result: any[] = [];
 
   componentNames.forEach((componentName) => {
     const props = propsData?.[componentName]?.props;
@@ -150,113 +45,222 @@ function normalizeProps(propsData: Record<string, any>, componentNames: string[]
   return result;
 }
 
-function createSearchText(item: {
-  name: string;
-  description: string;
-  packageName: string;
-  route: string;
-  props: ComponentData['props'];
-}) {
-  return [
-    item.name,
-    item.description,
-    item.packageName,
-    item.route,
-    item.props.map((prop) => prop.name).join(' '),
-  ]
-    .join(' ')
-    .toLowerCase();
+function faqTitle(markdown: string, fallback: string): string {
+  const match = /^#\s+(.+)$/m.exec(markdown);
+  return match ? match[1].trim() : fallback;
+}
+
+function faqDescription(markdown: string): string {
+  const titleMatch = /^#\s+.+$/m.exec(markdown);
+  if (!titleMatch) {
+    return '';
+  }
+
+  const rest = markdown.slice(titleMatch.index + titleMatch[0].length).split('\n');
+  const descriptionLine = rest.find((line) => line.trim().length > 0);
+  return descriptionLine ? descriptionLine.trim() : '';
+}
+
+function resolveDocsUrl(page: PageEntry): string {
+  return page.kind === 'faq'
+    ? `${config.helpSiteUrl}${page.route}`
+    : `${config.siteUrl}${page.route}`;
+}
+
+/**
+ * Structural self-check for the compiled output, run on every `compile:mcp`.
+ * The equivalent jest assertions only run when compiled data already exists
+ * on disk, so this is the only check that always runs in CI.
+ */
+function validateCompiledOutput(index: any[], docFileCount: number): void {
+  const violations: string[] = [];
+
+  if (!index.some((item) => item.kind === 'hook')) {
+    violations.push('no item has kind === "hook"');
+  }
+
+  if (!index.some((item) => item.package === '@mantine/form')) {
+    violations.push('no item has package === "@mantine/form"');
+  }
+
+  const changelogItems = index.filter((item) => String(item.route).startsWith('/changelog'));
+  if (changelogItems.length > 0) {
+    violations.push(
+      `${changelogItems.length} item(s) have a route starting with /changelog: ${changelogItems
+        .map((item) => item.id)
+        .join(', ')}`
+    );
+  }
+
+  index.forEach((item) => {
+    if (!item.id) {
+      violations.push(`an item is missing a non-empty id (route: ${item.route})`);
+    }
+
+    if (!item.docsUrl) {
+      violations.push(`item "${item.id}" is missing a non-empty docsUrl`);
+    }
+
+    if (!Array.isArray(item.headings)) {
+      violations.push(`item "${item.id}" is missing a headings array`);
+    }
+  });
+
+  index
+    .filter((item) => item.kind === 'faq')
+    .forEach((item) => {
+      if (!item.description) {
+        violations.push(`FAQ item "${item.id}" is missing a non-empty description`);
+      }
+    });
+
+  if (docFileCount !== index.length) {
+    violations.push(
+      `docs/<id>.json file count (${docFileCount}) does not match index length (${index.length})`
+    );
+  }
+
+  if (violations.length > 0) {
+    throw new Error(
+      `MCP data compilation produced invalid output:\n${violations.map((v) => `- ${v}`).join('\n')}`
+    );
+  }
+}
+
+async function collectFaqPages(): Promise<PageEntry[]> {
+  const files = (await fs.readdir(config.llmsPath)).filter(
+    (file) => file.startsWith(config.helpLlmsPrefix) && file.endsWith('.md')
+  );
+
+  return Promise.all(
+    files.sort().map(async (file) => {
+      const id = file.replace(/\.md$/, '');
+      const markdown = await fs.readFile(path.join(config.llmsPath, file), 'utf-8');
+
+      return {
+        id,
+        name: faqTitle(markdown, id),
+        kind: 'faq' as const,
+        group: 'gettingStarted' as const,
+        category: 'FAQ',
+        route: `/q/${id.slice(config.helpLlmsPrefix.length)}`,
+        description: faqDescription(markdown),
+        propsRefs: [],
+      };
+    })
+  );
 }
 
 async function compile() {
-  const mdxDataFiles = await glob('mdx-*-data.ts', {
-    cwd: config.mdxDataPath,
-    absolute: true,
-  });
-
-  const allEntries: MdxEntry[] = [];
-
-  for (const file of mdxDataFiles) {
-    const content = await fs.readFile(file, 'utf-8');
-    allEntries.push(...parseMdxEntries(content));
-  }
-
   const propsData = await fs.readJSON(config.propsDataPath);
+  const pages = [...collectNavPages(), ...(await collectFaqPages())];
 
-  const siteUrl = config.siteUrl.replace(/\/+$/, '');
-  const publicMcpDir = path.join(config.publicPath, 'mcp');
-  const componentsDir = path.join(publicMcpDir, 'components');
+  const docsDir = path.join(config.publicMcpPath, 'docs');
+  await fs.remove(path.join(config.publicMcpPath, 'components'));
+  await fs.remove(docsDir);
+  await fs.ensureDir(docsDir);
 
-  await fs.ensureDir(componentsDir);
+  const index: any[] = [];
+  const sectionIndex: any[] = [];
+  const missingPages: PageEntry[] = [];
 
-  const componentEntries = allEntries
-    .filter((entry) => entry.kind === 'component')
-    .filter((entry) => entry.packageName.startsWith('@mantine/'))
-    .filter((entry) => entry.packageName !== '@mantine/hooks')
-    .filter((entry) => entry.propsRefs.length > 0)
-    .sort((a, b) => a.name.localeCompare(b.name));
-
-  const index: IndexItem[] = [];
-
-  for (const entry of componentEntries) {
-    const llmFileName = getRouteFileName(entry.route, 'md');
-    const llmFilePath = path.join(config.publicPath, 'llms', llmFileName);
+  for (const page of pages) {
+    const llmFileName = `${page.id}.md`;
+    const llmFilePath = path.join(config.llmsPath, llmFileName);
 
     if (!(await fs.pathExists(llmFilePath))) {
+      missingPages.push(page);
       continue;
     }
 
     const markdown = await fs.readFile(llmFilePath, 'utf-8');
-    const props = normalizeProps(propsData, entry.propsRefs);
-    const componentDataFileName = getRouteFileName(entry.route, 'json');
+    const { intro, sections } = splitSections(markdown);
+    const props = normalizeProps(propsData, page.propsRefs);
+    const signature = extractSignature(sections);
+    const exportedTypeNames = extractExportedTypeNames(sections);
+    const headings = sections.map((section) => section.heading);
 
-    const item: IndexItem = {
-      id: llmFileName.replace(/\.md$/, ''),
-      name: entry.name,
-      kind: 'component',
-      package: entry.packageName,
-      route: entry.route,
-      description: entry.description,
+    const item = {
+      id: page.id,
+      name: page.name,
+      kind: page.kind,
+      group: page.group,
+      category: page.category,
+      package: page.package,
+      route: page.route,
+      docsUrl: resolveDocsUrl(page),
+      description: page.description,
+      searchTags: page.searchTags,
+      headings,
       propsCount: props.length,
-      llmUrl: `${siteUrl}/llms/${llmFileName}`,
-      componentDataUrl: `/mcp/components/${componentDataFileName}`,
+      hasSignature: signature !== null,
+      llmUrl: `${config.siteUrl}/llms/${llmFileName}`,
       searchText: createSearchText({
-        name: entry.name,
-        description: entry.description,
-        packageName: entry.packageName,
-        route: entry.route,
-        props,
+        name: page.name,
+        description: page.description,
+        package: page.package,
+        route: page.route,
+        category: page.category,
+        searchTags: page.searchTags,
+        headings,
+        propNames: props.map((prop) => prop.name),
       }),
     };
 
-    const componentData: ComponentData = {
-      ...item,
-      source: entry.source,
-      docs: entry.docs,
-      markdown,
-      props,
-    };
-
-    await fs.writeJSON(path.join(componentsDir, componentDataFileName), componentData, {
-      spaces: 2,
-    });
     index.push(item);
+
+    sections.forEach((section) => {
+      sectionIndex.push({
+        id: page.id,
+        slug: section.slug,
+        heading: section.heading,
+        snippet: section.body.slice(0, SNIPPET_LENGTH),
+      });
+    });
+
+    await fs.writeJSON(
+      path.join(docsDir, `${page.id}.json`),
+      {
+        item,
+        intro,
+        sections,
+        props,
+        signature,
+        exportedTypeNames,
+        source: page.source,
+        docs: page.docs,
+      },
+      { spaces: 2 }
+    );
   }
+
+  if (missingPages.length > 0) {
+    const details = missingPages.map((page) => `${page.id} (${page.route})`).join(', ');
+    throw new Error(`Missing generated markdown for ${missingPages.length} page(s): ${details}`);
+  }
+
+  const docFiles = (await fs.readdir(docsDir)).filter((file) => file.endsWith('.json'));
+  validateCompiledOutput(index, docFiles.length);
 
   const packageJson = await fs.readJSON(path.join(config.rootDir, 'package.json'));
 
-  await fs.writeJSON(path.join(publicMcpDir, 'index.json'), index, { spaces: 2 });
+  await fs.writeJSON(path.join(config.publicMcpPath, 'index.json'), index, { spaces: 2 });
+  await fs.writeJSON(path.join(config.publicMcpPath, 'sections.json'), sectionIndex, { spaces: 0 });
   await fs.writeJSON(
-    path.join(publicMcpDir, 'version.json'),
+    path.join(config.publicMcpPath, 'version.json'),
     {
-      schemaVersion: 1,
+      schemaVersion: 2,
       generatedAt: new Date().toISOString(),
       mantineVersion: packageJson.version,
-      siteUrl,
+      siteUrl: config.siteUrl,
       itemsCount: index.length,
+      sectionsCount: sectionIndex.length,
     },
     { spaces: 2 }
   );
+
+  // oxlint-disable-next-line no-console
+  console.log(`Compiled ${index.length} documents, ${sectionIndex.length} sections`);
 }
 
 compile().catch((error) => {

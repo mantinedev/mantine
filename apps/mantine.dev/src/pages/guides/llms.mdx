@@ -1,3 +1,4 @@
+import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -94,12 +95,38 @@ Mantine also provides an MCP server package:
 
 - `@mantine/mcp-server`
 
-The server reads Mantine static MCP data published on `mantine.dev` and exposes tools that AI agents can call directly:
+The server reads Mantine static MCP data published on `mantine.dev` – 405 documents covering components, hooks, `@mantine/form`, styling, theming, framework and migration guides, and FAQ pages (changelogs are not indexed) – and exposes tools that AI agents can call directly:
 
-- `list_items`
-- `get_item_doc`
-- `get_item_props`
-- `search_docs`
+<DataTable
+  head={['Tool', 'Description']}
+  data={[
+    [
+      <Code>search_docs</Code>,
+      'Search all documentation; returns ranked matches, often pointing at a specific section',
+    ],
+    [
+      <Code>get_item_doc</Code>,
+      <>
+        Outline by default, one section with <Code>section</Code>, whole page with{' '}
+        <Code>full: true</Code>
+      </>,
+    ],
+    [<Code>get_item_props</Code>, "Component props, or a hook's TypeScript signature"],
+    [
+      <Code>list_items</Code>,
+      <>
+        Filter by <Code>kind</Code>, <Code>group</Code>, <Code>category</Code>,{' '}
+        <Code>package</Code> or <Code>query</Code>
+      </>,
+    ],
+    [
+      <Code>get_api</Code>,
+      <>
+        Resolve a symbol (<Code>useForm</Code>, <Code>useDisclosure</Code>) to its signature
+      </>,
+    ],
+  ]}
+/>
 
 ### MCP server configuration
 

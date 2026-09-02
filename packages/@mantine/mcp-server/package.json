@@ -34,6 +34,10 @@
     "type": "git",
     "directory": "packages/@mantine/mcp-server"
   },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.0.0",
+    "zod": "^4.4.3"
+  },
   "engines": {
     "node": ">=22"
   },

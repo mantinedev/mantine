@@ -4593,6 +4593,9 @@ __metadata:
 "@mantine/mcp-server@workspace:packages/@mantine/mcp-server":
   version: 0.0.0-use.local
   resolution: "@mantine/mcp-server@workspace:packages/@mantine/mcp-server"
+  dependencies:
+    "@modelcontextprotocol/server": "npm:2.0.0"
+    zod: "npm:^4.4.3"
   bin:
     mcp-server: ./bin/mcp-server.cjs
   languageName: unknown
@@ -4883,6 +4886,25 @@ __metadata:
     "@types/react": ">=16"
     react: ">=16"
   checksum: 10c0/34ca98bc2a0f969894ea144dc5c8a5294690505458cd24965cd9be854d779c193ad9192bf9143c4c18438fafd1902e100d99067e045c69319288562d497558c6
+  languageName: node
+  linkType: hard
+
+"@modelcontextprotocol/core@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@modelcontextprotocol/core@npm:2.0.0"
+  dependencies:
+    zod: "npm:^4.2.0"
+  checksum: 10c0/1cb96fcebfb60651775bcaa3b1e92b47b9317239e9e0352a2d6a404f77d1abfb68ce5b462becd073cddc4db08f2f0024cd3c7dd2582e3463ddb958f65b73fbe3
+  languageName: node
+  linkType: hard
+
+"@modelcontextprotocol/server@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@modelcontextprotocol/server@npm:2.0.0"
+  dependencies:
+    "@modelcontextprotocol/core": "npm:2.0.0"
+    zod: "npm:^4.2.0"
+  checksum: 10c0/18f5dbb4c533eda392a66565d8177d792c8018d3455d2cb241102917f660c0c73181e80cbf2b76b1c0e8efae22e7ee0fbb1c27e667d439ba596f1c6059c1d8af
   languageName: node
   linkType: hard
 
@@ -14465,6 +14487,7 @@ __metadata:
     "@emotion/server": "npm:^11.11.0"
     "@emotion/utils": "npm:^1.4.2"
     "@floating-ui/react": "npm:^0.27.20"
+    "@modelcontextprotocol/server": "npm:2.0.0"
     "@phosphor-icons/react": "npm:^2.1.10"
     "@shikijs/transformers": "npm:^4.4.3"
     "@storybook/nextjs": "npm:^10.5.10"
@@ -14583,6 +14606,7 @@ __metadata:
     webpack: "npm:5.102.1"
     wrangler: "npm:^4.125.0"
     yargs: "npm:^18.1.0"
+    zod: "npm:^4.4.3"
     zx: "npm:^8.8.5"
   languageName: unknown
   linkType: soft
@@ -21881,6 +21905,13 @@ __metadata:
     cookie: "npm:^1.0.2"
     youch-core: "npm:^0.3.3"
   checksum: 10c0/588d65aa5837a46c8473cf57a9129115383f57aad5899915d37005950decfefc66bec85b8a1262dbefd623a122c279095074655889317311a554f9c2e290a5b3
+  languageName: node
+  linkType: hard
+
+"zod@npm:^4.2.0":
+  version: 4.5.4
+  resolution: "zod@npm:4.5.4"
+  checksum: 10c0/511a2a4d1a6f875dfdd70a1586989a8b14ef126776cd6218a2c760b9f65f14ef389ec20d92ee1aa4fcb4566d4ff3fa012956044f9dc503510d82e4c756a8ba92
   languageName: node
   linkType: hard
 

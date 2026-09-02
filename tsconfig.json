@@ -40,7 +40,8 @@
       "@mantine/*": ["./packages/@mantine/*/src"],
       "@mantinex/*": ["./packages/@mantinex/*/src"],
       "@mantine-tests/*": ["./packages/@mantine-tests/*/src"],
-      "@docs/*": ["./packages/@docs/*/src"]
+      "@docs/*": ["./packages/@docs/*/src"],
+      "@/*": ["./apps/mantine.dev/src/*"]
     }
   }
 }
