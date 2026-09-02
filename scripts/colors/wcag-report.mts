@@ -1,3 +1,4 @@
+/* oxlint-disable no-console */
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -72,7 +73,9 @@ const CHROMATIC_NAMES = new Set([
 ]);
 
 for (const { spec, shades } of palettes) {
-  if (!CHROMATIC_NAMES.has(spec.name)) continue;
+  if (!CHROMATIC_NAMES.has(spec.name)) {
+    continue;
+  }
 
   const s = shades;
 

@@ -1,3 +1,4 @@
+/* oxlint-disable no-console */
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,8 +22,12 @@ const BRIGHT_HUES = new Set(['yellow', 'lime', 'orange', 'green']);
 type ContrastVerdict = 'BUFFER-PASS' | 'PASS' | 'MARGINAL' | 'FAIL';
 
 function contrastVerdict(ratio: number): ContrastVerdict {
-  if (ratio >= 4.65) return 'BUFFER-PASS';
-  if (ratio >= 4.5) return 'MARGINAL';
+  if (ratio >= 4.65) {
+    return 'BUFFER-PASS';
+  }
+  if (ratio >= 4.5) {
+    return 'MARGINAL';
+  }
   return 'FAIL';
 }
 
@@ -170,7 +175,9 @@ for (const r of results) {
     r.idx8Contrast.verdict === 'FAIL' ||
     r.idx8Contrast.verdict === 'MARGINAL';
 
-  if (!hasNotes) continue;
+  if (!hasNotes) {
+    continue;
+  }
 
   md += `### ${r.name}\n\n`;
 
