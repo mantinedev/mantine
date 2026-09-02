@@ -75,6 +75,19 @@ selectors:
 
 <Demo data={ButtonDemos.disabledStyles} />
 
+## Native CSS tooltip
+
+You can create a simple tooltip without JavaScript by using CSS Anchor Positioning. The button is used as an anchor,
+and the tooltip is positioned relative to it with `position-anchor` and `anchor()` CSS functions.
+
+Note that this approach uses newer CSS Anchor Positioning features such as `anchor-name`,
+`position-anchor` and `position-try-fallbacks`, which may not be supported in all browsers yet.
+
+For more advanced use cases, such as controlled state, delays, arrows, portals and better browser support,
+use the [Tooltip](/core/tooltip) component.
+
+<Demo data={ButtonDemos.nativeTooltip} />
+
 ## Disabled button with Tooltip
 
 The `onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when a `Button` is disabled, so if you need to use a
