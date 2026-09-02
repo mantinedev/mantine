@@ -1,5 +1,5 @@
-import { Persona } from './Persona';
 import { PersonaPresenceStatus } from './get-presence-props';
+import { Persona } from './Persona';
 
 export default { title: 'Persona' };
 

@@ -28,6 +28,13 @@ function createMockContext(overrides: Partial<TourContextValue> = {}): TourConte
       stepCounter: (current: number, total: number) => `${current} of ${total}`,
       beacon: 'Start tour',
     },
+    titleId: 'tour-title',
+    bodyId: 'tour-body',
+    titleMounted: false,
+    bodyMounted: false,
+    setTitleMounted: jest.fn(),
+    setBodyMounted: jest.fn(),
+    setTargetElement: jest.fn(),
     ...overrides,
   };
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ActionIcon, Button } from '@mantine/core';
 import data from '@emoji-mart/data';
+import { ActionIcon, Button } from '@mantine/core';
 import { emojiMartAdapter } from '../../adapters';
 import { EmojiPickerPopover } from './EmojiPickerPopover';
 

@@ -20,19 +20,33 @@ export function useToolbarNavigation({ orientation, loop, dir }: UseToolbarNavig
   }, []);
 
   useEffect(() => {
-    const items = getFocusableItems();
-    if (items.length === 0) {
-      return;
+    const syncTabIndex = () => {
+      const items = getFocusableItems();
+      if (items.length === 0) {
+        return;
+      }
+
+      const clampedIndex = activeIndex >= items.length ? 0 : activeIndex;
+      if (clampedIndex !== activeIndex) {
+        setActiveIndex(clampedIndex);
+      }
+
+      items.forEach((item, index) => {
+        item.setAttribute('tabindex', index === clampedIndex ? '0' : '-1');
+      });
+    };
+
+    syncTabIndex();
+
+    const node = toolbarRef.current;
+    if (!node) {
+      return undefined;
     }
 
-    const clampedIndex = activeIndex >= items.length ? 0 : activeIndex;
-    if (clampedIndex !== activeIndex) {
-      setActiveIndex(clampedIndex);
-    }
+    const observer = new MutationObserver(syncTabIndex);
+    observer.observe(node, { childList: true, subtree: true, attributeFilter: ['data-disabled'] });
 
-    items.forEach((item, index) => {
-      item.setAttribute('tabindex', index === clampedIndex ? '0' : '-1');
-    });
+    return () => observer.disconnect();
   });
 
   const handleKeyDown = useCallback(

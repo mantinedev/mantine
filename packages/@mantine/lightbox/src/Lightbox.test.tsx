@@ -6,11 +6,11 @@ import type { LightboxSlideData } from './lightbox.types';
 import { LightboxCaption } from './LightboxCaption/LightboxCaption';
 import { LightboxCloseButton } from './LightboxCloseButton/LightboxCloseButton';
 import { LightboxNavigation } from './LightboxNavigation/LightboxNavigation';
+import { LightboxRoot } from './LightboxRoot/LightboxRoot';
 import { LightboxSlide } from './LightboxSlide/LightboxSlide';
 import { LightboxSlides } from './LightboxSlides/LightboxSlides';
 import { LightboxThumbnails } from './LightboxThumbnails/LightboxThumbnails';
 import { LightboxToolbar } from './LightboxToolbar/LightboxToolbar';
-import { LightboxRoot } from './LightboxRoot/LightboxRoot';
 
 const slides: LightboxSlideData[] = [
   { src: 'image1.jpg', alt: 'First image', caption: 'Caption 1' },
@@ -26,6 +26,82 @@ const defaultProps: LightboxProps = {
 
 function getLightbox() {
   return screen.getByRole('dialog');
+}
+
+function mockFullscreenApi() {
+  const originalRequest = document.documentElement.requestFullscreen;
+  const originalExit = document.exitFullscreen;
+  let fullscreenElement: Element | null = null;
+  let deferred = false;
+
+  const notify = () => document.documentElement.dispatchEvent(new Event('fullscreenchange'));
+
+  const setFullscreenElement = (element: Element | null) => {
+    fullscreenElement = element;
+    notify();
+  };
+
+  Object.defineProperty(document, 'fullscreenElement', {
+    configurable: true,
+    get: () => fullscreenElement,
+  });
+
+  let requestGate: { promise: Promise<void>; resolve: () => void } | null = null;
+
+  document.documentElement.requestFullscreen = jest.fn(async () => {
+    // A genuinely pending request: nothing is fullscreen yet and the promise is unresolved,
+    // which is the state the browser is in between the click and the transition finishing.
+    if (requestGate) {
+      await requestGate.promise;
+    }
+
+    fullscreenElement = document.documentElement;
+    if (!deferred) {
+      notify();
+    }
+  });
+
+  document.exitFullscreen = jest.fn(async () => {
+    setFullscreenElement(null);
+  });
+
+  return {
+    get element() {
+      return fullscreenElement;
+    },
+    /** Applies fullscreen without dispatching `fullscreenchange`, so React state stays stale */
+    deferConfirmation: () => {
+      deferred = true;
+    },
+    /** Makes `requestFullscreen` return a promise that stays pending until `settleRequest` */
+    deferRequest: () => {
+      let resolve!: () => void;
+      const promise = new Promise<void>((r) => {
+        resolve = r;
+      });
+      requestGate = { promise, resolve };
+    },
+    settleRequest: async () => {
+      const gate = requestGate;
+      requestGate = null;
+      await act(async () => {
+        gate?.resolve();
+        // Drain the request promise itself and the handlers chained onto it
+        await Promise.resolve();
+        await Promise.resolve();
+        await Promise.resolve();
+      });
+    },
+    confirm: () => act(() => notify()),
+    enterExternally: () => act(() => setFullscreenElement(document.documentElement)),
+    exitExternally: () => act(() => setFullscreenElement(null)),
+    exitSpy: document.exitFullscreen as jest.Mock,
+    restore: () => {
+      document.documentElement.requestFullscreen = originalRequest;
+      document.exitFullscreen = originalExit;
+      Reflect.deleteProperty(document, 'fullscreenElement');
+    },
+  };
 }
 
 const systemProps: LightboxProps = {
@@ -197,6 +273,24 @@ describe('@mantine/lightbox/Lightbox', () => {
   it('renders thumbnail toggle when withThumbnails is true', async () => {
     await renderWithAct(<Lightbox {...defaultProps} withThumbnails />);
     expect(screen.getByLabelText('Hide thumbnails')).toBeInTheDocument();
+  });
+
+  it('hides the thumbnails strip when withThumbnails is turned off while opened', async () => {
+    const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withThumbnails />);
+    expect(screen.getByLabelText('Go to slide 1')).toBeInTheDocument();
+
+    await act(async () => {
+      rerender(
+        <>
+          <Lightbox {...defaultProps} withThumbnails={false} />
+        </>
+      );
+    });
+
+    // The toolbar toggle disappears with the feature, so a strip left behind would be
+    // stuck on screen with no way to collapse it
+    expect(screen.queryByLabelText('Hide thumbnails')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Go to slide 1')).not.toBeInTheDocument();
   });
 
   it('renders initial focus placeholder by default', async () => {
@@ -465,5 +559,221 @@ describe('@mantine/lightbox/Lightbox store', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(customStore.getState().opened).toBe(true);
     expect(lightboxStore.getState().opened).toBe(false);
+  });
+
+  it('clamps the current index when slides are removed', async () => {
+    const onIndexChange = jest.fn();
+    const { rerender } = await renderWithAct(
+      <Lightbox {...defaultProps} withThumbnails onIndexChange={onIndexChange} />
+    );
+
+    await userEvent.click(screen.getByLabelText('Go to slide 3'));
+    onIndexChange.mockClear();
+
+    await act(async () => {
+      rerender(
+        <>
+          <Lightbox {...defaultProps} slides={slides.slice(0, 2)} onIndexChange={onIndexChange} />
+        </>
+      );
+    });
+
+    expect(onIndexChange).toHaveBeenCalledWith(1);
+    expect(screen.getByText('2 / 2')).toBeInTheDocument();
+  });
+
+  it('uses slidesLabel for the carousel region', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} labels={{ slidesLabel: 'Galeria' }} />);
+    expect(screen.getByRole('region', { name: 'Galeria' })).toBeInTheDocument();
+  });
+
+  it('sets z-index CSS variable from the zIndex prop', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} withinPortal={false} zIndex={900} />);
+    const root = document.querySelector('.mantine-Lightbox-root') as HTMLElement;
+    expect(root.style.getPropertyValue('--lightbox-z-index')).toBe('900');
+  });
+
+  it('does not set the z-index CSS variable when zIndex is not provided', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} withinPortal={false} />);
+    const root = document.querySelector('.mantine-Lightbox-root') as HTMLElement;
+    expect(root.style.getPropertyValue('--lightbox-z-index')).toBe('');
+  });
+
+  it('does not let emblaOptions override loop', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} loop={false} emblaOptions={{ loop: true }} />);
+
+    // With loop disabled the first slide has no previous slide to scroll to
+    expect(screen.getByLabelText('Previous slide')).toHaveAttribute('data-inactive');
+  });
+
+  it('normalizes fractional and non-finite indices in the store', async () => {
+    await renderWithAct(<Lightbox.Provider />);
+
+    await act(async () => {
+      lightbox.open({ slides });
+      lightbox.setIndex(1.6);
+    });
+    expect(lightboxStore.getState().currentIndex).toBe(2);
+
+    await act(async () => {
+      lightbox.setIndex(NaN);
+    });
+    expect(lightboxStore.getState().currentIndex).toBe(0);
+
+    await act(async () => {
+      lightbox.open({ slides, startIndex: 1.2 });
+    });
+    expect(lightboxStore.getState().currentIndex).toBe(1);
+  });
+
+  describe('fullscreen cleanup', () => {
+    let fullscreen: ReturnType<typeof mockFullscreenApi>;
+
+    beforeEach(() => {
+      fullscreen = mockFullscreenApi();
+    });
+
+    afterEach(() => {
+      fullscreen.restore();
+    });
+
+    it('exits fullscreen that it entered when the lightbox is closed', async () => {
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+      expect(fullscreen.element).toBe(document.documentElement);
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
+      expect(fullscreen.element).toBe(null);
+    });
+
+    it('exits fullscreen that it entered when the lightbox unmounts', async () => {
+      const { unmount } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+      expect(fullscreen.element).toBe(document.documentElement);
+
+      await act(async () => {
+        unmount();
+      });
+
+      expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
+      expect(fullscreen.element).toBe(null);
+    });
+
+    it('does not exit fullscreen that it did not enter', async () => {
+      await fullscreen.enterExternally();
+
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      expect(fullscreen.exitSpy).not.toHaveBeenCalled();
+      expect(fullscreen.element).toBe(document.documentElement);
+    });
+
+    it('does not exit fullscreen when the user already left it manually', async () => {
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+      await userEvent.click(screen.getByLabelText('Exit fullscreen'));
+      expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not exit fullscreen re-entered by something else after a manual exit', async () => {
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+      await act(() => fullscreen.exitExternally());
+      await fullscreen.enterExternally();
+      expect(fullscreen.exitSpy).not.toHaveBeenCalled();
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      expect(fullscreen.exitSpy).not.toHaveBeenCalled();
+      expect(fullscreen.element).toBe(document.documentElement);
+    });
+
+    it('exits fullscreen requested before the browser confirmed the request', async () => {
+      fullscreen.deferConfirmation();
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+
+      // The document is fullscreen, but `fullscreenchange` has not fired yet, so React
+      // state still says it is not - the lightbox is responsible for it regardless.
+      expect(fullscreen.element).toBe(document.documentElement);
+      expect(screen.getByLabelText('Enter fullscreen')).toBeInTheDocument();
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      expect(fullscreen.exitSpy).toHaveBeenCalled();
+      expect(fullscreen.element).toBe(null);
+    });
+
+    it('exits fullscreen entered by a request that was still pending when it closed', async () => {
+      // The real race: `requestFullscreen` has not resolved yet, so nothing is fullscreen
+      // when the lightbox closes and there is nothing to exit at that point. The browser
+      // then completes the request, and the exit has to be retried – otherwise the page is
+      // left fullscreen with no lightbox on top of it.
+      fullscreen.deferRequest();
+      const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
+
+      await userEvent.click(screen.getByLabelText('Enter fullscreen'));
+
+      expect(fullscreen.element).toBe(null);
+
+      await act(async () => {
+        rerender(
+          <>
+            <Lightbox {...defaultProps} opened={false} withFullscreen />
+          </>
+        );
+      });
+
+      // Still nothing to exit - the request has not completed
+      expect(fullscreen.element).toBe(null);
+
+      await fullscreen.settleRequest();
+
+      expect(fullscreen.exitSpy).toHaveBeenCalled();
+      expect(fullscreen.element).toBe(null);
+    });
   });
 });

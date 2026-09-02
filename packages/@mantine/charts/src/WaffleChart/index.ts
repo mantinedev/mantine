@@ -1,5 +1,6 @@
 import type {
   WaffleChartCell,
+  WaffleChartCssVariables,
   WaffleChartFactory,
   WaffleChartProps,
   WaffleChartStylesNames,
@@ -7,11 +8,18 @@ import type {
 
 export { WaffleChart } from './WaffleChart';
 
-export type { WaffleChartProps, WaffleChartStylesNames, WaffleChartFactory, WaffleChartCell };
+export type {
+  WaffleChartProps,
+  WaffleChartStylesNames,
+  WaffleChartCssVariables,
+  WaffleChartFactory,
+  WaffleChartCell,
+};
 
 export namespace WaffleChart {
   export type Props = WaffleChartProps;
   export type StylesNames = WaffleChartStylesNames;
+  export type CssVariables = WaffleChartCssVariables;
   export type Factory = WaffleChartFactory;
   export type Cell = WaffleChartCell;
 }

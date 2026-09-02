@@ -1,6 +1,6 @@
 import { renderWithAct, screen } from '@mantine-tests/core';
-import { LightboxCaption } from './LightboxCaption';
 import { LightboxWrapper } from '../test-utils';
+import { LightboxCaption } from './LightboxCaption';
 
 describe('@mantine/lightbox/LightboxCaption', () => {
   it('renders caption from current slide data', async () => {

@@ -28,6 +28,11 @@ export const Demo_overlappingEvents = {
   render: renderDemo(demos.overlappingEvents),
 };
 
+export const Demo_eventOverlapMode = {
+  name: '⭐ Demo: eventOverlapMode',
+  render: renderDemo(demos.eventOverlapMode),
+};
+
 export const Demo_currentTimeIndicator = {
   name: '⭐ Demo: currentTimeIndicator',
   render: renderDemo(demos.currentTimeIndicator),

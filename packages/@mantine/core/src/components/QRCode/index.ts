@@ -1,5 +1,5 @@
-import type { QRCodeCssVariables, QRCodeFactory, QRCodeProps, QRCodeStylesNames } from './QRCode';
 import type { EncodeQROptions, EncodeQRResult, QRCodeErrorCorrectionLevel } from './encode-qr';
+import type { QRCodeCssVariables, QRCodeFactory, QRCodeProps, QRCodeStylesNames } from './QRCode';
 
 export { QRCode } from './QRCode';
 export { encodeQR } from './encode-qr';

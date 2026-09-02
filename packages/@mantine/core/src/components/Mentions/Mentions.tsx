@@ -12,19 +12,19 @@ import {
 } from '../../core';
 import { Combobox, ComboboxProps, useCombobox } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
-import { InputBase } from '../InputBase';
 import { InputWrapperContext } from '../Input/InputWrapper.context';
+import { InputBase } from '../InputBase';
 import { ScrollArea } from '../ScrollArea';
 import { detectQuery } from './detect-query';
 import { buildHighlightSegments, getMentionModel, getSelectionStates } from './get-mention-model';
 import { Mention, MentionProps } from './Mention';
-import { MentionsHighlighter, MentionsRenderMentionInput } from './MentionsHighlighter';
-import { MentionsInlineSuggestion } from './MentionsInlineSuggestion';
 import type {
   MentionOccurrence,
   MentionsChangePayload,
   MentionsChangeTriggerType,
 } from './Mentions.types';
+import { MentionsHighlighter, MentionsRenderMentionInput } from './MentionsHighlighter';
+import { MentionsInlineSuggestion } from './MentionsInlineSuggestion';
 import { getSourceConfigs, resolveSources } from './resolve-sources';
 import { MentionsFilter, useMentionsQuery } from './use-mentions-query';
 import { applyChangeToValue } from './utils/apply-change-to-value';

@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { BubbleChart, BubbleChartProps, BubbleChartStylesNames } from './BubbleChart';
 
 const defaultProps: BubbleChartProps = {
@@ -8,8 +8,6 @@ const defaultProps: BubbleChartProps = {
 };
 
 describe('@mantine/charts/BubbleChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<BubbleChartProps, BubbleChartStylesNames>({
     component: BubbleChart,
     props: defaultProps,

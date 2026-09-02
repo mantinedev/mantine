@@ -11,7 +11,7 @@ function Demo() {
     <MatrixChart
       data={data}
       xLabels={xLabels}
-      yLabels={yLabels}
+      yLabels={yLabels} withYLabels
       withXLabels
       xLabelsRotation={-45}
     />
@@ -25,6 +25,7 @@ function Demo() {
       data={data}
       xLabels={xLabels}
       yLabels={yLabels}
+      withYLabels
       withXLabels
       xLabelsRotation={-45}
     />

@@ -8,6 +8,8 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { ImageCropperCropData } from './compute-crop-area';
+import { ImageCropperFlip } from './get-cropped-image';
 import { ImageCropperProvider } from './ImageCropper.context';
 import { ImageCropperControls } from './ImageCropperControls';
 import { ImageCropperImage } from './ImageCropperImage';
@@ -18,8 +20,6 @@ import {
   useImageCropper,
   UseImageCropperReturnValue,
 } from './use-image-cropper';
-import { ImageCropperCropData } from './compute-crop-area';
-import { ImageCropperFlip } from './get-cropped-image';
 import classes from './ImageCropper.module.css';
 
 export type ImageCropperStylesNames =

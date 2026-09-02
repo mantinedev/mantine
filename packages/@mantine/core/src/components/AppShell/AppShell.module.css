@@ -182,6 +182,7 @@
   padding-bottom: env(safe-area-inset-bottom);
   transform: var(--app-shell-footer-transform);
   z-index: var(--app-shell-footer-z-index);
+  --app-shell-footer-safe-area: env(safe-area-inset-bottom);
 
   :where([data-mode='static']) & {
     position: var(--app-shell-footer-position, fixed);
@@ -203,5 +204,73 @@
 
   &:where([data-grow]) {
     flex-grow: 1;
+  }
+}
+
+.resizeHandle {
+  position: absolute;
+  z-index: 1;
+  outline: none;
+  touch-action: none;
+  background-color: transparent;
+
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: transparent;
+    transition: background-color 100ms ease;
+  }
+
+  &:where(:hover, [data-active])::after,
+  &:where(:focus-visible)::after {
+    background-color: var(--mantine-primary-color-filled);
+  }
+
+  &:where([data-orientation='vertical']) {
+    top: 0;
+    bottom: 0;
+    width: var(--app-shell-resize-handle-size, rem(6px));
+    cursor: col-resize;
+
+    &::after {
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: rem(2px);
+      transform: translateX(-50%);
+    }
+  }
+
+  &:where([data-orientation='horizontal']) {
+    inset-inline: 0;
+    height: var(--app-shell-resize-handle-size, rem(6px));
+    cursor: row-resize;
+
+    &::after {
+      inset-inline: 0;
+      top: 50%;
+      height: rem(2px);
+      transform: translateY(-50%);
+    }
+  }
+
+  &:where([data-section='navbar']) {
+    inset-inline-end: calc(var(--app-shell-resize-handle-size, rem(6px)) / -2);
+    display: var(--app-shell-navbar-resize-handle-display, block);
+  }
+
+  &:where([data-section='aside']) {
+    inset-inline-start: calc(var(--app-shell-resize-handle-size, rem(6px)) / -2);
+    display: var(--app-shell-aside-resize-handle-display, block);
+  }
+
+  &:where([data-section='header']) {
+    bottom: calc(var(--app-shell-resize-handle-size, rem(6px)) / -2);
+    display: var(--app-shell-header-resize-handle-display, block);
+  }
+
+  &:where([data-section='footer']) {
+    top: calc(var(--app-shell-resize-handle-size, rem(6px)) / -2);
+    display: var(--app-shell-footer-resize-handle-display, block);
   }
 }

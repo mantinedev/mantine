@@ -7,13 +7,13 @@ import {
   Factory,
   useProps,
 } from '../../core';
-import { usePersonaContext } from './Persona.context';
 import {
   getPresenceProps,
   isPresenceVisible,
   PersonaPresenceGlyph,
   PersonaPresenceValue,
 } from './get-presence-props';
+import { usePersonaContext } from './Persona.context';
 
 export type PersonaPresenceStylesNames = 'presence';
 

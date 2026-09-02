@@ -44,6 +44,26 @@ does not leave empty space around the chart:
 
 <Demo data={GaugeChartDemos.angles} />
 
+A span of 360 degrees or more renders a full circle, and setting `endAngle` lower than
+`startAngle` sweeps the arc counter-clockwise – `sections` and `target` follow the same
+direction:
+
+```tsx
+import { GaugeChart } from '@mantine/charts';
+
+function Demo() {
+  return (
+    <>
+      {/* Full circle */}
+      <GaugeChart value={72} startAngle={0} endAngle={360} />
+
+      {/* Counter-clockwise */}
+      <GaugeChart value={72} startAngle={120} endAngle={-120} />
+    </>
+  );
+}
+```
+
 ## Thickness
 
 `thickness` controls the width of the arc in px, `size` controls both the width and the

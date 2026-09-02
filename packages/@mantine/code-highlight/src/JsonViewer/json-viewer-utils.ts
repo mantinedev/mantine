@@ -7,10 +7,12 @@ export function serializePath(segments: string[]): string {
 export function getAllExpandablePaths(
   value: any,
   prefix: string[] = [],
-  groupArraysAfterLength: number | false = false
+  groupArraysAfterLength: number | false = false,
+  ancestors = new WeakSet<object>()
 ): string[] {
   const paths: string[] = [];
-  if (value !== null && typeof value === 'object') {
+  if (value !== null && typeof value === 'object' && !ancestors.has(value)) {
+    ancestors.add(value);
     paths.push(serializePath(prefix));
     const isArray = Array.isArray(value);
     const entries: [string, any][] = isArray
@@ -25,8 +27,11 @@ export function getAllExpandablePaths(
     }
 
     for (const [key, val] of entries) {
-      paths.push(...getAllExpandablePaths(val, [...prefix, key], groupArraysAfterLength));
+      paths.push(
+        ...getAllExpandablePaths(val, [...prefix, key], groupArraysAfterLength, ancestors)
+      );
     }
+    ancestors.delete(value);
   }
   return paths;
 }
@@ -36,12 +41,19 @@ export function getDefaultExpandedPaths(
   depth: number,
   prefix: string[] = [],
   currentDepth = 0,
-  groupArraysAfterLength: number | false = false
+  groupArraysAfterLength: number | false = false,
+  ancestors = new WeakSet<object>()
 ): string[] {
-  if (currentDepth >= depth || value === null || typeof value !== 'object') {
+  if (
+    currentDepth >= depth ||
+    value === null ||
+    typeof value !== 'object' ||
+    ancestors.has(value)
+  ) {
     return [];
   }
 
+  ancestors.add(value);
   const paths: string[] = [serializePath(prefix)];
   const isArray = Array.isArray(value);
   const entries: [string, any][] = isArray
@@ -62,10 +74,12 @@ export function getDefaultExpandedPaths(
         depth,
         [...prefix, key],
         currentDepth + 1,
-        groupArraysAfterLength
+        groupArraysAfterLength,
+        ancestors
       )
     );
   }
+  ancestors.delete(value);
   return paths;
 }
 
@@ -131,9 +145,29 @@ export function formatValue(
   return { display: String(value), collapsed: false };
 }
 
+function createStringifyReplacer() {
+  const ancestors: object[] = [];
+  return function replacer(this: any, _key: string, value: any) {
+    if (typeof value === 'bigint') {
+      return value.toString();
+    }
+    if (typeof value !== 'object' || value === null) {
+      return value;
+    }
+    while (ancestors.length > 0 && ancestors[ancestors.length - 1] !== this) {
+      ancestors.pop();
+    }
+    if (ancestors.includes(value)) {
+      return '[Circular]';
+    }
+    ancestors.push(value);
+    return value;
+  };
+}
+
 export function safeStringify(value: any): string {
   try {
-    return JSON.stringify(value, null, 2);
+    return JSON.stringify(value, createStringifyReplacer(), 2);
   } catch {
     return String(value);
   }

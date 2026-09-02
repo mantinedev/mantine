@@ -1,15 +1,18 @@
-import { useEffect, useState } from 'react';
-import { offset, useFloating } from '@floating-ui/react';
+import { autoUpdate, offset, useFloating } from '@floating-ui/react';
+import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
   CompoundStylesApiProps,
   ElementProps,
   factory,
   Factory,
+  useDirection,
   useProps,
 } from '../../../core';
+import { getFloatingPosition } from '../../../utils/Floating';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useTourContext } from '../Tour.context';
+import { useTargetElement } from '../use-target-rect';
 import classes from '../Tour.module.css';
 
 export type TourBeaconStylesNames = 'beacon' | 'beaconPulse';
@@ -42,34 +45,24 @@ export const TourBeacon = factory<TourBeaconFactory>((_props) => {
     vars,
     target,
     onClick,
-    ref: _ref,
+    ref,
     role: _role,
     'aria-label': ariaLabel,
     ...others
   } = props;
 
   const ctx = useTourContext();
-  const [element, setElement] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    if (!target) {
-      setElement(null);
-      return;
-    }
-
-    const el =
-      typeof target === 'string'
-        ? document.querySelector<HTMLElement>(target)
-        : target?.current || null;
-
-    setElement(el);
-  }, [target]);
+  const { dir } = useDirection();
+  const element = useTargetElement(target);
 
   const { refs, floatingStyles } = useFloating({
     elements: { reference: element },
-    placement: 'right-start',
+    placement: getFloatingPosition(dir, 'right-start'),
+    whileElementsMounted: autoUpdate,
     middleware: [offset(8)],
   });
+
+  const mergedRef = useMergedRef(refs.setFloating, ref);
 
   if (!element) {
     return null;
@@ -77,7 +70,7 @@ export const TourBeacon = factory<TourBeaconFactory>((_props) => {
 
   return (
     <UnstyledButton
-      ref={refs.setFloating}
+      ref={mergedRef}
       role="button"
       aria-label={ariaLabel || ctx.labels.beacon}
       {...ctx.getStyles('beacon', { className, classNames, style, styles })}

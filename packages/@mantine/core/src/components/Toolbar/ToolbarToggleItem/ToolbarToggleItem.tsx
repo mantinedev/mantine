@@ -5,7 +5,6 @@ import {
   ElementProps,
   factory,
   Factory,
-  useMantineTheme,
   useProps,
 } from '../../../core';
 import { useToolbarContext } from '../Toolbar.context';
@@ -48,7 +47,6 @@ export const ToolbarToggleItem = factory<ToolbarToggleItemFactory>((_props) => {
   } = props;
   const ctx = useToolbarContext();
   const groupCtx = useToolbarToggleGroupContext();
-  const theme = useMantineTheme();
 
   const isActive =
     groupCtx.type === 'single'
@@ -57,29 +55,12 @@ export const ToolbarToggleItem = factory<ToolbarToggleItemFactory>((_props) => {
 
   const isDisabled = disabled || groupCtx.disabled;
 
-  let variantStyles: React.CSSProperties | undefined;
-  if (ctx.variant || ctx.color) {
-    const activeColors = theme.variantColorResolver({
-      color: ctx.color || theme.primaryColor,
-      theme,
-      variant: ctx.variant || 'light',
-      autoContrast: ctx.autoContrast,
-    });
-
-    variantStyles = {
-      '--toolbar-toggle-active-bg': activeColors.background,
-      '--toolbar-toggle-active-hover': activeColors.hover,
-      '--toolbar-toggle-active-color': activeColors.color,
-    } as React.CSSProperties;
-  }
-
   return (
     <Box
       component="button"
       {...others}
       type="button"
-      {...ctx.getStyles('toggle', { className, classNames, styles, focusable: true })}
-      style={[variantStyles, style]}
+      {...ctx.getStyles('toggle', { className, classNames, style, styles, focusable: true })}
       data-toolbar-toggle
       data-active={isActive || undefined}
       data-disabled={isDisabled || undefined}

@@ -1,5 +1,5 @@
-import { useBroadcastChannel } from '@mantine/hooks';
 import { ColorSwatch, Group, Paper, Stack, Text } from '@mantine/core';
+import { useBroadcastChannel } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
