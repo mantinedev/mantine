@@ -150,6 +150,22 @@ custom control:
 
 <Demo data={TreeSelectDemos.renderNodeExpand} />
 
+## renderPill
+
+The `renderPill` callback allows you to customize how pills are rendered for selected values
+in `multiple` and `checkbox` modes. It is called with an object containing `node`, `value`,
+`onRemove`, `disabled` and `readOnly` properties and must return a React node. Call `onRemove`
+from your custom pill to remove the value: in `checkbox` mode it unchecks the node and, unless
+`checkStrictly` is set, all its children, the same way the default remove button does.
+
+<Demo data={TreeSelectDemos.renderPill} />
+
+`renderPill` is not called for the overflow pill displayed when the number of selected values
+exceeds `maxDisplayedValues`, use `maxDisplayedValuesContent` to customize it instead.
+
+If a selected value is not present in `data` (for example, when children are loaded asynchronously),
+`node` is a placeholder object with `value` and `label` both set to the value.
+
 ## Scrollable dropdown
 
 By default, the options list is wrapped with [ScrollArea.Autosize](/core/scroll-area).

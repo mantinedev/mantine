@@ -1,4 +1,4 @@
-import { Changelog970Demos, TipTapDemos, WeekViewDemos } from '@docs/demos';
+import { Changelog970Demos, TipTapDemos, TreeSelectDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -100,3 +100,12 @@ The server was also migrated to the official Model Context Protocol SDK, so the 
 negotiated with the client instead of being pinned.
 
 For setup details, supported tools, and client-specific instructions, see [Mantine with LLMs](/guides/llms).
+
+## TreeSelect renderPill
+
+[TreeSelect](/core/tree-select) now supports `renderPill` prop to customize how pills are rendered
+for selected values in `multiple` and `checkbox` modes, similar to `renderPill` prop of
+[MultiSelect](/core/multi-select). The callback receives the tree node, so pills can use
+`nodeProps` or the node structure, for example to show a different icon for parent and leaf nodes:
+
+<Demo data={TreeSelectDemos.renderPill} />
