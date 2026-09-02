@@ -156,3 +156,7 @@ content. Set `hideDetached={false}` to restore the previous behavior. The prop h
 `Tooltip.Floating`, which is positioned relative to the mouse pointer.
 
 <Demo data={TooltipDemos.hideDetached} />
+
+## Other changes
+
+- [HoverCard](/core/hover-card) can now be opened with the keyboard and is announced by screen readers: the dropdown is opened when the target is focused with the keyboard and closed with `Escape`. New `events` prop controls which interactions open the dropdown (`{ hover: true, focus: true, touch: false }` by default), new `interactive` prop keeps the dropdown open while the pointer travels from the target to the dropdown, and new `role` prop switches the target/dropdown relation between `dialog` and `tooltip`. Note that focus activation is enabled by default and a tap on a touch device no longer opens the dropdown – set `events={{ focus: false, touch: true }}` and `closeOnEscape={false}` to restore the previous behavior.

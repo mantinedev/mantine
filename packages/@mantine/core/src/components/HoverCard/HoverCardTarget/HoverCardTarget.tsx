@@ -1,9 +1,8 @@
-import { cloneElement, use } from 'react';
+import { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { createEventHandler, getRefProp, getSingleElementChild, useProps } from '../../../core';
+import { getRefProp, getSingleElementChild, useProps } from '../../../core';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
-import { HoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup';
 
 export interface HoverCardTargetProps extends PopoverTargetProps {
   /**
@@ -34,31 +33,26 @@ export function HoverCardTarget(props: HoverCardTargetProps) {
   }
 
   const ctx = useHoverCardContext();
-  const groupContext = use(HoverCardGroupContext);
-  const targetRef = useMergedRef(getRefProp(child), ctx.assignTarget);
+  const childProps = child.props as any;
+  const targetRef = useMergedRef(getRefProp(child), ctx.assignTarget, ctx.reference);
 
-  if (groupContext.withinGroup && ctx.getReferenceProps && ctx.reference) {
-    const referenceProps = ctx.getReferenceProps();
+  const referenceProps = ctx.getReferenceProps(
+    eventPropsWrapperName ? childProps[eventPropsWrapperName] : childProps
+  );
 
-    return (
-      <Popover.Target refProp={refProp} {...others}>
-        {cloneElement(
-          child,
-          eventPropsWrapperName
-            ? { [eventPropsWrapperName]: { ...referenceProps, ref: ctx.reference } }
-            : { ...referenceProps, ref: ctx.reference }
-        )}
-      </Popover.Target>
-    );
-  }
-
-  const onMouseEnter = createEventHandler((child.props as any).onMouseEnter, ctx.openDropdown);
-  const onMouseLeave = createEventHandler((child.props as any).onMouseLeave, ctx.closeDropdown);
-
-  const eventListeners = { onMouseEnter, onMouseLeave };
+  const accessibleProps =
+    ctx.withRoles && ctx.role === 'tooltip'
+      ? {
+          'aria-describedby':
+            [childProps['aria-describedby'], ctx.opened ? ctx.dropdownId : null]
+              .filter(Boolean)
+              .join(' ') || undefined,
+        }
+      : undefined;
 
   const clonedProps: any = {
-    ...(eventPropsWrapperName ? { [eventPropsWrapperName]: eventListeners } : eventListeners),
+    ...(eventPropsWrapperName ? { [eventPropsWrapperName]: referenceProps } : referenceProps),
+    ...accessibleProps,
     ref: targetRef,
   };
 

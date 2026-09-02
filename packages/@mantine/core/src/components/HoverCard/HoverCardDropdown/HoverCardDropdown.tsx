@@ -1,8 +1,6 @@
-import { use } from 'react';
 import { createEventHandler, useProps } from '../../../core';
 import { Popover, PopoverDropdownProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
-import { HoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup';
 
 export interface HoverCardDropdownProps extends PopoverDropdownProps {
   /** Dropdown content */
@@ -17,29 +15,20 @@ export function HoverCardDropdown(props: HoverCardDropdownProps) {
   );
 
   const ctx = useHoverCardContext();
-  const groupCtx = use(HoverCardGroupContext);
+  const floatingProps = ctx.getFloatingProps();
 
-  if (groupCtx.withinGroup && ctx.getFloatingProps && ctx.floating) {
-    const floatingProps = ctx.getFloatingProps();
-
-    return (
-      <Popover.Dropdown
-        ref={ctx.floating}
-        {...floatingProps}
-        onMouseEnter={createEventHandler<any>(onMouseEnter, floatingProps.onMouseEnter)}
-        onMouseLeave={createEventHandler<any>(onMouseLeave, floatingProps.onMouseLeave)}
-        {...others}
-      >
-        {children}
-      </Popover.Dropdown>
-    );
-  }
-
-  const handleMouseEnter = createEventHandler<any>(onMouseEnter, ctx.openDropdown);
-  const handleMouseLeave = createEventHandler<any>(onMouseLeave!, ctx.closeDropdown);
+  const accessibleProps =
+    ctx.withRoles && ctx.role === 'tooltip' ? { role: 'tooltip', id: ctx.dropdownId } : undefined;
 
   return (
-    <Popover.Dropdown onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...others}>
+    <Popover.Dropdown
+      ref={ctx.floating}
+      {...floatingProps}
+      {...accessibleProps}
+      onMouseEnter={createEventHandler<any>(onMouseEnter, floatingProps.onMouseEnter)}
+      onMouseLeave={createEventHandler<any>(onMouseLeave, floatingProps.onMouseLeave)}
+      {...others}
+    >
       {children}
     </Popover.Dropdown>
   );
