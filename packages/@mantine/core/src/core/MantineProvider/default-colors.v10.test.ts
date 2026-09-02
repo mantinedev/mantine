@@ -1,5 +1,5 @@
-import { V10_DEFAULT_COLORS } from './default-colors.v10';
 import { darkColors, darkColdColors, darkTintedColors, darkWarmColors } from './dark-colors';
+import { V10_DEFAULT_COLORS } from './default-colors.v10';
 
 const OKLCH_RE = /^oklch\(/;
 const COLOR_NAMES = [

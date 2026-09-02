@@ -1,19 +1,19 @@
 import TipTapImage from '@tiptap/extension-image';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { getUploadImageExtension, RichTextEditor } from '@mantine/tiptap';
+import { getUploadImageExtension, ImageUploadResult, RichTextEditor } from '@mantine/tiptap';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import TipTapImage from '@tiptap/extension-image';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { getUploadImageExtension, RichTextEditor } from '@mantine/tiptap';
+import { getUploadImageExtension, ImageUploadResult, RichTextEditor } from '@mantine/tiptap';
 
-function handleImageUpload(file: File): Promise<string> {
+function handleImageUpload(file: File): Promise<ImageUploadResult> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(URL.createObjectURL(file));
+      resolve({ src: URL.createObjectURL(file), alt: file.name });
     }, 3000);
   });
 }
@@ -29,7 +29,7 @@ function Demo() {
   });
 
   return (
-    <RichTextEditor editor={editor} onImageUpload={handleImageUpload}>
+    <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
@@ -47,10 +47,10 @@ function Demo() {
 }
 `;
 
-function handleImageUpload(file: File): Promise<string> {
+function handleImageUpload(file: File): Promise<ImageUploadResult> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(URL.createObjectURL(file));
+      resolve({ src: URL.createObjectURL(file), alt: file.name });
     }, 3000);
   });
 }
@@ -68,7 +68,7 @@ function Demo() {
   });
 
   return (
-    <RichTextEditor editor={editor} onImageUpload={handleImageUpload}>
+    <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />

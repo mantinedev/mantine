@@ -1,5 +1,5 @@
-import { useBroadcastChannel } from '@mantine/hooks';
 import { Badge, Button, Group, Paper, Text } from '@mantine/core';
+import { useBroadcastChannel } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `

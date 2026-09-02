@@ -1,10 +1,10 @@
 import { Frontmatter } from '@/types';
 import { MDX_CHARTS_DATA } from './data/mdx-charts-data';
 import { MDX_CODE_HIGHLIGHT_DATA } from './data/mdx-code-highlight-data';
-import { MDX_EMOJI_DATA } from './data/mdx-emoji-data';
 import { MDX_CORE_DATA } from './data/mdx-core-data';
 import { MDX_DATA_GRID_DATA } from './data/mdx-data-grid-data';
 import { MDX_DATES_DATA } from './data/mdx-dates-data';
+import { MDX_EMOJI_DATA } from './data/mdx-emoji-data';
 import { MDX_FORM_DATA } from './data/mdx-form-data';
 import { MDX_GUIDES_DATA } from './data/mdx-guides-data';
 import { MDX_HOOKS_DATA } from './data/mdx-hooks-data';

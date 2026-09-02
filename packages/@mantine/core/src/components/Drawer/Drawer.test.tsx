@@ -1,7 +1,7 @@
 import { act, fireEvent } from '@testing-library/react';
 import { createContextContainer, render, screen, tests, userEvent } from '@mantine-tests/core';
-import { Drawer, DrawerProps, DrawerStylesNames } from './Drawer';
 import { useDrawersStack } from '../Modal/use-modals-stack';
+import { Drawer, DrawerProps, DrawerStylesNames } from './Drawer';
 import { DrawerBody, DrawerBodyProps } from './DrawerBody';
 import { DrawerCloseButton, DrawerCloseButtonProps } from './DrawerCloseButton';
 import { DrawerContent, DrawerContentProps } from './DrawerContent';

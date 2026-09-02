@@ -14,13 +14,13 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { formatCountdown } from './format-countdown';
+import { getStatSizeVars } from './get-stat-vars';
+import type { StatCssVariables, StatFactory, StatStylesNames } from './Stat';
 import { StatProvider } from './Stat.context';
 import { StatIcon } from './StatIcon';
 import { StatLabel } from './StatLabel';
 import { StatValue } from './StatValue';
-import { formatCountdown } from './format-countdown';
-import { getStatSizeVars } from './get-stat-vars';
-import type { StatCssVariables, StatFactory, StatStylesNames } from './Stat';
 import classes from './Stat.module.css';
 
 export interface StatCountdownProps

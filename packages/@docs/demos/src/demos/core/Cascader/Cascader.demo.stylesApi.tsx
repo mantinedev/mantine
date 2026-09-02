@@ -1,6 +1,6 @@
 import { Cascader } from '@mantine/core';
-import { CascaderStylesApi } from '@docs/styles-api';
 import { MantineDemo } from '@mantinex/demo';
+import { CascaderStylesApi } from '@docs/styles-api';
 import { data } from './data';
 
 const code = `

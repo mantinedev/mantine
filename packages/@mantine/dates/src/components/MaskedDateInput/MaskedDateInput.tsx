@@ -32,8 +32,8 @@ import { SpinInput } from '../SpinInput';
 import { AmPmInput } from '../TimePicker/AmPmInput/AmPmInput';
 import { TimePickerProvider } from '../TimePicker/TimePicker.context';
 import { YearLevelSettings } from '../YearLevel';
-import { useMaskedDateInput } from './use-masked-date-input';
 import { getDaysInMonth } from './get-days-in-month/get-days-in-month';
+import { useMaskedDateInput } from './use-masked-date-input';
 import classes from './MaskedDateInput.module.css';
 
 export type MaskedDateInputStylesNames =

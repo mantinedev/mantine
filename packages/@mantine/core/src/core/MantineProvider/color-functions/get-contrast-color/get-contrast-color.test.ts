@@ -1,5 +1,5 @@
-import { mergeMantineTheme } from '../../merge-mantine-theme/merge-mantine-theme';
 import { DEFAULT_THEME } from '../../default-theme';
+import { mergeMantineTheme } from '../../merge-mantine-theme/merge-mantine-theme';
 import { getContrastColor } from './get-contrast-color';
 
 describe('@mantine/core/get-contrast-color', () => {

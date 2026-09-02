@@ -1,7 +1,11 @@
 import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Notifications, NotificationsProps, NotificationsStylesNames } from './Notifications';
-import { createNotificationsStore, notifications } from './notifications.store';
+import {
+  createNotificationsStore,
+  notifications,
+  promiseNotification,
+} from './notifications.store';
 
 const defaultProps: NotificationsProps = {
   withinPortal: false,
@@ -99,6 +103,41 @@ describe('@mantine/core/Notifications', () => {
     });
 
     expect(screen.queryByText('Swipe me away')).not.toBeInTheDocument();
+  });
+
+  it('auto closes a focused notification in the default layout', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications store={store} withinPortal={false} autoClose={1000} transitionDuration={10} />
+    );
+
+    act(() => {
+      notifications.show({ id: 'focused', message: 'Focused notification' }, store);
+    });
+
+    const notification = screen.getByRole('alert');
+
+    // Focus tracking exists only to keep a collapsed stack expanded – in the default layout
+    // it must not hold a notification open, which is what happens whenever a user clicks an
+    // action button inside it.
+    act(() => {
+      fireEvent.focus(notification);
+      fireEvent.focusIn(notification);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(1200);
+    });
+
+    expect(store.getState().notifications).toHaveLength(0);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(screen.queryByText('Focused notification')).not.toBeInTheDocument();
   });
 
   it('preserves dismiss animation when notification has custom style', () => {
@@ -412,6 +451,70 @@ describe('@mantine/core/Notifications', () => {
     expect(screen.getByText('Custom per notification')).toBeInTheDocument();
   });
 
+  it('restores default rendering with renderNotification: null over a global renderer', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        renderNotification={(notification) => (
+          <div data-testid="global-custom">{notification.message}</div>
+        )}
+      />
+    );
+
+    act(() => {
+      notifications.show(
+        { id: 'opted-out', message: 'Default rendering', renderNotification: null },
+        store
+      );
+      notifications.show({ id: 'global', message: 'Global rendering' }, store);
+    });
+
+    // The opt-out notification uses the standard Mantine notification …
+    expect(
+      screen.getByText('Default rendering').closest('.mantine-Notification-root')
+    ).not.toBeNull();
+    // … while the other one still goes through the global renderer
+    expect(screen.getByTestId('global-custom')).toHaveTextContent('Global rendering');
+    expect(screen.queryAllByTestId('global-custom')).toHaveLength(1);
+  });
+
+  it('forwards div props to the custom rendering wrapper', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+    const onClick = jest.fn();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        renderNotification={(notification) => <div>{notification.message}</div>}
+      />
+    );
+
+    act(() => {
+      notifications.show(
+        { id: 'dom-props', message: 'With props', onClick, lang: 'fr', mt: 'md' } as any,
+        store
+      );
+    });
+
+    const wrapper = screen.getByText('With props').parentElement!;
+    expect(wrapper).toHaveAttribute('lang', 'fr');
+    // Style props are not DOM attributes and must not leak onto the element
+    expect(wrapper).not.toHaveAttribute('mt');
+
+    fireEvent.click(wrapper);
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
   it('preserves dismiss interaction with renderNotification', () => {
     jest.useFakeTimers();
     const store = createNotificationsStore();
@@ -496,9 +599,10 @@ describe('@mantine/core/Notifications', () => {
     const alerts = screen.getAllByRole('alert');
     expect(alerts).toHaveLength(2);
 
-    const style0 = alerts[0].style;
-    const style1 = alerts[1].style;
-    expect(Number(style0.zIndex)).toBeLessThan(Number(style1.zIndex));
+    // The newest notification is the one in front, regardless of where it sits in the DOM
+    const behind = alerts.find((alert) => alert.textContent?.includes('First stacked'))!;
+    const front = alerts.find((alert) => alert.textContent?.includes('Second stacked'))!;
+    expect(Number(behind.style.zIndex)).toBeLessThan(Number(front.style.zIndex));
   });
 
   it('keeps stacked styling while a stacked notification is exiting', () => {
@@ -644,6 +748,70 @@ describe('@mantine/core/Notifications', () => {
       const state = store.getState();
       expect(state.notifications.map((n) => n.id)).toEqual(['urgent']);
       expect(state.queue.map((n) => n.id)).toEqual(['normal']);
+    });
+
+    it('puts the highest priority notification in front of a stack', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+
+      render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={false}
+          transitionDuration={10}
+          layout="stacked"
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'low', message: 'low priority', priority: 0 }, store);
+        notifications.show({ id: 'urgent', message: 'urgent', priority: 10 }, store);
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(50);
+      });
+
+      const alerts = screen.getAllByRole('alert');
+      const low = alerts.find((alert) => alert.textContent?.includes('low priority'))!;
+      const urgent = alerts.find((alert) => alert.textContent?.includes('urgent'))!;
+
+      // The urgent notification is the visible, interactive front card
+      expect(Number(urgent.style.zIndex)).toBeGreaterThan(Number(low.style.zIndex));
+      expect(urgent.hasAttribute('inert')).toBe(false);
+      expect(low.hasAttribute('inert')).toBe(true);
+    });
+
+    it('keeps the newest notification in front of a stack for equal priorities', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+
+      render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={false}
+          transitionDuration={10}
+          layout="stacked"
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'older', message: 'older' }, store);
+        notifications.show({ id: 'newer', message: 'newer' }, store);
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(50);
+      });
+
+      const alerts = screen.getAllByRole('alert');
+      const older = alerts.find((alert) => alert.textContent?.includes('older'))!;
+      const newer = alerts.find((alert) => alert.textContent?.includes('newer'))!;
+
+      expect(Number(newer.style.zIndex)).toBeGreaterThan(Number(older.style.zIndex));
+      expect(newer.hasAttribute('inert')).toBe(false);
     });
 
     it('applies priority independently per position', () => {
@@ -813,5 +981,1193 @@ describe('@mantine/core/Notifications', () => {
 
     // Notification should now be closed
     expect(store.getState().notifications).toHaveLength(0);
+  });
+
+  it('marks collapsed stacked notifications as inert', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+    });
+
+    const roots = Array.from(container.querySelectorAll('.mantine-Notification-root'));
+    expect(roots).toHaveLength(2);
+
+    // The newest notification is in front and stays interactive, the one behind it does not
+    const inertCount = roots.filter((root) => root.hasAttribute('inert')).length;
+    expect(inertCount).toBe(1);
+  });
+
+  it('expands the stack when focus moves into a notification', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+    });
+
+    const getInertCount = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      ).length;
+
+    expect(getInertCount()).toBe(1);
+
+    const front = Array.from(container.querySelectorAll('.mantine-Notification-root')).find(
+      (root) => !root.hasAttribute('inert')
+    )!;
+    act(() => {
+      fireEvent.focus(front);
+    });
+
+    expect(getInertCount()).toBe(0);
+  });
+
+  it('renders the front stacked notification first in the DOM', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'Older' }, store);
+      notifications.show({ id: 'b', message: 'Newer' }, store);
+    });
+
+    const roots = Array.from(container.querySelectorAll('.mantine-Notification-root'));
+    expect(roots).toHaveLength(2);
+
+    // The front notification is the only focusable one while the stack is collapsed. If it
+    // came last, a forward Tab from it would skip the notifications it un-inerts on focus
+    // and leave the region entirely.
+    expect(roots[0].textContent).toContain('Newer');
+    expect(roots[0].hasAttribute('inert')).toBe(false);
+    expect(roots[1].textContent).toContain('Older');
+    expect(roots[1].hasAttribute('inert')).toBe(true);
+  });
+
+  it('keeps the default layout in chronological DOM order', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications store={store} withinPortal={false} autoClose={false} transitionDuration={10} />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'Older' }, store);
+      notifications.show({ id: 'b', message: 'Newer' }, store);
+    });
+
+    const roots = Array.from(container.querySelectorAll('.mantine-Notification-root'));
+    expect(roots[0].textContent).toContain('Older');
+    expect(roots[1].textContent).toContain('Newer');
+  });
+
+  it('expands only the stack that is interacted with', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'tl-a', message: 'Top left first', position: 'top-left' }, store);
+      notifications.show({ id: 'tl-b', message: 'Top left second', position: 'top-left' }, store);
+      notifications.show(
+        { id: 'br-a', message: 'Bottom right first', position: 'bottom-right' },
+        store
+      );
+      notifications.show(
+        { id: 'br-b', message: 'Bottom right second', position: 'bottom-right' },
+        store
+      );
+    });
+
+    const getInertCount = (position: string) =>
+      Array.from(
+        container.querySelectorAll(`[data-position="${position}"] .mantine-Notification-root`)
+      ).filter((root) => root.hasAttribute('inert')).length;
+
+    expect(getInertCount('top-left')).toBe(1);
+    expect(getInertCount('bottom-right')).toBe(1);
+
+    const topLeftFront = Array.from(
+      container.querySelectorAll('[data-position="top-left"] .mantine-Notification-root')
+    ).find((root) => !root.hasAttribute('inert'))!;
+
+    act(() => {
+      fireEvent.focus(topLeftFront);
+    });
+
+    // Only the hovered/focused corner expands – the other stack stays collapsed
+    expect(getInertCount('top-left')).toBe(0);
+    expect(getInertCount('bottom-right')).toBe(1);
+  });
+
+  it('pins the stack open on a touch tap and releases it on an outside tap', () => {
+    // jsdom has no PointerEvent, so React reports `pointerType` as null unless one exists
+    class MockPointerEvent extends MouseEvent {
+      pointerType: string;
+
+      constructor(type: string, props: MouseEventInit & { pointerType?: string } = {}) {
+        super(type, props);
+        this.pointerType = props.pointerType ?? 'mouse';
+      }
+    }
+    const originalPointerEvent = (window as any).PointerEvent;
+    (window as any).PointerEvent = MockPointerEvent;
+
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+    });
+
+    const getInertCount = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      ).length;
+
+    expect(getInertCount()).toBe(1);
+
+    // Synthetic events ignore `inert` hit-testing, so the front notification has to be
+    // selected by the absence of `inert` – picking it by DOM index would let this pass
+    // while the notification a real touch user can reach is not wired up.
+    const front = Array.from(container.querySelectorAll('.mantine-Notification-root')).find(
+      (root) => !root.hasAttribute('inert')
+    )!;
+    expect(front).toBeDefined();
+    act(() => {
+      fireEvent.pointerDown(front, { pointerType: 'touch' });
+    });
+    expect(getInertCount()).toBe(0);
+
+    // A mouse press elsewhere collapses it again
+    act(() => {
+      fireEvent.pointerDown(document.body, { pointerType: 'touch' });
+    });
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+    expect(getInertCount()).toBe(1);
+
+    (window as any).PointerEvent = originalPointerEvent;
+  });
+
+  it('does not expand the stack on a mouse pointer press', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+    });
+
+    const front = container.querySelectorAll('.mantine-Notification-root')[1];
+    act(() => {
+      fireEvent.pointerDown(front, { pointerType: 'mouse' });
+    });
+
+    const inertCount = Array.from(container.querySelectorAll('.mantine-Notification-root')).filter(
+      (root) => root.hasAttribute('inert')
+    ).length;
+    expect(inertCount).toBe(1);
+  });
+
+  it('releases the expanded stack when a focused notification is dismissed', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+    });
+
+    const getInertCount = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      ).length;
+
+    const front = Array.from(container.querySelectorAll('.mantine-Notification-root')).find(
+      (root) => !root.hasAttribute('inert')
+    )!;
+    act(() => {
+      fireEvent.focus(front);
+    });
+    expect(getInertCount()).toBe(0);
+
+    // The focused notification is removed without ever firing a blur event
+    act(() => {
+      notifications.hide('b', store);
+      jest.advanceTimersByTime(100);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
+    // The remaining notification is the only one left, so nothing is collapsed behind it,
+    // but the stack must no longer be held open by the dismissed notification
+    expect(container.querySelectorAll('.mantine-Notification-root')).toHaveLength(1);
+
+    act(() => {
+      notifications.show({ id: 'c', message: 'Third' }, store);
+      jest.advanceTimersByTime(300);
+    });
+
+    expect(getInertCount()).toBe(1);
+  });
+
+  it('does not invert deeply stacked notifications', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        limit={40}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      for (let i = 0; i < 40; i += 1) {
+        notifications.show({ id: `n-${i}`, message: `Message ${i}` }, store);
+      }
+    });
+
+    const scales = Array.from(container.querySelectorAll('.mantine-Notification-root'))
+      .map((root) => (root as HTMLElement).style.transform)
+      .map((transform) => transform.match(/scale\(([-\d.]+)\)/)?.[1])
+      .filter(Boolean)
+      .map(Number);
+
+    expect(scales.length).toBeGreaterThan(0);
+    scales.forEach((scale) => expect(scale).toBeGreaterThan(0));
+  });
+
+  it('keeps the stacked z-index order when the stack expands', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+      notifications.show({ id: 'c', message: 'Third' }, store);
+    });
+
+    // DOM order is front to back, so the z-index has to strictly decrease along it.
+    const getZIndexes = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).map((root) =>
+        Number((root as HTMLElement).style.zIndex)
+      );
+
+    const collapsed = getZIndexes();
+    expect(collapsed).toHaveLength(3);
+    expect(collapsed[0]).toBeGreaterThan(collapsed[1]);
+    expect(collapsed[1]).toBeGreaterThan(collapsed[2]);
+
+    const front = Array.from(container.querySelectorAll('.mantine-Notification-root')).find(
+      (root) => !root.hasAttribute('inert')
+    )!;
+
+    act(() => {
+      fireEvent.mouseEnter(front);
+    });
+
+    expect(
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      )
+    ).toHaveLength(0);
+
+    // `z-index` is not animatable, so an expanded stack that flattens to a single layer
+    // repaints every notification in front of the first one before the reveal transform
+    // has moved anything.
+    const expanded = getZIndexes();
+    expect(expanded).toEqual(collapsed);
+  });
+
+  it('keeps the stack expanded when the hovered notification is dismissed', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+      notifications.show({ id: 'b', message: 'Second' }, store);
+      notifications.show({ id: 'c', message: 'Third' }, store);
+    });
+
+    const group = container.querySelector('[data-position="bottom-right"]')!.firstElementChild!;
+    const getInertCount = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      ).length;
+
+    const front = Array.from(container.querySelectorAll('.mantine-Notification-root')).find(
+      (root) => !root.hasAttribute('inert')
+    )!;
+
+    // Entering the front notification enters the group that wraps it as well – the pointer
+    // cannot reach a notification without being over its stack.
+    act(() => {
+      fireEvent.mouseEnter(front);
+    });
+
+    expect(getInertCount()).toBe(0);
+
+    act(() => {
+      fireEvent.click(front.querySelector('button')!);
+    });
+
+    // Split from the collapse window below on purpose: the collapse timeout is only
+    // scheduled once the dismissed notification has unmounted, so a single
+    // `advanceTimersByTime` would finish before that timer exists and the assertion would
+    // pass whether or not the stack stayed expanded.
+    act(() => {
+      jest.advanceTimersByTime(50);
+    });
+
+    expect(container.querySelectorAll('.mantine-Notification-root')).toHaveLength(2);
+
+    act(() => {
+      jest.advanceTimersByTime(500);
+    });
+
+    // The dismissed notification released its own hover on unmount and the browser never
+    // delivers `onMouseEnter` to the one that takes its place under a stationary pointer,
+    // so the group is the only thing that still knows the stack is hovered.
+    expect(getInertCount()).toBe(0);
+
+    act(() => {
+      fireEvent.mouseLeave(group);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(500);
+    });
+
+    expect(getInertCount()).toBe(1);
+  });
+
+  it('keeps a hovered stack paused while the dismissed notification is still exiting', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={1000}
+        transitionDuration={250}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'only', message: 'Only' }, store);
+    });
+
+    act(() => {
+      fireEvent.mouseEnter(container.querySelector('.mantine-Notification-root')!);
+    });
+
+    act(() => {
+      fireEvent.click(
+        container.querySelector('.mantine-Notification-root')!.querySelector('button')!
+      );
+    });
+
+    // The store is empty here but the dismissed notification is still mounted and still under
+    // the pointer, so the stack is very much still hovered.
+    expect(store.getState().notifications).toHaveLength(0);
+    expect(container.querySelectorAll('.mantine-Notification-root')).toHaveLength(1);
+
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+
+    act(() => {
+      notifications.show({ id: 'next', message: 'Next' }, store);
+    });
+
+    // Split so the auto close timer, which is only scheduled once the exiting notification
+    // has unmounted, actually gets a window to run in.
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    expect(store.getState().notifications).toHaveLength(1);
+  });
+
+  it('releases the group hover when the stacked layout is switched off', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container, rerender } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={1000}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'a', message: 'First' }, store);
+    });
+
+    act(() => {
+      fireEvent.mouseEnter(container.querySelector('.mantine-Notification-root')!);
+    });
+
+    // The group is dropped from the tree along with its handlers, so it never gets the
+    // `mouseleave` that would release it.
+    rerender(
+      <>
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          layout="default"
+        />
+      </>
+    );
+
+    act(() => {
+      fireEvent.mouseLeave(container.querySelector('.mantine-Notification-root')!);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    expect(store.getState().notifications).toHaveLength(0);
+  });
+  it('does not re-observe notification nodes on every render in stacked layout', () => {
+    jest.useFakeTimers();
+    const originalResizeObserver = (global as any).ResizeObserver;
+    const observed: Element[] = [];
+    let deliverEntries: (() => void) | null = null;
+
+    (global as any).ResizeObserver = class {
+      constructor(cb: ResizeObserverCallback) {
+        deliverEntries = () => cb([], this as any);
+      }
+
+      observe(element: Element) {
+        observed.push(element);
+      }
+
+      unobserve() {}
+      disconnect() {}
+    };
+
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'ro-1', message: 'First' }, store);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(10);
+    });
+
+    const observedAfterMount = observed.length;
+    expect(observedAfterMount).toBeGreaterThan(0);
+
+    act(() => deliverEntries!());
+    expect(observed).toHaveLength(observedAfterMount);
+
+    act(() => deliverEntries!());
+    expect(observed).toHaveLength(observedAfterMount);
+
+    (global as any).ResizeObserver = originalResizeObserver;
+  });
+
+  it('forwards role, id and accessibility attributes to custom rendered notifications', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        attributes={{ notification: { 'aria-label': 'Upload complete' } }}
+        renderNotification={(notification) => (
+          <div data-testid="custom-a11y">{notification.message}</div>
+        )}
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'custom-a11y-id', role: 'status', message: 'Done' }, store);
+    });
+
+    const wrapper = screen.getByTestId('custom-a11y').parentElement!;
+    expect(wrapper).toHaveAttribute('role', 'status');
+    expect(wrapper).toHaveAttribute('id', 'custom-a11y-id');
+    expect(wrapper).toHaveAttribute('aria-label', 'Upload complete');
+  });
+
+  it('releases the stack pin when its own position runs out of notifications', () => {
+    // jsdom has no PointerEvent, so React reports `pointerType` as null unless one exists
+    class MockPointerEvent extends MouseEvent {
+      pointerType: string;
+
+      constructor(type: string, props: MouseEventInit & { pointerType?: string } = {}) {
+        super(type, props);
+        this.pointerType = props.pointerType ?? 'mouse';
+      }
+    }
+    const originalPointerEvent = (window as any).PointerEvent;
+    (window as any).PointerEvent = MockPointerEvent;
+
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+
+    const { container } = render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={10}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'tr-1', position: 'top-right', message: 'Right one' }, store);
+      notifications.show({ id: 'tr-2', position: 'top-right', message: 'Right two' }, store);
+      notifications.show({ id: 'tl-1', position: 'top-left', message: 'Left one' }, store);
+    });
+
+    const getInertCount = () =>
+      Array.from(container.querySelectorAll('.mantine-Notification-root')).filter((root) =>
+        root.hasAttribute('inert')
+      ).length;
+
+    const rightStack = container.querySelector('[data-position="top-right"]')!;
+    const front = rightStack.querySelectorAll('.mantine-Notification-root')[1];
+
+    act(() => {
+      fireEvent.pointerDown(front, { pointerType: 'touch' });
+    });
+    expect(getInertCount()).toBe(0);
+
+    act(() => {
+      notifications.hide('tr-1', store);
+      notifications.hide('tr-2', store);
+    });
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
+    act(() => {
+      notifications.show({ id: 'tr-3', position: 'top-right', message: 'Right three' }, store);
+      notifications.show({ id: 'tr-4', position: 'top-right', message: 'Right four' }, store);
+    });
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
+    expect(getInertCount()).toBe(1);
+
+    (window as any).PointerEvent = originalPointerEvent;
+  });
+  describe('re-show while exiting', () => {
+    it('restores a swipe-dismissed notification when notifications.promise settles while it is exiting', async () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      let resolve: (value: string) => void = () => {};
+      const promise = new Promise<string>((res) => {
+        resolve = res;
+      });
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={200}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        promiseNotification(
+          promise,
+          {
+            id: 'save',
+            loading: { message: 'Saving' },
+            success: { message: 'Saved' },
+            error: { message: 'Failed' },
+          },
+          store
+        );
+      });
+
+      const notification = screen.getByRole('alert');
+      fireEvent.mouseEnter(notification);
+
+      act(() => {
+        fireEvent.wheel(notification, { deltaX: 160, deltaY: 10 });
+        jest.advanceTimersByTime(200);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+      expect(screen.getByRole('alert')).toBe(notification);
+
+      fireEvent.mouseLeave(notification);
+
+      await act(async () => {
+        resolve('ok');
+        await promise;
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(300);
+      });
+
+      const shown = screen.getByRole('alert');
+      expect(shown).toBe(notification);
+      expect(shown).toHaveTextContent('Saved');
+      expect(shown.style.getPropertyValue('--notifications-swipe-opacity')).toBe('1');
+      expect(shown.style.getPropertyValue('--notifications-swipe-offset')).toBe('0px');
+      expect(container.querySelector('.mantine-Notifications-progress')).not.toHaveAttribute(
+        'data-paused'
+      );
+
+      act(() => {
+        jest.advanceTimersByTime(1000);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+
+    it('calls onOpen and restarts auto close when a closed notification is shown again while exiting', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const onOpen = jest.fn();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={200}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'again', message: 'First', onOpen }, store);
+      });
+
+      const notification = screen.getByRole('alert');
+      expect(onOpen).toHaveBeenCalledTimes(1);
+
+      act(() => {
+        fireEvent.click(container.querySelector('.mantine-Notification-closeButton')!);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+
+      act(() => {
+        notifications.show({ id: 'again', message: 'Second', onOpen }, store);
+      });
+
+      expect(screen.getByRole('alert')).toBe(notification);
+      expect(onOpen).toHaveBeenCalledTimes(2);
+      expect(onOpen).toHaveBeenLastCalledWith(expect.objectContaining({ message: 'Second' }));
+
+      act(() => {
+        jest.advanceTimersByTime(1300);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+  });
+
+  describe('auto close progress', () => {
+    const getProgress = (container: HTMLElement) =>
+      container.querySelector<HTMLElement>('.mantine-Notifications-progress');
+
+    it('renders the progress line with the auto close duration when withAutoCloseProgress is set', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'With progress' }, store);
+      });
+
+      const progress = getProgress(container);
+      expect(progress).toBeInTheDocument();
+      expect(progress!.style.getPropertyValue('--notifications-progress-duration')).toBe('1000ms');
+      expect(progress).toHaveAttribute('aria-hidden', 'true');
+      expect(progress).not.toHaveAttribute('data-paused');
+    });
+
+    it('uses the notification auto close timeout for the progress line duration', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'With progress', autoClose: 2500 }, store);
+      });
+
+      expect(
+        getProgress(container)!.style.getPropertyValue('--notifications-progress-duration')
+      ).toBe('2500ms');
+    });
+
+    it('does not render the progress line by default', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'No progress' }, store);
+      });
+
+      expect(getProgress(container)).toBeNull();
+    });
+
+    it('does not render the progress line when auto close is disabled', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Never closes', autoClose: false }, store);
+      });
+
+      expect(getProgress(container)).toBeNull();
+    });
+
+    it.each([
+      [false, true, true],
+      [true, false, false],
+    ])(
+      'lets the notification override withAutoCloseProgress=%s with %s',
+      (globalValue, notificationValue, rendered) => {
+        jest.useFakeTimers();
+        const store = createNotificationsStore();
+        const { container } = render(
+          <Notifications
+            store={store}
+            withinPortal={false}
+            autoClose={1000}
+            transitionDuration={10}
+            withAutoCloseProgress={globalValue}
+          />
+        );
+
+        act(() => {
+          notifications.show(
+            { id: 'progress', message: 'Override', withAutoCloseProgress: notificationValue },
+            store
+          );
+        });
+
+        expect(getProgress(container) !== null).toBe(rendered);
+      }
+    );
+
+    it('removes the progress line when the notification is updated to never close', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Closes' }, store);
+      });
+      expect(getProgress(container)).toBeInTheDocument();
+
+      act(() => {
+        notifications.update({ id: 'progress', message: 'Never closes', autoClose: false }, store);
+      });
+      expect(getProgress(container)).toBeNull();
+    });
+
+    it('pauses the progress line while hovered and restarts it when the pointer leaves', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Hover me' }, store);
+      });
+
+      const notification = screen.getByRole('alert');
+      const before = getProgress(container);
+
+      act(() => {
+        fireEvent.mouseEnter(notification);
+      });
+
+      expect(getProgress(container)).toBe(before);
+      expect(before).toHaveAttribute('data-paused');
+
+      act(() => {
+        fireEvent.mouseLeave(notification);
+      });
+
+      const after = getProgress(container);
+      expect(after).not.toBe(before);
+      expect(after).not.toHaveAttribute('data-paused');
+    });
+
+    it('pauses every progress line while any notification is hovered', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'first', message: 'First' }, store);
+        notifications.show({ id: 'second', message: 'Second' }, store);
+      });
+
+      const [first] = screen.getAllByRole('alert');
+
+      act(() => {
+        fireEvent.mouseEnter(first);
+      });
+
+      const progressLines = container.querySelectorAll('.mantine-Notifications-progress');
+      expect(progressLines).toHaveLength(2);
+      progressLines.forEach((line) => expect(line).toHaveAttribute('data-paused'));
+    });
+
+    it('restarts the auto close timer when progress is enabled for an active notification', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Late progress' }, store);
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      act(() => {
+        notifications.update(
+          { id: 'progress', message: 'Late progress', withAutoCloseProgress: true },
+          store
+        );
+      });
+
+      expect(getProgress(container)).toBeInTheDocument();
+
+      act(() => {
+        jest.advanceTimersByTime(700);
+      });
+      expect(store.getState().notifications).toHaveLength(1);
+
+      act(() => {
+        jest.advanceTimersByTime(400);
+      });
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+
+    it('does not render the progress line for custom rendered notifications', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+          renderNotification={(notification) => <div>{notification.message}</div>}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Custom' }, store);
+      });
+
+      expect(screen.getByText('Custom')).toBeInTheDocument();
+      expect(getProgress(container)).toBeNull();
+    });
+
+    it('does not restart the auto close timer when progress is disabled for an active notification', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Progress off' }, store);
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(600);
+      });
+
+      act(() => {
+        notifications.update(
+          { id: 'progress', message: 'Progress off', withAutoCloseProgress: false },
+          store
+        );
+      });
+
+      expect(getProgress(container)).toBeNull();
+
+      act(() => {
+        jest.advanceTimersByTime(600);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+
+    it('does not restart the auto close timer when withAutoCloseProgress is switched off on Notifications', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container, rerender } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Progress off' }, store);
+      });
+
+      const notification = screen.getByRole('alert');
+
+      act(() => {
+        jest.advanceTimersByTime(600);
+      });
+
+      rerender(
+        <>
+          <Notifications
+            store={store}
+            withinPortal={false}
+            autoClose={1000}
+            transitionDuration={10}
+            withAutoCloseProgress={false}
+          />
+        </>
+      );
+
+      expect(screen.getByRole('alert')).toBe(notification);
+      expect(getProgress(container)).toBeNull();
+
+      act(() => {
+        jest.advanceTimersByTime(600);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+
+    it('passes attributes.progress to the progress line', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+          attributes={{ progress: { 'data-review-progress': 'yes' } }}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Attributes' }, store);
+      });
+
+      expect(getProgress(container)).toHaveAttribute('data-review-progress', 'yes');
+    });
   });
 });

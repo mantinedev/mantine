@@ -20,6 +20,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { DataGridProvider } from './DataGrid.context';
+import { DataGridColumnDef } from './DataGrid.types';
 import {
   DataGridBody,
   DataGridBodyFactory,
@@ -27,11 +28,11 @@ import {
   DataGridVirtualBody,
   DataGridVirtualBodyFactory,
 } from './DataGridBody';
+import { DataGridColumnMenu, DataGridColumnMenuFactory } from './DataGridColumnMenu';
 import { DataGridFooter, DataGridFooterFactory } from './DataGridFooter';
 import { DataGridHeader, DataGridHeaderFactory } from './DataGridHeader';
 import { DataGridPagination, DataGridPaginationFactory } from './DataGridPagination';
 import { DataGridStatusBar, DataGridStatusBarFactory } from './DataGridStatusBar';
-import { DataGridColumnMenu, DataGridColumnMenuFactory } from './DataGridColumnMenu';
 import {
   DataGridColumnVisibilityToggle,
   DataGridColumnVisibilityToggleFactory,
@@ -42,7 +43,6 @@ import {
   DataGridToolbar,
   DataGridToolbarFactory,
 } from './DataGridToolbar';
-import { DataGridColumnDef } from './DataGrid.types';
 import { DataGridStore, useDataGrid } from './hooks';
 import { DEFAULT_LABELS, DataGridLabels } from './labels';
 import classes from './DataGrid.module.css';

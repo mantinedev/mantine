@@ -1,7 +1,6 @@
 import { fireEvent, waitFor } from '@testing-library/react';
 import { createContextContainer, render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Modal, ModalProps, ModalStylesNames } from './Modal';
-import { useModalsStack } from './use-modals-stack';
 import { ModalBody, ModalBodyProps } from './ModalBody';
 import { ModalCloseButton, ModalCloseButtonProps } from './ModalCloseButton';
 import { ModalContent, ModalContentProps } from './ModalContent';
@@ -10,6 +9,7 @@ import { ModalHeader, ModalHeaderProps } from './ModalHeader';
 import { ModalOverlay, ModalOverlayProps } from './ModalOverlay';
 import { ModalRoot, ModalRootProps } from './ModalRoot';
 import { ModalTitle, ModalTitleProps } from './ModalTitle';
+import { useModalsStack } from './use-modals-stack';
 
 const defaultProps: ModalProps = {
   opened: true,

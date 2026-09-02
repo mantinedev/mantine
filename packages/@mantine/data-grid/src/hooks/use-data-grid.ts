@@ -1,6 +1,4 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { useDeepCompareMemo } from './use-deep-compare-memo';
-import { createOperatorFilterFn as createOperatorFilterFnLocal } from '../DataGridFilters/filter-operators';
 import {
   type BuiltInFilterFn,
   ColumnDef,
@@ -33,7 +31,9 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 import type { DataGridDensity } from '../DataGrid.context';
+import { createOperatorFilterFn as createOperatorFilterFnLocal } from '../DataGridFilters/filter-operators';
 import { inferFeatureFlags } from './infer-feature-flags';
+import { useDeepCompareMemo } from './use-deep-compare-memo';
 
 function defaultSortingDisabled<TData>(columns: ColumnDef<TData, any>[]): ColumnDef<TData, any>[] {
   return columns.map((col) => ({

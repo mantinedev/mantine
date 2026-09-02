@@ -1,8 +1,7 @@
-import { use } from 'react';
+import { useMergedRef } from '@mantine/hooks';
 import { createEventHandler, useProps } from '../../../core';
 import { Popover, PopoverDropdownProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
-import { HoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup';
 
 export interface HoverCardDropdownProps extends PopoverDropdownProps {
   /** Dropdown content */
@@ -10,36 +9,28 @@ export interface HoverCardDropdownProps extends PopoverDropdownProps {
 }
 
 export function HoverCardDropdown(props: HoverCardDropdownProps) {
-  const { children, onMouseEnter, onMouseLeave, ...others } = useProps(
+  const { children, onMouseEnter, onMouseLeave, ref, ...others } = useProps(
     'HoverCardDropdown',
     null,
     props
   );
 
   const ctx = useHoverCardContext();
-  const groupCtx = use(HoverCardGroupContext);
+  const floatingProps = ctx.getFloatingProps();
+  const mergedRef = useMergedRef(ctx.floating, ref);
 
-  if (groupCtx.withinGroup && ctx.getFloatingProps && ctx.floating) {
-    const floatingProps = ctx.getFloatingProps();
-
-    return (
-      <Popover.Dropdown
-        ref={ctx.floating}
-        {...floatingProps}
-        onMouseEnter={createEventHandler<any>(onMouseEnter, floatingProps.onMouseEnter)}
-        onMouseLeave={createEventHandler<any>(onMouseLeave, floatingProps.onMouseLeave)}
-        {...others}
-      >
-        {children}
-      </Popover.Dropdown>
-    );
-  }
-
-  const handleMouseEnter = createEventHandler<any>(onMouseEnter, ctx.openDropdown);
-  const handleMouseLeave = createEventHandler<any>(onMouseLeave!, ctx.closeDropdown);
+  const accessibleProps =
+    ctx.withRoles && ctx.role === 'tooltip' ? { role: 'tooltip', id: ctx.dropdownId } : undefined;
 
   return (
-    <Popover.Dropdown onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...others}>
+    <Popover.Dropdown
+      ref={mergedRef}
+      {...floatingProps}
+      {...accessibleProps}
+      onMouseEnter={createEventHandler<any>(onMouseEnter, floatingProps.onMouseEnter)}
+      onMouseLeave={createEventHandler<any>(onMouseLeave, floatingProps.onMouseLeave)}
+      {...others}
+    >
       {children}
     </Popover.Dropdown>
   );

@@ -139,6 +139,7 @@ export function usePopover(options: UsePopoverOptions) {
 
   const previouslyOpened = useRef(_opened);
 
+  const measuredAfterShowRef = useRef(false);
   const [lockedPlacement, setLockedPlacement] = useState<FloatingPosition | null>(null);
   const lockEnabled = options.preventPositionChangeWhenVisible !== false;
 
@@ -146,6 +147,15 @@ export function usePopover(options: UsePopoverOptions) {
   if (_opened !== wasOpenedRef.current) {
     wasOpenedRef.current = _opened;
     if (_opened && lockedPlacement !== null) {
+      setLockedPlacement(null);
+    }
+  }
+
+  const previousPositionRef = useRef(options.position);
+  if (options.position !== previousPositionRef.current) {
+    previousPositionRef.current = options.position;
+    measuredAfterShowRef.current = false;
+    if (lockedPlacement !== null) {
       setLockedPlacement(null);
     }
   }
@@ -197,8 +207,6 @@ export function usePopover(options: UsePopoverOptions) {
     floating.elements.reference,
     floating.elements.floating,
   ]);
-
-  const measuredAfterShowRef = useRef(false);
 
   useIsomorphicEffect(() => {
     if (!_opened) {

@@ -1,4 +1,6 @@
-import { flip, offset, shift, useFloating } from '@floating-ui/react';
+import { useEffect } from 'react';
+import { autoUpdate, flip, offset, shift, useFloating } from '@floating-ui/react';
+import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -6,11 +8,13 @@ import {
   ElementProps,
   factory,
   Factory,
+  useDirection,
   useProps,
 } from '../../../core';
-import type { FloatingPosition } from '../../../utils/Floating';
+import { getFloatingPosition, type FloatingPosition } from '../../../utils/Floating';
 import { Transition, type TransitionOverride } from '../../Transition';
 import { useTourContext } from '../Tour.context';
+import { useTooltipAutoFocus } from '../use-tooltip-auto-focus';
 import classes from '../Tour.module.css';
 
 export type TourTooltipStylesNames = 'tooltip';
@@ -54,17 +58,33 @@ export const TourTooltip = factory<TourTooltipFactory>((_props) => {
     mounted,
     transitionProps,
     children,
-    ref: _ref,
+    ref,
+    role,
+    tabIndex,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
     ...others
   } = props;
 
   const ctx = useTourContext();
+  const { dir } = useDirection();
+  const { setTargetElement } = ctx;
+
+  useEffect(() => {
+    setTargetElement(targetElement ?? null);
+    return () => setTargetElement(null);
+  }, [targetElement, setTargetElement]);
 
   const { refs, floatingStyles } = useFloating({
     elements: { reference: targetElement },
-    placement: position,
+    placement: getFloatingPosition(dir, position!),
+    whileElementsMounted: autoUpdate,
     middleware: [offset(12), flip(), shift({ padding: 8 })],
   });
+
+  const autoFocusRef = useTooltipAutoFocus(true);
+  const mergedRef = useMergedRef(refs.setFloating, autoFocusRef, ref);
 
   return (
     <Transition
@@ -75,7 +95,15 @@ export const TourTooltip = factory<TourTooltipFactory>((_props) => {
     >
       {(transitionStyles) => (
         <Box
-          ref={refs.setFloating}
+          ref={mergedRef}
+          role={role ?? 'dialog'}
+          tabIndex={tabIndex ?? -1}
+          aria-labelledby={ariaLabelledBy ?? (ctx.titleMounted ? ctx.titleId : undefined)}
+          aria-label={
+            ariaLabel ??
+            (ctx.titleMounted ? undefined : ctx.labels.stepCounter(ctx.step + 1, ctx.stepsCount))
+          }
+          aria-describedby={ariaDescribedBy ?? (ctx.bodyMounted ? ctx.bodyId : undefined)}
           {...ctx.getStyles('tooltip', { className, classNames, style, styles })}
           data-centered={!targetElement || undefined}
           style={{

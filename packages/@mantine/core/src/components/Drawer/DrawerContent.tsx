@@ -7,10 +7,10 @@ import { ModalBaseContentProps, useModalBaseContext } from '../ModalBase';
 import { getStackTransform } from '../OverlayStack/get-stack-transform';
 import { Paper } from '../Paper';
 import { Transition } from '../Transition';
-import baseClasses from '../ModalBase/ModalBase.module.css';
 import { useDrawerContext } from './Drawer.context';
 import { resolvePosition, useDrawerDrag } from './use-drawer-drag';
 import { getDrawerInnerStyle } from './use-drawer-transform';
+import baseClasses from '../ModalBase/ModalBase.module.css';
 import classes from './Drawer.module.css';
 
 export type DrawerContentStylesNames = 'content' | 'inner' | 'panel' | 'handle';

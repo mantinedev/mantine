@@ -15,13 +15,13 @@ import {
 import { NumberFormatter } from '../NumberFormatter';
 import { RollingNumber } from '../RollingNumber';
 import { Skeleton } from '../Skeleton';
-import { StatCountdown } from './StatCountdown';
+import { getStatSizeVars } from './get-stat-vars';
 import { StatProvider } from './Stat.context';
+import { StatCountdown } from './StatCountdown';
 import { StatDiff, StatDiffFactory, StatDiffProps, StatDiffStylesNames } from './StatDiff';
 import { StatIcon, StatIconFactory, StatIconProps, StatIconStylesNames } from './StatIcon';
 import { StatLabel, StatLabelFactory, StatLabelProps, StatLabelStylesNames } from './StatLabel';
 import { StatValue, StatValueFactory, StatValueProps, StatValueStylesNames } from './StatValue';
-import { getStatSizeVars } from './get-stat-vars';
 import classes from './Stat.module.css';
 
 export type StatStylesNames =

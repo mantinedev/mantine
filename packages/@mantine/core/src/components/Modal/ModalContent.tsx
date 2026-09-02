@@ -7,8 +7,8 @@ import { ModalBaseContentProps, useModalBaseContext } from '../ModalBase';
 import { getStackTransform } from '../OverlayStack/get-stack-transform';
 import { Paper } from '../Paper';
 import { Transition } from '../Transition';
-import baseClasses from '../ModalBase/ModalBase.module.css';
 import { useModalContext } from './Modal.context';
+import baseClasses from '../ModalBase/ModalBase.module.css';
 import classes from './Modal.module.css';
 
 export type ModalContentStylesNames = 'content' | 'inner';

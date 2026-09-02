@@ -52,8 +52,8 @@
     "@mantine/hooks": "workspace:*",
     "@tanstack/match-sorter-utils": "^8.19.4",
     "@tanstack/react-table": "^8.21.3",
-    "@tanstack/react-virtual": "^3.13.26",
-    "react": "19.2.6",
-    "react-dom": "19.2.6"
+    "@tanstack/react-virtual": "^3.14.10",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   }
 }

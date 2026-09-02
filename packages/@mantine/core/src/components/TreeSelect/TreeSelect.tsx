@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -59,6 +59,23 @@ export type TreeSelectMode = 'single' | 'multiple' | 'checkbox';
 export type TreeSelectValue<Mode extends TreeSelectMode> = Mode extends 'single'
   ? string | null
   : string[];
+
+export interface TreeSelectRenderPillPayload {
+  /** Node associated with the pill. If the value is not present in `data`, a placeholder node with `label` equal to the value is passed. */
+  node: TreeNodeData;
+
+  /** Selected value that the pill represents */
+  value: string;
+
+  /** Removes the value from the selection. In `checkbox` mode unchecks the node and, unless `checkStrictly` is set, all its children, same as the default pill remove button. */
+  onRemove: () => void;
+
+  /** Value of the `disabled` prop passed to the component */
+  disabled?: boolean;
+
+  /** Value of the `readOnly` prop passed to the component */
+  readOnly?: boolean;
+}
 
 export interface TreeSelectProps<Mode extends TreeSelectMode = 'single'>
   extends
@@ -149,6 +166,9 @@ export interface TreeSelectProps<Mode extends TreeSelectMode = 'single'>
 
   /** Custom node rendering in the dropdown */
   renderNode?: (payload: TreeSelectRenderNodePayload) => React.ReactNode;
+
+  /** Custom pill rendering in `multiple` and `checkbox` modes. Not called for the overflow pill displayed when `maxDisplayedValues` is exceeded. */
+  renderPill?: (payload: TreeSelectRenderPillPayload) => React.ReactNode;
 
   /** Show tree connection lines between parent and child nodes @default true */
   withLines?: boolean;
@@ -276,6 +296,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     onRemove,
     onClear,
     renderNode,
+    renderPill,
     withLines,
     hiddenInputProps,
     hiddenInputValuesDivider,
@@ -712,27 +733,45 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
   const overflowCount =
     maxDisplayedValues != null ? Math.max(0, displayValues.length - maxDisplayedValues) : 0;
 
-  const pills = visiblePills.map((item, index) => (
-    <Pill
-      key={`${item}-${index}`}
-      withRemoveButton={!readOnly}
-      onRemove={() => {
-        if (isCheckbox) {
-          const childLeaves = checkStrictly ? [item] : getChildrenNodesValues(item, data);
-          const newInternal = internalChecked.filter((v) => !childLeaves.includes(v));
-          setValue(checkedToValue(newInternal, data, checkedStrategy!));
-        } else {
-          setValue((_value as string[]).filter((v: string) => v !== item));
-        }
-        onRemove?.(item);
-      }}
-      unstyled={unstyled}
-      disabled={disabled}
-      {...getStyles('pill')}
-    >
-      {getNodeLabel(item)}
-    </Pill>
-  ));
+  const removePillValue = (item: string) => {
+    if (isCheckbox) {
+      const childLeaves = checkStrictly ? [item] : getChildrenNodesValues(item, data);
+      const newInternal = internalChecked.filter((v) => !childLeaves.includes(v));
+      setValue(checkedToValue(newInternal, data, checkedStrategy!));
+    } else {
+      setValue((_value as string[]).filter((v: string) => v !== item));
+    }
+    onRemove?.(item);
+  };
+
+  const pills = visiblePills.map((item, index) => {
+    if (renderPill) {
+      return (
+        <Fragment key={`${item}-${index}`}>
+          {renderPill({
+            node: nodeLookup[item] ?? { value: item, label: item },
+            value: item,
+            onRemove: () => removePillValue(item),
+            disabled,
+            readOnly,
+          })}
+        </Fragment>
+      );
+    }
+
+    return (
+      <Pill
+        key={`${item}-${index}`}
+        withRemoveButton={!readOnly}
+        onRemove={() => removePillValue(item)}
+        unstyled={unstyled}
+        disabled={disabled}
+        {...getStyles('pill')}
+      >
+        {getNodeLabel(item)}
+      </Pill>
+    );
+  });
 
   if (overflowCount > 0) {
     const overflowContent =

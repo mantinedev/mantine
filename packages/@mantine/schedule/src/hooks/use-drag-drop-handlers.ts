@@ -1,8 +1,19 @@
 import dayjs from 'dayjs';
 import { useCallback, useEffectEvent, useState } from 'react';
 import { DragContextValue } from '../components/DragContext/DragContext';
-import { DateTimeStringValue, ScheduleEventData, ScheduleMode } from '../types';
+import {
+  DateTimeStringValue,
+  PreventEventOverlap,
+  ScheduleCanDropEventData,
+  ScheduleCanDropExternalEventData,
+  ScheduleEventData,
+  ScheduleEventPlacementRejectedData,
+  ScheduleMode,
+} from '../types';
+import { isEventPlacementAllowed } from '../utils/is-event-placement-allowed/is-event-placement-allowed';
 import { useDragState } from './use-drag-state';
+
+const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 export interface DragPreview<T = any> {
   start: DateTimeStringValue;
@@ -42,6 +53,27 @@ export interface UseDragDropHandlersOptions<T = any> {
 
   /** Called when an external item is dropped onto the schedule */
   onExternalDrop?: (e: React.DragEvent, target: T) => void;
+
+  /** Events the candidate range is checked against when `preventEventOverlap` is set */
+  events?: ScheduleEventData[];
+
+  /** If set, drops that would make the event overlap another event are rejected */
+  preventEventOverlap?: PreventEventOverlap;
+
+  /** Called on every `dragover` to compute live feedback and again before the drop is committed, return `false` to reject the drop */
+  canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
+
+  /** Called on every `dragover` of an external item to compute live feedback and again before the drop is committed, return `false` to reject the drop */
+  canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
+
+  /** Called when a drop is rejected */
+  onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
+
+  /** Resolves the target resource from the drop target, used by `Resources*` views */
+  getTargetResourceId?: (target: T) => string | number | undefined;
+
+  /** Resolves the datetime an external item would be dropped at, `null` when the target has no datetime */
+  getExternalDropDateTime?: (target: T) => DateTimeStringValue | null;
 }
 
 export interface DragDropHandlers<T = any> {
@@ -77,6 +109,9 @@ export interface DragDropHandlers<T = any> {
 
   /** Sets the current drag preview */
   setDragPreview: (preview: DragPreview<T> | null) => void;
+
+  /** False while the pointer is over a target that would be rejected */
+  dropValid: boolean;
 }
 
 /**
@@ -97,9 +132,17 @@ export function useDragDropHandlers<T = any>(
     onEventDragEnd,
     calculateDropTarget,
     onExternalDrop,
+    events,
+    preventEventOverlap,
+    canDropEvent,
+    canDropExternalEvent,
+    onEventPlacementRejected,
+    getTargetResourceId,
+    getExternalDropDateTime,
   } = options;
 
   const stableOnEventDrop = useEffectEvent(onEventDrop || (() => {}));
+  const stableOnEventPlacementRejected = useEffectEvent(onEventPlacementRejected || (() => {}));
   const stableOnEventDragStart = useEffectEvent(onEventDragStart || (() => {}));
   const stableOnEventDragEnd = useEffectEvent(onEventDragEnd || (() => {}));
   const stableOnExternalDrop = useEffectEvent(onExternalDrop || (() => {}));
@@ -107,11 +150,64 @@ export function useDragDropHandlers<T = any>(
   const dragState = useDragState();
   const [dropTarget, setDropTarget] = useState<T | null>(null);
   const [dragPreview, setDragPreview] = useState<DragPreview<T> | null>(null);
+  const [dropValid, setDropValid] = useState(true);
+
+  const validateDrop = useCallback(
+    (target: T, draggedEvent: ScheduleEventData) => {
+      const range = calculateDropTarget(target, draggedEvent);
+      const start = dayjs(range.start).format(DATE_TIME_FORMAT);
+      const end = dayjs(range.end).format(DATE_TIME_FORMAT);
+      const resourceId = getTargetResourceId?.(target);
+
+      const { allowed, conflicts } = isEventPlacementAllowed({
+        event: draggedEvent,
+        start,
+        end,
+        events: events || [],
+        preventEventOverlap,
+        resourceId,
+      });
+
+      if (!allowed) {
+        return { valid: false, start, end, resourceId, conflicts, reason: 'overlap' as const };
+      }
+
+      if (canDropEvent && canDropEvent({ event: draggedEvent, start, end, resourceId }) === false) {
+        return { valid: false, start, end, resourceId, conflicts: [], reason: 'rejected' as const };
+      }
+
+      return { valid: true, start, end, resourceId, conflicts: [], reason: null };
+    },
+    [calculateDropTarget, getTargetResourceId, events, preventEventOverlap, canDropEvent]
+  );
+
+  const validateExternalDrop = useCallback(
+    (target: T, dataTransfer: DataTransfer) => {
+      if (!canDropExternalEvent || !getExternalDropDateTime) {
+        return { valid: true, start: undefined, resourceId: undefined };
+      }
+
+      const start = getExternalDropDateTime(target);
+
+      if (start === null) {
+        return { valid: true, start: undefined, resourceId: undefined };
+      }
+
+      const resourceId = getTargetResourceId?.(target);
+      return {
+        valid: canDropExternalEvent({ dataTransfer, start, resourceId }) !== false,
+        start,
+        resourceId,
+      };
+    },
+    [canDropExternalEvent, getExternalDropDateTime, getTargetResourceId]
+  );
 
   const handleDragEnd = useCallback(() => {
     dragState.endDrag();
     setDropTarget(null);
     setDragPreview(null);
+    setDropValid(true);
     stableOnEventDragEnd();
   }, [dragState]);
 
@@ -148,10 +244,32 @@ export function useDragDropHandlers<T = any>(
       }
 
       event.preventDefault();
+
+      const draggedEvent = dragState.state.draggedEvent;
+      const valid =
+        isInternalDrag && draggedEvent
+          ? validateDrop(target, draggedEvent).valid
+          : validateExternalDrop(target, event.dataTransfer).valid;
+
+      setDropValid(valid);
+
+      // The drop effect stays permissive even for an invalid target: setting it to 'none' makes the
+      // browser end the drag with dragleave/dragend and never fire `drop`, which would stop
+      // `handleDrop` from rejecting the placement and reporting it through onEventPlacementRejected.
+      // Invalid targets are signalled with `data-invalid` on the drag preview instead.
       event.dataTransfer.dropEffect = isInternalDrag ? 'move' : 'copy';
       setDropTarget(target);
     },
-    [enabled, mode, dragState.state.isDragging, onExternalDrop, handleDragEnd]
+    [
+      enabled,
+      mode,
+      dragState.state.isDragging,
+      dragState.state.draggedEvent,
+      onExternalDrop,
+      handleDragEnd,
+      validateDrop,
+      validateExternalDrop,
+    ]
   );
 
   const handleDragLeave = useCallback((event?: React.DragEvent) => {
@@ -169,6 +287,7 @@ export function useDragDropHandlers<T = any>(
 
     setDropTarget(null);
     setDragPreview(null);
+    setDropValid(true);
   }, []);
 
   const handleDrop = useCallback(
@@ -179,12 +298,31 @@ export function useDragDropHandlers<T = any>(
         dragState.state.isDragging && event.dataTransfer.types.includes('application/json');
 
       if (isInternalDrag && enabled && dragState.state.draggedEvent && onEventDrop) {
-        const { start, end } = calculateDropTarget(target, dragState.state.draggedEvent);
+        const draggedEvent = dragState.state.draggedEvent;
+        const { valid, start, end, resourceId, conflicts, reason } = validateDrop(
+          target,
+          draggedEvent
+        );
+
+        if (!valid) {
+          stableOnEventPlacementRejected({
+            action: 'drop',
+            event: draggedEvent,
+            start,
+            end,
+            resourceId,
+            conflicts,
+            reason: reason!,
+          });
+          handleDragEnd();
+          return;
+        }
+
         stableOnEventDrop({
           eventId: dragState.state.draggedEventId!,
-          newStart: dayjs(start).format('YYYY-MM-DD HH:mm:ss'),
-          newEnd: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
-          event: dragState.state.draggedEvent,
+          newStart: start,
+          newEnd: end,
+          event: draggedEvent,
         });
         handleDragEnd();
         return;
@@ -194,24 +332,43 @@ export function useDragDropHandlers<T = any>(
         if (dragState.state.isDragging) {
           handleDragEnd();
         }
-        stableOnExternalDrop(event, target);
+
+        const external = validateExternalDrop(target, event.dataTransfer);
+
+        if (!external.valid) {
+          stableOnEventPlacementRejected({
+            action: 'external-drop',
+            dataTransfer: event.dataTransfer,
+            start: external.start!,
+            resourceId: external.resourceId,
+            conflicts: [],
+            reason: 'rejected',
+          });
+        } else {
+          stableOnExternalDrop(event, target);
+        }
+
         setDropTarget(null);
         setDragPreview(null);
+        setDropValid(true);
         return;
       }
 
       setDropTarget(null);
       setDragPreview(null);
+      setDropValid(true);
     },
     [
       enabled,
       dragState.state,
       onEventDrop,
       onExternalDrop,
-      calculateDropTarget,
       handleDragEnd,
+      validateDrop,
+      validateExternalDrop,
       stableOnEventDrop,
       stableOnExternalDrop,
+      stableOnEventPlacementRejected,
     ]
   );
 
@@ -260,5 +417,6 @@ export function useDragDropHandlers<T = any>(
     isDropTarget,
     dragPreview,
     setDragPreview,
+    dropValid,
   };
 }

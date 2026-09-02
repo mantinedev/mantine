@@ -9,8 +9,8 @@ import {
 } from '../../core';
 import { __CloseButtonProps, CloseButton } from '../CloseButton';
 import { useModalBaseContext } from '../ModalBase';
-import baseClasses from '../ModalBase/ModalBase.module.css';
 import { useDrawerContext } from './Drawer.context';
+import baseClasses from '../ModalBase/ModalBase.module.css';
 import classes from './Drawer.module.css';
 
 export type DrawerCloseButtonStylesNames = 'close';

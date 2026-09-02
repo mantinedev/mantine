@@ -9,8 +9,8 @@ import {
   useProps,
 } from '../../core';
 import { useModalBaseContext } from '../ModalBase';
-import baseClasses from '../ModalBase/ModalBase.module.css';
 import { useModalContext } from './Modal.context';
+import baseClasses from '../ModalBase/ModalBase.module.css';
 import classes from './Modal.module.css';
 
 export type ModalHeaderStylesNames = 'header';

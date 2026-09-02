@@ -1,6 +1,5 @@
 import { render, userEvent } from '@mantine-tests/core';
-import { EmojiPickerData } from '../../types';
-import { EmojiPicker, EmojiPickerProps } from './EmojiPicker';
+import { EmojiPicker } from './EmojiPicker';
 
 jest.mock('@tanstack/react-virtual', () => ({
   useVirtualizer: ({ count, estimateSize }: any) => ({
@@ -17,7 +16,13 @@ jest.mock('@tanstack/react-virtual', () => ({
   }),
 }));
 
-const testData: EmojiPickerData = {
+/**
+ * Fixtures are written without type annotations on purpose: `esbuild-jest` runs an extra
+ * Babel pass to hoist `jest.mock`, and that pass has no TypeScript preset, so an imported
+ * binding referenced from a type annotation fails to transform in any file that calls
+ * `jest.mock`. The fixtures are still checked against the component props where they are used.
+ */
+const testData = {
   categories: [
     { id: 'people', label: 'Smileys & People', emojis: ['grinning', 'thumbsup'] },
     { id: 'nature', label: 'Animals & Nature', emojis: ['dog'] },
@@ -35,7 +40,7 @@ const testData: EmojiPickerData = {
   },
 };
 
-const defaultProps: EmojiPickerProps = {
+const defaultProps = {
   data: testData,
 };
 

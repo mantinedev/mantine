@@ -5,6 +5,7 @@ export {
   cleanNotifications,
   cleanNotificationsQueue,
   updateNotification,
+  promiseNotification,
   updateNotificationsState,
   createNotificationsStore,
   notificationsStore,
@@ -16,6 +17,8 @@ export type {
   NotificationData,
   NotificationsState,
   NotificationsStore,
+  PromiseNotificationData,
+  PromiseNotificationOptions,
 } from './notifications.store';
 export type {
   NotificationsCssVariables,

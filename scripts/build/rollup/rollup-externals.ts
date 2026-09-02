@@ -5,6 +5,7 @@ import { getPackagesList } from '../../packages/get-packages-list';
 export const ROLLUP_EXTERNALS = [
   ...builtinModules,
   ...builtinModules.map((m) => `node:${m}`),
+  '@modelcontextprotocol/server/stdio',
   'dayjs/locale/ru',
   'dayjs/locale/es',
   'dayjs/plugin/customParseFormat.js',

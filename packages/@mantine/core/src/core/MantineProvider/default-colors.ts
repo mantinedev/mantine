@@ -1,5 +1,5 @@
-import type { MantineThemeColors } from './theme.types';
 import { darkColors } from './dark-colors';
+import type { MantineThemeColors } from './theme.types';
 
 export const DEFAULT_COLORS: MantineThemeColors = {
   dark: darkColors,

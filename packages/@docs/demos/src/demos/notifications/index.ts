@@ -9,3 +9,5 @@ export { update } from './Notifications.demo.update';
 export { customize } from './Notifications.demo.customize';
 export { position } from './Notifications.demo.position';
 export { store } from './Notifications.demo.store';
+export { autoCloseProgress } from './Notifications.demo.autoCloseProgress';
+export { promise } from './Notifications.demo.promise';

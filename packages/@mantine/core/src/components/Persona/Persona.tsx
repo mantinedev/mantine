@@ -13,6 +13,7 @@ import {
   useStyles,
 } from '../../core';
 import { AvatarProps } from '../Avatar/Avatar';
+import { isPresenceVisible, PersonaPresenceValue } from './get-presence-props';
 import { PersonaProvider } from './Persona.context';
 import {
   PersonaAvatar,
@@ -32,7 +33,6 @@ import {
   PersonaTextProps,
   PersonaTextStylesNames,
 } from './PersonaText';
-import { isPresenceVisible, PersonaPresenceValue } from './get-presence-props';
 import classes from './Persona.module.css';
 
 export type PersonaStylesNames =

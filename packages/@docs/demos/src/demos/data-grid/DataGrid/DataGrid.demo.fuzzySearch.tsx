@@ -1,5 +1,5 @@
-import { DataGrid, fuzzyFilter, useDataGrid } from '@mantine/data-grid';
 import { TextInput } from '@mantine/core';
+import { DataGrid, fuzzyFilter, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 

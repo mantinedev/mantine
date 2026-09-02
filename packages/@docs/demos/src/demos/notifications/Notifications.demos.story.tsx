@@ -57,3 +57,13 @@ export const Demo_stacked = {
   name: '⭐ Demo: stacked',
   render: renderDemo(demos.stacked),
 };
+
+export const Demo_autoCloseProgress = {
+  name: '⭐ Demo: autoCloseProgress',
+  render: renderDemo(demos.autoCloseProgress),
+};
+
+export const Demo_promise = {
+  name: '⭐ Demo: promise',
+  render: renderDemo(demos.promise),
+};

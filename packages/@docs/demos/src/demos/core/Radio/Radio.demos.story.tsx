@@ -62,3 +62,8 @@ export const Demo_indicator = {
   name: '⭐ Demo: indicator',
   render: renderDemo(demos.indicator),
 };
+
+export const Demo_lightVariant = {
+  name: '⭐ Demo: lightVariant',
+  render: renderDemo(demos.lightVariant),
+};

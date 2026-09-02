@@ -36,7 +36,7 @@
     "emoji-picker"
   ],
   "dependencies": {
-    "@tanstack/react-virtual": "^3.13.26"
+    "@tanstack/react-virtual": "^3.14.10"
   },
   "peerDependencies": {
     "@mantine/core": ">=9.0.0",

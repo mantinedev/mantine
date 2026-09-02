@@ -11,7 +11,7 @@ function Demo() {
     <MatrixChart
       data={data}
       xLabels={xLabels}
-      yLabels={yLabels}
+      yLabels={yLabels} withYLabels
       withXLabels
       withTooltip
       getTooltipLabel={({ x, y, value }) =>
@@ -28,6 +28,7 @@ function Demo() {
       data={data}
       xLabels={xLabels}
       yLabels={yLabels}
+      withYLabels
       withXLabels
       withTooltip
       getTooltipLabel={({ x, y, value }) =>
