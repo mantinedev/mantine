@@ -88,6 +88,12 @@ function Demo() {
 
 <Demo data={CheckboxDemos.states} />
 
+## Light variant
+
+`Checkbox` supports `filled` (default), `outline` and `light` variants. With `variant="light"`, checked and indeterminate states have a light background and a contrasting icon. Colors of the `light` variant are resolved with [theme.variantColorResolver](/theming/colors#colors-variant-resolver), the same way as in [Button](/core/button/) – `color` can be a key of `theme.colors` or any valid CSS color:
+
+<Demo data={CheckboxDemos.lightVariant} />
+
 ## Error state
 
 Use the `error` prop to display error message below the checkbox label.
@@ -231,6 +237,8 @@ related to the indicator. For example, it is useful in cards based on buttons, t
 
 Note that `Checkbox.Indicator` cannot be focused or selected with keyboard. It is not
 accessible and should not be used as a replacement for the `Checkbox` component.
+
+`Checkbox.Indicator` supports the same `variant` values as `Checkbox`: `filled`, `outline` and `light`.
 
 <Demo data={CheckboxDemos.indicator} />
 

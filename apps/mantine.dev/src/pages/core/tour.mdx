@@ -9,6 +9,8 @@ export default Layout(MDX_DATA.Tour);
 `Tour` component provides an interactive step-by-step guide for application onboarding.
 It highlights target elements with a spotlight overlay and displays tooltips with navigation controls.
 
+`Tour.Step` elements must be direct children of `Tour` – arrays of steps are supported, but steps wrapped in a `Fragment` or in a custom wrapper component are not detected.
+
 <Demo data={TourDemos.usage} />
 
 ## Complex example
@@ -41,7 +43,13 @@ Configure the overlay behavior with `withOverlay`, `withOverlayInteraction`, and
 - `withOverlayInteraction` - allow clicking through the overlay (default: `false`)
 - `closeOnOverlayClick` - close the tour when clicking the overlay (default: `false`)
 
+`withOverlayInteraction` and `closeOnOverlayClick` are mutually exclusive: with `withOverlayInteraction` the overlay does not receive pointer events (clicks pass through to the page), so `closeOnOverlayClick` has no effect.
+
 <Demo data={TourDemos.overlay} />
+
+## Step targets
+
+`Tour.Step` `target` prop accepts a CSS selector or a ref. A selector is resolved when the step activates and again when a matching element is added to the page later, so it works for elements that mount after the tour starts (for example, inside a panel opened by the previous step). A ref is resolved once when the step activates – the element must be mounted before that, use a selector for late-mounting targets.
 
 ## Steps without target
 
@@ -95,9 +103,15 @@ When `withKeyboardNavigation` is enabled (default), arrow key navigation is avai
 Arrow key navigation is not available in beacon mode. `Escape` closes the tour in both modes
 when `closeOnEscape` is `true` (default). Set `withKeyboardNavigation={false}` to disable arrow keys entirely.
 
+Arrow keys are swapped in RTL direction (`ArrowLeft` goes to the next step). Arrow hotkeys are ignored while the keyboard event originates inside the current step target element, so targets that use arrow keys themselves (sliders, tabs, inputs with `withOverlayInteraction`) keep working.
+
 <KeyboardEventsTable
   data={[
-    { key: 'ArrowRight', description: 'Go to the next step', condition: 'guided mode only' },
+    {
+      key: 'ArrowRight',
+      description: 'Go to the next step, closes the tour on the last step',
+      condition: 'guided mode only',
+    },
     { key: 'ArrowLeft', description: 'Go to the previous step', condition: 'guided mode only' },
     { key: 'Escape', description: 'Close the tour', condition: 'closeOnEscape is true (default)' },
   ]}
@@ -105,8 +119,9 @@ when `closeOnEscape` is `true` (default). Set `withKeyboardNavigation={false}` t
 
 ## Accessibility
 
-- Navigation buttons have accessible labels via the `labels` prop
+- The tooltip has `role="dialog"`, it is labelled by the step title (`aria-labelledby`) and described by the step body (`aria-describedby`). Steps without a title are labelled with the step counter text (`labels.stepCounter`)
+- When the tooltip opens, focus moves inside it (in beacon mode too), navigation buttons have accessible labels via the `labels` prop
 - Step counter is announced via `aria-live="polite"`
 - When the overlay is active in guided mode, focus is trapped inside the tooltip
-- Focus returns to the previously focused element when the tour closes
-- Beacons have `role="button"` with descriptive `aria-label`
+- Focus returns to the previously focused element when the tour closes. In beacon mode, if the tour stays active after the tooltip is closed, focus returns to the beacon that opened it
+- Beacons have `role="button"` with `aria-label` built from `labels.beacon` and the step title (for example, `Start tour: Settings`)

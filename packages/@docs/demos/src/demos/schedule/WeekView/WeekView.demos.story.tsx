@@ -93,6 +93,11 @@ export const Demo_overlappingEvents = {
   render: renderDemo(demos.overlappingEvents),
 };
 
+export const Demo_eventOverlapMode = {
+  name: '⭐ Demo: eventOverlapMode',
+  render: renderDemo(demos.eventOverlapMode),
+};
+
 export const Demo_dragDrop = {
   name: '⭐ Demo: dragDrop',
   render: renderDemo(demos.dragDrop),
@@ -221,4 +226,9 @@ export const Demo_forceCurrentTimeIndicator = {
 export const Demo_subHourGridLines = {
   name: '⭐ Demo: subHourGridLines',
   render: renderDemo(demos.subHourGridLines),
+};
+
+export const Demo_preventEventOverlap = {
+  name: '⭐ Demo: preventEventOverlap',
+  render: renderDemo(demos.preventEventOverlap),
 };

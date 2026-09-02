@@ -10,6 +10,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import type { ImageUploadResult } from './extensions/UploadImage';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './labels';
 import { RichTextEditorProvider } from './RichTextEditor.context';
 import {
@@ -17,15 +18,23 @@ import {
   type RichTextEditorContentProps,
 } from './RichTextEditorContent/RichTextEditorContent';
 import * as controls from './RichTextEditorControl';
+import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
 import {
   RichTextEditorControl,
   type RichTextEditorControlProps,
 } from './RichTextEditorControl/RichTextEditorControl';
-import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
+import {
+  RichTextEditorDetailsControl,
+  type RichTextEditorDetailsControlProps,
+} from './RichTextEditorControl/RichTextEditorDetailsControl';
 import {
   RichTextEditorImageUploadControl,
   type RichTextEditorImageUploadControlProps,
 } from './RichTextEditorControl/RichTextEditorImageUploadControl';
+import {
+  RichTextEditorInvisibleCharactersControl,
+  type RichTextEditorInvisibleCharactersControlProps,
+} from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl';
 import type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
 import {
   RichTextEditorSourceCodeControl,
@@ -35,14 +44,6 @@ import {
   RichTextEditorTableInsertControl,
   type RichTextEditorTableInsertControlProps,
 } from './RichTextEditorControl/RichTextEditorTableInsertControl';
-import {
-  RichTextEditorDetailsControl,
-  type RichTextEditorDetailsControlProps,
-} from './RichTextEditorControl/RichTextEditorDetailsControl';
-import {
-  RichTextEditorInvisibleCharactersControl,
-  type RichTextEditorInvisibleCharactersControlProps,
-} from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl';
 import {
   RichTextEditorControlsGroup,
   type RichTextEditorControlsGroupProps,
@@ -87,10 +88,10 @@ export interface RichTextEditorProps
   /** Called if `RichTextEditor.SourceCode` clicked.  */
   onSourceCodeTextSwitch?: (isSourceCodeModeActive: boolean) => void;
 
-  /** Called when an image file is selected for upload, must return a promise that resolves to image URL */
-  onImageUpload?: (file: File) => Promise<string>;
+  /** Called when an image file is picked with `RichTextEditor.ImageUpload` control, must return a promise that resolves to the uploaded image URL or to an object with `src` and optional `alt` and `title`. Takes precedence over `onImageUpload` option of the extension created with `getUploadImageExtension`. */
+  onImageUpload?: (file: File) => Promise<string | ImageUploadResult>;
 
-  /** Called when image upload fails */
+  /** Called when an image picked with `RichTextEditor.ImageUpload` control fails to upload. Takes precedence over `onImageUploadError` option of the extension created with `getUploadImageExtension`. */
   onImageUploadError?: (file: File, error: unknown) => void;
 
   /** Labels that are used in controls */

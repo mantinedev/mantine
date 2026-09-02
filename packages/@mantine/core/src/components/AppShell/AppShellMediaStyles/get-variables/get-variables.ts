@@ -1,5 +1,6 @@
 import { em, getSortedBreakpoints, keys, MantineTheme } from '../../../../core';
 import type { AppShellProps } from '../../AppShell';
+import type { AppShellResizeSection, AppShellResizeSizes } from '../../AppShell.types';
 import { assignAsideVariables } from '../assign-aside-variables/assign-aside-variables';
 import { assignFooterVariables } from '../assign-footer-variables/assign-footer-variables';
 import { assignHeaderVariables } from '../assign-header-variables/assign-header-variables';
@@ -17,6 +18,9 @@ interface GetVariablesInput {
   padding: AppShellProps['padding'] | undefined;
   theme: MantineTheme;
   mode: 'fixed' | 'static';
+  resize:
+    | { sizes: AppShellResizeSizes; enabled: Partial<Record<AppShellResizeSection, boolean>> }
+    | undefined;
 }
 
 export function getVariables({
@@ -27,6 +31,7 @@ export function getVariables({
   padding,
   theme,
   mode,
+  resize,
 }: GetVariablesInput) {
   const minMediaStyles: MediaQueryVariables = {};
   const maxMediaStyles: MediaQueryVariables = {};
@@ -45,6 +50,8 @@ export function getVariables({
     navbar,
     theme,
     mode,
+    resizedSize: resize?.sizes.navbar,
+    resizable: resize?.enabled.navbar,
   });
 
   assignAsideVariables({
@@ -54,10 +61,26 @@ export function getVariables({
     aside,
     theme,
     mode,
+    resizedSize: resize?.sizes.aside,
+    resizable: resize?.enabled.aside,
   });
 
-  assignHeaderVariables({ baseStyles, minMediaStyles, header, mode });
-  assignFooterVariables({ baseStyles, minMediaStyles, footer, mode });
+  assignHeaderVariables({
+    baseStyles,
+    minMediaStyles,
+    header,
+    mode,
+    resizedSize: resize?.sizes.header,
+    resizable: resize?.enabled.header,
+  });
+  assignFooterVariables({
+    baseStyles,
+    minMediaStyles,
+    footer,
+    mode,
+    resizedSize: resize?.sizes.footer,
+    resizable: resize?.enabled.footer,
+  });
   assignPaddingVariables({ baseStyles, minMediaStyles, padding });
 
   const minMedia = getSortedBreakpoints(keys(minMediaStyles), theme.breakpoints).map(

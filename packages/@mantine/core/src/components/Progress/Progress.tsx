@@ -6,6 +6,7 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '../../core';
+import type { ProgressContextValue } from './Progress.context';
 import { ProgressLabel, type ProgressLabelProps } from './ProgressLabel/ProgressLabel';
 import {
   __ProgressRootProps,
@@ -16,7 +17,6 @@ import {
 } from './ProgressRoot/ProgressRoot';
 import { ProgressSection, type ProgressSectionProps } from './ProgressSection/ProgressSection';
 import classes from './Progress.module.css';
-import type { ProgressContextValue } from './Progress.context';
 export type ProgressStylesNames = ProgressRootStylesNames;
 
 export interface ProgressProps extends __ProgressRootProps, StylesApiProps<ProgressFactory> {

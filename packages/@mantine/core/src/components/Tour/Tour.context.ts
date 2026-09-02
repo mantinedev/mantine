@@ -18,7 +18,7 @@ export interface TourLabels {
   /** Function that returns step counter text @default (current, total) => `${current} of ${total}` */
   stepCounter: (current: number, total: number) => string;
 
-  /** Label for the beacon button @default "Start tour" */
+  /** Label for the beacon button, the step title is appended when it is a string @default "Start tour" */
   beacon: string;
 }
 
@@ -82,6 +82,27 @@ export interface TourContextValue {
 
   /** Labels for tour UI elements */
   labels: TourLabels;
+
+  /** Id assigned to `Tour.Title`, referenced by the tooltip `aria-labelledby` */
+  titleId: string;
+
+  /** Id assigned to `Tour.Body`, referenced by the tooltip `aria-describedby` */
+  bodyId: string;
+
+  /** Whether `Tour.Title` is currently mounted */
+  titleMounted: boolean;
+
+  /** Whether `Tour.Body` is currently mounted */
+  bodyMounted: boolean;
+
+  /** Registers `Tour.Title` mount state */
+  setTitleMounted: (mounted: boolean) => void;
+
+  /** Registers `Tour.Body` mount state */
+  setBodyMounted: (mounted: boolean) => void;
+
+  /** Registers the current step target element, used to skip arrow hotkeys fired from inside it */
+  setTargetElement: (element: HTMLElement | null) => void;
 }
 
 export const TourContext = createContext<TourContextValue | null>(null);

@@ -31,7 +31,12 @@ import {
   DateStringValue,
   DateTimeStringValue,
   DayOfWeek,
+  PreventEventOverlap,
+  ScheduleCanDropEventData,
+  ScheduleCanDropExternalEventData,
+  ScheduleCanResizeEventToData,
   ScheduleEventData,
+  ScheduleEventPlacementRejectedData,
   ScheduleMode,
   ScheduleResourceData,
   ScheduleResourceGroup,
@@ -208,6 +213,21 @@ export interface ResourcesMonthViewProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. */
+  canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
+
+  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. */
+  canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
+
+  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. */
+  canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
+
+  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false */
+  preventEventOverlap?: PreventEventOverlap;
+
+  /** Called when a drop or resize is rejected */
+  onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
+
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
@@ -374,6 +394,11 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     withEventResize,
     onEventResize,
     canResizeEvent,
+    canDropEvent,
+    canDropExternalEvent,
+    canResizeEventTo,
+    preventEventOverlap,
+    onEventPlacementRejected,
     onEventClick,
     withDragSlotSelect,
     onSlotDragEnd,
@@ -496,6 +521,10 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     mode,
     onEventResize,
     canResizeEvent,
+    events: expandedEvents,
+    preventEventOverlap,
+    canResizeEventTo,
+    onEventPlacementRejected,
   });
 
   const { resizingEventId, previewStart, previewEnd } = eventResize;
@@ -664,6 +693,11 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
   type DropTargetCell = { day: string; resourceId: string | number };
 
+  const getExternalDropDateTime = useCallback(
+    (target: DropTargetCell) => `${dayjs(target.day).format('YYYY-MM-DD')} 00:00:00`,
+    []
+  );
+
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, target: DropTargetCell) => {
       if (!onExternalEventDrop) {
@@ -671,11 +705,11 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       }
       onExternalEventDrop({
         dataTransfer: e.dataTransfer,
-        dropDateTime: `${dayjs(target.day).format('YYYY-MM-DD')} 00:00:00`,
+        dropDateTime: getExternalDropDateTime(target),
         resourceId: target.resourceId,
       });
     },
-    [onExternalEventDrop]
+    [onExternalEventDrop, getExternalDropDateTime]
   );
 
   const dragDrop = useDragDropHandlers<DropTargetCell>({
@@ -692,6 +726,13 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       return calculateMonthDropDate({ draggedEvent, targetDay: target.day });
     },
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
+    events: expandedEvents,
+    preventEventOverlap,
+    canDropEvent,
+    canDropExternalEvent,
+    onEventPlacementRejected,
+    getExternalDropDateTime,
+    getTargetResourceId: (target) => target.resourceId,
   });
 
   const lastDropResourceId = useRef<string | number | undefined>(undefined);
@@ -842,7 +883,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
           autoSize
           size="sm"
           hanging={hanging}
-          mod={eventMod}
+          mod={[eventMod, { invalid: isThisEventResizing && !eventResize.resizeValid }]}
           draggable={dragDrop.isDraggableEvent(event)}
           isResizing={isThisEventResizing}
           renderEventBody={renderEventBody}

@@ -25,6 +25,7 @@ const nextConfig = {
       '@mantine/form',
       '@mantine/charts',
       '@mantine/carousel',
+      '@mantine/lightbox',
       '@mantine/code-highlight',
       '@mantine/dropzone',
       '@mantine/modals',

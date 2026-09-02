@@ -1,4 +1,5 @@
-import { useId } from '@mantine/hooks';
+import { useRef } from 'react';
+import { useId, useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -18,6 +19,7 @@ import {
   AppShellFooterConfiguration,
   AppShellHeaderConfiguration,
   AppShellNavbarConfiguration,
+  AppShellResizeController,
   AppShellResponsiveSize,
 } from './AppShell.types';
 import { AppShellAside, type AppShellAsideProps } from './AppShellAside/AppShellAside';
@@ -25,8 +27,10 @@ import { AppShellFooter, type AppShellFooterProps } from './AppShellFooter/AppSh
 import { AppShellHeader, type AppShellHeaderProps } from './AppShellHeader/AppShellHeader';
 import { AppShellMain, type AppShellMainProps } from './AppShellMain/AppShellMain';
 import { AppShellMediaStyles } from './AppShellMediaStyles/AppShellMediaStyles';
+import { escapeCssId } from './AppShellMediaStyles/escape-css-id/escape-css-id';
 import { AppShellNavbar, type AppShellNavbarProps } from './AppShellNavbar/AppShellNavbar';
 import { AppShellSection, type AppShellSectionProps } from './AppShellSection/AppShellSection';
+import { RESIZE_SECTION_NAMES } from './use-app-shell-resize/resize-section-config';
 import { useResizing } from './use-resizing/use-resizing';
 import classes from './AppShell.module.css';
 export type AppShellStylesNames =
@@ -36,10 +40,14 @@ export type AppShellStylesNames =
   | 'header'
   | 'footer'
   | 'aside'
-  | 'section';
+  | 'section'
+  | 'resizeHandle';
 
 export type AppShellCssVariables = {
-  root: '--app-shell-transition-duration' | '--app-shell-transition-timing-function';
+  root:
+    | '--app-shell-transition-duration'
+    | '--app-shell-transition-timing-function'
+    | '--app-shell-resize-handle-size';
 };
 
 export interface AppShellProps
@@ -82,6 +90,9 @@ export interface AppShellProps
 
   /** Determines positioning mode of all sections @default 'fixed' */
   mode?: 'fixed' | 'static';
+
+  /** `useAppShellResize` hook instance, enables resizing of the sections configured in the hook */
+  resize?: AppShellResizeController;
 }
 
 export type AppShellFactory = Factory<{
@@ -113,6 +124,7 @@ const varsResolver = createVarsResolver<AppShellFactory>(
     root: {
       '--app-shell-transition-duration': `${transitionDuration}ms`,
       '--app-shell-transition-timing-function': transitionTimingFunction,
+      '--app-shell-resize-handle-size': undefined,
     },
   })
 );
@@ -142,6 +154,8 @@ export const AppShell = factory<AppShellFactory>((_props) => {
     mod,
     attributes,
     id,
+    resize,
+    ref,
     ...others
   } = props;
 
@@ -159,11 +173,46 @@ export const AppShell = factory<AppShellFactory>((_props) => {
     varsResolver,
   });
 
-  const resizing = useResizing({ disabled, transitionDuration });
+  const resizeKey = resize
+    ? RESIZE_SECTION_NAMES.map((section) => resize.sizes[section]).join('|')
+    : undefined;
+  const resizing = useResizing({ disabled, transitionDuration, resizeKey });
   const _id = useId(id);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  const resizeVariables = resize
+    ? {
+        sizes: resize.sizes,
+        enabled: {
+          navbar: resize.navbar.enabled,
+          aside: resize.aside.enabled,
+          header: resize.header.enabled,
+          footer: resize.footer.enabled,
+        },
+      }
+    : undefined;
+
+  const resizeOffsets = {
+    navbar: true,
+    aside: true,
+    header: mode === 'static' ? true : (header?.offset ?? true),
+    footer: mode === 'static' ? true : (footer?.offset ?? true),
+  };
 
   return (
-    <AppShellProvider value={{ getStyles, withBorder, zIndex, disabled, offsetScrollbars, mode }}>
+    <AppShellProvider
+      value={{
+        getStyles,
+        withBorder,
+        zIndex,
+        disabled,
+        offsetScrollbars,
+        mode,
+        resize,
+        rootRef,
+        resizeOffsets,
+      }}
+    >
       <AppShellMediaStyles
         navbar={navbar}
         header={header}
@@ -171,12 +220,14 @@ export const AppShell = factory<AppShellFactory>((_props) => {
         footer={footer}
         padding={padding}
         mode={mode}
-        selector={mode === 'static' ? `#${_id}` : undefined}
+        resize={resizeVariables}
+        selector={resize || mode === 'static' ? `#${escapeCssId(_id)}` : undefined}
       />
       <Box
         {...getStyles('root')}
         id={_id}
-        mod={[{ resizing, layout, disabled, mode }, mod]}
+        ref={useMergedRef(ref, rootRef)}
+        mod={[{ resizing: resizing || resize?.activeSection != null, layout, disabled, mode }, mod]}
         {...others}
       />
     </AppShellProvider>

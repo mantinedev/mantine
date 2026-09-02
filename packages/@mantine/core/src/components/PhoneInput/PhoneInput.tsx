@@ -18,11 +18,11 @@ import { UnstyledButton } from '../UnstyledButton';
 import { buildRawValue } from './build-raw-value/build-raw-value';
 import { computeCursorPosition } from './compute-cursor-position/compute-cursor-position';
 import { CountryOptionContent } from './CountryOptionContent';
-import { ALL_COUNTRIES, PhoneInputCountryData } from './phone-data';
 import { clampToMask, formatPhoneNumber } from './format-phone-number/format-phone-number';
 import { filterCountries, getCountries } from './get-countries/get-countries';
 import { getDigits } from './get-digits/get-digits';
 import { guessCountry } from './guess-country/guess-country';
+import { ALL_COUNTRIES, PhoneInputCountryData } from './phone-data';
 import classes from './PhoneInput.module.css';
 
 export type PhoneInputStylesNames =

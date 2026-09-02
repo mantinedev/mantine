@@ -3,6 +3,7 @@ import {
   arrow,
   autoUpdate,
   flip,
+  hide,
   inline,
   offset,
   safePolygon,
@@ -17,6 +18,7 @@ import {
   type Middleware,
 } from '@floating-ui/react';
 import { useId, useIsomorphicEffect } from '@mantine/hooks';
+import { useMantineEnv } from '../../core';
 import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
 import { type TooltipMiddlewares } from './Tooltip.types';
 import { TooltipGroupContext } from './TooltipGroup/TooltipGroup';
@@ -36,6 +38,7 @@ interface UseTooltip {
   inline?: boolean;
   strategy?: FloatingStrategy;
   middlewares?: TooltipMiddlewares;
+  hideDetached?: boolean;
 }
 
 function getDefaultMiddlewares(middlewares: TooltipMiddlewares | undefined): TooltipMiddlewares {
@@ -57,7 +60,7 @@ function getDefaultMiddlewares(middlewares: TooltipMiddlewares | undefined): Too
 
 function getTooltipMiddlewares(settings: UseTooltip) {
   const middlewaresOptions = getDefaultMiddlewares(settings.middlewares);
-  const middlewares: Middleware[] = [offset(settings.offset)];
+  const middlewares: Middleware[] = [offset(settings.offset), hide()];
 
   if (middlewaresOptions.shift) {
     middlewares.push(
@@ -94,6 +97,7 @@ export function useTooltip(settings: UseTooltip) {
   const opened = controlled ? settings.opened : uncontrolledOpened;
   const withinGroup = use(TooltipGroupContext).withinGroup;
   const uid = useId();
+  const env = useMantineEnv();
 
   const onChange = useCallback(
     (_opened: boolean) => {
@@ -112,7 +116,7 @@ export function useTooltip(settings: UseTooltip) {
     context,
     refs,
     placement,
-    middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
+    middlewareData: { arrow: { x: arrowX, y: arrowY } = {}, hide: hideData },
   } = useFloating({
     strategy: settings.strategy,
     placement: settings.position,
@@ -159,5 +163,6 @@ export function useTooltip(settings: UseTooltip) {
     isGroupPhase,
     opened,
     placement,
+    referenceHidden: settings.hideDetached && env !== 'test' ? hideData?.referenceHidden : false,
   };
 }

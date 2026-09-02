@@ -3,7 +3,7 @@ import type {
   CandlestickChartFactory,
   CandlestickChartLabels,
   CandlestickChartProps,
-  CandlestickChartSeries,
+  CandlestickChartDataKeys,
   CandlestickChartStylesNames,
 } from './CandlestickChart';
 
@@ -15,5 +15,5 @@ export type {
   CandlestickChartCssVariables,
   CandlestickChartFactory,
   CandlestickChartLabels,
-  CandlestickChartSeries,
+  CandlestickChartDataKeys,
 };
