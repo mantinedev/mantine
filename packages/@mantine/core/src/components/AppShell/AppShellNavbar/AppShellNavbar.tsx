@@ -10,6 +10,7 @@ import {
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
 import type { AppShellCompoundProps } from '../AppShell.types';
+import { AppShellResizeHandle } from '../AppShellResizeHandle/AppShellResizeHandle';
 import classes from '../AppShell.module.css';
 
 export type AppShellNavbarStylesNames = 'navbar';
@@ -47,14 +48,34 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props) => {
     return null;
   }
 
+  const isResizable = ctx.resize?.navbar.enabled ?? false;
+  const boxProps = ctx.getStyles('navbar', { className, classNames, styles, style });
+
+  if (!isResizable) {
+    return (
+      <Box
+        component="nav"
+        mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
+        {...boxProps}
+        {...others}
+        __vars={{ '--app-shell-navbar-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
+      />
+    );
+  }
+
+  const { children, ...rest } = others;
+
   return (
     <Box
       component="nav"
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
-      {...ctx.getStyles('navbar', { className, classNames, styles, style })}
-      {...others}
+      {...boxProps}
+      {...rest}
       __vars={{ '--app-shell-navbar-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
-    />
+    >
+      {children}
+      <AppShellResizeHandle section="navbar" />
+    </Box>
   );
 });
 

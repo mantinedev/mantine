@@ -11,6 +11,7 @@ import {
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
 import type { AppShellCompoundProps } from '../AppShell.types';
+import { AppShellResizeHandle } from '../AppShellResizeHandle/AppShellResizeHandle';
 import classes from '../AppShell.module.css';
 
 export type AppShellHeaderStylesNames = 'header';
@@ -48,19 +49,39 @@ export const AppShellHeader = factory<AppShellHeaderFactory>((_props) => {
     return null;
   }
 
+  const isResizable = ctx.resize?.header.enabled ?? false;
+  const boxProps = ctx.getStyles('header', {
+    className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
+    classNames,
+    styles,
+    style,
+  });
+
+  if (!isResizable) {
+    return (
+      <Box
+        component="header"
+        mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
+        {...boxProps}
+        {...others}
+        __vars={{ '--app-shell-header-z-index': (zIndex ?? ctx.zIndex)?.toString() }}
+      />
+    );
+  }
+
+  const { children, ...rest } = others;
+
   return (
     <Box
       component="header"
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
-      {...ctx.getStyles('header', {
-        className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
-        classNames,
-        styles,
-        style,
-      })}
-      {...others}
+      {...boxProps}
+      {...rest}
       __vars={{ '--app-shell-header-z-index': (zIndex ?? ctx.zIndex)?.toString() }}
-    />
+    >
+      {children}
+      <AppShellResizeHandle section="header" />
+    </Box>
   );
 });
 

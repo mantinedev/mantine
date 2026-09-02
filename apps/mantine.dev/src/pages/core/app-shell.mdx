@@ -120,6 +120,209 @@ are positioned relative to each other. It accepts `alt` and `default` values:
 - `alt` – `AppShell.Navbar`/`AppShell.Aside` extends the full viewport height, while `AppShell.Header`/`AppShell.Footer` width equals the viewport width minus the width of `AppShell.Navbar` and `AppShell.Aside` ([example](/app-shell?e=AltLayout))
 - `default` – `AppShell.Navbar`/`AppShell.Aside` height equals the viewport height minus `AppShell.Header`/`AppShell.Footer` height, and `AppShell.Header`/`AppShell.Footer` spans the full viewport width ([example](/app-shell?e=FullLayout))
 
+## Resizable sections
+
+Use the `useAppShellResize` hook together with the `resize` prop to let the user resize
+`AppShell.Navbar`/`AppShell.Aside` horizontally and `AppShell.Header`/`AppShell.Footer` vertically –
+with a mouse, touch, or keyboard. Only the sections passed to `useAppShellResize` get a resize
+handle, the section configuration objects (`navbar={{ width, breakpoint }}` etc.) do not change:
+
+```tsx
+import { AppShell, useAppShellResize } from '@mantine/core';
+
+function Demo() {
+  const resize = useAppShellResize({
+    navbar: { min: 200, max: 500 },
+    header: { min: 48, max: 120 },
+  });
+
+  return (
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{ width: 300, breakpoint: 'sm' }}
+      resize={resize}
+    >
+      <AppShell.Header>Header</AppShell.Header>
+      <AppShell.Navbar>Navbar</AppShell.Navbar>
+      <AppShell.Main>Main</AppShell.Main>
+    </AppShell>
+  );
+}
+```
+
+In this example, `navbar` and `header` are passed to `useAppShellResize`, so `AppShell.Navbar` and
+`AppShell.Header` render a resize handle – `AppShell.Aside` and `AppShell.Footer` keep their
+configured size even if they are used elsewhere in the same `AppShell`. See the
+[resizable app shell example](/app-shell?e=ResizableAppShell) for a full demo that includes a
+reset button.
+
+### useAppShellResize hook
+
+The hook accepts an object with the following properties:
+
+```tsx
+interface UseAppShellResizeInput {
+  /** `AppShell.Navbar` resize options, the section is resizable when set */
+  navbar?: AppShellResizeSectionOptions;
+
+  /** `AppShell.Aside` resize options, the section is resizable when set */
+  aside?: AppShellResizeSectionOptions;
+
+  /** `AppShell.Header` resize options, the section is resizable when set */
+  header?: AppShellResizeSectionOptions;
+
+  /** `AppShell.Footer` resize options, the section is resizable when set */
+  footer?: AppShellResizeSectionOptions;
+
+  /** Sizes applied to sections that have not been resized yet, usually restored from storage */
+  initialSizes?: AppShellResizeSizes;
+
+  /** Called on every pointer move during a resize */
+  onResize?: (sizes: AppShellResizeSizes) => void;
+
+  /** Called when a resize is committed */
+  onResizeEnd?: (sizes: AppShellResizeSizes) => void;
+
+  /** Called when a section is dragged across its `collapseThreshold` */
+  onCollapseChange?: (section: AppShellResizeSection, collapsed: boolean) => void;
+}
+```
+
+Each section option (`navbar`, `aside`, `header`, `footer`) accepts the same shape:
+
+```tsx
+interface AppShellResizeSectionOptions {
+  /** Minimum size, in the same units as the section `width`/`height` configuration @default 0 */
+  min?: number;
+
+  /** Maximum size, in the same units as the section `width`/`height` configuration @default viewport size */
+  max?: number;
+
+  /** Size below which `onCollapseChange` reports the section as collapsed */
+  collapseThreshold?: number;
+}
+```
+
+Note that the effective maximum is always the smaller of `max` and the current viewport size – a
+`max` larger than the viewport has no effect.
+
+`useAppShellResize` returns a controller for every section (`navbar`, `aside`, `header`, `footer`)
+with the following shape:
+
+```tsx
+interface AppShellResizeSectionController {
+  /** `true` when the section was configured as resizable */
+  enabled: boolean;
+
+  /** Current size override, `undefined` when the section has not been resized */
+  size: number | undefined;
+
+  /** `true` while the section is being resized */
+  active: boolean;
+
+  /** Sets the section size, does not call `onResize`/`onResizeEnd` */
+  setSize: (size: number) => void;
+
+  /** Clears the size override, the section returns to the size defined in its configuration */
+  reset: () => void;
+}
+```
+
+as well as `sizes` – current size overrides of all sections, and `resetAll()` – clears size
+overrides of all sections. `setSize`, `reset`, and `resetAll` never call `onResize`/`onResizeEnd`.
+The returned object also carries a few fields used internally by `AppShell` to wire up the resize
+handles (`options`, `activeSection`, `startResize`, `previewResize`, `endResize`,
+`reportCollapse`) – you do not need to use them directly.
+
+### Keyboard shortcuts
+
+Every resize handle is focusable and supports the following keys. Keys for the section's other
+axis (for example, `ArrowUp`/`ArrowDown` on `AppShell.Navbar`) are ignored:
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowLeft/ArrowRight',
+      description: 'Resizes AppShell.Navbar/AppShell.Aside by 10',
+    },
+    {
+      key: 'ArrowUp/ArrowDown',
+      description: 'Resizes AppShell.Header/AppShell.Footer by 10',
+    },
+    {
+      key: 'Shift + arrow key',
+      description: 'Same as the arrow key, but changes the size by 50',
+    },
+    { key: 'Home', description: 'Sets the size to the configured minimum' },
+    { key: 'End', description: 'Sets the size to the configured maximum' },
+    { key: 'Escape', description: 'Cancels an in-progress mouse or touch drag' },
+  ]}
+/>
+
+Arrow key, `Home`, and `End` presses commit the size immediately, so they trigger `onResizeEnd`,
+not `onResize`. Double-clicking a handle resets the section, same as calling `reset()`.
+
+### Responsive sizes and reset
+
+Once a section is resized, it stops following its configured `width`/`height` – including a
+responsive `{ base, sm, ... }` object – until `reset()` is called. Calling `reset()` (or
+double-clicking the handle) returns the section to the value currently defined in its
+`width`/`height` configuration.
+
+### Persisting sizes
+
+Combine `useAppShellResize` with [use-local-storage](/hooks/use-local-storage) to remember sizes
+between visits:
+
+```tsx
+const [sizes, setSizes] = useLocalStorage<AppShellResizeSizes>({
+  key: 'app-shell-sizes',
+  defaultValue: {},
+});
+
+const resize = useAppShellResize({
+  navbar: { min: 200, max: 500 },
+  initialSizes: sizes,
+  onResizeEnd: setSizes,
+});
+```
+
+`initialSizes` is applied to a section only until that section is first resized. This is what
+makes the pattern above work with `useLocalStorage` – its stored value is only available after the
+initial render (`getInitialValueInEffect: true` by default), and by the time it arrives the
+section has not been touched yet, so it is still picked up.
+
+`reset()` and `resetAll()` never call `onResize`/`onResizeEnd`, so calling them does not clear a
+size that was already written to storage by a previous `onResizeEnd` call – clear the stored value
+yourself in whatever reset handler your application uses alongside `reset()`/`resetAll()`.
+
+### Drag-to-collapse
+
+Set `collapseThreshold` on a section to have `onCollapseChange` report when a drag crosses that
+size:
+
+```tsx
+const resize = useAppShellResize({
+  navbar: { min: 200, max: 500, collapseThreshold: 120 },
+  onCollapseChange: (section, collapsed) => {
+    if (section === 'navbar') {
+      setNavbarCollapsed(collapsed);
+    }
+  },
+});
+```
+
+`onCollapseChange` only reports the crossing – your application still owns the `collapsed` prop of
+`AppShell.Navbar`/`AppShell.Aside`/`AppShell.Header`/`AppShell.Footer`. Note that a collapsed
+`AppShell.Navbar`/`AppShell.Aside` moves its resize handle off screen together with the rest of the
+section, so pair drag-to-collapse with a `Burger` (or another control) rather than relying on the
+handle as the way to bring the section back.
+
+### Hiding the resize handle
+
+Resize handles are hidden below the `AppShell.Navbar`/`AppShell.Aside` `breakpoint`, and while the
+corresponding section is collapsed.
+
 ## Height configuration
 
 The `height` property in `header` and `footer` configuration objects works as follows:

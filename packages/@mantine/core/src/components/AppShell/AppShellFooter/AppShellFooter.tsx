@@ -11,6 +11,7 @@ import {
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
 import { AppShellCompoundProps } from '../AppShell.types';
+import { AppShellResizeHandle } from '../AppShellResizeHandle/AppShellResizeHandle';
 import classes from '../AppShell.module.css';
 
 export type AppShellFooterStylesNames = 'footer';
@@ -48,19 +49,39 @@ export const AppShellFooter = factory<AppShellFooterFactory>((_props) => {
     return null;
   }
 
+  const isResizable = ctx.resize?.footer.enabled ?? false;
+  const boxProps = ctx.getStyles('footer', {
+    className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
+    classNames,
+    styles,
+    style,
+  });
+
+  if (!isResizable) {
+    return (
+      <Box
+        component="footer"
+        mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
+        {...boxProps}
+        {...others}
+        __vars={{ '--app-shell-footer-z-index': (zIndex ?? ctx.zIndex)?.toString() }}
+      />
+    );
+  }
+
+  const { children, ...rest } = others;
+
   return (
     <Box
       component="footer"
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
-      {...ctx.getStyles('footer', {
-        className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
-        classNames,
-        styles,
-        style,
-      })}
-      {...others}
+      {...boxProps}
+      {...rest}
       __vars={{ '--app-shell-footer-z-index': (zIndex ?? ctx.zIndex)?.toString() }}
-    />
+    >
+      {children}
+      <AppShellResizeHandle section="footer" />
+    </Box>
   );
 });
 

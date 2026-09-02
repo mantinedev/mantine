@@ -10,6 +10,8 @@ interface AssignFooterVariablesInput {
   minMediaStyles: MediaQueryVariables;
   footer: AppShellProps['footer'] | undefined;
   mode: 'fixed' | 'static';
+  resizedSize?: number;
+  resizable?: boolean;
 }
 
 export function assignFooterVariables({
@@ -17,6 +19,8 @@ export function assignFooterVariables({
   minMediaStyles,
   footer,
   mode,
+  resizedSize,
+  resizable,
 }: AssignFooterVariablesInput) {
   const footerHeight = footer?.height;
   const collapsedFooterTransform = 'translateY(var(--app-shell-footer-height))';
@@ -28,39 +32,50 @@ export function assignFooterVariables({
     baseStyles['--app-shell-footer-grid-row'] = '3';
   }
 
-  if (isPrimitiveSize(footerHeight)) {
-    const baseSize = rem(getBaseSize(footerHeight));
-    baseStyles['--app-shell-footer-height'] = baseSize;
+  if (resizedSize !== undefined) {
+    const resizedValue = rem(resizedSize);
+    baseStyles['--app-shell-footer-height'] = resizedValue;
     if (shouldOffset) {
-      baseStyles['--app-shell-footer-offset'] = baseSize;
+      baseStyles['--app-shell-footer-offset'] = resizedValue;
     }
-  }
-
-  if (isResponsiveSize(footerHeight)) {
-    if (typeof footerHeight.base !== 'undefined') {
-      baseStyles['--app-shell-footer-height'] = rem(footerHeight.base);
-
+  } else {
+    if (isPrimitiveSize(footerHeight)) {
+      const baseSize = rem(getBaseSize(footerHeight));
+      baseStyles['--app-shell-footer-height'] = baseSize;
       if (shouldOffset) {
-        baseStyles['--app-shell-footer-offset'] = rem(footerHeight.base);
+        baseStyles['--app-shell-footer-offset'] = baseSize;
       }
     }
 
-    keys(footerHeight).forEach((key) => {
-      if (key !== 'base') {
-        minMediaStyles[key] = minMediaStyles[key] || {};
-        minMediaStyles[key]['--app-shell-footer-height'] = rem(footerHeight[key]);
+    if (isResponsiveSize(footerHeight)) {
+      if (typeof footerHeight.base !== 'undefined') {
+        baseStyles['--app-shell-footer-height'] = rem(footerHeight.base);
 
         if (shouldOffset) {
-          minMediaStyles[key]['--app-shell-footer-offset'] = rem(footerHeight[key]);
+          baseStyles['--app-shell-footer-offset'] = rem(footerHeight.base);
         }
       }
-    });
+
+      keys(footerHeight).forEach((key) => {
+        if (key !== 'base') {
+          minMediaStyles[key] = minMediaStyles[key] || {};
+          minMediaStyles[key]['--app-shell-footer-height'] = rem(footerHeight[key]);
+
+          if (shouldOffset) {
+            minMediaStyles[key]['--app-shell-footer-offset'] = rem(footerHeight[key]);
+          }
+        }
+      });
+    }
   }
 
   if (footer?.collapsed) {
     baseStyles['--app-shell-footer-transform'] = collapsedFooterTransform;
     if (mode === 'fixed') {
       baseStyles['--app-shell-footer-offset'] = '0px !important';
+    }
+    if (resizable) {
+      baseStyles['--app-shell-footer-resize-handle-display'] = 'none';
     }
   }
 }

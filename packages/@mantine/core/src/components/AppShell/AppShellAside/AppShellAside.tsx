@@ -11,6 +11,7 @@ import {
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
 import { AppShellCompoundProps } from '../AppShell.types';
+import { AppShellResizeHandle } from '../AppShellResizeHandle/AppShellResizeHandle';
 import classes from '../AppShell.module.css';
 
 export type AppShellAsideStylesNames = 'aside';
@@ -48,19 +49,39 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props) => {
     return null;
   }
 
+  const isResizable = ctx.resize?.aside.enabled ?? false;
+  const boxProps = ctx.getStyles('aside', {
+    className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
+    classNames,
+    styles,
+    style,
+  });
+
+  if (!isResizable) {
+    return (
+      <Box
+        component="aside"
+        mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
+        {...boxProps}
+        {...others}
+        __vars={{ '--app-shell-aside-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
+      />
+    );
+  }
+
+  const { children, ...rest } = others;
+
   return (
     <Box
       component="aside"
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
-      {...ctx.getStyles('aside', {
-        className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
-        classNames,
-        styles,
-        style,
-      })}
-      {...others}
+      {...boxProps}
+      {...rest}
       __vars={{ '--app-shell-aside-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
-    />
+    >
+      {children}
+      <AppShellResizeHandle section="aside" />
+    </Box>
   );
 });
 

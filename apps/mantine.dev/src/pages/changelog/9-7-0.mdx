@@ -177,6 +177,14 @@ functions that receive the resolved value or the rejection reason:
 
 <Demo data={NotificationsDemos.promise} />
 
+## AppShell resizable sections
+
+[AppShell](/core/app-shell) now supports resizing `AppShell.Navbar`/`AppShell.Aside`
+horizontally and `AppShell.Header`/`AppShell.Footer` vertically. Pass a `useAppShellResize`
+hook instance to the `resize` prop to enable it for the configured sections – handles support
+mouse, touch and keyboard, and can report drag-to-collapse.
+See [AppShell examples](/app-shell/?e=ResizableAppShell) for more details.
+
 ## Other changes
 
 - [HoverCard](/core/hover-card) can now be opened with the keyboard and is announced by screen readers: the dropdown is opened when the target is focused with the keyboard and closed with `Escape`. New `events` prop controls which interactions open the dropdown (`{ hover: true, focus: true, touch: false }` by default), new `interactive` prop keeps the dropdown open while the pointer travels from the target to the dropdown, and new `role` prop switches the target/dropdown relation between `dialog` and `tooltip`. Note that focus activation is enabled by default and a tap on a touch device no longer opens the dropdown – set `events={{ focus: false, touch: true }}` and `closeOnEscape={false}` to restore the previous behavior.

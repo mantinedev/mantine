@@ -75,4 +75,14 @@ export const APP_SHELL_EXAMPLES_DATA: AppShellExample[] = [
     name: 'Nested AppShell',
     description: 'Static AppShell nested inside fixed AppShell',
   },
+  {
+    id: 'ResizableAppShell',
+    name: 'Resizable sections',
+    description: 'Navbar and header resized with the useAppShellResize hook',
+  },
+  {
+    id: 'ResizableAltLayout',
+    name: 'Resizable alt layout',
+    description: 'Resizable navbar, aside and header in alt layout',
+  },
 ];

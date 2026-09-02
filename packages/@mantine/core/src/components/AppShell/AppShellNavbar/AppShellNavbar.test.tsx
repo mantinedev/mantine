@@ -1,4 +1,4 @@
-import { createContextContainer, render, tests } from '@mantine-tests/core';
+import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { AppShell } from '../AppShell';
 import { AppShellNavbar, AppShellNavbarProps, AppShellNavbarStylesNames } from './AppShellNavbar';
 
@@ -36,5 +36,12 @@ describe('@mantine/core/AppShellNavbar', () => {
     expect(container.querySelector('.mantine-AppShell-navbar')).not.toHaveAttribute(
       'data-with-border'
     );
+  });
+
+  it('does not throw when dangerouslySetInnerHTML is used without children on a non-resizable section', () => {
+    expect(() =>
+      render(<TestContainer dangerouslySetInnerHTML={{ __html: '<span>navbar</span>' }} />)
+    ).not.toThrow();
+    expect(screen.getByText('navbar')).toBeInTheDocument();
   });
 });
