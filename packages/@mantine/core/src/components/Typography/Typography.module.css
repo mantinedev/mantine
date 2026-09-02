@@ -228,13 +228,13 @@
     border: 1px solid var(--details-border-color);
     border-radius: var(--mantine-radius-default);
 
+    --details-border-color: var(--mantine-color-border);
+
     @mixin where-light {
-      --details-border-color: var(--mantine-color-gray-3);
       --details-summary-hover: var(--mantine-color-gray-1);
     }
 
     @mixin where-dark {
-      --details-border-color: var(--mantine-color-dark-4);
       --details-summary-hover: var(--mantine-color-dark-5);
     }
 

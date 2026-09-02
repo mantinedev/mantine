@@ -18,16 +18,8 @@
   }
 
   @mixin hover {
-    @mixin where-light {
-      &:where(:not(:disabled)) {
-        background-color: var(--mantine-color-gray-0);
-      }
-    }
-
-    @mixin where-dark {
-      &:where(:not(:disabled)) {
-        background-color: var(--mantine-color-dark-5);
-      }
+    &:where(:not(:disabled)) {
+      background-color: var(--mantine-color-default-hover);
     }
   }
 }

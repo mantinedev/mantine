@@ -27,13 +27,7 @@
   line-height: 1;
 
   @mixin where-hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-5);
-    }
+    background-color: var(--mantine-color-default-hover);
   }
 
   &[data-without-color] .legendItemColor {

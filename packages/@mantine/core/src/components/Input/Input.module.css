@@ -100,13 +100,13 @@
     }
   }
 
-  @mixin light {
-    &[data-variant='default'] {
-      --input-bd: var(--mantine-color-gray-4);
-      --input-bg: var(--mantine-color-white);
-      --input-bd-focus: var(--mantine-primary-color-filled);
-    }
+  &[data-variant='default'] {
+    --input-bd: var(--mantine-color-default-border);
+    --input-bg: var(--mantine-color-default);
+    --input-bd-focus: var(--mantine-primary-color-filled);
+  }
 
+  @mixin light {
     &[data-variant='filled'] {
       --input-bd: transparent;
       --input-bg: var(--mantine-color-gray-1);
@@ -121,12 +121,6 @@
   }
 
   @mixin dark {
-    &[data-variant='default'] {
-      --input-bd: var(--mantine-color-dark-4);
-      --input-bg: var(--mantine-color-dark-6);
-      --input-bd-focus: var(--mantine-primary-color-filled);
-    }
-
     &[data-variant='filled'] {
       --input-bd: transparent;
       --input-bg: var(--mantine-color-dark-5);

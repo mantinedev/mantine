@@ -18,14 +18,13 @@
   padding: 0.12em 0.45em;
 
   background-color: var(--mantine-color-surface-sunken);
+  border-color: var(--mantine-color-border);
 
   @mixin where-light {
-    border-color: var(--mantine-color-gray-3);
     color: var(--mantine-color-gray-7);
   }
 
   @mixin where-dark {
-    border-color: var(--mantine-color-dark-4);
     color: var(--mantine-color-dark-0);
   }
 }

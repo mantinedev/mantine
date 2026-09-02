@@ -36,15 +36,8 @@
   align-items: center;
   justify-content: center;
 
-  @mixin where-light {
-    background-color: var(--mantine-color-white);
-    border-color: var(--mantine-color-gray-4);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-6);
-    border-color: var(--mantine-color-dark-4);
-  }
+  background-color: var(--mantine-color-default);
+  border-color: var(--mantine-color-default-border);
 
   &[data-indeterminate],
   &[data-checked] {
@@ -64,13 +57,7 @@
     background-color: var(--mantine-color-disabled);
 
     &[data-checked] > .icon {
-      @mixin light {
-        color: var(--mantine-color-gray-5);
-      }
-
-      @mixin dark {
-        color: var(--mantine-color-dark-3);
-      }
+      color: var(--mantine-color-disabled-color);
     }
   }
 }

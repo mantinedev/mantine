@@ -71,22 +71,10 @@
 .label--outline:not([data-disabled]) {
   border: 1px solid var(--mantine-color-border);
 
-  @mixin where-light {
-    background-color: var(--mantine-color-white);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-6);
-  }
+  background-color: var(--mantine-color-default);
 
   @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-5);
-    }
+    background-color: var(--mantine-color-default-hover);
   }
 
   &:where([data-checked]) {

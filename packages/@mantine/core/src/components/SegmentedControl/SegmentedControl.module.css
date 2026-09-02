@@ -44,14 +44,14 @@
     calc(var(--sc-radius, var(--mantine-radius-default)) / 4)
   );
 
+  background-color: var(--sc-color, var(--mantine-color-surface-panel-2));
+
   @mixin where-light {
     box-shadow: var(--sc-shadow, none);
-    background-color: var(--sc-color, var(--mantine-color-white));
   }
 
   @mixin where-dark {
     box-shadow: none;
-    background-color: var(--sc-color, var(--mantine-color-dark-5));
   }
 }
 
@@ -110,14 +110,14 @@
       position: absolute;
       border-radius: calc(var(--sc-radius, var(--mantine-radius-default)) - 4px);
 
+      background-color: var(--sc-color, var(--mantine-color-surface-panel-2));
+
       @mixin where-light {
         box-shadow: var(--sc-shadow, none);
-        background-color: var(--sc-color, var(--mantine-color-white));
       }
 
       @mixin where-dark {
         box-shadow: none;
-        background-color: var(--sc-color, var(--mantine-color-dark-5));
       }
     }
   }

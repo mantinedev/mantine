@@ -9,14 +9,7 @@
   border-inline-end: 1px solid;
   padding-inline-end: 0.5em;
   margin-inline-end: 0.5em;
-
-  @mixin where-light {
-    border-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin where-dark {
-    border-color: var(--mantine-color-dark-5);
-  }
+  border-color: var(--mantine-color-border-subtle);
 }
 
 .presetButton {
@@ -26,12 +19,6 @@
   white-space: nowrap;
 
   @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-5);
-    }
+    background-color: var(--mantine-color-default-hover);
   }
 }

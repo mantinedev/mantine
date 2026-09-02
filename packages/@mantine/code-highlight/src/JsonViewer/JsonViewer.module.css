@@ -20,14 +20,7 @@
 
   &[data-with-border] {
     border: 1px solid;
-
-    @mixin where-light {
-      border-color: var(--mantine-color-gray-3);
-    }
-
-    @mixin where-dark {
-      border-color: var(--mantine-color-dark-4);
-    }
+    border-color: var(--mantine-color-border);
   }
 
   [data-controls] {
@@ -35,14 +28,7 @@
     gap: var(--mantine-spacing-xs);
     padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
     border-bottom: 1px solid;
-
-    @mixin where-light {
-      border-color: var(--mantine-color-gray-3);
-    }
-
-    @mixin where-dark {
-      border-color: var(--mantine-color-dark-4);
-    }
+    border-color: var(--mantine-color-border);
 
     [data-control] {
       font-size: var(--mantine-font-size-xs);
@@ -96,15 +82,14 @@
   margin-right: var(--mantine-spacing-xs);
   border-right: 1px solid;
   min-width: 2em;
+  border-color: var(--mantine-color-border);
 
   @mixin where-light {
     color: var(--mantine-color-gray-7);
-    border-color: var(--mantine-color-gray-3);
   }
 
   @mixin where-dark {
     color: var(--mantine-color-dark-4);
-    border-color: var(--mantine-color-dark-4);
   }
 
   & > div {

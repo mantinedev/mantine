@@ -180,14 +180,7 @@
     border-collapse: collapse;
     table-layout: fixed;
     overflow: hidden;
-
-    @mixin where-light {
-      --rte-table-border-color: var(--mantine-color-gray-3);
-    }
-
-    @mixin where-dark {
-      --rte-table-border-color: var(--mantine-color-dark-4);
-    }
+    --rte-table-border-color: var(--mantine-color-border);
   }
 
   & :global(td),
@@ -234,14 +227,13 @@
     padding: var(--mantine-spacing-sm);
     border: 1px solid var(--rte-details-border-color);
     border-radius: var(--mantine-radius-default);
+    --rte-details-border-color: var(--mantine-color-border);
 
     @mixin where-light {
-      --rte-details-border-color: var(--mantine-color-gray-3);
       --rte-details-button-hover: var(--mantine-color-gray-1);
     }
 
     @mixin where-dark {
-      --rte-details-border-color: var(--mantine-color-dark-4);
       --rte-details-button-hover: var(--mantine-color-dark-5);
     }
   }
@@ -374,14 +366,14 @@
     height: 32px;
   }
 
+  border-color: var(--mantine-color-default-border);
+
   @mixin where-light {
     background-color: var(--mantine-color-white);
-    border-color: var(--mantine-color-gray-4);
     color: var(--mantine-color-gray-7);
   }
 
   @mixin where-dark {
-    border-color: var(--mantine-color-dark-4);
     color: var(--mantine-color-dark-1);
 
     &:where([data-variant='default']) {
@@ -480,14 +472,14 @@
   align-items: center;
   border-radius: var(--mantine-radius-default);
 
+  border-color: var(--mantine-color-default-border);
+
   @mixin where-light {
     background-color: var(--mantine-color-white);
-    border-color: var(--mantine-color-gray-4);
   }
 
   @mixin where-dark {
     background-color: var(--mantine-color-dark-7);
-    border-color: var(--mantine-color-dark-4);
   }
 
   &:where([data-active]) {
@@ -577,16 +569,8 @@
     border-radius: var(--mantine-radius-sm);
     vertical-align: middle;
     position: relative;
-
-    @mixin where-light {
-      background-color: var(--mantine-color-white);
-      border-color: var(--mantine-color-gray-4);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-      border-color: var(--mantine-color-dark-4);
-    }
+    background-color: var(--mantine-color-default);
+    border-color: var(--mantine-color-default-border);
 
     &:checked {
       background-color: var(--mantine-primary-color-filled);

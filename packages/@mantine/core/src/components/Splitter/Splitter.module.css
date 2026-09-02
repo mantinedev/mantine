@@ -46,14 +46,7 @@
   transition: color 100ms ease;
 
   border: rem(1px) solid var(--mantine-color-border);
-
-  @mixin where-light {
-    background-color: var(--mantine-color-white);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-6);
-  }
+  background-color: var(--mantine-color-default);
 
   &:where([data-orientation='horizontal']) {
     width: rem(12px);

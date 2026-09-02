@@ -53,13 +53,7 @@
 
   &:where(:not([data-selected])) {
     @mixin hover {
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-0);
-      }
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-6);
-      }
+      background-color: var(--mantine-color-hover);
     }
   }
 

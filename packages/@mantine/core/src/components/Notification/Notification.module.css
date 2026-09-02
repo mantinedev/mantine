@@ -94,13 +94,7 @@
   }
 
   &:where([data-with-title]) {
-    @mixin where-light {
-      color: var(--mantine-color-gray-6);
-    }
-
-    @mixin where-dark {
-      color: var(--mantine-color-dark-2);
-    }
+    color: var(--mantine-color-dimmed);
   }
 }
 

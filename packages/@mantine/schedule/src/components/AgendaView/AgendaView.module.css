@@ -3,14 +3,7 @@
 
   display: flex;
   flex-direction: column;
-
-  @mixin where-light {
-    --agenda-view-border-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin where-dark {
-    --agenda-view-border-color: var(--mantine-color-dark-4);
-  }
+  --agenda-view-border-color: var(--mantine-color-border);
 }
 
 .agendaViewHeader {
@@ -67,13 +60,7 @@
   }
 
   @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-    }
+    background-color: var(--mantine-color-hover);
   }
 }
 

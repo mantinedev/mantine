@@ -253,8 +253,9 @@
     opacity: 1;
   }
 
+  border-color: var(--mantine-color-border);
+
   @mixin where-light {
-    border-color: var(--mantine-color-gray-3);
     color: var(--mantine-color-gray-8);
 
     &:where([data-active]) {
@@ -264,7 +265,6 @@
   }
 
   @mixin where-dark {
-    border-color: var(--mantine-color-dark-4);
     color: var(--mantine-color-dark-0);
 
     &:where([data-active]) {

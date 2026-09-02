@@ -36,13 +36,7 @@
   padding-inline-start: var(--label-offset);
 
   &:where([data-selected]) {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-1);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-5);
-    }
+    background-color: var(--mantine-color-selected);
   }
 
   &:where([data-dragging]) {

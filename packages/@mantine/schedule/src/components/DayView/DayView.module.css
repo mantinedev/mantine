@@ -6,15 +6,14 @@
   border-radius: var(--day-view-radius);
   overflow: hidden;
 
+  --day-view-border-color: var(--mantine-color-border);
+  --day-view-business-hours-bg: var(--mantine-color-body);
+
   @mixin where-light {
-    --day-view-border-color: var(--mantine-color-gray-3);
-    --day-view-business-hours-bg: var(--mantine-color-white);
     --day-view-non-business-hours-bg: var(--mantine-color-gray-0);
   }
 
   @mixin where-dark {
-    --day-view-border-color: var(--mantine-color-dark-4);
-    --day-view-business-hours-bg: var(--mantine-color-dark-7);
     --day-view-non-business-hours-bg: var(--mantine-color-dark-6);
   }
 }

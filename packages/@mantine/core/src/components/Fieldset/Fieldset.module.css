@@ -9,14 +9,7 @@
   border: 1px solid;
 
   border-color: var(--mantine-color-border);
-
-  @mixin where-light {
-    background-color: var(--mantine-color-white);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-7);
-  }
+  background-color: var(--mantine-color-body);
 }
 
 .root--filled {

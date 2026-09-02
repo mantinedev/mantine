@@ -33,13 +33,7 @@
 
   @mixin hover {
     &:where(:not([data-disabled], [data-static], :disabled)) {
-      @mixin light {
-        background-color: var(--mantine-color-gray-0);
-      }
-
-      @mixin dark {
-        background-color: var(--mantine-color-dark-5);
-      }
+      background-color: var(--mantine-color-default-hover);
     }
   }
 

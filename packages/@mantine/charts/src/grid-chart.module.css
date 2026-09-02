@@ -57,12 +57,5 @@
   box-shadow: var(--mantine-shadow-md);
   border-radius: var(--mantine-radius-default);
   padding: var(--mantine-spacing-sm);
-
-  @mixin where-light {
-    border: 1px solid var(--mantine-color-gray-3);
-  }
-
-  @mixin where-dark {
-    border: 1px solid var(--mantine-color-dark-4);
-  }
+  border: 1px solid var(--mantine-color-border);
 }

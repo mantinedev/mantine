@@ -6,15 +6,14 @@
   --resources-week-view-group-label-width: 80px;
   --resources-week-view-all-day-height: 20px;
 
+  --resources-week-view-border-color: var(--mantine-color-border);
+  --resources-week-view-business-hours-bg: var(--mantine-color-body);
+
   @mixin where-light {
-    --resources-week-view-border-color: var(--mantine-color-gray-3);
-    --resources-week-view-business-hours-bg: var(--mantine-color-white);
     --resources-week-view-non-business-hours-bg: var(--mantine-color-gray-0);
   }
 
   @mixin where-dark {
-    --resources-week-view-border-color: var(--mantine-color-dark-4);
-    --resources-week-view-business-hours-bg: var(--mantine-color-dark-7);
     --resources-week-view-non-business-hours-bg: var(--mantine-color-dark-6);
   }
 }

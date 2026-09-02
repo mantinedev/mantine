@@ -31,14 +31,7 @@
 
   border: 1px solid var(--mantine-color-border);
   box-shadow: var(--mantine-shadow-md);
-
-  @mixin where-light {
-    background-color: var(--mantine-color-white);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-7);
-  }
+  background-color: var(--mantine-color-surface-page);
 
   &:where([data-centered]) {
     position: fixed;
@@ -79,14 +72,7 @@
 
 .stepCounter {
   font-size: var(--mantine-font-size-sm);
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-6);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-2);
-  }
+  color: var(--mantine-color-dimmed);
 }
 
 .beacon {

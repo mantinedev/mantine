@@ -3,14 +3,7 @@
   --year-view-font-size: var(--mantine-font-size-sm);
   --year-view-columns: 7;
   container-type: inline-size;
-
-  @mixin where-light {
-    --year-view-border-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin where-dark {
-    --year-view-border-color: var(--mantine-color-dark-4);
-  }
+  --year-view-border-color: var(--mantine-color-border);
 }
 
 .yearViewMonths {
@@ -117,13 +110,7 @@
   }
 
   @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-    }
+    background-color: var(--mantine-color-hover);
   }
 
   &:where([data-static]) {
@@ -192,13 +179,7 @@
 
   @mixin hover {
     &:where(:not([data-today], [data-day-placeholder])) {
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-0);
-      }
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-6);
-      }
+      background-color: var(--mantine-color-hover);
     }
   }
 
@@ -228,13 +209,7 @@
   border-radius: var(--year-view-radius);
 
   @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-    }
+    background-color: var(--mantine-color-hover);
   }
 
   &:where([data-static]) {

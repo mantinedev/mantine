@@ -47,15 +47,8 @@
   cursor: var(--mantine-cursor-type);
   -webkit-tap-highlight-color: transparent;
 
-  @mixin where-light {
-    background-color: var(--mantine-color-white);
-    border-color: var(--mantine-color-gray-4);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-6);
-    border-color: var(--mantine-color-dark-4);
-  }
+  background-color: var(--mantine-color-default);
+  border-color: var(--mantine-color-default-border);
 
   &:where([data-with-error-styles][data-error]) {
     border-color: var(--mantine-color-error);

@@ -252,13 +252,7 @@
     transform: translate(calc(50% - var(--slider-size) / 2), calc(var(--mantine-spacing-xs) / 2));
   }
 
-  @mixin where-light {
-    color: var(--mantine-color-gray-6);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-2);
-  }
+  color: var(--mantine-color-dimmed);
 
   :where(.root[data-orientation='vertical']) & {
     transform: translate(
