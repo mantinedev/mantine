@@ -3,6 +3,7 @@ import { useCallback, useEffect, useEffectEvent, useRef, useState } from 'react'
 import { DateTimeStringValue, ScheduleEventData, ScheduleMode } from '../types';
 import { clampIntervalMinutes } from '../utils/clamp-interval-minutes/clamp-interval-minutes';
 import { parseTimeString } from '../utils/parse-time-string/parse-time-string';
+import { EventResizeValidationOptions, validateEventResize } from './validate-event-resize';
 
 type ResizeEdge = 'top' | 'bottom';
 
@@ -20,7 +21,7 @@ interface ResizeState {
   originalEnd: DateTimeStringValue;
 }
 
-export interface UseEventResizeInput {
+export interface UseEventResizeInput extends EventResizeValidationOptions {
   enabled?: boolean;
   mode?: ScheduleMode;
   startTime: string;
@@ -45,11 +46,35 @@ export function useEventResize({
   resizeIntervalMinutes,
   onEventResize,
   canResizeEvent,
+  events,
+  preventEventOverlap,
+  canResizeEventTo,
+  onEventPlacementRejected,
 }: UseEventResizeInput) {
   const [resizeState, setResizeState] = useState<ResizeState | null>(null);
+  const [resizeValid, setResizeValid] = useState(true);
   const resizeRef = useRef<ResizeState | null>(null);
   const justResizedRef = useRef(false);
   const stableOnEventResize = useEffectEvent(onEventResize || (() => {}));
+  const stableOnEventPlacementRejected = useEffectEvent(onEventPlacementRejected || (() => {}));
+
+  const validateResize = useEffectEvent(
+    (
+      event: ScheduleEventData,
+      start: DateTimeStringValue,
+      end: DateTimeStringValue,
+      edge: 'start' | 'end'
+    ) =>
+      validateEventResize({
+        event,
+        start,
+        end,
+        edge,
+        events,
+        preventEventOverlap,
+        canResizeEventTo,
+      })
+  );
 
   const parsedStartTime = parseTimeString(startTime);
   const parsedEndTime = parseTimeString(endTime);
@@ -149,8 +174,24 @@ export function useEventResize({
 
       resizeRef.current = state;
       setResizeState(state);
+      setResizeValid(true);
     },
     [enabled, mode]
+  );
+
+  const getResizeRange = useCallback(
+    (state: ResizeState) => ({
+      start:
+        state.edge === 'top'
+          ? percentToDateTime(state.currentTop, state.eventDate)
+          : state.originalStart,
+      end:
+        state.edge === 'top'
+          ? state.originalEnd
+          : percentToDateTime(state.currentTop + state.currentHeight, state.eventDate),
+      edge: (state.edge === 'top' ? 'start' : 'end') as 'start' | 'end',
+    }),
+    [percentToDateTime]
   );
 
   const isResizing = resizeState !== null;
@@ -192,6 +233,9 @@ export function useEventResize({
 
       resizeRef.current = { ...state, currentTop: newTop, currentHeight: newHeight };
       setResizeState(resizeRef.current);
+
+      const range = getResizeRange(resizeRef.current);
+      setResizeValid(validateResize(state.event, range.start, range.end, range.edge).valid);
     };
 
     const handlePointerUp = () => {
@@ -201,27 +245,32 @@ export function useEventResize({
           state.currentTop !== state.originalTop ||
           state.currentHeight !== state.originalHeight
         ) {
-          let newStart: DateTimeStringValue;
-          let newEnd: DateTimeStringValue;
+          const { start: newStart, end: newEnd, edge } = getResizeRange(state);
+          const { valid, conflicts, reason } = validateResize(state.event, newStart, newEnd, edge);
 
-          if (state.edge === 'top') {
-            newStart = percentToDateTime(state.currentTop, state.eventDate);
-            newEnd = state.originalEnd;
+          if (valid) {
+            stableOnEventResize({
+              eventId: state.eventId,
+              newStart,
+              newEnd,
+              event: state.event,
+            });
           } else {
-            newStart = state.originalStart;
-            newEnd = percentToDateTime(state.currentTop + state.currentHeight, state.eventDate);
+            stableOnEventPlacementRejected({
+              action: 'resize',
+              event: state.event,
+              start: newStart,
+              end: newEnd,
+              edge,
+              conflicts,
+              reason: reason!,
+            });
           }
-
-          stableOnEventResize({
-            eventId: state.eventId,
-            newStart,
-            newEnd,
-            event: state.event,
-          });
         }
       }
       resizeRef.current = null;
       setResizeState(null);
+      setResizeValid(true);
       justResizedRef.current = true;
       requestAnimationFrame(() => {
         justResizedRef.current = false;
@@ -267,5 +316,6 @@ export function useEventResize({
     getResizePosition,
     isResizableEvent,
     wasResizing,
+    resizeValid,
   };
 }

@@ -1,4 +1,4 @@
-import { ResourcesScheduleDemos } from '@docs/demos';
+import { ResourcesDayViewDemos, ResourcesScheduleDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -57,6 +57,20 @@ right edges in all three views. In week view, resizing is constrained to the eve
 month view, resizing snaps to whole days and preserves the event's original time of day.
 
 <Demo data={ResourcesScheduleDemos.eventResize} />
+
+## Drop validation
+
+`preventEventOverlap`, `canDropEvent`, `canResizeEventTo`, `canDropExternalEvent` and
+`onEventPlacementRejected` reject a drop or resize before it is committed. See
+[drop validation](/schedule/schedule/#drop-validation) for the full description of how the checks
+compose and what counts as a conflict.
+
+In resource views the conflict set is scoped to the **target** resource: moving an event onto another
+resource row is checked against the events already in that row, not the row it came from. The target
+resource is passed to `canDropEvent` and `canDropExternalEvent` as `resourceId`, and is reported on
+`onEventPlacementRejected`.
+
+<Demo data={ResourcesDayViewDemos.canDropEvent} />
 
 ## Static mode
 

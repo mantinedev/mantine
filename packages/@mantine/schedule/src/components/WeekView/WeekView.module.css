@@ -382,4 +382,10 @@
   border: 1px dashed var(--mantine-color-blue-filled);
   background-color: var(--mantine-color-blue-light);
   opacity: 0.6;
+
+  &:where([data-invalid]) {
+    border-color: var(--mantine-color-error);
+    background-color: transparent;
+    opacity: 0.4;
+  }
 }

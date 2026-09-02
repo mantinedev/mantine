@@ -6,6 +6,7 @@ import {
   MonthResizeEdge,
 } from '../utils/calculate-month-resize-dates/calculate-month-resize-dates';
 import { getIndexFromDragPoint } from '../utils/get-index-from-drag-point/get-index-from-drag-point';
+import { EventResizeValidationOptions, validateEventResize } from './validate-event-resize';
 
 interface ResizeState {
   eventId: string | number;
@@ -20,7 +21,7 @@ interface ResizeState {
   end: DateTimeStringValue;
 }
 
-export interface UseDayGridEventResizeInput {
+export interface UseDayGridEventResizeInput extends EventResizeValidationOptions {
   enabled?: boolean;
   mode?: ScheduleMode;
   onEventResize?: (data: {
@@ -50,11 +51,30 @@ export function useDayGridEventResize({
   mode = 'default',
   onEventResize,
   canResizeEvent,
+  events,
+  preventEventOverlap,
+  canResizeEventTo,
+  onEventPlacementRejected,
 }: UseDayGridEventResizeInput) {
   const [resizeState, setResizeState] = useState<ResizeState | null>(null);
+  const [resizeValid, setResizeValid] = useState(true);
   const resizeRef = useRef<ResizeState | null>(null);
   const justResizedRef = useRef(false);
   const stableOnEventResize = useEffectEvent(onEventResize || (() => {}));
+  const stableOnEventPlacementRejected = useEffectEvent(onEventPlacementRejected || (() => {}));
+
+  const validateResize = useEffectEvent((state: ResizeState) =>
+    validateEventResize({
+      event: state.event,
+      start: state.start,
+      end: state.end,
+      edge: state.edge,
+      events,
+      preventEventOverlap,
+      canResizeEventTo,
+      resourceId: state.event.resourceId,
+    })
+  );
 
   const handleResizeStart = useCallback(
     ({ event, edge, cells, days, pointerEvent }: DayGridResizeStartInput) => {
@@ -83,6 +103,7 @@ export function useDayGridEventResize({
 
       resizeRef.current = state;
       setResizeState(state);
+      setResizeValid(true);
     },
     [enabled, mode]
   );
@@ -123,11 +144,13 @@ export function useDayGridEventResize({
 
       resizeRef.current = { ...state, dayIndex, start, end };
       setResizeState(resizeRef.current);
+      setResizeValid(validateResize(resizeRef.current).valid);
     };
 
     const endGesture = () => {
       resizeRef.current = null;
       setResizeState(null);
+      setResizeValid(true);
       justResizedRef.current = true;
       requestAnimationFrame(() => {
         justResizedRef.current = false;
@@ -137,12 +160,27 @@ export function useDayGridEventResize({
     const handlePointerUp = () => {
       const state = resizeRef.current;
       if (state && (state.start !== state.originalStart || state.end !== state.originalEnd)) {
-        stableOnEventResize({
-          eventId: state.eventId,
-          newStart: state.start,
-          newEnd: state.end,
-          event: state.event,
-        });
+        const { valid, conflicts, reason } = validateResize(state);
+
+        if (valid) {
+          stableOnEventResize({
+            eventId: state.eventId,
+            newStart: state.start,
+            newEnd: state.end,
+            event: state.event,
+          });
+        } else {
+          stableOnEventPlacementRejected({
+            action: 'resize',
+            event: state.event,
+            start: state.start,
+            end: state.end,
+            edge: state.edge,
+            resourceId: state.event.resourceId,
+            conflicts,
+            reason: reason!,
+          });
+        }
       }
 
       endGesture();
@@ -182,5 +220,6 @@ export function useDayGridEventResize({
     previewEnd: resizeState?.end ?? null,
     isResizableEvent,
     wasResizing,
+    resizeValid,
   };
 }

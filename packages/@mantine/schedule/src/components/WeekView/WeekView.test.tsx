@@ -1316,4 +1316,120 @@ describe('@mantine/schedule/WeekView', () => {
       expect(root.style.getPropertyValue('--event-raise-delay')).toBe('250ms');
     });
   });
+
+  describe('drop validation', () => {
+    const movingEvent = {
+      id: 1,
+      title: 'Moving',
+      start: '2025-11-03 09:00:00',
+      end: '2025-11-03 09:30:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const blockingEvent = {
+      id: 2,
+      title: 'Blocking',
+      start: '2025-11-03 10:45:00',
+      end: '2025-11-03 11:15:00',
+      color: 'red',
+      payload: {},
+    };
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'drop', clientY?: number) => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      if (clientY !== undefined) {
+        Object.defineProperty(event, 'clientY', { value: clientY, configurable: true });
+      }
+      fireEvent(node, event);
+    };
+
+    const mockDaySlotRects = (dayColumn: Element) => {
+      Array.from(dayColumn.querySelectorAll('.mantine-WeekView-weekViewDaySlot')).forEach(
+        (node, i) => {
+          (node as HTMLElement).getBoundingClientRect = () =>
+            ({
+              top: i * 30,
+              bottom: (i + 1) * 30,
+              left: 0,
+              right: 100,
+              width: 100,
+              height: 30,
+              x: 0,
+              y: i * 30,
+              toJSON: () => {},
+            }) as DOMRect;
+        }
+      );
+    };
+
+    // clientY 165 snaps the dragged event to 10:45, which collides with `blockingEvent`.
+    const dropOnBlockedSlot = (props: Partial<WeekViewProps>) => {
+      const { container } = render(
+        <WeekView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          events={[movingEvent, blockingEvent]}
+          {...props}
+        />
+      );
+
+      const dayColumn = container.querySelectorAll('.mantine-WeekView-weekViewDaySlots')[0];
+      mockDaySlotRects(dayColumn);
+
+      fireDrag(container.querySelector('[data-event-id="1"]')!, 'dragStart');
+      fireDrag(dayColumn, 'drop', 165);
+    };
+
+    it('does not call onEventDrop when preventEventOverlap finds a conflict', () => {
+      const onEventDrop = jest.fn();
+      dropOnBlockedSlot({ onEventDrop, preventEventOverlap: true });
+
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+
+    it('calls onEventPlacementRejected with the conflicting event', () => {
+      const onEventPlacementRejected = jest.fn();
+      dropOnBlockedSlot({
+        onEventDrop: jest.fn(),
+        onEventPlacementRejected,
+        preventEventOverlap: true,
+      });
+
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
+        action: 'drop',
+        reason: 'overlap',
+        start: '2025-11-03 10:45:00',
+      });
+      expect(onEventPlacementRejected.mock.calls[0][0].conflicts).toHaveLength(1);
+      expect(onEventPlacementRejected.mock.calls[0][0].conflicts[0].id).toBe(2);
+    });
+
+    it('calls onEventDrop when preventEventOverlap is not set', () => {
+      const onEventDrop = jest.fn();
+      dropOnBlockedSlot({ onEventDrop });
+
+      expect(onEventDrop).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not call onEventDrop when canDropEvent returns false', () => {
+      const onEventDrop = jest.fn();
+      dropOnBlockedSlot({ onEventDrop, canDropEvent: () => false });
+
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+  });
 });

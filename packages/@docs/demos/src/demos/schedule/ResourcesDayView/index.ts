@@ -25,3 +25,4 @@ export { permissions } from './ResourcesDayView.demo.permissions';
 export { maxEventsPerTimeSlot } from './ResourcesDayView.demo.maxEventsPerTimeSlot';
 export { recurringEvents } from './ResourcesDayView.demo.recurringEvents';
 export { resourceGroups } from './ResourcesDayView.demo.resourceGroups';
+export { canDropEvent } from './ResourcesDayView.demo.canDropEvent';

@@ -1249,4 +1249,110 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       ).toBe('DIV');
     });
   });
+
+  describe('drop validation', () => {
+    const movingEvent = {
+      id: 'moving',
+      title: 'Moving',
+      start: '2025-01-15 08:00:00',
+      end: '2025-01-15 09:00:00',
+      color: 'blue',
+      payload: {},
+      resourceId: 'room-a',
+    };
+
+    const roomAEvent = {
+      id: 'room-a-event',
+      title: 'Room A booking',
+      start: '2025-01-15 10:00:00',
+      end: '2025-01-15 11:00:00',
+      color: 'red',
+      payload: {},
+      resourceId: 'room-a',
+    };
+
+    const roomBEvent = { ...roomAEvent, id: 'room-b-event', resourceId: 'room-b' };
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'drop', clientX?: number) => {
+      const dragEvent = createEvent[type](node);
+      Object.defineProperty(dragEvent, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      if (clientX !== undefined) {
+        Object.defineProperty(dragEvent, 'clientX', { value: clientX, configurable: true });
+      }
+      fireEvent(node, dragEvent);
+    };
+
+    // 08:00–12:00 at 60 min = 4 slots of 100px; clientX 250 lands in slot 2 => 10:00.
+    const mockRowSlotRects = (row: Element) => {
+      Array.from(row.querySelectorAll('.mantine-ResourcesDayView-resourcesDayViewRowSlot')).forEach(
+        (node, i) => {
+          (node as HTMLElement).getBoundingClientRect = () =>
+            ({
+              top: 0,
+              bottom: 40,
+              left: i * 100,
+              right: (i + 1) * 100 - 1,
+              width: 100,
+              height: 40,
+              x: i * 100,
+              y: 0,
+              toJSON: () => {},
+            }) as DOMRect;
+        }
+      );
+    };
+
+    const dropOnRoomBAt10 = (props: Partial<ResourcesDayViewProps>) => {
+      const { container } = render(
+        <ResourcesDayView {...defaultProps} withEventsDragAndDrop preventEventOverlap {...props} />
+      );
+
+      const rowSlots = container.querySelectorAll(
+        '.mantine-ResourcesDayView-resourcesDayViewRowSlots'
+      );
+      // index 1 is the Room B row – the resource the event is dragged onto
+      mockRowSlotRects(rowSlots[1]);
+
+      fireDrag(container.querySelector('[data-event-id="moving"]')!, 'dragStart');
+      fireDrag(rowSlots[1], 'drop', 250);
+    };
+
+    it('rejects a drop that conflicts with an event of the target resource', () => {
+      const onEventDrop = jest.fn();
+      dropOnRoomBAt10({ events: [movingEvent, roomBEvent], onEventDrop });
+
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+
+    it('allows a drop that only conflicts with an event of another resource', () => {
+      const onEventDrop = jest.fn();
+      dropOnRoomBAt10({ events: [movingEvent, roomAEvent], onEventDrop });
+
+      expect(onEventDrop).toHaveBeenCalledTimes(1);
+      expect(onEventDrop.mock.calls[0][0]).toMatchObject({ resourceId: 'room-b' });
+    });
+
+    it('reports the target resource on the rejection', () => {
+      const onEventPlacementRejected = jest.fn();
+      dropOnRoomBAt10({
+        events: [movingEvent, roomBEvent],
+        onEventDrop: jest.fn(),
+        onEventPlacementRejected,
+      });
+
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
+        action: 'drop',
+        reason: 'overlap',
+        resourceId: 'room-b',
+      });
+    });
+  });
 });

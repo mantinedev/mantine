@@ -69,3 +69,8 @@ export { getDayRelativePercent } from './get-day-relative-percent/get-day-relati
 export { getOverlapClusters } from './get-overlap-clusters/get-overlap-clusters';
 export { applyCascadeLayout } from './apply-cascade-layout/apply-cascade-layout';
 export type { CascadePositionedEvent } from './apply-cascade-layout/apply-cascade-layout';
+export { isEventPlacementAllowed } from './is-event-placement-allowed/is-event-placement-allowed';
+export type {
+  IsEventPlacementAllowedInput,
+  IsEventPlacementAllowedResult,
+} from './is-event-placement-allowed/is-event-placement-allowed';

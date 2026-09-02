@@ -219,3 +219,208 @@ describe('@mantine/schedule/use-event-resize', () => {
     );
   });
 });
+
+describe('@mantine/schedule/use-event-resize placement validation', () => {
+  const conflict: ScheduleEventData = {
+    id: 'conflict',
+    title: 'Conflict',
+    start: '2024-01-15 10:00:00',
+    end: '2024-01-15 11:00:00',
+    color: 'red',
+    payload: {},
+  };
+
+  const distant: ScheduleEventData = {
+    id: 'distant',
+    title: 'Distant',
+    start: '2024-01-15 15:00:00',
+    end: '2024-01-15 16:00:00',
+    color: 'red',
+    payload: {},
+  };
+
+  const baseInput = {
+    enabled: true,
+    startTime: '09:00:00',
+    endTime: '17:00:00',
+    intervalMinutes: 30,
+    resizeIntervalMinutes: 15,
+  } as const;
+
+  function dragTop(result: any, container: HTMLElement, clientY: number) {
+    act(() => {
+      result.current.handleResizeStart({
+        event,
+        edge: 'top',
+        container,
+        originalTop: ORIGINAL_TOP,
+        originalHeight: ORIGINAL_HEIGHT,
+        eventDate: '2024-01-15',
+        pointerEvent: { preventDefault() {}, stopPropagation() {} } as any,
+      });
+    });
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointermove', { clientY }));
+    });
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointerup'));
+    });
+  }
+
+  it('calls onEventResize when the new size is allowed', () => {
+    const onEventResize = jest.fn();
+    const { result } = renderHook(() =>
+      useEventResize({
+        ...baseInput,
+        onEventResize,
+        preventEventOverlap: true,
+        events: [distant],
+      })
+    );
+
+    dragBottom(result, makeContainer(), 75);
+    expect(onEventResize).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not call onEventResize when preventEventOverlap finds a conflict', () => {
+    const onEventResize = jest.fn();
+    const { result } = renderHook(() =>
+      useEventResize({
+        ...baseInput,
+        onEventResize,
+        preventEventOverlap: true,
+        events: [conflict],
+      })
+    );
+
+    dragBottom(result, makeContainer(), 75);
+    expect(onEventResize).not.toHaveBeenCalled();
+  });
+
+  it('does not call onEventResize when canResizeEventTo returns false', () => {
+    const onEventResize = jest.fn();
+    const { result } = renderHook(() =>
+      useEventResize({ ...baseInput, onEventResize, canResizeEventTo: () => false })
+    );
+
+    dragBottom(result, makeContainer(), 75);
+    expect(onEventResize).not.toHaveBeenCalled();
+  });
+
+  it('only rejects the resize when canResizeEventTo returns exactly false', () => {
+    const onEventResize = jest.fn();
+    const { result } = renderHook(() =>
+      useEventResize({
+        ...baseInput,
+        onEventResize,
+        canResizeEventTo: (() => undefined) as any,
+      })
+    );
+
+    dragBottom(result, makeContainer(), 75);
+    expect(onEventResize).toHaveBeenCalledTimes(1);
+  });
+
+  it('reports an overlap rejection with the conflicting events', () => {
+    const onEventPlacementRejected = jest.fn();
+    const { result } = renderHook(() =>
+      useEventResize({
+        ...baseInput,
+        onEventResize: jest.fn(),
+        onEventPlacementRejected,
+        preventEventOverlap: true,
+        events: [conflict],
+      })
+    );
+
+    dragBottom(result, makeContainer(), 75);
+
+    expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+    expect(onEventPlacementRejected).toHaveBeenCalledWith({
+      action: 'resize',
+      event,
+      edge: 'end',
+      start: '2024-01-15 09:00:00',
+      end: '2024-01-15 10:15:00',
+      conflicts: [conflict],
+      reason: 'overlap',
+    });
+  });
+
+  it('reports the start edge when the top handle is dragged', () => {
+    const onEventPlacementRejected = jest.fn();
+    const { result } = renderHook(() =>
+      useEventResize({
+        ...baseInput,
+        onEventResize: jest.fn(),
+        onEventPlacementRejected,
+        canResizeEventTo: () => false,
+      })
+    );
+
+    dragTop(result, makeContainer(), 15);
+
+    expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+    expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
+      action: 'resize',
+      edge: 'start',
+      start: '2024-01-15 09:15:00',
+      end: '2024-01-15 10:00:00',
+      reason: 'rejected',
+      conflicts: [],
+    });
+  });
+
+  it('passes the candidate range and edge to canResizeEventTo', () => {
+    const canResizeEventTo = jest.fn().mockReturnValue(true);
+    const { result } = renderHook(() =>
+      useEventResize({ ...baseInput, onEventResize: jest.fn(), canResizeEventTo })
+    );
+
+    dragBottom(result, makeContainer(), 75);
+
+    expect(canResizeEventTo).toHaveBeenCalledWith({
+      event,
+      start: '2024-01-15 09:00:00',
+      end: '2024-01-15 10:15:00',
+      edge: 'end',
+    });
+  });
+
+  it('marks the resize as invalid while the pointer is over a conflicting size', () => {
+    const { result } = renderHook(() =>
+      useEventResize({
+        ...baseInput,
+        onEventResize: jest.fn(),
+        preventEventOverlap: true,
+        events: [conflict],
+      })
+    );
+
+    act(() => {
+      result.current.handleResizeStart({
+        event,
+        edge: 'bottom',
+        container: makeContainer(),
+        originalTop: ORIGINAL_TOP,
+        originalHeight: ORIGINAL_HEIGHT,
+        eventDate: '2024-01-15',
+        pointerEvent: { preventDefault() {}, stopPropagation() {} } as any,
+      });
+    });
+
+    expect(result.current.resizeValid).toBe(true);
+
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointermove', { clientY: 75 }));
+    });
+
+    expect(result.current.resizeValid).toBe(false);
+
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointerup'));
+    });
+
+    expect(result.current.resizeValid).toBe(true);
+  });
+});

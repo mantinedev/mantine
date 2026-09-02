@@ -4,6 +4,7 @@ import { DateTimeStringValue, ScheduleEventData, ScheduleMode } from '../types';
 import { clampIntervalMinutes } from '../utils/clamp-interval-minutes/clamp-interval-minutes';
 import { getDayRelativePercent } from '../utils/get-day-relative-percent/get-day-relative-percent';
 import { parseTimeString } from '../utils/parse-time-string/parse-time-string';
+import { EventResizeValidationOptions, validateEventResize } from './validate-event-resize';
 
 type ResizeEdge = 'start' | 'end';
 
@@ -23,7 +24,7 @@ interface ResizeState {
   dayCount: number;
 }
 
-export interface UseHorizontalEventResizeInput {
+export interface UseHorizontalEventResizeInput extends EventResizeValidationOptions {
   enabled?: boolean;
   mode?: ScheduleMode;
   startTime: string;
@@ -48,11 +49,36 @@ export function useHorizontalEventResize({
   resizeIntervalMinutes,
   onEventResize,
   canResizeEvent,
+  events,
+  preventEventOverlap,
+  canResizeEventTo,
+  onEventPlacementRejected,
 }: UseHorizontalEventResizeInput) {
   const [resizeState, setResizeState] = useState<ResizeState | null>(null);
+  const [resizeValid, setResizeValid] = useState(true);
   const resizeRef = useRef<ResizeState | null>(null);
   const justResizedRef = useRef(false);
   const stableOnEventResize = useEffectEvent(onEventResize || (() => {}));
+  const stableOnEventPlacementRejected = useEffectEvent(onEventPlacementRejected || (() => {}));
+
+  const validateResize = useEffectEvent(
+    (
+      event: ScheduleEventData,
+      start: DateTimeStringValue,
+      end: DateTimeStringValue,
+      edge: 'start' | 'end'
+    ) =>
+      validateEventResize({
+        event,
+        start,
+        end,
+        edge,
+        events,
+        preventEventOverlap,
+        canResizeEventTo,
+        resourceId: event.resourceId,
+      })
+  );
 
   const parsedStartTime = parseTimeString(startTime);
   const parsedEndTime = parseTimeString(endTime);
@@ -155,8 +181,23 @@ export function useHorizontalEventResize({
 
       resizeRef.current = state;
       setResizeState(state);
+      setResizeValid(true);
     },
     [enabled, mode]
+  );
+
+  const getResizeRange = useCallback(
+    (state: ResizeState) => ({
+      start:
+        state.edge === 'start'
+          ? percentToDateTime(state.currentLeft, state.eventDate)
+          : state.originalStart,
+      end:
+        state.edge === 'start'
+          ? state.originalEnd
+          : percentToDateTime(state.currentLeft + state.currentWidth, state.eventDate),
+    }),
+    [percentToDateTime]
   );
 
   const isResizing = resizeState !== null;
@@ -205,6 +246,9 @@ export function useHorizontalEventResize({
 
       resizeRef.current = { ...state, currentLeft: newLeft, currentWidth: newWidth };
       setResizeState(resizeRef.current);
+
+      const range = getResizeRange(resizeRef.current);
+      setResizeValid(validateResize(state.event, range.start, range.end, state.edge).valid);
     };
 
     const handlePointerUp = () => {
@@ -214,27 +258,38 @@ export function useHorizontalEventResize({
           state.currentLeft !== state.originalLeft ||
           state.currentWidth !== state.originalWidth
         ) {
-          let newStart: DateTimeStringValue;
-          let newEnd: DateTimeStringValue;
-
-          if (state.edge === 'start') {
-            newStart = percentToDateTime(state.currentLeft, state.eventDate);
-            newEnd = state.originalEnd;
-          } else {
-            newStart = state.originalStart;
-            newEnd = percentToDateTime(state.currentLeft + state.currentWidth, state.eventDate);
-          }
-
-          stableOnEventResize({
-            eventId: state.eventId,
+          const { start: newStart, end: newEnd } = getResizeRange(state);
+          const { valid, conflicts, reason } = validateResize(
+            state.event,
             newStart,
             newEnd,
-            event: state.event,
-          });
+            state.edge
+          );
+
+          if (valid) {
+            stableOnEventResize({
+              eventId: state.eventId,
+              newStart,
+              newEnd,
+              event: state.event,
+            });
+          } else {
+            stableOnEventPlacementRejected({
+              action: 'resize',
+              event: state.event,
+              start: newStart,
+              end: newEnd,
+              edge: state.edge,
+              resourceId: state.event.resourceId,
+              conflicts,
+              reason: reason!,
+            });
+          }
         }
       }
       resizeRef.current = null;
       setResizeState(null);
+      setResizeValid(true);
       justResizedRef.current = true;
       requestAnimationFrame(() => {
         justResizedRef.current = false;
@@ -282,5 +337,6 @@ export function useHorizontalEventResize({
     getResizePosition,
     isResizableEvent,
     wasResizing,
+    resizeValid,
   };
 }

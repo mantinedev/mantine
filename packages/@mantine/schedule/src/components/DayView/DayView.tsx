@@ -31,8 +31,13 @@ import {
   DateLabelFormat,
   DateStringValue,
   DateTimeStringValue,
+  PreventEventOverlap,
+  ScheduleCanDropEventData,
+  ScheduleCanDropExternalEventData,
+  ScheduleCanResizeEventToData,
   ScheduleEventData,
   ScheduleEventOverlapMode,
+  ScheduleEventPlacementRejectedData,
   ScheduleMode,
   ScheduleViewLevel,
 } from '../../types';
@@ -261,6 +266,21 @@ export interface DayViewProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Called before a drag is committed, return `false` to reject the drop */
+  canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
+
+  /** Called before an external drop is committed, return `false` to reject the drop. Only `dataTransfer.types` can be read while the drag is in progress. */
+  canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
+
+  /** Called before a resize is committed, return `false` to reject the new size */
+  canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
+
+  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. @default false */
+  preventEventOverlap?: PreventEventOverlap;
+
+  /** Called when a drop or resize is rejected */
+  onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
+
   /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
   eventResizeInterval?: number;
 
@@ -377,6 +397,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    canDropEvent,
+    canDropExternalEvent,
+    canResizeEventTo,
+    preventEventOverlap,
+    onEventPlacementRejected,
     eventResizeInterval,
     recurrenceExpansionLimit,
     getTimeSlotProps,
@@ -532,20 +557,16 @@ export const DayView = factory<DayViewFactory>((_props) => {
     eventOverlapMode,
   });
 
-  const handleExternalDrop = useCallback(
-    (e: React.DragEvent, slotIndex: number) => {
-      if (!onExternalEventDrop) {
-        return;
-      }
+  const getExternalDropDateTime = useCallback(
+    (slotIndex: number) => {
       const slotDate = dayjs(date).format('YYYY-MM-DD');
       const slotTime = slots[slotIndex].startTime;
+      const slotStart = `${slotDate} ${slotTime}`;
 
       if (eventDragInterval == null) {
-        onExternalEventDrop(e.dataTransfer, `${slotDate} ${slotTime}`);
-        return;
+        return slotStart;
       }
 
-      const slotStart = `${slotDate} ${slotTime}`;
       const { start } = calculateDropTime({
         draggedEvent: { start: slotStart, end: slotStart } as ScheduleEventData,
         targetDate: date,
@@ -557,9 +578,20 @@ export const DayView = factory<DayViewFactory>((_props) => {
         startTime,
         endTime,
       });
-      onExternalEventDrop(e.dataTransfer, dayjs(start).format('YYYY-MM-DD HH:mm:ss'));
+
+      return dayjs(start).format('YYYY-MM-DD HH:mm:ss');
     },
-    [onExternalEventDrop, date, slots, eventDragInterval, intervalMinutes, startTime, endTime]
+    [date, slots, eventDragInterval, intervalMinutes, startTime, endTime]
+  );
+
+  const handleExternalDrop = useCallback(
+    (e: React.DragEvent, slotIndex: number) => {
+      if (!onExternalEventDrop) {
+        return;
+      }
+      onExternalEventDrop(e.dataTransfer, getExternalDropDateTime(slotIndex));
+    },
+    [onExternalEventDrop, getExternalDropDateTime]
   );
 
   const getDropTimeForSlot = (slotIndex: number, draggedEvent: ScheduleEventData) => {
@@ -586,6 +618,12 @@ export const DayView = factory<DayViewFactory>((_props) => {
     onEventDragEnd,
     calculateDropTarget: getDropTimeForSlot,
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
+    events: expandedEvents,
+    preventEventOverlap,
+    canDropEvent,
+    canDropExternalEvent,
+    onEventPlacementRejected,
+    getExternalDropDateTime,
   });
 
   const updateDragPreview = (slotIndex: number) => {
@@ -613,6 +651,10 @@ export const DayView = factory<DayViewFactory>((_props) => {
     resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
+    events: expandedEvents,
+    preventEventOverlap,
+    canResizeEventTo,
+    onEventPlacementRejected,
   });
 
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
@@ -663,7 +705,10 @@ export const DayView = factory<DayViewFactory>((_props) => {
             : undefined
         }
         {...stylesApiProps}
-        mod={{ cascade: eventOverlapMode === 'cascade' }}
+        mod={{
+          cascade: eventOverlapMode === 'cascade',
+          invalid: resizePosition !== null && !eventResize.resizeValid,
+        }}
         style={{
           ...stylesApiProps.styles?.event,
           top: `${eventTop}%`,
@@ -962,6 +1007,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
                 {dragDrop.dragPreview && dragDrop.dragContextValue.draggedEvent && (
                   <Box
+                    mod={{ invalid: !dragDrop.dropValid }}
                     {...getStyles('dayViewDragPreview', {
                       style: (() => {
                         const { top, height } = getDayPosition({

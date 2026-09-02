@@ -1,4 +1,11 @@
-import { Changelog970Demos, TipTapDemos, TooltipDemos, TreeSelectDemos, WeekViewDemos } from '@docs/demos';
+import {
+  Changelog970Demos,
+  ResourcesDayViewDemos,
+  TipTapDemos,
+  TooltipDemos,
+  TreeSelectDemos,
+  WeekViewDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -71,6 +78,35 @@ the available width. Covered events can still be read and used: rest the pointer
 raised above the events covering it, which also makes its resize handles reachable. Keyboard users get
 the same result by focusing the event with `Tab`. `eventOverlapRaiseDelay` prop controls how long the
 pointer must rest on an event before it is raised, in milliseconds (`600` by default).
+
+## Schedule drop validation
+
+All [Schedule](/schedule/schedule) views can now reject a drag or resize **before** it is committed,
+based on where the event is being dropped rather than on which event is being dragged. Previously
+`canDragEvent` and `canResizeEvent` only decided whether an event was draggable or resizable at all,
+so the only way to prevent a double booking was to accept the drop, notice the conflict in the
+handler and not update state – which produced a snap-back with no explanation:
+
+- `preventEventOverlap` rejects placements that would make the event overlap another event. Pass a
+  function to decide per pair of events: return `true` to forbid that particular overlap.
+- `canDropEvent` and `canResizeEventTo` are called before a drop or resize is committed – return
+  `false` to reject it.
+- `canDropExternalEvent` does the same for items dragged in from outside the schedule.
+- `onEventPlacementRejected` reports the rejection with the conflicting events and the reason.
+
+<Demo data={WeekViewDemos.preventEventOverlap} />
+
+The checks compose: a placement is allowed only when the overlap check passes and the matching
+callback returns a value other than `false`. The overlap check runs first, so `onEventPlacementRejected`
+can report `conflicts` without your code repeating the work. While the pointer is over an invalid
+target the drag ghost and the resizing event get `data-invalid`, so the rejection is visible before the
+pointer is released.
+
+In [resource views](/schedule/resources-schedule) the conflict set is scoped to the **target**
+resource, so moving an event onto another resource row is checked against that row rather than the one
+it came from:
+
+<Demo data={ResourcesDayViewDemos.canDropEvent} />
 
 ## @mantine/mcp-server documentation coverage
 

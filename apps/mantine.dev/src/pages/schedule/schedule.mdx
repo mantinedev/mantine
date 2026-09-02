@@ -1,4 +1,4 @@
-import { ScheduleDemos } from '@docs/demos';
+import { ScheduleDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -110,6 +110,95 @@ edge of an event to adjust its start or end time. Use `onEventResize` callback t
 the resize. Event resize works in both Day and Week views and can be combined with drag and drop.
 
 <Demo data={ScheduleDemos.eventResize} />
+
+## Drop validation
+
+By default a drop or resize is always committed and the application decides in `onEventDrop` /
+`onEventResize` whether to accept it. That produces a snap-back with no explanation. Use the
+validation props to reject a placement **before** it is committed, based on where the event is
+being dropped rather than on which event is being dragged:
+
+<DataTable
+  head={['Prop', 'Description']}
+  data={[
+    [
+      '`preventEventOverlap`',
+      'Rejects placements that would overlap another event. Pass a function to decide per pair of events.',
+    ],
+    ['`canDropEvent`', 'Called before a drag is committed, return `false` to reject the drop'],
+    ['`canResizeEventTo`', 'Called before a resize is committed, return `false` to reject the new size'],
+    [
+      '`canDropExternalEvent`',
+      'Called before an external drop is committed, return `false` to reject the drop',
+    ],
+    ['`onEventPlacementRejected`', 'Called when a drop or resize is rejected'],
+  ]}
+/>
+
+The checks compose: a placement is allowed only when the overlap check passes **and** the matching
+callback returns a value other than `false`. The overlap check runs first, so `onEventPlacementRejected`
+can report `conflicts` without your code repeating the work.
+
+While the pointer is over an invalid target the drag ghost gets `data-invalid`, and a resizing event
+gets `data-invalid` on the `event` selector, so the rejection is visible before the pointer is
+released. The drop is still allowed at the browser level – marking it as not-allowed would make the
+browser skip the `drop` event entirely and `onEventPlacementRejected` would never fire.
+
+<Demo data={WeekViewDemos.preventEventOverlap} />
+
+### What counts as a conflict
+
+`preventEventOverlap` compares the candidate range against the events the view has expanded. These
+are excluded from the conflict set:
+
+- The moving event itself, matched by `id`, and other occurrences of the same recurring series that
+  share its `recurrenceId`.
+- Events with `display: 'background'` – they are a shading layer, not bookings.
+- All-day events when the moving event is timed, and timed events when the moving event is all-day.
+
+Touching is not overlapping: an event ending at 10:00 and one starting at 10:00 do not conflict.
+
+In `Resources*` views the conflict set is scoped to the **target** resource, so moving an event to a
+different resource row is checked against that row rather than the one it came from.
+
+`preventEventOverlap` is a **view-local** guard: it only sees events the current view has expanded, so
+a conflict outside the visible range is not detected. An application with authoritative data should
+still validate in `onEventDrop`.
+
+### Blocking drops onto closed hours
+
+Background events are deliberately not part of the conflict set. To block drops onto a closed or
+blocked zone, use `canDropEvent` with the exported `isEventsOverlap` helper:
+
+```tsx
+import { isEventsOverlap, ScheduleEventData } from '@mantine/schedule';
+
+<WeekView
+  canDropEvent={({ start, end }) =>
+    !closedZones.some((zone) => isEventsOverlap({ start, end } as ScheduleEventData, zone))
+  }
+/>;
+```
+
+### Rejection data
+
+`onEventPlacementRejected` receives a discriminated union keyed on `action`. Every member carries
+`start`, `end`, `conflicts` and `reason` (`'overlap'` when the overlap check found a conflict,
+`'rejected'` when a callback returned `false`):
+
+<DataTable
+  head={['action', 'Extra fields']}
+  data={[
+    ['`drop`', '`event`, `resourceId`'],
+    ['`resize`', '`event`, `edge`'],
+    ['`external-drop`', '`dataTransfer`, `resourceId`'],
+  ]}
+/>
+
+External drops carry no `event` and no duration – `onExternalEventDrop` only produces a single
+datetime – so `preventEventOverlap` does not apply to them and their `reason` is always `'rejected'`.
+Note that `dataTransfer` data cannot be read while a drag is in progress, only `dataTransfer.types`
+is available to `canDropExternalEvent`.
 
 ## Recurring events
 

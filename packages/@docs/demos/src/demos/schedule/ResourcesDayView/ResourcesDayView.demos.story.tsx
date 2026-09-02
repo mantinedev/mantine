@@ -137,3 +137,8 @@ export const Demo_resourceGroups = {
   name: '⭐ Demo: resourceGroups',
   render: renderDemo(demos.resourceGroups),
 };
+
+export const Demo_canDropEvent = {
+  name: '⭐ Demo: canDropEvent',
+  render: renderDemo(demos.canDropEvent),
+};
