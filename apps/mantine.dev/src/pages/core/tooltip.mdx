@@ -59,6 +59,21 @@ Example of using the `target` prop with a string selector:
 
 <Demo data={TooltipDemos.target} />
 
+## Hide detached
+
+Use the `hideDetached` prop to configure how the tooltip behaves when the target
+element is removed from the DOM, hidden with `display: none`, or scrolled out of
+the viewport or of a scrollable container that clips it.
+
+By default, `hideDetached` is enabled – the tooltip is hidden with the target element.
+You can change this behavior with `hideDetached={false}`. To see the difference, try to scroll
+the root element of the following demo:
+
+<Demo data={TooltipDemos.hideDetached} demoProps={{ defaultExpanded: false }} />
+
+Note that `hideDetached` has no effect on [Tooltip.Floating](#floating-tooltip) –
+it is positioned relative to the mouse pointer rather than to a target element.
+
 ## Required ref prop
 
 Custom components that are rendered inside `Tooltip` are required to support `ref` prop:

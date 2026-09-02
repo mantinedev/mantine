@@ -1,4 +1,4 @@
-import { Changelog970Demos, TipTapDemos, TreeSelectDemos, WeekViewDemos } from '@docs/demos';
+import { Changelog970Demos, TipTapDemos, TooltipDemos, TreeSelectDemos, WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -109,3 +109,14 @@ for selected values in `multiple` and `checkbox` modes, similar to `renderPill` 
 `nodeProps` or the node structure, for example to show a different icon for parent and leaf nodes:
 
 <Demo data={TreeSelectDemos.renderPill} />
+
+## Tooltip hideDetached
+
+[Tooltip](/core/tooltip) now supports `hideDetached` prop, which works the same way as
+[Popover hideDetached](/core/popover/#hide-detached). It is enabled by default: the tooltip is now
+hidden when its target element is removed from the DOM, hidden with `display: none`, or scrolled out
+of a container that clips it. Previously, the tooltip stayed in place, floating over unrelated
+content. Set `hideDetached={false}` to restore the previous behavior. The prop has no effect on
+`Tooltip.Floating`, which is positioned relative to the mouse pointer.
+
+<Demo data={TooltipDemos.hideDetached} />
