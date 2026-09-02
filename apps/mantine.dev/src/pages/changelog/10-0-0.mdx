@@ -136,7 +136,7 @@ New variables (values differ per color scheme):
     [<Code>--mantine-color-hover</Code>, <Code>gray-0</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-active</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-selected</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
-    [<Code>--mantine-color-track</Code>, <Code>gray-1</Code>, <Code>dark-8</Code>],
+    [<Code>--mantine-color-track</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
     [<Code>--mantine-color-text-muted</Code>, <Code>gray-6</Code>, <Code>dark-2</Code>],
     [<Code>--mantine-color-surface-page</Code>, <Code>white</Code>, <Code>dark-7</Code>],
     [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
@@ -177,7 +177,7 @@ color scheme without hardcoding separate `gray-N`/`dark-N` pairs.
 
 ### Surface component
 
-A new `Surface` component replaces `Paper` as the depth-aware background primitive. `Surface` has
+A new [Surface](/core/surface) component replaces `Paper` as the depth-aware background primitive. `Surface` has
 3 levels – `0` (page), `1` (panel, the default for a standalone `Surface`), and `2` (panel-2) – and
 in dark mode each level is one shade lighter, giving your UI natural elevation layers. In light mode
 surfaces are near-flat and rely on shadows and borders instead of tone. A separate
@@ -196,12 +196,12 @@ function Demo() {
   return <Surface level={2} p="md">Content on elevation level 2</Surface>;
 }
 
-// Automatic depth stepping (each nested Surface steps up one level, clamped at level 2)
+// Automatic depth stepping, on by default (each nested Surface steps up one level, clamped at level 2)
 function Demo() {
   return (
-    <Surface autoDepth p="md">
+    <Surface p="md">
       Outer surface
-      <Surface autoDepth p="md">
+      <Surface p="md">
         Inner surface – one level higher
       </Surface>
     </Surface>

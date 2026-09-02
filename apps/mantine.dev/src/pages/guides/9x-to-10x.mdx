@@ -104,9 +104,9 @@ function Demo() {
 
 ### Paper is deprecated — use Surface
 
-`Paper` is deprecated in v10 and will be removed in v11. The replacement is `Surface`, which has
-the same API (`shadow`, `radius`, `withBorder`, padding props, polymorphic `component` prop) plus
-depth-aware background stepping in dark mode.
+`Paper` is deprecated in v10 and will be removed in v11. The replacement is
+[Surface](/core/surface), which has the same API (`shadow`, `radius`, `withBorder`, padding props,
+polymorphic `component` prop) plus depth-aware background stepping in dark mode.
 
 The deprecated `Paper` wrapper still works in v10 with no visual change — it renders a flat surface
 on the body background with no depth stepping, so existing code is safe until v11.
@@ -127,7 +127,10 @@ function Demo() {
 }
 ```
 
-`Surface` gains depth awareness when you add the `autoDepth` prop or set an explicit `level`:
+In light color scheme the replacement is visually identical. In dark color scheme `Surface` is
+depth-aware by default (`autoDepth` prop is `true`): a standalone `Surface` renders one shade
+lighter than `Paper` (the panel level instead of the body background), and each nested `Surface`
+steps one level higher:
 
 ```tsx
 import { Surface } from '@mantine/core';
@@ -135,14 +138,17 @@ import { Surface } from '@mantine/core';
 // Automatic depth stepping – each nested Surface steps one level higher in dark mode
 function Demo() {
   return (
-    <Surface autoDepth shadow="sm" p="md">
-      <Surface autoDepth p="md">
+    <Surface shadow="sm" p="md">
+      <Surface p="md">
         One level deeper
       </Surface>
     </Surface>
   );
 }
 ```
+
+This is the intended look for cards and panels in 10.x. To keep the exact `Paper` appearance in
+dark color scheme, set `level={0}` – see the [Surface documentation](/core/surface) for details.
 
 ### Darker dark theme
 

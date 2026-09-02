@@ -141,6 +141,7 @@ export * from './data/Spotlight.styles-api';
 export * from './data/Stack.styles-api';
 export * from './data/Stat.styles-api';
 export * from './data/Stepper.styles-api';
+export * from './data/Surface.styles-api';
 export * from './data/Switch.styles-api';
 export * from './data/SunburstChart.styles-api';
 export * from './data/Tabs.styles-api';

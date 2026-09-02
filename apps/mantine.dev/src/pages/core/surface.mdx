@@ -1,0 +1,157 @@
+import { Code } from '@mantine/core';
+import { SurfaceDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Surface);
+
+## Usage
+
+`Surface` is the depth-aware background primitive: it renders a container with background,
+optional shadow, border and border-radius, and picks its background color from one of three
+elevation levels. It replaces the deprecated [Paper](/core/paper) component and supports
+the same API (`shadow`, `radius`, `withBorder`, padding props, polymorphic `component` prop):
+
+<Demo data={SurfaceDemos.usage} />
+
+## Surface levels
+
+Every `Surface` resolves to one of three depth levels. Each level maps to a surface color
+token defined by the [colors system](/theming/colors):
+
+<DataTable
+  head={['Level', 'Token', 'Light', 'Dark']}
+  data={[
+    ['0', <Code>--mantine-color-surface-page</Code>, <Code>white</Code>, <Code>dark-7</Code>],
+    ['1', <Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
+    ['2', <Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
+  ]}
+/>
+
+In dark color scheme each level is one shade lighter than the previous one, so nested surfaces
+read as natural elevation layers. In light color scheme all levels are white by default – light
+interfaces are near-flat and rely on shadows and borders instead of tone, so the demos on this
+page are best viewed in dark color scheme.
+
+A separate `--mantine-color-surface-sunken` token covers inset elements (`Code`, `Kbd`,
+`SegmentedControl` root, `Slider` and `Progress` tracks). It is not a `Surface` level – sunken
+backgrounds sit below the page and are not used for containers.
+
+## Automatic depth
+
+By default, each `Surface` renders one level above its parent surface (`autoDepth` prop is `true`).
+A standalone `Surface` resolves to level 1 (`surface-panel`), a `Surface` nested inside it resolves
+to level 2 (`surface-panel-2`), and deeper nesting is clamped at level 2:
+
+<Demo data={SurfaceDemos.autoDepth} />
+
+The parent level is read from React context provided by the nearest ancestor `Surface`, so
+automatic depth works regardless of how deep in the DOM the nested `Surface` is rendered.
+
+Set `autoDepth={false}` to render the surface at the same level as its parent instead of
+stepping up:
+
+```tsx
+import { Surface } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Surface p="md">
+      Level 1
+      <Surface p="md" autoDepth={false}>
+        Also level 1 – same background as the parent
+      </Surface>
+    </Surface>
+  );
+}
+```
+
+## level prop
+
+Set the `level` prop to control the depth explicitly. It accepts an absolute value (`0`–`2`,
+number or string) or a relative value (`"+1"`, `"-1"`) that is applied against the parent
+surface level. When `level` is set, it always overrides `autoDepth`, and both forms are
+clamped to the `0`–`2` range:
+
+<Demo data={SurfaceDemos.level} />
+
+## Styling surfaces by level
+
+The root element always has the `data-mantine-surface-level` attribute with the resolved level
+(`0`, `1` or `2`). Use it to style surfaces differently depending on their depth, for example
+to add a border only to the deepest surfaces:
+
+```css
+.surface {
+  &[data-mantine-surface-level='2'] {
+    border: 1px solid var(--mantine-color-border-subtle);
+  }
+}
+```
+
+## Customize surface colors
+
+Surface level backgrounds are defined by the `--mantine-color-surface-page`,
+`--mantine-color-surface-panel` and `--mantine-color-surface-panel-2` CSS variables. Override
+them per color scheme with the `surfaces` [theme](/theming/theme-object) key – all components
+that use the corresponding token (including `Surface`) update together:
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  surfaces: {
+    dark: {
+      panel: '#101113',
+      panel2: '#17181c',
+    },
+  },
+});
+
+function Demo() {
+  return <MantineProvider theme={theme}>{/* Your app */}</MantineProvider>;
+}
+```
+
+Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2` and `sunken` keys. Note that
+`page` also controls the page background (`--mantine-color-body`), modals and dropdowns – see
+the [colors guide](/theming/colors) for the full list of consumers.
+
+## Migrating from Paper
+
+[Paper](/core/paper) is deprecated in 10.0 and will be removed in 11.0. `Surface` supports
+all `Paper` props, so in most cases it is enough to replace the component name:
+
+```tsx
+import { Paper, Surface } from '@mantine/core';
+
+// ❌ Deprecated
+function Demo() {
+  return <Paper shadow="sm" p="md">Content</Paper>;
+}
+
+// ✅ Use Surface instead
+function Demo() {
+  return <Surface shadow="sm" p="md">Content</Surface>;
+}
+```
+
+In light color scheme the replacement is visually identical. In dark color scheme there is one
+difference: `Paper` always renders on the body background (level 0), while a standalone
+`Surface` resolves to level 1 and renders one shade lighter. This is the intended look for
+cards and panels in 10.x. If you need to keep the exact `Paper` appearance, set `level={0}`:
+
+```tsx
+import { Surface } from '@mantine/core';
+
+function Demo() {
+  return <Surface level={0} shadow="sm" p="md">Same background as Paper</Surface>;
+}
+```
+
+<Polymorphic
+  defaultElement="div"
+  changeToElement="button"
+  component="Surface"
+  withNext
+/>

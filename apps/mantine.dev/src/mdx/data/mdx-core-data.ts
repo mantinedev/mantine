@@ -452,6 +452,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/stack.mdx',
     searchTags: 'column, vertical flex, vstack, flex column',
   },
+  Surface: {
+    title: 'Surface',
+    package: '@mantine/core',
+    slug: '/core/surface',
+    props: ['Surface'],
+    styles: ['Surface'],
+    description: 'Depth-aware background primitive with elevation levels for dark color scheme',
+    polymorphic: true,
+    source: '@mantine/core/src/components/Surface/Surface.tsx',
+    docs: 'core/surface.mdx',
+    searchTags: 'paper, card, sheet, elevated container, panel, elevation, depth, background',
+  },
   Switch: {
     title: 'Switch',
     package: '@mantine/core',

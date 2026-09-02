@@ -236,7 +236,7 @@ Key role variables and their defaults:
     [<Code>--mantine-color-divider</Code>, <Code>gray-3</Code>, <Code>dark-4</Code>],
     [<Code>--mantine-color-hover</Code>, <Code>gray-0</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-active</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
-    [<Code>--mantine-color-track</Code>, <Code>gray-1</Code>, <Code>dark-8</Code>],
+    [<Code>--mantine-color-track</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
     [<Code>--mantine-color-text-muted</Code>, <Code>gray-6</Code>, <Code>dark-2</Code>],
     [<Code>--mantine-color-surface-page</Code>, <Code>white</Code>, <Code>dark-7</Code>],
     [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
@@ -331,8 +331,9 @@ styles.
 
 ## Surface component
 
-Surface is the depth-aware background primitive introduced in v10. It replaces
-`Paper` (deprecated in v10, removed in v11) and supports automatic elevation stepping in dark mode:
+[Surface](/core/surface) is the depth-aware background primitive introduced in v10. It replaces
+`Paper` (deprecated in v10, removed in v11) and supports automatic elevation stepping in dark mode –
+each nested `Surface` renders one level above its parent by default:
 
 ```tsx
 import { Surface } from '@mantine/core';
@@ -340,7 +341,7 @@ import { Surface } from '@mantine/core';
 function Demo() {
   return (
     <Surface shadow="sm" radius="md" p="md">
-      <Surface autoDepth p="md">
+      <Surface p="md">
         Inner surface – one level deeper in dark mode
       </Surface>
     </Surface>
@@ -350,7 +351,8 @@ function Demo() {
 
 Depth can also be set explicitly with the `level` prop, either as an absolute `0`–`2` value or as a
 relative string like `level="+1"`/`level="-1"` that steps from the parent surface's level. Either
-form overrides `autoDepth` and clamps to the `0`–`2` range.
+form overrides `autoDepth` and clamps to the `0`–`2` range. See the
+[Surface documentation](/core/surface) for all details.
 
 Surface backgrounds can be overridden per color scheme with the `surfaces` theme key, without
 touching CSS variables directly:

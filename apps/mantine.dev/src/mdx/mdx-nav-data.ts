@@ -453,6 +453,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Portal,
       MDX_DATA.ScrollArea,
       MDX_DATA.Scroller,
+      MDX_DATA.Surface,
       MDX_DATA.Tilt,
       MDX_DATA.Transition,
       MDX_DATA.VisuallyHidden,
