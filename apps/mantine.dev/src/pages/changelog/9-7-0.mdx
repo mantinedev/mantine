@@ -1,5 +1,6 @@
 import {
   Changelog970Demos,
+  NotificationsDemos,
   ResourcesDayViewDemos,
   TipTapDemos,
   TooltipDemos,
@@ -156,6 +157,25 @@ content. Set `hideDetached={false}` to restore the previous behavior. The prop h
 `Tooltip.Floating`, which is positioned relative to the mouse pointer.
 
 <Demo data={TooltipDemos.hideDetached} />
+
+## Notifications auto close progress
+
+[Notifications](/x/notifications) now support `withAutoCloseProgress` prop. When set, a progress line
+that fills up until the notification auto closes is displayed at the bottom of every notification.
+The line fades out while the auto close timer is paused (for example, when the notification is hovered),
+starts over when the timer restarts, and uses the notification color. The prop sets the default for all notifications, it can be overridden
+for individual notifications with `withAutoCloseProgress` property in `notifications.show` and
+`notifications.update` functions:
+
+<Demo data={NotificationsDemos.autoCloseProgress} />
+
+## Notifications promise
+
+New `notifications.promise` function displays a loading notification while a promise is pending and
+updates it with success or error state once the promise settles. `success` and `error` can be
+functions that receive the resolved value or the rejection reason:
+
+<Demo data={NotificationsDemos.promise} />
 
 ## Other changes
 

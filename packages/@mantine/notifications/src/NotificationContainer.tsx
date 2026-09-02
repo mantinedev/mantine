@@ -20,6 +20,8 @@ interface NotificationContainerProps extends NotificationProps {
   allowDragDismiss: boolean;
   allowScrollDismiss: boolean;
   paused: boolean;
+  withAutoCloseProgress: boolean;
+  progressProps: { className?: string; style?: React.CSSProperties };
   onHoverStart?: () => void;
   onHoverEnd?: () => void;
   onExpandRequest?: () => void;
@@ -83,6 +85,8 @@ export function NotificationContainer({
   allowDragDismiss,
   allowScrollDismiss,
   paused,
+  withAutoCloseProgress,
+  progressProps,
   onHoverStart,
   onHoverEnd,
   onExpandRequest,
@@ -113,10 +117,14 @@ export function NotificationContainer({
     renderNotification: _renderNotification,
     onOpen: _onOpen,
     priority: _priority,
+    withAutoCloseProgress: _withAutoCloseProgress,
     __sequence: _sequence,
     ...notificationProps
   } = data as NotificationData & { __sequence?: number };
   const autoCloseDuration = getAutoClose(autoClose, data.autoClose);
+  const [autoCloseProgress, setAutoCloseProgress] = useState({ running: false, cycle: 0 });
+  const hasAutoCloseProgress =
+    (data.withAutoCloseProgress ?? withAutoCloseProgress) && typeof autoCloseDuration === 'number';
   const autoCloseTimeout = useRef<number>(-1);
   const hideTimeout = useRef<number>(-1);
   const scrollDismissTimeout = useRef<number>(-1);
@@ -153,7 +161,10 @@ export function NotificationContainer({
 
   useEffect(() => () => releaseActive(), []);
 
-  const cancelAutoClose = () => window.clearTimeout(autoCloseTimeout.current);
+  const cancelAutoClose = () => {
+    window.clearTimeout(autoCloseTimeout.current);
+    setAutoCloseProgress((current) => (current.running ? { ...current, running: false } : current));
+  };
   const cancelHide = () => window.clearTimeout(hideTimeout.current);
   const cancelScrollDismissReset = () => window.clearTimeout(scrollDismissTimeout.current);
 
@@ -193,6 +204,7 @@ export function NotificationContainer({
 
     cancelAutoClose();
     autoCloseTimeout.current = window.setTimeout(handleHide, autoCloseDuration);
+    setAutoCloseProgress((current) => ({ running: true, cycle: current.cycle + 1 }));
   };
 
   const getExitOffset = (direction: -1 | 1) => {
@@ -474,7 +486,7 @@ export function NotificationContainer({
   useEffect(() => {
     handleAutoClose();
     return cancelAutoClose;
-  }, [autoCloseDuration, active, dismissed]);
+  }, [autoCloseDuration, active, dismissed, hasAutoCloseProgress]);
 
   useEffect(() => {
     if (paused) {
@@ -545,6 +557,18 @@ export function NotificationContainer({
       onClose={handleHide}
     >
       {message}
+      {hasAutoCloseProgress && (
+        <div
+          key={autoCloseProgress.cycle}
+          aria-hidden
+          data-paused={!autoCloseProgress.running || undefined}
+          className={progressProps.className}
+          style={{
+            ...progressProps.style,
+            ['--notifications-progress-duration' as string]: `${autoCloseDuration}ms`,
+          }}
+        />
+      )}
     </Notification>
   );
 }

@@ -48,7 +48,7 @@ const STACK_EXPANDED_GAP = 16;
 /** Offset step used for a notification that has not been measured yet, in px */
 const FALLBACK_NOTIFICATION_HEIGHT = 80;
 
-export type NotificationsStylesNames = 'root' | 'notification';
+export type NotificationsStylesNames = 'root' | 'notification' | 'progress';
 export type NotificationsCssVariables = {
   root: '--notifications-z-index' | '--notifications-container-width';
 };
@@ -99,6 +99,9 @@ export interface NotificationsProps
 
   /** Controls how notifications are positioned in the stack, `'default'` – standard vertical list, `'stacked'` – only first notification is fully visible, rest are stacked behind @default 'default' */
   layout?: 'default' | 'stacked';
+
+  /** Determines whether a progress line that fills up until the notification auto closes is displayed at the bottom of every notification, can be overwritten for individual notifications in `notifications.show` and `notifications.update` functions @default false */
+  withAutoCloseProgress?: boolean;
 }
 
 export type NotificationsFactory = Factory<{
@@ -110,6 +113,7 @@ export type NotificationsFactory = Factory<{
     show: typeof notifications.show;
     hide: typeof notifications.hide;
     update: typeof notifications.update;
+    promise: typeof notifications.promise;
     clean: typeof notifications.clean;
     cleanQueue: typeof notifications.cleanQueue;
     updateState: typeof notifications.updateState;
@@ -130,6 +134,7 @@ const defaultProps = {
   withinPortal: true,
   pauseResetOnHover: 'all',
   layout: 'default',
+  withAutoCloseProgress: false,
 } satisfies Partial<NotificationsProps>;
 
 const varsResolver = createVarsResolver<NotificationsFactory>((_, { zIndex, containerWidth }) => ({
@@ -164,6 +169,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     pauseResetOnHover,
     renderNotification,
     layout,
+    withAutoCloseProgress,
     ...others
   } = props;
 
@@ -478,6 +484,8 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
                     : renderNotification
                 }
                 layout={layout}
+                withAutoCloseProgress={withAutoCloseProgress}
+                progressProps={getStyles('progress')}
                 stackIndex={stackIndex}
                 stackSize={groupLength}
                 stackPosition={pos}
@@ -563,6 +571,7 @@ Notifications.displayName = '@mantine/notifications/Notifications';
 Notifications.show = notifications.show;
 Notifications.hide = notifications.hide;
 Notifications.update = notifications.update;
+Notifications.promise = notifications.promise;
 Notifications.clean = notifications.clean;
 Notifications.cleanQueue = notifications.cleanQueue;
 Notifications.updateState = notifications.updateState;

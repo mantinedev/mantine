@@ -1683,4 +1683,273 @@ describe('@mantine/core/Notifications', () => {
 
     (window as any).PointerEvent = originalPointerEvent;
   });
+  describe('auto close progress', () => {
+    const getProgress = (container: HTMLElement) =>
+      container.querySelector<HTMLElement>('.mantine-Notifications-progress');
+
+    it('renders the progress line with the auto close duration when withAutoCloseProgress is set', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'With progress' }, store);
+      });
+
+      const progress = getProgress(container);
+      expect(progress).toBeInTheDocument();
+      expect(progress!.style.getPropertyValue('--notifications-progress-duration')).toBe('1000ms');
+      expect(progress).toHaveAttribute('aria-hidden', 'true');
+      expect(progress).not.toHaveAttribute('data-paused');
+    });
+
+    it('uses the notification auto close timeout for the progress line duration', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'With progress', autoClose: 2500 }, store);
+      });
+
+      expect(
+        getProgress(container)!.style.getPropertyValue('--notifications-progress-duration')
+      ).toBe('2500ms');
+    });
+
+    it('does not render the progress line by default', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'No progress' }, store);
+      });
+
+      expect(getProgress(container)).toBeNull();
+    });
+
+    it('does not render the progress line when auto close is disabled', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Never closes', autoClose: false }, store);
+      });
+
+      expect(getProgress(container)).toBeNull();
+    });
+
+    it.each([
+      [false, true, true],
+      [true, false, false],
+    ])(
+      'lets the notification override withAutoCloseProgress=%s with %s',
+      (globalValue, notificationValue, rendered) => {
+        jest.useFakeTimers();
+        const store = createNotificationsStore();
+        const { container } = render(
+          <Notifications
+            store={store}
+            withinPortal={false}
+            autoClose={1000}
+            transitionDuration={10}
+            withAutoCloseProgress={globalValue}
+          />
+        );
+
+        act(() => {
+          notifications.show(
+            { id: 'progress', message: 'Override', withAutoCloseProgress: notificationValue },
+            store
+          );
+        });
+
+        expect(getProgress(container) !== null).toBe(rendered);
+      }
+    );
+
+    it('removes the progress line when the notification is updated to never close', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Closes' }, store);
+      });
+      expect(getProgress(container)).toBeInTheDocument();
+
+      act(() => {
+        notifications.update({ id: 'progress', message: 'Never closes', autoClose: false }, store);
+      });
+      expect(getProgress(container)).toBeNull();
+    });
+
+    it('pauses the progress line while hovered and restarts it when the pointer leaves', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Hover me' }, store);
+      });
+
+      const notification = screen.getByRole('alert');
+      const before = getProgress(container);
+
+      act(() => {
+        fireEvent.mouseEnter(notification);
+      });
+
+      expect(getProgress(container)).toBe(before);
+      expect(before).toHaveAttribute('data-paused');
+
+      act(() => {
+        fireEvent.mouseLeave(notification);
+      });
+
+      const after = getProgress(container);
+      expect(after).not.toBe(before);
+      expect(after).not.toHaveAttribute('data-paused');
+    });
+
+    it('pauses every progress line while any notification is hovered', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'first', message: 'First' }, store);
+        notifications.show({ id: 'second', message: 'Second' }, store);
+      });
+
+      const [first] = screen.getAllByRole('alert');
+
+      act(() => {
+        fireEvent.mouseEnter(first);
+      });
+
+      const progressLines = container.querySelectorAll('.mantine-Notifications-progress');
+      expect(progressLines).toHaveLength(2);
+      progressLines.forEach((line) => expect(line).toHaveAttribute('data-paused'));
+    });
+
+    it('restarts the auto close timer when progress is enabled for an active notification', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Late progress' }, store);
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(500);
+      });
+
+      act(() => {
+        notifications.update(
+          { id: 'progress', message: 'Late progress', withAutoCloseProgress: true },
+          store
+        );
+      });
+
+      expect(getProgress(container)).toBeInTheDocument();
+
+      act(() => {
+        jest.advanceTimersByTime(700);
+      });
+      expect(store.getState().notifications).toHaveLength(1);
+
+      act(() => {
+        jest.advanceTimersByTime(400);
+      });
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+
+    it('does not render the progress line for custom rendered notifications', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+          renderNotification={(notification) => <div>{notification.message}</div>}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Custom' }, store);
+      });
+
+      expect(screen.getByText('Custom')).toBeInTheDocument();
+      expect(getProgress(container)).toBeNull();
+    });
+  });
 });
