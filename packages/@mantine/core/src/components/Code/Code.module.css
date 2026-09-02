@@ -7,13 +7,7 @@
   margin: 0;
   overflow: auto;
 
-  @mixin where-light {
-    background-color: var(--code-bg, var(--mantine-color-gray-0));
-  }
-
-  @mixin where-dark {
-    background-color: var(--code-bg, var(--mantine-color-dark-6));
-  }
+  background-color: var(--code-bg, var(--mantine-color-surface-sunken));
 
   &[data-block] {
     padding: var(--mantine-spacing-xs);

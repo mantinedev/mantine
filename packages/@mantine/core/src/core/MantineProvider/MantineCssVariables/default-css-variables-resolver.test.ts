@@ -36,8 +36,8 @@ describe('semantic color role variables', () => {
       expect(result.light['--mantine-color-selected']).toBe('var(--mantine-color-gray-1)');
     });
 
-    it('--mantine-color-track resolves to var(--mantine-color-neutral-3) in light', () => {
-      expect(result.light['--mantine-color-track']).toBe('var(--mantine-color-neutral-3)');
+    it('--mantine-color-track resolves to var(--mantine-color-surface-sunken) in light', () => {
+      expect(result.light['--mantine-color-track']).toBe('var(--mantine-color-surface-sunken)');
     });
   });
 
@@ -66,8 +66,8 @@ describe('semantic color role variables', () => {
       expect(result.dark['--mantine-color-selected']).toBe('var(--mantine-color-dark-5)');
     });
 
-    it('--mantine-color-track resolves to var(--mantine-color-neutral-3) in dark', () => {
-      expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-neutral-3)');
+    it('--mantine-color-track resolves to var(--mantine-color-surface-sunken) in dark', () => {
+      expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-surface-sunken)');
     });
   });
 
@@ -139,11 +139,11 @@ describe('legacy surface-level vars (surface-0..5, surface-recessed) are removed
     expect(result.dark['--mantine-color-surface-recessed']).toBeUndefined();
   });
 
-  it('body remains aliased to surface-page and track remains on the neutral ladder', () => {
+  it('body remains aliased to surface-page and track to surface-sunken', () => {
     expect(result.light['--mantine-color-body']).toBe('var(--mantine-color-surface-page)');
-    expect(result.light['--mantine-color-track']).toBe('var(--mantine-color-neutral-3)');
+    expect(result.light['--mantine-color-track']).toBe('var(--mantine-color-surface-sunken)');
     expect(result.dark['--mantine-color-body']).toBe('var(--mantine-color-surface-page)');
-    expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-neutral-3)');
+    expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-surface-sunken)');
   });
 });
 
@@ -235,7 +235,7 @@ describe('surface tokens with named aliases', () => {
     expect(result.dark['--mantine-color-surface-page']).toBe('var(--mantine-color-dark-7)');
     expect(result.dark['--mantine-color-surface-panel']).toBe('var(--mantine-color-dark-6)');
     expect(result.dark['--mantine-color-surface-panel-2']).toBe('var(--mantine-color-dark-5)');
-    expect(result.dark['--mantine-color-surface-sunken']).toBe('var(--mantine-color-dark-8)');
+    expect(result.dark['--mantine-color-surface-sunken']).toBe('var(--mantine-color-dark-9)');
     expect(result.dark['--mantine-color-body']).toBe('var(--mantine-color-surface-page)');
     expect(result.light['--mantine-color-surface-0']).toBeUndefined();
     expect(result.light['--mantine-color-surface-recessed']).toBeUndefined();

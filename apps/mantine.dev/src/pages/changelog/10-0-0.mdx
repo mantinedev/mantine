@@ -136,12 +136,12 @@ New variables (values differ per color scheme):
     [<Code>--mantine-color-hover</Code>, <Code>gray-0</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-active</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-selected</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
-    [<Code>--mantine-color-track</Code>, <Code>gray-2</Code>, <Code>dark-4</Code>],
+    [<Code>--mantine-color-track</Code>, <Code>gray-1</Code>, <Code>dark-8</Code>],
     [<Code>--mantine-color-text-muted</Code>, <Code>gray-6</Code>, <Code>dark-2</Code>],
     [<Code>--mantine-color-surface-page</Code>, <Code>white</Code>, <Code>dark-7</Code>],
     [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
-    [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-8</Code>],
+    [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
   ]}
 />
 
@@ -162,7 +162,7 @@ underlying shade differs so contrast holds in both:
     ['0', 'Page', <Code>white</Code>, <Code>dark-7</Code>],
     ['1', 'Panel', <Code>white</Code>, <Code>dark-6</Code>],
     ['2', 'Hover / raised', <Code>gray-0</Code>, <Code>dark-5</Code>],
-    ['3', 'Active / track', <Code>gray-2</Code>, <Code>dark-4</Code>],
+    ['3', 'Active', <Code>gray-2</Code>, <Code>dark-4</Code>],
     ['4', 'Border', <Code>gray-3</Code>, <Code>dark-4</Code>],
     ['5', 'Border strong / disabled', <Code>gray-5</Code>, <Code>dark-3</Code>],
     ['6', 'Dimmed', <Code>gray-6</Code>, <Code>dark-2</Code>],
@@ -238,6 +238,15 @@ Floating dropdowns – `Popover`, `Menu`, `HoverCard`, and all `Combobox`-based 
 `Modal` and `Drawer`. In dark mode dropdowns are now `dark-7` instead of `dark-6`, separated from
 surrounding content by border and shadow; light mode is visually unchanged. Overriding
 `surfaces.page` in the theme moves modals and dropdowns together with the page background.
+
+### Sunken surface adoption
+
+Inset elements now share the `--mantine-color-surface-sunken` token: `SegmentedControl` root,
+`Code`, `Kbd`, `ScrollArea` scrollbar background, and – through the re-anchored
+`--mantine-color-track` role variable – `Slider`, `Progress`, `RingProgress`, and
+`SemiCircleProgress` tracks. In dark mode these elements are now tonally sunken below the page
+(`dark-9`); in light mode they unify on `gray-1`. Overriding `surfaces.sunken` in the theme (or the
+token itself) restyles all of them together.
 
 ### Dark neutral flavors
 

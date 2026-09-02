@@ -34,13 +34,7 @@
   overflow: hidden;
   display: flex;
 
-  @mixin where-light {
-    background-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-4);
-  }
+  background-color: var(--mantine-color-track);
 
   &:where([data-orientation='vertical']) {
     height: auto;

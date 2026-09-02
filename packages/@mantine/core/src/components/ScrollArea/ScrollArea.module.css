@@ -116,17 +116,15 @@
   flex-direction: row;
 
   @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
+    background-color: var(--mantine-color-surface-sunken);
 
+    @mixin where-light {
       & > .thumb {
         background-color: rgba(0, 0, 0, 0.5);
       }
     }
 
     @mixin where-dark {
-      background-color: var(--mantine-color-dark-8);
-
       & > .thumb {
         background-color: rgba(255, 255, 255, 0.5);
       }

@@ -45,5 +45,5 @@ The light-scheme design stance: page and panel are both white; separation comes 
 Mixing a hue into neutral colors. Shipped as a generator function that produces a tuple, never as a core runtime feature. Tinting dark neutrals works; tinting light neutrals is the known trap that sank the June 2026 attempt.
 
 **Role var**:
-A semantic CSS variable (`border`, `dimmed`, `hover`, `track`, `default`) whose value is defined from the neutral scale rather than invented independently.
+A semantic CSS variable (`border`, `dimmed`, `hover`, `track`, `default`) whose value is defined from the neutral scale or a surface token rather than invented independently. `body` → page, `default` → panel, `track` → sunken.
 _Avoid_: semantic token (too broad)
