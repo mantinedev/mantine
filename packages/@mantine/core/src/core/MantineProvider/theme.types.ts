@@ -233,10 +233,10 @@ export interface MantineThemeOther {
 }
 
 export interface MantineThemeSurfaceValues {
-  /** Background of the app/page, `--mantine-color-surface-page` */
+  /** Background of the app/page and floating dropdowns (Popover, Menu, Select, HoverCard), `--mantine-color-surface-page` */
   page?: string;
 
-  /** Background of raised containers (cards, popovers, notifications) and default buttons via `--mantine-color-default`, `--mantine-color-surface-panel`. More components will migrate to this token incrementally. */
+  /** Background of raised containers (cards, notifications) and default buttons via `--mantine-color-default`, `--mantine-color-surface-panel`. More components will migrate to this token incrementally. */
   panel?: string;
 
   /** Background of the second raised step used by nested surfaces, `--mantine-color-surface-panel-2` */

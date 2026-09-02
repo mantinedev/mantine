@@ -35,13 +35,7 @@
   border-inline-end: rem(1px) solid var(--popover-border-color, var(--mantine-color-default-border));
 
   @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-7);
-    }
+    background-color: var(--mantine-color-hover);
   }
 
   & > svg {
@@ -92,25 +86,13 @@
 
   @mixin hover {
     &:where(:not([data-disabled], [data-active])) {
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-0);
-      }
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-7);
-      }
+      background-color: var(--mantine-color-hover);
     }
   }
 
   /* Selected options in the ancestor columns (the navigation trail) */
   &:where([data-in-path]) {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-1);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-    }
+    background-color: var(--mantine-color-selected);
   }
 
   /* Option in the column that is currently being navigated */

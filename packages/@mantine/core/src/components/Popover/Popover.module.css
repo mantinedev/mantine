@@ -13,7 +13,7 @@
     outline: none;
   }
 
-  background-color: var(--mantine-color-surface-panel);
+  background-color: var(--mantine-color-surface-page);
 
   @mixin where-light {
     --popover-border-color: var(--mantine-color-gray-2);

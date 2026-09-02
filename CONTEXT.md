@@ -25,11 +25,11 @@ The numeric position the Surface component renders at — 0 (page), 1 (panel), 2
 _Avoid_: depth, z-level
 
 **Page surface**:
-The app/document background — what was historically called "body". `surface-page`; body remains as an alias.
+The app/document background — what was historically called "body" — and the surface of floating overlays: modals and dropdowns (Popover, Menu, Select, HoverCard) render at page level, separated by border and shadow. `surface-page`; body remains as an alias.
 _Avoid_: body (in new writing), app background
 
 **Panel**:
-The raised container surface — cards, dropdowns, modals, notifications, and (via the `default` alias) input and default-button backgrounds. `surface-panel`.
+The raised in-flow container surface — cards, notifications, and (via the `default` alias) input and default-button backgrounds. `surface-panel`.
 _Avoid_: card color, elevated surface, raised
 
 **Sunken surface**:

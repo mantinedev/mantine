@@ -151,6 +151,11 @@ darker than the old `dark-7`, giving more headroom for surface elevation levels.
 specific `dark-N` shade values for backgrounds, test your application in dark mode and adjust
 as needed.
 
+Floating dropdowns (`Popover`, `Menu`, `HoverCard`, and all `Combobox`-based components such as
+`Select` and `Autocomplete`) now render on the page surface, matching `Modal` and `Drawer`: in dark
+mode their background is `dark-7` instead of `dark-6`, separated from surrounding content by border
+and shadow. Light mode is visually unchanged.
+
 ### New semantic color variables
 
 A layer of semantic role CSS variables has been added. Components use these tokens instead of
@@ -188,8 +193,8 @@ Key role variables:
     [<Code>--mantine-color-selected</Code>, 'Selected item background'],
     [<Code>--mantine-color-track</Code>, 'Track background (Slider, Switch, etc.)'],
     [<Code>--mantine-color-text-muted</Code>, 'Muted/secondary text'],
-    [<Code>--mantine-color-surface-page</Code>, 'Page/app background (aliased by --mantine-color-body)'],
-    [<Code>--mantine-color-surface-panel</Code>, 'Raised container background (cards, popovers, notifications) and default buttons via --mantine-color-default; more components migrate to this token incrementally'],
+    [<Code>--mantine-color-surface-page</Code>, 'Page/app background (aliased by --mantine-color-body) and floating dropdowns (Popover, Menu, Select, HoverCard)'],
+    [<Code>--mantine-color-surface-panel</Code>, 'Raised container background (cards, notifications) and default buttons via --mantine-color-default; more components migrate to this token incrementally'],
     [<Code>--mantine-color-surface-panel-2</Code>, 'Second raised step for nested surfaces'],
     [<Code>--mantine-color-surface-sunken</Code>, 'Inset/sunken surface (code blocks, slider tracks)'],
   ]}

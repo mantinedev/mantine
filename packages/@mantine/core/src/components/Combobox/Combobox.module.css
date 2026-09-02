@@ -57,13 +57,7 @@
 
   @mixin hover {
     &:where(:not([data-combobox-selected], [data-combobox-disabled])) {
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-0);
-      }
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-7);
-      }
+      background-color: var(--mantine-color-hover);
     }
   }
 }
@@ -90,13 +84,7 @@
     }
   }
 
-  @mixin where-light {
-    background-color: var(--mantine-color-white);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-7);
-  }
+  background-color: var(--mantine-color-surface-page);
 }
 
 .empty {

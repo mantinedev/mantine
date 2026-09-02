@@ -231,6 +231,14 @@ const theme = createTheme({
 Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, and `sunken` keys, matching the four
 surface tokens documented above.
 
+### Dropdowns render on the page surface
+
+Floating dropdowns – `Popover`, `Menu`, `HoverCard`, and all `Combobox`-based components such as
+`Select` and `Autocomplete` – now use `--mantine-color-surface-page` as their background, matching
+`Modal` and `Drawer`. In dark mode dropdowns are now `dark-7` instead of `dark-6`, separated from
+surrounding content by border and shadow; light mode is visually unchanged. Overriding
+`surfaces.page` in the theme moves modals and dropdowns together with the page background.
+
 ### Dark neutral flavors
 
 Four pre-built dark neutral color tuples are exported from `@mantine/core` and can be assigned to
