@@ -1,14 +1,18 @@
-import { offset, useFloating } from '@floating-ui/react';
+import { useEffect, useRef } from 'react';
+import { autoUpdate, offset, useFloating } from '@floating-ui/react';
+import { useMergedRef } from '@mantine/hooks';
 import { UnstyledButton } from '../UnstyledButton';
-import { useTargetRect } from './use-target-rect';
+import { useTargetElement, type TourTarget } from './use-target-rect';
 
 interface TourBeaconPositionedProps {
-  target: string | React.RefObject<HTMLElement | null> | undefined;
+  target: TourTarget;
   onClick: () => void;
   ariaLabel: string;
   className?: string;
   style?: React.CSSProperties;
   pulseStyles?: Record<string, unknown>;
+  withInitialFocus?: boolean;
+  onInitialFocus?: () => void;
 }
 
 export function TourBeaconPositioned({
@@ -18,14 +22,27 @@ export function TourBeaconPositioned({
   className,
   style,
   pulseStyles,
+  withInitialFocus,
+  onInitialFocus,
 }: TourBeaconPositionedProps) {
-  const { element } = useTargetRect(target);
+  const element = useTargetElement(target);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const { refs, floatingStyles } = useFloating({
     elements: { reference: element },
     placement: 'top-end',
+    whileElementsMounted: autoUpdate,
     middleware: [offset({ mainAxis: -4, crossAxis: -4 })],
   });
+
+  const mergedRef = useMergedRef(refs.setFloating, buttonRef);
+
+  useEffect(() => {
+    if (withInitialFocus && buttonRef.current) {
+      buttonRef.current.focus({ preventScroll: true });
+      onInitialFocus?.();
+    }
+  }, [withInitialFocus, element]);
 
   if (!element) {
     return null;
@@ -33,7 +50,7 @@ export function TourBeaconPositioned({
 
   return (
     <UnstyledButton
-      ref={refs.setFloating}
+      ref={mergedRef}
       role="button"
       aria-label={ariaLabel}
       className={className}

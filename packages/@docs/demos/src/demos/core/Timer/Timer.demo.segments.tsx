@@ -1,5 +1,5 @@
-import { ActionIcon, Group, Timer } from '@mantine/core';
 import { ArrowCounterClockwiseIcon, PauseIcon, PlayIcon } from '@phosphor-icons/react';
+import { ActionIcon, Group, Timer } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `

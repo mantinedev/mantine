@@ -1,5 +1,5 @@
-import { getOptionsLockup } from './get-options-lockup';
 import { getOptionByLabel } from './get-option-by-label';
+import { getOptionsLockup } from './get-options-lockup';
 
 const lockup = getOptionsLockup([
   { value: 'de', label: 'Germany' },

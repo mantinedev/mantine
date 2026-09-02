@@ -1,11 +1,12 @@
-import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { EmblaCarouselType } from 'embla-carousel';
-import type { LightboxRootFactory } from './LightboxRoot/LightboxRoot';
+import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { LightboxLabels, LightboxSlideData } from './lightbox.types';
+import type { LightboxRootFactory } from './LightboxRoot/LightboxRoot';
 
 export interface LightboxContextValue {
   getStyles: GetStylesApi<LightboxRootFactory>;
   labels: LightboxLabels;
+  opened: boolean;
   slides: LightboxSlideData[];
   currentIndex: number;
   setIndex: (index: number) => void;

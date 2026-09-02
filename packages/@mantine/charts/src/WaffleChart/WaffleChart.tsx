@@ -41,7 +41,7 @@ export type WaffleChartStylesNames =
   | 'legendLabel';
 
 export type WaffleChartCssVariables = {
-  root: '--waffle-gap' | '--waffle-cell-radius' | '--waffle-empty-color';
+  root: '--waffle-cell-radius' | '--waffle-empty-color';
 };
 
 export interface WaffleChartProps
@@ -105,9 +105,8 @@ const defaultProps = {
 } satisfies Partial<WaffleChartProps>;
 
 const varsResolver = createVarsResolver<WaffleChartFactory>(
-  (theme, { gap, cellRadius, emptyColor }) => ({
+  (theme, { cellRadius, emptyColor }) => ({
     root: {
-      '--waffle-gap': rem(gap),
       '--waffle-cell-radius': rem(cellRadius),
       '--waffle-empty-color': emptyColor ? getThemeColor(emptyColor, theme) : undefined,
     },
@@ -118,19 +117,31 @@ interface AllocatedCell {
   segmentIndex: number;
 }
 
+/**
+ * A part-to-whole chart has no meaning for negative values, and letting them through would
+ * allocate more cells than the grid can hold. Non-finite values are normalized to zero as
+ * well – `Math.max(0, NaN)` is `NaN`, which would poison the sum and leave every segment
+ * without cells instead of dropping just the offending one.
+ */
+function normalizeSegmentValue(value: number) {
+  return Number.isFinite(value) ? Math.max(0, value) : 0;
+}
+
 function allocateCells(
   data: WaffleChartCell[],
   gridCells: number,
   totalValue?: number
 ): AllocatedCell[] {
-  const sum = data.reduce((acc, d) => acc + d.value, 0);
+  const values = data.map((d) => normalizeSegmentValue(d.value));
+  const sum = values.reduce((acc, value) => acc + value, 0);
+
   if (sum === 0) {
     return Array.from({ length: gridCells }, () => ({ segmentIndex: -1 }));
   }
 
   const denominator = totalValue != null ? Math.max(totalValue, sum) : sum;
   const filledTarget = Math.round((sum / denominator) * gridCells);
-  const raw = data.map((d) => (d.value / sum) * filledTarget);
+  const raw = values.map((value) => (value / sum) * filledTarget);
   const floored = raw.map(Math.floor);
   const remainder = filledTarget - floored.reduce((a, b) => a + b, 0);
 
@@ -142,7 +153,7 @@ function allocateCells(
 
   const cells: AllocatedCell[] = [];
   data.forEach((_, i) => {
-    for (let j = 0; j < floored[i]; j++) {
+    for (let j = 0; j < floored[i] && cells.length < gridCells; j++) {
       cells.push({ segmentIndex: i });
     }
   });
@@ -204,8 +215,25 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
   );
   const [hoveredLegendIndex, setHoveredLegendIndex] = useState<number | null>(null);
 
-  const totalCells = rows! * columns!;
-  const cellSize = size ? (size - (columns! - 1) * gap!) / columns! : DEFAULT_CELL_SIZE;
+  const resolvedRows = Math.max(1, Math.floor(rows!));
+  const resolvedColumns = Math.max(1, Math.floor(columns!));
+  const resolvedGap = Math.max(0, gap!);
+
+  const totalCells = resolvedRows * resolvedColumns;
+
+  // `size` is the total width of the grid, gaps included. When the gaps alone would exceed
+  // it, the gap shrinks too – clamping only the cell size would render a grid wider than
+  // the caller asked for. `size != null` rather than a truthiness check so `size={0}` is
+  // honored instead of silently falling back to the default cell size.
+  const hasSize = size != null;
+  const gapTotal = (resolvedColumns - 1) * resolvedGap;
+  const effectiveGap =
+    hasSize && gapTotal > size! && resolvedColumns > 1
+      ? size! / (resolvedColumns - 1)
+      : resolvedGap;
+  const cellSize = hasSize
+    ? Math.max(0, (size! - (resolvedColumns - 1) * effectiveGap) / resolvedColumns)
+    : DEFAULT_CELL_SIZE;
   const allocated = allocateCells(data, totalCells, total);
 
   const cellCounts = new Map<number, number>();
@@ -215,29 +243,29 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
     }
   }
 
-  const svgWidth = columns! * cellSize + (columns! - 1) * gap!;
-  const svgHeight = rows! * cellSize + (rows! - 1) * gap!;
+  const svgWidth = resolvedColumns * cellSize + (resolvedColumns - 1) * effectiveGap;
+  const svgHeight = resolvedRows * cellSize + (resolvedRows - 1) * effectiveGap;
 
   const cellElements = allocated.map((cell, index) => {
     let row: number;
     let col: number;
 
     if (fillDirection === 'top-to-bottom') {
-      col = Math.floor(index / rows!);
-      row = index % rows!;
+      col = Math.floor(index / resolvedRows);
+      row = index % resolvedRows;
     } else if (fillDirection === 'bottom-to-top') {
-      col = Math.floor(index / rows!);
-      row = rows! - 1 - (index % rows!);
+      col = Math.floor(index / resolvedRows);
+      row = resolvedRows - 1 - (index % resolvedRows);
     } else if (fillDirection === 'right-to-left') {
-      row = Math.floor(index / columns!);
-      col = columns! - 1 - (index % columns!);
+      row = Math.floor(index / resolvedColumns);
+      col = resolvedColumns - 1 - (index % resolvedColumns);
     } else {
-      row = Math.floor(index / columns!);
-      col = index % columns!;
+      row = Math.floor(index / resolvedColumns);
+      col = index % resolvedColumns;
     }
 
-    const x = col * (cellSize + gap!);
-    const y = row * (cellSize + gap!);
+    const x = col * (cellSize + effectiveGap);
+    const y = row * (cellSize + effectiveGap);
     const segmentIndex = cell.segmentIndex;
     const isEmpty = segmentIndex < 0;
     const color = isEmpty ? undefined : getThemeColor(data[segmentIndex].color, theme);
@@ -304,8 +332,38 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
 
   const isVertical = legendPosition === 'left' || legendPosition === 'right';
 
+  // The cells carry no accessible information on their own, and the legend (when shown)
+  // exposes segment names but not their values – this gives assistive tech one readable
+  // summary of the data regardless of whether the legend is rendered. Values are reported
+  // as they are drawn, so a clamped negative or non-finite value is announced as 0.
+  const segmentsLabel = data
+    .map((segment) => `${segment.name}: ${normalizeSegmentValue(segment.value)}`)
+    .join(', ');
+
+  // The denominator is what makes the filled/empty split readable – without it a listener
+  // hears "Completed: 68" while a sighted user sees 68 of 100 cells filled.
+  const segmentsTotal = data.reduce(
+    (acc, segment) => acc + normalizeSegmentValue(segment.value),
+    0
+  );
+  const effectiveTotal = total != null ? Math.max(total, segmentsTotal) : segmentsTotal;
+  const gridLabel = segmentsLabel ? `${segmentsLabel} of ${effectiveTotal}` : '';
+
+  // A plain div has an implicit `generic` role, which cannot carry an accessible name, so
+  // a caller-supplied label would be dropped. Promoting the root to a group lets their
+  // label describe the chart while the grid keeps the generated data summary.
+  const hasCallerLabel =
+    others['aria-label'] !== undefined || others['aria-labelledby'] !== undefined;
+
   const grid = (
-    <Box component="svg" width={svgWidth} height={svgHeight} {...getStyles('grid')}>
+    <Box
+      component="svg"
+      width={svgWidth}
+      height={svgHeight}
+      role={gridLabel ? 'img' : undefined}
+      aria-label={gridLabel || undefined}
+      {...getStyles('grid')}
+    >
       <Tooltip.Floating label={tooltipLabel} disabled={!withTooltip || !hoveredCell} position="top">
         <g onMouseLeave={withTooltip ? () => setHoveredCell(null) : undefined}>
           {withTooltip && <rect fill="transparent" width={svgWidth} height={svgHeight} />}
@@ -320,14 +378,19 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
       {...getStyles('root')}
       variant={variant}
       mod={{ 'legend-position': withLegend ? legendPosition : undefined, vertical: isVertical }}
+      role={hasCallerLabel ? 'group' : undefined}
       {...others}
     >
       {withLegend && (legendPosition === 'top' || legendPosition === 'left') && (
-        <div {...getStyles('legend')}>{legendItems}</div>
+        <div {...getStyles('legend')} aria-hidden>
+          {legendItems}
+        </div>
       )}
       {grid}
       {withLegend && (legendPosition === 'bottom' || legendPosition === 'right') && (
-        <div {...getStyles('legend')}>{legendItems}</div>
+        <div {...getStyles('legend')} aria-hidden>
+          {legendItems}
+        </div>
       )}
     </Box>
   );

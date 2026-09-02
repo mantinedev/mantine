@@ -1,0 +1,7 @@
+[
+  {
+    "fileName": "ResizableAppShell.tsx",
+    "language": "tsx",
+    "code": "import { useDisclosure } from '@mantine/hooks';\n\nexport function ResizableAppShell() {\n  const [opened, { toggle }] = useDisclosure();\n  const resize = useAppShellResize({\n    navbar: { min: 200, max: 500 },\n    header: { min: 48, max: 120 },\n  });\n\n  return (\n    <AppShell\n      header={{ height: 60 }}\n      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}\n      padding=\"md\"\n      resize={resize}\n    >\n      <AppShell.Header>\n        <Group h=\"100%\" px=\"md\" justify=\"space-between\">\n          <Group h=\"100%\">\n            <Burger opened={opened} onClick={toggle} hiddenFrom=\"sm\" size=\"sm\" />\n            Drag the bottom edge of this header to resize it\n          </Group>\n          <Button onClick={resize.resetAll} variant=\"default\" size=\"xs\">\n            Reset layout\n          </Button>\n        </Group>\n      </AppShell.Header>\n      <AppShell.Navbar p=\"md\">\n        Drag the right edge of the navbar, or focus it and use arrow keys, to resize it.\n      </AppShell.Navbar>\n      <AppShell.Main>\n        <Text>This is the main section, your app content here.</Text>\n        <Text>Navbar and header can be resized with mouse, touch or keyboard.</Text>\n      </AppShell.Main>\n    </AppShell>\n  );\n}\n"
+  }
+]

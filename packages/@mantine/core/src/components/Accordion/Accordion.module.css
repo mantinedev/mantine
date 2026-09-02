@@ -123,7 +123,8 @@
     border-start-start-radius: var(--accordion-radius);
     border-start-end-radius: var(--accordion-radius);
 
-    & > [data-accordion-control] {
+    & > [data-accordion-control],
+    & > .itemTitle > [data-accordion-control] {
       border-start-start-radius: var(--accordion-radius);
       border-start-end-radius: var(--accordion-radius);
     }
@@ -133,7 +134,8 @@
     border-end-start-radius: var(--accordion-radius);
     border-end-end-radius: var(--accordion-radius);
 
-    & > [data-accordion-control] {
+    & > [data-accordion-control],
+    & > .itemTitle > [data-accordion-control] {
       border-end-start-radius: var(--accordion-radius);
       border-end-end-radius: var(--accordion-radius);
     }

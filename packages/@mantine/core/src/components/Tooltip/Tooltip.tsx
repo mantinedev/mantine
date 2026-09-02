@@ -97,6 +97,9 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Selector, ref of an element or element itself that should be used for positioning */
   target?: React.RefObject<HTMLElement | null> | HTMLElement | null | string;
+
+  /** If set, the tooltip is hidden when the target element is removed from the DOM, hidden with `display: none` or scrolled out of the visible area. Has no effect on `Tooltip.Floating` @default true */
+  hideDetached?: boolean;
 }
 
 export type TooltipFactory = Factory<{
@@ -125,6 +128,7 @@ const defaultProps = {
   closeOnEscape: true,
   zIndex: getDefaultZIndex('popover'),
   middlewares: { flip: true, shift: true, inline: false },
+  hideDetached: true,
 } satisfies Partial<TooltipProps>;
 
 const varsResolver = createVarsResolver<TooltipFactory>(
@@ -194,6 +198,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     autoContrast,
     attributes,
     target,
+    hideDetached,
     ref,
     ...others
   } = props;
@@ -218,6 +223,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     inline,
     strategy: floatingStrategy,
     middlewares,
+    hideDetached,
   });
 
   useEffect(() => {
@@ -290,6 +296,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
                     zIndex: zIndex as React.CSSProperties['zIndex'],
                     top: tooltip.y ?? 0,
                     left: tooltip.x ?? 0,
+                    ...(tooltip.referenceHidden ? { display: 'none' } : null),
                   },
                 })}
               >
@@ -344,6 +351,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
                   zIndex: zIndex as React.CSSProperties['zIndex'],
                   top: tooltip.y ?? 0,
                   left: tooltip.x ?? 0,
+                  ...(tooltip.referenceHidden ? { display: 'none' } : null),
                 },
               })}
             >

@@ -100,6 +100,10 @@ Enable drag and drop to move events between days.
 
 <Demo data={MonthViewDemos.dragDrop} />
 
+To reject a drop based on where the event lands – for example to prevent double booking – use
+`preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
+Month view has no drag ghost, so a rejected drop is only reported through `onEventPlacementRejected`.
+
 ## External drag and drop
 
 Use `onExternalEventDrop` to allow dragging items from outside the component into

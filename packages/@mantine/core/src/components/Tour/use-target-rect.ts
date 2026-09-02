@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+export type TourTarget = string | React.RefObject<HTMLElement | null> | undefined;
+
 export interface TargetRect {
   top: number;
   left: number;
@@ -7,55 +9,64 @@ export interface TargetRect {
   height: number;
 }
 
-export function useTargetRect(target: string | React.RefObject<HTMLElement | null> | undefined) {
-  const [rect, setRect] = useState<TargetRect | null>(null);
+function resolveTarget(target: TourTarget): HTMLElement | null {
+  if (!target) {
+    return null;
+  }
+
+  return typeof target === 'string'
+    ? document.querySelector<HTMLElement>(target)
+    : target.current || null;
+}
+
+export function useTargetElement(target: TourTarget) {
   const [element, setElement] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (!target) {
-      setRect(null);
-      setElement(null);
-      return;
-    }
-
-    const resolve = () =>
-      typeof target === 'string'
-        ? document.querySelector<HTMLElement>(target)
-        : target?.current || null;
-
-    const el = resolve();
+    const el = resolveTarget(target);
     setElement(el);
 
-    if (!el && typeof target === 'string') {
-      const mutationObserver = new MutationObserver(() => {
-        const found = resolve();
-        if (found) {
-          mutationObserver.disconnect();
-          setElement(found);
-        }
-      });
-
-      mutationObserver.observe(document.body, { childList: true, subtree: true });
-
-      return () => {
-        mutationObserver.disconnect();
-      };
+    if (el || typeof target !== 'string') {
+      return undefined;
     }
 
-    if (!el) {
+    const mutationObserver = new MutationObserver(() => {
+      const found = resolveTarget(target);
+      if (found) {
+        mutationObserver.disconnect();
+        setElement(found);
+      }
+    });
+
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      mutationObserver.disconnect();
+    };
+  }, [target]);
+
+  return element;
+}
+
+export function useTargetRect(target: TourTarget) {
+  const element = useTargetElement(target);
+  const [rect, setRect] = useState<TargetRect | null>(null);
+
+  useEffect(() => {
+    if (!element) {
       setRect(null);
-      return;
+      return undefined;
     }
 
     const updateRect = () => {
-      const r = el.getBoundingClientRect();
+      const r = element.getBoundingClientRect();
       setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
     };
 
     updateRect();
 
     const observer = new ResizeObserver(updateRect);
-    observer.observe(el);
+    observer.observe(element);
     window.addEventListener('scroll', updateRect, true);
     window.addEventListener('resize', updateRect);
 
@@ -64,7 +75,7 @@ export function useTargetRect(target: string | React.RefObject<HTMLElement | nul
       window.removeEventListener('scroll', updateRect, true);
       window.removeEventListener('resize', updateRect);
     };
-  }, [target, element]);
+  }, [element]);
 
   return { rect, element };
 }

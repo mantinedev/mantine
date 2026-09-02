@@ -21,6 +21,9 @@ export interface LightboxImageSlide {
 
   /** Image `sizes` attribute for responsive images */
   sizes?: string;
+
+  /** Image `loading` attribute, `'eager'` for the active slide and `'lazy'` for all other slides by default */
+  loading?: 'eager' | 'lazy';
 }
 
 export interface LightboxVideoSlideTrack {
@@ -91,6 +94,9 @@ export interface LightboxLabels {
 
   /** Accessible label of a slide, called with 1-based slide index and total number of slides */
   slideLabel: (index: number, total: number) => string;
+
+  /** Accessible label of the slides carousel region */
+  slidesLabel: string;
 
   /** Accessible label of the previous slide button */
   previousSlideLabel: string;

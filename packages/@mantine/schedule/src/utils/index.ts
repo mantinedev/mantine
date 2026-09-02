@@ -66,3 +66,11 @@ export type {
 export { getGroupToResourceIdMap } from './get-group-to-resource-id-map/get-group-to-resource-id-map';
 export { getIndexFromDragPoint } from './get-index-from-drag-point/get-index-from-drag-point';
 export { getDayRelativePercent } from './get-day-relative-percent/get-day-relative-percent';
+export { getOverlapClusters } from './get-overlap-clusters/get-overlap-clusters';
+export { applyCascadeLayout } from './apply-cascade-layout/apply-cascade-layout';
+export type { CascadePositionedEvent } from './apply-cascade-layout/apply-cascade-layout';
+export { isEventPlacementAllowed } from './is-event-placement-allowed/is-event-placement-allowed';
+export type {
+  IsEventPlacementAllowedInput,
+  IsEventPlacementAllowedResult,
+} from './is-event-placement-allowed/is-event-placement-allowed';

@@ -8,6 +8,7 @@ import {
   factory,
   Factory,
   UnstyledButton,
+  useDirection,
   useProps,
 } from '@mantine/core';
 import { useLightboxContext } from '../lightbox.context';
@@ -41,10 +42,18 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
   );
 
   const ctx = useLightboxContext();
+  const stylesApiProps = { classNames, styles };
 
+  const { dir } = useDirection();
+
+  // The second carousel is only built when the strip can actually be shown – `active: false`
+  // makes Embla skip its listeners and measurements entirely, so a lightbox without
+  // thumbnails does not pay for an instance it never renders.
   const [thumbsRef, thumbsEmbla] = useEmblaCarousel({
     containScroll: 'keepSnaps',
     dragFree: true,
+    direction: dir,
+    active: ctx.withThumbnails,
   });
 
   useEffect(() => {
@@ -53,7 +62,7 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
     }
   }, [ctx.currentIndex, thumbsEmbla]);
 
-  if (!ctx.withThumbnails && !ctx.thumbnailsVisible) {
+  if (!ctx.withThumbnails) {
     return null;
   }
 
@@ -67,7 +76,8 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
     return (
       <UnstyledButton
         key={index}
-        {...ctx.getStyles('thumbnail')}
+        {...ctx.getStyles('thumbnail', stylesApiProps)}
+        mod="reduce-motion"
         data-active={index === ctx.currentIndex || undefined}
         aria-label={ctx.labels.thumbnailLabel(index + 1, ctx.slides.length)}
         aria-current={index === ctx.currentIndex || undefined}
@@ -76,7 +86,13 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
         {hasCustomThumb ? (
           slide.renderThumb!()
         ) : thumbSrc ? (
-          <img {...ctx.getStyles('thumbnailImage')} src={thumbSrc} alt="" draggable={false} />
+          <img
+            {...ctx.getStyles('thumbnailImage', stylesApiProps)}
+            src={thumbSrc}
+            alt=""
+            loading="lazy"
+            draggable={false}
+          />
         ) : null}
       </UnstyledButton>
     );
@@ -90,8 +106,8 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
       {...ctx.getStyles('thumbnails', { className, style, classNames, styles })}
       {...others}
     >
-      <div {...ctx.getStyles('thumbnailsViewport')} ref={thumbsRef}>
-        <div {...ctx.getStyles('thumbnailsContainer')}>{thumbnails}</div>
+      <div {...ctx.getStyles('thumbnailsViewport', stylesApiProps)} ref={thumbsRef}>
+        <div {...ctx.getStyles('thumbnailsContainer', stylesApiProps)}>{thumbnails}</div>
       </div>
     </Collapse>
   );

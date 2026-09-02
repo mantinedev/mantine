@@ -64,6 +64,17 @@ export const PACKAGES_DATA = [
     ],
   },
   {
+    package: '@mantine/lightbox',
+    description: 'Full-screen media lightbox with carousel navigation',
+    dependencies: [
+      '@mantine/hooks',
+      '@mantine/core',
+      '@mantine/lightbox',
+      'embla-carousel@^8.5.2',
+      'embla-carousel-react@^8.5.2',
+    ],
+  },
+  {
     package: '@mantine/spotlight',
     description: 'Overlay command center',
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/spotlight'],

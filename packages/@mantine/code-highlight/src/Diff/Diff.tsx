@@ -13,13 +13,13 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { type DiffResult, diffLines } from './diff-algorithm';
-import { splitIntoLines } from './split-into-lines/split-into-lines';
-import { pairHunks } from './pair-hunks/pair-hunks';
 import {
   applyContextCollapsing,
   type ProcessedRow,
 } from './apply-context-collapsing/apply-context-collapsing';
+import { type DiffResult, diffLines } from './diff-algorithm';
+import { pairHunks } from './pair-hunks/pair-hunks';
+import { splitIntoLines } from './split-into-lines/split-into-lines';
 import classes from './Diff.module.css';
 
 export type DiffStylesNames =

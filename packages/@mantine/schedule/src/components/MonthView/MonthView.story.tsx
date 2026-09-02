@@ -1,6 +1,5 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { useState } from 'react';
 import { Popover, Stack, Text, UnstyledButton } from '@mantine/core';
 import { ScheduleEventData } from '../../types';

@@ -4,8 +4,9 @@
  * See ./LICENSE for the full license text. Only the encoder is vendored;
  * uqr's ANSI/Unicode/SVG renderers are intentionally omitted.
  */
-import type { QrCodeGenerateData, QrCodeGenerateOptions, QrCodeGenerateResult } from './types';
+
 import { EccMap, encodeSegments, makeBytes, makeSegments } from './qrcode';
+import type { QrCodeGenerateData, QrCodeGenerateOptions, QrCodeGenerateResult } from './types';
 import { QrCodeDataType } from './types';
 
 /**
