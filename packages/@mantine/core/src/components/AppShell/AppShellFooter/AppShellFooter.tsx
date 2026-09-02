@@ -1,5 +1,6 @@
 import cx from 'clsx';
 import { RemoveScroll } from 'react-remove-scroll';
+import { useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -44,6 +45,7 @@ export const AppShellFooter = factory<AppShellFooterFactory>((_props) => {
   } = useProps('AppShellFooter', null, _props);
 
   const ctx = useAppShellContext();
+  const sectionId = useId(others.id);
 
   if (ctx.disabled) {
     return null;
@@ -69,7 +71,7 @@ export const AppShellFooter = factory<AppShellFooterFactory>((_props) => {
     );
   }
 
-  const { children, ...rest } = others;
+  const { children, dangerouslySetInnerHTML, ...rest } = others;
 
   return (
     <Box
@@ -78,9 +80,14 @@ export const AppShellFooter = factory<AppShellFooterFactory>((_props) => {
       {...boxProps}
       {...rest}
       __vars={{ '--app-shell-footer-z-index': (zIndex ?? ctx.zIndex)?.toString() }}
+      id={sectionId}
     >
-      {children}
-      <AppShellResizeHandle section="footer" />
+      {dangerouslySetInnerHTML ? (
+        <div style={{ display: 'contents' }} dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
+      ) : (
+        children
+      )}
+      <AppShellResizeHandle section="footer" sectionId={sectionId} />
     </Box>
   );
 });

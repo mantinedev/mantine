@@ -265,4 +265,20 @@ describe('@mantine/schedule/use-horizontal-event-resize placement validation', (
 
     expect(result.current.resizeValid).toBe(false);
   });
+
+  it('does not call canResizeEventTo when the overlap check already rejected the size', () => {
+    const canResizeEventTo = jest.fn().mockReturnValue(true);
+    const { result } = renderHook(() =>
+      useHorizontalEventResize({
+        ...baseInput,
+        onEventResize: jest.fn(),
+        canResizeEventTo,
+        preventEventOverlap: true,
+        events: [{ ...sameResourceEvent, resourceId: undefined }],
+      })
+    );
+
+    dragEnd(result, makeContainer(), 75);
+    expect(canResizeEventTo).not.toHaveBeenCalled();
+  });
 });

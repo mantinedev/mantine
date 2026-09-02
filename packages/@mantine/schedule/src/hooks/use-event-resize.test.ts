@@ -423,4 +423,20 @@ describe('@mantine/schedule/use-event-resize placement validation', () => {
 
     expect(result.current.resizeValid).toBe(true);
   });
+
+  it('does not call canResizeEventTo when the overlap check already rejected the size', () => {
+    const canResizeEventTo = jest.fn().mockReturnValue(true);
+    const { result } = renderHook(() =>
+      useEventResize({
+        ...baseInput,
+        onEventResize: jest.fn(),
+        canResizeEventTo,
+        preventEventOverlap: true,
+        events: [conflict],
+      })
+    );
+
+    dragBottom(result, makeContainer(), 75);
+    expect(canResizeEventTo).not.toHaveBeenCalled();
+  });
 });

@@ -209,27 +209,37 @@ To use image upload, you will need to install an additional package:
 
 <InstallScript packages="@tiptap/extension-image" />
 
-Use `getUploadImageExtension` from `@mantine/tiptap` to create a tiptap extension that supports
-image uploads with loading states. The first argument is the `@tiptap/extension-image` default export,
-and the second is an options object. Pass an `onImageUpload` function that receives a `File` and returns
-a `Promise<string>` with the uploaded image URL. You can also handle errors with `onImageUploadError`.
-Pass the same `onImageUpload` and `onImageUploadError` to the `RichTextEditor` component to enable
-the toolbar button.
+Use `getUploadImageExtension` from `@mantine/tiptap` to create a tiptap extension that supports image uploads with loading states. The first argument is the `@tiptap/extension-image` default export, the second argument is an options object:
+
+- `onImageUpload` – required, receives a `File` and returns a promise that resolves to the uploaded image URL or to an object with `src` and optional `alt` and `title` attributes
+- `onImageUploadError` – optional, called with the file and the error when the upload fails
 
 Images can be added via:
+
 - `RichTextEditor.ImageUpload` toolbar control (opens file picker)
 - Drag and drop into the editor
 - Paste from clipboard
 
-During upload, the image is shown with a local preview and a loading spinner.
-On failure, the image is highlighted briefly and then removed.
+`RichTextEditor.ImageUpload` control uses `onImageUpload` and `onImageUploadError` options of the extension – configuring the extension is enough to enable the toolbar button. If the toolbar control needs different handlers, pass `onImageUpload` and `onImageUploadError` props to the `RichTextEditor` component, they take precedence over the extension options.
+
+During upload, the image is shown with a local preview and a loading spinner. On failure, the image is highlighted briefly and then removed. Several files picked, dropped or pasted together are inserted in the order they were selected.
+
+Return an object from `onImageUpload` to set `alt` (and optionally `title`) attribute of the uploaded image – images without alternative text are not accessible to screen reader users:
+
+```tsx
+async function handleImageUpload(file: File) {
+  const src = await uploadToServer(file);
+  return { src, alt: file.name };
+}
+```
 
 <Demo data={TipTapDemos.imageUpload} />
 
+Note that the image node must be created with `getUploadImageExtension`: if a plain `@tiptap/extension-image` extension is used instead, `RichTextEditor.ImageUpload` control logs a warning and does not insert anything.
+
 ### Upload error handling
 
-You can use `onImageUploadError` to show a notification or take other action when an upload fails.
-The image will be automatically removed from the editor after a brief error indication.
+You can use `onImageUploadError` to show a notification or take other action when an upload fails. The image will be automatically removed from the editor after a brief error indication.
 
 <Demo data={TipTapDemos.imageUploadError} />
 
@@ -543,10 +553,13 @@ export interface RichTextEditorLabels {
   /** A function go get RichTextEditor.Color control aria-label based on color that control applies */
   colorControlLabel: (color: string) => string;
 
-  /** aria-label for link editor url input */
+  /** RichTextEditor.SourceCode control aria-label */
+  sourceCodeControlLabel: string;
+
+  /** Aria-label for link editor url input */
   linkEditorInputLabel: string;
 
-  /** placeholder for link editor url input */
+  /** Placeholder for link editor url input */
   linkEditorInputPlaceholder: string;
 
   /** Content of external button tooltip in link editor when the link was chosen to open in a new tab */
@@ -573,17 +586,76 @@ export interface RichTextEditorLabels {
   /** Save button title text in color picker control */
   colorPickerSave: string;
 
-  /** aria-label for color palette colors */
+  /** Aria-label for color palette colors */
   colorPickerColorLabel: (color: string) => string;
+
+  /** Aria-label for task list control */
+  tasksControlLabel: string;
+
+  /** Aria-label for task list sink task */
+  tasksSinkLabel: string;
+
+  /** Aria-label for task list lift task */
+  tasksLiftLabel: string;
+
+  /** RichTextEditor.ImageUpload control aria-label */
+  imageUploadControlLabel?: string;
+
+  /** RichTextEditor.TableInsert control aria-label */
+  tableInsertControlLabel?: string;
+
+  /** A function to get RichTextEditor.TableInsert grid cell aria-label based on selected size */
+  tableInsertLabel?: (columns: number, rows: number) => string;
+
+  /** RichTextEditor.TableDelete control aria-label */
+  tableDeleteControlLabel?: string;
+
+  /** RichTextEditor.TableColumnBefore control aria-label */
+  tableColumnBeforeControlLabel?: string;
+
+  /** RichTextEditor.TableColumnAfter control aria-label */
+  tableColumnAfterControlLabel?: string;
+
+  /** RichTextEditor.TableColumnDelete control aria-label */
+  tableColumnDeleteControlLabel?: string;
+
+  /** RichTextEditor.TableRowBefore control aria-label */
+  tableRowBeforeControlLabel?: string;
+
+  /** RichTextEditor.TableRowAfter control aria-label */
+  tableRowAfterControlLabel?: string;
+
+  /** RichTextEditor.TableRowDelete control aria-label */
+  tableRowDeleteControlLabel?: string;
+
+  /** RichTextEditor.TableToggleHeaderRow control aria-label */
+  tableToggleHeaderRowControlLabel?: string;
+
+  /** RichTextEditor.TableToggleHeaderColumn control aria-label */
+  tableToggleHeaderColumnControlLabel?: string;
+
+  /** RichTextEditor.TableMergeCells control aria-label */
+  tableMergeCellsControlLabel?: string;
+
+  /** RichTextEditor.TableSplitCell control aria-label */
+  tableSplitCellControlLabel?: string;
+
+  /** RichTextEditor.Details control aria-label */
+  detailsControlLabel?: string;
+
+  /** RichTextEditor.InvisibleCharacters control aria-label */
+  invisibleCharactersControlLabel?: string;
 }
 ```
+
+`RichTextEditorLabels` keeps labels added in later versions optional, so a fully typed localization object written against an earlier version still compiles after an upgrade. `ResolvedRichTextEditorLabels` (also exported from `@mantine/tiptap`) is the same type with every label required – it is the type of the labels merged with defaults that controls receive from `useRichTextEditorContext`.
 
 Default labels (can be imported from `@mantine/tiptap` package):
 
 ```tsx
-import { RichTextEditorLabels } from '@mantine/tiptap';
+import { ResolvedRichTextEditorLabels } from '@mantine/tiptap';
 
-export const DEFAULT_LABELS: RichTextEditorLabels = {
+export const DEFAULT_LABELS: ResolvedRichTextEditorLabels = {
   // Controls labels
   linkControlLabel: 'Link',
   colorPickerControlLabel: 'Text color',
@@ -597,6 +669,7 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   unlinkControlLabel: 'Remove link',
   bulletListControlLabel: 'Bullet list',
   orderedListControlLabel: 'Ordered list',
+  sourceCodeControlLabel: 'Switch between text/source code',
   h1ControlLabel: 'Heading 1',
   h2ControlLabel: 'Heading 2',
   h3ControlLabel: 'Heading 3',
@@ -621,6 +694,28 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   tasksControlLabel: 'Task list',
   tasksSinkLabel: 'Decrease task level',
   tasksLiftLabel: 'Increase task level',
+  imageUploadControlLabel: 'Upload image',
+
+  // Table
+  tableInsertControlLabel: 'Insert table',
+  tableInsertLabel: (columns, rows) => `Insert ${columns} × ${rows} table`,
+  tableDeleteControlLabel: 'Delete table',
+  tableColumnBeforeControlLabel: 'Add column before',
+  tableColumnAfterControlLabel: 'Add column after',
+  tableColumnDeleteControlLabel: 'Delete column',
+  tableRowBeforeControlLabel: 'Add row before',
+  tableRowAfterControlLabel: 'Add row after',
+  tableRowDeleteControlLabel: 'Delete row',
+  tableToggleHeaderRowControlLabel: 'Toggle header row',
+  tableToggleHeaderColumnControlLabel: 'Toggle header column',
+  tableMergeCellsControlLabel: 'Merge cells',
+  tableSplitCellControlLabel: 'Split cell',
+
+  // Details
+  detailsControlLabel: 'Toggle collapsible section',
+
+  // Invisible characters
+  invisibleCharactersControlLabel: 'Toggle invisible characters',
 
   // Link editor
   linkEditorInputLabel: 'Enter URL',

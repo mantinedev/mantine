@@ -1,3 +1,4 @@
+import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -36,6 +37,10 @@ export type ToolbarStylesNames =
 
 export type ToolbarCssVariables = {
   root: '--toolbar-toggle-size' | '--toolbar-padding' | '--toolbar-gap' | '--toolbar-radius';
+  toggle:
+    | '--toolbar-toggle-active-bg'
+    | '--toolbar-toggle-active-hover'
+    | '--toolbar-toggle-active-color';
 };
 
 export interface ToolbarProps
@@ -86,14 +91,31 @@ const defaultProps = {
   variant: 'filled',
 } satisfies Partial<ToolbarProps>;
 
-const varsResolver = createVarsResolver<ToolbarFactory>((_, { size, radius }) => ({
-  root: {
-    '--toolbar-toggle-size': size !== undefined ? getSize(size, 'toolbar-toggle-size') : undefined,
-    '--toolbar-padding': size !== undefined ? getSize(size, 'toolbar-padding') : undefined,
-    '--toolbar-gap': size !== undefined ? getSize(size, 'toolbar-gap') : undefined,
-    '--toolbar-radius': radius !== undefined ? getRadius(radius) : undefined,
-  },
-}));
+const varsResolver = createVarsResolver<ToolbarFactory>(
+  (theme, { size, radius, color, variant, autoContrast }) => {
+    const activeColors = theme.variantColorResolver({
+      color: color || theme.primaryColor,
+      theme,
+      variant: variant || 'filled',
+      autoContrast,
+    });
+
+    return {
+      root: {
+        '--toolbar-toggle-size':
+          size !== undefined ? getSize(size, 'toolbar-toggle-size') : undefined,
+        '--toolbar-padding': size !== undefined ? getSize(size, 'toolbar-padding') : undefined,
+        '--toolbar-gap': size !== undefined ? getSize(size, 'toolbar-gap') : undefined,
+        '--toolbar-radius': radius !== undefined ? getRadius(radius) : undefined,
+      },
+      toggle: {
+        '--toolbar-toggle-active-bg': activeColors.background,
+        '--toolbar-toggle-active-hover': activeColors.hover,
+        '--toolbar-toggle-active-color': activeColors.color,
+      },
+    };
+  }
+);
 
 export const Toolbar = factory<ToolbarFactory>((_props) => {
   const props = useProps('Toolbar', defaultProps, _props);
@@ -116,6 +138,7 @@ export const Toolbar = factory<ToolbarFactory>((_props) => {
     attributes,
     onKeyDown,
     onFocus,
+    ref,
     ...others
   } = props;
 
@@ -141,12 +164,14 @@ export const Toolbar = factory<ToolbarFactory>((_props) => {
     dir,
   });
 
+  const mergedRef = useMergedRef(toolbarRef, ref);
+
   return (
     <ToolbarProvider
       value={{ getStyles, orientation: orientation!, size, radius, variant, color, autoContrast }}
     >
       <Box
-        ref={toolbarRef}
+        ref={mergedRef}
         role="toolbar"
         aria-orientation={orientation}
         {...getStyles('root')}

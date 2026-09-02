@@ -1,4 +1,5 @@
 import React from 'react';
+import { useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -43,6 +44,7 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props) => {
   } = useProps('AppShellNavbar', null, _props);
 
   const ctx = useAppShellContext();
+  const sectionId = useId(others.id);
 
   if (ctx.disabled) {
     return null;
@@ -63,7 +65,7 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props) => {
     );
   }
 
-  const { children, ...rest } = others;
+  const { children, dangerouslySetInnerHTML, ...rest } = others;
 
   return (
     <Box
@@ -72,9 +74,14 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props) => {
       {...boxProps}
       {...rest}
       __vars={{ '--app-shell-navbar-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
+      id={sectionId}
     >
-      {children}
-      <AppShellResizeHandle section="navbar" />
+      {dangerouslySetInnerHTML ? (
+        <div style={{ display: 'contents' }} dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
+      ) : (
+        children
+      )}
+      <AppShellResizeHandle section="navbar" sectionId={sectionId} />
     </Box>
   );
 });

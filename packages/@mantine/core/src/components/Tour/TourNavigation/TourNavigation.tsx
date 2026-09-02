@@ -4,7 +4,7 @@ import { Group } from '../../Group';
 import { useTourContext } from '../Tour.context';
 
 export interface TourNavigationProps {
-  /** Called when the close button is clicked */
+  /** Called when the navigation container is clicked (fires for clicks on any of its buttons and the step counter) */
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 

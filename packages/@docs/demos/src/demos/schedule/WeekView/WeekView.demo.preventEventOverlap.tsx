@@ -38,6 +38,34 @@ import dayjs from 'dayjs';
 import { Stack, Text } from '@mantine/core';
 import { WeekView, ScheduleEventData } from '@mantine/schedule';
 
+const startOfWeek = dayjs()
+  .subtract((dayjs().day() + 6) % 7, 'day')
+  .format('YYYY-MM-DD');
+
+const initialEvents: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: 'Standup',
+    start: \`\${startOfWeek} 09:00:00\`,
+    end: \`\${startOfWeek} 09:30:00\`,
+    color: 'blue',
+  },
+  {
+    id: 2,
+    title: 'Design review',
+    start: \`\${startOfWeek} 11:00:00\`,
+    end: \`\${startOfWeek} 12:00:00\`,
+    color: 'grape',
+  },
+  {
+    id: 3,
+    title: 'Retro',
+    start: \`\${startOfWeek} 14:00:00\`,
+    end: \`\${startOfWeek} 15:00:00\`,
+    color: 'teal',
+  },
+];
+
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
@@ -53,6 +81,7 @@ function Demo() {
         endTime="18:00:00"
         withEventsDragAndDrop
         withEventResize
+        eventDragInterval={15}
         preventEventOverlap
         onEventDrop={({ eventId, newStart, newEnd }) => {
           setMessage(null);
@@ -104,6 +133,7 @@ function Demo() {
         endTime="18:00:00"
         withEventsDragAndDrop
         withEventResize
+        eventDragInterval={15}
         preventEventOverlap
         onEventDrop={({ eventId, newStart, newEnd }) => {
           setMessage(null);

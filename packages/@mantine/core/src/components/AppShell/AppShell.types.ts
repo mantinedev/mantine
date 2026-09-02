@@ -60,6 +60,9 @@ export interface AppShellResizeSectionOptions {
 
   /** Size below which `onCollapseChange` reports the section as collapsed */
   collapseThreshold?: number;
+
+  /** `aria-label` of the resize handle @default 'Resize navbar' | 'Resize aside' | 'Resize header' | 'Resize footer' */
+  label?: string;
 }
 
 export interface AppShellResizeSectionController {

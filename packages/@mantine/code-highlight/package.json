@@ -2,7 +2,7 @@
   "name": "@mantine/code-highlight",
   "version": "9.6.0",
   "description": "Code highlight with Mantine theme",
-  "homepage": "https://mantine.dev/x/code-highlight/",
+  "homepage": "https://mantine.dev/code-highlight/code-highlight/",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "keywords": [

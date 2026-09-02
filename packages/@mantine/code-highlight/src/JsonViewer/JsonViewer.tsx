@@ -20,7 +20,12 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useClipboard, useUncontrolled } from '@mantine/hooks';
-import { getAllExpandablePaths, getDefaultExpandedPaths, serializePath } from './json-viewer-utils';
+import {
+  getAllExpandablePaths,
+  getDefaultExpandedPaths,
+  safeStringify,
+  serializePath,
+} from './json-viewer-utils';
 import { JsonViewerNode } from './JsonViewerNode';
 import classes from './JsonViewer.module.css';
 
@@ -58,7 +63,7 @@ export interface JsonViewerProps
   /** Label displayed for the root node @default false */
   rootName?: string | false;
 
-  /** Number of levels to expand by default @default 1 */
+  /** Number of levels to expand by default. Applied only to the `value` present on mount; pass a `key` or use controlled `expandedPaths` to re-apply it after `value` changes. @default 1 */
   defaultExpandDepth?: number;
 
   /** Controlled expanded paths */
@@ -100,7 +105,7 @@ export interface JsonViewerProps
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default 'sm' */
   radius?: MantineRadius;
 
-  /** Font size @default 'sm' */
+  /** Font size @default '13px' */
   fontSize?: MantineSize | (string & {}) | number;
 
   /** Indent width in px @default 16 */
@@ -182,6 +187,8 @@ const varsResolver = createVarsResolver<JsonViewerFactory>(
   })
 );
 
+const EMPTY_ANCESTORS: object[] = [];
+
 export function handleJsonViewerKeyDown(
   event: React.KeyboardEvent,
   togglePath?: (path: string) => void,
@@ -190,6 +197,28 @@ export function handleJsonViewerKeyDown(
 ) {
   const { code } = event.nativeEvent;
   const current = event.currentTarget as HTMLElement;
+
+  if (code === 'KeyC' && (event.ctrlKey || event.metaKey) && !event.shiftKey && !event.altKey) {
+    const copyControl = current.querySelector<HTMLElement>('[data-jv-copy]');
+    if (copyControl && !window.getSelection()?.toString()) {
+      event.stopPropagation();
+      event.preventDefault();
+      copyControl.click();
+    }
+    return;
+  }
+
+  if (
+    (code === 'Enter' || code === 'Space') &&
+    togglePath &&
+    pathStr &&
+    event.target === event.currentTarget
+  ) {
+    event.stopPropagation();
+    event.preventDefault();
+    togglePath(pathStr);
+    return;
+  }
 
   if (code === 'ArrowDown' || code === 'ArrowUp') {
     const root = findElementAncestor(current, '[data-jv-root]');
@@ -213,10 +242,11 @@ export function handleJsonViewerKeyDown(
     event.stopPropagation();
     event.preventDefault();
     if (isExpanded) {
-      const firstChild = current
-        .closest('[data-jv-node-wrapper]')
-        ?.querySelector<HTMLElement>('[data-jv-node-wrapper] [data-jv-node]');
-      firstChild?.focus();
+      const wrapper = current.closest<HTMLElement>('[data-jv-node-wrapper]');
+      const group = wrapper
+        ? Array.from(wrapper.children).find((child) => child.getAttribute('role') === 'group')
+        : undefined;
+      group?.querySelector<HTMLElement>('[data-jv-node]')?.focus();
     } else {
       togglePath(pathStr);
     }
@@ -346,9 +376,7 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
     }
 
     const syncLineNumbers = () => {
-      const rows = contentRef.current!.querySelectorAll<HTMLElement>(
-        ':scope .mantine-JsonViewer-row'
-      );
+      const rows = contentRef.current!.querySelectorAll<HTMLElement>(':scope [data-jv-row]');
       const heights: number[] = [];
       rows.forEach((row) => {
         heights.push(row.offsetHeight);
@@ -364,12 +392,6 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
   }, [withLineNumbers, _expandedPaths, allExpanded, value]);
 
   const clipboard = useClipboard();
-  let jsonString: string;
-  try {
-    jsonString = JSON.stringify(value, null, 2);
-  } catch {
-    jsonString = String(value);
-  }
 
   return (
     <Box {...getStyles('root')} {...others} data-with-border={withBorder || undefined} data-jv-root>
@@ -377,7 +399,7 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
         <Tooltip label={clipboard.copied ? copiedLabel : copyLabel} position="left" fz="xs">
           <UnstyledButton
             {...getStyles('copyAllButton')}
-            onClick={() => clipboard.copy(jsonString)}
+            onClick={() => clipboard.copy(safeStringify(value))}
             aria-label={clipboard.copied ? copiedLabel : `${copyLabel} JSON`}
           >
             <svg
@@ -420,7 +442,7 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
       <ScrollArea type="hover" scrollbarSize={4} {...getStyles('scrollarea')}>
         <div {...getStyles('wrapper')}>
           {withLineNumbers && (
-            <div {...getStyles('lineNumbers')} ref={lineNumbersRef}>
+            <div {...getStyles('lineNumbers')} ref={lineNumbersRef} aria-hidden>
               {lineHeights.map((height, i) => (
                 <div key={i} style={{ height }}>
                   {i + 1}
@@ -428,11 +450,18 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
               ))}
             </div>
           )}
-          <div {...getStyles('content')} ref={contentRef}>
+          <div
+            {...getStyles('content')}
+            ref={contentRef}
+            role="tree"
+            aria-label={rootName || 'JSON'}
+          >
             <JsonViewerNode
               value={value}
               path={[]}
               nodeKey={rootName || undefined}
+              level={1}
+              ancestors={EMPTY_ANCESTORS}
               expandedPaths={_expandedPaths}
               togglePath={togglePath}
               getStyles={getStyles}

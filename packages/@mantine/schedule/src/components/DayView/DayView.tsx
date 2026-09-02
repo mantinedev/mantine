@@ -266,16 +266,16 @@ export interface DayViewProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Called before a drag is committed, return `false` to reject the drop */
+  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. */
   canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
 
-  /** Called before an external drop is committed, return `false` to reject the drop. Only `dataTransfer.types` can be read while the drag is in progress. */
+  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. */
   canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
 
-  /** Called before a resize is committed, return `false` to reject the new size */
+  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. */
   canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
 
-  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. @default false */
+  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false */
   preventEventOverlap?: PreventEventOverlap;
 
   /** Called when a drop or resize is rejected */

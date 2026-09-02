@@ -1180,4 +1180,86 @@ describe('@mantine/schedule/DayView', () => {
       expect(root.style.getPropertyValue('--event-raise-delay')).toBe('250ms');
     });
   });
+
+  describe('drop validation', () => {
+    const movingEvent = {
+      id: 1,
+      title: 'Moving',
+      start: '2025-11-03 09:00:00',
+      end: '2025-11-03 09:30:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const blockingEvent = {
+      id: 2,
+      title: 'Blocking',
+      start: '2025-11-03 08:00:00',
+      end: '2025-11-03 09:00:00',
+      color: 'red',
+      payload: {},
+    };
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'drop') => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      Object.defineProperty(event, 'clientX', { value: 0, configurable: true });
+      Object.defineProperty(event, 'clientY', { value: 0, configurable: true });
+      fireEvent(node, event);
+    };
+
+    // jsdom reports empty rects, so the drop resolves to the first slot (08:00).
+    const dropOnFirstSlot = (props: Partial<DayViewProps>) => {
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          withEventsDragAndDrop
+          events={[movingEvent, blockingEvent]}
+          {...props}
+        />
+      );
+
+      fireDrag(container.querySelector('[data-event-id="1"]')!, 'dragStart');
+      fireDrag(container.querySelector('.mantine-DayView-dayViewTimeSlots')!, 'drop');
+    };
+
+    it('calls onEventDrop when the placement is allowed', () => {
+      const onEventDrop = jest.fn();
+      dropOnFirstSlot({ onEventDrop, preventEventOverlap: true, events: [movingEvent] });
+
+      expect(onEventDrop).toHaveBeenCalledTimes(1);
+      expect(onEventDrop.mock.calls[0][0]).toMatchObject({
+        eventId: 1,
+        newStart: '2025-11-03 08:00:00',
+      });
+    });
+
+    it('does not call onEventDrop when preventEventOverlap finds a conflict', () => {
+      const onEventDrop = jest.fn();
+      const onEventPlacementRejected = jest.fn();
+      dropOnFirstSlot({ onEventDrop, onEventPlacementRejected, preventEventOverlap: true });
+
+      expect(onEventDrop).not.toHaveBeenCalled();
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0].conflicts[0].id).toBe(2);
+    });
+
+    it('does not call onEventDrop when canDropEvent returns false', () => {
+      const onEventDrop = jest.fn();
+      const canDropEvent = jest.fn(() => false);
+      dropOnFirstSlot({ onEventDrop, canDropEvent });
+
+      expect(canDropEvent).toHaveBeenCalledTimes(1);
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+  });
 });

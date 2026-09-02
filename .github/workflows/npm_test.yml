@@ -27,5 +27,7 @@ jobs:
         run: npm run setup
       - name: Build public packages
         run: npm run build all
+      - name: Compile MCP documentation data
+        run: npm run compile:mcp
       - name: Run tests
         run: npm test

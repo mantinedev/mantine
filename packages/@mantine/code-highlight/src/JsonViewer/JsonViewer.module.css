@@ -4,6 +4,7 @@
   --jv-indent: 16px;
 
   position: relative;
+  direction: ltr;
   font-family: var(--mantine-font-family-monospace);
   font-size: var(--jv-fz);
   line-height: 1.55;
@@ -97,7 +98,7 @@
   min-width: 2em;
 
   @mixin where-light {
-    color: var(--mantine-color-gray-5);
+    color: var(--mantine-color-gray-7);
     border-color: var(--mantine-color-gray-3);
   }
 
@@ -186,6 +187,10 @@
   .copyButton {
     opacity: 0;
     transition: opacity 100ms ease;
+  }
+
+  &:focus-within .copyButton {
+    opacity: 1;
   }
 
   &[data-hoverable]:not([data-root]) {
@@ -393,7 +398,7 @@
   align-self: center;
 
   @mixin where-light {
-    color: var(--mantine-color-gray-5);
+    color: var(--mantine-color-gray-7);
   }
 
   @mixin where-dark {
@@ -403,7 +408,7 @@
 
 .ellipsis {
   @mixin where-light {
-    color: var(--mantine-color-gray-6);
+    color: var(--mantine-color-gray-7);
   }
 
   @mixin where-dark {
@@ -435,7 +440,7 @@
   border-radius: var(--mantine-radius-xs);
 
   @mixin where-light {
-    color: var(--mantine-color-gray-5);
+    color: var(--mantine-color-gray-6);
   }
 
   @mixin where-dark {

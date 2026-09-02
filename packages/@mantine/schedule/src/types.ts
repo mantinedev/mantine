@@ -235,7 +235,7 @@ export type PreventEventOverlap =
   | boolean
   | ((stillEvent: ScheduleEventData, movingEvent: ScheduleEventData) => boolean);
 
-/** Data passed to `canDropEvent` before a drag is committed */
+/** Data passed to `canDropEvent` while an event is dragged over a target and again before the drop is committed */
 export interface ScheduleCanDropEventData {
   /** Event that is being dragged */
   event: ScheduleEventData;
@@ -250,7 +250,7 @@ export interface ScheduleCanDropEventData {
   resourceId?: string | number;
 }
 
-/** Data passed to `canDropExternalEvent` before an external drop is committed */
+/** Data passed to `canDropExternalEvent` while an external item is dragged over a target and again before the drop is committed */
 export interface ScheduleCanDropExternalEventData {
   /** Data transfer of the drag event */
   dataTransfer: DataTransfer;
@@ -262,7 +262,7 @@ export interface ScheduleCanDropExternalEventData {
   resourceId?: string | number;
 }
 
-/** Data passed to `canResizeEventTo` before a resize is committed */
+/** Data passed to `canResizeEventTo` on every pointer move while an event is resized and again before the resize is committed */
 export interface ScheduleCanResizeEventToData {
   /** Event that is being resized */
   event: ScheduleEventData;
@@ -278,10 +278,10 @@ export interface ScheduleCanResizeEventToData {
 }
 
 interface ScheduleEventPlacementRejectedBase {
-  /** Candidate start of the event */
+  /** Candidate start of the event, for `external-drop` the datetime the item was dropped at */
   start: DateTimeStringValue;
 
-  /** Candidate end of the event */
+  /** Candidate end of the event, not present on `external-drop` */
   end: DateTimeStringValue;
 
   /** Events the placement collided with, empty when the rejection came from a callback */
@@ -290,11 +290,11 @@ interface ScheduleEventPlacementRejectedBase {
   /** `'overlap'` when `preventEventOverlap` found a conflict, `'rejected'` when a callback returned `false` */
   reason: 'overlap' | 'rejected';
 
-  /** Target resource, only in `Resources*` views */
+  /** Only in `Resources*` views: the target resource for `drop` and `external-drop`, the resized event resource for `resize` */
   resourceId?: string | number;
 }
 
-/** Data passed to `onEventPlacementRejected` when a drop or resize is rejected */
+/** Data passed to `onEventPlacementRejected` when a drop, resize or external drop is rejected. External drops have no `end`: the schedule does not know the duration of an external item. */
 export type ScheduleEventPlacementRejectedData =
   | (ScheduleEventPlacementRejectedBase & {
       action: 'drop';
@@ -308,10 +308,12 @@ export type ScheduleEventPlacementRejectedData =
       /** Edge of the event that was being dragged */
       edge: 'start' | 'end';
     })
-  | (ScheduleEventPlacementRejectedBase & {
+  | (Omit<ScheduleEventPlacementRejectedBase, 'end'> & {
       action: 'external-drop';
       /** Data transfer of the drag event */
       dataTransfer: DataTransfer;
+      /** Always `'rejected'`, `preventEventOverlap` does not apply to external drops */
       reason: 'rejected';
+      /** Always empty, external drops carry no duration and are not checked for overlap */
       conflicts: [];
     });

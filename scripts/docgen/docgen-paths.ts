@@ -45,6 +45,14 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Tabs/TabsList/TabsList.tsx',
   'packages/@mantine/core/src/components/Tabs/TabsPanel/TabsPanel.tsx',
 
+  // Toolbar
+  'packages/@mantine/core/src/components/Toolbar/ToolbarToggle/ToolbarToggle.tsx',
+  'packages/@mantine/core/src/components/Toolbar/ToolbarToggleGroup/ToolbarToggleGroup.tsx',
+  'packages/@mantine/core/src/components/Toolbar/ToolbarToggleItem/ToolbarToggleItem.tsx',
+
+  // Tour
+  'packages/@mantine/core/src/components/Tour/TourStep/TourStep.tsx',
+
   // Accordion
   'packages/@mantine/core/src/components/Accordion/AccordionItem/AccordionItem.tsx',
   'packages/@mantine/core/src/components/Accordion/AccordionControl/AccordionControl.tsx',

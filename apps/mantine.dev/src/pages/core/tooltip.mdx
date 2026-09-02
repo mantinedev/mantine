@@ -74,6 +74,12 @@ the root element of the following demo:
 Note that `hideDetached` has no effect on [Tooltip.Floating](#floating-tooltip) –
 it is positioned relative to the mouse pointer rather than to a target element.
 
+In test environments based on jsdom (Jest, Vitest) every element reports a zero-size rectangle,
+so the target is always considered detached and the tooltip is hidden. Set `env="test"` on
+[MantineProvider](/theming/mantine-provider/#env) in your test wrapper, as described in the
+[Jest](/guides/jest) and [Vitest](/guides/vitest) guides, or pass `hideDetached={false}` –
+otherwise `hideDetached` detection is disabled only in the `test` environment.
+
 ## Required ref prop
 
 Custom components that are rendered inside `Tooltip` are required to support `ref` prop:

@@ -54,6 +54,21 @@ export type ToolbarToggleGroupFactory = Factory<{
 
 const defaultProps = {} as Partial<ToolbarToggleGroupProps>;
 
+function normalizeGroupValue(
+  type: 'single' | 'multiple',
+  value: string | string[] | null | undefined
+): string | string[] | null {
+  if (type === 'single') {
+    return Array.isArray(value) ? (value[0] ?? null) : (value ?? null);
+  }
+
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  return value == null ? [] : [value];
+}
+
 export const ToolbarToggleGroup = factory<ToolbarToggleGroupFactory>((_props) => {
   const props = useProps('ToolbarToggleGroup', defaultProps, _props);
   const {
@@ -86,12 +101,14 @@ export const ToolbarToggleGroup = factory<ToolbarToggleGroupFactory>((_props) =>
     onChange,
   });
 
+  const normalizedValue = normalizeGroupValue(type, _value);
+
   const handleItemChange = (itemValue: string) => {
     if (type === 'single') {
-      const currentValue = _value as string | null;
+      const currentValue = normalizedValue as string | null;
       handleChange(currentValue === itemValue ? null : itemValue);
     } else {
-      const currentValue = _value as string[];
+      const currentValue = normalizedValue as string[];
       if (currentValue.includes(itemValue)) {
         handleChange(currentValue.filter((v) => v !== itemValue));
       } else {
@@ -101,7 +118,7 @@ export const ToolbarToggleGroup = factory<ToolbarToggleGroupFactory>((_props) =>
   };
 
   const contextValue: ToolbarToggleGroupContextValue = {
-    value: _value,
+    value: normalizedValue,
     onChange: handleItemChange,
     type,
     disabled: disabled || false,

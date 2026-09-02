@@ -1,5 +1,5 @@
-import { Children, useCallback, useEffect, useRef, useState } from 'react';
-import { useFocusReturn, useHotkeys, useUncontrolled } from '@mantine/hooks';
+import { Children, useEffect, useEffectEvent, useId, useRef, useState } from 'react';
+import { useFocusReturn, useHotkeys, useUncontrolled, type HotkeyItem } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -8,6 +8,7 @@ import {
   factory,
   Factory,
   StylesApiProps,
+  useDirection,
   useProps,
   useStyles,
 } from '../../../core';
@@ -46,7 +47,7 @@ export interface TourRootProps
   /** Whether to display the overlay @default true */
   withOverlay?: boolean;
 
-  /** Whether target elements can be interacted with through the overlay @default false */
+  /** Whether target elements can be interacted with through the overlay, disables `closeOnOverlayClick` @default false */
   withOverlayInteraction?: boolean;
 
   /** Whether to display the close button @default true */
@@ -70,7 +71,7 @@ export interface TourRootProps
   /** Whether pressing Escape closes the tour @default true */
   closeOnEscape?: boolean;
 
-  /** Whether clicking the overlay closes the tour @default false */
+  /** Whether clicking the overlay closes the tour, has no effect when `withOverlayInteraction` is set (the overlay does not receive clicks) @default false */
   closeOnOverlayClick?: boolean;
 
   /** Labels for tour UI elements */
@@ -94,7 +95,7 @@ export interface TourRootProps
   /** Shadow for the tooltip */
   tooltipShadow?: string;
 
-  /** Tour steps as children */
+  /** Tour steps */
   children?: React.ReactNode;
 }
 
@@ -179,6 +180,13 @@ export const TourRoot = factory<TourRootFactory>((_props) => {
 
   const labels: TourLabels = { ...defaultLabels, ...labelsProp };
   const spotlightPaddingValue = spotlightPadding!;
+  const { dir } = useDirection();
+  const id = useId();
+  const titleId = `${id}-title`;
+  const bodyId = `${id}-body`;
+  const [titleMounted, setTitleMounted] = useState(false);
+  const [bodyMounted, setBodyMounted] = useState(false);
+  const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
 
   const resolvedSpotlightRadius = spotlightRadius ?? 4;
 
@@ -191,63 +199,91 @@ export const TourRoot = factory<TourRootFactory>((_props) => {
 
   const [_beaconOpenStep, setBeaconOpenStep] = useState<number | null>(null);
 
-  const previousStepRef = useRef(currentStep);
+  const openStep = active && currentStep >= 0 ? currentStep : null;
+  const reportedStepRef = useRef<number | null>(null);
 
-  const close = useCallback(() => {
-    onStepClose?.(currentStep);
-    setBeaconOpenStep(null);
-    onClose?.();
-  }, [onClose, onStepClose, currentStep]);
-
-  useFocusReturn({ opened: !!active, shouldReturnFocus: true });
+  const emitStepClose = useEffectEvent((step: number) => onStepClose?.(step));
+  const emitStepOpen = useEffectEvent((step: number) => onStepOpen?.(step));
 
   useEffect(() => {
-    if (!active) {
+    const previousStep = reportedStepRef.current;
+
+    if (previousStep === openStep) {
       return;
     }
 
-    const prevStep = previousStepRef.current;
-    previousStepRef.current = currentStep;
+    reportedStepRef.current = openStep;
 
-    if (prevStep !== currentStep) {
-      onStepClose?.(prevStep);
-      onStepOpen?.(currentStep);
+    if (previousStep !== null) {
+      emitStepClose(previousStep);
     }
-  }, [active, currentStep]);
 
-  useEffect(() => {
-    if (active) {
-      onStepOpen?.(currentStep);
+    if (openStep !== null) {
+      emitStepOpen(openStep);
     }
-  }, [active]);
+  }, [openStep]);
 
-  const hotkeyHandlers: [string, () => void][] = [];
+  const close = () => {
+    const openedStep = reportedStepRef.current;
+
+    if (openedStep !== null) {
+      reportedStepRef.current = null;
+      onStepClose?.(openedStep);
+    }
+
+    setBeaconOpenStep(null);
+    onClose?.();
+  };
+
+  useFocusReturn({ opened: !!active, shouldReturnFocus: true });
+
+  const isInsideTarget = (event: KeyboardEvent) =>
+    !!targetElement && event.target instanceof Node && targetElement.contains(event.target);
+
+  const goToNextStep = (event: KeyboardEvent) => {
+    if (isInsideTarget(event)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const stepsCount = Children.count(children);
+    if (currentStep < stepsCount - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      close();
+    }
+  };
+
+  const goToPreviousStep = (event: KeyboardEvent) => {
+    if (isInsideTarget(event)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const hotkeyHandlers: HotkeyItem[] = [];
+
+  if (active && closeOnEscape) {
+    hotkeyHandlers.push(['Escape', close]);
+  }
 
   if (active && mode === 'guided' && withKeyboardNavigation) {
-    if (closeOnEscape) {
-      hotkeyHandlers.push(['Escape', close]);
-    }
     hotkeyHandlers.push([
-      'ArrowRight',
-      () => {
-        const stepsCount = Children.count(children);
-        if (currentStep < stepsCount - 1) {
-          setCurrentStep(currentStep + 1);
-        } else {
-          close();
-        }
-      },
+      dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight',
+      goToNextStep,
+      { preventDefault: false },
     ]);
     hotkeyHandlers.push([
-      'ArrowLeft',
-      () => {
-        if (currentStep > 0) {
-          setCurrentStep(currentStep - 1);
-        }
-      },
+      dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft',
+      goToPreviousStep,
+      { preventDefault: false },
     ]);
-  } else if (active && closeOnEscape) {
-    hotkeyHandlers.push(['Escape', close]);
   }
 
   useHotkeys(hotkeyHandlers);
@@ -295,6 +331,13 @@ export const TourRoot = factory<TourRootFactory>((_props) => {
         closeOnEscape: closeOnEscape!,
         closeOnOverlayClick: closeOnOverlayClick!,
         labels,
+        titleId,
+        bodyId,
+        titleMounted,
+        bodyMounted,
+        setTitleMounted,
+        setBodyMounted,
+        setTargetElement,
       }}
     >
       <OptionalPortal {...portalProps} withinPortal={withinPortal}>

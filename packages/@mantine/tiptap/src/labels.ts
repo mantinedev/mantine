@@ -138,7 +138,7 @@ export interface RichTextEditorLabels {
   tasksLiftLabel: string;
 
   /** RichTextEditor.ImageUpload control aria-label */
-  imageUploadControlLabel: string;
+  imageUploadControlLabel?: string;
 
   /** RichTextEditor.TableInsert control aria-label */
   tableInsertControlLabel?: string;

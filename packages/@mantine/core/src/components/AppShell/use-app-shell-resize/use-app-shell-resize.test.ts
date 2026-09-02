@@ -146,4 +146,44 @@ describe('@mantine/core/AppShell/use-app-shell-resize', () => {
     expect(onResize).toHaveBeenCalledWith({ navbar: 350 });
     expect(result.current.navbar.size).toBeUndefined();
   });
+
+  it('resetAll returns sections to the configuration, ignoring initialSizes', () => {
+    const { result } = renderHook(() =>
+      useAppShellResize({ navbar: {}, aside: {}, initialSizes: { navbar: 420, aside: 260 } })
+    );
+
+    expect(result.current.sizes).toStrictEqual({ navbar: 420, aside: 260 });
+
+    act(() => result.current.resetAll());
+
+    expect(result.current.navbar.size).toBeUndefined();
+    expect(result.current.sizes).toStrictEqual({});
+  });
+
+  it('calls the latest callbacks from controller methods captured in a previous render', () => {
+    const firstResizeEnd = jest.fn();
+    const secondResizeEnd = jest.fn();
+    const firstCollapseChange = jest.fn();
+    const secondCollapseChange = jest.fn();
+    const { result, rerender } = renderHook(
+      ({ onResizeEnd, onCollapseChange }) =>
+        useAppShellResize({ navbar: {}, onResizeEnd, onCollapseChange }),
+      {
+        initialProps: { onResizeEnd: firstResizeEnd, onCollapseChange: firstCollapseChange },
+      }
+    );
+
+    const { endResize, reportCollapse } = result.current;
+    rerender({ onResizeEnd: secondResizeEnd, onCollapseChange: secondCollapseChange });
+
+    act(() => {
+      reportCollapse('navbar', true);
+      endResize('navbar', 320);
+    });
+
+    expect(firstResizeEnd).not.toHaveBeenCalled();
+    expect(firstCollapseChange).not.toHaveBeenCalled();
+    expect(secondResizeEnd).toHaveBeenCalledWith({ navbar: 320 });
+    expect(secondCollapseChange).toHaveBeenCalledWith('navbar', true);
+  });
 });

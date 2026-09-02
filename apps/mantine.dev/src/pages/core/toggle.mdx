@@ -56,3 +56,5 @@ the width to adjust to content.
 `Toggle` renders a `button` element with `aria-pressed` attribute that reflects the active state.
 When using icon-only toggles, provide an `aria-label` prop so that screen readers can
 announce the button purpose.
+
+When `Toggle` is rendered as a non-button element (for example, `component="a"`), the `disabled` prop sets `aria-disabled`, removes the element from the tab order and prevents `onClick` and active state changes, since such elements do not support the native `disabled` attribute.

@@ -114,6 +114,7 @@ export const Toggle = polymorphicFactory<ToggleFactory>((_props) => {
     children,
     component,
     onClick,
+    tabIndex,
     attributes,
     ...others
   } = props as typeof props & { component?: any };
@@ -149,12 +150,16 @@ export const Toggle = polymorphicFactory<ToggleFactory>((_props) => {
       data-disabled={disabled || undefined}
       data-auto-width={autoWidth || undefined}
       disabled={disabled}
+      aria-disabled={disabled || undefined}
       aria-pressed={_active}
+      tabIndex={disabled ? -1 : tabIndex}
       size={size}
       onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-        if (!disabled) {
-          handleActiveChange(!_active);
+        if (disabled) {
+          event.preventDefault();
+          return;
         }
+        handleActiveChange(!_active);
         onClick?.(event);
       }}
     >

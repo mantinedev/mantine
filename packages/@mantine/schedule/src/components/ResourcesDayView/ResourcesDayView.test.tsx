@@ -1273,12 +1273,17 @@ describe('@mantine/schedule/ResourcesDayView', () => {
 
     const roomBEvent = { ...roomAEvent, id: 'room-b-event', resourceId: 'room-b' };
 
-    const fireDrag = (node: Element, type: 'dragStart' | 'drop', clientX?: number) => {
+    const fireDrag = (
+      node: Element,
+      type: 'dragStart' | 'drop',
+      clientX?: number,
+      types: string[] = ['application/json']
+    ) => {
       const dragEvent = createEvent[type](node);
       Object.defineProperty(dragEvent, 'dataTransfer', {
         value: {
           effectAllowed: 'move',
-          types: ['application/json'],
+          types,
           getData: jest.fn(),
           setData: jest.fn(),
         },
@@ -1353,6 +1358,60 @@ describe('@mantine/schedule/ResourcesDayView', () => {
         reason: 'overlap',
         resourceId: 'room-b',
       });
+    });
+
+    const dropExternalItemOnRoomBAt10 = (props: Partial<ResourcesDayViewProps>) => {
+      const { container } = render(<ResourcesDayView {...defaultProps} {...props} />);
+
+      const rowSlots = container.querySelectorAll(
+        '.mantine-ResourcesDayView-resourcesDayViewRowSlots'
+      );
+      mockRowSlotRects(rowSlots[1]);
+
+      fireDrag(rowSlots[1], 'drop', 250, ['text/plain']);
+    };
+
+    it('calls onExternalEventDrop with the drop datetime and the target resource', () => {
+      const onExternalEventDrop = jest.fn();
+      dropExternalItemOnRoomBAt10({ onExternalEventDrop });
+
+      expect(onExternalEventDrop).toHaveBeenCalledTimes(1);
+      expect(onExternalEventDrop.mock.calls[0][0]).toMatchObject({
+        dropDateTime: '2025-01-15 10:00:00',
+        resourceId: 'room-b',
+      });
+    });
+
+    it('does not call onExternalEventDrop when canDropExternalEvent returns false', () => {
+      const onExternalEventDrop = jest.fn();
+      const canDropExternalEvent = jest.fn(() => false);
+      dropExternalItemOnRoomBAt10({ onExternalEventDrop, canDropExternalEvent });
+
+      expect(canDropExternalEvent).toHaveBeenCalledTimes(1);
+      expect(canDropExternalEvent).toHaveBeenCalledWith(
+        expect.objectContaining({ start: '2025-01-15 10:00:00', resourceId: 'room-b' })
+      );
+      expect(onExternalEventDrop).not.toHaveBeenCalled();
+    });
+
+    it('reports an external drop rejection with the target resource and no end', () => {
+      const onEventPlacementRejected = jest.fn();
+      dropExternalItemOnRoomBAt10({
+        onExternalEventDrop: jest.fn(),
+        canDropExternalEvent: () => false,
+        onEventPlacementRejected,
+      });
+
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      const rejection = onEventPlacementRejected.mock.calls[0][0];
+      expect(rejection).toMatchObject({
+        action: 'external-drop',
+        start: '2025-01-15 10:00:00',
+        resourceId: 'room-b',
+        reason: 'rejected',
+        conflicts: [],
+      });
+      expect(rejection).not.toHaveProperty('end');
     });
   });
 });

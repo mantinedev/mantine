@@ -1,4 +1,4 @@
-import { render } from '@mantine-tests/core';
+import { render, screen } from '@mantine-tests/core';
 import { Toolbar } from '../Toolbar';
 
 describe('@mantine/core/ToolbarDivider', () => {
@@ -24,5 +24,32 @@ describe('@mantine/core/ToolbarDivider', () => {
       'data-orientation',
       'vertical'
     );
+  });
+
+  it('exposes a vertical separator in a horizontal toolbar', () => {
+    render(
+      <Toolbar>
+        <Toolbar.Divider />
+      </Toolbar>
+    );
+    expect(screen.getByRole('separator')).toHaveAttribute('aria-orientation', 'vertical');
+  });
+
+  it('exposes a horizontal separator in a vertical toolbar', () => {
+    render(
+      <Toolbar orientation="vertical">
+        <Toolbar.Divider />
+      </Toolbar>
+    );
+    expect(screen.getByRole('separator')).toHaveAttribute('aria-orientation', 'horizontal');
+  });
+
+  it('allows overriding aria-orientation', () => {
+    render(
+      <Toolbar>
+        <Toolbar.Divider aria-orientation="horizontal" />
+      </Toolbar>
+    );
+    expect(screen.getByRole('separator')).toHaveAttribute('aria-orientation', 'horizontal');
   });
 });

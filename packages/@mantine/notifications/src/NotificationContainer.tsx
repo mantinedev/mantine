@@ -6,7 +6,7 @@ import {
   NotificationProps,
   useMantineTheme,
 } from '@mantine/core';
-import { useDrag, useMergedRef } from '@mantine/hooks';
+import { useDidUpdate, useDrag, useMergedRef } from '@mantine/hooks';
 import { getAutoClose } from './get-auto-close/get-auto-close';
 import { NotificationData } from './notifications.store';
 
@@ -21,7 +21,7 @@ interface NotificationContainerProps extends NotificationProps {
   allowScrollDismiss: boolean;
   paused: boolean;
   withAutoCloseProgress: boolean;
-  progressProps: { className?: string; style?: React.CSSProperties };
+  progressProps: Record<string, any>;
   onHoverStart?: () => void;
   onHoverEnd?: () => void;
   onExpandRequest?: () => void;
@@ -483,10 +483,39 @@ export function NotificationContainer({
     data.onOpen?.(data);
   }, []);
 
+  const previousTransitionState = useRef(transitionState);
+
+  useEffect(() => {
+    const wasExiting = previousTransitionState.current === 'exiting';
+    previousTransitionState.current = transitionState;
+
+    if (transitionState !== 'entering' || !wasExiting) {
+      return;
+    }
+
+    cancelHide();
+
+    if (dismissed) {
+      setDismissed(false);
+      setScrollDismissActive(false);
+      setSwipeOffset(0);
+    } else {
+      handleAutoClose();
+    }
+
+    data.onOpen?.(data);
+  }, [transitionState]);
+
   useEffect(() => {
     handleAutoClose();
     return cancelAutoClose;
-  }, [autoCloseDuration, active, dismissed, hasAutoCloseProgress]);
+  }, [autoCloseDuration, active, dismissed]);
+
+  useDidUpdate(() => {
+    if (hasAutoCloseProgress) {
+      handleAutoClose();
+    }
+  }, [hasAutoCloseProgress]);
 
   useEffect(() => {
     if (paused) {
@@ -561,8 +590,8 @@ export function NotificationContainer({
         <div
           key={autoCloseProgress.cycle}
           aria-hidden
+          {...progressProps}
           data-paused={!autoCloseProgress.running || undefined}
-          className={progressProps.className}
           style={{
             ...progressProps.style,
             ['--notifications-progress-duration' as string]: `${autoCloseDuration}ms`,

@@ -1,6 +1,10 @@
 import { useRef } from 'react';
 import { BoxProps, CompoundStylesApiProps, factory, Factory, useProps } from '@mantine/core';
-import { insertImageWithUpload } from '../extensions/UploadImage';
+import {
+  getImageFiles,
+  getUploadImageExtensionOptions,
+  insertImageFilesWithUpload,
+} from '../extensions/UploadImage';
 import { IconPhoto } from '../icons/Icons';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
 import { RichTextEditorControlBase, RichTextEditorControlBaseProps } from './RichTextEditorControl';
@@ -27,31 +31,27 @@ const PhotoIcon: RichTextEditorControlBaseProps['icon'] = (props) => <IconPhoto 
 export const RichTextEditorImageUploadControl = factory<RichTextEditorImageUploadControlFactory>(
   (_props) => {
     const props = useProps('RichTextEditorImageUploadControl', null, _props);
-    const { classNames, className, style, styles, vars, icon, accept, ...others } = props;
+    const { classNames, className, style, styles, vars, icon, accept, onClick, ...others } = props;
 
     const ctx = useRichTextEditorContext();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleClick = () => {
-      fileInputRef.current?.click();
-    };
-
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const files = event.target.files;
-      if (!files || files.length === 0 || !ctx.editor || !ctx.onImageUpload) {
+      const files = getImageFiles(event.target.files);
+      if (files.length === 0 || !ctx.editor) {
+        return;
+      }
+
+      const extensionOptions = getUploadImageExtensionOptions(ctx.editor);
+      const onImageUpload = ctx.onImageUpload ?? extensionOptions.onImageUpload;
+      if (!onImageUpload) {
         return;
       }
 
       const { view } = ctx.editor;
-      const { from } = view.state.selection;
-
-      Array.from(files).forEach((file) => {
-        if (file.type.startsWith('image/')) {
-          insertImageWithUpload(view, file, from, {
-            onImageUpload: ctx.onImageUpload,
-            onImageUploadError: ctx.onImageUploadError,
-          });
-        }
+      insertImageFilesWithUpload(view, files, view.state.selection.from, {
+        onImageUpload,
+        onImageUploadError: ctx.onImageUploadError ?? extensionOptions.onImageUploadError,
       });
 
       if (fileInputRef.current) {
@@ -65,13 +65,21 @@ export const RichTextEditorImageUploadControl = factory<RichTextEditorImageUploa
           icon={icon || PhotoIcon}
           aria-label={ctx.labels.imageUploadControlLabel}
           title={ctx.labels.imageUploadControlLabel}
-          onClick={handleClick}
           className={className}
           style={style}
           classNames={classNames}
           styles={styles}
           variant={ctx.variant}
           {...others}
+          onClick={(event) => {
+            onClick?.(event);
+
+            if (event.defaultPrevented) {
+              return;
+            }
+
+            fileInputRef.current?.click();
+          }}
         />
         <input
           type="file"

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Box,
   BoxProps,
@@ -26,11 +27,21 @@ const defaultProps: Partial<TourBodyProps> = {};
 
 export const TourBody = factory<TourBodyFactory>((_props) => {
   const props = useProps('TourBody', defaultProps, _props);
-  const { children, classNames, className, style, styles, vars, ...others } = props;
+  const { children, classNames, className, style, styles, vars, id, ...others } = props;
   const ctx = useTourContext();
+  const { setBodyMounted } = ctx;
+
+  useEffect(() => {
+    setBodyMounted(true);
+    return () => setBodyMounted(false);
+  }, [setBodyMounted]);
 
   return (
-    <Box {...ctx.getStyles('body', { className, classNames, style, styles })} {...others}>
+    <Box
+      id={id ?? ctx.bodyId}
+      {...ctx.getStyles('body', { className, classNames, style, styles })}
+      {...others}
+    >
       {children}
     </Box>
   );

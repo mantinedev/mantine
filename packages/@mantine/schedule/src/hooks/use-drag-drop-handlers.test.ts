@@ -72,7 +72,7 @@ describe('@mantine/schedule/use-drag-drop-handlers placement validation', () => 
   function createDragEvent(types: string[] = ['application/json']) {
     return {
       preventDefault: jest.fn(),
-      dataTransfer: { types, dropEffect: 'move' },
+      dataTransfer: { types, dropEffect: 'none' },
     } as any;
   }
 
@@ -411,10 +411,10 @@ describe('@mantine/schedule/use-drag-drop-handlers placement validation', () => 
     expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
       action: 'external-drop',
       start: '2025-01-15 12:00:00',
-      end: '2025-01-15 12:00:00',
       reason: 'rejected',
       conflicts: [],
     });
+    expect(onEventPlacementRejected.mock.calls[0][0]).not.toHaveProperty('end');
   });
 
   it('calls onExternalDrop when canDropExternalEvent returns true', () => {
@@ -435,5 +435,80 @@ describe('@mantine/schedule/use-drag-drop-handlers placement validation', () => 
     });
 
     expect(onExternalDrop).toHaveBeenCalledTimes(1);
+  });
+
+  it('allows an external drop that the view cannot resolve to a datetime', () => {
+    const onExternalDrop = jest.fn();
+    const canDropExternalEvent = jest.fn(() => false);
+    const { result } = renderHook(() =>
+      useDragDropHandlers({
+        enabled: true,
+        mode: 'default',
+        calculateDropTarget,
+        onExternalDrop,
+        canDropExternalEvent,
+        getExternalDropDateTime: () => null,
+      })
+    );
+
+    act(() => {
+      result.current.handleDrop(createDragEvent(['text/plain']), 0);
+    });
+
+    expect(canDropExternalEvent).not.toHaveBeenCalled();
+    expect(onExternalDrop).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not validate external drops when the view provides no getExternalDropDateTime', () => {
+    const onExternalDrop = jest.fn();
+    const canDropExternalEvent = jest.fn(() => false);
+    const { result } = renderHook(() =>
+      useDragDropHandlers({
+        enabled: true,
+        mode: 'default',
+        calculateDropTarget,
+        onExternalDrop,
+        canDropExternalEvent,
+      })
+    );
+
+    act(() => {
+      result.current.handleDrop(createDragEvent(['text/plain']), 0);
+    });
+
+    expect(canDropExternalEvent).not.toHaveBeenCalled();
+    expect(onExternalDrop).toHaveBeenCalledTimes(1);
+  });
+
+  it('resets dropValid and the drag preview after a rejected drop', () => {
+    const { result } = renderHook(() =>
+      useDragDropHandlers({
+        enabled: true,
+        mode: 'default',
+        calculateDropTarget,
+        onEventDrop: jest.fn(),
+        canDropEvent: () => false,
+      })
+    );
+
+    startDrag(result);
+    act(() => {
+      result.current.handleDragOver(createDragEvent(), 0);
+      result.current.setDragPreview({
+        start: '2025-01-15 12:00:00',
+        end: '2025-01-15 13:00:00',
+        target: 0,
+      });
+    });
+
+    expect(result.current.dropValid).toBe(false);
+    expect(result.current.dragPreview).not.toBeNull();
+
+    act(() => {
+      result.current.handleDrop(createDragEvent(), 0);
+    });
+
+    expect(result.current.dropValid).toBe(true);
+    expect(result.current.dragPreview).toBeNull();
   });
 });

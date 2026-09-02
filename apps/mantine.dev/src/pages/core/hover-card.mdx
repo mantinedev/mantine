@@ -64,6 +64,11 @@ own tap action. `touch` extends hover activation, it has no effect if `hover` is
   ]}
 />
 
+The dropdown is also closed when the user presses outside of the target and the dropdown
+(`pointerdown` event), set `closeOnClickOutside={false}` to disable this behavior. Note that the
+`clickOutsideEvents` prop is not supported by `HoverCard`: outside press is always detected with
+the `pointerdown` event.
+
 ## Interactive dropdown
 
 By default, the dropdown is closed as soon as the pointer leaves the target: if there is a gap
@@ -122,9 +127,14 @@ content that is not a plain description of the target.
 
 - The target is focusable if it is an interactive element (a button or a link). If the target is
   not interactive, add `tabIndex={0}` to it to make it reachable with the keyboard.
-- Focusing the target with the keyboard opens the dropdown, `Escape` closes it.
+- Focusing the target with the keyboard opens the dropdown, `Escape` and a press outside of the
+  target and the dropdown close it.
 - `aria-haspopup`, `aria-expanded`, `aria-controls` and `aria-describedby` attributes are managed
   by the component, see the [Dropdown role](#dropdown-role) section.
+- The `returnFocus` prop is ignored while focus activation is enabled (`events.focus`, the
+  default): focus is already on the target when the dropdown is opened with the keyboard, and
+  returning it after the target was blurred would trap keyboard users on the target. `Escape`
+  pressed inside the dropdown always returns focus to the target.
 
 ### Limitations
 
@@ -136,3 +146,11 @@ If the dropdown contains interactive content, that content must also be availabl
 page. Do not use the `trapFocus` prop to work around this limitation: focus cannot be moved into
 the dropdown in the first place, and trapping focus in a hover-triggered element strands keyboard
 users.
+
+With `withinPortal={false}` the dropdown is rendered next to the target and focus can be moved into
+it with `Tab`, but moving focus out of the dropdown with `Tab` does not close it – the dropdown is
+closed with `Escape`, with a press outside or when the pointer leaves the target.
+
+Hover and focus activations do not coordinate: if the pointer leaves the target while the target is
+focused with the keyboard, the dropdown is closed after `closeDelay` and is not reopened until the
+target is blurred and focused again.

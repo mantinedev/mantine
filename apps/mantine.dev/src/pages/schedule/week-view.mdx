@@ -235,6 +235,9 @@ Enable drag and drop by setting `withDragDrop` prop. Events can be dragged to di
 
 <Demo data={WeekViewDemos.dragDrop} />
 
+To reject a drop based on where the event lands – for example to prevent double booking – use
+`preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
+
 ## Drag interval
 
 By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
@@ -276,6 +279,9 @@ edge of an event to adjust its start or end time. Use `onEventResize` callback t
 the resize. Use `canResizeEvent` to control which events can be resized.
 
 <Demo data={WeekViewDemos.eventResize} />
+
+To reject a resize based on the new range, use `preventEventOverlap` and `canResizeEventTo`, see
+[drop validation](/schedule/schedule/#drop-validation).
 
 ## Resize interval
 

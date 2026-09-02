@@ -37,7 +37,36 @@ const code = `
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { Stack, Text } from '@mantine/core';
-import { ResourcesDayView, ScheduleEventData } from '@mantine/schedule';
+import { ResourcesDayView, ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+
+const resources: ScheduleResourceData[] = [
+  { id: 'room-a', label: 'Room A' },
+  { id: 'room-b', label: 'Room B' },
+  { id: 'room-c', label: 'Room C (large groups only)' },
+];
+
+const initialEvents: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: 'Interview (2 people)',
+    start: \`\${today} 09:00:00\`,
+    end: \`\${today} 10:00:00\`,
+    color: 'blue',
+    resourceId: 'room-a',
+    payload: { attendees: 2 },
+  },
+  {
+    id: 2,
+    title: 'All-hands (40 people)',
+    start: \`\${today} 11:00:00\`,
+    end: \`\${today} 12:00:00\`,
+    color: 'grape',
+    resourceId: 'room-c',
+    payload: { attendees: 40 },
+  },
+];
 
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));

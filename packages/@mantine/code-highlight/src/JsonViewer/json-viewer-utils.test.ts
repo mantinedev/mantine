@@ -144,10 +144,22 @@ describe('safeStringify', () => {
     expect(safeStringify(null)).toBe('null');
   });
 
-  it('falls back to String() for circular references', () => {
-    const obj: any = {};
+  it('replaces circular references with [Circular]', () => {
+    const obj: any = { a: 1 };
     obj.self = obj;
-    expect(safeStringify(obj)).toBe('[object Object]');
+    expect(safeStringify(obj)).toBe('{\n  "a": 1,\n  "self": "[Circular]"\n}');
+  });
+
+  it('serializes shared (non-circular) references in full', () => {
+    const shared = { x: 1 };
+    expect(safeStringify({ a: shared, b: shared })).toBe(
+      '{\n  "a": {\n    "x": 1\n  },\n  "b": {\n    "x": 1\n  }\n}'
+    );
+  });
+
+  it('serializes bigint values as strings', () => {
+    expect(safeStringify({ a: BigInt(1) })).toBe('{\n  "a": "1"\n}');
+    expect(safeStringify(BigInt(42))).toBe('"42"');
   });
 });
 
@@ -187,6 +199,21 @@ describe('getAllExpandablePaths', () => {
     const paths = getAllExpandablePaths({ a: { b: { c: 1 } } });
     expect(paths).toContain(serializePath(['a', 'b']));
   });
+
+  it('terminates on circular references', () => {
+    const cyclic: any = { a: { b: 1 } };
+    cyclic.self = cyclic;
+    cyclic.a.parent = cyclic;
+    expect(() => getAllExpandablePaths(cyclic)).not.toThrow();
+    expect(getAllExpandablePaths(cyclic)).toEqual(['', serializePath(['a'])]);
+  });
+
+  it('expands shared (non-circular) references at every path', () => {
+    const shared = { x: { y: 1 } };
+    const paths = getAllExpandablePaths({ a: shared, b: shared });
+    expect(paths).toContain(serializePath(['a', 'x']));
+    expect(paths).toContain(serializePath(['b', 'x']));
+  });
 });
 
 describe('getDefaultExpandedPaths', () => {
@@ -219,5 +246,12 @@ describe('getDefaultExpandedPaths', () => {
     const arr = Array.from({ length: 10 }, (_, i) => i);
     const paths = getDefaultExpandedPaths(arr, 1, [], 0, 3);
     expect(paths).toContain(serializePath(['[0...2]']));
+  });
+
+  it('terminates on circular references', () => {
+    const cyclic: any = { a: { b: 1 } };
+    cyclic.self = cyclic;
+    expect(() => getDefaultExpandedPaths(cyclic, 50)).not.toThrow();
+    expect(getDefaultExpandedPaths(cyclic, 50)).toEqual(['', serializePath(['a'])]);
   });
 });

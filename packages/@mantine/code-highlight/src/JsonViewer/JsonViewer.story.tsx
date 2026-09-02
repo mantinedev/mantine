@@ -1,3 +1,4 @@
+import { DirectionProvider } from '@mantine/core';
 import { JsonViewer, serializePath } from './JsonViewer';
 
 export default { title: 'JsonViewer' };
@@ -294,5 +295,40 @@ export function AllFeatures() {
         rootName="data"
       />
     </div>
+  );
+}
+
+const cyclicData: any = {
+  id: BigInt(1),
+  name: 'cyclic',
+  nested: { count: BigInt(2) },
+};
+cyclicData.self = cyclicData;
+cyclicData.nested.parent = cyclicData;
+
+export function CyclicAndBigInt() {
+  return (
+    <div style={{ padding: 40, maxWidth: 700 }}>
+      <JsonViewer value={cyclicData} withControls withCopy withCopyButton withTypes />
+      <h3 style={{ marginTop: 20 }}>allExpanded</h3>
+      <JsonViewer value={cyclicData} allExpanded withTypes />
+    </div>
+  );
+}
+
+export function WithinRtl() {
+  return (
+    <DirectionProvider initialDirection="rtl">
+      <div dir="rtl" style={{ padding: 40, maxWidth: 700 }}>
+        <JsonViewer
+          value={nestedData}
+          withLineNumbers
+          withChevrons
+          withCopy
+          withCopyButton
+          defaultExpandDepth={2}
+        />
+      </div>
+    </DirectionProvider>
   );
 }

@@ -417,4 +417,97 @@ describe('@mantine/schedule/is-event-placement-allowed', () => {
     expect(result.allowed).toBe(false);
     expect(result.conflicts).toEqual([forbidden]);
   });
+
+  it('passes the target resource on the moving event to the preventEventOverlap function', () => {
+    const movingInRoomA = testUtils.createEvent({
+      id: 'moving',
+      start: '2025-01-15 10:00:00',
+      end: '2025-01-15 11:00:00',
+      resourceId: 'room-a',
+    });
+
+    const roomBEvent = testUtils.createEvent({
+      id: 'room-b-event',
+      start: '2025-01-15 12:30:00',
+      end: '2025-01-15 13:30:00',
+      resourceId: 'room-b',
+    });
+
+    const preventEventOverlap = jest.fn().mockReturnValue(true);
+
+    isEventPlacementAllowed({
+      event: movingInRoomA,
+      start: '2025-01-15 12:00:00',
+      end: '2025-01-15 13:00:00',
+      events: [roomBEvent],
+      preventEventOverlap,
+      resourceId: 'room-b',
+    });
+
+    expect(preventEventOverlap).toHaveBeenCalledTimes(1);
+    expect(preventEventOverlap.mock.calls[0][0]).toBe(roomBEvent);
+    expect(preventEventOverlap.mock.calls[0][1]).toMatchObject({
+      id: 'moving',
+      start: '2025-01-15 12:00:00',
+      end: '2025-01-15 13:00:00',
+      resourceId: 'room-b',
+    });
+  });
+
+  it('keeps the moving event resource when no target resource is given', () => {
+    const movingInRoomA = testUtils.createEvent({
+      id: 'moving',
+      start: '2025-01-15 10:00:00',
+      end: '2025-01-15 11:00:00',
+      resourceId: 'room-a',
+    });
+
+    const other = testUtils.createEvent({
+      id: 'other',
+      start: '2025-01-15 12:30:00',
+      end: '2025-01-15 13:30:00',
+      resourceId: 'room-a',
+    });
+
+    const preventEventOverlap = jest.fn().mockReturnValue(true);
+
+    isEventPlacementAllowed({
+      event: movingInRoomA,
+      start: '2025-01-15 12:00:00',
+      end: '2025-01-15 13:00:00',
+      events: [other],
+      preventEventOverlap,
+    });
+
+    expect(preventEventOverlap.mock.calls[0][1].resourceId).toBe('room-a');
+  });
+
+  it('rejects a cross-resource placement when the function compares resources', () => {
+    const movingInRoomA = testUtils.createEvent({
+      id: 'moving',
+      start: '2025-01-15 10:00:00',
+      end: '2025-01-15 11:00:00',
+      resourceId: 'room-a',
+    });
+
+    const roomBEvent = testUtils.createEvent({
+      id: 'room-b-event',
+      start: '2025-01-15 12:30:00',
+      end: '2025-01-15 13:30:00',
+      resourceId: 'room-b',
+    });
+
+    const result = isEventPlacementAllowed({
+      event: movingInRoomA,
+      start: '2025-01-15 12:00:00',
+      end: '2025-01-15 13:00:00',
+      events: [roomBEvent],
+      preventEventOverlap: (stillEvent, movingEvent) =>
+        stillEvent.resourceId === movingEvent.resourceId,
+      resourceId: 'room-b',
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.conflicts).toEqual([roomBEvent]);
+  });
 });

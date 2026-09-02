@@ -1,7 +1,11 @@
 import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Notifications, NotificationsProps, NotificationsStylesNames } from './Notifications';
-import { createNotificationsStore, notifications } from './notifications.store';
+import {
+  createNotificationsStore,
+  notifications,
+  promiseNotification,
+} from './notifications.store';
 
 const defaultProps: NotificationsProps = {
   withinPortal: false,
@@ -1683,6 +1687,117 @@ describe('@mantine/core/Notifications', () => {
 
     (window as any).PointerEvent = originalPointerEvent;
   });
+  describe('re-show while exiting', () => {
+    it('restores a swipe-dismissed notification when notifications.promise settles while it is exiting', async () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      let resolve: (value: string) => void = () => {};
+      const promise = new Promise<string>((res) => {
+        resolve = res;
+      });
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={200}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        promiseNotification(
+          promise,
+          {
+            id: 'save',
+            loading: { message: 'Saving' },
+            success: { message: 'Saved' },
+            error: { message: 'Failed' },
+          },
+          store
+        );
+      });
+
+      const notification = screen.getByRole('alert');
+      fireEvent.mouseEnter(notification);
+
+      act(() => {
+        fireEvent.wheel(notification, { deltaX: 160, deltaY: 10 });
+        jest.advanceTimersByTime(200);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+      expect(screen.getByRole('alert')).toBe(notification);
+
+      fireEvent.mouseLeave(notification);
+
+      await act(async () => {
+        resolve('ok');
+        await promise;
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(300);
+      });
+
+      const shown = screen.getByRole('alert');
+      expect(shown).toBe(notification);
+      expect(shown).toHaveTextContent('Saved');
+      expect(shown.style.getPropertyValue('--notifications-swipe-opacity')).toBe('1');
+      expect(shown.style.getPropertyValue('--notifications-swipe-offset')).toBe('0px');
+      expect(container.querySelector('.mantine-Notifications-progress')).not.toHaveAttribute(
+        'data-paused'
+      );
+
+      act(() => {
+        jest.advanceTimersByTime(1000);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+
+    it('calls onOpen and restarts auto close when a closed notification is shown again while exiting', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const onOpen = jest.fn();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={200}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'again', message: 'First', onOpen }, store);
+      });
+
+      const notification = screen.getByRole('alert');
+      expect(onOpen).toHaveBeenCalledTimes(1);
+
+      act(() => {
+        fireEvent.click(container.querySelector('.mantine-Notification-closeButton')!);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+
+      act(() => {
+        notifications.show({ id: 'again', message: 'Second', onOpen }, store);
+      });
+
+      expect(screen.getByRole('alert')).toBe(notification);
+      expect(onOpen).toHaveBeenCalledTimes(2);
+      expect(onOpen).toHaveBeenLastCalledWith(expect.objectContaining({ message: 'Second' }));
+
+      act(() => {
+        jest.advanceTimersByTime(1300);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+  });
+
   describe('auto close progress', () => {
     const getProgress = (container: HTMLElement) =>
       container.querySelector<HTMLElement>('.mantine-Notifications-progress');
@@ -1950,6 +2065,109 @@ describe('@mantine/core/Notifications', () => {
 
       expect(screen.getByText('Custom')).toBeInTheDocument();
       expect(getProgress(container)).toBeNull();
+    });
+
+    it('does not restart the auto close timer when progress is disabled for an active notification', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Progress off' }, store);
+      });
+
+      act(() => {
+        jest.advanceTimersByTime(600);
+      });
+
+      act(() => {
+        notifications.update(
+          { id: 'progress', message: 'Progress off', withAutoCloseProgress: false },
+          store
+        );
+      });
+
+      expect(getProgress(container)).toBeNull();
+
+      act(() => {
+        jest.advanceTimersByTime(600);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+
+    it('does not restart the auto close timer when withAutoCloseProgress is switched off on Notifications', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container, rerender } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Progress off' }, store);
+      });
+
+      const notification = screen.getByRole('alert');
+
+      act(() => {
+        jest.advanceTimersByTime(600);
+      });
+
+      rerender(
+        <>
+          <Notifications
+            store={store}
+            withinPortal={false}
+            autoClose={1000}
+            transitionDuration={10}
+            withAutoCloseProgress={false}
+          />
+        </>
+      );
+
+      expect(screen.getByRole('alert')).toBe(notification);
+      expect(getProgress(container)).toBeNull();
+
+      act(() => {
+        jest.advanceTimersByTime(600);
+      });
+
+      expect(store.getState().notifications).toHaveLength(0);
+    });
+
+    it('passes attributes.progress to the progress line', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+          attributes={{ progress: { 'data-review-progress': 'yes' } }}
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'Attributes' }, store);
+      });
+
+      expect(getProgress(container)).toHaveAttribute('data-review-progress', 'yes');
     });
   });
 });

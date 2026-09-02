@@ -351,6 +351,103 @@ canDragEvent?: (event: ScheduleEventData) => boolean;
 canResizeEvent?: (event: ScheduleEventData) => boolean;
 ```
 
+### preventEventOverlap
+
+Rejects drops and resizes that would make the event overlap another event, see
+[drop validation](/schedule/schedule/#drop-validation) for what counts as a conflict:
+
+```tsx
+preventEventOverlap?:
+  | boolean
+  | ((stillEvent: ScheduleEventData, movingEvent: ScheduleEventData) => boolean);
+```
+
+Pass a function to decide per pair of events – return `true` to forbid the overlap.
+`movingEvent` carries the candidate `start` and `end` and, in `Resources*` views, the
+target `resourceId`. The function runs while dragging and resizing to compute live
+feedback, it must be pure and cheap.
+
+### canDropEvent / canResizeEventTo / canDropExternalEvent
+
+Placement callbacks – return `false` to reject a drop or resize based on where the event
+is being placed. They are called while dragging to compute live feedback and again before
+the placement is committed, so they must be pure and cheap:
+
+```tsx
+canDropEvent?: (data: {
+  event: ScheduleEventData;
+  start: DateTimeStringValue;
+  end: DateTimeStringValue;
+  resourceId?: string | number;
+}) => boolean;
+
+canResizeEventTo?: (data: {
+  event: ScheduleEventData;
+  start: DateTimeStringValue;
+  end: DateTimeStringValue;
+  edge: 'start' | 'end';
+}) => boolean;
+
+canDropExternalEvent?: (data: {
+  dataTransfer: DataTransfer;
+  start: DateTimeStringValue;
+  resourceId?: string | number;
+}) => boolean;
+```
+
+- `start` / `end` – the candidate range in `YYYY-MM-DD HH:mm:ss` format. `canDropExternalEvent`
+  has no `end` – the schedule does not know the duration of an external item.
+- `resourceId` – the target resource, only in `Resources*` views.
+- `edge` – the edge of the event that is being dragged.
+- `dataTransfer` – only `dataTransfer.types` can be read while the drag is in progress.
+
+### onEventPlacementRejected
+
+Called when a drop, resize or external drop is rejected by `preventEventOverlap` or by one of
+the placement callbacks above. The payload is a discriminated union keyed on `action`:
+
+```tsx
+onEventPlacementRejected?: (
+  data:
+    | {
+        action: 'drop';
+        event: ScheduleEventData;
+        start: DateTimeStringValue;
+        end: DateTimeStringValue;
+        conflicts: ScheduleEventData[];
+        reason: 'overlap' | 'rejected';
+        resourceId?: string | number;
+      }
+    | {
+        action: 'resize';
+        event: ScheduleEventData;
+        edge: 'start' | 'end';
+        start: DateTimeStringValue;
+        end: DateTimeStringValue;
+        conflicts: ScheduleEventData[];
+        reason: 'overlap' | 'rejected';
+        resourceId?: string | number;
+      }
+    | {
+        action: 'external-drop';
+        dataTransfer: DataTransfer;
+        start: DateTimeStringValue;
+        conflicts: [];
+        reason: 'rejected';
+        resourceId?: string | number;
+      }
+) => void;
+```
+
+- `conflicts` – events the placement collided with, empty when the rejection came from a
+  callback.
+- `reason` – `'overlap'` when `preventEventOverlap` found a conflict, `'rejected'` when a
+  callback returned `false`.
+- `resourceId` – only in `Resources*` views: the target resource for `drop` and
+  `external-drop`, the event's own resource for `resize`.
+- `external-drop` has no `event` and no `end`, its `reason` is always `'rejected'` and its
+  `conflicts` are always empty.
+
 ## Date and time value formats
 
 Event data and callback payloads use the following string formats consistently:

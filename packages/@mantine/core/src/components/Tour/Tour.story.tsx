@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button } from '../Button';
+import { Slider } from '../Slider';
 import { TextInput } from '../TextInput';
 import { Tour } from './Tour';
 
@@ -169,6 +170,68 @@ export function CustomLabels() {
         </Tour.Step>
         <Tour.Step target="#custom-labels-action" title="Accion">
           Haz clic aqui para realizar una accion.
+        </Tour.Step>
+      </Tour>
+    </div>
+  );
+}
+
+export function BeaconScroll() {
+  const [active, setActive] = useState(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => setActive(true)}>Start beacon tour, then scroll the page</Button>
+      <div style={{ height: 600 }} />
+      <Button id="beacon-scroll-1">First target</Button>
+      <div style={{ height: 600 }} />
+      <TextInput id="beacon-scroll-2" placeholder="Second target" />
+      <div style={{ height: 1200 }} />
+
+      <Tour active={active} mode="beacon" defaultStep={-1} onClose={() => setActive(false)}>
+        <Tour.Step target="#beacon-scroll-1" title="First">
+          Beacons must stay attached to their targets while the page scrolls.
+        </Tour.Step>
+        <Tour.Step target="#beacon-scroll-2" title="Second">
+          This one too.
+        </Tour.Step>
+      </Tour>
+    </div>
+  );
+}
+
+export function InteractiveTarget() {
+  const [active, setActive] = useState(false);
+  const [step, setStep] = useState(0);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button id="interactive-start" onClick={() => setActive(true)}>
+        Start Tour
+      </Button>
+      <div id="interactive-slider" style={{ maxWidth: 400, marginTop: 40 }}>
+        <Slider defaultValue={40} />
+      </div>
+      <TextInput id="interactive-input" placeholder="Arrow keys move the caret" mt="md" />
+
+      <Tour
+        active={active}
+        step={step}
+        onStepChange={setStep}
+        withOverlayInteraction
+        onClose={() => {
+          setActive(false);
+          setStep(0);
+        }}
+      >
+        <Tour.Step target="#interactive-start" title="Welcome">
+          Arrow keys navigate the tour from here.
+        </Tour.Step>
+        <Tour.Step target="#interactive-slider" title="Slider">
+          Focus the slider thumb: arrow keys move the thumb and do not change the step.
+        </Tour.Step>
+        <Tour.Step target="#interactive-input" title="Input">
+          Arrow keys inside the input move the caret only.
         </Tour.Step>
       </Tour>
     </div>

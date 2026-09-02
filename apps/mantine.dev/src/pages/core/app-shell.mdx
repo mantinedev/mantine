@@ -156,6 +156,10 @@ configured size even if they are used elsewhere in the same `AppShell`. See the
 [resizable app shell example](/app-shell?e=ResizableAppShell) for a full demo that includes a
 reset button.
 
+Note that when the `resize` prop is set (same as with `mode="static"`), the `--app-shell-*`
+[CSS variables](#css-variables) are defined on the `AppShell` root element instead of `:root`, so
+they can only be read from elements rendered inside the `AppShell`.
+
 ### useAppShellResize hook
 
 The hook accepts an object with the following properties:
@@ -200,11 +204,19 @@ interface AppShellResizeSectionOptions {
 
   /** Size below which `onCollapseChange` reports the section as collapsed */
   collapseThreshold?: number;
+
+  /** `aria-label` of the resize handle @default 'Resize navbar' | 'Resize aside' | 'Resize header' | 'Resize footer' */
+  label?: string;
 }
 ```
 
 Note that the effective maximum is always the smaller of `max` and the current viewport size – a
 `max` larger than the viewport has no effect.
+
+Resize handles are rendered as `role="separator"` elements with an English `aria-label` by default
+(`Resize navbar`, `Resize aside`, `Resize header`, `Resize footer`). Use the `label` option to
+localize it or to describe the section more precisely, for example
+`navbar: { min: 200, max: 500, label: 'Sidebar width' }`.
 
 `useAppShellResize` returns a controller for every section (`navbar`, `aside`, `header`, `footer`)
 with the following shape:
@@ -692,3 +704,7 @@ Example of using CSS variables in styles:
   min-height: calc(100dvh - var(--app-shell-header-height));
 }
 ```
+
+These variables are defined on `:root` by default, but on the `AppShell` root element when the
+`resize` prop is set or `mode="static"` is used – in these cases they are not available to elements
+rendered outside of the `AppShell`, for example, in a `Modal` or `Drawer` rendered within a `Portal`.

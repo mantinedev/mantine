@@ -95,16 +95,11 @@
 }
 
 .radio--light {
-  & + .icon {
-    --radio-icon-color: var(--radio-color);
-  }
-
   &:checked:not(:disabled) {
     background-color: var(--radio-bg);
     border-color: transparent;
 
     & + .icon {
-      --radio-icon-color: var(--radio-color);
       --radio-icon-opacity: 1;
       --radio-icon-transform: none;
     }

@@ -16,6 +16,15 @@ export const ToolbarStylesApi: StylesApiData<ToolbarFactory> = {
       '--toolbar-gap': 'Controls `gap` between toolbar items',
       '--toolbar-radius': 'Controls `border-radius` of toolbar and its children',
     },
+
+    toggle: {
+      '--toolbar-toggle-active-bg':
+        'Controls active state `background-color` of `Toolbar.Toggle` and `Toolbar.ToggleItem`',
+      '--toolbar-toggle-active-hover':
+        'Controls active state hover `background-color` of `Toolbar.Toggle` and `Toolbar.ToggleItem`',
+      '--toolbar-toggle-active-color':
+        'Controls active state text `color` of `Toolbar.Toggle` and `Toolbar.ToggleItem`',
+    },
   },
 
   modifiers: [

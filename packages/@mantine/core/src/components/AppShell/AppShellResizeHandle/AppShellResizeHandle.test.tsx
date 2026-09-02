@@ -1,6 +1,9 @@
-import { fireEvent } from '@testing-library/react';
+import { useState } from 'react';
+import { act, fireEvent } from '@testing-library/react';
+import { hydrateRoot, type Root } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
 import { render, screen } from '@mantine-tests/core';
-import { MantineProvider } from '../../../core';
+import { DirectionProvider, MantineProvider, rem } from '../../../core';
 import { AppShell } from '../AppShell';
 import type {
   AppShellResizeController,
@@ -95,6 +98,23 @@ function FooterShell(props: ResizeShellProps) {
   return (
     <AppShell resize={resize} footer={{ height: 300 }}>
       <AppShell.Footer>footer</AppShell.Footer>
+    </AppShell>
+  );
+}
+
+function HeaderShell(props: ResizeShellProps) {
+  const { min = 100, collapseThreshold, onResize, onResizeEnd, onCollapseChange } = props;
+  const max = 'max' in props ? props.max : 500;
+  const resize = useAppShellResize({
+    header: { min, max, collapseThreshold },
+    onResize,
+    onResizeEnd,
+    onCollapseChange,
+  });
+
+  return (
+    <AppShell resize={resize} header={{ height: 60 }}>
+      <AppShell.Header>header</AppShell.Header>
     </AppShell>
   );
 }
@@ -639,5 +659,295 @@ describe('@mantine/core/AppShellResizeHandle', () => {
     fireEvent.keyDown(handle, { key: 'ArrowUp' });
 
     expect(onResizeEnd).toHaveBeenCalledWith({ footer: 290 });
+  });
+
+  it('renders the same aria-valuemax on the server and during hydration', async () => {
+    const originalInnerWidth = window.innerWidth;
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const ui = (
+      <MantineProvider>
+        <CallbackShell max={5000} />
+      </MantineProvider>
+    );
+    let root: Root | null = null;
+
+    try {
+      window.innerWidth = 0;
+      container.innerHTML = renderToString(ui);
+      expect(container.querySelector('[role="separator"]')).toHaveAttribute('aria-valuemax', '0');
+
+      window.innerWidth = 400;
+      await act(async () => {
+        root = hydrateRoot(container, ui);
+      });
+
+      expect(errorSpy).not.toHaveBeenCalled();
+      expect(container.querySelector('[role="separator"]')).toHaveAttribute('aria-valuemax', '400');
+    } finally {
+      await act(async () => {
+        root?.unmount();
+      });
+      window.innerWidth = originalInnerWidth;
+      errorSpy.mockRestore();
+      container.remove();
+    }
+  });
+
+  it('calls the latest onResizeEnd when the callback changes during a drag', () => {
+    mockSectionSize(300, 800);
+    const spy = jest.fn();
+
+    function StatefulShell() {
+      const [label, setLabel] = useState('a');
+      const resize = useAppShellResize({
+        navbar: { min: 100, max: 500 },
+        onResizeEnd: (sizes) => spy(label, sizes),
+      });
+
+      return (
+        <>
+          <button type="button" onClick={() => setLabel('b')}>
+            relabel
+          </button>
+          <AppShell resize={resize} navbar={{ width: 300, breakpoint: 'sm' }}>
+            <AppShell.Navbar>navbar</AppShell.Navbar>
+          </AppShell>
+        </>
+      );
+    }
+
+    render(<StatefulShell />);
+
+    fireEvent.pointerDown(screen.getByRole('separator'), { button: 0, clientX: 0, clientY: 0 });
+    fireEvent.click(screen.getByText('relabel'));
+    fireEvent.pointerMove(document, { clientX: 50, clientY: 0 });
+    fireEvent.pointerUp(document, { clientX: 50, clientY: 0 });
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith('b', { navbar: 350 });
+  });
+
+  it('reports collapse when a keyboard step crosses the threshold', () => {
+    mockSectionSize(300, 800);
+    const onCollapseChange = jest.fn();
+    render(<CallbackShell collapseThreshold={120} min={0} onCollapseChange={onCollapseChange} />);
+    const handle = screen.getByRole('separator');
+
+    fireEvent.keyDown(handle, { key: 'ArrowLeft' });
+    expect(onCollapseChange).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(handle, { key: 'Home' });
+    expect(onCollapseChange).toHaveBeenCalledTimes(1);
+    expect(onCollapseChange).toHaveBeenCalledWith('navbar', true);
+
+    fireEvent.keyDown(handle, { key: 'End' });
+    expect(onCollapseChange).toHaveBeenCalledTimes(2);
+    expect(onCollapseChange).toHaveBeenLastCalledWith('navbar', false);
+  });
+
+  it('reports keyboard collapse using the unclamped size', () => {
+    mockSectionSize(125, 800);
+    const onResizeEnd = jest.fn();
+    const onCollapseChange = jest.fn();
+    render(
+      <CallbackShell
+        collapseThreshold={120}
+        min={130}
+        onResizeEnd={onResizeEnd}
+        onCollapseChange={onCollapseChange}
+      />
+    );
+
+    fireEvent.keyDown(screen.getByRole('separator'), { key: 'ArrowLeft' });
+
+    expect(onResizeEnd).toHaveBeenCalledWith({ navbar: 130 });
+    expect(onCollapseChange).toHaveBeenCalledTimes(1);
+    expect(onCollapseChange).toHaveBeenCalledWith('navbar', true);
+  });
+
+  it('remeasures aria-valuenow when the window is resized', () => {
+    const sizeMock = mockSectionSize(300, 800);
+    const originalInnerWidth = window.innerWidth;
+    window.innerWidth = 1000;
+
+    try {
+      render(<MinimalShell />);
+      const handle = screen.getByRole('separator');
+      expect(handle).toHaveAttribute('aria-valuenow', '300');
+
+      sizeMock.mockReturnValue({
+        width: 375,
+        height: 800,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        x: 0,
+        y: 0,
+      } as any);
+      window.innerWidth = 500;
+      fireEvent(window, new Event('resize'));
+
+      expect(handle).toHaveAttribute('aria-valuenow', '375');
+    } finally {
+      window.innerWidth = originalInnerWidth;
+    }
+  });
+
+  it('uses the label option as the accessible name and links the handle to its section', () => {
+    function LabelShell() {
+      const resize = useAppShellResize({ navbar: { label: 'Sidebar width' } });
+      return (
+        <AppShell resize={resize} navbar={{ width: 300, breakpoint: 'sm' }}>
+          <AppShell.Navbar id="test-navbar">navbar</AppShell.Navbar>
+        </AppShell>
+      );
+    }
+
+    render(<LabelShell />);
+    const handle = screen.getByRole('separator', { name: 'Sidebar width' });
+
+    expect(handle).toHaveAttribute('aria-controls', 'test-navbar');
+    expect(handle.parentElement).toHaveAttribute('id', 'test-navbar');
+  });
+
+  it('generates a section id for aria-controls when the section has none', () => {
+    render(<Shell />);
+    const handle = screen.getByRole('separator', { name: 'Resize navbar' });
+    const controls = handle.getAttribute('aria-controls');
+
+    expect(controls).toBeTruthy();
+    expect(handle.parentElement).toHaveAttribute('id', controls!);
+  });
+
+  it('inverts the pointer delta in rtl direction', () => {
+    mockSectionSize(300, 800);
+    const onResizeEnd = jest.fn();
+    render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <CallbackShell onResizeEnd={onResizeEnd} />
+      </DirectionProvider>
+    );
+
+    drag(screen.getByRole('separator'), 50);
+
+    expect(onResizeEnd).toHaveBeenCalledWith({ navbar: 250 });
+  });
+
+  it('inverts the arrow keys in rtl direction', () => {
+    mockSectionSize(300, 800);
+    const onResizeEnd = jest.fn();
+    render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <CallbackShell onResizeEnd={onResizeEnd} />
+      </DirectionProvider>
+    );
+
+    fireEvent.keyDown(screen.getByRole('separator'), { key: 'ArrowRight' });
+
+    expect(onResizeEnd).toHaveBeenCalledWith({ navbar: 290 });
+  });
+
+  it('resizes the header vertically', () => {
+    mockSectionSize(1000, 60);
+    const onResizeEnd = jest.fn();
+    render(<HeaderShell min={40} max={500} onResizeEnd={onResizeEnd} />);
+    const handle = screen.getByRole('separator');
+
+    expect(handle).toHaveAttribute('data-section', 'header');
+    expect(handle).toHaveAttribute('aria-orientation', 'horizontal');
+
+    drag(handle, 0, 30);
+
+    expect(onResizeEnd).toHaveBeenCalledWith({ header: 90 });
+  });
+
+  it('applies classNames and styles to the resizeHandle selector', () => {
+    function StyledShell() {
+      const resize = useAppShellResize({ navbar: { min: 100, max: 500 } });
+      return (
+        <AppShell
+          resize={resize}
+          navbar={{ width: 300, breakpoint: 'sm' }}
+          classNames={{ resizeHandle: 'test-handle' }}
+          styles={{ resizeHandle: { opacity: 0.5 } }}
+        >
+          <AppShell.Navbar>navbar</AppShell.Navbar>
+        </AppShell>
+      );
+    }
+
+    render(<StyledShell />);
+    const handle = screen.getByRole('separator');
+
+    expect(handle).toHaveClass('test-handle');
+    expect(handle).toHaveClass('mantine-AppShell-resizeHandle');
+    expect(handle).toHaveStyle({ opacity: '0.5' });
+  });
+
+  it('sets data-orientation and toggles data-active during a drag', () => {
+    mockSectionSize(300, 800);
+    render(<CallbackShell />);
+    const handle = screen.getByRole('separator');
+
+    expect(handle).toHaveAttribute('data-orientation', 'vertical');
+    expect(handle).not.toHaveAttribute('data-active');
+
+    fireEvent.pointerDown(handle, { button: 0, clientX: 0, clientY: 0 });
+    expect(handle).toHaveAttribute('data-active');
+
+    fireEvent.pointerMove(document, { clientX: 50, clientY: 0 });
+    fireEvent.pointerUp(document, { clientX: 50, clientY: 0 });
+    expect(handle).not.toHaveAttribute('data-active');
+  });
+
+  it('does not write the offset variable during a drag when the section offset is disabled', () => {
+    mockSectionSize(1000, 60);
+
+    function OffsetShell() {
+      const resize = useAppShellResize({ header: { min: 40, max: 500 } });
+      return (
+        <AppShell resize={resize} header={{ height: 60, offset: false }}>
+          <AppShell.Header>header</AppShell.Header>
+        </AppShell>
+      );
+    }
+
+    const { container } = render(<OffsetShell />);
+    const root = container.querySelector('.mantine-AppShell-root') as HTMLElement;
+    const handle = screen.getByRole('separator');
+
+    fireEvent.pointerDown(handle, { button: 0, clientX: 0, clientY: 0 });
+    fireEvent.pointerMove(document, { clientX: 0, clientY: 30 });
+
+    expect(root.style.getPropertyValue('--app-shell-header-height')).toBe(rem(90));
+    expect(root.style.getPropertyValue('--app-shell-header-offset')).toBe('');
+
+    fireEvent.pointerUp(document, { clientX: 0, clientY: 30 });
+  });
+
+  it('measures the section element rather than the handle when a drag starts', () => {
+    const onResizeEnd = jest.fn();
+    render(<CallbackShell onResizeEnd={onResizeEnd} />);
+    const handle = screen.getByRole('separator');
+    const sectionSpy = jest
+      .spyOn(handle.parentElement as HTMLElement, 'getBoundingClientRect')
+      .mockReturnValue({
+        width: 300,
+        height: 800,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        x: 0,
+        y: 0,
+      } as any);
+
+    drag(handle, 50);
+
+    expect(sectionSpy).toHaveBeenCalled();
+    expect(onResizeEnd).toHaveBeenCalledWith({ navbar: 350 });
   });
 });

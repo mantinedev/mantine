@@ -25,12 +25,20 @@ the `resourceId` of the target resource, allowing you to update the event's reso
 
 <Demo data={ResourcesMonthViewDemos.dragDrop} />
 
+To reject a drop based on where the event lands – for example to prevent double booking – use
+`preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
+In resource views the conflict set is scoped to the target resource. Month view has no drag ghost, so a
+rejected drop is only reported through `onEventPlacementRejected`.
+
 ## Event resize
 
 Enable event resizing with `withEventResize` prop. Events can be resized by dragging their start or
 end edges, and the `onEventResize` callback is called with the updated event start and end dates.
 
 <Demo data={ResourcesMonthViewDemos.eventResize} />
+
+To reject a resize based on the new range, use `preventEventOverlap` and `canResizeEventTo`, see
+[drop validation](/schedule/schedule/#drop-validation).
 
 Resizing snaps to whole days and preserves the event's original time of day: dragging the end edge
 of an event that ends at `17:00` onto another day keeps the `17:00` end time. Events that end

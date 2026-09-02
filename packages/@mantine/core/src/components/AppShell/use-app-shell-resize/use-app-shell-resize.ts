@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallbackRef } from '@mantine/hooks';
 import type {
   AppShellResizeController,
   AppShellResizeSection,
@@ -18,6 +19,9 @@ export function useAppShellResize(input: UseAppShellResizeInput = {}): AppShellR
   const [touched, setTouched] = useState<SectionFlags>({});
   const [activeSection, setActiveSection] = useState<AppShellResizeSection | null>(null);
   const collapsedRef = useRef<SectionFlags>({});
+  const handleResize = useCallbackRef(onResize);
+  const handleResizeEnd = useCallbackRef(onResizeEnd);
+  const handleCollapseChange = useCallbackRef(onCollapseChange);
 
   const options = useMemo(
     () => ({ navbar, aside, header, footer }),
@@ -64,9 +68,9 @@ export function useAppShellResize(input: UseAppShellResizeInput = {}): AppShellR
 
   const previewResize = useCallback(
     (section: AppShellResizeSection, size: number) => {
-      onResize?.({ ...resolvedSizesRef.current, [section]: size });
+      handleResize({ ...resolvedSizesRef.current, [section]: size });
     },
-    [onResize]
+    [handleResize]
   );
 
   const endResize = useCallback(
@@ -79,9 +83,9 @@ export function useAppShellResize(input: UseAppShellResizeInput = {}): AppShellR
       }
 
       commitSize(section, size);
-      onResizeEnd?.({ ...resolvedSizesRef.current, [section]: size });
+      handleResizeEnd({ ...resolvedSizesRef.current, [section]: size });
     },
-    [commitSize, onResizeEnd]
+    [commitSize, handleResizeEnd]
   );
 
   const initCollapse = useCallback((section: AppShellResizeSection, collapsed: boolean) => {
@@ -95,9 +99,9 @@ export function useAppShellResize(input: UseAppShellResizeInput = {}): AppShellR
       }
 
       collapsedRef.current[section] = collapsed;
-      onCollapseChange?.(section, collapsed);
+      handleCollapseChange(section, collapsed);
     },
-    [onCollapseChange]
+    [handleCollapseChange]
   );
 
   const resetAll = useCallback(() => {

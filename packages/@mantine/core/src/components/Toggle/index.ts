@@ -1,5 +1,11 @@
 export { Toggle } from './Toggle';
-export type { ToggleProps, ToggleStylesNames, ToggleFactory, ToggleCssVariables } from './Toggle';
+export type {
+  ToggleProps,
+  ToggleStylesNames,
+  ToggleFactory,
+  ToggleCssVariables,
+  ToggleVariant,
+} from './Toggle';
 
 export namespace Toggle {
   export type Props = import('./Toggle').ToggleProps;

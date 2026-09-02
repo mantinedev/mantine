@@ -13,7 +13,7 @@ export interface EventResizeValidationOptions {
   /** If set, resizes that would make the event overlap another event are rejected */
   preventEventOverlap?: PreventEventOverlap;
 
-  /** Called before a resize is committed, return `false` to reject the new size */
+  /** Called on every pointer move to compute live feedback and again before the resize is committed, return `false` to reject the new size */
   canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
 
   /** Called when a resize is rejected */

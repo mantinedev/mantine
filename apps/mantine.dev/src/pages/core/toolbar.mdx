@@ -51,15 +51,17 @@ the toggle width to adjust to its content — useful for text labels.
 Set `disabled` prop on individual `Toolbar.ToggleItem` components, or on
 `Toolbar.ToggleGroup` to disable all items within the group.
 
+When `Toolbar.Toggle` is rendered as a non-button element (for example, `component="a"`), the `disabled` prop sets `aria-disabled`, removes the element from the tab order and prevents `onClick` from being called, since such elements do not support the native `disabled` attribute.
+
 <Demo data={ToolbarDemos.disabled} />
 
 ## Accessibility
 
-`Toolbar` renders `role="toolbar"` with `aria-orientation` set based on the `orientation` prop.
-All toggle buttons expose `aria-pressed` state automatically. When using icon-only toggles,
-always provide an `aria-label` prop so that screen readers can announce the button purpose.
+`Toolbar` renders `role="toolbar"` with `aria-orientation` set based on the `orientation` prop. `Toolbar.ToggleItem` always exposes `aria-pressed` state. `Toolbar.Toggle` exposes `aria-pressed` only when the `active` prop is passed – without it, `Toolbar.Toggle` is a regular button (for example, an action or a link) and does not announce a pressed state. `Toolbar.Divider` renders `role="separator"` with `aria-orientation` matching the drawn line. When using icon-only toggles, always provide an `aria-label` prop so that screen readers can announce the button purpose.
 
 ## Keyboard interactions
+
+Arrow keys, `Home` and `End` move focus only between `Toolbar.Toggle` and `Toolbar.ToggleItem` components – they share a single tab stop (roving tabindex). Other interactive children, for example `ActionIcon`, `Button`, `Menu.Target` or a standalone `Toggle`, are not part of the arrow key navigation and remain separate tab stops.
 
 <KeyboardEventsTable
   data={[

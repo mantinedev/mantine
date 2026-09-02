@@ -1,3 +1,4 @@
+import { useMergedRef } from '@mantine/hooks';
 import { createEventHandler, useProps } from '../../../core';
 import { Popover, PopoverDropdownProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
@@ -8,7 +9,7 @@ export interface HoverCardDropdownProps extends PopoverDropdownProps {
 }
 
 export function HoverCardDropdown(props: HoverCardDropdownProps) {
-  const { children, onMouseEnter, onMouseLeave, ...others } = useProps(
+  const { children, onMouseEnter, onMouseLeave, ref, ...others } = useProps(
     'HoverCardDropdown',
     null,
     props
@@ -16,13 +17,14 @@ export function HoverCardDropdown(props: HoverCardDropdownProps) {
 
   const ctx = useHoverCardContext();
   const floatingProps = ctx.getFloatingProps();
+  const mergedRef = useMergedRef(ctx.floating, ref);
 
   const accessibleProps =
     ctx.withRoles && ctx.role === 'tooltip' ? { role: 'tooltip', id: ctx.dropdownId } : undefined;
 
   return (
     <Popover.Dropdown
-      ref={ctx.floating}
+      ref={mergedRef}
       {...floatingProps}
       {...accessibleProps}
       onMouseEnter={createEventHandler<any>(onMouseEnter, floatingProps.onMouseEnter)}

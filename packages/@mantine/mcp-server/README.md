@@ -23,4 +23,4 @@ npx @mantine/mcp-server
 
 ## Coverage
 
-405 documents: components, hooks, `@mantine/form`, styling, theming, framework and migration guides, and FAQ pages. Changelogs are not indexed.
+406 documents: components, hooks, `@mantine/form`, styling, theming, framework and migration guides, and FAQ pages. Changelogs are not indexed.

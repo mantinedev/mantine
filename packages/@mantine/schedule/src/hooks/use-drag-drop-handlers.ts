@@ -60,10 +60,10 @@ export interface UseDragDropHandlersOptions<T = any> {
   /** If set, drops that would make the event overlap another event are rejected */
   preventEventOverlap?: PreventEventOverlap;
 
-  /** Called before a drag is committed, return `false` to reject the drop */
+  /** Called on every `dragover` to compute live feedback and again before the drop is committed, return `false` to reject the drop */
   canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
 
-  /** Called before an external drop is committed, return `false` to reject the drop */
+  /** Called on every `dragover` of an external item to compute live feedback and again before the drop is committed, return `false` to reject the drop */
   canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
 
   /** Called when a drop is rejected */
@@ -340,7 +340,6 @@ export function useDragDropHandlers<T = any>(
             action: 'external-drop',
             dataTransfer: event.dataTransfer,
             start: external.start!,
-            end: external.start!,
             resourceId: external.resourceId,
             conflicts: [],
             reason: 'rejected',

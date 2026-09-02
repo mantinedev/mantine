@@ -175,4 +175,30 @@ describe('@mantine/schedule/use-day-grid-event-resize', () => {
 
     expect(result.current.resizeValid).toBe(false);
   });
+
+  it('does not call canResizeEventTo when the overlap check already rejected the size', () => {
+    const canResizeEventTo = jest.fn().mockReturnValue(true);
+    const conflict: ScheduleEventData = {
+      id: 'conflict',
+      title: 'Conflict',
+      start: '2024-01-17 00:00:00',
+      end: '2024-01-18 00:00:00',
+      color: 'red',
+      payload: {},
+      resourceId: 'room-a',
+    };
+
+    const { result } = renderHook(() =>
+      useDayGridEventResize({
+        enabled: true,
+        onEventResize: jest.fn(),
+        canResizeEventTo,
+        preventEventOverlap: true,
+        events: [conflict],
+      })
+    );
+
+    dragEndEdge(result, 250);
+    expect(canResizeEventTo).not.toHaveBeenCalled();
+  });
 });

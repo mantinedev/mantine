@@ -66,6 +66,24 @@ export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'
    * @default 'dialog'
    */
   role?: 'dialog' | 'tooltip';
+
+  /** Determines whether the dropdown should be closed when the user presses outside of the target and the dropdown @default true */
+  closeOnClickOutside?: boolean;
+
+  /** Not supported by `HoverCard`: outside press is always detected with the `pointerdown` event. Use `closeOnClickOutside` to disable it. */
+  clickOutsideEvents?: string[];
+
+  /**
+   * Determines whether focus should be returned to the target when the dropdown closes.
+   * Ignored when focus activation is enabled (`events.focus`, the default), otherwise moving
+   * focus away from the target would return it and reopen the dropdown.
+   * `Escape` pressed inside the dropdown always returns focus to the target.
+   * @default false
+   */
+  returnFocus?: boolean;
+
+  /** Called when the dropdown is closed with `Escape` key or with a press outside of the target and the dropdown */
+  onDismiss?: () => void;
 }
 
 export type HoverCardFactory = Factory<{
@@ -82,6 +100,7 @@ const defaultProps = {
   initiallyOpened: false,
   interactive: false,
   closeOnEscape: true,
+  closeOnClickOutside: true,
   role: 'dialog',
 } satisfies Partial<HoverCardProps>;
 
@@ -96,6 +115,10 @@ export function HoverCard(props: HoverCardProps) {
     events,
     interactive,
     closeOnEscape,
+    closeOnClickOutside,
+    returnFocus,
+    onDismiss,
+    id,
     role,
     withRoles,
     ...others
@@ -113,6 +136,9 @@ export function HoverCard(props: HoverCardProps) {
     events: resolvedEvents,
     interactive,
     closeOnEscape,
+    closeOnClickOutside,
+    onDismiss,
+    id,
   });
 
   return (
@@ -133,7 +159,10 @@ export function HoverCard(props: HoverCardProps) {
     >
       <Popover
         {...others}
+        id={id}
         closeOnEscape={closeOnEscape}
+        closeOnClickOutside={closeOnClickOutside}
+        returnFocus={resolvedEvents.focus ? false : returnFocus}
         withRoles={role === 'tooltip' ? false : withRoles}
         opened={hoverCard.opened}
         __staticSelector="HoverCard"

@@ -1,8 +1,18 @@
-import { createContextContainer, render, tests } from '@mantine-tests/core';
+import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { AppShell } from '../AppShell';
+import { useAppShellResize } from '../use-app-shell-resize/use-app-shell-resize';
 import { AppShellAside, AppShellAsideProps, AppShellAsideStylesNames } from './AppShellAside';
 
 const TestContainer = createContextContainer(AppShellAside, AppShell, {});
+
+function ResizableContainer(props: AppShellAsideProps) {
+  const resize = useAppShellResize({ aside: { min: 40, max: 500 } });
+  return (
+    <AppShell resize={resize} aside={{ width: 300, breakpoint: 'sm' }}>
+      <AppShellAside {...props} />
+    </AppShell>
+  );
+}
 
 const defaultProps: AppShellAsideProps = {};
 
@@ -36,5 +46,20 @@ describe('@mantine/core/AppShellAside', () => {
     expect(container.querySelector('.mantine-AppShell-aside')).not.toHaveAttribute(
       'data-with-border'
     );
+  });
+
+  it('does not throw when dangerouslySetInnerHTML is used without children on a non-resizable section', () => {
+    expect(() =>
+      render(<TestContainer dangerouslySetInnerHTML={{ __html: '<span>aside</span>' }} />)
+    ).not.toThrow();
+    expect(screen.getByText('aside')).toBeInTheDocument();
+  });
+
+  it('does not throw when dangerouslySetInnerHTML is used on a resizable section', () => {
+    expect(() =>
+      render(<ResizableContainer dangerouslySetInnerHTML={{ __html: '<span>aside</span>' }} />)
+    ).not.toThrow();
+    expect(screen.getByText('aside')).toBeInTheDocument();
+    expect(screen.getByRole('separator')).toBeInTheDocument();
   });
 });

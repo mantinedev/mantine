@@ -130,21 +130,21 @@ const varsResolver = createVarsResolver<RadioFactory>(
         ? `var(--mantine-color-${parsedColor.color}-outline)`
         : parsedColor.color;
 
-    const lightColor =
-      parsedColor.isThemeColor && parsedColor.shade === undefined
-        ? `var(--mantine-color-${parsedColor.color}-light-color)`
-        : parsedColor.color;
-
-    const lightBg =
-      parsedColor.isThemeColor && parsedColor.shade === undefined
-        ? `var(--mantine-color-${parsedColor.color}-light)`
-        : parsedColor.color;
+    const lightColors =
+      variant === 'light'
+        ? theme.variantColorResolver({
+            color: color || theme.primaryColor,
+            theme,
+            variant: 'light',
+            autoContrast,
+          })
+        : undefined;
 
     const resolvedColor =
       variant === 'outline'
         ? outlineColor
-        : variant === 'light'
-          ? lightColor
+        : lightColors
+          ? lightColors.color
           : getThemeColor(color, theme);
 
     return {
@@ -152,11 +152,11 @@ const varsResolver = createVarsResolver<RadioFactory>(
         '--radio-size': getSize(size, 'radio-size'),
         '--radio-radius': radius === undefined ? undefined : getRadius(radius),
         '--radio-color': resolvedColor,
-        '--radio-bg': variant === 'light' ? lightBg : undefined,
+        '--radio-bg': lightColors?.background,
         '--radio-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
-          : variant === 'light'
-            ? lightColor
+          : lightColors
+            ? lightColors.color
             : getAutoContrastValue(autoContrast, theme)
               ? getContrastColor({ color, theme, autoContrast })
               : undefined,

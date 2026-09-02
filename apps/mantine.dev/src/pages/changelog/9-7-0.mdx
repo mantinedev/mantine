@@ -64,6 +64,12 @@ During upload, a local preview is shown with a loading indicator.
 
 <Demo data={TipTapDemos.imageUpload} />
 
+Configuring `getUploadImageExtension` is enough to enable uploads – `onImageUpload` and
+`onImageUploadError` props of `RichTextEditor` are optional overrides for the toolbar control.
+`onImageUpload` can resolve either to a string or to `{ src, alt, title }` (new exported
+`ImageUploadResult` type) to set alternative text on the uploaded image. Several files picked,
+dropped or pasted together are inserted in the order they were selected and are undone as one step.
+
 ## Schedule event overlap mode
 
 [DayView](/schedule/day-view) and [WeekView](/schedule/week-view) now support `eventOverlapMode` prop
@@ -111,7 +117,7 @@ it came from:
 
 ## @mantine/mcp-server documentation coverage
 
-[@mantine/mcp-server](https://www.npmjs.com/package/@mantine/mcp-server) now exposes 405 documentation
+[@mantine/mcp-server](https://www.npmjs.com/package/@mantine/mcp-server) now exposes 406 documentation
 pages instead of 164. Previously only components were indexed – hooks, [@mantine/form](/form/use-form),
 styling, theming, guides and [help.mantine.dev](https://help.mantine.dev) FAQ pages are now included as
 well. Changelog pages are deliberately excluded to keep search results focused on current APIs.
@@ -156,6 +162,11 @@ of a container that clips it. Previously, the tooltip stayed in place, floating 
 content. Set `hideDetached={false}` to restore the previous behavior. The prop has no effect on
 `Tooltip.Floating`, which is positioned relative to the mouse pointer.
 
+Note that jsdom reports zero-size rectangles for every element, so in Jest and Vitest every tooltip
+is treated as detached and hidden unless the test wrapper sets `env="test"` on `MantineProvider`
+(as described in the [Jest](/guides/jest) and [Vitest](/guides/vitest) guides) or the component is
+rendered with `hideDetached={false}`.
+
 <Demo data={TooltipDemos.hideDetached} />
 
 ## Notifications auto close progress
@@ -182,9 +193,15 @@ functions that receive the resolved value or the rejection reason:
 [AppShell](/core/app-shell) now supports resizing `AppShell.Navbar`/`AppShell.Aside`
 horizontally and `AppShell.Header`/`AppShell.Footer` vertically. Pass a `useAppShellResize`
 hook instance to the `resize` prop to enable it for the configured sections – handles support
-mouse, touch and keyboard, and can report drag-to-collapse.
+mouse, touch and keyboard, and can report drag-to-collapse. Each section accepts a `label` option
+to localize the `aria-label` of its handle.
 See [AppShell examples](/app-shell/?e=ResizableAppShell) for more details.
+
+Note that when the `resize` prop is used, `--app-shell-*` CSS variables are defined on the
+`AppShell` root element instead of `:root`, so they cannot be read from content rendered in a
+[Portal](/core/portal), for example from a [Modal](/core/modal) or a [Drawer](/core/drawer).
 
 ## Other changes
 
-- [HoverCard](/core/hover-card) can now be opened with the keyboard and is announced by screen readers: the dropdown is opened when the target is focused with the keyboard and closed with `Escape`. New `events` prop controls which interactions open the dropdown (`{ hover: true, focus: true, touch: false }` by default), new `interactive` prop keeps the dropdown open while the pointer travels from the target to the dropdown, and new `role` prop switches the target/dropdown relation between `dialog` and `tooltip`. Note that focus activation is enabled by default and a tap on a touch device no longer opens the dropdown – set `events={{ focus: false, touch: true }}` and `closeOnEscape={false}` to restore the previous behavior.
+- [HoverCard](/core/hover-card) can now be opened with the keyboard and is announced by screen readers: the dropdown is opened when the target is focused with the keyboard and closed with `Escape`. New `events` prop controls which interactions open the dropdown (`{ hover: true, focus: true, touch: false }` by default), new `interactive` prop keeps the dropdown open while the pointer travels from the target to the dropdown, and new `role` prop switches the target/dropdown relation between `dialog` and `tooltip`. Note that focus activation is enabled by default and a tap on a touch device no longer opens the dropdown – set `events={{ focus: false, touch: true }}` and `closeOnEscape={false}` to restore the previous behavior. Standalone hover cards (outside of `HoverCard.Group`) are now also closed by a press outside of the target and the dropdown, controlled by the `closeOnClickOutside` prop. `HoverCardEvents` type is exported from `@mantine/core`.
+- [Checkbox](/core/checkbox) and [Radio](/core/radio) `variant="light"` colors are resolved with `theme.variantColorResolver`, the same way as in [Button](/core/button), so any CSS color or theme color with a shade can be used.

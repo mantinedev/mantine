@@ -1,4 +1,5 @@
 import 'dayjs/locale/ru';
+import { createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { ResourcesSchedule, ResourcesScheduleProps } from './ResourcesSchedule';
@@ -493,5 +494,96 @@ describe('@mantine/schedule/ResourcesSchedule', () => {
 
     await userEvent.click(screen.getByRole('tab', { name: 'Switch to month view' }));
     expect(screen.getByText('Visible Event')).toBeInTheDocument();
+  });
+
+  describe('drop validation props', () => {
+    const fireDrag = (node: Element, type: 'dragStart' | 'drop') => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      Object.defineProperty(event, 'clientX', { value: 0, configurable: true });
+      Object.defineProperty(event, 'clientY', { value: 0, configurable: true });
+      fireEvent(node, event);
+    };
+
+    const dropTestEvent = (container: HTMLElement, target: Element) => {
+      fireDrag(container.querySelector('[data-event-id="1"]')!, 'dragStart');
+      fireDrag(target, 'drop');
+    };
+
+    it('canDropEvent forwarded to day view', () => {
+      const canDropEvent = jest.fn(() => false);
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <ResourcesSchedule
+          {...defaultProps}
+          defaultView="day"
+          events={testEvents}
+          withEventsDragAndDrop
+          canDropEvent={canDropEvent}
+          onEventDrop={onEventDrop}
+        />
+      );
+
+      dropTestEvent(
+        container,
+        container.querySelector('.mantine-ResourcesDayView-resourcesDayViewRowSlots')!
+      );
+
+      expect(canDropEvent).toHaveBeenCalledTimes(1);
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+
+    it('canDropEvent forwarded to week view', () => {
+      const canDropEvent = jest.fn(() => false);
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <ResourcesSchedule
+          {...defaultProps}
+          defaultView="week"
+          events={testEvents}
+          withEventsDragAndDrop
+          canDropEvent={canDropEvent}
+          onEventDrop={onEventDrop}
+        />
+      );
+
+      dropTestEvent(
+        container,
+        container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewRowSlots')!
+      );
+
+      expect(canDropEvent).toHaveBeenCalledTimes(1);
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+
+    it('canDropEvent forwarded to month view', () => {
+      const canDropEvent = jest.fn(() => false);
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <ResourcesSchedule
+          {...defaultProps}
+          defaultView="month"
+          events={testEvents}
+          withEventsDragAndDrop
+          canDropEvent={canDropEvent}
+          onEventDrop={onEventDrop}
+        />
+      );
+
+      dropTestEvent(
+        container,
+        container.querySelector('.mantine-ResourcesMonthView-resourcesMonthViewRowSlots')!
+      );
+
+      expect(canDropEvent).toHaveBeenCalledTimes(1);
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
   });
 });

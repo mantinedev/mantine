@@ -1,5 +1,6 @@
 import { use, useCallback, useEffect, useRef, useState } from 'react';
 import {
+  OpenChangeReason,
   safePolygon,
   useDelayGroup,
   useDismiss,
@@ -21,6 +22,9 @@ interface UseHoverCard {
   events: { hover: boolean; focus: boolean; touch: boolean };
   interactive: boolean;
   closeOnEscape: boolean;
+  closeOnClickOutside: boolean;
+  onDismiss?: () => void;
+  id?: string;
 }
 
 export function useHoverCard(settings: UseHoverCard) {
@@ -28,7 +32,7 @@ export function useHoverCard(settings: UseHoverCard) {
   const controlled = typeof settings.opened === 'boolean';
   const opened = controlled ? settings.opened : uncontrolledOpened;
   const withinGroup = use(HoverCardGroupContext).withinGroup;
-  const uid = useId();
+  const uid = useId(settings.id);
 
   const openedRef = useRef(opened);
   openedRef.current = opened;
@@ -65,9 +69,21 @@ export function useHoverCard(settings: UseHoverCard) {
     [uid, settings.onOpen, settings.onClose]
   );
 
+  const onOpenChange = useCallback(
+    (_opened: boolean, _event?: Event, reason?: OpenChangeReason) => {
+      const wasOpened = openedRef.current;
+      onChange(_opened);
+
+      if (wasOpened && !_opened && (reason === 'escape-key' || reason === 'outside-press')) {
+        settings.onDismiss?.();
+      }
+    },
+    [onChange, settings.onDismiss]
+  );
+
   const { context, refs } = useFloating({
     open: opened,
-    onOpenChange: onChange,
+    onOpenChange,
   });
 
   const { delay: groupDelay, setCurrentId } = useDelayGroup(context, { id: uid });
@@ -80,7 +96,10 @@ export function useHoverCard(settings: UseHoverCard) {
       handleClose: settings.interactive ? safePolygon() : null,
     }),
     useFocus(context, { enabled: settings.events.focus, visibleOnly: true }),
-    useDismiss(context, { escapeKey: settings.closeOnEscape }),
+    useDismiss(context, {
+      escapeKey: settings.closeOnEscape,
+      outsidePress: settings.closeOnClickOutside,
+    }),
   ]);
 
   const openDropdown = useCallback(() => {
@@ -129,7 +148,7 @@ export function useHoverCard(settings: UseHoverCard) {
 
   return {
     opened,
-    dropdownId: uid,
+    dropdownId: `${uid}-dropdown`,
     reference: refs.setReference,
     floating: refs.setFloating,
     assignTarget,

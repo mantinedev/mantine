@@ -182,6 +182,9 @@ event drops. All-day events cannot be dragged.
 
 <Demo data={DayViewDemos.dragDrop} />
 
+To reject a drop based on where the event lands – for example to prevent double booking – use
+`preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
+
 ## Drag interval
 
 By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
@@ -223,6 +226,9 @@ edge of an event to adjust its start or end time. Use `onEventResize` callback t
 the resize.
 
 <Demo data={DayViewDemos.eventResize} />
+
+To reject a resize based on the new range, use `preventEventOverlap` and `canResizeEventTo`, see
+[drop validation](/schedule/schedule/#drop-validation).
 
 ## Resize interval
 

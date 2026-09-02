@@ -1,3 +1,4 @@
+import { act } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Toggle, ToggleProps, ToggleStylesNames } from './Toggle';
 
@@ -30,6 +31,40 @@ describe('@mantine/core/Toggle', () => {
     expect(screen.getByRole('button')).not.toHaveAttribute('data-active');
   });
 
+  it('toggles aria-pressed on click in uncontrolled mode and calls onActiveChange', async () => {
+    const spy = jest.fn();
+    render(<Toggle onActiveChange={spy}>Click</Toggle>);
+    const button = screen.getByRole('button');
+    expect(button).toHaveAttribute('aria-pressed', 'false');
+
+    await userEvent.click(button);
+    expect(button).toHaveAttribute('aria-pressed', 'true');
+    expect(button).toHaveAttribute('data-active');
+    expect(spy).toHaveBeenLastCalledWith(true);
+
+    await userEvent.click(button);
+    expect(button).toHaveAttribute('aria-pressed', 'false');
+    expect(button).not.toHaveAttribute('data-active');
+    expect(spy).toHaveBeenLastCalledWith(false);
+  });
+
+  it('supports defaultActive', () => {
+    render(<Toggle defaultActive>Click</Toggle>);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('does not change active state on click in controlled mode but calls onActiveChange', async () => {
+    const spy = jest.fn();
+    render(
+      <Toggle active={false} onActiveChange={spy}>
+        Click
+      </Toggle>
+    );
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'false');
+    expect(spy).toHaveBeenCalledWith(true);
+  });
+
   it('applies disabled attribute', () => {
     render(<Toggle disabled>Click</Toggle>);
     expect(screen.getByRole('button')).toBeDisabled();
@@ -51,6 +86,34 @@ describe('@mantine/core/Toggle', () => {
     );
     await userEvent.click(screen.getByRole('button'));
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('ignores clicks and Enter and leaves the tab order when disabled as a non-button element', async () => {
+    const onClick = jest.fn();
+    const onActiveChange = jest.fn();
+    render(
+      <Toggle component="a" href="#" disabled onClick={onClick} onActiveChange={onActiveChange}>
+        Link
+      </Toggle>
+    );
+    const link = screen.getByRole('link', { name: 'Link' });
+    expect(link).toHaveAttribute('tabindex', '-1');
+    expect(link).toHaveAttribute('aria-disabled', 'true');
+
+    await userEvent.click(link);
+    await act(async () => {
+      link.focus();
+    });
+    await userEvent.keyboard('{Enter}');
+
+    expect(onClick).not.toHaveBeenCalled();
+    expect(onActiveChange).not.toHaveBeenCalled();
+    expect(link).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('keeps consumer tabIndex when not disabled', () => {
+    render(<Toggle tabIndex={0}>Click</Toggle>);
+    expect(screen.getByRole('button')).toHaveAttribute('tabindex', '0');
   });
 
   it('applies data-auto-width when autoWidth is set', () => {

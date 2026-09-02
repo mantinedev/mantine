@@ -18,3 +18,4 @@ export { withUseForm } from './Checkbox.demo.withUseForm';
 export { groupWithUseForm } from './Checkbox.demo.groupWithUseForm';
 export { maxSelectedValues } from './Checkbox.demo.maxSelectedValues';
 export { groupDisabled } from './CheckboxGroup.demo.disabled';
+export { lightVariant } from './Checkbox.demo.lightVariant';

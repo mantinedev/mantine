@@ -9,6 +9,7 @@ import { getSafeAreaInset } from '../use-app-shell-resize/safe-area-inset';
 
 interface AppShellResizeHandleProps {
   section: AppShellResizeSection;
+  sectionId: string;
 }
 
 const LABELS: Record<AppShellResizeSection, string> = {
@@ -42,7 +43,7 @@ function restoreBodyStyleProperty(property: string, value: string) {
   }
 }
 
-export function AppShellResizeHandle({ section }: AppShellResizeHandleProps) {
+export function AppShellResizeHandle({ section, sectionId }: AppShellResizeHandleProps) {
   const ctx = useAppShellContext();
   const controller = ctx.resize;
 
@@ -60,9 +61,7 @@ export function AppShellResizeHandle({ section }: AppShellResizeHandleProps) {
   const getViewportPx = () =>
     config.axis === 'horizontal' ? window.innerWidth : window.innerHeight;
 
-  const [viewportPx, setViewportPx] = useState(() =>
-    typeof window === 'undefined' ? 0 : getViewportPx()
-  );
+  const [viewportPx, setViewportPx] = useState(0);
   const [measuredSize, setMeasuredSize] = useState<number | undefined>(undefined);
 
   const getViewportMax = () => getViewportPx() / theme.scale;
@@ -201,6 +200,11 @@ export function AppShellResizeHandle({ section }: AppShellResizeHandleProps) {
   };
 
   const commitKeyboardSize = (size: number) => {
+    controller?.initCollapse(
+      section,
+      getCollapseState(getCurrentSize(), options.collapseThreshold)
+    );
+    controller?.reportCollapse(section, getCollapseState(size, options.collapseThreshold));
     controller?.endResize(
       section,
       clampResizeSize({
@@ -312,7 +316,7 @@ export function AppShellResizeHandle({ section }: AppShellResizeHandleProps) {
     if (controller?.[section].size === undefined) {
       setMeasuredSize(getCurrentSize());
     }
-  }, [controller?.[section].size]);
+  }, [controller?.[section].size, viewportPx]);
 
   useIsomorphicEffect(
     () => () => {
@@ -340,7 +344,8 @@ export function AppShellResizeHandle({ section }: AppShellResizeHandleProps) {
       ref={handleRef}
       role="separator"
       tabIndex={0}
-      aria-label={LABELS[section]}
+      aria-label={options.label ?? LABELS[section]}
+      aria-controls={sectionId}
       aria-orientation={config.orientation}
       aria-valuemin={options.min ?? 0}
       aria-valuemax={Math.round(effectiveMax)}

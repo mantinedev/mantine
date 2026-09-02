@@ -79,7 +79,12 @@ export function isEventPlacementAllowed({
     return { allowed: true, conflicts: [] };
   }
 
-  const candidate = { ...event, start, end } as ScheduleEventData;
+  const candidate = {
+    ...event,
+    start,
+    end,
+    ...(resourceId !== undefined ? { resourceId } : {}),
+  } as ScheduleEventData;
   const candidateIsAllDay = spansWholeDays(candidate);
   const conflicts = events.filter((other) => {
     if (other.display === 'background' || isSameEvent(event, other)) {

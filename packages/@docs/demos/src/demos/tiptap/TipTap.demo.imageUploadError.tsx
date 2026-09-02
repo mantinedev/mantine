@@ -40,17 +40,7 @@ function Demo() {
   });
 
   return (
-    <RichTextEditor
-      editor={editor}
-      onImageUpload={handleImageUpload}
-      onImageUploadError={(_file, error) => {
-        notifications.show({
-          title: 'Image upload failed',
-          message: (error as Error).message,
-          color: 'red',
-        });
-      }}
-    >
+    <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
@@ -98,17 +88,7 @@ function Demo() {
   });
 
   return (
-    <RichTextEditor
-      editor={editor}
-      onImageUpload={handleImageUpload}
-      onImageUploadError={(_file, error) => {
-        notifications.show({
-          title: 'Image upload failed',
-          message: (error as Error).message,
-          color: 'red',
-        });
-      }}
-    >
+    <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />

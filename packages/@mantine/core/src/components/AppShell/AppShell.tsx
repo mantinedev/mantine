@@ -27,8 +27,10 @@ import { AppShellFooter, type AppShellFooterProps } from './AppShellFooter/AppSh
 import { AppShellHeader, type AppShellHeaderProps } from './AppShellHeader/AppShellHeader';
 import { AppShellMain, type AppShellMainProps } from './AppShellMain/AppShellMain';
 import { AppShellMediaStyles } from './AppShellMediaStyles/AppShellMediaStyles';
+import { escapeCssId } from './AppShellMediaStyles/escape-css-id/escape-css-id';
 import { AppShellNavbar, type AppShellNavbarProps } from './AppShellNavbar/AppShellNavbar';
 import { AppShellSection, type AppShellSectionProps } from './AppShellSection/AppShellSection';
+import { RESIZE_SECTION_NAMES } from './use-app-shell-resize/resize-section-config';
 import { useResizing } from './use-resizing/use-resizing';
 import classes from './AppShell.module.css';
 export type AppShellStylesNames =
@@ -171,7 +173,10 @@ export const AppShell = factory<AppShellFactory>((_props) => {
     varsResolver,
   });
 
-  const resizing = useResizing({ disabled, transitionDuration });
+  const resizeKey = resize
+    ? RESIZE_SECTION_NAMES.map((section) => resize.sizes[section]).join('|')
+    : undefined;
+  const resizing = useResizing({ disabled, transitionDuration, resizeKey });
   const _id = useId(id);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -216,7 +221,7 @@ export const AppShell = factory<AppShellFactory>((_props) => {
         padding={padding}
         mode={mode}
         resize={resizeVariables}
-        selector={resize || mode === 'static' ? `#${_id}` : undefined}
+        selector={resize || mode === 'static' ? `#${escapeCssId(_id)}` : undefined}
       />
       <Box
         {...getStyles('root')}

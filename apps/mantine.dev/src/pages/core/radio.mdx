@@ -57,6 +57,12 @@ function Demo() {
 
 <Demo data={RadioDemos.states} />
 
+## Light variant
+
+`Radio` supports `filled` (default), `outline` and `light` variants. With `variant="light"`, the checked state has a light background and a contrasting icon. Colors of the `light` variant are resolved with [theme.variantColorResolver](/theming/colors#colors-variant-resolver), the same way as in [Button](/core/button/) – `color` can be a key of `theme.colors` or any valid CSS color:
+
+<Demo data={RadioDemos.lightVariant} />
+
 ## Change icon
 
 <Demo data={RadioDemos.icon} />
@@ -145,6 +151,8 @@ related to the indicator. For example, it is useful in cards based on buttons, t
 
 Note that `Radio.Indicator` cannot be focused or selected with the keyboard. It is not
 accessible and should not be used as a replacement for the `Radio` component.
+
+`Radio.Indicator` supports the same `variant` values as `Radio`: `filled`, `outline` and `light`.
 
 <Demo data={RadioDemos.indicator} />
 

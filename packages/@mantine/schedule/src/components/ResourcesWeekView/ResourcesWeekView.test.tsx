@@ -1309,4 +1309,98 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
       ).toBe('DIV');
     });
   });
+
+  describe('drop validation', () => {
+    const movingEvent = {
+      id: 1,
+      title: 'Moving',
+      start: '2025-01-15 09:00:00',
+      end: '2025-01-15 10:00:00',
+      color: 'blue',
+      payload: {},
+      resourceId: 'room-a',
+    };
+
+    // jsdom reports empty rects, so a drop on the Room B row resolves to its first slot:
+    // 08:00 on Monday, the first day of the week.
+    const blockingEvent = {
+      id: 2,
+      title: 'Blocking',
+      start: '2025-01-13 08:30:00',
+      end: '2025-01-13 09:30:00',
+      color: 'red',
+      payload: {},
+      resourceId: 'room-b',
+    };
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'drop') => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      Object.defineProperty(event, 'clientX', { value: 0, configurable: true });
+      Object.defineProperty(event, 'clientY', { value: 0, configurable: true });
+      fireEvent(node, event);
+    };
+
+    const dropOnRoomBFirstSlot = (props: Partial<ResourcesWeekViewProps>) => {
+      const { container } = render(
+        <ResourcesWeekView
+          {...defaultProps}
+          withEventsDragAndDrop
+          events={[movingEvent, blockingEvent]}
+          {...props}
+        />
+      );
+
+      const rowSlots = container.querySelectorAll(
+        '.mantine-ResourcesWeekView-resourcesWeekViewRowSlots'
+      );
+
+      fireDrag(container.querySelector('[data-event-id="1"]')!, 'dragStart');
+      fireDrag(rowSlots[1], 'drop');
+    };
+
+    it('calls onEventDrop with the target resource when the placement is allowed', () => {
+      const onEventDrop = jest.fn();
+      dropOnRoomBFirstSlot({ onEventDrop, preventEventOverlap: true, events: [movingEvent] });
+
+      expect(onEventDrop).toHaveBeenCalledTimes(1);
+      expect(onEventDrop.mock.calls[0][0]).toMatchObject({
+        eventId: 1,
+        newStart: '2025-01-13 08:00:00',
+        resourceId: 'room-b',
+      });
+    });
+
+    it('does not call onEventDrop when preventEventOverlap finds a conflict in the target resource', () => {
+      const onEventDrop = jest.fn();
+      const onEventPlacementRejected = jest.fn();
+      dropOnRoomBFirstSlot({ onEventDrop, onEventPlacementRejected, preventEventOverlap: true });
+
+      expect(onEventDrop).not.toHaveBeenCalled();
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
+        action: 'drop',
+        reason: 'overlap',
+        resourceId: 'room-b',
+      });
+      expect(onEventPlacementRejected.mock.calls[0][0].conflicts[0].id).toBe(2);
+    });
+
+    it('does not call onEventDrop when canDropEvent returns false', () => {
+      const onEventDrop = jest.fn();
+      const canDropEvent = jest.fn(() => false);
+      dropOnRoomBFirstSlot({ onEventDrop, canDropEvent });
+
+      expect(canDropEvent).toHaveBeenCalledTimes(1);
+      expect(canDropEvent).toHaveBeenCalledWith(expect.objectContaining({ resourceId: 'room-b' }));
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+  });
 });

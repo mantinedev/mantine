@@ -1336,7 +1336,7 @@ describe('@mantine/schedule/WeekView', () => {
       payload: {},
     };
 
-    const fireDrag = (node: Element, type: 'dragStart' | 'drop', clientY?: number) => {
+    const fireDrag = (node: Element, type: 'dragStart' | 'dragOver' | 'drop', clientY?: number) => {
       const event = createEvent[type](node);
       Object.defineProperty(event, 'dataTransfer', {
         value: {
@@ -1430,6 +1430,176 @@ describe('@mantine/schedule/WeekView', () => {
       dropOnBlockedSlot({ onEventDrop, canDropEvent: () => false });
 
       expect(onEventDrop).not.toHaveBeenCalled();
+    });
+
+    const dragOverSlot = (props: Partial<WeekViewProps>, clientY: number) => {
+      const { container } = render(
+        <WeekView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={jest.fn()}
+          events={[movingEvent, blockingEvent]}
+          {...props}
+        />
+      );
+
+      const dayColumn = container.querySelectorAll('.mantine-WeekView-weekViewDaySlots')[0];
+      mockDaySlotRects(dayColumn);
+
+      fireDrag(container.querySelector('[data-event-id="1"]')!, 'dragStart');
+      fireDrag(dayColumn, 'dragOver', clientY);
+
+      return container.querySelector('.mantine-WeekView-weekViewDragPreview');
+    };
+
+    it('marks the drag ghost as invalid over a conflicting slot', () => {
+      const ghost = dragOverSlot({ preventEventOverlap: true }, 165);
+
+      expect(ghost).toBeInTheDocument();
+      expect(ghost).toHaveAttribute('data-invalid');
+    });
+
+    it('does not mark the drag ghost as invalid over a free slot', () => {
+      const ghost = dragOverSlot({ preventEventOverlap: true }, 15);
+
+      expect(ghost).toBeInTheDocument();
+      expect(ghost).not.toHaveAttribute('data-invalid');
+    });
+
+    it('never marks the drag ghost as invalid when validation is off', () => {
+      const ghost = dragOverSlot({}, 165);
+
+      expect(ghost).toBeInTheDocument();
+      expect(ghost).not.toHaveAttribute('data-invalid');
+    });
+  });
+
+  describe('resize validation', () => {
+    const rect = {
+      top: 0,
+      left: 0,
+      right: 480,
+      bottom: 480,
+      width: 480,
+      height: 480,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    };
+
+    const resizingEvent = {
+      id: 1,
+      title: 'Resizing',
+      start: '2025-11-03 09:00:00',
+      end: '2025-11-03 09:30:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const blockingEvent = {
+      id: 2,
+      title: 'Blocking',
+      start: '2025-11-03 10:00:00',
+      end: '2025-11-03 11:00:00',
+      color: 'red',
+      payload: {},
+    };
+
+    // 480px for 08:00–16:00: clientY 165 drags the bottom edge of the 09:00 event to 10:45.
+    const resizeBottomEdgeTo1045 = (props: Partial<WeekViewProps>) => {
+      const spy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockReturnValue(rect as DOMRect);
+      const { container } = render(
+        <WeekView
+          date="2025-11-03"
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventResizeInterval={15}
+          withEventResize
+          events={[resizingEvent, blockingEvent]}
+          {...props}
+        />
+      );
+
+      const isInvalid = () =>
+        container.querySelector('[data-event-id="1"]')!.hasAttribute('data-invalid');
+
+      fireEvent.pointerDown(container.querySelector('[data-event-id="1"] [data-edge="bottom"]')!);
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointermove', { clientY: 165 }));
+      });
+      const invalidWhileResizing = isInvalid();
+
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+      const invalidAfterRelease = isInvalid();
+
+      spy.mockRestore();
+      return { invalidWhileResizing, invalidAfterRelease };
+    };
+
+    it('commits the resize when the new range is allowed', () => {
+      const onEventResize = jest.fn();
+      const { invalidWhileResizing } = resizeBottomEdgeTo1045({
+        onEventResize,
+        preventEventOverlap: true,
+        events: [resizingEvent],
+      });
+
+      expect(invalidWhileResizing).toBe(false);
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({ newEnd: '2025-11-03 10:45:00' })
+      );
+    });
+
+    it('marks the resizing event as invalid and rejects the resize when preventEventOverlap finds a conflict', () => {
+      const onEventResize = jest.fn();
+      const onEventPlacementRejected = jest.fn();
+      const { invalidWhileResizing, invalidAfterRelease } = resizeBottomEdgeTo1045({
+        onEventResize,
+        onEventPlacementRejected,
+        preventEventOverlap: true,
+      });
+
+      expect(invalidWhileResizing).toBe(true);
+      expect(invalidAfterRelease).toBe(false);
+      expect(onEventResize).not.toHaveBeenCalled();
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
+        action: 'resize',
+        edge: 'end',
+        reason: 'overlap',
+        start: '2025-11-03 09:00:00',
+        end: '2025-11-03 10:45:00',
+      });
+      expect(onEventPlacementRejected.mock.calls[0][0].conflicts[0].id).toBe(2);
+    });
+
+    it('rejects the resize when canResizeEventTo returns false', () => {
+      const onEventResize = jest.fn();
+      const onEventPlacementRejected = jest.fn();
+      const { invalidWhileResizing } = resizeBottomEdgeTo1045({
+        onEventResize,
+        onEventPlacementRejected,
+        canResizeEventTo: () => false,
+        events: [resizingEvent],
+      });
+
+      expect(invalidWhileResizing).toBe(true);
+      expect(onEventResize).not.toHaveBeenCalled();
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
+        action: 'resize',
+        reason: 'rejected',
+        conflicts: [],
+      });
     });
   });
 });
