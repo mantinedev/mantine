@@ -154,16 +154,8 @@
   }
 
   &:where([data-today]:not([data-selected])) {
-    @mixin where-light {
-      &::before {
-        background-color: var(--mantine-color-gray-2);
-      }
-    }
-
-    @mixin where-dark {
-      &::before {
-        background-color: var(--mantine-color-dark-5);
-      }
+    &::before {
+      background-color: var(--mantine-color-neutral-3);
     }
   }
 

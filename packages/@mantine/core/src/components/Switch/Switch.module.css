@@ -99,14 +99,7 @@
   }
 
   --switch-text-color: var(--mantine-color-dimmed);
-
-  @mixin light {
-    --switch-bg: var(--mantine-color-gray-3);
-  }
-
-  @mixin dark {
-    --switch-bg: var(--mantine-color-dark-5);
-  }
+  --switch-bg: var(--mantine-color-track);
 
   &[data-label-position='left'] {
     --switch-order: 2;

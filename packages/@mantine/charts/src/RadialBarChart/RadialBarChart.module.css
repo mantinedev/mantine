@@ -1,13 +1,6 @@
 .root {
   --chart-empty-background: var(--mantine-color-track);
-
-  @mixin where-light {
-    --chart-cursor-color: var(--mantine-color-gray-4);
-  }
-
-  @mixin where-dark {
-    --chart-cursor-color: var(--mantine-color-dark-4);
-  }
+  --chart-cursor-color: var(--mantine-color-default-border);
 
   :where(svg),
   :where(svg *) {

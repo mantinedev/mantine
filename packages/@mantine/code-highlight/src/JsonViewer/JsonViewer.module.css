@@ -28,23 +28,10 @@
       padding: 2px 8px;
       border-radius: var(--mantine-radius-sm);
       color: var(--mantine-color-subtle-color);
-
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-1);
-      }
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-6);
-      }
+      background-color: var(--mantine-color-neutral-1);
 
       @mixin hover {
-        @mixin where-light {
-          background-color: var(--mantine-color-gray-2);
-        }
-
-        @mixin where-dark {
-          background-color: var(--mantine-color-dark-5);
-        }
+        background-color: var(--mantine-color-neutral-3);
       }
     }
   }
@@ -382,14 +369,7 @@
 
   @mixin hover {
     color: var(--mantine-color-subtle-color);
-
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-2);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-5);
-    }
+    background-color: var(--mantine-color-neutral-3);
   }
 }
 

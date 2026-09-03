@@ -8,13 +8,7 @@
   overflow: hidden;
 
   &:where([data-with-border]) {
-    @mixin where-light {
-      border: 1px solid var(--mantine-color-gray-2);
-    }
-
-    @mixin where-dark {
-      border: 1px solid var(--mantine-color-dark-6);
-    }
+    border: 1px solid var(--mantine-color-border-subtle);
 
     &:where([data-code-color-scheme='dark']) {
       border: 1px solid var(--mantine-color-dark-6);
@@ -36,13 +30,7 @@
   padding: 3px 5px;
 
   &:where([data-with-border]) {
-    @mixin where-light {
-      border: 1px solid var(--mantine-color-gray-2);
-    }
-
-    @mixin where-dark {
-      border: 1px solid var(--mantine-color-dark-6);
-    }
+    border: 1px solid var(--mantine-color-border-subtle);
 
     &:where([data-code-color-scheme='dark']) {
       border: 1px solid var(--mantine-color-dark-6);
@@ -242,21 +230,20 @@
   }
 
   border-color: var(--mantine-color-border);
+  color: var(--mantine-color-text);
+
+  &:where([data-active]) {
+    background-color: var(--mantine-color-surface-panel-2);
+  }
 
   @mixin where-light {
-    color: var(--mantine-color-gray-8);
-
     &:where([data-active]) {
-      background-color: var(--mantine-color-white);
       color: var(--mantine-color-black);
     }
   }
 
   @mixin where-dark {
-    color: var(--mantine-color-dark-0);
-
     &:where([data-active]) {
-      background-color: var(--mantine-color-dark-5);
       color: var(--mantine-color-white);
     }
   }

@@ -80,10 +80,10 @@
     border-radius: var(--mantine-radius-default);
     padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
     background-color: var(--mantine-color-surface-sunken);
+    --code-color-comment: var(--mantine-color-dimmed);
 
     @mixin where-light {
       color: var(--mantine-color-gray-9);
-      --code-color-comment: var(--mantine-color-gray-5);
       --code-color-var: var(--mantine-color-red-7);
       --code-color-number: var(--mantine-color-blue-7);
       --code-color-title: var(--mantine-color-pink-7);
@@ -92,7 +92,6 @@
 
     @mixin where-dark {
       color: var(--mantine-color-dark-1);
-      --code-color-comment: var(--mantine-color-dark-2);
       --code-color-var: var(--mantine-color-red-5);
       --code-color-number: var(--mantine-color-cyan-5);
       --code-color-title: var(--mantine-color-yellow-5);
@@ -312,14 +311,7 @@
 .tableInsertCell {
   width: 20px;
   height: 20px;
-
-  @mixin where-light {
-    background-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-5);
-  }
+  background-color: var(--mantine-color-neutral-3);
 
   &[data-active] {
     background-color: var(--mantine-primary-color-filled);
@@ -351,14 +343,7 @@
     --control-icon-size: 20px;
     min-width: 32px;
     height: 32px;
-
-    @mixin where-light {
-      background-color: var(--mantine-color-white);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-7);
-    }
+    background-color: var(--mantine-color-neutral-0);
   }
 
   border-color: var(--mantine-color-default-border);
@@ -446,14 +431,7 @@
   border-radius: var(--mantine-radius-default);
 
   border-color: var(--mantine-color-default-border);
-
-  @mixin where-light {
-    background-color: var(--mantine-color-white);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-7);
-  }
+  background-color: var(--mantine-color-neutral-0);
 
   &:where([data-active]) {
     background-color: var(--mantine-primary-color-light);

@@ -37,14 +37,7 @@
       content: '';
       inset: 0;
       z-index: 11;
-
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-3);
-      }
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-4);
-      }
+      background-color: var(--mantine-color-neutral-4);
     }
   }
 }

@@ -158,13 +158,7 @@
     }
   }
 
-  @mixin where-light {
-    --slider-checkers: var(--mantine-color-gray-3);
-  }
-
-  @mixin where-dark {
-    --slider-checkers: var(--mantine-color-dark-4);
-  }
+  --slider-checkers: var(--mantine-color-neutral-4);
 }
 
 .sliderOverlay {

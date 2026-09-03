@@ -137,7 +137,7 @@ New variables (values differ per color scheme):
     [<Code>--mantine-color-hover-strong</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-active</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-selected</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
-    [<Code>--mantine-color-track</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
+    [<Code>--mantine-color-track</Code>, <Code>gray-3</Code>, <Code>dark-4</Code>],
     [<Code>--mantine-color-text-muted</Code>, <Code>gray-6</Code>, <Code>dark-2</Code>],
     [<Code>--mantine-color-subtle-color</Code>, <Code>gray-7</Code>, <Code>dark-1</Code>],
     [<Code>--mantine-color-surface-page</Code>, <Code>white</Code>, <Code>dark-7</Code>],
@@ -244,11 +244,13 @@ surrounding content by border and shadow; light mode is visually unchanged. Over
 ### Sunken surface adoption
 
 Inset elements now share the `--mantine-color-surface-sunken` token: `SegmentedControl` root,
-`Code`, `Kbd`, `ScrollArea` scrollbar background, and – through the re-anchored
-`--mantine-color-track` role variable – `Slider`, `Progress`, `RingProgress`, and
-`SemiCircleProgress` tracks. In dark mode these elements are now tonally sunken below the page
-(`dark-9`); in light mode they unify on `gray-1`. Overriding `surfaces.sunken` in the theme (or the
-token itself) restyles all of them together.
+`Code`, `Kbd`, and `ScrollArea` scrollbar background. In dark mode these elements are now tonally
+sunken below the page (`dark-9`); in light mode they unify on `gray-1`. Control tracks are a
+separate role: `Switch`, `Slider`, `Progress`, `RingProgress`, and `SemiCircleProgress` share the
+`--mantine-color-track` role variable, anchored to the border tone (`gray-3` / `dark-4`) so the
+unfilled part of a control reads as a rail rather than a hole. Overriding `surfaces.sunken` in the theme (or the
+token itself) restyles all inset elements together; override `--mantine-color-track` to restyle every control
+track at once.
 
 ### Dark neutral flavors
 

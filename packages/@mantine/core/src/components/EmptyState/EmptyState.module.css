@@ -79,13 +79,7 @@
   }
 
   &[data-with-background] {
-    @mixin light {
-      --empty-state-indicator-default-bg: var(--mantine-color-gray-1);
-    }
-
-    @mixin dark {
-      --empty-state-indicator-default-bg: var(--mantine-color-dark-6);
-    }
+    --empty-state-indicator-default-bg: var(--mantine-color-neutral-2);
 
     width: 2em;
     height: 2em;

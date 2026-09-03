@@ -69,14 +69,7 @@
   font-size: var(--mantine-font-size-sm);
   line-height: var(--mantine-line-height-sm);
   font-weight: var(--mantine-font-weight-medium);
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-9);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-white);
-  }
+  color: var(--mantine-color-bright);
 }
 
 .description {
@@ -84,14 +77,7 @@
   line-height: var(--mantine-line-height-sm);
   overflow: hidden;
   text-overflow: ellipsis;
-
-  @mixin where-light {
-    color: var(--mantine-color-black);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-0);
-  }
+  color: var(--mantine-color-text);
 
   &:where([data-with-title]) {
     color: var(--mantine-color-dimmed);
@@ -100,12 +86,6 @@
 
 .closeButton {
   @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-8);
-    }
+    background-color: var(--mantine-color-default-hover);
   }
 }

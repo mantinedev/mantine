@@ -19,12 +19,5 @@
 
   background-color: var(--mantine-color-surface-sunken);
   border-color: var(--mantine-color-border);
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-0);
-  }
+  color: var(--mantine-color-subtle-color);
 }

@@ -78,15 +78,14 @@
 .root--dot {
   --badge-dot-size: calc(var(--badge-height) / 3.4);
 
+  background-color: var(--mantine-color-surface-panel-2);
+  border-color: var(--mantine-color-default-border);
+
   @mixin where-light {
-    background-color: var(--mantine-color-white);
-    border-color: var(--mantine-color-gray-4);
     color: var(--mantine-color-black);
   }
 
   @mixin where-dark {
-    background-color: var(--mantine-color-dark-5);
-    border-color: var(--mantine-color-dark-5);
     color: var(--mantine-color-white);
   }
 

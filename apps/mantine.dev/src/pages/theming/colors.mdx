@@ -237,7 +237,7 @@ Key role variables and their defaults:
     [<Code>--mantine-color-hover</Code>, <Code>gray-0</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-hover-strong</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-active</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
-    [<Code>--mantine-color-track</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
+    [<Code>--mantine-color-track</Code>, <Code>gray-3</Code>, <Code>dark-4</Code>],
     [<Code>--mantine-color-text-muted</Code>, <Code>gray-6</Code>, <Code>dark-2</Code>],
     [<Code>--mantine-color-subtle-color</Code>, <Code>gray-7</Code>, <Code>dark-1</Code>],
     [<Code>--mantine-color-surface-page</Code>, <Code>white</Code>, <Code>dark-7</Code>],
@@ -274,6 +274,14 @@ CSS when you need a neutral shade that adapts to the color scheme without hardco
     [<Code>--mantine-color-neutral-9</Code>, 'Max contrast', <Code>black</Code>, <Code>white</Code>],
   ]}
 />
+
+Mantine components consume this ladder directly for neutral surfaces that have no dedicated role
+token – striped table rows, filled fieldsets and accordions, chart empty cells, checkerboard
+overlays, drag handles and similar – so overriding `--mantine-color-neutral-N` re-themes them
+together with the role tokens. A few component styles intentionally keep scheme-specific values
+and are not affected by ladder overrides: code blocks rendered with a forced `codeColorScheme`
+(`CodeHighlight`), the inverted `Tooltip` and `Slider` label bubbles, and the accent-tinted
+drag-and-drop targets in `@mantine/schedule`.
 
 ## Dark neutral flavors
 

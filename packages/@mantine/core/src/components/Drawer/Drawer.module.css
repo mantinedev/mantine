@@ -44,14 +44,10 @@
   width: 2rem;
   height: 0.25rem;
   border-radius: var(--mantine-radius-xl);
-  background-color: var(--mantine-color-gray-5);
+  background-color: var(--mantine-color-neutral-5);
   cursor: grab;
   touch-action: none;
   pointer-events: all;
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-3);
-  }
 
   &:where([data-position='bottom']) {
     bottom: calc(100% + 4px);

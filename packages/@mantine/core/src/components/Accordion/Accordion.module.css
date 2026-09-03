@@ -156,14 +156,7 @@
 
   &[data-active] {
     border-color: var(--item-border-color);
-
-    @mixin where-light {
-      background-color: var(--mantine-color-white);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-7);
-    }
+    background-color: var(--mantine-color-neutral-0);
   }
 
   & + & {

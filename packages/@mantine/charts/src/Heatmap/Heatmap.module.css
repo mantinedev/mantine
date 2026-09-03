@@ -7,7 +7,6 @@
     --heatmap-level-2: rgba(64, 192, 87, 0.45);
     --heatmap-level-3: rgba(55, 178, 77, 0.75);
     --heatmap-level-4: rgba(43, 138, 62, 1);
-    --heatmap-empty-rect-bg: var(--mantine-color-gray-2);
   }
 
   @mixin where-dark {
@@ -15,8 +14,9 @@
     --heatmap-level-2: rgba(47, 158, 68, 0.45);
     --heatmap-level-3: rgba(55, 178, 77, 0.75);
     --heatmap-level-4: rgba(81, 207, 102, 1);
-    --heatmap-empty-rect-bg: var(--mantine-color-dark-5);
   }
+
+  --heatmap-empty-rect-bg: var(--mantine-color-neutral-3);
 }
 
 .rect {

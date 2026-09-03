@@ -50,13 +50,7 @@
   }
 
   &:where([data-today][data-highlight-today]:not([data-selected], [data-in-range])) {
-    @mixin where-light {
-      border: 1px solid var(--mantine-color-gray-4);
-    }
-
-    @mixin where-dark {
-      border: 1px solid var(--mantine-color-dark-4);
-    }
+    border: 1px solid var(--mantine-color-default-border);
   }
 
   &:where([data-in-range]) {

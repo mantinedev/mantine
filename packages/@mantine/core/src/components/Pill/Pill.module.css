@@ -28,14 +28,8 @@
   max-width: 100%;
   position: relative;
 
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-7);
-    color: var(--mantine-color-dark-0);
-  }
-
-  @mixin where-light {
-    color: var(--mantine-color-black);
-  }
+  color: var(--mantine-color-text);
+  background-color: var(--mantine-color-neutral-0);
 
   &:where([data-with-remove]:not(:has(button:disabled))) {
     padding-inline-end: 0;
@@ -81,22 +75,20 @@
 }
 
 .root--default {
-  @mixin where-light {
-    background-color: var(--mantine-color-gray-1);
+  background-color: var(--mantine-color-neutral-3);
 
-    &:where([data-disabled], :has(button:disabled)) {
-      background-color: var(--mantine-color-disabled);
-    }
+  &:where([data-disabled], :has(button:disabled)) {
+    background-color: var(--mantine-color-disabled);
   }
 }
 
 .root--contrast {
   @mixin where-light {
     background-color: var(--mantine-color-white);
+  }
 
-    &:where([data-disabled], :has(button:disabled)) {
-      background-color: var(--mantine-color-disabled);
-    }
+  &:where([data-disabled], :has(button:disabled)) {
+    background-color: var(--mantine-color-disabled);
   }
 }
 

@@ -27,16 +27,8 @@
   width: var(--rating-size);
   height: var(--rating-size);
   display: block;
-
-  @mixin where-light {
-    fill: var(--mantine-color-gray-3);
-    stroke: var(--mantine-color-gray-3);
-  }
-
-  @mixin where-dark {
-    fill: var(--mantine-color-dark-3);
-    stroke: var(--mantine-color-dark-3);
-  }
+  fill: var(--mantine-color-neutral-4);
+  stroke: var(--mantine-color-neutral-4);
 
   &:where([data-filled]) {
     fill: var(--rating-color);

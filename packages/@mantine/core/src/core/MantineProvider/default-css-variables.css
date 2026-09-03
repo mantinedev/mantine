@@ -293,7 +293,7 @@
   --mantine-color-hover-strong: var(--mantine-color-dark-5);
   --mantine-color-active: var(--mantine-color-dark-5);
   --mantine-color-selected: var(--mantine-color-dark-5);
-  --mantine-color-track: var(--mantine-color-surface-sunken);
+  --mantine-color-track: var(--mantine-color-neutral-4);
   --mantine-color-neutral-0: var(--mantine-color-dark-7);
   --mantine-color-neutral-1: var(--mantine-color-dark-6);
   --mantine-color-neutral-2: var(--mantine-color-dark-5);
@@ -561,7 +561,7 @@
   --mantine-color-hover-strong: var(--mantine-color-gray-1);
   --mantine-color-active: var(--mantine-color-gray-1);
   --mantine-color-selected: var(--mantine-color-gray-1);
-  --mantine-color-track: var(--mantine-color-surface-sunken);
+  --mantine-color-track: var(--mantine-color-neutral-4);
   --mantine-color-neutral-0: var(--mantine-color-white);
   --mantine-color-neutral-1: var(--mantine-color-white);
   --mantine-color-neutral-2: var(--mantine-color-gray-0);

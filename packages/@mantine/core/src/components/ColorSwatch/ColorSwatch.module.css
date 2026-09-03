@@ -16,15 +16,8 @@
   color: inherit;
   text-decoration: none;
 
-  @mixin light {
-    --alpha-overlay-color: var(--mantine-color-gray-3);
-    --alpha-overlay-bg: var(--mantine-color-white);
-  }
-
-  @mixin dark {
-    --alpha-overlay-color: var(--mantine-color-dark-4);
-    --alpha-overlay-bg: var(--mantine-color-dark-7);
-  }
+  --alpha-overlay-color: var(--mantine-color-neutral-4);
+  --alpha-overlay-bg: var(--mantine-color-neutral-0);
 }
 
 .colorOverlay {

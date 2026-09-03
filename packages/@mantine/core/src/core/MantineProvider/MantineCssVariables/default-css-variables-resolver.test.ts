@@ -40,8 +40,8 @@ describe('semantic color role variables', () => {
       expect(result.light['--mantine-color-selected']).toBe('var(--mantine-color-gray-1)');
     });
 
-    it('--mantine-color-track resolves to var(--mantine-color-surface-sunken) in light', () => {
-      expect(result.light['--mantine-color-track']).toBe('var(--mantine-color-surface-sunken)');
+    it('--mantine-color-track resolves to var(--mantine-color-neutral-4) in light', () => {
+      expect(result.light['--mantine-color-track']).toBe('var(--mantine-color-neutral-4)');
     });
   });
 
@@ -74,8 +74,8 @@ describe('semantic color role variables', () => {
       expect(result.dark['--mantine-color-selected']).toBe('var(--mantine-color-dark-5)');
     });
 
-    it('--mantine-color-track resolves to var(--mantine-color-surface-sunken) in dark', () => {
-      expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-surface-sunken)');
+    it('--mantine-color-track resolves to var(--mantine-color-neutral-4) in dark', () => {
+      expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-neutral-4)');
     });
   });
 
@@ -157,9 +157,9 @@ describe('legacy surface-level vars (surface-0..5, surface-recessed) are removed
 
   it('body remains aliased to surface-page and track to surface-sunken', () => {
     expect(result.light['--mantine-color-body']).toBe('var(--mantine-color-surface-page)');
-    expect(result.light['--mantine-color-track']).toBe('var(--mantine-color-surface-sunken)');
+    expect(result.light['--mantine-color-track']).toBe('var(--mantine-color-neutral-4)');
     expect(result.dark['--mantine-color-body']).toBe('var(--mantine-color-surface-page)');
-    expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-surface-sunken)');
+    expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-neutral-4)');
   });
 });
 

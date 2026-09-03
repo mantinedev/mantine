@@ -5,11 +5,5 @@
     outline: 0;
   }
 
-  @mixin where-light {
-    --chart-link-color: var(--mantine-color-gray-1);
-  }
-
-  @mixin where-dark {
-    --chart-link-color: var(--mantine-color-dark-5);
-  }
+  --chart-link-color: var(--mantine-color-neutral-2);
 }

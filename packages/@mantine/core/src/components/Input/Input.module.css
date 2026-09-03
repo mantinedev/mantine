@@ -106,10 +106,13 @@
     --input-bd-focus: var(--mantine-primary-color-filled);
   }
 
+  &[data-variant='filled'] {
+    --input-bg: var(--mantine-color-neutral-2);
+  }
+
   @mixin light {
     &[data-variant='filled'] {
       --input-bd: transparent;
-      --input-bg: var(--mantine-color-gray-1);
       --input-bd-focus: var(--mantine-primary-color-filled);
     }
 
@@ -123,7 +126,6 @@
   @mixin dark {
     &[data-variant='filled'] {
       --input-bd: transparent;
-      --input-bg: var(--mantine-color-dark-5);
       --input-bd-focus: var(--mantine-primary-color-filled);
     }
 
