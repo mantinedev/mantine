@@ -226,13 +226,7 @@
     right: 0;
   }
 
-  @mixin where-light {
-    background-color: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-8);
-  }
+  background-color: var(--mantine-color-surface-sunken);
 
   &:where([data-hovered]) {
     opacity: 1;

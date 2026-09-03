@@ -87,14 +87,7 @@
     top: 0;
     height: min(var(--thumb-size), calc(var(--slider-size) / 2));
     width: 3px;
-
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-7);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-1);
-    }
+    background-color: var(--mantine-color-subtle-color);
   }
 }
 

@@ -21,14 +21,7 @@
   min-width: var(--cb-size);
   min-height: var(--cb-size);
   border-radius: var(--cb-radius);
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-1);
-  }
+  color: var(--mantine-color-subtle-color);
 
   &[data-disabled],
   &:disabled {

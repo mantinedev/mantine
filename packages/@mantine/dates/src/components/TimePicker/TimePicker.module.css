@@ -45,14 +45,7 @@
   @mixin hover {
     &:where(:not([data-active])) {
       color: var(--mantine-color-bright);
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-5);
-      }
-
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-1);
-      }
+      background-color: var(--mantine-color-hover-strong);
     }
   }
 }
@@ -72,14 +65,7 @@
   @mixin hover {
     &:where(:not([data-active])) {
       color: var(--mantine-color-bright);
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-5);
-      }
-
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-1);
-      }
+      background-color: var(--mantine-color-hover-strong);
     }
   }
 }
@@ -105,14 +91,7 @@
     height: 1px;
     flex: 1;
     margin-inline-start: var(--mantine-spacing-xs);
-
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-2);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-4);
-    }
+    background-color: var(--mantine-color-divider);
   }
 }
 

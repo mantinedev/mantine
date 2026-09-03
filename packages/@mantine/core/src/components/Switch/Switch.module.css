@@ -98,14 +98,14 @@
     --switch-cursor: not-allowed;
   }
 
+  --switch-text-color: var(--mantine-color-dimmed);
+
   @mixin light {
     --switch-bg: var(--mantine-color-gray-3);
-    --switch-text-color: var(--mantine-color-gray-6);
   }
 
   @mixin dark {
     --switch-bg: var(--mantine-color-dark-5);
-    --switch-text-color: var(--mantine-color-dark-1);
   }
 
   &[data-label-position='left'] {

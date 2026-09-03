@@ -75,13 +75,7 @@
 
   &,
   &:focus {
-    @mixin where-light {
-      border-color: var(--mantine-color-gray-2);
-    }
-
-    @mixin where-dark {
-      border-color: var(--mantine-color-dark-4);
-    }
+    border-color: var(--mantine-color-border);
   }
 
   background-color: var(--mantine-color-surface-page);
@@ -100,14 +94,7 @@
   border: 0 solid transparent;
   margin-inline: calc(var(--combobox-padding) * -1);
   padding: var(--combobox-option-padding);
-
-  @mixin where-light {
-    border-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin where-dark {
-    border-color: var(--mantine-color-dark-4);
-  }
+  border-color: var(--mantine-color-border);
 }
 
 .footer {
@@ -143,14 +130,7 @@
     inset-inline: 0;
     height: 1px;
     margin-inline-start: var(--mantine-spacing-xs);
-
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-2);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-4);
-    }
+    background-color: var(--mantine-color-divider);
   }
 
   &:only-child {
@@ -167,13 +147,7 @@
   --combobox-chevron-size-xl: 28px;
   --combobox-chevron-size: var(--combobox-chevron-size-sm);
 
-  @mixin where-light {
-    --_combobox-chevron-color: var(--combobox-chevron-color, var(--mantine-color-gray-6));
-  }
-
-  @mixin where-dark {
-    --_combobox-chevron-color: var(--combobox-chevron-color, var(--mantine-color-dark-3));
-  }
+  --_combobox-chevron-color: var(--combobox-chevron-color, var(--mantine-color-dimmed));
 
   width: var(--combobox-chevron-size);
   height: var(--combobox-chevron-size);

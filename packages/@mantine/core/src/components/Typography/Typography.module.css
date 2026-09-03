@@ -91,14 +91,7 @@
     margin-bottom: var(--mantine-spacing-md);
     border: 0;
     border-top: 1px solid;
-
-    @mixin where-light {
-      border-color: var(--mantine-color-gray-3);
-    }
-
-    @mixin where-dark {
-      border-color: var(--mantine-color-dark-3);
-    }
+    border-color: var(--mantine-color-border);
   }
 
   & :where(pre) {
@@ -111,14 +104,7 @@
     font-family: var(--mantine-font-family-monospace);
     font-size: var(--mantine-font-size-xs);
     border-radius: var(--mantine-radius-sm);
-
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-8);
-    }
+    background-color: var(--mantine-color-surface-sunken);
 
     & :where(code) {
       background-color: transparent;
@@ -141,15 +127,14 @@
     border-radius: var(--mantine-radius-sm);
     border: 1px solid;
     border-bottom-width: 3px;
+    border-color: var(--mantine-color-border);
 
     @mixin where-light {
-      border-color: var(--mantine-color-gray-3);
       color: var(--mantine-color-gray-7);
       background-color: var(--mantine-color-gray-0);
     }
 
     @mixin where-dark {
-      border-color: var(--mantine-color-dark-3);
       color: var(--mantine-color-dark-0);
       background-color: var(--mantine-color-dark-5);
     }
@@ -229,14 +214,7 @@
     border-radius: var(--mantine-radius-default);
 
     --details-border-color: var(--mantine-color-border);
-
-    @mixin where-light {
-      --details-summary-hover: var(--mantine-color-gray-1);
-    }
-
-    @mixin where-dark {
-      --details-summary-hover: var(--mantine-color-dark-5);
-    }
+    --details-summary-hover: var(--mantine-color-hover-strong);
 
     /* The native marker is hidden and replaced with a small triangle control so only the control –
        not the whole summary text – gets the hover affordance, matching the editor toggle button. */
@@ -297,13 +275,6 @@
     margin: var(--mantine-spacing-md) 0;
     border-radius: var(--mantine-radius-sm);
     padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
-
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-8);
-    }
+    background-color: var(--mantine-color-surface-sunken);
   }
 }

@@ -72,14 +72,7 @@
 
   /* outline is controlled by .input */
   outline: var(--segmented-control-outline, none);
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-1);
-  }
+  color: var(--mantine-color-subtle-color);
 
   &:where([data-read-only]) {
     cursor: default;

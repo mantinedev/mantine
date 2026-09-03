@@ -282,6 +282,7 @@
   --mantine-color-default-color: var(--mantine-color-white);
   --mantine-color-default-border: var(--mantine-color-dark-4);
   --mantine-color-dimmed: var(--mantine-color-neutral-6);
+  --mantine-color-subtle-color: var(--mantine-color-neutral-7);
   --mantine-color-disabled: var(--mantine-color-dark-6);
   --mantine-color-disabled-color: var(--mantine-color-dark-3);
   --mantine-color-disabled-border: var(--mantine-color-dark-4);
@@ -289,6 +290,7 @@
   --mantine-color-border-subtle: var(--mantine-color-dark-5);
   --mantine-color-border-strong: var(--mantine-color-dark-3);
   --mantine-color-hover: var(--mantine-color-neutral-1);
+  --mantine-color-hover-strong: var(--mantine-color-dark-5);
   --mantine-color-active: var(--mantine-color-dark-5);
   --mantine-color-selected: var(--mantine-color-dark-5);
   --mantine-color-track: var(--mantine-color-surface-sunken);
@@ -548,6 +550,7 @@
   --mantine-color-default-color: var(--mantine-color-black);
   --mantine-color-default-border: var(--mantine-color-gray-4);
   --mantine-color-dimmed: var(--mantine-color-neutral-6);
+  --mantine-color-subtle-color: var(--mantine-color-neutral-7);
   --mantine-color-disabled: var(--mantine-color-gray-2);
   --mantine-color-disabled-color: var(--mantine-color-gray-5);
   --mantine-color-disabled-border: var(--mantine-color-gray-3);
@@ -555,6 +558,7 @@
   --mantine-color-border-subtle: var(--mantine-color-gray-2);
   --mantine-color-border-strong: var(--mantine-color-gray-4);
   --mantine-color-hover: var(--mantine-color-neutral-2);
+  --mantine-color-hover-strong: var(--mantine-color-gray-1);
   --mantine-color-active: var(--mantine-color-gray-1);
   --mantine-color-selected: var(--mantine-color-gray-1);
   --mantine-color-track: var(--mantine-color-surface-sunken);

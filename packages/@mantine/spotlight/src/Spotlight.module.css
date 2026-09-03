@@ -31,14 +31,7 @@
   max-height: calc(100vh - 15rem);
   margin-inline-end: calc(var(--spotlight-actions-list-padding) * -1);
   width: 100%;
-
-  @mixin where-light {
-    border-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin where-dark {
-    border-color: var(--mantine-color-dark-4);
-  }
+  border-color: var(--mantine-color-border);
 }
 
 .action {
@@ -111,14 +104,7 @@
 .footer {
   padding: var(--mantine-spacing-xs) calc(var(--mantine-spacing-md) + rem(4px));
   border-top: 1px solid;
-
-  @mixin where-light {
-    border-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin where-dark {
-    border-color: var(--mantine-color-dark-4);
-  }
+  border-color: var(--mantine-color-border);
 }
 
 .actionsGroup {

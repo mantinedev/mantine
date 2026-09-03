@@ -28,6 +28,10 @@ describe('semantic color role variables', () => {
       expect(result.light['--mantine-color-hover']).toBe('var(--mantine-color-neutral-2)');
     });
 
+    it('--mantine-color-hover-strong resolves to var(--mantine-color-gray-1) in light', () => {
+      expect(result.light['--mantine-color-hover-strong']).toBe('var(--mantine-color-gray-1)');
+    });
+
     it('--mantine-color-active resolves to var(--mantine-color-gray-1) in light', () => {
       expect(result.light['--mantine-color-active']).toBe('var(--mantine-color-gray-1)');
     });
@@ -56,6 +60,10 @@ describe('semantic color role variables', () => {
 
     it('--mantine-color-hover resolves to var(--mantine-color-neutral-1) in dark', () => {
       expect(result.dark['--mantine-color-hover']).toBe('var(--mantine-color-neutral-1)');
+    });
+
+    it('--mantine-color-hover-strong resolves to var(--mantine-color-dark-5) in dark', () => {
+      expect(result.dark['--mantine-color-hover-strong']).toBe('var(--mantine-color-dark-5)');
     });
 
     it('--mantine-color-active resolves to var(--mantine-color-dark-5) in dark', () => {
@@ -98,6 +106,10 @@ describe('semantic color role variables', () => {
       expect(result.light['--mantine-color-dimmed']).toBe('var(--mantine-color-neutral-6)');
     });
 
+    it('--mantine-color-subtle-color resolves to var(--mantine-color-neutral-7) in light', () => {
+      expect(result.light['--mantine-color-subtle-color']).toBe('var(--mantine-color-neutral-7)');
+    });
+
     it('--mantine-color-body aliases surface-page in dark', () => {
       expect(result.dark['--mantine-color-body']).toBe('var(--mantine-color-surface-page)');
     });
@@ -112,6 +124,10 @@ describe('semantic color role variables', () => {
 
     it('--mantine-color-dimmed is re-anchored onto neutral-6 in dark', () => {
       expect(result.dark['--mantine-color-dimmed']).toBe('var(--mantine-color-neutral-6)');
+    });
+
+    it('--mantine-color-subtle-color resolves to var(--mantine-color-neutral-7) in dark', () => {
+      expect(result.dark['--mantine-color-subtle-color']).toBe('var(--mantine-color-neutral-7)');
     });
   });
 });

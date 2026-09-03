@@ -33,14 +33,7 @@
 
   &:where([data-with-border]) {
     border: 1px solid;
-
-    @mixin where-light {
-      border-color: var(--mantine-color-gray-4);
-    }
-
-    @mixin where-dark {
-      border-color: var(--mantine-color-dark-4);
-    }
+    border-color: var(--mantine-color-default-border);
   }
 
   &:where([data-orientation='vertical']) {
@@ -132,14 +125,7 @@
 
   background-color: var(--mantine-color-default);
   border-color: var(--mantine-color-default-border);
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-1);
-  }
+  color: var(--mantine-color-subtle-color);
 
   @mixin hover {
     &:where(:not([data-disabled], [data-active])) {
@@ -169,13 +155,7 @@
 }
 
 .divider {
-  @mixin where-light {
-    background-color: var(--mantine-color-gray-4);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-4);
-  }
+  background-color: var(--mantine-color-default-border);
 
   &:where([data-orientation='horizontal']) {
     width: 1px;

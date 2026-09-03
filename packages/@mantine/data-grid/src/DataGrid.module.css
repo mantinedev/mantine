@@ -31,14 +31,14 @@
   line-height: var(--mantine-line-height);
   --dg-border-color: var(--mantine-color-border);
 
+  --dg-hover-color: var(--mantine-color-hover-strong);
+
   @mixin where-light {
     --dg-stripe-color: var(--mantine-color-gray-0);
-    --dg-hover-color: var(--mantine-color-gray-1);
   }
 
   @mixin where-dark {
     --dg-stripe-color: var(--mantine-color-dark-6);
-    --dg-hover-color: var(--mantine-color-dark-5);
   }
 
   :where(.root[data-table-layout='auto']) & {
@@ -325,14 +325,14 @@
   line-height: var(--mantine-line-height);
   --dg-border-color: var(--mantine-color-border);
 
+  --dg-hover-color: var(--mantine-color-hover-strong);
+
   @mixin where-light {
     --dg-stripe-color: var(--mantine-color-gray-0);
-    --dg-hover-color: var(--mantine-color-gray-1);
   }
 
   @mixin where-dark {
     --dg-stripe-color: var(--mantine-color-dark-6);
-    --dg-hover-color: var(--mantine-color-dark-5);
   }
 }
 

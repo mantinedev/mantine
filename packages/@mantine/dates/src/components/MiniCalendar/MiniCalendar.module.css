@@ -37,19 +37,9 @@
     cursor: not-allowed;
   }
 
-  @mixin where-light {
-    @mixin hover {
-      &:where(:not([data-disabled], [data-selected])) {
-        background-color: var(--mantine-color-gray-1);
-      }
-    }
-  }
-
-  @mixin where-dark {
-    @mixin hover {
-      &:where(:not([data-disabled], [data-selected])) {
-        background-color: var(--mantine-color-dark-5);
-      }
+  @mixin hover {
+    &:where(:not([data-disabled], [data-selected])) {
+      background-color: var(--mantine-color-hover-strong);
     }
   }
 }
@@ -101,19 +91,9 @@
     }
   }
 
-  @mixin where-light {
-    @mixin hover {
-      &:where(:not([data-disabled])) {
-        background-color: var(--mantine-color-gray-1);
-      }
-    }
-  }
-
-  @mixin where-dark {
-    @mixin hover {
-      &:where(:not([data-disabled])) {
-        background-color: var(--mantine-color-dark-5);
-      }
+  @mixin hover {
+    &:where(:not([data-disabled])) {
+      background-color: var(--mantine-color-hover-strong);
     }
   }
 }

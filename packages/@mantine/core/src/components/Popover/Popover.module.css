@@ -14,14 +14,7 @@
   }
 
   background-color: var(--mantine-color-surface-page);
-
-  @mixin where-light {
-    --popover-border-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin where-dark {
-    --popover-border-color: var(--mantine-color-dark-4);
-  }
+  --popover-border-color: var(--mantine-color-border);
 }
 
 .arrow {

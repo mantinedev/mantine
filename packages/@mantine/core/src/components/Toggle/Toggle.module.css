@@ -31,14 +31,7 @@
 
   background-color: var(--mantine-color-default);
   border-color: var(--mantine-color-default-border);
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-1);
-  }
+  color: var(--mantine-color-subtle-color);
 
   @mixin hover {
     &:where(:not([data-disabled], [data-active])) {

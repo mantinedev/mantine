@@ -25,13 +25,7 @@
     }
   }
 
-  @mixin where-light {
-    --ch-background: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    --ch-background: var(--mantine-color-dark-8);
-  }
+  --ch-background: var(--mantine-color-surface-sunken);
 }
 
 .inlineCodeHighlight {
@@ -59,13 +53,7 @@
     }
   }
 
-  @mixin where-light {
-    --ch-background: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    --ch-background: var(--mantine-color-dark-8);
-  }
+  --ch-background: var(--mantine-color-surface-sunken);
 }
 
 .pre {

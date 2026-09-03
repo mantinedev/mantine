@@ -16,12 +16,5 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-2);
-  }
+  color: var(--mantine-color-dimmed);
 }

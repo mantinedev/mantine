@@ -50,13 +50,7 @@
   }
 
   @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-4);
-    }
+    background-color: var(--mantine-color-default-hover);
   }
 
   &:where(:first-of-type) {

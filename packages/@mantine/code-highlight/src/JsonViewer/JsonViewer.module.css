@@ -9,14 +9,7 @@
   font-size: var(--jv-fz);
   line-height: 1.55;
   border-radius: var(--jv-radius);
-
-  @mixin where-light {
-    background-color: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-8);
-  }
+  background-color: var(--mantine-color-surface-sunken);
 
   &[data-with-border] {
     border: 1px solid;
@@ -34,15 +27,14 @@
       font-size: var(--mantine-font-size-xs);
       padding: 2px 8px;
       border-radius: var(--mantine-radius-sm);
+      color: var(--mantine-color-subtle-color);
 
       @mixin where-light {
         background-color: var(--mantine-color-gray-1);
-        color: var(--mantine-color-gray-7);
       }
 
       @mixin where-dark {
         background-color: var(--mantine-color-dark-6);
-        color: var(--mantine-color-dark-1);
       }
 
       @mixin hover {
@@ -83,14 +75,7 @@
   border-right: 1px solid;
   min-width: 2em;
   border-color: var(--mantine-color-border);
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-4);
-  }
+  color: var(--mantine-color-dimmed);
 
   & > div {
     padding: 1px 0;
@@ -182,13 +167,7 @@
     cursor: default;
 
     @mixin hover {
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-1);
-      }
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-6);
-      }
+      background-color: var(--mantine-color-hover-strong);
 
       .copyButton {
         opacity: 1;
@@ -208,13 +187,7 @@
   flex-shrink: 0;
   cursor: pointer;
 
-  @mixin where-light {
-    color: var(--mantine-color-gray-6);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-3);
-  }
+  color: var(--mantine-color-dimmed);
 
   &[data-expanded] {
     transform: rotate(90deg);
@@ -282,13 +255,7 @@
 }
 
 .bracket {
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-2);
-  }
+  color: var(--mantine-color-dimmed);
 }
 
 .type {
@@ -381,24 +348,11 @@
   white-space: nowrap;
   flex-shrink: 0;
   align-self: center;
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-3);
-  }
+  color: var(--mantine-color-dimmed);
 }
 
 .ellipsis {
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-3);
-  }
+  color: var(--mantine-color-dimmed);
 
   &[data-clickable] {
     font-size: calc(var(--jv-fz) * 0.85);
@@ -424,22 +378,16 @@
   cursor: pointer;
   border-radius: var(--mantine-radius-xs);
 
-  @mixin where-light {
-    color: var(--mantine-color-gray-6);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-3);
-  }
+  color: var(--mantine-color-dimmed);
 
   @mixin hover {
+    color: var(--mantine-color-subtle-color);
+
     @mixin where-light {
-      color: var(--mantine-color-gray-7);
       background-color: var(--mantine-color-gray-2);
     }
 
     @mixin where-dark {
-      color: var(--mantine-color-dark-1);
       background-color: var(--mantine-color-dark-5);
     }
   }
@@ -457,16 +405,8 @@
   height: 28px;
   border-radius: var(--mantine-radius-sm);
   opacity: 0.5;
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-    background-color: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-1);
-    background-color: var(--mantine-color-dark-8);
-  }
+  color: var(--mantine-color-subtle-color);
+  background-color: var(--mantine-color-surface-sunken);
 
   @mixin hover {
     opacity: 1;

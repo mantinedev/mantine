@@ -10,13 +10,13 @@
 
   --table-border-color: var(--mantine-color-border);
 
+  --table-hover-color: var(--mantine-color-hover-strong);
+
   @mixin where-light {
-    --table-hover-color: var(--mantine-color-gray-1);
     --table-striped-color: var(--mantine-color-gray-0);
   }
 
   @mixin where-dark {
-    --table-hover-color: var(--mantine-color-dark-5);
     --table-striped-color: var(--mantine-color-dark-6);
   }
 

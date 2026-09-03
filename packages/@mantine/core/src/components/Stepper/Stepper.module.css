@@ -159,14 +159,7 @@
     border-color 150ms ease;
   border: var(--stepper-outline-thickness) solid var(--stepper-outline-color);
   background-color: var(--stepper-outline-color);
-
-  @mixin where-light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-1);
-  }
+  color: var(--mantine-color-subtle-color);
 
   &:where([data-progress]) {
     border-color: var(--step-color);
