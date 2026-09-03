@@ -4513,16 +4513,16 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@tanstack/match-sorter-utils": "npm:^8.19.4"
-    "@tanstack/react-table": "npm:^8.21.3"
+    "@tanstack/match-sorter-utils": "npm:^9.1.2"
+    "@tanstack/react-table": "npm:^9.2.4"
     "@tanstack/react-virtual": "npm:^3.14.10"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
   peerDependencies:
     "@mantine/core": 9.0.2
     "@mantine/hooks": 9.0.2
-    "@tanstack/match-sorter-utils": ">=8.0.0"
-    "@tanstack/react-table": ">=8.20.0"
+    "@tanstack/match-sorter-utils": ">=9.0.0"
+    "@tanstack/react-table": ">=9.0.0"
     "@tanstack/react-virtual": ">=3.13.0"
     react: ^19.2.0
     react-dom: ^19.2.0
@@ -6302,24 +6302,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/match-sorter-utils@npm:^8.19.4":
-  version: 8.19.4
-  resolution: "@tanstack/match-sorter-utils@npm:8.19.4"
+"@tanstack/match-sorter-utils@npm:^9.1.2":
+  version: 9.1.2
+  resolution: "@tanstack/match-sorter-utils@npm:9.1.2"
   dependencies:
     remove-accents: "npm:0.5.0"
-  checksum: 10c0/935022e3d639f19472131d289f3e1202253ff34301717c337e9bac0eeae6a0bd56450ed8ae2f7eb7ac9dfefa7ceaa7d126d8c5441021968b4a9eabc3ac4f8ba1
+  checksum: 10c0/38d7211d816cffd3411ada08bf5dea086c1eed9baf4e016c2f2c58bd65148e8f143acf0a567bfcd7077b5b247d0f65a8ea80b3edd6c59bbdb8e3cde40885ddf6
   languageName: node
   linkType: hard
 
-"@tanstack/react-table@npm:^8.21.3":
-  version: 8.21.3
-  resolution: "@tanstack/react-table@npm:8.21.3"
+"@tanstack/react-store@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "@tanstack/react-store@npm:0.11.1"
   dependencies:
-    "@tanstack/table-core": "npm:8.21.3"
+    "@tanstack/store": "npm:0.11.1"
+    use-sync-external-store: "npm:^1.6.0"
   peerDependencies:
-    react: ">=16.8"
-    react-dom: ">=16.8"
-  checksum: 10c0/85d1d0fcb690ecc011f68a5a61c96f82142e31a0270dcf9cbc699a6f36715b1653fe6ff1518302a6d08b7093351fc4cabefd055a7db3cd8ac01e068956b0f944
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/9b43ea1b07cfed9100b9d037a339e6dbef17ff8e7fd4b8968ef76b75c97a20ec3627345adca94135664d6fccd88f48622e1e871c64738ff2f0b0ce24ce365dfd
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-table@npm:^9.2.4":
+  version: 9.2.4
+  resolution: "@tanstack/react-table@npm:9.2.4"
+  dependencies:
+    "@tanstack/react-store": "npm:^0.11.1"
+    "@tanstack/table-core": "npm:9.2.4"
+  peerDependencies:
+    react: ">=18"
+  checksum: 10c0/f68d6da9850e7783773a035186e11744dacaf5ca61075766ecc7d4b5266af2e4afec005f19ac664c1deba6bf5b7586fed90a67372c82127afd8fdaf0473e73b4
   languageName: node
   linkType: hard
 
@@ -6335,10 +6348,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/table-core@npm:8.21.3":
-  version: 8.21.3
-  resolution: "@tanstack/table-core@npm:8.21.3"
-  checksum: 10c0/40e3560e6d55e07cc047024aa7f83bd47a9323d21920d4adabba8071fd2d21230c48460b26cedf392588f8265b9edc133abb1b0d6d0adf4dae0970032900a8c9
+"@tanstack/store@npm:0.11.1, @tanstack/store@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "@tanstack/store@npm:0.11.1"
+  checksum: 10c0/36e308f3a5037a4d79e2b2ea9f6f4015a617fcd7cb8ff541fe50869b015fb8753b267a8c24709ad197c4c3b5fd85207edc4f71eccaf9b0d311f62336a9cf7764
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:9.2.4":
+  version: 9.2.4
+  resolution: "@tanstack/table-core@npm:9.2.4"
+  dependencies:
+    "@tanstack/store": "npm:^0.11.1"
+  checksum: 10c0/fae9e7f3028f45eb2cd3e831365e398a92030d685acdd0458c3c2245eb8456176abd0d5ca208ea58eb9e7a4ccc666c26986269c93bc4ce25603866805bb837b9
   languageName: node
   linkType: hard
 
@@ -14599,8 +14621,8 @@ __metadata:
     "@phosphor-icons/react": "npm:^2.1.10"
     "@shikijs/transformers": "npm:^4.4.3"
     "@storybook/nextjs": "npm:^10.5.10"
-    "@tanstack/match-sorter-utils": "npm:^8.19.4"
-    "@tanstack/react-table": "npm:^8.21.3"
+    "@tanstack/match-sorter-utils": "npm:^9.1.2"
+    "@tanstack/react-table": "npm:^9.2.4"
     "@tanstack/react-virtual": "npm:^3.14.10"
     "@testing-library/dom": "npm:10.4.1"
     "@testing-library/jest-dom": "npm:7.0.1"
@@ -21352,7 +21374,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.2.2, use-sync-external-store@npm:^1.5.0":
+"use-sync-external-store@npm:^1.2.2, use-sync-external-store@npm:^1.5.0, use-sync-external-store@npm:^1.6.0":
   version: 1.6.0
   resolution: "use-sync-external-store@npm:1.6.0"
   peerDependencies:

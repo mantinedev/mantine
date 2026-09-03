@@ -40,8 +40,8 @@
   "peerDependencies": {
     "@mantine/core": "9.0.2",
     "@mantine/hooks": "9.0.2",
-    "@tanstack/match-sorter-utils": ">=8.0.0",
-    "@tanstack/react-table": ">=8.20.0",
+    "@tanstack/match-sorter-utils": ">=9.0.0",
+    "@tanstack/react-table": ">=9.0.0",
     "@tanstack/react-virtual": ">=3.13.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
@@ -50,8 +50,8 @@
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "@tanstack/match-sorter-utils": "^8.19.4",
-    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/match-sorter-utils": "^9.1.2",
+    "@tanstack/react-table": "^9.2.4",
     "@tanstack/react-virtual": "^3.14.10",
     "react": "19.2.8",
     "react-dom": "19.2.8"
