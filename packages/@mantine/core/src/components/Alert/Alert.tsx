@@ -7,13 +7,19 @@ import {
   factory,
   Factory,
   getRadius,
+  getSize,
   MantineColor,
   MantineRadius,
+  MantineSize,
+  MantineTheme,
+  parseThemeColor,
+  PartialVarsResolver,
+  rem,
   StylesApiProps,
   useProps,
   useStyles,
 } from '../../core';
-import { CloseButton } from '../CloseButton';
+import { CloseButton, CloseButtonFactory } from '../CloseButton';
 import classes from './Alert.module.css';
 
 export type AlertStylesNames =
@@ -27,7 +33,18 @@ export type AlertStylesNames =
   | 'closeButton';
 export type AlertVariant = 'filled' | 'light' | 'outline' | 'default' | 'transparent' | 'white';
 export type AlertCssVariables = {
-  root: '--alert-radius' | '--alert-bg' | '--alert-color' | '--alert-bd';
+  root:
+    | '--alert-radius'
+    | '--alert-bg'
+    | '--alert-color'
+    | '--alert-bd'
+    | '--alert-title-color'
+    | '--alert-icon-color'
+    | '--alert-padding'
+    | '--alert-fz'
+    | '--alert-icon-size'
+    | '--alert-gap'
+    | '--alert-close-size';
 };
 
 export interface AlertProps
@@ -37,6 +54,9 @@ export interface AlertProps
 
   /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor  */
   color?: MantineColor;
+
+  /** Controls padding, font-size, icon size and close button size @default 'md' */
+  size?: MantineSize | (string & {});
 
   /** Alert title */
   title?: React.ReactNode;
@@ -65,23 +85,71 @@ export type AlertFactory = Factory<{
   variant: AlertVariant;
 }>;
 
+const NEUTRAL_TEXT_VARIANTS = new Set(['light', 'outline', 'default', 'transparent']);
+
+const closeButtonVars: PartialVarsResolver<CloseButtonFactory> = () => ({
+  root: { '--cb-size': 'var(--alert-close-size)' },
+});
+
+function getAccentColor(color: string, theme: MantineTheme) {
+  const parsed = parseThemeColor({ color, theme });
+
+  if (parsed.isThemeColor && parsed.shade === undefined) {
+    return `var(--mantine-color-${parsed.color}-text)`;
+  }
+
+  return parsed.variable ? `var(${parsed.variable})` : parsed.color;
+}
+
 const varsResolver = createVarsResolver<AlertFactory>(
-  (theme, { radius, color, variant, autoContrast }) => {
+  (theme, { radius, color, variant, autoContrast, size }) => {
+    const resolvedColor = color || theme.primaryColor;
+    const resolvedVariant = variant || 'light';
     const colors = theme.variantColorResolver({
-      color: color || theme.primaryColor,
+      color: resolvedColor,
       theme,
-      variant: variant || 'light',
+      variant: resolvedVariant,
       autoContrast,
     });
 
-    return {
-      root: {
-        '--alert-radius': radius === undefined ? undefined : getRadius(radius),
-        '--alert-bg': color || variant ? colors.background : undefined,
-        '--alert-color': colors.color,
-        '--alert-bd': color || variant ? colors.border : undefined,
-      },
+    const vars: Record<AlertCssVariables['root'], string | undefined> = {
+      '--alert-radius': radius === undefined ? undefined : getRadius(radius),
+      '--alert-bg': colors.background,
+      '--alert-bd': colors.border,
+      '--alert-color': colors.color,
+      '--alert-title-color': colors.color,
+      '--alert-icon-color': colors.color,
+      '--alert-padding': getSize(size, 'alert-padding'),
+      '--alert-fz': getSize(size, 'alert-fz'),
+      '--alert-icon-size': getSize(size, 'alert-icon-size'),
+      '--alert-gap': getSize(size, 'alert-gap'),
+      '--alert-close-size': getSize(size, 'alert-close-size'),
     };
+
+    if (resolvedVariant === 'white') {
+      vars['--alert-color'] = 'var(--mantine-color-gray-8)';
+      vars['--alert-title-color'] = 'var(--mantine-color-black)';
+    }
+
+    if (NEUTRAL_TEXT_VARIANTS.has(resolvedVariant)) {
+      const accent = getAccentColor(resolvedColor, theme);
+
+      vars['--alert-color'] = 'var(--mantine-color-text)';
+      vars['--alert-title-color'] = 'var(--mantine-color-bright)';
+      vars['--alert-icon-color'] = accent;
+
+      if (resolvedVariant === 'light') {
+        vars['--alert-bg'] =
+          `color-mix(in srgb, ${colors.background} 60%, var(--mantine-color-body))`;
+        vars['--alert-bd'] = `${rem(1)} solid color-mix(in srgb, ${accent} 30%, transparent)`;
+      }
+
+      if (resolvedVariant === 'outline') {
+        vars['--alert-bd'] = `${rem(1)} solid color-mix(in srgb, ${accent} 60%, transparent)`;
+      }
+    }
+
+    return { root: vars };
   }
 );
 
@@ -96,6 +164,7 @@ export const Alert = factory<AlertFactory>((_props) => {
     vars,
     radius,
     color,
+    size,
     title,
     children,
     id,
@@ -133,6 +202,7 @@ export const Alert = factory<AlertFactory>((_props) => {
       id={rootId}
       {...getStyles('root', { variant })}
       variant={variant}
+      size={size}
       {...others}
       role={role || 'alert'}
       aria-describedby={children ? bodyId : undefined}
@@ -143,7 +213,7 @@ export const Alert = factory<AlertFactory>((_props) => {
 
         <div {...getStyles('body')}>
           {title && (
-            <div {...getStyles('title')} data-with-close-button={withCloseButton || undefined}>
+            <div {...getStyles('title')}>
               <span id={titleId} {...getStyles('label')}>
                 {title}
               </span>
@@ -151,7 +221,7 @@ export const Alert = factory<AlertFactory>((_props) => {
           )}
 
           {children && (
-            <div id={bodyId} {...getStyles('message')} data-variant={variant}>
+            <div id={bodyId} {...getStyles('message')}>
               {children}
             </div>
           )}
@@ -162,8 +232,7 @@ export const Alert = factory<AlertFactory>((_props) => {
             {...getStyles('closeButton')}
             onClick={onClose}
             variant="transparent"
-            size={16}
-            iconSize={16}
+            vars={closeButtonVars}
             aria-label={closeButtonLabel}
             unstyled={unstyled}
           />

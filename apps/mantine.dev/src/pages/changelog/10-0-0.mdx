@@ -1,4 +1,4 @@
-import { DataGridDemos, DrawerDemos, ModalDemos, ThemingDemos } from '@docs/demos';
+import { AlertDemos, DataGridDemos, DrawerDemos, ModalDemos, ThemingDemos } from '@docs/demos';
 import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -130,6 +130,26 @@ of `theme.breakpoints`, any CSS length or a number of pixels, and reacts to view
 the component is opened. [Drawer](/core/drawer) now also supports the `fullScreen` prop:
 
 <Demo data={ModalDemos.fullScreenBelow} />
+
+## Alert redesign
+
+[Alert](/core/alert) has a new look. The `light` variant uses a softer tint with a hairline border in
+the same hue, the icon is rendered in the accent color, and the title and message use neutral text
+colors, so long content reads like regular body text. The title is set in medium weight with a
+tighter gap to the message, the icon is centered on the title line, and the close button has a larger
+hit area with a hover state. `default` and `white` variants now render the icon in the `color` prop
+color. Title and icon colors can be customized with the new `--alert-title-color` and
+`--alert-icon-color` CSS variables:
+
+<Demo data={AlertDemos.colors} />
+
+## Alert size prop
+
+[Alert](/core/alert) now supports the `size` prop. It scales padding, font size, icon size and
+close button size together, from `xs` for inline form messages to `xl` for standalone page-level
+messages:
+
+<Demo data={AlertDemos.sizes} />
 
 ## OKLCH default palettes
 

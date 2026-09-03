@@ -30,6 +30,7 @@ export const configurator: MantineDemo = {
   controls: [
     { ...(staticVariantsControl as any), initialValue: 'light' },
     { type: 'color', prop: 'color', initialValue: 'blue', libraryValue: null },
+    { type: 'size', prop: 'size', initialValue: 'md', libraryValue: 'md' },
     { type: 'size', prop: 'radius', initialValue: 'md', libraryValue: 'md' },
     { type: 'boolean', prop: 'withCloseButton', initialValue: false, libraryValue: false },
     { type: 'string', prop: 'title', initialValue: 'Alert title', libraryValue: null },

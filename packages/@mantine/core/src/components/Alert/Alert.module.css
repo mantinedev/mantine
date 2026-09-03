@@ -1,13 +1,52 @@
 .root {
-  --alert-radius: var(--mantine-radius-default);
-  --alert-bg: var(--mantine-primary-color-light);
-  --alert-bd: 1px solid transparent;
-  --alert-color: var(--mantine-primary-color-light-color);
+  --alert-padding-xs: rem(8px) rem(10px);
+  --alert-padding-sm: rem(10px) rem(12px);
+  --alert-padding-md: var(--mantine-spacing-md);
+  --alert-padding-lg: var(--mantine-spacing-lg);
+  --alert-padding-xl: rem(24px);
 
-  padding: var(--mantine-spacing-md) var(--mantine-spacing-md);
-  border-radius: var(--alert-radius);
+  --alert-fz-xs: var(--mantine-font-size-xs);
+  --alert-fz-sm: var(--mantine-font-size-sm);
+  --alert-fz-md: var(--mantine-font-size-sm);
+  --alert-fz-lg: var(--mantine-font-size-md);
+  --alert-fz-xl: var(--mantine-font-size-lg);
+
+  --alert-icon-size-xs: rem(16px);
+  --alert-icon-size-sm: rem(18px);
+  --alert-icon-size-md: rem(20px);
+  --alert-icon-size-lg: rem(24px);
+  --alert-icon-size-xl: rem(28px);
+
+  --alert-gap-xs: rem(8px);
+  --alert-gap-sm: rem(10px);
+  --alert-gap-md: var(--mantine-spacing-sm);
+  --alert-gap-lg: rem(14px);
+  --alert-gap-xl: var(--mantine-spacing-md);
+
+  --alert-close-size-xs: rem(18px);
+  --alert-close-size-sm: rem(20px);
+  --alert-close-size-md: rem(22px);
+  --alert-close-size-lg: rem(28px);
+  --alert-close-size-xl: rem(34px);
+
+  --alert-padding: var(--alert-padding-md);
+  --alert-fz: var(--alert-fz-md);
+  --alert-icon-size: var(--alert-icon-size-md);
+  --alert-gap: var(--alert-gap-md);
+  --alert-close-size: var(--alert-close-size-md);
+  --alert-lh: var(--mantine-line-height-sm);
+
+  --alert-radius: var(--mantine-radius-default);
+  --alert-bg: color-mix(in srgb, var(--mantine-primary-color-light) 60%, var(--mantine-color-body));
+  --alert-bd: 1px solid transparent;
+  --alert-color: var(--mantine-color-text);
+  --alert-title-color: var(--mantine-color-bright);
+  --alert-icon-color: var(--mantine-primary-color-filled);
+
   position: relative;
   overflow: hidden;
+  padding: var(--alert-padding);
+  border-radius: var(--alert-radius);
   background-color: var(--alert-bg);
   border: var(--alert-bd);
   color: var(--alert-color);
@@ -15,25 +54,22 @@
 
 .wrapper {
   display: flex;
+  gap: var(--alert-gap);
 }
 
 .body {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--mantine-spacing-xs);
+  gap: calc(var(--alert-gap) / 4);
 }
 
 .title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: var(--mantine-font-size-sm);
-  font-weight: var(--mantine-font-weight-bold);
-
-  &:where([data-with-close-button]) {
-    padding-inline-end: var(--mantine-spacing-md);
-  }
+  font-size: var(--alert-fz);
+  line-height: var(--alert-lh);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--alert-title-color);
 }
 
 .label {
@@ -43,40 +79,31 @@
 }
 
 .icon {
-  line-height: 1;
-  width: 20px;
-  height: 20px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  margin-inline-end: var(--mantine-spacing-md);
-  margin-top: 1px;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--alert-icon-size);
+  height: var(--alert-icon-size);
+  font-size: var(--alert-icon-size);
+  line-height: 1;
+  color: var(--alert-icon-color);
 }
 
 .message {
-  text-overflow: ellipsis;
   overflow: hidden;
-  font-size: var(--mantine-font-size-sm);
-
-  @mixin where-light {
-    color: var(--mantine-color-black);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-white);
-  }
-
-  &:where([data-variant='filled']) {
-    color: var(--alert-color);
-  }
-
-  &:where([data-variant='white']) {
-    color: var(--mantine-color-black);
-  }
+  text-overflow: ellipsis;
+  font-size: var(--alert-fz);
+  line-height: var(--alert-lh);
 }
 
 .closeButton {
-  width: 20px;
-  height: 20px;
-  color: var(--alert-color);
+  margin-top: calc((var(--alert-fz) * var(--alert-lh) - var(--alert-close-size)) / 2);
+  margin-inline-end: calc(var(--alert-close-size) * -0.15);
+  color: color-mix(in srgb, var(--alert-color) 60%, transparent);
+
+  @mixin hover {
+    color: var(--alert-color);
+    background-color: color-mix(in srgb, var(--alert-color) 10%, transparent);
+  }
 }

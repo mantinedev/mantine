@@ -8,6 +8,35 @@ export default Layout(MDX_DATA.Alert);
 
 <Demo data={AlertDemos.configurator} />
 
+## Colors
+
+Use the `color` prop to set alert color. Combine it with the `icon` prop to make the meaning of
+the alert clear at a glance. The icon is rendered in the accent color, while the title and message
+use neutral text colors so that long content stays easy to read:
+
+<Demo data={AlertDemos.colors} />
+
+In `light`, `outline`, `default` and `transparent` variants the icon uses the text shade of the
+given color (`--mantine-color-{color}-text`, or the exact shade when `color` includes one, for
+example `red.4`), the title uses `--mantine-color-bright` and the message uses
+`--mantine-color-text`. Borders of `light` and `outline` variants are derived from the same accent
+color. `white` variant uses the resolver color for the icon with black title and gray message.
+`filled` and custom variants use colors returned by `theme.variantColorResolver` for all elements.
+To customize any of these colors, set `--alert-icon-color`, `--alert-title-color`,
+`--alert-color`, `--alert-bg` or `--alert-bd` with the `vars` prop or [Styles API](/styles/styles-api).
+
+## Size
+
+Use the `size` prop to control padding, font size, icon size and close button size together.
+`md` is the default. `xs` and `sm` are meant for banners and inline form messages, `lg` and `xl`
+for standalone page-level messages:
+
+<Demo data={AlertDemos.sizes} />
+
+Sizes are defined with CSS variables (`--alert-padding-{size}`, `--alert-fz-{size}`,
+`--alert-icon-size-{size}`, `--alert-gap-{size}` and `--alert-close-size-{size}`), so you can add
+custom sizes by defining these variables for the new size key, for example `--alert-padding-xxl`.
+
 <StylesApiSelectors component="Alert" />
 
 <Demo data={AlertDemos.stylesApi} />

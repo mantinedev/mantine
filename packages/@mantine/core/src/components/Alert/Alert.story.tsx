@@ -1,4 +1,10 @@
-import { ImageIcon } from '@phosphor-icons/react';
+import {
+  CheckCircleIcon,
+  ImageIcon,
+  InfoIcon,
+  WarningIcon,
+  XCircleIcon,
+} from '@phosphor-icons/react';
 import { MantineThemeProvider } from '../../core';
 import { Alert } from './Alert';
 
@@ -69,6 +75,61 @@ export function Variants() {
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>
+    </div>
+  );
+}
+
+export function Semantic() {
+  const variants = ['light', 'filled', 'outline', 'default', 'white', 'transparent'] as const;
+  const items = [
+    { color: 'blue', icon: <InfoIcon />, title: 'Payment method expires soon' },
+    { color: 'teal', icon: <CheckCircleIcon />, title: 'Changes saved' },
+    { color: 'yellow', icon: <WarningIcon />, title: 'Storage almost full' },
+    { color: 'red', icon: <XCircleIcon />, title: 'Build failed' },
+  ];
+
+  return (
+    <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
+      {variants.map((variant) =>
+        items.map((item) => (
+          <Alert
+            key={`${variant}-${item.color}`}
+            variant={variant}
+            color={item.color}
+            icon={item.icon}
+            title={item.title}
+            withCloseButton
+            closeButtonLabel="Dismiss"
+            mb="md"
+          >
+            The card ending in 4242 expires on 30 September. Update it to keep your subscription
+            active.
+          </Alert>
+        ))
+      )}
+    </div>
+  );
+}
+
+export function Sizes() {
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+
+  return (
+    <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
+      {sizes.map((size) => (
+        <Alert
+          key={size}
+          size={size}
+          icon={<InfoIcon />}
+          title="Payment method expires soon"
+          withCloseButton
+          closeButtonLabel="Dismiss"
+          mb="md"
+        >
+          The card ending in 4242 expires on 30 September. Update it to keep your subscription
+          active.
+        </Alert>
+      ))}
     </div>
   );
 }
