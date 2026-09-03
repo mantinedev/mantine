@@ -15,7 +15,14 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { ModalBaseProps, ModalBaseProvider, ModalBaseStylesNames, useOverlay } from '../ModalBase';
+import {
+  ModalBaseBreakpoint,
+  ModalBaseProps,
+  ModalBaseProvider,
+  ModalBaseStylesNames,
+  useOverlay,
+} from '../ModalBase';
+import { useBelowBreakpoint } from '../ModalBase/use-below-breakpoint';
 import { OptionalPortal } from '../Portal';
 import { ScrollArea } from '../ScrollArea';
 import { ModalProvider, ScrollAreaComponent } from './Modal.context';
@@ -46,6 +53,9 @@ export interface ModalRootProps extends StylesApiProps<ModalRootFactory>, ModalB
 
   /** If set, the modal takes the entire screen @default false */
   fullScreen?: boolean;
+
+  /** Key of `theme.breakpoints`, CSS length or px number below which the modal takes the entire screen */
+  fullScreenBelow?: ModalBaseBreakpoint;
 
   /** If set, the header stays pinned to the top while the body scrolls @default true */
   stickyHeader?: boolean;
@@ -102,6 +112,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     scrollAreaComponent,
     radius,
     fullScreen,
+    fullScreenBelow,
     centered,
     stickyHeader,
     stickyFooter,
@@ -156,6 +167,9 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     returnFocus,
   });
 
+  const belowBreakpoint = useBelowBreakpoint(fullScreenBelow);
+  const resolvedFullScreen = fullScreen || belowBreakpoint;
+
   const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};
 
   return (
@@ -164,7 +178,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
         yOffset,
         scrollAreaComponent,
         getStyles,
-        fullScreen,
+        fullScreen: resolvedFullScreen,
         centered,
         stickyHeader,
         stickyFooter,
@@ -193,7 +207,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
           >
             <Box
               {...getStyles('root')}
-              data-full-screen={fullScreen || undefined}
+              data-full-screen={resolvedFullScreen || undefined}
               data-centered={centered || undefined}
               data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
               {...others}

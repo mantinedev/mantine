@@ -11,7 +11,7 @@ export { scrollarea } from './Modal.demo.scrollarea';
 export { composition } from './Modal.demo.composition';
 export { offset } from './Modal.demo.offset';
 export { initialFocus } from './Modal.demo.initialFocus';
-export { fullScreenMobile } from './Modal.demo.fullScreenMobile';
+export { fullScreenBelow } from './Modal.demo.fullScreenBelow';
 export { closeIcon } from './Modal.demo.closeIcon';
 export { initialFocusTrap } from './Modal.demo.initialFocusTrap';
 export { stack } from './Modal.demo.stack';

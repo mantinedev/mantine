@@ -34,6 +34,43 @@ export function Usage() {
   );
 }
 
+export function FullScreen() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Drawer opened onClose={() => {}} title="Just a Drawer" fullScreen>
+        Full screen drawer
+      </Drawer>
+    </div>
+  );
+}
+
+export function FullScreenBelow() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Drawer opened onClose={() => {}} title="Just a Drawer" size="md" fullScreenBelow="md">
+        Full screen below md breakpoint, resize the viewport to see the change
+      </Drawer>
+    </div>
+  );
+}
+
+export function FullScreenBelowBottom() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Drawer
+        opened
+        onClose={() => {}}
+        title="Just a Drawer"
+        position="bottom"
+        size="md"
+        fullScreenBelow="md"
+      >
+        Full screen below md breakpoint, resize the viewport to see the change
+      </Drawer>
+    </div>
+  );
+}
+
 export function ScrollbarWithOffset() {
   const [opened, { open, close }] = useDisclosure(true);
   return (

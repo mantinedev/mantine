@@ -1,6 +1,13 @@
 import { useState } from 'react';
-import { fireEvent, waitFor } from '@testing-library/react';
-import { createContextContainer, render, screen, tests, userEvent } from '@mantine-tests/core';
+import { act, fireEvent, waitFor } from '@testing-library/react';
+import {
+  createContextContainer,
+  mockMatchMedia,
+  render,
+  screen,
+  tests,
+  userEvent,
+} from '@mantine-tests/core';
 import { MantineThemeProvider } from '../../core';
 import { Modal, ModalProps, ModalStylesNames } from './Modal';
 import { ModalBody, ModalBodyProps } from './ModalBody';
@@ -58,6 +65,48 @@ describe('@mantine/core/Modal', () => {
 
     rerender(<Modal {...defaultProps} fullScreen={false} />);
     expect(container.querySelector('.mantine-Modal-root')).not.toHaveAttribute('data-full-screen');
+  });
+
+  describe('fullScreenBelow', () => {
+    const isMinWidthQuery = (query: string) => query.startsWith('(min-width');
+    const getRoot = (container: HTMLElement) => container.querySelector('.mantine-Modal-root');
+    let media: ReturnType<typeof mockMatchMedia>;
+
+    afterEach(() => {
+      media.restore();
+    });
+
+    it('makes the modal full screen when the viewport is below the breakpoint', () => {
+      media = mockMatchMedia(false, { filter: isMinWidthQuery });
+      const { container } = render(<Modal {...defaultProps} fullScreenBelow="sm" />);
+      expect(getRoot(container)).toHaveAttribute('data-full-screen');
+      expect(container.querySelector('.mantine-Modal-content')).toHaveAttribute('data-full-screen');
+      expect(media.queries).toEqual(['(min-width: 48em)']);
+    });
+
+    it('keeps the modal regular when the viewport is at or above the breakpoint', () => {
+      media = mockMatchMedia(true, { filter: isMinWidthQuery });
+      const { container } = render(<Modal {...defaultProps} fullScreenBelow="sm" />);
+      expect(getRoot(container)).not.toHaveAttribute('data-full-screen');
+    });
+
+    it('keeps the modal full screen when fullScreen is set and the viewport is above the breakpoint', () => {
+      media = mockMatchMedia(true, { filter: isMinWidthQuery });
+      const { container } = render(<Modal {...defaultProps} fullScreen fullScreenBelow="sm" />);
+      expect(getRoot(container)).toHaveAttribute('data-full-screen');
+    });
+
+    it('switches to full screen while opened when the viewport shrinks below the breakpoint', () => {
+      media = mockMatchMedia(true, { filter: isMinWidthQuery });
+      const { container } = render(<Modal {...defaultProps} fullScreenBelow="md" />);
+      expect(getRoot(container)).not.toHaveAttribute('data-full-screen');
+
+      act(() => media.setMatches(false));
+      expect(getRoot(container)).toHaveAttribute('data-full-screen');
+
+      act(() => media.setMatches(true));
+      expect(getRoot(container)).not.toHaveAttribute('data-full-screen');
+    });
   });
 
   it('does not render overlay when withOverlay is false', () => {

@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { act, fireEvent } from '@testing-library/react';
-import { createContextContainer, render, screen, tests, userEvent } from '@mantine-tests/core';
+import {
+  createContextContainer,
+  mockMatchMedia,
+  render,
+  screen,
+  tests,
+  userEvent,
+} from '@mantine-tests/core';
 import { Modal } from '../Modal';
 import { useDrawersStack } from '../Modal/use-modals-stack';
 import { Drawer, DrawerProps, DrawerStylesNames } from './Drawer';
@@ -653,5 +660,81 @@ describe('@mantine/core/Drawer theme.overlayStack', () => {
 
     await userEvent.keyboard('{Escape}');
     expect(onCloseDrawer).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('@mantine/core/Drawer fullScreen', () => {
+  const isMinWidthQuery = (query: string) => query.startsWith('(min-width');
+  const getRoot = (container: HTMLElement) =>
+    container.querySelector<HTMLElement>('.mantine-Drawer-root')!;
+  const getSize = (container: HTMLElement) =>
+    getRoot(container).style.getPropertyValue('--drawer-size');
+  let media: ReturnType<typeof mockMatchMedia> | undefined;
+
+  afterEach(() => {
+    media?.restore();
+    media = undefined;
+  });
+
+  it('fills the viewport and sets data-full-screen when fullScreen is set', () => {
+    const { container } = render(<Drawer {...defaultProps} size="sm" fullScreen />);
+    expect(getSize(container)).toBe('100%');
+    expect(getRoot(container)).toHaveAttribute('data-full-screen');
+  });
+
+  it('clears offset when fullScreen is set', () => {
+    const { container } = render(<Drawer {...defaultProps} offset={8} fullScreen />);
+    expect(getRoot(container).style.getPropertyValue('--drawer-offset')).toBe('');
+  });
+
+  it('keeps offset when the viewport is at or above fullScreenBelow breakpoint', () => {
+    media = mockMatchMedia(true, { filter: isMinWidthQuery });
+    const { container } = render(<Drawer {...defaultProps} offset={8} fullScreenBelow="sm" />);
+    expect(getRoot(container).style.getPropertyValue('--drawer-offset')).toBe(
+      'calc(0.5rem * var(--mantine-scale))'
+    );
+  });
+
+  it('ignores fullScreen when snapPoints are set', () => {
+    const { container } = render(
+      <Drawer {...defaultProps} offset={8} snapPoints={[0.5, 1]} fullScreen />
+    );
+    expect(getRoot(container)).not.toHaveAttribute('data-full-screen');
+    expect(getRoot(container).style.getPropertyValue('--drawer-offset')).toBe(
+      'calc(0.5rem * var(--mantine-scale))'
+    );
+  });
+
+  it('uses the size prop when fullScreen is not set', () => {
+    const { container } = render(<Drawer {...defaultProps} size="sm" />);
+    expect(getSize(container)).toBe('var(--drawer-size-sm)');
+    expect(getRoot(container)).not.toHaveAttribute('data-full-screen');
+  });
+
+  it('fills the viewport when the viewport is below fullScreenBelow breakpoint', () => {
+    media = mockMatchMedia(false, { filter: isMinWidthQuery });
+    const { container } = render(<Drawer {...defaultProps} size="sm" fullScreenBelow="sm" />);
+    expect(getSize(container)).toBe('100%');
+    expect(getRoot(container)).toHaveAttribute('data-full-screen');
+    expect(media.queries).toEqual(['(min-width: 48em)']);
+  });
+
+  it('keeps the size prop when the viewport is at or above fullScreenBelow breakpoint', () => {
+    media = mockMatchMedia(true, { filter: isMinWidthQuery });
+    const { container } = render(<Drawer {...defaultProps} size="sm" fullScreenBelow="sm" />);
+    expect(getSize(container)).toBe('var(--drawer-size-sm)');
+    expect(getRoot(container)).not.toHaveAttribute('data-full-screen');
+  });
+
+  it('switches to full screen while opened when the viewport shrinks below the breakpoint', () => {
+    media = mockMatchMedia(true, { filter: isMinWidthQuery });
+    const { container } = render(<Drawer {...defaultProps} size="sm" fullScreenBelow="md" />);
+    expect(getSize(container)).toBe('var(--drawer-size-sm)');
+
+    act(() => media!.setMatches(false));
+    expect(getSize(container)).toBe('100%');
+
+    act(() => media!.setMatches(true));
+    expect(getSize(container)).toBe('var(--drawer-size-sm)');
   });
 });

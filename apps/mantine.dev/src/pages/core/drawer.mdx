@@ -47,6 +47,20 @@ function Demo() {
 
 <Demo data={DrawerDemos.sizes} />
 
+## Full screen
+
+Set the `fullScreen` prop to make the drawer take the entire viewport along its `position` axis:
+full width for `left` and `right` positions, full height for `top` and `bottom`.
+The `size`, `offset` and `radius` props are ignored when `fullScreen` is set. When `snapPoints`
+are set, the drawer is sized by the snap points and `fullScreen` has no effect.
+
+To make the drawer full screen only on small screens, set the `fullScreenBelow` prop to a key
+of `theme.breakpoints` (`xs`, `sm`, `md`, `lg`, `xl`), any CSS length (for example, `'50em'` or `'800px'`)
+or a number of pixels. The drawer reacts to viewport changes while it is opened, and `fullScreen`
+still forces full screen at any viewport width:
+
+<Demo data={DrawerDemos.fullScreenBelow} />
+
 ## Remove header
 
 To remove the header, set `withCloseButton={false}`

@@ -15,7 +15,14 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { ModalBaseProps, ModalBaseProvider, ModalBaseStylesNames, useOverlay } from '../ModalBase';
+import {
+  ModalBaseBreakpoint,
+  ModalBaseProps,
+  ModalBaseProvider,
+  ModalBaseStylesNames,
+  useOverlay,
+} from '../ModalBase';
+import { useBelowBreakpoint } from '../ModalBase/use-below-breakpoint';
 import { OptionalPortal } from '../Portal';
 import { ScrollArea } from '../ScrollArea';
 import { MantineTransition } from '../Transition';
@@ -66,6 +73,12 @@ export interface DrawerRootProps extends StylesApiProps<DrawerRootFactory>, Moda
 
   /** Drawer container offset from the viewport end @default 0 */
   offset?: number | string;
+
+  /** If set, the drawer takes the entire viewport along its position axis, `size`, `offset` and `radius` props are ignored @default false */
+  fullScreen?: boolean;
+
+  /** Key of `theme.breakpoints`, CSS length or px number below which the drawer takes the entire viewport along its position axis */
+  fullScreenBelow?: ModalBaseBreakpoint;
 
   /** If set, the header stays pinned to the top while the body scrolls @default true */
   stickyHeader?: boolean;
@@ -134,14 +147,14 @@ const defaultProps = {
 } satisfies Partial<DrawerRootProps>;
 
 const varsResolver = createVarsResolver<DrawerRootFactory>(
-  (_, { position, size, offset, snapPoints }) => {
+  (_, { position, size, offset, snapPoints, fullScreen }) => {
     const hasSnapPoints = Array.isArray(snapPoints) && snapPoints.length > 0;
     const isHorizontal = position === 'left' || position === 'right';
     const fillAxis = 'calc(100% - var(--drawer-offset, 0rem) * 2)';
 
     return {
       root: {
-        '--drawer-size': getSize(size, 'drawer-size'),
+        '--drawer-size': fullScreen ? '100%' : getSize(size, 'drawer-size'),
         '--drawer-flex':
           hasSnapPoints && isHorizontal ? `0 0 ${fillAxis}` : getDrawerFlex(position),
         '--drawer-height': isHorizontal
@@ -151,7 +164,7 @@ const varsResolver = createVarsResolver<DrawerRootFactory>(
             : 'var(--drawer-size)',
         '--drawer-align': getDrawerAlign(position),
         '--drawer-justify': position === 'right' ? 'flex-end' : undefined,
-        '--drawer-offset': rem(offset),
+        '--drawer-offset': fullScreen ? undefined : rem(offset),
       },
     };
   }
@@ -168,6 +181,8 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
     vars,
     scrollAreaComponent,
     position,
+    fullScreen,
+    fullScreenBelow,
     stickyHeader,
     stickyFooter,
     withSwipe,
@@ -204,11 +219,14 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
   } = props;
 
   const { dir } = useDirection();
+  const belowBreakpoint = useBelowBreakpoint(fullScreenBelow);
+  const hasSnapPoints = Array.isArray(snapPoints) && snapPoints.length > 0;
+  const resolvedFullScreen = !hasSnapPoints && (fullScreen || belowBreakpoint);
 
   const getStyles = useStyles<DrawerRootFactory>({
     name: 'Drawer',
     classes,
-    props,
+    props: { ...props, fullScreen: resolvedFullScreen },
     className,
     style,
     classNames,
@@ -275,6 +293,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
           >
             <Box
               {...getStyles('root')}
+              data-full-screen={resolvedFullScreen || undefined}
               data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
               {...others}
               id={overlay._id}

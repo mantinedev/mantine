@@ -271,6 +271,16 @@ export function FullScreen() {
   );
 }
 
+export function FullScreenBelow() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Modal opened onClose={() => {}} title="Just a Modal" fullScreenBelow="md">
+        Full screen below md breakpoint, resize the viewport to see the change
+      </Modal>
+    </div>
+  );
+}
+
 export function WithScroll() {
   return (
     <div style={{ padding: 40 }}>

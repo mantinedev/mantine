@@ -6,6 +6,12 @@
   --drawer-size-xl: 780px;
   --drawer-size: var(--drawer-size-md);
   --drawer-offset: 0rem;
+
+  &[data-full-screen] {
+    .content {
+      border-radius: 0;
+    }
+  }
 }
 
 .header {

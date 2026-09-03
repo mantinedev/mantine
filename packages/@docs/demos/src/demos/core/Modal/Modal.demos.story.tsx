@@ -68,9 +68,9 @@ export const Demo_initialFocus = {
   render: renderDemo(demos.initialFocus),
 };
 
-export const Demo_fullScreenMobile = {
-  name: '⭐ Demo: fullScreenMobile',
-  render: renderDemo(demos.fullScreenMobile),
+export const Demo_fullScreenBelow = {
+  name: '⭐ Demo: fullScreenBelow',
+  render: renderDemo(demos.fullScreenBelow),
 };
 
 export const Demo_closeIcon = {

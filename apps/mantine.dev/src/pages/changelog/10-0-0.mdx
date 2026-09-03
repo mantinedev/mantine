@@ -122,6 +122,15 @@ with `defaultActiveSnapPoint`:
 
 <Demo data={DrawerDemos.snapPoints} />
 
+## Modal and Drawer fullScreenBelow
+
+[Modal](/core/modal) and [Drawer](/core/drawer) now support the `fullScreenBelow` prop to take
+the entire screen when the viewport is narrower than the given breakpoint. The prop accepts a key
+of `theme.breakpoints`, any CSS length or a number of pixels, and reacts to viewport changes while
+the component is opened. [Drawer](/core/drawer) now also supports the `fullScreen` prop:
+
+<Demo data={ModalDemos.fullScreenBelow} />
+
 ## OKLCH default palettes
 
 All 14 built-in color palettes (`dark`, `gray`, `red`, `pink`, `grape`, `violet`, `indigo`, `blue`,

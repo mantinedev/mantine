@@ -6,6 +6,7 @@ export { useOverlayBodyId } from './use-modal-body-id';
 export { useOverlayTitleId } from './use-modal-title-id';
 
 export type { UseOverlayInput, UseOverlayReturn } from './use-overlay';
+export type { ModalBaseBreakpoint } from './use-below-breakpoint';
 export type {
   ModalBaseProps,
   ModalBaseContentProps,

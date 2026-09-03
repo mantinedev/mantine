@@ -1,25 +1,24 @@
-import { Button, em, Modal } from '@mantine/core';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { Button, Modal, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
-  const isMobile = useMediaQuery('(max-width: ${em(800)})');
 
   return (
     <>
       <Modal
         opened={opened}
         onClose={close}
-        title="This is a fullscreen modal"
-        fullScreen={isMobile}
+        title="Full screen on small screens"
+        fullScreenBelow="sm"
         transitionProps={{ transition: 'fade', duration: 200 }}
       >
-        The Modal will be full screen only on mobile
+        {/* Modal content */}
       </Modal>
 
       <Button variant="default" onClick={open}>
@@ -32,18 +31,20 @@ function Demo() {
 
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
-  const isMobile = useMediaQuery(`(max-width: ${em(800)})`);
 
   return (
     <>
       <Modal
         opened={opened}
         onClose={close}
-        title="This is a fullscreen modal"
-        fullScreen={isMobile}
+        title="Full screen on small screens"
+        fullScreenBelow="sm"
         transitionProps={{ transition: 'fade', duration: 200 }}
       >
-        The Modal will be full screen only on mobile
+        <Text>
+          The modal takes the entire screen when the viewport is narrower than the sm breakpoint.
+          Resize the browser window to see the change.
+        </Text>
       </Modal>
 
       <Button variant="default" onClick={open}>
@@ -53,7 +54,7 @@ function Demo() {
   );
 }
 
-export const fullScreenMobile: MantineDemo = {
+export const fullScreenBelow: MantineDemo = {
   type: 'code',
   code,
   centered: true,

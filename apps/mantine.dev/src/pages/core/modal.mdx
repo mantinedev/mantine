@@ -38,10 +38,15 @@ when the `fullScreen` prop is set:
 
 <Demo data={ModalDemos.fullScreen} />
 
-To switch Modal to fullscreen on devices with small screens only, use the [use-media-query](/hooks/use-media-query/) hook.
-The `size` prop is ignored if the `fullScreen` prop is set:
+## Fullscreen on small screens
 
-<Demo data={ModalDemos.fullScreenMobile} />
+Set the `fullScreenBelow` prop to make the modal fullscreen only when the viewport is narrower
+than the given breakpoint. The prop accepts a key of `theme.breakpoints` (`xs`, `sm`, `md`, `lg`, `xl`),
+any CSS length (for example, `'50em'` or `'800px'`) or a number of pixels. The modal reacts to viewport
+changes while it is opened. The `size` prop is ignored while the modal is fullscreen, and `fullScreen`
+still forces fullscreen at any viewport width:
+
+<Demo data={ModalDemos.fullScreenBelow} />
 
 ## Customize overlay
 

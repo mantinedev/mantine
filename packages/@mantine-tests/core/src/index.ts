@@ -89,6 +89,7 @@ export const tests = {
 
 export { render, renderWithAct } from './render';
 export { wait } from './wait';
+export { mockMatchMedia } from './mock-match-media';
 export { patchConsoleError, patchConsoleWarn, autoPatchWarn } from './patch-console-error';
 export { createContextContainer } from './create-context-container';
 export { inputDefaultProps, inputStylesApiSelectors } from './inputs/inputs-test-props';
