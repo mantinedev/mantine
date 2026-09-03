@@ -1,4 +1,5 @@
-import { Table } from '@tanstack/react-table';
+import { Table, RowData } from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 import {
   ExportColumnScope,
   ExportRowScope,
@@ -68,7 +69,10 @@ export function buildExcelXml(
   ].join('\n');
 }
 
-export function exportToExcel<TData>(table: Table<TData>, options?: ExportExcelOptions): void {
+export function exportToExcel<TData extends RowData>(
+  table: Table<DataGridFeatures, TData>,
+  options?: ExportExcelOptions
+): void {
   const {
     fileName = 'data-grid-export',
     sheetName = 'Sheet1',

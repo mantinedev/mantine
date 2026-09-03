@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { Table as ReactTable } from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 
 export type DataGridPersistableState =
   | 'sorting'
@@ -24,7 +25,7 @@ export interface UseDataGridStateOptions {
   persistedState?: DataGridPersistableState[];
 
   /** TanStack Table instance */
-  table: ReactTable<any>;
+  table: ReactTable<DataGridFeatures, any>;
 
   /** Current density value (not part of TanStack state) */
   density?: string;
@@ -97,7 +98,7 @@ export function useDataGridState(options: UseDataGridStateOptions) {
     }
 
     debounceRef.current = setTimeout(() => {
-      const tableState = table.getState();
+      const tableState = table.store.state;
       const toPersist: Record<string, unknown> = {};
 
       for (const key of persistedState) {

@@ -51,11 +51,14 @@ const store = useDataGrid({ data, columns, withColumnResizing: true });
 
 TanStack Table uses these defaults when `size`, `minSize`, or `maxSize` are not specified:
 
-| Property | Default |
-|----------|---------|
-| `size` | `150` |
-| `minSize` | `20` |
-| `maxSize` | `Number.MAX_SAFE_INTEGER` |
+<DataTable
+  head={['Property', 'Default']}
+  data={[
+    ['`size`', '`150`'],
+    ['`minSize`', '`20`'],
+    ['`maxSize`', '`Number.MAX_SAFE_INTEGER`'],
+  ]}
+/>
 
 Override these globally via `tableOptions.defaultColumn`:
 

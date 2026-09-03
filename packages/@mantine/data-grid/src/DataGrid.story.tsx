@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { ColumnDef } from '@tanstack/react-table';
 import { Badge, Box, Group, Stack, Text } from '@mantine/core';
-import { DataGrid, useDataGrid } from './index';
+import { DataGrid, useDataGrid, DataGridColumnDef } from './index';
 
 export default { title: 'DataGrid' };
 
@@ -198,7 +197,7 @@ const employees: Employee[] = [
   },
 ];
 
-const columns: ColumnDef<Employee>[] = [
+const columns: DataGridColumnDef<Employee>[] = [
   { accessorKey: 'firstName', header: 'Name', enableSorting: true },
   { accessorKey: 'department', header: 'Department', enableSorting: true },
   {
@@ -240,7 +239,7 @@ export function Usage() {
 }
 
 export function CustomCells() {
-  const customColumns: ColumnDef<Employee>[] = [
+  const customColumns: DataGridColumnDef<Employee>[] = [
     { accessorKey: 'firstName', header: 'Name' },
     {
       accessorKey: 'salary',
@@ -359,7 +358,7 @@ export function ColumnPinning() {
     columns,
     getRowId: (row) => row.id,
     withColumnPinning: true,
-    columnPinning: { left: ['firstName'], right: ['status'] },
+    columnPinning: { start: ['firstName'], end: ['status'] },
   });
   return (
     <Box p="md">
@@ -568,7 +567,7 @@ export function Density() {
 }
 
 export function CompoundComponents() {
-  const columnsWithFooter: ColumnDef<Employee>[] = [
+  const columnsWithFooter: DataGridColumnDef<Employee>[] = [
     { accessorKey: 'firstName', header: 'Name', footer: 'Total' },
     {
       accessorKey: 'salary',

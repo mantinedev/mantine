@@ -1,4 +1,5 @@
 import type { Column } from '@tanstack/react-table';
+import type { DataGridFeatures } from './table-features';
 
 export interface PinnedStyles {
   position: 'sticky';
@@ -7,7 +8,9 @@ export interface PinnedStyles {
   zIndex: number;
 }
 
-export function getPinnedStyles(column: Column<any, unknown>): PinnedStyles | undefined {
+export function getPinnedStyles(
+  column: Column<DataGridFeatures, any, unknown>
+): PinnedStyles | undefined {
   const isPinned = column.getIsPinned();
   if (!isPinned) {
     return undefined;
@@ -15,8 +18,8 @@ export function getPinnedStyles(column: Column<any, unknown>): PinnedStyles | un
 
   return {
     position: 'sticky',
-    left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
-    right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
+    left: isPinned === 'start' ? `${column.getStart('start')}px` : undefined,
+    right: isPinned === 'end' ? `${column.getAfter('end')}px` : undefined,
     zIndex: 1,
   };
 }

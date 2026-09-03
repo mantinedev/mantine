@@ -74,14 +74,22 @@ and many columns simultaneously.
 
 ## Feature compatibility
 
-| Feature | Row virtualization | Column virtualization |
-|---|---|---|
-| Column pinning | Works | Works (pinned columns are always rendered) |
-| Row pinning | Not supported | Works |
-| Editing | Not supported | Works |
-| Row selection | Works | Works |
-| Grouping | Works | Works |
-| Column reorder | Works | Works |
+<DataTable
+  head={['Feature', 'Row virtualization', 'Column virtualization']}
+  data={[
+    ['Column pinning', 'Works', 'Works (pinned columns are always rendered)'],
+    ['Row pinning', 'Not supported', 'Works'],
+    ['Editing', 'Not supported', 'Works'],
+    ['Row selection', 'Works', 'Works'],
+    ['Grouping', 'Works', 'Works'],
+    ['Column reorder', 'Works', 'Works'],
+    ['Cell spanning', 'Not supported', 'Not supported'],
+    ['Cell selection', 'Not supported', 'Not supported'],
+  ]}
+/>
+
+Virtualized rendering positions each cell independently, which is why cell spanning (`spanRows` /
+`spanColumns`) and cell selection are not applied when `virtualize` is set.
 
 ## Performance tips
 

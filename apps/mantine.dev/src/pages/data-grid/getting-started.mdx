@@ -62,15 +62,17 @@ function Demo() {
 }
 ```
 
-## createColumnHelper
+## createDataGridColumnHelper
 
-`createColumnHelper` provides a type-safe API for building column definitions. Pass your row data
-type as a generic to get full autocompletion on accessor keys and cell values:
+`createDataGridColumnHelper` provides a type-safe API for building column definitions. Pass your row
+data type as a generic to get full autocompletion on accessor keys and cell values. It is a thin
+wrapper around TanStack Table's `createColumnHelper` that is already bound to the feature set
+DataGrid registers, so you do not have to pass the features generic yourself:
 
 ```tsx
-import { createColumnHelper, DataGrid, useDataGrid } from '@mantine/data-grid';
+import { createDataGridColumnHelper, DataGrid, useDataGrid } from '@mantine/data-grid';
 
-const columnHelper = createColumnHelper<Person>();
+const columnHelper = createDataGridColumnHelper<Person>();
 
 const columns = [
   columnHelper.accessor('name', { header: 'Name', enableSorting: true }),
@@ -111,20 +113,24 @@ const store = useDataGrid({
 Features are configured via `useDataGrid` options. Most are inferred automatically when you provide
 controlled state or column-level flags:
 
-| Feature | Inferred from |
-|---------|---------------|
-| Sorting | Columns with `enableSorting: true` |
-| Column filtering | `columnFilters` or `onColumnFiltersChange` |
-| Global filter | `globalFilter` or `onGlobalFilterChange` |
-| Pagination | `pagination` or `onPaginationChange` |
-| Column resizing | `columnSizing`, `onColumnSizingChange`, or `columnResizeMode` |
-| Column pinning | `columnPinning` or `onColumnPinningChange` |
-| Column visibility | `columnVisibility` or `onColumnVisibilityChange` |
-| Column reorder | `columnOrder` or `onColumnOrderChange` |
-| Row selection | `rowSelection` or `onRowSelectionChange` |
-| Row expansion | `expanded` or `onExpandedChange` |
-| Grouping | `grouping` or `onGroupingChange` |
-| Editing | `editingMode` is set |
+<DataTable
+  head={['Feature', 'Inferred from']}
+  data={[
+    ['Sorting', 'Columns with `enableSorting: true`'],
+    ['Column filtering', '`columnFilters` or `onColumnFiltersChange`'],
+    ['Global filter', '`globalFilter` or `onGlobalFilterChange`'],
+    ['Pagination', '`pagination` or `onPaginationChange`'],
+    ['Column resizing', '`columnSizing`, `onColumnSizingChange`, or `columnResizeMode`'],
+    ['Column pinning', '`columnPinning` or `onColumnPinningChange`'],
+    ['Column visibility', '`columnVisibility` or `onColumnVisibilityChange`'],
+    ['Column reorder', '`columnOrder` or `onColumnOrderChange`'],
+    ['Row selection', '`rowSelection` or `onRowSelectionChange`'],
+    ['Row expansion', '`expanded` or `onExpandedChange`'],
+    ['Grouping', '`grouping` or `onGroupingChange`'],
+    ['Cell selection', '`cellSelection` or `onCellSelectionChange`'],
+    ['Editing', '`editingMode` is set'],
+  ]}
+/>
 
 Presentation props like `striped`, `highlightOnHover`, `stickyHeader`, `withRowNumbers`,
 and `virtualize` are set directly on the `DataGrid` component.
@@ -133,9 +139,13 @@ and `virtualize` are set directly on the `DataGrid` component.
 
 `@mantine/data-grid` uses TanStack Table and TanStack Virtual as peer dependencies. This means you share versions with your application -- no bundled duplicates or version conflicts.
 
-| Package | Min version | Purpose |
-|---------|-------------|---------|
-| `@tanstack/react-table` | `>=8.20.0` | Headless table logic |
-| `@tanstack/react-virtual` | `>=3.13.0` | Row virtualization |
-| `@mantine/core` | `9.0.2` | UI components |
-| `@mantine/hooks` | `9.0.2` | React hooks |
+<DataTable
+  head={['Package', 'Min version', 'Purpose']}
+  data={[
+    ['`@tanstack/react-table`', '`>=9.0.0`', 'Headless table logic'],
+    ['`@tanstack/match-sorter-utils`', '`>=9.0.0`', 'Fuzzy filtering and ranking'],
+    ['`@tanstack/react-virtual`', '`>=3.13.0`', 'Row virtualization'],
+    ['`@mantine/core`', '`9.0.2`', 'UI components'],
+    ['`@mantine/hooks`', '`9.0.2`', 'React hooks'],
+  ]}
+/>

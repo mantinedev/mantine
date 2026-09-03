@@ -1,11 +1,14 @@
-import type { ColumnDef } from '@tanstack/react-table';
+import type { RowData } from '@tanstack/react-table';
+import type { DataGridColumnDef } from '../DataGrid.types';
 import type { UseDataGridOptions } from './use-data-grid';
 
 function isDefined(...values: unknown[]): boolean {
   return values.some((v) => v !== undefined);
 }
 
-function hasEnableSorting(columns: ColumnDef<any, any>[]): boolean {
+function hasEnableSorting<TData extends RowData>(
+  columns: readonly DataGridColumnDef<TData>[]
+): boolean {
   return columns.some(
     (col) =>
       col.enableSorting === true ||
@@ -13,7 +16,9 @@ function hasEnableSorting(columns: ColumnDef<any, any>[]): boolean {
   );
 }
 
-function hasEnableColumnFilter(columns: ColumnDef<any, any>[]): boolean {
+function hasEnableColumnFilter<TData extends RowData>(
+  columns: readonly DataGridColumnDef<TData>[]
+): boolean {
   return columns.some(
     (col) =>
       col.enableColumnFilter === true ||
@@ -41,9 +46,12 @@ export interface DataGridFeatureFlags {
   withFaceting: boolean;
   withTreeData: boolean;
   withRowReorder: boolean;
+  withCellSelection: boolean;
 }
 
-export function inferFeatureFlags<TData>(options: UseDataGridOptions<TData>): DataGridFeatureFlags {
+export function inferFeatureFlags<TData extends RowData>(
+  options: UseDataGridOptions<TData>
+): DataGridFeatureFlags {
   const withTreeData = options.getSubRows !== undefined;
   const withGrouping =
     options.withGrouping ?? isDefined(options.grouping, options.onGroupingChange);
@@ -90,5 +98,7 @@ export function inferFeatureFlags<TData>(options: UseDataGridOptions<TData>): Da
     withFaceting: options.withFaceting ?? false,
     withTreeData,
     withRowReorder,
+    withCellSelection:
+      options.withCellSelection ?? isDefined(options.cellSelection, options.onCellSelectionChange),
   };
 }

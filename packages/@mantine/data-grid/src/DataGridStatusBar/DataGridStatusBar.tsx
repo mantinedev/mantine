@@ -44,7 +44,7 @@ export const DataGridStatusBar = factory<DataGridStatusBarFactory>((props) => {
   const hasFiltersApplied = isFiltered && filteredRows !== totalRows;
 
   const selectedCount = ctx.withRowSelection
-    ? Object.keys(table.getState().rowSelection || {}).length
+    ? Object.keys(table.store.state.rowSelection || {}).length
     : 0;
 
   return (

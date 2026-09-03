@@ -1,4 +1,5 @@
-import { Table } from '@tanstack/react-table';
+import { Table, RowData } from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 import { formatCsv } from './export-csv';
 import type { ExportColumnScope, ExportRowScope } from './export-utils';
 
@@ -9,8 +10,8 @@ export interface ClipboardCopyOptions {
   valueFormatter?: (value: unknown, columnId: string) => string;
 }
 
-export function copyToClipboard<TData>(
-  table: Table<TData>,
+export function copyToClipboard<TData extends RowData>(
+  table: Table<DataGridFeatures, TData>,
   options?: ClipboardCopyOptions
 ): Promise<void> {
   const {

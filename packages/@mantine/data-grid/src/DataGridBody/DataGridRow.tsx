@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 import { ExpandChevron, GripIcon } from '../icons';
-import type { RowSpanMap } from '../row-span';
+import type { DataGridFeatures } from '../table-features';
 import { DataGridCell } from './DataGridCell';
 import classes from '../DataGrid.module.css';
 
@@ -30,13 +30,12 @@ export type DataGridRowStylesNames =
 export interface DataGridRowProps
   extends BoxProps, CompoundStylesApiProps<DataGridRowFactory>, ElementProps<'tr'> {
   /** TanStack row instance */
-  row: Row<any>;
+  row: Row<DataGridFeatures, any>;
 
   /** Zero-based visual row index */
   rowIndex: number;
 
   /** Row span lookup map */
-  rowSpanMap?: RowSpanMap;
 }
 
 export type DataGridRowFactory = Factory<{
@@ -47,7 +46,7 @@ export type DataGridRowFactory = Factory<{
 }>;
 
 export const DataGridRow = factory<DataGridRowFactory>((props) => {
-  const { className, style, classNames, styles, row, rowIndex, rowSpanMap, ...others } = useProps(
+  const { className, style, classNames, styles, row, rowIndex, ...others } = useProps(
     'DataGridRow',
     null,
     props
@@ -76,7 +75,7 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
           const startIdx = rows.findIndex((r) => r.id === lastSelected.id);
           const endIdx = rows.findIndex((r) => r.id === row.id);
           const [from, to] = startIdx < endIdx ? [startIdx, endIdx] : [endIdx, startIdx];
-          const updates: Record<string, boolean> = {};
+          const updates: Record<string, true> = {};
           for (let i = from; i <= to; i++) {
             if (rows[i].getCanSelect()) {
               updates[rows[i].id] = true;
@@ -148,51 +147,33 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
   const dataCells = useMemo(() => {
     const visibleCells = row.getVisibleCells();
     const cells: React.ReactNode[] = [];
-    let skipCount = 0;
-    let visualColIndex = 0;
 
     for (let i = 0; i < visibleCells.length; i++) {
-      if (skipCount > 0) {
-        skipCount--;
-        visualColIndex++;
-        continue;
-      }
-
       const cell = visibleCells[i];
-      const meta = cell.column.columnDef.meta;
-      const colSpan =
-        typeof meta?.colSpan === 'function'
-          ? meta.colSpan({ row: cell.row, column: cell.column })
-          : (meta?.colSpan ?? 1);
 
-      if (colSpan > 1) {
-        skipCount = colSpan - 1;
-      }
-
-      const rSpan = rowSpanMap?.get(rowIndex, cell.column.id);
-      if (rSpan === 0) {
-        visualColIndex++;
+      if (cell.getIsCovered()) {
         continue;
       }
+
+      const colSpan = cell.getColSpan();
+      const rowSpan = cell.getRowSpan();
 
       cells.push(
         <DataGridCell
           key={cell.id}
           cell={cell}
-          colIndex={visualColIndex}
+          colIndex={i}
           colSpan={colSpan > 1 ? colSpan : undefined}
-          rowSpan={rSpan !== undefined && rSpan > 1 ? rSpan : undefined}
+          rowSpan={rowSpan > 1 ? rowSpan : undefined}
           classNames={classNames}
           styles={styles}
           treeData={ctx.withTreeData && i === 0 ? { row } : undefined}
         />
       );
-
-      visualColIndex++;
     }
 
     return cells;
-  }, [row, rowIndex, rowSpanMap, classNames, styles, ctx.withTreeData]);
+  }, [row, classNames, styles, ctx.withTreeData]);
 
   return (
     <Box

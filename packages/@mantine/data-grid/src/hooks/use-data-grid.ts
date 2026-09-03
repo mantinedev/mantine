@@ -1,41 +1,35 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   type BuiltInFilterFn,
-  ColumnDef,
+  CellSelectionState,
   ColumnFiltersState,
   ColumnOrderState,
   ColumnPinningState,
   ColumnResizeMode,
   ColumnSizingState,
+  ColumnVisibilityState,
   ExpandedState,
   FilterFn,
-  getCoreRowModel,
-  getExpandedRowModel,
-  getFacetedMinMaxValues,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getGroupedRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   GroupingState,
   OnChangeFn,
   PaginationState,
-  Row,
+  RowData,
   RowPinningState,
   RowSelectionState,
   SortingState,
-  Table as ReactTable,
   TableOptions,
-  useReactTable,
-  VisibilityState,
+  useTable,
 } from '@tanstack/react-table';
 import type { DataGridDensity } from '../DataGrid.context';
+import type { DataGridColumnDef, DataGridRow, DataGridTable } from '../DataGrid.types';
 import { createOperatorFilterFn as createOperatorFilterFnLocal } from '../DataGridFilters/filter-operators';
+import { createDataGridFeatures, type DataGridFeatures } from '../table-features';
 import { inferFeatureFlags } from './infer-feature-flags';
 import { useDeepCompareMemo } from './use-deep-compare-memo';
 
-function defaultSortingDisabled<TData>(columns: ColumnDef<TData, any>[]): ColumnDef<TData, any>[] {
+function defaultSortingDisabled<TData extends RowData>(
+  columns: readonly DataGridColumnDef<TData>[]
+): DataGridColumnDef<TData>[] {
   return columns.map((col) => ({
     enableSorting: false,
     ...col,
@@ -46,9 +40,9 @@ function defaultSortingDisabled<TData>(columns: ColumnDef<TData, any>[]): Column
   }));
 }
 
-function defaultFilteringDisabled<TData>(
-  columns: ColumnDef<TData, any>[]
-): ColumnDef<TData, any>[] {
+function defaultFilteringDisabled<TData extends RowData>(
+  columns: readonly DataGridColumnDef<TData>[]
+): DataGridColumnDef<TData>[] {
   return columns.map((col) => ({
     enableColumnFilter:
       col.meta?.filterVariant !== undefined ||
@@ -69,7 +63,9 @@ const FILTER_VARIANT_TO_FN = {
   boolean: 'equals',
 } as const satisfies Record<string, BuiltInFilterFn>;
 
-function processFilterColumns<TData>(columns: ColumnDef<TData, any>[]): ColumnDef<TData, any>[] {
+function processFilterColumns<TData extends RowData>(
+  columns: readonly DataGridColumnDef<TData>[]
+): DataGridColumnDef<TData>[] {
   return columns.map((col) => {
     const variant = col.meta?.filterVariant;
     const operators = col.meta?.filterOperators;
@@ -77,7 +73,7 @@ function processFilterColumns<TData>(columns: ColumnDef<TData, any>[]): ColumnDe
       variant && variant in FILTER_VARIANT_TO_FN
         ? FILTER_VARIANT_TO_FN[variant as keyof typeof FILTER_VARIANT_TO_FN]
         : undefined;
-    let operatorFilterFn: FilterFn<TData> | undefined;
+    let operatorFilterFn: FilterFn<DataGridFeatures, TData> | undefined;
     if (operators && operators.length > 0 && !col.filterFn) {
       operatorFilterFn = createOperatorFilterFnLocal(operators);
     }
@@ -95,9 +91,34 @@ function processFilterColumns<TData>(columns: ColumnDef<TData, any>[]): ColumnDe
   });
 }
 
-export interface DataGridStore<TData = any> {
+function collectAggregatedColumnIds<TData extends RowData>(
+  columns: readonly DataGridColumnDef<TData>[],
+  acc: string[] = []
+): string[] {
+  for (const col of columns) {
+    if ('columns' in col && col.columns) {
+      collectAggregatedColumnIds(col.columns, acc);
+      continue;
+    }
+
+    if (col.aggregationFn !== undefined) {
+      const accessorKey =
+        'accessorKey' in col && col.accessorKey !== undefined
+          ? String(col.accessorKey).replaceAll('.', '_')
+          : undefined;
+      const id = col.id ?? accessorKey ?? (typeof col.header === 'string' ? col.header : undefined);
+      if (id) {
+        acc.push(id);
+      }
+    }
+  }
+
+  return acc;
+}
+
+export interface DataGridStore<TData extends RowData = any> {
   /** The underlying TanStack Table instance */
-  table: ReactTable<TData>;
+  table: DataGridTable<TData>;
 
   /** Whether sorting is enabled */
   withSorting: boolean;
@@ -147,6 +168,12 @@ export interface DataGridStore<TData = any> {
   /** Whether row drag-and-drop reordering is enabled */
   withRowReorder: boolean;
 
+  /** Whether spreadsheet-style cell range selection is enabled */
+  withCellSelection: boolean;
+
+  /** Ids of columns that explicitly declare an `aggregationFn`, shown in the footer */
+  aggregatedColumnIds: string[];
+
   /** Callback when rows are reordered via drag and drop */
   onRowOrderChange?: (reorderedData: TData[]) => void;
 
@@ -181,7 +208,7 @@ export interface DataGridStore<TData = any> {
   columnPinning: ColumnPinningState;
 
   /** Current column visibility state */
-  columnVisibility: VisibilityState;
+  columnVisibility: ColumnVisibilityState;
 
   /** Current column order state */
   columnOrder: ColumnOrderState;
@@ -198,6 +225,9 @@ export interface DataGridStore<TData = any> {
   /** Current row pinning state */
   rowPinning: RowPinningState;
 
+  /** Current cell selection state */
+  cellSelection: CellSelectionState;
+
   /** Ref to the scroll container DOM element */
   scrollContainerRef: React.RefObject<HTMLDivElement | null>;
 
@@ -211,15 +241,15 @@ export interface DataGridStore<TData = any> {
   getScrollPosition: () => { top: number; left: number };
 }
 
-export interface UseDataGridOptions<TData> {
+export interface UseDataGridOptions<TData extends RowData> {
   /** Data array to display */
   data: TData[];
 
   /** Column definitions */
-  columns: ColumnDef<TData, any>[];
+  columns: DataGridColumnDef<TData>[];
 
   /** Function to derive stable row ID */
-  getRowId?: (row: TData, index: number, parent?: Row<TData>) => string;
+  getRowId?: (row: TData, index: number, parent?: DataGridRow<TData>) => string;
 
   /** Enable sorting, inferred from columns with `enableSorting: true` */
   withSorting?: boolean;
@@ -267,7 +297,7 @@ export interface UseDataGridOptions<TData> {
   onGlobalFilterChange?: OnChangeFn<any>;
 
   /** Custom filter function for global filter */
-  globalFilterFn?: FilterFn<TData>;
+  globalFilterFn?: FilterFn<DataGridFeatures, TData>;
 
   /** Controlled pagination state */
   pagination?: PaginationState;
@@ -318,10 +348,10 @@ export interface UseDataGridOptions<TData> {
   withColumnVisibility?: boolean;
 
   /** Controlled column visibility state */
-  columnVisibility?: VisibilityState;
+  columnVisibility?: ColumnVisibilityState;
 
   /** Callback when column visibility changes */
-  onColumnVisibilityChange?: OnChangeFn<VisibilityState>;
+  onColumnVisibilityChange?: OnChangeFn<ColumnVisibilityState>;
 
   /** Enable column reorder via drag and drop, inferred from controlled state */
   withColumnReorder?: boolean;
@@ -342,13 +372,13 @@ export interface UseDataGridOptions<TData> {
   onRowSelectionChange?: OnChangeFn<RowSelectionState>;
 
   /** Enable row selection per row, or a function to control per-row */
-  enableRowSelection?: boolean | ((row: Row<TData>) => boolean);
+  enableRowSelection?: boolean | ((row: DataGridRow<TData>) => boolean);
 
   /** Enable multi-row selection, set to `false` for single-select mode */
-  enableMultiRowSelection?: boolean | ((row: Row<TData>) => boolean);
+  enableMultiRowSelection?: boolean | ((row: DataGridRow<TData>) => boolean);
 
   /** Enable sub-row selection in tree data mode */
-  enableSubRowSelection?: boolean | ((row: Row<TData>) => boolean);
+  enableSubRowSelection?: boolean | ((row: DataGridRow<TData>) => boolean);
 
   /** Enable row expansion, inferred from controlled state */
   withRowExpansion?: boolean;
@@ -381,7 +411,7 @@ export interface UseDataGridOptions<TData> {
   onRowPinningChange?: OnChangeFn<RowPinningState>;
 
   /** Enable row pinning per row, or a function to control per-row */
-  enableRowPinning?: boolean | ((row: Row<TData>) => boolean);
+  enableRowPinning?: boolean | ((row: DataGridRow<TData>) => boolean);
 
   /** Keep pinned rows visible through filtering/pagination */
   keepPinnedRows?: boolean;
@@ -402,7 +432,7 @@ export interface UseDataGridOptions<TData> {
   getSubRows?: (originalRow: TData, index: number) => TData[] | undefined;
 
   /** Function to determine if a row can be expanded in tree data mode */
-  getRowCanExpand?: (row: Row<TData>) => boolean;
+  getRowCanExpand?: (row: DataGridRow<TData>) => boolean;
 
   /** Whether expanded rows should be paginated, @default true */
   paginateExpandedRows?: boolean;
@@ -422,11 +452,22 @@ export interface UseDataGridOptions<TData> {
   /** Callback when rows are reordered via drag and drop */
   onRowOrderChange?: (reorderedData: TData[]) => void;
 
+  /** Enable spreadsheet-style cell range selection, @default false */
+  withCellSelection?: boolean;
+
+  /** Controlled cell selection state */
+  cellSelection?: CellSelectionState;
+
+  /** Callback when cell selection changes */
+  onCellSelectionChange?: OnChangeFn<CellSelectionState>;
+
   /** Additional TanStack Table options */
-  tableOptions?: Partial<TableOptions<TData>>;
+  tableOptions?: Partial<TableOptions<DataGridFeatures, TData>>;
 }
 
-export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGridStore<TData> {
+export function useDataGrid<TData extends RowData>(
+  options: UseDataGridOptions<TData>
+): DataGridStore<TData> {
   const { data, columns, getRowId, tableOptions } = options;
 
   const {
@@ -446,7 +487,32 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     withFaceting,
     withTreeData,
     withRowReorder,
+    withCellSelection,
   } = inferFeatureFlags(options);
+
+  const features = useMemo(
+    () =>
+      createDataGridFeatures({
+        withSorting,
+        withFiltering,
+        withGlobalFilter,
+        withPagination,
+        withRowExpansion,
+        withGrouping,
+        withTreeData,
+        withFaceting,
+      }),
+    [
+      withSorting,
+      withFiltering,
+      withGlobalFilter,
+      withPagination,
+      withRowExpansion,
+      withGrouping,
+      withTreeData,
+      withFaceting,
+    ]
+  );
 
   // Density state (Mantine-specific, not part of TanStack)
   const [densityState, setDensityState] = useState<DataGridDensity>(options.density ?? 'default');
@@ -473,6 +539,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     ...(options.expanded !== undefined && { expanded: options.expanded }),
     ...(options.grouping !== undefined && { grouping: options.grouping }),
     ...(options.rowPinning !== undefined && { rowPinning: options.rowPinning }),
+    ...(options.cellSelection !== undefined && { cellSelection: options.cellSelection }),
   });
 
   // Build change handlers
@@ -491,18 +558,19 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     ...(options.onExpandedChange && { onExpandedChange: options.onExpandedChange }),
     ...(options.onGroupingChange && { onGroupingChange: options.onGroupingChange }),
     ...(options.onRowPinningChange && { onRowPinningChange: options.onRowPinningChange }),
+    ...(options.onCellSelectionChange && {
+      onCellSelectionChange: options.onCellSelectionChange,
+    }),
   };
 
   // Build TanStack Table config
-  const tableConfig: TableOptions<TData> = {
+  const tableConfig: TableOptions<DataGridFeatures, TData> = {
     data,
     columns: processedColumns,
     getRowId,
-    getCoreRowModel: getCoreRowModel(),
+    features,
 
-    // Row models (enabled per feature)
     ...(withSorting && {
-      getSortedRowModel: getSortedRowModel(),
       manualSorting: options.manualSorting,
       ...(options.enableSortingRemoval !== undefined && {
         enableSortingRemoval: options.enableSortingRemoval,
@@ -513,13 +581,9 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
         maxMultiSortColCount: options.maxMultiSortColCount,
       }),
     }),
-    ...((withFiltering || withGlobalFilter) && {
-      getFilteredRowModel: getFilteredRowModel(),
-    }),
     ...(options.globalFilterFn && { globalFilterFn: options.globalFilterFn }),
     ...(withFiltering && { manualFiltering: options.manualFiltering }),
     ...(withPagination && {
-      getPaginationRowModel: getPaginationRowModel(),
       manualPagination: options.manualPagination,
       ...(options.rowCount !== undefined && { rowCount: options.rowCount }),
       ...(options.pageCount !== undefined && { pageCount: options.pageCount }),
@@ -548,18 +612,18 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
         enableSubRowSelection: options.enableSubRowSelection,
       }),
     }),
-    ...((withRowExpansion || withGrouping || withTreeData) && {
-      getExpandedRowModel: getExpandedRowModel(),
-    }),
     ...(withGrouping && {
-      getGroupedRowModel: getGroupedRowModel(),
       autoResetExpanded: false,
       ...(options.groupedColumnMode !== undefined && {
         groupedColumnMode: options.groupedColumnMode,
       }),
     }),
     ...(options.getSubRows && { getSubRows: options.getSubRows }),
-    ...(options.getRowCanExpand && { getRowCanExpand: options.getRowCanExpand }),
+    ...(options.getRowCanExpand
+      ? { getRowCanExpand: options.getRowCanExpand }
+      : withRowExpansion && !withTreeData
+        ? { getRowCanExpand: () => true }
+        : {}),
     ...(options.paginateExpandedRows !== undefined && {
       paginateExpandedRows: options.paginateExpandedRows,
     }),
@@ -570,11 +634,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
       maxLeafRowFilterDepth: options.maxLeafRowFilterDepth,
     }),
     ...(options.manualExpanding !== undefined && { manualExpanding: options.manualExpanding }),
-    ...(withFaceting && {
-      getFacetedRowModel: getFacetedRowModel(),
-      getFacetedUniqueValues: getFacetedUniqueValues(),
-      getFacetedMinMaxValues: getFacetedMinMaxValues(),
-    }),
+    enableCellSelection: withCellSelection,
 
     // Controlled state and handlers
     ...(Object.keys(controlledState).length > 0 && { state: controlledState }),
@@ -593,8 +653,10 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     }),
   };
 
-  const table = useReactTable(tableConfig);
-  const state = table.getState();
+  const table = useTable(tableConfig);
+  const state = table.store.state;
+
+  const aggregatedColumnIds = useMemo(() => collectAggregatedColumnIds(columns), [columns]);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -648,6 +710,8 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     withFaceting,
     withTreeData,
     withRowReorder,
+    withCellSelection,
+    aggregatedColumnIds,
     onRowOrderChange: options.onRowOrderChange,
     editingMode: options.editingMode,
     density,
@@ -665,6 +729,7 @@ export function useDataGrid<TData>(options: UseDataGridOptions<TData>): DataGrid
     expanded: state.expanded,
     grouping: state.grouping,
     rowPinning: state.rowPinning,
+    cellSelection: state.cellSelection,
     scrollContainerRef,
     scrollToRow,
     scrollToColumn,

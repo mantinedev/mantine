@@ -1,9 +1,8 @@
-import { FilterFn } from '@tanstack/react-table';
-import { DataGrid, useDataGrid } from '@mantine/data-grid';
+import { DataGrid, DataGridFilterFn, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
-const exactMatchFilter: FilterFn<any> = (row, columnId, filterValue) => {
+const exactMatchFilter: DataGridFilterFn = (row, columnId, filterValue) => {
   if (!filterValue) {
     return true;
   }
@@ -12,11 +11,10 @@ const exactMatchFilter: FilterFn<any> = (row, columnId, filterValue) => {
 };
 
 const code = `
-import { FilterFn } from '@tanstack/react-table';
-import { DataGrid, useDataGrid } from '@mantine/data-grid';
+import { DataGrid, DataGridFilterFn, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
 
-const exactMatchFilter: FilterFn<any> = (row, columnId, filterValue) => {
+const exactMatchFilter: DataGridFilterFn = (row, columnId, filterValue) => {
   if (!filterValue) {
     return true;
   }

@@ -1,10 +1,11 @@
 import { Column } from '@tanstack/react-table';
 import { MultiSelect } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import type { DataGridFeatures } from '../table-features';
 import { getFilterOptions } from './get-filter-options';
 
 export interface MultiSelectFilterProps {
-  column: Column<any, unknown>;
+  column: Column<DataGridFeatures, any, unknown>;
 }
 
 export function MultiSelectFilter({ column }: MultiSelectFilterProps) {

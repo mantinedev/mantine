@@ -56,3 +56,5 @@ export { density } from './DataGrid.demo.density';
 export { treeData } from './DataGrid.demo.treeData';
 export { treeDataFiltering } from './DataGrid.demo.treeDataFiltering';
 export { treeDataPagination } from './DataGrid.demo.treeDataPagination';
+export { cellSelection } from './DataGrid.demo.cellSelection';
+export { cellSpanning } from './DataGrid.demo.cellSpanning';

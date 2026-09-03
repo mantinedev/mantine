@@ -4,14 +4,15 @@ import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { DataGridFactory } from './DataGrid';
 import type { DataGridStore } from './hooks';
 import type { DataGridLabels } from './labels';
+import type { DataGridFeatures } from './table-features';
 
 export type DataGridDensity = 'compact' | 'default' | 'comfortable';
 
 export interface DataGridContextValue {
   getStyles: GetStylesApi<DataGridFactory>;
   store: DataGridStore;
-  table: ReactTable<any>;
-  getRowHeight?: (row: Row<any>) => number | 'auto';
+  table: ReactTable<DataGridFeatures, any>;
+  getRowHeight?: (row: Row<DataGridFeatures, any>) => number | 'auto';
   estimateRowHeight?: number;
   withSorting: boolean;
   sortedIcon: React.ReactNode | undefined;
@@ -36,6 +37,8 @@ export interface DataGridContextValue {
   withFaceting: boolean;
   withTreeData: boolean;
   withRowReorder: boolean;
+  withCellSelection: boolean;
+  aggregatedColumnIds: string[];
   onRowOrderChange?: (reorderedData: any[]) => void;
   tableLayout: 'fixed' | 'auto';
   stickyHeader: boolean;
@@ -44,20 +47,24 @@ export interface DataGridContextValue {
   density: DataGridDensity;
   onDensityChange: (density: DataGridDensity) => void;
   labels: DataGridLabels;
-  renderExpandedRow?: (props: { row: Row<any> }) => React.ReactNode;
+  renderExpandedRow?: (props: { row: Row<DataGridFeatures, any> }) => React.ReactNode;
   emptyState?: React.ReactNode;
-  onRowClick?: (row: Row<any>, event: React.MouseEvent) => void;
-  onRowDoubleClick?: (row: Row<any>, event: React.MouseEvent) => void;
-  onCellClick?: (cell: Cell<any, unknown>, event: React.MouseEvent) => void;
-  onCellEdit?: (props: { row: Row<any>; columnId: string; value: unknown }) => void;
-  onRowEdit?: (props: { row: Row<any>; values: Record<string, unknown> }) => void;
+  onRowClick?: (row: Row<DataGridFeatures, any>, event: React.MouseEvent) => void;
+  onRowDoubleClick?: (row: Row<DataGridFeatures, any>, event: React.MouseEvent) => void;
+  onCellClick?: (cell: Cell<DataGridFeatures, any, unknown>, event: React.MouseEvent) => void;
+  onCellEdit?: (props: {
+    row: Row<DataGridFeatures, any>;
+    columnId: string;
+    value: unknown;
+  }) => void;
+  onRowEdit?: (props: { row: Row<DataGridFeatures, any>; values: Record<string, unknown> }) => void;
   editTrigger: 'click' | 'doubleClick';
   processRowUpdate?: (newRow: any, oldRow: any) => Promise<any>;
   onProcessRowUpdateError?: (error: unknown) => void;
   selectOnRowClick: boolean;
   headerFilters: boolean;
   listView: boolean;
-  renderListItem?: (props: { row: Row<any> }) => React.ReactNode;
+  renderListItem?: (props: { row: Row<DataGridFeatures, any> }) => React.ReactNode;
 }
 
 export const [DataGridProvider, useDataGridContext] = createSafeContext<DataGridContextValue>(

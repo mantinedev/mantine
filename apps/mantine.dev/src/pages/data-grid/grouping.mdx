@@ -28,7 +28,7 @@ The order of IDs determines the grouping depth — the first ID is the outermost
 ## Aggregation
 
 Add `aggregationFn` and `aggregatedCell` to column definitions to display computed values in group header rows.
-TanStack Table provides built-in aggregation functions: `sum`, `min`, `max`, `mean`, `count`, `unique`, and `extent`.
+TanStack Table provides built-in aggregation functions: `sum`, `min`, `max`, `mean`, `median`, `count`, `unique`, `uniqueCount`, `first`, `last` and `extent`.
 
 <Demo data={DataGridDemos.groupingAggregation} />
 
@@ -36,16 +36,25 @@ TanStack Table provides built-in aggregation functions: `sum`, `min`, `max`, `me
 
 Define a custom aggregation function for advanced calculations.
 
+In TanStack Table v9 custom aggregations are built with `constructAggregationFn`, which receives the
+rows and a `getValue` accessor:
+
 ```tsx
+import { constructAggregationFn } from '@tanstack/react-table';
+
+const salaryTotal = constructAggregationFn({
+  aggregate: ({ rows, getValue }) => {
+    const values = rows.map((row) => getValue(row) as number);
+    const total = values.reduce((sum, val) => sum + val, 0);
+    return { total, count: values.length };
+  },
+});
+
 const columns = [
   {
     accessorKey: 'salary',
     header: 'Salary',
-    aggregationFn: (columnId, leafRows) => {
-      const values = leafRows.map((row) => row.getValue(columnId) as number);
-      const total = values.reduce((sum, val) => sum + val, 0);
-      return { total, count: values.length };
-    },
+    aggregationFn: salaryTotal,
     aggregatedCell: ({ getValue }) => {
       const { total, count } = getValue();
       return `$${total.toLocaleString()} (${count} employees)`;
@@ -58,11 +67,14 @@ const columns = [
 
 The `groupedColumnMode` option controls what happens to a column after it is used for grouping.
 
-| Value | Behavior |
-| --- | --- |
-| `'reorder'` (default) | Grouped columns are moved to the front of the column list |
-| `'remove'` | Grouped columns are hidden from the table |
-| `false` | Grouped columns stay in their original position |
+<DataTable
+  head={['Value', 'Behavior']}
+  data={[
+    ["`'reorder'` (default)", 'Grouped columns are moved to the front of the column list'],
+    ["`'remove'`", 'Grouped columns are hidden from the table'],
+    ['`false`', 'Grouped columns stay in their original position'],
+  ]}
+/>
 
 <Demo data={DataGridDemos.groupedColumnMode} />
 

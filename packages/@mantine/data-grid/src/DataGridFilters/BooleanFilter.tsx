@@ -1,9 +1,10 @@
 import { Column } from '@tanstack/react-table';
 import { Select } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import type { DataGridFeatures } from '../table-features';
 
 export interface BooleanFilterProps {
-  column: Column<any, unknown>;
+  column: Column<DataGridFeatures, any, unknown>;
 }
 
 export function BooleanFilter({ column }: BooleanFilterProps) {

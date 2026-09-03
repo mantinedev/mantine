@@ -1,4 +1,5 @@
-import { Table } from '@tanstack/react-table';
+import { Table, RowData } from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 
 export interface AutosizeColumnsOptions {
   columnIds?: string[];
@@ -7,8 +8,8 @@ export interface AutosizeColumnsOptions {
   minWidth?: number;
 }
 
-export function autosizeColumns<TData>(
-  table: Table<TData>,
+export function autosizeColumns<TData extends RowData>(
+  table: Table<DataGridFeatures, TData>,
   containerElement: HTMLElement,
   options?: AutosizeColumnsOptions
 ): void {

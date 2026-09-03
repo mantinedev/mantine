@@ -91,7 +91,7 @@ and `rowPinning`/`onRowPinningChange`. Access current state directly from the st
 const store = useDataGrid({ data, columns, columnPinning, onColumnPinningChange });
 
 // Read current state
-store.columnPinning // { left: ['firstName'], right: [] }
+store.columnPinning // { start: ['firstName'], end: [] }
 store.rowPinning    // { top: ['1'], bottom: [] }
 ```
 

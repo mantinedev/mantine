@@ -1,6 +1,10 @@
 import { Column } from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 
-export function getFilterOptions(column: Column<any, unknown>, withFaceting: boolean) {
+export function getFilterOptions(
+  column: Column<DataGridFeatures, any, unknown>,
+  withFaceting: boolean
+) {
   const meta = column.columnDef.meta;
 
   if (meta?.filterOptions) {

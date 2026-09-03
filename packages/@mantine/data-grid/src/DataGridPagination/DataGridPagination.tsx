@@ -55,8 +55,8 @@ export const DataGridPagination = factory<DataGridPaginationFactory>((props) => 
   const ctx = useDataGridContext();
   const { table } = ctx;
   const pageCount = table.getPageCount();
-  const currentPage = table.getState().pagination.pageIndex + 1;
-  const currentPageSize = table.getState().pagination.pageSize;
+  const currentPage = table.store.state.pagination.pageIndex + 1;
+  const currentPageSize = table.store.state.pagination.pageSize;
 
   const allOptions = pageSizeOptions!.includes(currentPageSize)
     ? pageSizeOptions!

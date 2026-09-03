@@ -14,8 +14,8 @@ import { employees } from './data';
 
 function Demo() {
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
-    left: [],
-    right: [],
+    start: [],
+    end: [],
   });
 
   const store = useDataGrid({
@@ -36,26 +36,26 @@ function Demo() {
   return (
     <div style={{ maxWidth: 600 }}>
       <Text mb="xs">
-        Pinned left: <Code>{JSON.stringify(columnPinning.left)}</Code>, right:{' '}
-        <Code>{JSON.stringify(columnPinning.right)}</Code>
+        Pinned start: <Code>{JSON.stringify(columnPinning.start)}</Code>, end:{' '}
+        <Code>{JSON.stringify(columnPinning.end)}</Code>
       </Text>
       <Group mb="md">
-        <Button size="xs" onClick={() => setColumnPinning({ left: ['firstName'], right: [] })}>
-          Pin firstName left
+        <Button size="xs" onClick={() => setColumnPinning({ start: ['firstName'], end: [] })}>
+          Pin firstName to start
         </Button>
-        <Button size="xs" onClick={() => setColumnPinning({ left: [], right: ['status'] })}>
-          Pin status right
+        <Button size="xs" onClick={() => setColumnPinning({ start: [], end: ['status'] })}>
+          Pin status to end
         </Button>
         <Button
           size="xs"
-          onClick={() => setColumnPinning({ left: ['firstName'], right: ['status'] })}
+          onClick={() => setColumnPinning({ start: ['firstName'], end: ['status'] })}
         >
           Pin both
         </Button>
         <Button
           size="xs"
           variant="default"
-          onClick={() => setColumnPinning({ left: [], right: [] })}
+          onClick={() => setColumnPinning({ start: [], end: [] })}
         >
           Unpin all
         </Button>
@@ -68,8 +68,8 @@ function Demo() {
 
 function Demo() {
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
-    left: [],
-    right: [],
+    start: [],
+    end: [],
   });
 
   const store = useDataGrid({
@@ -90,26 +90,26 @@ function Demo() {
   return (
     <div style={{ maxWidth: 600 }}>
       <Text mb="xs">
-        Pinned left: <Code>{JSON.stringify(columnPinning.left)}</Code>, right:{' '}
-        <Code>{JSON.stringify(columnPinning.right)}</Code>
+        Pinned start: <Code>{JSON.stringify(columnPinning.start)}</Code>, end:{' '}
+        <Code>{JSON.stringify(columnPinning.end)}</Code>
       </Text>
       <Group mb="md">
-        <Button size="xs" onClick={() => setColumnPinning({ left: ['firstName'], right: [] })}>
-          Pin firstName left
+        <Button size="xs" onClick={() => setColumnPinning({ start: ['firstName'], end: [] })}>
+          Pin firstName to start
         </Button>
-        <Button size="xs" onClick={() => setColumnPinning({ left: [], right: ['status'] })}>
-          Pin status right
+        <Button size="xs" onClick={() => setColumnPinning({ start: [], end: ['status'] })}>
+          Pin status to end
         </Button>
         <Button
           size="xs"
-          onClick={() => setColumnPinning({ left: ['firstName'], right: ['status'] })}
+          onClick={() => setColumnPinning({ start: ['firstName'], end: ['status'] })}
         >
           Pin both
         </Button>
         <Button
           size="xs"
           variant="default"
-          onClick={() => setColumnPinning({ left: [], right: [] })}
+          onClick={() => setColumnPinning({ start: [], end: [] })}
         >
           Unpin all
         </Button>

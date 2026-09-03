@@ -148,6 +148,33 @@
   white-space: nowrap;
 }
 
+.td {
+  &:where([data-selected]) {
+    background-color: var(--mantine-primary-color-light);
+  }
+
+  &:where([data-focused]) {
+    outline: rem(2px) solid var(--mantine-primary-color-filled);
+    outline-offset: rem(-2px);
+  }
+
+  &:where([data-edge-top]) {
+    border-top: rem(1px) solid var(--mantine-primary-color-filled);
+  }
+
+  &:where([data-edge-bottom]) {
+    border-bottom: rem(1px) solid var(--mantine-primary-color-filled);
+  }
+
+  &:where([data-edge-left]) {
+    border-left: rem(1px) solid var(--mantine-primary-color-filled);
+  }
+
+  &:where([data-edge-right]) {
+    border-right: rem(1px) solid var(--mantine-primary-color-filled);
+  }
+}
+
 :where(.root[data-text-overflow='wrap']) :where(.td, .virtualCell) {
   overflow: visible;
   text-overflow: unset;

@@ -3,32 +3,88 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.DataGridTanStackCompat);
 
-## TanStack Table feature support
+## TanStack Table version
 
-The table below lists every TanStack Table v8 feature and its current status in DataGrid.
+DataGrid is built on [TanStack Table v9](https://tanstack.com/table/latest). The v9 packages are
+peer dependencies, so your application controls the exact version:
 
-| Feature | Status | How to use |
-|---|---|---|
-| Sorting | Built-in | `enableSorting: true` on columns |
-| Column Filtering | Built-in | `withFiltering` or controlled state |
-| Global Filtering | Built-in | `withGlobalFilter` or controlled state |
-| Pagination | Built-in | `withPagination` or controlled state |
-| Column Sizing | Built-in | `withColumnResizing` or controlled state |
-| Column Pinning | Built-in | `columnPinning` state |
-| Row Pinning | Built-in | `rowPinning` state |
-| Column Ordering | Built-in | `withColumnReorder` or controlled state |
-| Column Visibility | Built-in | `withColumnVisibility` or controlled state |
-| Row Selection | Built-in | `withRowSelection` or controlled state |
-| Row Expansion | Built-in | `withRowExpansion` or controlled state |
-| Grouping | Built-in | `grouping` state |
-| Faceting | Built-in | `withFaceting: true` |
-| Tree Data | Built-in | `getSubRows` |
-| Row Virtualization | Built-in | `virtualize="rows"` |
-| Column Virtualization | Built-in | `virtualize="columns"` |
-| Row Reordering | Built-in | `withRowReorder: true` |
-| Custom Sort Functions | Via `tableOptions` | `tableOptions: { sortingFns: {...} }` |
-| Custom Filter Functions | Per column | `filterFn` on column def |
-| Debug Mode | Via `tableOptions` | `tableOptions: { debugTable: true }` |
+```bash
+yarn add @tanstack/react-table @tanstack/match-sorter-utils
+```
+
+## Feature support
+
+The table below lists every TanStack Table feature and its current status in DataGrid.
+
+<DataTable
+  head={['Feature', 'Status', 'How to use']}
+  data={[
+    ['Sorting', 'Built-in', '`enableSorting: true` on columns'],
+    ['Column Filtering', 'Built-in', '`withFiltering` or controlled state'],
+    ['Global Filtering', 'Built-in', '`withGlobalFilter` or controlled state'],
+    ['Pagination', 'Built-in', '`withPagination` or controlled state'],
+    ['Column Sizing', 'Built-in', '`withColumnResizing` or controlled state'],
+    ['Column Resizing', 'Built-in', '`withColumnResizing`, `columnResizeMode`'],
+    ['Column Pinning', 'Built-in', '`columnPinning` state (`start` / `end`)'],
+    ['Row Pinning', 'Built-in', '`rowPinning` state'],
+    ['Column Ordering', 'Built-in', '`withColumnReorder` or controlled state'],
+    ['Column Visibility', 'Built-in', '`withColumnVisibility` or controlled state'],
+    ['Row Selection', 'Built-in', '`withRowSelection` or controlled state'],
+    ['Row Expansion', 'Built-in', '`withRowExpansion` or controlled state'],
+    ['Grouping', 'Built-in', '`grouping` state'],
+    ['Aggregation', 'Built-in', '`aggregationFn` on a column definition'],
+    ['Faceting', 'Built-in', '`withFaceting: true`'],
+    ['Tree Data', 'Built-in', '`getSubRows`'],
+    ['Cell Selection', 'Built-in', '`withCellSelection: true`'],
+    ['Cell Spanning', 'Built-in', '`spanRows` / `spanColumns` on a column definition'],
+    ['Row Virtualization', 'Built-in', "`virtualize=\"rows\"`"],
+    ['Column Virtualization', 'Built-in', "`virtualize=\"columns\"`"],
+    ['Row Reordering', 'Built-in', '`withRowReorder: true`'],
+    ['Custom Sort Functions', 'Per column', '`sortFn` on a column definition'],
+    ['Custom Filter Functions', 'Per column', '`filterFn` on a column definition'],
+    ['Debug Mode', 'Via `tableOptions`', '`tableOptions: { debugTable: true }`'],
+  ]}
+/>
+
+## Bound types
+
+TanStack Table v9 types take the registered feature set as their first generic argument. DataGrid
+exports aliases that are already bound to its feature set, so you never have to pass it yourself:
+
+<DataTable
+  head={['DataGrid alias', 'TanStack equivalent']}
+  data={[
+    ['`DataGridColumnDef<TData>`', '`ColumnDef<DataGridFeatures, TData>`'],
+    ['`DataGridTable<TData>`', '`Table<DataGridFeatures, TData>`'],
+    ['`DataGridRow<TData>`', '`Row<DataGridFeatures, TData>`'],
+    ['`DataGridCell<TData>`', '`Cell<DataGridFeatures, TData>`'],
+    ['`DataGridColumn<TData>`', '`Column<DataGridFeatures, TData>`'],
+    ['`DataGridFilterFn<TData>`', '`FilterFn<DataGridFeatures, TData>`'],
+    ['`DataGridSortFn<TData>`', '`SortFn<DataGridFeatures, TData>`'],
+  ]}
+/>
+
+```tsx
+import { DataGridColumnDef, DataGridFilterFn } from '@mantine/data-grid';
+
+const columns: DataGridColumnDef<Person>[] = [{ accessorKey: 'name', header: 'Name' }];
+
+const exactMatch: DataGridFilterFn = (row, columnId, filterValue) =>
+  String(row.getValue(columnId)) === filterValue;
+```
+
+The registered feature set itself is exported as `dataGridFeatures` (value) and `DataGridFeatures`
+(type) if you need to build TanStack types by hand.
+
+## Features and row models
+
+In v9 features and row models are registered explicitly rather than passed as `getXRowModel`
+options. DataGrid does this for you: it registers the full feature set and enables only the row
+models the grid actually needs, based on the props you pass to `useDataGrid`.
+
+This matters because `table.getRowModel()` resolves to the paginated row model. DataGrid only
+registers the paginated row model when the grid is actually paginated, so an unpaginated grid keeps
+rendering all of its rows.
 
 ## Using tableOptions
 
@@ -49,3 +105,24 @@ const store = useDataGrid({
 
 This provides a full escape hatch to the underlying TanStack Table instance without losing
 the DataGrid features built on top.
+
+## Accessing table state
+
+TanStack Table v9 replaced `table.getState()` with a store. Read state from `table.store.state`, or
+subscribe to a single slice with `table.atoms`:
+
+```tsx
+const store = useDataGrid({ data, columns });
+
+store.table.store.state.sorting;
+store.table.atoms.sorting.get();
+```
+
+Commonly used slices are also mirrored on the DataGrid store directly (`store.sorting`,
+`store.pagination`, `store.rowSelection` and so on).
+
+## Module format
+
+TanStack Table v9 is published as ES modules only. Bundlers such as Vite, webpack and Next.js handle
+this transparently. If you consume DataGrid from CommonJS with a raw `require()`, you need Node
+22.12 or newer (or 20.19+), where `require()` of an ES module is supported.

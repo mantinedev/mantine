@@ -15,7 +15,7 @@ All funds are used to improve Mantine and create new features and components.
 ## @mantine/data-grid package
 
 New `@mantine/data-grid` package provides a fully-featured data grid component built on top of
-[TanStack Table](https://tanstack.com/table) and [TanStack Virtual](https://tanstack.com/virtual).
+[TanStack Table v9](https://tanstack.com/table) and [TanStack Virtual](https://tanstack.com/virtual).
 It fills the gap left by community libraries with first-party Mantine integration, compound component
 architecture, and full Styles API support.
 
@@ -23,6 +23,8 @@ Key features:
 - Sorting (single and multi-column), column and global filtering, pagination
 - Column resizing, pinning, visibility toggling, and drag-and-drop reordering
 - Row selection with checkboxes and Shift+click range select
+- Spreadsheet-style cell selection with drag, Shift-extend and keyboard navigation
+- Cell spanning across rows and columns
 - Row expansion with detail panels
 - Row virtualization for 100k+ rows via `@tanstack/react-virtual`
 - Inline editing (cell and row modes) with validation
@@ -38,6 +40,20 @@ Key features:
 `with*` boolean props:
 
 <Demo data={DataGridDemos.usage} />
+
+### Cell selection
+
+Enable `withCellSelection` for spreadsheet-style cell range selection – click and drag to select a
+range, extend it with Shift, add or subtract ranges with Ctrl/Cmd, and move with the arrow keys:
+
+<Demo data={DataGridDemos.cellSelection} />
+
+### Cell spanning
+
+Set `spanRows` on a column definition to merge adjacent rows that share the same value, or
+`spanColumns` to make a cell span several columns:
+
+<Demo data={DataGridDemos.cellSpanning} />
 
 ## @mantine/core
 

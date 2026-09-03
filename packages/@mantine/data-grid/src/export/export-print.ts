@@ -1,4 +1,5 @@
-import { Table } from '@tanstack/react-table';
+import { Table, RowData } from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 import { formatCsv } from './export-csv';
 import type { ExportColumnScope, ExportRowScope } from './export-utils';
 
@@ -17,9 +18,9 @@ function escapeHtml(str: string): string {
     .replace(/"/g, '&quot;');
 }
 
-function buildPrintTable<TData>(
+function buildPrintTable<TData extends RowData>(
   doc: Document,
-  table: Table<TData>,
+  table: Table<DataGridFeatures, TData>,
   options?: ExportPrintOptions
 ): HTMLTableElement {
   const {
@@ -74,7 +75,10 @@ function buildPrintTable<TData>(
   return tableEl;
 }
 
-export function exportToPrint<TData>(table: Table<TData>, options?: ExportPrintOptions): void {
+export function exportToPrint<TData extends RowData>(
+  table: Table<DataGridFeatures, TData>,
+  options?: ExportPrintOptions
+): void {
   const { title = document.title } = options ?? {};
   const printWindow = window.open('', '_blank');
   if (!printWindow) {

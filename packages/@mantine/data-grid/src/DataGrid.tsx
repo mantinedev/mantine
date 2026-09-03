@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
-import { Cell, Row } from '@tanstack/react-table';
+import { Cell, Row, RowData } from '@tanstack/react-table';
 import {
   Box,
   BoxProps,
   createVarsResolver,
   ElementProps,
-  factory,
+  genericFactory,
   Factory,
   getSpacing,
   getThemeColor,
@@ -45,6 +45,7 @@ import {
 } from './DataGridToolbar';
 import { DataGridStore, useDataGrid } from './hooks';
 import { DEFAULT_LABELS, DataGridLabels } from './labels';
+import type { DataGridFeatures } from './table-features';
 import classes from './DataGrid.module.css';
 
 export type DataGridStylesNames =
@@ -103,7 +104,7 @@ export type DataGridCssVariables = {
     | '--dg-spacing';
 };
 
-export interface DataGridProps<TData = any>
+export interface DataGridProps<TData extends RowData = any>
   extends BoxProps, StylesApiProps<DataGridFactory>, ElementProps<'div', 'children'> {
   /** DataGrid store, can be used to control grid state. If not provided, an internal store is created from `data` and `columns` */
   store?: DataGridStore<TData>;
@@ -148,13 +149,13 @@ export interface DataGridProps<TData = any>
   withRowNumbers?: boolean;
 
   /** Callback when a row is clicked */
-  onRowClick?: (row: Row<TData>, event: React.MouseEvent) => void;
+  onRowClick?: (row: Row<DataGridFeatures, TData>, event: React.MouseEvent) => void;
 
   /** Callback when a row is double-clicked */
-  onRowDoubleClick?: (row: Row<TData>, event: React.MouseEvent) => void;
+  onRowDoubleClick?: (row: Row<DataGridFeatures, TData>, event: React.MouseEvent) => void;
 
   /** Callback when a cell is clicked */
-  onCellClick?: (cell: Cell<TData, unknown>, event: React.MouseEvent) => void;
+  onCellClick?: (cell: Cell<DataGridFeatures, TData, unknown>, event: React.MouseEvent) => void;
 
   /** Content to display when data is empty */
   emptyState?: React.ReactNode;
@@ -181,16 +182,23 @@ export interface DataGridProps<TData = any>
   onScrollToBottom?: () => void;
 
   /** Render function for expanded row content */
-  renderExpandedRow?: (props: { row: Row<TData> }) => React.ReactNode;
+  renderExpandedRow?: (props: { row: Row<DataGridFeatures, TData> }) => React.ReactNode;
 
   /** When true, clicking a row toggles its expansion, @default false */
   expandOnRowClick?: boolean;
 
   /** Callback when a cell value is edited */
-  onCellEdit?: (props: { row: Row<TData>; columnId: string; value: unknown }) => void;
+  onCellEdit?: (props: {
+    row: Row<DataGridFeatures, TData>;
+    columnId: string;
+    value: unknown;
+  }) => void;
 
   /** Callback when a row is edited */
-  onRowEdit?: (props: { row: Row<TData>; values: Record<string, unknown> }) => void;
+  onRowEdit?: (props: {
+    row: Row<DataGridFeatures, TData>;
+    values: Record<string, unknown>;
+  }) => void;
 
   /** How editing is triggered: 'click' for single click, 'doubleClick' for double click, @default 'doubleClick' */
   editTrigger?: 'click' | 'doubleClick';
@@ -214,7 +222,7 @@ export interface DataGridProps<TData = any>
   labels?: Partial<DataGridLabels>;
 
   /** Return height for a specific row, or 'auto' for content-measured height */
-  getRowHeight?: (row: Row<TData>) => number | 'auto';
+  getRowHeight?: (row: Row<DataGridFeatures, TData>) => number | 'auto';
 
   /** Estimated row height for initial render before measurement, used with getRowHeight */
   estimateRowHeight?: number;
@@ -229,7 +237,7 @@ export interface DataGridProps<TData = any>
   listView?: boolean;
 
   /** Custom render function for list view items. Receives the row and should return a card/item element */
-  renderListItem?: (props: { row: Row<TData> }) => React.ReactNode;
+  renderListItem?: (props: { row: Row<DataGridFeatures, TData> }) => React.ReactNode;
 
   /** Table layout algorithm, @default 'fixed' */
   tableLayout?: 'fixed' | 'auto';
@@ -243,6 +251,7 @@ export type DataGridFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: DataGridStylesNames;
   vars: DataGridCssVariables;
+  signature: <TData extends RowData = any>(props: DataGridProps<TData>) => React.JSX.Element;
   staticComponents: {
     Header: typeof DataGridHeader;
     Body: typeof DataGridBody;
@@ -276,7 +285,7 @@ const varsResolver = createVarsResolver<DataGridFactory>(
   })
 );
 
-export const DataGrid = factory<DataGridFactory>((_props) => {
+export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<any>) => {
   const props = useProps('DataGrid', defaultProps, _props);
   const {
     classNames,
@@ -357,9 +366,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
   const hasColumnFooter = store.table
     .getFooterGroups()
     .some((group) => group.headers.some((header) => header.column.columnDef.footer !== undefined));
-  const hasAggregation = store.table
-    .getVisibleLeafColumns()
-    .some((col) => col.columnDef.meta?.aggregationFn !== undefined);
+  const hasAggregation = store.aggregatedColumnIds.length > 0;
   const hasFooter = hasColumnFooter || hasAggregation;
   const scrollContainerRef = store.scrollContainerRef;
   const withRowVirtualization = virtualize === 'rows' || virtualize === 'rows,columns';
@@ -412,6 +419,8 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
         withTreeData: store.withTreeData,
         withRowReorder:
           withRowVirtualization || withColumnVirtualization ? false : store.withRowReorder,
+        withCellSelection: store.withCellSelection,
+        aggregatedColumnIds: store.aggregatedColumnIds,
         onRowOrderChange:
           withRowVirtualization || withColumnVirtualization ? undefined : store.onRowOrderChange,
         tableLayout,
@@ -523,7 +532,7 @@ export const DataGrid = factory<DataGridFactory>((_props) => {
       </Box>
     </DataGridProvider>
   );
-});
+}) as any);
 
 DataGrid.classes = classes;
 DataGrid.varsResolver = varsResolver;

@@ -1,104 +1,84 @@
-import { FilterFn } from '@tanstack/react-table';
+import {
+  constructFilterFn,
+  filterFn_empty,
+  filterFn_endsWith,
+  filterFn_equalsString,
+  filterFn_greaterThan,
+  filterFn_greaterThanOrEqualTo,
+  filterFn_includesString,
+  filterFn_lessThan,
+  filterFn_lessThanOrEqualTo,
+  filterFn_notEmpty,
+  filterFn_startsWith,
+  filterFn_weakEquals,
+  type FilterFn,
+} from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 
 export interface FilterOperator {
   label: string;
   value: string;
-  filterFn: FilterFn<any>;
+  filterFn: FilterFn<DataGridFeatures, any>;
+  /** When true the operator matches on the cell alone and ignores its input value */
+  valueless?: boolean;
 }
 
-function stringOp(
-  label: string,
-  value: string,
-  compare: (cellStr: string, filterStr: string) => boolean
-): FilterOperator {
-  return {
-    label,
-    value,
-    filterFn: (row, columnId, filterValue) => {
-      if (!filterValue) {
-        return true;
-      }
-      return compare(
-        String(row.getValue(columnId)).toLowerCase(),
-        String(filterValue).toLowerCase()
-      );
-    },
-  };
-}
+const filterFn_notWeakEquals = constructFilterFn({
+  ...filterFn_weakEquals,
+  filter: (dataValue, filterValue, row, columnId, addMeta) =>
+    !filterFn_weakEquals.filter(dataValue, filterValue, row, columnId, addMeta),
+});
 
-function numberOp(
-  label: string,
-  value: string,
-  compare: (a: number, b: number) => boolean
-): FilterOperator {
-  return {
-    label,
-    value,
-    filterFn: (row, columnId, filterValue) => {
-      if (filterValue === '' || filterValue == null) {
-        return true;
-      }
-      return compare(Number(row.getValue(columnId)), Number(filterValue));
-    },
-  };
-}
+const filterFn_isTrue = constructFilterFn({ filter: (dataValue) => dataValue === true });
+const filterFn_isFalse = constructFilterFn({ filter: (dataValue) => dataValue === false });
 
 export const stringOperators: FilterOperator[] = [
-  stringOp('Contains', 'contains', (a, b) => a.includes(b)),
-  stringOp('Equals', 'equals', (a, b) => a === b),
-  stringOp('Starts with', 'startsWith', (a, b) => a.startsWith(b)),
-  stringOp('Ends with', 'endsWith', (a, b) => a.endsWith(b)),
-  {
-    label: 'Is empty',
-    value: 'isEmpty',
-    filterFn: (row, columnId) => {
-      const val = row.getValue(columnId);
-      return val == null || val === '';
-    },
-  },
-  {
-    label: 'Is not empty',
-    value: 'isNotEmpty',
-    filterFn: (row, columnId) => {
-      const val = row.getValue(columnId);
-      return val != null && val !== '';
-    },
-  },
+  { label: 'Contains', value: 'contains', filterFn: filterFn_includesString },
+  { label: 'Equals', value: 'equals', filterFn: filterFn_equalsString },
+  { label: 'Starts with', value: 'startsWith', filterFn: filterFn_startsWith },
+  { label: 'Ends with', value: 'endsWith', filterFn: filterFn_endsWith },
+  { label: 'Is empty', value: 'isEmpty', filterFn: filterFn_empty, valueless: true },
+  { label: 'Is not empty', value: 'isNotEmpty', filterFn: filterFn_notEmpty, valueless: true },
 ];
 
 export const numberOperators: FilterOperator[] = [
-  numberOp('=', 'eq', (a, b) => a === b),
-  numberOp('\u2260', 'neq', (a, b) => a !== b),
-  numberOp('>', 'gt', (a, b) => a > b),
-  numberOp('<', 'lt', (a, b) => a < b),
-  numberOp('\u2265', 'gte', (a, b) => a >= b),
-  numberOp('\u2264', 'lte', (a, b) => a <= b),
+  { label: '=', value: 'eq', filterFn: filterFn_weakEquals },
+  { label: '≠', value: 'neq', filterFn: filterFn_notWeakEquals },
+  { label: '>', value: 'gt', filterFn: filterFn_greaterThan },
+  { label: '<', value: 'lt', filterFn: filterFn_lessThan },
+  { label: '≥', value: 'gte', filterFn: filterFn_greaterThanOrEqualTo },
+  { label: '≤', value: 'lte', filterFn: filterFn_lessThanOrEqualTo },
 ];
 
 export const booleanOperators: FilterOperator[] = [
-  {
-    label: 'Is true',
-    value: 'isTrue',
-    filterFn: (row, columnId) => row.getValue(columnId) === true,
-  },
-  {
-    label: 'Is false',
-    value: 'isFalse',
-    filterFn: (row, columnId) => row.getValue(columnId) === false,
-  },
+  { label: 'Is true', value: 'isTrue', filterFn: filterFn_isTrue, valueless: true },
+  { label: 'Is false', value: 'isFalse', filterFn: filterFn_isFalse, valueless: true },
 ];
 
-export function createOperatorFilterFn(operators: FilterOperator[]): FilterFn<any> {
-  const operatorMap = new Map(operators.map((op) => [op.value, op.filterFn]));
-  return (row, columnId, filterValue) => {
-    if (!filterValue || typeof filterValue !== 'object') {
-      return true;
-    }
-    const { operator, value } = filterValue as { operator: string; value: string };
-    const fn = operatorMap.get(operator);
-    if (!fn) {
-      return true;
-    }
-    return fn(row, columnId, value, () => {});
-  };
+export function createOperatorFilterFn(
+  operators: FilterOperator[]
+): FilterFn<DataGridFeatures, any> {
+  const operatorMap = new Map(operators.map((op) => [op.value, op]));
+
+  return constructFilterFn({
+    filter: (_dataValue, filterValue, row, columnId, addMeta) => {
+      if (!filterValue || typeof filterValue !== 'object') {
+        return true;
+      }
+
+      const { operator, value } = filterValue as { operator: string; value: unknown };
+      const op = operatorMap.get(operator);
+
+      if (!op) {
+        return true;
+      }
+
+      if (!op.valueless && (value === '' || value == null)) {
+        return true;
+      }
+
+      const resolved = op.filterFn.resolveFilterValue?.(value) ?? value;
+      return op.filterFn(row, columnId, resolved, addMeta);
+    },
+  });
 }

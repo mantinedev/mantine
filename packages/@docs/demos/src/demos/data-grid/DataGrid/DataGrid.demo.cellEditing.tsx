@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { Row } from '@tanstack/react-table';
-import { DataGrid, useDataGrid } from '@mantine/data-grid';
+import { DataGrid, DataGridRow, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { Row } from '@tanstack/react-table';
-import { DataGrid, useDataGrid } from '@mantine/data-grid';
+import { DataGrid, DataGridRow, useDataGrid } from '@mantine/data-grid';
 
 interface Employee {
   id: string;
@@ -42,7 +40,7 @@ function Demo() {
   return (
     <DataGrid
       store={store}
-      onCellEdit={({ row, columnId, value }: { row: Row<Employee>; columnId: string; value: unknown }) => {
+      onCellEdit={({ row, columnId, value }: { row: DataGridRow<Employee>; columnId: string; value: unknown }) => {
         setData((prev) =>
           prev.map((item) =>
             item.id === row.original.id ? { ...item, [columnId]: value } : item
@@ -93,7 +91,7 @@ function Demo() {
         columnId,
         value,
       }: {
-        row: Row<Employee>;
+        row: DataGridRow<Employee>;
         columnId: string;
         value: unknown;
       }) => {

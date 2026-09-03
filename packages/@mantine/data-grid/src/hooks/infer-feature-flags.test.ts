@@ -23,6 +23,7 @@ const allFalse: DataGridFeatureFlags = {
   withFaceting: false,
   withTreeData: false,
   withRowReorder: false,
+  withCellSelection: false,
 };
 
 describe('inferFeatureFlags', () => {
@@ -214,7 +215,7 @@ describe('inferFeatureFlags', () => {
     it('infers from columnPinning', () => {
       const flags = inferFeatureFlags({
         ...baseOptions,
-        columnPinning: { left: ['name'] },
+        columnPinning: { start: ['name'], end: [] },
       });
       expect(flags.withColumnPinning).toBe(true);
     });

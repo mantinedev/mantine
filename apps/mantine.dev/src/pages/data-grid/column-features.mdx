@@ -21,6 +21,47 @@ on a column definition to create header groups.
 
 <Demo data={DataGridDemos.headerGroups} />
 
+## Cell spanning
+
+Set `spanRows: true` on a column definition to merge adjacent rows that share the same value for
+that column into a single vertically spanning cell. Spans are recomputed from the rows that are
+actually rendered, so sorting, filtering and pagination only change which rows are adjacent — a run
+never crosses a page boundary, a pinned-row section, or a grouped row.
+
+<Demo data={DataGridDemos.cellSpanning} />
+
+Pass a predicate instead of `true` to decide whether a row joins the run anchored at `anchorRow`:
+
+```tsx
+const columns = [
+  {
+    accessorKey: 'startDate',
+    header: 'Start Date',
+    spanRows: ({ anchorValue, value }) =>
+      new Date(anchorValue).getFullYear() === new Date(value).getFullYear(),
+  },
+];
+```
+
+Use `spanColumns` to make a cell span several columns in a given row. Return `1` or less for no
+span, or `Infinity` for the rest of the cell's pinned region:
+
+```tsx
+const columns = [
+  {
+    accessorKey: 'label',
+    header: 'Label',
+    spanColumns: ({ row }) => (row.original.isSummary ? Infinity : 1),
+  },
+];
+```
+
+By default nullish values are not merged. Set `enableCellSpanning: false` on `tableOptions` to turn
+spanning off for the whole grid, or `enableCellSpanning: false` on a column to exclude it.
+
+Cell spanning is not applied when virtualization is enabled — the virtualized renderer positions every
+cell independently, so `spanRows` and `spanColumns` are ignored for grids that use `virtualize`.
+
 ## Related pages
 
 - [Column sizing](/data-grid/column-sizing) -- resize, min/max constraints

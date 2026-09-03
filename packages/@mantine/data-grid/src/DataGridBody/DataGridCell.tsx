@@ -13,6 +13,7 @@ import {
 import { useDataGridContext } from '../DataGrid.context';
 import { getPinnedStyles } from '../get-pinned-styles';
 import { ExpandChevron } from '../icons';
+import type { DataGridFeatures } from '../table-features';
 import classes from '../DataGrid.module.css';
 
 export type DataGridCellStylesNames = 'td' | 'editCell' | 'treeIndent' | 'treeToggle';
@@ -20,10 +21,10 @@ export type DataGridCellStylesNames = 'td' | 'editCell' | 'treeIndent' | 'treeTo
 export interface DataGridCellProps
   extends BoxProps, CompoundStylesApiProps<DataGridCellFactory>, ElementProps<'td'> {
   /** TanStack cell instance */
-  cell: Cell<any, unknown>;
+  cell: Cell<DataGridFeatures, any, unknown>;
 
   /** Tree data info, present only on the first data cell when tree data is active */
-  treeData?: { row: Row<any> };
+  treeData?: { row: Row<DataGridFeatures, any> };
 
   /** Number of columns this cell should span */
   colSpan?: number;
@@ -64,6 +65,42 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(cell.column) : undefined;
+
+  const cellRef = useRef<HTMLTableCellElement>(null);
+  const withCellSelection = ctx.withCellSelection;
+  const isCellSelected = withCellSelection && cell.getIsSelected();
+  const isCellFocused = withCellSelection && cell.getIsFocused();
+  const selectionEdges = withCellSelection ? cell.getSelectionEdges() : undefined;
+
+  useEffect(() => {
+    if (isCellFocused && cellRef.current && document.activeElement !== cellRef.current) {
+      cellRef.current.focus();
+    }
+  }, [isCellFocused]);
+
+  const handleSelectionKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      const directions = {
+        ArrowUp: 'up',
+        ArrowDown: 'down',
+        ArrowLeft: 'left',
+        ArrowRight: 'right',
+      } as const;
+
+      const direction = directions[event.key as keyof typeof directions];
+      if (!direction) {
+        return;
+      }
+
+      event.preventDefault();
+      if (event.shiftKey) {
+        ctx.table.extendCellSelection(direction);
+      } else {
+        ctx.table.moveCellSelection(direction);
+      }
+    },
+    [ctx.table]
+  );
 
   const canEdit = ctx.withEditing && !cell.column.columnDef.meta?.disableEditing;
   const editComponent = cell.column.columnDef.meta?.editComponent;
@@ -158,10 +195,21 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
       colSpan={colSpan}
       rowSpan={rowSpan}
       data-col-index={colIndex}
-      data-pinned-left={isPinned === 'left' || undefined}
-      data-pinned-right={isPinned === 'right' || undefined}
+      data-pinned-left={isPinned === 'start' || undefined}
+      data-pinned-right={isPinned === 'end' || undefined}
       data-editing={isEditing || undefined}
       data-saving={isSaving || undefined}
+      data-selected={isCellSelected || undefined}
+      data-focused={isCellFocused || undefined}
+      data-edge-top={selectionEdges?.top || undefined}
+      data-edge-bottom={selectionEdges?.bottom || undefined}
+      data-edge-left={selectionEdges?.left || undefined}
+      data-edge-right={selectionEdges?.right || undefined}
+      tabIndex={withCellSelection ? cell.getTabIndex() : undefined}
+      ref={withCellSelection ? cellRef : undefined}
+      onMouseDown={withCellSelection ? cell.getSelectionStartHandler() : undefined}
+      onMouseEnter={withCellSelection ? cell.getSelectionExtendHandler() : undefined}
+      onKeyDown={withCellSelection ? handleSelectionKeyDown : undefined}
       onClick={
         ctx.onCellClick || (canEdit && ctx.editTrigger === 'click') ? composedClick : undefined
       }

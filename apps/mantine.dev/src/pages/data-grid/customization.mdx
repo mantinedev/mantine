@@ -16,17 +16,20 @@ component page.
 
 DataGrid exposes the following CSS variables on the root element:
 
-| Variable | Description | Default |
-|---|---|---|
-| `--dg-row-height` | Row height | `40px` |
-| `--dg-header-height` | Header row height | `40px` |
-| `--dg-border-color` | Border color | `var(--mantine-color-default-border)` |
-| `--dg-stripe-color` | Striped row background | `var(--mantine-color-gray-0)` |
-| `--dg-hover-color` | Row hover background | `var(--mantine-color-gray-1)` |
-| `--dg-selected-color` | Selected row background | `var(--mantine-primary-color-light)` |
-| `--dg-pinned-shadow` | Shadow for pinned columns | `4px 0 8px rgba(0,0,0,0.1)` |
-| `--dg-font-size` | Cell font size | `var(--mantine-font-size-sm)` |
-| `--dg-spacing` | Cell padding | `var(--mantine-spacing-xs)` |
+<DataTable
+  head={['Variable', 'Description', 'Default']}
+  data={[
+    ['`--dg-row-height`', 'Row height', '`40px`'],
+    ['`--dg-header-height`', 'Header row height', '`40px`'],
+    ['`--dg-border-color`', 'Border color', '`var(--mantine-color-default-border)`'],
+    ['`--dg-stripe-color`', 'Striped row background', '`var(--mantine-color-gray-0)`'],
+    ['`--dg-hover-color`', 'Row hover background', '`var(--mantine-color-gray-1)`'],
+    ['`--dg-selected-color`', 'Selected row background', '`var(--mantine-primary-color-light)`'],
+    ['`--dg-pinned-shadow`', 'Shadow for pinned columns', '`4px 0 8px rgba(0,0,0,0.1)`'],
+    ['`--dg-font-size`', 'Cell font size', '`var(--mantine-font-size-sm)`'],
+    ['`--dg-spacing`', 'Cell padding', '`var(--mantine-spacing-xs)`'],
+  ]}
+/>
 
 ## Density toggle
 

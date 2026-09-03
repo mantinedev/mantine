@@ -13,6 +13,7 @@ import {
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 import { KebabIcon } from '../icons';
+import type { DataGridFeatures } from '../table-features';
 import classes from '../DataGrid.module.css';
 
 export type DataGridColumnMenuStylesNames = 'columnMenu';
@@ -20,7 +21,7 @@ export type DataGridColumnMenuStylesNames = 'columnMenu';
 export interface DataGridColumnMenuProps
   extends BoxProps, CompoundStylesApiProps<DataGridColumnMenuFactory>, ElementProps<'div'> {
   /** Column instance from @tanstack/react-table */
-  column: Column<any, unknown>;
+  column: Column<DataGridFeatures, any, unknown>;
 
   /** Props passed to the internal Menu component */
   menuProps?: Partial<MenuProps>;
@@ -79,11 +80,11 @@ export const DataGridColumnMenu = factory<DataGridColumnMenuFactory>((props) => 
 
   const pinItems = canPin ? (
     <>
-      {isPinned !== 'left' && (
-        <Menu.Item onClick={() => column.pin('left')}>{labels.columnMenuPinLeft}</Menu.Item>
+      {isPinned !== 'start' && (
+        <Menu.Item onClick={() => column.pin('start')}>{labels.columnMenuPinLeft}</Menu.Item>
       )}
-      {isPinned !== 'right' && (
-        <Menu.Item onClick={() => column.pin('right')}>{labels.columnMenuPinRight}</Menu.Item>
+      {isPinned !== 'end' && (
+        <Menu.Item onClick={() => column.pin('end')}>{labels.columnMenuPinRight}</Menu.Item>
       )}
       {isPinned && (
         <Menu.Item onClick={() => column.pin(false)}>{labels.columnMenuUnpin}</Menu.Item>

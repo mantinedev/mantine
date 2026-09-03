@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -10,7 +10,6 @@ import {
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 import { getExtraColumnsCount } from '../get-extra-columns-count';
-import { computeRowSpans } from '../row-span';
 import { DataGridGroupRow } from './DataGridGroupRow';
 import { DataGridRow } from './DataGridRow';
 import classes from '../DataGrid.module.css';
@@ -44,15 +43,6 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
   const rows = ctx.withRowPinning ? ctx.table.getCenterRows() : ctx.table.getRowModel().rows;
   const allEmpty = topRows.length === 0 && rows.length === 0 && bottomRows.length === 0;
   const totalColumns = ctx.table.getVisibleLeafColumns().length + getExtraColumnsCount(ctx);
-  const visibleColumns = ctx.table.getVisibleLeafColumns();
-  const allVisibleRows = useMemo(
-    () => [...topRows, ...rows, ...bottomRows],
-    [topRows, rows, bottomRows]
-  );
-  const rowSpanMap = useMemo(
-    () => computeRowSpans(allVisibleRows, visibleColumns),
-    [allVisibleRows, visibleColumns]
-  );
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLTableSectionElement>) => {
@@ -124,13 +114,7 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
               styles={styles}
             />
           ) : (
-            <DataGridRow
-              row={row}
-              rowIndex={globalIndex}
-              rowSpanMap={rowSpanMap}
-              classNames={classNames}
-              styles={styles}
-            />
+            <DataGridRow row={row} rowIndex={globalIndex} classNames={classNames} styles={styles} />
           )}
           {ctx.withRowExpansion &&
             !ctx.withTreeData &&

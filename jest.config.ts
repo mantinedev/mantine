@@ -4,7 +4,9 @@ export default {
   workerIdleMemoryLimit: '512MB',
   transform: {
     '^.+\\.tsx?$': 'esbuild-jest',
+    '^.+\\.m?js$': 'esbuild-jest',
   },
+  transformIgnorePatterns: ['/node_modules/(?!@tanstack/)'],
   testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
   modulePathIgnorePatterns: ['<rootDir>/.claude/'],
   testPathIgnorePatterns: ['/node_modules/', '<rootDir>/.claude/'],

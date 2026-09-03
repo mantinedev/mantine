@@ -27,7 +27,7 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary', size: 120 },
       { accessorKey: 'status', header: 'Status', size: 120 },
     ],
-    columnPinning: { left: ['firstName', 'lastName'] },
+    columnPinning: { start: ['firstName', 'lastName'], end: [] },
   });
 
   return (
@@ -59,7 +59,7 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary', size: 120 },
       { accessorKey: 'status', header: 'Status', size: 120 },
     ],
-    columnPinning: { left: ['firstName', 'lastName'] },
+    columnPinning: { start: ['firstName', 'lastName'], end: [] },
   });
 
   return (

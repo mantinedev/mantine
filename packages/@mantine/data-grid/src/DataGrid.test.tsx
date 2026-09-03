@@ -316,4 +316,60 @@ describe('@mantine/data-grid/DataGrid', () => {
       expect(screen.queryByText('Age')).not.toBeInTheDocument();
     });
   });
+
+  describe('TanStack Table v9 regressions', () => {
+    it('renders every row when the grid is not paginated', () => {
+      const manyRows = Array.from({ length: 25 }, (_, i) => ({ name: `Row ${i}`, age: i }));
+      const { container } = render(<DataGrid data={manyRows} columns={columns} />);
+      expect(container.querySelectorAll('tbody tr')).toHaveLength(manyRows.length);
+    });
+
+    it('expands a row without subRows via renderExpandedRow', async () => {
+      render(
+        <DataGridWithStore
+          storeOptions={{ data, columns, withRowExpansion: true }}
+          renderExpandedRow={({ row }) => <div>Details for {row.original.name}</div>}
+        />
+      );
+      await userEvent.click(screen.getAllByRole('button')[0]);
+      expect(screen.getByText('Details for Alice')).toBeInTheDocument();
+    });
+
+    it('does not render a footer aggregation row unless a column declares aggregationFn', () => {
+      const { container } = render(<DataGrid data={data} columns={columns} />);
+      expect(container.querySelector('tfoot')).not.toBeInTheDocument();
+    });
+
+    it('renders a footer aggregation row for columns that declare aggregationFn', () => {
+      const { container } = render(
+        <DataGrid
+          data={data}
+          columns={[
+            { accessorKey: 'name', header: 'Name' },
+            { accessorKey: 'age', header: 'Age', aggregationFn: 'sum' },
+          ]}
+        />
+      );
+      const aggregationCells = container.querySelectorAll('tfoot td[class*="aggregationCell"]');
+      expect(aggregationCells).toHaveLength(2);
+      expect(container.querySelector('tfoot')).toHaveTextContent('90');
+    });
+
+    it('does not enable cell selection by default', () => {
+      const { container } = render(<DataGrid data={data} columns={columns} />);
+      expect(container.querySelector('td[data-selected]')).not.toBeInTheDocument();
+      expect(container.querySelector('tbody td[tabindex]')).not.toBeInTheDocument();
+    });
+
+    it('selects a cell on mouse down when withCellSelection is enabled', async () => {
+      const { container } = render(
+        <DataGridWithStore storeOptions={{ data, columns, withCellSelection: true }} />
+      );
+      const cell = container.querySelectorAll('tbody td')[0] as HTMLElement;
+      await userEvent.click(cell);
+
+      expect(container.querySelector('td[data-selected]')).toBeInTheDocument();
+      expect(container.querySelector('td[data-focused]')).toBeInTheDocument();
+    });
+  });
 });

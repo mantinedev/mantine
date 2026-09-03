@@ -292,3 +292,13 @@ export const Demo_treeDataPagination = {
   name: '⭐ Demo: treeDataPagination',
   render: renderDemo(demos.treeDataPagination),
 };
+
+export const Demo_cellSelection = {
+  name: '⭐ Demo: cellSelection',
+  render: renderDemo(demos.cellSelection),
+};
+
+export const Demo_cellSpanning = {
+  name: '⭐ Demo: cellSpanning',
+  render: renderDemo(demos.cellSpanning),
+};

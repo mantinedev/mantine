@@ -12,9 +12,10 @@ import {
   Stack,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import type { DataGridFeatures } from '../table-features';
 
 export interface NumberRangeFilterProps {
-  column: Column<any, unknown>;
+  column: Column<DataGridFeatures, any, unknown>;
 }
 
 export function NumberRangeFilter({ column }: NumberRangeFilterProps) {

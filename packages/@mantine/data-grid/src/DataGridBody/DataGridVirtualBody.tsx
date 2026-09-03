@@ -18,6 +18,7 @@ import { FilterDispatcher } from '../DataGridFilters';
 import { getExtraColumnsCount } from '../get-extra-columns-count';
 import { getPinnedStyles } from '../get-pinned-styles';
 import { DefaultUnsortedIcon, ExpandChevron, GripIcon, SortIcon } from '../icons';
+import type { DataGridFeatures } from '../table-features';
 import classes from '../DataGrid.module.css';
 
 export type DataGridVirtualBodyStylesNames =
@@ -147,9 +148,9 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     const right: number[] = [];
     visibleColumns.forEach((col, index) => {
       const pinned = col.getIsPinned();
-      if (pinned === 'left') {
+      if (pinned === 'start') {
         left.push(index);
-      } else if (pinned === 'right') {
+      } else if (pinned === 'end') {
         right.push(index);
       }
     });
@@ -227,8 +228,8 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         role="gridcell"
         aria-colindex={cellColIndex}
         tabIndex={handleCellClick ? 0 : undefined}
-        data-pinned-left={isPinned === 'left' || undefined}
-        data-pinned-right={isPinned === 'right' || undefined}
+        data-pinned-left={isPinned === 'start' || undefined}
+        data-pinned-right={isPinned === 'end' || undefined}
         onClick={handleCellClick}
         onKeyDown={handleCellKeyDown}
         {...ctx.getStyles('virtualCell', { classNames, styles })}
@@ -466,7 +467,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         })
       : rows.map((row, rowIndex) => <div key={row.id}>{renderRowContent(row, rowIndex)}</div>);
 
-  function renderHeaderCell(header: Header<any, unknown>, headerIndex: number) {
+  function renderHeaderCell(header: Header<DataGridFeatures, any, unknown>, headerIndex: number) {
     const canSort = ctx.withSorting && header.column.getCanSort();
     const sortDirection = header.column.getIsSorted();
     const ariaSort =
@@ -493,8 +494,8 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         data-sort-asc={sortDirection === 'asc' || undefined}
         data-sort-desc={sortDirection === 'desc' || undefined}
         data-sortable={canSort || undefined}
-        data-pinned-left={isPinned === 'left' || undefined}
-        data-pinned-right={isPinned === 'right' || undefined}
+        data-pinned-left={isPinned === 'start' || undefined}
+        data-pinned-right={isPinned === 'end' || undefined}
         data-resizing={isResizing || undefined}
         {...ctx.getStyles('virtualCell', { classNames, styles })}
         style={{
@@ -546,7 +547,10 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     );
   }
 
-  function renderVirtualizedHeaders(headers: Header<any, unknown>[], isLeafRow: boolean) {
+  function renderVirtualizedHeaders(
+    headers: Header<DataGridFeatures, any, unknown>[],
+    isLeafRow: boolean
+  ) {
     if (isLeafRow) {
       const leftPinned = allCellsPinned.left.map((idx) => renderHeaderCell(headers[idx], idx));
       const virtualHeaders = virtualColumnItems!.filter(

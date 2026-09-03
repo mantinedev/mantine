@@ -1,4 +1,5 @@
-import { Table } from '@tanstack/react-table';
+import { Table, RowData } from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 import {
   ExportColumnScope,
   ExportRowScope,
@@ -47,7 +48,10 @@ export function buildCsvString(
   return lines.join('\n');
 }
 
-export function formatCsv<TData>(table: Table<TData>, options?: ExportCsvOptions): string {
+export function formatCsv<TData extends RowData>(
+  table: Table<DataGridFeatures, TData>,
+  options?: ExportCsvOptions
+): string {
   const {
     delimiter = ',',
     includeHeaders = true,
@@ -74,7 +78,10 @@ export function formatCsv<TData>(table: Table<TData>, options?: ExportCsvOptions
   return buildCsvString(headers, rows, delimiter);
 }
 
-export function exportToCsv<TData>(table: Table<TData>, options?: ExportCsvOptions): void {
+export function exportToCsv<TData extends RowData>(
+  table: Table<DataGridFeatures, TData>,
+  options?: ExportCsvOptions
+): void {
   const { fileName = 'data-grid-export' } = options ?? {};
   const csv = formatCsv(table, options);
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });

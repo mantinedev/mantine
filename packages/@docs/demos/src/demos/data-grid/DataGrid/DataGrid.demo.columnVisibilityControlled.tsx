@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { VisibilityState } from '@tanstack/react-table';
+import { ColumnVisibilityState } from '@tanstack/react-table';
 import { Checkbox, Group } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
@@ -9,7 +9,7 @@ const allColumns = ['firstName', 'lastName', 'email', 'department', 'salary', 's
 
 const code = `
 import { useState } from 'react';
-import { VisibilityState } from '@tanstack/react-table';
+import { ColumnVisibilityState } from '@tanstack/react-table';
 import { Checkbox, Group } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
@@ -17,7 +17,7 @@ import { employees } from './data';
 const allColumns = ['firstName', 'lastName', 'email', 'department', 'salary', 'status'];
 
 function Demo() {
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<ColumnVisibilityState>({});
 
   const store = useDataGrid({
     data: employees,
@@ -38,7 +38,7 @@ function Demo() {
   return (
     <>
       <Checkbox.Group value={visibleColumns} onChange={(value) => {
-        const next: VisibilityState = {};
+        const next: ColumnVisibilityState = {};
         allColumns.forEach((col) => {
           next[col] = value.includes(col);
         });
@@ -57,7 +57,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<ColumnVisibilityState>({});
 
   const store = useDataGrid({
     data: employees,
@@ -80,7 +80,7 @@ function Demo() {
       <Checkbox.Group
         value={visibleColumns}
         onChange={(value) => {
-          const next: VisibilityState = {};
+          const next: ColumnVisibilityState = {};
           allColumns.forEach((col) => {
             next[col] = value.includes(col);
           });

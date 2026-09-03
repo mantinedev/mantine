@@ -9,7 +9,6 @@ import {
   Factory,
   useProps,
 } from '@mantine/core';
-import { computeAggregation } from '../aggregation';
 import { useDataGridContext } from '../DataGrid.context';
 import { getExtraColumnsCount } from '../get-extra-columns-count/get-extra-columns-count';
 import classes from '../DataGrid.module.css';
@@ -35,11 +34,10 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
 
   const ctx = useDataGridContext();
 
-  const aggregation = useMemo(() => {
-    const visibleColumns = ctx.table.getVisibleLeafColumns();
-    const rows = ctx.table.getFilteredRowModel().rows;
-    return computeAggregation(rows, visibleColumns);
-  }, [ctx.table.getFilteredRowModel().rows, ctx.table.getVisibleLeafColumns()]);
+  const aggregatedColumnIds = useMemo(
+    () => new Set(ctx.aggregatedColumnIds),
+    [ctx.aggregatedColumnIds]
+  );
 
   const extraColCount = getExtraColumnsCount({
     withRowReorder: ctx.withRowReorder,
@@ -76,24 +74,25 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
           ))}
         </tr>
       ))}
-      {aggregation.hasAny() && (
+      {aggregatedColumnIds.size > 0 && (
         <tr {...ctx.getStyles('tr', { classNames, styles })}>
           {Array.from({ length: extraColCount }).map((_, i) => (
             <td key={`extra-${i}`} {...ctx.getStyles('td', { classNames, styles })} />
           ))}
           {ctx.table.getVisibleLeafColumns().map((column) => {
-            const agg = aggregation.get(column.id);
+            const hasAggregation = aggregatedColumnIds.has(column.id);
+            const value = hasAggregation
+              ? column.getAggregationValue({ rows: ctx.table.getFilteredRowModel().rows })
+              : undefined;
+            const label = column.columnDef.meta?.aggregationLabel;
+
             return (
               <td
                 key={column.id}
                 {...ctx.getStyles('td', { classNames, styles })}
                 {...ctx.getStyles('aggregationCell', { classNames, styles })}
               >
-                {agg
-                  ? agg.label
-                    ? `${agg.label}: ${agg.value ?? ''}`
-                    : String(agg.value ?? '')
-                  : null}
+                {hasAggregation ? (label ? `${label}: ${value ?? ''}` : String(value ?? '')) : null}
               </td>
             );
           })}

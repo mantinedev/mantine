@@ -37,7 +37,7 @@ columns that are not currently sorted.
 
 ## Custom sort functions
 
-Set a custom `sortingFn` on a column definition to override the default sort behavior. The value can
+Set a custom `sortFn` on a column definition to override the default sort behavior. The value can
 be one of the built-in sort function names (a string) or a custom comparator function:
 
 ```tsx
@@ -46,13 +46,13 @@ const columns = [
     accessorKey: 'date',
     header: 'Date',
     enableSorting: true,
-    sortingFn: 'datetime',
+    sortFn: 'datetime',
   },
   {
     accessorKey: 'name',
     header: 'Name',
     enableSorting: true,
-    sortingFn: (rowA, rowB, columnId) => {
+    sortFn: (rowA, rowB, columnId) => {
       return rowA.getValue(columnId).localeCompare(rowB.getValue(columnId));
     },
   },
@@ -61,16 +61,19 @@ const columns = [
 
 ## Built-in sort functions
 
-TanStack Table provides the following built-in sort function names that can be used as `sortingFn`:
+TanStack Table provides the following built-in sort function names that can be used as `sortFn`:
 
-| Name | Description |
-|---|---|
-| `alphanumeric` | Case-insensitive alphanumeric sort |
-| `alphanumericCaseSensitive` | Case-sensitive alphanumeric sort |
-| `text` | Case-insensitive string sort |
-| `textCaseSensitive` | Case-sensitive string sort |
-| `datetime` | Date/time sort |
-| `basic` | Basic sort using JavaScript comparison |
+<DataTable
+  head={['Name', 'Description']}
+  data={[
+    ['`alphanumeric`', 'Case-insensitive alphanumeric sort'],
+    ['`alphanumericCaseSensitive`', 'Case-sensitive alphanumeric sort'],
+    ['`text`', 'Case-insensitive string sort'],
+    ['`textCaseSensitive`', 'Case-sensitive string sort'],
+    ['`datetime`', 'Date/time sort'],
+    ['`basic`', 'Basic sort using JavaScript comparison'],
+  ]}
+/>
 
 ## Sort removal behavior
 

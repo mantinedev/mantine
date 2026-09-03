@@ -11,6 +11,7 @@ import {
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 import { ExpandChevron } from '../icons';
+import type { DataGridFeatures } from '../table-features';
 import classes from '../DataGrid.module.css';
 
 export type DataGridGroupRowStylesNames = 'tr' | 'groupHeader' | 'groupToggle' | 'aggregationCell';
@@ -18,7 +19,7 @@ export type DataGridGroupRowStylesNames = 'tr' | 'groupHeader' | 'groupToggle' |
 export interface DataGridGroupRowProps
   extends BoxProps, CompoundStylesApiProps<DataGridGroupRowFactory>, ElementProps<'tr'> {
   /** TanStack row instance */
-  row: Row<any>;
+  row: Row<DataGridFeatures, any>;
 
   /** Total number of visible columns including feature columns */
   totalColumns: number;

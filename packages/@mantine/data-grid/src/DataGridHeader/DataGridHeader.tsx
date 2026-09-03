@@ -67,8 +67,8 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
       }
 
       const currentOrder =
-        ctx.table.getState().columnOrder.length > 0
-          ? ctx.table.getState().columnOrder
+        ctx.table.store.state.columnOrder.length > 0
+          ? ctx.table.store.state.columnOrder
           : ctx.table.getAllLeafColumns().map((c) => c.id);
 
       const sourceIndex = currentOrder.indexOf(sourceColumnId);
@@ -179,8 +179,8 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                 data-sort-asc={sortDirection === 'asc' || undefined}
                 data-sort-desc={sortDirection === 'desc' || undefined}
                 data-sortable={canSort || undefined}
-                data-pinned-left={isPinned === 'left' || undefined}
-                data-pinned-right={isPinned === 'right' || undefined}
+                data-pinned-left={isPinned === 'start' || undefined}
+                data-pinned-right={isPinned === 'end' || undefined}
                 data-resizing={isResizing || undefined}
                 {...ctx.getStyles('th', { classNames, styles })}
                 style={{
@@ -247,8 +247,8 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
             return (
               <th
                 key={column.id}
-                data-pinned-left={isPinned === 'left' || undefined}
-                data-pinned-right={isPinned === 'right' || undefined}
+                data-pinned-left={isPinned === 'start' || undefined}
+                data-pinned-right={isPinned === 'end' || undefined}
                 {...ctx.getStyles('th', { classNames, styles })}
                 style={{
                   ...pinnedStyle,

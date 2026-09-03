@@ -1,23 +1,31 @@
-import { Column, Table } from '@tanstack/react-table';
+import { Column, Table, RowData } from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 
 export type ExportRowScope = 'all' | 'filtered' | 'selected' | 'page';
 export type ExportColumnScope = 'visible' | 'all' | string[];
 
-export function getExportColumns<TData>(
-  table: Table<TData>,
+export function getExportColumns<TData extends RowData>(
+  table: Table<DataGridFeatures, TData>,
   columns: ExportColumnScope | undefined
-): Column<TData, unknown>[] {
+): Column<DataGridFeatures, TData, unknown>[] {
   const allColumns =
     columns === 'all'
       ? table.getAllColumns()
       : Array.isArray(columns)
-        ? (columns.map((id) => table.getColumn(id)).filter(Boolean) as Column<TData, unknown>[])
+        ? (columns.map((id) => table.getColumn(id)).filter(Boolean) as Column<
+            DataGridFeatures,
+            TData,
+            unknown
+          >[])
         : table.getVisibleLeafColumns();
 
   return allColumns.filter((col) => !col.columnDef.meta?.disableExport);
 }
 
-export function getExportRows<TData>(table: Table<TData>, rows: ExportRowScope | undefined) {
+export function getExportRows<TData extends RowData>(
+  table: Table<DataGridFeatures, TData>,
+  rows: ExportRowScope | undefined
+) {
   switch (rows) {
     case 'filtered':
       return table.getFilteredRowModel().rows;
@@ -30,7 +38,9 @@ export function getExportRows<TData>(table: Table<TData>, rows: ExportRowScope |
   }
 }
 
-export function getExportHeaders<TData>(columns: Column<TData, unknown>[]): string[] {
+export function getExportHeaders<TData extends RowData>(
+  columns: Column<DataGridFeatures, TData, unknown>[]
+): string[] {
   return columns.map((col) => {
     const header = col.columnDef.header;
     return typeof header === 'string' ? header : col.id;

@@ -1,17 +1,25 @@
 import { compareItems, rankItem, type RankingInfo } from '@tanstack/match-sorter-utils';
-import { sortingFns, type FilterFn, type SortingFn } from '@tanstack/react-table';
+import {
+  constructFilterFn,
+  sortFn_alphanumeric,
+  type FilterFn,
+  type SortFn,
+} from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 
 interface FuzzyFilterMeta {
   itemRank: RankingInfo;
 }
 
-export const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
-  const itemRank = rankItem(row.getValue(columnId), value);
-  addMeta({ itemRank });
-  return itemRank.passed;
-};
+export const fuzzyFilter: FilterFn<DataGridFeatures, any> = constructFilterFn({
+  filter: (dataValue, filterValue, _row, _columnId, addMeta) => {
+    const itemRank = rankItem(dataValue, filterValue);
+    addMeta?.({ itemRank } as any);
+    return itemRank.passed;
+  },
+});
 
-export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
+export const fuzzySort: SortFn<DataGridFeatures, any> = (rowA, rowB, columnId) => {
   let dir = 0;
   if (rowA.columnFiltersMeta[columnId]) {
     dir = compareItems(
@@ -19,5 +27,5 @@ export const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
       (rowB.columnFiltersMeta[columnId] as FuzzyFilterMeta).itemRank
     );
   }
-  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
+  return dir === 0 ? sortFn_alphanumeric(rowA, rowB, columnId) : dir;
 };

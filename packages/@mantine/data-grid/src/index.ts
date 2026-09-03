@@ -9,7 +9,17 @@ export type {
 export { DataGridProvider, useDataGridContext } from './DataGrid.context';
 export type { DataGridContextValue, DataGridDensity } from './DataGrid.context';
 
-export type { DataGridColumnDef, DataGridColumnMeta } from './DataGrid.types';
+export { createDataGridColumnHelper } from './DataGrid.types';
+export type {
+  DataGridColumnDef,
+  DataGridColumnMeta,
+  DataGridTable,
+  DataGridRow,
+  DataGridCell,
+  DataGridColumn,
+  DataGridFilterFn,
+  DataGridSortFn,
+} from './DataGrid.types';
 
 export * from './DataGridHeader/index';
 export * from './DataGridBody/index';
@@ -21,9 +31,10 @@ export * from './DataGridColumnMenu/index';
 export * from './DataGridFilters/index';
 export * from './labels';
 export * from './export/index';
-export * from './aggregation/index';
 export * from './column-autosize/index';
 export * from './hooks/index';
-export * from './row-span/index';
 
-export { createColumnHelper, flexRender } from '@tanstack/react-table';
+export { dataGridFeatures } from './table-features';
+export type { DataGridFeatures } from './table-features';
+
+export { flexRender } from '@tanstack/react-table';

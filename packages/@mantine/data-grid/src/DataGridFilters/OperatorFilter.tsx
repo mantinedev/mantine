@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Column } from '@tanstack/react-table';
 import { Group, Select, TextInput } from '@mantine/core';
+import type { DataGridFeatures } from '../table-features';
 import type { FilterOperator } from './filter-operators';
 
 export interface OperatorFilterProps {
-  column: Column<any, unknown>;
+  column: Column<DataGridFeatures, any, unknown>;
   operators: FilterOperator[];
 }
 

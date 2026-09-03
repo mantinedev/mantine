@@ -1,4 +1,5 @@
 import { Column } from '@tanstack/react-table';
+import type { DataGridFeatures } from '../table-features';
 import { BooleanFilter } from './BooleanFilter';
 import { MultiSelectFilter } from './MultiSelectFilter';
 import { NumberRangeFilter } from './NumberRangeFilter';
@@ -7,7 +8,7 @@ import { SelectFilter } from './SelectFilter';
 import { TextFilter } from './TextFilter';
 
 export interface FilterDispatcherProps {
-  column: Column<any, unknown>;
+  column: Column<DataGridFeatures, any, unknown>;
 }
 
 export function FilterDispatcher({ column }: FilterDispatcherProps) {

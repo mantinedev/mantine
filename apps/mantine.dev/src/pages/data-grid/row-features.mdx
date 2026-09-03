@@ -112,6 +112,29 @@ Both callbacks receive the `row` object and the `event`:
 />
 ```
 
+## Cell selection
+
+Pass `withCellSelection` to `useDataGrid` to enable spreadsheet-style cell range selection. Users can
+click a cell to focus it, drag across cells to select a range, extend a range with Shift, and add or
+subtract additional ranges with Ctrl/Cmd. Arrow keys move the focused cell and Shift + arrow keys
+extend the selection.
+
+<Demo data={DataGridDemos.cellSelection} />
+
+Cell selection state can be controlled with `cellSelection` and `onCellSelectionChange`. The current
+selection is available on the store as `store.cellSelection`, and the table instance exposes helpers
+for reading it:
+
+```tsx
+const store = useDataGrid({ data, columns, withCellSelection: true });
+
+store.table.getSelectedCellIds();
+store.table.getSelectedCellCount();
+store.table.getSelectedCellRangesData(); // values as [region][row][column]
+```
+
+Set `enableCellSelection: false` on a column definition to exclude it from selection.
+
 ## Row reorder
 
 Pass `withRowReorder` to `useDataGrid` and provide `onRowOrderChange` to handle the updated data

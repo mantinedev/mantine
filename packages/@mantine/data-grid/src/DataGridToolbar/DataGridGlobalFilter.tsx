@@ -44,7 +44,7 @@ export const DataGridGlobalFilter = factory<DataGridGlobalFilterFactory>((props)
       <TextInput
         size="sm"
         {...textInputProps}
-        value={(ctx.table.getState().globalFilter as string) ?? ''}
+        value={(ctx.table.store.state.globalFilter as string) ?? ''}
         onChange={(event) => ctx.table.setGlobalFilter(event.currentTarget.value)}
         placeholder={placeholder ?? ctx.labels.globalFilterPlaceholder}
         aria-label={ctx.labels.globalFilterPlaceholder}

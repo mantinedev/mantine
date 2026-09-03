@@ -1,9 +1,10 @@
 import { Column } from '@tanstack/react-table';
 import { TextInput } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import type { DataGridFeatures } from '../table-features';
 
 export interface TextFilterProps {
-  column: Column<any, unknown>;
+  column: Column<DataGridFeatures, any, unknown>;
 }
 
 export function TextFilter({ column }: TextFilterProps) {

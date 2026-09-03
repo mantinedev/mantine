@@ -18,7 +18,7 @@ function Demo() {
       { accessorKey: 'startDate', header: 'Start Date', size: 150 },
       { accessorKey: 'status', header: 'Status', size: 120 },
     ],
-    columnPinning: { left: ['firstName'], right: [] },
+    columnPinning: { start: ['firstName'], end: [] },
   });
 
   return (
@@ -41,7 +41,7 @@ function Demo() {
       { accessorKey: 'startDate', header: 'Start Date', size: 150 },
       { accessorKey: 'status', header: 'Status', size: 120 },
     ],
-    columnPinning: { left: ['firstName'], right: [] },
+    columnPinning: { start: ['firstName'], end: [] },
   });
 
   return (
