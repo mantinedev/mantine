@@ -4,7 +4,7 @@ import { useMergedRef } from '@mantine/hooks';
 import { CompoundStylesApiProps, factory, Factory, rem, useProps } from '../../core';
 import { FocusTrap } from '../FocusTrap';
 import { ModalBaseContentProps, useModalBaseContext } from '../ModalBase';
-import { getStackTransform } from '../OverlayStack/get-stack-transform';
+import { getCenteredStackOffset, getStackTransform } from '../OverlayStack/get-stack-transform';
 import { Paper } from '../Paper';
 import { Transition } from '../Transition';
 import { useModalContext } from './Modal.context';
@@ -50,17 +50,35 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
     ...others
   } = props;
 
-  const stackTransform =
-    __depth !== undefined
-      ? getStackTransform({ kind: 'modal', depth: __depth, dragProgress: __dragProgress })
-      : null;
-
   const contentRef = useRef<HTMLElement>(null);
   const mergedContentRef = useMergedRef(ref, contentRef);
 
   const ctx = useModalContext();
   const baseCtx = useModalBaseContext();
   const Scroll: React.FC<any> = ctx.scrollAreaComponent || NativeScrollArea;
+
+  const [releasing, setReleasing] = useState(false);
+  const [prevDepth, setPrevDepth] = useState(__depth);
+  const [contentSize, setContentSize] = useState<{ width: number; height: number } | null>(null);
+
+  if (prevDepth !== __depth) {
+    setPrevDepth(__depth);
+
+    if (prevDepth !== undefined && prevDepth > 0 && __depth === 0) {
+      setReleasing(true);
+    }
+  }
+
+  useEffect(() => {
+    if (!releasing) {
+      return undefined;
+    }
+
+    const id = setTimeout(() => setReleasing(false), 220);
+    return () => clearTimeout(id);
+  }, [releasing, __depth]);
+
+  const frozen = __depth !== undefined && !ctx.fullScreen && (__depth > 0 || releasing);
 
   useEffect(() => {
     if (!__reportTopRect || __depth !== 0) {
@@ -81,6 +99,16 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
         width: Number.isFinite(naturalWidth) && naturalWidth > 0 ? naturalWidth : rect.width,
         height: rect.height,
       });
+
+      if (!frozen) {
+        const width = node.clientWidth;
+        const height = node.offsetHeight;
+        setContentSize((current) =>
+          current && current.width === width && current.height === height
+            ? current
+            : { width, height }
+        );
+      }
     };
 
     measure();
@@ -89,25 +117,26 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [__reportTopRect, __depth, baseCtx.opened]);
+  }, [__reportTopRect, __depth, baseCtx.opened, frozen]);
 
-  const [releasing, setReleasing] = useState(false);
-  const prevDepthRef = useRef(__depth);
+  const stackOffset =
+    __depth !== undefined && __depth > 0 && ctx.centered && !ctx.fullScreen && __topRect
+      ? getCenteredStackOffset({
+          topHeight: __topRect.height,
+          ownHeight: contentSize?.height ?? null,
+          depth: __depth,
+        })
+      : 0;
 
-  useEffect(() => {
-    const prevDepth = prevDepthRef.current;
-    prevDepthRef.current = __depth;
-
-    if (prevDepth !== undefined && prevDepth > 0 && __depth === 0) {
-      setReleasing(true);
-      const id = setTimeout(() => setReleasing(false), 220);
-      return () => clearTimeout(id);
-    }
-
-    return undefined;
-  }, [__depth]);
-
-  const frozen = __depth !== undefined && !ctx.fullScreen && (__depth > 0 || releasing);
+  const stackTransform =
+    __depth !== undefined
+      ? getStackTransform({
+          kind: 'modal',
+          depth: __depth,
+          dragProgress: __dragProgress,
+          offset: stackOffset,
+        })
+      : null;
 
   const stackSizeStyle: React.CSSProperties =
     __depth !== undefined && !ctx.fullScreen
@@ -201,7 +230,13 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
                   <div
                     style={
                       frozen
-                        ? { display: 'block', width: 'var(--modal-size)', flex: '0 0 auto' }
+                        ? {
+                            display: 'block',
+                            width: contentSize?.width
+                              ? `${contentSize.width}px`
+                              : 'var(--modal-size)',
+                            flex: '0 0 auto',
+                          }
                         : { display: 'contents' }
                     }
                   >

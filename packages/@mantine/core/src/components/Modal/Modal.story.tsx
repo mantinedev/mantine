@@ -80,6 +80,38 @@ export function ModalsStack() {
   );
 }
 
+export function ModalsStackCentered() {
+  const stack = useModalsStack(['first', 'second', 'third']);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => stack.open('first')}>Open modal</Button>
+      <Modal.Stack>
+        <Modal {...stack.register('first')} title="First modal" centered>
+          {generateContent(3)}
+          <Button onClick={() => stack.open('second')} fullWidth mt="md">
+            Open second modal
+          </Button>
+        </Modal>
+
+        <Modal {...stack.register('second')} title="Second modal" centered>
+          Second modal
+          <Button onClick={() => stack.open('third')} fullWidth mt="md">
+            Open third modal
+          </Button>
+        </Modal>
+
+        <Modal {...stack.register('third')} title="Third modal" centered>
+          {generateContent(2)}
+          <Button onClick={() => stack.closeAll()} fullWidth mt="md">
+            Close all
+          </Button>
+        </Modal>
+      </Modal.Stack>
+    </div>
+  );
+}
+
 export function WithSelect() {
   const [opened, { open, close }] = useDisclosure(true);
   return (

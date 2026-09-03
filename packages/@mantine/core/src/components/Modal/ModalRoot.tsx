@@ -160,7 +160,15 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
 
   return (
     <ModalProvider
-      value={{ yOffset, scrollAreaComponent, getStyles, fullScreen, stickyHeader, stickyFooter }}
+      value={{
+        yOffset,
+        scrollAreaComponent,
+        getStyles,
+        fullScreen,
+        centered,
+        stickyHeader,
+        stickyFooter,
+      }}
     >
       <ModalBaseProvider
         value={{

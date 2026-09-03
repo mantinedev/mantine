@@ -353,6 +353,55 @@ describe('@mantine/core/ModalStack', () => {
     expect(top.style.maxWidth).toBe('var(--modal-size)');
   });
 
+  it('offsets centered stacked modals so that each card peeks above the top one', async () => {
+    const originalGetBoundingClientRect = HTMLElement.prototype.getBoundingClientRect;
+    HTMLElement.prototype.getBoundingClientRect = function getBoundingClientRect() {
+      return {
+        width: 400,
+        height: 300,
+        top: 0,
+        left: 0,
+        right: 400,
+        bottom: 300,
+        x: 0,
+        y: 0,
+      } as any;
+    };
+
+    function CenteredStackDemo() {
+      const stack = useModalsStack(['a', 'b']);
+      return (
+        <Modal.Stack>
+          <Modal {...stack.register('a')} withinPortal={false} centered>
+            modal-a
+          </Modal>
+          <Modal {...stack.register('b')} withinPortal={false} centered>
+            modal-b
+          </Modal>
+          <button type="button" onClick={() => stack.open('a')}>
+            open-a
+          </button>
+          <button type="button" onClick={() => stack.open('b')}>
+            open-b
+          </button>
+        </Modal.Stack>
+      );
+    }
+
+    try {
+      render(<CenteredStackDemo />);
+      await userEvent.click(screen.getByText('open-a'));
+      await userEvent.click(screen.getByText('open-b'));
+
+      await waitFor(() => {
+        const inner = screen.getByText('modal-a').closest<HTMLElement>('.mantine-Modal-inner')!;
+        expect(inner.style.transform).toBe('translateY(-16px)');
+      });
+    } finally {
+      HTMLElement.prototype.getBoundingClientRect = originalGetBoundingClientRect;
+    }
+  });
+
   it('hides stacked items beyond maxDepth', async () => {
     const { container } = render(<StackDemo maxDepth={1} />);
     await userEvent.click(screen.getByText('open'));

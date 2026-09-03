@@ -1,5 +1,9 @@
-export { getStackTransform } from './get-stack-transform';
-export type { StackTransform, StackTransformInput } from './get-stack-transform';
+export { getCenteredStackOffset, getStackTransform } from './get-stack-transform';
+export type {
+  CenteredStackOffsetInput,
+  StackTransform,
+  StackTransformInput,
+} from './get-stack-transform';
 export { OverlayStackProvider } from './OverlayStack';
 export type { OverlayStackProviderProps } from './OverlayStack';
 export { OverlayStackContext } from './OverlayStack.context';
