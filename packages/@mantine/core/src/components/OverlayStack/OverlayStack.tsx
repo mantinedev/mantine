@@ -51,7 +51,8 @@ export function OverlayStackProvider({
   const getZIndex = (id: string) => `calc(${maxZIndex} + ${stack.indexOf(id)} + 1)`;
   const getDepth = (id: string) => {
     const source = closing.includes(id) ? stack : openStack;
-    return source.length - 1 - source.indexOf(id);
+    const index = source.indexOf(id);
+    return index === -1 ? 0 : source.length - 1 - index;
   };
   const isVisible = (id: string) => getDepth(id) <= maxDepth;
 

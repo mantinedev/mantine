@@ -58,7 +58,8 @@
   }
 
   &[data-stacked] {
-    border: 1px solid var(--mantine-color-border);
+    outline: 1px solid var(--mantine-color-border);
+    outline-offset: -1px;
   }
 }
 

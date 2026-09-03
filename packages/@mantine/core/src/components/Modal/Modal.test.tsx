@@ -322,6 +322,37 @@ describe('@mantine/core/ModalStack', () => {
     expect(screen.getByText('modal-a').closest('[data-stack-hidden]')).toBeNull();
   });
 
+  it('renders a newly opened modal as the top card without freezing its layout', async () => {
+    function OpenSecondDemo() {
+      const stack = useModalsStack(['a', 'b']);
+      return (
+        <Modal.Stack>
+          <Modal {...stack.register('a')} withinPortal={false}>
+            modal-a
+          </Modal>
+          <Modal {...stack.register('b')} withinPortal={false}>
+            modal-b
+          </Modal>
+          <button type="button" onClick={() => stack.open('a')}>
+            open-a
+          </button>
+          <button type="button" onClick={() => stack.open('b')}>
+            open-b
+          </button>
+        </Modal.Stack>
+      );
+    }
+
+    render(<OpenSecondDemo />);
+    await userEvent.click(screen.getByText('open-a'));
+    await userEvent.click(screen.getByText('open-b'));
+
+    const top = screen.getByText('modal-b').closest<HTMLElement>('[data-modal-content]')!;
+    expect(top.style.overflow).not.toBe('hidden');
+    expect(top.style.maxHeight).toBe('');
+    expect(top.style.maxWidth).toBe('var(--modal-size)');
+  });
+
   it('hides stacked items beyond maxDepth', async () => {
     const { container } = render(<StackDemo maxDepth={1} />);
     await userEvent.click(screen.getByText('open'));
