@@ -108,6 +108,11 @@ export const Demo_cursorType = {
   render: renderDemo(demos.cursorType),
 };
 
+export const Demo_disabledOpacity = {
+  name: '⭐ Demo: disabledOpacity',
+  render: renderDemo(demos.disabledOpacity),
+};
+
 export const Demo_autoContrast = {
   name: '⭐ Demo: autoContrast',
   render: renderDemo(demos.autoContrast),

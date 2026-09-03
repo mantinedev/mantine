@@ -108,9 +108,6 @@ export function themeToVars(theme: MantineThemeOverride): MantineVars {
       defaultColor: 'var(--mantine-color-default-color)',
       defaultBorder: 'var(--mantine-color-default-border)',
       dimmed: 'var(--mantine-color-dimmed)',
-      disabledBody: 'var(--mantine-color-disabled)',
-      disabledText: 'var(--mantine-color-disabled-color)',
-      disabledBorder: 'var(--mantine-color-disabled-border)',
     }
   ) as Colors;
 

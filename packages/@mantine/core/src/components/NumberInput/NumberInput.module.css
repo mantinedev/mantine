@@ -41,8 +41,7 @@
   &:where(:disabled) {
     background-color: transparent;
     cursor: not-allowed;
-    opacity: 0.6;
-    color: var(--mantine-color-disabled-color);
+    opacity: var(--mantine-disabled-opacity);
   }
 
   .root[data-error] :where(&) {

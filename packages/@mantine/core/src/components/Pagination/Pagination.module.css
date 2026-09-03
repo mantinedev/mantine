@@ -39,7 +39,7 @@
 
   &:where(:disabled, [data-disabled]) {
     cursor: not-allowed;
-    opacity: 0.4;
+    opacity: var(--mantine-disabled-opacity);
   }
 
   border-color: var(--mantine-color-default-border);

@@ -27,7 +27,7 @@
   }
 
   &:where(:disabled, [data-disabled]) {
-    opacity: 0.5;
+    opacity: var(--mantine-disabled-opacity);
     cursor: not-allowed;
   }
 }

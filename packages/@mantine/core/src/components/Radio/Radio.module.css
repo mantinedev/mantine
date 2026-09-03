@@ -74,12 +74,6 @@
 
   &:disabled {
     cursor: not-allowed;
-    background-color: var(--mantine-color-disabled);
-    border-color: var(--mantine-color-disabled-border);
-
-    & + .icon {
-      --radio-icon-color: var(--mantine-color-disabled-color);
-    }
   }
 
   &:where([data-with-error-styles][data-error]) {
@@ -88,7 +82,7 @@
 }
 
 .radio--light {
-  &:checked:not(:disabled) {
+  &:checked {
     background-color: var(--radio-bg);
     border-color: transparent;
 
@@ -104,7 +98,7 @@
     --radio-icon-color: var(--radio-color);
   }
 
-  &:checked:not(:disabled) {
+  &:checked {
     background-color: transparent;
     border-color: var(--radio-color);
 

@@ -76,19 +76,11 @@
 
 .root--default {
   background-color: var(--mantine-color-neutral-3);
-
-  &:where([data-disabled], :has(button:disabled)) {
-    background-color: var(--mantine-color-disabled);
-  }
 }
 
 .root--contrast {
   @mixin where-light {
     background-color: var(--mantine-color-white);
-  }
-
-  &:where([data-disabled], :has(button:disabled)) {
-    background-color: var(--mantine-color-disabled);
   }
 }
 

@@ -17,6 +17,11 @@
     --label-offset-end: 0;
     --label-offset-start: var(--mantine-spacing-sm);
   }
+
+  fieldset:disabled &,
+  &[data-disabled] {
+    opacity: var(--mantine-disabled-opacity);
+  }
 }
 
 .body {
@@ -46,11 +51,6 @@
   color: inherit;
   padding-inline-start: var(--label-offset-start);
   padding-inline-end: var(--label-offset-end);
-
-  fieldset:disabled &,
-  &:where([data-disabled]) {
-    color: var(--mantine-color-disabled-color);
-  }
 }
 
 .description {

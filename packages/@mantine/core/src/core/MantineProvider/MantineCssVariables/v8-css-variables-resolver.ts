@@ -127,6 +127,7 @@ export const v8CssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-z-index-max': '9999',
       '--mantine-scale': theme.scale.toString(),
       '--mantine-cursor-type': theme.cursorType,
+      '--mantine-disabled-opacity': theme.disabledOpacity.toString(),
       '--mantine-webkit-font-smoothing': theme.fontSmoothing ? 'antialiased' : 'unset',
       '--mantine-moz-font-smoothing': theme.fontSmoothing ? 'grayscale' : 'unset',
       '--mantine-color-white': theme.white,
@@ -160,9 +161,6 @@ export const v8CssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-color': 'var(--mantine-color-black)',
       '--mantine-color-default-border': 'var(--mantine-color-gray-4)',
       '--mantine-color-dimmed': 'var(--mantine-color-gray-6)',
-      '--mantine-color-disabled': 'var(--mantine-color-gray-2)',
-      '--mantine-color-disabled-color': 'var(--mantine-color-gray-5)',
-      '--mantine-color-disabled-border': 'var(--mantine-color-gray-3)',
     },
     dark: {
       '--mantine-color-scheme': 'dark',
@@ -179,9 +177,6 @@ export const v8CssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-color': 'var(--mantine-color-white)',
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',
       '--mantine-color-dimmed': 'var(--mantine-color-dark-2)',
-      '--mantine-color-disabled': 'var(--mantine-color-dark-6)',
-      '--mantine-color-disabled-color': 'var(--mantine-color-dark-3)',
-      '--mantine-color-disabled-border': 'var(--mantine-color-dark-4)',
     },
   };
 

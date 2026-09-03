@@ -61,10 +61,8 @@
 
   &:where(:disabled:not([data-loading]), [data-disabled]:not([data-loading])) {
     cursor: not-allowed;
-    border: 1px solid transparent;
     transform: none;
-    color: var(--mantine-color-disabled-color);
-    background: var(--mantine-color-disabled);
+    opacity: var(--mantine-disabled-opacity);
   }
 
   &::before {

@@ -794,20 +794,21 @@ are provided for the light color scheme, dark color scheme values are different.
         'Border color of default-styled controls and control containers (inputs, buttons, toolbars, editors)',
       defaultValue: 'var(--mantine-color-gray-4)',
     },
+  ]}
+/>
+
+### Disabled opacity
+
+`--mantine-disabled-opacity` controls the opacity of disabled elements in all components.
+Its value is set by `theme.disabledOpacity` (`0.5` by default) and can be overridden
+for any part of the application with a CSS rule.
+
+<CssVariablesGroup
+  data={[
     {
-      variable: '--mantine-color-disabled',
-      description: 'Background color of disabled elements',
-      defaultValue: 'var(--mantine-color-gray-2)',
-    },
-    {
-      variable: '--mantine-color-disabled-color',
-      description: 'Text color of disabled elements',
-      defaultValue: 'var(--mantine-color-gray-5)',
-    },
-    {
-      variable: '--mantine-color-disabled-border',
-      description: 'Border color of disabled elements',
-      defaultValue: 'var(--mantine-color-gray-3)',
+      variable: '--mantine-disabled-opacity',
+      description: 'Opacity of disabled elements, value of theme.disabledOpacity',
+      defaultValue: '0.5',
     },
   ]}
 />

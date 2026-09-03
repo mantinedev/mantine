@@ -13,6 +13,11 @@
     outline-offset: 2px;
   }
 
+  &:where([data-disabled]) {
+    cursor: not-allowed;
+    opacity: var(--mantine-disabled-opacity);
+  }
+
   --slider-size: 60px;
   --thumb-size: calc(var(--slider-size) / 5);
 

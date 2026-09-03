@@ -33,6 +33,15 @@
   }
 
   background-color: var(--mantine-color-surface-sunken);
+
+  fieldset:disabled &,
+  &:where([data-disabled]) {
+    opacity: var(--mantine-disabled-opacity);
+
+    & > * {
+      --mantine-disabled-opacity: 1;
+    }
+  }
 }
 
 .indicator {
@@ -81,7 +90,7 @@
   fieldset:disabled &,
   &:where([data-disabled]) {
     cursor: not-allowed;
-    color: var(--mantine-color-disabled-color);
+    opacity: var(--mantine-disabled-opacity);
   }
 
   &:where([data-active]) {
@@ -115,7 +124,7 @@
     }
   }
 
-  &:where(:not([data-disabled], [data-active], [data-read-only])) {
+  &:where(:not([data-disabled], [data-active], [data-read-only], fieldset:disabled *)) {
     @mixin hover {
       @mixin where-light {
         color: var(--mantine-color-black);
@@ -124,12 +133,6 @@
       @mixin where-dark {
         color: var(--mantine-color-white);
       }
-    }
-  }
-
-  fieldset:disabled & {
-    @mixin hover {
-      color: var(--mantine-color-disabled-color) !important;
     }
   }
 }

@@ -3,6 +3,8 @@ import { DEFAULT_THEME } from '../default-theme';
 import { mergeMantineTheme } from '../merge-mantine-theme/merge-mantine-theme';
 import { defaultCssVariablesResolver } from './default-css-variables-resolver';
 import { getCSSColorVariables } from './get-css-color-variables';
+import { v8CssVariablesResolver } from './v8-css-variables-resolver';
+import { v9CssVariablesResolver } from './v9-css-variables-resolver';
 
 test('default-css-variables-resolver', () => {
   expect(defaultCssVariablesResolver(DEFAULT_THEME)).toMatchSnapshot();
@@ -270,5 +272,44 @@ describe('theme.surfaces overrides', () => {
     expect(resolved.dark['--mantine-color-surface-panel']).toBe('#101113');
     expect(resolved.dark['--mantine-color-surface-page']).toBe('var(--mantine-color-dark-7)');
     expect(resolved.light['--mantine-color-surface-sunken']).toBe('var(--mantine-color-gray-2)');
+  });
+});
+
+describe('disabled opacity', () => {
+  it('--mantine-disabled-opacity resolves to theme.disabledOpacity', () => {
+    expect(defaultCssVariablesResolver(DEFAULT_THEME).variables['--mantine-disabled-opacity']).toBe(
+      '0.5'
+    );
+    expect(
+      defaultCssVariablesResolver({ ...DEFAULT_THEME, disabledOpacity: 0.3 }).variables[
+        '--mantine-disabled-opacity'
+      ]
+    ).toBe('0.3');
+  });
+
+  it('emits --mantine-disabled-opacity from the v9 and v8 resolvers', () => {
+    expect(v9CssVariablesResolver(DEFAULT_THEME).variables['--mantine-disabled-opacity']).toBe(
+      '0.5'
+    );
+    expect(v8CssVariablesResolver(DEFAULT_THEME).variables['--mantine-disabled-opacity']).toBe(
+      '0.5'
+    );
+  });
+
+  it('does not emit the legacy disabled color tokens from any resolver', () => {
+    const tokens = [
+      '--mantine-color-disabled',
+      '--mantine-color-disabled-color',
+      '--mantine-color-disabled-border',
+    ];
+    [defaultCssVariablesResolver, v9CssVariablesResolver, v8CssVariablesResolver].forEach(
+      (resolver) => {
+        const result = resolver(DEFAULT_THEME);
+        tokens.forEach((token) => {
+          expect(result.light).not.toHaveProperty(token);
+          expect(result.dark).not.toHaveProperty(token);
+        });
+      }
+    );
   });
 });

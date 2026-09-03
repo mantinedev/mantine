@@ -63,18 +63,19 @@
 
   &:where([data-disabled]) {
     cursor: not-allowed;
-    background-color: var(--mantine-color-disabled);
-    color: var(--mantine-color-disabled-color);
+    opacity: var(--mantine-disabled-opacity);
   }
 }
 
-.label--outline:not([data-disabled]) {
+.label--outline {
   border: 1px solid var(--mantine-color-border);
 
   background-color: var(--mantine-color-default);
 
   @mixin hover {
-    background-color: var(--mantine-color-default-hover);
+    &:where(:not([data-disabled])) {
+      background-color: var(--mantine-color-default-hover);
+    }
   }
 
   &:where([data-checked]) {
@@ -82,19 +83,23 @@
     border: var(--chip-bd);
 
     @mixin hover {
-      background-color: var(--chip-hover);
+      &:where(:not([data-disabled])) {
+        background-color: var(--chip-hover);
+      }
     }
   }
 }
 
-.label--filled:not([data-disabled]),
-.label--light:not([data-disabled]) {
+.label--filled,
+.label--light {
   border: 1px solid transparent;
   color: var(--mantine-color-text);
   background-color: var(--mantine-color-neutral-2);
 
   @mixin hover {
-    background-color: var(--mantine-color-neutral-3);
+    &:where(:not([data-disabled])) {
+      background-color: var(--mantine-color-neutral-3);
+    }
   }
 
   &:where([data-checked]) {
@@ -103,7 +108,9 @@
     background-color: var(--chip-bg);
 
     @mixin hover {
-      background-color: var(--chip-hover);
+      &:where(:not([data-disabled])) {
+        background-color: var(--chip-hover);
+      }
     }
   }
 }

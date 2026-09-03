@@ -276,7 +276,7 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
       ]}
       {...others}
       role="radiogroup"
-      data-disabled={disabled}
+      data-disabled={disabled || undefined}
     >
       {typeof _value !== 'undefined' && (
         <FloatingIndicator

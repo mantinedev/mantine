@@ -105,7 +105,7 @@
 
   .root[data-disabled] &:not([data-hidden]) {
     cursor: default;
-    opacity: 0.5;
+    opacity: var(--mantine-disabled-opacity);
   }
 
   .root[data-orientation='vertical'] & [data-compare-handle-icon] {

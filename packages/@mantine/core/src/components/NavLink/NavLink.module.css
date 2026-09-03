@@ -14,7 +14,7 @@
   }
 
   &:where([data-disabled]) {
-    opacity: 0.4;
+    opacity: var(--mantine-disabled-opacity);
     pointer-events: none;
   }
 

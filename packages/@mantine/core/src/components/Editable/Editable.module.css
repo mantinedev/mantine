@@ -41,7 +41,7 @@
 
   &[data-disabled] {
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: var(--mantine-disabled-opacity);
   }
 
   &:focus-visible {
@@ -96,6 +96,6 @@ textarea.input {
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: var(--mantine-disabled-opacity);
   }
 }

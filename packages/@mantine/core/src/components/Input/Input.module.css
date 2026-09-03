@@ -25,8 +25,6 @@
   --input-padding-inline-end: var(--input-padding);
   --input-placeholder-color: var(--mantine-color-placeholder);
   --input-color: var(--mantine-color-text);
-  --input-disabled-bg: var(--mantine-color-disabled);
-  --input-disabled-color: var(--mantine-color-disabled-color);
 
   --input-left-section-size: var(--input-left-section-width, calc(var(--input-height) - rem(2px)));
 
@@ -163,6 +161,14 @@
     --left-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
     --right-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
   }
+
+  &:where([data-disabled]) {
+    opacity: var(--mantine-disabled-opacity);
+
+    & > * {
+      --mantine-disabled-opacity: 1;
+    }
+  }
 }
 
 .input {
@@ -236,17 +242,13 @@
   &:disabled,
   &[data-disabled] {
     cursor: not-allowed;
-    opacity: 0.6;
-    background-color: var(--input-disabled-bg);
-    color: var(--input-disabled-color);
+    opacity: var(--mantine-disabled-opacity);
   }
 
   /* Required to be a separate selector to work in Firefox, can be merged with &:disabled once :has is supported */
   &:has(input:disabled) {
     cursor: not-allowed;
-    opacity: 0.6;
-    background-color: var(--input-disabled-bg);
-    color: var(--input-disabled-color);
+    opacity: var(--mantine-disabled-opacity);
   }
 
   &[readonly] {

@@ -38,7 +38,7 @@
   }
 
   &:where(:disabled, [data-disabled]) {
-    opacity: 0.2;
+    opacity: var(--mantine-disabled-opacity);
     cursor: not-allowed;
   }
 }
@@ -86,7 +86,7 @@
 
   &:disabled {
     cursor: not-allowed;
-    color: var(--mantine-color-dimmed);
+    opacity: var(--mantine-disabled-opacity);
   }
 }
 

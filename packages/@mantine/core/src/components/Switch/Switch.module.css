@@ -36,7 +36,6 @@
   --switch-track-label-padding: var(--switch-track-label-padding-sm);
   --switch-radius: 1000px;
   --switch-color: var(--mantine-primary-color-filled);
-  --switch-disabled-color: var(--mantine-color-disabled);
 
   position: relative;
 }
@@ -94,7 +93,6 @@
 
   .input:disabled + &,
   .input[data-disabled] + & {
-    --switch-bg: var(--switch-disabled-color);
     --switch-cursor: not-allowed;
   }
 
@@ -135,19 +133,6 @@
 
   .input:checked + * > & {
     --switch-thumb-start: calc(100% - var(--switch-thumb-size) - var(--switch-track-label-padding));
-  }
-
-  .input:disabled + * > &,
-  .input[data-disabled] + * > & {
-    --switch-thumb-bg: var(--switch-thumb-bg-disabled);
-  }
-
-  @mixin light {
-    --switch-thumb-bg-disabled: var(--mantine-color-gray-0);
-  }
-
-  @mixin dark {
-    --switch-thumb-bg-disabled: var(--mantine-color-dark-3);
   }
 }
 

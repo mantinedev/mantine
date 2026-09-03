@@ -51,8 +51,6 @@
 
   &:where([data-disabled]) {
     cursor: not-allowed;
-    color: var(--mantine-color-disabled-color);
-    background-color: var(--mantine-color-disabled);
-    border-color: transparent;
+    opacity: var(--mantine-disabled-opacity);
   }
 }

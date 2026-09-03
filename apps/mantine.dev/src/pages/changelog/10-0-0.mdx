@@ -1,4 +1,4 @@
-import { DataGridDemos, DrawerDemos, ModalDemos } from '@docs/demos';
+import { DataGridDemos, DrawerDemos, ModalDemos, ThemingDemos } from '@docs/demos';
 import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -285,6 +285,19 @@ separate role: `Switch`, `Slider`, `Progress`, `RingProgress`, and `SemiCirclePr
 unfilled part of a control reads as a rail rather than a hole. Overriding `surfaces.sunken` in the theme (or the
 token itself) restyles all inset elements together; override `--mantine-color-track` to restyle every control
 track at once.
+
+## Disabled state opacity
+
+All components now render their disabled state as a reduced-opacity version of their normal
+appearance instead of switching to flat neutral colors. A disabled filled `Button` stays blue, a
+checked disabled `Checkbox` keeps its accent color, and every other component follows the same
+rule – only faded.
+
+The opacity is controlled by a single theme option, `theme.disabledOpacity` (`0.5` by default),
+exposed as the `--mantine-disabled-opacity` CSS variable. Override it globally in your theme, or
+per subtree and color scheme with plain CSS.
+
+<Demo data={ThemingDemos.disabledOpacity} />
 
 ## Dark neutral flavors
 

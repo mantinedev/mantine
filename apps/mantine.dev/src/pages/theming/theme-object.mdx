@@ -131,6 +131,11 @@ interface MantineTheme {
    */
   cursorType: 'default' | 'pointer';
 
+  /** Opacity of disabled elements in all components, `0.5` by default.
+   *  Emitted as `--mantine-disabled-opacity` CSS variable.
+   */
+  disabledOpacity: number;
+
   /** Default gradient configuration for components that support `variant="gradient"` */
   defaultGradient: MantineGradient;
 
@@ -340,6 +345,22 @@ With `overlayStack` enabled, modals that are opened one after another are stacke
 that do not have `cursor: pointer` styles by default. For example, [Checkbox](/core/checkbox) and [NativeSelect](/core/native-select).
 
 <Demo data={ThemingDemos.cursorType} />
+
+### disabledOpacity
+
+`theme.disabledOpacity` controls the opacity of disabled elements in all components,
+for example, [Button](/core/button), [TextInput](/core/text-input) or [Checkbox](/core/checkbox).
+Disabled elements keep their regular colors and are rendered with reduced opacity,
+the default value is `0.5`. The value is exposed as `--mantine-disabled-opacity` CSS variable,
+you can override it for a part of your application without changing the theme:
+
+```css
+.my-panel {
+  --mantine-disabled-opacity: 0.3;
+}
+```
+
+<Demo data={ThemingDemos.disabledOpacity} />
 
 ### defaultGradient
 

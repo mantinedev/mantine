@@ -279,6 +279,42 @@ function Demo() {
 }
 ```
 
+## Disabled state
+
+In v10 disabled elements no longer use dedicated gray colors. Instead, all components keep
+their regular colors and are rendered with reduced opacity controlled by the new
+`theme.disabledOpacity` option (`0.5` by default), exposed as `--mantine-disabled-opacity`
+CSS variable:
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  disabledOpacity: 0.4,
+});
+
+function Demo() {
+  return <MantineProvider theme={theme}>{/* Your app */}</MantineProvider>;
+}
+```
+
+The `--mantine-color-disabled`, `--mantine-color-disabled-color` and
+`--mantine-color-disabled-border` CSS variables were removed. If you used them in your
+styles, replace them with the opacity variable:
+
+```css
+.custom-control:disabled {
+  opacity: var(--mantine-disabled-opacity);
+}
+```
+
+The `disabledBody`, `disabledText` and `disabledBorder` keys of `vars.colors` in
+`@mantine/vanilla-extract` were removed for the same reason – use `--mantine-disabled-opacity`
+in your `.css.ts` files instead.
+
+Note that the [v9 opt-out](#v9-opt-out) does not restore the gray disabled styles –
+components no longer read the removed variables.
+
 ## v9 opt-out
 
 If your application cannot migrate immediately, you can restore the full v9 colors, variant

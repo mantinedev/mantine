@@ -40,9 +40,8 @@
   }
 
   &:where(:disabled, [data-disabled]) {
-    color: var(--mantine-color-disabled-color);
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: var(--mantine-disabled-opacity);
   }
 
   &:where([data-hidden]) {

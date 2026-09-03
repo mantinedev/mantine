@@ -125,6 +125,11 @@ export interface MantineTheme {
    */
   cursorType: 'default' | 'pointer';
 
+  /** Opacity of disabled elements in all components, `0.5` by default.
+   *  Emitted as `--mantine-disabled-opacity` CSS variable.
+   */
+  disabledOpacity: number;
+
   /** Default gradient configuration for components that support `variant="gradient"` */
   defaultGradient: MantineGradient;
 

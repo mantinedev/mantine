@@ -49,4 +49,5 @@
 
 .control:disabled {
   cursor: not-allowed;
+  opacity: var(--mantine-disabled-opacity);
 }

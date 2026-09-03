@@ -67,12 +67,6 @@
 
   &:disabled {
     cursor: not-allowed;
-    border-color: var(--mantine-color-disabled-border);
-    background-color: var(--mantine-color-disabled);
-
-    & + .icon {
-      color: var(--mantine-color-disabled-color);
-    }
   }
 }
 
@@ -81,8 +75,8 @@
     color: var(--checkbox-color);
   }
 
-  &[data-indeterminate]:not(:disabled),
-  &:checked:not(:disabled) {
+  &[data-indeterminate],
+  &:checked {
     background-color: var(--checkbox-bg);
     border-color: transparent;
 
@@ -99,8 +93,8 @@
     color: var(--checkbox-color);
   }
 
-  &[data-indeterminate]:not(:disabled),
-  &:checked:not(:disabled) {
+  &[data-indeterminate],
+  &:checked {
     background-color: transparent;
     border-color: var(--checkbox-color);
 

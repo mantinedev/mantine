@@ -53,18 +53,13 @@
 
   &[data-disabled] {
     cursor: not-allowed;
-    border-color: var(--mantine-color-disabled-border);
-    background-color: var(--mantine-color-disabled);
-
-    &[data-checked] > .icon {
-      color: var(--mantine-color-disabled-color);
-    }
+    opacity: var(--mantine-disabled-opacity);
   }
 }
 
 .indicator--light {
-  &[data-indeterminate]:not([data-disabled]),
-  &[data-checked]:not([data-disabled]) {
+  &[data-indeterminate],
+  &[data-checked] {
     background-color: var(--checkbox-bg);
     border-color: transparent;
 
@@ -77,8 +72,8 @@
 }
 
 .indicator--outline {
-  &[data-indeterminate]:not([data-disabled]),
-  &[data-checked]:not([data-disabled]) {
+  &[data-indeterminate],
+  &[data-checked] {
     background-color: transparent;
     border-color: var(--checkbox-color);
 

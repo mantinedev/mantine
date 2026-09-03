@@ -52,7 +52,7 @@
 
   &:where([data-combobox-disabled]) {
     cursor: not-allowed;
-    opacity: 0.35;
+    opacity: var(--mantine-disabled-opacity);
   }
 
   @mixin hover {

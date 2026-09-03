@@ -48,17 +48,12 @@
 
   &[data-disabled] {
     cursor: not-allowed;
-    background-color: var(--mantine-color-disabled);
-    border-color: var(--mantine-color-disabled-border);
-
-    &[data-checked] > .icon {
-      color: var(--mantine-color-disabled-color);
-    }
+    opacity: var(--mantine-disabled-opacity);
   }
 }
 
 .indicator--light {
-  &[data-checked]:not([data-disabled]) {
+  &[data-checked] {
     background-color: var(--radio-bg);
     border-color: transparent;
 
@@ -71,7 +66,7 @@
 }
 
 .indicator--outline {
-  &[data-checked]:not([data-disabled]) {
+  &[data-checked] {
     background-color: transparent;
     border-color: var(--radio-color);
 

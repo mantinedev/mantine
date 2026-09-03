@@ -88,7 +88,7 @@ export function InlineInput({
         '--label-fz': getFontSize(size),
         '--label-lh': getSize(size, 'label-lh'),
       }}
-      mod={[{ 'label-position': labelPosition }, mod]}
+      mod={[{ 'label-position': labelPosition, disabled }, mod]}
       variant={variant}
       size={size}
       {...others}

@@ -33,7 +33,7 @@
   }
 
   &:where([data-disabled]) {
-    opacity: 0.3;
+    opacity: var(--mantine-disabled-opacity);
     cursor: not-allowed;
   }
 
@@ -66,7 +66,7 @@
   color: var(--mantine-color-bright);
 
   &:where([data-disabled]) {
-    opacity: 0.3;
+    opacity: var(--mantine-disabled-opacity);
     cursor: not-allowed;
   }
 

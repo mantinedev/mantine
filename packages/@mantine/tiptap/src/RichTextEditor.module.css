@@ -351,7 +351,7 @@
 
   &:where([data-disabled]) {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: var(--mantine-disabled-opacity);
   }
 
   &:where([data-interactive]:not([data-disabled])) {

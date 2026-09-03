@@ -48,7 +48,7 @@
   &[data-disabled] {
     pointer-events: none;
     filter: grayscale(0.6);
-    opacity: 0.5;
+    opacity: var(--mantine-disabled-opacity);
   }
 }
 
