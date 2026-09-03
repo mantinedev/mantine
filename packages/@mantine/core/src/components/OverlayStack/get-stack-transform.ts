@@ -1,11 +1,12 @@
 export interface StackTransformInput {
-  kind: 'modal' | 'drawer';
-  position?: 'top' | 'bottom' | 'left' | 'right';
+  /** Position of the modal in the stack, 0 is the top modal */
   depth: number;
+
+  /** Progress of the top item swipe gesture in `[0, 1]`, moves stacked items one step toward the front */
   dragProgress?: number;
-  scaleStep?: number;
+
+  /** Translate in px per depth step @default 9 */
   offsetStep?: number;
-  opacityStep?: number;
 
   /** Extra translate along the stacking axis in px, added on top of the depth-based offset */
   offset?: number;
@@ -13,44 +14,17 @@ export interface StackTransformInput {
 
 export interface StackTransform {
   transform: string;
-  opacity: number;
 }
 
-export function getStackTransform(input: StackTransformInput): StackTransform {
-  const {
-    kind,
-    position = 'left',
-    depth,
-    dragProgress = 0,
-    scaleStep = 0.04,
-    offsetStep = 16,
-    opacityStep = 0,
-    offset = 0,
-  } = input;
-
+/** Transform of a stacked modal: each card behind the top one is shifted up so that a constant strip peeks above the card in front of it */
+export function getStackTransform({
+  depth,
+  dragProgress = 0,
+  offsetStep = 9,
+  offset = 0,
+}: StackTransformInput): StackTransform {
   const d = Math.max(0, depth - dragProgress);
-
-  if (kind === 'modal') {
-    const modalOffsetStep = input.offsetStep ?? 9;
-    return { transform: `translateY(${-(d * modalOffsetStep + offset)}px)`, opacity: 1 };
-  }
-
-  const scale = 1 - d * scaleStep;
-  const opacity = Math.min(1, Math.max(0, 1 - d * opacityStep));
-
-  let translate: string;
-
-  if (position === 'bottom') {
-    translate = `translateY(${d * offsetStep}px)`;
-  } else if (position === 'top') {
-    translate = `translateY(${-(d * offsetStep)}px)`;
-  } else if (position === 'right') {
-    translate = `translateX(${d * offsetStep}px)`;
-  } else {
-    translate = `translateX(${-(d * offsetStep)}px)`;
-  }
-
-  return { transform: `scale(${scale}) ${translate}`, opacity };
+  return { transform: `translateY(${-(d * offsetStep + offset)}px)` };
 }
 
 export interface CenteredStackOffsetInput {

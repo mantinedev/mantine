@@ -113,6 +113,16 @@ export const Drawer = factory<DrawerFactory>((_props) => {
     [reportDrag, stackId]
   );
 
+  const reportTopRect = ctx?.reportTopRect;
+  const handleReportTopRect = useCallback(
+    (rect: { width: number; height: number }) => {
+      if (stackId) {
+        reportTopRect?.(stackId, rect);
+      }
+    },
+    [reportTopRect, stackId]
+  );
+
   const depthProps =
     ctx && stackId
       ? {
@@ -121,6 +131,8 @@ export const Drawer = factory<DrawerFactory>((_props) => {
                 __depth: ctx.getDepth(stackId),
                 __visible: ctx.isVisible(stackId),
                 __dragProgress: ctx.dragProgress,
+                __topRect: ctx.topRect,
+                __reportTopRect: handleReportTopRect,
               }
             : { __visible: ctx.isVisible(stackId) }),
           __onDragProgress: handleDragProgress,

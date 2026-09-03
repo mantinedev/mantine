@@ -170,30 +170,40 @@ export function AutosizeScrollarea() {
   );
 }
 
-export function Stack() {
+type StackPosition = 'left' | 'right' | 'top' | 'bottom';
+
+interface StackDemoProps {
+  position?: StackPosition;
+  sizes?: [string, string, string];
+  offset?: number;
+  radius?: string;
+}
+
+function StackDemo({ position, sizes = ['md', 'md', 'md'], offset, radius }: StackDemoProps) {
   const stack = useModalsStack(['first', 'second', 'third']);
+  const shared = { position, offset, radius, overlayProps: { blur: 3 } };
 
   return (
     <div style={{ padding: 40 }}>
-      <Button onClick={() => stack.open('first')}>Open modal</Button>
+      <Button onClick={() => stack.open('first')}>Open drawer</Button>
       <Drawer.Stack>
-        <Drawer {...stack.register('first')} title="First modal" overlayProps={{ blur: 3 }}>
-          First modal
+        <Drawer {...stack.register('first')} {...shared} size={sizes[0]} title="First drawer">
+          First drawer
           {content}
           <Button onClick={() => stack.open('second')} fullWidth mt="md">
-            Open second modal
+            Open second drawer
           </Button>
         </Drawer>
 
-        <Drawer {...stack.register('second')} title="Second modal" overlayProps={{ blur: 3 }}>
-          Second modal
+        <Drawer {...stack.register('second')} {...shared} size={sizes[1]} title="Second drawer">
+          Second drawer
           <Button onClick={() => stack.open('third')} fullWidth mt="md">
-            Open third modal
+            Open third drawer
           </Button>
         </Drawer>
 
-        <Drawer {...stack.register('third')} title="Third modal" overlayProps={{ blur: 3 }}>
-          Third modal
+        <Drawer {...stack.register('third')} {...shared} size={sizes[2]} title="Third drawer">
+          Third drawer
           <Button onClick={() => stack.closeAll()} fullWidth mt="md">
             Close all
           </Button>
@@ -201,6 +211,34 @@ export function Stack() {
       </Drawer.Stack>
     </div>
   );
+}
+
+export function Stack() {
+  return <StackDemo />;
+}
+
+export function StackRight() {
+  return <StackDemo position="right" />;
+}
+
+export function StackBottom() {
+  return <StackDemo position="bottom" />;
+}
+
+export function StackTop() {
+  return <StackDemo position="top" />;
+}
+
+export function StackMixedSizes() {
+  return <StackDemo sizes={['xl', 'md', 'sm']} />;
+}
+
+export function StackFloating() {
+  return <StackDemo offset={16} radius="md" />;
+}
+
+export function StackWithOffset() {
+  return <StackDemo offset={5} radius="md" />;
 }
 
 function Timer() {

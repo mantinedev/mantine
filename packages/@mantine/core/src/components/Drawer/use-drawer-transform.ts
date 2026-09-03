@@ -2,13 +2,10 @@ export interface UseDrawerTransformInput {
   position: 'top' | 'bottom' | 'left' | 'right';
   dragging: boolean;
   dragOffset: number;
-  baseTransform?: string;
-  baseOpacity?: number;
 }
 
 export interface DrawerInnerStyle {
   transform?: string;
-  opacity?: number;
   transition?: string;
 }
 
@@ -30,16 +27,9 @@ export function getDrawerInnerStyle({
   position,
   dragging,
   dragOffset,
-  baseTransform,
-  baseOpacity,
 }: UseDrawerTransformInput): DrawerInnerStyle {
-  const dragTranslate = dragOffset !== 0 ? getDragTranslate(position, dragOffset) : null;
-
-  const transform = [baseTransform, dragTranslate].filter(Boolean).join(' ') || undefined;
-
   return {
-    transform,
-    opacity: baseOpacity,
+    transform: dragOffset !== 0 ? getDragTranslate(position, dragOffset) : undefined,
     transition: dragging ? 'none' : undefined,
   };
 }

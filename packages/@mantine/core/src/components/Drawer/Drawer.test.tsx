@@ -303,6 +303,27 @@ describe('@mantine/core/DrawerStack', () => {
     expect(screen.getByText('drawer-a').closest('[data-stack-hidden]')).toBeNull();
   });
 
+  it('shifts and scales stacked drawer panels instead of the viewport layer', async () => {
+    const { container } = render(<StackDemo />);
+    await userEvent.click(screen.getByText('open'));
+
+    const panels = Array.from(container.querySelectorAll<HTMLElement>('.mantine-Drawer-panel'));
+    expect(panels).toHaveLength(3);
+
+    expect(panels[2].style.translate).toBe('0px 0px');
+    expect(panels[2].style.scale).toBe('1');
+    expect(panels[1].style.translate).toBe('9px 0px');
+    expect(panels[0].style.translate).toBe('18px 0px');
+    expect(panels[0].style.transformOrigin).toBe('right center');
+
+    const inners = Array.from(container.querySelectorAll<HTMLElement>('.mantine-Drawer-inner'));
+    inners.forEach((inner) => expect(inner.style.transform).toBe(''));
+
+    const contents = Array.from(container.querySelectorAll<HTMLElement>('.mantine-Drawer-content'));
+    expect(contents[0].style.overflow).toBe('hidden');
+    expect(contents[2].style.overflow).toBe('');
+  });
+
   it('hides stacked items beyond maxDepth', async () => {
     const { container } = render(<StackDemo maxDepth={1} />);
     await userEvent.click(screen.getByText('open'));
@@ -341,6 +362,58 @@ describe('@mantine/core/Drawer swipe', () => {
       window.dispatchEvent(makePointerEvent('pointerup', distance));
     });
   }
+
+  it('does not animate stacked panels while the top drawer is swiped', async () => {
+    function SwipeStackDemo() {
+      const stack = useDrawersStack(['a', 'b']);
+      return (
+        <Drawer.Stack>
+          <Drawer {...stack.register('a')} withinPortal={false} position="bottom">
+            drawer-a
+          </Drawer>
+          <Drawer {...stack.register('b')} withinPortal={false} position="bottom">
+            drawer-b
+          </Drawer>
+          <button
+            type="button"
+            onClick={() => {
+              stack.open('a');
+              stack.open('b');
+            }}
+          >
+            open
+          </button>
+        </Drawer.Stack>
+      );
+    }
+
+    const { container } = render(<SwipeStackDemo />);
+    await userEvent.click(screen.getByText('open'));
+
+    const backPanel = () => container.querySelector<HTMLElement>('.mantine-Drawer-panel')!;
+    expect(backPanel().style.translate).toBe('0px -9px');
+    expect(backPanel().style.transitionProperty).toContain('translate');
+
+    const top = screen.getByText('drawer-b').closest<HTMLElement>('[role="dialog"]')!;
+    Object.defineProperty(top, 'scrollTop', { value: 0, configurable: true });
+    top.getBoundingClientRect = () => ({ width: DRAWER_SIZE, height: DRAWER_SIZE }) as DOMRect;
+
+    act(() => {
+      fireEvent(top, makePointerEvent('pointerdown', 0));
+    });
+    act(() => {
+      window.dispatchEvent(makePointerEvent('pointermove', 40));
+    });
+
+    expect(backPanel().style.translate).toBe('0px -8.1px');
+    expect(backPanel().style.transitionProperty).not.toContain('translate');
+
+    act(() => {
+      window.dispatchEvent(makePointerEvent('pointerup', 40));
+    });
+
+    expect(backPanel().style.transitionProperty).toContain('translate');
+  });
 
   it('closes when content is dragged past threshold (bottom position)', () => {
     const onClose = jest.fn();

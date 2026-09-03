@@ -130,12 +130,7 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
 
   const stackTransform =
     __depth !== undefined
-      ? getStackTransform({
-          kind: 'modal',
-          depth: __depth,
-          dragProgress: __dragProgress,
-          offset: stackOffset,
-        })
+      ? getStackTransform({ depth: __depth, dragProgress: __dragProgress, offset: stackOffset })
       : null;
 
   const stackSizeStyle: React.CSSProperties =
@@ -196,10 +191,7 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
             data-stack-hidden={__visible === false || undefined}
             style={{
               ...innerStyles.style,
-              ...(stackTransform && {
-                transform: stackTransform.transform,
-                opacity: stackTransform.opacity,
-              }),
+              ...(stackTransform && { transform: stackTransform.transform }),
               ...(__visible === false && { display: 'none' }),
             }}
             className={cx({ [baseClasses.inner]: !baseCtx.unstyled }, innerStyles.className)}

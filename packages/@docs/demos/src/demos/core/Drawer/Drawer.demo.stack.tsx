@@ -10,7 +10,7 @@ function Demo() {
   return (
     <>
       <Drawer.Stack>
-        <Drawer {...stack.register('delete-page')} title="Delete this page?">
+        <Drawer {...stack.register('delete-page')} offset={5} radius="md" title="Delete this page?">
           Are you sure you want to delete this page? This action cannot be undone.
           <Group mt="lg" justify="flex-end">
             <Button onClick={stack.closeAll} variant="default">
@@ -22,7 +22,7 @@ function Demo() {
           </Group>
         </Drawer>
 
-        <Drawer {...stack.register('confirm-action')} title="Confirm action">
+        <Drawer {...stack.register('confirm-action')} offset={5} radius="md" title="Confirm action">
           Are you sure you want to perform this action? This action cannot be undone. If you are
           sure, press confirm button below.
           <Group mt="lg" justify="flex-end">
@@ -35,7 +35,12 @@ function Demo() {
           </Group>
         </Drawer>
 
-        <Drawer {...stack.register('really-confirm-action')} title="Really confirm action">
+        <Drawer
+          {...stack.register('really-confirm-action')}
+          offset={5}
+          radius="md"
+          title="Really confirm action"
+        >
           Jokes aside. You have confirmed this action. This is your last chance to cancel it. After
           you press confirm button below, action will be performed and cannot be undone. For real
           this time. Are you sure you want to proceed?
@@ -64,7 +69,7 @@ function Demo() {
   return (
     <>
       <Drawer.Stack>
-        <Drawer {...stack.register('delete-page')} title="Delete this page?">
+        <Drawer {...stack.register('delete-page')} offset={5} radius="md" title="Delete this page?">
           Are you sure you want to delete this page? This action cannot be undone.
           <Group mt="lg" justify="flex-end">
             <Button onClick={stack.closeAll} variant="default">
@@ -76,7 +81,7 @@ function Demo() {
           </Group>
         </Drawer>
 
-        <Drawer {...stack.register('confirm-action')} title="Confirm action">
+        <Drawer {...stack.register('confirm-action')} offset={5} radius="md" title="Confirm action">
           Are you sure you want to perform this action? This action cannot be undone. If you are
           sure, press confirm button below.
           <Group mt="lg" justify="flex-end">
@@ -89,7 +94,12 @@ function Demo() {
           </Group>
         </Drawer>
 
-        <Drawer {...stack.register('really-confirm-action')} title="Really confirm action">
+        <Drawer
+          {...stack.register('really-confirm-action')}
+          offset={5}
+          radius="md"
+          title="Really confirm action"
+        >
           Jokes aside. You have confirmed this action. This is your last chance to cancel it. After
           you press confirm button below, action will be performed and cannot be undone. For real
           this time. Are you sure you want to proceed?

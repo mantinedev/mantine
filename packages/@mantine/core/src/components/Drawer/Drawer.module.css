@@ -31,6 +31,12 @@
   width: 100%;
   height: 100%;
   overflow-y: auto;
+
+  &[data-stacked] {
+    box-shadow:
+      0 0 0 1px var(--mantine-color-border),
+      var(--mb-shadow, var(--mantine-shadow-xl));
+  }
 }
 
 .inner {

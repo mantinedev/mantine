@@ -52,37 +52,8 @@ describe('@mantine/core/getDrawerInnerStyle', () => {
     expect(result.transform).toContain('translateX(30px)');
   });
 
-  it('composes drag translate with base transform', () => {
-    const result = getDrawerInnerStyle({
-      position: 'bottom',
-      dragging: true,
-      dragOffset: 20,
-      baseTransform: 'scale(0.95) translateY(16px)',
-    });
-
-    expect(result.transform).toContain('scale(0.95) translateY(16px)');
-    expect(result.transform).toContain('translateY(20px)');
-  });
-
-  it('passes through base opacity', () => {
-    const result = getDrawerInnerStyle({
-      position: 'bottom',
-      dragging: false,
-      dragOffset: 0,
-      baseOpacity: 0.8,
-    });
-
-    expect(result.opacity).toBe(0.8);
-  });
-
-  it('returns base transform without drag translate when offset is 0', () => {
-    const result = getDrawerInnerStyle({
-      position: 'bottom',
-      dragging: false,
-      dragOffset: 0,
-      baseTransform: 'scale(0.9)',
-    });
-
-    expect(result.transform).toBe('scale(0.9)');
+  it('does not set transform when offset is 0', () => {
+    const result = getDrawerInnerStyle({ position: 'bottom', dragging: false, dragOffset: 0 });
+    expect(result.transform).toBeUndefined();
   });
 });
