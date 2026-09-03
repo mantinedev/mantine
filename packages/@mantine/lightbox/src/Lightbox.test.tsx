@@ -777,3 +777,20 @@ describe('@mantine/lightbox/Lightbox store', () => {
     });
   });
 });
+
+describe('@mantine/lightbox/Lightbox module initialization', () => {
+  it('attaches Lightbox.Provider when the provider module is evaluated first', () => {
+    jest.isolateModules(() => {
+      require('./LightboxProvider/LightboxProvider');
+      const { Lightbox: IsolatedLightbox } = require('./Lightbox');
+      expect(IsolatedLightbox.Provider).toBeDefined();
+    });
+  });
+
+  it('attaches Lightbox.Provider when the package entry is evaluated first', () => {
+    jest.isolateModules(() => {
+      const { Lightbox: IsolatedLightbox } = require('./index');
+      expect(IsolatedLightbox.Provider).toBeDefined();
+    });
+  });
+});
