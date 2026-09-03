@@ -12,14 +12,20 @@ All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
 
-## @mantine/data-grid package
+## Migration guide
 
-New `@mantine/data-grid` package provides a fully-featured data grid component built on top of
-[TanStack Table v9](https://tanstack.com/table) and [TanStack Virtual](https://tanstack.com/virtual).
-It fills the gap left by community libraries with first-party Mantine integration, compound component
-architecture, and full Styles API support.
+This changelog covers breaking changes and new features in Mantine 10.0.
+To migrate your application to Mantine 10.0, follow [9.x → 10.x migration guide](/guides/9x-to-10x).
+
+## New @mantine/data-grid package
+
+New [`@mantine/data-grid`](/data-grid/getting-started) package provides a fully-featured data grid
+component built on top of [TanStack Table v9](https://tanstack.com/table) and
+[TanStack Virtual](https://tanstack.com/virtual). It fills the gap left by community libraries with
+first-party Mantine integration, compound component architecture, and full Styles API support.
 
 Key features:
+
 - Sorting (single and multi-column), column and global filtering, pagination
 - Column resizing, pinning, visibility toggling, and drag-and-drop reordering
 - Row selection with checkboxes and Shift+click range select
@@ -34,30 +40,26 @@ Key features:
 - Compound components for custom layouts (Toolbar, Table, Pagination, StatusBar)
 - Full accessibility: semantic `<table>` or ARIA grid roles with keyboard navigation
 
-### DataGrid
-
 [DataGrid](/data-grid/data-grid) renders a customizable data grid with all features enabled through
 `with*` boolean props:
 
 <Demo data={DataGridDemos.usage} />
 
-### Cell selection
+## DataGrid cell selection
 
 Enable `withCellSelection` for spreadsheet-style cell range selection – click and drag to select a
 range, extend it with Shift, add or subtract ranges with Ctrl/Cmd, and move with the arrow keys:
 
 <Demo data={DataGridDemos.cellSelection} />
 
-### Cell spanning
+## DataGrid cell spanning
 
 Set `spanRows` on a column definition to merge adjacent rows that share the same value, or
 `spanColumns` to make a cell span several columns:
 
 <Demo data={DataGridDemos.cellSpanning} />
 
-## @mantine/core
-
-### Modal.Footer and Drawer.Footer
+## Modal.Footer and Drawer.Footer
 
 [Modal](/core/modal) and [Drawer](/core/drawer) now support `Modal.Footer`/`Drawer.Footer`
 compound components to render a footer with actions. By default the footer stays pinned to the
@@ -65,35 +67,14 @@ bottom while the body scrolls:
 
 <Demo data={DrawerDemos.footer} />
 
-### stickyHeader and stickyFooter props
+## Modal and Drawer sticky header and footer
 
 [Modal](/core/modal) and [Drawer](/core/drawer) now support the `stickyHeader` and `stickyFooter`
 props (both default to `true`). When enabled, the header stays pinned to the top and the footer
 stays pinned to the bottom while the body scrolls between them. Set either to `false` to make that
 section scroll away with the body content.
 
-### Drawer swipe to dismiss
-
-[Drawer](/core/drawer) can now be dismissed with a swipe gesture. Swipe to dismiss is enabled by
-default for all four positions and is RTL-aware. Opt out with `withSwipe={false}` and adjust the
-distance required to dismiss with `swipeThreshold`:
-
-<Demo data={DrawerDemos.swipe} />
-
-### Drawer drag handle
-
-[Drawer](/core/drawer) now supports the `withHandle` prop – an optional grab-bar drag affordance
-rendered on the overlay at the drawer's leading edge that hints the drawer can be dragged.
-
-### Drawer snap points
-
-[Drawer](/core/drawer) now supports opt-in snap points with the `snapPoints` prop. The active snap
-point can be controlled with `activeSnapPoint`/`onSnapPointChange` or used in uncontrolled mode
-with `defaultActiveSnapPoint`:
-
-<Demo data={DrawerDemos.snapPoints} />
-
-### Reworked Modal.Stack and Drawer.Stack
+## Reworked Modal.Stack and Drawer.Stack
 
 [Modal.Stack](/core/modal/#modalstack) and [Drawer.Stack](/core/drawer/#drawerstack) have been
 reworked – all opened stacked items now stay mounted and visible with a stacked depth effect
@@ -102,9 +83,28 @@ stacked items are visible behind the top one at the same time.
 
 <Demo data={ModalDemos.stack} />
 
-## Colors system
+## Drawer swipe to dismiss
 
-### OKLCH default palettes
+[Drawer](/core/drawer) can now be dismissed with a swipe gesture. Swipe to dismiss is enabled by
+default for all four positions and is RTL-aware. Opt out with `withSwipe={false}` and adjust the
+distance required to dismiss with `swipeThreshold`:
+
+<Demo data={DrawerDemos.swipe} />
+
+## Drawer drag handle
+
+[Drawer](/core/drawer) now supports the `withHandle` prop – an optional grab-bar drag affordance
+rendered on the overlay at the drawer's leading edge that hints the drawer can be dragged.
+
+## Drawer snap points
+
+[Drawer](/core/drawer) now supports opt-in snap points with the `snapPoints` prop. The active snap
+point can be controlled with `activeSnapPoint`/`onSnapPointChange` or used in uncontrolled mode
+with `defaultActiveSnapPoint`:
+
+<Demo data={DrawerDemos.snapPoints} />
+
+## OKLCH default palettes
 
 All 14 built-in color palettes (`dark`, `gray`, `red`, `pink`, `grape`, `violet`, `indigo`, `blue`,
 `cyan`, `teal`, `green`, `lime`, `yellow`, `orange`) have been re-derived in the OKLCH color space.
@@ -120,7 +120,7 @@ are unchanged. All default shades remain within the sRGB gamut.
 parses these variables as hex or RGB must be updated. See the [9.x → 10.x migration guide](/guides/9x-to-10x)
 for details.
 
-### autoContrast enabled by default
+## autoContrast enabled by default
 
 `theme.autoContrast` now defaults to `true`. Filled controls automatically pick black or white text
 based on the luminance of their background color (threshold `0.2`), so light shades used as a filled
@@ -134,7 +134,7 @@ The following 22 components are affected: `Button`, `ActionIcon`, `ActionIconGro
 To restore the v9 behaviour set `autoContrast: false` in the theme, or use the one-line v9 opt-out
 described in the migration guide.
 
-### Semantic color CSS variables
+## Semantic color CSS variables
 
 A new layer of semantic role variables has been added. Components now use these tokens instead of
 hardcoding raw `gray-N` or `dark-N` indices, making it easier to theme borders, surfaces, and text
@@ -168,7 +168,7 @@ Role variables are defined as `var()` references to the underlying shade variabl
 `--mantine-color-body` is aliased to `--mantine-color-surface-page`, so overriding the latter also
 updates the page background.
 
-### Neutral color ladder
+## Neutral color ladder
 
 A new `--mantine-color-neutral-0..9` scale backs the role and surface tokens above. The ladder is
 scheme-agnostic by role – index `N` means the same thing in both color schemes – while the
@@ -193,7 +193,7 @@ underlying shade differs so contrast holds in both:
 Use `var(--mantine-color-neutral-N)` in custom CSS when you need a neutral shade that adapts to the
 color scheme without hardcoding separate `gray-N`/`dark-N` pairs.
 
-### Surface component
+## Surface component
 
 A new [Surface](/core/surface) component replaces `Paper` as the depth-aware background primitive. `Surface` has
 3 levels – `0` (page), `1` (panel, the default for a standalone `Surface`), and `2` (panel-2) – and
@@ -249,7 +249,7 @@ const theme = createTheme({
 Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, and `sunken` keys, matching the four
 surface tokens documented above.
 
-### Dropdowns render on the page surface
+## Dropdowns render on the page surface
 
 Floating dropdowns – `Popover`, `Menu`, `HoverCard`, and all `Combobox`-based components such as
 `Select` and `Autocomplete` – now use `--mantine-color-surface-page` as their background, matching
@@ -257,7 +257,7 @@ Floating dropdowns – `Popover`, `Menu`, `HoverCard`, and all `Combobox`-based 
 surrounding content by border and shadow; light mode is visually unchanged. Overriding
 `surfaces.page` in the theme moves modals and dropdowns together with the page background.
 
-### Sunken surface adoption
+## Sunken surfaces and control tracks
 
 Inset elements now share the `--mantine-color-surface-sunken` token: `SegmentedControl` root,
 `Code`, `Kbd`, and `ScrollArea` scrollbar background. In dark mode these elements are now tonally
@@ -268,7 +268,7 @@ unfilled part of a control reads as a rail rather than a hole. Overriding `surfa
 token itself) restyles all inset elements together; override `--mantine-color-track` to restyle every control
 track at once.
 
-### Dark neutral flavors
+## Dark neutral flavors
 
 Four pre-built dark neutral color tuples are exported from `@mantine/core` and can be assigned to
 `theme.colors.dark` to change the overall tone of the dark scheme:
@@ -293,7 +293,7 @@ const theme = createTheme({
 });
 ```
 
-### tintColors utility
+## tintColors utility
 
 A new `tintColors` function mixes a color into every shade of a `MantineColorsTuple`, useful for
 building a custom-tinted dark ramp without hand-editing 10 shades. It targets the **dark** ramp –
@@ -318,7 +318,7 @@ concrete color values – the result cannot be fed into functions that expect a 
 as `darken`), and it appears as a `color-mix(...)` expression, not a hex/rgb value, in computed
 styles.
 
-### OKLCH colors generator
+## OKLCH colors generator
 
 `@mantine/colors-generator` has been updated to output OKLCH color palettes. The `generateColors`
 function still returns a `MantineColorsTuple` (now containing `oklch(...)` strings) so existing
