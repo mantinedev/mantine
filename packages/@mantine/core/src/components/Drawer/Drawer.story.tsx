@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
+import { MantineThemeProvider } from '../../core';
 import { Button } from '../Button';
-import { useModalsStack } from '../Modal';
+import { Modal, useDrawerStackContext, useModalsStack } from '../Modal';
 import { ScrollArea } from '../ScrollArea';
 import { Stack as MantineStack } from '../Stack';
 import { Tabs } from '../Tabs';
@@ -318,5 +319,62 @@ export function KeepMountedMode() {
         </MantineStack>
       </Drawer>
     </div>
+  );
+}
+
+function SharedStackDrawers() {
+  const [first, firstHandlers] = useDisclosure(false);
+  const [second, secondHandlers] = useDisclosure(false);
+  const [third, thirdHandlers] = useDisclosure(false);
+  const [modal, modalHandlers] = useDisclosure(false);
+  const stack = useDrawerStackContext();
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={firstHandlers.open}>Open drawer</Button>
+      <p>Opened drawers: {stack.stack.length}</p>
+
+      <Drawer
+        opened={first}
+        onClose={firstHandlers.close}
+        title="First drawer"
+        overlayProps={{ blur: 3 }}
+      >
+        First drawer
+        {content}
+        <Button onClick={secondHandlers.open} fullWidth mt="md">
+          Open second drawer
+        </Button>
+      </Drawer>
+
+      <Drawer opened={second} onClose={secondHandlers.close} title="Second drawer">
+        Second drawer
+        <Button onClick={thirdHandlers.open} fullWidth mt="md">
+          Open third drawer
+        </Button>
+        <Button onClick={modalHandlers.open} variant="default" fullWidth mt="md">
+          Open modal (separate stack)
+        </Button>
+      </Drawer>
+
+      <Drawer opened={third} onClose={thirdHandlers.close} title="Third drawer" position="right">
+        Third drawer
+        <Button onClick={stack.closeAll} fullWidth mt="md">
+          Close all
+        </Button>
+      </Drawer>
+
+      <Modal opened={modal} onClose={modalHandlers.close} title="Modal above drawers" centered>
+        Modals and drawers are stacked separately, this modal is not a part of the drawers stack.
+      </Modal>
+    </div>
+  );
+}
+
+export function ThemeOverlayStack() {
+  return (
+    <MantineThemeProvider theme={{ overlayStack: true }}>
+      <SharedStackDrawers />
+    </MantineThemeProvider>
   );
 }

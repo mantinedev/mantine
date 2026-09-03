@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { createContextContainer, render, screen, tests, userEvent } from '@mantine-tests/core';
+import { MantineThemeProvider } from '../../core';
 import { Modal, ModalProps, ModalStylesNames } from './Modal';
 import { ModalBody, ModalBodyProps } from './ModalBody';
 import { ModalCloseButton, ModalCloseButtonProps } from './ModalCloseButton';
@@ -9,6 +11,7 @@ import { ModalHeader, ModalHeaderProps } from './ModalHeader';
 import { ModalOverlay, ModalOverlayProps } from './ModalOverlay';
 import { ModalRoot, ModalRootProps } from './ModalRoot';
 import { ModalTitle, ModalTitleProps } from './ModalTitle';
+import { useModalStackContext } from './use-modal-stack-context';
 import { useModalsStack } from './use-modals-stack';
 
 const defaultProps: ModalProps = {
@@ -578,5 +581,303 @@ describe('@mantine/core/ModalStack', () => {
     const { container } = render(<FullScreenStackDemo />);
     await userEvent.click(screen.getByText('open'));
     expect(container.querySelector('[data-modal-content][data-full-screen]')).not.toBeNull();
+  });
+});
+
+describe('@mantine/core/Modal theme.overlayStack', () => {
+  function StackInfo() {
+    const stack = useModalStackContext();
+    return (
+      <>
+        <span>stack-size:{stack.stack.length}</span>
+        <button type="button" onClick={stack.closeAll}>
+          close-all
+        </button>
+      </>
+    );
+  }
+
+  interface SharedStackDemoProps {
+    onCloseA?: () => void;
+    onCloseB?: () => void;
+    modalAProps?: Partial<ModalProps>;
+    modalBProps?: Partial<ModalProps>;
+    withInfo?: boolean;
+    wrapB?: (node: React.ReactNode) => React.ReactNode;
+  }
+
+  function SharedStackDemo({
+    onCloseA,
+    onCloseB,
+    modalAProps,
+    modalBProps,
+    withInfo,
+    wrapB,
+  }: SharedStackDemoProps) {
+    const [a, setA] = useState(false);
+    const [b, setB] = useState(false);
+    const [mountedA, setMountedA] = useState(true);
+
+    const modalB = (
+      <Modal
+        opened={b}
+        onClose={() => {
+          setB(false);
+          onCloseB?.();
+        }}
+        withinPortal={false}
+        {...modalBProps}
+      >
+        modal-b
+      </Modal>
+    );
+
+    return (
+      <>
+        {mountedA && (
+          <Modal
+            opened={a}
+            onClose={() => {
+              setA(false);
+              onCloseA?.();
+            }}
+            withinPortal={false}
+            {...modalAProps}
+          >
+            modal-a
+          </Modal>
+        )}
+        {wrapB ? wrapB(modalB) : modalB}
+        <button type="button" onClick={() => setA(true)}>
+          open-a
+        </button>
+        <button type="button" onClick={() => setB(true)}>
+          open-b
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setA(true);
+            setB(true);
+          }}
+        >
+          open
+        </button>
+        <button type="button" onClick={() => setMountedA(false)}>
+          unmount-a
+        </button>
+        {withInfo && <StackInfo />}
+      </>
+    );
+  }
+
+  const getInners = (container: HTMLElement) =>
+    Array.from(container.querySelectorAll<HTMLElement>('.mantine-Modal-inner'));
+  const getOverlays = (container: HTMLElement) =>
+    container.querySelectorAll('.mantine-Modal-overlay');
+
+  it('stacks all modals without Modal.Stack and stackId when theme.overlayStack is set', async () => {
+    const { container } = render(<SharedStackDemo />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open'));
+
+    const inners = getInners(container);
+    expect(inners[0].style.transform).toBe('translateY(-9px)');
+    expect(inners[1].style.transform).toBe('translateY(0px)');
+    expect(getOverlays(container)).toHaveLength(1);
+    expect(container.querySelectorAll('[data-stacked]')).toHaveLength(2);
+  });
+
+  it('does not stack modals when theme.overlayStack is not set', async () => {
+    const { container } = render(<SharedStackDemo />);
+    await userEvent.click(screen.getByText('open'));
+
+    const inners = getInners(container);
+    expect(inners[0].style.transform).toBe('');
+    expect(inners[1].style.transform).toBe('');
+    expect(getOverlays(container)).toHaveLength(2);
+    expect(container.querySelectorAll('[data-stacked]')).toHaveLength(0);
+  });
+
+  it('closes only the top modal on Escape in the shared stack', async () => {
+    const onCloseA = jest.fn();
+    const onCloseB = jest.fn();
+    render(<SharedStackDemo onCloseA={onCloseA} onCloseB={onCloseB} />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open'));
+
+    await userEvent.keyboard('{Escape}');
+    expect(onCloseB).toHaveBeenCalledTimes(1);
+    expect(onCloseA).not.toHaveBeenCalled();
+    expect(screen.getByText('modal-a')).toBeInTheDocument();
+    expect(screen.queryByText('modal-b')).not.toBeInTheDocument();
+
+    await userEvent.keyboard('{Escape}');
+    expect(onCloseA).toHaveBeenCalledTimes(1);
+  });
+
+  it('respects closeOnEscape={false} of the top modal in the shared stack', async () => {
+    const onCloseA = jest.fn();
+    const onCloseB = jest.fn();
+    render(
+      <SharedStackDemo
+        onCloseA={onCloseA}
+        onCloseB={onCloseB}
+        modalBProps={{ closeOnEscape: false }}
+      />,
+      { overlayStack: true }
+    );
+    await userEvent.click(screen.getByText('open'));
+
+    await userEvent.keyboard('{Escape}');
+    expect(onCloseA).not.toHaveBeenCalled();
+    expect(onCloseB).not.toHaveBeenCalled();
+    expect(screen.getByText('modal-b')).toBeInTheDocument();
+  });
+
+  it('joins Modal.Stack rendered inside the shared stack instead of creating a nested stack', async () => {
+    const { container } = render(
+      <SharedStackDemo
+        wrapB={(node) => <Modal.Stack withStackTransform={false}>{node}</Modal.Stack>}
+      />,
+      { overlayStack: true }
+    );
+    await userEvent.click(screen.getByText('open'));
+
+    expect(getInners(container)[0].style.transform).toBe('translateY(-9px)');
+    expect(getOverlays(container)).toHaveLength(1);
+  });
+
+  it('keeps nested explicit Modal.Stack isolated when theme.overlayStack is not set', async () => {
+    const { container } = render(
+      <Modal.Stack>
+        <SharedStackDemo wrapB={(node) => <Modal.Stack>{node}</Modal.Stack>} />
+      </Modal.Stack>
+    );
+    await userEvent.click(screen.getByText('open'));
+
+    const inners = getInners(container);
+    expect(inners[0].style.transform).toBe('translateY(0px)');
+    expect(inners[1].style.transform).toBe('translateY(0px)');
+    expect(getOverlays(container)).toHaveLength(2);
+  });
+
+  it('closes all modals with useModalStackContext', async () => {
+    const onCloseA = jest.fn();
+    const onCloseB = jest.fn();
+    render(<SharedStackDemo onCloseA={onCloseA} onCloseB={onCloseB} withInfo />, {
+      overlayStack: true,
+    });
+    await userEvent.click(screen.getByText('open'));
+    expect(screen.getByText('stack-size:2')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('close-all'));
+    expect(onCloseA).toHaveBeenCalledTimes(1);
+    expect(onCloseB).toHaveBeenCalledTimes(1);
+
+    await waitFor(() => {
+      expect(screen.queryByText('modal-a')).not.toBeInTheDocument();
+      expect(screen.queryByText('modal-b')).not.toBeInTheDocument();
+      expect(screen.getByText('stack-size:0')).toBeInTheDocument();
+    });
+  });
+
+  it('removes unmounted modal from the shared stack', async () => {
+    const { container } = render(<SharedStackDemo withInfo />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open'));
+    expect(screen.getByText('stack-size:2')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('unmount-a'));
+    expect(screen.getByText('stack-size:1')).toBeInTheDocument();
+    expect(getOverlays(container)).toHaveLength(1);
+  });
+
+  it('derives stack z-index from currently opened modals only', async () => {
+    const { container } = render(<SharedStackDemo modalAProps={{ zIndex: 1000 }} />, {
+      overlayStack: true,
+    });
+    await userEvent.click(screen.getByText('open'));
+
+    const getRootZIndex = () =>
+      Array.from(container.querySelectorAll<HTMLElement>('.mantine-Modal-root')).map((root) =>
+        root.style.getPropertyValue('--mb-z-index')
+      );
+
+    expect(getRootZIndex()).toStrictEqual(['calc(1000 + 0 + 1)', 'calc(1000 + 1 + 1)']);
+
+    await userEvent.click(screen.getByText('unmount-a'));
+    expect(getRootZIndex()).toStrictEqual(['calc(200 + 0 + 1)']);
+  });
+
+  it('keeps the default overlay transition for a single modal in the shared stack', async () => {
+    const { container } = render(<SharedStackDemo />, { overlayStack: true }, { env: 'default' });
+    await userEvent.click(screen.getByText('open-a'));
+
+    await waitFor(() => {
+      expect(getOverlays(container)).toHaveLength(1);
+      expect((getOverlays(container)[0] as HTMLElement).style.transitionDuration).toBe('200ms');
+    });
+
+    await userEvent.click(screen.getByText('open-b'));
+
+    await waitFor(() => {
+      expect(getOverlays(container)).toHaveLength(1);
+      expect((getOverlays(container)[0] as HTMLElement).style.transitionDuration).toBe('');
+    });
+  });
+
+  it('does not create a second shared stack in nested MantineThemeProvider', async () => {
+    const { container } = render(
+      <SharedStackDemo
+        wrapB={(node) => (
+          <MantineThemeProvider theme={{ primaryColor: 'red' }}>{node}</MantineThemeProvider>
+        )}
+      />,
+      { overlayStack: true }
+    );
+    await userEvent.click(screen.getByText('open'));
+
+    expect(getInners(container)[0].style.transform).toBe('translateY(-9px)');
+    expect(getOverlays(container)).toHaveLength(1);
+  });
+
+  it('opts out of the shared stack in nested MantineThemeProvider with overlayStack: false', async () => {
+    const { container } = render(
+      <SharedStackDemo
+        wrapB={(node) => (
+          <MantineThemeProvider theme={{ overlayStack: false }}>{node}</MantineThemeProvider>
+        )}
+      />,
+      { overlayStack: true }
+    );
+    await userEvent.click(screen.getByText('open'));
+
+    const inners = getInners(container);
+    expect(inners[0].style.transform).toBe('translateY(0px)');
+    expect(inners[1].style.transform).toBe('');
+    expect(container.querySelectorAll('[data-stacked]')).toHaveLength(1);
+    expect(getOverlays(container)).toHaveLength(2);
+  });
+
+  it('creates the shared stack in nested MantineThemeProvider with overlayStack', async () => {
+    const { container } = render(
+      <MantineThemeProvider theme={{ overlayStack: true }}>
+        <SharedStackDemo />
+      </MantineThemeProvider>
+    );
+    await userEvent.click(screen.getByText('open'));
+
+    expect(getInners(container)[0].style.transform).toBe('translateY(-9px)');
+    expect(getOverlays(container)).toHaveLength(1);
+  });
+
+  it('applies theme.overlayStack options to the shared stack', async () => {
+    const { container } = render(<SharedStackDemo />, {
+      overlayStack: { withStackTransform: false },
+    });
+    await userEvent.click(screen.getByText('open'));
+
+    const inners = getInners(container);
+    expect(inners[0].style.transform).toBe('');
+    expect(inners[1].style.transform).toBe('');
+    expect(getOverlays(container)).toHaveLength(1);
   });
 });

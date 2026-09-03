@@ -1,6 +1,7 @@
-import { OverlayStackProvider } from '../OverlayStack/OverlayStack';
+import { use } from 'react';
+import { DrawerStackContext, OverlayStackProvider } from '../OverlayStack';
 
-export { OverlayStackContext as DrawerStackContext } from '../OverlayStack/OverlayStack.context';
+export { DrawerStackContext } from '../OverlayStack';
 
 export interface DrawerStackProps {
   children: React.ReactNode;
@@ -13,8 +14,19 @@ export interface DrawerStackProps {
 }
 
 export function DrawerStack({ children, maxDepth, withStackTransform }: DrawerStackProps) {
+  const parentStack = use(DrawerStackContext);
+
+  if (parentStack?.shared) {
+    return <>{children}</>;
+  }
+
   return (
-    <OverlayStackProvider maxDepth={maxDepth} withStackTransform={withStackTransform}>
+    <OverlayStackProvider
+      context={DrawerStackContext}
+      kind="drawer"
+      maxDepth={maxDepth}
+      withStackTransform={withStackTransform}
+    >
       {children}
     </OverlayStackProvider>
   );

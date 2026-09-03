@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { act, fireEvent } from '@testing-library/react';
 import { createContextContainer, render, screen, tests, userEvent } from '@mantine-tests/core';
+import { Modal } from '../Modal';
 import { useDrawersStack } from '../Modal/use-modals-stack';
 import { Drawer, DrawerProps, DrawerStylesNames } from './Drawer';
 import { DrawerBody, DrawerBodyProps } from './DrawerBody';
@@ -526,5 +528,130 @@ describe('@mantine/core/Drawer snap points', () => {
     } finally {
       HTMLElement.prototype.getBoundingClientRect = originalGetBoundingClientRect;
     }
+  });
+});
+
+describe('@mantine/core/Drawer theme.overlayStack', () => {
+  function SharedStackDemo() {
+    const [a, setA] = useState(false);
+    const [b, setB] = useState(false);
+
+    return (
+      <>
+        <Drawer opened={a} onClose={() => setA(false)} withinPortal={false}>
+          drawer-a
+        </Drawer>
+        <Drawer opened={b} onClose={() => setB(false)} withinPortal={false}>
+          drawer-b
+        </Drawer>
+        <button
+          type="button"
+          onClick={() => {
+            setA(true);
+            setB(true);
+          }}
+        >
+          open
+        </button>
+      </>
+    );
+  }
+
+  it('stacks all drawers without Drawer.Stack and stackId when theme.overlayStack is set', async () => {
+    const { container } = render(<SharedStackDemo />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open'));
+
+    const panels = Array.from(container.querySelectorAll<HTMLElement>('.mantine-Drawer-panel'));
+    expect(panels[0].style.translate).toBe('9px 0px');
+    expect(panels[1].style.translate).toBe('0px 0px');
+    expect(container.querySelectorAll('.mantine-Drawer-overlay')).toHaveLength(1);
+  });
+
+  it('does not stack drawers when theme.overlayStack is not set', async () => {
+    const { container } = render(<SharedStackDemo />);
+    await userEvent.click(screen.getByText('open'));
+
+    const panels = Array.from(container.querySelectorAll<HTMLElement>('.mantine-Drawer-panel'));
+    expect(panels[0].style.translate).toBe('');
+    expect(container.querySelectorAll('.mantine-Drawer-overlay')).toHaveLength(2);
+  });
+
+  it('keeps modals and drawers in separate stacks', () => {
+    const { container } = render(
+      <>
+        <Drawer.Stack>
+          <Modal opened onClose={() => {}} withinPortal={false}>
+            modal-in-drawer-stack
+          </Modal>
+        </Drawer.Stack>
+        <Modal.Stack>
+          <Drawer opened onClose={() => {}} withinPortal={false}>
+            drawer-in-modal-stack
+          </Drawer>
+        </Modal.Stack>
+      </>
+    );
+
+    expect(container.querySelector('.mantine-Modal-content')).not.toHaveAttribute('data-stacked');
+    expect(container.querySelector('.mantine-Drawer-content')).not.toHaveAttribute('data-stacked');
+  });
+
+  it('places a modal opened above a drawer on top and closes only the modal on Escape, even with the same stackId', async () => {
+    const onCloseDrawer = jest.fn();
+    const onCloseModal = jest.fn();
+
+    function MixedDemo() {
+      const [drawer, setDrawer] = useState(false);
+      const [modal, setModal] = useState(false);
+      return (
+        <>
+          <Modal
+            opened={modal}
+            onClose={() => {
+              setModal(false);
+              onCloseModal();
+            }}
+            withinPortal={false}
+            stackId="same-id"
+          >
+            modal-content
+          </Modal>
+          <Drawer
+            opened={drawer}
+            onClose={() => {
+              setDrawer(false);
+              onCloseDrawer();
+            }}
+            withinPortal={false}
+            stackId="same-id"
+          >
+            drawer-content
+            <button type="button" onClick={() => setModal(true)}>
+              open-modal
+            </button>
+          </Drawer>
+          <button type="button" onClick={() => setDrawer(true)}>
+            open-drawer
+          </button>
+        </>
+      );
+    }
+
+    const { container } = render(<MixedDemo />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open-drawer'));
+    await userEvent.click(screen.getByText('open-modal'));
+
+    const zIndex = (selector: string) =>
+      container.querySelector<HTMLElement>(selector)!.style.getPropertyValue('--mb-z-index');
+    expect(zIndex('.mantine-Drawer-root')).toBe('calc(200 + 0 + 1)');
+    expect(zIndex('.mantine-Modal-root')).toBe('calc(200 + 1 + 1)');
+
+    await userEvent.keyboard('{Escape}');
+    expect(onCloseModal).toHaveBeenCalledTimes(1);
+    expect(onCloseDrawer).not.toHaveBeenCalled();
+    expect(screen.getByText('drawer-content')).toBeInTheDocument();
+
+    await userEvent.keyboard('{Escape}');
+    expect(onCloseDrawer).toHaveBeenCalledTimes(1);
   });
 });

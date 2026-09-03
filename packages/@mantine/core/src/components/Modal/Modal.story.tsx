@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
+import { MantineThemeProvider } from '../../core';
 import { Button } from '../Button';
 import { Card } from '../Card';
 import { Menu } from '../Menu';
@@ -8,6 +9,7 @@ import { Select } from '../Select';
 import { Stack } from '../Stack';
 import { Tabs } from '../Tabs';
 import { Modal } from './Modal';
+import { useModalStackContext } from './use-modal-stack-context';
 import { useModalsStack } from './use-modals-stack';
 
 export default { title: 'Modal' };
@@ -448,5 +450,62 @@ export function KeepMountedMode() {
         </Stack>
       </Modal>
     </div>
+  );
+}
+
+function SharedStackModals() {
+  const [first, firstHandlers] = useDisclosure(false);
+  const [second, secondHandlers] = useDisclosure(false);
+  const [third, thirdHandlers] = useDisclosure(false);
+  const stack = useModalStackContext();
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={firstHandlers.open}>Open modal</Button>
+      <p>Opened modals: {stack.stack.length}</p>
+
+      <Modal
+        opened={first}
+        onClose={firstHandlers.close}
+        title="First modal"
+        overlayProps={{ blur: 3 }}
+      >
+        First modal
+        {content}
+        <Button onClick={secondHandlers.open} fullWidth mt="md">
+          Open second modal
+        </Button>
+      </Modal>
+
+      <Modal opened={second} onClose={secondHandlers.close} title="Second modal">
+        Second modal
+        <Button onClick={thirdHandlers.open} fullWidth mt="md">
+          Open third modal
+        </Button>
+      </Modal>
+
+      <Modal opened={third} onClose={thirdHandlers.close} title="Third modal">
+        Third modal
+        <Button onClick={stack.closeAll} fullWidth mt="md">
+          Close all
+        </Button>
+      </Modal>
+    </div>
+  );
+}
+
+export function ThemeOverlayStack() {
+  return (
+    <MantineThemeProvider theme={{ overlayStack: true }}>
+      <SharedStackModals />
+    </MantineThemeProvider>
+  );
+}
+
+export function ThemeOverlayStackWithoutTransform() {
+  return (
+    <MantineThemeProvider theme={{ overlayStack: { withStackTransform: false } }}>
+      <SharedStackModals />
+    </MantineThemeProvider>
   );
 }

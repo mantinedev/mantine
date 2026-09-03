@@ -83,6 +83,24 @@ stacked items are visible behind the top one at the same time.
 
 <Demo data={ModalDemos.stack} />
 
+## Shared Modal.Stack and Drawer.Stack
+
+New `theme.overlayStack` option makes all [Modal](/core/modal/#shared-stack) and
+[Drawer](/core/drawer/#shared-stack) components in the application a part of the shared
+`Modal.Stack` and `Drawer.Stack` – modals and drawers are stacked automatically without
+`Modal.Stack`/`Drawer.Stack` wrappers and `stackId` props. New `useModalStackContext` and
+`useDrawerStackContext` hooks provide access to the shared stacks:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  overlayStack: true,
+});
+```
+
+<Demo data={ModalDemos.overlayStack} />
+
 ## Drawer swipe to dismiss
 
 [Drawer](/core/drawer) can now be dismissed with a swipe gesture. Swipe to dismiss is enabled by

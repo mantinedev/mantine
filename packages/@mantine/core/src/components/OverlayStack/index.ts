@@ -10,8 +10,17 @@ export type {
   StackTransform,
   StackTransformInput,
 } from './get-stack-transform';
-export { OverlayStackProvider } from './OverlayStack';
-export type { OverlayStackProviderProps } from './OverlayStack';
-export { OverlayStackContext } from './OverlayStack.context';
-export type { OverlayStackContextValue } from './OverlayStack.context';
+export {
+  createOverlayStackContextHook,
+  DrawerStackContext,
+  ModalStackContext,
+  OverlayStackProvider,
+} from '../../core/OverlayStack';
+export type {
+  OverlayStackContextHandlers,
+  OverlayStackContextValue,
+  OverlayStackOptions,
+  OverlayStackProviderProps,
+  OverlayStackRect,
+} from '../../core/OverlayStack';
 export { useOverlayStackState } from './use-overlay-stack-state';

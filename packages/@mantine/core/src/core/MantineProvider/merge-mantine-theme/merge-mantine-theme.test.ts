@@ -115,4 +115,17 @@ describe('@mantine/core/merge-mantine-theme', () => {
     expect(subsequent.headings.fontFamily).toBe(originalFontFamily);
     expect(subsequent.headings.fontFamily).not.toBe('first-tenant-font');
   });
+
+  it('merges overlayStack object override over boolean default', () => {
+    expect(
+      mergeMantineTheme(DEFAULT_THEME, { overlayStack: { maxDepth: 3 } }).overlayStack
+    ).toStrictEqual({ maxDepth: 3 });
+    expect(mergeMantineTheme(DEFAULT_THEME, { overlayStack: true }).overlayStack).toBe(true);
+    expect(
+      mergeMantineTheme(
+        { ...DEFAULT_THEME, overlayStack: { maxDepth: 3 } },
+        { overlayStack: false }
+      ).overlayStack
+    ).toBe(false);
+  });
 });

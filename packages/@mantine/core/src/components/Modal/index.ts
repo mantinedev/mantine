@@ -21,6 +21,11 @@ export { ModalOverlay } from './ModalOverlay';
 export { ModalTitle } from './ModalTitle';
 export { ModalStack, ModalStackContext } from './ModalStack';
 export { useModalsStack, useDrawersStack } from './use-modals-stack';
+export { useModalStackContext, useDrawerStackContext } from './use-modal-stack-context';
+export type {
+  UseModalStackContextReturnType,
+  UseDrawerStackContextReturnType,
+} from './use-modal-stack-context';
 export { useModalContext } from './Modal.context';
 
 export type {

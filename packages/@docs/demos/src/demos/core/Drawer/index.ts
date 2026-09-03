@@ -12,6 +12,7 @@ export { offset } from './Drawer.demo.offset';
 export { closeIcon } from './Drawer.demo.closeIcon';
 export { initialFocusTrap } from './Drawer.demo.initialFocusTrap';
 export { stack } from './Drawer.demo.stack';
+export { overlayStack } from './Drawer.demo.overlayStack';
 export { transitionEnd } from './Drawer.demo.transitionEnd';
 export { footer } from './Drawer.demo.footer';
 export { stickySections } from './Drawer.demo.stickySections';

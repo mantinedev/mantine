@@ -1,4 +1,4 @@
-import { use, useCallback, useEffect } from 'react';
+import { use, useCallback, useEffect, useId } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { DrawerBody } from './DrawerBody';
 import { DrawerCloseButton, DrawerCloseButtonProps } from './DrawerCloseButton';
@@ -38,7 +38,7 @@ export interface DrawerProps extends DrawerRootProps {
   /** Props passed down to the close button */
   closeButtonProps?: DrawerCloseButtonProps;
 
-  /** Id of the drawer in the `Drawer.Stack` */
+  /** Id of the drawer in the `Drawer.Stack`, generated automatically if not set */
   stackId?: string;
 }
 
@@ -82,6 +82,9 @@ export const Drawer = factory<DrawerFactory>((_props) => {
     closeButtonProps,
     children,
     opened,
+    onClose,
+    closeOnEscape,
+    trapFocus,
     stackId,
     zIndex,
     onExitTransitionEnd,
@@ -89,88 +92,105 @@ export const Drawer = factory<DrawerFactory>((_props) => {
   } = useProps('Drawer', defaultProps, _props);
 
   const ctx = use(DrawerStackContext);
+  const autoStackId = useId();
+  const resolvedStackId = stackId || autoStackId;
   const hasHeader = !!title || withCloseButton;
-  const isStackActive = !!(ctx && stackId && ctx.currentId === stackId);
-  const stackProps =
-    ctx && stackId
-      ? {
-          closeOnEscape: isStackActive,
-          trapFocus: isStackActive,
-          zIndex: ctx.getZIndex(stackId),
-        }
-      : {};
+  const isStackTop = !!ctx && ctx.currentId === resolvedStackId;
+  const isStackActive = !!ctx && ctx.activeId === resolvedStackId;
+  const hasOtherDrawers = !!ctx && ctx.stack.some((id) => id !== resolvedStackId);
+  const stackProps = ctx
+    ? {
+        closeOnEscape: isStackActive && closeOnEscape,
+        trapFocus: isStackActive && trapFocus,
+        zIndex: ctx.getZIndex(resolvedStackId),
+      }
+    : {};
 
-  const overlayVisible =
-    withOverlay === false ? false : stackId && ctx ? ctx.currentId === stackId : opened;
+  const overlayVisible = withOverlay === false ? false : hasOtherDrawers ? isStackTop : opened;
 
   const reportDrag = ctx?.reportDrag;
   const handleDragProgress = useCallback(
     (progress: number) => {
-      if (stackId) {
-        reportDrag?.(stackId, progress);
-      }
+      reportDrag?.(resolvedStackId, progress);
     },
-    [reportDrag, stackId]
+    [reportDrag, resolvedStackId]
   );
 
   const reportTopRect = ctx?.reportTopRect;
   const handleReportTopRect = useCallback(
     (rect: { width: number; height: number }) => {
-      if (stackId) {
-        reportTopRect?.(stackId, rect);
-      }
+      reportTopRect?.(resolvedStackId, rect);
     },
-    [reportTopRect, stackId]
+    [reportTopRect, resolvedStackId]
   );
 
-  const depthProps =
-    ctx && stackId
-      ? {
-          ...(ctx.withStackTransform
-            ? {
-                __depth: ctx.getDepth(stackId),
-                __visible: ctx.isVisible(stackId),
-                __dragProgress: ctx.dragProgress,
-                __topRect: ctx.topRect,
-                __reportTopRect: handleReportTopRect,
-              }
-            : { __visible: ctx.isVisible(stackId) }),
-          __onDragProgress: handleDragProgress,
-          __active: isStackActive,
-          __instant: !opened && ctx.getDepth(stackId) > 0,
-        }
-      : {};
+  const depthProps = ctx
+    ? {
+        ...(ctx.withStackTransform
+          ? {
+              __depth: ctx.getDepth(resolvedStackId),
+              __visible: ctx.isVisible(resolvedStackId),
+              __dragProgress: ctx.dragProgress,
+              __topRect: ctx.topRect,
+              __reportTopRect: handleReportTopRect,
+            }
+          : { __visible: ctx.isVisible(resolvedStackId) }),
+        __onDragProgress: handleDragProgress,
+        __active: isStackActive,
+        __instant: !opened && ctx.getDepth(resolvedStackId) > 0,
+      }
+    : {};
+
+  const addOverlay = ctx?.addOverlay;
+  const markClosing = ctx?.markClosing;
+  const removeOverlay = ctx?.removeOverlay;
+  const registerCloseHandler = ctx?.registerCloseHandler;
 
   useEffect(() => {
-    if (ctx && stackId) {
-      if (opened) {
-        ctx.addOverlay(stackId, zIndex || getDefaultZIndex('modal'));
-      } else {
-        ctx.markClosing(stackId);
-      }
+    if (opened) {
+      addOverlay?.(resolvedStackId, zIndex || getDefaultZIndex('modal'));
+    } else {
+      markClosing?.(resolvedStackId);
     }
-  }, [opened, stackId, zIndex]);
+  }, [opened, resolvedStackId, zIndex, addOverlay, markClosing]);
+
+  useEffect(() => {
+    if (!removeOverlay) {
+      return undefined;
+    }
+
+    return () => removeOverlay(resolvedStackId);
+  }, [removeOverlay, resolvedStackId]);
+
+  useEffect(() => {
+    if (!registerCloseHandler) {
+      return undefined;
+    }
+
+    return registerCloseHandler(resolvedStackId, onClose);
+  }, [registerCloseHandler, resolvedStackId, onClose]);
 
   const handleExitTransitionEnd = () => {
-    if (ctx && stackId) {
-      ctx.removeOverlay(stackId);
-    }
+    removeOverlay?.(resolvedStackId);
     onExitTransitionEnd?.();
   };
 
   return (
     <DrawerRoot
       opened={opened}
-      zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
+      onClose={onClose}
+      zIndex={ctx ? ctx.getZIndex(resolvedStackId) : zIndex}
       onExitTransitionEnd={handleExitTransitionEnd}
+      closeOnEscape={closeOnEscape}
+      trapFocus={trapFocus}
       {...others}
       {...stackProps}
     >
       {withOverlay && (
         <DrawerOverlay
           visible={overlayVisible}
-          transitionProps={ctx && stackId ? { duration: 0 } : undefined}
-          {...(ctx && stackId ? { zIndex: ctx.maxZIndex } : null)}
+          transitionProps={hasOtherDrawers ? { duration: 0 } : undefined}
+          {...(ctx ? { zIndex: ctx.maxZIndex } : null)}
           {...overlayProps}
         />
       )}

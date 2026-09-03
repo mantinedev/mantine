@@ -107,3 +107,8 @@ export const Demo_stickySections = {
   name: '⭐ Demo: stickySections',
   render: renderDemo(demos.stickySections),
 };
+
+export const Demo_overlayStack = {
+  name: '⭐ Demo: overlayStack',
+  render: renderDemo(demos.overlayStack),
+};

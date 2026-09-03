@@ -3,6 +3,10 @@ function isObject(item: unknown) {
 }
 
 export function deepMerge<T extends object>(target: T, source: any): T {
+  if (!isObject(target)) {
+    return source;
+  }
+
   const result: Record<string, any> = { ...target };
   const _source: Record<string, any> = source;
 

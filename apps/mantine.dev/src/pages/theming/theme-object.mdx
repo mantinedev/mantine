@@ -1,4 +1,4 @@
-import { ThemingDemos } from '@docs/demos';
+import { ModalDemos, ThemingDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -121,6 +121,9 @@ interface MantineTheme {
 
   /** Determines whether user OS settings to reduce motion should be respected; `false` by default */
   respectReducedMotion: boolean;
+
+  /** Determines whether all Modal and Drawer components should be rendered in the shared Modal.Stack and Drawer.Stack; `false` by default */
+  overlayStack: boolean | MantineThemeOverlayStack;
 
   /** Determines which cursor type will be used for interactive elements
    * - `default` – cursor that is used by native HTML elements, for example, `input[type="checkbox"]` has `cursor: default` styles
@@ -310,6 +313,26 @@ converted to rem. For example, `theme.defaultRadius: 4` will be converted to `0.
 You can learn more about rem conversion in the [rem units guide](/styles/rem).
 
 <Demo data={ThemingDemos.defaultRadiusConfigurator} />
+
+### overlayStack
+
+`overlayStack` enables the shared [Modal.Stack](/core/modal/#shared-stack) and [Drawer.Stack](/core/drawer/#shared-stack)
+for all modals and drawers in the application – modals and drawers are stacked automatically
+without `Modal.Stack`/`Drawer.Stack` wrappers and `stackId` props. Modals and drawers are stacked
+separately. `overlayStack` accepts `true` or an object with `maxDepth` and `withStackTransform` options:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  overlayStack: true,
+});
+```
+
+With `overlayStack` enabled, modals that are opened one after another are stacked without
+`Modal.Stack` wrapper:
+
+<Demo data={ModalDemos.overlayStack} />
 
 ### cursorType
 

@@ -114,6 +114,11 @@ export interface MantineTheme {
   /** Determines whether user OS settings to reduce motion should be respected, `false` by default */
   respectReducedMotion: boolean;
 
+  /** Determines whether all `Modal` and `Drawer` components should be rendered in the shared `Modal.Stack` and `Drawer.Stack`
+   *  without wrapping them manually, `false` by default. Accepts an object to configure the shared stacks.
+   */
+  overlayStack: boolean | MantineThemeOverlayStack;
+
   /** Determines which cursor type will be used for interactive elements
    * - `default` – cursor that is used by native HTML elements, for example, `input[type="checkbox"]` has `cursor: default` styles
    * - `pointer` – sets `cursor: pointer` on interactive elements that do not have these styles by default
@@ -139,6 +144,14 @@ export interface MantineTheme {
 }
 
 export type MantineColorScheme = 'light' | 'dark' | 'auto';
+
+export interface MantineThemeOverlayStack {
+  /** Maximum number of stacked items that remain visible behind the top one, others are hidden @default 5 */
+  maxDepth?: number;
+
+  /** If set, stacked items are offset and scaled to reveal the items behind the top one @default true */
+  withStackTransform?: boolean;
+}
 
 export type MantineThemeOverride = PartialDeep<MantineTheme>;
 

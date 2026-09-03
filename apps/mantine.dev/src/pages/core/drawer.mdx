@@ -287,6 +287,10 @@ function Demo() {
 Note that `Drawer.Stack` can only be used with `Drawer` component. Components built with `Drawer.Root`
 and other compound components are not compatible with `Drawer.Stack`.
 
+All drawers rendered inside `Drawer.Stack` are a part of the stack, `stackId` prop is required only to
+connect drawer with the `useDrawersStack` hook. To enable stacking for all drawers in your application
+without `Drawer.Stack`, see [shared stack](#shared-stack) section.
+
 ## useDrawersStack hook
 
 `useDrawersStack` hook provides an easy way to control multiple drawers at the same time.
@@ -333,6 +337,83 @@ function Demo() {
       <Button onClick={() => stack.open('first')}>Open first</Button>
     </>
   );
+}
+```
+
+## Shared stack
+
+Set `theme.overlayStack` to make all `Drawer` components in your application a part of one
+shared `Drawer.Stack` without wrapping them in `Drawer.Stack` and passing `stackId`. Any drawer
+that is opened while another drawer is opened is rendered on top of it: z-index, focus trap,
+`Escape` key handling and the overlay are managed for the entire application.
+[Modal](/core/modal) components get their own shared `Modal.Stack`, drawers and modals
+are never stacked together.
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  overlayStack: true,
+});
+
+function App() {
+  return <MantineProvider theme={theme}>{/* Your app here */}</MantineProvider>;
+}
+```
+
+Once `overlayStack` is enabled on the theme, drawers do not require `Drawer.Stack` wrapper and
+`stackId` prop – any drawer that is opened on top of another drawer is stacked automatically:
+
+<Demo data={DrawerDemos.overlayStack} />
+
+`overlayStack` accepts an object to configure the shared stacks:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  overlayStack: {
+    // Maximum number of stacked drawers that remain visible behind the top one, 5 by default
+    maxDepth: 3,
+
+    // Disables the stacked depth effect, true by default
+    withStackTransform: false,
+  },
+});
+```
+
+When `theme.overlayStack` is set, `Drawer.Stack` does not create a separate stack – drawers
+rendered inside it become a part of the shared stack, `maxDepth` and `withStackTransform`
+props of `Drawer.Stack` are ignored. `useDrawersStack` hook can still be used to manage
+opened state of several drawers.
+
+Use `useDrawerStackContext` hook to access the shared stack (or the closest `Drawer.Stack`)
+from any component:
+
+```tsx
+import { Button, useDrawerStackContext } from '@mantine/core';
+
+function CloseAllButton() {
+  const stack = useDrawerStackContext();
+  return <Button onClick={stack.closeAll}>Close all drawers ({stack.stack.length})</Button>;
+}
+```
+
+`useDrawerStackContext` returns an object with the following properties:
+
+```tsx
+interface UseDrawerStackContextReturnType {
+  // Ids of opened drawers, the last item is the top drawer
+  stack: string[];
+
+  // Id of the top drawer, undefined if no drawers are opened
+  currentId: string | undefined;
+
+  // Calls onClose of the drawer with the given id
+  close: (id: string) => void;
+
+  // Calls onClose of all opened drawers, starting from the top one
+  closeAll: () => void;
 }
 ```
 

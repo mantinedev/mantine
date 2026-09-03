@@ -97,3 +97,8 @@ export const Demo_snapPoints = {
   name: '⭐ Demo: snapPoints',
   render: renderDemo(demos.snapPoints),
 };
+
+export const Demo_overlayStack = {
+  name: '⭐ Demo: overlayStack',
+  render: renderDemo(demos.overlayStack),
+};
