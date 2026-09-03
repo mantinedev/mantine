@@ -64,7 +64,10 @@ export function getCSSColorVariables({
     })`,
     [`--mantine-color-${name}-light`]: darken(theme.colors[color][9], 0.5),
     [`--mantine-color-${name}-light-hover`]: darken(theme.colors[color][9], 0.3),
-    [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-0)`,
+    [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-${Math.max(
+      primaryShade - 5,
+      0
+    )})`,
     [`--mantine-color-${name}-outline`]: `var(--mantine-color-${name}-${Math.max(primaryShade - 4, 0)})`,
     [`--mantine-color-${name}-outline-hover`]: alpha(
       theme.colors[color][Math.max(primaryShade - 4, 0)],
