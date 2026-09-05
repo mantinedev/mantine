@@ -233,7 +233,7 @@ export const Rating = factory<RatingFactory>((_props) => {
 
     if (!readOnly) {
       const touch = touches[0];
-      setValue(getRatingFromCoordinates(touch.clientX));
+      handleChange(getRatingFromCoordinates(touch.clientX));
     }
 
     onTouchStart?.(event);
