@@ -599,6 +599,11 @@ describe('@mantine/core/Notifications', () => {
     const behind = alerts.find((alert) => alert.textContent?.includes('First stacked'))!;
     const front = alerts.find((alert) => alert.textContent?.includes('Second stacked'))!;
     expect(Number(behind.style.zIndex)).toBeLessThan(Number(front.style.zIndex));
+    expect(front.style.transitionProperty).toBe('transform, opacity');
+    expect(front.style.transitionDuration).toBe('10ms, 10ms');
+    expect(front.style.transitionTimingFunction).toBe('cubic-bezier(.51,.3,0,1.21), ease');
+    expect(front.style.transitionDelay).toBe('0ms');
+    expect(behind.style.transitionDelay).toBe('30ms');
   });
 
   it('keeps stacked styling while a stacked notification is exiting', () => {
@@ -637,7 +642,7 @@ describe('@mantine/core/Notifications', () => {
     // Stays inside the shared grid cell so the remaining notifications do not jump
     expect(exiting.style.gridArea).toBe('1 / 1');
     // Keeps a transition so the exit animation actually plays
-    expect(exiting.style.transition).not.toBe('');
+    expect(exiting.style.transitionProperty).toBe('transform, opacity');
     // Does not instantly collapse its height (stacked notifications overlap, no space to collapse)
     expect(exiting.style.maxHeight).not.toBe('0px');
     // Exit animation starts immediately, without the entrance stagger delay

@@ -337,9 +337,11 @@ export function NotificationContainer({
           zIndex: (stackSize || 5) - (stackIndex ?? 0),
           pointerEvents: isCollapsed ? ('none' as const) : undefined,
           alignSelf: stackDirection === 1 ? ('start' as const) : ('end' as const),
-          transition: isDragging
-            ? 'none'
-            : `transform ${transitionDuration}ms cubic-bezier(.51,.3,0,1.21), opacity ${transitionDuration}ms ease`,
+          transitionProperty: isDragging ? 'none' : 'transform, opacity',
+          transitionDuration: isDragging
+            ? '0ms, 0ms'
+            : `${transitionDuration}ms, ${transitionDuration}ms`,
+          transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21), ease',
           transitionDelay: isDragging || isExiting ? '0ms' : `${staggerDelay}ms`,
         }
       : {}),
