@@ -81,6 +81,34 @@ describe('@mantine/schedule/get-mobile-month-view-events', () => {
     });
   });
 
+  it('includes multi-day events that started in the previous month', () => {
+    const events: ScheduleEventData[] = [
+      testUtils.createEvent({ id: 1, start: '2025-10-30', end: '2025-11-02' }),
+    ];
+
+    const result = getMobileMonthViewEvents({ date: '2025-11-01', events });
+    expect(result).toStrictEqual({
+      '2025-10-30': [events[0]],
+      '2025-10-31': [events[0]],
+      '2025-11-01': [events[0]],
+      '2025-11-02': [events[0]],
+    });
+  });
+
+  it('includes multi-day events that end in the next month', () => {
+    const events: ScheduleEventData[] = [
+      testUtils.createEvent({ id: 1, start: '2025-11-29', end: '2025-12-02' }),
+    ];
+
+    const result = getMobileMonthViewEvents({ date: '2025-11-01', events });
+    expect(result).toStrictEqual({
+      '2025-11-29': [events[0]],
+      '2025-11-30': [events[0]],
+      '2025-12-01': [events[0]],
+      '2025-12-02': [events[0]],
+    });
+  });
+
   it('throws error on duplicate event IDs', () => {
     const events: ScheduleEventData[] = [
       testUtils.createEvent({ id: 1, start: '2025-11-05 10:00:00', end: '2025-11-05 11:00:00' }),
