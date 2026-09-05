@@ -601,6 +601,59 @@ describe('@mantine/core/Notifications', () => {
     expect(Number(behind.style.zIndex)).toBeLessThan(Number(front.style.zIndex));
   });
 
+  it('preserves stacked transitions without style conflicts when dragging is canceled', () => {
+    jest.useFakeTimers();
+    const store = createNotificationsStore();
+    const consoleError = jest.spyOn(console, 'error');
+
+    render(
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={false}
+        transitionDuration={100}
+        layout="stacked"
+      />
+    );
+
+    act(() => {
+      notifications.show({ id: 'drag-stacked-a', message: 'First stacked' }, store);
+      notifications.show({ id: 'drag-stacked-b', message: 'Second stacked' }, store);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(200);
+    });
+
+    const notification = screen
+      .getByText('Second stacked')
+      .closest('[role="alert"]') as HTMLElement;
+    fireEvent.mouseEnter(notification);
+    expect(notification.style.transitionDelay).toBe('0ms');
+
+    act(() => {
+      pointerDown(notification, { clientX: 0 });
+      pointerMove({ clientX: 40 });
+    });
+
+    expect(notification.style.getPropertyValue('--notifications-swipe-offset')).toBe('40px');
+    expect(notification.style.transitionDelay).toBe('0ms');
+
+    act(() => {
+      document.dispatchEvent(new PointerEvent('pointercancel', { bubbles: true, pointerId: 1 }));
+    });
+
+    expect(notification.style.getPropertyValue('--notifications-swipe-offset')).toBe('0px');
+    expect(notification.style.transitionDelay).toBe('0ms');
+    expect(store.getState().notifications).toHaveLength(2);
+    expect(
+      consoleError.mock.calls.filter(([message]) =>
+        String(message).includes('conflicting property')
+      )
+    ).toEqual([]);
+    consoleError.mockRestore();
+  });
+
   it('keeps stacked styling while a stacked notification is exiting', () => {
     jest.useFakeTimers();
     const store = createNotificationsStore();
@@ -637,7 +690,8 @@ describe('@mantine/core/Notifications', () => {
     // Stays inside the shared grid cell so the remaining notifications do not jump
     expect(exiting.style.gridArea).toBe('1 / 1');
     // Keeps a transition so the exit animation actually plays
-    expect(exiting.style.transition).not.toBe('');
+    expect(exiting.style.transitionProperty).toBe('transform, opacity');
+    expect(exiting.style.transitionDuration).toBe('100ms');
     // Does not instantly collapse its height (stacked notifications overlap, no space to collapse)
     expect(exiting.style.maxHeight).not.toBe('0px');
     // Exit animation starts immediately, without the entrance stagger delay
