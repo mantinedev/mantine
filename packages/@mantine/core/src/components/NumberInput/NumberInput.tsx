@@ -645,8 +645,13 @@ export const NumberInput = genericFactory<NumberInputFactory>(
     const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
       const pastedText = event.clipboardData.getData('text');
       const _decimalSeparator = others.decimalSeparator || '.';
+      // `thousandSeparator: true` enables the default ',' separator in react-number-format
+      const _thousandSeparator = others.thousandSeparator === true ? ',' : others.thousandSeparator;
+      // The thousand separator cannot act as a decimal separator: values like 1,234,567
+      // must keep their grouping (react-number-format strips it on its own) instead of
+      // being rewritten to 1.234.567
       const separatorsToReplace = (allowedDecimalSeparators || ['.', ',']).filter(
-        (s) => s !== _decimalSeparator
+        (s) => s !== _decimalSeparator && s !== _thousandSeparator
       );
 
       if (separatorsToReplace.some((s) => pastedText.includes(s))) {
