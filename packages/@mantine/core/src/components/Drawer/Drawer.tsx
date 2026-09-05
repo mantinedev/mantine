@@ -5,6 +5,7 @@ import { DrawerBody } from './DrawerBody';
 import { DrawerCloseButton } from './DrawerCloseButton';
 import { DrawerContent } from './DrawerContent';
 import { DrawerHeader } from './DrawerHeader';
+import { DrawerFooter } from './DrawerFooter';
 import { DrawerOverlay } from './DrawerOverlay';
 import {
   DrawerRoot,
@@ -53,6 +54,7 @@ export type DrawerFactory = Factory<{
     Content: typeof DrawerContent;
     Body: typeof DrawerBody;
     Header: typeof DrawerHeader;
+    Footer: typeof DrawerFooter;
     Title: typeof DrawerTitle;
     CloseButton: typeof DrawerCloseButton;
     Stack: typeof DrawerStack;
@@ -143,6 +145,7 @@ Drawer.Overlay = DrawerOverlay;
 Drawer.Content = DrawerContent;
 Drawer.Body = DrawerBody;
 Drawer.Header = DrawerHeader;
+Drawer.Footer = DrawerFooter;
 Drawer.Title = DrawerTitle;
 Drawer.CloseButton = DrawerCloseButton;
 Drawer.Stack = DrawerStack;

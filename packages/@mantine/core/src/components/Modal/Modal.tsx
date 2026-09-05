@@ -5,6 +5,7 @@ import { ModalBody, type ModalBodyProps } from './ModalBody';
 import { ModalCloseButton, type ModalCloseButtonProps } from './ModalCloseButton';
 import { ModalContent, type ModalContentProps } from './ModalContent';
 import { ModalHeader, type ModalHeaderProps } from './ModalHeader';
+import { ModalFooter } from './ModalFooter';
 import { ModalOverlay, type ModalOverlayProps } from './ModalOverlay';
 import {
   ModalRoot,
@@ -54,6 +55,7 @@ export type ModalFactory = Factory<{
     Content: typeof ModalContent;
     Body: typeof ModalBody;
     Header: typeof ModalHeader;
+    Footer: typeof ModalFooter;
     Title: typeof ModalTitle;
     CloseButton: typeof ModalCloseButton;
     Stack: typeof ModalStack;
@@ -149,6 +151,7 @@ Modal.Overlay = ModalOverlay;
 Modal.Content = ModalContent;
 Modal.Body = ModalBody;
 Modal.Header = ModalHeader;
+Modal.Footer = ModalFooter;
 Modal.Title = ModalTitle;
 Modal.CloseButton = ModalCloseButton;
 Modal.Stack = ModalStack;
