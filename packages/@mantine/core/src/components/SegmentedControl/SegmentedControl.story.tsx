@@ -184,3 +184,25 @@ export function ScaledAncestor() {
     </div>
   );
 }
+export function BugRepro() {
+  const [value, setValue] = useState('a');
+  const [dataSet, setDataSet] = useState(0);
+
+  const dataSets = [
+    [{ value: 'a', label: 'Apple' }, { value: 'b', label: 'Banana' }, { value: 'c', label: 'Cherry' }],
+    [{ value: 'a', label: 'Apricot' }, { value: 'x', label: 'Xigua' }, { value: 'c', label: 'Cranberry' }],
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <SegmentedControl
+        value={value}
+        onChange={setValue}
+        data={dataSets[dataSet]}
+      />
+      <button onClick={() => setDataSet((d) => (d + 1) % 2)} style={{ marginTop: 20 }}>
+        Swap data (same length, different values)
+      </button>
+    </div>
+  );
+}

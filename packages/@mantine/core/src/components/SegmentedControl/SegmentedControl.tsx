@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useRef } from 'react';
 import {
   randomId,
   useId,
@@ -192,11 +192,22 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
   const initialized = useMounted();
   const [key, setKey] = useState(randomId());
   const [parent, setParent] = useState<HTMLElement | null>(null);
-  const [refs, setRefs] = useState<Record<string, HTMLElement | null>>({});
-  const setElementRef = (element: HTMLElement | null, val: string) => {
-    refs[val] = element;
-    setRefs(refs);
-  };
+const [refs, setRefs] = useState<Record<string, HTMLElement | null>>({});
+const refCallbacks = useRef<Record<string, (node: HTMLElement | null) => void>>({});
+
+const getElementRef = (val: string) => {
+  if (!refCallbacks.current[val]) {
+    refCallbacks.current[val] = (node: HTMLElement | null) => {
+      setRefs((current) => {
+        if (current[val] === node) {
+          return current;
+        }
+        return { ...current, [val]: node };
+      });
+    };
+  }
+  return refCallbacks.current[val];
+};
 
   const [_value, handleValueChange] = useUncontrolled({
     value,
@@ -237,7 +248,7 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
           'read-only': readOnly,
         }}
         htmlFor={`${uuid}-${item.value}`}
-        ref={(node) => setElementRef(node, `${item.value}`)}
+ref={getElementRef(`${item.value}`)}
         __vars={{
           '--sc-label-color':
             color !== undefined ? getContrastColor({ color, theme, autoContrast }) : undefined,
