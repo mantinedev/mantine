@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { factory, Factory, useProps } from '@mantine/core';
-import { Lightbox, LightboxProps } from '../Lightbox';
 import { lightboxActions, LightboxStore, lightboxStore, useLightboxStore } from '../lightbox.store';
+import { LightboxBase, LightboxProps } from '../LightboxBase';
 
 export interface LightboxProviderProps extends Omit<
   LightboxProps,
@@ -35,7 +35,7 @@ export const LightboxProviderComponent = factory<LightboxProviderFactory>((_prop
   }, [loop, store]);
 
   return (
-    <Lightbox
+    <LightboxBase
       {...others}
       loop={loop}
       opened={state.opened}
