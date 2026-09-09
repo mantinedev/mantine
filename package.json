@@ -53,6 +53,7 @@
     "release:major": "npm run release major",
     "test": "npm run format:test && npm run syncpack && npm run typecheck && npm run lint && npm run jest",
     "test:exports": "tsx scripts/tests/exports",
+    "test:esm-entrypoints": "tsx scripts/tests/esm-entrypoints",
     "test:conflicts": "tsx scripts/tests/conflicts",
     "test:validate-package-json": "tsx scripts/tests/validate-package-json",
     "test:validate-packages-files": "tsx scripts/tests/validate-packages-files",
