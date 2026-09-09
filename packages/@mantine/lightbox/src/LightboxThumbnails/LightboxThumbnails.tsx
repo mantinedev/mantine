@@ -67,24 +67,24 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
   }
 
   const thumbnails = ctx.slides.map((slide, index) => {
-    const hasCustomThumb = slide.type === 'custom' && slide.renderThumb;
+    const active = index === ctx.currentIndex;
     const thumbSrc =
       slide.thumbSrc ??
       (slide.type === 'video' ? slide.poster : undefined) ??
-      (slide.type !== 'custom' ? slide.src : undefined);
+      (slide.type === 'image' || slide.type === undefined ? slide.src : undefined);
 
     return (
       <UnstyledButton
         key={index}
         {...ctx.getStyles('thumbnail', stylesApiProps)}
         mod="reduce-motion"
-        data-active={index === ctx.currentIndex || undefined}
+        data-active={active || undefined}
         aria-label={ctx.labels.thumbnailLabel(index + 1, ctx.slides.length)}
-        aria-current={index === ctx.currentIndex || undefined}
+        aria-current={active || undefined}
         onClick={() => ctx.setIndex(index)}
       >
-        {hasCustomThumb ? (
-          slide.renderThumb!()
+        {slide.renderThumb ? (
+          slide.renderThumb({ active })
         ) : thumbSrc ? (
           <img
             {...ctx.getStyles('thumbnailImage', stylesApiProps)}
