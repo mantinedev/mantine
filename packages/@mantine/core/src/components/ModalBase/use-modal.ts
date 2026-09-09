@@ -11,6 +11,7 @@ interface UseModalInput {
   trapFocus: boolean | undefined;
   closeOnEscape: boolean | undefined;
   returnFocus: boolean | undefined;
+  handledEscapeEvents?: WeakSet<KeyboardEvent>;
 }
 
 export function useModal({
@@ -21,6 +22,7 @@ export function useModal({
   closeOnEscape,
   onClose,
   returnFocus,
+  handledEscapeEvents,
 }: UseModalInput) {
   const _id = useId(id);
   const [titleMounted, setTitleMounted] = useState(false);
@@ -34,10 +36,19 @@ export function useModal({
   useWindowEvent(
     'keydown',
     (event) => {
-      if (event.key === 'Escape' && closeOnEscape && !event.isComposing && opened) {
+      if (
+        event.key === 'Escape' &&
+        closeOnEscape &&
+        !event.isComposing &&
+        opened &&
+        !handledEscapeEvents?.has(event)
+      ) {
         const shouldTrigger =
           (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-        shouldTrigger && onClose();
+        if (shouldTrigger) {
+          handledEscapeEvents?.add(event);
+          onClose();
+        }
       }
     },
     { capture: true }
