@@ -1,23 +1,23 @@
 import { act, fireEvent, screen } from '@testing-library/react';
 import { render } from '@mantine-tests/core';
-import { Modal } from './Modal';
-import { useModalsStack } from './use-modals-stack';
+import { useDrawersStack } from '../Modal/use-modals-stack';
+import { Drawer } from './Drawer';
 
 function TestContainer() {
-  const stack = useModalsStack(['a', 'b']);
+  const stack = useDrawersStack(['a', 'b']);
 
   return (
     <>
-      <Modal.Stack>
+      <Drawer.Stack>
         {(['a', 'b'] as const).map((id) => (
-          <Modal
+          <Drawer
             key={id}
             {...stack.register(id)}
             onClose={() => act(() => stack.close(id))}
             title={id}
           />
         ))}
-      </Modal.Stack>
+      </Drawer.Stack>
       <button type="button" onClick={() => stack.open('a')}>
         Open a
       </button>
@@ -33,7 +33,7 @@ function pressEscape() {
   document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
 }
 
-describe('@mantine/core/Modal.Stack', () => {
+describe('@mantine/core/Drawer.Stack', () => {
   it.each([
     ['a', 'b'],
     ['b', 'a'],
