@@ -293,6 +293,42 @@ describe('@mantine/lightbox/Lightbox', () => {
     expect(screen.queryByLabelText('Go to slide 1')).not.toBeInTheDocument();
   });
 
+  it('renders renderThumb content for image and video slides', async () => {
+    const renderThumb = jest.fn(({ active }: { active: boolean }) => (
+      <span data-testid="custom-thumb" data-active={active || undefined}>
+        thumb
+      </span>
+    ));
+
+    await renderWithAct(
+      <Lightbox
+        {...defaultProps}
+        withThumbnails
+        slides={[
+          { src: 'image1.jpg', renderThumb },
+          { type: 'video', src: 'video.mp4', poster: 'poster.png', renderThumb },
+        ]}
+      />
+    );
+
+    const thumbs = screen.getAllByTestId('custom-thumb');
+    expect(thumbs).toHaveLength(2);
+    expect(thumbs[0]).toHaveAttribute('data-active');
+    expect(thumbs[1]).not.toHaveAttribute('data-active');
+    expect(renderThumb).toHaveBeenCalledWith({ active: true });
+    expect(renderThumb).toHaveBeenCalledWith({ active: false });
+    expect(document.querySelector('.mantine-Lightbox-thumbnailImage')).not.toBeInTheDocument();
+  });
+
+  it('does not render a thumbnail image for video slides without poster and thumbSrc', async () => {
+    await renderWithAct(
+      <Lightbox {...defaultProps} withThumbnails slides={[{ type: 'video', src: 'video.mp4' }]} />
+    );
+
+    expect(screen.getByLabelText('Go to slide 1')).toBeInTheDocument();
+    expect(document.querySelector('.mantine-Lightbox-thumbnailImage')).not.toBeInTheDocument();
+  });
+
   it('renders initial focus placeholder by default', async () => {
     await renderWithAct(<Lightbox {...defaultProps} />);
     const placeholder = getLightbox().querySelector('[data-autofocus]');

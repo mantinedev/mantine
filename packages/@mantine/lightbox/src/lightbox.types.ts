@@ -1,5 +1,10 @@
 import type { ReactNode } from 'react';
 
+export interface LightboxRenderThumbPayload {
+  /** Whether the thumbnail belongs to the current slide */
+  active: boolean;
+}
+
 export interface LightboxImageSlide {
   /** Slide type, `'image'` by default */
   type?: 'image';
@@ -9,6 +14,9 @@ export interface LightboxImageSlide {
 
   /** Image alt text for accessibility */
   alt?: string;
+
+  /** Render function for custom thumbnail content, takes priority over `thumbSrc` */
+  renderThumb?: (payload: LightboxRenderThumbPayload) => ReactNode;
 
   /** Custom thumbnail URL, if not set `src` is used */
   thumbSrc?: string;
@@ -53,7 +61,10 @@ export interface LightboxVideoSlide {
   /** Video accessible label, announced by screen readers */
   label?: string;
 
-  /** Custom thumbnail URL */
+  /** Render function for custom thumbnail content, takes priority over `thumbSrc` and `poster` */
+  renderThumb?: (payload: LightboxRenderThumbPayload) => ReactNode;
+
+  /** Custom thumbnail URL, if not set `poster` is used */
   thumbSrc?: string;
 
   /** Caption displayed below the slide */
@@ -77,7 +88,7 @@ export interface LightboxCustomSlide {
   render: (props: { active: boolean }) => ReactNode;
 
   /** Render function for custom thumbnail content */
-  renderThumb?: () => ReactNode;
+  renderThumb?: (payload: LightboxRenderThumbPayload) => ReactNode;
 
   /** Custom thumbnail URL, used if `renderThumb` is not set */
   thumbSrc?: string;

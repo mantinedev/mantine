@@ -24,6 +24,20 @@ const slides: LightboxSlideData[] = [
     caption: 'Another video',
   },
   { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png', caption: 'Another image' },
+  {
+    type: 'video',
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    caption: 'Video with a video thumbnail rendered with renderThumb',
+    renderThumb: () => (
+      <video
+        src="https://www.w3schools.com/html/mov_bbb.mp4"
+        muted
+        playsInline
+        preload="metadata"
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      />
+    ),
+  },
 ];
 
 function Demo() {
@@ -67,6 +81,20 @@ const slides: LightboxSlideData[] = [
   {
     src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png',
     caption: 'Another image',
+  },
+  {
+    type: 'video',
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    caption: 'Video with a video thumbnail rendered with renderThumb',
+    renderThumb: () => (
+      <video
+        src="https://www.w3schools.com/html/mov_bbb.mp4"
+        muted
+        playsInline
+        preload="metadata"
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      />
+    ),
   },
 ];
 
