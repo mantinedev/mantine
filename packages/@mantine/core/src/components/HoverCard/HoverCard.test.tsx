@@ -1,4 +1,4 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { renderWithAct, screen, tests } from '@mantine-tests/core';
 import { HoverCard, HoverCardProps } from './HoverCard';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
 import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
@@ -21,8 +21,8 @@ describe('@mantine/core/HoverCard', () => {
     props: {},
   });
 
-  it('correctly handles initiallyOpened prop', () => {
-    render(<TestContainer initiallyOpened />);
+  it('correctly handles initiallyOpened prop', async () => {
+    await renderWithAct(<TestContainer initiallyOpened />);
     expect(screen.getByText('test-dropdown')).toBeInTheDocument();
   });
 

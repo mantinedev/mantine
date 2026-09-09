@@ -637,7 +637,8 @@ describe('@mantine/core/Notifications', () => {
     // Stays inside the shared grid cell so the remaining notifications do not jump
     expect(exiting.style.gridArea).toBe('1 / 1');
     // Keeps a transition so the exit animation actually plays
-    expect(exiting.style.transition).not.toBe('');
+    expect(exiting.style.transitionProperty).toBe('transform, opacity');
+    expect(exiting.style.transitionDuration).toBe('100ms, 100ms');
     // Does not instantly collapse its height (stacked notifications overlap, no space to collapse)
     expect(exiting.style.maxHeight).not.toBe('0px');
     // Exit animation starts immediately, without the entrance stagger delay
