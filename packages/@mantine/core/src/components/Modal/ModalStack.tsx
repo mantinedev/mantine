@@ -8,6 +8,7 @@ interface ModalStackContext {
   getZIndex: (id: string) => string;
   currentId: string;
   maxZIndex: string | number;
+  handledEscapeEvents: WeakSet<KeyboardEvent>;
 }
 
 export const ModalStackContext = createContext<ModalStackContext | null>(null);
@@ -19,6 +20,7 @@ export interface ModalStackProps {
 export function ModalStack({ children }: ModalStackProps) {
   const [stack, setStack] = useState<string[]>([]);
   const [maxZIndex, setMaxZIndex] = useState<number | string>(getDefaultZIndex('modal'));
+  const [handledEscapeEvents] = useState(() => new WeakSet<KeyboardEvent>());
 
   return (
     <ModalStackContext
@@ -36,6 +38,7 @@ export function ModalStack({ children }: ModalStackProps) {
         getZIndex: (id) => `calc(${maxZIndex} + ${stack.indexOf(id)} + 1)`,
         currentId: stack[stack.length - 1],
         maxZIndex,
+        handledEscapeEvents,
       }}
     >
       {children}
