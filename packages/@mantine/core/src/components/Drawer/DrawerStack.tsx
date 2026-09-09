@@ -8,6 +8,7 @@ interface DrawerStackContext {
   getZIndex: (id: string) => string;
   currentId: string;
   maxZIndex: string | number;
+  handledEscapeEvents: WeakSet<KeyboardEvent>;
 }
 
 export const DrawerStackContext = createContext<DrawerStackContext | null>(null);
@@ -19,6 +20,7 @@ export interface DrawerStackProps {
 export function DrawerStack({ children }: DrawerStackProps) {
   const [stack, setStack] = useState<string[]>([]);
   const [maxZIndex, setMaxZIndex] = useState<number | string>(getDefaultZIndex('modal'));
+  const [handledEscapeEvents] = useState(() => new WeakSet<KeyboardEvent>());
 
   return (
     <DrawerStackContext
@@ -36,6 +38,7 @@ export function DrawerStack({ children }: DrawerStackProps) {
         getZIndex: (id) => `calc(${maxZIndex} + ${stack.indexOf(id)} + 1)`,
         currentId: stack[stack.length - 1],
         maxZIndex,
+        handledEscapeEvents,
       }}
     >
       {children}
