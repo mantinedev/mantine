@@ -18,6 +18,8 @@ import {
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
 import { UnstyledButton } from '../UnstyledButton';
+import { getCaretPositionAfterPaste } from './get-caret-position-after-paste/get-caret-position-after-paste';
+import { normalizePastedValue } from './normalize-pasted-value/normalize-pasted-value';
 import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
 
@@ -645,16 +647,21 @@ export const NumberInput = genericFactory<NumberInputFactory>(
     const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
       const pastedText = event.clipboardData.getData('text');
       const _decimalSeparator = others.decimalSeparator || '.';
-      const separatorsToReplace = (allowedDecimalSeparators || ['.', ',']).filter(
-        (s) => s !== _decimalSeparator
-      );
+      const _thousandSeparator =
+        others.thousandSeparator === true
+          ? ','
+          : others.thousandSeparator === false
+            ? undefined
+            : others.thousandSeparator;
+      const modifiedText = normalizePastedValue(pastedText, {
+        decimalSeparator: _decimalSeparator,
+        thousandSeparator: _thousandSeparator,
+        allowedDecimalSeparators: allowedDecimalSeparators || ['.', ','],
+        thousandsGroupStyle: others.thousandsGroupStyle,
+      });
 
-      if (separatorsToReplace.some((s) => pastedText.includes(s))) {
+      if (modifiedText !== pastedText) {
         event.preventDefault();
-        let modifiedText = pastedText;
-        separatorsToReplace.forEach((s) => {
-          modifiedText = modifiedText.split(s).join(_decimalSeparator);
-        });
 
         const input = inputRef.current;
         if (input) {
@@ -671,8 +678,14 @@ export const NumberInput = genericFactory<NumberInputFactory>(
           nativeInputValueSetter?.call(input, newValue);
           input.dispatchEvent(new Event('change', { bubbles: true }));
 
-          const cursorPos = start + modifiedText.length;
-          setTimeout(() => adjustCursor(cursorPos), 0);
+          const rawCaret = start + modifiedText.length;
+          setTimeout(
+            () =>
+              adjustCursor(
+                getCaretPositionAfterPaste(newValue, rawCaret, input.value, _decimalSeparator)
+              ),
+            0
+          );
         }
       }
 
