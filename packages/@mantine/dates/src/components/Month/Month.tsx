@@ -11,6 +11,7 @@ import {
   getSize,
   MantineSize,
   StylesApiProps,
+  UnstyledButton,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -22,6 +23,7 @@ import { Day, DayProps, DayStylesNames, RenderDay } from '../Day';
 import { WeekdaysRow } from '../WeekdaysRow';
 import { getDateInTabOrder } from './get-date-in-tab-order/get-date-in-tab-order';
 import { getMonthDays } from './get-month-days/get-month-days';
+import { getWeekInTabOrder } from './get-week-in-tab-order/get-week-in-tab-order';
 import { getWeekNumber } from './get-week-number/get-week-number';
 import { isAfterMinDate } from './is-after-min-date/is-after-min-date';
 import { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
@@ -38,13 +40,34 @@ export type MonthStylesNames =
   | 'monthTbody'
   | 'monthCell'
   | 'weekNumber'
+  | 'weekControl'
   | DayStylesNames;
 
 export type MonthCssVariables = {
   weekNumber: '--wn-fz' | '--wn-size';
 };
 
+export interface MonthWeekControlProps extends ElementProps<'button'>, DataAttributes {
+  /** Determines whether the week is selected */
+  selected?: boolean;
+}
+
 export interface MonthSettings {
+  /** Renders week numbers as buttons and removes days from the tab order, used in WeekPicker */
+  __withWeekControls?: boolean;
+
+  /** Passes props down to week controls, receives the first date of the week */
+  __getWeekControlProps?: (weekStart: DateStringValue) => Partial<MonthWeekControlProps>;
+
+  /** Assigns ref of every week control based on its row index, used for arrows navigation */
+  __getWeekControlRef?: (rowIndex: number, node: HTMLButtonElement) => void;
+
+  /** Called when any keydown event is registered on week control, used for arrows navigation */
+  __onWeekControlKeyDown?: (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    payload: { rowIndex: number; date: DateStringValue }
+  ) => void;
+
   /** Determines whether propagation for `Escape` key should be stopped */
   __stopPropagation?: boolean;
 
@@ -185,6 +208,10 @@ export const Month = factory<MonthFactory>((_props) => {
     withWeekNumbers,
     fullWidth,
     attributes,
+    __withWeekControls,
+    __getWeekControlProps,
+    __getWeekControlRef,
+    __onWeekControlKeyDown,
     ...others
   } = props;
 
@@ -226,6 +253,15 @@ export const Month = factory<MonthFactory>((_props) => {
     props,
   });
 
+  const isDayDisabled = (date: DateStringValue) =>
+    !!excludeDate?.(date) ||
+    !isBeforeMaxDate(date, toDateString(maxDate)!) ||
+    !isAfterMinDate(date, toDateString(minDate)!);
+
+  const weekInTabOrder = __withWeekControls
+    ? getWeekInTabOrder({ dates, isDayDisabled, getWeekControlProps: __getWeekControlProps })
+    : -1;
+
   const rows = dates.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
       const outside = !isSameMonth(date, month);
@@ -260,11 +296,7 @@ export const Month = factory<MonthFactory>((_props) => {
             aria-label={ariaLabel}
             static={isStatic}
             fullWidth={fullWidth}
-            disabled={
-              excludeDate?.(date) ||
-              !isBeforeMaxDate(date, toDateString(maxDate)!) ||
-              !isAfterMinDate(date, toDateString(minDate)!)
-            }
+            disabled={isDayDisabled(date)}
             ref={(node) => {
               if (node) {
                 __getDayRef?.(rowIndex, cellIndex, node!);
@@ -288,15 +320,53 @@ export const Month = factory<MonthFactory>((_props) => {
               dayProps?.onMouseDown?.(event);
               __preventFocus && event.preventDefault();
             }}
-            tabIndex={__preventFocus || !isDateInTabOrder ? -1 : 0}
+            tabIndex={__preventFocus || __withWeekControls || !isDateInTabOrder ? -1 : 0}
           />
         </td>
       );
     });
 
+    const weekStart = row[0];
+    const { selected: weekSelected, ...weekControlProps } = __withWeekControls
+      ? __getWeekControlProps?.(weekStart) || {}
+      : {};
+    const weekDisabled = row.every(isDayDisabled);
+
     return (
       <tr key={rowIndex} {...getStyles('monthRow')}>
-        {withWeekNumbers && <td {...getStyles('weekNumber')}>{getWeekNumber(row)}</td>}
+        {withWeekNumbers && (
+          <td {...getStyles('weekNumber')}>
+            {__withWeekControls ? (
+              <UnstyledButton
+                {...getStyles('weekControl')}
+                data-week-control
+                data-mantine-stop-propagation={__stopPropagation || undefined}
+                disabled={weekDisabled}
+                data-disabled={weekDisabled || undefined}
+                data-selected={weekSelected || undefined}
+                ref={(node) => {
+                  if (node) {
+                    __getWeekControlRef?.(rowIndex, node);
+                  }
+                }}
+                {...weekControlProps}
+                onKeyDown={(event) => {
+                  weekControlProps.onKeyDown?.(event);
+                  __onWeekControlKeyDown?.(event, { rowIndex, date: weekStart });
+                }}
+                onMouseDown={(event) => {
+                  weekControlProps.onMouseDown?.(event);
+                  __preventFocus && event.preventDefault();
+                }}
+                tabIndex={__preventFocus || rowIndex !== weekInTabOrder ? -1 : 0}
+              >
+                {getWeekNumber(row)}
+              </UnstyledButton>
+            ) : (
+              getWeekNumber(row)
+            )}
+          </td>
+        )}
         {cells}
       </tr>
     );

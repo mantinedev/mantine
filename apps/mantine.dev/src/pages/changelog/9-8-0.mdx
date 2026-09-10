@@ -1,4 +1,4 @@
-import { DiffDemos, EmojiPickerDemos, EmojiPickerInputDemos, EmojiPickerPopoverDemos, MaskedDateInputDemos, PhoneInputDemos } from '@docs/demos';
+import { DiffDemos, EmojiPickerDemos, EmojiPickerInputDemos, EmojiPickerPopoverDemos, MaskedDateInputDemos, PhoneInputDemos, QuarterPickerDemos, QuarterPickerInputDemos, WeekPickerDemos, WeekPickerInputDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -61,3 +61,39 @@ individual masked fields for day, month, and year. It supports configurable fiel
 custom separators, optional time fields, and a calendar dropdown for date selection.
 
 <Demo data={MaskedDateInputDemos.usage} />
+
+## QuarterPicker and QuarterPickerInput components
+
+New [QuarterPicker](/dates/quarter-picker) and [QuarterPickerInput](/dates/quarter-picker-input) components
+allow picking quarters, multiple quarters and quarters ranges. They work the same way as `MonthPicker`
+and `MonthPickerInput`; the value is the first day of the selected quarter in `YYYY-MM-DD` format.
+
+<Demo data={QuarterPickerDemos.usage} />
+
+<Demo data={QuarterPickerInputDemos.usage} />
+
+## WeekPicker and WeekPickerInput components
+
+New [WeekPicker](/dates/week-picker) and [WeekPickerInput](/dates/week-picker-input) components
+allow picking weeks, multiple weeks and weeks ranges. Clicking any day selects the whole week,
+the value is the first day of the week according to `firstDayOfWeek` in `YYYY-MM-DD` format.
+
+<Demo data={WeekPickerDemos.usage} />
+
+<Demo data={WeekPickerInputDemos.usage} />
+
+## Keyboard navigation improvements in @mantine/dates
+
+Keyboard navigation in [DatePicker](/dates/date-picker), [MonthPicker](/dates/month-picker),
+[YearPicker](/dates/year-picker), [QuarterPicker](/dates/quarter-picker), [WeekPicker](/dates/week-picker)
+and the corresponding input components has been reworked:
+
+- Arrow navigation in the dates grid is no longer limited to the current month: visible outside dates
+  can be focused, and when the target date is not displayed, the calendar switches to the previous/next
+  month (year or decade in other pickers) and focuses the target date
+- Presets have a roving tab index: only one preset is in the tab order, `ArrowDown`/`ArrowUp` move focus
+  between presets and `Tab` moves focus to the calendar
+- When the level is changed with the keyboard, focus moves to the label of the new level
+- When the dropdown of `DatePickerInput` and other input components is closed after a keyboard interaction,
+  focus is returned to the input
+- Dropdown start padding is reduced when presets are displayed

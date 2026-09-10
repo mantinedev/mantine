@@ -44,6 +44,7 @@ describe('@mantine/dates/DatePicker', () => {
     component: DatePicker,
     props: defaultProps,
     name: 'DatePicker',
+    withMonthChange: true,
   });
 
   datesTests.itSupportsMonthProps({

@@ -150,26 +150,36 @@ function Demo() {
 ### Keyboard interactions
 
 Note that the following events will only trigger if focus is on a year control.
+When arrow navigation reaches the edge of the grid, the calendar switches to the
+previous/next decade and focuses the corresponding year.
 
 <KeyboardEventsTable
   data={[
     {
       key: 'ArrowRight',
-      description: 'Focuses next non-disabled year',
+      description: 'Focuses next non-disabled year, switches to the next decade if needed',
     },
     {
       key: 'ArrowLeft',
-      description: 'Focuses previous non-disabled year',
+      description: 'Focuses previous non-disabled year, switches to the previous decade if needed',
     },
     {
       key: 'ArrowDown',
       description:
-        'Focuses next non-disabled year in the same column',
+        'Focuses next non-disabled year in the same column, switches to the next decade if needed',
     },
     {
       key: 'ArrowUp',
       description:
-        'Focuses previous non-disabled year in the same column',
+        'Focuses previous non-disabled year in the same column, switches to the previous decade if needed',
     },
   ]}
 />
+
+When `presets` are used, only one preset button is in the tab order. With focus on a preset,
+`ArrowDown` and `ArrowUp` move focus between presets without selecting them, `Enter` or `Space`
+selects the focused preset, and `Tab` moves focus to the calendar.
+
+When the level is changed with the keyboard (for example, `Enter` on the month label), focus
+moves to the label of the new level or to the grid control in the tab order if the new level
+does not have a clickable label.

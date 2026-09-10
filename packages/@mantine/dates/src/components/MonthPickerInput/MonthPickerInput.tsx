@@ -113,6 +113,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
     return (
       <PickerInputBase
         formattedValue={formattedValue}
+        withPresets={!!presets}
         dropdownOpened={dropdownOpened}
         dropdownHandlers={dropdownHandlers}
         classNames={resolvedClassNames}

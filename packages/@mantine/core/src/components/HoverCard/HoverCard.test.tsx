@@ -1,6 +1,6 @@
 import { createRef } from 'react';
 import { act, fireEvent } from '@testing-library/react';
-import { render, screen, tests, userEvent, wait } from '@mantine-tests/core';
+import { render, renderWithAct, screen, tests, userEvent, wait } from '@mantine-tests/core';
 import { Switch } from '../Switch';
 import { HoverCard, HoverCardProps } from './HoverCard';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
@@ -52,8 +52,8 @@ describe('@mantine/core/HoverCard', () => {
     props: {},
   });
 
-  it('correctly handles initiallyOpened prop', () => {
-    render(<TestContainer initiallyOpened />);
+  it('correctly handles initiallyOpened prop', async () => {
+    await renderWithAct(<TestContainer initiallyOpened />);
     expect(screen.getByText('test-dropdown')).toBeInTheDocument();
   });
 
