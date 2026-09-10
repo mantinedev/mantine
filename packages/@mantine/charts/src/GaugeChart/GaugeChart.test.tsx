@@ -13,6 +13,10 @@ function getSections(container: HTMLElement) {
   return Array.from(container.querySelectorAll('.mantine-GaugeChart-section'));
 }
 
+function getSectionCaps(container: HTMLElement) {
+  return Array.from(container.querySelectorAll('.mantine-GaugeChart-sectionCap'));
+}
+
 function getViewBox(container: HTMLElement) {
   return container.querySelector('svg')!.getAttribute('viewBox')!.split(' ').map(Number);
 }
@@ -194,6 +198,81 @@ describe('@mantine/charts/GaugeChart', () => {
     expect(getSections(over).map((s) => s.getAttribute('d'))).toStrictEqual(
       getSections(full).map((s) => s.getAttribute('d'))
     );
+  });
+
+  it('does not round the caps of sections without roundCaps', () => {
+    const { container } = render(
+      <GaugeChart
+        {...defaultProps}
+        sections={[
+          { value: 50, color: 'red' },
+          { value: 100, color: 'blue' },
+        ]}
+      />
+    );
+
+    expect(getSectionCaps(container)).toHaveLength(0);
+    getSections(container).forEach((section) => {
+      expect(section).toHaveAttribute('stroke-linecap', 'butt');
+    });
+  });
+
+  it('rounds only the outer ends of the first and last sections with roundCaps', () => {
+    const sections = [
+      { value: 30, color: 'red' },
+      { value: 60, color: 'green' },
+      { value: 100, color: 'blue' },
+    ];
+    const { container } = render(<GaugeChart {...defaultProps} sections={sections} roundCaps />);
+    const rendered = getSections(container);
+    const caps = getSectionCaps(container);
+
+    rendered.forEach((section) => {
+      expect(section).toHaveAttribute('stroke-linecap', 'butt');
+    });
+
+    expect(caps).toHaveLength(2);
+    expect(caps[0]).toHaveAttribute('stroke-linecap', 'round');
+    expect(caps[0]).toHaveAttribute('d', rendered[0].getAttribute('d')!);
+    expect(caps[0]).toHaveAttribute('stroke', rendered[0].getAttribute('stroke')!);
+    expect(caps[1]).toHaveAttribute('stroke-linecap', 'round');
+    expect(caps[1]).toHaveAttribute('d', rendered[2].getAttribute('d')!);
+    expect(caps[1]).toHaveAttribute('stroke', rendered[2].getAttribute('stroke')!);
+
+    const svg = container.querySelector('svg')!;
+    const order = Array.from(svg.querySelectorAll<Element>('path'));
+    expect(order.indexOf(caps[1])).toBeLessThan(order.indexOf(rendered[0]));
+  });
+
+  it('renders a single round-capped copy for a single section with roundCaps', () => {
+    const { container } = render(
+      <GaugeChart {...defaultProps} sections={[{ value: 80, color: 'red' }]} roundCaps />
+    );
+    const caps = getSectionCaps(container);
+
+    expect(caps).toHaveLength(1);
+    expect(caps[0]).toHaveAttribute('d', getSections(container)[0].getAttribute('d')!);
+  });
+
+  it('ignores skipped sections when picking the sections to round', () => {
+    const { container } = render(
+      <GaugeChart
+        {...defaultProps}
+        sections={[
+          { value: 0, color: 'gray' },
+          { value: 50, color: 'red' },
+          { value: 100, color: 'blue' },
+          { value: 100, color: 'gray' },
+        ]}
+        roundCaps
+      />
+    );
+    const caps = getSectionCaps(container);
+    const rendered = getSections(container).filter((s) => s.getAttribute('d'));
+
+    expect(caps).toHaveLength(2);
+    expect(caps[0]).toHaveAttribute('d', rendered[0].getAttribute('d')!);
+    expect(caps[1]).toHaveAttribute('d', rendered[1].getAttribute('d')!);
   });
 
   it('reserves room for a round-capped target marker in the viewBox', () => {
