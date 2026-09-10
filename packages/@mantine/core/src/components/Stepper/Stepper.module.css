@@ -1,9 +1,9 @@
 .root {
-  --stepper-icon-size-xs: 34px;
-  --stepper-icon-size-sm: 36px;
-  --stepper-icon-size-md: 42px;
-  --stepper-icon-size-lg: 48px;
-  --stepper-icon-size-xl: 52px;
+  --stepper-icon-size-xs: 28px;
+  --stepper-icon-size-sm: 32px;
+  --stepper-icon-size-md: 36px;
+  --stepper-icon-size-lg: 42px;
+  --stepper-icon-size-xl: 48px;
 
   --stepper-icon-size: var(--stepper-icon-size-md);
   --stepper-color: var(--mantine-primary-color-filled);
@@ -13,7 +13,7 @@
   --stepper-fz: var(--mantine-font-size-md);
   --stepper-outline-thickness: 2px;
 
-  --stepper-outline-color: var(--mantine-color-border-subtle);
+  --stepper-outline-color: var(--mantine-color-border);
 }
 
 .steps {
@@ -48,14 +48,23 @@
 }
 
 .separator {
-  transition: background-color 150ms ease;
+  transition: background-size 220ms ease;
   flex: 1;
   height: var(--stepper-outline-thickness);
-  margin-inline: var(--mantine-spacing-md);
-  background-color: var(--stepper-outline-color);
+  margin-inline: var(--mantine-spacing-sm);
+  border-radius: 1000px;
+  background:
+    linear-gradient(var(--stepper-color), var(--stepper-color)) no-repeat left / 0% 100%,
+    var(--stepper-outline-color);
+
+  @mixin where-rtl {
+    background-position: right;
+  }
 
   &:where([data-active]) {
-    background-color: var(--stepper-color);
+    background-size:
+      100% 100%,
+      auto;
   }
 
   .steps:where([data-label-position='bottom']) & {
@@ -69,12 +78,20 @@
 
 .step {
   --step-color: var(--stepper-color);
+  --step-color-text: var(--stepper-color-text, var(--step-color));
 
   display: flex;
   cursor: default;
 
   &:where([data-allow-click]) {
     cursor: pointer;
+
+    @mixin hover {
+      .stepIcon:where(:not([data-progress], [data-completed])) {
+        background-color: var(--mantine-color-hover);
+        border-color: var(--mantine-color-border-strong);
+      }
+    }
   }
 
   &:where([data-icon-position='left']) {
@@ -136,6 +153,8 @@
   height: 100vh;
   position: absolute;
   border-inline-start: var(--stepper-outline-thickness) solid var(--stepper-outline-color);
+  border-radius: 1000px;
+  transition: border-color 150ms ease;
 
   &:where([data-active]) {
     border-color: var(--stepper-color);
@@ -156,12 +175,15 @@
   font-weight: bold;
   transition:
     background-color 150ms ease,
-    border-color 150ms ease;
+    border-color 150ms ease,
+    color 150ms ease;
   border: var(--stepper-outline-thickness) solid var(--stepper-outline-color);
-  background-color: var(--stepper-outline-color);
-  color: var(--mantine-color-subtle-color);
+  background-color: transparent;
+  color: var(--mantine-color-dimmed);
 
   &:where([data-progress]) {
+    color: var(--step-color-text);
+    background-color: color-mix(in srgb, var(--step-color) 12%, transparent);
     border-color: var(--step-color);
   }
 
@@ -208,13 +230,12 @@
 .stepLabel {
   font-weight: var(--mantine-font-weight-medium);
   font-size: var(--stepper-fz);
-  line-height: 1;
+  line-height: 1.15;
 }
 
 .stepDescription {
-  margin-top: calc(var(--stepper-spacing) / 3);
-  margin-bottom: calc(var(--stepper-spacing) / 3);
+  margin-top: rem(2px);
   font-size: calc(var(--stepper-fz) - rem(2px));
-  line-height: 1;
+  line-height: 1.2;
   color: var(--mantine-color-dimmed);
 }

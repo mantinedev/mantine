@@ -13,6 +13,7 @@ import { CheckIcon } from '../../Checkbox';
 import { Loader } from '../../Loader';
 import { Transition } from '../../Transition';
 import { UnstyledButton } from '../../UnstyledButton';
+import { getStepColorText } from '../get-step-color-text';
 import type { StepFragmentComponent } from '../Stepper';
 import { useStepperContext } from '../Stepper.context';
 import classes from '../Stepper.module.css';
@@ -153,7 +154,10 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
       ]}
       {...dataAttributes}
       {...others}
-      __vars={{ '--step-color': color ? getThemeColor(color, theme) : undefined }}
+      __vars={{
+        '--step-color': color ? getThemeColor(color, theme) : undefined,
+        '--step-color-text': color ? getStepColorText(color, theme) : undefined,
+      }}
       tabIndex={allowStepClick ? 0 : -1}
     >
       {withIcon && (

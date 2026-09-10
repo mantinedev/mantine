@@ -22,6 +22,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { getStepColorText } from './get-step-color-text';
 import { StepperProvider, type StepperContextValue } from './Stepper.context';
 import { StepperCompleted, StepperCompletedProps } from './StepperCompleted/StepperCompleted';
 import { StepperStep, StepperStepProps } from './StepperStep/StepperStep';
@@ -47,6 +48,7 @@ export type StepperStylesNames =
 export type StepperCssVariables = {
   root:
     | '--stepper-color'
+    | '--stepper-color-text'
     | '--stepper-icon-color'
     | '--stepper-icon-size'
     | '--stepper-content-padding'
@@ -135,6 +137,7 @@ const varsResolver = createVarsResolver<StepperFactory>(
   (theme, { color, iconSize, size, contentPadding, radius, autoContrast }) => ({
     root: {
       '--stepper-color': color ? getThemeColor(color, theme) : undefined,
+      '--stepper-color-text': getStepColorText(color || theme.primaryColor, theme),
       '--stepper-icon-color': getAutoContrastValue(autoContrast, theme)
         ? getContrastColor({ color, theme, autoContrast })
         : undefined,

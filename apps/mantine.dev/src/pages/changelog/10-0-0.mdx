@@ -8,6 +8,7 @@ import {
   NotificationDemos,
   PillsInputDemos,
   SliderDemos,
+  StepperDemos,
   SwitchDemos,
   ThemingDemos,
 } from '@docs/demos';
@@ -212,6 +213,18 @@ prop supports `filled` and `white` thumb styles in addition to `default`:
 pressed and snaps into place on release, the way native toggles behave:
 
 <Demo data={SwitchDemos.configurator} />
+
+## Stepper redesign
+
+[Stepper](/core/stepper) step states have been reworked so that they can be told apart at a glance.
+Steps that are not reached yet are hollow circles with a `border` ring and a dimmed number, the
+step in progress is filled with a 12% tint of the stepper color with the number in the color's text
+shade, completed steps are unchanged. Step icons are one notch smaller per `size` (36px instead of
+42px at `md`) to match the height of the label and description next to them, the connecting line
+uses the `border` color and fills towards the next step with a transition, and clickable steps that
+are not reached yet have a hover state:
+
+<Demo data={StepperDemos.usage} />
 
 ## PillsInput spacing
 
