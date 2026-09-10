@@ -37,6 +37,7 @@ const slides: LightboxSlideData[] = [
     alt: 'Mountain lake', // Alt text, always set it for screen readers
     caption: 'Mountain lake at sunrise', // Caption displayed below the slide
     thumbSrc: 'image-small.png', // Custom thumbnail URL, `src` is used if not set
+    renderThumb: ({ active }) => <span>Thumb</span>, // Custom thumbnail content, see below
     srcSet: 'image-2x.png 2x', // Optional srcset for responsive images
     sizes: '(max-width: 600px) 100vw, 50vw', // Optional sizes attribute
     loading: 'lazy', // Optional loading attribute, see below
@@ -48,6 +49,8 @@ const slides: LightboxSlideData[] = [
     src: 'video.mp4',
     label: 'Product demo', // Accessible video label
     poster: 'poster.png', // Poster image, also used as thumbnail
+    thumbSrc: 'poster-small.png', // Custom thumbnail URL, `poster` is used if not set
+    renderThumb: ({ active }) => <span>Thumb</span>, // Custom thumbnail content, see below
     autoPlay: true, // Auto-play when the slide becomes active
     tracks: [{ src: 'captions.vtt', kind: 'captions', srcLang: 'en', label: 'English' }],
   },
@@ -56,7 +59,8 @@ const slides: LightboxSlideData[] = [
   {
     type: 'custom',
     render: ({ active }) => <div>Custom content</div>,
-    renderThumb: () => <span>Thumb</span>, // Custom thumbnail content
+    thumbSrc: 'thumb.png', // Custom thumbnail URL
+    renderThumb: ({ active }) => <span>Thumb</span>, // Custom thumbnail content, see below
   },
 ];
 ```
@@ -108,6 +112,35 @@ Toggle visibility at runtime with the `T` keyboard shortcut or the toolbar butto
 animated with the `transitionDuration` prop value:
 
 <Demo data={LightboxDemos.thumbnails} />
+
+### Custom thumbnails
+
+By default, thumbnails are rendered as `<img>` elements: image slides use `thumbSrc` or `src`,
+video slides use `thumbSrc` or `poster`, custom slides use `thumbSrc`. Set `renderThumb` on any
+slide to render custom thumbnail content instead – for example, a `<video>` element when the
+thumbnail is a small video rather than an image. The function receives `{ active }` payload, `active`
+is `true` for the thumbnail of the current slide. Rendered content is placed inside a 64x64px
+button, size it with `width: 100%` and `height: 100%`:
+
+```tsx
+import type { LightboxSlideData } from '@mantine/lightbox';
+
+const slides: LightboxSlideData[] = [
+  {
+    type: 'video',
+    src: 'video.mp4',
+    renderThumb: () => (
+      <video
+        src="video-thumb.mp4"
+        muted
+        playsInline
+        preload="metadata"
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      />
+    ),
+  },
+];
+```
 
 ## All features
 
@@ -258,14 +291,16 @@ function Demo() {
 ## Video slides
 
 Set `type: 'video'` on a slide to render a `<video>` element. Videos are automatically
-paused when navigating away from the slide:
+paused when navigating away from the slide. The `poster` image is used as the thumbnail,
+set `thumbSrc` to use a different image or `renderThumb` to render a custom thumbnail,
+for example a muted `<video>` element (see the last slide in the demo below):
 
 <Demo data={LightboxDemos.video} />
 
 ## Custom slides
 
 Set `type: 'custom'` with a `render` function for fully custom slide content.
-Use `renderThumb` to customize the thumbnail as well:
+Use `renderThumb` or `thumbSrc` to provide the thumbnail – custom slides do not have a default one:
 
 <Demo data={LightboxDemos.custom} />
 

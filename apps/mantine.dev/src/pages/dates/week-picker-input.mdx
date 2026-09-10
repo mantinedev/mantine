@@ -1,0 +1,137 @@
+import { WeekPickerInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.WeekPickerInput);
+
+## WeekPicker props
+
+`WeekPickerInput` supports most of the [WeekPicker](/dates/week-picker/) props.
+Read through the [WeekPicker](/dates/week-picker/) documentation to learn about all component features that are not listed on this page.
+
+## Usage
+
+The value is a date string in `YYYY-MM-DD` format pointing to the first day of the selected week.
+The input label displays the week as a range of its first and last day:
+
+<Demo data={WeekPickerInputDemos.usage} />
+
+## Multiple weeks
+
+Set `type="multiple"` to allow users to pick multiple weeks:
+
+<Demo data={WeekPickerInputDemos.multiple} />
+
+## Weeks range
+
+Set `type="range"` to allow users to pick a weeks range. The label displays the range from the first day of the
+first week to the last day of the last week:
+
+<Demo data={WeekPickerInputDemos.range} />
+
+## First day of week
+
+`firstDayOfWeek` changes the calendar layout, the emitted value and the label:
+
+<Demo data={WeekPickerInputDemos.firstDayOfWeek} />
+
+## Presets
+
+Use the `presets` prop to add custom week presets. Presets are displayed next to the calendar.
+Preset values are normalized to the first day of their week before `onChange` is called, so any date
+inside the week can be used as a preset value:
+
+<Demo data={WeekPickerInputDemos.presets} />
+
+To use `presets` with `type="range"`, define the value as a tuple of two dates:
+
+<Demo data={WeekPickerInputDemos.presetsRange} />
+
+## Open picker in modal
+
+By default, [WeekPicker](/dates/week-picker/) is rendered inside [Popover](/core/popover/).
+You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
+
+<Demo data={WeekPickerInputDemos.modal} />
+
+## Value format
+
+`valueFormat` is a [dayjs format](https://day.js.org/docs/en/display/format) applied to both the first and the last day
+of the week. The default value is `MMM D, YYYY`:
+
+<Demo data={WeekPickerInputDemos.valueFormat} />
+
+## Value formatter
+
+`valueFormatter` is a more powerful alternative to the `valueFormat` prop.
+It allows formatting the value label with a custom function. The function receives the raw week start values.
+The function is the same for all component types (`default`, `multiple` and `range`)
+– you need to perform additional checks inside the function to handle different types.
+
+Example of using a custom formatter function with `type="multiple"`:
+
+<Demo data={WeekPickerInputDemos.valueFormatter} />
+
+`getWeekFormatter(firstDayOfWeek)` exported from `@mantine/dates` returns the default formatter,
+you can compose it with your own logic, for example, to add the ISO week number.
+The demo extends dayjs with the `isoWeek` plugin to get typed access to `isoWeek()`.
+
+<Demo data={WeekPickerInputDemos.weekNumberFormatter} />
+
+## Clearable
+
+Set the `clearable` prop to display a clear button in the right section. Note that if you set the `rightSection`
+prop, the clear button will not be displayed.
+
+<Demo data={WeekPickerInputDemos.clearable} />
+
+<ClearSectionMode />
+
+<Demo data={WeekPickerInputDemos.clearSectionMode} />
+
+## Disabled state
+
+<Demo data={WeekPickerInputDemos.disabled} />
+
+## Min and max dates
+
+`minDate` and `maxDate` props define the minimum and maximum dates that can be picked:
+
+<Demo data={WeekPickerInputDemos.minMax} />
+
+## Week controls
+
+Week numbers are always displayed and act as controls: they are the only focusable elements of the
+calendar, days can be clicked with the mouse only. Use `getWeekControlProps` to change `aria-label`
+or disable specific weeks, see [WeekPicker](/dates/week-picker/) documentation for details.
+
+## Max level
+
+`maxLevel` prop allows to set the maximum level that can be reached by clicking on the label in the header.
+
+<Demo data={WeekPickerInputDemos.maxLevel} />
+
+## Input props
+
+<InputFeatures component="WeekPickerInput" element="button" />
+
+<Demo data={WeekPickerInputDemos.configurator} />
+
+## With icon
+
+<Demo data={WeekPickerInputDemos.icon} />
+
+## Native level select
+
+<Demo data={WeekPickerInputDemos.nativeLevelSelect} />
+
+<GetElementRef
+  component="WeekPickerInput"
+  refType="button"
+  package="@mantine/dates"
+/>
+
+<InputAccessibility
+  component="WeekPickerInput"
+  packageName="@mantine/dates"
+/>

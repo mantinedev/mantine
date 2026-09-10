@@ -2,6 +2,18 @@ import { RefObject } from 'react';
 
 type ControlsRef = RefObject<HTMLButtonElement[][][]>;
 type Direction = 'up' | 'down' | 'left' | 'right';
+type Edge = 'previous' | 'next';
+
+export interface ControlEdgeCrossPayload {
+  /** Grid edge that was crossed */
+  edge: Edge;
+
+  /** Arrow direction that caused the crossing */
+  direction: Direction;
+
+  /** Cell index of the control that had focus */
+  cellIndex: number;
+}
 
 type NextIndexInput = Omit<ShiftFocusInput, 'controlsRef'>;
 
@@ -113,6 +125,14 @@ interface ShiftFocusInput {
   size: number[][];
 }
 
+function isControlFocusable(control: HTMLButtonElement) {
+  return (
+    !control.disabled &&
+    !control.getAttribute('data-hidden') &&
+    !control.getAttribute('data-outside')
+  );
+}
+
 function focusOnNextFocusableControl({
   controlsRef,
   direction,
@@ -120,26 +140,26 @@ function focusOnNextFocusableControl({
   rowIndex,
   cellIndex,
   size,
-}: ShiftFocusInput) {
+}: ShiftFocusInput): Edge | null {
   const nextIndex = getNextIndex({ direction, size, rowIndex, cellIndex, levelIndex });
 
   if (!nextIndex) {
-    return;
+    return 'previous';
+  }
+
+  if (nextIndex.levelIndex >= size.length) {
+    return 'next';
   }
 
   const controlToFocus =
     controlsRef.current?.[nextIndex.levelIndex]?.[nextIndex.rowIndex]?.[nextIndex.cellIndex];
 
   if (!controlToFocus) {
-    return;
+    return null;
   }
 
-  if (
-    controlToFocus.disabled ||
-    controlToFocus.getAttribute('data-hidden') ||
-    controlToFocus.getAttribute('data-outside')
-  ) {
-    focusOnNextFocusableControl({
+  if (!isControlFocusable(controlToFocus)) {
+    return focusOnNextFocusableControl({
       controlsRef,
       direction,
       levelIndex: nextIndex.levelIndex,
@@ -147,9 +167,41 @@ function focusOnNextFocusableControl({
       rowIndex: nextIndex.rowIndex,
       size,
     });
-  } else {
-    controlToFocus.focus();
   }
+
+  controlToFocus.focus();
+  return null;
+}
+
+interface FocusControlInput {
+  controlsRef: ControlsRef;
+  direction: Direction;
+  levelIndex: number;
+  rowIndex: number;
+  cellIndex: number;
+}
+
+/** Focuses control at the given position or the next focusable control in the given direction */
+export function focusControl({
+  controlsRef,
+  direction,
+  levelIndex,
+  rowIndex,
+  cellIndex,
+}: FocusControlInput) {
+  const size = getControlsSize(controlsRef);
+  const control = controlsRef.current?.[levelIndex]?.[rowIndex]?.[cellIndex];
+
+  if (!size || !control) {
+    return;
+  }
+
+  if (isControlFocusable(control)) {
+    control.focus();
+    return;
+  }
+
+  focusOnNextFocusableControl({ controlsRef, direction, levelIndex, rowIndex, cellIndex, size });
 }
 
 function getDirection(key: KeyboardEvent['key']): Direction {
@@ -177,6 +229,9 @@ interface HandleControlKeyDownInput {
   rowIndex: number;
   cellIndex: number;
   event: React.KeyboardEvent<HTMLButtonElement>;
+
+  /** Called when arrow navigation runs off the first or the last grid */
+  onEdgeCross?: (payload: ControlEdgeCrossPayload) => void;
 }
 
 export function handleControlKeyDown({
@@ -185,6 +240,7 @@ export function handleControlKeyDown({
   rowIndex,
   cellIndex,
   event,
+  onEdgeCross,
 }: HandleControlKeyDownInput) {
   const direction = getDirection(event.key);
 
@@ -193,7 +249,7 @@ export function handleControlKeyDown({
 
     const size = getControlsSize(controlsRef)!;
 
-    focusOnNextFocusableControl({
+    const edge = focusOnNextFocusableControl({
       controlsRef,
       direction,
       levelIndex,
@@ -201,5 +257,9 @@ export function handleControlKeyDown({
       cellIndex,
       size,
     });
+
+    if (edge) {
+      onEdgeCross?.({ edge, direction, cellIndex });
+    }
   }
 }

@@ -27,6 +27,12 @@ describe('@mantine/code-highlight/normalize-code', () => {
     );
   });
 
+  it('keeps indentation in tab-prefixed code without trailing whitespace', () => {
+    expect(normalizeCode(`${'\t'.repeat(1_000)}code`, { withFirstLineIndentation: true })).toBe(
+      `${'\t'.repeat(1_000)}code`
+    );
+  });
+
   it('returns an empty string for blank input', () => {
     expect(normalizeCode('  \n \n ', { withFirstLineIndentation: true })).toBe('');
     expect(normalizeCode('', { withFirstLineIndentation: true })).toBe('');

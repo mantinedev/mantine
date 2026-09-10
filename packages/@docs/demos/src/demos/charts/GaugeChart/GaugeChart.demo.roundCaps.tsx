@@ -11,6 +11,16 @@ function Demo() {
     <Group>
       <GaugeChart value={72} roundCaps size={160} />
       <GaugeChart value={72} roundCaps={false} size={160} />
+      <GaugeChart
+        value={72}
+        roundCaps
+        size={160}
+        sections={[
+          { value: 60, color: 'teal' },
+          { value: 80, color: 'yellow' },
+          { value: 100, color: 'red' },
+        ]}
+      />
     </Group>
   );
 }
@@ -21,6 +31,16 @@ function Demo() {
     <Group>
       <GaugeChart value={72} roundCaps size={160} />
       <GaugeChart value={72} roundCaps={false} size={160} />
+      <GaugeChart
+        value={72}
+        roundCaps
+        size={160}
+        sections={[
+          { value: 60, color: 'teal' },
+          { value: 80, color: 'yellow' },
+          { value: 100, color: 'red' },
+        ]}
+      />
     </Group>
   );
 }

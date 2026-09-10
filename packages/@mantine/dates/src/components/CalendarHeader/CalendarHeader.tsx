@@ -306,6 +306,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
       component={hasNextLevel ? 'button' : 'div'}
       {...getStyles('calendarHeaderLevel')}
       key="level"
+      data-level-control
       onClick={hasNextLevel ? onLevelClick : undefined}
       unstyled={unstyled}
       onMouseDown={hasNextLevel ? preventFocus : undefined}
