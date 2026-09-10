@@ -27,6 +27,21 @@ See the [notifications package documentation](/x/notifications/) for configurati
 
 <Demo data={NotificationDemos.icon} />
 
+## Variants
+
+Use the `variant` prop to control how the icon is rendered. `filled` (default) renders the icon
+in a solid circle with a contrast color, `light` renders it in a tinted circle with a colored icon,
+`transparent` renders the icon without background in the text shade of the given color, the same
+as [Alert](/core/alert) icon. Colors are resolved with `theme.variantColorResolver`, so custom
+variants work as well:
+
+<Demo data={NotificationDemos.variants} />
+
+The `variant` prop affects only the icon. The accent line displayed when `icon` is not set and
+the loader always use the `color` prop color. To customize icon colors, set
+`--notification-icon-bg` and `--notification-icon-color` with the `vars` prop or
+[Styles API](/styles/styles-api).
+
 <StylesApiSelectors component="Notification" />
 
 <Demo data={NotificationDemos.stylesApi} />

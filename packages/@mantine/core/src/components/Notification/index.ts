@@ -3,6 +3,7 @@ import type {
   NotificationFactory,
   NotificationProps,
   NotificationStylesNames,
+  NotificationVariant,
 } from './Notification';
 
 export { Notification } from './Notification';
@@ -12,4 +13,5 @@ export type {
   NotificationStylesNames,
   NotificationFactory,
   NotificationCssVariables,
+  NotificationVariant,
 };

@@ -10,12 +10,15 @@ import {
   getThemeColor,
   MantineColor,
   MantineRadius,
+  MantineTheme,
+  parseThemeColor,
+  PartialVarsResolver,
   StylesApiProps,
   useProps,
   useStyles,
 } from '../../core';
 import { __CloseButtonProps, CloseButton } from '../CloseButton';
-import { Loader, LoaderProps } from '../Loader';
+import { Loader, LoaderFactory, LoaderProps } from '../Loader';
 import classes from './Notification.module.css';
 
 export type NotificationStylesNames =
@@ -26,8 +29,13 @@ export type NotificationStylesNames =
   | 'title'
   | 'description'
   | 'closeButton';
+export type NotificationVariant = 'filled' | 'light' | 'transparent';
 export type NotificationCssVariables = {
-  root: '--notification-radius' | '--notification-color';
+  root:
+    | '--notification-radius'
+    | '--notification-color'
+    | '--notification-icon-bg'
+    | '--notification-icon-color';
 };
 
 export interface NotificationProps
@@ -35,8 +43,14 @@ export interface NotificationProps
   /** Called when the close button is clicked */
   onClose?: () => void;
 
-  /** Controls icon background color or notification accent line color, key of `theme.colors` or any valid CSS color. When `icon` is provided, sets the icon background color. When no icon is provided, sets the colored accent line on the left. @default theme.primaryColor */
+  /** Controls icon colors, accent line color and loader color, key of `theme.colors` or any valid CSS color. When `icon` is provided, styles the icon. When no icon is provided, sets the colored accent line on the left. @default theme.primaryColor */
   color?: MantineColor;
+
+  /** Controls how the icon is rendered: `filled` – solid circle with contrast icon, `light` – tinted circle with colored icon, `transparent` – icon without background @default 'filled' */
+  variant?: NotificationVariant | (string & {});
+
+  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for icon color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  autoContrast?: boolean;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
@@ -71,24 +85,61 @@ export type NotificationFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: NotificationStylesNames;
   vars: NotificationCssVariables;
+  variant: NotificationVariant;
 }>;
 
 const defaultProps = {
   withCloseButton: true,
+  variant: 'filled',
 } satisfies Partial<NotificationProps>;
 
-const varsResolver = createVarsResolver<NotificationFactory>((theme, { radius, color }) => ({
+const loaderVars: PartialVarsResolver<LoaderFactory> = (_theme, { size, color }) => ({
   root: {
-    '--notification-radius': radius === undefined ? undefined : getRadius(radius),
-    '--notification-color': color ? getThemeColor(color, theme) : undefined,
+    '--loader-size': size === undefined ? 'var(--notification-icon-size)' : undefined,
+    '--loader-color': color === undefined ? 'var(--notification-color)' : undefined,
   },
-}));
+});
+
+function getAccentColor(color: string, theme: MantineTheme) {
+  const parsed = parseThemeColor({ color, theme });
+
+  if (parsed.isThemeColor && parsed.shade === undefined) {
+    return `var(--mantine-color-${parsed.color}-text)`;
+  }
+
+  return parsed.variable ? `var(${parsed.variable})` : parsed.color;
+}
+
+const varsResolver = createVarsResolver<NotificationFactory>(
+  (theme, { radius, color, variant, autoContrast }) => {
+    const resolvedColor = color || theme.primaryColor;
+    const resolvedVariant = variant || 'filled';
+    const colors = theme.variantColorResolver({
+      color: resolvedColor,
+      theme,
+      variant: resolvedVariant,
+      autoContrast,
+    });
+
+    return {
+      root: {
+        '--notification-radius': radius === undefined ? undefined : getRadius(radius),
+        '--notification-color': color ? getThemeColor(color, theme) : undefined,
+        '--notification-icon-bg': colors.background,
+        '--notification-icon-color':
+          resolvedVariant === 'transparent' ? getAccentColor(resolvedColor, theme) : colors.color,
+      },
+    };
+  }
+);
 
 export const Notification = factory<NotificationFactory>((_props) => {
   const props = useProps('Notification', defaultProps, _props);
   const {
     className,
     color,
+    variant,
+    autoContrast,
     radius,
     loading,
     withCloseButton,
@@ -128,11 +179,16 @@ export const Notification = factory<NotificationFactory>((_props) => {
     <Box
       {...getStyles('root')}
       mod={[{ withIcon: !!icon || loading, withBorder }, mod]}
+      variant={variant}
       role={role || 'alert'}
       {...others}
     >
-      {icon && !loading && <div {...getStyles('icon')}>{icon}</div>}
-      {loading && <Loader size={28} color={color} {...getStyles('loader')} {...loaderProps} />}
+      {icon && !loading && (
+        <Box {...getStyles('icon')} mod={{ variant }}>
+          {icon}
+        </Box>
+      )}
+      {loading && <Loader vars={loaderVars} {...getStyles('loader')} {...loaderProps} />}
 
       <div {...getStyles('body')}>
         {title && <div {...getStyles('title')}>{title}</div>}
@@ -144,8 +200,9 @@ export const Notification = factory<NotificationFactory>((_props) => {
 
       {withCloseButton && (
         <CloseButton
+          variant="transparent"
+          size="sm"
           iconSize={16}
-          color="gray"
           {...closeButtonProps}
           unstyled={unstyled}
           onClick={(event) => {
@@ -168,4 +225,5 @@ export namespace Notification {
   export type StylesNames = NotificationStylesNames;
   export type Factory = NotificationFactory;
   export type CssVariables = NotificationCssVariables;
+  export type Variant = NotificationVariant;
 }

@@ -203,6 +203,45 @@ export function Usage() {
   );
 }
 
+export function Variants() {
+  const icons = {
+    blue: <BookmarkIcon />,
+    teal: <CheckIcon />,
+    yellow: <ExclamationMarkIcon />,
+    red: <XIcon />,
+  };
+
+  return (
+    <div style={{ padding: 40, display: 'flex', gap: 40, alignItems: 'flex-start' }}>
+      {(['filled', 'light', 'transparent'] as const).map((variant) => (
+        <div
+          key={variant}
+          style={{ width: 400, display: 'flex', flexDirection: 'column', gap: 16 }}
+        >
+          {Object.entries(icons).map(([color, icon]) => (
+            <Notification
+              key={color}
+              variant={variant}
+              color={color}
+              icon={icon}
+              onClose={() => {}}
+              title={`${variant} ${color} notification`}
+            >
+              Notification description goes here
+            </Notification>
+          ))}
+          <Notification variant={variant} color="teal" onClose={() => {}} title="Without icon">
+            Accent line is used when icon is not provided
+          </Notification>
+          <Notification variant={variant} color="teal" loading onClose={() => {}} title="Loading">
+            Loader is displayed instead of the icon
+          </Notification>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>

@@ -1,32 +1,37 @@
 .root {
   --notification-radius: var(--mantine-radius-default);
   --notification-color: var(--mantine-primary-color-filled);
+  --notification-icon-bg: var(--mantine-primary-color-filled);
+  --notification-icon-color: var(--mantine-primary-color-contrast);
+  --notification-icon-size: rem(24px);
+  --notification-line-size: rem(4px);
 
   overflow: hidden;
   box-sizing: border-box;
   position: relative;
   display: flex;
   align-items: center;
-  padding-inline-start: 22px;
-  padding-inline-end: var(--mantine-spacing-xs);
-  padding-top: var(--mantine-spacing-xs);
-  padding-bottom: var(--mantine-spacing-xs);
+  gap: rem(12px);
+  padding: rem(12px);
+  padding-inline-start: rem(14px);
   border-radius: var(--notification-radius);
-  box-shadow: var(--mantine-shadow-lg);
+  box-shadow: var(--mantine-shadow-md);
+  background-color: var(--mantine-color-surface-panel);
 
   &::before {
     content: '';
     display: block;
     position: absolute;
-    width: 6px;
-    top: var(--notification-radius);
-    bottom: var(--notification-radius);
-    inset-inline-start: 4px;
-    border-radius: var(--notification-radius);
+    width: var(--notification-line-size);
+    top: 0;
+    bottom: 0;
+    inset-inline-start: 0;
     background-color: var(--notification-color);
   }
 
-  background-color: var(--mantine-color-surface-panel);
+  &:where(:not([data-with-icon])) {
+    padding-inline-start: calc(rem(14px) + var(--notification-line-size));
+  }
 
   &:where([data-with-icon]) {
     &::before {
@@ -41,29 +46,37 @@
 
 .icon {
   box-sizing: border-box;
-  margin-inline-end: var(--mantine-spacing-md);
-  width: 28px;
-  height: 28px;
-  border-radius: 28px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--notification-color);
-  color: var(--mantine-color-white);
+  width: var(--notification-icon-size);
+  height: var(--notification-icon-size);
+  border-radius: 50%;
+  font-size: rem(16px);
+  line-height: 1;
+  background-color: var(--notification-icon-bg);
+  color: var(--notification-icon-color);
+
+  &:where([data-variant='transparent']) {
+    font-size: rem(20px);
+  }
 }
 
 .loader {
-  margin-inline-end: var(--mantine-spacing-md);
+  flex-shrink: 0;
 }
 
 .body {
   flex: 1;
+  min-width: 0;
   overflow: hidden;
-  margin-inline-end: var(--mantine-spacing-xs);
+  display: flex;
+  flex-direction: column;
+  gap: rem(2px);
 }
 
 .title {
-  margin-bottom: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: var(--mantine-font-size-sm);
@@ -85,7 +98,10 @@
 }
 
 .closeButton {
+  color: var(--mantine-color-dimmed);
+
   @mixin hover {
-    background-color: var(--mantine-color-default-hover);
+    color: var(--mantine-color-text);
+    background-color: color-mix(in srgb, var(--mantine-color-text) 8%, transparent);
   }
 }

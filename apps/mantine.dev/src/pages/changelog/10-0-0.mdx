@@ -1,4 +1,11 @@
-import { AlertDemos, DataGridDemos, DrawerDemos, ModalDemos, ThemingDemos } from '@docs/demos';
+import {
+  AlertDemos,
+  DataGridDemos,
+  DrawerDemos,
+  ModalDemos,
+  NotificationDemos,
+  ThemingDemos,
+} from '@docs/demos';
 import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -150,6 +157,17 @@ close button size together, from `xs` for inline form messages to `xl` for stand
 messages:
 
 <Demo data={AlertDemos.sizes} />
+
+## Notification redesign
+
+[Notification](/core/notification) has a new look. The icon is rendered in a smaller circle, the
+accent line displayed without an icon is now flush with the edge of the notification, padding is
+larger, the shadow is softer, and the close button has a hover state. The new `variant` prop
+controls how the icon is rendered: `filled` (default) renders a solid circle with a contrast icon,
+`light` renders a tinted circle with a colored icon, and `transparent` renders the icon without
+background, the same as Alert:
+
+<Demo data={NotificationDemos.variants} />
 
 ## OKLCH default palettes
 

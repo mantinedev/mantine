@@ -1,20 +1,22 @@
+import { CheckIcon } from '@phosphor-icons/react';
 import { Box, Notification, NotificationProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 function Wrapper(props: NotificationProps) {
   return (
     <Box maw={400} mx="auto">
-      <Notification onClose={() => {}} {...props} />
+      <Notification onClose={() => {}} icon={<CheckIcon />} {...props} />
     </Box>
   );
 }
 
 const code = `
+import { CheckIcon } from '@phosphor-icons/react';
 import { Notification } from '@mantine/core';
 
 function Demo() {
   return (
-    <Notification{{props}}>
+    <Notification icon={<CheckIcon />}{{props}}>
       {{children}}
     </Notification>
   );
@@ -28,6 +30,13 @@ export const configurator: MantineDemo = {
   code,
   dimmed: true,
   controls: [
+    {
+      prop: 'variant',
+      type: 'select',
+      initialValue: 'filled',
+      libraryValue: 'filled',
+      data: ['filled', 'light', 'transparent'],
+    },
     { prop: 'loading', type: 'boolean', initialValue: false, libraryValue: false },
     { prop: 'withCloseButton', type: 'boolean', initialValue: true, libraryValue: true },
     { prop: 'withBorder', type: 'boolean', initialValue: false, libraryValue: false },

@@ -13,6 +13,11 @@ export const Demo_configurator = {
   render: renderDemo(demos.configurator),
 };
 
+export const Demo_variants = {
+  name: '⭐ Demo: variants',
+  render: renderDemo(demos.variants),
+};
+
 export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),

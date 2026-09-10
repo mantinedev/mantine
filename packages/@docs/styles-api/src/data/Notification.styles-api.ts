@@ -15,11 +15,14 @@ export const NotificationStylesApi: StylesApiData<NotificationFactory> = {
   vars: {
     root: {
       '--notification-radius': 'Controls `border-radius`',
-      '--notification-color': 'Controls icon color or notification line color',
+      '--notification-color': 'Controls accent line color and loader color',
+      '--notification-icon-bg': 'Controls icon `background-color`',
+      '--notification-icon-color': 'Controls icon `color`',
     },
   },
 
   modifiers: [
+    { modifier: 'data-variant', selector: ['root', 'icon'], value: 'Value of `variant` prop' },
     { modifier: 'data-with-icon', selector: 'root', condition: '`icon` prop is set' },
     { modifier: 'data-with-border', selector: 'root', condition: '`withBorder` prop is set' },
     { modifier: 'data-with-title', selector: 'description', condition: '`title` prop is set' },
