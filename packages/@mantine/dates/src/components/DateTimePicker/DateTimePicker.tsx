@@ -267,6 +267,7 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
   return (
     <PickerInputBase
       formattedValue={formattedValue}
+      withPresets={!!presets}
       dropdownOpened={!rest.disabled ? dropdownOpened : false}
       dropdownHandlers={dropdownHandlers}
       classNames={resolvedClassNames}

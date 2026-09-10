@@ -27,6 +27,7 @@ export interface OverlayStackContextValue {
   withStackTransform: boolean;
   topRect: OverlayStackRect | null;
   reportTopRect: (id: string, rect: OverlayStackRect) => void;
+  handledEscapeEvents: WeakSet<KeyboardEvent>;
 }
 
 export type OverlayStackContextType = React.Context<OverlayStackContextValue | null>;

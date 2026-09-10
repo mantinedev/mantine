@@ -19,5 +19,5 @@ export function normalizeCode(
     return code.trim();
   }
 
-  return code.replace(/^(?:[^\S\r\n]*\r?\n)+|\s+$/g, '');
+  return code.replace(/^(?:[^\S\r\n]*\r?\n)+/, '').trimEnd();
 }

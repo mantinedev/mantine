@@ -140,6 +140,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     padding,
     __vars,
     removeScrollProps,
+    __handledEscapeEvents,
     ...others
   } = props;
 
@@ -165,6 +166,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     closeOnEscape,
     onClose,
     returnFocus,
+    handledEscapeEvents: __handledEscapeEvents,
   });
 
   const belowBreakpoint = useBelowBreakpoint(fullScreenBelow);

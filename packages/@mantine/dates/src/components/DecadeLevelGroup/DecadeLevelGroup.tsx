@@ -1,9 +1,11 @@
 import dayjs from 'dayjs';
 import { useRef } from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '@mantine/core';
+import { usePendingControlFocus } from '../../hooks';
 import { DateStringValue } from '../../types';
-import { handleControlKeyDown } from '../../utils';
+import { ControlEdgeCrossPayload, handleControlKeyDown } from '../../utils';
 import { DecadeLevel, DecadeLevelSettings, DecadeLevelStylesNames } from '../DecadeLevel';
+import { getDecadeRange } from '../DecadeLevel/get-decade-range/get-decade-range';
 import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
 
 export type DecadeLevelGroupStylesNames = LevelsGroupStylesNames | DecadeLevelStylesNames;
@@ -88,6 +90,48 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
 
   const controlsRef = useRef<HTMLButtonElement[][][]>([]);
 
+  const requestControlFocus = usePendingControlFocus({ controlsRef, period: decade });
+
+  const _previousDisabled =
+    typeof previousDisabled === 'boolean'
+      ? previousDisabled
+      : minDate
+        ? !dayjs(getDecadeRange(decade)[0]).startOf('year').isAfter(minDate)
+        : false;
+
+  const _nextDisabled =
+    typeof nextDisabled === 'boolean'
+      ? nextDisabled
+      : maxDate
+        ? !dayjs(
+            getDecadeRange(
+              dayjs(decade)
+                .add((numberOfColumns - 1) * 10, 'years')
+                .format('YYYY-MM-DD')
+            )[1]
+          )
+            .endOf('year')
+            .isBefore(maxDate)
+        : false;
+
+  const handleEdgeCross = ({ edge, direction, cellIndex }: ControlEdgeCrossPayload) => {
+    const handler = edge === 'previous' ? onPrevious : onNext;
+    const disabled = edge === 'previous' ? _previousDisabled : _nextDisabled;
+
+    if (!handler || disabled) {
+      return;
+    }
+
+    requestControlFocus({
+      direction,
+      levelIndex: edge === 'previous' ? 'last' : 0,
+      rowIndex: edge === 'previous' ? 'last' : 0,
+      cellIndex:
+        direction === 'up' || direction === 'down' ? cellIndex : edge === 'previous' ? 'last' : 0,
+    });
+    handler();
+  };
+
   const decades = Array(numberOfColumns)
     .fill(0)
     .map((_, decadeIndex) => {
@@ -113,6 +157,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
               cellIndex: payload.cellIndex,
               event,
               controlsRef,
+              onEdgeCross: handleEdgeCross,
             })
           }
           __getControlRef={(rowIndex, cellIndex, node) => {

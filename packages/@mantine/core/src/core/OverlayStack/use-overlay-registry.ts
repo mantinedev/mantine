@@ -22,6 +22,7 @@ export interface OverlayRegistry {
   close: (kind: OverlayStackKind, id: string) => void;
   setDragProgress: (progress: number) => void;
   reportTopRect: (kind: OverlayStackKind, id: string, rect: OverlayStackRect) => void;
+  handledEscapeEvents: WeakSet<KeyboardEvent>;
 }
 
 export function getOverlayKey(kind: OverlayStackKind, id: string) {
@@ -36,6 +37,7 @@ export function useOverlayRegistry(): OverlayRegistry {
   const [rects, setRects] = useState<Record<string, OverlayStackRect>>({});
   const [dragProgress, setDragProgress] = useState(0);
   const closeHandlers = useRef(new Map<string, () => void>());
+  const [handledEscapeEvents] = useState(() => new WeakSet<KeyboardEvent>());
 
   const addOverlay = useCallback((kind: OverlayStackKind, id: string, zIndex: number | string) => {
     setEntries((current) => {
@@ -123,6 +125,7 @@ export function useOverlayRegistry(): OverlayRegistry {
       close,
       setDragProgress,
       reportTopRect,
+      handledEscapeEvents,
     }),
     [
       entries,
@@ -134,6 +137,7 @@ export function useOverlayRegistry(): OverlayRegistry {
       registerCloseHandler,
       close,
       reportTopRect,
+      handledEscapeEvents,
     ]
   );
 }
@@ -160,6 +164,7 @@ export function useOverlayStackValue(
     close: registryClose,
     setDragProgress,
     reportTopRect: registryReportTopRect,
+    handledEscapeEvents,
   } = registry;
 
   const kindEntries = useMemo(
@@ -251,6 +256,7 @@ export function useOverlayStackValue(
       withStackTransform,
       topRect: currentId === undefined ? null : rects[getOverlayKey(kind, currentId)] || null,
       reportTopRect,
+      handledEscapeEvents,
     };
   }, [
     entries,
@@ -271,5 +277,6 @@ export function useOverlayStackValue(
     closeAll,
     reportDrag,
     reportTopRect,
+    handledEscapeEvents,
   ]);
 }

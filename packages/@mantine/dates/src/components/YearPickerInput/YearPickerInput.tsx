@@ -110,6 +110,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
     return (
       <PickerInputBase
         formattedValue={formattedValue}
+        withPresets={!!presets}
         dropdownOpened={dropdownOpened}
         dropdownHandlers={dropdownHandlers}
         classNames={resolvedClassNames}

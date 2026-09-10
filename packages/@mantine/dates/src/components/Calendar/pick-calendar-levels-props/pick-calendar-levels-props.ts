@@ -35,6 +35,9 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
     __setLevelRef,
     withWeekNumbers,
     headerControlsOrder,
+    __withWeekControls,
+    __getWeekControlProps,
+    getWeekControlProps,
 
     // MonthLevelGroup props
     firstDayOfWeek,
@@ -105,6 +108,9 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
       __setDateRef,
       withWeekNumbers,
       headerControlsOrder,
+      __withWeekControls,
+      __getWeekControlProps,
+      getWeekControlProps,
 
       // MonthLevelGroup props
       firstDayOfWeek,
