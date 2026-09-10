@@ -11,7 +11,6 @@ import {
   getFontSize,
   MantineComponentStaticProperties,
   StylesApiProps,
-  UnstyledButton,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -36,6 +35,7 @@ import { useDatesContext } from '../DatesProvider';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { getEndOfWeek, getStartOfWeek, isSameMonth, MonthWeekControlProps } from '../Month';
 import { MonthLevelBaseSettings } from '../MonthLevel';
+import { PresetsList } from '../PresetsList';
 import { YearLevelBaseSettings } from '../YearLevel';
 import {
   getWeekPickerDayProps,
@@ -308,21 +308,15 @@ export const WeekPicker: WeekPickerComponent = factory<WeekPickerFactory>((_prop
     }
   };
 
-  const presetButtons = presets.map((preset, index) => (
-    <UnstyledButton
-      key={index}
-      {...getStyles('presetButton')}
-      onClick={() => handlePresetSelect(preset.value)}
-      onMouseDown={(event) => event.preventDefault()}
-      data-mantine-stop-propagation={__stopPropagation || undefined}
-    >
-      {preset.label}
-    </UnstyledButton>
-  ));
-
   return (
     <Box {...getStyles('weekPickerRoot')} size={size} {...others}>
-      <div {...getStyles('presetsList')}>{presetButtons}</div>
+      <PresetsList
+        {...getStyles('presetsList')}
+        presets={presets}
+        onPresetSelect={handlePresetSelect}
+        buttonProps={getStyles('presetButton')}
+        stopPropagation={__stopPropagation}
+      />
       {calendar}
     </Box>
   );

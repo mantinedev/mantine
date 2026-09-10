@@ -5,6 +5,9 @@ interface Options {
   component: React.ComponentType<any>;
   props: Record<string, any>;
   listSelector: string;
+
+  /** Set when the component changes displayed period when arrow navigation runs off the grid */
+  withPeriodChange?: boolean;
 }
 
 export function itHandlesControlsKeyboardEvents(
@@ -66,13 +69,40 @@ export function itHandlesControlsKeyboardEvents(
     await userEvent.type(controls[2], '{ArrowRight}');
     expect(controls[3]).toHaveFocus();
 
+    if (!options.withPeriodChange) {
+      await userEvent.type(controls[0], '{ArrowLeft}');
+      expect(controls[0]).toHaveFocus();
+
+      await userEvent.type(controls[0], '{ArrowUp}');
+      expect(controls[0]).toHaveFocus();
+
+      await userEvent.type(controls[controls.length - 1], '{ArrowDown}');
+      expect(controls[controls.length - 1]).toHaveFocus();
+      return;
+    }
+
+    const getControls = () => container.querySelectorAll('table button');
+    const getLastRowLength = () => {
+      const rows = container.querySelectorAll('table tr');
+      return rows[rows.length - 1].querySelectorAll('button').length;
+    };
+    const getLabel = () => container.querySelector('[data-level-control]')!.textContent;
+
+    const initialLabel = getLabel();
     await userEvent.type(controls[0], '{ArrowLeft}');
-    expect(controls[0]).toHaveFocus();
+    expect(getLabel()).not.toBe(initialLabel);
+    expect(getControls()[getControls().length - 1]).toHaveFocus();
 
-    await userEvent.type(controls[0], '{ArrowUp}');
-    expect(controls[0]).toHaveFocus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(getLabel()).toBe(initialLabel);
+    expect(getControls()[0]).toHaveFocus();
 
-    await userEvent.type(controls[controls.length - 1], '{ArrowDown}');
-    expect(controls[controls.length - 1]).toHaveFocus();
+    await userEvent.keyboard('{ArrowUp}');
+    expect(getLabel()).not.toBe(initialLabel);
+    expect(getControls()[getControls().length - getLastRowLength()]).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getLabel()).toBe(initialLabel);
+    expect(getControls()[0]).toHaveFocus();
   });
 }

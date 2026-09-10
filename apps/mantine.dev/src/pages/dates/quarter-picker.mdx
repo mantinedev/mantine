@@ -176,12 +176,22 @@ function Demo() {
 ### Keyboard interactions
 
 Note that the following events will only trigger if focus is on a quarter control.
+When arrow navigation reaches the edge of the grid, the calendar switches to the
+previous/next year and focuses the corresponding quarter.
 
 <KeyboardEventsTable
   data={[
-    { key: 'ArrowRight', description: 'Focuses next non-disabled quarter' },
-    { key: 'ArrowLeft', description: 'Focuses previous non-disabled quarter' },
-    { key: 'ArrowDown', description: 'Focuses next non-disabled quarter in the same column' },
-    { key: 'ArrowUp', description: 'Focuses previous non-disabled quarter in the same column' },
+    { key: 'ArrowRight', description: 'Focuses next non-disabled quarter, switches to the next year if needed' },
+    { key: 'ArrowLeft', description: 'Focuses previous non-disabled quarter, switches to the previous year if needed' },
+    { key: 'ArrowDown', description: 'Focuses the same quarter of the next year' },
+    { key: 'ArrowUp', description: 'Focuses the same quarter of the previous year' },
   ]}
 />
+
+When `presets` are used, only one preset button is in the tab order. With focus on a preset,
+`ArrowDown` and `ArrowUp` move focus between presets without selecting them, `Enter` or `Space`
+selects the focused preset, and `Tab` moves focus to the calendar.
+
+When the level is changed with the keyboard (for example, `Enter` on the month label), focus
+moves to the label of the new level or to the grid control in the tab order if the new level
+does not have a clickable label.

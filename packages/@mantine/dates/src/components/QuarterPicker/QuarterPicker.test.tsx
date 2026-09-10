@@ -84,20 +84,43 @@ describe('@mantine/dates/QuarterPicker', () => {
       expect(firstColumnControls[3]).toHaveFocus();
     });
 
-    it('respects boundaries with numberOfColumns=1', async () => {
+    it('switches year when navigation runs off the grid with numberOfColumns=1', async () => {
       const { container } = render(<QuarterPicker {...defaultProps} numberOfColumns={1} />);
+      const getControls = () => container.querySelectorAll('table button');
+      const getLabel = () => container.querySelector('[data-level-control]')!.textContent;
+
+      await userEvent.type(getControls()[0], '{ArrowLeft}');
+      expect(getLabel()).toBe('2021');
+      expect(getControls()[3]).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(getLabel()).toBe('2022');
+      expect(getControls()[0]).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowUp}');
+      expect(getLabel()).toBe('2021');
+      expect(getControls()[0]).toHaveFocus();
+
+      await userEvent.type(getControls()[2], '{ArrowDown}');
+      expect(getLabel()).toBe('2022');
+      expect(getControls()[2]).toHaveFocus();
+    });
+
+    it('does not switch year past minDate and maxDate', async () => {
+      const { container } = render(
+        <QuarterPicker
+          {...defaultProps}
+          numberOfColumns={1}
+          minDate="2022-01-01"
+          maxDate="2022-12-31"
+        />
+      );
       const controls = container.querySelectorAll('table button');
 
       await userEvent.type(controls[0], '{ArrowLeft}');
       expect(controls[0]).toHaveFocus();
 
-      await userEvent.type(controls[0], '{ArrowUp}');
-      expect(controls[0]).toHaveFocus();
-
       await userEvent.type(controls[3], '{ArrowRight}');
-      expect(controls[3]).toHaveFocus();
-
-      await userEvent.type(controls[3], '{ArrowDown}');
       expect(controls[3]).toHaveFocus();
     });
   });

@@ -11,17 +11,17 @@ import {
   MantineComponentStaticProperties,
   MantineSize,
   StylesApiProps,
-  UnstyledButton,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useUncontrolled } from '@mantine/hooks';
-import { useDatesState, useUncontrolledDates } from '../../hooks';
+import { useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useDatesState, useFocusAfterLevelChange, useUncontrolledDates } from '../../hooks';
 import { DatePickerType, DateStringValue, PickerBaseProps } from '../../types';
 import { getDefaultClampedDate, toDateString } from '../../utils';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
+import { PresetsList } from '../PresetsList';
 import { QuarterLevelBaseSettings } from '../QuarterLevel';
 import { QuarterLevelGroup, QuarterLevelGroupStylesNames } from '../QuarterLevelGroup';
 import { normalizeQuarterValue } from './normalize-quarter-value/normalize-quarter-value';
@@ -264,6 +264,7 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
     onPreviousYear,
     onNextDecade,
     onPreviousDecade,
+    ref,
     ...others
   } = props;
 
@@ -301,6 +302,19 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
     defaultValue: toDateString(defaultDate),
     onChange: onDateChange as any,
   });
+
+  const calendarRef = useRef<HTMLDivElement>(null);
+  const mergedRef = useMergedRef(calendarRef, ref);
+  const focusAfterLevelChange = useFocusAfterLevelChange({
+    rootRef: calendarRef,
+    level: _level,
+    disabled: __preventFocus,
+  });
+
+  const changeLevel = (nextLevel: QuarterPickerLevel) => {
+    focusAfterLevelChange();
+    setLevel(nextLevel);
+  };
 
   const fallbackDateRef = useRef<DateStringValue | null>(null);
   if (fallbackDateRef.current === null) {
@@ -373,6 +387,7 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
       data-full-width={fullWidth || undefined}
       onMouseLeave={onRootMouseLeave}
       {...(!presets ? { className, style, ...others } : {})}
+      ref={presets ? calendarRef : mergedRef}
     >
       {_level === 'year' && (
         <QuarterLevelGroup
@@ -385,7 +400,7 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
           onNext={handleNextYear}
           onPrevious={handlePreviousYear}
           hasNextLevel={maxLevel !== 'year'}
-          onLevelClick={() => setLevel('decade')}
+          onLevelClick={() => changeLevel('decade')}
           levelControlAriaLabel={ariaLabels?.yearLevelControl}
           nextLabel={ariaLabels?.nextYear ?? nextLabel}
           nextIcon={nextIcon}
@@ -439,7 +454,7 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
           __onControlMouseEnter={onYearMouseEnter}
           __onControlClick={(_event, payload) => {
             __updateDateOnYearSelect && setDate(payload);
-            setLevel('year');
+            changeLevel('year');
             onYearSelect?.(payload);
           }}
           __preventFocus={__preventFocus}
@@ -471,21 +486,15 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
     }
   };
 
-  const presetButtons = presets.map((preset, index) => (
-    <UnstyledButton
-      key={index}
-      {...getStyles('presetButton')}
-      onClick={() => handlePresetSelect(preset.value)}
-      onMouseDown={(event) => event.preventDefault()}
-      data-mantine-stop-propagation={__stopPropagation || undefined}
-    >
-      {preset.label}
-    </UnstyledButton>
-  ));
-
   return (
-    <Box {...getStyles('quarterPickerRoot')} size={size} {...others}>
-      <div {...getStyles('presetsList')}>{presetButtons}</div>
+    <Box {...getStyles('quarterPickerRoot')} size={size} {...others} ref={ref}>
+      <PresetsList
+        {...getStyles('presetsList')}
+        presets={presets}
+        onPresetSelect={handlePresetSelect}
+        buttonProps={getStyles('presetButton')}
+        stopPropagation={__stopPropagation}
+      />
       {calendar}
     </Box>
   );

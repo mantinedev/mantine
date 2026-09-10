@@ -81,3 +81,19 @@ the value is the first day of the week according to `firstDayOfWeek` in `YYYY-MM
 <Demo data={WeekPickerDemos.usage} />
 
 <Demo data={WeekPickerInputDemos.usage} />
+
+## Keyboard navigation improvements in @mantine/dates
+
+Keyboard navigation in [DatePicker](/dates/date-picker), [MonthPicker](/dates/month-picker),
+[YearPicker](/dates/year-picker), [QuarterPicker](/dates/quarter-picker), [WeekPicker](/dates/week-picker)
+and the corresponding input components has been reworked:
+
+- Arrow navigation in the dates grid is no longer limited to the current month: visible outside dates
+  can be focused, and when the target date is not displayed, the calendar switches to the previous/next
+  month (year or decade in other pickers) and focuses the target date
+- Presets have a roving tab index: only one preset is in the tab order, `ArrowDown`/`ArrowUp` move focus
+  between presets and `Tab` moves focus to the calendar
+- When the level is changed with the keyboard, focus moves to the label of the new level
+- When the dropdown of `DatePickerInput` and other input components is closed after a keyboard interaction,
+  focus is returned to the input
+- Dropdown start padding is reduced when presets are displayed

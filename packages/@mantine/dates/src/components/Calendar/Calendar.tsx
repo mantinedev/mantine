@@ -11,7 +11,7 @@ import {
   useResolvedStylesApi,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled } from '@mantine/hooks';
-import { useUncontrolledDates } from '../../hooks';
+import { useFocusAfterLevelChange, useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue } from '../../types';
 import { getDefaultClampedDate, toDateString } from '../../utils';
 import { DecadeLevelSettings } from '../DecadeLevel';
@@ -351,6 +351,17 @@ export const Calendar = factory<CalendarFactory>((_props) => {
 
   const calendarRef = useRef<HTMLDivElement>(null);
 
+  const focusAfterLevelChange = useFocusAfterLevelChange({
+    rootRef: calendarRef,
+    level: _level,
+    disabled: __preventFocus || isStatic,
+  });
+
+  const changeLevel = (nextLevel: CalendarLevel) => {
+    focusAfterLevelChange();
+    setLevel(nextLevel);
+  };
+
   useEffect(() => {
     if (!enableKeyboardNavigation || isStatic) {
       return;
@@ -389,7 +400,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
         case 'Y':
           if (_level === 'month') {
             event.preventDefault();
-            setLevel('year');
+            changeLevel('year');
           }
           break;
       }
@@ -435,7 +446,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           onNext={handleNextMonth}
           onPrevious={handlePreviousMonth}
           hasNextLevel={maxLevel !== 'month'}
-          onLevelClick={() => setLevel('year')}
+          onLevelClick={() => changeLevel('year')}
           numberOfColumns={numberOfColumns}
           locale={locale}
           levelControlAriaLabel={ariaLabels?.monthLevelControl}
@@ -476,7 +487,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           onNext={handleNextYear}
           onPrevious={handlePreviousYear}
           hasNextLevel={maxLevel !== 'month' && maxLevel !== 'year'}
-          onLevelClick={() => setLevel('decade')}
+          onLevelClick={() => changeLevel('decade')}
           levelControlAriaLabel={ariaLabels?.yearLevelControl}
           nextLabel={ariaLabels?.nextYear ?? nextLabel}
           nextIcon={nextIcon}
@@ -486,7 +497,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           __onControlMouseEnter={onMonthMouseEnter}
           __onControlClick={(_event, payload) => {
             __updateDateOnMonthSelect && setDate(payload);
-            setLevel(clampLevel('month', minLevel, maxLevel));
+            changeLevel(clampLevel('month', minLevel, maxLevel));
             onMonthSelect?.(payload);
           }}
           __onDateChange={setDate}
@@ -521,7 +532,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           __onControlMouseEnter={onYearMouseEnter}
           __onControlClick={(_event, payload) => {
             __updateDateOnYearSelect && setDate(payload);
-            setLevel(clampLevel('year', minLevel, maxLevel));
+            changeLevel(clampLevel('year', minLevel, maxLevel));
             onYearSelect?.(payload);
           }}
           __preventFocus={__preventFocus}

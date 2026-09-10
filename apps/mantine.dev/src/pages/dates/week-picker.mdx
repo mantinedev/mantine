@@ -199,11 +199,21 @@ function Demo() {
 
 Only week controls (week numbers) can be focused with the keyboard. The control of the selected week
 is in the tab order; if no week is selected, the control of the current week or the first enabled week is used.
+When arrow navigation reaches the first/last week of the grid, the calendar switches to the
+previous/next month and focuses the target week.
 
 <KeyboardEventsTable
   data={[
-    { key: 'ArrowDown', description: 'Focuses next non-disabled week control' },
-    { key: 'ArrowUp', description: 'Focuses previous non-disabled week control' },
+    { key: 'ArrowDown', description: 'Focuses next non-disabled week control, switches to the next month if needed' },
+    { key: 'ArrowUp', description: 'Focuses previous non-disabled week control, switches to the previous month if needed' },
     { key: 'Enter/Space', description: 'Selects the focused week' },
   ]}
 />
+
+When `presets` are used, only one preset button is in the tab order. With focus on a preset,
+`ArrowDown` and `ArrowUp` move focus between presets without selecting them, `Enter` or `Space`
+selects the focused preset, and `Tab` moves focus to the calendar.
+
+When the level is changed with the keyboard (for example, `Enter` on the month label), focus
+moves to the label of the new level or to the grid control in the tab order if the new level
+does not have a clickable label.

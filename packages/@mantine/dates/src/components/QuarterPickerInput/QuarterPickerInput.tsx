@@ -113,6 +113,7 @@ export const QuarterPickerInput: QuarterPickerInputComponent = factory<QuarterPi
     return (
       <PickerInputBase
         formattedValue={formattedValue}
+        withPresets={!!presets}
         dropdownOpened={dropdownOpened}
         dropdownHandlers={dropdownHandlers}
         classNames={resolvedClassNames}

@@ -111,8 +111,34 @@ describe('@mantine/dates/WeekPicker', () => {
     expect(controls[1]).toHaveFocus();
     await userEvent.keyboard('{ArrowRight}');
     expect(controls[1]).toHaveFocus();
-    await userEvent.keyboard('{ArrowUp}{ArrowUp}');
+    await userEvent.keyboard('{ArrowUp}');
     expect(controls[0]).toHaveFocus();
+  });
+
+  it('switches to the previous month with ArrowUp on the first week', async () => {
+    const { container } = render(<WeekPicker {...defaultProps} />);
+    await userEvent.click(weekControls(container)[0]);
+    await userEvent.keyboard('{ArrowUp}');
+    expect(container.querySelector('[data-level-control]')!.textContent).toBe('March 2022');
+    expect(
+      container.querySelector('[data-week-control][aria-label="21 March 2022 – 27 March 2022"]')
+    ).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(
+      container.querySelector('[data-week-control][aria-label="28 March 2022 – 3 April 2022"]')
+    ).toHaveFocus();
+  });
+
+  it('switches to the next month with ArrowDown on the last week', async () => {
+    const { container } = render(<WeekPicker {...defaultProps} />);
+    const controls = weekControls(container);
+    await userEvent.click(controls[controls.length - 1]);
+    await userEvent.keyboard('{ArrowDown}');
+    expect(container.querySelector('[data-level-control]')!.textContent).toBe('May 2022');
+    expect(
+      container.querySelector('[data-week-control][aria-label="2 May 2022 – 8 May 2022"]')
+    ).toHaveFocus();
   });
 
   it('moves focus to the next month column with ArrowDown on the last week', async () => {
@@ -122,7 +148,7 @@ describe('@mantine/dates/WeekPicker', () => {
     const secondColumnControls = columns[1].querySelectorAll('[data-week-control]');
     await userEvent.click(firstColumnControls[firstColumnControls.length - 1]);
     await userEvent.keyboard('{ArrowDown}');
-    expect(secondColumnControls[0]).toHaveFocus();
+    expect(secondColumnControls[1]).toHaveFocus();
     await userEvent.keyboard('{ArrowUp}');
     expect(firstColumnControls[firstColumnControls.length - 1]).toHaveFocus();
   });

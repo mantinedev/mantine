@@ -117,6 +117,7 @@ export const WeekPickerInput: WeekPickerInputComponent = factory<WeekPickerInput
     return (
       <PickerInputBase
         formattedValue={formattedValue}
+        withPresets={!!presets}
         dropdownOpened={dropdownOpened}
         dropdownHandlers={dropdownHandlers}
         classNames={resolvedClassNames}
