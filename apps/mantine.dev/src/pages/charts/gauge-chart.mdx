@@ -80,8 +80,9 @@ By default, the center label displays `value` formatted with `valueFormatter`. U
 
 ## Round caps
 
-Set `roundCaps` to round the endpoints of the arc. Round caps are not applied to
-`sections` – rounded caps of adjacent sections would overlap each other:
+Set `roundCaps` to round the endpoints of the arc. With `sections`, only the outer
+ends of the first and last sections are rounded – adjacent sections keep straight
+edges so they do not overlap each other:
 
 <Demo data={GaugeChartDemos.roundCaps} />
 

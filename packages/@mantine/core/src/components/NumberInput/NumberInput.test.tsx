@@ -648,4 +648,91 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(25.5);
     expectValue('25,5');
   });
+
+  // jsdom does not insert clipboard text on a native paste. When the paste is not
+  // intercepted, the native insertion is simulated with a change event.
+  const pasteText = (text: string) => {
+    focusInput();
+    const notIntercepted = fireEvent.paste(getInput(), {
+      clipboardData: { getData: () => text },
+    });
+
+    if (notIntercepted) {
+      fireEvent.change(getInput(), { target: { value: text } });
+    }
+
+    return notIntercepted;
+  };
+
+  it('strips grouping separators from pasted values when thousandSeparator is not set', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} />);
+
+    expect(pasteText('1,234,567')).toBe(false);
+    expect(spy).toHaveBeenLastCalledWith(1234567);
+    expectValue('1234567');
+  });
+
+  it('does not intercept pasted values grouped with the configured thousandSeparator', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator="," />);
+
+    expect(pasteText('1,234,567')).toBe(true);
+    expect(spy).toHaveBeenLastCalledWith(1234567);
+    expectValue('1,234,567');
+  });
+
+  it('does not intercept pasted values grouped with thousandSeparator={true}', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator />);
+
+    expect(pasteText('1,234,567')).toBe(true);
+    expect(spy).toHaveBeenLastCalledWith(1234567);
+    expectValue('1,234,567');
+  });
+
+  it('treats a single thousandSeparator not followed by a full group as decimal in pasted values', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator="," />);
+
+    expect(pasteText('12,5')).toBe(false);
+    expect(spy).toHaveBeenLastCalledWith(12.5);
+    expectValue('12.5');
+  });
+
+  it('handles european formatted pasted values', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator="." decimalSeparator="," />);
+
+    expect(pasteText('1.234.567,89')).toBe(true);
+    expect(spy).toHaveBeenLastCalledWith(1234567.89);
+    expectValue('1.234.567,89');
+  });
+
+  it('converts a single thousandSeparator to decimal in pasted european values', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator="." decimalSeparator="," />);
+
+    expect(pasteText('10.5')).toBe(false);
+    expect(spy).toHaveBeenLastCalledWith(10.5);
+    expectValue('10,5');
+  });
+
+  it('converts pasted decimal separator when thousandSeparator is a different character', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator=" " allowedDecimalSeparators={[',']} />);
+
+    expect(pasteText('1 234,5')).toBe(false);
+    expect(spy).toHaveBeenLastCalledWith(1234.5);
+    expectValue('1 234.5');
+  });
+
+  it('places the caret after the pasted text once grouping separators are inserted', async () => {
+    render(<NumberInput thousandSeparator=" " />);
+
+    expect(pasteText('1234567,5')).toBe(false);
+    expectValue('1 234 567.5');
+    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    expect(getInput()).toHaveProperty('selectionStart', 11);
+  });
 });
