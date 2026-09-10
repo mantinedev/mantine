@@ -31,6 +31,12 @@
   color: var(--mantine-color-text);
   background-color: var(--mantine-color-neutral-0);
 
+  &:where([data-within-input]) {
+    --pill-fz: calc(var(--input-fz) - rem(1px));
+    --pill-height: calc(var(--input-height) - rem(8px));
+    --pill-radius: max(calc(var(--input-radius) - rem(3px)), 0px);
+  }
+
   &:where([data-with-remove]:not(:has(button:disabled))) {
     padding-inline-end: 0;
   }
@@ -138,4 +144,10 @@
   align-items: center;
   gap: var(--pg-gap);
   flex-wrap: wrap;
+
+  &:where([data-within-input]) {
+    --pg-gap: rem(3px);
+
+    min-height: calc(var(--input-height) - rem(8px));
+  }
 }

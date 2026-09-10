@@ -57,7 +57,7 @@ export type PillFactory = Factory<{
   stylesNames: PillStylesNames;
   vars: PillCssVariables;
   variant: PillVariant;
-  ctx: { size: MantineSize | (string & {}) | undefined };
+  ctx: { size: MantineSize | (string & {}) | undefined; withinInput: boolean };
   staticComponents: {
     Group: typeof PillGroup;
   };
@@ -67,10 +67,10 @@ const defaultProps = {
   variant: 'default',
 } satisfies Partial<PillProps>;
 
-const varsResolver = createVarsResolver<PillFactory>((_, { radius }, { size }) => ({
+const varsResolver = createVarsResolver<PillFactory>((_, { radius }, { size, withinInput }) => ({
   root: {
-    '--pill-fz': getSize(size, 'pill-fz'),
-    '--pill-height': getSize(size, 'pill-height'),
+    '--pill-fz': withinInput ? undefined : getSize(size, 'pill-fz'),
+    '--pill-height': withinInput ? undefined : getSize(size, 'pill-height'),
     '--pill-radius': radius === undefined ? undefined : getRadius(radius),
   },
 }));
@@ -114,7 +114,7 @@ export const Pill = factory<PillFactory>((_props) => {
     attributes,
     vars,
     varsResolver,
-    stylesCtx: { size: _size },
+    stylesCtx: { size: _size, withinInput: !!pillsInputCtx },
   });
 
   return (
@@ -124,7 +124,11 @@ export const Pill = factory<PillFactory>((_props) => {
       size={_size}
       {...getStyles('root', { variant: _variant })}
       mod={[
-        { 'with-remove': withRemoveButton && !disabled, disabled: disabled || ctx?.disabled },
+        {
+          'with-remove': withRemoveButton && !disabled,
+          'within-input': !!pillsInputCtx,
+          disabled: disabled || ctx?.disabled,
+        },
         mod,
       ]}
       {...others}

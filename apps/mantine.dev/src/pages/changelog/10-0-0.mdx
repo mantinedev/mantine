@@ -6,6 +6,7 @@ import {
   DrawerDemos,
   ModalDemos,
   NotificationDemos,
+  PillsInputDemos,
   SliderDemos,
   SwitchDemos,
   ThemingDemos,
@@ -211,6 +212,17 @@ prop supports `filled` and `white` thumb styles in addition to `default`:
 pressed and snaps into place on release, the way native toggles behave:
 
 <Demo data={SwitchDemos.configurator} />
+
+## PillsInput spacing
+
+Pills inside [PillsInput](/core/pills-input) now fill the input: the input keeps a 3px inset on every
+side, pills are 3px apart, the pill height is the input height minus 8px, the pill font size is the
+input font size minus 1px and the pill radius is concentric with the input radius. This applies to
+all components built on top of `PillsInput`: [MultiSelect](/core/multi-select),
+[TagsInput](/core/tags-input) and [TreeSelect](/core/tree-select). `Pill` and `Pill.Group` used
+outside of `PillsInput` are not affected.
+
+<Demo data={PillsInputDemos.usage} />
 
 ## OKLCH default palettes
 

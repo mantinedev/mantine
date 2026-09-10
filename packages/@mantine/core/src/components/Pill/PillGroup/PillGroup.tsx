@@ -44,12 +44,13 @@ export type PillGroupFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: PillGroupStylesNames;
   vars: PillGroupCssVariables;
-  ctx: { size: MantineSize | (string & {}) | undefined };
+  ctx: { size: MantineSize | (string & {}) | undefined; withinInput: boolean };
 }>;
 
-const varsResolver = createVarsResolver<PillGroupFactory>((_, { gap }, { size }) => ({
+const varsResolver = createVarsResolver<PillGroupFactory>((_, { gap }, { size, withinInput }) => ({
   group: {
-    '--pg-gap': gap !== undefined ? getSize(gap) : getSize(size, 'pg-gap'),
+    '--pg-gap':
+      gap !== undefined ? getSize(gap) : withinInput ? undefined : getSize(size, 'pg-gap'),
   },
 }));
 
@@ -65,6 +66,7 @@ export const PillGroup = factory<PillGroupFactory>((_props) => {
     size,
     disabled,
     attributes,
+    mod,
     ...others
   } = props;
   const pillsInputCtx = use(PillsInputContext);
@@ -82,13 +84,18 @@ export const PillGroup = factory<PillGroupFactory>((_props) => {
     attributes,
     vars,
     varsResolver,
-    stylesCtx: { size: _size },
+    stylesCtx: { size: _size, withinInput: !!pillsInputCtx },
     rootSelector: 'group',
   });
 
   return (
     <PillGroupContext value={{ size: _size, disabled }}>
-      <Box size={_size} {...getStyles('group')} {...others} />
+      <Box
+        size={_size}
+        mod={[{ 'within-input': !!pillsInputCtx }, mod]}
+        {...getStyles('group')}
+        {...others}
+      />
     </PillGroupContext>
   );
 });

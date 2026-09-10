@@ -5,9 +5,10 @@
   flex: 1;
   border: 0;
   font-size: inherit;
-  height: 1.6em;
+  height: calc(var(--input-height) - rem(8px));
   color: inherit;
-  padding: 0;
+  padding-block: 0;
+  padding-inline: 0.8em;
 
   &::placeholder {
     color: var(--input-placeholder-color);
@@ -29,7 +30,7 @@
   }
 
   &:where([data-type='auto']:focus) {
-    height: 1.6em;
+    height: calc(var(--input-height) - rem(8px));
     visibility: visible;
     opacity: 1;
     position: static;

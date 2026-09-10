@@ -201,6 +201,21 @@
     --input-overflow: hidden;
   }
 
+  /* Used as data attribute in PillsInput component, does not have associated prop on the Input component */
+  &[data-pills] {
+    .wrapper:where(:not([data-variant='unstyled'])) > & {
+      --input-padding-y: rem(3px);
+    }
+
+    .wrapper:where(:not([data-variant='unstyled'], [data-with-left-section])) > & {
+      --input-padding-inline-start: rem(3px);
+    }
+
+    .wrapper:where(:not([data-variant='unstyled'], [data-with-right-section])) > & {
+      --input-padding-inline-end: rem(3px);
+    }
+  }
+
   /* Used as data attribute in JsonInput component, does not have associated prop on the Input component */
   &[data-monospace] {
     --input-font-family: var(--mantine-font-family-monospace);
