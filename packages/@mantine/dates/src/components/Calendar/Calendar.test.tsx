@@ -63,6 +63,7 @@ describe('@mantine/dates/Calendar', () => {
     component: Calendar,
     props: defaultProps,
     name: 'Calendar',
+    withMonthChange: true,
   });
 
   datesTests.itHandlesControlsKeyboardEvents(
@@ -70,6 +71,7 @@ describe('@mantine/dates/Calendar', () => {
       component: Calendar,
       props: { ...defaultProps, level: 'year' },
       listSelector: '.mantine-Calendar-monthsList',
+      withPeriodChange: true,
     },
     'handle months list keyboard events'
   );
@@ -79,6 +81,7 @@ describe('@mantine/dates/Calendar', () => {
       component: Calendar,
       props: { ...defaultProps, level: 'decade' },
       listSelector: '.mantine-Calendar-yearsList',
+      withPeriodChange: true,
     },
     'handle years list keyboard events'
   );
@@ -344,6 +347,151 @@ describe('@mantine/dates/Calendar', () => {
     );
 
     expect(screen.getByText('0/2020 – 0/2029')).toBeInTheDocument();
+  });
+
+  it('moves focus to the level control of the next level after level change with keyboard', async () => {
+    render(<Calendar {...defaultProps} />);
+    const monthLevel = screen.getByRole('button', {
+      name: defaultProps.ariaLabels!.monthLevelControl,
+    });
+    monthLevel.focus();
+    await userEvent.keyboard('{Enter}');
+
+    const yearLevel = screen.getByRole('button', {
+      name: defaultProps.ariaLabels!.yearLevelControl,
+    });
+    expect(yearLevel).toHaveFocus();
+
+    await userEvent.keyboard('{Enter}');
+    expect(screen.queryByLabelText('year-level')).not.toBeInTheDocument();
+    expect(document.activeElement).toHaveAttribute('tabindex', '0');
+    expect(document.activeElement!.closest('table')).not.toBeNull();
+  });
+
+  it('moves focus to the level control of the same column with numberOfColumns > 1', async () => {
+    render(<Calendar {...defaultProps} numberOfColumns={2} />);
+    const monthLevels = screen.getAllByRole('button', {
+      name: defaultProps.ariaLabels!.monthLevelControl,
+    });
+    monthLevels[1].focus();
+    await userEvent.keyboard('{Enter}');
+
+    const yearLevels = screen.getAllByRole('button', {
+      name: defaultProps.ariaLabels!.yearLevelControl,
+    });
+    expect(yearLevels[1]).toHaveFocus();
+  });
+
+  it('moves focus to the grid control after month is selected with keyboard', async () => {
+    const { container } = render(<Calendar {...defaultProps} defaultLevel="year" />);
+    const months = container.querySelectorAll<HTMLButtonElement>('table button');
+    months[4].focus();
+    await userEvent.keyboard('{Enter}');
+
+    expectHeaderLevel('month', 'May 2022');
+    expect(document.activeElement).toHaveAttribute('tabindex', '0');
+    expect(document.activeElement!.closest('table')).not.toBeNull();
+  });
+
+  it('does not move focus after level change with __preventFocus', async () => {
+    render(<Calendar {...defaultProps} __preventFocus />);
+    const monthLevel = screen.getByRole('button', {
+      name: defaultProps.ariaLabels!.monthLevelControl,
+    });
+    monthLevel.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByLabelText('year-level')).toBeInTheDocument();
+    expect(document.body).toHaveFocus();
+  });
+
+  it('navigates to outside dates and switches month when navigation runs off the grid', async () => {
+    const { container } = render(<Calendar {...defaultProps} />);
+    const getDay = (label: string) =>
+      container.querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
+
+    getDay('1 April 2022')!.focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(getDay('31 March 2022')).toHaveFocus();
+    expect(getDay('31 March 2022')).toHaveAttribute('data-outside');
+    expectHeaderLevel('month', 'April 2022');
+
+    await userEvent.keyboard('{ArrowUp}');
+    expectHeaderLevel('month', 'March 2022');
+    expect(getDay('24 March 2022')).toHaveFocus();
+    expect(getDay('24 March 2022')).not.toHaveAttribute('data-outside');
+
+    getDay('31 March 2022')!.focus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(getDay('1 April 2022')).toHaveFocus();
+    expect(getDay('1 April 2022')).toHaveAttribute('data-outside');
+
+    await userEvent.keyboard('{ArrowDown}');
+    expectHeaderLevel('month', 'April 2022');
+    expect(getDay('8 April 2022')).toHaveFocus();
+  });
+
+  it('switches month when hidden outside dates are reached with keyboard', async () => {
+    const { container } = render(<Calendar {...defaultProps} hideOutsideDates />);
+    const getDay = (label: string) =>
+      container.querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
+
+    getDay('1 April 2022')!.focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expectHeaderLevel('month', 'March 2022');
+    expect(getDay('31 March 2022')).toHaveFocus();
+    expect(getDay('31 March 2022')).not.toHaveAttribute('data-hidden');
+  });
+
+  it('prefers the day inside its month when the same date is rendered in two columns', async () => {
+    const { container } = render(<Calendar {...defaultProps} numberOfColumns={2} />);
+    const getDays = (label: string) =>
+      container.querySelectorAll<HTMLButtonElement>(
+        `button[aria-label="${label}"]:not([data-outside])`
+      );
+
+    getDays('30 April 2022')[0].focus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(getDays('1 May 2022')[0]).toHaveFocus();
+    expect(getDays('1 May 2022')[0].closest('[data-month-level]')).toBe(
+      container.querySelectorAll('[data-month-level]')[1]
+    );
+
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(getDays('30 April 2022')[0]).toHaveFocus();
+    expect(getDays('30 April 2022')[0].closest('[data-month-level]')).toBe(
+      container.querySelectorAll('[data-month-level]')[0]
+    );
+    expectLevelsCount([2, 0]);
+  });
+
+  it('does not switch month past minDate and maxDate with keyboard', async () => {
+    const { container } = render(
+      <Calendar {...defaultProps} minDate="2022-04-01" maxDate="2022-04-30" />
+    );
+    const getDay = (label: string) =>
+      container.querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
+
+    getDay('1 April 2022')!.focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expectHeaderLevel('month', 'April 2022');
+    expect(getDay('1 April 2022')).toHaveFocus();
+
+    getDay('30 April 2022')!.focus();
+    await userEvent.keyboard('{ArrowRight}');
+    expectHeaderLevel('month', 'April 2022');
+    expect(getDay('30 April 2022')).toHaveFocus();
+  });
+
+  it('skips disabled dates when switching month with keyboard', async () => {
+    const { container } = render(
+      <Calendar {...defaultProps} excludeDate={(date) => date === '2022-03-31'} />
+    );
+    const getDay = (label: string) =>
+      container.querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`);
+
+    getDay('1 April 2022')!.focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(getDay('30 March 2022')).toHaveFocus();
   });
 
   it('only adds selected date in month to tab order', async () => {

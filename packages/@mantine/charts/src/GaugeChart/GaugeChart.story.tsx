@@ -69,6 +69,60 @@ export function RoundCaps() {
   );
 }
 
+export function RoundCapsWithSections() {
+  const sections = [
+    { value: 60, color: 'teal' },
+    { value: 80, color: 'yellow' },
+    { value: 100, color: 'red' },
+  ];
+
+  return (
+    <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+      <GaugeChart value={72} roundCaps size={160} sections={sections} />
+      <GaugeChart value={72} roundCaps={false} size={160} sections={sections} />
+      <GaugeChart value={72} roundCaps size={160} sections={[{ value: 80, color: 'teal' }]} />
+      <GaugeChart
+        value={72}
+        roundCaps
+        size={160}
+        target={72}
+        sections={[
+          { value: 60, color: 'teal' },
+          { value: 80, color: 'yellow' },
+        ]}
+      />
+      <GaugeChart
+        value={72}
+        roundCaps
+        size={160}
+        startAngle={120}
+        endAngle={-120}
+        sections={sections}
+      />
+      <GaugeChart
+        value={72}
+        roundCaps
+        size={160}
+        startAngle={0}
+        endAngle={360}
+        sections={sections}
+      />
+      <GaugeChart
+        value={72}
+        roundCaps
+        size={160}
+        thickness={24}
+        sections={[
+          { value: 0, color: 'gray' },
+          { value: 50, color: 'teal' },
+          { value: 100, color: 'red' },
+          { value: 100, color: 'gray' },
+        ]}
+      />
+    </div>
+  );
+}
+
 export function FullCircle() {
   return (
     <div style={{ display: 'flex', gap: 20 }}>
