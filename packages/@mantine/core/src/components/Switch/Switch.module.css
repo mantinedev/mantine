@@ -105,20 +105,24 @@
 }
 
 .thumb {
+  --switch-thumb-width: var(--switch-thumb-size);
+
   position: absolute;
   z-index: 1;
   border-radius: var(--switch-radius);
   display: flex;
   background-color: var(--switch-thumb-bg, var(--mantine-color-white));
   height: var(--switch-thumb-size);
-  width: var(--switch-thumb-size);
+  width: var(--switch-thumb-width);
   inset-inline-start: var(--switch-thumb-start, var(--switch-track-label-padding));
-  transition: inset-inline-start 150ms ease;
+  transition:
+    inset-inline-start 150ms ease,
+    width 150ms ease;
 
   &:where([data-with-thumb-indicator])::before {
     content: '';
-    width: 40%;
-    height: 40%;
+    width: calc(var(--switch-thumb-size) * 0.4);
+    height: calc(var(--switch-thumb-size) * 0.4);
     background-color: var(--switch-bg);
     position: absolute;
     border-radius: var(--switch-radius);
@@ -132,7 +136,13 @@
   }
 
   .input:checked + * > & {
-    --switch-thumb-start: calc(100% - var(--switch-thumb-size) - var(--switch-track-label-padding));
+    --switch-thumb-start: calc(
+      100% - var(--switch-thumb-width) - var(--switch-track-label-padding)
+    );
+  }
+
+  .input:active:not(:disabled) + * > & {
+    --switch-thumb-width: calc(var(--switch-thumb-size) * 1.25);
   }
 }
 

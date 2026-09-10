@@ -7,6 +7,7 @@ import {
   ModalDemos,
   NotificationDemos,
   SliderDemos,
+  SwitchDemos,
   ThemingDemos,
 } from '@docs/demos';
 import { Code } from '@mantine/core';
@@ -203,6 +204,13 @@ look in both color schemes, and a halo in the slider color when hovered or dragg
 prop supports `filled` and `white` thumb styles in addition to `default`:
 
 <Demo data={SliderDemos.variants} />
+
+## Switch pressed state
+
+[Switch](/core/switch) thumb now stretches towards the direction of travel while the input is
+pressed and snaps into place on release, the way native toggles behave:
+
+<Demo data={SwitchDemos.configurator} />
 
 ## OKLCH default palettes
 
