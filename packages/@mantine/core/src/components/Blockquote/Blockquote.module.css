@@ -1,42 +1,37 @@
 .root {
-  --blockquote-border: 3px solid var(--bq-bd);
+  --bq-bd: var(--mantine-primary-color-filled);
+  --bq-icon-color: var(--mantine-primary-color-filled);
+  --bq-icon-size: rem(24px);
+  --bq-line-size: rem(3px);
 
   position: relative;
   margin: 0;
+  padding: rem(4px) 0;
+  padding-inline-start: rem(20px);
+  border-inline-start: var(--bq-line-size) solid var(--bq-bd);
+  font-size: var(--mantine-font-size-lg);
+  line-height: var(--mantine-line-height-lg);
+  color: var(--mantine-color-bright);
   text-wrap: var(--bq-text-wrap, var(--mantine-text-wrap));
-  border-inline-start: var(--blockquote-border);
-  border-start-end-radius: var(--bq-radius);
-  border-end-end-radius: var(--bq-radius);
-  padding: var(--mantine-spacing-xl) rem(38px);
-
-  @mixin where-light {
-    background-color: var(--bq-bg-light);
-  }
-
-  @mixin where-dark {
-    background-color: var(--bq-bg-dark);
-  }
 }
 
 .icon {
-  --blockquote-icon-offset: calc(var(--bq-icon-size) / -2);
-
-  position: absolute;
-  color: var(--bq-bd);
-  background-color: var(--mantine-color-body);
   display: flex;
   align-items: center;
   justify-content: center;
-  top: var(--blockquote-icon-offset);
-  inset-inline-start: var(--blockquote-icon-offset);
   width: var(--bq-icon-size);
   height: var(--bq-icon-size);
-  border-radius: var(--bq-icon-size);
+  margin-bottom: rem(8px);
+  font-size: var(--bq-icon-size);
+  line-height: 1;
+  color: var(--bq-icon-color);
 }
 
 .cite {
   display: block;
-  margin-top: var(--mantine-spacing-md);
-  opacity: 0.6;
-  font-size: 85%;
+  margin-top: rem(8px);
+  font-size: var(--mantine-font-size-sm);
+  line-height: var(--mantine-line-height-sm);
+  font-style: normal;
+  color: var(--mantine-color-dimmed);
 }

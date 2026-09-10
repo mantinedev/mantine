@@ -5,13 +5,11 @@ import {
   ElementProps,
   factory,
   Factory,
-  getRadius,
   getThemeColor,
   MantineColor,
-  MantineRadius,
+  MantineTheme,
   parseThemeColor,
   rem,
-  rgba,
   StylesApiProps,
   useProps,
   useStyles,
@@ -20,28 +18,19 @@ import classes from './Blockquote.module.css';
 
 export type BlockquoteStylesNames = 'root' | 'icon' | 'cite';
 export type BlockquoteCssVariables = {
-  root:
-    | '--bq-bg-light'
-    | '--bq-bg-dark'
-    | '--bq-bd'
-    | '--bq-icon-size'
-    | '--bq-radius'
-    | '--bq-text-wrap';
+  root: '--bq-bd' | '--bq-icon-color' | '--bq-icon-size' | '--bq-text-wrap';
 };
 
 export interface BlockquoteProps
   extends BoxProps, StylesApiProps<BlockquoteFactory>, ElementProps<'blockquote', 'cite'> {
-  /** Blockquote icon, displayed at the top left side */
+  /** Blockquote icon, displayed above the quote */
   icon?: React.ReactNode;
 
-  /** Controls icon `width` and `height`, numbers are converted to rem @default 40 */
+  /** Controls icon `width`, `height` and `font-size`, numbers are converted to rem @default 24 */
   iconSize?: number | string;
 
-  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color, controls accent line and icon colors @default theme.primaryColor */
   color?: MantineColor;
-
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
 
   /** Reference to a cited quote */
   cite?: React.ReactNode;
@@ -58,30 +47,28 @@ export type BlockquoteFactory = Factory<{
 }>;
 
 const defaultProps = {
-  iconSize: 48,
+  iconSize: 24,
 } satisfies Partial<BlockquoteProps>;
 
-const varsResolver = createVarsResolver<BlockquoteFactory>(
-  (theme, { color, iconSize, radius, textWrap }) => {
-    const darkParsed = parseThemeColor({
-      color: color || theme.primaryColor,
-      theme,
-      colorScheme: 'dark',
-    });
+function getAccentColor(color: string, theme: MantineTheme) {
+  const parsed = parseThemeColor({ color, theme });
 
-    const lightParsed = parseThemeColor({
-      color: color || theme.primaryColor,
-      theme,
-      colorScheme: 'light',
-    });
+  if (parsed.isThemeColor && parsed.shade === undefined) {
+    return `var(--mantine-color-${parsed.color}-text)`;
+  }
+
+  return parsed.variable ? `var(${parsed.variable})` : parsed.color;
+}
+
+const varsResolver = createVarsResolver<BlockquoteFactory>(
+  (theme, { color, iconSize, textWrap }) => {
+    const resolvedColor = color || theme.primaryColor;
 
     return {
       root: {
-        '--bq-bg-light': rgba(lightParsed.value, 0.07),
-        '--bq-bg-dark': rgba(darkParsed.value, 0.06),
-        '--bq-bd': getThemeColor(color, theme),
+        '--bq-bd': getThemeColor(resolvedColor, theme),
+        '--bq-icon-color': getAccentColor(resolvedColor, theme),
         '--bq-icon-size': rem(iconSize),
-        '--bq-radius': getRadius(radius),
         '--bq-text-wrap': textWrap,
       },
     };

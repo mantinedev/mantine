@@ -1,5 +1,6 @@
 import {
   AlertDemos,
+  BlockquoteDemos,
   DataGridDemos,
   DrawerDemos,
   ModalDemos,
@@ -168,6 +169,19 @@ controls how the icon is rendered: `filled` (default) renders a solid circle wit
 background, the same as Alert:
 
 <Demo data={NotificationDemos.variants} />
+
+## Blockquote redesign
+
+[Blockquote](/core/blockquote) has a new look. The tinted background, rounded corners and the icon
+floating over the top left corner are gone. The quote is set in `lg` text next to a `3px` accent line,
+the icon is rendered above the quote in the accent color, and the citation is a dimmed line below
+the quote. The component no longer depends on the surface it is placed on and does not require
+extra margin above it. `iconSize` defaults to `24` and also sets the icon `font-size`, so icons
+without explicit size fill the slot. `radius` prop and `--bq-bg-light`, `--bq-bg-dark`,
+`--bq-radius` CSS variables were removed, `--bq-icon-color` variable was added. Blockquotes
+rendered inside [Typography](/core/typography) share the same styles:
+
+<Demo data={BlockquoteDemos.usage} />
 
 ## OKLCH default palettes
 

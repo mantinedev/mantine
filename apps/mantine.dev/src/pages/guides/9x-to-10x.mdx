@@ -315,6 +315,33 @@ in your `.css.ts` files instead.
 Note that the [v9 opt-out](#v9-opt-out) does not restore the gray disabled styles –
 components no longer read the removed variables.
 
+## Blockquote changes
+
+[Blockquote](/core/blockquote) was redesigned in v10: it no longer has a background and rounded
+corners, the icon is displayed above the quote instead of floating over the top left corner, and
+`iconSize` defaults to `24` instead of `48`. The `radius` prop and `--bq-bg-light`,
+`--bq-bg-dark`, `--bq-radius` CSS variables were removed. If you customized the background with
+these variables, use the `root` selector in `styles` or `classNames` instead:
+
+```tsx
+import { Blockquote } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Blockquote
+      styles={{
+        root: {
+          backgroundColor: 'var(--mantine-color-blue-light)',
+          borderRadius: 'var(--mantine-radius-md)',
+        },
+      }}
+    >
+      Life is like an npm install – you never know what you are going to get.
+    </Blockquote>
+  );
+}
+```
+
 ## v9 opt-out
 
 If your application cannot migrate immediately, you can restore the full v9 colors, variant

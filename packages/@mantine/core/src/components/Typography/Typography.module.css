@@ -262,10 +262,20 @@
 
   & :where(blockquote) {
     font-size: var(--mantine-font-size-lg);
-    line-height: var(--mantine-line-height);
+    line-height: var(--mantine-line-height-lg);
     margin: var(--mantine-spacing-md) 0;
-    border-radius: var(--mantine-radius-sm);
-    padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
-    background-color: var(--mantine-color-surface-sunken);
+    padding: rem(4px) 0;
+    padding-inline-start: rem(20px);
+    border-inline-start: rem(3px) solid var(--bq-bd, var(--mantine-primary-color-filled));
+    color: var(--mantine-color-bright);
+
+    & :where(cite) {
+      display: block;
+      margin-top: rem(8px);
+      font-size: var(--mantine-font-size-sm);
+      line-height: var(--mantine-line-height-sm);
+      font-style: normal;
+      color: var(--mantine-color-dimmed);
+    }
   }
 }
