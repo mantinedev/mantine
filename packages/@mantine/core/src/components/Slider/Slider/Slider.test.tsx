@@ -37,6 +37,49 @@ describe('@mantine/core/Slider', () => {
     ],
   });
 
+  it('sets data-variant attribute on the root element', () => {
+    const { container, rerender } = render(<Slider />);
+    expect(container.querySelector('.mantine-Slider-root')).toHaveAttribute(
+      'data-variant',
+      'default'
+    );
+
+    rerender(
+      <>
+        <Slider variant="filled" />
+      </>
+    );
+    expect(container.querySelector('.mantine-Slider-root')).toHaveAttribute(
+      'data-variant',
+      'filled'
+    );
+  });
+
+  it('resolves thumb size from size and thumbSize props', () => {
+    const { container, rerender } = render(<Slider size="xl" />);
+    expect(container.querySelector('.mantine-Slider-root')).toHaveStyle({
+      '--slider-thumb-size': 'var(--slider-thumb-size-xl)',
+    });
+
+    rerender(
+      <>
+        <Slider size={20} />
+      </>
+    );
+    expect(container.querySelector('.mantine-Slider-root')).toHaveStyle({
+      '--slider-thumb-size': 'calc(var(--slider-size) + calc(0.625rem * var(--mantine-scale)))',
+    });
+
+    rerender(
+      <>
+        <Slider size="xl" thumbSize={30} />
+      </>
+    );
+    expect(container.querySelector('.mantine-Slider-root')).toHaveStyle({
+      '--slider-thumb-size': 'calc(1.875rem * var(--mantine-scale))',
+    });
+  });
+
   it('provides name and value to hidden input', () => {
     const { container } = render(<Slider name="test-input" value={50} />);
     expectInputValue('50', container);

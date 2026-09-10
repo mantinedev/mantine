@@ -1,4 +1,5 @@
 export { configurator } from './Slider.demo.configurator';
+export { variants } from './Slider.demo.variants';
 export { customize } from './Slider.demo.customize';
 export { marks } from './Slider.demo.marks';
 export { label } from './Slider.demo.label';

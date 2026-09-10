@@ -342,6 +342,25 @@ function Demo() {
 }
 ```
 
+## ColorPicker changes
+
+[ColorPicker](/core/color-picker) and [ColorInput](/core/color-input) display `10` swatches per row
+by default instead of `7`. Set `swatchesPerRow={7}` to keep the previous density. Saturation picker,
+sliders, preview swatch and color swatches follow `theme.defaultRadius`; use the new `radius` prop
+to change it. Sliders were pill-shaped in v9 and the saturation picker had `sm` radius, there is no
+single `radius` value that restores both. `ColorInput` does not pass its `radius` prop to the picker.
+
+## Slider changes
+
+[Slider](/core/slider) and [RangeSlider](/core/range-slider) thumb has been redesigned. The thumb
+size is now defined per `size` (14px, 16px, 18px, 22px and 26px for `xs` to `xl`) instead of
+being twice the track height, the border is 2px instead of 4px, and the thumb is white with a
+colored border in both color schemes (in v9 the dark color scheme displayed a colored thumb with a
+white border). Hovered and dragged thumbs display a halo in the slider color. If you have
+customized `thumb` styles with Styles API, check that they still look as intended. Use
+`thumbSize` prop to restore the previous size and the new `variant="filled"` to get a thumb
+filled with the slider color.
+
 ## v9 opt-out
 
 If your application cannot migrate immediately, you can restore the full v9 colors, variant

@@ -86,7 +86,7 @@ const defaultProps = {
   format: 'hex',
   fixOnBlur: true,
   withPreview: true,
-  swatchesPerRow: 7,
+  swatchesPerRow: 10,
   withPicker: true,
   popoverProps: { transitionProps: { transition: 'fade', duration: 0 } },
   withEyeDropper: true,

@@ -9,7 +9,6 @@ export function MdxInfo({ className, ...others }: BlockquoteProps) {
     <Blockquote
       className={cx(classes.root, className)}
       icon={<InfoIcon className={classes.icon} />}
-      radius="md"
       __vars={{
         '--docs-bq-code-bg-light': rgba(theme.colors.blue[6], 0.2),
         '--docs-bq-code-bg-dark': rgba(theme.colors.blue[4], 0.2),

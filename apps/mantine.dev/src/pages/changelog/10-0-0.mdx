@@ -1,10 +1,12 @@
 import {
   AlertDemos,
   BlockquoteDemos,
+  ColorPickerDemos,
   DataGridDemos,
   DrawerDemos,
   ModalDemos,
   NotificationDemos,
+  SliderDemos,
   ThemingDemos,
 } from '@docs/demos';
 import { Code } from '@mantine/core';
@@ -182,6 +184,25 @@ without explicit size fill the slot. `radius` prop and `--bq-bg-light`, `--bq-bg
 rendered inside [Typography](/core/typography) share the same styles:
 
 <Demo data={BlockquoteDemos.usage} />
+
+## ColorPicker radius and swatches density
+
+[ColorPicker](/core/color-picker) saturation picker, sliders, preview swatch and color swatches now
+follow `theme.defaultRadius` instead of a fixed `sm` radius for the picker and pill-shaped sliders.
+The new `radius` prop and `--cp-radius` CSS variable control it. `swatchesPerRow` now defaults to
+`10` instead of `7` in both `ColorPicker` and `ColorInput`. [ColorInput](/core/color-input) does not
+pass its `radius` prop to the picker, so existing inputs with custom `radius` are not affected:
+
+<Demo data={ColorPickerDemos.radiusConfigurator} />
+
+## Slider thumb redesign
+
+[Slider](/core/slider) and [RangeSlider](/core/range-slider) thumb has been redesigned: it now has
+its own size per `size` prop instead of being twice the track height, a 2px border, the same white
+look in both color schemes, and a halo in the slider color when hovered or dragged. New `variant`
+prop supports `filled` and `white` thumb styles in addition to `default`:
+
+<Demo data={SliderDemos.variants} />
 
 ## OKLCH default palettes
 

@@ -30,6 +30,6 @@ export const swatchesConfigurator: MantineDemo = {
   component: Wrapper,
   code,
   controls: [
-    { prop: 'swatchesPerRow', type: 'number', initialValue: 7, libraryValue: 7, min: 5, max: 12 },
+    { prop: 'swatchesPerRow', type: 'number', initialValue: 10, libraryValue: 10, min: 5, max: 14 },
   ],
 };

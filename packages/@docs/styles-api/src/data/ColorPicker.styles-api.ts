@@ -24,6 +24,8 @@ export const ColorPickerStylesApi: StylesApiData<ColorPickerFactory> = {
       '--cp-swatch-size': 'Controls swatch `width` and `height`',
       '--cp-thumb-size': 'Controls thumb `width` and `height` in all sliders and saturation picker',
       '--cp-saturation-height': 'Controls `height` of the saturation picker',
+      '--cp-radius':
+        'Controls `border-radius` of the saturation picker, sliders, preview swatch and color swatches',
     },
   },
 };

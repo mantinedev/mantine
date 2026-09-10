@@ -5,7 +5,14 @@
   --slider-size-lg: 10px;
   --slider-size-xl: 12px;
 
+  --slider-thumb-size-xs: 14px;
+  --slider-thumb-size-sm: 16px;
+  --slider-thumb-size-md: 18px;
+  --slider-thumb-size-lg: 22px;
+  --slider-thumb-size-xl: 26px;
+
   --slider-size: var(--slider-size-md);
+  --slider-thumb-size: var(--slider-thumb-size-md);
   --slider-radius: 1000px;
   --slider-color: var(--mantine-primary-color-filled);
 
@@ -56,20 +63,25 @@
 }
 
 .thumb {
+  --slider-thumb-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  --slider-thumb-halo: color-mix(in srgb, var(--slider-color) 20%, transparent);
+  --slider-thumb-halo-active: color-mix(in srgb, var(--slider-color) 28%, transparent);
+
   position: absolute;
   display: flex;
   height: var(--slider-thumb-size);
   width: var(--slider-thumb-size);
-  border: 4px solid;
+  border: 2px solid var(--slider-color);
   transform: translate(-50%, -50%);
   top: 50%;
   cursor: pointer;
   border-radius: var(--slider-radius);
   align-items: center;
   justify-content: center;
-  transition:
-    box-shadow 100ms ease,
-    transform 100ms ease;
+  color: var(--slider-color);
+  background-color: var(--mantine-color-white);
+  box-shadow: var(--slider-thumb-shadow);
+  transition: box-shadow 120ms ease;
   z-index: 3;
   user-select: none;
   touch-action: none;
@@ -86,21 +98,32 @@
     display: none;
   }
 
-  &:where([data-dragging]) {
-    transform: translate(-50%, -50%) scale(1.05);
-    box-shadow: var(--mantine-shadow-sm);
+  @mixin hover {
+    box-shadow:
+      var(--slider-thumb-shadow),
+      0 0 0 4px var(--slider-thumb-halo);
   }
 
-  @mixin where-light {
-    color: var(--slider-color);
-    border-color: var(--slider-color);
-    background-color: var(--mantine-color-white);
+  &[data-dragging] {
+    box-shadow:
+      var(--slider-thumb-shadow),
+      0 0 0 8px var(--slider-thumb-halo-active);
   }
 
-  @mixin where-dark {
+  :where(.root[data-variant='filled']) & {
+    --slider-thumb-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+
     color: var(--mantine-color-white);
     border-color: var(--mantine-color-white);
     background-color: var(--slider-color);
+  }
+
+  :where(.root[data-variant='white']) & {
+    --slider-thumb-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+
+    color: var(--mantine-color-gray-6);
+    border-color: transparent;
   }
 
   :where(.root[data-orientation='vertical']) & {
@@ -109,10 +132,6 @@
     right: auto;
     bottom: var(--slider-thumb-offset);
     transform: translate(-50%, 50%);
-
-    &:where([data-dragging]) {
-      transform: translate(-50%, 50%) scale(1.05);
-    }
 
     @mixin where-rtl {
       left: 50%;

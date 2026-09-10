@@ -8,6 +8,19 @@ export default Layout(MDX_DATA.Slider);
 
 <Demo data={SliderDemos.configurator} />
 
+## Variants
+
+`Slider` and `RangeSlider` support three thumb styles set with the `variant` prop:
+
+- `default` – white thumb with a border in the slider color
+- `filled` – thumb filled with the slider color with a white border
+- `white` – white thumb with a shadow, the slider color is used only for the track
+
+In all variants the thumb size is based on the `size` prop (14px for `xs`, 18px for `md`,
+26px for `xl`), use `thumbSize` prop to override it:
+
+<Demo data={SliderDemos.variants} />
+
 ## Controlled
 
 ```tsx

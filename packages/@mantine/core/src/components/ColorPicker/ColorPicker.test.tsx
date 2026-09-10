@@ -79,6 +79,36 @@ describe('@mantine/core/ColorPicker', () => {
     expect(spy).toHaveBeenCalledWith('#ffffff');
   });
 
+  it('sets radius css variable', () => {
+    const { container, rerender } = render(<ColorPicker />);
+    const getWrapper = () => container.querySelector('.mantine-ColorPicker-wrapper') as HTMLElement;
+    expect(getWrapper().style.getPropertyValue('--cp-radius')).toBe(
+      'var(--mantine-radius-default)'
+    );
+
+    rerender(
+      <>
+        <ColorPicker radius="xl" />
+      </>
+    );
+    expect(getWrapper().style.getPropertyValue('--cp-radius')).toBe('var(--mantine-radius-xl)');
+
+    rerender(
+      <>
+        <ColorPicker radius={4} />
+      </>
+    );
+    expect(getWrapper().style.getPropertyValue('--cp-radius')).toBe(
+      'calc(0.25rem * var(--mantine-scale))'
+    );
+  });
+
+  it('displays 10 swatches per row by default', () => {
+    const { container } = render(<ColorPicker swatches={['#ffffff']} />);
+    const wrapper = container.querySelector('.mantine-ColorPicker-wrapper') as HTMLElement;
+    expect(wrapper.style.getPropertyValue('--cp-swatch-size')).toBe('10%');
+  });
+
   it('renders hidden input with given name and value', () => {
     const { container } = render(
       <ColorPicker name="color" value="#ff0000" format="hex" withPicker={false} />

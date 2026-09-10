@@ -13,14 +13,18 @@ import {
   MantineColor,
   MantineRadius,
   MantineSize,
-  rem,
   StylesApiProps,
   useDirection,
   useProps,
   useStyles,
 } from '../../../core';
 import { TransitionOverride } from '../../Transition';
-import { SliderCssVariables, SliderProvider, SliderStylesNames } from '../Slider.context';
+import {
+  SliderCssVariables,
+  SliderProvider,
+  SliderStylesNames,
+  SliderVariant,
+} from '../Slider.context';
 import { SliderMark } from '../SliderMark';
 import { SliderRoot } from '../SliderRoot/SliderRoot';
 import { Thumb } from '../Thumb/Thumb';
@@ -36,6 +40,7 @@ import {
   getNextMarkValue,
   getPreviousMarkValue,
 } from '../utils/get-step-mark-value/get-step-mark-value';
+import { getThumbSize } from '../utils/get-thumb-size/get-thumb-size';
 import classes from '../Slider.module.css';
 
 export type RangeSliderValue = [number, number];
@@ -45,6 +50,9 @@ export interface RangeSliderProps
     BoxProps,
     StylesApiProps<RangeSliderFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
+  /** Thumb style: `default` is a white thumb with a colored border, `filled` is a colored thumb with a white border, `white` is a white thumb with a shadow and without a colored border @default 'default' */
+  variant?: SliderVariant;
+
   /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default theme.primaryColor */
   color?: MantineColor;
 
@@ -156,6 +164,7 @@ export type RangeSliderFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: SliderStylesNames;
   vars: SliderCssVariables;
+  variant: SliderVariant;
 }>;
 
 const varsResolver = createVarsResolver<RangeSliderFactory>(
@@ -164,13 +173,13 @@ const varsResolver = createVarsResolver<RangeSliderFactory>(
       '--slider-size': getSize(size, 'slider-size'),
       '--slider-color': color ? getThemeColor(color, theme) : undefined,
       '--slider-radius': radius === undefined ? undefined : getRadius(radius),
-      '--slider-thumb-size':
-        thumbSize !== undefined ? rem(thumbSize) : 'calc(var(--slider-size) * 2)',
+      '--slider-thumb-size': getThumbSize(size, thumbSize),
     },
   })
 );
 
 const defaultProps = {
+  variant: 'default',
   min: 0,
   max: 100,
   minRange: 10,

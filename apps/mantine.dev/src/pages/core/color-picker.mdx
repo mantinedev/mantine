@@ -67,7 +67,7 @@ You can add predefined color swatches with the `swatches` prop:
 
 <Demo data={ColorPickerDemos.swatches} />
 
-By default, `ColorPicker` will display 7 swatches per row. You can configure it with the `swatchesPerRow` prop:
+By default, `ColorPicker` will display 10 swatches per row. You can configure it with the `swatchesPerRow` prop:
 
 <Demo data={ColorPickerDemos.swatchesConfigurator} />
 
@@ -80,6 +80,14 @@ To display swatches without picker, set `withPicker={false}` and `fullWidth` pro
 `ColorPicker` has 5 predefined sizes: `xs`, `sm`, `md`, `lg` and `xl`:
 
 <Demo data={ColorPickerDemos.sizeConfigurator} />
+
+## Radius
+
+Saturation picker, sliders, preview swatch and color swatches use `theme.defaultRadius` by default.
+Use the `radius` prop to change it. Note that [ColorInput](/core/color-input) does not pass its
+`radius` prop to the dropdown picker: the input `radius` changes only the input element.
+
+<Demo data={ColorPickerDemos.radiusConfigurator} />
 
 ## fullWidth
 

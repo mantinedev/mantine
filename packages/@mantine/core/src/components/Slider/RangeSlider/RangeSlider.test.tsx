@@ -40,6 +40,13 @@ describe('@mantine/core/RangeSlider', () => {
     ],
   });
 
+  it('sets data-variant attribute on the root element and resolves thumb size', () => {
+    const { container } = render(<RangeSlider variant="white" size="lg" />);
+    const root = container.querySelector('.mantine-RangeSlider-root');
+    expect(root).toHaveAttribute('data-variant', 'white');
+    expect(root).toHaveStyle({ '--slider-thumb-size': 'var(--slider-thumb-size-lg)' });
+  });
+
   it('sets data-orientation attribute on root element', () => {
     const { container, rerender } = render(
       <RangeSlider {...defaultProps} orientation="vertical" />

@@ -1,5 +1,6 @@
 export { formatsConfigurator } from './ColorPicker.demo.formatsConfigurator';
 export { sizeConfigurator } from './ColorPicker.demo.sizeConfigurator';
+export { radiusConfigurator } from './ColorPicker.demo.radiusConfigurator';
 export { swatchesConfigurator } from './ColorPicker.demo.swatchesConfigurator';
 export { swatches } from './ColorPicker.demo.swatches';
 export { swatchesOnly } from './ColorPicker.demo.swatchesOnly';

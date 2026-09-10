@@ -222,3 +222,21 @@ export function WithDecimalValue() {
     </div>
   );
 }
+
+export function Variants() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Slider defaultValue={45} marks={marks} mb={40} />
+      <Slider defaultValue={45} marks={marks} variant="filled" mb={40} />
+      <Slider defaultValue={45} marks={marks} variant="white" mb={40} />
+      <RangeSlider defaultValue={[25, 65]} mb="xl" labelAlwaysOn mt={40} />
+      <RangeSlider defaultValue={[25, 65]} variant="filled" mb="xl" />
+      <RangeSlider defaultValue={[25, 65]} variant="white" mb="xl" />
+      <Slider defaultValue={45} variant="filled" color="yellow" mb="xl" />
+      <Slider defaultValue={45} variant="white" color="yellow" mb="xl" />
+      <Slider defaultValue={45} variant="filled" thumbChildren="A" thumbSize={26} mb="xl" />
+      <Slider defaultValue={45} variant="white" thumbChildren="A" thumbSize={26} mb="xl" />
+      <Slider defaultValue={45} variant="filled" disabled mb="xl" />
+    </div>
+  );
+}

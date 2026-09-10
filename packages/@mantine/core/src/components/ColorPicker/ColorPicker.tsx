@@ -8,8 +8,10 @@ import {
   ElementProps,
   factory,
   Factory,
+  getRadius,
   getSize,
   getSpacing,
+  MantineRadius,
   MantineSize,
   StylesApiProps,
   useProps,
@@ -47,7 +49,8 @@ export type ColorPickerCssVariables = {
     | '--cp-body-spacing'
     | '--cp-swatch-size'
     | '--cp-thumb-size'
-    | '--cp-saturation-height';
+    | '--cp-saturation-height'
+    | '--cp-radius';
 };
 
 export interface __ColorPickerProps {
@@ -72,7 +75,7 @@ export interface __ColorPickerProps {
   /** A list of colors used to display swatches list below the color picker */
   swatches?: string[];
 
-  /** Number of swatches per row @default 7 */
+  /** Number of swatches per row @default 10 */
   swatchesPerRow?: number;
 
   /** Component size @default 'md' */
@@ -89,6 +92,9 @@ export interface ColorPickerProps
     StylesApiProps<ColorPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   __staticSelector?: string;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` of saturation area, sliders, preview and swatches @default theme.defaultRadius */
+  radius?: MantineRadius;
 
   /** If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard @default true */
   focusable?: boolean;
@@ -120,23 +126,26 @@ export type ColorPickerFactory = Factory<{
 }>;
 
 const defaultProps = {
-  swatchesPerRow: 7,
+  swatchesPerRow: 10,
   withPicker: true,
   focusable: true,
   size: 'md',
   __staticSelector: 'ColorPicker',
 } satisfies Partial<ColorPickerProps>;
 
-const varsResolver = createVarsResolver<ColorPickerFactory>((_, { size, swatchesPerRow }) => ({
-  wrapper: {
-    '--cp-preview-size': getSize(size, 'cp-preview-size'),
-    '--cp-width': getSize(size, 'cp-width'),
-    '--cp-body-spacing': getSpacing(size),
-    '--cp-swatch-size': `${100 / swatchesPerRow!}%`,
-    '--cp-thumb-size': getSize(size, 'cp-thumb-size'),
-    '--cp-saturation-height': getSize(size, 'cp-saturation-height'),
-  },
-}));
+const varsResolver = createVarsResolver<ColorPickerFactory>(
+  (_, { size, swatchesPerRow, radius }) => ({
+    wrapper: {
+      '--cp-preview-size': getSize(size, 'cp-preview-size'),
+      '--cp-width': getSize(size, 'cp-width'),
+      '--cp-body-spacing': getSpacing(size),
+      '--cp-swatch-size': `${100 / swatchesPerRow!}%`,
+      '--cp-thumb-size': getSize(size, 'cp-thumb-size'),
+      '--cp-saturation-height': getSize(size, 'cp-saturation-height'),
+      '--cp-radius': getRadius(radius),
+    },
+  })
+);
 
 export const ColorPicker = factory<ColorPickerFactory>((_props) => {
   const props = useProps('ColorPicker', defaultProps, _props);
@@ -154,6 +163,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
     onChangeEnd,
     withPicker,
     size,
+    radius,
     saturationLabel,
     hueLabel,
     alphaLabel,
@@ -294,7 +304,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
               {withAlpha && (
                 <ColorSwatch
                   color={_value}
-                  radius="sm"
+                  radius="var(--cp-radius)"
                   size="var(--cp-preview-size)"
                   {...getStyles('preview')}
                 />

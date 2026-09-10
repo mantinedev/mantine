@@ -11,6 +11,8 @@ export type SliderStylesNames =
   | 'mark'
   | 'markLabel';
 
+export type SliderVariant = 'default' | 'filled' | 'white' | (string & {});
+
 export type SliderCssVariables = {
   root: '--slider-size' | '--slider-color' | '--slider-thumb-size' | '--slider-radius';
 };

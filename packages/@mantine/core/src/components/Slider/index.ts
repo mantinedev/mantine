@@ -3,7 +3,7 @@ import type {
   RangeSliderProps,
   RangeSliderValue,
 } from './RangeSlider/RangeSlider';
-import type { SliderCssVariables, SliderStylesNames } from './Slider.context';
+import type { SliderCssVariables, SliderStylesNames, SliderVariant } from './Slider.context';
 import type { SliderFactory, SliderProps } from './Slider/Slider';
 import type { SliderMark } from './SliderMark';
 
@@ -14,6 +14,7 @@ export type {
   SliderProps,
   SliderStylesNames,
   SliderCssVariables,
+  SliderVariant,
   SliderFactory,
   RangeSliderProps,
   RangeSliderValue,

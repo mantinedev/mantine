@@ -28,6 +28,7 @@
   --cp-saturation-height: var(--cp-saturation-height-sm);
   --cp-width: var(--cp-width-sm);
   --cp-body-spacing: var(--mantine-spacing-sm);
+  --cp-radius: var(--mantine-radius-default);
 
   width: var(--cp-width);
   padding: 1px;
@@ -99,7 +100,7 @@
   -webkit-tap-highlight-color: transparent;
   position: relative;
   height: var(--cp-saturation-height);
-  border-radius: var(--mantine-radius-sm);
+  border-radius: var(--cp-radius);
   margin: calc(var(--cp-thumb-size) / 2);
 
   &:where([data-focus-ring='auto']) {
@@ -121,7 +122,7 @@
 
 .saturationOverlay {
   position: absolute;
-  border-radius: var(--mantine-radius-sm);
+  border-radius: var(--cp-radius);
   inset: calc(var(--cp-thumb-size) * -1 / 2 - rem(1px));
 }
 
@@ -166,5 +167,5 @@
   top: 0;
   bottom: 0;
   inset-inline: calc(var(--cp-thumb-size) * -1 / 2 - rem(1px));
-  border-radius: 10000rem;
+  border-radius: var(--cp-radius, var(--mantine-radius-default));
 }

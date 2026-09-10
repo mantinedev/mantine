@@ -47,4 +47,16 @@ describe('@mantine/core/ColorInput', () => {
       container.querySelector('.mantine-ColorInput-dropdown [data-full-width]')
     ).toBeInTheDocument();
   });
+
+  it('does not pass radius prop to ColorPicker', () => {
+    const { container } = render(
+      <MantineProvider>
+        <ColorInput popoverProps={{ opened: true, withinPortal: false }} radius="xl" />
+      </MantineProvider>
+    );
+    const picker = container.querySelector(
+      '.mantine-ColorInput-dropdown .mantine-ColorInput-wrapper'
+    ) as HTMLElement;
+    expect(picker.style.getPropertyValue('--cp-radius')).toBe('var(--mantine-radius-default)');
+  });
 });

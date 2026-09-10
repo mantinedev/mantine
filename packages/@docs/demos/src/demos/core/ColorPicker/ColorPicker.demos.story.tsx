@@ -13,6 +13,11 @@ export const Demo_sizeConfigurator = {
   render: renderDemo(demos.sizeConfigurator),
 };
 
+export const Demo_radiusConfigurator = {
+  name: '⭐ Demo: radiusConfigurator',
+  render: renderDemo(demos.radiusConfigurator),
+};
+
 export const Demo_swatchesConfigurator = {
   name: '⭐ Demo: swatchesConfigurator',
   render: renderDemo(demos.swatchesConfigurator),

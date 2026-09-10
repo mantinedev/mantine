@@ -36,7 +36,7 @@ export function Swatches({
       type="button"
       color={color}
       key={index}
-      radius="sm"
+      radius="var(--cp-radius)"
       onClick={() => {
         setValue(color);
         onChangeEnd?.(color);

@@ -8,6 +8,11 @@ export const Demo_configurator = {
   render: renderDemo(demos.configurator),
 };
 
+export const Demo_variants = {
+  name: '⭐ Demo: variants',
+  render: renderDemo(demos.variants),
+};
+
 export const Demo_customize = {
   name: '⭐ Demo: customize',
   render: renderDemo(demos.customize),

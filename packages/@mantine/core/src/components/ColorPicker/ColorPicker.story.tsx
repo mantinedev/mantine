@@ -69,6 +69,18 @@ export function Usage() {
   );
 }
 
+export function Radius() {
+  const swatches = ['#25262b', '#868e96', '#fa5252', '#e64980', '#be4bdb', '#7950f2', '#4c6ef5'];
+  return (
+    <div style={{ padding: 40, display: 'flex', gap: 40, flexWrap: 'wrap' }}>
+      <ColorPicker format="rgba" swatches={swatches} />
+      <ColorPicker format="rgba" swatches={swatches} radius="xs" />
+      <ColorPicker format="rgba" swatches={swatches} radius="xl" />
+      <ColorPicker format="rgba" swatches={swatches} radius={0} />
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>

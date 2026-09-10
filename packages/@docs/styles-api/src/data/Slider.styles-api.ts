@@ -18,12 +18,18 @@ export const SliderStylesApi: StylesApiData<SliderFactory> = {
     root: {
       '--slider-size': 'Controls track `height`',
       '--slider-color': 'Controls filled track, thumb and marks `background`',
-      '--slider-thumb-size': 'Controls thumb `width` and `height`',
+      '--slider-thumb-size':
+        'Controls thumb `width` and `height`, by default based on `--slider-thumb-size-{size}` variables',
       '--slider-radius': 'Controls `border-radius` of track and thumb',
     },
   },
 
   modifiers: [
+    {
+      modifier: 'data-variant',
+      selector: 'root',
+      condition: '`variant` prop value, `default` by default',
+    },
     {
       modifier: 'data-orientation',
       selector: 'root',
