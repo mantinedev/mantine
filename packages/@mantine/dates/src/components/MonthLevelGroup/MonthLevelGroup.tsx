@@ -2,16 +2,26 @@ import dayjs from 'dayjs';
 import { useRef } from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '@mantine/core';
 import { DateStringValue } from '../../types';
-import { handleControlKeyDown } from '../../utils';
+import { toDateString } from '../../utils';
+import { useDatesContext } from '../DatesProvider';
 import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
 import { MonthLevel, MonthLevelSettings, MonthLevelStylesNames } from '../MonthLevel';
+import { useDaysNavigation } from './use-days-navigation/use-days-navigation';
 
 export type MonthLevelGroupStylesNames = MonthLevelStylesNames | LevelsGroupStylesNames;
 
 export interface MonthLevelGroupProps
   extends
     BoxProps,
-    Omit<MonthLevelSettings, 'withPrevious' | 'withNext' | '__onDayKeyDown' | '__getDayRef'>,
+    Omit<
+      MonthLevelSettings,
+      | 'withPrevious'
+      | 'withNext'
+      | '__onDayKeyDown'
+      | '__getDayRef'
+      | '__onWeekControlKeyDown'
+      | '__getWeekControlRef'
+    >,
     Omit<StylesApiProps<MonthLevelGroupFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {
   classNames?: Partial<Record<string, string>>;
@@ -72,6 +82,8 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
     withCellSpacing,
     highlightToday,
     withWeekNumbers,
+    __withWeekControls,
+    __getWeekControlProps,
 
     // CalendarHeader settings
     __preventFocus,
@@ -108,7 +120,38 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
     ...others
   } = props;
 
+  const ctx = useDatesContext();
   const daysRefs = useRef<HTMLButtonElement[][][]>([]);
+  const weekControlsRefs = useRef<HTMLButtonElement[][][]>([]);
+
+  const lastMonth = dayjs(month)
+    .add(numberOfColumns - 1, 'months')
+    .format('YYYY-MM-DD');
+
+  const { handleDayKeyDown, handleWeekControlKeyDown } = useDaysNavigation({
+    month,
+    numberOfColumns,
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    consistentWeeks: ctx.consistentWeeks,
+    daysRefs,
+    weekControlsRefs,
+    minDate: toDateString(minDate),
+    maxDate: toDateString(maxDate),
+    previousDisabled:
+      typeof previousDisabled === 'boolean'
+        ? previousDisabled
+        : minDate
+          ? !dayjs(month).startOf('month').isAfter(minDate)
+          : false,
+    nextDisabled:
+      typeof nextDisabled === 'boolean'
+        ? nextDisabled
+        : maxDate
+          ? !dayjs(lastMonth).endOf('month').isBefore(maxDate)
+          : false,
+    onPrevious,
+    onNext,
+  });
 
   const months = Array(numberOfColumns)
     .fill(0)
@@ -125,15 +168,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
           __stopPropagation={__stopPropagation}
           __onDayClick={__onDayClick}
           __onDayMouseEnter={__onDayMouseEnter}
-          __onDayKeyDown={(event, payload) =>
-            handleControlKeyDown({
-              levelIndex: monthIndex,
-              rowIndex: payload.rowIndex,
-              cellIndex: payload.cellIndex,
-              event,
-              controlsRef: daysRefs,
-            })
-          }
+          __onDayKeyDown={handleDayKeyDown}
           __getDayRef={(rowIndex, cellIndex, node) => {
             if (!Array.isArray(daysRefs.current[monthIndex])) {
               daysRefs.current[monthIndex] = [];
@@ -144,6 +179,16 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
             }
 
             daysRefs.current[monthIndex][rowIndex][cellIndex] = node;
+          }}
+          __withWeekControls={__withWeekControls}
+          __getWeekControlProps={__getWeekControlProps}
+          __onWeekControlKeyDown={handleWeekControlKeyDown}
+          __getWeekControlRef={(rowIndex, node) => {
+            if (!Array.isArray(weekControlsRefs.current[monthIndex])) {
+              weekControlsRefs.current[monthIndex] = [];
+            }
+
+            weekControlsRefs.current[monthIndex][rowIndex] = [node];
           }}
           levelControlAriaLabel={
             typeof levelControlAriaLabel === 'function'

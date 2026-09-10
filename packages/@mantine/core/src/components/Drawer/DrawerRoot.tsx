@@ -215,6 +215,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
     padding,
     __vars,
     removeScrollProps,
+    __handledEscapeEvents,
     ...others
   } = props;
 
@@ -248,6 +249,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
     closeOnEscape,
     onClose,
     returnFocus,
+    handledEscapeEvents: __handledEscapeEvents,
   });
 
   const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};

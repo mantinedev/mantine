@@ -16,7 +16,6 @@ import {
   Popover,
   PopoverProps,
   StylesApiProps,
-  UnstyledButton,
   useInputProps,
   useStyles,
 } from '@mantine/core';
@@ -30,6 +29,7 @@ import { DecadeLevelSettings } from '../DecadeLevel';
 import { HiddenDatesInput } from '../HiddenDatesInput';
 import { isSameMonth } from '../Month';
 import { MonthLevelSettings } from '../MonthLevel';
+import { PresetsList } from '../PresetsList';
 import { YearLevelSettings } from '../YearLevel';
 import { dateStringParser } from './date-string-parser/date-string-parser';
 import { isDateValid } from './is-date-valid/is-date-valid';
@@ -288,17 +288,6 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     setDropdownOpened(false);
   };
 
-  const presetButtons = presets?.map((preset, index) => (
-    <UnstyledButton
-      key={index}
-      {...getStyles('presetButton')}
-      onClick={() => handlePresetSelect(preset.value)}
-      onMouseDown={(event) => event.preventDefault()}
-    >
-      {preset.label}
-    </UnstyledButton>
-  ));
-
   const clearButton = (
     <Input.ClearButton
       onClick={() => {
@@ -386,6 +375,8 @@ export const DateInput = factory<DateInputFactory>((_props) => {
           <Popover.Dropdown
             onMouseDown={(event) => event.preventDefault()}
             data-dates-dropdown
+            data-with-presets={presets ? true : undefined}
+            className={unstyled ? undefined : classes.dropdown}
             ref={_dropdownRef}
           >
             {presets ? (
@@ -394,7 +385,12 @@ export const DateInput = factory<DateInputFactory>((_props) => {
                   style: { '--preset-font-size': getFontSize(inputProps.size) },
                 })}
               >
-                <div {...getStyles('presetsList')}>{presetButtons}</div>
+                <PresetsList
+                  {...getStyles('presetsList')}
+                  presets={presets}
+                  onPresetSelect={handlePresetSelect}
+                  buttonProps={getStyles('presetButton')}
+                />
                 {calendar}
               </Box>
             ) : (

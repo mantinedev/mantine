@@ -13,6 +13,7 @@ import { itSupportsOnControlKeydown } from './it-supports-on-control-key-down';
 import { itSupportsOnControlMouseEnter } from './it-supports-on-control-mouse-enter';
 import { itSupportsOnDayClick } from './it-supports-on-day-click';
 import { itSupportsOnDayKeydown } from './it-supports-on-day-keydown';
+import { itSupportsQuartersListProps } from './it-supports-quarters-list-props';
 import { itSupportsWeekdaysProps } from './it-supports-weekdays-props';
 import { itSupportsWithNextPrevious } from './it-supports-with-next-previous';
 import { itSupportsYearsListProps } from './it-supports-years-list-props';
@@ -26,6 +27,7 @@ export const datesTests = {
   itSupportsOnDayKeydown,
   itSupportsGetControlRef,
   itSupportsMonthsListProps,
+  itSupportsQuartersListProps,
   itSupportsYearsListProps,
   itSupportsOnControlKeydown,
   itSupportsOnControlClick,

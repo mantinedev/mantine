@@ -37,6 +37,7 @@ export interface ModalBaseOverlayProps
 
 export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   unstyled?: boolean;
+  __handledEscapeEvents?: WeakSet<KeyboardEvent>;
 
   /** If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. @default false */
   keepMounted?: boolean;

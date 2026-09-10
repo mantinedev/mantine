@@ -23,7 +23,13 @@ export interface GaugeChartSection {
   color: MantineColor;
 }
 
-export type GaugeChartStylesNames = 'root' | 'track' | 'section' | 'needle' | 'label';
+export type GaugeChartStylesNames =
+  | 'root'
+  | 'track'
+  | 'section'
+  | 'sectionCap'
+  | 'needle'
+  | 'label';
 
 export type GaugeChartCssVariables = {
   root: '--gauge-size';
@@ -79,7 +85,7 @@ export interface GaugeChartProps
   /** Thickness of the target marker, @default 2 */
   targetSize?: number;
 
-  /** Whether to round arc endpoints. Not applied to `sections` – rounded caps of adjacent sections would overlap each other. @default false */
+  /** Whether to round arc endpoints. With `sections`, only the outer ends of the first and last sections are rounded. @default false */
   roundCaps?: boolean;
 }
 
@@ -286,7 +292,7 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
         const direction = resolvedEndAngle >= startAngle! ? 1 : -1;
         let prevAngle = startAngle!;
 
-        return sortedSections.map((section, index) => {
+        const resolvedSections = sortedSections.map((section) => {
           const sectionEndAngle = valueToAngle(
             section.value,
             min!,
@@ -298,21 +304,47 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
             return null;
           }
           const path = describeArc(cx, cy, r, prevAngle, sectionEndAngle);
-          const resolvedColor = getThemeColor(section.color, theme);
           prevAngle = sectionEndAngle;
-
-          return (
-            <path
-              key={index}
-              {...getStyles('section')}
-              d={path}
-              fill="none"
-              stroke={resolvedColor}
-              strokeWidth={thickness}
-              strokeLinecap="butt"
-            />
-          );
+          return { path, color: getThemeColor(section.color, theme) };
         });
+
+        const visibleSections = resolvedSections.filter((section) => section !== null);
+
+        const capSections =
+          roundCaps && visibleSections.length > 0
+            ? visibleSections.length === 1
+              ? [visibleSections[0]]
+              : [visibleSections[0], visibleSections[visibleSections.length - 1]]
+            : [];
+
+        return (
+          <>
+            {capSections.map((section, index) => (
+              <path
+                key={index}
+                {...getStyles('sectionCap')}
+                d={section.path}
+                fill="none"
+                stroke={section.color}
+                strokeWidth={thickness}
+                strokeLinecap="round"
+              />
+            ))}
+            {resolvedSections.map((section, index) =>
+              section ? (
+                <path
+                  key={index}
+                  {...getStyles('section')}
+                  d={section.path}
+                  fill="none"
+                  stroke={section.color}
+                  strokeWidth={thickness}
+                  strokeLinecap="butt"
+                />
+              ) : null
+            )}
+          </>
+        );
       })()
     ) : (
       <path

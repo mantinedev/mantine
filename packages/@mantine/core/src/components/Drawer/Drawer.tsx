@@ -103,6 +103,7 @@ export const Drawer = factory<DrawerFactory>((_props) => {
         closeOnEscape: isStackActive && closeOnEscape,
         trapFocus: isStackActive && trapFocus,
         zIndex: ctx.getZIndex(resolvedStackId),
+        __handledEscapeEvents: ctx.handledEscapeEvents,
       }
     : {};
 

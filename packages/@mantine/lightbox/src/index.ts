@@ -44,6 +44,7 @@ export type {
   LightboxSlideData,
   LightboxImageSlide,
   LightboxVideoSlide,
+  LightboxRenderThumbPayload,
   LightboxVideoSlideTrack,
   LightboxCustomSlide,
   LightboxLabels,

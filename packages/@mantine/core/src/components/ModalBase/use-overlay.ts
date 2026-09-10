@@ -11,6 +11,7 @@ export interface UseOverlayInput {
   trapFocus?: boolean;
   closeOnEscape?: boolean;
   returnFocus?: boolean;
+  handledEscapeEvents?: WeakSet<KeyboardEvent>;
 }
 
 export interface UseOverlayReturn {
@@ -40,6 +41,7 @@ export function useOverlay({
   closeOnEscape,
   onClose,
   returnFocus,
+  handledEscapeEvents,
 }: UseOverlayInput): UseOverlayReturn {
   const _id = useId(id);
   const [titleMounted, setTitleMounted] = useState(false);
@@ -53,10 +55,19 @@ export function useOverlay({
   useWindowEvent(
     'keydown',
     (event) => {
-      if (event.key === 'Escape' && closeOnEscape && !event.isComposing && opened) {
+      if (
+        event.key === 'Escape' &&
+        closeOnEscape &&
+        !event.isComposing &&
+        opened &&
+        !handledEscapeEvents?.has(event)
+      ) {
         const shouldTrigger =
           (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-        shouldTrigger && onClose();
+        if (shouldTrigger) {
+          handledEscapeEvents?.add(event);
+          onClose();
+        }
       }
     },
     { capture: true }

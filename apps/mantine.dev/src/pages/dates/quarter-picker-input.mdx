@@ -1,0 +1,119 @@
+import { QuarterPickerInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.QuarterPickerInput);
+
+## QuarterPicker props
+
+`QuarterPickerInput` supports most of the [QuarterPicker](/dates/quarter-picker/) props.
+Read through the [QuarterPicker](/dates/quarter-picker/) documentation to learn about all component features that are not listed on this page.
+
+## Usage
+
+The value is a date string in `YYYY-MM-DD` format pointing to the first day of the selected quarter:
+
+<Demo data={QuarterPickerInputDemos.usage} />
+
+## Multiple quarters
+
+Set `type="multiple"` to allow users to pick multiple quarters:
+
+<Demo data={QuarterPickerInputDemos.multiple} />
+
+## Quarters range
+
+Set `type="range"` to allow users to pick a quarters range:
+
+<Demo data={QuarterPickerInputDemos.range} />
+
+## Presets
+
+Use the `presets` prop to add custom quarter presets. Presets are displayed next to the calendar.
+Preset values are normalized to the first day of their quarter before `onChange` is called, so any
+date inside the quarter can be used as a preset value:
+
+<Demo data={QuarterPickerInputDemos.presets} />
+
+To use `presets` with `type="range"`, define the value as a tuple of two dates:
+
+<Demo data={QuarterPickerInputDemos.presetsRange} />
+
+## Open picker in modal
+
+By default, [QuarterPicker](/dates/quarter-picker/) is rendered inside [Popover](/core/popover/).
+You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
+
+<Demo data={QuarterPickerInputDemos.modal} />
+
+## Value format
+
+Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label.
+The default format is `[Q]Q YYYY` (for example, `Q2 2026`); the `Q` token is provided by the
+[advancedFormat plugin](https://day.js.org/docs/en/plugin/advanced-format) that `@mantine/dates` registers:
+
+<Demo data={QuarterPickerInputDemos.valueFormat} />
+
+## Value formatter
+
+`valueFormatter` is a more powerful alternative to the `valueFormat` prop.
+It allows formatting the value label with a custom function.
+The function is the same for all component types (`default`, `multiple` and `range`)
+– you need to perform additional checks inside the function to handle different types.
+
+Example of using a custom formatter function with `type="multiple"`:
+
+<Demo data={QuarterPickerInputDemos.valueFormatter} />
+
+## Clearable
+
+Set the `clearable` prop to display a clear button in the right section. Note that if you set the `rightSection`
+prop, the clear button will not be displayed.
+
+<Demo data={QuarterPickerInputDemos.clearable} />
+
+<ClearSectionMode />
+
+<Demo data={QuarterPickerInputDemos.clearSectionMode} />
+
+## Disabled state
+
+<Demo data={QuarterPickerInputDemos.disabled} />
+
+## Min and max dates
+
+`minDate` and `maxDate` props define the minimum and maximum dates that can be picked.
+Quarters that end before `minDate` or start after `maxDate` are disabled:
+
+<Demo data={QuarterPickerInputDemos.minMax} />
+
+## Max level
+
+`maxLevel` prop allows to set the maximum level that can be reached by clicking on the label in the header.
+
+<Demo data={QuarterPickerInputDemos.maxLevel} />
+
+## Input props
+
+<InputFeatures component="QuarterPickerInput" element="button" />
+
+<Demo data={QuarterPickerInputDemos.configurator} />
+
+## With icon
+
+<Demo data={QuarterPickerInputDemos.icon} />
+
+## Native level select
+
+<Demo data={QuarterPickerInputDemos.nativeLevelSelect} />
+
+<GetElementRef
+  component="QuarterPickerInput"
+  refType="button"
+  package="@mantine/dates"
+/>
+
+<InputAccessibility
+  component="QuarterPickerInput"
+  packageName="@mantine/dates"
+/>
