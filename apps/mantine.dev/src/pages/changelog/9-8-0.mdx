@@ -1,4 +1,4 @@
-import { DiffDemos, EmojiPickerDemos, EmojiPickerInputDemos, EmojiPickerPopoverDemos, MaskedDateInputDemos, PhoneInputDemos } from '@docs/demos';
+import { DiffDemos, EmojiPickerDemos, EmojiPickerInputDemos, EmojiPickerPopoverDemos, MaskedDateInputDemos, PhoneInputDemos, QuarterPickerDemos, QuarterPickerInputDemos, WeekPickerDemos, WeekPickerInputDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -61,3 +61,23 @@ individual masked fields for day, month, and year. It supports configurable fiel
 custom separators, optional time fields, and a calendar dropdown for date selection.
 
 <Demo data={MaskedDateInputDemos.usage} />
+
+## QuarterPicker and QuarterPickerInput components
+
+New [QuarterPicker](/dates/quarter-picker) and [QuarterPickerInput](/dates/quarter-picker-input) components
+allow picking quarters, multiple quarters and quarters ranges. They work the same way as `MonthPicker`
+and `MonthPickerInput`; the value is the first day of the selected quarter in `YYYY-MM-DD` format.
+
+<Demo data={QuarterPickerDemos.usage} />
+
+<Demo data={QuarterPickerInputDemos.usage} />
+
+## WeekPicker and WeekPickerInput components
+
+New [WeekPicker](/dates/week-picker) and [WeekPickerInput](/dates/week-picker-input) components
+allow picking weeks, multiple weeks and weeks ranges. Clicking any day selects the whole week,
+the value is the first day of the week according to `firstDayOfWeek` in `YYYY-MM-DD` format.
+
+<Demo data={WeekPickerDemos.usage} />
+
+<Demo data={WeekPickerInputDemos.usage} />

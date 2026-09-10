@@ -222,6 +222,8 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     withCellSpacing,
     highlightToday,
     withWeekNumbers,
+    __withWeekControls,
+    __getWeekControlProps,
 
     // YearLevelGroup props
     monthsListFormat,
@@ -452,6 +454,8 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           withCellSpacing={withCellSpacing}
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
+          __withWeekControls={__withWeekControls}
+          __getWeekControlProps={__getWeekControlProps}
           withNativeLevelSelect={withNativeLevelSelect}
           yearsSelectRange={yearsSelectRange}
           headerControlsOrder={headerControlsOrder}

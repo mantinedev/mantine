@@ -11,7 +11,15 @@ export type MonthLevelGroupStylesNames = MonthLevelStylesNames | LevelsGroupStyl
 export interface MonthLevelGroupProps
   extends
     BoxProps,
-    Omit<MonthLevelSettings, 'withPrevious' | 'withNext' | '__onDayKeyDown' | '__getDayRef'>,
+    Omit<
+      MonthLevelSettings,
+      | 'withPrevious'
+      | 'withNext'
+      | '__onDayKeyDown'
+      | '__getDayRef'
+      | '__onWeekControlKeyDown'
+      | '__getWeekControlRef'
+    >,
     Omit<StylesApiProps<MonthLevelGroupFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {
   classNames?: Partial<Record<string, string>>;
@@ -72,6 +80,8 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
     withCellSpacing,
     highlightToday,
     withWeekNumbers,
+    __withWeekControls,
+    __getWeekControlProps,
 
     // CalendarHeader settings
     __preventFocus,
@@ -109,6 +119,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
   } = props;
 
   const daysRefs = useRef<HTMLButtonElement[][][]>([]);
+  const weekControlsRefs = useRef<HTMLButtonElement[][][]>([]);
 
   const months = Array(numberOfColumns)
     .fill(0)
@@ -144,6 +155,26 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
             }
 
             daysRefs.current[monthIndex][rowIndex][cellIndex] = node;
+          }}
+          __withWeekControls={__withWeekControls}
+          __getWeekControlProps={__getWeekControlProps}
+          __onWeekControlKeyDown={(event, payload) => {
+            if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+              handleControlKeyDown({
+                levelIndex: monthIndex,
+                rowIndex: payload.rowIndex,
+                cellIndex: 0,
+                event,
+                controlsRef: weekControlsRefs,
+              });
+            }
+          }}
+          __getWeekControlRef={(rowIndex, node) => {
+            if (!Array.isArray(weekControlsRefs.current[monthIndex])) {
+              weekControlsRefs.current[monthIndex] = [];
+            }
+
+            weekControlsRefs.current[monthIndex][rowIndex] = [node];
           }}
           levelControlAriaLabel={
             typeof levelControlAriaLabel === 'function'

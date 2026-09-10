@@ -70,6 +70,30 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     searchTags: 'calendar input, date range input, daterange input, date field',
   },
 
+  WeekPicker: {
+    title: 'WeekPicker',
+    package: '@mantine/dates',
+    slug: '/dates/week-picker',
+    props: ['WeekPicker'],
+    styles: ['WeekPicker'],
+    description: 'Inline week, multiple weeks and weeks range picker',
+    source: '@mantine/dates/src/components/WeekPicker/WeekPicker.tsx',
+    docs: 'dates/week-picker.mdx',
+    searchTags: 'calendar, week range, weeks calendar, week selector, iso week',
+  },
+
+  WeekPickerInput: {
+    title: 'WeekPickerInput',
+    package: '@mantine/dates',
+    slug: '/dates/week-picker-input',
+    props: ['WeekPickerInput'],
+    styles: ['WeekPickerInput'],
+    description: 'Week, multiple weeks and weeks range picker input',
+    source: '@mantine/dates/src/components/WeekPickerInput/WeekPickerInput.tsx',
+    docs: 'dates/week-picker-input.mdx',
+    searchTags: 'calendar input, week range input, week selector input, week field',
+  },
+
   DateTimePicker: {
     title: 'DateTimePicker',
     package: '@mantine/dates',
@@ -115,6 +139,30 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     source: '@mantine/dates/src/components/MonthPickerInput/MonthPickerInput.tsx',
     docs: 'dates/month-picker-input.mdx',
     searchTags: 'calendar input, month range input, month selector input, month field',
+  },
+
+  QuarterPicker: {
+    title: 'QuarterPicker',
+    package: '@mantine/dates',
+    slug: '/dates/quarter-picker',
+    props: ['QuarterPicker'],
+    styles: ['QuarterPicker'],
+    description: 'Inline quarter, multiple quarters and quarters range picker',
+    source: '@mantine/dates/src/components/QuarterPicker/QuarterPicker.tsx',
+    docs: 'dates/quarter-picker.mdx',
+    searchTags: 'calendar, quarter range, quarters calendar, quarter selector, Q1 Q2 Q3 Q4',
+  },
+
+  QuarterPickerInput: {
+    title: 'QuarterPickerInput',
+    package: '@mantine/dates',
+    slug: '/dates/quarter-picker-input',
+    props: ['QuarterPickerInput'],
+    styles: ['QuarterPickerInput'],
+    description: 'Quarter, multiple quarters and quarters range picker input',
+    source: '@mantine/dates/src/components/QuarterPickerInput/QuarterPickerInput.tsx',
+    docs: 'dates/quarter-picker-input.mdx',
+    searchTags: 'calendar input, quarter range input, quarter selector input, quarter field',
   },
 
   TimeInput: {
