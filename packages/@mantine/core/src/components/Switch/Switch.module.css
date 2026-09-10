@@ -121,8 +121,8 @@
 
   &:where([data-with-thumb-indicator])::before {
     content: '';
-    width: calc(var(--switch-thumb-size) * 0.4);
-    height: calc(var(--switch-thumb-size) * 0.4);
+    width: 40%;
+    height: 40%;
     background-color: var(--switch-bg);
     position: absolute;
     border-radius: var(--switch-radius);

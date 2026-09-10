@@ -101,13 +101,13 @@
   @mixin hover {
     box-shadow:
       var(--slider-thumb-shadow),
-      0 0 0 4px var(--slider-thumb-halo);
+      0 0 0 1.5px var(--slider-thumb-halo);
   }
 
   &[data-dragging] {
     box-shadow:
       var(--slider-thumb-shadow),
-      0 0 0 8px var(--slider-thumb-halo-active);
+      0 0 0 3px var(--slider-thumb-halo-active);
   }
 
   :where(.root[data-variant='filled']) & {
