@@ -6,7 +6,6 @@ import {
   createEventHandler,
   createScopedKeydownHandler,
   MantineColor,
-  parseThemeColor,
   polymorphicFactory,
   PolymorphicFactory,
   useDirection,
@@ -15,6 +14,7 @@ import {
 } from '../../../core';
 import { AccordionChevron } from '../../Accordion';
 import { UnstyledButton } from '../../UnstyledButton';
+import { getMenuItemVars } from '../get-menu-item-vars';
 import { useMenuContext } from '../Menu.context';
 import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
@@ -76,9 +76,6 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
   const itemRef = useRef<HTMLButtonElement>(null);
   const _others: any = others;
 
-  const colors = color ? theme.variantColorResolver({ color, theme, variant: 'light' }) : undefined;
-  const parsedThemeColor = color ? parseThemeColor({ color, theme }) : null;
-
   const handleKeydown = createEventHandler<any>(_others.onKeyDown, (event) => {
     if (event.key === 'ArrowRight') {
       subCtx?.open();
@@ -126,7 +123,7 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
       {...referenceProps}
       unstyled={ctx.unstyled}
       tabIndex={ctx.menuItemTabIndex}
-      {...ctx.getStyles('item', { className, style, styles, classNames })}
+      {...ctx.getStyles('item', { className, style, styles, classNames, variant: ctx.variant })}
       ref={useMergedRef(itemRef, ref, subCtx?.setReference)}
       role="menuitem"
       disabled={disabled}
@@ -145,13 +142,7 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
         orientation: 'vertical',
         onKeyDown: handleKeydown,
       })}
-      __vars={{
-        '--menu-item-color':
-          parsedThemeColor?.isThemeColor && parsedThemeColor?.shade === undefined
-            ? `var(--mantine-color-${parsedThemeColor.color}-6)`
-            : colors?.color,
-        '--menu-item-hover': colors?.hover,
-      }}
+      __vars={getMenuItemVars({ theme, color, variant: ctx.variant })}
     >
       {ctx.alignItemsLabels === 'all' && (
         <div {...ctx.getStyles('itemIndicator', { styles, classNames })} data-placeholder />

@@ -8,6 +8,20 @@ export default Layout(MDX_DATA.Menu);
 
 <Demo data={MenuDemos.usage} />
 
+## Filled variant
+
+Set `variant="filled"` to highlight hovered and keyboard-active items with the primary color
+background. Items with `color` prop use their own color for the highlight:
+
+<Demo data={MenuDemos.filled} />
+
+## Item description
+
+Use `description` prop to display a secondary line of text below the `Menu.Item` label.
+Description is not used for type-ahead navigation, only the label is matched:
+
+<Demo data={MenuDemos.description} />
+
 ## Submenus
 
 <Demo data={MenuDemos.sub} demoProps={{ defaultExpanded: false }} />

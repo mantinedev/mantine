@@ -1,5 +1,5 @@
 import { createSafeContext, GetStylesApi } from '../../core';
-import type { MenuFactory } from './Menu';
+import type { MenuFactory, MenuVariant } from './Menu';
 
 export interface MenuContextValue {
   toggleDropdown: () => void;
@@ -23,6 +23,7 @@ export interface MenuContextValue {
   searchExitClearRef: React.RefObject<(() => void) | null>;
   alignItemsLabels: 'all' | 'with-indicators' | 'none';
   checkIcon: React.ReactNode;
+  variant: MenuVariant | undefined;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContextValue>(

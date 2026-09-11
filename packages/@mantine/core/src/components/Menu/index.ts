@@ -1,4 +1,4 @@
-import type { MenuFactory, MenuProps, MenuStylesNames } from './Menu';
+import type { MenuFactory, MenuProps, MenuStylesNames, MenuVariant } from './Menu';
 import type { MenuContextValue } from './Menu.context';
 import type { MenuCheckboxGroupProps } from './MenuCheckboxGroup/MenuCheckboxGroup';
 import type { MenuCheckboxItemProps } from './MenuCheckboxItem/MenuCheckboxItem';
@@ -37,6 +37,7 @@ export { MenuSubTarget } from './MenuSubTarget/MenuSubTarget';
 export type {
   MenuProps,
   MenuStylesNames,
+  MenuVariant,
   MenuFactory,
   MenuDividerProps,
   MenuItemProps,

@@ -99,7 +99,7 @@ export function Usage() {
           <Menu.Item
             leftSection={<MagnifyingGlassIcon size={14} />}
             rightSection={
-              <Text size="xs" c="dimmed">
+              <Text size="xs" opacity={0.6}>
                 ⌘K
               </Text>
             }
@@ -544,6 +544,96 @@ export function NestedSubIgnoresWithinPortal() {
           <Menu.Item>Other</Menu.Item>
         </Menu.Dropdown>
       </Menu>
+    </div>
+  );
+}
+
+export function FilledVariant() {
+  return (
+    <div style={{ padding: 40, display: 'flex', gap: 40 }}>
+      <Menu width={220} shadow="md" variant="filled" position="bottom-start" opened>
+        <Menu.Target>
+          <Button>Filled variant</Button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Label>Application</Menu.Label>
+          <Menu.Item leftSection={<MagnifyingGlassIcon size={14} />}>Settings</Menu.Item>
+          <Menu.Item
+            leftSection={<TableIcon size={14} />}
+            rightSection={
+              <Text size="xs" opacity={0.6}>
+                ⌘K
+              </Text>
+            }
+          >
+            Search
+          </Menu.Item>
+          <Menu.Item disabled>Disabled</Menu.Item>
+          <Menu.Sub>
+            <Menu.Sub.Target>
+              <Menu.Sub.Item>Products</Menu.Sub.Item>
+            </Menu.Sub.Target>
+            <Menu.Sub.Dropdown>
+              <Menu.Item>All products</Menu.Item>
+              <Menu.Item>Categories</Menu.Item>
+            </Menu.Sub.Dropdown>
+          </Menu.Sub>
+          <Menu.Divider />
+          <Menu.Label>Danger zone</Menu.Label>
+          <Menu.CheckboxItem defaultChecked>Confirm before delete</Menu.CheckboxItem>
+          <Menu.Item color="red" leftSection={<TableIcon size={14} />}>
+            Delete my account
+          </Menu.Item>
+          <Menu.Item color="teal.7">Teal shade 7</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </div>
+  );
+}
+
+export function WithDescription() {
+  return (
+    <div style={{ padding: 40, display: 'flex', gap: 300 }}>
+      {(['default', 'filled'] as const).map((variant) => (
+        <Menu
+          key={variant}
+          width={260}
+          shadow="md"
+          variant={variant}
+          position="bottom-start"
+          opened
+        >
+          <Menu.Target>
+            <Button>{variant}</Button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Label>Share</Menu.Label>
+            <Menu.Item
+              leftSection={<MagnifyingGlassIcon size={14} />}
+              description="Anyone with the link can view"
+            >
+              Copy link
+            </Menu.Item>
+            <Menu.Item
+              leftSection={<TableIcon size={14} />}
+              description="Send an email invitation"
+              rightSection={
+                <Text size="xs" opacity={0.6}>
+                  ⌘I
+                </Text>
+              }
+            >
+              Invite people
+            </Menu.Item>
+            <Menu.Item description="No description wrapper on this item">Plain item</Menu.Item>
+            <Menu.Item>Plain item</Menu.Item>
+            <Menu.Divider />
+            <Menu.Item color="red" description="Moves the file to trash">
+              Delete file
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      ))}
     </div>
   );
 }

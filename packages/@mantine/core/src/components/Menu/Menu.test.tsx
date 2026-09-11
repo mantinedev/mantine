@@ -40,6 +40,18 @@ describe('@mantine/core/Menu', () => {
   tests.itHasClasses({ component: Menu });
   tests.itRendersChildren({ component: Menu, props: {} });
 
+  it('adds variant class to items when variant is filled', () => {
+    render(<TestContainer opened variant="filled" />);
+    expect(screen.getByText('test-item-1').closest('[data-menu-item]')).toHaveClass('item--filled');
+  });
+
+  it('does not add variant class to items with default variant', () => {
+    render(<TestContainer opened />);
+    expect(screen.getByText('test-item-1').closest('[data-menu-item]')?.className).not.toContain(
+      'item--'
+    );
+  });
+
   it('calls onOpen and onClose functions when dropdown state changes', async () => {
     const onOpen = jest.fn();
     const onClose = jest.fn();

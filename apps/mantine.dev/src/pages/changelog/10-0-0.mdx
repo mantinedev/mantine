@@ -4,6 +4,7 @@ import {
   ColorPickerDemos,
   DataGridDemos,
   DrawerDemos,
+  MenuDemos,
   ModalDemos,
   NotificationDemos,
   PillsInputDemos,
@@ -236,6 +237,22 @@ indicator under the tab label, `pill-compact` with reduced padding and fully rou
 bordered panel with rounded corners:
 
 <Demo data={TabsDemos.variants} />
+
+## Menu filled variant and item description
+
+[Menu](/core/menu) component now supports `variant="filled"` that highlights hovered and
+keyboard-active items with the primary color background. Items with `color` prop use their own
+color for the highlight:
+
+<Demo data={MenuDemos.filled} />
+
+`Menu.Item` now supports `description` prop to display a secondary line of text below the label:
+
+<Demo data={MenuDemos.description} />
+
+Menu styles were also tuned: item radius is now concentric with the dropdown radius, dividers span
+the full dropdown width, `Menu.Label` uses the text color and sub menu chevrons are dimmed until the
+item is hovered.
 
 ## PillsInput spacing
 

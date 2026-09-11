@@ -6,6 +6,7 @@ const TestContainer = createContextContainer<any>(MenuItem, Menu, { opened: true
 
 const defaultProps: MenuItemProps = {
   children: 'test-menu-item',
+  description: 'test-description',
   leftSection: '$$',
 };
 
@@ -16,7 +17,7 @@ describe('@mantine/core/MenuItem', () => {
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/MenuItem',
-    stylesApiSelectors: ['item', 'itemSection', 'itemLabel'],
+    stylesApiSelectors: ['item', 'itemSection', 'itemLabel', 'itemBody', 'itemDescription'],
     stylesApiName: 'Menu',
     compound: true,
     providerStylesApi: false,
@@ -42,6 +43,30 @@ describe('@mantine/core/MenuItem', () => {
 
     await userEvent.click(screen.getByRole('menuitem'));
     expect(spy).toHaveBeenCalled();
+  });
+
+  it('renders description outside of the type-ahead label', () => {
+    render(<TestContainer {...defaultProps} />);
+    const label = screen.getByText('test-menu-item');
+    expect(label).toHaveAttribute('data-menu-item-label');
+    expect(label).not.toHaveTextContent('test-description');
+    expect(screen.getByText('test-description')).toHaveClass('mantine-Menu-itemDescription');
+    expect(document.querySelector('.mantine-Menu-itemBody')).toContainElement(label);
+  });
+
+  it('keeps an empty type-ahead label for description-only items', () => {
+    const { children, ...withoutChildren } = defaultProps;
+    render(<TestContainer {...withoutChildren} />);
+    const label = document.querySelector('[data-menu-item-label]');
+    expect(label).toBeInTheDocument();
+    expect(label).toHaveTextContent('');
+    expect(screen.getByText('test-description')).toBeInTheDocument();
+  });
+
+  it('does not render item body without description', () => {
+    render(<TestContainer {...defaultProps} description={undefined} />);
+    expect(document.querySelector('.mantine-Menu-itemBody')).not.toBeInTheDocument();
+    expect(screen.getByText('test-menu-item')).toHaveClass('mantine-Menu-itemLabel');
   });
 
   it('renders given leftSection and rightSection', () => {

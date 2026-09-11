@@ -26,7 +26,7 @@ export function DemoMenuItems({ widthRightSection = true, withTarget = true }) {
           <Menu.Item
             leftSection={<MagnifyingGlassIcon size={14} />}
             rightSection={
-              <Text size="xs" c="dimmed">
+              <Text size="xs" opacity={0.6}>
                 ⌘K
               </Text>
             }

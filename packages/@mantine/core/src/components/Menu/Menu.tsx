@@ -32,9 +32,13 @@ import type { MenuSubTargetProps } from './MenuSubTarget/MenuSubTarget';
 import { MenuTarget, type MenuTargetProps } from './MenuTarget/MenuTarget';
 import classes from './Menu.module.css';
 
+export type MenuVariant = 'default' | 'filled';
+
 export type MenuStylesNames =
   | 'item'
   | 'itemLabel'
+  | 'itemBody'
+  | 'itemDescription'
   | 'itemSection'
   | 'itemIndicator'
   | 'label'
@@ -63,7 +67,8 @@ export type MenuFactory = Factory<{
 }>;
 
 export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
-  variant?: string;
+  /** Controls colors of hovered and keyboard-active items, `default` – neutral background, `filled` – primary color background @default 'default' */
+  variant?: MenuVariant;
 
   /** Menu children */
   children?: React.ReactNode;
@@ -276,6 +281,7 @@ export const Menu = factory<MenuFactory>((_props) => {
         searchExitClearRef,
         alignItemsLabels: alignItemsLabels!,
         checkIcon,
+        variant,
       }}
     >
       <Popover

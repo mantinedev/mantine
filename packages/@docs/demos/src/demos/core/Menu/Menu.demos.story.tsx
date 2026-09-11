@@ -102,3 +102,13 @@ export const Demo_contextMenu = {
   name: '⭐ Demo: contextMenu',
   render: renderDemo(demos.contextMenu),
 };
+
+export const Demo_filled = {
+  name: '⭐ Demo: filled',
+  render: renderDemo(demos.filled),
+};
+
+export const Demo_description = {
+  name: '⭐ Demo: description',
+  render: renderDemo(demos.description),
+};

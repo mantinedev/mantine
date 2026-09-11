@@ -17,3 +17,5 @@ export { radioItem } from './Menu.demo.radioItem';
 export { alignItemsLabels } from './Menu.demo.alignItemsLabels';
 export { checkIcon } from './Menu.demo.checkIcon';
 export { contextMenu } from './Menu.demo.contextMenu';
+export { filled } from './Menu.demo.filled';
+export { description } from './Menu.demo.description';

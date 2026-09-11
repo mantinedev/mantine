@@ -1,9 +1,15 @@
 .dropdown {
-  padding: 4px;
+  --menu-dropdown-padding: 4px;
+  --menu-item-radius: max(
+    calc(var(--popover-radius, var(--mantine-radius-default)) - var(--menu-dropdown-padding)),
+    calc(var(--popover-radius, var(--mantine-radius-default)) / 2)
+  );
+
+  padding: var(--menu-dropdown-padding);
 }
 
 .label {
-  color: var(--mantine-color-dimmed);
+  color: var(--mantine-color-text);
   font-weight: var(--mantine-font-weight-medium);
   font-size: var(--mantine-font-size-xs);
   padding: calc(var(--mantine-spacing-xs) / 2) var(--mantine-spacing-sm);
@@ -13,6 +19,7 @@
 .divider {
   margin-top: 4px;
   margin-bottom: 4px;
+  margin-inline: calc(var(--menu-dropdown-padding, 4px) * -1);
   border-top: 1px solid;
   border-color: var(--mantine-color-divider);
 }
@@ -21,7 +28,7 @@
   font-size: var(--mantine-font-size-sm);
   width: 100%;
   padding: calc(var(--mantine-spacing-xs) / 1.5) var(--mantine-spacing-sm);
-  border-radius: var(--popover-radius, var(--mantine-radius-default));
+  border-radius: var(--menu-item-radius, var(--popover-radius, var(--mantine-radius-default)));
   color: var(--menu-item-color, var(--mantine-color-text));
   display: flex;
   align-items: center;
@@ -35,6 +42,11 @@
   &:where(:hover, :focus, [data-menu-active]) {
     &:where(:not(:disabled, [data-disabled])) {
       background-color: var(--menu-item-hover, var(--mantine-color-hover-strong));
+
+      .chevron,
+      .itemDescription {
+        color: inherit;
+      }
     }
   }
 
@@ -43,8 +55,21 @@
   }
 }
 
+.item--filled {
+  &:where(:hover, :focus, [data-menu-active]) {
+    &:where(:not(:disabled, [data-disabled])) {
+      background-color: var(--menu-item-hover, var(--mantine-primary-color-filled));
+      color: var(--menu-item-hover-color, var(--mantine-primary-color-contrast));
+
+      .itemDescription {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
 .search {
-  --menu-search-padding: var(--popover-padding, 4px);
+  --menu-search-padding: var(--menu-dropdown-padding, 4px);
 
   margin-inline: calc(var(--menu-search-padding) * -1);
   margin-top: calc(var(--menu-search-padding) * -1);
@@ -65,6 +90,17 @@
 
 .itemLabel {
   flex: 1;
+}
+
+.itemBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemDescription {
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1.4;
+  color: var(--mantine-color-dimmed);
 }
 
 .itemIndicator {
@@ -92,6 +128,7 @@
 }
 
 .chevron {
+  color: var(--mantine-color-dimmed);
   transform: rotate(-90deg);
 
   @mixin where-rtl {

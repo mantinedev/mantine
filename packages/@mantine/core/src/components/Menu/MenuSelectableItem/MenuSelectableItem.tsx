@@ -4,11 +4,11 @@ import {
   createEventHandler,
   createScopedKeydownHandler,
   MantineColor,
-  parseThemeColor,
   useDirection,
   useMantineTheme,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
+import { getMenuItemVars } from '../get-menu-item-vars';
 import { useMenuContext } from '../Menu.context';
 import { SubMenuContext } from '../MenuSub/MenuSub.context';
 
@@ -87,8 +87,6 @@ export function MenuSelectableItem({
     }
   });
 
-  const colors = color ? theme.variantColorResolver({ color, theme, variant: 'light' }) : undefined;
-  const parsedThemeColor = color ? parseThemeColor({ color, theme }) : null;
   const renderIndicator = ctx.alignItemsLabels !== 'none' || checked;
 
   return (
@@ -97,7 +95,7 @@ export function MenuSelectableItem({
       {...others}
       unstyled={ctx.unstyled}
       tabIndex={ctx.menuItemTabIndex}
-      {...ctx.getStyles('item', { className, style, styles, classNames })}
+      {...ctx.getStyles('item', { className, style, styles, classNames, variant: ctx.variant })}
       ref={useMergedRef(itemRef, buttonRef)}
       role={role}
       aria-checked={checked}
@@ -117,13 +115,7 @@ export function MenuSelectableItem({
         orientation: 'vertical',
         onKeyDown: handleKeydown,
       })}
-      __vars={{
-        '--menu-item-color':
-          parsedThemeColor?.isThemeColor && parsedThemeColor?.shade === undefined
-            ? `var(--mantine-color-${parsedThemeColor.color}-6)`
-            : colors?.color,
-        '--menu-item-hover': colors?.hover,
-      }}
+      __vars={getMenuItemVars({ theme, color, variant: ctx.variant })}
     >
       {renderIndicator && (
         <div

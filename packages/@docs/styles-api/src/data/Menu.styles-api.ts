@@ -9,6 +9,9 @@ export const MenuStylesApi: StylesApiData<MenuFactory> = {
     label: '`Menu.Label` root element',
     item: '`Menu.Item` root element',
     itemLabel: 'Label of `Menu.Item`',
+    itemBody:
+      'Wrapper of `Menu.Item` label and description, rendered only when `description` prop is set',
+    itemDescription: 'Description of `Menu.Item`',
     itemSection: 'Left and right sections of `Menu.Item`',
     itemIndicator: 'Indicator slot of `Menu.CheckboxItem` and `Menu.RadioItem`',
     chevron: 'Sub menu chevron',

@@ -6,7 +6,6 @@ import {
   createEventHandler,
   createScopedKeydownHandler,
   MantineColor,
-  parseThemeColor,
   polymorphicFactory,
   PolymorphicFactory,
   useDirection,
@@ -14,17 +13,27 @@ import {
   useProps,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
+import { getMenuItemVars } from '../get-menu-item-vars';
 import { useMenuContext } from '../Menu.context';
 import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
 
-export type MenuItemStylesNames = 'item' | 'itemLabel' | 'itemSection' | 'itemIndicator';
+export type MenuItemStylesNames =
+  | 'item'
+  | 'itemLabel'
+  | 'itemBody'
+  | 'itemDescription'
+  | 'itemSection'
+  | 'itemIndicator';
 
 export interface MenuItemProps extends BoxProps, CompoundStylesApiProps<MenuItemFactory> {
   'data-disabled'?: boolean;
 
   /** Item label */
   children?: React.ReactNode;
+
+  /** Description displayed below the label */
+  description?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color */
   color?: MantineColor;
@@ -62,6 +71,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
     leftSection,
     rightSection,
     children,
+    description,
     disabled,
     'data-disabled': dataDisabled,
     ref,
@@ -101,9 +111,6 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
     });
   });
 
-  const colors = color ? theme.variantColorResolver({ color, theme, variant: 'light' }) : undefined;
-  const parsedThemeColor = color ? parseThemeColor({ color, theme }) : null;
-
   const handleKeydown = createEventHandler<any>(_others.onKeyDown, (event) => {
     if (event.key === 'ArrowLeft' && subCtx) {
       subCtx.close();
@@ -111,13 +118,19 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
     }
   });
 
+  const label = (children || description) && (
+    <div {...ctx.getStyles('itemLabel', { styles, classNames })} data-menu-item-label>
+      {children}
+    </div>
+  );
+
   return (
     <UnstyledButton
       onMouseDown={(event) => event.preventDefault()}
       {...others}
       unstyled={ctx.unstyled}
       tabIndex={ctx.menuItemTabIndex}
-      {...ctx.getStyles('item', { className, style, styles, classNames })}
+      {...ctx.getStyles('item', { className, style, styles, classNames, variant: ctx.variant })}
       ref={useMergedRef(itemRef, ref)}
       role="menuitem"
       disabled={disabled}
@@ -135,13 +148,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
         orientation: 'vertical',
         onKeyDown: handleKeydown,
       })}
-      __vars={{
-        '--menu-item-color':
-          parsedThemeColor?.isThemeColor && parsedThemeColor?.shade === undefined
-            ? `var(--mantine-color-${parsedThemeColor.color}-6)`
-            : colors?.color,
-        '--menu-item-hover': colors?.hover,
-      }}
+      __vars={getMenuItemVars({ theme, color, variant: ctx.variant })}
     >
       {ctx.alignItemsLabels === 'all' && (
         <div {...ctx.getStyles('itemIndicator', { styles, classNames })} data-placeholder />
@@ -151,10 +158,13 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
           {leftSection}
         </div>
       )}
-      {children && (
-        <div {...ctx.getStyles('itemLabel', { styles, classNames })} data-menu-item-label>
-          {children}
+      {description ? (
+        <div {...ctx.getStyles('itemBody', { styles, classNames })}>
+          {label}
+          <div {...ctx.getStyles('itemDescription', { styles, classNames })}>{description}</div>
         </div>
+      ) : (
+        label
       )}
       {rightSection && (
         <div {...ctx.getStyles('itemSection', { styles, classNames })} data-position="right">
