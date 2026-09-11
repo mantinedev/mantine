@@ -8,6 +8,11 @@ export const Demo_usage = {
   render: renderDemo(demos.usage),
 };
 
+export const Demo_variants = {
+  name: '⭐ Demo: variants',
+  render: renderDemo(demos.variants),
+};
+
 export const Demo_position = {
   name: '⭐ Demo: position',
   render: renderDemo(demos.position),

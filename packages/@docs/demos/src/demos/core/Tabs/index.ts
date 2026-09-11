@@ -1,4 +1,5 @@
 export { usage } from './Tabs.demo.usage';
+export { variants } from './Tabs.demo.variants';
 export { position } from './Tabs.demo.position';
 export { pull } from './Tabs.demo.pull';
 export { inverted } from './Tabs.demo.inverted';

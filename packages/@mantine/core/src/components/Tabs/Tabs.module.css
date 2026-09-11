@@ -20,11 +20,26 @@
   --tab-radius: var(--tabs-radius) var(--tabs-radius) 0 0;
   --tab-border-width: 0 0 var(--tabs-list-border-width) 0;
 
+  --tabs-enclosed-corner: var(--tabs-radius);
+  --tabs-enclosed-radius-ss: var(--tabs-enclosed-corner);
+  --tabs-enclosed-radius-se: var(--tabs-radius);
+  --tabs-enclosed-radius-es: var(--tabs-radius);
+  --tabs-enclosed-radius-ee: var(--tabs-radius);
+
+  &[data-variant='enclosed']:has(
+      > .list:where(:not([data-justify]), [data-justify='flex-start'])
+        > .tab:first-child[data-active]
+    ) {
+    --tabs-enclosed-corner: 0;
+  }
+
   &[data-inverted] {
     --tabs-list-line-bottom: unset;
     --tabs-list-line-top: 0;
     --tab-radius: 0 0 var(--tabs-radius) var(--tabs-radius);
     --tab-border-width: var(--tabs-list-border-width) 0 0 0;
+    --tabs-enclosed-radius-ss: var(--tabs-radius);
+    --tabs-enclosed-radius-es: var(--tabs-enclosed-corner);
 
     & .list--default::before {
       top: 0;
@@ -54,6 +69,8 @@
       --tabs-flex-direction: row-reverse;
       --tabs-list-line-start: 0;
       --tabs-list-line-end: unset;
+      --tabs-enclosed-radius-ss: var(--tabs-radius);
+      --tabs-enclosed-radius-se: var(--tabs-enclosed-corner);
       --tabs-list-border-size: 0 0 0 var(--tabs-list-border-width);
       --tab-border-width: 0 0 0 var(--tabs-list-border-width);
       --tab-radius: 0 var(--tabs-radius) var(--tabs-radius) 0;
@@ -78,6 +95,23 @@
   &[data-variant='pills'] {
     --tabs-list-gap: calc(var(--mantine-spacing-sm) / 2);
     --tab-hover-color: var(--mantine-color-hover);
+  }
+
+  &[data-variant='inset'] {
+    --tabs-list-border-width: 1px;
+  }
+
+  &[data-variant='pill-compact'] {
+    --tabs-list-gap: rem(4px);
+    --tab-hover-color: var(--mantine-color-hover);
+  }
+
+  &[data-variant='contained'] {
+    --tabs-list-gap: rem(4px);
+  }
+
+  &[data-variant='enclosed'] {
+    --tabs-list-border-width: 1px;
   }
 }
 
@@ -180,7 +214,8 @@
 }
 
 /*************************************** outline variant ***************************************/
-.list--outline {
+.list--outline,
+.list--inset {
   position: relative;
 
   &::before {
@@ -196,7 +231,8 @@
   }
 }
 
-.tab--outline {
+.tab--outline,
+.tab--enclosed {
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
   border-inline: 1px solid transparent;
@@ -211,30 +247,6 @@
   --tab-border-inline-start-color: transparent;
 
   &:where([data-active]) {
-    &::before {
-      content: '';
-      position: absolute;
-      background-color: var(--tab-border-color);
-      bottom: var(--tab-before-bottom, rem(-1px));
-      inset-inline-start: var(--tab-before-start, rem(-1px));
-      inset-inline-end: var(--tab-before-end, auto);
-      top: var(--tab-before-top, auto);
-      width: 1px;
-      height: 1px;
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      background-color: var(--tab-border-color);
-      bottom: var(--tab-after-bottom, rem(-1px));
-      inset-inline-end: var(--tab-after-end, rem(-1px));
-      inset-inline-start: var(--tab-after-start, auto);
-      top: var(--tab-after-top, auto);
-      width: 1px;
-      height: 1px;
-    }
-
     border-top-color: var(--tab-border-top-color);
     border-bottom-color: var(--tab-border-bottom-color);
     border-inline-start-color: var(--tab-border-inline-start-color);
@@ -285,6 +297,158 @@
   }
 }
 
+.tab--outline:where([data-active]) {
+  &::before {
+    content: '';
+    position: absolute;
+    background-color: var(--tab-border-color);
+    bottom: var(--tab-before-bottom, rem(-1px));
+    inset-inline-start: var(--tab-before-start, rem(-1px));
+    inset-inline-end: var(--tab-before-end, auto);
+    top: var(--tab-before-top, auto);
+    width: 1px;
+    height: 1px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: var(--tab-border-color);
+    bottom: var(--tab-after-bottom, rem(-1px));
+    inset-inline-end: var(--tab-after-end, rem(-1px));
+    inset-inline-start: var(--tab-after-start, auto);
+    top: var(--tab-after-top, auto);
+    width: 1px;
+    height: 1px;
+  }
+}
+
+/*************************************** enclosed variant ***************************************/
+.list--enclosed {
+  position: relative;
+  z-index: 1;
+  margin-bottom: rem(-1px);
+
+  &:where([data-inverted]) {
+    margin-bottom: 0;
+    margin-top: rem(-1px);
+  }
+
+  &:where([data-orientation='vertical']) {
+    margin-bottom: 0;
+    margin-inline-end: rem(-1px);
+
+    &:where([data-placement='right']) {
+      margin-inline-end: 0;
+      margin-inline-start: rem(-1px);
+    }
+  }
+}
+
+.panel--enclosed {
+  padding: var(--mantine-spacing-md);
+  border: rem(1px) solid var(--tab-border-color);
+  border-start-start-radius: var(--tabs-enclosed-radius-ss);
+  border-start-end-radius: var(--tabs-enclosed-radius-se);
+  border-end-start-radius: var(--tabs-enclosed-radius-es);
+  border-end-end-radius: var(--tabs-enclosed-radius-ee);
+}
+
+/*************************************** inset variant ***************************************/
+.tab--inset {
+  padding-block: rem(14px);
+  color: var(--mantine-color-dimmed);
+  transition: color 100ms ease;
+
+  &:where([data-active]) {
+    color: var(--mantine-color-text);
+
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: var(--tabs-color);
+      inset-inline: var(--mantine-spacing-md);
+      bottom: 0;
+      height: rem(3px);
+      border-start-start-radius: rem(3px);
+      border-start-end-radius: rem(3px);
+    }
+
+    &:where([data-inverted])::after {
+      bottom: auto;
+      top: 0;
+      border-start-start-radius: 0;
+      border-start-end-radius: 0;
+      border-end-start-radius: rem(3px);
+      border-end-end-radius: rem(3px);
+    }
+
+    &:where([data-orientation='vertical'])::after {
+      inset-inline: auto 0;
+      top: var(--mantine-spacing-xs);
+      bottom: var(--mantine-spacing-xs);
+      width: rem(3px);
+      height: auto;
+      border-start-start-radius: rem(3px);
+      border-start-end-radius: 0;
+      border-end-start-radius: rem(3px);
+    }
+
+    &:where([data-orientation='vertical'][data-placement='right'])::after {
+      inset-inline: 0 auto;
+      border-start-start-radius: 0;
+      border-start-end-radius: rem(3px);
+      border-end-start-radius: 0;
+      border-end-end-radius: rem(3px);
+    }
+  }
+
+  @mixin hover {
+    &:where(:not(:disabled, [data-disabled])) {
+      color: var(--mantine-color-text);
+    }
+  }
+}
+
+/*************************************** contained variant ***************************************/
+.list--contained {
+  display: inline-flex;
+  padding: rem(4px);
+  border-radius: var(--tabs-radius);
+  background-color: var(--mantine-color-surface-sunken);
+
+  &:where([data-grow]) {
+    display: flex;
+  }
+
+  &:where([data-orientation='vertical']) {
+    align-self: flex-start;
+  }
+}
+
+.tab--contained {
+  border-radius: max(calc(var(--tabs-radius) - rem(4px)), calc(var(--tabs-radius) / 4));
+  color: var(--mantine-color-subtle-color);
+  transition:
+    color 100ms ease,
+    background-color 100ms ease;
+
+  &:where([data-active]) {
+    color: var(--mantine-color-text);
+    background-color: var(--mantine-color-surface-panel-2);
+
+    @mixin where-light {
+      box-shadow: var(--mantine-shadow-xs);
+    }
+  }
+
+  @mixin hover {
+    &:where(:not(:disabled, [data-disabled], [data-active])) {
+      color: var(--mantine-color-text);
+    }
+  }
+}
+
 /*************************************** pills variant ***************************************/
 .tab--pills {
   border-radius: var(--tabs-radius);
@@ -306,6 +470,37 @@
 
     @mixin hover {
       --tab-bg: var(--tabs-color);
+    }
+  }
+}
+
+/*************************************** pill-compact variant ***************************************/
+.tab--pill-compact {
+  padding: rem(6px) rem(12px);
+  border-radius: var(--tabs-radius);
+  background-color: var(--tab-bg);
+  color: var(--tab-color);
+  transition:
+    color 100ms ease,
+    background-color 100ms ease;
+
+  --tab-bg: transparent;
+  --tab-color: var(--mantine-color-dimmed);
+
+  &:not([data-disabled]) {
+    @mixin hover {
+      --tab-bg: var(--tab-hover-color);
+      --tab-color: var(--mantine-color-text);
+    }
+  }
+
+  &[data-active][data-active] {
+    --tab-bg: var(--tabs-color);
+    --tab-color: var(--tabs-text-color, var(--mantine-color-white));
+
+    @mixin hover {
+      --tab-bg: var(--tabs-color);
+      --tab-color: var(--tabs-text-color, var(--mantine-color-white));
     }
   }
 }

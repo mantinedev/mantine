@@ -55,6 +55,7 @@ export const TabsList = factory<TabsListFactory>((_props) => {
           orientation: ctx.orientation,
           placement: ctx.orientation === 'vertical' && ctx.placement,
           inverted: ctx.inverted,
+          justify,
         },
         mod,
       ]}

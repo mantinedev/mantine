@@ -29,7 +29,14 @@ export type TabsStylesNames =
   | TabsPanelStylesNames
   | TabsTabStylesNames;
 
-export type TabsVariant = 'default' | 'outline' | 'pills';
+export type TabsVariant =
+  | 'default'
+  | 'outline'
+  | 'pills'
+  | 'inset'
+  | 'pill-compact'
+  | 'contained'
+  | 'enclosed';
 export type TabsCssVariables = {
   root: '--tabs-color' | '--tabs-radius';
 };
@@ -69,7 +76,7 @@ export interface TabsProps
   /** Tabs content */
   children?: React.ReactNode;
 
-  /** Changes colors of `Tabs.Tab` components when variant is `pills` or `default`, does nothing for other variants */
+  /** Changes colors of `Tabs.Tab` components when variant is `default`, `pills`, `inset` or `pill-compact`, does nothing for other variants */
   color?: MantineColor;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
@@ -114,15 +121,17 @@ const defaultProps = {
   placement: 'left',
 } satisfies Partial<TabsProps>;
 
-const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color, autoContrast }) => ({
-  root: {
-    '--tabs-radius': getRadius(radius),
-    '--tabs-color': getThemeColor(color, theme),
-    '--tabs-text-color': getAutoContrastValue(autoContrast, theme)
-      ? getContrastColor({ color, theme, autoContrast })
-      : undefined,
-  },
-}));
+const varsResolver = createVarsResolver<TabsFactory>(
+  (theme, { radius, color, autoContrast, variant }) => ({
+    root: {
+      '--tabs-radius': getRadius(radius ?? (variant === 'pill-compact' ? 'xl' : undefined)),
+      '--tabs-color': getThemeColor(color, theme),
+      '--tabs-text-color': getAutoContrastValue(autoContrast, theme)
+        ? getContrastColor({ color, theme, autoContrast })
+        : undefined,
+    },
+  })
+);
 
 export const Tabs = factory<TabsFactory>((_props) => {
   const props = useProps('Tabs', defaultProps, _props);

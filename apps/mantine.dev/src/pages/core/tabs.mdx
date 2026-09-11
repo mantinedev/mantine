@@ -8,6 +8,20 @@ export default Layout(MDX_DATA.Tabs);
 
 <Demo data={TabsDemos.usage} />
 
+## Variants
+
+`Tabs` supports the following `variant` values:
+
+- `default` – tab with an underline in the tabs color, the default variant
+- `outline` – tab with a border that merges with the line under the list
+- `pills` – tab filled with the tabs color
+- `inset` – short rounded indicator under the tab label, inactive tabs are dimmed
+- `pill-compact` – rounded pills with reduced padding, `radius` is `xl` by default
+- `contained` – tabs inside a sunken track, the active tab is raised, the same look as [SegmentedControl](/core/segmented-control), `color` prop is ignored
+- `enclosed` – outline tabs attached to a bordered panel, `Tabs.Panel` has padding and rounded corners, `color` prop is ignored
+
+<Demo data={TabsDemos.variants} />
+
 ## Controlled Tabs
 
 To control the Tabs state, use `value` and `onChange` props:

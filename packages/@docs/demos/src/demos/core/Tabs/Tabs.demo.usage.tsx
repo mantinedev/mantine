@@ -7,6 +7,8 @@ function Wrapper(props: TabsProps) {
   const panelProps =
     props.orientation === 'vertical' ? { [dir === 'rtl' ? 'pr' : 'pl']: 'xs' } : { pt: 'xs' };
 
+  const enclosed = props.variant === 'enclosed';
+
   return (
     <Tabs defaultValue="gallery" {...props}>
       <Tabs.List>
@@ -21,15 +23,15 @@ function Wrapper(props: TabsProps) {
         </Tabs.Tab>
       </Tabs.List>
 
-      <Tabs.Panel value="gallery" {...panelProps}>
+      <Tabs.Panel value="gallery" {...(enclosed ? {} : panelProps)}>
         Gallery tab content
       </Tabs.Panel>
 
-      <Tabs.Panel value="messages" {...panelProps}>
+      <Tabs.Panel value="messages" {...(enclosed ? {} : panelProps)}>
         Messages tab content
       </Tabs.Panel>
 
-      <Tabs.Panel value="settings" {...panelProps}>
+      <Tabs.Panel value="settings" {...(enclosed ? {} : panelProps)}>
         Settings tab content
       </Tabs.Panel>
     </Tabs>
@@ -80,14 +82,10 @@ export const usage: MantineDemo = {
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
     {
       prop: 'variant',
-      type: 'segmented',
+      type: 'select',
       initialValue: 'default',
       libraryValue: 'default',
-      data: [
-        { value: 'default', label: 'Default' },
-        { value: 'outline', label: 'Outline' },
-        { value: 'pills', label: 'Pills' },
-      ],
+      data: ['default', 'outline', 'pills', 'inset', 'pill-compact', 'contained', 'enclosed'],
     },
     { prop: 'radius', type: 'size', initialValue: 'md', libraryValue: 'md' },
     {

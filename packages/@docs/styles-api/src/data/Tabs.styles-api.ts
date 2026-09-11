@@ -14,7 +14,7 @@ export const TabsStylesApi: StylesApiData<TabsFactory> = {
   vars: {
     root: {
       '--tabs-color':
-        'Controls colors of `Tabs.Tab`, only applicable when variant is `pills` or `default`',
+        'Controls colors of `Tabs.Tab`, only applicable when variant is `default`, `pills`, `inset` or `pill-compact`',
       '--tabs-radius': 'Controls `Tabs.Tab` `border-radius`',
     },
   },
@@ -40,6 +40,12 @@ export const TabsStylesApi: StylesApiData<TabsFactory> = {
       modifier: 'data-grow',
       selector: ['list'],
       condition: '`grow` prop is set on `Tabs.List` component',
+    },
+    {
+      modifier: 'data-justify',
+      selector: ['list'],
+      value: 'Value of `justify` prop',
+      condition: '`justify` prop is set on `Tabs.List` component',
     },
     {
       modifier: 'data-position',

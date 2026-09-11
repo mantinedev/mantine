@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { PackageIcon } from '@phosphor-icons/react';
 import { NumberInput, Stack, Text } from '../..';
-import { Tabs, TabsProps } from './Tabs';
+import { Tabs, TabsProps, TabsVariant } from './Tabs';
 
 export default {
   title: 'Tabs',
@@ -189,35 +189,63 @@ export const Grow = () => (
   </Wrapper>
 );
 
+const ALL_VARIANTS: TabsVariant[] = [
+  'default',
+  'outline',
+  'pills',
+  'inset',
+  'pill-compact',
+  'contained',
+  'enclosed',
+];
+
 export const Variants = () => (
   <div style={{ maxWidth: 500, padding: 40 }}>
-    <Wrapper defaultValue="react" variant="default" mt={10} mb={50}>
-      {base}
-    </Wrapper>
+    {ALL_VARIANTS.map((variant) => (
+      <Wrapper key={variant} defaultValue="react" variant={variant} mt={10} mb={50}>
+        {base}
+      </Wrapper>
+    ))}
+  </div>
+);
 
-    <Wrapper defaultValue="react" variant="outline" mt={10} mb={50}>
-      {base}
-    </Wrapper>
+export const NewVariants = () => (
+  <div style={{ maxWidth: 500, padding: 40 }}>
+    {(['inset', 'pill-compact', 'contained', 'enclosed'] as const).map((variant) => (
+      <Wrapper key={variant} defaultValue="react" variant={variant} mt={10} mb={50}>
+        <Tabs.List>
+          <Tabs.Tab value="react" leftSection={<PackageIcon size={16} />}>
+            React
+          </Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
 
-    <Wrapper defaultValue="react" variant="pills" mt={10}>
-      {base}
-    </Wrapper>
+        <Tabs.Panel value="react">React Panel</Tabs.Panel>
+        <Tabs.Panel value="sv">Svelte Panel</Tabs.Panel>
+        <Tabs.Panel value="ng">Angular Panel</Tabs.Panel>
+      </Wrapper>
+    ))}
   </div>
 );
 
 export const VerticalVariants = () => (
   <div style={{ maxWidth: 600, padding: 40 }}>
-    <Wrapper defaultValue="react" orientation="vertical" variant="default" mt={10} mb={50}>
-      {verticalBase}
-    </Wrapper>
-
-    <Wrapper defaultValue="react" orientation="vertical" variant="outline" mt={10} mb={50}>
-      {verticalBase}
-    </Wrapper>
-
-    <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10}>
-      {verticalBase}
-    </Wrapper>
+    {ALL_VARIANTS.map((variant) => (
+      <Wrapper
+        key={variant}
+        defaultValue="react"
+        orientation="vertical"
+        variant={variant}
+        mt={10}
+        mb={50}
+      >
+        {verticalBase}
+      </Wrapper>
+    ))}
   </div>
 );
 
@@ -248,6 +276,19 @@ export const VerticalPlacement = () => (
     <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10} placement="right">
       {verticalBase}
     </Wrapper>
+
+    {(['inset', 'contained', 'enclosed'] as const).map((variant) => (
+      <Wrapper
+        key={variant}
+        defaultValue="react"
+        orientation="vertical"
+        variant={variant}
+        mt={50}
+        placement="right"
+      >
+        {verticalBase}
+      </Wrapper>
+    ))}
   </div>
 );
 
@@ -362,24 +403,28 @@ export function WithActivityStatePreservation() {
 }
 
 export const Inverted = () => (
-  <Wrapper defaultValue="react" variant="outline" inverted>
-    <Tabs.Panel value="react" pb="sm">
-      React Panel
-    </Tabs.Panel>
-    <Tabs.Panel value="sv" pb="sm">
-      Svelte Panel
-    </Tabs.Panel>
-    <Tabs.Panel value="ng" pb="sm">
-      Angular Panel
-    </Tabs.Panel>
+  <>
+    {(['default', 'outline', 'inset', 'enclosed'] as const).map((variant) => (
+      <Wrapper key={variant} defaultValue="react" variant={variant} inverted>
+        <Tabs.Panel value="react" pb={variant === 'enclosed' ? undefined : 'sm'}>
+          React Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="sv" pb={variant === 'enclosed' ? undefined : 'sm'}>
+          Svelte Panel
+        </Tabs.Panel>
+        <Tabs.Panel value="ng" pb={variant === 'enclosed' ? undefined : 'sm'}>
+          Angular Panel
+        </Tabs.Panel>
 
-    <Tabs.List>
-      <Tabs.Tab value="react">React</Tabs.Tab>
-      <Tabs.Tab value="sv">Svelte</Tabs.Tab>
-      <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
-      <Tabs.Tab value="ds" disabled>
-        Disabled
-      </Tabs.Tab>
-    </Tabs.List>
-  </Wrapper>
+        <Tabs.List>
+          <Tabs.Tab value="react">React</Tabs.Tab>
+          <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+          <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+          <Tabs.Tab value="ds" disabled>
+            Disabled
+          </Tabs.Tab>
+        </Tabs.List>
+      </Wrapper>
+    ))}
+  </>
 );

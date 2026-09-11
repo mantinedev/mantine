@@ -68,6 +68,7 @@ export const TabsPanel = factory<TabsPanelFactory>((_props) => {
         styles,
         style: [style, !active ? { display: 'none' } : undefined],
         props,
+        variant: ctx.variant,
       })}
       mod={[{ orientation: ctx.orientation }, mod]}
       role="tabpanel"

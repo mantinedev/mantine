@@ -10,6 +10,7 @@ import {
   SliderDemos,
   StepperDemos,
   SwitchDemos,
+  TabsDemos,
   ThemingDemos,
 } from '@docs/demos';
 import { Code } from '@mantine/core';
@@ -225,6 +226,16 @@ uses the `border` color and fills towards the next step with a transition, and c
 are not reached yet have a hover state:
 
 <Demo data={StepperDemos.usage} />
+
+## Tabs variants
+
+[Tabs](/core/tabs) component now supports four new variants: `inset` with a short rounded
+indicator under the tab label, `pill-compact` with reduced padding and fully rounded pills,
+`contained` with a sunken track and a raised active tab that shares colors with
+[SegmentedControl](/core/segmented-control), and `enclosed` with outline tabs attached to a
+bordered panel with rounded corners:
+
+<Demo data={TabsDemos.variants} />
 
 ## PillsInput spacing
 
