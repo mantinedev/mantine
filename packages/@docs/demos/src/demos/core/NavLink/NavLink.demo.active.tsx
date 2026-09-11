@@ -30,7 +30,10 @@ function Demo() {
       description={item.description}
       rightSection={item.rightSection}
       leftSection={<item.icon size={16} />}
-      onClick={() => setActive(index)}
+      onClick={(event) => {
+        event.preventDefault();
+        setActive(index);
+      }}
       {{props}}
     />
   ));
@@ -61,7 +64,10 @@ function Demo(props: any) {
       description={item.description}
       rightSection={item.rightSection}
       leftSection={<item.icon size={16} />}
-      onClick={() => setActive(index)}
+      onClick={(event) => {
+        event.preventDefault();
+        setActive(index);
+      }}
       {...props}
     />
   ));
@@ -86,6 +92,7 @@ export const active: MantineDemo = {
         { value: 'subtle', label: 'Subtle' },
         { value: 'light', label: 'Light' },
         { value: 'filled', label: 'Filled' },
+        { value: 'rail', label: 'Rail' },
       ],
 
       libraryValue: 'light',

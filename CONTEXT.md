@@ -47,3 +47,9 @@ Mixing a hue into neutral colors. Shipped as a generator function that produces 
 **Role var**:
 A semantic CSS variable (`border`, `dimmed`, `hover`, `track`, `default`) whose value is defined from the neutral scale or a surface token rather than invented independently. `body` → page, `default` → panel, `track` → sunken.
 _Avoid_: semantic token (too broad)
+
+### Designer surface
+
+**Design token**:
+A named theme value that exists identically as a CSS variable in code and a variable in Figma, scheme-aware where its value flips per scheme. Role vars are the semantic subset on the code side; raw ramps and size scales are tokens too.
+_Avoid_: semantic token (too broad), style (Figma's legacy color/text styles)

@@ -3,8 +3,12 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  getRadius,
+  getSize,
   getSpacing,
   MantineColor,
+  MantineRadius,
+  MantineSize,
   MantineSpacing,
   polymorphicFactory,
   PolymorphicFactory,
@@ -26,9 +30,20 @@ export type NavLinkStylesNames =
   | 'chevron'
   | 'collapse'
   | 'children';
-export type NavLinkVariant = 'filled' | 'light' | 'subtle';
+export type NavLinkVariant = 'filled' | 'light' | 'subtle' | 'rail';
 export type NavLinkCssVariables = {
-  root: '--nl-color' | '--nl-bg' | '--nl-hover';
+  root:
+    | '--nl-color'
+    | '--nl-bg'
+    | '--nl-hover'
+    | '--nl-rail-color'
+    | '--nl-radius'
+    | '--nl-fz'
+    | '--nl-description-fz'
+    | '--nl-padding-y'
+    | '--nl-padding-x'
+    | '--nl-section-gap'
+    | '--nl-chevron-size';
   children: '--nl-offset';
 };
 
@@ -51,6 +66,12 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** Key of `theme.colors` or any valid CSS color to control active styles @default theme.primaryColor */
   color?: MantineColor;
 
+  /** Controls font size, padding, sections gap and nested links offset @default 'sm' */
+  size?: MantineSize | (string & {});
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, ignored for `rail` variant @default theme.defaultRadius */
+  radius?: MantineRadius;
+
   /** If set, label and description are truncated with ellipsis instead of wrapping @default false */
   noWrap?: boolean;
 
@@ -69,8 +90,11 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** If set, right section will not be rotated when collapse is opened @default false */
   disableRightSectionRotation?: boolean;
 
-  /** Controls indentation of nested NavLink components, key of `theme.spacing` or any valid CSS value @default 'lg' */
+  /** Controls indentation of nested NavLink components, key of `theme.spacing` or any valid CSS value. By default, nested links are aligned with the parent link label (28px for `size="sm"`). */
   childrenOffset?: MantineSpacing;
+
+  /** If set, a vertical guideline is displayed at the start of nested links @default false */
+  withGuideline?: boolean;
 
   /** If set, disabled styles will be added to the root element @default false */
   disabled?: boolean;
@@ -98,23 +122,35 @@ export type NavLinkFactory = PolymorphicFactory<{
 }>;
 
 const varsResolver = createVarsResolver<NavLinkFactory>(
-  (theme, { variant, color, childrenOffset, autoContrast }) => {
+  (theme, { variant, color, childrenOffset, autoContrast, size, radius }) => {
+    const isRail = variant === 'rail';
     const colors = theme.variantColorResolver({
       color: color || theme.primaryColor,
       theme,
-      variant: variant || 'light',
+      variant: isRail ? 'filled' : variant || 'light',
       autoContrast,
     });
 
     return {
       root: {
-        '--nl-bg': color || variant ? colors.background : undefined,
-        '--nl-hover': color || variant ? colors.hover : undefined,
-        '--nl-color': color || variant ? colors.color : undefined,
+        '--nl-bg': !isRail && (color || variant) ? colors.background : undefined,
+        '--nl-hover': !isRail && (color || variant) ? colors.hover : undefined,
+        '--nl-color': !isRail && (color || variant) ? colors.color : undefined,
+        '--nl-rail-color': isRail && color ? colors.background : undefined,
+        '--nl-radius': getRadius(radius),
+        '--nl-fz': getSize(size, 'nl-fz'),
+        '--nl-description-fz': getSize(size, 'nl-description-fz'),
+        '--nl-padding-y': getSize(size, 'nl-padding-y'),
+        '--nl-padding-x': getSize(size, 'nl-padding-x'),
+        '--nl-section-gap': getSize(size, 'nl-section-gap'),
+        '--nl-chevron-size': getSize(size, 'nl-chevron-size'),
       },
 
       children: {
-        '--nl-offset': getSpacing(childrenOffset),
+        '--nl-offset':
+          childrenOffset === undefined
+            ? getSize(size, 'nl-children-offset')
+            : getSpacing(childrenOffset),
       },
     };
   }
@@ -142,6 +178,10 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
     disableRightSectionRotation,
     noWrap,
     childrenOffset,
+    withGuideline,
+    variant,
+    size,
+    radius,
     autoContrast,
     mod,
     attributes,
@@ -198,6 +238,8 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
           }
         }}
         unstyled={unstyled}
+        size={size}
+        variant={variant}
         mod={[{ disabled, active, expanded: _opened }, mod]}
         {...others}
       >
@@ -224,7 +266,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
               rightSection !== undefined ? (
                 rightSection
               ) : (
-                <AccordionChevron {...getStyles('chevron')} />
+                <AccordionChevron {...getStyles('chevron')} size="var(--nl-chevron-size)" />
               )
             ) : (
               rightSection
@@ -234,7 +276,9 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
       </UnstyledButton>
       {withChildren && (
         <Collapse expanded={_opened} keepMounted={keepMounted} {...getStyles('collapse')}>
-          <div {...getStyles('children')}>{children}</div>
+          <Box {...getStyles('children')} mod={{ 'with-guideline': withGuideline, variant }}>
+            {children}
+          </Box>
         </Collapse>
       )}
     </>

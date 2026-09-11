@@ -24,11 +24,45 @@ You can customize active styles with the `color` and `variant` props:
 
 <Demo data={NavLinkDemos.autoContrast} />
 
+## Rail variant
+
+`variant="rail"` displays a bar in the `color` at the start of the active link over a neutral
+background. It is designed for sidebars in which the active link should read as a position marker
+rather than a highlighted button. Links with `rail` variant always have square corners, `radius` prop
+is ignored:
+
+<Demo data={NavLinkDemos.rail} />
+
+## Size
+
+`size` prop controls font size, padding, gap between sections and the default offset of nested
+links. Icons in `leftSection` and `rightSection` are not scaled automatically, pass an appropriate
+`size` prop to the icon. Nested links labels are aligned with the parent link label when the icon
+size matches the link size: 14px for `xs`, 16px for `sm`, 18px for `md`, 20px for `lg` and 22px for
+`xl`. Icon sizes in the code below change with the selected size:
+
+<Demo data={NavLinkDemos.sizes} />
+
+## Radius
+
+`radius` prop sets `border-radius` of the link, by default `theme.defaultRadius` is used:
+
+<Demo data={NavLinkDemos.radius} />
+
 ## Nested NavLinks
 
-To create nested links, put `NavLink` as children of another `NavLink`:
+To create nested links, put `NavLink` as children of another `NavLink`. By default, nested links
+are offset so that their labels align with the parent link label (28px for `size="sm"`). Use
+`childrenOffset` prop to change the offset:
 
 <Demo data={NavLinkDemos.nested} />
+
+## Guideline
+
+Set `withGuideline` prop to display a vertical guideline at the start of nested links. With
+`rail` variant, the guideline is displayed under the bar of the active link:
+
+<Demo data={NavLinkDemos.guideline} />
 
 <Polymorphic
   defaultElement="a"

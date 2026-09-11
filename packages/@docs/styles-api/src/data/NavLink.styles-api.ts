@@ -18,6 +18,15 @@ export const NavLinkStylesApi: StylesApiData<NavLinkFactory> = {
       '--nl-bg': 'Controls link `background-color`',
       '--nl-color': 'Controls link `color`',
       '--nl-hover': 'Controls link `background-color` when hovered',
+      '--nl-rail-color':
+        'Controls color of the bar and left section icon of active link, `rail` variant only',
+      '--nl-radius': 'Controls link `border-radius`',
+      '--nl-fz': 'Controls label `font-size`',
+      '--nl-description-fz': 'Controls description `font-size`',
+      '--nl-padding-y': 'Controls link vertical padding',
+      '--nl-padding-x': 'Controls link horizontal padding',
+      '--nl-section-gap': 'Controls gap between sections and label',
+      '--nl-chevron-size': 'Controls default chevron size',
     },
 
     children: {
@@ -25,5 +34,14 @@ export const NavLinkStylesApi: StylesApiData<NavLinkFactory> = {
     },
   },
 
-  modifiers: [{ modifier: 'data-active', selector: 'root', condition: '`active` prop is set' }],
+  modifiers: [
+    { modifier: 'data-active', selector: 'root', condition: '`active` prop is set' },
+    { modifier: 'data-variant', selector: 'root', value: 'Value of `variant` prop' },
+    {
+      modifier: 'data-with-guideline',
+      selector: 'children',
+      condition: '`withGuideline` prop is set',
+    },
+    { modifier: 'data-variant', selector: 'children', value: 'Value of `variant` prop' },
+  ],
 };

@@ -5,16 +5,16 @@ import {
   HouseIcon,
   ProhibitIcon,
 } from '@phosphor-icons/react';
-import { Badge, NavLink } from '@mantine/core';
+import { Badge, NavLink, Stack } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Badge, NavLink } from '@mantine/core';
+import { Badge, NavLink, Stack } from '@mantine/core';
 import { HouseIcon, GaugeIcon, CaretRightIcon, HeartbeatIcon, ProhibitIcon } from '@phosphor-icons/react';
 
 function Demo() {
   return (
-    <>
+    <Stack gap={2}>
       <NavLink
         href="#required-for-focus"
         label="With icon"
@@ -73,14 +73,14 @@ function Demo() {
         variant="filled"
         active
       />
-    </>
+    </Stack>
   );
 }
 `;
 
 function Demo() {
   return (
-    <>
+    <Stack gap={2}>
       <NavLink href="#required-for-focus" label="With icon" leftSection={<HouseIcon size={16} />} />
       <NavLink
         href="#required-for-focus"
@@ -127,7 +127,7 @@ function Demo() {
         variant="filled"
         active
       />
-    </>
+    </Stack>
   );
 }
 

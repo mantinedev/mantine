@@ -2,11 +2,57 @@
   --nl-bg: var(--mantine-primary-color-light);
   --nl-hover: var(--mantine-primary-color-light-hover);
   --nl-color: var(--mantine-primary-color-light-color);
+  --nl-rail-color: var(--mantine-primary-color-filled);
+
+  --nl-fz-xs: var(--mantine-font-size-xs);
+  --nl-fz-sm: var(--mantine-font-size-sm);
+  --nl-fz-md: var(--mantine-font-size-md);
+  --nl-fz-lg: var(--mantine-font-size-lg);
+  --nl-fz-xl: var(--mantine-font-size-xl);
+
+  --nl-description-fz-xs: rem(11px);
+  --nl-description-fz-sm: var(--mantine-font-size-xs);
+  --nl-description-fz-md: var(--mantine-font-size-sm);
+  --nl-description-fz-lg: var(--mantine-font-size-md);
+  --nl-description-fz-xl: var(--mantine-font-size-lg);
+
+  --nl-padding-y-xs: rem(6px);
+  --nl-padding-y-sm: rem(8px);
+  --nl-padding-y-md: rem(10px);
+  --nl-padding-y-lg: rem(12px);
+  --nl-padding-y-xl: rem(14px);
+
+  --nl-padding-x-xs: rem(10px);
+  --nl-padding-x-sm: var(--mantine-spacing-sm);
+  --nl-padding-x-md: rem(14px);
+  --nl-padding-x-lg: rem(16px);
+  --nl-padding-x-xl: rem(18px);
+
+  --nl-section-gap-xs: rem(10px);
+  --nl-section-gap-sm: var(--mantine-spacing-sm);
+  --nl-section-gap-md: rem(14px);
+  --nl-section-gap-lg: rem(16px);
+  --nl-section-gap-xl: rem(18px);
+
+  --nl-chevron-size-xs: rem(12px);
+  --nl-chevron-size-sm: rem(14px);
+  --nl-chevron-size-md: rem(16px);
+  --nl-chevron-size-lg: rem(18px);
+  --nl-chevron-size-xl: rem(20px);
+
+  --nl-fz: var(--nl-fz-sm);
+  --nl-description-fz: var(--nl-description-fz-sm);
+  --nl-padding-y: var(--nl-padding-y-sm);
+  --nl-padding-x: var(--nl-padding-x-sm);
+  --nl-section-gap: var(--nl-section-gap-sm);
+  --nl-chevron-size: var(--nl-chevron-size-sm);
 
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 8px var(--mantine-spacing-sm);
+  padding: var(--nl-padding-y) var(--nl-padding-x);
+  border-radius: var(--nl-radius, var(--mantine-radius-default));
+  font-size: var(--nl-fz);
   user-select: none;
 
   @mixin hover {
@@ -31,12 +77,34 @@
       --description-color: var(--nl-color);
     }
   }
+
+  &:where([data-variant='rail']) {
+    --nl-bg: var(--mantine-color-hover);
+    --nl-hover: var(--mantine-color-hover-strong);
+    --nl-color: var(--mantine-color-text);
+
+    border-radius: 0;
+
+    &:where([data-active], [aria-current='page']) {
+      box-shadow: inset rem(2px) 0 0 var(--nl-rail-color);
+
+      @mixin where-rtl {
+        box-shadow: inset rem(-2px) 0 0 var(--nl-rail-color);
+      }
+
+      .description {
+        --description-opacity: 1;
+        --description-color: var(--mantine-color-dimmed);
+      }
+    }
+  }
 }
 
 .section {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--mantine-color-dimmed);
   transition: transform 150ms ease;
 
   & > svg {
@@ -44,20 +112,29 @@
   }
 
   &:where([data-position='left']) {
-    margin-inline-end: var(--mantine-spacing-sm);
+    margin-inline-end: var(--nl-section-gap);
   }
 
   &:where([data-position='right']) {
-    margin-inline-start: var(--mantine-spacing-sm);
+    margin-inline-start: var(--nl-section-gap);
   }
 
   &:where([data-rotate]) {
     transform: rotate(90deg);
   }
+
+  :where(.root:hover, .root[data-disabled], .root[data-active], .root[aria-current='page']) & {
+    color: inherit;
+  }
+
+  :where(.root[data-variant='rail'][data-active], .root[data-variant='rail'][aria-current='page'])
+    &:where([data-position='left']) {
+    color: var(--nl-rail-color);
+  }
 }
 
 .label {
-  font-size: var(--mantine-font-size-sm);
+  font-size: var(--nl-fz);
 }
 
 .body {
@@ -72,7 +149,7 @@
 
 .description {
   display: block;
-  font-size: var(--mantine-font-size-xs);
+  font-size: var(--nl-description-fz);
   opacity: var(--description-opacity, 1);
   color: var(--description-color, var(--mantine-color-dimmed));
   overflow: hidden;
@@ -84,7 +161,31 @@
 }
 
 .children {
-  padding-inline-start: var(--nl-offset, var(--mantine-spacing-lg));
+  --nl-children-offset-xs: rem(24px);
+  --nl-children-offset-sm: rem(28px);
+  --nl-children-offset-md: rem(32px);
+  --nl-children-offset-lg: rem(36px);
+  --nl-children-offset-xl: rem(40px);
+  --nl-offset: var(--nl-children-offset-sm);
+
+  padding-inline-start: var(--nl-offset);
+
+  &:where([data-with-guideline]) {
+    --nl-guideline-offset: calc(var(--nl-offset) - rem(3px));
+
+    background-image: linear-gradient(var(--mantine-color-divider), var(--mantine-color-divider));
+    background-size: rem(1px) 100%;
+    background-repeat: no-repeat;
+    background-position: var(--nl-guideline-offset) 0;
+
+    @mixin where-rtl {
+      background-position: right var(--nl-guideline-offset) top 0;
+    }
+
+    &:where([data-variant='rail']) {
+      --nl-guideline-offset: var(--nl-offset);
+    }
+  }
 }
 
 .chevron {

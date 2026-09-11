@@ -5,6 +5,7 @@ import {
   DataGridDemos,
   DrawerDemos,
   MenuDemos,
+  NavLinkDemos,
   ModalDemos,
   NotificationDemos,
   PillsInputDemos,
@@ -253,6 +254,21 @@ color for the highlight:
 Menu styles were also tuned: item radius is now concentric with the dropdown radius, dividers span
 the full dropdown width, `Menu.Label` uses the text color and sub menu chevrons are dimmed until the
 item is hovered.
+
+## NavLink redesign
+
+[NavLink](/core/nav-link) component styles were tuned: links now have `border-radius` controlled
+by the new `radius` prop (`theme.defaultRadius` by default), icons and chevrons are dimmed until the
+link is hovered or active, and nested links are aligned with the parent link label by default.
+
+New `variant="rail"` displays a bar at the start of the active link over a neutral background.
+`withGuideline` prop displays a vertical guideline at the start of nested links:
+
+<Demo data={NavLinkDemos.rail} />
+
+New `size` prop controls font size, padding, gap between sections and the offset of nested links:
+
+<Demo data={NavLinkDemos.sizes} />
 
 ## PillsInput spacing
 
