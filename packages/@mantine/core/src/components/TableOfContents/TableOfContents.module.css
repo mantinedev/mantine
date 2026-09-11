@@ -1,15 +1,57 @@
 .root {
+  --toc-padding-y-xs: rem(4px);
+  --toc-padding-y-sm: rem(5px);
+  --toc-padding-y-md: rem(6px);
+  --toc-padding-y-lg: rem(7px);
+  --toc-padding-y-xl: rem(8px);
+
+  --toc-padding-x-xs: rem(10px);
+  --toc-padding-x-sm: rem(12px);
+  --toc-padding-x-md: rem(14px);
+  --toc-padding-x-lg: rem(16px);
+  --toc-padding-x-xl: rem(18px);
+
+  --toc-depth-offset-xs: rem(10px);
+  --toc-depth-offset-sm: rem(12px);
+  --toc-depth-offset-md: rem(14px);
+  --toc-depth-offset-lg: rem(16px);
+  --toc-depth-offset-xl: rem(18px);
+
+  --toc-padding-y: var(--toc-padding-y-sm);
+  --toc-padding-x: var(--toc-padding-x-sm);
+  --toc-depth-offset: var(--toc-depth-offset-sm);
+
   display: flex;
   flex-direction: column;
-  --toc-depth-offset: 0.8em;
+
+  &:where([data-with-guideline]) {
+    background-image: linear-gradient(var(--mantine-color-divider), var(--mantine-color-divider));
+    background-size: rem(1px) 100%;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+
+    @mixin where-rtl {
+      background-position: 100% 0;
+    }
+
+    .control:where(:not([data-active])) {
+      box-shadow: inset rem(1px) 0 0 var(--mantine-color-divider);
+
+      @mixin where-rtl {
+        box-shadow: inset rem(-1px) 0 0 var(--mantine-color-divider);
+      }
+    }
+  }
 }
 
 .control {
   display: block;
-  padding: 0.3em 0.8em;
-  font-size: var(--toc-size, var(--mantine-font-size-md));
+  padding: var(--toc-padding-y) var(--toc-padding-x);
+  padding-inline-start: calc(
+    max(var(--depth-offset) - 1, 0) * var(--toc-depth-offset) + var(--toc-padding-x)
+  );
+  font-size: var(--toc-size, var(--mantine-font-size-sm));
   border-radius: var(--toc-radius, var(--mantine-radius-default));
-  padding-left: max(calc(var(--depth-offset) * var(--toc-depth-offset)), 0.8em);
 
   @mixin where-hover {
     &:where(:not([data-variant='none'])) {
@@ -20,5 +62,28 @@
   &:where([data-active]) {
     background-color: var(--toc-bg);
     color: var(--toc-color);
+  }
+
+  &:where([data-variant='rail']) {
+    --toc-bg: var(--mantine-color-hover);
+    --toc-color: var(--mantine-color-text);
+
+    border-radius: 0;
+
+    @mixin where-hover {
+      background-color: var(--mantine-color-hover);
+    }
+
+    &:where([data-active]) {
+      box-shadow: inset rem(2px) 0 0 var(--toc-rail-color, var(--mantine-primary-color-filled));
+
+      @mixin where-rtl {
+        box-shadow: inset rem(-2px) 0 0 var(--toc-rail-color, var(--mantine-primary-color-filled));
+      }
+
+      @mixin where-hover {
+        background-color: var(--mantine-color-hover-strong);
+      }
+    }
   }
 }

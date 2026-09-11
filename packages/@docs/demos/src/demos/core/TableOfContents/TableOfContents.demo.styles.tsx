@@ -19,7 +19,6 @@ import classes from './Demo.module.css';
 function Demo() {
   return (
     <TableOfContents
-      size="sm"
       variant="none"
       classNames={classes}
       minDepthToOffset={0}
@@ -39,7 +38,6 @@ function Demo() {
 function Demo() {
   return (
     <TableOfContents
-      size="sm"
       variant="none"
       classNames={classes}
       minDepthToOffset={0}

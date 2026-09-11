@@ -6,6 +6,7 @@ import {
   DrawerDemos,
   MenuDemos,
   NavLinkDemos,
+  TableOfContentsDemos,
   ModalDemos,
   NotificationDemos,
   PillsInputDemos,
@@ -269,6 +270,16 @@ New `variant="rail"` displays a bar at the start of the active link over a neutr
 New `size` prop controls font size, padding, gap between sections and the offset of nested links:
 
 <Demo data={NavLinkDemos.sizes} />
+
+## TableOfContents rail variant
+
+[TableOfContents](/core/table-of-contents) has a new `rail` variant that displays a bar at the start
+of the active control over a neutral background and a vertical guideline along the list (can be hidden
+with `withGuideline={false}`). It is now the default variant, the previous default was `filled`. Default `size` was changed from `md` to `sm`. Padding and depth offset of controls
+are now defined in px per `size` instead of em values, the depth offset is added to the horizontal
+padding (see [Size](/core/table-of-contents#size) section):
+
+<Demo data={TableOfContentsDemos.usage} />
 
 ## PillsInput spacing
 

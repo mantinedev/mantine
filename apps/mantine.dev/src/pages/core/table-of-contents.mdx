@@ -12,6 +12,35 @@ the scroll position and highlights the current heading in the list.
 
 <Demo data={TableOfContentsDemos.usage} />
 
+## Variants
+
+`TableOfContents` supports the following variants:
+
+- `rail` (default) – displays a bar at the start of the active control over a neutral background, `color` prop controls the bar color, `radius` is ignored
+- `filled` – active control has a filled background with the `color` prop color
+- `light` – active control has a light background with the `color` prop color
+- `none` – active and hover styles are not applied, use [Styles API](/styles/styles-api) to style the active control
+
+With `rail` variant, a vertical guideline is displayed at the start of the list, the bar of the active
+control covers it. Set `withGuideline={false}` to hide the guideline. The prop has no effect
+on other variants.
+
+## Size
+
+`size` prop controls font size, padding and depth offset of controls. Custom string and number
+values change only the font size, padding and depth offset stay the same as for `size="sm"`:
+
+<DataTable
+  head={['size', 'Font size', 'Padding', 'Depth offset']}
+  data={[
+    ['xs', '12px', '4px 10px', '10px'],
+    ['sm', '14px', '5px 12px', '12px'],
+    ['md', '16px', '6px 14px', '14px'],
+    ['lg', '18px', '7px 16px', '16px'],
+    ['xl', '20px', '8px 18px', '18px'],
+  ]}
+/>
+
 ## use-scroll-spy options
 
 `TableOfContents` is based on the [use-scroll-spy](/hooks/use-scroll-spy) hook.
@@ -89,7 +118,8 @@ Use the `minDepthToOffset` prop to set the minimum depth at which offset should 
 By default, `minDepthToOffset` is `1`, which means that first and second level headings
 will not be offset. Set it to `0` to apply offset to all headings.
 
-To control the offset value in px, set the `depthOffset` prop:
+By default, the offset value depends on `size` (`12px` for `size="sm"`) and is multiplied
+by the depth level. To control the offset value in px, set the `depthOffset` prop:
 
 <Demo data={TableOfContentsDemos.depthOffset} />
 

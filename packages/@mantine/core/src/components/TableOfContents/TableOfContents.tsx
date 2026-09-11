@@ -14,6 +14,7 @@ import {
   Factory,
   getFontSize,
   getRadius,
+  getSize,
   MantineColor,
   MantineRadius,
   MantineSize,
@@ -27,9 +28,17 @@ import { UnstyledButton, UnstyledButtonProps } from '../UnstyledButton';
 import classes from './TableOfContents.module.css';
 
 export type TableOfContentsStylesNames = 'root' | 'control';
-export type TableOfContentsVariant = 'filled' | 'light' | 'none';
+export type TableOfContentsVariant = 'rail' | 'filled' | 'light' | 'none';
 export type TableOfContentsCssVariables = {
-  root: '--toc-bg' | '--toc-color' | '--toc-size' | '--toc-depth-offset' | '--toc-radius';
+  root:
+    | '--toc-bg'
+    | '--toc-color'
+    | '--toc-rail-color'
+    | '--toc-size'
+    | '--toc-padding-y'
+    | '--toc-padding-x'
+    | '--toc-depth-offset'
+    | '--toc-radius';
 };
 
 export interface InitialTableOfContentsData {
@@ -53,10 +62,10 @@ export interface TableOfContentsGetControlPropsPayload {
 
 export interface TableOfContentsProps
   extends BoxProps, StylesApiProps<TableOfContentsFactory>, ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color value, controls active control background for `filled` and `light` variants and bar color for `rail` variant @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Controls font-size and padding of all elements @default 'md' */
+  /** Controls font-size, padding and depth offset of controls, custom string and number values change only font-size @default 'sm' */
   size?: MantineSize | (string & {}) | number;
 
   /** If set, adjusts text color based on background color for `filled` variant */
@@ -76,11 +85,17 @@ export interface TableOfContentsProps
   /** Minimum `depth` value that requires offset, `1` by default */
   minDepthToOffset?: number;
 
-  /** Controls padding on the left side of control, multiplied by (`depth` - `minDepthToOffset`), `20px` by default  */
+  /** Offset of nested controls, multiplied by (`depth` - `minDepthToOffset`) and added to the horizontal padding, by default depends on `size` (`12px` for `size="sm"`) */
   depthOffset?: number | string;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, ignored for `rail` variant @default theme.defaultRadius */
   radius?: MantineRadius;
+
+  /** Controls active control styles: `rail` displays a bar at the start of the active control over a neutral background, `filled` and `light` use the corresponding color variant, `none` removes active and hover styles @default 'rail' */
+  variant?: TableOfContentsVariant;
+
+  /** If set, a vertical guideline is displayed at the start of the list, applies only to `rail` variant @default true */
+  withGuideline?: boolean;
 
   /** A function to reinitialize headings from `use-scroll-spy` hook */
   reinitializeRef?: React.RefObject<() => void>;
@@ -95,26 +110,36 @@ export type TableOfContentsFactory = Factory<{
 }>;
 
 const defaultProps = {
+  variant: 'rail',
+  withGuideline: true,
   getControlProps: ({ data }) => ({
     children: data.value,
   }),
 } satisfies Partial<TableOfContentsProps>;
 
+const NAMED_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
+
 const varsResolver = createVarsResolver<TableOfContentsFactory>(
   (theme, { color, size, variant, autoContrast, depthOffset, radius }) => {
+    const isRail = variant === 'rail';
+    const namedSize = typeof size === 'string' && NAMED_SIZES.includes(size) ? size : undefined;
     const colors = theme.variantColorResolver({
       color: color || theme.primaryColor,
       theme,
-      variant: variant || 'filled',
+      variant: isRail ? 'filled' : variant || 'filled',
       autoContrast,
     });
 
     return {
       root: {
-        '--toc-bg': variant !== 'none' ? colors.background : undefined,
-        '--toc-color': variant !== 'none' ? colors.color : undefined,
+        '--toc-bg': !isRail && variant !== 'none' ? colors.background : undefined,
+        '--toc-color': !isRail && variant !== 'none' ? colors.color : undefined,
+        '--toc-rail-color': isRail ? colors.background : undefined,
         '--toc-size': getFontSize(size),
-        '--toc-depth-offset': rem(depthOffset),
+        '--toc-padding-y': getSize(namedSize, 'toc-padding-y'),
+        '--toc-padding-x': getSize(namedSize, 'toc-padding-x'),
+        '--toc-depth-offset':
+          depthOffset === undefined ? getSize(namedSize, 'toc-depth-offset') : rem(depthOffset),
         '--toc-radius': getRadius(radius),
       },
     };
@@ -139,8 +164,10 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props) => {
     depthOffset,
     variant,
     radius,
+    withGuideline,
     reinitializeRef,
     attributes,
+    mod,
     ...others
   } = props;
 
@@ -176,7 +203,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props) => {
     return (
       <UnstyledButton
         key={data.id || `${idBase}-${index}`}
-        __vars={{ '--depth-offset': `${data.depth - (minDepthToOffset || 1)}` }}
+        __vars={{ '--depth-offset': `${data.depth - (minDepthToOffset ?? 1)}` }}
         data-active={index === spy.active || undefined}
         variant={variant}
         {...controlProps}
@@ -189,7 +216,12 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props) => {
   });
 
   return (
-    <Box variant={variant} {...getStyles('root')} {...others}>
+    <Box
+      variant={variant}
+      mod={[{ 'with-guideline': withGuideline && variant === 'rail' }, mod]}
+      {...getStyles('root')}
+      {...others}
+    >
       {controls}
     </Box>
   );
