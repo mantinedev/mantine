@@ -11,8 +11,9 @@
   font-weight: var(--mantine-font-weight-bold);
   font-size: var(--kbd-fz);
   border-radius: var(--mantine-radius-sm);
-  border: 1px solid;
-  border-bottom-width: 3px;
+  border-width: 1px 1px 3px;
+  border-style: solid;
+  border-color: currentColor;
   unicode-bidi: embed;
   text-align: center;
   padding: 0.12em 0.45em;
