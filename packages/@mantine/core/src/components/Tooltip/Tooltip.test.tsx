@@ -39,24 +39,24 @@ describe('@mantine/core/Tooltip', () => {
     expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
   });
 
-  it('does not set data-interactive attribute by default', () => {
+  it('does not set data-hoverable attribute by default', () => {
     render(<Tooltip {...defaultProps} />);
-    expect(screen.getByRole('tooltip')).not.toHaveAttribute('data-interactive');
+    expect(screen.getByRole('tooltip')).not.toHaveAttribute('data-hoverable');
   });
 
-  it('sets data-interactive attribute when tooltip is opened with interactive prop', () => {
-    render(<Tooltip {...defaultProps} interactive />);
-    expect(screen.getByRole('tooltip')).toHaveAttribute('data-interactive');
+  it('sets data-hoverable attribute when tooltip is opened with hoverable prop', () => {
+    render(<Tooltip {...defaultProps} hoverable />);
+    expect(screen.getByRole('tooltip')).toHaveAttribute('data-hoverable');
   });
 
-  it('does not set data-interactive attribute on a hidden tooltip with keepMounted prop', () => {
-    render(<Tooltip {...defaultProps} interactive opened={false} keepMounted />);
-    expect(screen.getByRole('tooltip', { hidden: true })).not.toHaveAttribute('data-interactive');
+  it('does not set data-hoverable attribute on a hidden tooltip with keepMounted prop', () => {
+    render(<Tooltip {...defaultProps} hoverable opened={false} keepMounted />);
+    expect(screen.getByRole('tooltip', { hidden: true })).not.toHaveAttribute('data-hoverable');
   });
 
-  it('does not set data-interactive attribute on a disabled tooltip', () => {
-    render(<Tooltip {...defaultProps} interactive disabled keepMounted />);
-    expect(screen.getByRole('tooltip', { hidden: true })).not.toHaveAttribute('data-interactive');
+  it('does not set data-hoverable attribute on a disabled tooltip', () => {
+    render(<Tooltip {...defaultProps} hoverable disabled keepMounted />);
+    expect(screen.getByRole('tooltip', { hidden: true })).not.toHaveAttribute('data-hoverable');
   });
 
   it('exposes TooltipGroup and TooltipFloating as static properties', () => {
