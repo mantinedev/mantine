@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { autoPatchWarn, render, tests } from '@mantine-tests/core';
 import { BubbleChart, BubbleChartProps, BubbleChartStylesNames } from './BubbleChart';
 
 const defaultProps: BubbleChartProps = {
@@ -16,5 +16,13 @@ describe('@mantine/charts/BubbleChart', () => {
     varsResolver: true,
     displayName: '@mantine/charts/BubbleChart',
     stylesApiSelectors: ['root'],
+  });
+
+  it('does not pass textColor and gridColor props to the root element', () => {
+    const { container } = render(
+      <BubbleChart {...defaultProps} textColor="red" gridColor="blue" />
+    );
+    expect(container.querySelector('[textcolor]')).not.toBeInTheDocument();
+    expect(container.querySelector('[gridcolor]')).not.toBeInTheDocument();
   });
 });
