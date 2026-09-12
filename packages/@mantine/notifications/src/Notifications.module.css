@@ -38,7 +38,7 @@
 }
 
 .notification {
-  & + & {
+  &:where(& + &) {
     margin-top: var(--mantine-spacing-md);
   }
 
