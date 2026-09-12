@@ -428,7 +428,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
         <div>
           <Text {...getStyles('mobileMonthViewEventTitle')}>{event.title}</Text>
           <Text {...getStyles('mobileMonthViewEventTime')}>
-            {isAllDay ? 'All day' : `${startTime} – ${endTime}`}
+            {isAllDay ? getLabel('allDay', labels) : `${startTime} – ${endTime}`}
           </Text>
         </div>
       </Box>
