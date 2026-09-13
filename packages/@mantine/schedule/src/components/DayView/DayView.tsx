@@ -82,6 +82,7 @@ export type DayViewStylesNames =
   | 'dayViewSlotLabel'
   | 'dayViewSlotLabels'
   | 'dayViewBackgroundEvent'
+  | 'dayViewBackgroundEventResizeHandle'
   | 'dayViewDragPreview'
   | MoreEventsStylesNames
   | ScheduleEventStylesNames
@@ -229,7 +230,7 @@ export interface DayViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
   withInteractiveBackgroundEvents?: boolean;
 
   /** If set, enables drag-to-select time slot ranges @default false */
@@ -613,6 +614,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
+    withBackgroundEvents: withInteractiveBackgroundEvents,
   });
 
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
@@ -803,26 +805,59 @@ export const DayView = factory<DayViewFactory>((_props) => {
     />
   ));
 
-  const backgroundTimedEventNodes = eventsData.backgroundTimedEvents.map((event) => (
-    <ScheduleBackgroundEvent
-      key={event.id}
-      event={event}
-      renderEvent={renderEvent}
-      renderEventBody={renderEventBody}
-      interactive={interactiveBackgroundEvents}
-      onEventClick={onEventClick}
-      {...getStyles('dayViewBackgroundEvent', {
-        style: {
-          ...getTimeAxisEventStyle({
-            start: event.position.top,
-            span: event.position.height,
-            axis: 'vertical',
-          }),
-          width: '100%',
-        },
-      })}
-    />
-  ));
+  const backgroundTimedEventNodes = eventsData.backgroundTimedEvents.map((event) => {
+    const isResizable = eventResize.isResizableEvent(event);
+    const resizePosition = eventResize.getResizePosition(event.id);
+
+    return (
+      <ScheduleBackgroundEvent<'top' | 'bottom'>
+        key={event.id}
+        event={event}
+        renderEvent={renderEvent}
+        renderEventBody={renderEventBody}
+        interactive={interactiveBackgroundEvents}
+        onEventClick={
+          onEventClick
+            ? (clickedEvent, e) => {
+                if (!eventResize.wasResizing()) {
+                  onEventClick(clickedEvent, e);
+                }
+              }
+            : undefined
+        }
+        withResize={isResizable}
+        isResizing={resizePosition !== null}
+        resizeHandleProps={getStyles('dayViewBackgroundEventResizeHandle')}
+        onResizeStart={
+          isResizable
+            ? (edge, e) => {
+                if (timeSlotsContainerRef.current) {
+                  eventResize.handleResizeStart({
+                    event,
+                    edge,
+                    container: timeSlotsContainerRef.current,
+                    originalTop: event.position.top,
+                    originalHeight: event.position.height,
+                    eventDate: dayjs(date).format('YYYY-MM-DD'),
+                    pointerEvent: e,
+                  });
+                }
+              }
+            : undefined
+        }
+        {...getStyles('dayViewBackgroundEvent', {
+          style: {
+            ...getTimeAxisEventStyle({
+              start: resizePosition ? resizePosition.top : event.position.top,
+              span: resizePosition ? resizePosition.height : event.position.height,
+              axis: 'vertical',
+            }),
+            width: '100%',
+          },
+        })}
+      />
+    );
+  });
 
   const content = (
     <Box

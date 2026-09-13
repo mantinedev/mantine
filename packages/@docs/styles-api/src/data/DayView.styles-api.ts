@@ -14,6 +14,7 @@ export const DayViewStylesApi: StylesApiData<DayViewFactory> = {
     dayViewSlotLabel: 'Time slot label element',
     dayViewSlotLabels: 'Container for all slot labels',
     dayViewBackgroundEvent: 'Background event element',
+    dayViewBackgroundEventResizeHandle: 'Resize handle of an interactive background event',
     dayViewDragPreview: 'Ghost preview shown at the snapped position while dragging an event',
     header: 'Header container, part of ScheduleHeader',
     headerControl: 'Header control element, part of ScheduleHeader',

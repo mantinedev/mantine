@@ -93,6 +93,7 @@ export type WeekViewStylesNames =
   | 'weekViewWeekLabel'
   | 'weekViewWeekNumber'
   | 'weekViewBackgroundEvent'
+  | 'weekViewBackgroundEventResizeHandle'
   | 'weekViewDragPreview'
   | CurrentTimeIndicatorStylesNames
   | CombinedScheduleHeaderStylesNames
@@ -256,7 +257,7 @@ export interface WeekViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
   withInteractiveBackgroundEvents?: boolean;
 
   /** If set, enables drag-to-select time slot ranges @default false */
@@ -598,6 +599,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
+    withBackgroundEvents: withInteractiveBackgroundEvents,
   });
 
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
@@ -851,23 +853,58 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
     const backgroundEventNodes = allBgEvents
       .filter((event) => !event.position.allDay)
-      .map((event) => (
-        <ScheduleBackgroundEvent
-          key={`bg-${event.id}`}
-          event={event}
-          renderEvent={renderEvent}
-          renderEventBody={renderEventBody}
-          interactive={interactiveBackgroundEvents}
-          onEventClick={onEventClick}
-          {...getStyles('weekViewBackgroundEvent', {
-            style: {
-              top: `${event.position.top}%`,
-              height: `${event.position.height}%`,
-              width: '100%',
-            },
-          })}
-        />
-      ));
+      .map((event) => {
+        const eventDate = dayjs(day).format('YYYY-MM-DD');
+        const isResizable = eventResize.isResizableEvent(event);
+        const resizePosition = eventResize.getResizePosition(event.id, eventDate);
+
+        return (
+          <ScheduleBackgroundEvent<'top' | 'bottom'>
+            key={`bg-${event.id}`}
+            event={event}
+            renderEvent={renderEvent}
+            renderEventBody={renderEventBody}
+            interactive={interactiveBackgroundEvents}
+            onEventClick={
+              onEventClick
+                ? (clickedEvent, e) => {
+                    if (!eventResize.wasResizing()) {
+                      onEventClick(clickedEvent, e);
+                    }
+                  }
+                : undefined
+            }
+            withResize={isResizable}
+            isResizing={resizePosition !== null}
+            resizeHandleProps={getStyles('weekViewBackgroundEventResizeHandle')}
+            onResizeStart={
+              isResizable
+                ? (edge, e) => {
+                    const container = daySlotsContainersRef.current[dayIndex];
+                    if (container) {
+                      eventResize.handleResizeStart({
+                        event,
+                        edge,
+                        container,
+                        originalTop: event.position.top,
+                        originalHeight: event.position.height,
+                        eventDate,
+                        pointerEvent: e,
+                      });
+                    }
+                  }
+                : undefined
+            }
+            {...getStyles('weekViewBackgroundEvent', {
+              style: {
+                top: `${resizePosition ? resizePosition.top : event.position.top}%`,
+                height: `${resizePosition ? resizePosition.height : event.position.height}%`,
+                width: '100%',
+              },
+            })}
+          />
+        );
+      });
 
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
       const eventIsAllDay = isAllDayEvent({ event, date: day });

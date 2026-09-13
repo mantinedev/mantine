@@ -31,6 +31,7 @@ import {
   DateLabelFormat,
   DateStringValue,
   DateTimeStringValue,
+  DayPositionedEventData,
   ScheduleEventData,
   ScheduleMode,
   ScheduleResourceData,
@@ -242,7 +243,7 @@ export interface ResourcesDayViewProps
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
   withInteractiveBackgroundEvents?: boolean;
 
   /** If set, enables drag-to-select time slot ranges @default false */
@@ -568,6 +569,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
+    withBackgroundEvents: withInteractiveBackgroundEvents,
   });
 
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
@@ -736,29 +738,69 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   const interactiveBackgroundEvents = withInteractiveBackgroundEvents && mode !== 'static';
 
   const rows = orderedResources.map((resource, resourceIndex) => {
-    const allBgEvents = [
-      ...(resourceEvents.backgroundTimedEvents[resource.id] || []),
-      ...(resourceEvents.backgroundAllDayEvents[resource.id] || []),
-    ];
+    const renderBackgroundEvent = (event: DayPositionedEventData, allDay: boolean) => {
+      const isResizable = !allDay && eventResize.isResizableEvent(event);
+      const resizePosition = eventResize.getResizePosition(event.id);
 
-    const backgroundEventNodes = allBgEvents.map((event) => (
-      <ScheduleBackgroundEvent
-        key={`bg-${event.id}`}
-        event={event}
-        renderEvent={renderEvent}
-        renderEventBody={renderEventBody}
-        interactive={interactiveBackgroundEvents}
-        onEventClick={onEventClick}
-        {...getStyles('resourcesDayViewBackgroundEvent', {
-          style: {
-            left: `${event.position.top}%`,
-            width: `${event.position.height}%`,
-            top: 0,
-            height: '100%',
-          },
-        })}
-      />
-    ));
+      return (
+        <ScheduleBackgroundEvent<'start' | 'end'>
+          key={`bg-${event.id}`}
+          event={event}
+          renderEvent={renderEvent}
+          renderEventBody={renderEventBody}
+          interactive={interactiveBackgroundEvents}
+          onEventClick={
+            onEventClick
+              ? (clickedEvent, e) => {
+                  if (!eventResize.wasResizing()) {
+                    onEventClick(clickedEvent, e);
+                  }
+                }
+              : undefined
+          }
+          withResize={isResizable}
+          isResizing={resizePosition !== null}
+          activeResizeEdge={eventResize.resizingEdge}
+          resizeAxis="horizontal"
+          resizeHandleProps={getStyles('resourcesDayViewResizeHandle')}
+          onResizeStart={
+            isResizable
+              ? (edge, e) => {
+                  const container = rowSlotsContainersRef.current[resourceIndex];
+                  if (container) {
+                    eventResize.handleResizeStart({
+                      event,
+                      edge,
+                      container,
+                      originalLeft: event.position.top,
+                      originalWidth: event.position.height,
+                      eventDate: dateStr,
+                      pointerEvent: e,
+                    });
+                  }
+                }
+              : undefined
+          }
+          {...getStyles('resourcesDayViewBackgroundEvent', {
+            style: {
+              left: `${resizePosition ? resizePosition.left : event.position.top}%`,
+              width: `${resizePosition ? resizePosition.width : event.position.height}%`,
+              top: 0,
+              height: '100%',
+            },
+          })}
+        />
+      );
+    };
+
+    const backgroundEventNodes = [
+      ...(resourceEvents.backgroundTimedEvents[resource.id] || []).map((event) =>
+        renderBackgroundEvent(event, false)
+      ),
+      ...(resourceEvents.backgroundAllDayEvents[resource.id] || []).map((event) =>
+        renderBackgroundEvent(event, true)
+      ),
+    ];
 
     const allRegularEvents = (resourceEvents.regularEvents[resource.id] || []).filter(
       (event) => !isAllDayEvent({ event, date })

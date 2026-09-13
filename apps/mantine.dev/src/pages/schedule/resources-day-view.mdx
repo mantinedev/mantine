@@ -28,10 +28,29 @@ background event calls `onEventClick` with the event object, the same as for reg
 use `event.display === 'background'` to tell them apart in the handler.
 
 Note that an interactive background event covers the time slots underneath it: clicks and
-drag-to-select in its range go to the event instead of the grid. Background events still
-cannot be dragged or resized.
+drag-to-select in its range go to the event instead of the grid. Interactive background
+events still cannot be dragged.
 
 <Demo data={ResourcesDayViewDemos.interactiveBackgroundEvents} />
+
+## Resizable background events
+
+When `withEventResize` is set together with `withInteractiveBackgroundEvents`, background
+events render resize handles on their start and end edges. Dragging a handle calls
+`onEventResize` with the background event, the same way it does for regular events – use
+`event.display === 'background'` to tell them apart in the handler.
+
+All-day background events are never resizable. To keep background events fixed while
+regular events stay resizable, return `false` from `canResizeEvent`:
+
+```tsx
+<ResourcesDayView
+  withEventResize
+  withInteractiveBackgroundEvents
+  canResizeEvent={(event) => event.display !== 'background'}
+/>
+```
+
 
 ## Time range and intervals
 

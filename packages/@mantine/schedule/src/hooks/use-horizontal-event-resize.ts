@@ -37,6 +37,7 @@ export interface UseHorizontalEventResizeInput {
     event: ScheduleEventData;
   }) => void;
   canResizeEvent?: (event: ScheduleEventData) => boolean;
+  withBackgroundEvents?: boolean;
 }
 
 export function useHorizontalEventResize({
@@ -48,6 +49,7 @@ export function useHorizontalEventResize({
   resizeIntervalMinutes,
   onEventResize,
   canResizeEvent,
+  withBackgroundEvents = false,
 }: UseHorizontalEventResizeInput) {
   const [resizeState, setResizeState] = useState<ResizeState | null>(null);
   const resizeRef = useRef<ResizeState | null>(null);
@@ -253,8 +255,11 @@ export function useHorizontalEventResize({
   }, [isResizing]);
 
   const getResizePosition = useCallback(
-    (eventId: string | number) => {
+    (eventId: string | number, eventDate?: string) => {
       if (!resizeState || resizeState.eventId !== eventId) {
+        return null;
+      }
+      if (eventDate !== undefined && resizeState.eventDate !== eventDate) {
         return null;
       }
       return { left: resizeState.currentLeft, width: resizeState.currentWidth };
@@ -264,12 +269,15 @@ export function useHorizontalEventResize({
 
   const isResizableEvent = useCallback(
     (event: ScheduleEventData) => {
-      if (!enabled || mode === 'static' || event.display === 'background') {
+      if (!enabled || mode === 'static') {
+        return false;
+      }
+      if (event.display === 'background' && !withBackgroundEvents) {
         return false;
       }
       return canResizeEvent ? canResizeEvent(event) : true;
     },
-    [enabled, mode, canResizeEvent]
+    [enabled, mode, canResizeEvent, withBackgroundEvents]
   );
 
   const wasResizing = useCallback(() => justResizedRef.current, []);

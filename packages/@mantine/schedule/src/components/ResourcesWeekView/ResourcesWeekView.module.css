@@ -336,6 +336,13 @@
       background-color: var(--bg-event-hover);
     }
   }
+
+  /* The resized edge repeatedly crosses the pointer, so hover feedback would flicker */
+  &:where([data-resizing]) {
+    @mixin hover {
+      background-color: var(--bg-event-bg);
+    }
+  }
 }
 
 .resourcesWeekViewAllDayEvent {
@@ -398,9 +405,47 @@
   pointer-events: none;
 }
 
+/* The resizing background event is the one that set `data-event-interaction`, so it must
+   keep capturing pointer events. */
 .resourcesWeekView:where([data-event-interaction], [data-slot-dragging])
-  .resourcesWeekViewBackgroundEvent {
+  .resourcesWeekViewBackgroundEvent:not([data-resizing]) {
   pointer-events: none;
+
+  & .resourcesWeekViewResizeHandle {
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+.resourcesWeekViewBackgroundEvent {
+  & .resourcesWeekViewResizeHandle {
+    background-color: var(--bg-event-color);
+
+    &:where([data-edge='start']) {
+      left: 0;
+    }
+
+    &:where([data-edge='end']) {
+      right: 0;
+    }
+  }
+
+  &:hover .resourcesWeekViewResizeHandle {
+    opacity: 0.5;
+  }
+
+  & .resourcesWeekViewResizeHandle:hover {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourcesWeekViewResizeHandle:where([data-active]) {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourcesWeekViewResizeHandle:not([data-active]) {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .resourcesWeekView:where([data-resizing]) {

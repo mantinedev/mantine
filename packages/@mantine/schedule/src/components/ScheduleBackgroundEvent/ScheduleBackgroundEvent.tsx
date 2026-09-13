@@ -10,7 +10,17 @@ import {
 import { ScheduleEventData } from '../../types';
 import { RenderEvent, RenderEventBody } from '../ScheduleEvent/ScheduleEvent';
 
-export interface ScheduleBackgroundEventProps extends BoxProps, ElementProps<'div', 'onClick'> {
+export type ScheduleBackgroundEventResizeEdge = 'top' | 'bottom' | 'start' | 'end';
+
+const RESIZE_EDGES = {
+  vertical: ['top', 'bottom'],
+  horizontal: ['start', 'end'],
+} satisfies Record<string, ScheduleBackgroundEventResizeEdge[]>;
+
+export interface ScheduleBackgroundEventProps<
+  Edge extends ScheduleBackgroundEventResizeEdge = ScheduleBackgroundEventResizeEdge,
+>
+  extends BoxProps, ElementProps<'div', 'onClick'> {
   /** Background event to display */
   event: ScheduleEventData;
 
@@ -25,11 +35,44 @@ export interface ScheduleBackgroundEventProps extends BoxProps, ElementProps<'di
 
   /** Function to customize event body */
   renderEventBody?: RenderEventBody;
+
+  /** If set, the event renders resize handles on both of its edges @default false */
+  withResize?: boolean;
+
+  /** Axis along which the event is resized, defines which edges render handles @default 'vertical' */
+  resizeAxis?: 'vertical' | 'horizontal';
+
+  /** Props passed down to both resize handles, usually a styles api props object */
+  resizeHandleProps?: Record<string, any>;
+
+  /** Called when resize starts on an edge */
+  onResizeStart?: (edge: Edge, e: React.PointerEvent) => void;
+
+  /** If set, the event is currently being resized @default false */
+  isResizing?: boolean;
+
+  /** Edge that is currently being dragged, only relevant when `isResizing` is set */
+  activeResizeEdge?: Edge | null;
 }
 
-export function ScheduleBackgroundEvent(props: ScheduleBackgroundEventProps) {
-  const { event, interactive, onEventClick, renderEvent, renderEventBody, mod, ...others } =
-    useProps('ScheduleBackgroundEvent', null, props);
+export function ScheduleBackgroundEvent<
+  Edge extends ScheduleBackgroundEventResizeEdge = ScheduleBackgroundEventResizeEdge,
+>(props: ScheduleBackgroundEventProps<Edge>) {
+  const {
+    event,
+    interactive,
+    onEventClick,
+    renderEvent,
+    renderEventBody,
+    mod,
+    withResize,
+    resizeAxis = 'vertical',
+    resizeHandleProps,
+    onResizeStart,
+    isResizing,
+    activeResizeEdge,
+    ...others
+  } = useProps('ScheduleBackgroundEvent', null, props);
 
   const theme = useMantineTheme();
 
@@ -68,6 +111,26 @@ export function ScheduleBackgroundEvent(props: ScheduleBackgroundEventProps) {
     autoContrast: true,
   });
 
+  // Handles are part of the children rather than a wrapper so that `renderEvent` consumers
+  // keep them – the same contract `ScheduleEvent` uses for its own resize handles.
+  const body = typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
+  const children = withResize ? (
+    <>
+      {(RESIZE_EDGES[resizeAxis] as Edge[]).map((edge) => (
+        <Box
+          key={edge}
+          {...resizeHandleProps}
+          mod={{ edge }}
+          data-active={(isResizing && activeResizeEdge === edge) || undefined}
+          onPointerDown={(e: React.PointerEvent) => onResizeStart?.(edge, e)}
+        />
+      ))}
+      {body}
+    </>
+  ) : (
+    body
+  );
+
   const eventProps = {
     ...others,
     __vars: {
@@ -75,10 +138,10 @@ export function ScheduleBackgroundEvent(props: ScheduleBackgroundEventProps) {
       '--bg-event-color': colors.color,
       '--bg-event-hover': colors.hover,
     },
-    children: typeof renderEventBody === 'function' ? renderEventBody(event) : event.title,
+    children,
     // Composed rather than replaced – `mod` is a public prop, and overwriting it would
     // silently drop the caller's data modifiers whenever `interactive` is set.
-    mod: interactive ? [mod, { interactive: true }] : mod,
+    mod: [mod, { interactive, resizable: withResize, resizing: isResizing }],
     ...(interactive
       ? {
           'data-event-id': event.id,

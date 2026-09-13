@@ -193,7 +193,7 @@ export interface ResourcesScheduleProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Applies to `day` and `week` views only – `ResourcesMonthView` does not render background events separately. @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Applies to `day` and `week` views only – `ResourcesMonthView` does not render background events separately. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
   withInteractiveBackgroundEvents?: boolean;
 
   /** Max number of generated recurring instances @default 2000 */

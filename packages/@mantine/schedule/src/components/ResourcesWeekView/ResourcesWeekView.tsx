@@ -32,6 +32,7 @@ import {
   DateStringValue,
   DateTimeStringValue,
   DayOfWeek,
+  DayPositionedEventData,
   ScheduleEventData,
   ScheduleMode,
   ScheduleResourceData,
@@ -183,7 +184,7 @@ export interface ResourcesWeekViewProps
     resourceId?: string | number;
   }) => void;
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
   withInteractiveBackgroundEvents?: boolean;
   withDragSlotSelect?: boolean;
   onSlotDragEnd?: (data: {
@@ -573,6 +574,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
+    withBackgroundEvents: withInteractiveBackgroundEvents,
   });
 
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
@@ -750,29 +752,72 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
       const dayOffsetPercent = (dayIndex / weekdays.length) * 100;
 
-      const bgEvents = [
-        ...(dayEvents.backgroundTimedEvents[resource.id] || []),
-        ...(dayEvents.backgroundAllDayEvents[resource.id] || []),
-      ];
-      for (const event of bgEvents) {
+      const pushBackgroundEvent = (event: DayPositionedEventData, allDay: boolean) => {
+        const backgroundEventDate = dayjs(day).format('YYYY-MM-DD');
+        const isResizable = !allDay && eventResize.isResizableEvent(event);
+        const resizePosition = eventResize.getResizePosition(event.id, backgroundEventDate);
+        const effectiveLeft = resizePosition ? resizePosition.left : event.position.top;
+        const effectiveWidth = resizePosition ? resizePosition.width : event.position.height;
+
         eventNodes.push(
-          <ScheduleBackgroundEvent
+          <ScheduleBackgroundEvent<'start' | 'end'>
             key={`bg-${event.id}-${day}`}
             event={event}
             renderEvent={renderEvent}
             renderEventBody={renderEventBody}
             interactive={interactiveBackgroundEvents}
-            onEventClick={onEventClick}
+            onEventClick={
+              onEventClick
+                ? (clickedEvent, e) => {
+                    if (!eventResize.wasResizing()) {
+                      onEventClick(clickedEvent, e);
+                    }
+                  }
+                : undefined
+            }
+            withResize={isResizable}
+            isResizing={resizePosition !== null}
+            activeResizeEdge={eventResize.resizingEdge}
+            resizeAxis="horizontal"
+            resizeHandleProps={getStyles('resourcesWeekViewResizeHandle')}
+            onResizeStart={
+              isResizable
+                ? (edge, e) => {
+                    const container = rowSlotsContainersRef.current[resourceIndex];
+                    if (container) {
+                      eventResize.handleResizeStart({
+                        event,
+                        edge,
+                        container,
+                        originalLeft: event.position.top,
+                        originalWidth: event.position.height,
+                        eventDate: backgroundEventDate,
+                        dayIndex,
+                        dayCount: weekdays.length,
+                        pointerEvent: e,
+                      });
+                    }
+                  }
+                : undefined
+            }
             {...getStyles('resourcesWeekViewBackgroundEvent', {
               style: {
-                left: `${dayOffsetPercent + (event.position.top / 100) * dayWidthPercent}%`,
-                width: `${(event.position.height / 100) * dayWidthPercent}%`,
+                left: `${dayOffsetPercent + (effectiveLeft / 100) * dayWidthPercent}%`,
+                width: `${(effectiveWidth / 100) * dayWidthPercent}%`,
                 top: 0,
                 height: '100%',
               },
             })}
           />
         );
+      };
+
+      for (const event of dayEvents.backgroundTimedEvents[resource.id] || []) {
+        pushBackgroundEvent(event, false);
+      }
+
+      for (const event of dayEvents.backgroundAllDayEvents[resource.id] || []) {
+        pushBackgroundEvent(event, true);
       }
 
       const allRegularEvents = (dayEvents.regularEvents[resource.id] || []).filter(

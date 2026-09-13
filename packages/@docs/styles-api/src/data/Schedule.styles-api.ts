@@ -17,6 +17,7 @@ export const ScheduleStylesApi: StylesApiData<ScheduleFactory> = {
     dayViewSlotLabel: 'DayView time slot label',
     dayViewSlotLabels: 'DayView slot labels container',
     dayViewBackgroundEvent: 'DayView background event element',
+    dayViewBackgroundEventResizeHandle: 'DayView resize handle of an interactive background event',
     dayViewDragPreview: 'DayView drag preview ghost element',
     weekView: 'WeekView root element',
     weekViewRoot: 'WeekView root container',
@@ -40,6 +41,8 @@ export const ScheduleStylesApi: StylesApiData<ScheduleFactory> = {
     weekViewWeekLabel: 'WeekView week label',
     weekViewWeekNumber: 'WeekView week number',
     weekViewBackgroundEvent: 'WeekView background event element',
+    weekViewBackgroundEventResizeHandle:
+      'WeekView resize handle of an interactive background event',
     weekViewDragPreview: 'WeekView drag preview ghost element',
     monthView: 'MonthView root element',
     monthViewScrollArea: 'MonthView scroll area wrapper',
