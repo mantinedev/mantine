@@ -454,6 +454,76 @@ describe('@mantine/hooks/use-roving-index', () => {
       expect(result.current.focusedIndex).toBe(7);
     });
 
+    it('skips disabled items in horizontal grid navigation', () => {
+      const { result } = renderHook(() =>
+        useRovingIndex({
+          total: 9,
+          columns: 3,
+          initialIndex: 3,
+          isItemDisabled: (i) => i === 4,
+        })
+      );
+
+      act(() => {
+        result.current
+          .getItemProps({ index: 3 })
+          .onKeyDown(
+            new KeyboardEvent('keydown', { key: 'ArrowRight' }) as unknown as React.KeyboardEvent
+          );
+      });
+      expect(result.current.focusedIndex).toBe(5);
+
+      act(() => {
+        result.current
+          .getItemProps({ index: 5 })
+          .onKeyDown(
+            new KeyboardEvent('keydown', { key: 'ArrowLeft' }) as unknown as React.KeyboardEvent
+          );
+      });
+      expect(result.current.focusedIndex).toBe(3);
+    });
+
+    it('does not move horizontally when the rest of the row is disabled', () => {
+      const { result } = renderHook(() =>
+        useRovingIndex({
+          total: 9,
+          columns: 3,
+          initialIndex: 3,
+          isItemDisabled: (i) => i === 4 || i === 5,
+        })
+      );
+
+      act(() => {
+        result.current
+          .getItemProps({ index: 3 })
+          .onKeyDown(
+            new KeyboardEvent('keydown', { key: 'ArrowRight' }) as unknown as React.KeyboardEvent
+          );
+      });
+      expect(result.current.focusedIndex).toBe(3);
+    });
+
+    it('skips disabled items in horizontal grid navigation with RTL', () => {
+      const { result } = renderHook(() =>
+        useRovingIndex({
+          total: 9,
+          columns: 3,
+          dir: 'rtl',
+          initialIndex: 5,
+          isItemDisabled: (i) => i === 4,
+        })
+      );
+
+      act(() => {
+        result.current
+          .getItemProps({ index: 5 })
+          .onKeyDown(
+            new KeyboardEvent('keydown', { key: 'ArrowRight' }) as unknown as React.KeyboardEvent
+          );
+      });
+      expect(result.current.focusedIndex).toBe(3);
+    });
+
     it('Home navigates to first item in current row', () => {
       const { result } = renderHook(() =>
         useRovingIndex({ total: 9, columns: 3, initialIndex: 5 })
