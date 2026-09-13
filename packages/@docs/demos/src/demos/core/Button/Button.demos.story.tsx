@@ -48,6 +48,11 @@ export const Demo_group = {
   render: renderDemo(demos.group),
 };
 
+export const Demo_nativeTooltip = {
+  name: '⭐ Demo: nativeTooltip',
+  render: renderDemo(demos.nativeTooltip),
+};
+
 export const Demo_disabledTooltip = {
   name: '⭐ Demo: disabledTooltip',
   render: renderDemo(demos.disabledTooltip),
