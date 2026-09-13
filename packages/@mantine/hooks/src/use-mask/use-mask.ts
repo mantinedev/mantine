@@ -245,7 +245,8 @@ function findPrevTokenIndex(slots: MaskSlot[], from: number): number {
 function processInput(
   inputValue: string,
   slots: MaskSlot[],
-  _slotCharOption: string | null | undefined
+  _slotCharOption: string | null | undefined,
+  transform?: (char: string) => string
 ): string {
   let result = '';
   let inputIndex = 0;
@@ -270,7 +271,7 @@ function processInput(
     }
 
     while (inputIndex < inputValue.length) {
-      const ch = inputValue[inputIndex];
+      const ch = transform ? transform(inputValue[inputIndex]) : inputValue[inputIndex];
       inputIndex++;
 
       if (slot.pattern!.test(ch)) {
@@ -457,11 +458,15 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         return false;
       }
 
-      const { slots: initialSlots, slotChar: initialSlotChar } = getResolvedOptions(opts, '');
-      const initialProcessed = processInput(node.value, initialSlots, initialSlotChar);
+      const {
+        slots: initialSlots,
+        slotChar: initialSlotChar,
+        transform,
+      } = getResolvedOptions(opts, '');
+      const initialProcessed = processInput(node.value, initialSlots, initialSlotChar, transform);
       const initialRaw = extractRaw(initialProcessed, initialSlots);
       const { slots: resolvedSlots, slotChar } = getResolvedOptions(opts, initialRaw);
-      const reprocessed = processInput(node.value, resolvedSlots, slotChar);
+      const reprocessed = processInput(node.value, resolvedSlots, slotChar, transform);
       const newRaw = extractRaw(reprocessed, resolvedSlots);
       const showSlots = opts.alwaysShowMask || isFocusedRef.current;
       const showOnFocus = opts.showMaskOnFocus !== false;
