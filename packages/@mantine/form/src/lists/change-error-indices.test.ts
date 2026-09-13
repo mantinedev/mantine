@@ -97,6 +97,27 @@ describe('@mantine/form/change-error-indices', () => {
     });
   });
 
+  it('decrements error indices and removes the error of the removed element for a list of primitive values', () => {
+    const errors = {
+      name: 'name-error',
+      'fruits.0': 'fruit-error-1',
+      'fruits.1': 'fruit-error-2',
+      'fruits.2': 'fruit-error-3',
+    };
+
+    expect(changeErrorIndices('fruits', 0, errors, -1)).toStrictEqual({
+      name: 'name-error',
+      'fruits.0': 'fruit-error-2',
+      'fruits.1': 'fruit-error-3',
+    });
+
+    expect(changeErrorIndices('fruits', 1, errors, -1)).toStrictEqual({
+      name: 'name-error',
+      'fruits.0': 'fruit-error-1',
+      'fruits.1': 'fruit-error-3',
+    });
+  });
+
   describe('returns unchanged object', () => {
     it('if index is undefined', () => {
       expect(changeErrorIndices('fruits', undefined, TEST_ERRORS, 1)).toStrictEqual(TEST_ERRORS);
