@@ -164,15 +164,17 @@ function Demo() {
 }
 ```
 
-## Interactive tooltip
+## Hoverable tooltip
 
-By default, the tooltip closes as soon as the pointer leaves the target element, and the tooltip body ignores pointer events. Set the `interactive` prop to keep the tooltip open while the pointer travels from the target to the tooltip and rests over its content:
+By default, the tooltip closes as soon as the pointer leaves the target element, and the tooltip body ignores pointer events. Set the `hoverable` prop to keep the tooltip open while the pointer travels from the target to the tooltip and rests over its content:
 
-<Demo data={TooltipDemos.interactive} />
+<Demo data={TooltipDemos.hoverable} />
 
-Set `interactive` if the tooltip contains content that the user must be able to reach with a pointer, for example a link. It is also required by [WCAG 2.1 success criterion 1.4.13: Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html), which states that content that appears on hover must remain visible while the pointer is over it.
+The `hoverable` prop satisfies the _hoverable_ condition of [WCAG 2.1 success criterion 1.4.13: Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html), so the pointer can reach the tooltip body without dismissing it, for example to read or select its content.
 
-Note that an interactive tooltip receives pointer events, which means that while it is open, it intercepts clicks and hover events of the elements that it overlaps. The tooltip stops receiving pointer events as soon as it starts closing. The `interactive` prop is not supported by `Tooltip.Floating`, which always follows the mouse.
+Do not put interactive or focusable content (links, buttons, inputs) inside a tooltip. Interactive content should be put in a [Popover](/core/popover) instead, which is reachable by mouse, keyboard, and touch.
+
+Note that a hoverable tooltip receives pointer events, which means that while it is open, it intercepts clicks and hover events of the elements that it overlaps. The tooltip stops receiving pointer events as soon as it starts closing. The `hoverable` prop is not supported by `Tooltip.Floating`, which always follows the mouse.
 
 ## Multiline
 
@@ -260,8 +262,8 @@ function Demo() {
 additionally requires content that appears on hover to be dismissable, hoverable and persistent.
 Tooltip is persistent out of the box and dismissable if its opened state is not controlled
 (`Escape` closes it without moving the pointer – if you control the `opened` prop, you are responsible
-for handling `Escape` yourself). Tooltip is not hoverable by default – set the
-[interactive](#interactive-tooltip) prop to make the tooltip body hoverable:
+for handling `Escape` yourself). Tooltip is not hoverable by default. Set the
+[hoverable](#hoverable-tooltip) prop to change that:
 
 ```tsx
 import { Button, Tooltip } from '@mantine/core';
@@ -269,7 +271,7 @@ import { Button, Tooltip } from '@mantine/core';
 // Tooltip stays open while the pointer is over its content
 function Demo() {
   return (
-    <Tooltip label="Tooltip" interactive>
+    <Tooltip label="Tooltip" hoverable>
       <Button>Button with tooltip</Button>
     </Tooltip>
   );
