@@ -735,4 +735,23 @@ describe('@mantine/core/NumberInput', () => {
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(getInput()).toHaveProperty('selectionStart', 11);
   });
+
+  it('clamps value correctly on blur when decimalScale is set', async () => {
+    render(<NumberInput max={50} min={10} decimalScale={2} clampBehavior="blur" />);
+    await enterText('100.55');
+    blurInput();
+    expectValue('50');
+
+    await userEvent.clear(getInput());
+    await enterText('5.25');
+    blurInput();
+    expectValue('10');
+  });
+
+  it('clamps value correctly on blur when fixedDecimalScale is set', async () => {
+    render(<NumberInput max={50} decimalScale={2} fixedDecimalScale clampBehavior="blur" />);
+    await enterText('100.55');
+    blurInput();
+    expectValue('50.00');
+  });
 });
