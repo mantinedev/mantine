@@ -744,8 +744,18 @@ export const NumberInput = genericFactory<NumberInputFactory>(
           });
         }
       } else {
-        if (clampBehavior === 'blur' && typeof sanitizedValue === 'number') {
-          sanitizedValue = clamp(sanitizedValue, minNumber, maxNumber);
+        if (clampBehavior === 'blur') {
+          if (typeof sanitizedValue === 'number') {
+            sanitizedValue = clamp(sanitizedValue, minNumber, maxNumber);
+          } else if (typeof sanitizedValue === 'string') {
+            const parsed = Number.parseFloat(sanitizedValue);
+            if (!Number.isNaN(parsed)) {
+              const clamped = clamp(parsed, minNumber, maxNumber);
+              if (clamped !== parsed) {
+                sanitizedValue = clamped;
+              }
+            }
+          }
         }
 
         if (
