@@ -67,6 +67,10 @@
     background: var(--mantine-color-disabled);
   }
 
+  &:active:where(:not([data-loading])) {
+    overflow: visible;
+  }
+
   &::before {
     content: '';
     pointer-events: none;
