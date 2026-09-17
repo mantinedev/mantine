@@ -43,7 +43,7 @@ export interface FloatingWindowProps
   /** Props passed down to `Portal` component */
   portalProps?: Omit<PortalProps, 'children'>;
 
-  /** `z-index` of the root element @default 400 */
+  /** `z-index` of the root element @default 200 */
   zIndex?: React.CSSProperties['zIndex'];
 
   /** Dimensions configuration for resizable floating window */
@@ -70,7 +70,7 @@ export type FloatingWindowFactory = Factory<{
 
 const defaultProps = {
   constrainToViewport: true,
-  zIndex: getDefaultZIndex('overlay'),
+  zIndex: getDefaultZIndex('modal'),
 } satisfies Partial<FloatingWindowProps>;
 
 function clampDimension(value: number, min?: number, max?: number): number {
