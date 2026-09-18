@@ -296,29 +296,40 @@ const varsResolver = createVarsResolver<NumberInputFactory>((_, { size }) => ({
   },
 }));
 
-function clampAndSanitizeInput(sanitizedValue: string | number, max?: number, min?: number) {
-  const stringValue = sanitizedValue.toString();
-  const hasTrailingDecimalSeparator = trailingDecimalSeparatorPattern.test(stringValue);
+function withTrailingSeparator(value: number, hasTrailingDecimalSeparator: boolean) {
+  return hasTrailingDecimalSeparator ? `${value}.` : value;
+}
 
-  const replaced = stringValue.replace(/^0+(?=\d)/, '');
-  const parsedValue = parseFloat(replaced);
+interface SanitizeInputOnBlurOptions {
+  min: number | undefined;
+  max: number | undefined;
+  trim: boolean;
+  clamp: boolean;
+}
+
+function sanitizeInputOnBlur(value: string, options: SanitizeInputOnBlurOptions) {
+  const hasTrailingDecimalSeparator = trailingDecimalSeparatorPattern.test(value);
+  const trimmed = options.trim ? value.replace(/^0+(?=\d)/, '') : value;
+  const parsedValue = parseFloat(trimmed);
 
   if (Number.isNaN(parsedValue)) {
-    return replaced;
+    return trimmed;
   }
 
-  if (parsedValue > Number.MAX_SAFE_INTEGER) {
-    return max !== undefined ? max : replaced;
+  if (!options.clamp) {
+    return options.trim ? withTrailingSeparator(parsedValue, hasTrailingDecimalSeparator) : value;
   }
 
-  const clamped = clamp(parsedValue, min, max);
+  const clamped =
+    parsedValue > Number.MAX_SAFE_INTEGER && options.max !== undefined
+      ? options.max
+      : clamp(parsedValue, options.min, options.max);
 
-  if (hasTrailingDecimalSeparator) {
-    const clampedString = clamped.toString().replace(/^0+(?=\d)/, '');
-    return `${clampedString}.`;
+  if (!options.trim && clamped === parsedValue) {
+    return value;
   }
 
-  return clamped;
+  return withTrailingSeparator(clamped, hasTrailingDecimalSeparator);
 }
 
 function clampAndSanitizeBigIntInput(
@@ -743,18 +754,17 @@ export const NumberInput = genericFactory<NumberInputFactory>(
             clampBehavior,
           });
         }
-      } else {
-        if (clampBehavior === 'blur' && typeof sanitizedValue === 'number') {
+      } else if (typeof sanitizedValue === 'number') {
+        if (clampBehavior === 'blur') {
           sanitizedValue = clamp(sanitizedValue, minNumber, maxNumber);
         }
-
-        if (
-          trimLeadingZeroesOnBlur &&
-          typeof sanitizedValue === 'string' &&
-          getDecimalPlaces(sanitizedValue) < 15
-        ) {
-          sanitizedValue = clampAndSanitizeInput(sanitizedValue, maxNumber, minNumber);
-        }
+      } else if (typeof sanitizedValue === 'string') {
+        sanitizedValue = sanitizeInputOnBlur(sanitizedValue, {
+          min: minNumber,
+          max: maxNumber,
+          trim: !!trimLeadingZeroesOnBlur && getDecimalPlaces(sanitizedValue) < 15,
+          clamp: clampBehavior === 'blur',
+        });
       }
 
       if (_value !== sanitizedValue) {
