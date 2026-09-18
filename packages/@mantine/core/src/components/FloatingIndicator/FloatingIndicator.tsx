@@ -128,7 +128,12 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props) => {
   }
 
   return (
-    <Box ref={mergedRef} mod={[{ initialized, hidden }, mod]} {...getStyles('root')} {...others} />
+    <Box
+      ref={mergedRef}
+      mod={[{ initialized, hidden, 'preserve-transition': true }, mod]}
+      {...getStyles('root')}
+      {...others}
+    />
   );
 });
 

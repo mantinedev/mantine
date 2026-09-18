@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { MantineProvider } from '../MantineProvider';
 import { useMantineColorScheme } from './use-mantine-color-scheme';
 
@@ -21,5 +21,15 @@ describe('@mantine/core/MantineProvider/use-mantine-color-scheme', () => {
       const { result } = renderHook(() => useMantineColorScheme(), { wrapper: DefaultWrapper });
       expect(result.current.colorScheme).toBe('light');
     });
+  });
+
+  it('exempts [data-preserve-transition] from disableTransition style rule when changing color scheme', () => {
+    const { result } = renderHook(() => useMantineColorScheme(), { wrapper: Wrapper });
+    act(() => {
+      result.current.setColorScheme('light');
+    });
+    const style = document.querySelector('style[data-mantine-disable-transition]');
+    expect(style).not.toBeNull();
+    expect(style?.innerHTML).toContain(':not([data-preserve-transition])');
   });
 });

@@ -7,7 +7,8 @@ import { MantineColorScheme } from '../theme.types';
 function disableTransition(nonce: string | undefined) {
   const style = document.createElement('style');
   style.setAttribute('data-mantine-styles', 'inline');
-  style.innerHTML = '*, *::before, *::after {transition: none !important;}';
+  style.innerHTML =
+    '*:not([data-preserve-transition]):not([data-preserve-transition] *), *:not([data-preserve-transition]):not([data-preserve-transition] *)::before, *:not([data-preserve-transition]):not([data-preserve-transition] *)::after {transition: none !important;}';
   style.setAttribute('data-mantine-disable-transition', 'true');
   nonce && style.setAttribute('nonce', nonce);
 

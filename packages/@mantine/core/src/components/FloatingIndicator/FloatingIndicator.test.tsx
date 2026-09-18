@@ -61,4 +61,14 @@ describe('@mantine/core/FloatingIndicator', () => {
     expect(indicatorRef.current.style.height).toBe('50px');
     expect(indicatorRef.current.style.transform).toBe('translateY(50px) translateX(100px)');
   });
+
+  it('renders with data-preserve-transition attribute', () => {
+    const { container } = render(
+      <FloatingIndicator
+        parent={document.createElement('div')}
+        target={document.createElement('div')}
+      />
+    );
+    expect(container.querySelector('[data-preserve-transition]')).not.toBeNull();
+  });
 });
