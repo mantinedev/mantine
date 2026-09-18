@@ -270,6 +270,7 @@
   --mantine-color-error: var(--mantine-color-red-8);
   --mantine-color-success: var(--mantine-color-teal-8);
   --mantine-color-placeholder: var(--mantine-color-dark-3);
+  --mantine-color-placeholder-error: alpha(var(--mantine-color-error), 0.65);
   --mantine-color-anchor: var(--mantine-color-blue-4);
   --mantine-color-default: var(--mantine-color-dark-6);
   --mantine-color-default-hover: var(--mantine-color-dark-5);
@@ -403,6 +404,7 @@
   --mantine-color-error: var(--mantine-color-red-6);
   --mantine-color-success: var(--mantine-color-teal-8);
   --mantine-color-placeholder: var(--mantine-color-gray-5);
+  --mantine-color-placeholder-error: alpha(var(--mantine-color-error), 0.65);
   --mantine-color-anchor: var(--mantine-color-blue-6);
   --mantine-color-default: var(--mantine-color-white);
   --mantine-color-default-hover: var(--mantine-color-gray-0);

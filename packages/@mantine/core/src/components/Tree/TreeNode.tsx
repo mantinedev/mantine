@@ -20,7 +20,7 @@ function getValuesRange(anchor: string | null, value: string | undefined, flatVa
 }
 
 function isVisibleTreeNode(node: HTMLElement, root: Element) {
-  for (let current: HTMLElement | null = node; current && current !== root;) {
+  for (let current: HTMLElement | null = node; current && current !== root; ) {
     if (current.style.display === 'none') {
       return false;
     }
