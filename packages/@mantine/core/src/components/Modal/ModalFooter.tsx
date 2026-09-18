@@ -16,7 +16,7 @@ export type ModalFooterFactory = Factory<{
   compound: true;
 }>;
 
-export const ModalFooter = factory<ModalFooterFactory>((_props, ref) => {
+export const ModalFooter = factory<ModalFooterFactory>((_props) => {
   const props = useProps('ModalFooter', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +24,6 @@ export const ModalFooter = factory<ModalFooterFactory>((_props, ref) => {
 
   return (
     <ModalBaseFooter
-      ref={ref}
       {...ctx.getStyles('footer', { classNames, style, styles, className })}
       {...others}
     />
