@@ -48,7 +48,7 @@ export interface PieChartProps
   /** Data used to render chart */
   data: PieChartCell[];
 
-  /** Determines whether the tooltip should be displayed when one of the section is hovered @default true */
+  /** Determines whether the tooltip should be displayed when one of the section is hovered @default false */
   withTooltip?: boolean;
 
   /** Determines whether the legend should be displayed @default false */
