@@ -28,20 +28,20 @@ export function useHotkeys(
   triggerOnContentEditable = false
 ) {
   const handleKeydown = useEffectEvent((event: KeyboardEvent) => {
-    hotkeys.forEach(
-      ([hotkey, handler, options = { preventDefault: true, usePhysicalKeys: false }]) => {
-        if (
-          getHotkeyMatcher(hotkey, options.usePhysicalKeys)(event) &&
-          shouldFireEvent(event, tagsToIgnore, triggerOnContentEditable)
-        ) {
-          if (options.preventDefault) {
-            event.preventDefault();
-          }
+    hotkeys.forEach(([hotkey, handler, options]) => {
+      const { preventDefault = true, usePhysicalKeys = false } = options || {};
 
-          handler(event);
+      if (
+        getHotkeyMatcher(hotkey, usePhysicalKeys)(event) &&
+        shouldFireEvent(event, tagsToIgnore, triggerOnContentEditable)
+      ) {
+        if (preventDefault) {
+          event.preventDefault();
         }
+
+        handler(event);
       }
-    );
+    });
   });
 
   useEffect(() => {

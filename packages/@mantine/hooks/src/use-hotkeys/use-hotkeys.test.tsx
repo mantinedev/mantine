@@ -4,6 +4,7 @@ import { useHotkeys } from './use-hotkeys';
 const dispatchEvent = (data: any) => {
   const event = new KeyboardEvent('keydown', data);
   document.documentElement.dispatchEvent(event);
+  return event;
 };
 
 describe('@mantine/hooks/use-hotkey', () => {
@@ -61,6 +62,30 @@ describe('@mantine/hooks/use-hotkey', () => {
     renderHook(() => useHotkeys([['A', handler, { usePhysicalKeys: true }]], [], true));
     dispatchEvent({ code: 'KeyA' });
     expect(handler).toHaveBeenCalled();
+  });
+
+  it('calls preventDefault by default when options are not provided', () => {
+    const handler = jest.fn();
+    renderHook(() => useHotkeys([['ctrl+S', handler]]));
+    const event = dispatchEvent({ ctrlKey: true, key: 'S', cancelable: true });
+    expect(handler).toHaveBeenCalled();
+    expect(event.defaultPrevented).toBe(true);
+  });
+
+  it('calls preventDefault by default when only usePhysicalKeys option is provided', () => {
+    const handler = jest.fn();
+    renderHook(() => useHotkeys([['A', handler, { usePhysicalKeys: true }]]));
+    const event = dispatchEvent({ code: 'KeyA', cancelable: true });
+    expect(handler).toHaveBeenCalled();
+    expect(event.defaultPrevented).toBe(true);
+  });
+
+  it('does not call preventDefault when preventDefault option is false', () => {
+    const handler = jest.fn();
+    renderHook(() => useHotkeys([['ctrl+S', handler, { preventDefault: false }]]));
+    const event = dispatchEvent({ ctrlKey: true, key: 'S', cancelable: true });
+    expect(handler).toHaveBeenCalled();
+    expect(event.defaultPrevented).toBe(false);
   });
 
   it('does not re-register the listener when an inline array changes identity on rerender', () => {
