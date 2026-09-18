@@ -168,6 +168,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -198,6 +199,26 @@ jobs:
           VERSION: ${{ needs.prepare.outputs.version }}
         run: |
           gh release create "$VERSION" --title "$VERSION" --target "$GITHUB_SHA" --notes-file .changelog/release-notes.md
+      - name: Close issues fixed in this release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+          LABEL: ${{ needs.prepare.outputs.release_type == 'patch' && 'Fixed in patch' || 'Fixed in minor' }}
+        run: |
+          set -euo pipefail
+          RELEASE_URL="https://github.com/$GH_REPO/releases/tag/$VERSION"
+          NUMBERS=$(gh api --paginate -X GET "repos/$GH_REPO/issues" \
+            -f labels="$LABEL" -f state=open -f per_page=100 \
+            --jq '.[] | select(.pull_request == null) | .number')
+          if [ -z "$NUMBERS" ]; then
+            echo "No open issues labeled \"$LABEL\""
+            exit 0
+          fi
+          for NUMBER in $NUMBERS; do
+            echo "Closing #$NUMBER"
+            gh issue close "$NUMBER" --comment "Fixed in [$VERSION]($RELEASE_URL)"
+          done
       - name: Post to Discord
         if: needs.prepare.outputs.release_type == 'patch'
         env:
