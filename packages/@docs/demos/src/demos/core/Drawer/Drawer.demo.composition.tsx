@@ -19,6 +19,10 @@ function Demo() {
             <Drawer.CloseButton />
           </Drawer.Header>
           <Drawer.Body>Drawer content</Drawer.Body>
+          <Drawer.Footer>
+            <Button onClick={close}>Close</Button>
+            <Button>Confirm</Button>
+          </Drawer.Footer>
         </Drawer.Content>
       </Drawer.Root>
 
@@ -33,6 +37,10 @@ function Demo() {
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
 
+  const content = Array(100)
+    .fill(0)
+    .map((_, index) => <p key={index}>Drawer content</p>);
+
   return (
     <>
       <Drawer.Root opened={opened} onClose={close}>
@@ -42,7 +50,11 @@ function Demo() {
             <Drawer.Title>Drawer title</Drawer.Title>
             <Drawer.CloseButton />
           </Drawer.Header>
-          <Drawer.Body>Drawer content</Drawer.Body>
+          <Drawer.Body>{content}</Drawer.Body>
+          <Drawer.Footer>
+            <Button onClick={close}>Close</Button>
+            <Button>Confirm</Button>
+          </Drawer.Footer>
         </Drawer.Content>
       </Drawer.Root>
 

@@ -11,6 +11,7 @@ export const DrawerStylesApi: StylesApiData<DrawerFactory> = {
     title: 'Drawer title (h2 tag), displayed in the header',
     body: 'Drawer body, displayed after header',
     close: 'Close button',
+    footer: 'Drawer footer',
   },
 
   vars: {

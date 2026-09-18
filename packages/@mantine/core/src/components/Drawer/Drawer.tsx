@@ -4,6 +4,7 @@ import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { DrawerBody } from './DrawerBody';
 import { DrawerCloseButton } from './DrawerCloseButton';
 import { DrawerContent } from './DrawerContent';
+import { DrawerFooter } from './DrawerFooter';
 import { DrawerHeader } from './DrawerHeader';
 import { DrawerOverlay } from './DrawerOverlay';
 import {
@@ -52,6 +53,7 @@ export type DrawerFactory = Factory<{
     Overlay: typeof DrawerOverlay;
     Content: typeof DrawerContent;
     Body: typeof DrawerBody;
+    Footer: typeof DrawerFooter;
     Header: typeof DrawerHeader;
     Title: typeof DrawerTitle;
     CloseButton: typeof DrawerCloseButton;
@@ -143,6 +145,7 @@ Drawer.Root = DrawerRoot;
 Drawer.Overlay = DrawerOverlay;
 Drawer.Content = DrawerContent;
 Drawer.Body = DrawerBody;
+Drawer.Footer = DrawerFooter;
 Drawer.Header = DrawerHeader;
 Drawer.Title = DrawerTitle;
 Drawer.CloseButton = DrawerCloseButton;

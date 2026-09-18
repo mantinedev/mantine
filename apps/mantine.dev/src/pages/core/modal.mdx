@@ -141,7 +141,8 @@ You can use the following compound components to have full control over the `Mod
 - `Modal.Header` – sticky header, usually contains `Modal.Title` and `Modal.CloseButton`
 - `Modal.Title` – `h2` element, the `aria-labelledby` of `Modal.Content` is pointing to this element, usually rendered inside `Modal.Header`
 - `Modal.CloseButton` – close button, usually rendered inside `Modal.Header`
-- `Modal.Body` – a place for main content, the `aria-describedby` of `Modal.Content` is pointing to this element
+- `Modal.Body` – a place for main content, `aria-describedby` of `Modal.Content` is pointing to this element
+- `Modal.Footer` - a place for extra content. It's always sticky to prevent scrolling modal content to footer content
 
 <Demo data={ModalDemos.composition} />
 
