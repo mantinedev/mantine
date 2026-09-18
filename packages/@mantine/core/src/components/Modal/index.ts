@@ -4,6 +4,7 @@ import type { ModalBodyProps } from './ModalBody';
 import type { ModalCloseButtonProps } from './ModalCloseButton';
 import type { ModalContentProps } from './ModalContent';
 import type { ModalHeaderProps } from './ModalHeader';
+import type { ModalFooterProps, ModalFooterStylesNames } from './ModalFooter';
 import type { ModalOverlayProps } from './ModalOverlay';
 import type { ModalRootProps } from './ModalRoot';
 import type { ModalStackProps } from './ModalStack';
@@ -15,6 +16,7 @@ export { ModalBody } from './ModalBody';
 export { ModalCloseButton } from './ModalCloseButton';
 export { ModalContent } from './ModalContent';
 export { ModalHeader } from './ModalHeader';
+export { ModalFooter } from './ModalFooter';
 export { ModalOverlay } from './ModalOverlay';
 export { ModalTitle } from './ModalTitle';
 export { ModalStack, ModalStackContext } from './ModalStack';
@@ -31,6 +33,8 @@ export type {
   ModalCloseButtonProps,
   ModalContentProps,
   ModalHeaderProps,
+  ModalFooterProps,
+  ModalFooterStylesNames,
   ModalOverlayProps,
   ModalTitleProps,
   ModalStackProps,
