@@ -146,7 +146,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
         return {
           background: 'transparent',
           hover: `var(--mantine-color-${color}-light-hover)`,
-          color: `var(--mantine-color-${color}-light-color)`,
+          color: `var(--mantine-color-${color}-text)`,
           border: `${rem(1)} solid transparent`,
         };
       }
@@ -175,7 +175,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
         return {
           background: 'transparent',
           hover: 'transparent',
-          color: `var(--mantine-color-${color}-light-color)`,
+          color: `var(--mantine-color-${color}-text)`,
           border: `${rem(1)} solid transparent`,
         };
       }
