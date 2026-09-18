@@ -11,8 +11,7 @@ import classes from './Drawer.module.css';
 export type DrawerContentStylesNames = 'content' | 'inner';
 
 export interface DrawerContentProps
-  extends ModalBaseContentProps,
-    CompoundStylesApiProps<DrawerContentFactory> {}
+  extends ModalBaseContentProps, CompoundStylesApiProps<DrawerContentFactory> {}
 
 export type DrawerContentFactory = Factory<{
   props: DrawerContentProps;
