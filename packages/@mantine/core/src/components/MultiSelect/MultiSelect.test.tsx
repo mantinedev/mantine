@@ -144,4 +144,23 @@ describe('@mantine/core/MultiSelect', () => {
     expect(screen.getAllByText('React').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Angular').length).toBeGreaterThan(0);
   });
+
+  it('does not change aria-selected of options when the highlighted option changes', async () => {
+    render(<MultiSelect data={['ID', 'Tax', 'Total']} defaultValue={['ID', 'Total']} />);
+    await userEvent.click(screen.getByRole('combobox'));
+
+    const getAriaSelected = () =>
+      screen.getAllByRole('option').map((option) => option.getAttribute('aria-selected'));
+
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+  });
 });
