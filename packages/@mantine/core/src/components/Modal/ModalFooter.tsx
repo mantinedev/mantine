@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalFooterStylesNames = 'footer';
 
 export interface ModalFooterProps
-  extends ModalBaseFooterProps,
-    CompoundStylesApiProps<ModalFooterFactory> {}
+  extends ModalBaseFooterProps, CompoundStylesApiProps<ModalFooterFactory> {}
 
 export type ModalFooterFactory = Factory<{
   props: ModalFooterProps;

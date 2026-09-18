@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerFooterStylesNames = 'footer';
 
 export interface DrawerFooterProps
-  extends ModalBaseFooterProps,
-    CompoundStylesApiProps<DrawerFooterFactory> {}
+  extends ModalBaseFooterProps, CompoundStylesApiProps<DrawerFooterFactory> {}
 
 export type DrawerFooterFactory = Factory<{
   props: DrawerFooterProps;
