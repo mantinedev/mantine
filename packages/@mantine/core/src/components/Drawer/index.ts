@@ -17,7 +17,7 @@ export { DrawerContent } from './DrawerContent';
 export { DrawerHeader } from './DrawerHeader';
 export { DrawerOverlay } from './DrawerOverlay';
 export { DrawerTitle } from './DrawerTitle';
-export { DrawerStack, DrawerStackContext } from './DrawerStack';
+export { DrawerStack } from './DrawerStack';
 export { useDrawerContext } from './Drawer.context';
 
 export type {

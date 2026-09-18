@@ -1,4 +1,3 @@
-import { use, useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { ModalBody, type ModalBodyProps } from './ModalBody';
@@ -12,7 +11,7 @@ import {
   ModalRootProps,
   ModalRootStylesNames,
 } from './ModalRoot';
-import { ModalStack, ModalStackContext, type ModalStackProps } from './ModalStack';
+import { ModalStack, type ModalStackProps } from './ModalStack';
 import { ModalTitle, type ModalTitleProps } from './ModalTitle';
 import classes from './Modal.module.css';
 export type ModalStylesNames = ModalRootStylesNames;
@@ -38,9 +37,6 @@ export interface ModalProps extends ModalRootProps {
 
   /** Props passed down to the close button */
   closeButtonProps?: ModalBaseCloseButtonProps;
-
-  /** Id of the modal in the `Modal.Stack` */
-  stackId?: string;
 }
 
 export type ModalFactory = Factory<{
@@ -85,51 +81,15 @@ export const Modal = factory<ModalFactory>((_props) => {
     radius,
     opened,
     stackId,
-    zIndex,
     ...others
   } = useProps('Modal', defaultProps, _props);
-  const ctx = use(ModalStackContext);
+
   const hasHeader = !!title || withCloseButton;
-  const stackProps =
-    ctx && stackId
-      ? {
-          closeOnEscape: ctx.currentId === stackId,
-          trapFocus: ctx.currentId === stackId,
-          zIndex: ctx.getZIndex(stackId),
-          __handledEscapeEvents: ctx.handledEscapeEvents,
-        }
-      : {};
-
-  const overlayVisible =
-    withOverlay === false ? false : stackId && ctx ? ctx.currentId === stackId : opened;
-
-  useEffect(() => {
-    if (ctx && stackId) {
-      opened
-        ? ctx.addModal(stackId, zIndex || getDefaultZIndex('modal'))
-        : ctx.removeModal(stackId);
-    }
-  }, [opened, stackId, zIndex]);
 
   return (
-    <ModalRoot
-      radius={radius}
-      opened={opened}
-      zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
-      {...others}
-      {...stackProps}
-    >
-      {withOverlay && (
-        <ModalOverlay
-          visible={overlayVisible}
-          transitionProps={ctx && stackId ? { duration: 0 } : undefined}
-          {...overlayProps}
-        />
-      )}
-      <ModalContent
-        radius={radius}
-        __hidden={ctx && stackId && opened ? stackId !== ctx.currentId : false}
-      >
+    <ModalRoot radius={radius} opened={opened} stackId={stackId} {...others}>
+      {withOverlay && <ModalOverlay withOverlay={withOverlay} {...overlayProps} />}
+      <ModalContent radius={radius}>
         {hasHeader && (
           <ModalHeader>
             {title && <ModalTitle>{title}</ModalTitle>}

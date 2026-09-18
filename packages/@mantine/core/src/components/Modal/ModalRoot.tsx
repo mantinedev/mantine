@@ -11,7 +11,13 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { ModalBase, ModalBaseProps, ModalBaseStylesNames } from '../ModalBase';
+import {
+  ModalBase,
+  ModalBaseProps,
+  ModalBaseStylesNames,
+  useModalBaseStackContext,
+  useModalStackProps,
+} from '../ModalBase';
 import { ScrollArea } from '../ScrollArea';
 import { ModalProvider, ScrollAreaComponent } from './Modal.context';
 import classes from './Modal.module.css';
@@ -41,6 +47,9 @@ export interface ModalRootProps extends StylesApiProps<ModalRootFactory>, ModalB
 
   /** If set, the modal takes the entire screen @default false */
   fullScreen?: boolean;
+
+  /** Id of the modal in the `Modal.Stack` */
+  stackId?: string;
 }
 
 export type ModalRootFactory = Factory<{
@@ -92,6 +101,9 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     xOffset,
     __staticSelector,
     attributes,
+    stackId,
+    opened,
+    zIndex,
     ...others
   } = props;
 
@@ -109,15 +121,21 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     varsResolver,
   });
 
+  const modalStackCtx = useModalBaseStackContext();
+  const stackProps = useModalStackProps({ stackCtx: modalStackCtx, opened, stackId, zIndex });
+
   return (
-    <ModalProvider value={{ yOffset, scrollAreaComponent, getStyles, fullScreen }}>
+    <ModalProvider value={{ yOffset, scrollAreaComponent, getStyles, fullScreen, stackId, opened }}>
       <ModalBase
+        opened={opened}
         {...getStyles('root')}
         data-full-screen={fullScreen || undefined}
         data-centered={centered || undefined}
         data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
         unstyled={unstyled}
+        zIndex={modalStackCtx && stackId ? modalStackCtx.getZIndex(stackId) : zIndex}
         {...others}
+        {...stackProps}
       />
     </ModalProvider>
   );

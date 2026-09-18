@@ -1,12 +1,14 @@
 import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
-import { ModalBaseOverlay, ModalBaseOverlayProps } from '../ModalBase';
+import { ModalBaseOverlay, ModalBaseOverlayProps, useModalBaseStackContext } from '../ModalBase';
 import { useDrawerContext } from './Drawer.context';
 import classes from './Drawer.module.css';
 
 export type DrawerOverlayStylesNames = 'overlay';
 
 export interface DrawerOverlayProps
-  extends ModalBaseOverlayProps, CompoundStylesApiProps<DrawerOverlayFactory> {}
+  extends ModalBaseOverlayProps, CompoundStylesApiProps<DrawerOverlayFactory> {
+  withOverlay?: boolean;
+}
 
 export type DrawerOverlayFactory = Factory<{
   props: DrawerOverlayProps;
@@ -17,14 +19,24 @@ export type DrawerOverlayFactory = Factory<{
 
 export const DrawerOverlay = factory<DrawerOverlayFactory>((_props) => {
   const props = useProps('DrawerOverlay', null, _props);
-  const { classNames, className, style, styles, vars, ...others } = props;
+  const { classNames, className, style, styles, vars, withOverlay, ...others } = props;
 
   const ctx = useDrawerContext();
+  const drawerStackCtx = useModalBaseStackContext();
+
+  const overlayVisible =
+    withOverlay === false
+      ? false
+      : ctx.stackId && drawerStackCtx
+        ? drawerStackCtx.currentId === ctx.stackId
+        : ctx.opened;
 
   return (
     <ModalBaseOverlay
       {...ctx.getStyles('overlay', { classNames, style, styles, className })}
       {...others}
+      visible={overlayVisible}
+      transitionProps={drawerStackCtx && ctx.stackId ? { duration: 0 } : undefined}
     />
   );
 });
