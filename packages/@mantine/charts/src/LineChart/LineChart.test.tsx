@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { autoPatchWarn, render, tests } from '@mantine-tests/core';
 import { LineChart, LineChartProps, LineChartStylesNames } from './LineChart';
 
 const defaultProps: LineChartProps = {
@@ -20,5 +20,11 @@ describe('@mantine/charts/LineChart', () => {
     varsResolver: true,
     displayName: '@mantine/charts/LineChart',
     stylesApiSelectors: ['root'],
+  });
+
+  it('does not pass textColor and gridColor props to the root element', () => {
+    const { container } = render(<LineChart {...defaultProps} textColor="red" gridColor="blue" />);
+    expect(container.querySelector('[textcolor]')).not.toBeInTheDocument();
+    expect(container.querySelector('[gridcolor]')).not.toBeInTheDocument();
   });
 });

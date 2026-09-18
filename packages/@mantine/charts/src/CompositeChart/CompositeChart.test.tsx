@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { autoPatchWarn, render, tests } from '@mantine-tests/core';
 import { CompositeChart, CompositeChartProps, CompositeChartStylesNames } from './CompositeChart';
 
 const defaultProps: CompositeChartProps = {
@@ -20,5 +20,13 @@ describe('@mantine/charts/CompositeChart', () => {
     varsResolver: true,
     displayName: '@mantine/charts/CompositeChart',
     stylesApiSelectors: ['root'],
+  });
+
+  it('does not pass textColor and gridColor props to the root element', () => {
+    const { container } = render(
+      <CompositeChart {...defaultProps} textColor="red" gridColor="blue" />
+    );
+    expect(container.querySelector('[textcolor]')).not.toBeInTheDocument();
+    expect(container.querySelector('[gridcolor]')).not.toBeInTheDocument();
   });
 });

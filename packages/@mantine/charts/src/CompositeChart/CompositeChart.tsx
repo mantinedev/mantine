@@ -222,6 +222,8 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     accessibilityLayer,
     withBrush,
     brushProps,
+    gridColor,
+    textColor,
     ...others
   } = props;
 
