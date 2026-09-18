@@ -15,7 +15,7 @@ import {
   extractStyleProps,
   MantineStyleProps,
   parseStyleProps,
-  STYlE_PROPS_DATA,
+  STYLE_PROPS_DATA,
 } from './style-props';
 import { useRandomClassName } from './use-random-classname/use-random-classname';
 
@@ -90,7 +90,7 @@ function _Box({
   const parsedStyleProps = parseStyleProps({
     styleProps,
     theme,
-    data: STYlE_PROPS_DATA,
+    data: STYLE_PROPS_DATA,
   });
 
   const deduplicateInlineStyles = useMantineDeduplicateInlineStyles();
