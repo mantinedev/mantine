@@ -28,7 +28,7 @@ export const PROP_CATEGORIES: Record<string, string> = {
   state: 'State',
   accessibility: 'Accessibility',
   behavior: 'Behavior',
-  visual: 'Visual',
+  appearance: 'Appearance',
 };
 
 export const PROP_CATEGORY_ORDER = [...Object.keys(PROP_CATEGORIES), 'other'];

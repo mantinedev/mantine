@@ -97,3 +97,7 @@ The five canonical triage labels, used verbatim on the GitLab tracker. See `docs
 ### Domain docs
 
 Single-context — one `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+### Prop categories
+
+The four `@category` values for docs props tables, the deciding question and placement rules for each, and when a component gets tagged. See `docs/agents/prop-categories.md`.

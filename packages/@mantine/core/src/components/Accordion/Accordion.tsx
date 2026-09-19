@@ -59,31 +59,31 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** If set, arrow keys loop through items (first to last and last to first) @default true @category behavior */
   loop?: boolean;
 
-  /** Transition duration in ms @default 200 @category visual */
+  /** Transition duration in ms @default 200 @category appearance */
   transitionDuration?: number;
 
-  /** If set, chevron rotation is disabled @default false @category visual */
+  /** If set, chevron rotation is disabled @default false @category appearance */
   disableChevronRotation?: boolean;
 
   /** If set, the open item cannot be collapsed by clicking it again, so one item always stays open. Only applies when `multiple` is `false`. @default false @category behavior */
   disableCollapse?: boolean;
 
-  /** Position of the chevron relative to the item label @default right @category visual */
+  /** Position of the chevron relative to the item label @default right @category appearance */
   chevronPosition?: AccordionChevronPosition;
 
-  /** Size of the chevron icon container @default auto @category visual */
+  /** Size of the chevron icon container @default auto @category appearance */
   chevronSize?: number | string;
 
-  /** Size of the default chevron icon. Ignored when `chevron` prop is set. Use `chevronSize` instead when using custom chevron. @default 16 @category visual */
+  /** Size of the default chevron icon. Ignored when `chevron` prop is set. Use `chevronSize` instead when using custom chevron. @default 16 @category appearance */
   chevronIconSize?: number | string;
 
   /** Sets heading level (h2-h6) for `Accordion.Control` elements. Wraps each control in the corresponding heading tag, recommended to meet WAI-ARIA accessibility requirements. Has no visual effect. @category accessibility */
   order?: AccordionHeadingOrder;
 
-  /** Custom chevron icon @category visual */
+  /** Custom chevron icon @category appearance */
   chevron?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius @category visual */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
   /** If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. @default true */

@@ -67,8 +67,8 @@ _Avoid_: controlled mode (as if it were a separate rendering mode)
 ### Props documentation
 
 **Prop category**:
-The kind of a prop on the docs props table, from a fixed vocabulary: state, behavior, content, visual, layout, rendering, elements. Applies only to a component's own props; a prop without one falls into Other.
-_Avoid_: prop type (clashes with TypeScript), tag, group (reserved for the rendered unit)
+The kind of a prop on the docs props table, from a fixed vocabulary: state, accessibility, behavior, appearance. Applies only to a component's own props; a prop without one falls into Other. Rules for assigning one live in `docs/agents/prop-categories.md`.
+_Avoid_: prop type (clashes with TypeScript), tag, group (reserved for the rendered unit), visual (the old name of appearance)
 
 **Prop origin**:
 The interface that declares a prop: the component's own props or a shared base such as Input, Input.Wrapper or Combobox. Derived from the type declaration, never annotated.
