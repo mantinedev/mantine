@@ -117,14 +117,6 @@ export function Variants() {
   );
 }
 
-export function WithinGroup() {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Badge>Single badge within group</Badge>
-    </div>
-  );
-}
-
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>
@@ -144,16 +136,6 @@ export function CustomComponent() {
 
       <Badge component="button" type="button">
         Button
-      </Badge>
-    </div>
-  );
-}
-
-export function ColorsIndex() {
-  return (
-    <div style={{ padding: 40 }}>
-      <Badge color="violet.2" variant="dot">
-        Anchor
       </Badge>
     </div>
   );

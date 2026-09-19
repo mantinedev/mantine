@@ -45,7 +45,7 @@ export function WithFormData() {
       onSubmit={(event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        console.log('Checkbox group value:', formData.get('angle'));
+        console.log('Angle value:', formData.get('angle'));
       }}
     >
       <AngleSlider name="angle" defaultValue={120} />
@@ -83,6 +83,13 @@ The `disabled` prop disables the component and prevents user interaction:
 
 <Demo data={AngleSliderDemos.disabled} />
 
+## readOnly
+
+The `readOnly` prop prevents the value from being changed, but unlike `disabled`, the slider
+remains focusable and is announced by screen readers as read-only:
+
+<Demo data={AngleSliderDemos.readOnly} />
+
 ## Accessibility
 
 To make the component accessible for screen readers, set the `aria-label` prop:
@@ -103,10 +110,23 @@ Keyboard interactions when the component is focused:
     { key: 'ArrowLeft', description: 'Decreases value by step' },
     { key: 'ArrowUp', description: 'Increases value by step' },
     { key: 'ArrowRight', description: 'Increases value by step' },
+    { key: 'Shift + Arrow', description: 'Changes value by largeStep' },
+    { key: 'PageUp', description: 'Increases value by largeStep' },
+    { key: 'PageDown', description: 'Decreases value by largeStep' },
     { key: 'Home', description: 'Sets value to 0' },
-    { key: 'End', description: 'Sets value to 359' },
+    { key: 'End', description: 'Sets value to the largest value on the step grid (359 with the default step)' },
   ]}
 />
+
+`largeStep` is `10 × step` by default. All keyboard interactions produce values that are on the
+same grid as pointer interactions, so with `step={5}` `ArrowLeft` at `0` sets the value to `355`,
+not `359`.
+
+When `restrictToMarks` is set, keyboard interactions work with marks instead of the step grid:
+`ArrowLeft`/`ArrowDown`/`PageDown` move to the previous mark, `ArrowRight`/`ArrowUp`/`PageUp` to
+the next mark (both wrap around the marks array), and `Home`/`End` snap to the mark closest to `0`
+and `359`. If the current value is not one of the marks, any of these keys snaps the value to the
+closest mark.
 
 ## Based on use-radial-move
 

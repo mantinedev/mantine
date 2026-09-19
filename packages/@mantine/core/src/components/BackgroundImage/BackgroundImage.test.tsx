@@ -1,4 +1,4 @@
-import { tests } from '@mantine-tests/core';
+import { render, tests } from '@mantine-tests/core';
 import {
   BackgroundImage,
   BackgroundImageProps,
@@ -18,5 +18,12 @@ describe('@mantine/core/BackgroundImage', () => {
     children: true,
     displayName: '@mantine/core/BackgroundImage',
     stylesApiSelectors: ['root'],
+  });
+
+  it('renders src as background-image of the root element', () => {
+    const { container } = render(<BackgroundImage src="test.png" />);
+    expect(container.querySelector('.mantine-BackgroundImage-root')).toHaveStyle({
+      backgroundImage: 'url(test.png)',
+    });
   });
 });

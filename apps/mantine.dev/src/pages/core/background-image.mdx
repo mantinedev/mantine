@@ -6,6 +6,12 @@ export default Layout(MDX_DATA.BackgroundImage);
 
 ## Usage
 
+`BackgroundImage` renders the given `src` as a CSS `background-image` of the root element and
+stretches it to cover the element. Any content passed as `children` is rendered on top of it:
+
+Use the `radius` prop to set the `border-radius` of the root element – it accepts a key of
+`theme.radius` or any valid CSS value:
+
 <Demo data={BackgroundImageDemos.usage} />
 
 <Polymorphic

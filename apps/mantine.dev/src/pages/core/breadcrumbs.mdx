@@ -10,3 +10,38 @@ export default Layout(MDX_DATA.Breadcrumbs);
 and adds a given separator (defaults to `/`) between them:
 
 <Demo data={BreadcrumbsDemos.usage} />
+
+## Accessibility
+
+`Breadcrumbs` root element is a `<nav>` landmark with `aria-label="Breadcrumbs"`. Change the label
+with the `aria-label` prop if the page contains more than one breadcrumb trail:
+
+```tsx
+import { Breadcrumbs } from '@mantine/core';
+
+function Demo() {
+  return <Breadcrumbs aria-label="Documentation breadcrumbs">{/* items */}</Breadcrumbs>;
+}
+```
+
+Separators are decorative – they are rendered with `aria-hidden` and are not announced by screen
+readers.
+
+Following the [WAI-ARIA breadcrumb pattern](https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/),
+set `aria-current="page"` on the item that represents the current page:
+
+```tsx
+import { Anchor, Breadcrumbs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Breadcrumbs>
+      <Anchor href="/">Home</Anchor>
+      <Anchor href="/docs">Documentation</Anchor>
+      <Anchor href="/docs/breadcrumbs" aria-current="page">
+        Breadcrumbs
+      </Anchor>
+    </Breadcrumbs>
+  );
+}
+```

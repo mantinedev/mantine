@@ -7,4 +7,12 @@ describe('@mantine/core/Avatar/get-initials', () => {
     expect(getInitials('John Doe')).toBe('JD');
     expect(getInitials('John Doe', 1)).toBe('J');
   });
+
+  it('handles extra whitespace', () => {
+    expect(getInitials('John  Doe')).toBe('JD');
+    expect(getInitials('  John Doe  ')).toBe('JD');
+    expect(getInitials('  John')).toBe('JO');
+    expect(getInitials('   ')).toBe('');
+    expect(getInitials('')).toBe('');
+  });
 });

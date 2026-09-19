@@ -14,15 +14,3 @@ export function Usage() {
     </div>
   );
 }
-
-export function Unstyled() {
-  return (
-    <div style={{ padding: 40 }}>
-      <Breadcrumbs unstyled>
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
-      </Breadcrumbs>
-    </div>
-  );
-}

@@ -27,3 +27,8 @@ export const Demo_disabled = {
   name: '⭐ Demo: disabled',
   render: renderDemo(demos.disabled),
 };
+
+export const Demo_readOnly = {
+  name: '⭐ Demo: readOnly',
+  render: renderDemo(demos.readOnly),
+};

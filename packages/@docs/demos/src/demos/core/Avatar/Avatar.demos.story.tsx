@@ -47,3 +47,8 @@ export const Demo_allowedColors = {
   name: '⭐ Demo: allowedColors',
   render: renderDemo(demos.allowedColors),
 };
+
+export const Demo_groupMax = {
+  name: '⭐ Demo: groupMax',
+  render: renderDemo(demos.groupMax),
+};

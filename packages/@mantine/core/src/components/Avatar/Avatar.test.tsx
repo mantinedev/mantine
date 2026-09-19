@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/react';
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { Avatar, AvatarProps, AvatarStylesNames } from './Avatar';
 import { AvatarGroup } from './AvatarGroup/AvatarGroup';
 
@@ -64,6 +64,63 @@ describe('@mantine/core/Avatar', () => {
       <Avatar src="image.png" alt="test-alt" imageProps={{ 'aria-label': 'test-label' }} />
     );
     expect(container.querySelector('img')).toHaveAttribute('aria-label', 'test-label');
+  });
+
+  it('renders initials based on name prop', () => {
+    render(<Avatar name="John Doe" />);
+    expect(screen.getByText('JD')).toBeInTheDocument();
+  });
+
+  it('gives children precedence over name initials', () => {
+    render(<Avatar name="John Doe">XX</Avatar>);
+    expect(screen.getByText('XX')).toBeInTheDocument();
+    expect(screen.queryByText('JD')).not.toBeInTheDocument();
+  });
+
+  it('uses name as the placeholder title when alt is not set', () => {
+    const { container, rerender } = render(<Avatar name="John Doe" />);
+    expect(container.querySelector('.mantine-Avatar-placeholder')).toHaveAttribute(
+      'title',
+      'John Doe'
+    );
+
+    rerender(
+      <>
+        <Avatar name="John Doe" alt="test-alt" />
+      </>
+    );
+    expect(container.querySelector('.mantine-Avatar-placeholder')).toHaveAttribute(
+      'title',
+      'test-alt'
+    );
+  });
+
+  it('sets empty alt attribute on the image when alt is not given', () => {
+    const { container } = render(<Avatar src="image.png" />);
+    expect(container.querySelector('img')).toHaveAttribute('alt', '');
+  });
+
+  it('calls imageProps.onError in addition to the internal error handler', () => {
+    const onError = jest.fn();
+    const { container } = render(<Avatar src="image.png" imageProps={{ onError }} />);
+
+    fireEvent.error(container.querySelector('img')!);
+    expect(onError).toHaveBeenCalledTimes(1);
+    expect(container.querySelector('.mantine-Avatar-placeholder')).toBeInTheDocument();
+  });
+
+  it('resets the error state when src changes', () => {
+    const { container, rerender } = render(<Avatar src="image.png" />);
+    fireEvent.error(container.querySelector('img')!);
+    expect(container.querySelector('.mantine-Avatar-placeholder')).toBeInTheDocument();
+
+    rerender(
+      <>
+        <Avatar src="other-image.png" />
+      </>
+    );
+    expect(container.querySelector('.mantine-Avatar-placeholder')).not.toBeInTheDocument();
+    expect(container.querySelector('img')).toHaveAttribute('src', 'other-image.png');
   });
 
   it('exposes AvatarGroup component', () => {

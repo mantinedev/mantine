@@ -77,6 +77,28 @@ describe('@mantine/core/Blockquote', () => {
     );
   });
 
+  it('does not set text-wrap css variable when textWrap is not given', () => {
+    const { container, rerender } = render(<Blockquote {...defaultProps}>test</Blockquote>);
+    expect(getRoot(container).style.getPropertyValue('--bq-text-wrap')).toBe('');
+
+    rerender(
+      <>
+        <Blockquote {...defaultProps} textWrap="balance">
+          test
+        </Blockquote>
+      </>
+    );
+    expect(getRoot(container).style.getPropertyValue('--bq-text-wrap')).toBe('balance');
+  });
+
+  it('hides the icon from assistive technologies', () => {
+    const { container } = render(<Blockquote {...defaultProps}>test</Blockquote>);
+    expect(container.querySelector('.mantine-Blockquote-icon')).toHaveAttribute(
+      'aria-hidden',
+      'true'
+    );
+  });
+
   it('renders cite when cite prop is set', () => {
     const { container } = render(
       <Blockquote {...defaultProps} cite="– Author">

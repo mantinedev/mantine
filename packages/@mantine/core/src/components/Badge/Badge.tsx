@@ -44,7 +44,7 @@ export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
   /** Controls `font-size`, `height` and horizontal `padding` @default 'md' */
   size?: MantineSize | (string & {});
 
-  /** If set, badge `min-width` becomes equal to its `height` and horizontal padding is removed */
+  /** If set, badge `min-width` becomes equal to its `height` and horizontal padding is removed. `radius` prop is ignored when `circle` is set. @default false */
   circle?: boolean;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
@@ -56,7 +56,7 @@ export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
   /** Gradient configuration used when `variant=\"gradient\"` @default theme.defaultGradient */
   gradient?: MantineGradient;
 
-  /** Content displayed on the left side of the badge label */
+  /** Content displayed on the left side of the badge label. Ignored when `variant="dot"` is set. */
   leftSection?: React.ReactNode;
 
   /** Content displayed on the right side of the badge label */
@@ -68,7 +68,7 @@ export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
   /** Main badge content */
   children?: React.ReactNode;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color for `filled` variant @default false */
   autoContrast?: boolean;
 }
 
@@ -144,6 +144,8 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props) => {
     varsResolver,
   });
 
+  const _leftSection = variant === 'dot' ? undefined : leftSection;
+
   return (
     <Box
       variant={variant}
@@ -151,17 +153,17 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props) => {
         {
           block: fullWidth,
           circle,
-          'with-right-section': !!rightSection,
-          'with-left-section': !!leftSection,
+          withRightSection: !!rightSection,
+          withLeftSection: !!_leftSection,
         },
         mod,
       ]}
       {...getStyles('root', { variant })}
       {...others}
     >
-      {leftSection && (
+      {_leftSection && (
         <span {...getStyles('section')} data-position="left">
-          {leftSection}
+          {_leftSection}
         </span>
       )}
       <span {...getStyles('label')}>{children}</span>

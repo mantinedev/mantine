@@ -93,7 +93,7 @@ export type AutocompleteFactory = Factory<{
 export const Autocomplete = factory<AutocompleteFactory>((_props) => {
   const props = useProps(
     ['Input', 'InputWrapper', 'Autocomplete'],
-    { size: 'sm' } satisfies Partial<AutocompleteProps>,
+    { size: 'sm', openOnFocus: true } satisfies Partial<AutocompleteProps>,
     _props
   );
   const {
@@ -135,7 +135,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
     clearSectionMode,
     rightSection,
     autoSelectOnBlur,
-    openOnFocus = true,
+    openOnFocus,
     attributes,
     ...others
   } = props;
@@ -265,7 +265,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
         maxDropdownHeight={maxDropdownHeight}
         unstyled={unstyled}
         labelId={others.label ? `${_id}-label` : undefined}
-        aria-label={others.label ? undefined : others['aria-label']}
+        aria-label={others['aria-label']}
         renderOption={renderOption}
         scrollAreaProps={scrollAreaProps}
       />

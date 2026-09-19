@@ -39,6 +39,9 @@ export interface AffixBaseProps {
 
   /** Affix position on screen @default { bottom: 0, right: 0 } */
   position?: AffixPosition;
+
+  /** If set, `env(safe-area-inset-*)` values are added to the `position` offsets @default false */
+  withSafeArea?: boolean;
 }
 
 export interface AffixProps
@@ -57,13 +60,27 @@ const defaultProps = {
   withinPortal: true,
 } satisfies Partial<AffixProps>;
 
-const varsResolver = createVarsResolver<AffixFactory>((_, { zIndex, position }) => ({
+function getPositionOffset(
+  value: AffixPosition[keyof AffixPosition],
+  side: keyof AffixPosition,
+  withSafeArea: boolean | undefined
+) {
+  const offset = getSpacing(value);
+
+  if (!withSafeArea || offset === undefined) {
+    return offset;
+  }
+
+  return `calc(${offset} + env(safe-area-inset-${side}, 0px))`;
+}
+
+const varsResolver = createVarsResolver<AffixFactory>((_, { zIndex, position, withSafeArea }) => ({
   root: {
     '--affix-z-index': zIndex?.toString(),
-    '--affix-top': getSpacing(position?.top),
-    '--affix-left': getSpacing(position?.left),
-    '--affix-bottom': getSpacing(position?.bottom),
-    '--affix-right': getSpacing(position?.right),
+    '--affix-top': getPositionOffset(position?.top, 'top', withSafeArea),
+    '--affix-left': getPositionOffset(position?.left, 'left', withSafeArea),
+    '--affix-bottom': getPositionOffset(position?.bottom, 'bottom', withSafeArea),
+    '--affix-right': getPositionOffset(position?.right, 'right', withSafeArea),
   },
 }));
 
@@ -80,6 +97,7 @@ export const Affix = factory<AffixFactory>((_props) => {
     zIndex,
     withinPortal,
     position,
+    withSafeArea,
     attributes,
     ...others
   } = props;

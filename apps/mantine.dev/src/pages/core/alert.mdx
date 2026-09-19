@@ -45,23 +45,30 @@ custom sizes by defining these variables for the new size key, for example `--al
 
 - Root element role set to `alert`
 - `aria-describedby` set to body element id, `aria-labelledby` set to title element id if `title` is provided
-- Set `closeButtonLabel` prop to make close button accessible
+- Close button `aria-label` is set to `Close` by default
+
+To change the close button `aria-label`, set the `closeButtonLabel` prop:
 
 ```tsx
 import { Alert } from '@mantine/core';
 
-function Invalid() {
-  // -> not ok
-  return <Alert withCloseButton />;
+function Demo() {
+  return <Alert withCloseButton closeButtonLabel="Dismiss notification" />;
 }
+```
 
-function Valid() {
-  // -> ok
-  return <Alert withCloseButton closeButtonLabel="Dismiss" />;
-}
+`closeButtonProps` takes precedence over `closeButtonLabel` – use it if you need to pass other
+props to the close button as well:
 
-function AlsoValid() {
-  // -> ok, without close button, closeButtonLabel is not needed
-  return <Alert />;
+```tsx
+import { Alert } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Alert
+      withCloseButton
+      closeButtonProps={{ 'aria-label': 'Dismiss notification', title: 'Dismiss' }}
+    />
+  );
 }
 ```

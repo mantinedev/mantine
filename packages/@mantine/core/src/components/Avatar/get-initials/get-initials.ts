@@ -1,8 +1,8 @@
 export function getInitials(name: string, limit = 2) {
-  const splitted = name.split(' ');
+  const splitted = name.split(/\s+/).filter(Boolean);
 
-  if (splitted.length === 1) {
-    return name.slice(0, limit).toUpperCase();
+  if (splitted.length <= 1) {
+    return (splitted[0] ?? '').slice(0, limit).toUpperCase();
   }
 
   return splitted

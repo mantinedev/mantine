@@ -18,9 +18,17 @@ Set the `circle` prop to reduce horizontal padding and make the badge width equa
 
 <Demo data={BadgeDemos.rounded} />
 
+`circle` always renders a fully rounded badge – the `radius` prop is ignored when it is set.
+Because horizontal padding is removed, `circle` is intended for a short label (one or two
+characters) without `leftSection`/`rightSection`.
+
 ## Left and right sections
 
 <Demo data={BadgeDemos.sections} />
+
+`leftSection` is ignored when `variant="dot"` is used – the dot indicator occupies the same slot.
+If the section content is an icon without visible text, give it its own accessible name with an
+`aria-label` or `title` attribute.
 
 ## Full width
 

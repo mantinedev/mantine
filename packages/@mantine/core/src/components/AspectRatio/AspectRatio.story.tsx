@@ -46,13 +46,6 @@ export function WithinFlexContainer() {
           alt="img"
         />
       </AspectRatio>
-
-      <AspectRatio ratio={16 / 9} style={{ flex: 1 }}>
-        <img
-          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-          alt="img"
-        />
-      </AspectRatio>
     </div>
   );
 }

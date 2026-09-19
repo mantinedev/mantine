@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from 'react';
+import { use, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -17,13 +17,15 @@ import {
 } from '../../core';
 import {
   AvatarGroup,
-  AvatarGroupContext,
-  type AvatarGroupProps,
-  type AvatarGroupStylesNames,
   type AvatarGroupCssVariables,
   type AvatarGroupFactory,
-  type AvatarGroupContextValue,
+  type AvatarGroupProps,
+  type AvatarGroupStylesNames,
 } from './AvatarGroup/AvatarGroup';
+import {
+  AvatarGroupContext,
+  type AvatarGroupContextValue,
+} from './AvatarGroup/AvatarGroup.context';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { getInitialsColor } from './get-initials-color/get-initials-color';
 import { getInitials } from './get-initials/get-initials';
@@ -143,7 +145,11 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props) => {
     ...others
   } = props;
   const groupCtx = use(AvatarGroupContext);
-  const [error, setError] = useState(!src);
+  const [{ src: loadedSrc, error }, setImageState] = useState({ src, error: !src });
+
+  if (src !== loadedSrc) {
+    setImageState({ src, error: !src });
+  }
 
   const getStyles = useStyles<AvatarFactory>({
     name: 'Avatar',
@@ -159,12 +165,10 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props) => {
     varsResolver,
   });
 
-  useEffect(() => setError(!src), [src]);
-
   return (
     <Box {...getStyles('root')} mod={[{ 'within-group': groupCtx.withinGroup }, mod]} {...others}>
       {error || !src ? (
-        <span {...getStyles('placeholder')} title={alt}>
+        <span {...getStyles('placeholder')} title={alt ?? name}>
           {children || (typeof name === 'string' && getInitials(name)) || <AvatarPlaceholderIcon />}
         </span>
       ) : (
@@ -172,9 +176,9 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props) => {
           {...imageProps}
           {...getStyles('image')}
           src={src}
-          alt={alt}
+          alt={alt ?? ''}
           onError={(event) => {
-            setError(true);
+            setImageState({ src, error: true });
             imageProps?.onError?.(event);
           }}
         />
@@ -186,7 +190,16 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props) => {
 Avatar.classes = classes;
 Avatar.varsResolver = varsResolver;
 Avatar.displayName = '@mantine/core/Avatar';
-Avatar.Group = AvatarGroup;
+
+// AvatarGroup renders Avatar for its overflow counter, so the two modules import each other.
+// Reading the AvatarGroup binding here at module evaluation time throws when AvatarGroup is
+// evaluated first (`Cannot access 'AvatarGroup' before initialization`), so the read is deferred
+// to the first Avatar.Group access instead.
+Object.defineProperty(Avatar, 'Group', {
+  configurable: true,
+  enumerable: true,
+  get: () => AvatarGroup,
+});
 
 export namespace Avatar {
   export type Props = AvatarProps;

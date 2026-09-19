@@ -17,7 +17,7 @@ export function WithFormData() {
         onSubmit={(event) => {
           event.preventDefault();
           const formData = new FormData(event.currentTarget);
-          console.log('Checkbox group value:', formData.get('angle'));
+          console.log('Angle value:', formData.get('angle'));
         }}
       >
         <AngleSlider name="angle" defaultValue={120} />

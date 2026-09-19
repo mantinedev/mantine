@@ -537,3 +537,12 @@ const theme = createTheme({
 
 A new `generateColorFormats` function is also available when you need the full palette in multiple
 formats (oklch, hex, rgb, hsl) along with the detected base color index.
+
+## Other changes
+
+- [Affix](/core/affix) now supports `withSafeArea` prop – when it is set, `env(safe-area-inset-*)` values are added to the `position` offsets, so the affixed content is not covered by the device notch or the home indicator.
+- [Alert](/core/alert) now supports `closeButtonProps` and sets `Close` as the default close button `aria-label`.
+- [AngleSlider](/core/angle-slider) now supports `largeStep` prop and `PageUp`/`PageDown`/`Shift + Arrow` keyboard interactions, a `readOnly` prop, and sets `aria-valuetext`, `aria-disabled` and `aria-readonly` attributes. Keyboard interactions now always produce values that are on the same grid as pointer interactions: with `step={5}`, `ArrowLeft` at `0` sets the value to `355` instead of `359`. `onMouseDown` and `onTouchStart` props are now forwarded to the root element – previously they were silently ignored.
+- [Avatar.Group](/core/avatar) now supports `max`, `total` and `renderOverflow` props – children that do not fit into `max` are replaced with a `+N` counter.
+- [Badge](/core/badge) no longer renders `leftSection` when `variant="dot"` is used – the dot indicator occupies the same slot and the two collided in the grid layout.
+- [Breadcrumbs](/core/breadcrumbs) root element is now a `nav` landmark with a default `aria-label="Breadcrumbs"`, and separators are rendered with `aria-hidden` so that they are not announced by screen readers.

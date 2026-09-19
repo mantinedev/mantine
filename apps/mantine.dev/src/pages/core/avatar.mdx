@@ -16,6 +16,10 @@ is set, you can use `color="initials"` to generate a color based on the name:
 
 <Demo data={AvatarDemos.initials} />
 
+The avatar content is resolved in the following order: `children` (if given) take precedence over
+the initials generated from `name`, which in turn take precedence over the default placeholder
+icon. `name` is also used as the `title` attribute of the placeholder when `alt` is not set.
+
 ## Allowed initials colors
 
 By default, all colors from the default theme are allowed for initials. You can restrict them
@@ -68,6 +72,38 @@ Example of usage with [Tooltip](/core/tooltip/):
 
 <Demo data={AvatarDemos.groupTooltip} />
 
+## Avatar.Group overflow counter
+
+Set the `max` prop to limit the number of avatars displayed in the group – all children that do not
+fit are replaced with a counter. Use the `total` prop if the group represents more avatars than the
+number of children you render, for example when the data is paginated:
+
+<Demo data={AvatarDemos.groupMax} />
+
+The counter is an `Avatar` with `+{count}` content. To customize it – for example to wrap it with a
+[Tooltip](/core/tooltip) – use the `renderOverflow` prop:
+
+```tsx
+import { Avatar, Tooltip } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Avatar.Group
+      max={2}
+      renderOverflow={(count) => (
+        <Tooltip label={`${count} more`}>
+          <Avatar>+{count}</Avatar>
+        </Tooltip>
+      )}
+    >
+      <Avatar src="image-1.png" />
+      <Avatar src="image-2.png" />
+      <Avatar src="image-3.png" />
+    </Avatar.Group>
+  );
+}
+```
+
 <Polymorphic
   defaultElement="div"
   changeToElement="button"
@@ -83,6 +119,10 @@ Example of using `Avatar` as a link:
 
 Avatar renders an `<img />` HTML element. Set the `alt` prop to describe the image –
 it is also used as the `title` attribute for the avatar placeholder when the image cannot be loaded.
+If `alt` is not set, the image gets `alt=""` so that screen readers do not read out the image url,
+and the placeholder falls back to `name` for its `title`. The default placeholder icon is always
+`aria-hidden` – if the avatar is used as a link or a button, give it an accessible name with the
+`aria-label` prop.
 
 ```tsx
 import { Avatar } from '@mantine/core';

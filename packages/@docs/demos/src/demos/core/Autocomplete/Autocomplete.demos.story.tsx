@@ -137,3 +137,8 @@ export const Demo_floatingHeight = {
   name: '⭐ Demo: floatingHeight',
   render: renderDemo(demos.floatingHeight),
 };
+
+export const Demo_openOnFocus = {
+  name: '⭐ Demo: openOnFocus',
+  render: renderDemo(demos.openOnFocus),
+};

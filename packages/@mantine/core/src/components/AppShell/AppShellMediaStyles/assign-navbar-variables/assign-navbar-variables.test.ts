@@ -184,7 +184,7 @@ describe('@mantine/core/AppShell/assign-navbar-variables resize', () => {
     expect(maxMediaStyles.sm?.['--app-shell-navbar-resize-handle-display']).toBeUndefined();
   });
 
-  it('overrides the static mode grid width', () => {
+  it('applies the resized size in static mode', () => {
     const baseStyles = {};
     assignNavbarVariables({
       baseStyles,
@@ -197,6 +197,9 @@ describe('@mantine/core/AppShell/assign-navbar-variables resize', () => {
       resizable: true,
     });
 
-    expect(baseStyles).toMatchObject({ '--app-shell-navbar-grid-width': rem(420) });
+    expect(baseStyles).toMatchObject({
+      '--app-shell-navbar-width': rem(420),
+      '--app-shell-navbar-offset': rem(420),
+    });
   });
 });

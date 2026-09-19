@@ -1,4 +1,5 @@
 export { usage } from './Autocomplete.demo.usage';
+export { openOnFocus } from './Autocomplete.demo.openOnFocus';
 export { readOnly } from './Autocomplete.demo.readOnly';
 export { disabled } from './Autocomplete.demo.disabled';
 export { configurator } from './Autocomplete.demo.configurator';

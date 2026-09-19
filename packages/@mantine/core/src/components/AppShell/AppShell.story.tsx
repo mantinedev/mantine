@@ -181,64 +181,6 @@ export function Disabled() {
   );
 }
 
-export function Unstyled() {
-  const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure(true);
-  const [navbarMobileOpened, { toggle: toggleNavbarMobile }] = useDisclosure(false);
-  const [asideOpened, { toggle: toggleAside }] = useDisclosure(true);
-  const [asideMobileOpened, { toggle: toggleAsideMobile }] = useDisclosure(false);
-  const [headerOpened, { toggle: toggleHeader }] = useDisclosure(true);
-  const [footerOpened, { toggle: toggleFooter }] = useDisclosure(true);
-
-  return (
-    <AppShell
-      padding="md"
-      unstyled
-      navbar={{
-        width: { base: 200, md: 300 },
-        breakpoint: 'sm',
-        collapsed: { desktop: !navbarOpened, mobile: !navbarMobileOpened },
-      }}
-      aside={{
-        width: { base: 200, md: 300 },
-        breakpoint: 'sm',
-        collapsed: { desktop: !asideOpened, mobile: !asideMobileOpened },
-      }}
-      header={{
-        height: 50,
-        collapsed: !headerOpened,
-      }}
-      footer={{
-        height: 50,
-        collapsed: !footerOpened,
-      }}
-    >
-      <AppShell.Navbar>
-        <AppShell.Section>First section</AppShell.Section>
-        <AppShell.Section>Second section</AppShell.Section>
-        <AppShell.Section grow>Grow section</AppShell.Section>
-        <AppShell.Section>Last section</AppShell.Section>
-      </AppShell.Navbar>
-      <AppShell.Header>Header</AppShell.Header>
-      <AppShell.Main>
-        <Group>
-          <Button onClick={toggleHeader}>Toggle header</Button>
-          <Button onClick={toggleFooter}>Toggle footer</Button>
-          <Button onClick={toggleNavbar}>Toggle navbar</Button>
-          <Button onClick={toggleNavbarMobile}>Toggle navbar mobile</Button>
-
-          <Button onClick={toggleAside}>Toggle aside</Button>
-          <Button onClick={toggleAsideMobile}>Toggle aside mobile</Button>
-        </Group>
-        <p>Other content</p>
-      </AppShell.Main>
-
-      <AppShell.Aside>Aside</AppShell.Aside>
-
-      <AppShell.Footer>Footer</AppShell.Footer>
-    </AppShell>
-  );
-}
-
 export function StaticMode() {
   const [navbarOpened, { toggle }] = useDisclosure(true);
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure(false);

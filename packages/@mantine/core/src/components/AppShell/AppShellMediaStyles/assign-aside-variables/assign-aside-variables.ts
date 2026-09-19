@@ -48,9 +48,6 @@ export function assignAsideVariables({
     const resizedValue = rem(resizedSize);
     baseStyles['--app-shell-aside-width'] = resizedValue;
     baseStyles['--app-shell-aside-offset'] = resizedValue;
-    if (mode === 'static') {
-      baseStyles['--app-shell-aside-grid-width'] = resizedValue;
-    }
   } else {
     if (isPrimitiveSize(asideWidth)) {
       const baseSize = rem(getBaseSize(asideWidth));

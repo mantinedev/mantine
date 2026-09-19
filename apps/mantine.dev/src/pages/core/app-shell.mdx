@@ -120,6 +120,33 @@ are positioned relative to each other. It accepts `alt` and `default` values:
 - `alt` – `AppShell.Navbar`/`AppShell.Aside` extends the full viewport height, while `AppShell.Header`/`AppShell.Footer` width equals the viewport width minus the width of `AppShell.Navbar` and `AppShell.Aside` ([example](/app-shell?e=AltLayout))
 - `default` – `AppShell.Navbar`/`AppShell.Aside` height equals the viewport height minus `AppShell.Header`/`AppShell.Footer` height, and `AppShell.Header`/`AppShell.Footer` spans the full viewport width ([example](/app-shell?e=FullLayout))
 
+## mode prop
+
+`mode` prop controls how `AppShell` sections are positioned on the page. It accepts `fixed` and
+`static` values:
+
+- `fixed` (default) – all sections have `position: fixed` and are taken out of the document flow. The shell always fills the viewport, and `AppShell.Main` is offset with paddings so that its content is not covered by the sections.
+- `static` – the shell is a CSS grid that participates in the document flow. Sections are placed in grid tracks and scroll with the page, `AppShell.Navbar`/`AppShell.Aside` become `position: sticky` above the configured breakpoint, and `header.offset`/`footer.offset` are forced to `true`.
+
+```tsx
+import { AppShell } from '@mantine/core';
+
+function Demo() {
+  return (
+    <AppShell mode="static" navbar={{ width: 300, breakpoint: 'sm' }}>
+      {/* AppShell content */}
+    </AppShell>
+  );
+}
+```
+
+Static mode is the only way to render an `AppShell` that is not attached to the viewport, for
+example inside a card, a modal or another `AppShell` ([static mode example](/app-shell?e=StaticMode),
+[nested AppShell example](/app-shell?e=NestedAppShell)).
+
+Note that in static mode `--app-shell-*` CSS variables are defined on the `AppShell` root element
+instead of `:root`, the same way as with the `resize` prop.
+
 ## Resizable sections
 
 Use the `useAppShellResize` hook together with the `resize` prop to let the user resize
@@ -621,8 +648,8 @@ function Demo() {
 
 ## disabled prop
 
-Set the `disabled` prop on the `AppShell` component to prevent all sections except `AppShell.Main` from rendering.
-This is useful when you want to hide the shell on certain pages of your application.
+Set the `disabled` prop on the `AppShell` component to prevent all sections except `AppShell.Main`
+from rendering. This is useful when you want to hide the shell on certain pages of your application:
 
 ```tsx
 import { AppShell } from '@mantine/core';
@@ -631,6 +658,12 @@ function Demo() {
   return <AppShell disabled>{/* AppShell content */}</AppShell>;
 }
 ```
+
+`AppShell.Header`, `AppShell.Navbar`, `AppShell.Aside` and `AppShell.Footer` return `null` when the
+shell is disabled – they are unmounted, not hidden with styles, so their state is lost. All section
+offsets are reset to `0`, and transitions are suppressed for the duration of `transitionDuration`
+while the shell switches between the two states, so toggling `disabled` does not animate the
+remaining content.
 
 ## AppShell.Section component
 
@@ -680,6 +713,31 @@ Important: do not use a `<main>` element inside `AppShell.Main`, as only one `<m
     [<Code>AppShell.Section</Code>, <Code>div</Code>],
   ]}
 />
+
+## Accessibility
+
+`AppShell` sections render landmark elements (see the table above): `header` (`banner`), `nav`
+(`navigation`), `aside` (`complementary`), `footer` (`contentinfo`) and `main`.
+When a page contains more than one landmark of the same type – for example a second `nav` inside
+`AppShell.Main` – give each of them a unique label so that they can be told apart in the screen
+reader landmarks list:
+
+```tsx
+import { AppShell } from '@mantine/core';
+
+function Demo() {
+  return (
+    <AppShell navbar={{ width: 300, breakpoint: 'sm' }} aside={{ width: 300, breakpoint: 'sm' }}>
+      <AppShell.Navbar aria-label="Main navigation">{/* Navbar content */}</AppShell.Navbar>
+      <AppShell.Aside aria-label="Table of contents">{/* Aside content */}</AppShell.Aside>
+    </AppShell>
+  );
+}
+```
+
+Note that the `disabled` prop unmounts all sections except `AppShell.Main`, so the page loses these
+landmarks entirely – if users rely on landmark navigation, provide an alternative navigation
+region inside `AppShell.Main`.
 
 ## CSS variables
 

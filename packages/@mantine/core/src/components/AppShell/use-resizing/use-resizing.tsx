@@ -45,6 +45,14 @@ export function useResizing({ transitionDuration, disabled, resizeKey }: UseResi
     );
   });
 
+  useEffect(
+    () => () => {
+      window.clearTimeout(resizingTimeout.current);
+      window.clearTimeout(disabledTimeout.current);
+    },
+    []
+  );
+
   useIsomorphicEffect(() => {
     setResizing(true);
     clearTimeout(disabledTimeout.current);

@@ -3,3 +3,4 @@ export { marks } from './AngleSlider.demo.marks';
 export { formatLabel } from './AngleSlider.demo.formatLabel';
 export { onChangeEnd } from './AngleSlider.demo.onChangeEnd';
 export { disabled } from './AngleSlider.demo.disabled';
+export { readOnly } from './AngleSlider.demo.readOnly';

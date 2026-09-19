@@ -34,9 +34,6 @@ export function assignNavbarVariables({
     maxMediaStyles[navbar?.breakpoint] = maxMediaStyles[navbar?.breakpoint] || {};
     maxMediaStyles[navbar?.breakpoint]['--app-shell-navbar-offset'] = '0px';
     maxMediaStyles[navbar?.breakpoint]['--app-shell-navbar-width'] = '100%';
-    if (mode === 'static') {
-      maxMediaStyles[navbar?.breakpoint]['--app-shell-navbar-grid-width'] = '0px';
-    }
     if (resizable) {
       maxMediaStyles[navbar.breakpoint]['--app-shell-navbar-resize-handle-display'] = 'none';
     }
@@ -46,26 +43,17 @@ export function assignNavbarVariables({
     const resizedValue = rem(resizedSize);
     baseStyles['--app-shell-navbar-width'] = resizedValue;
     baseStyles['--app-shell-navbar-offset'] = resizedValue;
-    if (mode === 'static') {
-      baseStyles['--app-shell-navbar-grid-width'] = resizedValue;
-    }
   } else {
     if (isPrimitiveSize(navbarWidth)) {
       const baseSize = rem(getBaseSize(navbarWidth));
       baseStyles['--app-shell-navbar-width'] = baseSize;
       baseStyles['--app-shell-navbar-offset'] = baseSize;
-      if (mode === 'static') {
-        baseStyles['--app-shell-navbar-grid-width'] = baseSize;
-      }
     }
 
     if (isResponsiveSize(navbarWidth)) {
       if (typeof navbarWidth.base !== 'undefined') {
         baseStyles['--app-shell-navbar-width'] = rem(navbarWidth.base);
         baseStyles['--app-shell-navbar-offset'] = rem(navbarWidth.base);
-        if (mode === 'static') {
-          baseStyles['--app-shell-navbar-grid-width'] = rem(navbarWidth.base);
-        }
       }
 
       keys(navbarWidth).forEach((key) => {
@@ -73,9 +61,6 @@ export function assignNavbarVariables({
           minMediaStyles[key] = minMediaStyles[key] || {};
           minMediaStyles[key]['--app-shell-navbar-width'] = rem(navbarWidth![key]);
           minMediaStyles[key]['--app-shell-navbar-offset'] = rem(navbarWidth![key]);
-          if (mode === 'static') {
-            minMediaStyles[key]['--app-shell-navbar-grid-width'] = rem(navbarWidth![key]);
-          }
         }
       });
     }
@@ -113,9 +98,6 @@ export function assignNavbarVariables({
     maxMediaStyles[breakpointValue] = maxMediaStyles[breakpointValue] || {};
     maxMediaStyles[breakpointValue]['--app-shell-navbar-width'] = '100%';
     maxMediaStyles[breakpointValue]['--app-shell-navbar-offset'] = '0px';
-    if (mode === 'static') {
-      maxMediaStyles[breakpointValue]['--app-shell-navbar-grid-width'] = '0px';
-    }
     maxMediaStyles[breakpointValue]['--app-shell-navbar-transform'] = collapsedNavbarTransform;
     maxMediaStyles[breakpointValue]['--app-shell-navbar-transform-rtl'] =
       collapsedNavbarTransformRtl;

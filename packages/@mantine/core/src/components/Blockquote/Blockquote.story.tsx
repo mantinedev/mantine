@@ -47,13 +47,3 @@ export function Colors() {
     </div>
   );
 }
-
-export function Unstyled() {
-  return (
-    <div style={{ padding: 40, maxWidth: 820 }}>
-      <Blockquote unstyled icon={<InfoIcon />} color="#F0000E" cite="– Forrest Gump">
-        Life is like an npm install – you never know what you are going to get.
-      </Blockquote>
-    </div>
-  );
-}

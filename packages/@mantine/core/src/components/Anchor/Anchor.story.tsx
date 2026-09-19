@@ -5,25 +5,25 @@ export default { title: 'Anchor' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Anchor href="https://mantine.dev" target="blank" underline="never">
+      <Anchor href="https://mantine.dev" target="_blank" underline="never">
         Mantine website link: never
       </Anchor>
       <br />
-      <Anchor href="https://mantine.dev" target="blank">
+      <Anchor href="https://mantine.dev" target="_blank">
         Mantine website link: hover
       </Anchor>
       <br />
-      <Anchor href="https://mantine.dev" target="blank" underline="not-hover">
+      <Anchor href="https://mantine.dev" target="_blank" underline="not-hover">
         Mantine website link: not hover
       </Anchor>
       <br />
-      <Anchor href="https://mantine.dev" target="blank" underline="always">
+      <Anchor href="https://mantine.dev" target="_blank" underline="always">
         Mantine website link: always
       </Anchor>
       <br />
       <Anchor
         href="https://mantine.dev"
-        target="blank"
+        target="_blank"
         underline="never"
         variant="gradient"
         fz={60}

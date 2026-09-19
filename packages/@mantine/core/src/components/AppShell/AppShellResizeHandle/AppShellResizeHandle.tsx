@@ -85,10 +85,6 @@ export function AppShellResizeHandle({ section, sectionId }: AppShellResizeHandl
     if (ctx.resizeOffsets[section]) {
       root.style.setProperty(config.offsetVariable, value);
     }
-
-    if (ctx.mode === 'static' && config.gridWidthVariable) {
-      root.style.setProperty(config.gridWidthVariable, value);
-    }
   };
 
   const clearPreview = () => {
@@ -99,9 +95,6 @@ export function AppShellResizeHandle({ section, sectionId }: AppShellResizeHandl
 
     root.style.removeProperty(config.sizeVariable);
     root.style.removeProperty(config.offsetVariable);
-    if (config.gridWidthVariable) {
-      root.style.removeProperty(config.gridWidthVariable);
-    }
   };
 
   const stopListeners = () => {

@@ -1,6 +1,7 @@
 export function AvatarPlaceholderIcon(props: React.ComponentProps<'svg'>) {
   return (
     <svg
+      aria-hidden
       {...props}
       data-avatar-placeholder-icon
       viewBox="0 0 15 15"

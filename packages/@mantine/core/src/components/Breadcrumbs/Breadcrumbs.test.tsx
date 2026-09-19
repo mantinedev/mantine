@@ -26,6 +26,51 @@ describe('@mantine/core/Breadcrumbs', () => {
     expect(screen.getAllByText('test-separator')).toHaveLength(2);
   });
 
+  it('renders a nav element with a default aria-label', () => {
+    const { container, rerender } = render(<Breadcrumbs {...defaultProps} />);
+    const root = container.querySelector('.mantine-Breadcrumbs-root')!;
+    expect(root.tagName).toBe('NAV');
+    expect(root).toHaveAttribute('aria-label', 'Breadcrumbs');
+
+    rerender(
+      <>
+        <Breadcrumbs {...defaultProps} aria-label="Test label" />
+      </>
+    );
+    expect(container.querySelector('.mantine-Breadcrumbs-root')).toHaveAttribute(
+      'aria-label',
+      'Test label'
+    );
+  });
+
+  it('hides separators from assistive technologies', () => {
+    const { container } = render(<Breadcrumbs {...defaultProps} />);
+    container.querySelectorAll('.mantine-Breadcrumbs-separator').forEach((separator) => {
+      expect(separator).toHaveAttribute('aria-hidden', 'true');
+    });
+  });
+
+  it('wraps non-element children with a breadcrumb element', () => {
+    const { container } = render(
+      <Breadcrumbs>
+        first
+        {2}
+      </Breadcrumbs>
+    );
+
+    const breadcrumbs = container.querySelectorAll('.mantine-Breadcrumbs-breadcrumb');
+    expect(breadcrumbs).toHaveLength(2);
+    expect(breadcrumbs[0]).toHaveTextContent('first');
+    expect(breadcrumbs[1]).toHaveTextContent('2');
+  });
+
+  it('supports React node separator', () => {
+    const { container } = render(
+      <Breadcrumbs {...defaultProps} separator={<span data-test-separator>-</span>} />
+    );
+    expect(container.querySelectorAll('[data-test-separator]')).toHaveLength(2);
+  });
+
   it('allows to set child className', () => {
     render(
       <Breadcrumbs>

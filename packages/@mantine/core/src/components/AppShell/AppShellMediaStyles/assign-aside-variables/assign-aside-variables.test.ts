@@ -186,7 +186,7 @@ describe('@mantine/core/AppShell/assign-aside-variables resize', () => {
     expect(maxMediaStyles.sm?.['--app-shell-aside-resize-handle-display']).toBeUndefined();
   });
 
-  it('overrides the static mode grid width', () => {
+  it('applies the resized size in static mode', () => {
     const baseStyles = {};
     assignAsideVariables({
       baseStyles,
@@ -199,6 +199,9 @@ describe('@mantine/core/AppShell/assign-aside-variables resize', () => {
       resizable: true,
     });
 
-    expect(baseStyles).toMatchObject({ '--app-shell-aside-grid-width': rem(420) });
+    expect(baseStyles).toMatchObject({
+      '--app-shell-aside-width': rem(420),
+      '--app-shell-aside-offset': rem(420),
+    });
   });
 });

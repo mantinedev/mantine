@@ -21,26 +21,27 @@ export type BreadcrumbsCssVariables = {
 };
 
 export interface BreadcrumbsProps
-  extends BoxProps, StylesApiProps<BreadcrumbsFactory>, ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<BreadcrumbsFactory>, ElementProps<'nav'> {
   /** Separator between children @default '/' */
   separator?: React.ReactNode;
 
   /** Controls spacing between separator and breadcrumb @default 'xs' */
   separatorMargin?: MantineSpacing;
 
-  /** React nodes that should be separated with `separator` */
+  /** React nodes that should be separated with `separator`. Arrays are flattened, non-element children are wrapped with a `div`. */
   children: React.ReactNode;
 }
 
 export type BreadcrumbsFactory = Factory<{
   props: BreadcrumbsProps;
-  ref: HTMLDivElement;
+  ref: HTMLElement;
   stylesNames: BreadcrumbsStylesNames;
   vars: BreadcrumbsCssVariables;
 }>;
 
 const defaultProps = {
   separator: '/',
+  'aria-label': 'Breadcrumbs',
 } satisfies Partial<BreadcrumbsProps>;
 
 const varsResolver = createVarsResolver<BreadcrumbsFactory>((_, { separatorMargin }) => ({
@@ -82,8 +83,10 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props) => {
   const items = Children.toArray(children).reduce<React.ReactNode[]>((acc, child, index, array) => {
     const item = isElement(child) ? (
       cloneElement(child, {
-        ...getStyles('breadcrumb', { className: (child.props as any)?.className }),
-        key: index,
+        ...getStyles('breadcrumb', {
+          className: (child.props as { className?: string })?.className,
+        }),
+        key: child.key ?? index,
       })
     ) : (
       <div {...getStyles('breadcrumb')} key={index}>
@@ -95,7 +98,7 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props) => {
 
     if (index !== array.length - 1) {
       acc.push(
-        <Box {...getStyles('separator')} key={`separator-${index}`}>
+        <Box {...getStyles('separator')} aria-hidden key={`separator-${index}`}>
           {separator}
         </Box>
       );
@@ -105,7 +108,7 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props) => {
   }, []);
 
   return (
-    <Box {...getStyles('root')} {...others}>
+    <Box component="nav" {...getStyles('root')} {...others}>
       {items}
     </Box>
   );

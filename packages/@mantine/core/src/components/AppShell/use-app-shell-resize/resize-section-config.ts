@@ -13,9 +13,6 @@ export interface ResizeSectionConfig {
   /** CSS variable that controls the space reserved for the section */
   offsetVariable: string;
 
-  /** CSS variable that controls the grid track size in `mode="static"` */
-  gridWidthVariable?: string;
-
   /** CSS variable that controls whether the resize handle is displayed */
   handleDisplayVariable: string;
 
@@ -32,7 +29,6 @@ export const RESIZE_SECTIONS: Record<AppShellResizeSection, ResizeSectionConfig>
     orientation: 'vertical',
     sizeVariable: '--app-shell-navbar-width',
     offsetVariable: '--app-shell-navbar-offset',
-    gridWidthVariable: '--app-shell-navbar-grid-width',
     handleDisplayVariable: '--app-shell-navbar-resize-handle-display',
     sign: 1,
   },
@@ -41,7 +37,6 @@ export const RESIZE_SECTIONS: Record<AppShellResizeSection, ResizeSectionConfig>
     orientation: 'vertical',
     sizeVariable: '--app-shell-aside-width',
     offsetVariable: '--app-shell-aside-offset',
-    gridWidthVariable: '--app-shell-aside-grid-width',
     handleDisplayVariable: '--app-shell-aside-resize-handle-display',
     sign: -1,
   },

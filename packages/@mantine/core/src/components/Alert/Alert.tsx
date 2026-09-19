@@ -3,6 +3,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -19,7 +20,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { CloseButton, CloseButtonFactory } from '../CloseButton';
+import { __CloseButtonProps, CloseButton, CloseButtonFactory } from '../CloseButton';
 import classes from './Alert.module.css';
 
 export type AlertStylesNames =
@@ -52,7 +53,7 @@ export interface AlertProps
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor  */
+  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
   color?: MantineColor;
 
   /** Controls padding, font-size, icon size and close button size @default 'md' */
@@ -70,10 +71,13 @@ export interface AlertProps
   /** Called when the close button is clicked */
   onClose?: () => void;
 
-  /** Close button `aria-label` */
+  /** Close button `aria-label` @default 'Close' */
   closeButtonLabel?: string;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** Props passed down to the close button */
+  closeButtonProps?: __CloseButtonProps & ElementProps<'button'> & DataAttributes;
+
+  /** If set, adjusts text color based on the background color, applied only to the `filled` variant @default false */
   autoContrast?: boolean;
 }
 
@@ -84,6 +88,10 @@ export type AlertFactory = Factory<{
   vars: AlertCssVariables;
   variant: AlertVariant;
 }>;
+
+const defaultProps = {
+  closeButtonLabel: 'Close',
+} satisfies Partial<AlertProps>;
 
 const NEUTRAL_TEXT_VARIANTS = new Set(['light', 'outline', 'default', 'transparent']);
 
@@ -154,7 +162,7 @@ const varsResolver = createVarsResolver<AlertFactory>(
 );
 
 export const Alert = factory<AlertFactory>((_props) => {
-  const props = useProps('Alert', null, _props);
+  const props = useProps('Alert', defaultProps, _props);
   const {
     classNames,
     className,
@@ -172,6 +180,7 @@ export const Alert = factory<AlertFactory>((_props) => {
     withCloseButton,
     onClose,
     closeButtonLabel,
+    closeButtonProps,
     variant,
     autoContrast,
     role,
@@ -195,7 +204,7 @@ export const Alert = factory<AlertFactory>((_props) => {
 
   const rootId = useId(id);
   const titleId = (title && `${rootId}-title`) || undefined;
-  const bodyId = `${rootId}-body`;
+  const bodyId = (children && `${rootId}-body`) || undefined;
 
   return (
     <Box
@@ -205,11 +214,15 @@ export const Alert = factory<AlertFactory>((_props) => {
       size={size}
       {...others}
       role={role || 'alert'}
-      aria-describedby={children ? bodyId : undefined}
+      aria-describedby={bodyId}
       aria-labelledby={title ? titleId : undefined}
     >
       <div {...getStyles('wrapper')}>
-        {icon && <div {...getStyles('icon')}>{icon}</div>}
+        {icon && (
+          <div {...getStyles('icon')} aria-hidden>
+            {icon}
+          </div>
+        )}
 
         <div {...getStyles('body')}>
           {title && (
@@ -229,12 +242,16 @@ export const Alert = factory<AlertFactory>((_props) => {
 
         {withCloseButton && (
           <CloseButton
-            {...getStyles('closeButton')}
-            onClick={onClose}
             variant="transparent"
             vars={closeButtonVars}
             aria-label={closeButtonLabel}
+            {...closeButtonProps}
+            {...getStyles('closeButton')}
             unstyled={unstyled}
+            onClick={(event) => {
+              closeButtonProps?.onClick?.(event);
+              onClose?.();
+            }}
           />
         )}
       </div>

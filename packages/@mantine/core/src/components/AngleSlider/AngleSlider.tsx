@@ -25,6 +25,9 @@ export interface AngleSliderProps
   /** Step between values @default 1 */
   step?: number;
 
+  /** Number by which value is incremented/decremented on `Shift + Arrow` and `PageUp`/`PageDown` keys. Ignored when `restrictToMarks` is set @default 10 × step */
+  largeStep?: number;
+
   /** Controlled component value */
   value?: number;
 
@@ -52,14 +55,17 @@ export interface AngleSliderProps
   /** Slider size in px @default 60 */
   size?: number;
 
-  /** Size of the thumb in px. Calculated based on the `size` value by default. */
+  /** Size of the thumb in px @default `size / 5`, but not larger than `size / 2` */
   thumbSize?: number;
 
   /** A function to format label based on the current value */
   formatLabel?: (value: number) => React.ReactNode;
 
-  /** Sets `data-disabled` attribute, disables interactions */
+  /** Sets `data-disabled` attribute, disables interactions @default false */
   disabled?: boolean;
+
+  /** If set, the value cannot be changed, but the slider remains focusable @default false */
+  readOnly?: boolean;
 
   /** If set, the selection is allowed only from the given marks array @default false */
   restrictToMarks?: boolean;
@@ -83,6 +89,10 @@ const defaultProps = {
   withLabel: true,
 } satisfies Partial<AngleSliderProps>;
 
+const DECREMENT_KEYS = new Set(['ArrowLeft', 'ArrowDown', 'PageDown']);
+const INCREMENT_KEYS = new Set(['ArrowRight', 'ArrowUp', 'PageUp']);
+const KEYBOARD_KEYS = new Set([...DECREMENT_KEYS, ...INCREMENT_KEYS, 'Home', 'End']);
+
 const varsResolver = createVarsResolver<AngleSliderFactory>((_, { size, thumbSize }) => ({
   root: {
     '--slider-size': rem(size),
@@ -100,10 +110,10 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
     unstyled,
     vars,
     step,
+    largeStep,
     value,
     defaultValue,
     onChange,
-    onMouseDown,
     withLabel,
     marks,
     thumbSize,
@@ -111,7 +121,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
     formatLabel,
     onChangeEnd,
     disabled,
-    onTouchStart,
+    readOnly,
     name,
     hiddenInputProps,
     'aria-label': ariaLabel,
@@ -134,7 +144,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
   });
 
   const update = (val: number) => {
-    if (rootRef.current && !disabled) {
+    if (rootRef.current && !disabled && !readOnly) {
       const newValue =
         restrictToMarks && Array.isArray(marks)
           ? findClosestNumber(
@@ -146,6 +156,8 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
       setValue(newValue);
     }
   };
+
+  const maxValue = normalizeRadialValue(360 - step, step);
 
   const { ref: radialMoveRef } = useRadialMove(update, {
     step,
@@ -169,50 +181,37 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
   });
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (disabled) {
+    if (disabled || readOnly || !KEYBOARD_KEYS.has(event.key)) {
       return;
     }
 
+    event.preventDefault();
+
+    const markValues = restrictToMarks && Array.isArray(marks) ? marks.map((m) => m.value) : null;
+    const delta =
+      event.key === 'PageUp' || event.key === 'PageDown' || event.shiftKey
+        ? (largeStep ?? step * 10)
+        : step;
+
     let newValue = _value;
 
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-      event.preventDefault();
-      if (_value === 0) {
-        newValue = 359;
-      } else {
-        newValue = normalizeRadialValue(_value - step, step);
-      }
-    }
-
-    if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-      event.preventDefault();
-      if (_value === 359) {
-        newValue = 0;
-      } else {
-        newValue = normalizeRadialValue(_value + step, step);
-      }
-    }
-
-    if (event.key === 'Home') {
+    if (DECREMENT_KEYS.has(event.key) || INCREMENT_KEYS.has(event.key)) {
+      const direction = INCREMENT_KEYS.has(event.key) ? 1 : -1;
+      newValue = normalizeRadialValue((((_value + direction * delta) % 360) + 360) % 360, step);
+      newValue = newValue > maxValue ? 0 : newValue;
+    } else if (event.key === 'Home') {
       newValue = 0;
+    } else if (event.key === 'End') {
+      newValue = maxValue;
     }
 
-    if (event.key === 'End') {
-      newValue = 359;
-    }
-
-    if (restrictToMarks && Array.isArray(marks)) {
-      const markValues = marks.map((mark) => mark.value);
+    if (markValues) {
       const currentIndex = markValues.indexOf(_value);
 
-      if (currentIndex !== -1) {
-        if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-          newValue = markValues[currentIndex === 0 ? markValues.length - 1 : currentIndex - 1];
-        } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-          newValue = markValues[currentIndex === markValues.length - 1 ? 0 : currentIndex + 1];
-        } else {
-          newValue = findClosestNumber(newValue, markValues);
-        }
+      if (currentIndex !== -1 && DECREMENT_KEYS.has(event.key)) {
+        newValue = markValues[currentIndex === 0 ? markValues.length - 1 : currentIndex - 1];
+      } else if (currentIndex !== -1 && INCREMENT_KEYS.has(event.key)) {
+        newValue = markValues[currentIndex === markValues.length - 1 ? 0 : currentIndex + 1];
       } else {
         newValue = findClosestNumber(newValue, markValues);
       }
@@ -221,6 +220,13 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
     setValue(newValue);
     onChangeEnd?.(newValue);
   };
+
+  const label = typeof formatLabel === 'function' ? formatLabel(_value) : _value;
+  const formattedLabel =
+    typeof formatLabel === 'function' && (typeof label === 'string' || typeof label === 'number')
+      ? String(label)
+      : undefined;
+  const valueText = formattedLabel ?? marks?.find((mark) => mark.value === _value)?.label;
 
   const marksItems = marks?.map((mark, index) => (
     <div
@@ -232,24 +238,23 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
 
   return (
     <Box
-      ref={useMergedRef(ref, rootRef, radialMoveRef)}
+      ref={useMergedRef(ref, rootRef, disabled || readOnly ? null : radialMoveRef)}
       {...getStyles('root', { focusable: true })}
-      mod={[{ disabled }, mod]}
+      mod={[{ disabled, readOnly }, mod]}
       {...others}
     >
       {marksItems && marksItems.length > 0 && <div {...getStyles('marks')}>{marksItems}</div>}
 
-      {withLabel && (
-        <div {...getStyles('label')}>
-          {typeof formatLabel === 'function' ? formatLabel(_value) : _value}
-        </div>
-      )}
+      {withLabel && <div {...getStyles('label')}>{label}</div>}
       <div
         tabIndex={tabIndex ?? (disabled ? -1 : 0)}
         role="slider"
-        aria-valuemax={360}
+        aria-valuemax={maxValue}
         aria-valuemin={0}
         aria-valuenow={_value}
+        aria-valuetext={valueText}
+        aria-disabled={disabled || undefined}
+        aria-readonly={readOnly || undefined}
         onKeyDown={handleKeyDown}
         aria-label={ariaLabel}
         {...getStyles('thumb', { style: { transform: `rotate(${_value}deg)` } })}

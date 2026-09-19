@@ -6,15 +6,16 @@ import type {
   AvatarVariant,
 } from './Avatar';
 import type {
-  AvatarGroupContextValue,
   AvatarGroupCssVariables,
   AvatarGroupFactory,
   AvatarGroupProps,
   AvatarGroupStylesNames,
 } from './AvatarGroup/AvatarGroup';
+import type { AvatarGroupContextValue } from './AvatarGroup/AvatarGroup.context';
 
 export { Avatar } from './Avatar';
-export { AvatarGroup, AvatarGroupContext } from './AvatarGroup/AvatarGroup';
+export { AvatarGroup } from './AvatarGroup/AvatarGroup';
+export { AvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
 
 export type {
   AvatarProps,

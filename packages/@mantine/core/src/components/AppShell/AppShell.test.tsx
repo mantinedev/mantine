@@ -68,6 +68,56 @@ describe('@mantine/core/AppShell', () => {
     expect(container.querySelector('.mantine-AppShell-root')).not.toHaveAttribute('data-disabled');
   });
 
+  it('sets data-mode attribute based on mode prop', () => {
+    const { container, rerender } = render(<AppShell mode="static" />);
+    expect(container.querySelector('.mantine-AppShell-root')).toHaveAttribute(
+      'data-mode',
+      'static'
+    );
+
+    rerender(
+      <>
+        <AppShell mode="fixed" />
+      </>
+    );
+    expect(container.querySelector('.mantine-AppShell-root')).toHaveAttribute('data-mode', 'fixed');
+  });
+
+  it('does not render Navbar, Header, Aside and Footer when disabled is set', () => {
+    const { container, rerender } = render(
+      <AppShell disabled navbar={{ width: 300, breakpoint: 'sm' }} header={{ height: 50 }}>
+        <AppShell.Navbar>navbar</AppShell.Navbar>
+        <AppShell.Header>header</AppShell.Header>
+        <AppShell.Aside>aside</AppShell.Aside>
+        <AppShell.Footer>footer</AppShell.Footer>
+        <AppShell.Main>main</AppShell.Main>
+      </AppShell>
+    );
+
+    expect(container.querySelector('.mantine-AppShell-navbar')).toBe(null);
+    expect(container.querySelector('.mantine-AppShell-header')).toBe(null);
+    expect(container.querySelector('.mantine-AppShell-aside')).toBe(null);
+    expect(container.querySelector('.mantine-AppShell-footer')).toBe(null);
+    expect(container.querySelector('.mantine-AppShell-main')).toBeInTheDocument();
+
+    rerender(
+      <>
+        <AppShell navbar={{ width: 300, breakpoint: 'sm' }} header={{ height: 50 }}>
+          <AppShell.Navbar>navbar</AppShell.Navbar>
+          <AppShell.Header>header</AppShell.Header>
+          <AppShell.Aside>aside</AppShell.Aside>
+          <AppShell.Footer>footer</AppShell.Footer>
+          <AppShell.Main>main</AppShell.Main>
+        </AppShell>
+      </>
+    );
+
+    expect(container.querySelector('.mantine-AppShell-navbar')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-AppShell-header')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-AppShell-aside')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-AppShell-footer')).toBeInTheDocument();
+  });
+
   it('scopes generated styles to the shell id when a resize controller is given', () => {
     const { container } = render(<TestShell />);
     const shellId = container.querySelector('.mantine-AppShell-root')!.getAttribute('id');

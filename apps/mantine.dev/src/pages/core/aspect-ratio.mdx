@@ -11,6 +11,11 @@ It can be used to display images, maps, videos, and other media.
 
 <Demo data={AspectRatioDemos.image} />
 
+`AspectRatio` is designed to wrap a **single** element – an image, a video, an iframe or one
+container element. The ratio is applied to every direct child, so if you pass more than one child,
+each of them will be stretched to the given ratio and they will overlap. The child element is also
+responsible for its own accessible name, for example `alt` on an `img` or `title` on an `iframe`.
+
 ## Map embed
 
 <Demo data={AspectRatioDemos.map} />

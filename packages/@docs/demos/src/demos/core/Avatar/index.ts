@@ -4,6 +4,7 @@ export { configurator } from './Avatar.demo.configurator';
 export { link } from './Avatar.demo.link';
 export { group } from './Avatar.demo.group';
 export { groupTooltip } from './Avatar.demo.groupTooltip';
+export { groupMax } from './Avatar.demo.groupMax';
 export { gradient } from './Avatar.demo.gradient';
 export { initials } from './Avatar.demo.initials';
 export { allowedColors } from './Avatar.demo.allowedColors';
