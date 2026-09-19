@@ -1,4 +1,3 @@
-import { klona } from 'klona/full';
 import { getSplittedPath } from './get-splitted-path';
 
 export function setPath<T>(path: unknown, value: unknown, values: T): T {
@@ -8,24 +7,17 @@ export function setPath<T>(path: unknown, value: unknown, values: T): T {
     return values;
   }
 
-  const cloned: any = klona(values);
-
-  if (splittedPath.length === 1) {
-    cloned[splittedPath[0]] = value;
-    return cloned;
-  }
-
-  let val = cloned[splittedPath[0]];
-
-  for (let i = 1; i < splittedPath.length - 1; i += 1) {
-    if (val === undefined) {
-      return cloned;
+  function cloneStep(current: any, index: number): any {
+    if (index === splittedPath.length) {
+      return value;
     }
 
-    val = val[splittedPath[i]];
+    const key = splittedPath[index];
+    const isArr = Array.isArray(current);
+    const copy = isArr ? [...(current || [])] : { ...(current || {}) };
+    copy[key] = cloneStep(copy[key], index + 1);
+    return copy;
   }
 
-  val[splittedPath[splittedPath.length - 1]] = value;
-
-  return cloned;
+  return cloneStep(values, 0);
 }

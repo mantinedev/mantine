@@ -120,61 +120,53 @@ export function useFormActions<Values = Record<string, unknown>, TransformedValu
     validateFormName(name);
   }
 
-  useFormEvent(`mantine-form:${name}:set-field-value`, (event: CustomEvent) =>
+  const getEventKey = (action: string) => (name ? `mantine-form:${name}:${action}` : undefined);
+
+  useFormEvent(getEventKey('set-field-value'), (event: CustomEvent) =>
     form.setFieldValue(event.detail.path, event.detail.value)
   );
 
-  useFormEvent(`mantine-form:${name}:set-values`, (event: CustomEvent) =>
-    form.setValues(event.detail)
-  );
+  useFormEvent(getEventKey('set-values'), (event: CustomEvent) => form.setValues(event.detail));
 
-  useFormEvent(`mantine-form:${name}:set-initial-values`, (event: CustomEvent) =>
+  useFormEvent(getEventKey('set-initial-values'), (event: CustomEvent) =>
     form.setInitialValues(event.detail)
   );
 
-  useFormEvent(`mantine-form:${name}:set-errors`, (event: CustomEvent) =>
-    form.setErrors(event.detail)
-  );
+  useFormEvent(getEventKey('set-errors'), (event: CustomEvent) => form.setErrors(event.detail));
 
-  useFormEvent(`mantine-form:${name}:set-field-error`, (event: CustomEvent) =>
+  useFormEvent(getEventKey('set-field-error'), (event: CustomEvent) =>
     form.setFieldError(event.detail.path, event.detail.error)
   );
 
-  useFormEvent(`mantine-form:${name}:clear-field-error`, (event: CustomEvent) =>
+  useFormEvent(getEventKey('clear-field-error'), (event: CustomEvent) =>
     form.clearFieldError(event.detail)
   );
 
-  useFormEvent(`mantine-form:${name}:clear-errors`, form.clearErrors);
-  useFormEvent(`mantine-form:${name}:reset`, form.reset);
-  useFormEvent(`mantine-form:${name}:validate`, form.validate);
+  useFormEvent(getEventKey('clear-errors'), form.clearErrors);
+  useFormEvent(getEventKey('reset'), form.reset);
+  useFormEvent(getEventKey('validate'), form.validate);
 
-  useFormEvent(`mantine-form:${name}:validate-field`, (event: CustomEvent) =>
+  useFormEvent(getEventKey('validate-field'), (event: CustomEvent) =>
     form.validateField(event.detail)
   );
 
-  useFormEvent(`mantine-form:${name}:reorder-list-item`, (event: CustomEvent) =>
+  useFormEvent(getEventKey('reorder-list-item'), (event: CustomEvent) =>
     form.reorderListItem(event.detail.path, event.detail.payload)
   );
 
-  useFormEvent(`mantine-form:${name}:remove-list-item`, (event: CustomEvent) =>
+  useFormEvent(getEventKey('remove-list-item'), (event: CustomEvent) =>
     form.removeListItem(event.detail.path, event.detail.index)
   );
 
-  useFormEvent(`mantine-form:${name}:insert-list-item`, (event: CustomEvent) =>
+  useFormEvent(getEventKey('insert-list-item'), (event: CustomEvent) =>
     form.insertListItem(event.detail.path, event.detail.item, event.detail.index)
   );
 
-  useFormEvent(`mantine-form:${name}:set-dirty`, (event: CustomEvent) =>
-    form.setDirty(event.detail)
-  );
+  useFormEvent(getEventKey('set-dirty'), (event: CustomEvent) => form.setDirty(event.detail));
 
-  useFormEvent(`mantine-form:${name}:set-touched`, (event: CustomEvent) =>
-    form.setTouched(event.detail)
-  );
+  useFormEvent(getEventKey('set-touched'), (event: CustomEvent) => form.setTouched(event.detail));
 
-  useFormEvent(`mantine-form:${name}:reset-dirty`, (event: CustomEvent) =>
-    form.resetDirty(event.detail)
-  );
+  useFormEvent(getEventKey('reset-dirty'), (event: CustomEvent) => form.resetDirty(event.detail));
 
-  useFormEvent(`mantine-form:${name}:reset-touched`, form.resetTouched);
+  useFormEvent(getEventKey('reset-touched'), form.resetTouched);
 }
