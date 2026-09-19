@@ -97,4 +97,12 @@ describe('@mantine/form/set-path', () => {
       ],
     });
   });
+
+  it('preserves references of untouched subtrees via structural sharing', () => {
+    const updated = setPath('job.title', 'Senior Engineer', values);
+    expect(updated.job.title).toBe('Senior Engineer');
+    expect(updated.job.permissions).toBe(values.job.permissions);
+    expect(updated.duties).toBe(values.duties);
+    expect(updated.description).toBe(values.description);
+  });
 });
