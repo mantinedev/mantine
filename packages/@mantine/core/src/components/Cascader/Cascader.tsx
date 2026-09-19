@@ -77,109 +77,109 @@ export interface CascaderProps
     __BaseInputProps,
     StylesApiProps<CascaderFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** Hierarchical options data */
+  /** Hierarchical options data @category appearance */
   data: CascaderOption[];
 
-  /** Controlled selected path from root to node */
+  /** Controlled selected path from root to node @category state */
   value?: string[] | null;
 
-  /** Uncontrolled selected path from root to node */
+  /** Uncontrolled selected path from root to node @category state */
   defaultValue?: string[] | null;
 
-  /** Called when the selected path changes with the path and the resolved option chain */
+  /** Called when the selected path changes with the path and the resolved option chain @category state */
   onChange?: (value: string[] | null, options: CascaderOption[]) => void;
 
-  /** If set, any intermediate option can be selected, not only leaf options @default false */
+  /** If set, any intermediate option can be selected, not only leaf options @default false @category behavior */
   changeOnSelect?: boolean;
 
-  /** Determines whether the dropdown should be closed when a value is selected, defaults to `!allowDeselect` */
+  /** Determines whether the dropdown should be closed when a value is selected, defaults to `!allowDeselect` @category behavior */
   closeOnSelect?: boolean;
 
-  /** If set, the selected value can be deselected by selecting it again @default true */
+  /** If set, the selected value can be deselected by selecting it again @default true @category behavior */
   allowDeselect?: boolean;
 
-  /** If set, the check icon is displayed on the selected option @default true */
+  /** If set, the check icon is displayed on the selected option @default true @category appearance */
   withCheckIcon?: boolean;
 
-  /** Position of the check icon relative to the option label @default 'right' */
+  /** Position of the check icon relative to the option label @default 'right' @category appearance */
   checkIconPosition?: 'left' | 'right';
 
-  /** Renders the dropdown as cascading columns. When `false`, options are rendered as a flat list of paths, the same way as search results (useful for narrow/mobile layouts) @default true */
+  /** Renders the dropdown as cascading columns. When `false`, options are rendered as a flat list of paths, the same way as search results (useful for narrow/mobile layouts) @default true @category appearance */
   withColumns?: boolean;
 
-  /** Determines how the next column is opened @default 'click' */
+  /** Determines how the next column is opened @default 'click' @category behavior */
   expandTrigger?: 'click' | 'hover';
 
-  /** Determines whether the next column stays open while the cursor moves toward it, applicable only when `expandTrigger="hover"`. Pass an object to configure safe polygon behavior. @default true */
+  /** Determines whether the next column stays open while the cursor moves toward it, applicable only when `expandTrigger="hover"`. Pass an object to configure safe polygon behavior. @default true @category behavior */
   safeAreaPolygon?: boolean | CascaderSafeAreaPolygonOptions;
 
-  /** If set, options can be searched by their flattened paths @default false */
+  /** If set, options can be searched by their flattened paths @default false @category behavior */
   searchable?: boolean;
 
-  /** Controlled search value */
+  /** Controlled search value @category state */
   searchValue?: string;
 
-  /** Uncontrolled search value */
+  /** Uncontrolled search value @category state */
   defaultSearchValue?: string;
 
-  /** Called when the search value changes */
+  /** Called when the search value changes @category state */
   onSearchChange?: (value: string) => void;
 
-  /** Custom search filter, matched against the full option path */
+  /** Custom search filter, matched against the full option path @category behavior */
   filter?: (query: string, options: CascaderOption[]) => boolean;
 
-  /** Custom rendering of a search result row */
+  /** Custom rendering of a search result row @category appearance */
   renderSearchOption?: (query: string, options: CascaderOption[]) => React.ReactNode;
 
-  /** A function to format the selected path displayed in the input, should return a string */
+  /** A function to format the selected path displayed in the input, should return a string @category appearance */
   formatValue?: CascaderFormatValue;
 
-  /** Custom rendering of an option in columns */
+  /** Custom rendering of an option in columns @category appearance */
   renderOption?: (option: CascaderOption, level: number) => React.ReactNode;
 
-  /** Path separator displayed in the input and search results @default '/' */
+  /** Path separator displayed in the input and search results @default '/' @category appearance */
   separator?: React.ReactNode;
 
-  /** Width of each column */
+  /** Width of each column @category appearance */
   columnWidth?: number | string;
 
-  /** Maximum number of columns (levels) displayed next to each other, deeper levels replace earlier ones @default 3 */
+  /** Maximum number of columns (levels) displayed next to each other, deeper levels replace earlier ones @default 3 @category appearance */
   maxDisplayedLevels?: number;
 
-  /** `aria-label` and `title` of the control that reveals levels hidden before the visible ones by `maxDisplayedLevels` @default 'Show previous levels' */
+  /** `aria-label` and `title` of the control that reveals levels hidden before the visible ones by `maxDisplayedLevels` @default 'Show previous levels' @category accessibility */
   previousLevelsControlLabel?: string;
 
-  /** `aria-label` and `title` of the control that reveals levels hidden after the visible ones by `maxDisplayedLevels` @default 'Show next levels' */
+  /** `aria-label` and `title` of the control that reveals levels hidden after the visible ones by `maxDisplayedLevels` @default 'Show next levels' @category accessibility */
   nextLevelsControlLabel?: string;
 
-  /** Max height of a column before it becomes scrollable @default 260 */
+  /** Max height of a column before it becomes scrollable @default 260 @category appearance */
   maxDropdownHeight?: number | string;
 
-  /** Message displayed when there are no options or search results */
+  /** Message displayed when there are no options or search results @category appearance */
   nothingFoundMessage?: React.ReactNode;
 
-  /** If set, the clear button is displayed when a value is selected @default false */
+  /** If set, the clear button is displayed when a value is selected @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and `rightSection` are rendered @default 'both' */
+  /** Determines how the clear button and `rightSection` are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: InputClearButtonProps;
 
-  /** Called when the clear button is clicked */
+  /** Called when the clear button is clicked @category behavior */
   onClear?: () => void;
 
-  /** Controlled dropdown opened state */
+  /** Controlled dropdown opened state @category state */
   dropdownOpened?: boolean;
 
-  /** Uncontrolled dropdown opened state */
+  /** Uncontrolled dropdown opened state @category state */
   defaultDropdownOpened?: boolean;
 
-  /** Called when the dropdown opens */
+  /** Called when the dropdown opens @category state */
   onDropdownOpen?: () => void;
 
-  /** Called when the dropdown closes */
+  /** Called when the dropdown closes @category state */
   onDropdownClose?: () => void;
 
   /** Props passed down to the underlying `Combobox` component */
@@ -188,13 +188,13 @@ export interface CascaderProps
   /** Props passed down to the dropdown `ScrollArea` */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** Controls the default chevron color */
+  /** Controls the default chevron color @category appearance */
   chevronColor?: MantineColor;
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
 
-  /** Opens the dropdown when the input is focused in `searchable` mode @default true */
+  /** Opens the dropdown when the input is focused in `searchable` mode @default true @category behavior */
   openOnFocus?: boolean;
 }
 

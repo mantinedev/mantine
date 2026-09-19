@@ -93,50 +93,50 @@ export interface ResourcesMonthViewProps
   extends BoxProps, StylesApiProps<ResourcesMonthViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Date to display, Date object or date string in `YYYY-MM-DD` format */
+  /** Date to display, Date object or date string in `YYYY-MM-DD` format @category state */
   date: Date | string;
 
-  /** Called with the new date value when a date is selected */
+  /** Called with the new date value when a date is selected @category state */
   onDateChange?: (value: DateStringValue) => void;
 
-  /** List of resources to display as rows */
+  /** List of resources to display as rows @category appearance */
   resources: ScheduleResourceData[];
 
-  /** Locale passed down to dayjs */
+  /** Locale passed down to dayjs @category appearance */
   locale?: string;
 
-  /** `dayjs` format for weekdays in day column headers @default 'dd' */
+  /** `dayjs` format for weekdays in day column headers @default 'dd' @category appearance */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days */
+  /** Indices of weekend days @category appearance */
   weekendDays?: DayOfWeek[];
 
-  /** If set to false, weekend days are hidden @default true */
+  /** If set to false, weekend days are hidden @default true @category appearance */
   withWeekendDays?: boolean;
 
-  /** Date to scroll to on initial render, in `YYYY-MM-DD` format */
+  /** Date to scroll to on initial render, in `YYYY-MM-DD` format @category appearance */
   startScrollDate?: string;
 
-  /** Called when a cell is clicked, includes resourceId */
+  /** Called when a cell is clicked, includes resourceId @category behavior */
   onDayClick?: (data: {
     date: DateStringValue;
     nativeEvent: React.MouseEvent<HTMLButtonElement>;
     resourceId?: string | number;
   }) => void;
 
-  /** If set, highlights the current day @default true */
+  /** If set, highlights the current day @default true @category appearance */
   highlightToday?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** If set, the header is displayed @default true */
+  /** If set, the header is displayed @default true @category appearance */
   withHeader?: boolean;
 
   /** Props passed down to `MonthYearSelect` component */
   monthYearSelectProps?: Partial<MonthYearSelectProps>;
 
-  /** Called when view level select button is clicked */
+  /** Called when view level select button is clicked @category state */
   onViewChange?: (view: ScheduleViewLevel) => void;
 
   /** Props passed to previous control */
@@ -151,37 +151,37 @@ export interface ResourcesMonthViewProps
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 
-  /** Events to display */
+  /** Events to display @category appearance */
   events?: ScheduleEventData[];
 
-  /** Width of each day column @default 40px */
+  /** Width of each day column @default 40px @category appearance */
   dayWidth?: React.CSSProperties['width'];
 
-  /** Height of each resource row @default 48px */
+  /** Height of each resource row @default 48px @category appearance */
   rowHeight?: React.CSSProperties['height'];
 
-  /** Function to customize event body */
+  /** Function to customize event body @category appearance */
   renderEventBody?: RenderEventBody;
 
-  /** Function to fully customize event rendering */
+  /** Function to fully customize event rendering @category appearance */
   renderEvent?: RenderEvent;
 
-  /** Function to customize resource label rendering */
+  /** Function to customize resource label rendering @category appearance */
   renderResourceLabel?: (resource: ScheduleResourceData) => React.ReactNode;
 
-  /** List of resource groups to display as a column to the left of resource labels */
+  /** List of resource groups to display as a column to the left of resource labels @category appearance */
   groups?: ScheduleResourceGroup[];
 
-  /** Function to customize group label rendering */
+  /** Function to customize group label rendering @category appearance */
   renderGroupLabel?: (group: ScheduleResourceGroup) => React.ReactNode;
 
-  /** Width of the group label column @default 80px */
+  /** Width of the group label column @default 80px @category appearance */
   groupLabelWidth?: React.CSSProperties['width'];
 
-  /** If true, events can be dragged and dropped @default false */
+  /** If true, events can be dragged and dropped @default false @category behavior */
   withEventsDragAndDrop?: boolean;
 
-  /** Called when event is dropped, includes target resourceId */
+  /** Called when event is dropped, includes target resourceId @category behavior */
   onEventDrop?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -190,19 +190,19 @@ export interface ResourcesMonthViewProps
     resourceId?: string | number;
   }) => void;
 
-  /** Function to determine if event can be dragged */
+  /** Function to determine if event can be dragged @category behavior */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Called when any event drag starts */
+  /** Called when any event drag starts @category behavior */
   onEventDragStart?: (event: ScheduleEventData) => void;
 
-  /** Called when any event drag ends */
+  /** Called when any event drag ends @category behavior */
   onEventDragEnd?: () => void;
 
-  /** If true, events can be resized by dragging their start and end edges, resizing snaps to whole days @default false */
+  /** If true, events can be resized by dragging their start and end edges, resizing snaps to whole days @default false @category behavior */
   withEventResize?: boolean;
 
-  /** Called when event is resized */
+  /** Called when event is resized @category behavior */
   onEventResize?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -210,54 +210,54 @@ export interface ResourcesMonthViewProps
     event: ScheduleEventData;
   }) => void;
 
-  /** Function to determine if event can be resized */
+  /** Function to determine if event can be resized @category behavior */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. */
+  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. @category behavior */
   canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
 
-  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. */
+  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. @category behavior */
   canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
 
-  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. */
+  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. @category behavior */
   canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
 
-  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false */
+  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false @category behavior */
   preventEventOverlap?: PreventEventOverlap;
 
-  /** Called when a drop or resize is rejected */
+  /** Called when a drop or resize is rejected @category behavior */
   onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
 
-  /** Called when event is clicked */
+  /** Called when event is clicked @category behavior */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** If set, enables drag-to-select day ranges @default false */
+  /** If set, enables drag-to-select day ranges @default false @category behavior */
   withDragSlotSelect?: boolean;
 
-  /** Called when a day range is selected by dragging, includes resourceId */
+  /** Called when a day range is selected by dragging, includes resourceId @category behavior */
   onSlotDragEnd?: (data: {
     rangeStart: DateTimeStringValue;
     rangeEnd: DateTimeStringValue;
     resourceId?: string | number;
   }) => void;
 
-  /** Labels override for i18n */
+  /** Labels override for i18n @category appearance */
   labels?: ScheduleLabelsOverride;
 
-  /** Interaction mode @default default */
+  /** Interaction mode @default default @category behavior */
   mode?: ScheduleMode;
 
   /** Props passed down to `ScrollArea` component */
   scrollAreaProps?: Partial<ScrollAreaProps> & DataAttributes;
 
-  /** Called when an external item is dropped */
+  /** Called when an external item is dropped @category behavior */
   onExternalEventDrop?: (data: {
     dataTransfer: DataTransfer;
     dropDateTime: DateTimeStringValue;
     resourceId?: string | number;
   }) => void;
 
-  /** Maximum number of events visible per cell before "+more" indicator @default 2 */
+  /** Maximum number of events visible per cell before "+more" indicator @default 2 @category appearance */
   maxEventsPerTimeSlot?: number;
 
   /** Props passed down to `MoreEvents` component */

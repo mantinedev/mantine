@@ -81,25 +81,25 @@ export interface AreaChartProps
     Omit<GridChartBaseProps, 'withXAxis' | 'withYAxis'>,
     StylesApiProps<AreaChartFactory>,
     ElementProps<'div'> {
-  /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
+  /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. @category appearance */
   series: AreaChartSeries[];
 
-  /** Determines whether x-axis should be displayed. Defaults to `false` for `type="stream"` with `orientation="vertical"` – the floating baseline makes the values not meaningful to read off. @default true */
+  /** Determines whether x-axis should be displayed. Defaults to `false` for `type="stream"` with `orientation="vertical"` – the floating baseline makes the values not meaningful to read off. @default true @category appearance */
   withXAxis?: boolean;
 
-  /** Determines whether y-axis should be displayed. Defaults to `false` for `type="stream"` with `orientation="horizontal"` – the floating baseline makes the values not meaningful to read off. @default true */
+  /** Determines whether y-axis should be displayed. Defaults to `false` for `type="stream"` with `orientation="horizontal"` – the floating baseline makes the values not meaningful to read off. @default true @category appearance */
   withYAxis?: boolean;
 
-  /** Controls how chart areas are positioned relative to each other. Set to `'stream'` to render a streamgraph. @default 'default' */
+  /** Controls how chart areas are positioned relative to each other. Set to `'stream'` to render a streamgraph. @default 'default' @category appearance */
   type?: AreaChartType;
 
-  /** Determines whether the chart area should be represented with a gradient instead of the solid color @default false */
+  /** Determines whether the chart area should be represented with a gradient instead of the solid color @default false @category appearance */
   withGradient?: boolean;
 
-  /** Type of the curve @default 'monotone' */
+  /** Type of the curve @default 'monotone' @category appearance */
   curveType?: AreaChartCurveType;
 
-  /** Determines whether dots should be displayed @default true */
+  /** Determines whether dots should be displayed @default true @category appearance */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -108,25 +108,25 @@ export interface AreaChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: MantineChartDotProps;
 
-  /** Stroke width for the chart areas @default 2 */
+  /** Stroke width for the chart areas @default 2 @category appearance */
   strokeWidth?: number;
 
   /** Props passed down to recharts `AreaChart` component */
   areaChartProps?: React.ComponentProps<typeof ReChartsAreaChart>;
 
-  /** Controls fill opacity of all areas @default 0.2 */
+  /** Controls fill opacity of all areas @default 0.2 @category appearance */
   fillOpacity?: number;
 
-  /** A tuple of colors used when `type="split"` is set, ignored in all other cases. A tuple may include theme colors reference or any valid CSS colors @default ['green.7', 'red.7'] */
+  /** A tuple of colors used when `type="split"` is set, ignored in all other cases. A tuple may include theme colors reference or any valid CSS colors @default ['green.7', 'red.7'] @category appearance */
   splitColors?: [MantineColor, MantineColor];
 
-  /** Offset for the split gradient. By default, value is inferred from `data` and `series` if possible. Must be generated from the data array with `getSplitOffset` function. */
+  /** Offset for the split gradient. By default, value is inferred from `data` and `series` if possible. Must be generated from the data array with `getSplitOffset` function. @category appearance */
   splitOffset?: number;
 
-  /** If set, points with `null` values are connected @default true */
+  /** If set, points with `null` values are connected @default true @category appearance */
   connectNulls?: boolean;
 
-  /** Additional components that are rendered inside recharts `AreaChart` component */
+  /** Additional components that are rendered inside recharts `AreaChart` component @category appearance */
   children?: React.ReactNode;
 
   /** Props passed down to recharts `Area` component */
@@ -134,7 +134,7 @@ export interface AreaChartProps
     | ((series: AreaChartSeries) => Partial<Omit<AreaProps<any, any>, 'ref'>>)
     | Partial<Omit<AreaProps<any, any>, 'ref'>>;
 
-  /** If set, each point has an associated label @default false */
+  /** If set, each point has an associated label @default false @category appearance */
   withPointLabels?: boolean;
 }
 

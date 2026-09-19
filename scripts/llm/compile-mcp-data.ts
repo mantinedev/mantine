@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
 import path from 'node:path';
 import fs from 'fs-extra';
+import { PROP_ORIGIN_GROUPS } from '../../apps/mantine.dev/src/components/PropsTable/prop-groups';
 import { collectNavPages, PageEntry } from './mcp/page-source';
 import { createSearchText } from './mcp/search-text';
 import { SNIPPET_LENGTH, splitSections } from './mcp/sections';
@@ -31,6 +32,8 @@ function normalizeProps(propsData: Record<string, any>, componentNames: string[]
 
     Object.keys(props).forEach((propName) => {
       const propData = props[propName] || {};
+      const tags = propData.tags || {};
+      const origin = propData.parent in PROP_ORIGIN_GROUPS ? propData.parent : undefined;
       result.push({
         name: propName,
         description: propData.description,
@@ -38,6 +41,9 @@ function normalizeProps(propsData: Record<string, any>, componentNames: string[]
         defaultValue: propData.defaultValue,
         type: propData.type,
         sourceComponent: componentName,
+        ...('category' in tags && { category: tags.category }),
+        ...(origin && { origin }),
+        ...('deprecated' in tags && { deprecated: tags.deprecated }),
       });
     });
   });

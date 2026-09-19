@@ -15,40 +15,40 @@ export type CompareSliderStylesNames = 'root' | 'before' | 'after' | 'divider' |
 
 export interface CompareSliderProps
   extends BoxProps, StylesApiProps<CompareSliderFactory>, ElementProps<'div', 'onChange'> {
-  /** Content of the first (before) layer, displayed on the left/top side of the divider */
+  /** Content of the first (before) layer, displayed on the left/top side of the divider @category appearance */
   before?: React.ReactNode;
 
-  /** Content of the second (after) layer, displayed on the right/bottom side of the divider */
+  /** Content of the second (after) layer, displayed on the right/bottom side of the divider @category appearance */
   after?: React.ReactNode;
 
-  /** Divider direction @default 'horizontal' */
+  /** Divider direction @default 'horizontal' @category appearance */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Controlled divider position, number between 0 and 100 */
+  /** Controlled divider position, number between 0 and 100 @category state */
   position?: number;
 
-  /** Uncontrolled divider default position, number between 0 and 100 @default 50 */
+  /** Uncontrolled divider default position, number between 0 and 100 @default 50 @category state */
   defaultPosition?: number;
 
-  /** Called when the divider position changes */
+  /** Called when the divider position changes @category state */
   onPositionChange?: (position: number) => void;
 
-  /** Custom divider handle content */
+  /** Custom divider handle content @category appearance */
   handle?: React.ReactNode;
 
-  /** If set, the divider handle is displayed @default true */
+  /** If set, the divider handle is displayed @default true @category appearance */
   withHandle?: boolean;
 
-  /** If set, the divider position follows the pointer on hover, without requiring a drag @default false */
+  /** If set, the divider position follows the pointer on hover, without requiring a drag @default false @category behavior */
   changePositionOnHover?: boolean;
 
-  /** Arrow keys position increment/decrement in % @default 5 */
+  /** Arrow keys position increment/decrement in % @default 5 @category behavior */
   keyboardStep?: number;
 
-  /** Enables position change animation, number is used as animation duration in ms (`150` when set to `true`) @default false */
+  /** Enables position change animation, number is used as animation duration in ms (`150` when set to `true`) @default false @category appearance */
   transition?: boolean | number;
 
-  /** Sets `data-disabled` attribute, disables interactions */
+  /** Sets `data-disabled` attribute, disables interactions @category behavior */
   disabled?: boolean;
 }
 

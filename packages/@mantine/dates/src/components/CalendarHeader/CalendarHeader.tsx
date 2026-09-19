@@ -34,55 +34,55 @@ export interface CalendarHeaderSettings {
   /** Determines whether propagation for `Escape` key should be stopped */
   __stopPropagation?: boolean;
 
-  /** Change next icon */
+  /** Change next icon @category appearance */
   nextIcon?: React.ReactNode;
 
-  /** Change previous icon */
+  /** Change previous icon @category appearance */
   previousIcon?: React.ReactNode;
 
-  /** Next button `aria-label` */
+  /** Next button `aria-label` @category accessibility */
   nextLabel?: string;
 
-  /** Previous button `aria-label` */
+  /** Previous button `aria-label` @category accessibility */
   previousLabel?: string;
 
-  /** Called when the next button is clicked */
+  /** Called when the next button is clicked @category behavior */
   onNext?: () => void;
 
-  /** Called when the previous button is clicked */
+  /** Called when the previous button is clicked @category behavior */
   onPrevious?: () => void;
 
-  /** Called when the level button is clicked */
+  /** Called when the level button is clicked @category behavior */
   onLevelClick?: () => void;
 
-  /** Disables next control */
+  /** Disables next control @category behavior */
   nextDisabled?: boolean;
 
-  /** Disables previous control */
+  /** Disables previous control @category behavior */
   previousDisabled?: boolean;
 
-  /** Determines whether next level button should be enabled @default true */
+  /** Determines whether next level button should be enabled @default true @category behavior */
   hasNextLevel?: boolean;
 
-  /** Determines whether next control should be rendered @default true */
+  /** Determines whether next control should be rendered @default true @category appearance */
   withNext?: boolean;
 
-  /** Determines whether previous control should be rendered @default true */
+  /** Determines whether previous control should be rendered @default true @category appearance */
   withPrevious?: boolean;
 
-  /** Component size */
+  /** Component size @category appearance */
   size?: MantineSize;
 
-  /** Controls order @default ['previous', 'level', 'next'] */
+  /** Controls order @default ['previous', 'level', 'next'] @category appearance */
   headerControlsOrder?: ('previous' | 'next' | 'level')[];
 
-  /** Determines whether the header should take the full width of its container @default false */
+  /** Determines whether the header should take the full width of its container @default false @category appearance */
   fullWidth?: boolean;
 
-  /** Determines whether level select controls should be rendered as native `<select>` elements @default false */
+  /** Determines whether level select controls should be rendered as native `<select>` elements @default false @category behavior */
   withNativeLevelSelect?: boolean;
 
-  /** Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. */
+  /** Year range for native level select, tuple of `[startYear, endYear]`. Defaults to `[currentYear - 100, currentYear + 50]` or values derived from `minDate`/`maxDate` if set. @category appearance */
   yearsSelectRange?: [number, number];
 }
 
@@ -94,10 +94,10 @@ export interface CalendarHeaderProps
     ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Label displayed between next and previous buttons */
+  /** Label displayed between next and previous buttons @category appearance */
   label: React.ReactNode;
 
-  /** Level control `aria-label` */
+  /** Level control `aria-label` @category accessibility */
   levelControlAriaLabel?: string;
 
   /** Current calendar level, used for native level select rendering */

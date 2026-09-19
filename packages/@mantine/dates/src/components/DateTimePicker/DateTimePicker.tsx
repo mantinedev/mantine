@@ -51,22 +51,22 @@ export interface DateTimePickerProps<Type extends DatePickerType = 'default'>
     CalendarBaseProps,
     Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter' | 'hasNextLevel'>,
     StylesApiProps<DateTimePickerFactory> {
-  /** Picker type: range or default @default 'default' */
+  /** Picker type: range or default @default 'default' @category state */
   type?: Type;
 
-  /** `dayjs` format for input value, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value @default "DD/MM/YYYY HH:mm"  */
+  /** `dayjs` format for input value, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value @default "DD/MM/YYYY HH:mm" @category appearance */
   valueFormat?: string | ((date: DateStringValue) => string);
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: DatePickerValue<Type>;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: DatePickerValue<Type>;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: DatePickerValue<Type, DateStringValue>) => void;
 
-  /** Default time value in HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
+  /** Default time value in HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. @category state */
   defaultTimeValue?: string;
 
   /** Props passed down to `TimePicker` component */
@@ -78,19 +78,19 @@ export interface DateTimePickerProps<Type extends DatePickerType = 'default'>
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentProps<'button'>;
 
-  /** Determines whether the seconds input should be displayed @default false */
+  /** Determines whether the seconds input should be displayed @default false @category appearance */
   withSeconds?: boolean;
 
-  /** Max level that user can go up to @default 'decade' */
+  /** Max level that user can go up to @default 'decade' @category behavior */
   maxLevel?: CalendarLevel;
 
-  /** Presets values */
+  /** Presets values @category appearance */
   presets?: DatePickerPreset<Type>[];
 
-  /** Determines whether a single day can be selected as range, applicable only when type="range" */
+  /** Determines whether a single day can be selected as range, applicable only when type="range" @category behavior */
   allowSingleDateInRange?: Type extends 'range' ? boolean : never;
 
-  /** Separator between range values */
+  /** Separator between range values @category appearance */
   labelSeparator?: string;
 }
 

@@ -36,7 +36,7 @@ export type ScrollAreaCssVariables = {
 
 export interface ScrollAreaProps
   extends BoxProps, StylesApiProps<ScrollAreaFactory>, ElementProps<'div'> {
-  /** Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 12px (0.75rem) */
+  /** Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 12px (0.75rem) @category appearance */
   scrollbarSize?: number | string;
 
   /**
@@ -46,11 +46,11 @@ export interface ScrollAreaProps
    * - `'auto'` – scrollbars visible only when content overflows (like CSS overflow: auto)
    * - `'always'` – scrollbars always visible, even when content doesn't overflow
    * - `'never'` – scrollbars always hidden
-   * @default 'hover'
+   * @default 'hover' @category appearance
    * */
   type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
 
-  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` @default 1000 */
+  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` @default 1000 @category appearance */
   scrollHideDelay?: number;
 
   /**
@@ -59,7 +59,7 @@ export interface ScrollAreaProps
    * - `'y'` - vertical scrollbar only
    * - `'xy'` - both scrollbars
    * - `false` - no scrollbars rendered (content remains scrollable via mouse/touch)
-   * @default 'xy'
+   * @default 'xy' @category appearance
    */
   scrollbars?: 'x' | 'y' | 'xy' | false;
 
@@ -69,7 +69,7 @@ export interface ScrollAreaProps
    * - `'x'` - adds padding to offset horizontal scrollbar (always)
    * - `'y'` - adds padding to offset vertical scrollbar (always)
    * - `'present'` - adds padding only when scrollbars are visible (dynamic)
-   * @default false
+   * @default false @category appearance
    */
   offsetScrollbars?: boolean | 'x' | 'y' | 'present';
 
@@ -79,11 +79,11 @@ export interface ScrollAreaProps
    * - `true` – fades both axes, bounded by `scrollbars`
    * - `'x'` – fades the horizontal edges only
    * - `'y'` – fades the vertical edges only
-   * @default false
+   * @default false @category appearance
    */
   scrollFade?: boolean | 'x' | 'y';
 
-  /** Length of the edge fade gradient, numbers are converted to rem @default '2rem' */
+  /** Length of the edge fade gradient, numbers are converted to rem @default '2rem' @category appearance */
   scrollFadeSize?: number | string;
 
   /** Assigns viewport element (scrollable container) ref */
@@ -92,38 +92,38 @@ export interface ScrollAreaProps
   /** Props passed down to the viewport element */
   viewportProps?: React.ComponentProps<'div'>;
 
-  /** Called with current position (`x` and `y` coordinates) when viewport is scrolled */
+  /** Called with current position (`x` and `y` coordinates) when viewport is scrolled @category behavior */
   onScrollPositionChange?: (position: { x: number; y: number }) => void;
 
   /**
-   * Called when scrollarea is scrolled to the bottom (within 0.8px tolerance for sub-pixel rendering)
+   * Called when scrollarea is scrolled to the bottom (within 0.8px tolerance for sub-pixel rendering) @category behavior
    */
   onBottomReached?: () => void;
 
-  /** Called when scrollarea is scrolled all the way to the top */
+  /** Called when scrollarea is scrolled all the way to the top @category behavior */
   onTopReached?: () => void;
 
-  /** Called when scrollarea is scrolled to the left (within 0.8px tolerance for sub-pixel rendering) */
+  /** Called when scrollarea is scrolled to the left (within 0.8px tolerance for sub-pixel rendering) @category behavior */
   onLeftReached?: () => void;
 
-  /** Called when scrollarea is scrolled to the right (within 0.8px tolerance for sub-pixel rendering) */
+  /** Called when scrollarea is scrolled to the right (within 0.8px tolerance for sub-pixel rendering) @category behavior */
   onRightReached?: () => void;
 
-  /** Defines `overscroll-behavior` of the viewport */
+  /** Defines `overscroll-behavior` of the viewport @category behavior */
   overscrollBehavior?: React.CSSProperties['overscrollBehavior'];
 
-  /** Initial scroll position set on mount */
+  /** Initial scroll position set on mount @category state */
   startScrollPosition?: { x?: number; y?: number };
 
   /**
    * Pins the vertical scrollbar to a physical side (`left` or `right`) regardless of direction.
-   * By default, the scrollbar follows the inline-end edge (right in LTR, left in RTL).
+   * By default, the scrollbar follows the inline-end edge (right in LTR, left in RTL). @category appearance
    */
   verticalScrollbarPosition?: 'left' | 'right';
 }
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
-  /** Called when content overflows due to max-height, making the container scrollable */
+  /** Called when content overflows due to max-height, making the container scrollable @category behavior */
   onOverflowChange?: (overflowing: boolean) => void;
 }
 

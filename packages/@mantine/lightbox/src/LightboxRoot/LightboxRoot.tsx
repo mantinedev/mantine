@@ -70,55 +70,55 @@ export type LightboxCssVariables = {
 
 export interface LightboxRootProps
   extends BoxProps, StylesApiProps<LightboxRootFactory>, ElementProps<'div', 'children'> {
-  /** Controls whether the lightbox is opened */
+  /** Controls whether the lightbox is opened @category state */
   opened: boolean;
 
-  /** Called when the lightbox is closed */
+  /** Called when the lightbox is closed @category state */
   onClose: () => void;
 
-  /** Lightbox content (compound components) */
+  /** Lightbox content (compound components) @category appearance */
   children: React.ReactNode;
 
-  /** Array of slide data objects */
+  /** Array of slide data objects @category appearance */
   slides: LightboxSlideData[];
 
-  /** Controlled current slide index */
+  /** Controlled current slide index @category state */
   currentIndex?: number;
 
-  /** Called when the current slide index changes */
+  /** Called when the current slide index changes @category state */
   onIndexChange?: (index: number) => void;
 
-  /** Labels used in the component, used for accessibility and localization */
+  /** Labels used in the component, used for accessibility and localization @category accessibility */
   labels?: Partial<LightboxLabels>;
 
-  /** Enables image zoom on click/pinch @default false */
+  /** Enables image zoom on click/pinch @default false @category behavior */
   withZoom?: boolean;
 
-  /** Shows bottom thumbnail strip @default false */
+  /** Shows bottom thumbnail strip @default false @category appearance */
   withThumbnails?: boolean;
 
-  /** Adds fullscreen toggle to toolbar @default false */
+  /** Adds fullscreen toggle to toolbar @default false @category appearance */
   withFullscreen?: boolean;
 
-  /** Adds download button to toolbar @default false */
+  /** Adds download button to toolbar @default false @category appearance */
   withDownload?: boolean;
 
-  /** Enables infinite loop navigation @default false */
+  /** Enables infinite loop navigation @default false @category behavior */
   loop?: boolean;
 
-  /** Closes lightbox when the empty space around the slide content is clicked @default false */
+  /** Closes lightbox when the empty space around the slide content is clicked @default false @category behavior */
   closeOnClickOutside?: boolean;
 
-  /** Closes lightbox when swiping down on mobile @default true */
+  /** Closes lightbox when swiping down on mobile @default true @category behavior */
   closeOnSwipeDown?: boolean;
 
-  /** Determines whether keyboard shortcuts (arrows, `F`/`T`/`Z`) are active, `Escape` always closes the lightbox @default true */
+  /** Determines whether keyboard shortcuts (arrows, `F`/`T`/`Z`) are active, `Escape` always closes the lightbox @default true @category behavior */
   withKeyboardEvents?: boolean;
 
-  /** Determines whether focus should be returned to the last active element when the lightbox is closed @default true */
+  /** Determines whether focus should be returned to the last active element when the lightbox is closed @default true @category behavior */
   returnFocus?: boolean;
 
-  /** Adds a hidden focusable element at the start of the lightbox content – prevents the first toolbar button from receiving visible focus when the lightbox is opened with a pointer. Set to `false` if you need custom focus management. @default true */
+  /** Adds a hidden focusable element at the start of the lightbox content – prevents the first toolbar button from receiving visible focus when the lightbox is opened with a pointer. Set to `false` if you need custom focus management. @default true @category behavior */
   withInitialFocusPlaceholder?: boolean;
 
   /** Determines whether the lightbox should be rendered inside `Portal` @default true */
@@ -127,10 +127,10 @@ export interface LightboxRootProps
   /** `z-index` of the overlay and content elements, `400` by default */
   zIndex?: string | number;
 
-  /** Transition duration in milliseconds @default 200 */
+  /** Transition duration in milliseconds @default 200 @category appearance */
   transitionDuration?: number;
 
-  /** Props passed down to the `Transition` component that animates the content, the overlay always fades. By default, the content is scaled from 95% to 100% while fading in. */
+  /** Props passed down to the `Transition` component that animates the content, the overlay always fades. By default, the content is scaled from 95% to 100% while fading in. @category appearance */
   transitionProps?: TransitionOverride;
 
   /** Additional Embla carousel options. `loop` and `startIndex` are controlled by the
@@ -139,10 +139,10 @@ export interface LightboxRootProps
    * always disabled while the image is zoomed. */
   emblaOptions?: EmblaOptionsType;
 
-  /** Maximum zoom scale @default 3 */
+  /** Maximum zoom scale @default 3 @category behavior */
   zoomMaxScale?: number;
 
-  /** Enables animated slide transitions for programmatic navigation @default false */
+  /** Enables animated slide transitions for programmatic navigation @default false @category appearance */
   withSlideTransition?: boolean;
 }
 

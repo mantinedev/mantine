@@ -25,43 +25,43 @@ export type DayCssVariables = {
 export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementProps<'button'> {
   __staticSelector?: string;
 
-  /** Determines which element is used as root, `'button'` by default, `'div'` if static prop is set */
+  /** Determines which element is used as root, `'button'` by default, `'div'` if static prop is set @category behavior */
   static?: boolean;
 
-  /** Date that is displayed in `YYYY-MM-DD` format */
+  /** Date that is displayed in `YYYY-MM-DD` format @category state */
   date: DateStringValue;
 
-  /** Control width and height of the day @default 'sm' */
+  /** Control width and height of the day @default 'sm' @category appearance */
   size?: MantineSize;
 
-  /** Determines whether the day is considered to be a weekend @default false */
+  /** Determines whether the day is considered to be a weekend @default false @category appearance */
   weekend?: boolean;
 
-  /** Determines whether the day is outside of the current month @default false */
+  /** Determines whether the day is outside of the current month @default false @category appearance */
   outside?: boolean;
 
-  /** Determines whether the day is selected @default false */
+  /** Determines whether the day is selected @default false @category state */
   selected?: boolean;
 
-  /** Determines whether the day should not be displayed @default false */
+  /** Determines whether the day should not be displayed @default false @category appearance */
   hidden?: boolean;
 
-  /** Determines whether the day is selected in range @default false */
+  /** Determines whether the day is selected in range @default false @category state */
   inRange?: boolean;
 
-  /** Determines whether the day is first in range selection @default false */
+  /** Determines whether the day is first in range selection @default false @category state */
   firstInRange?: boolean;
 
-  /** Determines whether the day is last in range selection @default false */
+  /** Determines whether the day is last in range selection @default false @category state */
   lastInRange?: boolean;
 
-  /** Controls day value rendering */
+  /** Controls day value rendering @category appearance */
   renderDay?: RenderDay;
 
-  /** Determines whether today should be highlighted with a border @default false */
+  /** Determines whether today should be highlighted with a border @default false @category appearance */
   highlightToday?: boolean;
 
-  /** Determines whether the day should take the full width of its cell @default false */
+  /** Determines whether the day should take the full width of its cell @default false @category appearance */
   fullWidth?: boolean;
 }
 

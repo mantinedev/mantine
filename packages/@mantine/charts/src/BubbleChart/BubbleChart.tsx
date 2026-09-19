@@ -80,16 +80,16 @@ export interface BubbleChartDataKey {
 
 export interface BubbleChartProps
   extends BoxProps, StylesApiProps<BubbleChartFactory>, ElementProps<'div'> {
-  /** Chart data */
+  /** Chart data @category appearance */
   data: Record<string, any>[];
 
-  /** Data keys for x, y and z axis */
+  /** Data keys for x, y and z axis @category appearance */
   dataKey: BubbleChartDataKey;
 
-  /** Z axis range */
+  /** Z axis range @category appearance */
   range: [number, number];
 
-  /** Color of the chart items. Key of `theme.colors` or any valid CSS color. @default blue.6 */
+  /** Color of the chart items. Key of `theme.colors` or any valid CSS color. @default blue.6 @category appearance */
   color?: MantineColor;
 
   /** Props passed down to the `XAxis` recharts component */
@@ -107,22 +107,22 @@ export interface BubbleChartProps
   /** Props passed down to the `Scatter` component */
   scatterProps?: Partial<Omit<ScatterProps, 'ref'>>;
 
-  /** Color of the text displayed inside the chart @default 'dimmed' */
+  /** Color of the text displayed inside the chart @default 'dimmed' @category appearance */
   textColor?: MantineColor;
 
-  /** Color of the grid and cursor lines, by default depends on color scheme */
+  /** Color of the grid and cursor lines, by default depends on color scheme @category appearance */
   gridColor?: MantineColor;
 
-  /** Chart label displayed next to the x axis */
+  /** Chart label displayed next to the x axis @category appearance */
   label?: string;
 
-  /** Determines whether the tooltip should be displayed @default true */
+  /** Determines whether the tooltip should be displayed @default true @category appearance */
   withTooltip?: boolean;
 
-  /** Function to format z axis values */
+  /** Function to format z axis values @category appearance */
   valueFormatter?: (value: number) => string;
 
-  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default @category accessibility */
   accessibilityLayer?: boolean;
 }
 

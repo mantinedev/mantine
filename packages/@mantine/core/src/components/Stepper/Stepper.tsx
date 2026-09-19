@@ -59,55 +59,55 @@ export type StepperCssVariables = {
 
 export interface StepperProps
   extends BoxProps, StylesApiProps<StepperFactory>, ElementProps<'div'> {
-  /** `Stepper.Step` components */
+  /** `Stepper.Step` components @category appearance */
   children: React.ReactNode;
 
-  /** Called when a clickable step is clicked with its 0-based index. Not called for the currently active step. */
+  /** Called when a clickable step is clicked with its 0-based index. Not called for the currently active step. @category behavior */
   onStepClick?: (stepIndex: number) => void;
 
-  /** Index of the active step */
+  /** Index of the active step @category state */
   active: number;
 
-  /** Step icon @default step index + 1 */
+  /** Step icon @default step index + 1 @category appearance */
   icon?: React.ReactNode | StepFragmentComponent;
 
-  /** Step icon displayed when step is completed @default CheckIcon */
+  /** Step icon displayed when step is completed @default CheckIcon @category appearance */
   completedIcon?: React.ReactNode | StepFragmentComponent;
 
-  /** Step icon displayed when step is in progress @default step index + 1 */
+  /** Step icon displayed when step is in progress @default step index + 1 @category appearance */
   progressIcon?: React.ReactNode | StepFragmentComponent;
 
-  /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Controls size of the step icon, by default icon size is inferred from `size` prop */
+  /** Controls size of the step icon, by default icon size is inferred from `size` prop @category appearance */
   iconSize?: number | string;
 
-  /** Key of `theme.spacing` or any valid CSS value to set `padding-top` of the content @default 'md' */
+  /** Key of `theme.spacing` or any valid CSS value to set `padding-top` of the content @default 'md' @category appearance */
   contentPadding?: MantineSpacing;
 
-  /** Stepper orientation @default 'horizontal' */
+  /** Stepper orientation @default 'horizontal' @category appearance */
   orientation?: 'vertical' | 'horizontal';
 
-  /** Icon position relative to the step body. Ignored if `labelPosition="bottom"` is set – with the label below the icon there is no left/right to place it on. @default 'left' */
+  /** Icon position relative to the step body. Ignored if `labelPosition="bottom"` is set – with the label below the icon there is no left/right to place it on. @default 'left' @category appearance */
   iconPosition?: 'right' | 'left';
 
-  /** Controls size of various Stepper elements */
+  /** Controls size of various Stepper elements @category appearance */
   size?: MantineSize;
 
-  /** Key of `theme.radius` or any valid CSS value to set steps border-radius @default "xl" */
+  /** Key of `theme.radius` or any valid CSS value to set steps border-radius @default "xl" @category appearance */
   radius?: MantineRadius;
 
-  /** When true, users can click and jump to any step. When false, users can only navigate to completed steps @default true */
+  /** When true, users can click and jump to any step. When false, users can only navigate to completed steps @default true @category behavior */
   allowNextStepsSelect?: boolean;
 
-  /** Determines whether steps should wrap to the next line if no space is available @default true */
+  /** Determines whether steps should wrap to the next line if no space is available @default true @category appearance */
   wrap?: boolean;
 
-  /** Controls position of the step label and description relative to the step icon. Takes precedence over `iconPosition`. Ignored if `orientation="vertical"` is set. @default 'right' */
+  /** Controls position of the step label and description relative to the step icon. Takes precedence over `iconPosition`. Ignored if `orientation="vertical"` is set. @default 'right' @category appearance */
   labelPosition?: 'right' | 'bottom';
 
-  /** When true, automatically adjusts the icon color in completed steps to ensure sufficient contrast against the step background color */
+  /** When true, automatically adjusts the icon color in completed steps to ensure sufficient contrast against the step background color @category appearance */
   autoContrast?: boolean;
 
   /** If set, all step content is kept mounted. React 19 `Activity` is used to preserve state while content is hidden. @default false */

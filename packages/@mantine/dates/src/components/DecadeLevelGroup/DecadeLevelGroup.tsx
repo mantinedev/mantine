@@ -23,16 +23,16 @@ export interface DecadeLevelGroupProps
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
-  /** Number of columns to display next to each other */
+  /** Number of columns to display next to each other @category appearance */
   numberOfColumns?: number;
 
-  /** Displayed decade */
+  /** Displayed decade @category state */
   decade: DateStringValue;
 
-  /** Function that returns level control `aria-label` based on year date */
+  /** Function that returns level control `aria-label` based on year date @category accessibility */
   levelControlAriaLabel?: ((decade: DateStringValue) => string) | string;
 
-  /** Determines whether the calendar should take the full width of its container @default false */
+  /** Determines whether the calendar should take the full width of its container @default false @category appearance */
   fullWidth?: boolean;
 }
 

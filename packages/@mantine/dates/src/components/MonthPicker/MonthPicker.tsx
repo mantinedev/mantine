@@ -57,22 +57,22 @@ export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
     DecadeLevelBaseSettings,
     YearLevelBaseSettings,
     Omit<CalendarBaseProps, 'onNextMonth' | 'onPreviousMonth' | 'hasNextLevel'> {
-  /** Determines whether level select controls should be rendered as native `<select>` elements @default false */
+  /** Determines whether level select controls should be rendered as native `<select>` elements @default false @category behavior */
   withNativeLevelSelect?: boolean;
 
-  /** Max level that user can go up to @default 'decade' */
+  /** Max level that user can go up to @default 'decade' @category behavior */
   maxLevel?: CalendarLevel;
 
-  /** Initial displayed level (uncontrolled) */
+  /** Initial displayed level (uncontrolled) @category state */
   defaultLevel?: CalendarLevel;
 
-  /** Current displayed level (controlled) */
+  /** Current displayed level (controlled) @category state */
   level?: CalendarLevel;
 
-  /** Called when level changes */
+  /** Called when level changes @category state */
   onLevelChange?: (level: MonthPickerLevel) => void;
 
-  /** Predefined values to pick from */
+  /** Predefined values to pick from @category appearance */
   presets?: MonthPickerPreset<Type>[];
 
   /** If defined, called with preset value, suppresses `onChange` call */
@@ -87,7 +87,7 @@ export interface MonthPickerProps<Type extends DatePickerType = 'default'>
     MonthPickerBaseProps<Type>,
     StylesApiProps<MonthPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
-  /** Called when month is selected */
+  /** Called when month is selected @category behavior */
   onMonthSelect?: (date: DateStringValue) => void;
 }
 

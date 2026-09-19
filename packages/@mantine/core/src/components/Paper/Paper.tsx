@@ -20,13 +20,13 @@ export type PaperCssVariables = {
 };
 
 export interface PaperBaseProps {
-  /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
+  /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` @category appearance */
   shadow?: MantineShadow;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Adds border to the root element */
+  /** Adds border to the root element @category appearance */
   withBorder?: boolean;
 }
 

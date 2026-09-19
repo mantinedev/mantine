@@ -63,58 +63,58 @@ export interface MultiSelectProps<Value extends Primitive = string>
     ComboboxLikeProps<Value>,
     StylesApiProps<MultiSelectFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: Value[];
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: Value[];
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: Value[]) => void;
 
-  /** Called with `value` of the removed item */
+  /** Called with `value` of the removed item @category behavior */
   onRemove?: (value: Value) => void;
 
-  /** Called when the clear button is clicked */
+  /** Called when the clear button is clicked @category behavior */
   onClear?: () => void;
 
-  /** Called when user attempts to select more values than allowed */
+  /** Called when user attempts to select more values than allowed @category behavior */
   onMaxValues?: () => void;
 
-  /** Controlled search value */
+  /** Controlled search value @category state */
   searchValue?: string;
 
-  /** Default search value */
+  /** Default search value @category state */
   defaultSearchValue?: string;
 
-  /** Called when search changes */
+  /** Called when search changes @category state */
   onSearchChange?: (value: string) => void;
 
-  /** Maximum number of values, no limit if not set */
+  /** Maximum number of values, no limit if not set @category behavior */
   maxValues?: number;
 
-  /** Allows searching through options by user input @default false */
+  /** Allows searching through options by user input @default false @category behavior */
   searchable?: boolean;
 
-  /** Message displayed when no options match the search query (when searchable is enabled) or when the data array is empty. If not set, the dropdown will be hidden instead. */
+  /** Message displayed when no options match the search query (when searchable is enabled) or when the data array is empty. If not set, the dropdown will be hidden instead. @category appearance */
   nothingFoundMessage?: React.ReactNode;
 
-  /** If set, the check icon is displayed near the selected option label @default true */
+  /** If set, the check icon is displayed near the selected option label @default true @category appearance */
   withCheckIcon?: boolean;
 
-  /** If set, unchecked labels are aligned with checked ones @default false */
+  /** If set, unchecked labels are aligned with checked ones @default false @category appearance */
   withAlignedLabels?: boolean;
 
-  /** Position of the checkmark icon shown next to selected options in the dropdown @default 'left' */
+  /** Position of the checkmark icon shown next to selected options in the dropdown @default 'left' @category appearance */
   checkIconPosition?: 'left' | 'right';
 
-  /** When enabled, selected options are hidden from the dropdown list @default false */
+  /** When enabled, selected options are hidden from the dropdown list @default false @category appearance */
   hidePickedOptions?: boolean;
 
-  /** When enabled, displays a clear button to remove all selected values (hidden when component is empty, disabled, or read-only) @default false */
+  /** When enabled, displays a clear button to remove all selected values (hidden when component is empty, disabled, or read-only) @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  /** Determines how the clear button and rightSection are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
@@ -126,25 +126,25 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** Divider used to separate values in the hidden input `value` attribute @default ',' */
   hiddenInputValuesDivider?: string;
 
-  /** A function to render content of the option, replaces the default content of the option */
+  /** A function to render content of the option, replaces the default content of the option @category appearance */
   renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode;
 
-  /** A function to render content of the pill */
+  /** A function to render content of the pill @category appearance */
   renderPill?: (props: ComboboxRenderPillInput<Value>) => React.ReactNode;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** Controls color of the default chevron */
+  /** Controls color of the default chevron @category appearance */
   chevronColor?: MantineColor;
 
-  /** Clear search value when item is selected @default true */
+  /** Clear search value when item is selected @default true @category behavior */
   clearSearchOnChange?: boolean;
 
-  /** Controls whether dropdown opens when the input receives focus @default true */
+  /** Controls whether dropdown opens when the input receives focus @default true @category behavior */
   openOnFocus?: boolean;
 
-  /** If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false */
+  /** If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false @category behavior */
   withPillsReorder?: boolean;
 }
 

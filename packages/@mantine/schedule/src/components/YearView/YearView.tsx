@@ -57,28 +57,28 @@ export interface YearViewProps
   extends YearViewMonthSettings, BoxProps, StylesApiProps<YearViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format */
+  /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format @category state */
   date: Date | string;
 
-  /** Called with the new date value when a date is selected */
+  /** Called with the new date value when a date is selected @category state */
   onDateChange?: (value: DateStringValue) => void;
 
-  /** Events to display, must be a stable reference */
+  /** Events to display, must be a stable reference @category appearance */
   events?: ScheduleEventData[];
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** If set, highlights the current day @default true */
+  /** If set, highlights the current day @default true @category appearance */
   highlightToday?: boolean;
 
-  /** If set, the header is displayed @default true */
+  /** If set, the header is displayed @default true @category appearance */
   withHeader?: boolean;
 
   /** Props passed down to `MonthYearSelect` component in the header */
   monthYearSelectProps?: Partial<MonthYearSelectProps>;
 
-  /** Called when view level select button is clicked */
+  /** Called when view level select button is clicked @category state */
   onViewChange?: (view: ScheduleViewLevel) => void;
 
   /** Props passed to previous month control */
@@ -93,7 +93,7 @@ export interface YearViewProps
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default @category behavior */
   mode?: ScheduleMode;
 
   /** Max number of generated recurring instances per recurring series @default 2000 */

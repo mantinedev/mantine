@@ -27,16 +27,16 @@ export type QuartersListStylesNames =
   | 'quartersListControl';
 
 export interface QuartersListSettings extends ControlsGroupSettings {
-  /** `dayjs` format for quarters list or a function that returns quarter label based on the date value @default "[Q]Q" */
+  /** `dayjs` format for quarters list or a function that returns quarter label based on the date value @default "[Q]Q" @category appearance */
   quartersListFormat?: DateLabelFormat;
 
   /** Passes props down to quarter picker control */
   getQuarterControlProps?: (date: DateStringValue) => Partial<PickerControlProps> & DataAttributes;
 
-  /** Determines whether controls should be separated @default true */
+  /** Determines whether controls should be separated @default true @category appearance */
   withCellSpacing?: boolean;
 
-  /** Determines whether the list should take the full width of its container @default false */
+  /** Determines whether the list should take the full width of its container @default false @category appearance */
   fullWidth?: boolean;
 }
 

@@ -56,25 +56,25 @@ export interface CalendarSettings
     Omit<DecadeLevelSettings, OmittedSettings>,
     Omit<YearLevelSettings, OmittedSettings>,
     Omit<MonthLevelSettings, OmittedSettings> {
-  /** Initial displayed level in uncontrolled mode */
+  /** Initial displayed level in uncontrolled mode @category state */
   defaultLevel?: CalendarLevel;
 
-  /** Current displayed level displayed in controlled mode */
+  /** Current displayed level displayed in controlled mode @category state */
   level?: CalendarLevel;
 
-  /** Called when level changes */
+  /** Called when level changes @category state */
   onLevelChange?: (level: CalendarLevel) => void;
 
-  /** Called when user selects year */
+  /** Called when user selects year @category behavior */
   onYearSelect?: (date: DateStringValue) => void;
 
-  /** Called when user selects month */
+  /** Called when user selects month @category behavior */
   onMonthSelect?: (date: DateStringValue) => void;
 
-  /** Called when mouse enters year control */
+  /** Called when mouse enters year control @category behavior */
   onYearMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: DateStringValue) => void;
 
-  /** Called when mouse enters month control */
+  /** Called when mouse enters month control @category behavior */
   onMonthMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: DateStringValue) => void;
 }
 
@@ -96,49 +96,49 @@ export interface CalendarBaseProps {
   /** Assigns function to set level to the given ref */
   __setLevelRef?: React.RefObject<((level: CalendarLevel) => void) | null>;
 
-  /** Initial displayed date in uncontrolled mode */
+  /** Initial displayed date in uncontrolled mode @category state */
   defaultDate?: DateStringValue | Date;
 
-  /** Displayed date in controlled mode */
+  /** Displayed date in controlled mode @category state */
   date?: DateStringValue | Date;
 
-  /** Called when date changes */
+  /** Called when date changes @category state */
   onDateChange?: (date: DateStringValue) => void;
 
-  /** Number of columns displayed next to each other @default 1 */
+  /** Number of columns displayed next to each other @default 1 @category appearance */
   numberOfColumns?: number;
 
-  /** Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly */
+  /** Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly @category behavior */
   columnsToScroll?: number;
 
-  /** `aria-label` attributes for controls on different levels */
+  /** `aria-label` attributes for controls on different levels @category accessibility */
   ariaLabels?: CalendarAriaLabels;
 
-  /** Next button `aria-label` */
+  /** Next button `aria-label` @category accessibility */
   nextLabel?: string;
 
-  /** Previous button `aria-label` */
+  /** Previous button `aria-label` @category accessibility */
   previousLabel?: string;
 
-  /** Determines whether the calendar should take the full width of its container @default false */
+  /** Determines whether the calendar should take the full width of its container @default false @category appearance */
   fullWidth?: boolean;
 
-  /** Called when the next decade button is clicked */
+  /** Called when the next decade button is clicked @category behavior */
   onNextDecade?: (date: DateStringValue) => void;
 
-  /** Called when the previous decade button is clicked */
+  /** Called when the previous decade button is clicked @category behavior */
   onPreviousDecade?: (date: DateStringValue) => void;
 
-  /** Called when the next year button is clicked */
+  /** Called when the next year button is clicked @category behavior */
   onNextYear?: (date: DateStringValue) => void;
 
-  /** Called when the previous year button is clicked */
+  /** Called when the previous year button is clicked @category behavior */
   onPreviousYear?: (date: DateStringValue) => void;
 
-  /** Called when the next month button is clicked */
+  /** Called when the next month button is clicked @category behavior */
   onNextMonth?: (date: DateStringValue) => void;
 
-  /** Called when the previous month button is clicked */
+  /** Called when the previous month button is clicked @category behavior */
   onPreviousMonth?: (date: DateStringValue) => void;
 }
 
@@ -149,16 +149,16 @@ export interface CalendarProps
     CalendarBaseProps,
     StylesApiProps<CalendarFactory>,
     ElementProps<'div'> {
-  /** Max level that user can go up to (decade, year, month) @default 'decade' */
+  /** Max level that user can go up to (decade, year, month) @default 'decade' @category behavior */
   maxLevel?: CalendarLevel;
 
-  /** Min level that user can go down to (decade, year, month) @default 'month' */
+  /** Min level that user can go down to (decade, year, month) @default 'month' @category behavior */
   minLevel?: CalendarLevel;
 
-  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
+  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way @category behavior */
   static?: boolean;
 
-  /** Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) */
+  /** Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) @category behavior */
   enableKeyboardNavigation?: boolean;
 }
 

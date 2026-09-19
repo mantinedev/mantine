@@ -56,61 +56,61 @@ export type TourCssVariables = {
 };
 
 export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, ElementProps<'div'> {
-  /** Whether the tour is active @default false */
+  /** Whether the tour is active @default false @category state */
   active?: boolean;
 
-  /** Called when the tour is closed */
+  /** Called when the tour is closed @category state */
   onClose?: () => void;
 
-  /** Controlled current step index */
+  /** Controlled current step index @category state */
   step?: number;
 
-  /** Uncontrolled default step index @default 0 */
+  /** Uncontrolled default step index @default 0 @category state */
   defaultStep?: number;
 
-  /** Called when step changes */
+  /** Called when step changes @category state */
   onStepChange?: (step: number) => void;
 
-  /** Called when a step opens */
+  /** Called when a step opens @category behavior */
   onStepOpen?: (step: number) => void;
 
-  /** Called when a step closes */
+  /** Called when a step closes @category behavior */
   onStepClose?: (step: number) => void;
 
-  /** Tour mode @default "guided" */
+  /** Tour mode @default "guided" @category behavior */
   mode?: 'guided' | 'beacon';
 
-  /** Whether to display the overlay @default true */
+  /** Whether to display the overlay @default true @category appearance */
   withOverlay?: boolean;
 
-  /** Whether target elements can be interacted with through the overlay, disables `closeOnOverlayClick` @default false */
+  /** Whether target elements can be interacted with through the overlay, disables `closeOnOverlayClick` @default false @category behavior */
   withOverlayInteraction?: boolean;
 
-  /** Whether to display the close button @default true */
+  /** Whether to display the close button @default true @category appearance */
   withCloseButton?: boolean;
 
-  /** Whether keyboard navigation is enabled in guided mode @default true */
+  /** Whether keyboard navigation is enabled in guided mode @default true @category behavior */
   withKeyboardNavigation?: boolean;
 
-  /** Whether to scroll target elements into view @default true */
+  /** Whether to scroll target elements into view @default true @category behavior */
   withScrollIntoView?: boolean;
 
-  /** Custom scroll handler */
+  /** Custom scroll handler @category behavior */
   scrollToHandler?: (element: HTMLElement) => void;
 
-  /** Padding around the spotlight cutout in px @default 8 */
+  /** Padding around the spotlight cutout in px @default 8 @category appearance */
   spotlightPadding?: number;
 
-  /** Border radius of the spotlight cutout in px @default 4 */
+  /** Border radius of the spotlight cutout in px @default 4 @category appearance */
   spotlightRadius?: number;
 
-  /** Whether pressing Escape closes the tour @default true */
+  /** Whether pressing Escape closes the tour @default true @category behavior */
   closeOnEscape?: boolean;
 
-  /** Whether clicking the overlay closes the tour, has no effect when `withOverlayInteraction` is set (the overlay does not receive clicks) @default false */
+  /** Whether clicking the overlay closes the tour, has no effect when `withOverlayInteraction` is set (the overlay does not receive clicks) @default false @category behavior */
   closeOnOverlayClick?: boolean;
 
-  /** Labels for tour UI elements */
+  /** Labels for tour UI elements @category appearance */
   labels?: Partial<TourLabels>;
 
   /** Whether to render inside a portal @default true */
@@ -122,22 +122,22 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** z-index of the tour @default 10000 */
   zIndex?: string | number;
 
-  /** Transition props for the tooltip */
+  /** Transition props for the tooltip @category appearance */
   transitionProps?: TransitionOverride;
 
-  /** Duration of the tooltip position transition between steps in ms @default 300 */
+  /** Duration of the tooltip position transition between steps in ms @default 300 @category appearance */
   stepTransitionDuration?: number;
 
-  /** Max width of the tooltip, tooltip always takes this width if viewport allows @default 360 */
+  /** Max width of the tooltip, tooltip always takes this width if viewport allows @default 360 @category appearance */
   maxWidth?: number;
 
-  /** Tour step overlay color @default "rgba(0, 0, 0, 0.5)" */
+  /** Tour step overlay color @default "rgba(0, 0, 0, 0.5)" @category appearance */
   overlayColor?: string;
 
-  /** Shadow for the tooltip */
+  /** Shadow for the tooltip @category appearance */
   tooltipShadow?: string;
 
-  /** Tour steps – `Tour.Step` elements must be direct children (arrays are supported, Fragments and wrapper components are not) */
+  /** Tour steps – `Tour.Step` elements must be direct children (arrays are supported, Fragments and wrapper components are not) @category appearance */
   children?: React.ReactNode;
 }
 

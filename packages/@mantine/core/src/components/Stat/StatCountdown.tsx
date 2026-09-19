@@ -25,34 +25,34 @@ import classes from './Stat.module.css';
 
 export interface StatCountdownProps
   extends BoxProps, StylesApiProps<StatCountdownFactory>, ElementProps<'div', 'prefix' | 'color'> {
-  /** Caption displayed above the value */
+  /** Caption displayed above the value @category appearance */
   label?: React.ReactNode;
 
-  /** Target time to count down to, a `Date` or a timestamp in milliseconds */
+  /** Target time to count down to, a `Date` or a timestamp in milliseconds @category state */
   value?: number | Date;
 
-  /** dayjs-style format for the remaining time. Literals can be escaped with square brackets @default 'HH:mm:ss' */
+  /** dayjs-style format for the remaining time. Literals can be escaped with square brackets @default 'HH:mm:ss' @category appearance */
   format?: string;
 
-  /** Content rendered before the value */
+  /** Content rendered before the value @category appearance */
   prefix?: React.ReactNode;
 
-  /** Content rendered after the value */
+  /** Content rendered after the value @category appearance */
   suffix?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set the value color */
+  /** Key of `theme.colors` or any valid CSS color to set the value color @category appearance */
   color?: MantineColor;
 
-  /** Leading icon or illustration displayed next to the value */
+  /** Leading icon or illustration displayed next to the value @category appearance */
   icon?: React.ReactNode;
 
-  /** Controls label, value and icon sizes @default 'md' */
+  /** Controls label, value and icon sizes @default 'md' @category appearance */
   size?: MantineSize;
 
-  /** Called once when the target time is reached */
+  /** Called once when the target time is reached @category state */
   onFinish?: () => void;
 
-  /** Called on every tick with the remaining time in milliseconds */
+  /** Called on every tick with the remaining time in milliseconds @category state */
   onTick?: (remainingMs: number) => void;
 }
 

@@ -62,19 +62,19 @@ export interface TableOfContentsGetControlPropsPayload {
 
 export interface TableOfContentsProps
   extends BoxProps, StylesApiProps<TableOfContentsFactory>, ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color value, controls active control background for `filled` and `light` variants and bar color for `rail` variant @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color value, controls active control background for `filled` and `light` variants and bar color for `rail` variant @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Controls font-size, padding and depth offset of controls, custom string and number values change only font-size @default 'sm' */
+  /** Controls font-size, padding and depth offset of controls, custom string and number values change only font-size @default 'sm' @category appearance */
   size?: MantineSize | (string & {}) | number;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color for `filled` variant @category appearance */
   autoContrast?: boolean;
 
   /** Options passed down to `use-scroll-spy` hook */
   scrollSpyOptions?: UseScrollSpyOptions;
 
-  /** Data used to render content until actual values are retrieved from the DOM */
+  /** Data used to render content until actual values are retrieved from the DOM @category appearance */
   initialData?: InitialTableOfContentsData[];
 
   /** A function to pass props down to controls, accepts values from `use-scroll-spy` hook as an argument and active state. */
@@ -82,19 +82,19 @@ export interface TableOfContentsProps
     payload: TableOfContentsGetControlPropsPayload
   ) => UnstyledButtonProps & ElementProps<'button'> & Record<`data-${string}`, any>;
 
-  /** Minimum `depth` value that requires offset, `1` by default */
+  /** Minimum `depth` value that requires offset, `1` by default @category appearance */
   minDepthToOffset?: number;
 
-  /** Offset of nested controls, multiplied by (`depth` - `minDepthToOffset`) and added to the horizontal padding, by default depends on `size` (`12px` for `size="sm"`) */
+  /** Offset of nested controls, multiplied by (`depth` - `minDepthToOffset`) and added to the horizontal padding, by default depends on `size` (`12px` for `size="sm"`) @category appearance */
   depthOffset?: number | string;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, ignored for `rail` variant @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, ignored for `rail` variant @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
   /** Controls active control styles: `rail` displays a bar at the start of the active control over a neutral background, `filled` and `light` use the corresponding color variant, `none` removes active and hover styles @default 'rail' */
   variant?: TableOfContentsVariant;
 
-  /** If set, a vertical guideline is displayed at the start of the list, applies only to `rail` variant @default true */
+  /** If set, a vertical guideline is displayed at the start of the list, applies only to `rail` variant @default true @category appearance */
   withGuideline?: boolean;
 
   /** A function to reinitialize headings from `use-scroll-spy` hook */

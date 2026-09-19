@@ -36,34 +36,34 @@ export type RadialBarChartCssVariables = {
 
 export interface RadialBarChartProps
   extends BoxProps, StylesApiProps<RadialBarChartFactory>, ElementProps<'div'> {
-  /** Chart data */
+  /** Chart data @category appearance */
   data: Record<string, any>[];
 
-  /** Key from data object to use as data key */
+  /** Key from data object to use as data key @category appearance */
   dataKey: string;
 
-  /** Size of bars in px, `20` by default */
+  /** Size of bars in px, `20` by default @category appearance */
   barSize?: number;
 
-  /** Determines whether empty bars area should be visible @default true */
+  /** Determines whether empty bars area should be visible @default true @category appearance */
   withBackground?: boolean;
 
-  /** Determines whether labels should be displayed @default false */
+  /** Determines whether labels should be displayed @default false @category appearance */
   withLabels?: boolean;
 
-  /** Determines whether the legend should be displayed @default false */
+  /** Determines whether the legend should be displayed @default false @category appearance */
   withLegend?: boolean;
 
-  /** Determines whether the tooltip should be displayed when one of the bars is hovered @default true */
+  /** Determines whether the tooltip should be displayed when one of the bars is hovered @default true @category appearance */
   withTooltip?: boolean;
 
-  /** Color of the empty background, by default depends on the color scheme */
+  /** Color of the empty background, by default depends on the color scheme @category appearance */
   emptyBackgroundColor?: string;
 
-  /** Angle at which chart starts @default 90 */
+  /** Angle at which chart starts @default 90 @category appearance */
   startAngle?: number;
 
-  /** Angle at which chart ends @default -270 */
+  /** Angle at which chart ends @default -270 @category appearance */
   endAngle?: number;
 
   /** Props passed down to recharts RadialBar component */
@@ -78,7 +78,7 @@ export interface RadialBarChartProps
   /** Props passed down to `Tooltip` recharts component */
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 
-  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default @category accessibility */
   accessibilityLayer?: boolean;
 }
 

@@ -40,52 +40,52 @@ export interface GaugeChartProps
     BoxProps,
     StylesApiProps<GaugeChartFactory>,
     ElementProps<'svg', 'display' | 'opacity' | 'viewBox' | 'width' | 'height' | 'target'> {
-  /** Current value to display. Fills the arc from `min` up to `value`, unless `sections` is set – then the arc is colored by thresholds and the value is displayed only in the center label. */
+  /** Current value to display. Fills the arc from `min` up to `value`, unless `sections` is set – then the arc is colored by thresholds and the value is displayed only in the center label. @category state */
   value: number;
 
-  /** Minimum value of the gauge, @default 0 */
+  /** Minimum value of the gauge, @default 0 @category appearance */
   min?: number;
 
-  /** Maximum value of the gauge, @default 100 */
+  /** Maximum value of the gauge, @default 100 @category appearance */
   max?: number;
 
-  /** Value marked on the arc with a line marker, use to display a goal or the current value of a gauge with `sections` */
+  /** Value marked on the arc with a line marker, use to display a goal or the current value of a gauge with `sections` @category state */
   target?: number;
 
-  /** Threshold sections of the gauge arc, each section is filled from the previous section upper bound to its own `value`. If set, the arc is not filled based on `value`. */
+  /** Threshold sections of the gauge arc, each section is filled from the previous section upper bound to its own `value`. If set, the arc is not filled based on `value`. @category appearance */
   sections?: GaugeChartSection[];
 
-  /** Arc thickness in px, @default 12 */
+  /** Arc thickness in px, @default 12 @category appearance */
   thickness?: number;
 
-  /** Chart size (width and height), @default 200 */
+  /** Chart size (width and height), @default 200 @category appearance */
   size?: number;
 
-  /** Start angle in degrees, @default -120 */
+  /** Start angle in degrees, @default -120 @category appearance */
   startAngle?: number;
 
-  /** End angle in degrees, @default 120 */
+  /** End angle in degrees, @default 120 @category appearance */
   endAngle?: number;
 
-  /** Label displayed in the center of the gauge */
+  /** Label displayed in the center of the gauge @category appearance */
   label?: React.ReactNode;
 
-  /** Value formatter for default label, @default (v) => String(v) */
+  /** Value formatter for default label, @default (v) => String(v) @category appearance */
   valueFormatter?: (value: number) => string;
 
-  /** Color of the gauge track (unfilled portion) */
+  /** Color of the gauge track (unfilled portion) @category appearance */
   trackColor?: MantineColor;
 
-  /** Color of the filled arc when sections are not provided */
+  /** Color of the filled arc when sections are not provided @category appearance */
   filledColor?: MantineColor;
 
-  /** Color of the target marker */
+  /** Color of the target marker @category appearance */
   targetColor?: MantineColor;
 
-  /** Thickness of the target marker, @default 2 */
+  /** Thickness of the target marker, @default 2 @category appearance */
   targetSize?: number;
 
-  /** Whether to round arc endpoints. With `sections`, only the outer ends of the first and last sections are rounded. @default false */
+  /** Whether to round arc endpoints. With `sections`, only the outer ends of the first and last sections are rounded. @default false @category appearance */
   roundCaps?: boolean;
 }
 

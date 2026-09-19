@@ -33,34 +33,34 @@ export type SemiCircleProgressCssVariables = {
 
 export interface SemiCircleProgressProps
   extends BoxProps, StylesApiProps<SemiCircleProgressFactory>, ElementProps<'div'> {
-  /** Progress value from `0` to `100` */
+  /** Progress value from `0` to `100` @category state */
   value: number;
 
-  /** Width of the component and diameter of the full circle in px. The visible SVG height will be size/2 @default 200 */
+  /** Width of the component and diameter of the full circle in px. The visible SVG height will be size/2 @default 200 @category appearance */
   size?: number;
 
-  /** Stroke width of the circle segments in px @default 12 */
+  /** Stroke width of the circle segments in px @default 12 @category appearance */
   thickness?: number;
 
-  /** Orientation of the circle @default 'up' */
+  /** Orientation of the circle @default 'up' @category appearance */
   orientation?: 'up' | 'down';
 
-  /** Direction from which the circle is filled @default 'left-to-right' */
+  /** Direction from which the circle is filled @default 'left-to-right' @category appearance */
   fillDirection?: 'right-to-left' | 'left-to-right';
 
-  /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor @category appearance */
   filledSegmentColor?: MantineColor;
 
-  /** Key of `theme.colors` or any valid CSS color value @default 'gray.2' in light mode, 'dark.4' in dark mode */
+  /** Key of `theme.colors` or any valid CSS color value @default 'gray.2' in light mode, 'dark.4' in dark mode @category appearance */
   emptySegmentColor?: MantineColor;
 
-  /** Transition duration for the filled segment progress changes in ms. Does not affect color transitions @default 0 */
+  /** Transition duration for the filled segment progress changes in ms. Does not affect color transitions @default 0 @category appearance */
   transitionDuration?: number;
 
-  /** Label rendered inside the circle */
+  /** Label rendered inside the circle @category appearance */
   label?: React.ReactNode;
 
-  /** Label position relative to the circle center @default 'bottom' */
+  /** Label position relative to the circle center @default 'bottom' @category appearance */
   labelPosition?: 'center' | 'bottom';
 }
 

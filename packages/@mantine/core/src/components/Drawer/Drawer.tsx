@@ -20,19 +20,19 @@ export type DrawerStylesNames = DrawerRootStylesNames;
 export type DrawerCssVariables = DrawerRootCssVariables;
 
 export interface DrawerProps extends DrawerRootProps {
-  /** Drawer title */
+  /** Drawer title @category appearance */
   title?: React.ReactNode;
 
-  /** If set, the overlay is displayed @default true */
+  /** If set, the overlay is displayed @default true @category appearance */
   withOverlay?: boolean;
 
   /** Props passed down to the `Overlay` component, can be used to configure opacity, `background-color`, styles and other properties */
   overlayProps?: DrawerOverlayProps;
 
-  /** Drawer content */
+  /** Drawer content @category appearance */
   children?: React.ReactNode;
 
-  /** If set, the close button is displayed @default true */
+  /** If set, the close button is displayed @default true @category appearance */
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */

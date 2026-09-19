@@ -75,25 +75,25 @@ export type LineChartCssVariables = {
 
 export interface LineChartProps
   extends BoxProps, GridChartBaseProps, StylesApiProps<LineChartFactory>, ElementProps<'div'> {
-  /** Data used to display chart */
+  /** Data used to display chart @category appearance */
   data: Record<string, any>[];
 
-  /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
+  /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. @category appearance */
   series: LineChartSeries[];
 
-  /** Controls styles of the line @default 'default' */
+  /** Controls styles of the line @default 'default' @category appearance */
   type?: LineChartType;
 
-  /** Data used to generate gradient stops @default [{ offset: 0, color: 'red' }, { offset: 100, color: 'blue' }] */
+  /** Data used to generate gradient stops @default [{ offset: 0, color: 'red' }, { offset: 100, color: 'blue' }] @category appearance */
   gradientStops?: LineChartGradientStop[];
 
-  /** Type of the curve @default 'monotone' */
+  /** Type of the curve @default 'monotone' @category appearance */
   curveType?: LineChartCurveType;
 
-  /** Controls fill opacity of all lines @default 1 */
+  /** Controls fill opacity of all lines @default 1 @category appearance */
   fillOpacity?: number;
 
-  /** Determines whether dots should be displayed @default true */
+  /** Determines whether dots should be displayed @default true @category appearance */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -102,16 +102,16 @@ export interface LineChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: MantineChartDotProps;
 
-  /** Stroke width for the chart lines @default 2 */
+  /** Stroke width for the chart lines @default 2 @category appearance */
   strokeWidth?: number;
 
   /** Props passed down to recharts `LineChart` component */
   lineChartProps?: React.ComponentProps<typeof ReChartsLineChart>;
 
-  /** Determines whether points with `null` values should be connected @default true */
+  /** Determines whether points with `null` values should be connected @default true @category appearance */
   connectNulls?: boolean;
 
-  /** Additional components that are rendered inside recharts `LineChart` component */
+  /** Additional components that are rendered inside recharts `LineChart` component @category appearance */
   children?: React.ReactNode;
 
   /** Props passed down to recharts `Line` component */
@@ -119,7 +119,7 @@ export interface LineChartProps
     | ((series: LineChartSeries) => Partial<Omit<LineProps, 'ref'>>)
     | Partial<Omit<LineProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label @default false */
+  /** Determines whether each point should have associated label @default false @category appearance */
   withPointLabels?: boolean;
 }
 

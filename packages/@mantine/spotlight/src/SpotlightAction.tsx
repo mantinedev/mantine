@@ -23,34 +23,34 @@ export type SpotlightActionStylesNames =
 
 export interface SpotlightActionProps
   extends BoxProps, CompoundStylesApiProps<SpotlightActionFactory>, ElementProps<'button'> {
-  /** Action label, pass string to use in default filter */
+  /** Action label, pass string to use in default filter @category appearance */
   label?: string;
 
-  /** Action description, pass string to use in default filter */
+  /** Action description, pass string to use in default filter @category appearance */
   description?: string;
 
-  /** Section displayed on the left side of the label, for example, icon */
+  /** Section displayed on the left side of the label, for example, icon @category appearance */
   leftSection?: React.ReactNode;
 
-  /** Section displayed on the right side of the label, for example, hotkey */
+  /** Section displayed on the right side of the label, for example, hotkey @category appearance */
   rightSection?: React.ReactNode;
 
-  /** Children override default action elements, if passed, label, description and sections are hidden */
+  /** Children override default action elements, if passed, label, description and sections are hidden @category appearance */
   children?: React.ReactNode;
 
-  /** Determines whether left and right sections should have dimmed styles @default true */
+  /** Determines whether left and right sections should have dimmed styles @default true @category appearance */
   dimmedSections?: boolean;
 
-  /** Determines whether search query should be highlighted in action label @default false */
+  /** Determines whether search query should be highlighted in action label @default false @category appearance */
   highlightQuery?: boolean;
 
-  /** Key of `theme.colors` of any valid CSS color that will be used to highlight search query @default 'yellow' */
+  /** Key of `theme.colors` of any valid CSS color that will be used to highlight search query @default 'yellow' @category appearance */
   highlightColor?: MantineColor;
 
-  /** Determines whether the spotlight should be closed when action is triggered, overrides `closeOnActionTrigger` prop set on `Spotlight` */
+  /** Determines whether the spotlight should be closed when action is triggered, overrides `closeOnActionTrigger` prop set on `Spotlight` @category behavior */
   closeSpotlightOnTrigger?: boolean;
 
-  /** Keywords that are used for default filtering, not displayed anywhere, can be a string: "react,router,javascript" or an array: ['react', 'router', 'javascript'] */
+  /** Keywords that are used for default filtering, not displayed anywhere, can be a string: "react,router,javascript" or an array: ['react', 'router', 'javascript'] @category behavior */
   keywords?: string | string[];
 }
 

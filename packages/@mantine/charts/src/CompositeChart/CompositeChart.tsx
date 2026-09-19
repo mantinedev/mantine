@@ -77,16 +77,16 @@ export interface CompositeChartProps
     Omit<GridChartBaseProps, 'orientation'>,
     StylesApiProps<CompositeChartFactory>,
     ElementProps<'div'> {
-  /** Data used to display chart */
+  /** Data used to display chart @category appearance */
   data: Record<string, any>[];
 
-  /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
+  /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. @category appearance */
   series: CompositeChartSeries[];
 
-  /** Type of the curve @default 'monotone' */
+  /** Type of the curve @default 'monotone' @category appearance */
   curveType?: CompositeChartCurveType;
 
-  /** Determines whether dots should be displayed @default true */
+  /** Determines whether dots should be displayed @default true @category appearance */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -95,13 +95,13 @@ export interface CompositeChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: MantineChartDotProps;
 
-  /** Stroke width for the chart lines @default 2 */
+  /** Stroke width for the chart lines @default 2 @category appearance */
   strokeWidth?: number;
 
-  /** Determines whether points with `null` values should be connected @default true */
+  /** Determines whether points with `null` values should be connected @default true @category appearance */
   connectNulls?: boolean;
 
-  /** Additional components that are rendered inside recharts `AreaChart` component */
+  /** Additional components that are rendered inside recharts `AreaChart` component @category appearance */
   children?: React.ReactNode;
 
   /** Props passed down to recharts `Line` component */
@@ -119,16 +119,16 @@ export interface CompositeChartProps
     | ((series: CompositeChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label @default false */
+  /** Determines whether each point should have associated label @default false @category appearance */
   withPointLabels?: boolean;
 
-  /** Determines whether a label with bar value should be displayed on top of each bar @default false */
+  /** Determines whether a label with bar value should be displayed on top of each bar @default false @category appearance */
   withBarValueLabel?: boolean;
 
-  /** Sets minimum height of the bar in px @default 0 */
+  /** Sets minimum height of the bar in px @default 0 @category appearance */
   minBarSize?: number;
 
-  /** Maximum bar width in px */
+  /** Maximum bar width in px @category appearance */
   maxBarWidth?: number;
 
   /** Props passed down to recharts `AreaChart` component */

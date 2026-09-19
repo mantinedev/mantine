@@ -29,37 +29,37 @@ export type TimerStylesNames =
 
 export interface TimerProps
   extends BoxProps, StylesApiProps<TimerFactory>, ElementProps<'div', 'onChange'> {
-  /** Controller returned by the `useTimer` hook. When provided, the timer is controlled externally and the option props below are ignored */
+  /** Controller returned by the `useTimer` hook. When provided, the timer is controlled externally and the option props below are ignored @category state */
   controller?: UseTimerReturnValue;
 
-  /** Initial elapsed (stopwatch) or remaining (countdown) time in milliseconds, `0` by default */
+  /** Initial elapsed (stopwatch) or remaining (countdown) time in milliseconds, `0` by default @category state */
   startMs?: number;
 
-  /** Boundary the timer counts up to (stopwatch) or down to (countdown) */
+  /** Boundary the timer counts up to (stopwatch) or down to (countdown) @category state */
   targetMs?: number;
 
-  /** If set, the timer counts down instead of up, `false` by default */
+  /** If set, the timer counts down instead of up, `false` by default @category state */
   countdown?: boolean;
 
-  /** Tick interval in milliseconds, `1000` by default */
+  /** Tick interval in milliseconds, `1000` by default @category state */
   interval?: number;
 
-  /** If set, the timer starts automatically on mount, `false` by default */
+  /** If set, the timer starts automatically on mount, `false` by default @category state */
   autoStart?: boolean;
 
-  /** Called on every tick with the current timer value */
+  /** Called on every tick with the current timer value @category state */
   onTick?: (value: TimerValue) => void;
 
-  /** Called once when the timer reaches its target boundary */
+  /** Called once when the timer reaches its target boundary @category state */
   onComplete?: () => void;
 
-  /** Format of the default readout, `'HH:mm:ss'` by default. Supported tokens: `DD`, `HH`, `mm`, `ss`, `SSS` */
+  /** Format of the default readout, `'HH:mm:ss'` by default. Supported tokens: `DD`, `HH`, `mm`, `ss`, `SSS` @category appearance */
   format?: string;
 
-  /** If set, default start/pause/reset controls are rendered under the readout, `false` by default */
+  /** If set, default start/pause/reset controls are rendered under the readout, `false` by default @category appearance */
   withControls?: boolean;
 
-  /** Custom layout built with `Timer.Segment`, `Timer.Separator` and `Timer.Control` compound components */
+  /** Custom layout built with `Timer.Segment`, `Timer.Separator` and `Timer.Control` compound components @category appearance */
   children?: React.ReactNode;
 }
 

@@ -25,34 +25,34 @@ export type MarqueeCssVariables = {
 
 export interface MarqueeProps
   extends BoxProps, StylesApiProps<MarqueeFactory>, ElementProps<'div'> {
-  /** Reverses animation direction @default false */
+  /** Reverses animation direction @default false @category appearance */
   reverse?: boolean;
 
-  /** Pauses animation on hover @default false */
+  /** Pauses animation on hover @default false @category behavior */
   pauseOnHover?: boolean;
 
-  /** Content to scroll */
+  /** Content to scroll @category appearance */
   children: React.ReactNode;
 
-  /** Scroll orientation @default 'horizontal' */
+  /** Scroll orientation @default 'horizontal' @category appearance */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Number of times children are repeated inline for seamless scrolling @default 4 */
+  /** Number of times children are repeated inline for seamless scrolling @default 4 @category appearance */
   repeat?: number;
 
-  /** Animation duration in ms @default 40000 */
+  /** Animation duration in ms @default 40000 @category appearance */
   duration?: number;
 
-  /** Gap between repeated children, key of `theme.spacing` or any valid CSS value @default 'md' */
+  /** Gap between repeated children, key of `theme.spacing` or any valid CSS value @default 'md' @category appearance */
   gap?: MantineSpacing;
 
-  /** Whether to show gradient fade on edges, @default true */
+  /** Whether to show gradient fade on edges, @default true @category appearance */
   fadeEdges?: boolean;
 
-  /** Color of the fade gradient, @default 'var(--mantine-color-body)' */
+  /** Color of the fade gradient, @default 'var(--mantine-color-body)' @category appearance */
   fadeEdgeColor?: string;
 
-  /** Size of the fade gradient, @default '5%' */
+  /** Size of the fade gradient, @default '5%' @category appearance */
   fadeEdgeSize?: string;
 }
 

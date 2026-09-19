@@ -28,19 +28,19 @@ export interface MonthLevelGroupProps
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
-  /** Number of columns to display next to each other */
+  /** Number of columns to display next to each other @category appearance */
   numberOfColumns?: number;
 
-  /** Month to display */
+  /** Month to display @category state */
   month: DateStringValue;
 
-  /** Function that returns level control `aria-label` based on month date */
+  /** Function that returns level control `aria-label` based on month date @category accessibility */
   levelControlAriaLabel?: ((month: DateStringValue) => string) | string;
 
-  /** Passed as `isStatic` prop to `Month` component */
+  /** Passed as `isStatic` prop to `Month` component @category behavior */
   static?: boolean;
 
-  /** Determines whether the calendar should take the full width of its container @default false */
+  /** Determines whether the calendar should take the full width of its container @default false @category appearance */
   fullWidth?: boolean;
 
   /** Called when date is changed via native level select */

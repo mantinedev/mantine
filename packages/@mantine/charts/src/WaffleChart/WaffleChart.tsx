@@ -46,43 +46,43 @@ export type WaffleChartCssVariables = {
 
 export interface WaffleChartProps
   extends BoxProps, StylesApiProps<WaffleChartFactory>, ElementProps<'div'> {
-  /** Array of data segments with name, value, and color */
+  /** Array of data segments with name, value, and color @category appearance */
   data: WaffleChartCell[];
 
-  /** Number of rows, @default 10 */
+  /** Number of rows, @default 10 @category appearance */
   rows?: number;
 
-  /** Number of columns, @default 10 */
+  /** Number of columns, @default 10 @category appearance */
   columns?: number;
 
-  /** Total value for the chart, determines how many cells are filled vs empty, sum of all values by default */
+  /** Total value for the chart, determines how many cells are filled vs empty, sum of all values by default @category appearance */
   total?: number;
 
-  /** Gap between cells in px, @default 2 */
+  /** Gap between cells in px, @default 2 @category appearance */
   gap?: number;
 
-  /** Cell border radius, @default 0 */
+  /** Cell border radius, @default 0 @category appearance */
   cellRadius?: number;
 
-  /** Color of empty (unfilled) cells */
+  /** Color of empty (unfilled) cells @category appearance */
   emptyColor?: MantineColor;
 
-  /** Whether to show tooltip on hover, @default false */
+  /** Whether to show tooltip on hover, @default false @category appearance */
   withTooltip?: boolean;
 
-  /** Custom tooltip label formatter */
+  /** Custom tooltip label formatter @category appearance */
   getTooltipLabel?: (cell: WaffleChartCell & { count: number }) => React.ReactNode;
 
-  /** Whether to show legend, @default true */
+  /** Whether to show legend, @default true @category appearance */
   withLegend?: boolean;
 
-  /** Legend position, @default 'bottom' */
+  /** Legend position, @default 'bottom' @category appearance */
   legendPosition?: 'top' | 'bottom' | 'left' | 'right';
 
-  /** Fill direction, @default 'left-to-right' */
+  /** Fill direction, @default 'left-to-right' @category appearance */
   fillDirection?: 'left-to-right' | 'right-to-left' | 'top-to-bottom' | 'bottom-to-top';
 
-  /** Chart size (width), auto-calculated from columns if not set */
+  /** Chart size (width), auto-calculated from columns if not set @category appearance */
   size?: number;
 }
 

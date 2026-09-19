@@ -41,34 +41,34 @@ export type BadgeCssVariables = {
 };
 
 export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
-  /** Controls `font-size`, `height` and horizontal `padding` @default 'md' */
+  /** Controls `font-size`, `height` and horizontal `padding` @default 'md' @category appearance */
   size?: MantineSize | (string & {});
 
-  /** If set, badge `min-width` becomes equal to its `height` and horizontal padding is removed. `radius` prop is ignored when `circle` is set. @default false */
+  /** If set, badge `min-width` becomes equal to its `height` and horizontal padding is removed. `radius` prop is ignored when `circle` is set. @default false @category appearance */
   circle?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' @category appearance */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Gradient configuration used when `variant=\"gradient\"` @default theme.defaultGradient */
+  /** Gradient configuration used when `variant=\"gradient\"` @default theme.defaultGradient @category appearance */
   gradient?: MantineGradient;
 
-  /** Content displayed on the left side of the badge label. Ignored when `variant="dot"` is set. */
+  /** Content displayed on the left side of the badge label. Ignored when `variant="dot"` is set. @category appearance */
   leftSection?: React.ReactNode;
 
-  /** Content displayed on the right side of the badge label */
+  /** Content displayed on the right side of the badge label @category appearance */
   rightSection?: React.ReactNode;
 
-  /** Determines whether Badge should take 100% of its parent width @default false */
+  /** Determines whether Badge should take 100% of its parent width @default false @category appearance */
   fullWidth?: boolean;
 
-  /** Main badge content */
+  /** Main badge content @category appearance */
   children?: React.ReactNode;
 
-  /** If set, adjusts text color based on background color for `filled` variant @default false */
+  /** If set, adjusts text color based on background color for `filled` variant @default false @category appearance */
   autoContrast?: boolean;
 }
 

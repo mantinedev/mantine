@@ -44,49 +44,49 @@ export interface SelectProps<Value extends Primitive = string>
     ComboboxLikeProps<Value>,
     StylesApiProps<SelectFactory>,
     ElementProps<'input', 'onChange' | 'size' | 'value' | 'defaultValue'> {
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: Value | null;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: Value | null;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: Value | null, option: ComboboxItem<Value>) => void;
 
-  /** Called when the clear button is clicked */
+  /** Called when the clear button is clicked @category behavior */
   onClear?: () => void;
 
-  /** Determines whether the select should be searchable @default false */
+  /** Determines whether the select should be searchable @default false @category behavior */
   searchable?: boolean;
 
-  /** Displays check icon near the selected option label @default true */
+  /** Displays check icon near the selected option label @default true @category appearance */
   withCheckIcon?: boolean;
 
-  /** Aligns unchecked labels with the checked one @default false */
+  /** Aligns unchecked labels with the checked one @default false @category appearance */
   withAlignedLabels?: boolean;
 
-  /** Position of the check icon relative to the option label @default 'left' */
+  /** Position of the check icon relative to the option label @default 'left' @category appearance */
   checkIconPosition?: 'left' | 'right';
 
-  /** Message displayed when no options match the search query or when there is no data */
+  /** Message displayed when no options match the search query or when there is no data @category appearance */
   nothingFoundMessage?: React.ReactNode;
 
-  /** Controlled search value */
+  /** Controlled search value @category state */
   searchValue?: string;
 
-  /** Default search value */
+  /** Default search value @category state */
   defaultSearchValue?: string;
 
-  /** Called when search changes */
+  /** Called when search changes @category state */
   onSearchChange?: (value: string) => void;
 
-  /** Allows deselecting the selected option by clicking it @default true */
+  /** Allows deselecting the selected option by clicking it @default true @category behavior */
   allowDeselect?: boolean;
 
-  /** Displays clear button in the right section when component has value @default false */
+  /** Displays clear button in the right section when component has value @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  /** Determines how the clear button and rightSection are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
@@ -95,19 +95,19 @@ export interface SelectProps<Value extends Primitive = string>
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
 
-  /** A function to render content of the option, replaces the default content of the option */
+  /** A function to render content of the option, replaces the default content of the option @category appearance */
   renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** Controls color of the default chevron, by default depends on the color scheme */
+  /** Controls color of the default chevron, by default depends on the color scheme @category appearance */
   chevronColor?: MantineColor;
 
-  /** Automatically selects the highlighted option when input loses focus @default false */
+  /** Automatically selects the highlighted option when input loses focus @default false @category behavior */
   autoSelectOnBlur?: boolean;
 
-  /** Opens dropdown when input receives focus (requires searchable={true}) @default true */
+  /** Opens dropdown when input receives focus (requires searchable={true}) @default true @category behavior */
   openOnFocus?: boolean;
 }
 

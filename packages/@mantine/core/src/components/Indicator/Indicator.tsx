@@ -41,46 +41,46 @@ export type IndicatorCssVariables = {
 
 export interface IndicatorProps
   extends BoxProps, StylesApiProps<IndicatorFactory>, ElementProps<'div'> {
-  /** Indicator position relative to the target element @default 'top-end' */
+  /** Indicator position relative to the target element @default 'top-end' @category appearance */
   position?: IndicatorPosition;
 
-  /** Distance in pixels to offset the indicator from its default position, useful for elements with border-radius. Can be a number for uniform offset or an object with `x` and `y` properties for separate horizontal and vertical offsets @default 0 */
+  /** Distance in pixels to offset the indicator from its default position, useful for elements with border-radius. Can be a number for uniform offset or an object with `x` and `y` properties for separate horizontal and vertical offsets @default 0 @category appearance */
   offset?: number | { x: number; y: number };
 
-  /** Changes container display from block to inline-block, use when wrapping elements with fixed width @default false */
+  /** Changes container display from block to inline-block, use when wrapping elements with fixed width @default false @category appearance */
   inline?: boolean;
 
-  /** Indicator width and height @default 10 */
+  /** Indicator width and height @default 10 @category appearance */
   size?: number | string;
 
-  /** Label displayed inside the indicator, for example, notification count */
+  /** Label displayed inside the indicator, for example, notification count @category appearance */
   label?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 100 */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 100 @category appearance */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Adds border to the root element */
+  /** Adds border to the root element @category appearance */
   withBorder?: boolean;
 
-  /** Hides the indicator when set */
+  /** Hides the indicator when set @category appearance */
   disabled?: boolean;
 
-  /** If set, the indicator has processing animation @default false */
+  /** If set, the indicator has processing animation @default false @category appearance */
   processing?: boolean;
 
   /** Indicator z-index @default 200 */
   zIndex?: string | number;
 
-  /** If set, adjusts text color based on background color */
+  /** If set, adjusts text color based on background color @category appearance */
   autoContrast?: boolean;
 
-  /** Maximum value to display. If label is a number greater than this value, it will be displayed as `{maxValue}+` */
+  /** Maximum value to display. If label is a number greater than this value, it will be displayed as `{maxValue}+` @category appearance */
   maxValue?: number;
 
-  /** Determines whether indicator with label `0` should be displayed @default true */
+  /** Determines whether indicator with label `0` should be displayed @default true @category appearance */
   showZero?: boolean;
 }
 

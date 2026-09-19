@@ -26,7 +26,7 @@ export interface WeekPickerInputProps<Type extends DatePickerType = 'default'>
     DateInputSharedProps,
     WeekPickerBaseProps<Type>,
     StylesApiProps<WeekPickerInputFactory> {
-  /** `dayjs` format applied to the start and end dates of the week @default "MMM D, YYYY" */
+  /** `dayjs` format applied to the start and end dates of the week @default "MMM D, YYYY" @category appearance */
   valueFormat?: string;
 }
 

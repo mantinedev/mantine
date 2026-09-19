@@ -35,43 +35,43 @@ export type MiniCalendarCssVariables = {
 
 export interface MiniCalendarProps
   extends BoxProps, StylesApiProps<MiniCalendarFactory>, ElementProps<'div', 'onChange'> {
-  /** Controlled component date value, start date of the interval */
+  /** Controlled component date value, start date of the interval @category state */
   date?: Date | string;
 
-  /** Uncontrolled component default value, start date of the interval */
+  /** Uncontrolled component default value, start date of the interval @category state */
   defaultDate?: Date | string;
 
-  /** Called with date in `YYYY-MM-DD` format when date internal changes */
+  /** Called with date in `YYYY-MM-DD` format when date internal changes @category state */
   onDateChange?: (date: string) => void;
 
-  /** Selected date, controlled value */
+  /** Selected date, controlled value @category state */
   value?: Date | string | null;
 
-  /** Called with date in `YYYY-MM-DD` format when date changes */
+  /** Called with date in `YYYY-MM-DD` format when date changes @category state */
   onChange?: (date: string) => void;
 
-  /** Maximum date that can be selected, date object or date string in `YYYY-MM-DD` format */
+  /** Maximum date that can be selected, date object or date string in `YYYY-MM-DD` format @category behavior */
   maxDate?: Date | string;
 
-  /** Minimum date that can be selected, date object or date string in `YYYY-MM-DD` format */
+  /** Minimum date that can be selected, date object or date string in `YYYY-MM-DD` format @category behavior */
   minDate?: Date | string;
 
-  /** Number of days to display in the calendar @default 7 */
+  /** Number of days to display in the calendar @default 7 @category appearance */
   numberOfDays?: number;
 
-  /** `dayjs` format for month label or a function that returns month label based on the date value @default "MMM" */
+  /** `dayjs` format for month label or a function that returns month label based on the date value @default "MMM" @category appearance */
   monthLabelFormat?: DateLabelFormat;
 
-  /** Called when the next button is clicked */
+  /** Called when the next button is clicked @category behavior */
   onNext?: () => void;
 
-  /** Called when the previous button is clicked */
+  /** Called when the previous button is clicked @category behavior */
   onPrevious?: () => void;
 
   /** Props passed down to the day component */
   getDayProps?: (date: string) => Record<string, any>;
 
-  /** Component size @default 'sm' */
+  /** Component size @default 'sm' @category appearance */
   size?: MantineSize;
 
   /** Props passed to previous control button */
@@ -80,7 +80,7 @@ export interface MiniCalendarProps
   /** Props passed to next control button */
   nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
 
-  /** dayjs locale used for formatting */
+  /** dayjs locale used for formatting @category appearance */
   locale?: string;
 }
 

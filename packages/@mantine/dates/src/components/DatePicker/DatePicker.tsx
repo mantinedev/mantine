@@ -65,18 +65,19 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
     CalendarBaseProps,
     Omit<CalendarSettings, 'hasNextLevel'>,
     Pick<CalendarProps, 'enableKeyboardNavigation'> {
+  /** @category behavior */
   maxLevel?: CalendarLevel;
 
-  /** Initial displayed level (uncontrolled) */
+  /** Initial displayed level (uncontrolled) @category state */
   defaultLevel?: CalendarLevel;
 
-  /** Current displayed level (controlled) */
+  /** Current displayed level (controlled) @category state */
   level?: CalendarLevel;
 
-  /** Called when level changes */
+  /** Called when level changes @category state */
   onLevelChange?: (level: CalendarLevel) => void;
 
-  /** Predefined values to pick from */
+  /** Predefined values to pick from @category appearance */
   presets?: DatePickerPreset<Type>[];
 
   /** If defined, called with preset value, suppresses `onChange` call */

@@ -21,34 +21,34 @@ export type SpoilerCssVariables = {
 
 export interface SpoilerProps
   extends BoxProps, StylesApiProps<SpoilerFactory>, ElementProps<'div'> {
-  /** Maximum height of visible content in px. When content exceeds this height, the toggle control appears @default 100 */
+  /** Maximum height of visible content in px. When content exceeds this height, the toggle control appears @default 100 @category appearance */
   maxHeight?: number;
 
-  /** Content displayed in the toggle button when content is collapsed (to expand) */
+  /** Content displayed in the toggle button when content is collapsed (to expand) @category appearance */
   showLabel: React.ReactNode;
 
-  /** Content displayed in the toggle button when content is expanded (to collapse) */
+  /** Content displayed in the toggle button when content is expanded (to collapse) @category appearance */
   hideLabel: React.ReactNode;
 
   /** Ref of the toggle button element */
   controlRef?: React.Ref<HTMLButtonElement>;
 
-  /** Initial expanded state in uncontrolled mode. If `true`, content starts expanded. If `false`, content starts collapsed @default false */
+  /** Initial expanded state in uncontrolled mode. If `true`, content starts expanded. If `false`, content starts collapsed @default false @category state */
   defaultExpanded?: boolean;
 
-  /** Controlled expanded state value */
+  /** Controlled expanded state value @category state */
   expanded?: boolean;
 
-  /** Called when expanded state changes (when spoiler visibility is toggled by the user) */
+  /** Called when expanded state changes (when spoiler visibility is toggled by the user) @category state */
   onExpandedChange?: (expanded: boolean) => void;
 
-  /** Spoiler reveal transition duration in ms. Set to 0 to disable animation @default 200 */
+  /** Spoiler reveal transition duration in ms. Set to 0 to disable animation @default 200 @category appearance */
   transitionDuration?: number;
 
-  /** Accessible label for the toggle button when collapsed. If not set, `showLabel` is used */
+  /** Accessible label for the toggle button when collapsed. If not set, `showLabel` is used @category accessibility */
   showAriaLabel?: string;
 
-  /** Accessible label for the toggle button when expanded. If not set, `hideLabel` is used */
+  /** Accessible label for the toggle button when expanded. If not set, `hideLabel` is used @category accessibility */
   hideAriaLabel?: string;
 }
 

@@ -75,85 +75,85 @@ export interface QuarterPickerBaseProps<Type extends DatePickerType = 'default'>
     preset: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
   ) => void;
 
-  /** Initial displayed date in uncontrolled mode */
+  /** Initial displayed date in uncontrolled mode @category state */
   defaultDate?: DateStringValue | Date;
 
-  /** Displayed date in controlled mode */
+  /** Displayed date in controlled mode @category state */
   date?: DateStringValue | Date;
 
-  /** Called when date changes */
+  /** Called when date changes @category state */
   onDateChange?: (date: DateStringValue) => void;
 
-  /** Max level that user can go up to @default 'decade' */
+  /** Max level that user can go up to @default 'decade' @category behavior */
   maxLevel?: QuarterPickerLevel;
 
-  /** Initial displayed level (uncontrolled) */
+  /** Initial displayed level (uncontrolled) @category state */
   defaultLevel?: QuarterPickerLevel;
 
-  /** Current displayed level (controlled) */
+  /** Current displayed level (controlled) @category state */
   level?: QuarterPickerLevel;
 
-  /** Called when level changes */
+  /** Called when level changes @category state */
   onLevelChange?: (level: QuarterPickerLevel) => void;
 
-  /** Number of columns displayed next to each other @default 1 */
+  /** Number of columns displayed next to each other @default 1 @category appearance */
   numberOfColumns?: number;
 
-  /** Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly */
+  /** Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly @category behavior */
   columnsToScroll?: number;
 
-  /** `aria-label` attributes for controls on different levels */
+  /** `aria-label` attributes for controls on different levels @category accessibility */
   ariaLabels?: QuarterPickerAriaLabels;
 
-  /** Next button `aria-label` */
+  /** Next button `aria-label` @category accessibility */
   nextLabel?: string;
 
-  /** Previous button `aria-label` */
+  /** Previous button `aria-label` @category accessibility */
   previousLabel?: string;
 
-  /** Change next icon */
+  /** Change next icon @category appearance */
   nextIcon?: React.ReactNode;
 
-  /** Change previous icon */
+  /** Change previous icon @category appearance */
   previousIcon?: React.ReactNode;
 
-  /** Controls order @default ['previous', 'level', 'next'] */
+  /** Controls order @default ['previous', 'level', 'next'] @category appearance */
   headerControlsOrder?: ('previous' | 'next' | 'level')[];
 
-  /** Determines whether level select controls should be rendered as native `<select>` elements @default false */
+  /** Determines whether level select controls should be rendered as native `<select>` elements @default false @category behavior */
   withNativeLevelSelect?: boolean;
 
-  /** Year range for native level select, tuple of `[startYear, endYear]` */
+  /** Year range for native level select, tuple of `[startYear, endYear]` @category appearance */
   yearsSelectRange?: [number, number];
 
-  /** Determines whether the picker should take the full width of its container @default false */
+  /** Determines whether the picker should take the full width of its container @default false @category appearance */
   fullWidth?: boolean;
 
-  /** Component size */
+  /** Component size @category appearance */
   size?: MantineSize;
 
-  /** Predefined values to pick from */
+  /** Predefined values to pick from @category appearance */
   presets?: QuarterPickerPreset<Type>[];
 
-  /** Called when user selects year on decade level */
+  /** Called when user selects year on decade level @category behavior */
   onYearSelect?: (date: DateStringValue) => void;
 
-  /** Called when the next year button is clicked */
+  /** Called when the next year button is clicked @category behavior */
   onNextYear?: (date: DateStringValue) => void;
 
-  /** Called when the previous year button is clicked */
+  /** Called when the previous year button is clicked @category behavior */
   onPreviousYear?: (date: DateStringValue) => void;
 
-  /** Called when the next decade button is clicked */
+  /** Called when the next decade button is clicked @category behavior */
   onNextDecade?: (date: DateStringValue) => void;
 
-  /** Called when the previous decade button is clicked */
+  /** Called when the previous decade button is clicked @category behavior */
   onPreviousDecade?: (date: DateStringValue) => void;
 
-  /** Called when mouse enters year control */
+  /** Called when mouse enters year control @category behavior */
   onYearMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: DateStringValue) => void;
 
-  /** Called when mouse enters quarter control */
+  /** Called when mouse enters quarter control @category behavior */
   onQuarterMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: DateStringValue) => void;
 }
 
@@ -163,7 +163,7 @@ export interface QuarterPickerProps<Type extends DatePickerType = 'default'>
     QuarterPickerBaseProps<Type>,
     StylesApiProps<QuarterPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
-  /** Called when quarter is selected */
+  /** Called when quarter is selected @category behavior */
   onQuarterSelect?: (date: DateStringValue) => void;
 }
 

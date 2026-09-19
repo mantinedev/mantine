@@ -54,34 +54,34 @@ export type ColorPickerCssVariables = {
 };
 
 export interface __ColorPickerProps {
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: string;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: string;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: string) => void;
 
-  /** Called when the user stops dragging one of the sliders or changes the value with keyboard */
+  /** Called when the user stops dragging one of the sliders or changes the value with keyboard @category state */
   onChangeEnd?: (value: string) => void;
 
-  /** Color format. `hexa`, `rgba`, `hsla` values render alpha channel slider @default 'hex' */
+  /** Color format. `hexa`, `rgba`, `hsla` values render alpha channel slider @default 'hex' @category state */
   format?: ColorFormat;
 
-  /** If `false`, the component displays only swatches @default true */
+  /** If `false`, the component displays only swatches @default true @category appearance */
   withPicker?: boolean;
 
-  /** A list of colors used to display swatches list below the color picker */
+  /** A list of colors used to display swatches list below the color picker @category appearance */
   swatches?: string[];
 
-  /** Number of swatches per row @default 10 */
+  /** Number of swatches per row @default 10 @category appearance */
   swatchesPerRow?: number;
 
-  /** Component size @default 'md' */
+  /** Component size @default 'md' @category appearance */
   size?: MantineSize | (string & {});
 
-  /** If set, the component takes 100% width of its container @default false */
+  /** If set, the component takes 100% width of its container @default false @category appearance */
   fullWidth?: boolean;
 }
 
@@ -93,22 +93,22 @@ export interface ColorPickerProps
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   __staticSelector?: string;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` of saturation area, sliders, preview and swatches @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` of saturation area, sliders, preview and swatches @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard @default true */
+  /** If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard @default true @category behavior */
   focusable?: boolean;
 
-  /** Saturation slider `aria-label` */
+  /** Saturation slider `aria-label` @category accessibility */
   saturationLabel?: string;
 
-  /** Hue slider `aria-label` */
+  /** Hue slider `aria-label` @category accessibility */
   hueLabel?: string;
 
-  /** Alpha slider `aria-label` */
+  /** Alpha slider `aria-label` @category accessibility */
   alphaLabel?: string;
 
-  /** Called when one of the color swatches is clicked */
+  /** Called when one of the color swatches is clicked @category behavior */
   onColorSwatchClick?: (color: string) => void;
 
   /** Hidden input `name` attribute, if not set, the input will not be rendered */

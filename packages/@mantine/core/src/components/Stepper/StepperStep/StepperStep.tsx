@@ -43,52 +43,52 @@ export type StepperStepStylesNames =
 
 export interface StepperStepProps
   extends BoxProps, CompoundStylesApiProps<StepperStepFactory>, ElementProps<'button'> {
-  /** 0-based step index, automatically set by Stepper component */
+  /** 0-based step index, automatically set by Stepper component @category state */
   step?: number;
 
-  /** Step state, automatically set by Stepper component based on active prop. stepInactive: not reached, stepProgress: current, stepCompleted: passed */
+  /** Step state, automatically set by Stepper component based on active prop. stepInactive: not reached, stepProgress: current, stepCompleted: passed @category state */
   state?: 'stepInactive' | 'stepProgress' | 'stepCompleted';
 
-  /** Key of `theme.colors`, by default controlled by Stepper component */
+  /** Key of `theme.colors`, by default controlled by Stepper component @category appearance */
   color?: MantineColor;
 
-  /** When false, hides the step icon. Useful for creating compact steppers with only labels @default true */
+  /** When false, hides the step icon. Useful for creating compact steppers with only labels @default true @category appearance */
   withIcon?: boolean;
 
-  /** Step icon, defaults to `step index + 1` when rendered within Stepper */
+  /** Step icon, defaults to `step index + 1` when rendered within Stepper @category appearance */
   icon?: React.ReactNode | StepFragmentComponent;
 
-  /** Step icon displayed when step is completed */
+  /** Step icon displayed when step is completed @category appearance */
   completedIcon?: React.ReactNode | StepFragmentComponent;
 
-  /** Step icon displayed when step is in progress */
+  /** Step icon displayed when step is in progress @category appearance */
   progressIcon?: React.ReactNode | StepFragmentComponent;
 
-  /** Step label, render after icon */
+  /** Step label, render after icon @category appearance */
   label?: React.ReactNode | StepFragmentComponent;
 
-  /** Step description */
+  /** Step description @category appearance */
   description?: React.ReactNode | StepFragmentComponent;
 
-  /** Icon wrapper size */
+  /** Icon wrapper size @category appearance */
   iconSize?: string | number;
 
-  /** Icon position relative to step body, controlled by Stepper component */
+  /** Icon position relative to step body, controlled by Stepper component @category appearance */
   iconPosition?: 'right' | 'left';
 
-  /** Indicates loading state of the step */
+  /** Indicates loading state of the step @category behavior */
   loading?: boolean;
 
-  /** Set to false to disable clicks on step */
+  /** Set to false to disable clicks on step @category behavior */
   allowStepClick?: boolean;
 
-  /** Should step selection be allowed */
+  /** Should step selection be allowed @category behavior */
   allowStepSelect?: boolean;
 
   /** Static selector base */
   __staticSelector?: string;
 
-  /** Component orientation */
+  /** Component orientation @category appearance */
   orientation?: 'vertical' | 'horizontal';
 }
 

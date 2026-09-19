@@ -77,19 +77,19 @@ export interface WeekPickerBaseProps<Type extends DatePickerType = 'default'>
       'hasNextLevel' | 'withWeekNumbers' | '__withWeekControls' | '__getWeekControlProps'
     >,
     Pick<CalendarProps, 'enableKeyboardNavigation'> {
-  /** Max level that user can go up to @default 'decade' */
+  /** Max level that user can go up to @default 'decade' @category behavior */
   maxLevel?: CalendarLevel;
 
-  /** Initial displayed level (uncontrolled) */
+  /** Initial displayed level (uncontrolled) @category state */
   defaultLevel?: CalendarLevel;
 
-  /** Current displayed level (controlled) */
+  /** Current displayed level (controlled) @category state */
   level?: CalendarLevel;
 
-  /** Called when level changes */
+  /** Called when level changes @category state */
   onLevelChange?: (level: CalendarLevel) => void;
 
-  /** Predefined values to pick from */
+  /** Predefined values to pick from @category appearance */
   presets?: WeekPickerPreset<Type>[];
 
   /** Passes props down to week controls, receives the first date of the week in `YYYY-MM-DD` format */

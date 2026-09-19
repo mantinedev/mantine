@@ -41,64 +41,64 @@ export interface EditableProps
   /** Controller returned by the `useEditable` hook. When provided, the editing state is controlled externally and the option props below are ignored */
   controller?: UseEditableReturnValue;
 
-  /** Controlled value */
+  /** Controlled value @category state */
   value?: string;
 
-  /** Uncontrolled value initial state */
+  /** Uncontrolled value initial state @category state */
   defaultValue?: string;
 
-  /** Called on every value change (on each keystroke) */
+  /** Called on every value change (on each keystroke) @category state */
   onChange?: (value: string) => void;
 
-  /** Called when the edit is confirmed */
+  /** Called when the edit is confirmed @category state */
   onValueCommit?: (value: string) => void;
 
-  /** Called when the edit is cancelled */
+  /** Called when the edit is cancelled @category state */
   onValueRevert?: (value: string) => void;
 
-  /** Controlled editing state */
+  /** Controlled editing state @category state */
   editing?: boolean;
 
-  /** Uncontrolled editing state initial value, `false` by default */
+  /** Uncontrolled editing state initial value, `false` by default @category state */
   defaultEditing?: boolean;
 
-  /** Called when the editing state changes */
+  /** Called when the editing state changes @category state */
   onEditingChange?: (editing: boolean) => void;
 
-  /** How the preview enters edit mode, `'focus'` by default */
+  /** How the preview enters edit mode, `'focus'` by default @category behavior */
   activationMode?: EditableActivationMode;
 
-  /** What confirms the edit, `'both'` by default */
+  /** What confirms the edit, `'both'` by default @category behavior */
   submitMode?: EditableSubmitMode;
 
-  /** If set, the input contents are selected when entering edit mode, `true` by default */
+  /** If set, the input contents are selected when entering edit mode, `true` by default @category behavior */
   selectOnFocus?: boolean;
 
-  /** If set, a `textarea` is used instead of an `input`, `false` by default */
+  /** If set, a `textarea` is used instead of an `input`, `false` by default @category appearance */
   multiline?: boolean;
 
-  /** If set, the `textarea` grows to fit its content, `false` by default. Only used when `multiline` is set */
+  /** If set, the `textarea` grows to fit its content, `false` by default. Only used when `multiline` is set @category appearance */
   autosize?: boolean;
 
-  /** Minimum `textarea` rows, only used with `autosize` */
+  /** Minimum `textarea` rows, only used with `autosize` @category appearance */
   minRows?: number;
 
-  /** Maximum `textarea` rows to grow to, only used with `autosize` */
+  /** Maximum `textarea` rows to grow to, only used with `autosize` @category appearance */
   maxRows?: number;
 
-  /** Placeholder text displayed when the value is empty. Can be a string or an object with `edit` and `preview` keys */
+  /** Placeholder text displayed when the value is empty. Can be a string or an object with `edit` and `preview` keys @category appearance */
   placeholder?: string | { edit?: string; preview?: string };
 
-  /** If set, entering edit mode is disabled, `false` by default */
+  /** If set, entering edit mode is disabled, `false` by default @category behavior */
   disabled?: boolean;
 
-  /** If set, the value cannot be changed, `false` by default */
+  /** If set, the value cannot be changed, `false` by default @category behavior */
   readOnly?: boolean;
 
-  /** Adds `required` attribute to the input */
+  /** Adds `required` attribute to the input @category state */
   required?: boolean;
 
-  /** Maximum length of the value */
+  /** Maximum length of the value @category behavior */
   maxLength?: number;
 
   /** `name` attribute of the input, used for form submission */
@@ -107,7 +107,7 @@ export interface EditableProps
   /** Element focused after the edit is confirmed with the keyboard. Defaults to the preview element */
   finalFocusRef?: React.RefObject<HTMLElement | null>;
 
-  /** Custom layout built with `Editable.Preview`, `Editable.Input` and other compound components */
+  /** Custom layout built with `Editable.Preview`, `Editable.Input` and other compound components @category appearance */
   children?: React.ReactNode;
 }
 

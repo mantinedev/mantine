@@ -54,10 +54,10 @@ export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
       CalendarBaseProps,
       'onNextYear' | 'onPreviousYear' | 'onNextMonth' | 'onPreviousMonth' | 'hasNextLevel'
     > {
-  /** Determines whether level select controls should be rendered as native `<select>` elements @default false */
+  /** Determines whether level select controls should be rendered as native `<select>` elements @default false @category behavior */
   withNativeLevelSelect?: boolean;
 
-  /** Predefined values to pick from */
+  /** Predefined values to pick from @category appearance */
   presets?: YearPickerPreset<Type>[];
 
   /** If defined, called with preset value, suppresses `onChange` call */
@@ -72,7 +72,7 @@ export interface YearPickerProps<Type extends DatePickerType = 'default'>
     YearPickerBaseProps<Type>,
     StylesApiProps<YearPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
-  /** Called when year is selected */
+  /** Called when year is selected @category behavior */
   onYearSelect?: (date: DateStringValue) => void;
 }
 

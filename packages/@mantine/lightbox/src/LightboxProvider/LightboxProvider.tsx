@@ -7,7 +7,7 @@ export interface LightboxProviderProps extends Omit<
   LightboxProps,
   'opened' | 'onClose' | 'slides' | 'currentIndex' | 'onIndexChange'
 > {
-  /** Lightbox store, can be used to create multiple instances @default lightboxStore */
+  /** Lightbox store, can be used to create multiple instances @default lightboxStore @category state */
   store?: LightboxStore;
 }
 

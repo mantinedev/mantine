@@ -35,25 +35,25 @@ export interface ActionBarProps
     PaperBaseProps,
     StylesApiProps<ActionBarFactory>,
     ElementProps<'div'> {
-  /** Controls visibility */
+  /** Controls visibility @category state */
   opened: boolean;
 
-  /** Called when close button is clicked or Escape is pressed */
+  /** Called when close button is clicked or Escape is pressed @category state */
   onClose?: () => void;
 
-  /** Props passed down to the `Transition` component, `{ transition: 'pop', duration: 200 }` by default */
+  /** Props passed down to the `Transition` component, `{ transition: 'pop', duration: 200 }` by default @category appearance */
   transitionProps?: TransitionOverride;
 
-  /** Key of `theme.shadows` or any valid CSS `box-shadow` value */
+  /** Key of `theme.shadows` or any valid CSS `box-shadow` value @category appearance */
   shadow?: MantineShadow;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @category appearance */
   radius?: MantineRadius;
 
-  /** Determines whether the action bar should be closed when `Escape` key is pressed, `false` by default */
+  /** Determines whether the action bar should be closed when `Escape` key is pressed, `false` by default @category behavior */
   closeOnEscape?: boolean;
 
-  /** `aria-label` of the actions group, `'Actions'` by default */
+  /** `aria-label` of the actions group, `'Actions'` by default @category accessibility */
   'aria-label'?: string;
 
   /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node, `false` by default */

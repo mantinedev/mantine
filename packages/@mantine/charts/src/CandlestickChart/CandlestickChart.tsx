@@ -103,31 +103,31 @@ export interface CandlestickChartProps
     >,
     StylesApiProps<CandlestickChartFactory>,
     ElementProps<'div'> {
-  /** Data used to display chart */
+  /** Data used to display chart @category appearance */
   data: Record<string, any>[];
 
-  /** Keys of the `data` object used to read open, high, low and close values @default `{ open: 'open', high: 'high', low: 'low', close: 'close' }` */
+  /** Keys of the `data` object used to read open, high, low and close values @default `{ open: 'open', high: 'high', low: 'low', close: 'close' }` @category appearance */
   dataKeys?: CandlestickChartDataKeys;
 
-  /** Labels of open, high, low and close values displayed in the tooltip @default `{ open: 'Open', high: 'High', low: 'Low', close: 'Close' }` */
+  /** Labels of open, high, low and close values displayed in the tooltip @default `{ open: 'Open', high: 'High', low: 'Low', close: 'Close' }` @category appearance */
   labels?: Partial<CandlestickChartLabels>;
 
-  /** Color of candles with `close >= open`, key of `theme.colors` or any valid CSS color @default 'teal.6' */
+  /** Color of candles with `close >= open`, key of `theme.colors` or any valid CSS color @default 'teal.6' @category appearance */
   upColor?: MantineColor;
 
-  /** Color of candles with `close < open`, key of `theme.colors` or any valid CSS color @default 'red.6' */
+  /** Color of candles with `close < open`, key of `theme.colors` or any valid CSS color @default 'red.6' @category appearance */
   downColor?: MantineColor;
 
-  /** Maximum candle width in px */
+  /** Maximum candle width in px @category appearance */
   maxCandleWidth?: number;
 
-  /** Stroke width of the candle wick and body outline @default 1 */
+  /** Stroke width of the candle wick and body outline @default 1 @category appearance */
   candleStrokeWidth?: number;
 
   /** Props passed down to recharts `ComposedChart` component */
   composedChartProps?: React.ComponentProps<typeof ReChartsComposedChart>;
 
-  /** Additional components that are rendered inside recharts `ComposedChart` component */
+  /** Additional components that are rendered inside recharts `ComposedChart` component @category appearance */
   children?: React.ReactNode;
 }
 

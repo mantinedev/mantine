@@ -69,56 +69,56 @@ export type CodeHighlightCssVariables = {
 };
 
 export interface CodeHighlightSettings {
-  /** Label for copy button in default state @default 'Copy' */
+  /** Label for copy button in default state @default 'Copy' @category appearance */
   copyLabel?: string;
 
-  /** Label for copy button in copied state @default 'Copied' */
+  /** Label for copy button in copied state @default 'Copied' @category appearance */
   copiedLabel?: string;
 
-  /** Uncontrolled expanded default state */
+  /** Uncontrolled expanded default state @category state */
   defaultExpanded?: boolean;
 
-  /** Controlled expanded state */
+  /** Controlled expanded state @category state */
   expanded?: boolean;
 
-  /** Called when expanded state changes */
+  /** Called when expanded state changes @category state */
   onExpandedChange?: (expanded: boolean) => void;
 
-  /** Max height of collapsed state @default 180px */
+  /** Max height of collapsed state @default 180px @category appearance */
   maxCollapsedHeight?: number | string;
 
-  /** Determines whether the copy button should be displayed @default true  */
+  /** Determines whether the copy button should be displayed @default true @category appearance */
   withCopyButton?: boolean;
 
-  /** Determines whether the expand/collapse button should be displayed @default false */
+  /** Determines whether the expand/collapse button should be displayed @default false @category appearance */
   withExpandButton?: boolean;
 
-  /** Label for expand button @default 'Expand code' */
+  /** Label for expand button @default 'Expand code' @category appearance */
   expandCodeLabel?: string;
 
-  /** Label for collapse button @default 'Collapse code' */
+  /** Label for collapse button @default 'Collapse code' @category appearance */
   collapseCodeLabel?: string;
 
-  /** Controls background color of the code. By default, the value depends on color scheme. */
+  /** Controls background color of the code. By default, the value depends on color scheme. @category appearance */
   background?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default 0 */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default 0 @category appearance */
   radius?: MantineRadius;
 
-  /** Adds border to the root element @default false */
+  /** Adds border to the root element @default false @category appearance */
   withBorder?: boolean;
 
-  /** Determines whether line numbers should be displayed @default false */
+  /** Determines whether line numbers should be displayed @default false @category appearance */
   withLineNumbers?: boolean;
 
-  /** Extra controls to display in the controls list */
+  /** Extra controls to display in the controls list @category appearance */
   controls?: React.ReactNode[];
 
-  /** Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here */
+  /** Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here @category appearance */
   codeColorScheme?: 'dark' | 'light' | (string & {});
 
   /** If set, indentation of the first line of the code is preserved. By default, it is removed
-   *  along with the rest of the leading and trailing whitespace. @default false */
+   *  along with the rest of the leading and trailing whitespace. @default false @category appearance */
   withFirstLineIndentation?: boolean;
 }
 
@@ -134,10 +134,10 @@ export interface CodeHighlightProps
   /** If set, the code will be rendered as inline element without `<pre>` @default false */
   __inline?: boolean;
 
-  /** Code to highlight */
+  /** Code to highlight @category appearance */
   code: string;
 
-  /** Language of the code, used for syntax highlighting */
+  /** Language of the code, used for syntax highlighting @category appearance */
   language?: string;
 }
 

@@ -30,10 +30,10 @@ export interface DateInputSharedProps
   extends
     Omit<__BaseInputProps, 'size'>,
     ElementProps<'button', 'defaultValue' | 'value' | 'onChange' | 'type'> {
-  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"` @default true */
+  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"` @default true @category behavior */
   closeOnChange?: boolean;
 
-  /** Type of the dropdown @default 'popover' */
+  /** Type of the dropdown @default 'popover' @category appearance */
   dropdownType?: 'popover' | 'modal';
 
   /** Props passed down to `Popover` component */
@@ -42,31 +42,31 @@ export interface DateInputSharedProps
   /** Props passed down to `Modal` component */
   modalProps?: Partial<Omit<ModalProps, 'children'>>;
 
-  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default false */
+  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  /** Determines how the clear button and rightSection are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentProps<'button'>;
 
-  /** If set, the component value cannot be changed by the user */
+  /** If set, the component value cannot be changed by the user @category behavior */
   readOnly?: boolean;
 
-  /** Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" @default true */
+  /** Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" @default true @category state */
   sortDates?: boolean;
 
-  /** Separator between range value */
+  /** Separator between range value @category appearance */
   labelSeparator?: string;
 
-  /** Input placeholder */
+  /** Input placeholder @category appearance */
   placeholder?: string;
 
-  /** A function to format selected dates values into a string. By default, date is formatted based on the input type. */
+  /** A function to format selected dates values into a string. By default, date is formatted based on the input type. @category appearance */
   valueFormatter?: DateFormatter;
 
-  /** Called when the dropdown is closed */
+  /** Called when the dropdown is closed @category behavior */
   onDropdownClose?: () => void;
 }
 
@@ -78,18 +78,28 @@ export interface PickerInputBaseProps
   classNames?: Partial<Record<string, string>>;
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
+  /** @category appearance */
   children: React.ReactNode;
+  /** @category state */
   formattedValue: string | null | undefined;
+  /** @category state */
   dropdownHandlers: ReturnType<typeof useDisclosure>[1];
+  /** @category state */
   dropdownOpened: boolean;
+  /** @category behavior */
   onClear: () => void;
+  /** @category appearance */
   shouldClear: boolean;
+  /** @category state */
   value: HiddenDatesInputValue;
+  /** @category state */
   type: DatePickerType;
+  /** @category appearance */
   size?: MantineSize;
+  /** @category state */
   withTime?: boolean;
 
-  /** Set when the dropdown content includes presets, reduces dropdown start padding */
+  /** Set when the dropdown content includes presets, reduces dropdown start padding @category appearance */
   withPresets?: boolean;
 }
 

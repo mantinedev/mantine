@@ -25,6 +25,8 @@ jobs:
         run: yarn
       - name: Generate files for docs
         run: npm run setup
+      - name: Validate props categories
+        run: npm run test:props-categories
       - name: Build public packages
         run: npm run build all
       - name: Validate esm entry points

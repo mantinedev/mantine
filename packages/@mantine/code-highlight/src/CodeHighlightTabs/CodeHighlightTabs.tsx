@@ -46,19 +46,19 @@ export interface CodeHighlightTabsProps
     BoxProps,
     StylesApiProps<CodeHighlightTabsFactory>,
     ElementProps<'div'> {
-  /** Code to highlight with meta data (file name and icon) */
+  /** Code to highlight with meta data (file name and icon) @category appearance */
   code: CodeHighlightTabsCode[];
 
-  /** Function that returns icon based on file name */
+  /** Function that returns icon based on file name @category appearance */
   getFileIcon?: (fileName: string) => React.ReactNode;
 
-  /** Default active tab index */
+  /** Default active tab index @category state */
   defaultActiveTab?: number;
 
-  /** Index of controlled active tab state */
+  /** Index of controlled active tab state @category state */
   activeTab?: number;
 
-  /** Called when tab changes */
+  /** Called when tab changes @category state */
   onTabChange?: (tab: number) => void;
 }
 

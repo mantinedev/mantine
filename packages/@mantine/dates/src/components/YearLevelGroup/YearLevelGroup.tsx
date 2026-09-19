@@ -19,16 +19,16 @@ export interface YearLevelGroupProps
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
-  /** Number of columns displayed next to each other */
+  /** Number of columns displayed next to each other @category appearance */
   numberOfColumns?: number;
 
-  /** Displayed year */
+  /** Displayed year @category state */
   year: DateStringValue;
 
-  /** Function that returns level control `aria-label` */
+  /** Function that returns level control `aria-label` @category accessibility */
   levelControlAriaLabel?: ((year: DateStringValue) => string) | string;
 
-  /** Determines whether the calendar should take the full width of its container @default false */
+  /** Determines whether the calendar should take the full width of its container @default false @category appearance */
   fullWidth?: boolean;
 
   /** Called when date is changed via native level select */

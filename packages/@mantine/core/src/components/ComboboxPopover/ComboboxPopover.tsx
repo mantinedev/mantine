@@ -193,82 +193,82 @@ export interface ComboboxPopoverProps<
   Multiple extends boolean = false,
   Value extends Primitive = string,
 > extends StylesApiProps<ComboboxPopoverFactory> {
-  /** If set, multiple items can be selected at the same time */
+  /** If set, multiple items can be selected at the same time @category state */
   multiple?: Multiple;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: ComboboxPopoverValue<Multiple, Value>;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: ComboboxPopoverValue<Multiple, Value>;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: ComboboxPopoverValue<Multiple, Value>) => void;
 
-  /** Data used to generate options */
+  /** Data used to generate options @category appearance */
   data?: ComboboxData<Value>;
 
-  /** Controlled dropdown opened state */
+  /** Controlled dropdown opened state @category state */
   dropdownOpened?: boolean;
 
-  /** Uncontrolled dropdown initial opened state */
+  /** Uncontrolled dropdown initial opened state @category state */
   defaultDropdownOpened?: boolean;
 
-  /** Called when dropdown opens */
+  /** Called when dropdown opens @category behavior */
   onDropdownOpen?: () => void;
 
-  /** Called when dropdown closes */
+  /** Called when dropdown closes @category behavior */
   onDropdownClose?: () => void;
 
-  /** Called when option is submitted from dropdown with mouse click or Enter key */
+  /** Called when option is submitted from dropdown with mouse click or Enter key @category behavior */
   onOptionSubmit?: (value: Value) => void;
 
   /** Props passed down to Combobox component */
   comboboxProps?: ComboboxProps;
 
-  /** Function based on which items are filtered and sorted */
+  /** Function based on which items are filtered and sorted @category behavior */
   filter?: OptionsFilter<Value>;
 
-  /** Maximum number of options displayed at a time @default Infinity */
+  /** Maximum number of options displayed at a time @default Infinity @category appearance */
   limit?: number;
 
   /** Determines whether the options should be wrapped with ScrollArea.AutoSize @default true */
   withScrollArea?: boolean;
 
-  /** max-height of the dropdown @default 250 */
+  /** max-height of the dropdown @default 250 @category appearance */
   maxDropdownHeight?: number | string;
 
-  /** If set, the first option is selected when dropdown opens @default false */
+  /** If set, the first option is selected when dropdown opens @default false @category behavior */
   selectFirstOptionOnDropdownOpen?: boolean;
 
-  /** Displays check icon near the selected option label @default true */
+  /** Displays check icon near the selected option label @default true @category appearance */
   withCheckIcon?: boolean;
 
-  /** Aligns unchecked labels with the checked one @default false */
+  /** Aligns unchecked labels with the checked one @default false @category appearance */
   withAlignedLabels?: boolean;
 
-  /** Position of the check icon relative to the option label @default 'left' */
+  /** Position of the check icon relative to the option label @default 'left' @category appearance */
   checkIconPosition?: 'left' | 'right';
 
-  /** Message displayed when no options match the search query or when there is no data */
+  /** Message displayed when no options match the search query or when there is no data @category appearance */
   nothingFoundMessage?: React.ReactNode;
 
-  /** Allows searching through options @default false */
+  /** Allows searching through options @default false @category behavior */
   searchable?: boolean;
 
-  /** Controlled search value */
+  /** Controlled search value @category state */
   searchValue?: string;
 
-  /** Default search value */
+  /** Default search value @category state */
   defaultSearchValue?: string;
 
-  /** Called when search changes */
+  /** Called when search changes @category state */
   onSearchChange?: (value: string) => void;
 
-  /** Allows deselecting the selected option by clicking it (only for single mode) @default true */
+  /** Allows deselecting the selected option by clicking it (only for single mode) @default true @category behavior */
   allowDeselect?: boolean;
 
-  /** A function to render content of the option, replaces the default content of the option */
+  /** A function to render content of the option, replaces the default content of the option @category appearance */
   renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
 
   /** Props passed down to the underlying ScrollArea component in the dropdown */
@@ -283,7 +283,7 @@ export interface ComboboxPopoverProps<
   /** Hidden input form for form submission */
   form?: string;
 
-  /** Content of the component */
+  /** Content of the component @category appearance */
   children?: React.ReactNode;
 
   /** Divider used to separate values in the hidden input value attribute @default ',' */

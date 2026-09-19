@@ -76,7 +76,15 @@ function groupOwnProps(
   }));
 }
 
+function isOriginOwnerPage(component: string) {
+  return Object.values(PROP_ORIGIN_GROUPS).some((group) => group.component === component);
+}
+
 export function groupProps(component: string, props: DocgenProp[]): PropGroup[] {
+  if (isOriginOwnerPage(component)) {
+    return [{ key: 'own', label: '', props }];
+  }
+
   const own = props.filter((prop) => getOriginKey(prop) === null);
   const shared = PROP_ORIGIN_ORDER.map((origin) => ({
     key: origin,

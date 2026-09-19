@@ -27,16 +27,16 @@ export type MonthsListStylesNames =
   | 'monthsListControl';
 
 export interface MonthsListSettings extends ControlsGroupSettings {
-  /** `dayjs` format for months list or a function that returns month label based on the date value @default "MMM" */
+  /** `dayjs` format for months list or a function that returns month label based on the date value @default "MMM" @category appearance */
   monthsListFormat?: DateLabelFormat;
 
   /** Passes props down month picker control */
   getMonthControlProps?: (date: DateStringValue) => Partial<PickerControlProps> & DataAttributes;
 
-  /** Determines whether controls should be separated @default true */
+  /** Determines whether controls should be separated @default true @category appearance */
   withCellSpacing?: boolean;
 
-  /** Determines whether the list should take the full width of its container @default false */
+  /** Determines whether the list should take the full width of its container @default false @category appearance */
   fullWidth?: boolean;
 }
 

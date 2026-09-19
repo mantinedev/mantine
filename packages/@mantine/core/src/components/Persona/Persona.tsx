@@ -52,40 +52,40 @@ export type PersonaCssVariables = {
 };
 
 export interface PersonaProps extends BoxProps, StylesApiProps<PersonaFactory> {
-  /** Primary text, usually the person name. Also drives avatar initials and color when the avatar has no image */
+  /** Primary text, usually the person name. Also drives avatar initials and color when the avatar has no image @category appearance */
   name?: string;
 
-  /** Second line of text, for example the person role */
+  /** Second line of text, for example the person role @category appearance */
   secondaryText?: React.ReactNode;
 
-  /** Third line of text, for example the person status */
+  /** Third line of text, for example the person status @category appearance */
   tertiaryText?: React.ReactNode;
 
-  /** Fourth line of text */
+  /** Fourth line of text @category appearance */
   quaternaryText?: React.ReactNode;
 
-  /** `Avatar` props (`src`, `initials`, `color`, `radius`, ...) or a custom node rendered in place of the avatar */
+  /** `Avatar` props (`src`, `initials`, `color`, `radius`, ...) or a custom node rendered in place of the avatar @category appearance */
   avatar?: AvatarProps | React.ReactNode;
 
-  /** Presence badge: a status string or a configuration object `{ status, outOfOffice, processing }`. Use `'none'` to hide the badge @default 'none' */
+  /** Presence badge: a status string or a configuration object `{ status, outOfOffice, processing }`. Use `'none'` to hide the badge @default 'none' @category appearance */
   presence?: PersonaPresenceValue;
 
-  /** If set, only the presence badge is displayed inline with the text, without an avatar @default false */
+  /** If set, only the presence badge is displayed inline with the text, without an avatar @default false @category appearance */
   presenceOnly?: boolean;
 
-  /** Controls avatar and text sizes @default 'md' */
+  /** Controls avatar and text sizes @default 'md' @category appearance */
   size?: MantineSize;
 
-  /** Text placement relative to the avatar @default 'after' */
+  /** Text placement relative to the avatar @default 'after' @category appearance */
   textPosition?: 'after' | 'before' | 'below';
 
-  /** Text block alignment @default 'start' */
+  /** Text block alignment @default 'start' @category appearance */
   textAlignment?: 'start' | 'center';
 
-  /** Key of `theme.radius` or any valid CSS value to set the avatar `border-radius`, `1000px` by default */
+  /** Key of `theme.radius` or any valid CSS value to set the avatar `border-radius`, `1000px` by default @category appearance */
   radius?: MantineRadius;
 
-  /** Custom content, replaces the default composition built from shorthand props */
+  /** Custom content, replaces the default composition built from shorthand props @category appearance */
   children?: React.ReactNode;
 }
 

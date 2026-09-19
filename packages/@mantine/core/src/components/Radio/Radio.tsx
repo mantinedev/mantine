@@ -64,43 +64,43 @@ export type RadioCssVariables = {
 
 export interface RadioProps
   extends BoxProps, StylesApiProps<RadioFactory>, ElementProps<'input', 'size' | 'children'> {
-  /** Content of the `label` associated with the radio */
+  /** Content of the `label` associated with the radio @category appearance */
   label?: React.ReactNode;
 
-  /** Key of theme.colors or any valid CSS color to set radio background color in checked state @default theme.primaryColor */
+  /** Key of theme.colors or any valid CSS color to set radio background color in checked state @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Controls size of the component @default 'sm' */
+  /** Controls size of the component @default 'sm' @category appearance */
   size?: MantineSize | (string & {});
 
-  /** A component that replaces the default radio icon (centered dot) */
+  /** A component that replaces the default radio icon (centered dot) @category appearance */
   icon?: React.FC<RadioIconProps>;
 
   /** Props passed down to the root element */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Position of the label relative to the input @default 'right' */
+  /** Position of the label relative to the input @default 'right' @category appearance */
   labelPosition?: 'left' | 'right';
 
-  /** Description displayed below the label */
+  /** Description displayed below the label @category appearance */
   description?: React.ReactNode;
 
-  /** Error displayed below the label */
+  /** Error displayed below the label @category state */
   error?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' @category appearance */
   radius?: MantineRadius;
 
   /** Assigns ref of the root element */
   rootRef?: React.Ref<HTMLDivElement>;
 
-  /** Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting */
+  /** Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting @category appearance */
   iconColor?: MantineColor;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color for `filled` variant @category appearance */
   autoContrast?: boolean;
 
-  /** If set, applies error styles to the radio when `error` prop is set @default true */
+  /** If set, applies error styles to the radio when `error` prop is set @default true @category appearance */
   withErrorStyles?: boolean;
 }
 

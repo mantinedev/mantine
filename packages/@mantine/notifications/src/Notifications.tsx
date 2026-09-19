@@ -55,28 +55,28 @@ export type NotificationsCssVariables = {
 
 export interface NotificationsProps
   extends BoxProps, StylesApiProps<NotificationsFactory>, ElementProps<'div'> {
-  /** Notifications default position @default 'bottom-right' */
+  /** Notifications default position @default 'bottom-right' @category appearance */
   position?: NotificationPosition;
 
-  /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function @default 4000 */
+  /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function @default 4000 @category behavior */
   autoClose?: number | false;
 
-  /** Notification transition duration in ms @default 250 */
+  /** Notification transition duration in ms @default 250 @category appearance */
   transitionDuration?: number;
 
-  /** Determines whether notifications can be dismissed by dragging left or right @default true */
+  /** Determines whether notifications can be dismissed by dragging left or right @default true @category behavior */
   allowDragDismiss?: boolean;
 
-  /** Determines whether notifications can be dismissed with horizontal scroll gesture while hovered @default true */
+  /** Determines whether notifications can be dismissed with horizontal scroll gesture while hovered @default true @category behavior */
   allowScrollDismiss?: boolean;
 
-  /** Notification width, cannot exceed 100% @default 440 */
+  /** Notification width, cannot exceed 100% @default 440 @category appearance */
   containerWidth?: number | string;
 
-  /** Notification `max-height`, used for transitions @default 200 */
+  /** Notification `max-height`, used for transitions @default 200 @category appearance */
   notificationMaxHeight?: number | string;
 
-  /** Maximum number of notifications displayed at a time, other new notifications will be added to queue @default 5 */
+  /** Maximum number of notifications displayed at a time, other new notifications will be added to queue @default 5 @category appearance */
   limit?: number;
 
   /** Notifications container z-index @default 400 */
@@ -85,22 +85,22 @@ export interface NotificationsProps
   /** Props passed down to the `Portal` component */
   portalProps?: BasePortalProps;
 
-  /** Store for notifications state, can be used to create multiple instances of notifications system in your application */
+  /** Store for notifications state, can be used to create multiple instances of notifications system in your application @category state */
   store?: NotificationsStore;
 
   /** Determines whether notifications container should be rendered inside `Portal` @default true */
   withinPortal?: boolean;
 
-  /** Determines which notifications should pause auto close on hover, `'all'` – pauses auto close for all notifications when any notification is hovered, `'notification'` – pauses auto close only for the hovered notification @default 'all' */
+  /** Determines which notifications should pause auto close on hover, `'all'` – pauses auto close for all notifications when any notification is hovered, `'notification'` – pauses auto close only for the hovered notification @default 'all' @category behavior */
   pauseResetOnHover?: 'all' | 'notification';
 
-  /** Custom render function that replaces the default notification, can be overridden per notification */
+  /** Custom render function that replaces the default notification, can be overridden per notification @category appearance */
   renderNotification?: (notification: NotificationData) => React.ReactNode;
 
-  /** Controls how notifications are positioned in the stack, `'default'` – standard vertical list, `'stacked'` – only first notification is fully visible, rest are stacked behind @default 'default' */
+  /** Controls how notifications are positioned in the stack, `'default'` – standard vertical list, `'stacked'` – only first notification is fully visible, rest are stacked behind @default 'default' @category appearance */
   layout?: 'default' | 'stacked';
 
-  /** Determines whether a progress line that fills up until the notification auto closes is displayed at the bottom of every notification, can be overwritten for individual notifications in `notifications.show` and `notifications.update` functions @default false */
+  /** Determines whether a progress line that fills up until the notification auto closes is displayed at the bottom of every notification, can be overwritten for individual notifications in `notifications.show` and `notifications.update` functions @default false @category appearance */
   withAutoCloseProgress?: boolean;
 }
 

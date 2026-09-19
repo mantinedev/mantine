@@ -31,22 +31,22 @@ export interface DialogProps
   /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node @default false */
   keepMounted?: boolean;
 
-  /** If set, displays the close button @default false */
+  /** If set, displays the close button @default false @category appearance */
   withCloseButton?: boolean;
 
-  /** Called on close button click */
+  /** Called on close button click @category state */
   onClose?: () => void;
 
-  /** Dialog content */
+  /** Dialog content @category appearance */
   children?: React.ReactNode;
 
-  /** Opened state */
+  /** Opened state @category state */
   opened: boolean;
 
-  /** Props passed down to the underlying `Transition` component @default { transition: 'pop-top-right', duration: 200 } */
+  /** Props passed down to the underlying `Transition` component @default { transition: 'pop-top-right', duration: 200 } @category appearance */
   transitionProps?: TransitionOverride;
 
-  /** Controls `width` of the dialog @default 'md' */
+  /** Controls `width` of the dialog @default 'md' @category appearance */
   size?: MantineSize | (string & {}) | number;
 }
 

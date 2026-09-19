@@ -32,28 +32,28 @@ export interface YearViewDayKeydownPayload {
 }
 
 export interface YearViewMonthSettings {
-  /** `dayjs` format for month label  @default 'MMMM' */
+  /** `dayjs` format for month label  @default 'MMMM' @category appearance */
   monthLabelFormat?: DateLabelFormat;
 
-  /** If set, show week numbers */
+  /** If set, show week numbers @category appearance */
   withWeekNumbers?: boolean;
 
-  /** If set, weekdays names are displayed in the first row @default true */
+  /** If set, weekdays names are displayed in the first row @default true @category appearance */
   withWeekDays?: boolean;
 
-  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` @category appearance */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday @default 0 */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday @default 0 @category appearance */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names  @default 'd' */
+  /** `dayjs` format for weekdays names  @default 'd' @category appearance */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. @category appearance */
   weekendDays?: DayOfWeek[];
 
-  /** If set, weekend days are displayed. When `false`, weekend columns are hidden and the month grid shrinks. @default true */
+  /** If set, weekend days are displayed. When `false`, weekend columns are hidden and the month grid shrinks. @default true @category appearance */
   withWeekendDays?: boolean;
 
   /** Props passed down to the week number button */
@@ -62,31 +62,32 @@ export interface YearViewMonthSettings {
   /** Props passed down to the day button */
   getDayProps?: (date: DateStringValue) => Record<string, any>;
 
-  /** Called when day is clicked */
+  /** Called when day is clicked @category behavior */
   onDayClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** Called with first day of the week when week number is clicked */
+  /** Called with first day of the week when week number is clicked @category behavior */
   onWeekNumberClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** Called with the first day of the month when month label is clicked */
+  /** Called with the first day of the month when month label is clicked @category behavior */
   onMonthClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** If set, highlights the current day @default true */
+  /** If set, highlights the current day @default true @category appearance */
   highlightToday?: boolean;
 
-  /** Labels override for i18n */
+  /** Labels override for i18n @category appearance */
   labels?: ScheduleLabelsOverride;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @category behavior */
   mode?: ScheduleMode;
 
-  /** If true, days from adjacent months are displayed @default true */
+  /** If true, days from adjacent months are displayed @default true @category appearance */
   withOutsideDays?: boolean;
 
   /**
    * A function to replace the entire content of a day cell, called with the day date
    * and the events grouped on that day – the same list that is used to render the default
    * indicators. When set, default event indicators are not rendered.
+   * @category appearance
    */
   renderDay?: YearViewRenderDay;
 }

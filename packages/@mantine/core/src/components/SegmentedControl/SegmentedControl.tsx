@@ -61,52 +61,52 @@ export interface SegmentedControlProps<Value extends Primitive = string>
     BoxProps,
     StylesApiProps<SegmentedControlFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
-  /** Data based on which controls are rendered */
+  /** Data based on which controls are rendered @category appearance */
   data: (Value | SegmentedControlItem<Value>)[];
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: Value;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: Value;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: Value) => void;
 
-  /** Determines whether the component is disabled */
+  /** Determines whether the component is disabled @category behavior */
   disabled?: boolean;
 
   /** Name attribute for the radio group. A random name is auto-generated if not provided */
   name?: string;
 
-  /** Determines whether the component should take 100% width of its parent @default false */
+  /** Determines whether the component should take 100% width of its parent @default false @category appearance */
   fullWidth?: boolean;
 
-  /** Key of `theme.colors` or any valid CSS color, changes indicator background color. By default, uses white in light mode and dark.5 in dark mode */
+  /** Key of `theme.colors` or any valid CSS color, changes indicator background color. By default, uses white in light mode and dark.5 in dark mode @category appearance */
   color?: MantineColor;
 
-  /** Controls `font-size`, `padding` and `height` properties @default 'sm' */
+  /** Controls `font-size`, `padding` and `height` properties @default 'sm' @category appearance */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Indicator `transition-duration` in ms, set `0` to turn off transitions @default 200 */
+  /** Indicator `transition-duration` in ms, set `0` to turn off transitions @default 200 @category appearance */
   transitionDuration?: number;
 
-  /** Indicator `transition-timing-function` property @default ease */
+  /** Indicator `transition-timing-function` property @default ease @category appearance */
   transitionTimingFunction?: string;
 
-  /** Component orientation @default 'horizontal' */
+  /** Component orientation @default 'horizontal' @category appearance */
   orientation?: 'vertical' | 'horizontal';
 
-  /** If set to `false`, prevents changing the value */
+  /** If set to `false`, prevents changing the value @category behavior */
   readOnly?: boolean;
 
-  /** If set, automatically adjusts label text color for optimal contrast against the indicator background color */
+  /** If set, automatically adjusts label text color for optimal contrast against the indicator background color @category appearance */
   autoContrast?: boolean;
 
-  /** Determines whether there should be borders between items @default true */
+  /** Determines whether there should be borders between items @default true @category appearance */
   withItemsBorders?: boolean;
 }
 

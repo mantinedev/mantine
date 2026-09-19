@@ -38,49 +38,49 @@ export interface EmojiPickerInputProps
     __BaseInputProps,
     StylesApiProps<EmojiPickerInputFactory>,
     ElementProps<'button', 'size' | 'onChange' | 'value' | 'defaultValue'> {
-  /** Controlled emoji id value */
+  /** Controlled emoji id value @category state */
   value?: string | null;
 
-  /** Default emoji id value for uncontrolled state */
+  /** Default emoji id value for uncontrolled state @category state */
   defaultValue?: string | null;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: string | null) => void;
 
-  /** Input placeholder displayed when no emoji is selected */
+  /** Input placeholder displayed when no emoji is selected @category appearance */
   placeholder?: string;
 
-  /** Determines whether the clear button is displayed @default false */
+  /** Determines whether the clear button is displayed @default false @category behavior */
   clearable?: boolean;
 
   /** Props passed to the `Popover` component */
   popoverProps?: Omit<PopoverProps, 'children'>;
 
-  /** Controlled popover opened state */
+  /** Controlled popover opened state @category state */
   opened?: boolean;
 
-  /** Default popover opened state for uncontrolled mode */
+  /** Default popover opened state for uncontrolled mode @category state */
   defaultOpened?: boolean;
 
-  /** Called when popover opened state changes */
+  /** Called when popover opened state changes @category state */
   onOpenedChange?: (opened: boolean) => void;
 
-  /** Determines whether the popover closes after emoji is selected @default true */
+  /** Determines whether the popover closes after emoji is selected @default true @category behavior */
   closeOnSelect?: boolean;
 
-  /** Emoji data object, use `emojiMartAdapter` or `emojibaseAdapter` to convert data */
+  /** Emoji data object, use `emojiMartAdapter` or `emojibaseAdapter` to convert data @category appearance */
   data: EmojiPickerProps['data'];
 
-  /** Called when an emoji is selected */
+  /** Called when an emoji is selected @category behavior */
   onEmojiSelect?: EmojiPickerProps['onEmojiSelect'];
 
   /** Props passed to the `EmojiPicker` component inside the dropdown */
   pickerProps?: Omit<EmojiPickerProps, 'data' | 'onEmojiSelect'>;
 
-  /** Determines whether the input is in read-only mode */
+  /** Determines whether the input is in read-only mode @category behavior */
   readOnly?: boolean;
 
-  /** Determines whether the input is disabled */
+  /** Determines whether the input is disabled @category behavior */
   disabled?: boolean;
 }
 

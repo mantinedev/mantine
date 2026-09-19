@@ -70,67 +70,67 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   /** Controls colors of hovered and keyboard-active items, `default` – neutral background, `filled` – primary color background @default 'default' */
   variant?: MenuVariant;
 
-  /** Menu children */
+  /** Menu children @category appearance */
   children?: React.ReactNode;
 
-  /** Controlled menu opened state */
+  /** Controlled menu opened state @category state */
   opened?: boolean;
 
-  /** Uncontrolled menu initial opened state */
+  /** Uncontrolled menu initial opened state @category state */
   defaultOpened?: boolean;
 
-  /** If set, focus is trapped within the menu dropdown when it is opened */
+  /** If set, focus is trapped within the menu dropdown when it is opened @category behavior */
   trapFocus?: boolean;
 
-  /** Called when menu opened state changes */
+  /** Called when menu opened state changes @category state */
   onChange?: (opened: boolean) => void;
 
-  /** Called when Menu is opened */
+  /** Called when Menu is opened @category behavior */
   onOpen?: () => void;
 
-  /** Called when Menu is closed */
+  /** Called when Menu is closed @category behavior */
   onClose?: () => void;
 
-  /** If set, the Menu is closed when one of the items is clicked. Can be overridden per item with `closeMenuOnClick` prop */
+  /** If set, the Menu is closed when one of the items is clicked. Can be overridden per item with `closeMenuOnClick` prop @category behavior */
   closeOnItemClick?: boolean;
 
-  /** If set, arrow key presses wrap around from last item to first and vice versa */
+  /** If set, arrow key presses wrap around from last item to first and vice versa @category behavior */
   loop?: boolean;
 
-  /** If set, the dropdown is closed when the `Escape` key is pressed @default true */
+  /** If set, the dropdown is closed when the `Escape` key is pressed @default true @category behavior */
   closeOnEscape?: boolean;
 
-  /** Event trigger to open menu. Note: 'hover' is not keyboard accessible; prefer 'click-hover' for accessible hover menus */
+  /** Event trigger to open menu. Note: 'hover' is not keyboard accessible; prefer 'click-hover' for accessible hover menus @category behavior */
   trigger?: 'click' | 'hover' | 'click-hover';
 
-  /** Open delay in ms, applicable only to `trigger="hover"` variant */
+  /** Open delay in ms, applicable only to `trigger="hover"` variant @category behavior */
   openDelay?: number;
 
-  /** Close delay in ms, applicable only to `trigger="hover"` variant */
+  /** Close delay in ms, applicable only to `trigger="hover"` variant @category behavior */
   closeDelay?: number;
 
-  /** If set, the dropdown is closed on outside clicks */
+  /** If set, the dropdown is closed on outside clicks @category behavior */
   closeOnClickOutside?: boolean;
 
-  /** Events that trigger outside click detection. Includes mousedown for desktop clicks, touchstart for mobile, and keydown for Escape key handling @default ['mousedown', 'touchstart', 'keydown'] */
+  /** Events that trigger outside click detection. Includes mousedown for desktop clicks, touchstart for mobile, and keydown for Escape key handling @default ['mousedown', 'touchstart', 'keydown'] @category behavior */
   clickOutsideEvents?: string[];
 
   /** Id base to create accessibility connections */
   id?: string;
 
-  /** Set the `tabindex` on all menu items. Use `0` to allow Tab key navigation through menu items (required for navigation menus following WAI-ARIA disclosure pattern). @default -1 */
+  /** Set the `tabindex` on all menu items. Use `0` to allow Tab key navigation through menu items (required for navigation menus following WAI-ARIA disclosure pattern). @default -1 @category behavior */
   menuItemTabIndex?: -1 | 0;
 
-  /** Adds a hidden focusable element at the start of the dropdown to prevent unexpected focus jumps when opening with keyboard. Set to false if you need custom focus management. @default true */
+  /** Adds a hidden focusable element at the start of the dropdown to prevent unexpected focus jumps when opening with keyboard. Set to false if you need custom focus management. @default true @category behavior */
   withInitialFocusPlaceholder?: boolean;
 
-  /** Determines whether focus should be automatically returned to control when dropdown closes @default `true` */
+  /** Determines whether focus should be automatically returned to control when dropdown closes @default `true` @category behavior */
   returnFocus?: boolean;
 
-  /** Controls how indicator slot space is reserved on menu items for label alignment. `'all'` reserves space on every `Menu.Item`, `'with-indicators'` reserves space only on `Menu.CheckboxItem` and `Menu.RadioItem`, `'none'` reserves space only on items that currently display an indicator. @default 'with-indicators' */
+  /** Controls how indicator slot space is reserved on menu items for label alignment. `'all'` reserves space on every `Menu.Item`, `'with-indicators'` reserves space only on `Menu.CheckboxItem` and `Menu.RadioItem`, `'none'` reserves space only on items that currently display an indicator. @default 'with-indicators' @category appearance */
   alignItemsLabels?: 'all' | 'with-indicators' | 'none';
 
-  /** Custom icon rendered as the indicator of checked `Menu.CheckboxItem` and selected `Menu.RadioItem`. Can be overridden per item with the `checkIcon` prop. */
+  /** Custom icon rendered as the indicator of checked `Menu.CheckboxItem` and selected `Menu.RadioItem`. Can be overridden per item with the `checkIcon` prop. @category appearance */
   checkIcon?: React.ReactNode;
 }
 

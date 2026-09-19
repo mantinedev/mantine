@@ -27,7 +27,7 @@ export interface QuarterPickerInputProps<Type extends DatePickerType = 'default'
     DateInputSharedProps,
     QuarterPickerBaseProps<Type>,
     StylesApiProps<QuarterPickerInputFactory> {
-  /** `dayjs` format for input value @default "[Q]Q YYYY" */
+  /** `dayjs` format for input value @default "[Q]Q YYYY" @category appearance */
   valueFormat?: string;
 }
 

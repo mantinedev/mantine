@@ -52,55 +52,55 @@ export interface DateInputProps
     MonthLevelSettings,
     StylesApiProps<DateInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** A function to parse user input and convert it to date string value */
+  /** A function to parse user input and convert it to date string value @category behavior */
   dateParser?: (value: string) => DateStringValue | Date | null;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: DateValue | Date;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: DateValue | Date;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: DateStringValue | null) => void;
 
   /** Props passed down to the `Popover` component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
 
-  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default false */
+  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  /** Determines how the clear button and rightSection are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentProps<'button'>;
 
-  /** `dayjs` format to display input value, or a function that receives the value as a `YYYY-MM-DD` string and returns the formatted value. A function cannot be used to parse user input – set `dateParser` prop to support formats other than `YYYY-MM-DD`. @default "MMMM D, YYYY" */
+  /** `dayjs` format to display input value, or a function that receives the value as a `YYYY-MM-DD` string and returns the formatted value. A function cannot be used to parse user input – set `dateParser` prop to support formats other than `YYYY-MM-DD`. @default "MMMM D, YYYY" @category appearance */
   valueFormat?: string | ((date: DateStringValue) => string);
 
-  /** If set to `true`, the time part of the value is preserved. Set this to `true` when `valueFormat` includes time (e.g. `"YYYY-MM-DD HH:mm"`). @default false */
+  /** If set to `true`, the time part of the value is preserved. Set this to `true` when `valueFormat` includes time (e.g. `"YYYY-MM-DD HH:mm"`). @default false @category state */
   withTime?: boolean;
 
-  /** If set to `false`, invalid user input is preserved and is not corrected on blur */
+  /** If set to `false`, invalid user input is preserved and is not corrected on blur @category behavior */
   fixOnBlur?: boolean;
 
-  /** If set, the value can be deselected by deleting everything from the input or by clicking the selected date in the dropdown. By default, `true` if `clearable` prop is set, `false` otherwise. */
+  /** If set, the value can be deselected by deleting everything from the input or by clicking the selected date in the dropdown. By default, `true` if `clearable` prop is set, `false` otherwise. @category behavior */
   allowDeselect?: boolean;
 
-  /** Max level that user can go up to @default 'decade' */
+  /** Max level that user can go up to @default 'decade' @category behavior */
   maxLevel?: CalendarLevel;
 
-  /** Initial displayed level (uncontrolled) */
+  /** Initial displayed level (uncontrolled) @category state */
   defaultLevel?: CalendarLevel;
 
-  /** Current displayed level (controlled) */
+  /** Current displayed level (controlled) @category state */
   level?: CalendarLevel;
 
-  /** Called when the level changes */
+  /** Called when the level changes @category state */
   onLevelChange?: (level: CalendarLevel) => void;
 
-  /** Predefined values to pick from */
+  /** Predefined values to pick from @category appearance */
   presets?: DatePickerPreset<'default'>[];
 }
 

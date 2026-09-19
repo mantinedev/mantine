@@ -68,22 +68,22 @@ export interface TimePickerProps
     __BaseInputProps,
     StylesApiProps<TimePickerFactory>,
     ElementProps<'div', 'onChange' | 'defaultValue'> {
-  /** TimePicker type, `'time'` for regular time input, `'duration'` for duration input that allows values greater than 24 hours @default 'time' */
+  /** TimePicker type, `'time'` for regular time input, `'duration'` for duration input that allows values greater than 24 hours @default 'time' @category state */
   type?: TimePickerType;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: string;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: string;
 
-  /** Called when the value changes */
+  /** Called when the value changes @category state */
   onChange?: (value: string) => void;
 
-  /** Determines whether the clear button should be displayed @default false */
+  /** Determines whether the clear button should be displayed @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  /** Determines how the clear button and rightSection are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
   /** `name` prop passed down to the hidden input */
@@ -92,52 +92,52 @@ export interface TimePickerProps
   /** `form` prop passed down to the hidden input */
   form?: string;
 
-  /** Min possible time value in `hh:mm:ss` format */
+  /** Min possible time value in `hh:mm:ss` format @category behavior */
   min?: string;
 
-  /** Max possible time value in `hh:mm:ss` format */
+  /** Max possible time value in `hh:mm:ss` format @category behavior */
   max?: string;
 
-  /** Time format, `'24h'` by default */
+  /** Time format, `'24h'` by default @category appearance */
   format?: TimePickerFormat;
 
-  /** Number by which hours are incremented/decremented @default 1 */
+  /** Number by which hours are incremented/decremented @default 1 @category behavior */
   hoursStep?: number;
 
-  /** Number by which minutes are incremented/decremented @default 1 */
+  /** Number by which minutes are incremented/decremented @default 1 @category behavior */
   minutesStep?: number;
 
-  /** Number by which seconds are incremented/decremented @default 1 */
+  /** Number by which seconds are incremented/decremented @default 1 @category behavior */
   secondsStep?: number;
 
-  /** Determines whether the seconds input should be displayed @default false */
+  /** Determines whether the seconds input should be displayed @default false @category appearance */
   withSeconds?: boolean;
 
-  /** `aria-label` of hours input */
+  /** `aria-label` of hours input @category accessibility */
   hoursInputLabel?: string;
 
-  /** `aria-label` of minutes input */
+  /** `aria-label` of minutes input @category accessibility */
   minutesInputLabel?: string;
 
-  /** `aria-label` of seconds input */
+  /** `aria-label` of seconds input @category accessibility */
   secondsInputLabel?: string;
 
-  /** `aria-label` of am/pm input */
+  /** `aria-label` of am/pm input @category accessibility */
   amPmInputLabel?: string;
 
-  /** Labels used for am/pm values @default { am: 'AM', pm: 'PM' } */
+  /** Labels used for am/pm values @default { am: 'AM', pm: 'PM' } @category appearance */
   amPmLabels?: TimePickerAmPmLabels;
 
-  /** Determines whether the dropdown with time controls list should be visible when the input has focus @default false */
+  /** Determines whether the dropdown with time controls list should be visible when the input has focus @default false @category behavior */
   withDropdown?: boolean;
 
   /** Props passed down to `Popover` component */
   popoverProps?: PopoverProps;
 
-  /** Called once when one of the inputs is focused, not called when focused is shifted between hours, minutes, seconds and am/pm inputs */
+  /** Called once when one of the inputs is focused, not called when focused is shifted between hours, minutes, seconds and am/pm inputs @category behavior */
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 
-  /** Called once when the focus is no longer on any of the inputs */
+  /** Called once when the focus is no longer on any of the inputs @category behavior */
   onBlur?: (event: React.FocusEvent<HTMLDivElement>) => void;
 
   /** Props passed down to clear button */
@@ -155,16 +155,16 @@ export interface TimePickerProps
   /** Props passed down to am/pm select */
   amPmSelectProps?: React.ComponentProps<'select'> & DataAttributes;
 
-  /** If set, the value cannot be updated */
+  /** If set, the value cannot be updated @category behavior */
   readOnly?: boolean;
 
-  /** If set, the component becomes disabled */
+  /** If set, the component becomes disabled @category behavior */
   disabled?: boolean;
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
-  /** A function to transform paste values, by default time in 24h format can be parsed on paste for example `23:34:22` */
+  /** A function to transform paste values, by default time in 24h format can be parsed on paste for example `23:34:22` @category behavior */
   pasteSplit?: TimePickerPasteSplit;
 
   /** A ref object to get node reference of the hours input */
@@ -179,31 +179,31 @@ export interface TimePickerProps
   /** A ref object to get node reference of the am/pm select */
   amPmRef?: React.Ref<HTMLSelectElement>;
 
-  /** Time presets to display in the dropdown */
+  /** Time presets to display in the dropdown @category appearance */
   presets?: TimePickerPresets;
 
-  /** If set, the dropdown is closed when a value is selected from the presets list @default false */
+  /** If set, the dropdown is closed when a value is selected from the presets list @default false @category behavior */
   closeDropdownOnPresetSelect?: boolean;
 
-  /** Maximum height of the content displayed in the dropdown in px @default 200 */
+  /** Maximum height of the content displayed in the dropdown in px @default 200 @category appearance */
   maxDropdownContentHeight?: number;
 
   /** Props passed down to all underlying `ScrollArea` components */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** If set, the time controls list are reversed, @default false */
+  /** If set, the time controls list are reversed, @default false @category appearance */
   reverseTimeControlsList?: boolean;
 
-  /** Hours input placeholder, @default -- */
+  /** Hours input placeholder, @default -- @category appearance */
   hoursPlaceholder?: string;
 
-  /** Minutes input placeholder, @default -- */
+  /** Minutes input placeholder, @default -- @category appearance */
   minutesPlaceholder?: string;
 
-  /** Seconds input placeholder, @default -- */
+  /** Seconds input placeholder, @default -- @category appearance */
   secondsPlaceholder?: string;
 
-  /** Minimum number of digits displayed in the hours input, applicable only when `type="duration"` is set @default 2 */
+  /** Minimum number of digits displayed in the hours input, applicable only when `type="duration"` is set @default 2 @category appearance */
   minHoursDigits?: number;
 }
 

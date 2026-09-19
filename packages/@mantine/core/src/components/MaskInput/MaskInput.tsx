@@ -9,42 +9,42 @@ export interface MaskInputProps
     __BaseInputProps,
     StylesApiProps<MaskInputFactory>,
     ElementProps<'input', 'size'> {
-  /** Mask pattern string or array of string literals and RegExp objects */
+  /** Mask pattern string or array of string literals and RegExp objects @category behavior */
   mask: string | Array<string | RegExp>;
 
-  /** Override or extend the default token map */
+  /** Override or extend the default token map @category behavior */
   tokens?: Record<string, RegExp>;
 
-  /** Called before masking on each keystroke, can return overrides for mask options */
+  /** Called before masking on each keystroke, can return overrides for mask options @category behavior */
   modify?: (
     value: string
   ) => Partial<Pick<MaskInputProps, 'mask' | 'tokens' | 'slotChar' | 'separate'>> | undefined;
 
-  /** When true, raw and display values are decoupled */
+  /** When true, raw and display values are decoupled @category state */
   separate?: boolean;
 
-  /** Character displayed in unfilled slots, `"_"` by default */
+  /** Character displayed in unfilled slots, `"_"` by default @category appearance */
   slotChar?: string | null;
 
-  /** Show mask pattern even when field is empty and unfocused */
+  /** Show mask pattern even when field is empty and unfocused @category appearance */
   alwaysShowMask?: boolean;
 
-  /** Show mask placeholder on focus, `true` by default */
+  /** Show mask placeholder on focus, `true` by default @category appearance */
   showMaskOnFocus?: boolean;
 
-  /** Transform each character before validation and insertion */
+  /** Transform each character before validation and insertion @category behavior */
   transform?: (char: string) => string;
 
-  /** Clear value on blur when mask is incomplete, `false` by default */
+  /** Clear value on blur when mask is incomplete, `false` by default @category behavior */
   autoClear?: boolean;
 
-  /** Called on every change with raw and masked values */
+  /** Called on every change with raw and masked values @category state */
   onChangeRaw?: (rawValue: string, maskedValue: string) => void;
 
-  /** Called when all required mask slots are filled */
+  /** Called when all required mask slots are filled @category state */
   onComplete?: (maskedValue: string, rawValue: string) => void;
 
-  /** Escape hatch for advanced cursor/value manipulation */
+  /** Escape hatch for advanced cursor/value manipulation @category behavior */
   beforeMaskedStateChange?: (states: {
     previousState: { value: string; selection: { start: number; end: number } | null };
     currentState: { value: string; selection: { start: number; end: number } | null };

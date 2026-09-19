@@ -45,19 +45,19 @@ export type PieChartCssVariables = {
 
 export interface PieChartProps
   extends BoxProps, StylesApiProps<PieChartFactory>, ElementProps<'div'> {
-  /** Data used to render chart */
+  /** Data used to render chart @category appearance */
   data: PieChartCell[];
 
-  /** Determines whether the tooltip should be displayed when one of the section is hovered @default true */
+  /** Determines whether the tooltip should be displayed when one of the section is hovered @default true @category appearance */
   withTooltip?: boolean;
 
-  /** Determines whether the legend should be displayed @default false */
+  /** Determines whether the legend should be displayed @default false @category appearance */
   withLegend?: boolean;
 
   /** Props passed down to recharts `Legend` component */
   legendProps?: Omit<LegendProps, 'ref'>;
 
-  /** Tooltip animation duration in ms @default 0 */
+  /** Tooltip animation duration in ms @default 0 @category appearance */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -66,49 +66,49 @@ export interface PieChartProps
   /** Props passed down to recharts `Pie` component */
   pieProps?: Partial<Omit<PieProps, 'ref'>>;
 
-  /** Controls color of the segments stroke, by default depends on color scheme */
+  /** Controls color of the segments stroke, by default depends on color scheme @category appearance */
   strokeColor?: MantineColor;
 
-  /** Controls text color of all labels, white by default */
+  /** Controls text color of all labels, white by default @category appearance */
   labelColor?: MantineColor;
 
-  /** Controls padding between segments @default 0 */
+  /** Controls padding between segments @default 0 @category appearance */
   paddingAngle?: number;
 
-  /** Determines whether each segment should have associated label @default false */
+  /** Determines whether each segment should have associated label @default false @category appearance */
   withLabels?: boolean;
 
-  /** Determines whether segments labels should have lines that connect the segment with the label @default true */
+  /** Determines whether segments labels should have lines that connect the segment with the label @default true @category appearance */
   withLabelsLine?: boolean;
 
-  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default 80 */
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default 80 @category appearance */
   size?: number;
 
-  /** Controls width of segments stroke @default 1 */
+  /** Controls width of segments stroke @default 1 @category appearance */
   strokeWidth?: number;
 
-  /** Controls angle at which chart starts. Set to `180` to render the chart as semicircle. @default 0 */
+  /** Controls angle at which chart starts. Set to `180` to render the chart as semicircle. @default 0 @category appearance */
   startAngle?: number;
 
-  /** Controls angle at which charts ends. Set to `0` to render the chart as semicircle. @default 360 */
+  /** Controls angle at which charts ends. Set to `0` to render the chart as semicircle. @default 360 @category appearance */
   endAngle?: number;
 
-  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default 'all' */
+  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default 'all' @category appearance */
   tooltipDataSource?: 'segment' | 'all';
 
-  /** Additional elements rendered inside `PieChart` component */
+  /** Additional elements rendered inside `PieChart` component @category appearance */
   children?: React.ReactNode;
 
   /** Props passed down to recharts `PieChart` component */
   pieChartProps?: React.ComponentProps<typeof ReChartsPieChart>;
 
-  /** Controls labels position relative to the segment @default 'outside' */
+  /** Controls labels position relative to the segment @default 'outside' @category appearance */
   labelsPosition?: 'inside' | 'outside';
 
-  /** Type of labels to display @default 'value' */
+  /** Type of labels to display @default 'value' @category appearance */
   labelsType?: 'value' | 'percent' | 'name';
 
-  /** A function to format values inside the tooltip */
+  /** A function to format values inside the tooltip @category appearance */
   valueFormatter?: (value: number) => string;
 
   /** Props passed down to each segment of the chart */
@@ -116,7 +116,7 @@ export interface PieChartProps
     | ((series: PieChartCell) => Partial<Omit<React.SVGProps<SVGElement>, 'ref'>>)
     | Partial<Omit<React.SVGProps<SVGElement>, 'ref'>>;
 
-  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default @category accessibility */
   accessibilityLayer?: boolean;
 }
 

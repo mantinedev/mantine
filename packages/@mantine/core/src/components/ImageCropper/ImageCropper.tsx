@@ -37,67 +37,67 @@ export interface ImageCropperProps
   /** Controller returned by the `useImageCropper` hook. When provided, the option props below are ignored */
   controller?: UseImageCropperReturnValue;
 
-  /** Image source, can be an object URL, data URL or remote URL */
+  /** Image source, can be an object URL, data URL or remote URL @category appearance */
   src?: string;
 
   /** `crossorigin` attribute of the underlying image, set to `'anonymous'` to allow exporting CORS-enabled remote images */
   crossOrigin?: React.ImgHTMLAttributes<HTMLImageElement>['crossOrigin'];
 
-  /** Crop aspect ratio, e.g. `1` or `16 / 9`. Defaults to the viewport aspect ratio when not set */
+  /** Crop aspect ratio, e.g. `1` or `16 / 9`. Defaults to the viewport aspect ratio when not set @category appearance */
   aspectRatio?: number;
 
-  /** Crop shape, `'rectangle'` by default. `'circle'` enforces a square aspect ratio */
+  /** Crop shape, `'rectangle'` by default. `'circle'` enforces a square aspect ratio @category appearance */
   cropShape?: ImageCropperCropShape;
 
-  /** Controlled zoom value */
+  /** Controlled zoom value @category state */
   zoom?: number;
 
-  /** Uncontrolled zoom initial value, `1` by default */
+  /** Uncontrolled zoom initial value, `1` by default @category state */
   defaultZoom?: number;
 
-  /** Minimum zoom value, `1` by default */
+  /** Minimum zoom value, `1` by default @category behavior */
   minZoom?: number;
 
-  /** Maximum zoom value, `5` by default */
+  /** Maximum zoom value, `5` by default @category behavior */
   maxZoom?: number;
 
-  /** Zoom step used by wheel and default controls, `0.1` by default */
+  /** Zoom step used by wheel and default controls, `0.1` by default @category behavior */
   zoomStep?: number;
 
-  /** Controlled rotation value in degrees */
+  /** Controlled rotation value in degrees @category state */
   rotation?: number;
 
-  /** Uncontrolled rotation initial value in degrees, `0` by default */
+  /** Uncontrolled rotation initial value in degrees, `0` by default @category state */
   defaultRotation?: number;
 
-  /** Controlled flip value */
+  /** Controlled flip value @category state */
   flip?: ImageCropperFlip;
 
-  /** Uncontrolled flip initial value */
+  /** Uncontrolled flip initial value @category state */
   defaultFlip?: ImageCropperFlip;
 
-  /** Called when zoom changes */
+  /** Called when zoom changes @category state */
   onZoomChange?: (zoom: number) => void;
 
-  /** Called when rotation changes */
+  /** Called when rotation changes @category state */
   onRotationChange?: (rotation: number) => void;
 
-  /** Called when flip changes */
+  /** Called when flip changes @category state */
   onFlipChange?: (flip: ResolvedImageCropperFlip) => void;
 
-  /** Called with the resolved crop rectangle when the crop changes */
+  /** Called with the resolved crop rectangle when the crop changes @category state */
   onCropChange?: (data: ImageCropperCropData) => void;
 
-  /** If set, a rule-of-thirds grid is displayed over the crop area, `false` by default */
+  /** If set, a rule-of-thirds grid is displayed over the crop area, `false` by default @category appearance */
   withGrid?: boolean;
 
-  /** If set, default zoom, rotation and flip controls are rendered under the viewport, `false` by default */
+  /** If set, default zoom, rotation and flip controls are rendered under the viewport, `false` by default @category appearance */
   withControls?: boolean;
 
-  /** If set, the cropper is static and non-interactive, `false` by default */
+  /** If set, the cropper is static and non-interactive, `false` by default @category behavior */
   disabled?: boolean;
 
-  /** Custom layout built with `ImageCropper.Viewport`, `ImageCropper.Image` and `ImageCropper.Controls` */
+  /** Custom layout built with `ImageCropper.Viewport`, `ImageCropper.Image` and `ImageCropper.Controls` @category appearance */
   children?: React.ReactNode;
 }
 

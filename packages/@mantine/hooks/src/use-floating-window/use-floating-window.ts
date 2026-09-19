@@ -23,34 +23,34 @@ interface FloatingWindowPosition {
 }
 
 export interface UseFloatingWindowOptions {
-  /** If `false`, the element can not be dragged. */
+  /** If `false`, the element can not be dragged. @category behavior */
   enabled?: boolean;
 
-  /** If `true`, the element can only move within the current viewport boundaries. */
+  /** If `true`, the element can only move within the current viewport boundaries. @category behavior */
   constrainToViewport?: boolean;
 
-  /** The offset from the viewport edges when constraining the element. Requires `constrainToViewport: true`. */
+  /** The offset from the viewport edges when constraining the element. Requires `constrainToViewport: true`. @category behavior */
   constrainOffset?: number;
 
-  /** Selector of an element that should be used to drag floating window. If not specified, the entire root element is used as a drag target. */
+  /** Selector of an element that should be used to drag floating window. If not specified, the entire root element is used as a drag target. @category behavior */
   dragHandleSelector?: string;
 
-  /** Selector of an element within `dragHandleSelector` that should be excluded from the drag event. */
+  /** Selector of an element within `dragHandleSelector` that should be excluded from the drag event. @category behavior */
   excludeDragHandleSelector?: string;
 
-  /** If set, restricts movement to the specified axis */
+  /** If set, restricts movement to the specified axis @category behavior */
   axis?: 'x' | 'y';
 
-  /** Initial position. If not set, calculated from element styles. */
+  /** Initial position. If not set, calculated from element styles. @category state */
   initialPosition?: FloatingWindowPositionConfig;
 
-  /** Called when the element position changes */
+  /** Called when the element position changes @category state */
   onPositionChange?: (pos: FloatingWindowPosition) => void;
 
-  /** Called when the drag starts */
+  /** Called when the drag starts @category behavior */
   onDragStart?: () => void;
 
-  /** Called when the drag stops */
+  /** Called when the drag stops @category behavior */
   onDragEnd?: () => void;
 }
 

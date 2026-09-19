@@ -22,52 +22,52 @@ export type AngleSliderCssVariables = {
 
 export interface AngleSliderProps
   extends BoxProps, StylesApiProps<AngleSliderFactory>, ElementProps<'div', 'onChange'> {
-  /** Step between values @default 1 */
+  /** Step between values @default 1 @category behavior */
   step?: number;
 
-  /** Number by which value is incremented/decremented on `Shift + Arrow` and `PageUp`/`PageDown` keys. Ignored when `restrictToMarks` is set @default 10 × step */
+  /** Number by which value is incremented/decremented on `Shift + Arrow` and `PageUp`/`PageDown` keys. Ignored when `restrictToMarks` is set @default 10 × step @category behavior */
   largeStep?: number;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: number;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: number;
 
-  /** Called on value change */
+  /** Called on value change @category state */
   onChange?: (value: number) => void;
 
-  /** Called after the selection is finished */
+  /** Called after the selection is finished @category state */
   onChangeEnd?: (value: number) => void;
 
-  /** Called in `onMouseDown` and `onTouchStart` */
+  /** Called in `onMouseDown` and `onTouchStart` @category behavior */
   onScrubStart?: () => void;
 
-  /** Called in `onMouseUp` and `onTouchEnd` */
+  /** Called in `onMouseUp` and `onTouchEnd` @category behavior */
   onScrubEnd?: () => void;
 
-  /** If set, the label is displayed inside the slider @default true */
+  /** If set, the label is displayed inside the slider @default true @category appearance */
   withLabel?: boolean;
 
-  /** Array of marks displayed on the slider */
+  /** Array of marks displayed on the slider @category appearance */
   marks?: { value: number; label?: string }[];
 
-  /** Slider size in px @default 60 */
+  /** Slider size in px @default 60 @category appearance */
   size?: number;
 
-  /** Size of the thumb in px @default `size / 5`, but not larger than `size / 2` */
+  /** Size of the thumb in px @default `size / 5`, but not larger than `size / 2` @category appearance */
   thumbSize?: number;
 
-  /** A function to format label based on the current value */
+  /** A function to format label based on the current value @category appearance */
   formatLabel?: (value: number) => React.ReactNode;
 
-  /** Sets `data-disabled` attribute, disables interactions @default false */
+  /** Sets `data-disabled` attribute, disables interactions @default false @category behavior */
   disabled?: boolean;
 
-  /** If set, the value cannot be changed, but the slider remains focusable @default false */
+  /** If set, the value cannot be changed, but the slider remains focusable @default false @category behavior */
   readOnly?: boolean;
 
-  /** If set, the selection is allowed only from the given marks array @default false */
+  /** If set, the selection is allowed only from the given marks array @default false @category behavior */
   restrictToMarks?: boolean;
 
   /** Props passed down to the hidden input */

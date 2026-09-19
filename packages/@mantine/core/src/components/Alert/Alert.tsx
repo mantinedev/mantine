@@ -50,34 +50,34 @@ export type AlertCssVariables = {
 
 export interface AlertProps
   extends BoxProps, StylesApiProps<AlertFactory>, ElementProps<'div', 'title'> {
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Controls padding, font-size, icon size and close button size @default 'md' */
+  /** Controls padding, font-size, icon size and close button size @default 'md' @category appearance */
   size?: MantineSize | (string & {});
 
-  /** Alert title */
+  /** Alert title @category appearance */
   title?: React.ReactNode;
 
-  /** Icon displayed next to the title */
+  /** Icon displayed next to the title @category appearance */
   icon?: React.ReactNode;
 
-  /** Determines whether close button should be displayed @default false */
+  /** Determines whether close button should be displayed @default false @category appearance */
   withCloseButton?: boolean;
 
-  /** Called when the close button is clicked */
+  /** Called when the close button is clicked @category behavior */
   onClose?: () => void;
 
-  /** Close button `aria-label` @default 'Close' */
+  /** Close button `aria-label` @default 'Close' @category accessibility */
   closeButtonLabel?: string;
 
   /** Props passed down to the close button */
   closeButtonProps?: __CloseButtonProps & ElementProps<'button'> & DataAttributes;
 
-  /** If set, adjusts text color based on the background color, applied only to the `filled` variant @default false */
+  /** If set, adjusts text color based on the background color, applied only to the `filled` variant @default false @category appearance */
   autoContrast?: boolean;
 }
 

@@ -50,64 +50,64 @@ export interface PhoneInputProps
     __BaseInputProps,
     StylesApiProps<PhoneInputFactory>,
     ElementProps<'input', 'onChange' | 'size' | 'value' | 'defaultValue'> {
-  /** Controlled value — raw digits with + prefix, e.g. "+12025551234" */
+  /** Controlled value — raw digits with + prefix, e.g. "+12025551234" @category state */
   value?: string;
 
-  /** Uncontrolled default value */
+  /** Uncontrolled default value @category state */
   defaultValue?: string;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (rawValue: string, details: PhoneInputChangeDetails) => void;
 
-  /** Default country ISO2 code, e.g. "us" */
+  /** Default country ISO2 code, e.g. "us" @category state */
   defaultCountry?: string;
 
-  /** Countries pinned to top of dropdown with separator, ISO2 codes */
+  /** Countries pinned to top of dropdown with separator, ISO2 codes @category appearance */
   preferredCountries?: string[];
 
-  /** Only show these countries, ISO2 codes */
+  /** Only show these countries, ISO2 codes @category appearance */
   onlyCountries?: string[];
 
-  /** Hide these countries, ISO2 codes */
+  /** Hide these countries, ISO2 codes @category appearance */
   excludeCountries?: string[];
 
-  /** Called when selected country changes */
+  /** Called when selected country changes @category state */
   onCountryChange?: (country: PhoneInputCountryData) => void;
 
-  /** Enable search in country dropdown @default true */
+  /** Enable search in country dropdown @default true @category behavior */
   searchable?: boolean;
 
-  /** Show +dialCode in input @default true */
+  /** Show +dialCode in input @default true @category appearance */
   international?: boolean;
 
-  /** Auto-detect country from typed dial code digits @default false */
+  /** Auto-detect country from typed dial code digits @default false @category behavior */
   withCountryAutoDetect?: boolean;
 
-  /** Custom flag renderer for country selector button and dropdown options, receives null when no country is selected */
+  /** Custom flag renderer for country selector button and dropdown options, receives null when no country is selected @category appearance */
   renderFlag?: (country: PhoneInputCountryData | null) => React.ReactNode;
 
-  /** Custom renderer for country dropdown options */
+  /** Custom renderer for country dropdown options @category appearance */
   renderCountryOption?: (country: PhoneInputCountryData) => React.ReactNode;
 
-  /** Maximum dropdown height in px @default 250 */
+  /** Maximum dropdown height in px @default 250 @category appearance */
   maxDropdownHeight?: number | string;
 
-  /** Controlled dropdown opened state */
+  /** Controlled dropdown opened state @category state */
   dropdownOpened?: boolean;
 
   /** Props passed down to the underlying Combobox component */
   comboboxProps?: ComboboxProps;
 
-  /** Called when dropdown opens */
+  /** Called when dropdown opens @category state */
   onDropdownOpen?: () => void;
 
-  /** Called when dropdown closes */
+  /** Called when dropdown closes @category state */
   onDropdownClose?: () => void;
 
-  /** Display chevron in the country button @default false */
+  /** Display chevron in the country button @default false @category appearance */
   withChevron?: boolean;
 
-  /** Message displayed when no countries match the search query */
+  /** Message displayed when no countries match the search query @category appearance */
   nothingFoundMessage?: React.ReactNode;
 }
 

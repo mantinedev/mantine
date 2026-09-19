@@ -43,7 +43,7 @@ export interface InlineDateTimePickerProps<Type extends DatePickerType = 'defaul
     DatePickerBaseProps<Type>,
     StylesApiProps<InlineDateTimePickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
-  /** Default time value in `HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
+  /** Default time value in `HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. @category state */
   defaultTimeValue?: string;
 
   /** Props passed down to `TimePicker` component */
@@ -55,25 +55,25 @@ export interface InlineDateTimePickerProps<Type extends DatePickerType = 'defaul
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentProps<'button'>;
 
-  /** Determines whether the seconds input should be displayed @default false */
+  /** Determines whether the seconds input should be displayed @default false @category appearance */
   withSeconds?: boolean;
 
-  /** Called when the submit button is clicked */
+  /** Called when the submit button is clicked @category behavior */
   onSubmit?: () => void;
 
-  /** `dayjs` format for range display, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value @default "DD/MM/YYYY HH:mm" */
+  /** `dayjs` format for range display, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value @default "DD/MM/YYYY HH:mm" @category appearance */
   valueFormat?: string | ((date: DateStringValue) => string);
 
-  /** Separator between range values */
+  /** Separator between range values @category appearance */
   labelSeparator?: string;
 
-  /** Component size @default 'sm' */
+  /** Component size @default 'sm' @category appearance */
   size?: MantineSize;
 
-  /** Min date */
+  /** Min date @category behavior */
   minDate?: DateStringValue | Date;
 
-  /** Max date */
+  /** Max date @category behavior */
   maxDate?: DateStringValue | Date;
 
   /** @internal Adds data-mantine-stop-propagation to interactive elements */

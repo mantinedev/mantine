@@ -40,37 +40,37 @@ export type NotificationCssVariables = {
 
 export interface NotificationProps
   extends BoxProps, StylesApiProps<NotificationFactory>, ElementProps<'div', 'title'> {
-  /** Called when the close button is clicked */
+  /** Called when the close button is clicked @category behavior */
   onClose?: () => void;
 
-  /** Controls icon colors, accent line color and loader color, key of `theme.colors` or any valid CSS color. When `icon` is provided, styles the icon. When no icon is provided, sets the colored accent line on the left. @default theme.primaryColor */
+  /** Controls icon colors, accent line color and loader color, key of `theme.colors` or any valid CSS color. When `icon` is provided, styles the icon. When no icon is provided, sets the colored accent line on the left. @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
   /** Controls how the icon is rendered: `filled` – solid circle with contrast icon, `light` – tinted circle with colored icon, `transparent` – icon without background @default 'filled' */
   variant?: NotificationVariant | (string & {});
 
-  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for icon color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for icon color, otherwise `theme.black`. Overrides `theme.autoContrast`. @category appearance */
   autoContrast?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Notification icon, replaces color line */
+  /** Notification icon, replaces color line @category appearance */
   icon?: React.ReactNode;
 
-  /** Notification title, displayed above the message body */
+  /** Notification title, displayed above the message body @category appearance */
   title?: React.ReactNode;
 
-  /** Notification description, displayed below the title. When no title is provided, this serves as the main message. */
+  /** Notification description, displayed below the title. When no title is provided, this serves as the main message. @category appearance */
   children?: React.ReactNode;
 
-  /** If set, displays a `Loader` component instead of the icon. Takes precedence over the `icon` prop if both are provided. */
+  /** If set, displays a `Loader` component instead of the icon. Takes precedence over the `icon` prop if both are provided. @category appearance */
   loading?: boolean;
 
-  /** Adds border to the root element */
+  /** Adds border to the root element @category appearance */
   withBorder?: boolean;
 
-  /** If set, the close button is visible @default true */
+  /** If set, the close button is visible @default true @category appearance */
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */

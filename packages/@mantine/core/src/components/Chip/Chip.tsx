@@ -47,28 +47,28 @@ export type ChipCssVariables = {
 
 export interface ChipProps
   extends BoxProps, StylesApiProps<ChipFactory>, ElementProps<'input', 'size' | 'onChange'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' @category appearance */
   radius?: MantineRadius;
 
-  /** Controls various properties related to the component size @default 'sm' */
+  /** Controls various properties related to the component size @default 'sm' @category appearance */
   size?: MantineSize;
 
-  /** Chip input type @default 'checkbox' */
+  /** Chip input type @default 'checkbox' @category behavior */
   type?: 'radio' | 'checkbox';
 
-  /** `label` element associated with the input */
+  /** `label` element associated with the input @category appearance */
   children: React.ReactNode;
 
-  /** Controlled checked state */
+  /** Controlled checked state @category state */
   checked?: boolean;
 
-  /** Uncontrolled checked state initial value */
+  /** Uncontrolled checked state initial value @category state */
   defaultChecked?: boolean;
 
-  /** Calls when checked state changes */
+  /** Calls when checked state changes @category state */
   onChange?: (checked: boolean) => void;
 
-  /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
   /** Unique input id, generated randomly if not provided */
@@ -77,13 +77,13 @@ export interface ChipProps
   /** Props passed down to the root element */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Any element or component to replace the default icon */
+  /** Any element or component to replace the default icon @category appearance */
   icon?: React.ReactNode;
 
   /** Assigns ref of the root element */
   rootRef?: React.Ref<HTMLDivElement>;
 
-  /** If set, adjusts text color based on the chip background color for `filled` variant */
+  /** If set, adjusts text color based on the chip background color for `filled` variant @category appearance */
   autoContrast?: boolean;
 }
 

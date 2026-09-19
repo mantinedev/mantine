@@ -66,19 +66,19 @@ export interface SpotlightProps extends SpotlightRootProps {
   /** Props passed down to the `Spotlight.Search` */
   searchProps?: SpotlightSearchProps;
 
-  /** Actions data, passed down to `Spotlight.Action` component */
+  /** Actions data, passed down to `Spotlight.Action` component @category appearance */
   actions: SpotlightActions[];
 
-  /** Function to filter actions data based on search query, by default actions are filtered by title, description and keywords */
+  /** Function to filter actions data based on search query, by default actions are filtered by title, description and keywords @category behavior */
   filter?: SpotlightFilterFunction;
 
-  /** Message displayed when none of the actions match given `filter` */
+  /** Message displayed when none of the actions match given `filter` @category appearance */
   nothingFound?: React.ReactNode;
 
-  /** Determines whether search query should be highlighted in action label @default false */
+  /** Determines whether search query should be highlighted in action label @default false @category appearance */
   highlightQuery?: boolean;
 
-  /** Maximum number of actions displayed at a time @default Infinity */
+  /** Maximum number of actions displayed at a time @default Infinity @category appearance */
   limit?: number;
 
   /** Props passed down to the `ScrollArea` component */

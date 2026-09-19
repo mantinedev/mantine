@@ -53,109 +53,109 @@ export interface RangeSliderProps
   /** Thumb style: `default` is a white thumb with a colored border, `filled` is a colored thumb with a white border, `white` is a white thumb with a shadow and without a colored border @default 'default' */
   variant?: SliderVariant;
 
-  /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' @category appearance */
   radius?: MantineRadius;
 
-  /** Controls size of the track @default 'md' */
+  /** Controls size of the track @default 'md' @category appearance */
   size?: MantineSize | (string & {}) | number;
 
-  /** Minimal possible value @default 0 */
+  /** Minimal possible value @default 0 @category behavior */
   min?: number;
 
-  /** Maximum possible value @default 100 */
+  /** Maximum possible value @default 100 @category behavior */
   max?: number;
 
-  /** Domain of the slider, defines the selectable value range independently of min/max. Useful when you want to display a wider track range (min/max) but restrict actual selection to a subset (domain). @default [min, max] */
+  /** Domain of the slider, defines the selectable value range independently of min/max. Useful when you want to display a wider track range (min/max) but restrict actual selection to a subset (domain). @default [min, max] @category appearance */
   domain?: [number, number];
 
-  /** Number by which value will be incremented/decremented with thumb drag and arrows @default 1 */
+  /** Number by which value will be incremented/decremented with thumb drag and arrows @default 1 @category behavior */
   step?: number;
 
-  /** Number by which the focused thumb is moved on `Shift + Arrow` and `PageUp`/`PageDown` keys. Ignored when `restrictToMarks` is set @default 10 × step */
+  /** Number by which the focused thumb is moved on `Shift + Arrow` and `PageUp`/`PageDown` keys. Ignored when `restrictToMarks` is set @default 10 × step @category behavior */
   largeStep?: number;
 
-  /** Number of significant digits after the decimal point */
+  /** Number of significant digits after the decimal point @category behavior */
   precision?: number;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: RangeSliderValue;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: RangeSliderValue;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: RangeSliderValue) => void;
 
-  /** Called when user stops dragging slider or changes value with arrows */
+  /** Called when user stops dragging slider or changes value with arrows @category state */
   onChangeEnd?: (value: RangeSliderValue) => void;
 
   /** Hidden input name, use with uncontrolled component */
   name?: string;
 
-  /** Marks displayed on the track */
+  /** Marks displayed on the track @category appearance */
   marks?: SliderMark[];
 
-  /** Function to generate label or any react node to render instead, set to null to disable label */
+  /** Function to generate label or any react node to render instead, set to null to disable label @category appearance */
   label?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Props passed down to the `Transition` component @default { transition: 'fade', duration: 0 } */
+  /** Props passed down to the `Transition` component @default { transition: 'fade', duration: 0 } @category appearance */
   labelTransitionProps?: TransitionOverride;
 
-  /** Determines whether the label should be visible when the slider is not being dragged or hovered @default false */
+  /** Determines whether the label should be visible when the slider is not being dragged or hovered @default false @category appearance */
   labelAlwaysOn?: boolean;
 
-  /** Determines whether the label should be displayed when the slider is hovered @default true */
+  /** Determines whether the label should be displayed when the slider is hovered @default true @category appearance */
   showLabelOnHover?: boolean;
 
-  /** Content rendered inside thumb */
+  /** Content rendered inside thumb @category appearance */
   thumbChildren?: React.ReactNode;
 
-  /** Disables slider */
+  /** Disables slider @category behavior */
   disabled?: boolean;
 
-  /** Thumb `width` and `height`, by default value is computed based on `size` prop */
+  /** Thumb `width` and `height`, by default value is computed based on `size` prop @category appearance */
   thumbSize?: number | string;
 
-  /** A transformation function to change the scale of the slider */
+  /** A transformation function to change the scale of the slider @category behavior */
   scale?: (value: number) => number;
 
-  /** Determines whether track values representation should be inverted @default false */
+  /** Determines whether track values representation should be inverted @default false @category appearance */
   inverted?: boolean;
 
-  /** Slider orientation @default 'horizontal' */
+  /** Slider orientation @default 'horizontal' @category appearance */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Minimal range interval between the two thumbs. Consider this value relative to the total range (max - min). @default 10 */
+  /** Minimal range interval between the two thumbs. Consider this value relative to the total range (max - min). @default 10 @category behavior */
   minRange?: number;
 
-  /** Maximum range interval @default Infinity */
+  /** Maximum range interval @default Infinity @category behavior */
   maxRange?: number;
 
-  /** `aria-label` for both thumbs (overridden by thumbFromLabel/thumbToLabel if provided) */
+  /** `aria-label` for both thumbs (overridden by thumbFromLabel/thumbToLabel if provided) @category accessibility */
   thumbLabel?: string;
 
-  /** `aria-valuetext` for both thumbs. When a function is provided, it receives the scaled value. */
+  /** `aria-valuetext` for both thumbs. When a function is provided, it receives the scaled value. @category accessibility */
   thumbValueText?: string | ((value: number) => string);
 
-  /** First thumb `aria-label` */
+  /** First thumb `aria-label` @category accessibility */
   thumbFromLabel?: string;
 
-  /** Second thumb `aria-label` */
+  /** Second thumb `aria-label` @category accessibility */
   thumbToLabel?: string;
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentProps<'input'>;
 
-  /** Determines whether the selection should be only allowed from the given marks array @default false */
+  /** Determines whether the selection should be only allowed from the given marks array @default false @category behavior */
   restrictToMarks?: boolean;
 
   /** Props passed down to thumb element based on the thumb index */
   thumbProps?: (index: 0 | 1) => React.ComponentProps<'div'>;
 
-  /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached @default true */
+  /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached @default true @category behavior */
   pushOnOverlap?: boolean;
 }
 

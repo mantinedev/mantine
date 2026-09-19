@@ -53,43 +53,43 @@ export interface SwitchProps
   /** Id used to bind input and label, if not passed, unique id will be generated instead */
   id?: string;
 
-  /** Content of the label associated with the switch */
+  /** Content of the label associated with the switch @category appearance */
   label?: React.ReactNode;
 
-  /** Inner label when the `Switch` is in unchecked state */
+  /** Inner label when the `Switch` is in unchecked state @category appearance */
   offLabel?: React.ReactNode;
 
-  /** Inner label when the `Switch` is in checked state */
+  /** Inner label when the `Switch` is in checked state @category appearance */
   onLabel?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Controls size of all elements */
+  /** Controls size of all elements @category appearance */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' @category appearance */
   radius?: MantineRadius;
 
   /** Props passed down to the root element */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Icon inside the thumb of the switch */
+  /** Icon inside the thumb of the switch @category appearance */
   thumbIcon?: React.ReactNode;
 
-  /** Position of the label relative to the input @default 'right' */
+  /** Position of the label relative to the input @default 'right' @category appearance */
   labelPosition?: 'left' | 'right';
 
-  /** Description displayed below the label */
+  /** Description displayed below the label @category appearance */
   description?: React.ReactNode;
 
-  /** Error displayed below the label */
+  /** Error displayed below the label @category state */
   error?: React.ReactNode;
 
   /** Assigns ref of the root element */
   rootRef?: React.Ref<HTMLDivElement>;
 
-  /** If set, displays a colored dot inside the thumb that matches the track background color @default true */
+  /** If set, displays a colored dot inside the thumb that matches the track background color @default true @category appearance */
   withThumbIndicator?: boolean;
 }
 

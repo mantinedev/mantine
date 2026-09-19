@@ -64,43 +64,43 @@ export type ButtonCssVariables = {
 export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
   'data-disabled'?: boolean;
 
-  /** Controls button `height`, `font-size` and horizontal `padding` @default 'sm' */
+  /** Controls button `height`, `font-size` and horizontal `padding` @default 'sm' @category appearance */
   size?: ButtonSize;
 
-  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Sets `justify-content` of `inner` element, can be used to change distribution of sections and label @default 'center' */
+  /** Sets `justify-content` of `inner` element, can be used to change distribution of sections and label @default 'center' @category appearance */
   justify?: React.CSSProperties['justifyContent'];
 
-  /** Content on the left side of the button label */
+  /** Content on the left side of the button label @category appearance */
   leftSection?: React.ReactNode;
 
-  /** Content on the right side of the button label */
+  /** Content on the right side of the button label @category appearance */
   rightSection?: React.ReactNode;
 
-  /** Sets `width: 100%` @default false */
+  /** Sets `width: 100%` @default false @category appearance */
   fullWidth?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Gradient configuration used for `variant="gradient"` @default theme.defaultGradient */
+  /** Gradient configuration used for `variant="gradient"` @default theme.defaultGradient @category appearance */
   gradient?: MantineGradient;
 
-  /** Sets `disabled` attribute, applies disabled styles */
+  /** Sets `disabled` attribute, applies disabled styles @category behavior */
   disabled?: boolean;
 
-  /** Button content */
+  /** Button content @category appearance */
   children?: React.ReactNode;
 
-  /** If set, the `Loader` component is displayed over the button */
+  /** If set, the `Loader` component is displayed over the button @category behavior */
   loading?: boolean;
 
   /** Props added to the `Loader` component (only visible when `loading` prop is set) */
   loaderProps?: LoaderProps;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color for `filled` variant @category appearance */
   autoContrast?: boolean;
 }
 

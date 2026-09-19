@@ -51,16 +51,16 @@ export interface CarouselProps
   /** Options passed down to embla carousel */
   emblaOptions?: EmblaOptionsType;
 
-  /** `Carousel.Slide` components */
+  /** `Carousel.Slide` components @category appearance */
   children?: React.ReactNode;
 
-  /** Called when next slide is shown */
+  /** Called when next slide is shown @category behavior */
   onNextSlide?: () => void;
 
-  /** Called when previous slider is shown */
+  /** Called when previous slider is shown @category behavior */
   onPreviousSlide?: () => void;
 
-  /** Called with slide index when slide changes */
+  /** Called with slide index when slide changes @category behavior */
   onSlideChange?: (index: number) => void;
 
   /** Get embla API as ref */
@@ -72,49 +72,49 @@ export interface CarouselProps
   /** Props passed down to previous control */
   previousControlProps?: React.ComponentProps<'button'>;
 
-  /** Controls size of the next and previous controls @default 26 */
+  /** Controls size of the next and previous controls @default 26 @category appearance */
   controlSize?: React.CSSProperties['width'];
 
-  /** Controls position of the next and previous controls, key of `theme.spacing` or any valid CSS value @default 'sm' */
+  /** Controls position of the next and previous controls, key of `theme.spacing` or any valid CSS value @default 'sm' @category appearance */
   controlsOffset?: MantineSpacing;
 
-  /** Controls slide width based on viewport width @default '100%' */
+  /** Controls slide width based on viewport width @default '100%' @category appearance */
   slideSize?: StyleProp<string | number>;
 
-  /** Key of theme.spacing or number to set gap between slides */
+  /** Key of theme.spacing or number to set gap between slides @category appearance */
   slideGap?: StyleProp<MantineSpacing>;
 
-  /** Carousel orientation @default 'horizontal' */
+  /** Carousel orientation @default 'horizontal' @category appearance */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Determines type of queries used for responsive styles @default 'media' */
+  /** Determines type of queries used for responsive styles @default 'media' @category appearance */
   type?: 'media' | 'container';
 
-  /** Slides container `height`, required for vertical orientation */
+  /** Slides container `height`, required for vertical orientation @category appearance */
   height?: React.CSSProperties['height'];
 
-  /** Determines whether gap between slides should be treated as part of the slide size @default true */
+  /** Determines whether gap between slides should be treated as part of the slide size @default true @category appearance */
   includeGapInSize?: boolean;
 
-  /** Index of initial slide */
+  /** Index of initial slide @category state */
   initialSlide?: number;
 
-  /** Determines whether next/previous controls should be displayed @default true */
+  /** Determines whether next/previous controls should be displayed @default true @category appearance */
   withControls?: boolean;
 
-  /** Determines whether indicators should be displayed @default false */
+  /** Determines whether indicators should be displayed @default false @category appearance */
   withIndicators?: boolean;
 
   /** A list of embla plugins */
   plugins?: EmblaPluginType[];
 
-  /** Icon of the next control */
+  /** Icon of the next control @category appearance */
   nextControlIcon?: React.ReactNode;
 
-  /** Icon of the previous control */
+  /** Icon of the previous control @category appearance */
   previousControlIcon?: React.ReactNode;
 
-  /** Determines whether arrow key should switch slides @default true */
+  /** Determines whether arrow key should switch slides @default true @category behavior */
   withKeyboardEvents?: boolean;
 
   /** Function to get props for indicator button */

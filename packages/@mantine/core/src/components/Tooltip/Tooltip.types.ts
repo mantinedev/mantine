@@ -18,34 +18,34 @@ export interface TooltipMiddlewares {
 
 export interface TooltipBaseProps
   extends BoxProps, StylesApiProps<TooltipFactory>, ElementProps<'div'> {
-  /** Target element, must support `ref` prop and `...others` */
+  /** Target element, must support `ref` prop and `...others` @category appearance */
   children?: React.ReactNode;
 
-  /** Tooltip position relative to target element (`Tooltip` component) or mouse (`Tooltip.Floating` component) */
+  /** Tooltip position relative to target element (`Tooltip` component) or mouse (`Tooltip.Floating` component) @category appearance */
   position?: FloatingPosition;
 
   /** Key of the prop that can be used to access element ref, `ref` by default */
   refProp?: string;
 
-  /** Tooltip content */
+  /** Tooltip content @category appearance */
   label: React.ReactNode;
 
   /** Determines whether tooltip should be rendered within `Portal`, `true` by default */
   withinPortal?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color, controls tooltip background, by default set based on current color scheme */
+  /** Key of `theme.colors` or any valid CSS color, controls tooltip background, by default set based on current color scheme @category appearance */
   color?: MantineColor;
 
-  /** Determines whether content should be wrapped on to the next line, `false` by default */
+  /** Determines whether content should be wrapped on to the next line, `false` by default @category appearance */
   multiline?: boolean;
 
   /** Tooltip z-index, `300` by default */
   zIndex?: string | number;
 
-  /** If set, tooltip element will not be rendered */
+  /** If set, tooltip element will not be rendered @category behavior */
   disabled?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */

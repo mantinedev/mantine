@@ -44,19 +44,19 @@ export type TreemapCssVariables = {
 
 export interface TreemapProps
   extends BoxProps, StylesApiProps<TreemapFactory>, ElementProps<'div'> {
-  /** Data used to render chart */
+  /** Data used to render chart @category appearance */
   data: TreemapData[];
 
-  /** Key in data object for the value @default 'value' */
+  /** Key in data object for the value @default 'value' @category appearance */
   dataKey?: string;
 
-  /** The treemap will try to keep every single rectangle's aspect ratio near the aspectRatio given @default 1.618033988749895 */
+  /** The treemap will try to keep every single rectangle's aspect ratio near the aspectRatio given @default 1.618033988749895 @category appearance */
   aspectRatio?: number;
 
-  /** Determines whether the tooltip should be displayed when a node is hovered @default true */
+  /** Determines whether the tooltip should be displayed when a node is hovered @default true @category appearance */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms @default 0 */
+  /** Tooltip animation duration in ms @default 0 @category appearance */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -65,25 +65,25 @@ export interface TreemapProps
   /** Props passed down to recharts `Treemap` component */
   treemapProps?: Partial<Omit<RechartsTreemapProps, 'ref' | 'data' | 'dataKey'>>;
 
-  /** Controls color of the node stroke, by default depends on color scheme */
+  /** Controls color of the node stroke, by default depends on color scheme @category appearance */
   strokeColor?: MantineColor;
 
-  /** Controls text color of labels @default dimmed */
+  /** Controls text color of labels @default dimmed @category appearance */
   textColor?: MantineColor;
 
-  /** Controls chart height @default 300 */
+  /** Controls chart height @default 300 @category appearance */
   height?: number;
 
-  /** Controls width of node stroke @default 1 */
+  /** Controls width of node stroke @default 1 @category appearance */
   strokeWidth?: number;
 
-  /** A function to format values inside the tooltip */
+  /** A function to format values inside the tooltip @category appearance */
   valueFormatter?: (value: number) => string;
 
-  /** Determines whether text color should be adjusted based on background color to improve contrast */
+  /** Determines whether text color should be adjusted based on background color to improve contrast @category appearance */
   autoContrast?: boolean;
 
-  /** Additional elements rendered inside `Treemap` component */
+  /** Additional elements rendered inside `Treemap` component @category appearance */
   children?: React.ReactNode;
 }
 

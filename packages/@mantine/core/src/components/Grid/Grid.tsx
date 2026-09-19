@@ -22,34 +22,34 @@ export type GridCssVariables = {
 };
 
 export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, ElementProps<'div'> {
-  /** Gap between columns and rows, key of `theme.spacing` or any valid CSS value @default 'md' */
+  /** Gap between columns and rows, key of `theme.spacing` or any valid CSS value @default 'md' @category appearance */
   gap?: StyleProp<MantineSpacing>;
 
-  /** Row gap, overrides `gap` for vertical spacing */
+  /** Row gap, overrides `gap` for vertical spacing @category appearance */
   rowGap?: StyleProp<MantineSpacing>;
 
-  /** Column gap, overrides `gap` for horizontal spacing */
+  /** Column gap, overrides `gap` for horizontal spacing @category appearance */
   columnGap?: StyleProp<MantineSpacing>;
 
-  /** If set, columns in the last row expand to fill all available space @default false */
+  /** If set, columns in the last row expand to fill all available space @default false @category appearance */
   grow?: boolean;
 
-  /** Sets `justify-content` @default flex-start */
+  /** Sets `justify-content` @default flex-start @category appearance */
   justify?: React.CSSProperties['justifyContent'];
 
-  /** Sets `align-items` @default stretch */
+  /** Sets `align-items` @default stretch @category appearance */
   align?: React.CSSProperties['alignItems'];
 
-  /** Number of columns in each row @default 12 */
+  /** Number of columns in each row @default 12 @category appearance */
   columns?: number;
 
-  /** Sets `overflow` CSS property on the root element @default 'visible' */
+  /** Sets `overflow` CSS property on the root element @default 'visible' @category appearance */
   overflow?: React.CSSProperties['overflow'];
 
-  /** Type of queries used for responsive styles @default 'media' */
+  /** Type of queries used for responsive styles @default 'media' @category appearance */
   type?: 'media' | 'container';
 
-  /** Breakpoints values, only used with `type="container"` */
+  /** Breakpoints values, only used with `type="container"` @category appearance */
   breakpoints?: GridBreakpoints;
 }
 

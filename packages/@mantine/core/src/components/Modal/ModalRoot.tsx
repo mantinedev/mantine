@@ -36,31 +36,31 @@ export type ModalRootCssVariables = {
 export interface ModalRootProps extends StylesApiProps<ModalRootFactory>, ModalBaseProps {
   __staticSelector?: string;
 
-  /** Top/bottom modal offset @default 5dvh */
+  /** Top/bottom modal offset @default 5dvh @category appearance */
   yOffset?: React.CSSProperties['marginTop'];
 
-  /** Left/right modal offset @default 5vw */
+  /** Left/right modal offset @default 5vw @category appearance */
   xOffset?: React.CSSProperties['marginLeft'];
 
   /** Scroll area component @default 'div' */
   scrollAreaComponent?: ScrollAreaComponent;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** If set, the modal is centered vertically @default false */
+  /** If set, the modal is centered vertically @default false @category appearance */
   centered?: boolean;
 
-  /** If set, the modal takes the entire screen @default false */
+  /** If set, the modal takes the entire screen @default false @category appearance */
   fullScreen?: boolean;
 
-  /** Key of `theme.breakpoints`, CSS length or px number below which the modal takes the entire screen */
+  /** Key of `theme.breakpoints`, CSS length or px number below which the modal takes the entire screen @category appearance */
   fullScreenBelow?: ModalBaseBreakpoint;
 
-  /** If set, the header stays pinned to the top while the body scrolls @default true */
+  /** If set, the header stays pinned to the top while the body scrolls @default true @category appearance */
   stickyHeader?: boolean;
 
-  /** If set, the footer stays pinned to the bottom while the body scrolls @default true */
+  /** If set, the footer stays pinned to the bottom while the body scrolls @default true @category appearance */
   stickyFooter?: boolean;
 }
 

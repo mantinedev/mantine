@@ -48,64 +48,64 @@ export type NavLinkCssVariables = {
 };
 
 export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
-  /** Main link label */
+  /** Main link label @category appearance */
   label?: React.ReactNode;
 
-  /** Link description, displayed below the label */
+  /** Link description, displayed below the label @category appearance */
   description?: React.ReactNode;
 
-  /** Section displayed on the left side of the label */
+  /** Section displayed on the left side of the label @category appearance */
   leftSection?: React.ReactNode;
 
-  /** Section displayed on the right side of the label */
+  /** Section displayed on the right side of the label @category appearance */
   rightSection?: React.ReactNode;
 
-  /** Determines whether the link should have active styles @default false */
+  /** Determines whether the link should have active styles @default false @category state */
   active?: boolean;
 
-  /** Key of `theme.colors` or any valid CSS color to control active styles @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color to control active styles @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Controls font size, padding, sections gap and nested links offset @default 'sm' */
+  /** Controls font size, padding, sections gap and nested links offset @default 'sm' @category appearance */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, ignored for `rail` variant @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, ignored for `rail` variant @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** If set, label and description are truncated with ellipsis instead of wrapping @default false */
+  /** If set, label and description are truncated with ellipsis instead of wrapping @default false @category appearance */
   noWrap?: boolean;
 
-  /** Child `NavLink` components */
+  /** Child `NavLink` components @category appearance */
   children?: React.ReactNode;
 
-  /** Controlled nested items collapse state */
+  /** Controlled nested items collapse state @category state */
   opened?: boolean;
 
-  /** Uncontrolled nested items collapse initial state */
+  /** Uncontrolled nested items collapse initial state @category state */
   defaultOpened?: boolean;
 
-  /** Called when open state changes */
+  /** Called when open state changes @category state */
   onChange?: (opened: boolean) => void;
 
-  /** If set, right section will not be rotated when collapse is opened @default false */
+  /** If set, right section will not be rotated when collapse is opened @default false @category appearance */
   disableRightSectionRotation?: boolean;
 
-  /** Controls indentation of nested NavLink components, key of `theme.spacing` or any valid CSS value. By default, nested links are aligned with the parent link label (28px for `size="sm"`). */
+  /** Controls indentation of nested NavLink components, key of `theme.spacing` or any valid CSS value. By default, nested links are aligned with the parent link label (28px for `size="sm"`). @category appearance */
   childrenOffset?: MantineSpacing;
 
-  /** If set, a vertical guideline is displayed at the start of nested links @default false */
+  /** If set, a vertical guideline is displayed at the start of nested links @default false @category appearance */
   withGuideline?: boolean;
 
-  /** If set, disabled styles will be added to the root element @default false */
+  /** If set, disabled styles will be added to the root element @default false @category behavior */
   disabled?: boolean;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color for `filled` variant @category appearance */
   autoContrast?: boolean;
 
-  /** Called when the root element is clicked */
+  /** Called when the root element is clicked @category behavior */
   onClick?: React.MouseEventHandler<HTMLElement>;
 
-  /** Called on keydown of the root element */
+  /** Called on keydown of the root element @category behavior */
   onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 
   /** If set to `false`, child `NavLinks` are unmounted when collapsed */

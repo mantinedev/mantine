@@ -34,28 +34,28 @@ export interface TimeGridProps
     BoxProps,
     StylesApiProps<TimeGridFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
-  /** Time data in 24h format to be displayed in the grid, for example `['10:00', '18:30', '22:00']`. Time values must be unique. */
+  /** Time data in 24h format to be displayed in the grid, for example `['10:00', '18:30', '22:00']`. Time values must be unique. @category appearance */
   data: string[];
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: string | null;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: string | null;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: string | null) => void;
 
-  /** Determines whether the value can be deselected when the current active option is clicked or activated with keyboard @default false */
+  /** Determines whether the value can be deselected when the current active option is clicked or activated with keyboard @default false @category behavior */
   allowDeselect?: boolean;
 
-  /** Time format displayed in the grid @default '24h' */
+  /** Time format displayed in the grid @default '24h' @category appearance */
   format?: TimePickerFormat;
 
-  /** Determines whether the seconds part should be displayed @default false */
+  /** Determines whether the seconds part should be displayed @default false @category appearance */
   withSeconds?: boolean;
 
-  /** Labels used for am/pm values @default { am: 'AM', pm: 'PM' } */
+  /** Labels used for am/pm values @default { am: 'AM', pm: 'PM' } @category appearance */
   amPmLabels?: TimePickerAmPmLabels;
 
   /** Props passed down to the underlying `SimpleGrid` component @default { cols: 3, spacing: 'xs' } */
@@ -64,22 +64,22 @@ export interface TimeGridProps
   /** A function to pass props down to control based on the time value */
   getControlProps?: (time: string) => React.ComponentProps<'button'> & DataAttributes;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Control `font-size` of controls, key of `theme.fontSizes` or any valid CSS value @default 'sm' */
+  /** Control `font-size` of controls, key of `theme.fontSizes` or any valid CSS value @default 'sm' @category appearance */
   size?: MantineSize;
 
-  /** All controls before this time are disabled */
+  /** All controls before this time are disabled @category behavior */
   minTime?: string;
 
-  /** All controls after this time are disabled */
+  /** All controls after this time are disabled @category behavior */
   maxTime?: string;
 
-  /** Array of time values to disable */
+  /** Array of time values to disable @category behavior */
   disableTime?: string[] | ((time: string) => boolean);
 
-  /** If set, all controls are disabled */
+  /** If set, all controls are disabled @category behavior */
   disabled?: boolean;
 }
 

@@ -106,7 +106,7 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
       'LightboxNavigation',
       'LightboxCaption',
       'LightboxCloseButton',
-      'LightboxProviderComponent',
+      'LightboxProvider',
     ],
     styles: ['Lightbox'],
     description: 'Full-screen media lightbox with carousel navigation',

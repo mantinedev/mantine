@@ -61,67 +61,67 @@ export type EmojiPickerCssVariables = {
 
 export interface EmojiPickerProps
   extends BoxProps, StylesApiProps<EmojiPickerFactory>, ElementProps<'div'> {
-  /** Emoji data object, use `emojiMartAdapter` or `emojibaseAdapter` to convert data */
+  /** Emoji data object, use `emojiMartAdapter` or `emojibaseAdapter` to convert data @category appearance */
   data: EmojiPickerData;
 
-  /** Called when an emoji is selected */
+  /** Called when an emoji is selected @category behavior */
   onEmojiSelect?: (emoji: EmojiPickerEmoji) => void;
 
-  /** Number of emoji columns @default 9 */
+  /** Number of emoji columns @default 9 @category appearance */
   columns?: number;
 
-  /** Custom emoji button size in px, overrides size-based value */
+  /** Custom emoji button size in px, overrides size-based value @category appearance */
   emojiSize?: number;
 
-  /** Determines whether the search input is displayed @default true */
+  /** Determines whether the search input is displayed @default true @category appearance */
   withSearch?: boolean;
 
-  /** Determines whether the category navigation bar is displayed @default true */
+  /** Determines whether the category navigation bar is displayed @default true @category appearance */
   withCategoryNav?: boolean;
 
-  /** Determines whether the emoji preview area is displayed @default true */
+  /** Determines whether the emoji preview area is displayed @default true @category appearance */
   withPreview?: boolean;
 
-  /** Determines whether the skin tone selector is displayed @default true */
+  /** Determines whether the skin tone selector is displayed @default true @category appearance */
   withSkinToneSelector?: boolean;
 
-  /** Controlled skin tone value (0–5) */
+  /** Controlled skin tone value (0–5) @category state */
   skinTone?: number;
 
-  /** Default skin tone value for uncontrolled state @default 0 */
+  /** Default skin tone value for uncontrolled state @default 0 @category state */
   defaultSkinTone?: number;
 
-  /** Called when skin tone changes */
+  /** Called when skin tone changes @category state */
   onSkinToneChange?: (skinTone: number) => void;
 
-  /** Controlled search input value */
+  /** Controlled search input value @category state */
   searchValue?: string;
 
-  /** Called when search value changes */
+  /** Called when search value changes @category state */
   onSearchChange?: (value: string) => void;
 
-  /** Search input placeholder */
+  /** Search input placeholder @category appearance */
   searchPlaceholder?: string;
 
-  /** Content displayed when search yields no results */
+  /** Content displayed when search yields no results @category appearance */
   emptySearchContent?: React.ReactNode;
 
-  /** Determines whether unsupported emojis are filtered out @default false */
+  /** Determines whether unsupported emojis are filtered out @default false @category appearance */
   withUnsupportedDetection?: boolean;
 
-  /** Determines whether the search input is focused on mount @default false */
+  /** Determines whether the search input is focused on mount @default false @category behavior */
   autoFocus?: boolean;
 
   /** Props passed to the internal `ScrollArea` component */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** Override category labels by category id */
+  /** Override category labels by category id @category appearance */
   categoryLabels?: Record<string, string>;
 
-  /** Override UI labels (search placeholder, no results text, etc.) */
+  /** Override UI labels (search placeholder, no results text, etc.) @category appearance */
   labels?: EmojiPickerLabels;
 
-  /** Controls size of all inner elements @default 'sm' */
+  /** Controls size of all inner elements @default 'sm' @category appearance */
   size?: MantineSize;
 
   /** Props passed to the search `Input` component */

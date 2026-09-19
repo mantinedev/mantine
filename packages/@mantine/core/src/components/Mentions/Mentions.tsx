@@ -54,64 +54,64 @@ export interface MentionsProps
     __BaseInputProps,
     StylesApiProps<MentionsFactory>,
     ElementProps<'textarea', 'onChange' | 'value' | 'defaultValue' | 'size'> {
-  /** Controlled markup value */
+  /** Controlled markup value @category state */
   value?: string;
 
-  /** Uncontrolled markup value initial state */
+  /** Uncontrolled markup value initial state @category state */
   defaultValue?: string;
 
-  /** Called on every value change with a rich payload */
+  /** Called on every value change with a rich payload @category state */
   onChange?: (payload: MentionsChangePayload) => void;
 
-  /** `Mentions.Mention` nodes, one per trigger/data source */
+  /** `Mentions.Mention` nodes, one per trigger/data source @category appearance */
   children?: React.ReactNode;
 
-  /** If set, renders a single-line `input` instead of a `textarea` @default false */
+  /** If set, renders a single-line `input` instead of a `textarea` @default false @category appearance */
   singleLine?: boolean;
 
-  /** Minimum rows of the underlying control */
+  /** Minimum rows of the underlying control @category appearance */
   minRows?: number;
 
-  /** Maximum rows before the control scrolls */
+  /** Maximum rows before the control scrolls @category appearance */
   maxRows?: number;
 
-  /** Anchors the dropdown to the caret position or the input's left edge @default 'caret' */
+  /** Anchors the dropdown to the caret position or the input's left edge @default 'caret' @category appearance */
   anchorMode?: 'caret' | 'left';
 
-  /** Dropdown placement relative to the anchor @default 'below' */
+  /** Dropdown placement relative to the anchor @default 'below' @category appearance */
   suggestionsPlacement?: 'auto' | 'above' | 'below';
 
-  /** Displays suggestions as a dropdown list or as inline ghost text @default 'overlay' */
+  /** Displays suggestions as a dropdown list or as inline ghost text @default 'overlay' @category appearance */
   suggestionsDisplay?: 'overlay' | 'inline';
 
-  /** Called when the caret/selection overlaps one or more mentions */
+  /** Called when the caret/selection overlaps one or more mentions @category behavior */
   onSelectionChange?: (
     selection: { start: number; end: number },
     mentions: MentionOccurrence[]
   ) => void;
 
-  /** Local filtering of array data, `false` to disable (server-driven) */
+  /** Local filtering of array data, `false` to disable (server-driven) @category behavior */
   filter?: false | MentionsFilter;
 
-  /** Message shown when a query returns no matches */
+  /** Message shown when a query returns no matches @category appearance */
   nothingFoundMessage?: React.ReactNode;
 
-  /** Function to customize how mentions are rendered in the overlay, for example to add a tooltip or a `HoverCard`. The returned content must keep the same text metrics as `display` to stay aligned. */
+  /** Function to customize how mentions are rendered in the overlay, for example to add a tooltip or a `HoverCard`. The returned content must keep the same text metrics as `display` to stay aligned. @category appearance */
   renderMention?: (input: MentionsRenderMentionInput) => React.ReactNode;
 
-  /** Dropdown `max-height` before scroll @default 220 */
+  /** Dropdown `max-height` before scroll @default 220 @category appearance */
   maxDropdownHeight?: number | string;
 
   /** Props passed down to the underlying `Combobox` */
   comboboxProps?: ComboboxProps;
 
-  /** Screen-reader label for the suggestions list */
+  /** Screen-reader label for the suggestions list @category accessibility */
   a11ySuggestionsListLabel?: string;
 
   /** Ref forwarded to the underlying control */
   inputRef?: React.Ref<HTMLTextAreaElement | HTMLInputElement>;
 
-  /** `static` disables all interactions @default 'interactive' */
+  /** `static` disables all interactions @default 'interactive' @category behavior */
   mode?: 'interactive' | 'static';
 }
 

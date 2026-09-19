@@ -24,34 +24,34 @@ export interface MenuCheckboxItemProps
     ElementProps<'button', 'color' | 'onChange' | 'value'> {
   'data-disabled'?: boolean;
 
-  /** Item label */
+  /** Item label @category appearance */
   children?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color */
+  /** Key of `theme.colors` or any valid CSS color @category appearance */
   color?: MantineColor;
 
-  /** If set, closes the menu when this item is clicked. By default, checkbox items do not close the menu. */
+  /** If set, closes the menu when this item is clicked. By default, checkbox items do not close the menu. @category behavior */
   closeMenuOnClick?: boolean;
 
-  /** Section displayed at the end of the label */
+  /** Section displayed at the end of the label @category appearance */
   rightSection?: React.ReactNode;
 
-  /** Sets disabled attribute, applies disabled styles */
+  /** Sets disabled attribute, applies disabled styles @category behavior */
   disabled?: boolean;
 
-  /** Value of the checkbox item. When used inside `Menu.CheckboxGroup`, determines whether the item is checked and what value is added/removed on toggle. */
+  /** Value of the checkbox item. When used inside `Menu.CheckboxGroup`, determines whether the item is checked and what value is added/removed on toggle. @category state */
   value?: string;
 
-  /** Controlled checked state. Overrides selection derived from the parent `Menu.CheckboxGroup`. */
+  /** Controlled checked state. Overrides selection derived from the parent `Menu.CheckboxGroup`. @category state */
   checked?: boolean;
 
-  /** Uncontrolled default checked state. Ignored when the item is used inside `Menu.CheckboxGroup`. */
+  /** Uncontrolled default checked state. Ignored when the item is used inside `Menu.CheckboxGroup`. @category state */
   defaultChecked?: boolean;
 
-  /** Called when checked state changes. Overrides `onChange` of the parent `Menu.CheckboxGroup`. */
+  /** Called when checked state changes. Overrides `onChange` of the parent `Menu.CheckboxGroup`. @category state */
   onChange?: (checked: boolean) => void;
 
-  /** Replaces the default check icon rendered in the indicator slot when the item is checked. Overrides `checkIcon` set on `Menu`. */
+  /** Replaces the default check icon rendered in the indicator slot when the item is checked. Overrides `checkIcon` set on `Menu`. @category appearance */
   checkIcon?: React.ReactNode;
 }
 

@@ -44,19 +44,19 @@ export type FunnelChartCssVariables = {
 
 export interface FunnelChartProps
   extends BoxProps, StylesApiProps<FunnelChartFactory>, ElementProps<'div'> {
-  /** Data used to render chart */
+  /** Data used to render chart @category appearance */
   data: FunnelChartCell[];
 
-  /** Determines whether the tooltip should be displayed when a section is hovered @default true */
+  /** Determines whether the tooltip should be displayed when a section is hovered @default true @category appearance */
   withTooltip?: boolean;
 
-  /** Determines whether the legend should be displayed @default false */
+  /** Determines whether the legend should be displayed @default false @category appearance */
   withLegend?: boolean;
 
   /** Props passed down to recharts `Legend` component */
   legendProps?: Omit<LegendProps, 'ref'>;
 
-  /** Tooltip animation duration in ms @default 0 */
+  /** Tooltip animation duration in ms @default 0 @category appearance */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -65,37 +65,37 @@ export interface FunnelChartProps
   /** Props passed down to recharts `Pie` component */
   funnelProps?: Partial<Omit<FunnelProps, 'ref'>>;
 
-  /** Controls color of the segments stroke, by default depends on color scheme */
+  /** Controls color of the segments stroke, by default depends on color scheme @category appearance */
   strokeColor?: MantineColor;
 
-  /** Controls text color of all labels @default 'white' */
+  /** Controls text color of all labels @default 'white' @category appearance */
   labelColor?: MantineColor;
 
-  /** Controls chart width and height @default 300 */
+  /** Controls chart width and height @default 300 @category appearance */
   size?: number;
 
-  /** Controls width of segments stroke @default 1 */
+  /** Controls width of segments stroke @default 1 @category appearance */
   strokeWidth?: number;
 
-  /** Determines whether each segment should have associated label @default false */
+  /** Determines whether each segment should have associated label @default false @category appearance */
   withLabels?: boolean;
 
-  /** Controls labels position relative to the segment @default 'right' */
+  /** Controls labels position relative to the segment @default 'right' @category appearance */
   labelsPosition?: 'right' | 'left' | 'inside';
 
-  /** A function to format values inside the tooltip and labels */
+  /** A function to format values inside the tooltip and labels @category appearance */
   valueFormatter?: (value: number) => string;
 
-  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default 'all' */
+  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default 'all' @category appearance */
   tooltipDataSource?: 'segment' | 'all';
 
-  /** Additional elements rendered inside `FunnelChart` component */
+  /** Additional elements rendered inside `FunnelChart` component @category appearance */
   children?: React.ReactNode;
 
   /** Props passed down to recharts `FunnelChart` component */
   funnelChartProps?: React.ComponentProps<typeof RechartsFunnelChart>;
 
-  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default @category accessibility */
   accessibilityLayer?: boolean;
 }
 

@@ -43,61 +43,61 @@ export interface PinInputProps
   /** Hidden input `form` attribute */
   form?: string;
 
-  /** Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem @default 'md' */
+  /** Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem @default 'md' @category appearance */
   gap?: MantineSpacing;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Controls inputs `width` and `height` @default 'sm' */
+  /** Controls inputs `width` and `height` @default 'sm' @category appearance */
   size?: MantineSize;
 
-  /** If set, the first input is focused when component is mounted @default false */
+  /** If set, the first input is focused when component is mounted @default false @category behavior */
   autoFocus?: boolean;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: string;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: string;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: string) => void;
 
-  /** Called when all inputs have value */
+  /** Called when all inputs have value @category state */
   onComplete?: (value: string) => void;
 
-  /** Inputs placeholder @default '○' */
+  /** Inputs placeholder @default '○' @category appearance */
   placeholder?: string;
 
-  /** Determines whether focus should be moved automatically to the next input once filled @default true */
+  /** Determines whether focus should be moved automatically to the next input once filled @default true @category behavior */
   manageFocus?: boolean;
 
-  /** Determines whether `autocomplete="one-time-code"` attribute should be set on all inputs @default true */
+  /** Determines whether `autocomplete="one-time-code"` attribute should be set on all inputs @default true @category behavior */
   oneTimeCode?: boolean;
 
   /** Base id used to generate unique ids for inputs */
   id?: string;
 
-  /** Adds disabled attribute to all inputs */
+  /** Adds disabled attribute to all inputs @category behavior */
   disabled?: boolean;
 
-  /** Sets `aria-invalid` attribute and applies error styles to all inputs */
+  /** Sets `aria-invalid` attribute and applies error styles to all inputs @category state */
   error?: boolean;
 
-  /** Applies success styles to all inputs */
+  /** Applies success styles to all inputs @category state */
   success?: boolean;
 
-  /** Determines which values can be entered @default 'alphanumeric' */
+  /** Determines which values can be entered @default 'alphanumeric' @category behavior */
   type?: 'alphanumeric' | 'number' | RegExp;
 
-  /** Changes input type to `"password"` @default false */
+  /** Changes input type to `"password"` @default false @category appearance */
   mask?: boolean;
 
-  /** Number of inputs @default 4 */
+  /** Number of inputs @default 4 @category appearance */
   length?: number;
 
-  /** If set, the user cannot edit the value */
+  /** If set, the user cannot edit the value @category behavior */
   readOnly?: boolean;
 
   /** Inputs `type` attribute, inferred from the `type` prop if not specified */
@@ -115,7 +115,7 @@ export interface PinInputProps
     | 'search'
     | undefined;
 
-  /** `aria-label` attribute */
+  /** `aria-label` attribute @category accessibility */
   ariaLabel?: string;
 
   /** Props passed down to the hidden input */

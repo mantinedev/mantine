@@ -110,55 +110,55 @@ export interface ResourcesDayViewProps
   extends BoxProps, StylesApiProps<ResourcesDayViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Day to display, Date object or date string in `YYYY-MM-DD` format */
+  /** Day to display, Date object or date string in `YYYY-MM-DD` format @category state */
   date: Date | string;
 
-  /** Called with the new date value when a date is selected */
+  /** Called with the new date value when a date is selected @category state */
   onDateChange?: (value: DateStringValue) => void;
 
-  /** List of resources to display as rows */
+  /** List of resources to display as rows @category appearance */
   resources: ScheduleResourceData[];
 
-  /** Start time for the day view, in `HH:mm:ss` format @default 00:00:00 */
+  /** Start time for the day view, in `HH:mm:ss` format @default 00:00:00 @category appearance */
   startTime?: string;
 
-  /** End time for the day view, in `HH:mm:ss` format @default 23:59:59 */
+  /** End time for the day view, in `HH:mm:ss` format @default 23:59:59 @category appearance */
   endTime?: string;
 
-  /** Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
+  /** Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 @category appearance */
   intervalMinutes?: number;
 
-  /** Minimum on-screen size of an event along the time axis, in px. Prevents very short events from collapsing. Larger values make brief events easier to see but extend them past their real start time. @default 1 */
+  /** Minimum on-screen size of an event along the time axis, in px. Prevents very short events from collapsing. Larger values make brief events easier to see but extend them past their real start time. @default 1 @category appearance */
   minEventSize?: number;
 
-  /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm */
+  /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm @category appearance */
   slotLabelFormat?: DateLabelFormat;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Time to scroll to on initial render, in `HH:mm:ss` format */
+  /** Time to scroll to on initial render, in `HH:mm:ss` format @category appearance */
   startScrollTime?: string;
 
   /** Props passed down to the `ScrollArea` component */
   scrollAreaProps?: Partial<ScrollAreaProps> & DataAttributes;
 
-  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` @category appearance */
   locale?: string;
 
-  /** If set, displays a vertical line indicating the current time. By default, displayed only for the current day. */
+  /** If set, displays a vertical line indicating the current time. By default, displayed only for the current day. @category appearance */
   withCurrentTimeIndicator?: boolean;
 
-  /** If set, the time indicator displays the current time in the bubble @default true */
+  /** If set, the time indicator displays the current time in the bubble @default true @category appearance */
   withCurrentTimeBubble?: boolean;
 
-  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() */
+  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() @category appearance */
   getCurrentTime?: () => AnyDateValue;
 
-  /** If set, the header is displayed @default true */
+  /** If set, the header is displayed @default true @category appearance */
   withHeader?: boolean;
 
-  /** Called when view level select button is clicked */
+  /** Called when view level select button is clicked @category state */
   onViewChange?: (view: ScheduleViewLevel) => void;
 
   /** Props passed to previous control */
@@ -173,49 +173,49 @@ export interface ResourcesDayViewProps
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 
-  /** Dayjs format for header label @default 'MMMM D, YYYY' */
+  /** Dayjs format for header label @default 'MMMM D, YYYY' @category appearance */
   headerFormat?: DateLabelFormat;
 
-  /** List of events to display */
+  /** List of events to display @category appearance */
   events?: ScheduleEventData[];
 
-  /** Width of each time slot column @default 80px */
+  /** Width of each time slot column @default 80px @category appearance */
   slotWidth?: React.CSSProperties['width'];
 
-  /** Height of each resource row @default 64px */
+  /** Height of each resource row @default 64px @category appearance */
   rowHeight?: React.CSSProperties['height'];
 
-  /** Labels override */
+  /** Labels override @category appearance */
   labels?: ScheduleLabelsOverride;
 
-  /** If set to true, highlights business hours with white background @default false */
+  /** If set to true, highlights business hours with white background @default false @category appearance */
   highlightBusinessHours?: boolean;
 
-  /** Business hours range in `HH:mm:ss` format @default ['09:00:00', '17:00:00'] */
+  /** Business hours range in `HH:mm:ss` format @default ['09:00:00', '17:00:00'] @category appearance */
   businessHours?: [string, string];
 
-  /** Function to customize event body */
+  /** Function to customize event body @category appearance */
   renderEventBody?: RenderEventBody;
 
-  /** Function to fully customize event rendering */
+  /** Function to fully customize event rendering @category appearance */
   renderEvent?: RenderEvent;
 
-  /** Function to customize resource label rendering */
+  /** Function to customize resource label rendering @category appearance */
   renderResourceLabel?: (resource: ScheduleResourceData) => React.ReactNode;
 
-  /** List of resource groups to display as a column to the left of resource labels */
+  /** List of resource groups to display as a column to the left of resource labels @category appearance */
   groups?: ScheduleResourceGroup[];
 
-  /** Function to customize group label rendering */
+  /** Function to customize group label rendering @category appearance */
   renderGroupLabel?: (group: ScheduleResourceGroup) => React.ReactNode;
 
-  /** Width of the group label column @default 80px */
+  /** Width of the group label column @default 80px @category appearance */
   groupLabelWidth?: React.CSSProperties['width'];
 
-  /** If true, events can be dragged and dropped @default false */
+  /** If true, events can be dragged and dropped @default false @category behavior */
   withEventsDragAndDrop?: boolean;
 
-  /** Called when event is dropped at new time, includes target resourceId */
+  /** Called when event is dropped at new time, includes target resourceId @category behavior */
   onEventDrop?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -224,19 +224,19 @@ export interface ResourcesDayViewProps
     resourceId?: string | number;
   }) => void;
 
-  /** Function to determine if event can be dragged */
+  /** Function to determine if event can be dragged @category behavior */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes @category behavior */
   eventDragInterval?: number;
 
-  /** Called when any event drag starts */
+  /** Called when any event drag starts @category behavior */
   onEventDragStart?: (event: ScheduleEventData) => void;
 
-  /** Called when any event drag ends */
+  /** Called when any event drag ends @category behavior */
   onEventDragEnd?: () => void;
 
-  /** Called when time slot is clicked, includes resourceId */
+  /** Called when time slot is clicked, includes resourceId @category behavior */
   onTimeSlotClick?: (data: {
     slotStart: DateTimeStringValue;
     slotEnd: DateTimeStringValue;
@@ -244,36 +244,36 @@ export interface ResourcesDayViewProps
     resourceId?: string | number;
   }) => void;
 
-  /** Called when event is clicked */
+  /** Called when event is clicked @category behavior */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false @category behavior */
   withInteractiveBackgroundEvents?: boolean;
 
-  /** If set, enables drag-to-select time slot ranges @default false */
+  /** If set, enables drag-to-select time slot ranges @default false @category behavior */
   withDragSlotSelect?: boolean;
 
-  /** Called when a time slot range is selected by dragging, includes resourceId */
+  /** Called when a time slot range is selected by dragging, includes resourceId @category behavior */
   onSlotDragEnd?: (data: {
     rangeStart: DateTimeStringValue;
     rangeEnd: DateTimeStringValue;
     resourceId?: string | number;
   }) => void;
 
-  /** Interaction mode @default default */
+  /** Interaction mode @default default @category behavior */
   mode?: ScheduleMode;
 
-  /** Called when an external item is dropped onto the schedule */
+  /** Called when an external item is dropped onto the schedule @category behavior */
   onExternalEventDrop?: (data: {
     dataTransfer: DataTransfer;
     dropDateTime: DateTimeStringValue;
     resourceId?: string | number;
   }) => void;
 
-  /** If true, events can be resized by dragging their left/right edges @default false */
+  /** If true, events can be resized by dragging their left/right edges @default false @category behavior */
   withEventResize?: boolean;
 
-  /** Called when event is resized */
+  /** Called when event is resized @category behavior */
   onEventResize?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -281,31 +281,31 @@ export interface ResourcesDayViewProps
     event: ScheduleEventData;
   }) => void;
 
-  /** Function to determine if event can be resized */
+  /** Function to determine if event can be resized @category behavior */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. */
+  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. @category behavior */
   canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
 
-  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. */
+  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. @category behavior */
   canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
 
-  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. */
+  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. @category behavior */
   canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
 
-  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false */
+  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false @category behavior */
   preventEventOverlap?: PreventEventOverlap;
 
-  /** Called when a drop or resize is rejected */
+  /** Called when a drop or resize is rejected @category behavior */
   onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
 
-  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes @category behavior */
   eventResizeInterval?: number;
 
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
 
-  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 @default 2 */
+  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 @default 2 @category appearance */
   maxEventsPerTimeSlot?: number;
 
   /** Props passed down to `MoreEvents` component */

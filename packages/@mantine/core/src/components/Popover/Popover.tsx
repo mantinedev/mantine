@@ -143,34 +143,34 @@ export interface __PopoverProps {
 export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFactory> {
   __staticSelector?: string;
 
-  /** `Popover.Target` and `Popover.Dropdown` components */
+  /** `Popover.Target` and `Popover.Dropdown` components @category appearance */
   children?: React.ReactNode;
 
-  /** Initial opened state for uncontrolled component */
+  /** Initial opened state for uncontrolled component @category state */
   defaultOpened?: boolean;
 
-  /** Controlled dropdown opened state */
+  /** Controlled dropdown opened state @category state */
   opened?: boolean;
 
-  /** Called with current state when dropdown opens or closes */
+  /** Called with current state when dropdown opens or closes @category state */
   onChange?: (opened: boolean) => void;
 
-  /** Determines whether dropdown should be closed on outside clicks @default true */
+  /** Determines whether dropdown should be closed on outside clicks @default true @category behavior */
   closeOnClickOutside?: boolean;
 
-  /** Events that trigger outside clicks */
+  /** Events that trigger outside clicks @category behavior */
   clickOutsideEvents?: string[];
 
-  /** Determines whether focus should be trapped within dropdown @default false */
+  /** Determines whether focus should be trapped within dropdown @default false @category behavior */
   trapFocus?: boolean;
 
-  /** Determines whether dropdown should be closed when `Escape` key is pressed @default true */
+  /** Determines whether dropdown should be closed when `Escape` key is pressed @default true @category behavior */
   closeOnEscape?: boolean;
 
   /** Id base to create accessibility connections */
   id?: string;
 
-  /** Determines whether dropdown and target elements should have accessible roles @default true */
+  /** Determines whether dropdown and target elements should have accessible roles @default true @category accessibility */
   withRoles?: boolean;
 }
 

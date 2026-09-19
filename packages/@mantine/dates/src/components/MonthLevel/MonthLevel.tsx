@@ -20,7 +20,7 @@ import { Month, MonthSettings, MonthStylesNames } from '../Month';
 export type MonthLevelStylesNames = MonthStylesNames | CalendarHeaderStylesNames;
 
 export interface MonthLevelBaseSettings extends MonthSettings {
-  /** dayjs label format to display month label or a function that returns month label based on month value @default "MMMM YYYY" */
+  /** dayjs label format to display month label or a function that returns month label based on month value @default "MMMM YYYY" @category appearance */
   monthLabelFormat?: DateLabelFormat;
 }
 
@@ -36,16 +36,16 @@ export interface MonthLevelProps
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
-  /** Month that is currently displayed */
+  /** Month that is currently displayed @category state */
   month: DateStringValue;
 
-  /** Aria-label for change level control */
+  /** Aria-label for change level control @category accessibility */
   levelControlAriaLabel?: string;
 
-  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
+  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way @category behavior */
   static?: boolean;
 
-  /** Determines whether the calendar should take the full width of its container @default false */
+  /** Determines whether the calendar should take the full width of its container @default false @category appearance */
   fullWidth?: boolean;
 
   /** Called when date is changed via native level select */

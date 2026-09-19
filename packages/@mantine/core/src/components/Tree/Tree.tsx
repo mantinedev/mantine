@@ -88,51 +88,51 @@ export interface TreeDragState {
 }
 
 export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, ElementProps<'ul'> {
-  /** Data used to render nodes */
+  /** Data used to render nodes @category appearance */
   data: TreeNodeData[];
 
-  /** Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value @default 'lg' */
+  /** Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value @default 'lg' @category appearance */
   levelOffset?: MantineSpacing;
 
-  /** If set, tree node with children is expanded on click @default true */
+  /** If set, tree node with children is expanded on click @default true @category behavior */
   expandOnClick?: boolean;
 
-  /** If set, tree node with children is expanded on space key press @default true */
+  /** If set, tree node with children is expanded on space key press @default true @category behavior */
   expandOnSpace?: boolean;
 
-  /** If set, tree node is checked on space key press @default false */
+  /** If set, tree node is checked on space key press @default false @category behavior */
   checkOnSpace?: boolean;
 
-  /** If set, tree node is selected on click @default false */
+  /** If set, tree node is selected on click @default false @category behavior */
   selectOnClick?: boolean;
 
-  /** Use-tree hook instance that can be used to manipulate component state */
+  /** Use-tree hook instance that can be used to manipulate component state @category state */
   tree?: TreeController;
 
-  /** A function to render tree node label */
+  /** A function to render tree node label @category appearance */
   renderNode?: RenderNode;
 
-  /** If set, selection is cleared when user clicks outside of the tree @default false */
+  /** If set, selection is cleared when user clicks outside of the tree @default false @category behavior */
   clearSelectionOnOutsideClick?: boolean;
 
-  /** If set, tree nodes range can be selected with click when `Shift` key is pressed @default true */
+  /** If set, tree nodes range can be selected with click when `Shift` key is pressed @default true @category behavior */
   allowRangeSelection?: boolean;
 
   /** If set, subtree content is kept mounted when collapsed. React 19 `Activity` is used to preserve state. @default false */
   keepMounted?: boolean;
 
-  /** Called when a node is dropped on another node, enables drag-and-drop when provided */
+  /** Called when a node is dropped on another node, enables drag-and-drop when provided @category behavior */
   onDragDrop?: (payload: TreeDragDropPayload) => void;
 
   /** Called for each potential drop target to determine whether a drop is allowed.
-   * When it returns `false`, the drop indicator is hidden and the drop is rejected. */
+   * When it returns `false`, the drop indicator is hidden and the drop is rejected. @category behavior */
   allowDrop?: TreeAllowDrop;
 
   /** If set, drag-and-drop must be initiated from an element that spreads `dragHandleProps`
-   * from the `renderNode` payload, rather than anywhere on the node. @default false */
+   * from the `renderNode` payload, rather than anywhere on the node. @default false @category behavior */
   withDragHandle?: boolean;
 
-  /** If set, connecting lines are rendered showing parent-child relationships @default false */
+  /** If set, connecting lines are rendered showing parent-child relationships @default false @category appearance */
   withLines?: boolean;
 }
 

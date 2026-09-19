@@ -57,91 +57,91 @@ export type JsonViewerHighlightType = 'added' | 'removed';
 
 export interface JsonViewerProps
   extends BoxProps, StylesApiProps<JsonViewerFactory>, ElementProps<'div'> {
-  /** JSON data to display */
+  /** JSON data to display @category state */
   value: any;
 
-  /** Label displayed for the root node @default false */
+  /** Label displayed for the root node @default false @category appearance */
   rootName?: string | false;
 
-  /** Number of levels to expand by default. Applied only to the `value` present on mount; pass a `key` or use controlled `expandedPaths` to re-apply it after `value` changes. @default 1 */
+  /** Number of levels to expand by default. Applied only to the `value` present on mount; pass a `key` or use controlled `expandedPaths` to re-apply it after `value` changes. @default 1 @category state */
   defaultExpandDepth?: number;
 
-  /** Controlled expanded paths */
+  /** Controlled expanded paths @category state */
   expandedPaths?: string[];
 
-  /** Called when expanded paths change */
+  /** Called when expanded paths change @category state */
   onExpandedPathsChange?: (paths: string[]) => void;
 
-  /** Max number of items to show before truncation @default 100 */
+  /** Max number of items to show before truncation @default 100 @category appearance */
   maxDisplayLength?: number;
 
-  /** Whether to show type badges next to values @default false */
+  /** Whether to show type badges next to values @default false @category appearance */
   withTypes?: boolean;
 
-  /** Whether to show item count for objects/arrays @default false */
+  /** Whether to show item count for objects/arrays @default false @category appearance */
   withSize?: boolean;
 
-  /** Whether to show copy button on hover for individual nodes @default false */
+  /** Whether to show copy button on hover for individual nodes @default false @category appearance */
   withCopy?: boolean;
 
-  /** Whether to show a copy button to copy the entire JSON @default false */
+  /** Whether to show a copy button to copy the entire JSON @default false @category appearance */
   withCopyButton?: boolean;
 
-  /** Whether to show quotes around string values @default true */
+  /** Whether to show quotes around string values @default true @category appearance */
   withQuotes?: boolean;
 
-  /** Whether to show quotes around keys @default false */
+  /** Whether to show quotes around keys @default false @category appearance */
   withKeyQuotes?: boolean;
 
-  /** Collapse strings longer than this value @default false */
+  /** Collapse strings longer than this value @default false @category appearance */
   collapseStringsAfterLength?: number | false;
 
-  /** Sort object keys @default false */
+  /** Sort object keys @default false @category appearance */
   sortKeys?: boolean | ((a: string, b: string) => number);
 
-  /** Group arrays into chunks when array length exceeds this value @default false */
+  /** Group arrays into chunks when array length exceeds this value @default false @category appearance */
   groupArraysAfterLength?: number | false;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default 'sm' */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default 'sm' @category appearance */
   radius?: MantineRadius;
 
-  /** Font size @default '13px' */
+  /** Font size @default '13px' @category appearance */
   fontSize?: MantineSize | (string & {}) | number;
 
-  /** Indent width in px @default 16 */
+  /** Indent width in px @default 16 @category appearance */
   indentWidth?: number;
 
-  /** Adds border to the root element @default false */
+  /** Adds border to the root element @default false @category appearance */
   withBorder?: boolean;
 
-  /** Label for copy button @default 'Copy' */
+  /** Label for copy button @default 'Copy' @category appearance */
   copyLabel?: string;
 
-  /** Label for copied state @default 'Copied' */
+  /** Label for copied state @default 'Copied' @category appearance */
   copiedLabel?: string;
 
-  /** Called when a value is selected/clicked */
+  /** Called when a value is selected/clicked @category behavior */
   onValueSelect?: (path: string[], value: any) => void;
 
-  /** Label for expand all button @default 'Expand all' */
+  /** Label for expand all button @default 'Expand all' @category appearance */
   expandAllLabel?: string;
 
-  /** Label for collapse all button @default 'Collapse all' */
+  /** Label for collapse all button @default 'Collapse all' @category appearance */
   collapseAllLabel?: string;
 
-  /** Whether to show expand all / collapse all controls @default false */
+  /** Whether to show expand all / collapse all controls @default false @category appearance */
   withControls?: boolean;
 
-  /** Map of JSON paths to highlight type ('added' or 'removed'), use serializeJsonViewerPath to build keys */
+  /** Map of JSON paths to highlight type ('added' or 'removed'), use serializeJsonViewerPath to build keys @category appearance */
   highlightItems?: Record<string, JsonViewerHighlightType>;
 
-  /** When true, all nodes are expanded and expand/collapse is disabled @default false */
+  /** When true, all nodes are expanded and expand/collapse is disabled @default false @category state */
   allExpanded?: boolean;
 
-  /** Whether to show line numbers @default false */
+  /** Whether to show line numbers @default false @category appearance */
   withLineNumbers?: boolean;
 
-  /** Whether to show expand/collapse chevrons @default false */
+  /** Whether to show expand/collapse chevrons @default false @category appearance */
   withChevrons?: boolean;
 }
 

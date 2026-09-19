@@ -52,46 +52,46 @@ export type AppShellCssVariables = {
 
 export interface AppShellProps
   extends BoxProps, StylesApiProps<AppShellFactory>, ElementProps<'div'> {
-  /** If set, the associated components have a border @default true */
+  /** If set, the associated components have a border @default true @category appearance */
   withBorder?: boolean;
 
-  /** Padding of the main section. Important: use `padding` prop instead of `p`. @default 0 */
+  /** Padding of the main section. Important: use `padding` prop instead of `p`. @default 0 @category appearance */
   padding?: MantineSpacing | AppShellResponsiveSize;
 
-  /** `Navbar` configuration, controls width, breakpoints and collapsed state. Required if you use `Navbar` component. */
+  /** `Navbar` configuration, controls width, breakpoints and collapsed state. Required if you use `Navbar` component. @category appearance */
   navbar?: AppShellNavbarConfiguration;
 
-  /** `Aside` configuration, controls width, breakpoints and collapsed state. Required if you use `Aside` component. */
+  /** `Aside` configuration, controls width, breakpoints and collapsed state. Required if you use `Aside` component. @category appearance */
   aside?: AppShellAsideConfiguration;
 
-  /** `Header` configuration, controls height, offset and collapsed state. Required if you use `Header` component. */
+  /** `Header` configuration, controls height, offset and collapsed state. Required if you use `Header` component. @category appearance */
   header?: AppShellHeaderConfiguration;
 
-  /** `Footer` configuration, controls height, offset and collapsed state. Required if you use `Footer` component. */
+  /** `Footer` configuration, controls height, offset and collapsed state. Required if you use `Footer` component. @category appearance */
   footer?: AppShellFooterConfiguration;
 
-  /** Duration of all transitions in ms @default 200 */
+  /** Duration of all transitions in ms @default 200 @category appearance */
   transitionDuration?: number;
 
-  /** Timing function of all transitions @default ease */
+  /** Timing function of all transitions @default ease @category appearance */
   transitionTimingFunction?: React.CSSProperties['transitionTimingFunction'];
 
   /** `z-index` of all associated elements @default 100 */
   zIndex?: string | number;
 
-  /** Determines how `Navbar`/`Aside` are arranged relative to `Header`/`Footer` */
+  /** Determines how `Navbar`/`Aside` are arranged relative to `Header`/`Footer` @category appearance */
   layout?: 'default' | 'alt';
 
-  /** If set, `Navbar`, `Aside`, `Header` and `Footer` components are hidden */
+  /** If set, `Navbar`, `Aside`, `Header` and `Footer` components are hidden @category appearance */
   disabled?: boolean;
 
-  /** If set, `Header` and `Footer` components include styles to offset scrollbars. Based on `react-remove-scroll`. @default true */
+  /** If set, `Header` and `Footer` components include styles to offset scrollbars. Based on `react-remove-scroll`. @default true @category appearance */
   offsetScrollbars?: boolean;
 
-  /** Determines positioning mode of all sections @default 'fixed' */
+  /** Determines positioning mode of all sections @default 'fixed' @category appearance */
   mode?: 'fixed' | 'static';
 
-  /** `useAppShellResize` hook instance, enables resizing of the sections configured in the hook */
+  /** `useAppShellResize` hook instance, enables resizing of the sections configured in the hook @category behavior */
   resize?: AppShellResizeController;
 }
 

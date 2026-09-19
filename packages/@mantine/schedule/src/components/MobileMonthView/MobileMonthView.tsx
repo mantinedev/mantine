@@ -87,37 +87,37 @@ export interface MobileMonthViewProps
   extends BoxProps, StylesApiProps<MobileMonthViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format */
+  /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format @category state */
   date: Date | string;
 
-  /** Called with the new date value when a date is selected */
+  /** Called with the new date value when a date is selected @category state */
   onDateChange?: (value: DateStringValue) => void;
 
-  /** Currently selected date (controlled) */
+  /** Currently selected date (controlled) @category state */
   selectedDate?: Date | string | null;
 
-  /** Default selected date (uncontrolled) */
+  /** Default selected date (uncontrolled) @category state */
   defaultSelectedDate?: Date | string | null;
 
-  /** Called when selected date changes */
+  /** Called when selected date changes @category state */
   onSelectedDateChange?: (value: DateStringValue | null) => void;
 
-  /** If set, week numbers are displayed in the first column @default false */
+  /** If set, week numbers are displayed in the first column @default false @category appearance */
   withWeekNumbers?: boolean;
 
-  /** If set, weekdays names are displayed in the first row @default true */
+  /** If set, weekdays names are displayed in the first row @default true @category appearance */
   withWeekDays?: boolean;
 
-  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` @category appearance */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday @category appearance */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names. By default, the first letter of the weekday. */
+  /** `dayjs` format for weekdays names. By default, the first letter of the weekday. @category appearance */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. @category appearance */
   weekendDays?: DayOfWeek[];
 
   /** Props passed down to the week number button */
@@ -126,46 +126,46 @@ export interface MobileMonthViewProps
   /** Props passed down to the day button */
   getDayProps?: (date: DateStringValue) => Record<string, any>;
 
-  /** Called when day is clicked */
+  /** Called when day is clicked @category behavior */
   onDayClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** Called with first day of the week when week number is clicked */
+  /** Called with first day of the week when week number is clicked @category behavior */
   onWeekNumberClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** If set, always renders 6 weeks in the month view @default true */
+  /** If set, always renders 6 weeks in the month view @default true @category appearance */
   consistentWeeks?: boolean;
 
-  /** If set, highlights the current day @default true */
+  /** If set, highlights the current day @default true @category appearance */
   highlightToday?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** If set, days from the previous and next months are displayed to fill the weeks @default false */
+  /** If set, days from the previous and next months are displayed to fill the weeks @default false @category appearance */
   withOutsideDays?: boolean;
 
-  /** Events to display */
+  /** Events to display @category appearance */
   events?: ScheduleEventData[];
 
-  /** Labels override for i18n */
+  /** Labels override for i18n @category appearance */
   labels?: ScheduleLabelsOverride;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default 'default' */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default 'default' @category behavior */
   mode?: ScheduleMode;
 
-  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children @category appearance */
   renderEvent?: RenderEvent;
 
-  /** Format for the events list header date @default 'dddd, MMMM D' */
+  /** Format for the events list header date @default 'dddd, MMMM D' @category appearance */
   eventsHeaderFormat?: DateLabelFormat;
 
-  /** Called when the year back button in the header is clicked */
+  /** Called when the year back button in the header is clicked @category behavior */
   onYearClick?: () => void;
 
-  /** Called when event is clicked */
+  /** Called when event is clicked @category behavior */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** Custom header renderer, receives object with mode, date, and default header element */
+  /** Custom header renderer, receives object with mode, date, and default header element @category appearance */
   renderHeader?: (input: MobileMonthViewRenderHeaderInput) => React.ReactNode;
 
   /** Max number of generated recurring instances per recurring series @default 2000 */

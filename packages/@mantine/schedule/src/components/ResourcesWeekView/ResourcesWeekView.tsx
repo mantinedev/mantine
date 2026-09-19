@@ -118,58 +118,83 @@ export type ResourcesWeekViewCssVariables = {
 export interface ResourcesWeekViewProps
   extends BoxProps, StylesApiProps<ResourcesWeekViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
+  /** @category state */
   date: Date | string;
+  /** @category state */
   onDateChange?: (value: DateStringValue) => void;
+  /** @category appearance */
   resources: ScheduleResourceData[];
+  /** @category appearance */
   startTime?: string;
+  /** @category appearance */
   endTime?: string;
-  /** Number of minutes for each interval in the week view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
+  /** Number of minutes for each interval in the week view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 @category appearance */
   intervalMinutes?: number;
-  /** Minimum on-screen size of an event along the time axis, in px. Prevents very short events from collapsing. Larger values make brief events easier to see but extend them past their real start time. @default 1 */
+  /** Minimum on-screen size of an event along the time axis, in px. Prevents very short events from collapsing. Larger values make brief events easier to see but extend them past their real start time. @default 1 @category appearance */
   minEventSize?: number;
+  /** @category appearance */
   slotLabelFormat?: DateLabelFormat;
+  /** @category appearance */
   radius?: MantineRadius;
-  /** Date and time to scroll to on initial render, in `YYYY-MM-DD HH:mm:ss` format */
+  /** Date and time to scroll to on initial render, in `YYYY-MM-DD HH:mm:ss` format @category appearance */
   startScrollDateTime?: string;
   scrollAreaProps?: Partial<ScrollAreaProps> & DataAttributes;
+  /** @category appearance */
   locale?: string;
+  /** @category appearance */
   withCurrentTimeIndicator?: boolean;
+  /** @category appearance */
   withCurrentTimeBubble?: boolean;
 
-  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() */
+  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() @category appearance */
   getCurrentTime?: () => AnyDateValue;
 
+  /** @category appearance */
   withHeader?: boolean;
+  /** @category state */
   onViewChange?: (view: ScheduleViewLevel) => void;
   previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
   nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
   todayControlProps?: React.ComponentProps<'button'> & DataAttributes;
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
+  /** @category appearance */
   weekLabelFormat?: DateLabelFormat;
+  /** @category appearance */
   renderWeekLabel?: (params: {
     weekStart: DateStringValue;
     weekEnd: DateStringValue;
   }) => React.ReactNode;
+  /** @category appearance */
   events?: ScheduleEventData[];
+  /** @category appearance */
   slotWidth?: React.CSSProperties['width'];
+  /** @category appearance */
   rowHeight?: React.CSSProperties['height'];
+  /** @category appearance */
   labels?: ScheduleLabelsOverride;
+  /** @category appearance */
   highlightBusinessHours?: boolean;
+  /** @category appearance */
   businessHours?: [string, string];
+  /** @category appearance */
   renderEventBody?: RenderEventBody;
+  /** @category appearance */
   renderEvent?: RenderEvent;
+  /** @category appearance */
   renderResourceLabel?: (resource: ScheduleResourceData) => React.ReactNode;
 
-  /** List of resource groups to display as a column to the left of resource labels */
+  /** List of resource groups to display as a column to the left of resource labels @category appearance */
   groups?: ScheduleResourceGroup[];
 
-  /** Function to customize group label rendering */
+  /** Function to customize group label rendering @category appearance */
   renderGroupLabel?: (group: ScheduleResourceGroup) => React.ReactNode;
 
-  /** Width of the group label column @default 80px */
+  /** Width of the group label column @default 80px @category appearance */
   groupLabelWidth?: React.CSSProperties['width'];
 
+  /** @category behavior */
   withEventsDragAndDrop?: boolean;
+  /** @category behavior */
   onEventDrop?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -177,37 +202,46 @@ export interface ResourcesWeekViewProps
     event: ScheduleEventData;
     resourceId?: string | number;
   }) => void;
+  /** @category behavior */
   canDragEvent?: (event: ScheduleEventData) => boolean;
-  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes @category behavior */
   eventDragInterval?: number;
+  /** @category behavior */
   onEventDragStart?: (event: ScheduleEventData) => void;
+  /** @category behavior */
   onEventDragEnd?: () => void;
+  /** @category behavior */
   onTimeSlotClick?: (data: {
     slotStart: DateTimeStringValue;
     slotEnd: DateTimeStringValue;
     nativeEvent: React.MouseEvent<HTMLButtonElement>;
     resourceId?: string | number;
   }) => void;
+  /** @category behavior */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false @category behavior */
   withInteractiveBackgroundEvents?: boolean;
+  /** @category behavior */
   withDragSlotSelect?: boolean;
+  /** @category behavior */
   onSlotDragEnd?: (data: {
     rangeStart: DateTimeStringValue;
     rangeEnd: DateTimeStringValue;
     resourceId?: string | number;
   }) => void;
+  /** @category behavior */
   mode?: ScheduleMode;
+  /** @category behavior */
   onExternalEventDrop?: (data: {
     dataTransfer: DataTransfer;
     dropDateTime: DateTimeStringValue;
     resourceId?: string | number;
   }) => void;
 
-  /** If true, events can be resized by dragging their left/right edges @default false */
+  /** If true, events can be resized by dragging their left/right edges @default false @category behavior */
   withEventResize?: boolean;
 
-  /** Called when event is resized */
+  /** Called when event is resized @category behavior */
   onEventResize?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -215,39 +249,44 @@ export interface ResourcesWeekViewProps
     event: ScheduleEventData;
   }) => void;
 
-  /** Function to determine if event can be resized */
+  /** Function to determine if event can be resized @category behavior */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. */
+  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. @category behavior */
   canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
 
-  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. */
+  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. @category behavior */
   canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
 
-  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. */
+  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. @category behavior */
   canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
 
-  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false */
+  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false @category behavior */
   preventEventOverlap?: PreventEventOverlap;
 
-  /** Called when a drop or resize is rejected */
+  /** Called when a drop or resize is rejected @category behavior */
   onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
 
-  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes @category behavior */
   eventResizeInterval?: number;
 
   recurrenceExpansionLimit?: number;
 
-  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 @default 2 */
+  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 @default 2 @category appearance */
   maxEventsPerTimeSlot?: number;
 
   /** Props passed down to `MoreEvents` component */
   moreEventsProps?: Partial<MoreEventsProps>;
 
+  /** @category appearance */
   firstDayOfWeek?: DayOfWeek;
+  /** @category appearance */
   weekendDays?: DayOfWeek[];
+  /** @category appearance */
   withWeekendDays?: boolean;
+  /** @category appearance */
   weekdayFormat?: DateLabelFormat;
+  /** @category appearance */
   highlightToday?: boolean;
 }
 

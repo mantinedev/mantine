@@ -38,58 +38,58 @@ export interface PaginationRootProps
     BoxProps,
     StylesApiProps<PaginationRootFactory>,
     ElementProps<'div', 'value' | 'onChange'> {
-  /** `height` and `min-width` of controls @default 'md' */
+  /** `height` and `min-width` of controls @default 'md' @category appearance */
   size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
 
-  /** Total number of pages, must be an integer */
+  /** Total number of pages, must be an integer @category state */
   total: number;
 
-  /** Active page for controlled component, must be an integer in [1, total] interval */
+  /** Active page for controlled component, must be an integer in [1, total] interval @category state */
   value?: number;
 
-  /** Active page for uncontrolled component, must be an integer in [1, total] interval */
+  /** Active page for uncontrolled component, must be an integer in [1, total] interval @category state */
   defaultValue?: number;
 
-  /** Called when page changes */
+  /** Called when page changes @category state */
   onChange?: (value: number) => void;
 
-  /** Disables all controls, applies disabled styles */
+  /** Disables all controls, applies disabled styles @category behavior */
   disabled?: boolean;
 
-  /** Number of siblings displayed on the left/right side of the selected page @default 1 */
+  /** Number of siblings displayed on the left/right side of the selected page @default 1 @category appearance */
   siblings?: number;
 
-  /** Number of elements visible on the left/right edges @default 1 */
+  /** Number of elements visible on the left/right edges @default 1 @category appearance */
   boundaries?: number;
 
-  /** Key of `theme.colors`, active item color @default theme.primaryColor */
+  /** Key of `theme.colors`, active item color @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Called when next page control is clicked */
+  /** Called when next page control is clicked @category behavior */
   onNextPage?: () => void;
 
-  /** Called when previous page control is clicked */
+  /** Called when previous page control is clicked @category behavior */
   onPreviousPage?: () => void;
 
-  /** Called when first page control is clicked */
+  /** Called when first page control is clicked @category behavior */
   onFirstPage?: () => void;
 
-  /** Called when last page control is clicked */
+  /** Called when last page control is clicked @category behavior */
   onLastPage?: () => void;
 
   /** Additional props passed down to controls */
   getItemProps?: (page: number) => Record<string, any>;
 
-  /** If set, adjusts text color based on the active page background color to ensure sufficient contrast */
+  /** If set, adjusts text color based on the active page background color to ensure sufficient contrast @category appearance */
   autoContrast?: boolean;
 
-  /** Starting page number, defaults to 1 */
+  /** Starting page number, defaults to 1 @category state */
   startValue?: number;
 
-  /** Determines how the pagination is displayed, `'responsive'` uses CSS container queries to switch between pages and a compact label @default 'default' */
+  /** Determines how the pagination is displayed, `'responsive'` uses CSS container queries to switch between pages and a compact label @default 'default' @category appearance */
   layout?: 'default' | 'responsive';
 }
 

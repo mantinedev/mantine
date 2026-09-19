@@ -23,19 +23,20 @@ export interface HoverCardEvents {
 }
 
 export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'> {
-  /** Initial opened state */
+  /** Initial opened state @category state */
   initiallyOpened?: boolean;
 
-  /** Called when the dropdown is opened */
+  /** Called when the dropdown is opened @category behavior */
   onOpen?: () => void;
 
-  /** Called when the dropdown is closed */
+  /** Called when the dropdown is closed @category behavior */
   onClose?: () => void;
 
   /**
    * Delay in ms before the dropdown opens after mouse enters the target.
    * Overridden by HoverCard.Group delay if used within a group.
    * @default 0
+   * @category behavior
    */
   openDelay?: number;
 
@@ -43,12 +44,14 @@ export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'
    * Delay in ms before the dropdown closes after mouse leaves the target or dropdown.
    * Overridden by HoverCard.Group delay if used within a group.
    * @default 150
+   * @category behavior
    */
   closeDelay?: number;
 
   /**
    * Determines which events open the dropdown. Fields that are not specified keep their default values.
    * @default { hover: true, focus: true, touch: false }
+   * @category behavior
    */
   events?: HoverCardEvents;
 
@@ -56,6 +59,7 @@ export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'
    * If set, the dropdown stays open while the pointer travels from the target to the dropdown
    * and remains over it. Set it if the dropdown contains interactive content.
    * @default false
+   * @category behavior
    */
   interactive?: boolean;
 
@@ -64,13 +68,14 @@ export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'
    * `aria-expanded` and `aria-controls` on the target, `tooltip` sets `aria-describedby` instead
    * and should be used if the dropdown contains only descriptive content.
    * @default 'dialog'
+   * @category accessibility
    */
   role?: 'dialog' | 'tooltip';
 
-  /** Determines whether the dropdown should be closed when the user presses outside of the target and the dropdown @default true */
+  /** Determines whether the dropdown should be closed when the user presses outside of the target and the dropdown @default true @category behavior */
   closeOnClickOutside?: boolean;
 
-  /** Not supported by `HoverCard`: outside press is always detected with the `pointerdown` event. Use `closeOnClickOutside` to disable it. */
+  /** Not supported by `HoverCard`: outside press is always detected with the `pointerdown` event. Use `closeOnClickOutside` to disable it. @category behavior */
   clickOutsideEvents?: string[];
 
   /**
@@ -79,10 +84,11 @@ export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'
    * focus away from the target would return it and reopen the dropdown.
    * `Escape` pressed inside the dropdown always returns focus to the target.
    * @default false
+   * @category behavior
    */
   returnFocus?: boolean;
 
-  /** Called when the dropdown is closed with `Escape` key or with a press outside of the target and the dropdown */
+  /** Called when the dropdown is closed with `Escape` key or with a press outside of the target and the dropdown @category behavior */
   onDismiss?: () => void;
 }
 

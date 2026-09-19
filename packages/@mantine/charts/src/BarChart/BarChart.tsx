@@ -65,25 +65,25 @@ export type BarChartCssVariables = {
 
 export interface BarChartProps
   extends BoxProps, GridChartBaseProps, StylesApiProps<BarChartFactory>, ElementProps<'div'> {
-  /** Data used to display chart. */
+  /** Data used to display chart. @category appearance */
   data: Record<string, any>[];
 
-  /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
+  /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. @category appearance */
   series: BarChartSeries[];
 
-  /** Controls how bars are positioned relative to each other @default 'default' */
+  /** Controls how bars are positioned relative to each other @default 'default' @category appearance */
   type?: BarChartType;
 
-  /** Controls fill opacity of all bars @default 1 */
+  /** Controls fill opacity of all bars @default 1 @category appearance */
   fillOpacity?: number;
 
-  /** Fill of hovered bar section, by default value is based on color scheme */
+  /** Fill of hovered bar section, by default value is based on color scheme @category appearance */
   cursorFill?: MantineColor;
 
   /** Props passed down to recharts `BarChart` component */
   barChartProps?: React.ComponentProps<typeof ReChartsBarChart>;
 
-  /** Additional components that are rendered inside recharts `BarChart` component */
+  /** Additional components that are rendered inside recharts `BarChart` component @category appearance */
   children?: React.ReactNode;
 
   /** Props passed down to recharts `Bar` component */
@@ -91,7 +91,7 @@ export interface BarChartProps
     | ((series: BarChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
 
-  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` @default false */
+  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` @default false @category appearance */
   withBarValueLabel?: boolean;
 
   /** Props passed down to recharts `LabelList` component */
@@ -99,16 +99,16 @@ export interface BarChartProps
     | ((series: BarChartSeries) => Partial<Omit<LabelListProps, 'ref'>>)
     | Partial<LabelListProps>;
 
-  /** Sets minimum height of the bar in px @default 0 */
+  /** Sets minimum height of the bar in px @default 0 @category appearance */
   minBarSize?: number;
 
-  /** Maximum bar width in px */
+  /** Maximum bar width in px @category appearance */
   maxBarWidth?: number;
 
-  /** Controls color of the bar label, by default the value is determined by the chart orientation */
+  /** Controls color of the bar label, by default the value is determined by the chart orientation @category appearance */
   barLabelColor?: MantineColor;
 
-  /** A function to assign dynamic bar color based on its value */
+  /** A function to assign dynamic bar color based on its value @category appearance */
   getBarColor?: (value: number, series: BarChartSeries) => MantineColor;
 }
 

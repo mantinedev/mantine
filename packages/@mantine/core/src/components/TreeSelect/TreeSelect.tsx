@@ -83,94 +83,94 @@ export interface TreeSelectProps<Mode extends TreeSelectMode = 'single'>
     __BaseInputProps,
     StylesApiProps<TreeSelectFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** Tree data */
+  /** Tree data @category appearance */
   data: TreeNodeData[];
 
-  /** Selection mode: 'single', 'multiple', or 'checkbox' (with cascade) @default 'single' */
+  /** Selection mode: 'single', 'multiple', or 'checkbox' (with cascade) @default 'single' @category state */
   mode?: Mode;
 
-  /** Controlled value */
+  /** Controlled value @category state */
   value?: TreeSelectValue<Mode>;
 
-  /** Default value */
+  /** Default value @category state */
   defaultValue?: TreeSelectValue<Mode>;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: TreeSelectValue<Mode>) => void;
 
-  /** Disables parent-child cascade in checkbox mode @default false */
+  /** Disables parent-child cascade in checkbox mode @default false @category behavior */
   checkStrictly?: boolean;
 
-  /** Controls which checked nodes appear in value/pills in checkbox mode @default 'child' */
+  /** Controls which checked nodes appear in value/pills in checkbox mode @default 'child' @category state */
   checkedStrategy?: CheckedStrategy;
 
-  /** Default expanded node values */
+  /** Default expanded node values @category state */
   defaultExpandedValues?: string[];
 
-  /** Expand all nodes by default @default false */
+  /** Expand all nodes by default @default false @category state */
   defaultExpandAll?: boolean;
 
-  /** Controlled expanded state */
+  /** Controlled expanded state @category state */
   expandedValues?: string[];
 
-  /** Called when expanded state changes */
+  /** Called when expanded state changes @category state */
   onExpandedChange?: (values: string[]) => void;
 
-  /** Also toggle expand when clicking a parent node (not just the chevron). In `single` and `multiple` modes, parent clicks only expand; only leaves can be selected. In `checkbox` mode, parent clicks both check and expand. @default false */
+  /** Also toggle expand when clicking a parent node (not just the chevron). In `single` and `multiple` modes, parent clicks only expand; only leaves can be selected. In `checkbox` mode, parent clicks both check and expand. @default false @category behavior */
   expandOnClick?: boolean;
 
-  /** Enables search filtering @default false */
+  /** Enables search filtering @default false @category behavior */
   searchable?: boolean;
 
-  /** Controlled search value */
+  /** Controlled search value @category state */
   searchValue?: string;
 
-  /** Default search value */
+  /** Default search value @category state */
   defaultSearchValue?: string;
 
-  /** Called when search changes */
+  /** Called when search changes @category state */
   onSearchChange?: (value: string) => void;
 
-  /** Custom filter function */
+  /** Custom filter function @category behavior */
   filter?: (query: string, node: TreeNodeData) => boolean;
 
-  /** Message when no nodes match search */
+  /** Message when no nodes match search @category appearance */
   nothingFoundMessage?: React.ReactNode;
 
-  /** Allows deselecting in single mode @default true */
+  /** Allows deselecting in single mode @default true @category behavior */
   allowDeselect?: boolean;
 
-  /** Shows clear button @default false */
+  /** Shows clear button @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  /** Determines how the clear button and rightSection are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
   /** Props for the clear button */
   clearButtonProps?: InputClearButtonProps;
 
-  /** Maximum selectable values (multiple/checkbox mode) */
+  /** Maximum selectable values (multiple/checkbox mode) @category behavior */
   maxValues?: number;
 
-  /** Maximum displayed pills before "+N more" */
+  /** Maximum displayed pills before "+N more" @category appearance */
   maxDisplayedValues?: number;
 
-  /** Content shown when values overflow maxDisplayedValues */
+  /** Content shown when values overflow maxDisplayedValues @category appearance */
   maxDisplayedValuesContent?: React.ReactNode | ((overflow: number) => React.ReactNode);
 
-  /** Called with removed value in multiple/checkbox mode */
+  /** Called with removed value in multiple/checkbox mode @category behavior */
   onRemove?: (value: string) => void;
 
-  /** Called when clear button is clicked */
+  /** Called when clear button is clicked @category behavior */
   onClear?: () => void;
 
-  /** Custom node rendering in the dropdown */
+  /** Custom node rendering in the dropdown @category appearance */
   renderNode?: (payload: TreeSelectRenderNodePayload) => React.ReactNode;
 
-  /** Custom pill rendering in `multiple` and `checkbox` modes. Not called for the overflow pill displayed when `maxDisplayedValues` is exceeded. */
+  /** Custom pill rendering in `multiple` and `checkbox` modes. Not called for the overflow pill displayed when `maxDisplayedValues` is exceeded. @category appearance */
   renderPill?: (payload: TreeSelectRenderPillPayload) => React.ReactNode;
 
-  /** Show tree connection lines between parent and child nodes @default true */
+  /** Show tree connection lines between parent and child nodes @default true @category appearance */
   withLines?: boolean;
 
   /** Props for the hidden input */
@@ -182,34 +182,34 @@ export interface TreeSelectProps<Mode extends TreeSelectMode = 'single'>
   /** Props for the ScrollArea in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** Controls the default chevron color */
+  /** Controls the default chevron color @category appearance */
   chevronColor?: MantineColor;
 
-  /** Max dropdown height @default 220 */
+  /** Max dropdown height @default 220 @category appearance */
   maxDropdownHeight?: number | string;
 
-  /** Controlled dropdown state */
+  /** Controlled dropdown state @category state */
   dropdownOpened?: boolean;
 
-  /** Default dropdown state */
+  /** Default dropdown state @category state */
   defaultDropdownOpened?: boolean;
 
-  /** Called when dropdown opens */
+  /** Called when dropdown opens @category state */
   onDropdownOpen?: () => void;
 
-  /** Called when dropdown closes */
+  /** Called when dropdown closes @category state */
   onDropdownClose?: () => void;
 
   /** Props passed to the underlying Combobox */
   comboboxProps?: Record<string, any>;
 
-  /** Clear search on selection change @default true */
+  /** Clear search on selection change @default true @category behavior */
   clearSearchOnChange?: boolean;
 
-  /** Opens dropdown on focus (searchable mode) @default true */
+  /** Opens dropdown on focus (searchable mode) @default true @category behavior */
   openOnFocus?: boolean;
 
-  /** aria-label values for the expand/collapse chevron button */
+  /** aria-label values for the expand/collapse chevron button @category accessibility */
   chevronAriaLabels?: TreeSelectChevronAriaLabels;
 }
 

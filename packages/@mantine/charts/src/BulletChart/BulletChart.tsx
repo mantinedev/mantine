@@ -45,46 +45,46 @@ export type BulletChartCssVariables = {
 
 export interface BulletChartProps
   extends BoxProps, StylesApiProps<BulletChartFactory>, ElementProps<'div'> {
-  /** Current actual value */
+  /** Current actual value @category state */
   value: number;
 
-  /** Target value, displayed as a marker line */
+  /** Target value, displayed as a marker line @category state */
   target?: number;
 
-  /** Qualitative ranges displayed as background bands */
+  /** Qualitative ranges displayed as background bands @category appearance */
   ranges: BulletChartRange[];
 
-  /** Orientation, @default 'horizontal' */
+  /** Orientation, @default 'horizontal' @category appearance */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Label displayed next to the chart */
+  /** Label displayed next to the chart @category appearance */
   label?: React.ReactNode;
 
-  /** Value formatter for tooltip/display and labels */
+  /** Value formatter for tooltip/display and labels @category appearance */
   valueFormatter?: (value: number) => string;
 
-  /** Color of the actual value bar, @default 'white' */
+  /** Color of the actual value bar, @default 'white' @category appearance */
   barColor?: MantineColor;
 
-  /** Color of the target marker, @default 'dark' for light, 'white' for dark */
+  /** Color of the target marker, @default 'dark' for light, 'white' for dark @category appearance */
   targetColor?: MantineColor;
 
-  /** Height of the chart track area (ranges), @default 32 */
+  /** Height of the chart track area (ranges), @default 32 @category appearance */
   size?: number | string;
 
-  /** Height of the actual value bar, @default 16 */
+  /** Height of the actual value bar, @default 16 @category appearance */
   barSize?: number | string;
 
-  /** Target marker size relative to chart size, @default 0.7 */
+  /** Target marker size relative to chart size, @default 0.7 @category appearance */
   targetRatio?: number;
 
-  /** Target marker thickness, @default 2 */
+  /** Target marker thickness, @default 2 @category appearance */
   targetSize?: number | string;
 
-  /** Whether to show tooltip on hover, @default false */
+  /** Whether to show tooltip on hover, @default false @category appearance */
   withTooltip?: boolean;
 
-  /** Custom tooltip content */
+  /** Custom tooltip content @category appearance */
   getTooltipLabel?: (data: { value: number; target?: number }) => React.ReactNode;
 }
 

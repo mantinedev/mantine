@@ -37,10 +37,10 @@ export interface AffixBaseProps {
   /** Props passed down to the `Portal` component. Ignored when `withinPortal` is `false`. */
   portalProps?: BasePortalProps;
 
-  /** Affix position on screen @default { bottom: 0, right: 0 } */
+  /** Affix position on screen @default { bottom: 0, right: 0 } @category appearance */
   position?: AffixPosition;
 
-  /** If set, `env(safe-area-inset-*)` values are added to the `position` offsets @default false */
+  /** If set, `env(safe-area-inset-*)` values are added to the `position` offsets @default false @category appearance */
   withSafeArea?: boolean;
 }
 

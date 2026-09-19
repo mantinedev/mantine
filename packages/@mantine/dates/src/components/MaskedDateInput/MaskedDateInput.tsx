@@ -56,64 +56,64 @@ export interface MaskedDateInputProps
     MonthLevelSettings,
     StylesApiProps<MaskedDateInputFactory>,
     ElementProps<'div', 'onChange' | 'defaultValue' | 'size'> {
-  /** Controlled component value. YYYY-MM-DD format when withTime=false, YYYY-MM-DD HH:mm:ss when withTime=true. */
+  /** Controlled component value. YYYY-MM-DD format when withTime=false, YYYY-MM-DD HH:mm:ss when withTime=true. @category state */
   value?: DateStringValue | DateTimeStringValue | null;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: DateStringValue | DateTimeStringValue | null;
 
-  /** Called when value changes. Value is null when fields are incomplete. Format depends on withTime prop. */
+  /** Called when value changes. Value is null when fields are incomplete. Format depends on withTime prop. @category state */
   onChange?: (value: DateStringValue | DateTimeStringValue | null) => void;
 
-  /** Order of date fields @default ['day', 'month', 'year'] */
+  /** Order of date fields @default ['day', 'month', 'year'] @category appearance */
   fieldsOrder?: ('day' | 'month' | 'year')[];
 
-  /** Separator displayed between date fields @default '/' */
+  /** Separator displayed between date fields @default '/' @category appearance */
   dateSeparator?: string;
 
-  /** Separator displayed between time fields @default ':' */
+  /** Separator displayed between time fields @default ':' @category appearance */
   timeSeparator?: string;
 
-  /** Determines whether time fields (hours, minutes) are displayed @default false */
+  /** Determines whether time fields (hours, minutes) are displayed @default false @category state */
   withTime?: boolean;
 
-  /** Determines whether seconds field is displayed (requires withTime) @default false */
+  /** Determines whether seconds field is displayed (requires withTime) @default false @category appearance */
   withSeconds?: boolean;
 
-  /** Time format, 24h or 12h @default '24h' */
+  /** Time format, 24h or 12h @default '24h' @category appearance */
   format?: '24h' | '12h';
 
-  /** Labels used for am/pm values @default { am: 'AM', pm: 'PM' } */
+  /** Labels used for am/pm values @default { am: 'AM', pm: 'PM' } @category appearance */
   amPmLabels?: { am: string; pm: string };
 
-  /** Number by which hours are incremented/decremented @default 1 */
+  /** Number by which hours are incremented/decremented @default 1 @category behavior */
   hoursStep?: number;
 
-  /** Number by which minutes are incremented/decremented @default 1 */
+  /** Number by which minutes are incremented/decremented @default 1 @category behavior */
   minutesStep?: number;
 
-  /** Number by which seconds are incremented/decremented @default 1 */
+  /** Number by which seconds are incremented/decremented @default 1 @category behavior */
   secondsStep?: number;
 
-  /** Determines whether the calendar dropdown is displayed when input is focused @default true */
+  /** Determines whether the calendar dropdown is displayed when input is focused @default true @category behavior */
   withDropdown?: boolean;
 
   /** Props passed down to Popover component */
   popoverProps?: PopoverProps;
 
-  /** Determines whether the clear button should be displayed @default false */
+  /** Determines whether the clear button should be displayed @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  /** Determines how the clear button and rightSection are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
-  /** If set, the value can be deselected by clicking the selected date in the calendar dropdown */
+  /** If set, the value can be deselected by clicking the selected date in the calendar dropdown @category behavior */
   allowDeselect?: boolean;
 
-  /** If set, the value cannot be updated */
+  /** If set, the value cannot be updated @category behavior */
   readOnly?: boolean;
 
-  /** If set, the component becomes disabled */
+  /** If set, the component becomes disabled @category behavior */
   disabled?: boolean;
 
   /** `name` prop passed down to the hidden input */
@@ -122,25 +122,25 @@ export interface MaskedDateInputProps
   /** `form` prop passed down to the hidden input */
   form?: string;
 
-  /** `aria-label` of day input */
+  /** `aria-label` of day input @category accessibility */
   dayInputLabel?: string;
 
-  /** `aria-label` of month input */
+  /** `aria-label` of month input @category accessibility */
   monthInputLabel?: string;
 
-  /** `aria-label` of year input */
+  /** `aria-label` of year input @category accessibility */
   yearInputLabel?: string;
 
-  /** `aria-label` of hours input */
+  /** `aria-label` of hours input @category accessibility */
   hoursInputLabel?: string;
 
-  /** `aria-label` of minutes input */
+  /** `aria-label` of minutes input @category accessibility */
   minutesInputLabel?: string;
 
-  /** `aria-label` of seconds input */
+  /** `aria-label` of seconds input @category accessibility */
   secondsInputLabel?: string;
 
-  /** `aria-label` of am/pm input */
+  /** `aria-label` of am/pm input @category accessibility */
   amPmInputLabel?: string;
 
   /** Props passed to day input */
@@ -170,22 +170,22 @@ export interface MaskedDateInputProps
   /** Props passed to hidden input */
   hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
-  /** Day input placeholder @default '--' */
+  /** Day input placeholder @default '--' @category appearance */
   dayPlaceholder?: string;
 
-  /** Month input placeholder @default '--' */
+  /** Month input placeholder @default '--' @category appearance */
   monthPlaceholder?: string;
 
-  /** Year input placeholder @default '----' */
+  /** Year input placeholder @default '----' @category appearance */
   yearPlaceholder?: string;
 
-  /** Hours input placeholder @default '--' */
+  /** Hours input placeholder @default '--' @category appearance */
   hoursPlaceholder?: string;
 
-  /** Minutes input placeholder @default '--' */
+  /** Minutes input placeholder @default '--' @category appearance */
   minutesPlaceholder?: string;
 
-  /** Seconds input placeholder @default '--' */
+  /** Seconds input placeholder @default '--' @category appearance */
   secondsPlaceholder?: string;
 
   /** Ref to day input element */
@@ -209,13 +209,13 @@ export interface MaskedDateInputProps
   /** Ref to am/pm select element */
   amPmRef?: React.Ref<HTMLSelectElement>;
 
-  /** Called once when one of the inputs is focused */
+  /** Called once when one of the inputs is focused @category behavior */
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 
-  /** Called once when focus leaves all inputs */
+  /** Called once when focus leaves all inputs @category behavior */
   onBlur?: (event: React.FocusEvent<HTMLDivElement>) => void;
 
-  /** A function to transform pasted values */
+  /** A function to transform pasted values @category behavior */
   pasteSplit?: (value: string) => {
     day: number | null;
     month: number | null;

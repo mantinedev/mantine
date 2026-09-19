@@ -54,31 +54,31 @@ export type RadarChartCssVariables = {
 
 export interface RadarChartProps
   extends BoxProps, StylesApiProps<RadarChartFactory>, ElementProps<'div'> {
-  /** Data used in the chart */
+  /** Data used in the chart @category appearance */
   data: Record<string, any>[];
 
-  /** Determines which data should be consumed from the `data` array. */
+  /** Determines which data should be consumed from the `data` array. @category appearance */
   series: RadarChartSeries[];
 
-  /** Key of the `data` object for axis values */
+  /** Key of the `data` object for axis values @category appearance */
   dataKey: string;
 
-  /** Controls color of the grid lines. By default, color depends on the color scheme. */
+  /** Controls color of the grid lines. By default, color depends on the color scheme. @category appearance */
   gridColor?: MantineColor;
 
-  /** Controls color of all text elements. By default, color depends on the color scheme. */
+  /** Controls color of all text elements. By default, color depends on the color scheme. @category appearance */
   textColor?: MantineColor;
 
-  /** Determines whether PolarGrid component should be displayed @default true. */
+  /** Determines whether PolarGrid component should be displayed @default true. @category appearance */
   withPolarGrid?: boolean;
 
-  /** Determines whether PolarAngleAxis component should be displayed @default true */
+  /** Determines whether PolarAngleAxis component should be displayed @default true @category appearance */
   withPolarAngleAxis?: boolean;
 
-  /** Determines whether PolarRadiusAxisProps component should be displayed @default false */
+  /** Determines whether PolarRadiusAxisProps component should be displayed @default false @category appearance */
   withPolarRadiusAxis?: boolean;
 
-  /** Determines whether Tooltip component should be displayed @default false */
+  /** Determines whether Tooltip component should be displayed @default false @category appearance */
   withTooltip?: boolean;
 
   /** Props passed down to recharts Radar component */
@@ -104,13 +104,13 @@ export interface RadarChartProps
   /** Props passed down to recharts Tooltip component */
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 
-  /** Tooltip position animation duration in ms @default 0 */
+  /** Tooltip position animation duration in ms @default 0 @category appearance */
   tooltipAnimationDuration?: number;
 
-  /** Determines whether the legend should be displayed @default false */
+  /** Determines whether the legend should be displayed @default false @category appearance */
   withLegend?: boolean;
 
-  /** Determines whether dots should be displayed @default false */
+  /** Determines whether dots should be displayed @default false @category appearance */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -119,10 +119,10 @@ export interface RadarChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: MantineChartDotProps;
 
-  /** Additional components that are rendered inside recharts `RadarChart` component */
+  /** Additional components that are rendered inside recharts `RadarChart` component @category appearance */
   children?: React.ReactNode;
 
-  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default @category accessibility */
   accessibilityLayer?: boolean;
 }
 

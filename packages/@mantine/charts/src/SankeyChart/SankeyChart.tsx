@@ -50,40 +50,40 @@ export type SankeyChartCssVariables = {
 
 export interface SankeyChartProps
   extends BoxProps, StylesApiProps<SankeyChartFactory>, ElementProps<'div'> {
-  /** Data used to render chart, must include `nodes` and `links` arrays */
+  /** Data used to render chart, must include `nodes` and `links` arrays @category appearance */
   data: SankeyChartData;
 
-  /** Controls chart height @default 300 */
+  /** Controls chart height @default 300 @category appearance */
   height?: number;
 
-  /** The width of each node @default 10 */
+  /** The width of each node @default 10 @category appearance */
   nodeWidth?: number;
 
-  /** The padding between nodes @default 10 */
+  /** The padding between nodes @default 10 @category appearance */
   nodePadding?: number;
 
-  /** The curvature of links between nodes @default 0.5 */
+  /** The curvature of links between nodes @default 0.5 @category appearance */
   linkCurvature?: number;
 
-  /** The number of relaxation iterations @default 32 */
+  /** The number of relaxation iterations @default 32 @category appearance */
   iterations?: number;
 
-  /** Default color for nodes, by default depends on color scheme */
+  /** Default color for nodes, by default depends on color scheme @category appearance */
   nodeColor?: MantineColor;
 
-  /** An array of colors used for nodes when no `color` is set on individual nodes */
+  /** An array of colors used for nodes when no `color` is set on individual nodes @category appearance */
   colors?: MantineColor[];
 
-  /** Default color for links, by default depends on color scheme */
+  /** Default color for links, by default depends on color scheme @category appearance */
   linkColor?: MantineColor;
 
-  /** Opacity of the link fill @default 0.4 */
+  /** Opacity of the link fill @default 0.4 @category appearance */
   linkOpacity?: number;
 
-  /** Determines whether the tooltip should be displayed when hovered @default true */
+  /** Determines whether the tooltip should be displayed when hovered @default true @category appearance */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms @default 0 */
+  /** Tooltip animation duration in ms @default 0 @category appearance */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -92,13 +92,13 @@ export interface SankeyChartProps
   /** Props passed down to recharts `Sankey` component */
   sankeyProps?: Partial<Omit<RechartsSankeyProps, 'ref' | 'data'>>;
 
-  /** Controls text color of labels @default dimmed */
+  /** Controls text color of labels @default dimmed @category appearance */
   textColor?: MantineColor;
 
-  /** A function to format values inside the tooltip and node labels */
+  /** A function to format values inside the tooltip and node labels @category appearance */
   valueFormatter?: (value: number) => string;
 
-  /** Additional elements rendered inside `Sankey` component */
+  /** Additional elements rendered inside `Sankey` component @category appearance */
   children?: React.ReactNode;
 }
 

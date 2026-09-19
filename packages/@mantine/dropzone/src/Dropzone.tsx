@@ -86,93 +86,93 @@ export type DropzoneCssVariables = {
 
 export interface DropzoneProps
   extends BoxProps, StylesApiProps<DropzoneFactory>, ElementProps<'div', 'onDrop'> {
-  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` @default theme.primaryColor @category appearance */
   acceptColor?: MantineColor;
 
-  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject` @default 'red' */
+  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject` @default 'red' @category appearance */
   rejectColor?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Determines whether files capturing should be disabled @default false */
+  /** Determines whether files capturing should be disabled @default false @category behavior */
   disabled?: boolean;
 
-  /** Called when any files are dropped to the dropzone */
+  /** Called when any files are dropped to the dropzone @category behavior */
   onDropAny?: (files: FileWithPath[], fileRejections: FileRejection[]) => void;
 
-  /** Called when valid files are dropped to the dropzone */
+  /** Called when valid files are dropped to the dropzone @category behavior */
   onDrop: (files: FileWithPath[]) => void;
 
-  /** Called when dropped files do not meet file restrictions */
+  /** Called when dropped files do not meet file restrictions @category behavior */
   onReject?: (fileRejections: FileRejection[]) => void;
 
-  /** Determines whether a loading overlay should be displayed over the dropzone @default false */
+  /** Determines whether a loading overlay should be displayed over the dropzone @default false @category behavior */
   loading?: boolean;
 
-  /** Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types. */
+  /** Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types. @category behavior */
   accept?: Accept | string[];
 
   /** A ref function which when called opens the file system file picker */
   openRef?: React.Ref<() => void | undefined>;
 
-  /** Determines whether multiple files can be dropped to the dropzone or selected from file system picker @default true */
+  /** Determines whether multiple files can be dropped to the dropzone or selected from file system picker @default true @category state */
   multiple?: boolean;
 
-  /** Maximum file size in bytes */
+  /** Maximum file size in bytes @category behavior */
   maxSize?: number;
 
   /** Name of the form control. Submitted with the form as part of a name/value pair. */
   name?: string;
 
-  /** Maximum number of files that can be picked at once, files over the limit are rejected */
+  /** Maximum number of files that can be picked at once, files over the limit are rejected @category behavior */
   maxFiles?: number;
 
-  /** Set to autofocus the root element */
+  /** Set to autofocus the root element @category behavior */
   autoFocus?: boolean;
 
-  /** If `false`, disables click to open the native file selection dialog */
+  /** If `false`, disables click to open the native file selection dialog @category behavior */
   activateOnClick?: boolean;
 
-  /** If `false`, disables drag 'n' drop */
+  /** If `false`, disables drag 'n' drop @category behavior */
   activateOnDrag?: boolean;
 
-  /** If `false`, disables Space/Enter to open the native file selection dialog. Note that it also stops tracking the focus state. */
+  /** If `false`, disables Space/Enter to open the native file selection dialog. Note that it also stops tracking the focus state. @category behavior */
   activateOnKeyboard?: boolean;
 
-  /** If `false`, stops drag event propagation to parents */
+  /** If `false`, stops drag event propagation to parents @category behavior */
   dragEventsBubbling?: boolean;
 
-  /** Called when the `dragenter` event occurs */
+  /** Called when the `dragenter` event occurs @category behavior */
   onDragEnter?: (event: React.DragEvent<HTMLElement>) => void;
 
-  /** Called when the `dragleave` event occurs */
+  /** Called when the `dragleave` event occurs @category behavior */
   onDragLeave?: (event: React.DragEvent<HTMLElement>) => void;
 
-  /** Called when the `dragover` event occurs */
+  /** Called when the `dragover` event occurs @category behavior */
   onDragOver?: (event: React.DragEvent<HTMLElement>) => void;
 
-  /** Called when user closes the file selection dialog with no selection */
+  /** Called when user closes the file selection dialog with no selection @category behavior */
   onFileDialogCancel?: () => void;
 
-  /** Called when user opens the file selection dialog */
+  /** Called when user opens the file selection dialog @category behavior */
   onFileDialogOpen?: () => void;
 
-  /** If `false`, allow dropped items to take over the current browser window */
+  /** If `false`, allow dropped items to take over the current browser window @category behavior */
   preventDropOnDocument?: boolean;
 
-  /** Set to true to use the File System Access API to open the file picker instead of using an `input type="file"` click event @default false */
+  /** Set to true to use the File System Access API to open the file picker instead of using an `input type="file"` click event @default false @category behavior */
   useFsAccessApi?: boolean;
 
-  /** Use this to provide a custom file aggregator */
+  /** Use this to provide a custom file aggregator @category behavior */
   getFilesFromEvent?: (
     event: DropEvent | FileSystemFileHandle[]
   ) => Promise<Array<File | DataTransferItem>>;
 
-  /** Custom validation function. It must return null if there's no errors. */
+  /** Custom validation function. It must return null if there's no errors. @category behavior */
   validator?: <T extends File>(file: T) => FileError | FileError[] | null;
 
-  /** Determines whether pointer events should be enabled on the inner element @default false */
+  /** Determines whether pointer events should be enabled on the inner element @default false @category behavior */
   enablePointerEvents?: boolean;
 
   /** Props passed down to the Loader component */

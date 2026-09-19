@@ -16,40 +16,40 @@ export interface TransitionProps {
    */
   keepMountedMode?: 'activity' | 'display-none';
 
-  /** Transition name or object */
+  /** Transition name or object @category appearance */
   transition?: MantineTransition;
 
-  /** Transition duration in ms @default 250 */
+  /** Transition duration in ms @default 250 @category appearance */
   duration?: number;
 
-  /** Exit transition duration in ms @default 250 */
+  /** Exit transition duration in ms @default 250 @category appearance */
   exitDuration?: number;
 
-  /** Transition timing function @default theme.transitionTimingFunction */
+  /** Transition timing function @default theme.transitionTimingFunction @category appearance */
   timingFunction?: string;
 
-  /** Determines whether component should be mounted to the DOM */
+  /** Determines whether component should be mounted to the DOM @category state */
   mounted: boolean;
 
-  /** Render function with transition styles argument */
+  /** Render function with transition styles argument @category appearance */
   children: (styles: React.CSSProperties) => React.JSX.Element;
 
-  /** Called when exit transition ends */
+  /** Called when exit transition ends @category behavior */
   onExited?: () => void;
 
-  /** Called when exit transition starts */
+  /** Called when exit transition starts @category behavior */
   onExit?: () => void;
 
-  /** Called when enter transition starts */
+  /** Called when enter transition starts @category behavior */
   onEnter?: () => void;
 
-  /** Called when enter transition ends */
+  /** Called when enter transition ends @category behavior */
   onEntered?: () => void;
 
-  /** Delay in ms before enter transition starts */
+  /** Delay in ms before enter transition starts @category appearance */
   enterDelay?: number;
 
-  /** Delay in ms before exit transition starts */
+  /** Delay in ms before exit transition starts @category appearance */
   exitDelay?: number;
 }
 

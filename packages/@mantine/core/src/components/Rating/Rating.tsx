@@ -40,49 +40,49 @@ export type RatingCssVariables = {
 
 export interface RatingProps
   extends BoxProps, StylesApiProps<RatingFactory>, ElementProps<'div', 'onChange'> {
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: number;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: number;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: number) => void;
 
-  /** Icon displayed for unselected rating items. Can be a function that receives the rating value. */
+  /** Icon displayed for unselected rating items. Can be a function that receives the rating value. @category appearance */
   emptySymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Icon displayed for selected rating items. Can be a function that receives the rating value. */
+  /** Icon displayed for selected rating items. Can be a function that receives the rating value. @category appearance */
   fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Number of fractions each item can be divided into, default is 1 */
+  /** Number of fractions each item can be divided into, default is 1 @category behavior */
   fractions?: number;
 
-  /** Controls component size @default 'sm' */
+  /** Controls component size @default 'sm' @category appearance */
   size?: MantineSize | number | (string & {});
 
-  /** Number of rating items (stars), default is 5 */
+  /** Number of rating items (stars), default is 5 @category appearance */
   count?: number;
 
-  /** Called when rating item is hovered. Receives -1 when hover ends. */
+  /** Called when rating item is hovered. Receives -1 when hover ends. @category behavior */
   onHover?: (value: number) => void;
 
-  /** Function to generate aria-label for each rating value. Receives the rating value as argument, default is (value) => String(value) */
+  /** Function to generate aria-label for each rating value. Receives the rating value as argument, default is (value) => String(value) @category accessibility */
   getSymbolLabel?: (index: number) => string;
 
   /** Name attribute for form submission. If not provided, a unique id will be generated. */
   name?: string;
 
-  /** When true, rating cannot be changed by user interaction, default is false */
+  /** When true, rating cannot be changed by user interaction, default is false @category behavior */
   readOnly?: boolean;
 
-  /** When true, clicking the same rating value clears the rating to 0, default is false */
+  /** When true, clicking the same rating value clears the rating to 0, default is false @category behavior */
   allowClear?: boolean;
 
-  /** When true, only the clicked rating item is highlighted, not all items up to the selected value, default is false */
+  /** When true, only the clicked rating item is highlighted, not all items up to the selected value, default is false @category appearance */
   highlightSelectedOnly?: boolean;
 
-  /** Key of theme.colors or any CSS color value, default is 'yellow' */
+  /** Key of theme.colors or any CSS color value, default is 'yellow' @category appearance */
   color?: MantineColor;
 }
 

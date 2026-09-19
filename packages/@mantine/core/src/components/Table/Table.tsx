@@ -67,52 +67,52 @@ export interface TableData {
 }
 
 export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, ElementProps<'table'> {
-  /** Value of `table-layout` style @default auto */
+  /** Value of `table-layout` style @default auto @category appearance */
   layout?: React.CSSProperties['tableLayout'];
 
-  /** Side of the `Table.Caption` @default bottom */
+  /** Side of the `Table.Caption` @default bottom @category appearance */
   captionSide?: 'top' | 'bottom';
 
-  /** Color of table borders, key of `theme.colors` or any valid CSS color */
+  /** Color of table borders, key of `theme.colors` or any valid CSS color @category appearance */
   borderColor?: MantineColor;
 
-  /** If set, the table has the outer border @default false */
+  /** If set, the table has the outer border @default false @category appearance */
   withTableBorder?: boolean;
 
-  /** If set, the table has borders between columns @default false */
+  /** If set, the table has borders between columns @default false @category appearance */
   withColumnBorders?: boolean;
 
-  /** If set, the table has borders between rows @default true */
+  /** If set, the table has borders between rows @default true @category appearance */
   withRowBorders?: boolean;
 
-  /** Horizontal cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default xs */
+  /** Horizontal cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default xs @category appearance */
   horizontalSpacing?: MantineSpacing;
 
-  /** Vertical cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default xs */
+  /** Vertical cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default xs @category appearance */
   verticalSpacing?: MantineSpacing;
 
-  /** If set, every odd/even row background changes to `stripedColor`, if set to `true`, then `odd` value will be used @default false  */
+  /** If set, every odd/even row background changes to `stripedColor`, if set to `true`, then `odd` value will be used @default false @category appearance */
   striped?: boolean | 'odd' | 'even';
 
-  /** Background color of striped rows, key of `theme.colors` or any valid CSS color */
+  /** Background color of striped rows, key of `theme.colors` or any valid CSS color @category appearance */
   stripedColor?: MantineColor;
 
-  /** If set, table rows background changes to `highlightOnHoverColor` when hovered @default false */
+  /** If set, table rows background changes to `highlightOnHoverColor` when hovered @default false @category appearance */
   highlightOnHover?: boolean;
 
-  /** Background color of table rows when hovered, key of `theme.colors` or any valid CSS color */
+  /** Background color of table rows when hovered, key of `theme.colors` or any valid CSS color @category appearance */
   highlightOnHoverColor?: MantineColor;
 
-  /** Data used to generate table, ignored if `children` prop is set */
+  /** Data used to generate table, ignored if `children` prop is set @category appearance */
   data?: TableData;
 
-  /** If set, `Table.Thead` is sticky @default false */
+  /** If set, `Table.Thead` is sticky @default false @category appearance */
   stickyHeader?: boolean;
 
-  /** Offset from top at which `Table.Thead` should become sticky @default 0 */
+  /** Offset from top at which `Table.Thead` should become sticky @default 0 @category appearance */
   stickyHeaderOffset?: number | string;
 
-  /** If set, `font-variant-numeric: tabular-nums` style is applied @default false */
+  /** If set, `font-variant-numeric: tabular-nums` style is applied @default false @category appearance */
   tabularNums?: boolean;
 }
 

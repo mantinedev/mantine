@@ -19,13 +19,13 @@ import { LightboxToolbar } from './LightboxToolbar/LightboxToolbar';
 export type LightboxStylesNames = LightboxRootStylesNames;
 
 export interface LightboxProps extends Omit<LightboxRootProps, 'children'> {
-  /** Custom toolbar items, overrides default toolbar. Can be a function that receives the current lightbox state and handlers. */
+  /** Custom toolbar items, overrides default toolbar. Can be a function that receives the current lightbox state and handlers. @category appearance */
   toolbarItems?: ToolbarItems;
 
-  /** Shows previous/next navigation arrows @default true */
+  /** Shows previous/next navigation arrows @default true @category appearance */
   withNavigation?: boolean;
 
-  /** Custom lightbox layout, overrides the default layout built from compound components */
+  /** Custom lightbox layout, overrides the default layout built from compound components @category appearance */
   children?: React.ReactNode;
 }
 

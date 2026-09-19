@@ -46,16 +46,16 @@ export interface FloatingWindowProps
   /** `z-index` of the root element @default 400 */
   zIndex?: React.CSSProperties['zIndex'];
 
-  /** Dimensions configuration for resizable floating window */
+  /** Dimensions configuration for resizable floating window @category appearance */
   dimensions?: FloatingWindowDimensions;
 
-  /** Called when the window is resized with `FloatingWindow.ResizeHandle` */
+  /** Called when the window is resized with `FloatingWindow.ResizeHandle` @category state */
   onSizeChange?: (size: FloatingWindowSize) => void;
 
-  /** Called when the resize with `FloatingWindow.ResizeHandle` starts. Not called for keyboard resize. */
+  /** Called when the resize with `FloatingWindow.ResizeHandle` starts. Not called for keyboard resize. @category behavior */
   onResizeStart?: () => void;
 
-  /** Called when the resize with `FloatingWindow.ResizeHandle` stops. Not called for keyboard resize. */
+  /** Called when the resize with `FloatingWindow.ResizeHandle` stops. Not called for keyboard resize. @category behavior */
   onResizeEnd?: () => void;
 }
 

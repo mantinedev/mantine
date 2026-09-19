@@ -46,40 +46,40 @@ export interface AutocompleteProps
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<AutocompleteFactory>,
     ElementProps<'input', 'onChange' | 'size'> {
-  /** Data used to display options. Values must be unique. */
+  /** Data used to display options. Values must be unique. @category appearance */
   data?: ComboboxGenericData;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: string;
 
-  /** Default value for uncontrolled component */
+  /** Default value for uncontrolled component @category state */
   defaultValue?: string;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: string) => void;
 
-  /** Function to render custom option content */
+  /** Function to render custom option content @category appearance */
   renderOption?: RenderAutocompleteOption;
 
   /** Props passed to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** Called when the clear button is clicked */
+  /** Called when the clear button is clicked @category behavior */
   onClear?: () => void;
 
   /** Props passed down to the clear button */
   clearButtonProps?: InputClearButtonProps;
 
-  /** If set, the clear button is displayed when the component has a value @default false */
+  /** If set, the clear button is displayed when the component has a value @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  /** Determines how the clear button and rightSection are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
-  /** If set, the highlighted option is selected when the input loses focus @default false */
+  /** If set, the highlighted option is selected when the input loses focus @default false @category behavior */
   autoSelectOnBlur?: boolean;
 
-  /** If set, the dropdown opens when the input receives focus @default true */
+  /** If set, the dropdown opens when the input receives focus @default true @category behavior */
   openOnFocus?: boolean;
 }
 

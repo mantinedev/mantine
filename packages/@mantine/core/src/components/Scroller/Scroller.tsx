@@ -24,16 +24,16 @@ export type ScrollerCssVariables = {
 
 export interface ScrollerProps
   extends BoxProps, StylesApiProps<ScrollerFactory>, ElementProps<'div'> {
-  /** Content to display */
+  /** Content to display @category appearance */
   children: React.ReactNode;
 
-  /** Amount of pixels to scroll when clicking the control buttons, `200` by default */
+  /** Amount of pixels to scroll when clicking the control buttons, `200` by default @category behavior */
   scrollAmount?: number;
 
-  /** Size of the control buttons, @default 60px */
+  /** Size of the control buttons, @default 60px @category appearance */
   controlSize?: string | number;
 
-  /** Background color for the gradient fade on controls, `'var(--mantine-color-body)'` by default */
+  /** Background color for the gradient fade on controls, `'var(--mantine-color-body)'` by default @category appearance */
   edgeGradientColor?: string;
 
   /** Props passed to the start control button */
@@ -42,19 +42,19 @@ export interface ScrollerProps
   /** Props passed to the end control button */
   endControlProps?: React.ComponentProps<'button'>;
 
-  /** Icon component for the start control, AccordionChevron by default */
+  /** Icon component for the start control, AccordionChevron by default @category appearance */
   startControlIcon?: React.ReactNode;
 
-  /** Icon component for the end control, AccordionChevron by default */
+  /** Icon component for the end control, AccordionChevron by default @category appearance */
   endControlIcon?: React.ReactNode;
 
-  /** Determines whether start control should always be visible regardless of scroll position, `false` by default */
+  /** Determines whether start control should always be visible regardless of scroll position, `false` by default @category appearance */
   showStartControl?: boolean;
 
-  /** Determines whether end control should always be visible regardless of scroll position, `false` by default */
+  /** Determines whether end control should always be visible regardless of scroll position, `false` by default @category appearance */
   showEndControl?: boolean;
 
-  /** Determines whether content can be scrolled by dragging with mouse, `true` by default */
+  /** Determines whether content can be scrolled by dragging with mouse, `true` by default @category behavior */
   draggable?: boolean;
 
   /** Ref for the scroll container element */

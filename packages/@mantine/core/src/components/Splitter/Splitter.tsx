@@ -60,52 +60,52 @@ export type SplitterCssVariables = {
 
 export interface SplitterProps
   extends BoxProps, StylesApiProps<SplitterFactory>, ElementProps<'div'> {
-  /** Layout direction @default 'horizontal' */
+  /** Layout direction @default 'horizontal' @category appearance */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Controlled sizes, each value keeps the unit it was declared in (number/`%` flexible, `px`/`rem` fixed) */
+  /** Controlled sizes, each value keeps the unit it was declared in (number/`%` flexible, `px`/`rem` fixed) @category state */
   sizes?: SplitterPaneSize[];
 
-  /** Called during resize with updated sizes, each value keeps its declared unit */
+  /** Called during resize with updated sizes, each value keeps its declared unit @category state */
   onSizeChange?: (sizes: SplitterPaneSize[]) => void;
 
-  /** Called when drag starts */
+  /** Called when drag starts @category behavior */
   onResizeStart?: (handleIndex: number) => void;
 
-  /** Called when drag ends */
+  /** Called when drag ends @category behavior */
   onResizeEnd?: (handleIndex: number, sizes: SplitterPaneSize[]) => void;
 
-  /** Called when a panel collapses or expands */
+  /** Called when a panel collapses or expands @category behavior */
   onCollapseChange?: (panelIndex: number, collapsed: boolean) => void;
 
-  /** How to redistribute space when immediate neighbor is at its min/max */
+  /** How to redistribute space when immediate neighbor is at its min/max @category behavior */
   redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn;
 
-  /** Keyboard step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels @default 1 */
+  /** Keyboard step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels @default 1 @category behavior */
   step?: SplitterStep;
 
-  /** Shift+arrow step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels @default 10 */
+  /** Shift+arrow step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels @default 10 @category behavior */
   shiftStep?: SplitterStep;
 
-  /** CSS value for separator line thickness between panes @default 2 */
+  /** CSS value for separator line thickness between panes @default 2 @category appearance */
   lineSize?: number | string;
 
-  /** Key of `theme.colors` or any valid CSS color for the separator line */
+  /** Key of `theme.colors` or any valid CSS color for the separator line @category appearance */
   handleColor?: MantineColor;
 
-  /** Custom icon displayed in the handle thumb, by default uses grip icon based on orientation */
+  /** Custom icon displayed in the handle thumb, by default uses grip icon based on orientation @category appearance */
   handleIcon?: React.ReactNode;
 
-  /** Determines whether the thumb with grip icon is displayed on the handle @default true */
+  /** Determines whether the thumb with grip icon is displayed on the handle @default true @category appearance */
   withHandle?: boolean;
 
-  /** Restore the two panes adjacent to a handle to their default ratio (preserving their combined size) when the handle is double-clicked @default true */
+  /** Restore the two panes adjacent to a handle to their default ratio (preserving their combined size) when the handle is double-clicked @default true @category behavior */
   resetOnDoubleClick?: boolean;
 
   /** Ref to imperative splitter API (sizes, collapse, expand, etc.) */
   splitterRef?: React.RefObject<UseSplitterReturnValue | null>;
 
-  /** Splitter panes */
+  /** Splitter panes @category appearance */
   children?: React.ReactNode;
 }
 

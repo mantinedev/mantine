@@ -1482,7 +1482,7 @@ Additional information about ${component} component.`;
       for (const [propName, propData] of Object.entries(entry.data.props as any)) {
         const { type, defaultValue, description, required } = propData as any;
         const typeStr = type?.name || 'unknown';
-        const defaultStr = defaultValue?.value || (required ? 'required' : '-');
+        const defaultStr = defaultValue || (required ? 'required' : '-');
         const descStr = description || '-';
 
         this.output.push(

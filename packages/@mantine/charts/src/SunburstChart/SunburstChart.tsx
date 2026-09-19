@@ -42,16 +42,16 @@ export type SunburstChartCssVariables = {
 
 export interface SunburstChartProps
   extends BoxProps, StylesApiProps<SunburstChartFactory>, ElementProps<'div'> {
-  /** Data used to render chart */
+  /** Data used to render chart @category appearance */
   data: SunburstChartData[];
 
-  /** Key in data object for the value @default 'value' */
+  /** Key in data object for the value @default 'value' @category appearance */
   dataKey?: string;
 
-  /** Determines whether the tooltip should be displayed when a node is hovered @default true */
+  /** Determines whether the tooltip should be displayed when a node is hovered @default true @category appearance */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms @default 0 */
+  /** Tooltip animation duration in ms @default 0 @category appearance */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -60,31 +60,31 @@ export interface SunburstChartProps
   /** Props passed down to recharts `SunburstChart` component */
   sunburstChartProps?: Partial<Omit<RechartsSunburstChartProps, 'ref' | 'data' | 'dataKey'>>;
 
-  /** Controls color of the sectors stroke, by default depends on color scheme */
+  /** Controls color of the sectors stroke, by default depends on color scheme @category appearance */
   strokeColor?: MantineColor;
 
-  /** Controls chart width and height @default 300 */
+  /** Controls chart width and height @default 300 @category appearance */
   size?: number;
 
-  /** Controls the radius of the inner circle at the center of the chart @default 50 */
+  /** Controls the radius of the inner circle at the center of the chart @default 50 @category appearance */
   innerRadius?: number;
 
-  /** Gap between sectors and rings in px @default 1 */
+  /** Gap between sectors and rings in px @default 1 @category appearance */
   gap?: number;
 
-  /** Angle in degrees from which the chart should start @default 0 */
+  /** Angle in degrees from which the chart should start @default 0 @category appearance */
   startAngle?: number;
 
-  /** Angle in degrees at which the chart should end @default 360 */
+  /** Angle in degrees at which the chart should end @default 360 @category appearance */
   endAngle?: number;
 
-  /** Determines whether value labels are displayed inside each sector @default false */
+  /** Determines whether value labels are displayed inside each sector @default false @category appearance */
   withLabels?: boolean;
 
-  /** A function to format values inside the tooltip and labels */
+  /** A function to format values inside the tooltip and labels @category appearance */
   valueFormatter?: (value: number) => string;
 
-  /** Additional elements rendered inside `SunburstChart` component */
+  /** Additional elements rendered inside `SunburstChart` component @category appearance */
   children?: React.ReactNode;
 }
 

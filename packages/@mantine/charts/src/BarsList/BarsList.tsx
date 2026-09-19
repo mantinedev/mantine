@@ -43,40 +43,40 @@ export interface BarsListBarData {
 
 export interface BarsListProps
   extends BoxProps, StylesApiProps<BarsListFactory>, ElementProps<'div'> {
-  /** Data for bars */
+  /** Data for bars @category appearance */
   data: BarsListBarData[];
 
-  /** Function to format value display */
+  /** Function to format value display @category appearance */
   valueFormatter?: (value: number) => string;
 
-  /** Label displayed above the bars column */
+  /** Label displayed above the bars column @category appearance */
   barsLabel?: string;
 
-  /** Label displayed above the values column */
+  /** Label displayed above the values column @category appearance */
   valueLabel?: string;
 
   /** Function to pass props down to the bar depending on the bar data payload */
   getBarProps?: (data: BarsListBarData) => React.ComponentProps<'div'>;
 
-  /** Function to completely customize bar rendering */
+  /** Function to completely customize bar rendering @category appearance */
   renderBar?: (data: BarsListBarData, defaultBar: React.ReactNode) => React.ReactNode;
 
-  /** Controls gap between bars @default 5 */
+  /** Controls gap between bars @default 5 @category appearance */
   barGap?: MantineSpacing;
 
-  /** Minimum bar width @default 100 */
+  /** Minimum bar width @default 100 @category appearance */
   minBarSize?: number | string;
 
-  /** Bar height @default 32 */
+  /** Bar height @default 32 @category appearance */
   barHeight?: number | string;
 
-  /** Default bar background color, used when item does not have color specified */
+  /** Default bar background color, used when item does not have color specified @category appearance */
   barColor?: MantineColor;
 
-  /** Bar text color, overrides autoContrast */
+  /** Bar text color, overrides autoContrast @category appearance */
   barTextColor?: MantineColor;
 
-  /** If set, adjusts text color based on background color */
+  /** If set, adjusts text color based on background color @category appearance */
   autoContrast?: boolean;
 }
 

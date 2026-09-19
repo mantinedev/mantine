@@ -84,31 +84,31 @@ export interface MonthViewProps
   extends BoxProps, StylesApiProps<MonthViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format */
+  /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format @category state */
   date: Date | string;
 
-  /** Called with the new date value when a date is selected */
+  /** Called with the new date value when a date is selected @category state */
   onDateChange?: (value: DateStringValue) => void;
 
-  /** If set, week numbers are displayed in the first column @default false */
+  /** If set, week numbers are displayed in the first column @default false @category appearance */
   withWeekNumbers?: boolean;
 
-  /** If set, weekdays names are displayed in the first row @default true */
+  /** If set, weekdays names are displayed in the first row @default true @category appearance */
   withWeekDays?: boolean;
 
-  /** If set, weekend days are displayed. When `false`, days defined by `weekendDays` are hidden and the grid shrinks to the remaining columns @default true */
+  /** If set, weekend days are displayed. When `false`, days defined by `weekendDays` are hidden and the grid shrinks to the remaining columns @default true @category appearance */
   withWeekendDays?: boolean;
 
-  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` @category appearance */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday @category appearance */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names. By default, the first letter of the weekday. */
+  /** `dayjs` format for weekdays names. By default, the first letter of the weekday. @category appearance */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. @category appearance */
   weekendDays?: DayOfWeek[];
 
   /** Props passed down to the week number button */
@@ -117,31 +117,31 @@ export interface MonthViewProps
   /** Props passed down to the day button */
   getDayProps?: (date: DateStringValue) => Record<string, any>;
 
-  /** Called when day is clicked */
+  /** Called when day is clicked @category behavior */
   onDayClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** Called with first day of the week when week number is clicked */
+  /** Called with first day of the week when week number is clicked @category behavior */
   onWeekNumberClick?: (date: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** If set, always renders 6 weeks in the month view @default true */
+  /** If set, always renders 6 weeks in the month view @default true @category appearance */
   consistentWeeks?: boolean;
 
-  /** If set, highlights the current day @default true */
+  /** If set, highlights the current day @default true @category appearance */
   highlightToday?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** If set, days from the previous and next months are displayed to fill the weeks @default true */
+  /** If set, days from the previous and next months are displayed to fill the weeks @default true @category appearance */
   withOutsideDays?: boolean;
 
-  /** If set, the header is displayed @default true */
+  /** If set, the header is displayed @default true @category appearance */
   withHeader?: boolean;
 
   /** Props passed down to `MonthYearSelect` component in the header */
   monthYearSelectProps?: Partial<MonthYearSelectProps>;
 
-  /** Called when view level select button is clicked */
+  /** Called when view level select button is clicked @category state */
   onViewChange?: (view: ScheduleViewLevel) => void;
 
   /** Props passed to previous month control */
@@ -156,22 +156,22 @@ export interface MonthViewProps
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 
-  /** Events to display */
+  /** Events to display @category appearance */
   events?: ScheduleEventData[];
 
   /** Props passed down to `MoreEvents` component */
   moreEventsProps?: Partial<MoreEventsProps>;
 
-  /** Function to customize event body, `event` object is passed as first argument */
+  /** Function to customize event body, `event` object is passed as first argument @category appearance */
   renderEventBody?: RenderEventBody;
 
-  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children @category appearance */
   renderEvent?: RenderEvent;
 
-  /** If true, events can be dragged and dropped @default false */
+  /** If true, events can be dragged and dropped @default false @category behavior */
   withEventsDragAndDrop?: boolean;
 
-  /** Called when event is dropped on new date */
+  /** Called when event is dropped on new date @category behavior */
   onEventDrop?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -179,58 +179,58 @@ export interface MonthViewProps
     event: ScheduleEventData;
   }) => void;
 
-  /** Function to determine if event can be dragged */
+  /** Function to determine if event can be dragged @category behavior */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. */
+  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. @category behavior */
   canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
 
-  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. */
+  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. @category behavior */
   canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
 
-  /** If set, drops that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging to compute live feedback, it must be pure and cheap. @default false */
+  /** If set, drops that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging to compute live feedback, it must be pure and cheap. @default false @category behavior */
   preventEventOverlap?: PreventEventOverlap;
 
-  /** Called when a drop is rejected */
+  /** Called when a drop is rejected @category behavior */
   onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
 
-  /** Called when any event drag starts */
+  /** Called when any event drag starts @category behavior */
   onEventDragStart?: (event: ScheduleEventData) => void;
 
-  /** Called when any event drag ends */
+  /** Called when any event drag ends @category behavior */
   onEventDragEnd?: () => void;
 
-  /** Called when event is clicked */
+  /** Called when event is clicked @category behavior */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false @category behavior */
   withInteractiveBackgroundEvents?: boolean;
 
-  /** If set, enables drag-to-select day ranges @default false */
+  /** If set, enables drag-to-select day ranges @default false @category behavior */
   withDragSlotSelect?: boolean;
 
-  /** Called when a day range is selected by dragging */
+  /** Called when a day range is selected by dragging @category behavior */
   onSlotDragEnd?: (rangeStart: DateTimeStringValue, rangeEnd: DateTimeStringValue) => void;
 
-  /** Labels override for i18n */
+  /** Labels override for i18n @category appearance */
   labels?: ScheduleLabelsOverride;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default @category behavior */
   mode?: ScheduleMode;
 
   /** Props passed down to `ScrollArea` component */
   scrollAreaProps?: Partial<ScrollAreaProps> & DataAttributes;
 
-  /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
+  /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. @category behavior */
   onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
 
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
 
-  /** Maximum number of events visible per day before "+more" indicator shows, value is clamped between 1 and 10 @default 2 */
+  /** Maximum number of events visible per day before "+more" indicator shows, value is clamped between 1 and 10 @default 2 @category appearance */
   maxEventsPerDay?: number;
 
-  /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
+  /** If set, displays an Agenda button in the header that opens an agenda list view @default false @category appearance */
   withAgenda?: boolean;
 }
 

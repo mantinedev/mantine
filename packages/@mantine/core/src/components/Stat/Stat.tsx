@@ -43,61 +43,61 @@ export type StatCssVariables = {
 
 export interface StatProps
   extends BoxProps, StylesApiProps<StatFactory>, ElementProps<'div', 'prefix' | 'color'> {
-  /** Caption displayed above the value */
+  /** Caption displayed above the value @category appearance */
   label?: React.ReactNode;
 
-  /** The metric value */
+  /** The metric value @category state */
   value?: number | string;
 
-  /** Limits the number of digits displayed after the decimal point */
+  /** Limits the number of digits displayed after the decimal point @category appearance */
   decimalScale?: number;
 
-  /** If set, trailing zeros are added to match `decimalScale` @default false */
+  /** If set, trailing zeros are added to match `decimalScale` @default false @category appearance */
   fixedDecimalScale?: boolean;
 
-  /** Character used as a decimal separator @default '.' */
+  /** Character used as a decimal separator @default '.' @category appearance */
   decimalSeparator?: string;
 
-  /** Character used to separate thousands, set to `true` for `,` */
+  /** Character used to separate thousands, set to `true` for `,` @category appearance */
   thousandSeparator?: string | boolean;
 
-  /** Content rendered before the value (units, icons, currency) */
+  /** Content rendered before the value (units, icons, currency) @category appearance */
   prefix?: React.ReactNode;
 
-  /** Content rendered after the value (units, icons, `%`) */
+  /** Content rendered after the value (units, icons, `%`) @category appearance */
   suffix?: React.ReactNode;
 
-  /** A function to fully customize the value rendering, overrides `decimalScale`, separators and animation */
+  /** A function to fully customize the value rendering, overrides `decimalScale`, separators and animation @category appearance */
   formatter?: (value: number | string) => React.ReactNode;
 
-  /** Trend delta. Positive renders an up indicator, negative a down indicator, both colored */
+  /** Trend delta. Positive renders an up indicator, negative a down indicator, both colored @category state */
   diff?: number;
 
-  /** A function to format the rendered delta @default `` (value) => `${value > 0 ? '+' : ''}${value}%` `` */
+  /** A function to format the rendered delta @default `` (value) => `${value > 0 ? '+' : ''}${value}%` `` @category appearance */
   diffFormatter?: (diff: number) => React.ReactNode;
 
-  /** If set, the up/down arrow is displayed next to the delta @default true */
+  /** If set, the up/down arrow is displayed next to the delta @default true @category appearance */
   withDiffIcon?: boolean;
 
-  /** If set, value changes are animated with `RollingNumber` (only applies to numeric values) @default false */
+  /** If set, value changes are animated with `RollingNumber` (only applies to numeric values) @default false @category appearance */
   animate?: boolean;
 
-  /** Animation duration in milliseconds, applied when `animate` is set @default 600 */
+  /** Animation duration in milliseconds, applied when `animate` is set @default 600 @category appearance */
   animationDuration?: number;
 
-  /** If set, a `Skeleton` is displayed in place of the value @default false */
+  /** If set, a `Skeleton` is displayed in place of the value @default false @category appearance */
   loading?: boolean;
 
-  /** Key of `theme.colors` or any valid CSS color to set the value color */
+  /** Key of `theme.colors` or any valid CSS color to set the value color @category appearance */
   color?: MantineColor;
 
-  /** Leading icon or illustration displayed next to the value */
+  /** Leading icon or illustration displayed next to the value @category appearance */
   icon?: React.ReactNode;
 
-  /** Controls label, value and icon sizes @default 'md' */
+  /** Controls label, value and icon sizes @default 'md' @category appearance */
   size?: MantineSize;
 
-  /** Custom content, replaces the default composition built from shorthand props */
+  /** Custom content, replaces the default composition built from shorthand props @category appearance */
   children?: React.ReactNode;
 }
 

@@ -8,19 +8,19 @@ export interface EmojiPickerPopoverProps extends EmojiPickerProps {
   /** Props passed to the `Popover` component */
   popoverProps?: Omit<PopoverProps, 'children'>;
 
-  /** Controlled popover opened state */
+  /** Controlled popover opened state @category state */
   opened?: boolean;
 
-  /** Default popover opened state for uncontrolled mode */
+  /** Default popover opened state for uncontrolled mode @category state */
   defaultOpened?: boolean;
 
-  /** Called when popover opened state changes */
+  /** Called when popover opened state changes @category state */
   onOpenedChange?: (opened: boolean) => void;
 
-  /** Determines whether the popover closes after emoji is selected @default true */
+  /** Determines whether the popover closes after emoji is selected @default true @category behavior */
   closeOnSelect?: boolean;
 
-  /** Popover target element */
+  /** Popover target element @category appearance */
   children: React.ReactNode;
 }
 

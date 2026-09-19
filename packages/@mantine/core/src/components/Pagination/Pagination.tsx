@@ -31,40 +31,40 @@ export type PaginationStylesNames = PaginationRootStylesNames;
 export type PaginationCssVariables = PaginationRootCssVariables;
 
 export interface PaginationProps extends PaginationRootProps {
-  /** If set, first/last controls are displayed @default false */
+  /** If set, first/last controls are displayed @default false @category appearance */
   withEdges?: boolean;
 
-  /** If set, next/previous controls are displayed @default true */
+  /** If set, next/previous controls are displayed @default true @category appearance */
   withControls?: boolean;
 
   /** Props passed down to next/previous/first/last controls */
   getControlProps?: (control: 'first' | 'previous' | 'last' | 'next') => Record<string, any>;
 
-  /** Next control icon component */
+  /** Next control icon component @category appearance */
   nextIcon?: PaginationIcon;
 
-  /** Previous control icon component */
+  /** Previous control icon component @category appearance */
   previousIcon?: PaginationIcon;
 
-  /** Last control icon component */
+  /** Last control icon component @category appearance */
   lastIcon?: PaginationIcon;
 
-  /** First control icon component */
+  /** First control icon component @category appearance */
   firstIcon?: PaginationIcon;
 
-  /** Dots icon component */
+  /** Dots icon component @category appearance */
   dotsIcon?: PaginationIcon;
 
-  /** Key of `theme.spacing`, gap between controls @default 8 */
+  /** Key of `theme.spacing`, gap between controls @default 8 @category appearance */
   gap?: MantineSpacing;
 
-  /** If set, the pagination is hidden when only one page is available (`total={1}`) @default false */
+  /** If set, the pagination is hidden when only one page is available (`total={1}`) @default false @category appearance */
   hideWithOnePage?: boolean;
 
-  /** If set to `false`, page number buttons are hidden, only next/previous controls remain @default `true` */
+  /** If set to `false`, page number buttons are hidden, only next/previous controls remain @default `true` @category appearance */
   withPages?: boolean;
 
-  /** Function to format the label text displayed in responsive mode */
+  /** Function to format the label text displayed in responsive mode @category appearance */
   formatLabel?: PaginationFormatLabel;
 }
 

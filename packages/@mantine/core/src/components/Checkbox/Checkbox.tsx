@@ -69,46 +69,46 @@ export interface CheckboxProps
   /** Unique input id */
   id?: string;
 
-  /** `label` associated with the checkbox */
+  /** `label` associated with the checkbox @category appearance */
   label?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default theme.primaryColor */
+  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Controls size of the component @default 'sm' */
+  /** Controls size of the component @default 'sm' @category appearance */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
   /** Props passed down to the root element */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Position of the label relative to the input @default 'right' */
+  /** Position of the label relative to the input @default 'right' @category appearance */
   labelPosition?: 'left' | 'right';
 
-  /** Description below the label */
+  /** Description below the label @category appearance */
   description?: React.ReactNode;
 
-  /** Error message below the label */
+  /** Error message below the label @category state */
   error?: React.ReactNode;
 
-  /** Indeterminate state of the checkbox. If set, `checked` prop is dismissed. */
+  /** Indeterminate state of the checkbox. If set, `checked` prop is dismissed. @category state */
   indeterminate?: boolean;
 
-  /** Icon for checked or indeterminate state */
+  /** Icon for checked or indeterminate state @category appearance */
   icon?: CheckboxIconComponent;
 
   /** Root element ref */
   rootRef?: React.Ref<HTMLDivElement>;
 
-  /** Key of `theme.colors` or any valid CSS color to set icon color. By default, depends on `theme.autoContrast`. */
+  /** Key of `theme.colors` or any valid CSS color to set icon color. By default, depends on `theme.autoContrast`. @category appearance */
   iconColor?: MantineColor;
 
-  /** If set, adjusts icon color based on background color for `filled` variant */
+  /** If set, adjusts icon color based on background color for `filled` variant @category appearance */
   autoContrast?: boolean;
 
-  /** If set, applies error styles to the checkbox when `error` prop is set @default true */
+  /** If set, applies error styles to the checkbox when `error` prop is set @default true @category appearance */
   withErrorStyles?: boolean;
 }
 

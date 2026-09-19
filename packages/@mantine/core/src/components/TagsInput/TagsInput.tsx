@@ -55,52 +55,52 @@ export interface TagsInputProps
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<TagsInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** Data displayed in the dropdown. Values must be unique. */
+  /** Data displayed in the dropdown. Values must be unique. @category appearance */
   data?: ComboboxGenericData;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: string[];
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: string[];
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: string[]) => void;
 
-  /** Called when tag is removed */
+  /** Called when tag is removed @category behavior */
   onRemove?: (value: string) => void;
 
-  /** Called when the clear button is clicked */
+  /** Called when the clear button is clicked @category behavior */
   onClear?: () => void;
 
-  /** Controlled search value */
+  /** Controlled search value @category state */
   searchValue?: string;
 
-  /** Default search value */
+  /** Default search value @category state */
   defaultSearchValue?: string;
 
-  /** Called when search changes */
+  /** Called when search changes @category state */
   onSearchChange?: (value: string) => void;
 
-  /** Maximum number of tags @default Infinity */
+  /** Maximum number of tags @default Infinity @category behavior */
   maxTags?: number;
 
-  /** Called when user tries to add more tags than maxTags */
+  /** Called when user tries to add more tags than maxTags @category behavior */
   onMaxTags?: (value: string) => void;
 
-  /** If set, duplicate tags are allowed @default false */
+  /** If set, duplicate tags are allowed @default false @category behavior */
   allowDuplicates?: boolean;
 
-  /** Called when user tries to submit a duplicated tag */
+  /** Called when user tries to submit a duplicated tag @category behavior */
   onDuplicate?: (value: string) => void;
 
-  /** Characters that should trigger tags split, `[',']` by default */
+  /** Characters that should trigger tags split, `[',']` by default @category behavior */
   splitChars?: string[];
 
-  /** If set, the clear button is displayed in the right section when the component has value @default false */
+  /** If set, the clear button is displayed in the right section when the component has value @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  /** Determines how the clear button and rightSection are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
@@ -112,25 +112,25 @@ export interface TagsInputProps
   /** Divider used to separate values in the hidden input `value` attribute @default ',' */
   hiddenInputValuesDivider?: string;
 
-  /** A function to render content of the option, replaces the default content of the option */
+  /** A function to render content of the option, replaces the default content of the option @category appearance */
   renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxGenericItem>) => React.ReactNode;
 
-  /** A function to render content of the pill, replaces the default content of the pill */
+  /** A function to render content of the pill, replaces the default content of the pill @category appearance */
   renderPill?: (props: ComboboxRenderPillInput) => React.ReactNode;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** If set, the value typed in by the user but not submitted is accepted when the input is blurred @default true */
+  /** If set, the value typed in by the user but not submitted is accepted when the input is blurred @default true @category behavior */
   acceptValueOnBlur?: boolean;
 
-  /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
+  /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. @category behavior */
   isDuplicate?: (value: string, currentValues: string[]) => boolean;
 
-  /** If set, the dropdown opens when the input receives focus @default true */
+  /** If set, the dropdown opens when the input receives focus @default true @category behavior */
   openOnFocus?: boolean;
 
-  /** If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false */
+  /** If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false @category behavior */
   withPillsReorder?: boolean;
 }
 

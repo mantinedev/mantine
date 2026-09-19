@@ -45,6 +45,12 @@ export interface PropData {
   defaultValue?: unknown;
   type?: unknown;
   sourceComponent: string;
+  /** Prop category from the `@category` JSDoc tag, present only on tagged props */
+  category?: string;
+  /** Shared base interface that declares the prop, present only for shared origins */
+  origin?: string;
+  /** Text of the `@deprecated` JSDoc tag, empty string for the bare tag */
+  deprecated?: string;
 }
 
 /** Full per-page payload fetched on demand */

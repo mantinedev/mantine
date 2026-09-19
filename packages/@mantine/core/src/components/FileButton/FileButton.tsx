@@ -5,16 +5,16 @@ import { Factory, genericFactory, useProps } from '../../core';
 export interface FileButtonProps<Multiple extends boolean = false> {
   ref?: React.Ref<HTMLInputElement>;
 
-  /** Called when files are picked */
+  /** Called when files are picked @category state */
   onChange: (payload: Multiple extends true ? File[] : File | null) => void;
 
-  /** Function that receives button props and returns react node that should be rendered */
+  /** Function that receives button props and returns react node that should be rendered @category appearance */
   children: (props: { onClick: () => void }) => React.ReactNode;
 
-  /** If set, user can pick more than one file */
+  /** If set, user can pick more than one file @category state */
   multiple?: Multiple;
 
-  /** File input accept attribute, for example, `"image/png,image/jpeg"` */
+  /** File input accept attribute, for example, `"image/png,image/jpeg"` @category behavior */
   accept?: string;
 
   /** Input name attribute */
@@ -26,10 +26,10 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   /** Reference of the function that should be called when value changes to null or empty array */
   resetRef?: React.Ref<() => void>;
 
-  /** Disables file picker */
+  /** Disables file picker @category behavior */
   disabled?: boolean;
 
-  /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
+  /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. @category behavior */
   capture?: boolean | 'user' | 'environment';
 
   /** Passes down props to the input element used to capture files */

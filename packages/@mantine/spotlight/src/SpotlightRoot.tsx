@@ -45,46 +45,46 @@ export interface SpotlightRootProps
       | 'withCloseButton'
       | 'attributes'
     > {
-  /** Spotlight store, can be used to create multiple instances of spotlight */
+  /** Spotlight store, can be used to create multiple instances of spotlight @category state */
   store?: SpotlightStore;
 
-  /** Controlled Spotlight search query */
+  /** Controlled Spotlight search query @category state */
   query?: string;
 
-  /** Called when query changes */
+  /** Called when query changes @category state */
   onQueryChange?: (query: string) => void;
 
-  /** Determines whether the search query should be cleared when the spotlight is closed @default true */
+  /** Determines whether the search query should be cleared when the spotlight is closed @default true @category behavior */
   clearQueryOnClose?: boolean;
 
-  /** Keyboard shortcut or a list of shortcuts to trigger spotlight @default 'mod + K' */
+  /** Keyboard shortcut or a list of shortcuts to trigger spotlight @default 'mod + K' @category behavior */
   shortcut?: string | string[] | null;
 
-  /** A list of tags which when focused will be ignored by shortcut @default ['input', 'textarea', 'select'] */
+  /** A list of tags which when focused will be ignored by shortcut @default ['input', 'textarea', 'select'] @category behavior */
   tagsToIgnore?: string[];
 
-  /** Determines whether shortcut should trigger based in contentEditable @default false */
+  /** Determines whether shortcut should trigger based in contentEditable @default false @category behavior */
   triggerOnContentEditable?: boolean;
 
-  /** If set, spotlight will not be rendered */
+  /** If set, spotlight will not be rendered @category behavior */
   disabled?: boolean;
 
-  /** Called when spotlight opens */
+  /** Called when spotlight opens @category behavior */
   onSpotlightOpen?: () => void;
 
-  /** Called when spotlight closes */
+  /** Called when spotlight closes @category behavior */
   onSpotlightClose?: () => void;
 
-  /** Forces opened state, useful for tests */
+  /** Forces opened state, useful for tests @category state */
   forceOpened?: boolean;
 
-  /** Determines whether spotlight should be closed when one of the actions is triggered @default true */
+  /** Determines whether spotlight should be closed when one of the actions is triggered @default true @category behavior */
   closeOnActionTrigger?: boolean;
 
-  /** Spotlight content max-height. Ignored unless `scrollable` prop is set. @default 400 */
+  /** Spotlight content max-height. Ignored unless `scrollable` prop is set. @default 400 @category appearance */
   maxHeight?: React.CSSProperties['maxHeight'];
 
-  /** Determines whether the actions list should be scrollable. If not set, `maxHeight` is ignored @default false */
+  /** Determines whether the actions list should be scrollable. If not set, `maxHeight` is ignored @default false @category appearance */
   scrollable?: boolean;
 }
 

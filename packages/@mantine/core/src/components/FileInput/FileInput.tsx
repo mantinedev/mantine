@@ -28,19 +28,19 @@ export interface FileInputProps<Multiple = false>
     ElementProps<'button', 'value' | 'defaultValue' | 'onChange' | 'placeholder'> {
   component?: any;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (payload: Multiple extends true ? File[] : File | null) => void;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: Multiple extends true ? File[] : File | null;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: Multiple extends true ? File[] : File | null;
 
-  /** If set, user can pick more than one file @default false */
+  /** If set, user can pick more than one file @default false @category state */
   multiple?: Multiple;
 
-  /** File input accept attribute, for example, `"image/png,image/jpeg"` */
+  /** File input accept attribute, for example, `"image/png,image/jpeg"` @category behavior */
   accept?: string;
 
   /** Input name attribute */
@@ -49,28 +49,28 @@ export interface FileInputProps<Multiple = false>
   /** Input form attribute */
   form?: string;
 
-  /** Value renderer. By default, displays file name. */
+  /** Value renderer. By default, displays file name. @category appearance */
   valueComponent?: React.FC<{ value: null | File | File[] }>;
 
-  /** If set, the clear button is displayed in the right section @default false */
+  /** If set, the clear button is displayed in the right section @default false @category behavior */
   clearable?: boolean;
 
-  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  /** Determines how the clear button and rightSection are rendered @default 'both' @category appearance */
   clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentProps<'button'>;
 
-  /** If set, the input value cannot be changed  */
+  /** If set, the input value cannot be changed @category behavior */
   readOnly?: boolean;
 
-  /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
+  /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. @category behavior */
   capture?: boolean | 'user' | 'environment';
 
   /** Props passed down to the hidden `input[type="file"]` */
   fileInputProps?: React.ComponentProps<'input'>;
 
-  /** Input placeholder */
+  /** Input placeholder @category appearance */
   placeholder?: React.ReactNode;
 
   /** Reference of the function that should be called when value changes to null or empty array */

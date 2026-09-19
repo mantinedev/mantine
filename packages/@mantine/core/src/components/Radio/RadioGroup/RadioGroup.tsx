@@ -27,31 +27,31 @@ export interface RadioGroupProps<Value extends Primitive = string> extends Omit<
   InputWrapperProps,
   'onChange' | 'value' | 'defaultValue'
 > {
-  /** `Radio` components and any other elements */
+  /** `Radio` components and any other elements @category appearance */
   children: React.ReactNode;
 
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: Value | null;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: Value | null;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: Value) => void;
 
   /** Props passed down to the `Input.Wrapper` */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Controls size of the `Input.Wrapper` @default 'sm' */
+  /** Controls size of the `Input.Wrapper` @default 'sm' @category appearance */
   size?: MantineSize;
 
   /** `name` attribute of child radio inputs. By default, `name` is generated randomly. */
   name?: string;
 
-  /** If set, value cannot be changed */
+  /** If set, value cannot be changed @category behavior */
   readOnly?: boolean;
 
-  /** Sets `disabled` attribute, prevents interactions */
+  /** Sets `disabled` attribute, prevents interactions @category behavior */
   disabled?: boolean;
 }
 

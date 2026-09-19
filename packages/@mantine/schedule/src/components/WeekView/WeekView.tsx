@@ -111,79 +111,79 @@ export interface WeekViewProps
   extends BoxProps, StylesApiProps<WeekViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Week to display, Date object or date string in `YYYY-MM-DD` format */
+  /** Week to display, Date object or date string in `YYYY-MM-DD` format @category state */
   date: Date | string;
 
-  /** Called with the new date value when a date is selected */
+  /** Called with the new date value when a date is selected @category state */
   onDateChange?: (value: DateStringValue) => void;
 
-  /** Start time for the day view, in `HH:mm:ss` format @default 00:00:00 */
+  /** Start time for the day view, in `HH:mm:ss` format @default 00:00:00 @category appearance */
   startTime?: string;
 
-  /** End time for the day view, in `HH:mm:ss` format @default 23:59:59 */
+  /** End time for the day view, in `HH:mm:ss` format @default 23:59:59 @category appearance */
   endTime?: string;
 
-  /** Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
+  /** Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 @category appearance */
   intervalMinutes?: number;
 
-  /** If set, grid lines are displayed for intervals smaller than one hour, for example 15 and 30 minutes intervals @default true */
+  /** If set, grid lines are displayed for intervals smaller than one hour, for example 15 and 30 minutes intervals @default true @category appearance */
   withSubHourGridLines?: boolean;
 
-  /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm  */
+  /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm @category appearance */
   slotLabelFormat?: DateLabelFormat;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday @category appearance */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names. @default 'ddd' */
+  /** `dayjs` format for weekdays names. @default 'ddd' @category appearance */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. @category appearance */
   weekendDays?: DayOfWeek[];
 
-  /** If set to false, weekend days are hidden @default true */
+  /** If set to false, weekend days are hidden @default true @category appearance */
   withWeekendDays?: boolean;
 
-  /** Determines how events that overlap in time are laid out: `columns` splits the available width between them, `cascade` indents each event and stacks it over the previous one @default 'columns' */
+  /** Determines how events that overlap in time are laid out: `columns` splits the available width between them, `cascade` indents each event and stacks it over the previous one @default 'columns' @category appearance */
   eventOverlapMode?: ScheduleEventOverlapMode;
 
-  /** Time in ms the pointer must rest on an event before it is raised above the events covering it, only used with `eventOverlapMode="cascade"` @default 600 */
+  /** Time in ms the pointer must rest on an event before it is raised above the events covering it, only used with `eventOverlapMode="cascade"` @default 600 @category behavior */
   eventOverlapRaiseDelay?: number;
 
-  /** If set to true, highlights today in the weekday row @default false */
+  /** If set to true, highlights today in the weekday row @default false @category appearance */
   highlightToday?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
   /** Props passed down to the `ScrollArea.Autosize` component */
   scrollAreaProps?: ScrollAreaAutosizeProps & DataAttributes;
 
-  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` @category appearance */
   locale?: string;
 
-  /** If set, the week number is displayed at the top left corner @default true */
+  /** If set, the week number is displayed at the top left corner @default true @category appearance */
   withWeekNumber?: boolean;
 
-  /** If set, displays a line indicating the current time @default true */
+  /** If set, displays a line indicating the current time @default true @category appearance */
   withCurrentTimeIndicator?: boolean;
 
-  /** If set, the time indicator displays the current time in the bubble @default true */
+  /** If set, the time indicator displays the current time in the bubble @default true @category appearance */
   withCurrentTimeBubble?: boolean;
 
-  /** If set, displays the current time indicator on the same day of week even when viewing a different week @default false */
+  /** If set, displays the current time indicator on the same day of week even when viewing a different week @default false @category appearance */
   forceCurrentTimeIndicator?: boolean;
 
-  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() */
+  /** A function to get the current time, called on every tick. Can be used to display the current time indicator in a different timezone. @default () => dayjs() @category appearance */
   getCurrentTime?: () => AnyDateValue;
 
-  /** If set, displays all-day slots at the top of the view @default true */
+  /** If set, displays all-day slots at the top of the view @default true @category appearance */
   withAllDaySlots?: boolean;
 
-  /** If set, the header is displayed @default true */
+  /** If set, the header is displayed @default true @category appearance */
   withHeader?: boolean;
 
-  /** Called when view level select button is clicked */
+  /** Called when view level select button is clicked @category state */
   onViewChange?: (view: ScheduleViewLevel) => void;
 
   /** Props passed to previous month control */
@@ -198,37 +198,37 @@ export interface WeekViewProps
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 
-  /** Format for week label @default 'MMM DD' */
+  /** Format for week label @default 'MMM DD' @category appearance */
   weekLabelFormat?: DateLabelFormat;
 
-  /** List of events to display in the week view */
+  /** List of events to display in the week view @category appearance */
   events?: ScheduleEventData[];
 
-  /** Height of 1hr slot @default 64px */
+  /** Height of 1hr slot @default 64px @category appearance */
   slotHeight?: React.CSSProperties['height'];
 
-  /** Height of all-day slot @default 48px */
+  /** Height of all-day slot @default 48px @category appearance */
   allDaySlotHeight?: React.CSSProperties['height'];
 
-  /** Labels override */
+  /** Labels override @category appearance */
   labels?: ScheduleLabelsOverride;
 
-  /** If set to true, highlights business hours with white background @default false */
+  /** If set to true, highlights business hours with white background @default false @category appearance */
   highlightBusinessHours?: boolean;
 
-  /** Business hours range in `HH:mm:ss` format shared across all days, or a per-day record keyed by day of the week (`0` – Sunday, `6` – Saturday) for day-specific ranges. Set a day to `null` to mark it as fully outside business hours. @default ['09:00:00', '17:00:00'] */
+  /** Business hours range in `HH:mm:ss` format shared across all days, or a per-day record keyed by day of the week (`0` – Sunday, `6` – Saturday) for day-specific ranges. Set a day to `null` to mark it as fully outside business hours. @default ['09:00:00', '17:00:00'] @category appearance */
   businessHours?: BusinessHoursValue;
 
-  /** Function to customize event body, `event` object is passed as first argument */
+  /** Function to customize event body, `event` object is passed as first argument @category appearance */
   renderEventBody?: RenderEventBody;
 
-  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children @category appearance */
   renderEvent?: RenderEvent;
 
-  /** If true, events can be dragged and dropped @default false */
+  /** If true, events can be dragged and dropped @default false @category behavior */
   withEventsDragAndDrop?: boolean;
 
-  /** Called when event is dropped at new time */
+  /** Called when event is dropped at new time @category behavior */
   onEventDrop?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -236,59 +236,59 @@ export interface WeekViewProps
     event: ScheduleEventData;
   }) => void;
 
-  /** Function to determine if event can be dragged */
+  /** Function to determine if event can be dragged @category behavior */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes @category behavior */
   eventDragInterval?: number;
 
-  /** Called when any event drag starts */
+  /** Called when any event drag starts @category behavior */
   onEventDragStart?: (event: ScheduleEventData) => void;
 
-  /** Called when any event drag ends */
+  /** Called when any event drag ends @category behavior */
   onEventDragEnd?: () => void;
 
-  /** Called when time slot is clicked */
+  /** Called when time slot is clicked @category behavior */
   onTimeSlotClick?: (data: {
     slotStart: DateTimeStringValue;
     slotEnd: DateTimeStringValue;
     nativeEvent: React.MouseEvent<HTMLButtonElement>;
   }) => void;
 
-  /** Called when all-day slot is clicked */
+  /** Called when all-day slot is clicked @category behavior */
   onAllDaySlotClick?: (day: DateStringValue, event: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** Called when event is clicked */
+  /** Called when event is clicked @category behavior */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` @default false @category behavior */
   withInteractiveBackgroundEvents?: boolean;
 
-  /** If set, enables drag-to-select time slot ranges @default false */
+  /** If set, enables drag-to-select time slot ranges @default false @category behavior */
   withDragSlotSelect?: boolean;
 
-  /** Called when a time slot range is selected by dragging */
+  /** Called when a time slot range is selected by dragging @category behavior */
   onSlotDragEnd?: (rangeStart: DateTimeStringValue, rangeEnd: DateTimeStringValue) => void;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default @category behavior */
   mode?: ScheduleMode;
 
-  /** Time to scroll to on initial render, in `HH:mm:ss` format */
+  /** Time to scroll to on initial render, in `HH:mm:ss` format @category appearance */
   startScrollTime?: string;
 
-  /** Function to customize week label in the header */
+  /** Function to customize week label in the header @category appearance */
   renderWeekLabel?: (params: {
     weekStart: DateStringValue;
     weekEnd: DateStringValue;
   }) => React.ReactNode;
 
-  /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. */
+  /** Called when an external item is dropped onto the schedule. Receives the `DataTransfer` object and the drop target datetime. @category behavior */
   onExternalEventDrop?: (dataTransfer: DataTransfer, dropDateTime: DateTimeStringValue) => void;
 
-  /** If true, events can be resized by dragging their edges @default false */
+  /** If true, events can be resized by dragging their edges @default false @category behavior */
   withEventResize?: boolean;
 
-  /** Called when event is resized */
+  /** Called when event is resized @category behavior */
   onEventResize?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -296,25 +296,25 @@ export interface WeekViewProps
     event: ScheduleEventData;
   }) => void;
 
-  /** Function to determine if event can be resized */
+  /** Function to determine if event can be resized @category behavior */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. */
+  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. @category behavior */
   canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
 
-  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. */
+  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. @category behavior */
   canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
 
-  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. */
+  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. @category behavior */
   canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
 
-  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false */
+  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false @category behavior */
   preventEventOverlap?: PreventEventOverlap;
 
-  /** Called when a drop or resize is rejected */
+  /** Called when a drop or resize is rejected @category behavior */
   onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
 
-  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes @category behavior */
   eventResizeInterval?: number;
 
   /** Max number of generated recurring instances per recurring series @default 2000 */
@@ -326,7 +326,7 @@ export interface WeekViewProps
     end: DateTimeStringValue;
   }) => Record<string, any> | undefined;
 
-  /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
+  /** If set, displays an Agenda button in the header that opens an agenda list view @default false @category appearance */
   withAgenda?: boolean;
 }
 

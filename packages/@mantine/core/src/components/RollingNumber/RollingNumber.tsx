@@ -23,37 +23,37 @@ export type RollingNumberCssVariables = {
 
 export interface RollingNumberProps
   extends BoxProps, StylesApiProps<RollingNumberFactory>, ElementProps<'div'> {
-  /** Number value to display */
+  /** Number value to display @category state */
   value: number;
 
-  /** Prefix added before the value */
+  /** Prefix added before the value @category appearance */
   prefix?: string;
 
-  /** Suffix added after the value */
+  /** Suffix added after the value @category appearance */
   suffix?: string;
 
-  /** Character used as a decimal separator @default '.' */
+  /** Character used as a decimal separator @default '.' @category appearance */
   decimalSeparator?: string;
 
-  /** Character used to separate thousands, set to `true` for `,` @default false */
+  /** Character used to separate thousands, set to `true` for `,` @default false @category appearance */
   thousandSeparator?: string | boolean;
 
-  /** Number of decimal places to display */
+  /** Number of decimal places to display @category appearance */
   decimalScale?: number;
 
-  /** If set, trailing zeros are added to match `decimalScale` @default false */
+  /** If set, trailing zeros are added to match `decimalScale` @default false @category appearance */
   fixedDecimalScale?: boolean;
 
-  /** Animation duration in milliseconds @default 600 */
+  /** Animation duration in milliseconds @default 600 @category appearance */
   animationDuration?: number;
 
-  /** CSS timing function for animation @default 'ease' */
+  /** CSS timing function for animation @default 'ease' @category appearance */
   timingFunction?: string;
 
-  /** If set, use tabular (monospace) numbers @default true */
+  /** If set, use tabular (monospace) numbers @default true @category appearance */
   tabularNumbers?: boolean;
 
-  /** If set, the root element acts as an `aria-live="polite"` region (`role="status"`) and screen readers announce every value change. When `false`, the root uses `role="img"` so the current value is still accessible but updates are not announced. @default false */
+  /** If set, the root element acts as an `aria-live="polite"` region (`role="status"`) and screen readers announce every value change. When `false`, the root uses `role="img"` so the current value is still accessible but updates are not announced. @default false @category accessibility */
   withLiveRegion?: boolean;
 }
 

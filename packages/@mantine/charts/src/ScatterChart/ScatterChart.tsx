@@ -61,19 +61,19 @@ export interface ScatterChartProps
     BoxProps,
     StylesApiProps<ScatterChartFactory>,
     ElementProps<'div'> {
-  /** Keys that should be used to retrieve data from the data array on x and y axis */
+  /** Keys that should be used to retrieve data from the data array on x and y axis @category appearance */
   dataKey: { x: string; y: string };
 
-  /** Data that is used to build the chart */
+  /** Data that is used to build the chart @category appearance */
   data: ScatterChartSeries[];
 
-  /** Units displayed after value on axis and inside the tooltip */
+  /** Units displayed after value on axis and inside the tooltip @category appearance */
   unit?: { x?: string; y?: string };
 
-  /** Labels that should be used instead of keys names in the tooltip */
+  /** Labels that should be used instead of keys names in the tooltip @category appearance */
   labels?: { x?: string; y?: string };
 
-  /** A function to format values on x/y axis and in the tooltip */
+  /** A function to format values on x/y axis and in the tooltip @category appearance */
   valueFormatter?:
     | GridChartBaseProps['valueFormatter']
     | { x?: GridChartBaseProps['valueFormatter']; y?: GridChartBaseProps['valueFormatter'] };
@@ -84,7 +84,7 @@ export interface ScatterChartProps
   /** Props passed down to recharts `Scatter` component */
   scatterProps?: Partial<Omit<ScatterProps, 'ref'>>;
 
-  /** If set, displays labels next to points for the given axis */
+  /** If set, displays labels next to points for the given axis @category appearance */
   pointLabels?: 'x' | 'y';
 }
 

@@ -3,18 +3,31 @@ import { clamp, useDidUpdate, useMergedRef } from '@mantine/hooks';
 import { padTime } from '../TimePicker/utils/pad-time/pad-time';
 
 interface SpinInputProps extends Omit<React.ComponentProps<'input'>, 'onChange' | 'value'> {
+  /** @category state */
   value: number | null;
+  /** @category behavior */
   min: number;
+  /** @category behavior */
   max: number;
+  /** @category state */
   onChange: (value: number | null) => void;
+  /** @category behavior */
   focusable: boolean;
+  /** @category behavior */
   step: number;
+  /** @category behavior */
   onNextInput?: () => void;
+  /** @category behavior */
   onPreviousInput?: () => void;
+  /** @category behavior */
   allowTemporaryZero?: boolean;
+  /** @category appearance */
   placeholder?: string;
+  /** @category behavior */
   disableAutoAdvance?: boolean;
+  /** @category appearance */
   padValue?: (value: number) => string;
+  /** @category behavior */
   maxDigits?: number;
 }
 

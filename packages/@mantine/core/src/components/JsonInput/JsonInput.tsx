@@ -7,28 +7,28 @@ import { Textarea, TextareaProps } from '../Textarea';
 import { validateJson } from './validate-json/validate-json';
 
 export interface JsonInputProps extends Omit<TextareaProps, 'onChange'> {
-  /** Controlled component value */
+  /** Controlled component value @category state */
   value?: string;
 
-  /** Uncontrolled component default value */
+  /** Uncontrolled component default value @category state */
   defaultValue?: string;
 
-  /** Called when value changes */
+  /** Called when value changes @category state */
   onChange?: (value: string) => void;
 
-  /** Determines whether the value should be formatted on blur @default false */
+  /** Determines whether the value should be formatted on blur @default false @category behavior */
   formatOnBlur?: boolean;
 
-  /** Error message shown when the input value is invalid JSON (checked on blur). If not provided, a generic error state is shown. Takes precedence over the `error` prop when validation fails. */
+  /** Error message shown when the input value is invalid JSON (checked on blur). If not provided, a generic error state is shown. Takes precedence over the `error` prop when validation fails. @category state */
   validationError?: React.ReactNode;
 
-  /** Function to serialize value into a string for formatting. Called with (value, null, 2) where 2 is the indentation level. @default JSON.stringify */
+  /** Function to serialize value into a string for formatting. Called with (value, null, 2) where 2 is the indentation level. @default JSON.stringify @category behavior */
   serialize?: typeof JSON.stringify;
 
-  /** Function to deserialize string value for formatting and validation. Must throw an error if the string is invalid JSON. @default JSON.parse */
+  /** Function to deserialize string value for formatting and validation. Must throw an error if the string is invalid JSON. @default JSON.parse @category behavior */
   deserialize?: typeof JSON.parse;
 
-  /** Number of spaces to use as white space for formatting. Passed as the third argument to `serialize` function. @default 2 */
+  /** Number of spaces to use as white space for formatting. Passed as the third argument to `serialize` function. @default 2 @category appearance */
   indentSpaces?: number;
 }
 

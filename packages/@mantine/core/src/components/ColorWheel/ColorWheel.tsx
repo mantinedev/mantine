@@ -21,46 +21,46 @@ export type ColorWheelCssVariables = {
 
 export interface ColorWheelProps
   extends BoxProps, StylesApiProps<ColorWheelFactory>, ElementProps<'div', 'onChange'> {
-  /** Step between values @default 1 */
+  /** Step between values @default 1 @category behavior */
   step?: number;
 
-  /** Controlled component value, hue in degrees (0–360) */
+  /** Controlled component value, hue in degrees (0–360) @category state */
   value?: number;
 
-  /** Uncontrolled component default value, hue in degrees (0–360) @default 0 */
+  /** Uncontrolled component default value, hue in degrees (0–360) @default 0 @category state */
   defaultValue?: number;
 
-  /** Called on value change */
+  /** Called on value change @category state */
   onChange?: (value: number) => void;
 
-  /** Called after the selection is finished */
+  /** Called after the selection is finished @category state */
   onChangeEnd?: (value: number) => void;
 
-  /** Called in `onMouseDown` and `onTouchStart` */
+  /** Called in `onMouseDown` and `onTouchStart` @category behavior */
   onScrubStart?: () => void;
 
-  /** Called in `onMouseUp` and `onTouchEnd` */
+  /** Called in `onMouseUp` and `onTouchEnd` @category behavior */
   onScrubEnd?: () => void;
 
-  /** Wheel outer diameter @default 180 */
+  /** Wheel outer diameter @default 180 @category appearance */
   size?: number | string;
 
-  /** Ring thickness in px @default 24 */
+  /** Ring thickness in px @default 24 @category appearance */
   thickness?: number;
 
-  /** Size of the thumb in px. Calculated based on the `thickness` value by default. */
+  /** Size of the thumb in px. Calculated based on the `thickness` value by default. @category appearance */
   thumbSize?: number;
 
-  /** Saturation (0–100) used to render the ring colors @default 100 */
+  /** Saturation (0–100) used to render the ring colors @default 100 @category appearance */
   saturation?: number;
 
-  /** Lightness (0–100) used to render the ring colors @default 50 */
+  /** Lightness (0–100) used to render the ring colors @default 50 @category appearance */
   lightness?: number;
 
-  /** If set, the thumb indicator is displayed @default true */
+  /** If set, the thumb indicator is displayed @default true @category appearance */
   withThumbIndicator?: boolean;
 
-  /** Sets `data-disabled` attribute, disables interactions */
+  /** Sets `data-disabled` attribute, disables interactions @category behavior */
   disabled?: boolean;
 
   /** Props passed down to the hidden input */

@@ -35,52 +35,52 @@ import {
 import { useTooltip } from './use-tooltip';
 import classes from './Tooltip.module.css';
 export interface TooltipProps extends TooltipBaseProps {
-  /** Called when tooltip position changes */
+  /** Called when tooltip position changes @category behavior */
   onPositionChange?: (position: FloatingPosition) => void;
 
-  /** Open delay in ms */
+  /** Open delay in ms @category behavior */
   openDelay?: number;
 
-  /** Close delay in ms @default 0 */
+  /** Close delay in ms @default 0 @category behavior */
   closeDelay?: number;
 
-  /** Controlled opened state */
+  /** Controlled opened state @category state */
   opened?: boolean;
 
-  /** Uncontrolled tooltip initial opened state */
+  /** Uncontrolled tooltip initial opened state @category state */
   defaultOpened?: boolean;
 
-  /** Space between target element and tooltip in px @default 5 */
+  /** Space between target element and tooltip in px @default 5 @category appearance */
   offset?: number | FloatingAxesOffsets;
 
-  /** If set, the tooltip has an arrow @default false */
+  /** If set, the tooltip has an arrow @default false @category appearance */
   withArrow?: boolean;
 
-  /** Arrow size in px @default 4 */
+  /** Arrow size in px @default 4 @category appearance */
   arrowSize?: number;
 
-  /** Arrow offset in px @default 5 */
+  /** Arrow offset in px @default 5 @category appearance */
   arrowOffset?: number;
 
-  /** Arrow `border-radius` in px @default 0 */
+  /** Arrow `border-radius` in px @default 0 @category appearance */
   arrowRadius?: number;
 
-  /** Arrow position relative to the tooltip @default side */
+  /** Arrow position relative to the tooltip @default side @category appearance */
   arrowPosition?: ArrowPosition;
 
-  /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type @default { duration: 100, transition: 'fade' } */
+  /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type @default { duration: 100, transition: 'fade' } @category appearance */
   transitionProps?: TransitionOverride;
 
-  /** Determines which events are used to open the tooltip. Set `click: true` to toggle the tooltip on trigger click – hover and focus opening are disabled in this mode @default { hover: true, focus: false, touch: false } */
+  /** Determines which events are used to open the tooltip. Set `click: true` to toggle the tooltip on trigger click – hover and focus opening are disabled in this mode @default { hover: true, focus: false, touch: false } @category behavior */
   events?: { hover?: boolean; focus?: boolean; touch?: boolean; click?: boolean };
 
-  /** If set, the tooltip is closed when a click is registered outside of the tooltip, applies only to click mode @default true */
+  /** If set, the tooltip is closed when a click is registered outside of the tooltip, applies only to click mode @default true @category behavior */
   closeOnClickOutside?: boolean;
 
-  /** If set, the tooltip is closed when the `Escape` key is pressed, applies only to click mode @default true */
+  /** If set, the tooltip is closed when the `Escape` key is pressed, applies only to click mode @default true @category behavior */
   closeOnEscape?: boolean;
 
-  /** If set, the tooltip stays open while the pointer moves from the target to the tooltip and remains over it. Required by [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html) if the tooltip contains interactive content. Note that an interactive tooltip intercepts pointer events of the content it overlaps @default false */
+  /** If set, the tooltip stays open while the pointer moves from the target to the tooltip and remains over it. Required by [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html) if the tooltip contains interactive content. Note that an interactive tooltip intercepts pointer events of the content it overlaps @default false @category behavior */
   interactive?: boolean;
 
   /** Must be set if the tooltip target is an inline element */
@@ -92,7 +92,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) @default 'absolute' */
   floatingStrategy?: FloatingStrategy;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color for `filled` variant @category appearance */
   autoContrast?: boolean;
 
   /** Selector, ref of an element or element itself that should be used for positioning */

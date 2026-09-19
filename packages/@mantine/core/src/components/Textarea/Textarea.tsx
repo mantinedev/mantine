@@ -19,19 +19,19 @@ export interface TextareaProps
     ElementProps<'textarea', 'size'> {
   __staticSelector?: string;
 
-  /** If set, enables textarea height growing with its content @default false */
+  /** If set, enables textarea height growing with its content @default false @category appearance */
   autosize?: boolean;
 
-  /** Maximum rows for autosize textarea to grow, ignored if `autosize` prop is not set */
+  /** Maximum rows for autosize textarea to grow, ignored if `autosize` prop is not set @category appearance */
   maxRows?: number;
 
-  /** Minimum rows of autosize textarea, ignored if `autosize` prop is not set */
+  /** Minimum rows of autosize textarea, ignored if `autosize` prop is not set @category appearance */
   minRows?: number;
 
-  /** Controls `resize` CSS property @default 'none' */
+  /** Controls `resize` CSS property @default 'none' @category appearance */
   resize?: React.CSSProperties['resize'];
 
-  /** Content rendered at the bottom of the input, inside the border */
+  /** Content rendered at the bottom of the input, inside the border @category appearance */
   bottomSection?: React.ReactNode;
 
   /** Props passed down to the `bottomSection` element */

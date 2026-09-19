@@ -27,7 +27,7 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
    * - Matching is case-insensitive and accent-insensitive by default, use `caseInsensitive` and `accentInsensitive` props to control this behavior
    * - Regex special characters are automatically escaped
    * - When multiple substrings are provided, longer matches take precedence
-   * - Empty strings and whitespace-only strings are ignored
+   * - Empty strings and whitespace-only strings are ignored @category appearance
    */
   highlight: string | string[] | HighlightTerm[];
 
@@ -35,33 +35,33 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
    * Default background color for all highlighted text.
    * Key of `theme.colors` or any valid CSS color, passed to `Mark` component.
    * Can be overridden per term when using HighlightTerm objects.
-   * @default 'yellow'
+   * @default 'yellow' @category appearance
    */
   color?: MantineColor | string;
 
-  /** Styles applied to `mark` elements */
+  /** Styles applied to `mark` elements @category appearance */
   highlightStyles?: React.CSSProperties | ((theme: MantineTheme) => React.CSSProperties);
 
-  /** String in which to highlight substrings */
+  /** String in which to highlight substrings @category appearance */
   children: string;
 
   /**
    * Only match whole words (adds word boundaries to regex).
    * When enabled, 'the' will not match 'there'.
-   * @default false
+   * @default false @category appearance
    */
   wholeWord?: boolean;
 
   /**
    * Perform case-insensitive matching.
-   * @default true
+   * @default true @category appearance
    */
   caseInsensitive?: boolean;
 
   /**
    * Perform accent-insensitive matching.
    * When enabled cafe will match cafe, café, cafè, etc.
-   * @default true
+   * @default true @category appearance
    */
   accentInsensitive?: boolean;
 }

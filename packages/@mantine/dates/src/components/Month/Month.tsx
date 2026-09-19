@@ -89,16 +89,16 @@ export interface MonthSettings {
   /** Assigns ref of every day based on its position in the table, used for arrows navigation */
   __getDayRef?: (rowIndex: number, cellIndex: number, node: HTMLButtonElement) => void;
 
-  /** `dayjs` locale, the default value is defined by `DatesProvider` */
+  /** `dayjs` locale, the default value is defined by `DatesProvider` @category appearance */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday @category appearance */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names @default 'dd' */
+  /** `dayjs` format for weekdays names @default 'dd' @category appearance */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. @category appearance */
   weekendDays?: DayOfWeek[];
 
   /** Passes props down to `Day` components */
@@ -106,40 +106,40 @@ export interface MonthSettings {
     date: DateStringValue
   ) => Omit<Partial<DayProps>, 'classNames' | 'styles' | 'vars'> & DataAttributes;
 
-  /** Callback function to determine whether the day should be disabled */
+  /** Callback function to determine whether the day should be disabled @category behavior */
   excludeDate?: (date: DateStringValue) => boolean;
 
-  /** Minimum possible date, in `YYYY-MM-DD` format */
+  /** Minimum possible date, in `YYYY-MM-DD` format @category behavior */
   minDate?: DateStringValue | Date;
 
-  /** Maximum possible date, in `YYYY-MM-DD` format */
+  /** Maximum possible date, in `YYYY-MM-DD` format @category behavior */
   maxDate?: DateStringValue | Date;
 
-  /** Controls day value rendering */
+  /** Controls day value rendering @category appearance */
   renderDay?: RenderDay;
 
-  /** Determines whether outside dates should be hidden @default false */
+  /** Determines whether outside dates should be hidden @default false @category appearance */
   hideOutsideDates?: boolean;
 
-  /** Determines whether weekdays row should be hidden @default false */
+  /** Determines whether weekdays row should be hidden @default false @category appearance */
   hideWeekdays?: boolean;
 
-  /** Assigns `aria-label` to `Day` components based on date */
+  /** Assigns `aria-label` to `Day` components based on date @category accessibility */
   getDayAriaLabel?: (date: DateStringValue) => string;
 
-  /** Controls size */
+  /** Controls size @category appearance */
   size?: MantineSize;
 
-  /** Determines whether controls should be separated by space @default true */
+  /** Determines whether controls should be separated by space @default true @category appearance */
   withCellSpacing?: boolean;
 
-  /** Determines whether today should be highlighted with a border @default false */
+  /** Determines whether today should be highlighted with a border @default false @category appearance */
   highlightToday?: boolean;
 
-  /** Determines whether week numbers should be displayed @default false */
+  /** Determines whether week numbers should be displayed @default false @category appearance */
   withWeekNumbers?: boolean;
 
-  /** Determines whether the month should take the full width of its container @default false */
+  /** Determines whether the month should take the full width of its container @default false @category appearance */
   fullWidth?: boolean;
 }
 
@@ -147,10 +147,10 @@ export interface MonthProps
   extends BoxProps, MonthSettings, StylesApiProps<MonthFactory>, ElementProps<'table'> {
   __staticSelector?: string;
 
-  /** Month to display, value `YYYY-MM-DD` */
+  /** Month to display, value `YYYY-MM-DD` @category state */
   month: DateStringValue;
 
-  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
+  /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way @category behavior */
   static?: boolean;
 }
 

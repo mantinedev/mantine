@@ -152,6 +152,31 @@ const FILES_PATHS = getPaths([
   // List
   'packages/@mantine/core/src/components/List/ListItem/ListItem.tsx',
 
+  // DataList
+  'packages/@mantine/core/src/components/DataList/DataListItem/DataListItem.tsx',
+  'packages/@mantine/core/src/components/DataList/DataListItemLabel/DataListItemLabel.tsx',
+  'packages/@mantine/core/src/components/DataList/DataListItemValue/DataListItemValue.tsx',
+
+  // EmptyState
+  'packages/@mantine/core/src/components/EmptyState/EmptyStateIndicator/EmptyStateIndicator.tsx',
+  'packages/@mantine/core/src/components/EmptyState/EmptyStateTitle/EmptyStateTitle.tsx',
+  'packages/@mantine/core/src/components/EmptyState/EmptyStateDescription/EmptyStateDescription.tsx',
+  'packages/@mantine/core/src/components/EmptyState/EmptyStateActions/EmptyStateActions.tsx',
+
+  // Menubar
+  'packages/@mantine/core/src/components/Menubar/MenubarMenu/MenubarMenu.tsx',
+  'packages/@mantine/core/src/components/Menubar/MenubarTarget/MenubarTarget.tsx',
+  'packages/@mantine/core/src/components/Menubar/MenubarDropdown/MenubarDropdown.tsx',
+
+  // Mentions
+  'packages/@mantine/core/src/components/Mentions/Mention.tsx',
+
+  // Splitter
+  'packages/@mantine/core/src/components/Splitter/SplitterPane/SplitterPane.tsx',
+
+  // Tilt
+  'packages/@mantine/core/src/components/Tilt/TiltLayer.tsx',
+
   // ColorPicker
   'packages/@mantine/core/src/components/ColorPicker/AlphaSlider/AlphaSlider.tsx',
   'packages/@mantine/core/src/components/ColorPicker/HueSlider/HueSlider.tsx',
@@ -208,6 +233,7 @@ const FILES_PATHS = getPaths([
 
   // Schedule
   'packages/@mantine/schedule/src/components/DayView/DayView.tsx',
+  'packages/@mantine/schedule/src/components/AgendaView/AgendaView.tsx',
   'packages/@mantine/schedule/src/components/MonthView/MonthView.tsx',
   'packages/@mantine/schedule/src/components/WeekView/WeekView.tsx',
   'packages/@mantine/schedule/src/components/YearView/YearView.tsx',
@@ -217,6 +243,9 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/schedule/src/components/ResourcesWeekView/ResourcesWeekView.tsx',
   'packages/@mantine/schedule/src/components/ResourcesMonthView/ResourcesMonthView.tsx',
   'packages/@mantine/schedule/src/components/ResourcesSchedule/ResourcesSchedule.tsx',
+
+  // DataGrid
+  'packages/@mantine/data-grid/src/DataGrid.tsx',
 ]);
 
 export const DOCGEN_PATHS = getDeclarationsPaths([

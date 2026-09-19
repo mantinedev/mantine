@@ -43,34 +43,34 @@ export interface MatrixChartProps
     BoxProps,
     StylesApiProps<MatrixChartFactory>,
     ElementProps<'svg', 'display' | 'opacity' | 'viewBox' | 'width' | 'height'> {
-  /** Array of cell objects with x, y, and value */
+  /** Array of cell objects with x, y, and value @category appearance */
   data: MatrixChartData;
 
-  /** Labels for x-axis (columns), displayed along top or bottom */
+  /** Labels for x-axis (columns), displayed along top or bottom @category appearance */
   xLabels?: string[];
 
-  /** Labels for y-axis (rows), displayed along left side */
+  /** Labels for y-axis (rows), displayed along left side @category appearance */
   yLabels?: string[];
 
-  /** Value domain [min, max] for color interpolation, auto-calculated if not set */
+  /** Value domain [min, max] for color interpolation, auto-calculated if not set @category appearance */
   domain?: [number, number];
 
-  /** Array of colors for value interpolation, by default 4 shades of green colors are used */
+  /** Array of colors for value interpolation, by default 4 shades of green colors are used @category appearance */
   colors?: MantineColor[];
 
-  /** Cell size in px, @default 20 */
+  /** Cell size in px, @default 20 @category appearance */
   cellSize?: number;
 
-  /** Gap between cells in px, @default 1 */
+  /** Gap between cells in px, @default 1 @category appearance */
   gap?: number;
 
-  /** Cell border radius, @default 2 */
+  /** Cell border radius, @default 2 @category appearance */
   cellRadius?: number;
 
-  /** If set, tooltip is displayed on cell hover, requires `getTooltipLabel` to be set @default false */
+  /** If set, tooltip is displayed on cell hover, requires `getTooltipLabel` to be set @default false @category appearance */
   withTooltip?: boolean;
 
-  /** A function to generate tooltip label based on the hovered cell, required for the tooltip to be visible */
+  /** A function to generate tooltip label based on the hovered cell, required for the tooltip to be visible @category appearance */
   getTooltipLabel?: (cell: MatrixChartCell) => React.ReactNode;
 
   /** Props passed down to the `Tooltip.Floating` component */
@@ -79,34 +79,34 @@ export interface MatrixChartProps
   /** Callback to add custom props to cells */
   getCellProps?: (cell: MatrixChartCell) => React.ComponentProps<'rect'>;
 
-  /** Width reserved for y-axis labels, @default 60 */
+  /** Width reserved for y-axis labels, @default 60 @category appearance */
   yLabelsWidth?: number;
 
-  /** Height reserved for x-axis labels, @default 60 */
+  /** Height reserved for x-axis labels, @default 60 @category appearance */
   xLabelsHeight?: number;
 
-  /** X-axis label position, @default 'bottom' */
+  /** X-axis label position, @default 'bottom' @category appearance */
   xLabelsPosition?: 'top' | 'bottom';
 
-  /** Font size for axis labels, @default 12 */
+  /** Font size for axis labels, @default 12 @category appearance */
   fontSize?: number;
 
-  /** Color for empty/null cells */
+  /** Color for empty/null cells @category appearance */
   emptyColor?: MantineColor;
 
-  /** Whether to show legend, @default false */
+  /** Whether to show legend, @default false @category appearance */
   withLegend?: boolean;
 
-  /** Legend labels, @default ['Less', 'More'] */
+  /** Legend labels, @default ['Less', 'More'] @category appearance */
   legendLabels?: [string, string];
 
-  /** If set, x-axis labels are displayed, @default false */
+  /** If set, x-axis labels are displayed, @default false @category appearance */
   withXLabels?: boolean;
 
-  /** If set, y-axis labels are displayed, @default false */
+  /** If set, y-axis labels are displayed, @default false @category appearance */
   withYLabels?: boolean;
 
-  /** Rotation angle for x-axis labels in degrees, @default -90 */
+  /** Rotation angle for x-axis labels in degrees, @default -90 @category appearance */
   xLabelsRotation?: number;
 }
 
