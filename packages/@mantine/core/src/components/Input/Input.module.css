@@ -101,7 +101,7 @@
   &[data-variant='default'] {
     --input-bd: var(--mantine-color-default-border);
     --input-bg: var(--mantine-color-default);
-    --input-bd-focus: var(--mantine-primary-color-filled);
+    --input-bd-focus: var(--mantine-color-focus-ring);
   }
 
   &[data-variant='filled'] {
@@ -111,7 +111,7 @@
   @mixin light {
     &[data-variant='filled'] {
       --input-bd: transparent;
-      --input-bd-focus: var(--mantine-primary-color-filled);
+      --input-bd-focus: var(--mantine-color-focus-ring);
     }
 
     &[data-variant='unstyled'] {
@@ -124,7 +124,7 @@
   @mixin dark {
     &[data-variant='filled'] {
       --input-bd: transparent;
-      --input-bd-focus: var(--mantine-primary-color-filled);
+      --input-bd-focus: var(--mantine-color-focus-ring);
     }
 
     &[data-variant='unstyled'] {

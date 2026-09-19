@@ -64,6 +64,6 @@
   }
 
   .handle:focus-visible & {
-    box-shadow: 0 0 0 rem(2px) var(--mantine-primary-color-filled);
+    box-shadow: 0 0 0 rem(2px) var(--mantine-color-focus-ring);
   }
 }

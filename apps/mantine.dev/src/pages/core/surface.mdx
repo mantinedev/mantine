@@ -33,9 +33,11 @@ read as natural elevation layers. In light color scheme all levels are white by 
 interfaces are near-flat and rely on shadows and borders instead of tone, so the demos on this
 page are best viewed in dark color scheme.
 
-A separate `--mantine-color-surface-sunken` token covers inset elements (`Code`, `Kbd`,
-`SegmentedControl` root, `Slider` and `Progress` tracks). It is not a `Surface` level – sunken
-backgrounds sit below the page and are not used for containers.
+Two separate tokens cover non-container backgrounds, neither of which is a `Surface` level:
+`--mantine-color-surface-sunken` for wells that hold a raised child (`SegmentedControl` root, `Tabs`
+`contained` list, `ScrollArea` scrollbars), and `--mantine-color-surface-muted` for code and inset
+content (`Code`, `Kbd`, `CodeHighlight`, `Typography` `pre`). In dark color scheme a sunken well
+sits below the page while a muted surface sits one step above it.
 
 ## Automatic depth
 
@@ -113,7 +115,7 @@ function Demo() {
 }
 ```
 
-Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2` and `sunken` keys. Note that
+Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, `sunken` and `muted` keys. Note that
 `page` also controls the page background (`--mantine-color-body`), modals and dropdowns – see
 the [colors guide](/theming/colors) for the full list of consumers.
 

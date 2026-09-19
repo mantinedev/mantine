@@ -79,7 +79,7 @@
     font-family: var(--mantine-font-family-monospace);
     border-radius: var(--mantine-radius-default);
     padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
-    background-color: var(--mantine-color-surface-sunken);
+    background-color: var(--mantine-color-surface-muted);
     --code-color-comment: var(--mantine-color-dimmed);
 
     @mixin where-light {

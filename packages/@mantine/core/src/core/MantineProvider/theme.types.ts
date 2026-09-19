@@ -260,8 +260,11 @@ export interface MantineThemeSurfaceValues {
   /** Background of the second raised step used by nested surfaces, `--mantine-color-surface-panel-2` */
   panel2?: string;
 
-  /** Background of below-page wells and tracks, `--mantine-color-surface-sunken` */
+  /** Background of wells that hold a raised child (SegmentedControl root, Tabs `contained` list, ScrollArea scrollbars), `--mantine-color-surface-sunken` */
   sunken?: string;
+
+  /** Background of code and inset content surfaces (Code, Kbd, CodeHighlight, Typography `pre`), `--mantine-color-surface-muted` */
+  muted?: string;
 }
 
 export interface MantineThemeSurfaces {

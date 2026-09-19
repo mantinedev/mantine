@@ -7,7 +7,7 @@
   margin: 0;
   overflow: auto;
 
-  background-color: var(--code-bg, var(--mantine-color-surface-sunken));
+  background-color: var(--code-bg, var(--mantine-color-surface-muted));
 
   &[data-block] {
     padding: var(--mantine-spacing-xs);

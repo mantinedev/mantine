@@ -9,7 +9,7 @@
   font-size: var(--jv-fz);
   line-height: 1.55;
   border-radius: var(--jv-radius);
-  background-color: var(--mantine-color-surface-sunken);
+  background-color: var(--mantine-color-surface-muted);
 
   &[data-with-border] {
     border: 1px solid;
@@ -137,7 +137,7 @@
   line-height: inherit;
 
   &:focus-visible {
-    outline: 2px solid var(--mantine-primary-color-filled);
+    outline: 2px solid var(--mantine-color-focus-ring);
     outline-offset: -2px;
   }
 
@@ -386,7 +386,7 @@
   border-radius: var(--mantine-radius-sm);
   opacity: 0.5;
   color: var(--mantine-color-subtle-color);
-  background-color: var(--mantine-color-surface-sunken);
+  background-color: var(--mantine-color-surface-muted);
 
   @mixin hover {
     opacity: 1;

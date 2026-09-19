@@ -162,11 +162,19 @@ Floating dropdowns (`Popover`, `Menu`, `HoverCard`, and all `Combobox`-based com
 mode their background is `dark-7` instead of `dark-6`, separated from surrounding content by border
 and shadow. Light mode is visually unchanged.
 
-Inset elements – `SegmentedControl` root, `Code`, `Kbd`, `ScrollArea` scrollbar background, and
-`Slider`/`Progress`/`RingProgress`/`SemiCircleProgress` tracks – now share the
-`--mantine-color-surface-sunken` token: `gray-1` in light mode, `dark-9` in dark mode. In dark mode
-they render tonally sunken below the page instead of the lighter `dark-4`/`dark-6` values used
-in v9.
+Wells – the `SegmentedControl` root, the `Tabs` `contained` list, and `ScrollArea` scrollbar
+backgrounds – now share the `--mantine-color-surface-sunken` token: `gray-1` in light mode, `dark-9`
+in dark mode. In dark mode they render tonally sunken below the page instead of the lighter
+`dark-4`/`dark-6` values used in v9.
+
+Code and inset content – `Code`, `Kbd`, `CodeHighlight`, `JsonViewer`, and `Typography`
+`pre`/`code`/`kbd` – use a separate `--mantine-color-surface-muted` token: the same `gray-1` in
+light mode, but `dark-6` in dark mode, one step *above* the page so code reads as raised.
+
+Focus rings use a new `--mantine-color-focus-ring` token instead of
+`--mantine-primary-color-filled`. It follows `theme.primaryColor` and is unchanged in light mode
+(`blue-6` by default), but uses shade 5 in dark mode rather than `primaryShade.dark` (shade 7), so
+the ring stays legible against dark backgrounds.
 
 ### New semantic color variables
 
@@ -210,7 +218,9 @@ Key role variables:
     [<Code>--mantine-color-surface-page</Code>, 'Page/app background (aliased by --mantine-color-body) and floating dropdowns (Popover, Menu, Select, HoverCard)'],
     [<Code>--mantine-color-surface-panel</Code>, 'Raised container background (cards, notifications) and default buttons via --mantine-color-default; more components migrate to this token incrementally'],
     [<Code>--mantine-color-surface-panel-2</Code>, 'Second raised step for nested surfaces'],
-    [<Code>--mantine-color-surface-sunken</Code>, 'Inset/sunken surface (code blocks, kbd, segmented control, scrollbars)'],
+    [<Code>--mantine-color-surface-sunken</Code>, 'Well background that holds a raised child (SegmentedControl root, Tabs contained list, scrollbars)'],
+    [<Code>--mantine-color-surface-muted</Code>, 'Code and inset content background (Code, Kbd, CodeHighlight, JsonViewer, Typography pre)'],
+    [<Code>--mantine-color-focus-ring</Code>, 'Focus ring outline and focused input border'],
   ]}
 />
 

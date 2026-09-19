@@ -104,7 +104,7 @@
     font-family: var(--mantine-font-family-monospace);
     font-size: var(--mantine-font-size-xs);
     border-radius: var(--mantine-radius-sm);
-    background-color: var(--mantine-color-surface-sunken);
+    background-color: var(--mantine-color-surface-muted);
 
     & :where(code) {
       background-color: transparent;
@@ -128,7 +128,7 @@
     border: 1px solid;
     border-bottom-width: 3px;
     border-color: var(--mantine-color-border);
-    background-color: var(--mantine-color-surface-sunken);
+    background-color: var(--mantine-color-surface-muted);
     color: var(--mantine-color-subtle-color);
   }
 
@@ -138,7 +138,7 @@
     border-radius: var(--mantine-radius-sm);
     font-family: var(--mantine-font-family-monospace);
     font-size: var(--mantine-font-size-xs);
-    background-color: var(--mantine-color-surface-sunken);
+    background-color: var(--mantine-color-surface-muted);
 
     @mixin where-light {
       color: var(--mantine-color-black);

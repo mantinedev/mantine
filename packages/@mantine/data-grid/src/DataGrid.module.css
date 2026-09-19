@@ -76,7 +76,7 @@
   outline: none;
 
   &:focus-visible {
-    outline: rem(2px) solid var(--mantine-primary-color-filled);
+    outline: rem(2px) solid var(--mantine-color-focus-ring);
     outline-offset: rem(-2px);
   }
 
@@ -154,7 +154,7 @@
   }
 
   &:where([data-focused]) {
-    outline: rem(2px) solid var(--mantine-primary-color-filled);
+    outline: rem(2px) solid var(--mantine-color-focus-ring);
     outline-offset: rem(-2px);
   }
 

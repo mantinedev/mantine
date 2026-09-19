@@ -139,7 +139,7 @@
   margin: 0;
 
   &:focus-visible + .label {
-    outline: 2px solid var(--mantine-primary-color-filled);
+    outline: 2px solid var(--mantine-color-focus-ring);
     outline-offset: 2px;
   }
 }

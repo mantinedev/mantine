@@ -348,6 +348,8 @@ New variables (values differ per color scheme):
     [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
+    [<Code>--mantine-color-surface-muted</Code>, <Code>gray-1</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-focus-ring</Code>, <Code>blue-6</Code>, <Code>blue-5</Code>],
   ]}
 />
 
@@ -386,9 +388,9 @@ color scheme without hardcoding separate `gray-N`/`dark-N` pairs.
 A new [Surface](/core/surface) component replaces `Paper` as the depth-aware background primitive. `Surface` has
 3 levels – `0` (page), `1` (panel, the default for a standalone `Surface`), and `2` (panel-2) – and
 in dark mode each level is one shade lighter, giving your UI natural elevation layers. In light mode
-surfaces are near-flat and rely on shadows and borders instead of tone. A separate
-`--mantine-color-surface-sunken` token (not a `Surface` level) covers inset elements like code
-blocks and slider tracks.
+surfaces are near-flat and rely on shadows and borders instead of tone. Two separate tokens (not
+`Surface` levels) cover non-container backgrounds: `--mantine-color-surface-sunken` for wells and
+`--mantine-color-surface-muted` for code and inset content.
 
 `Surface` is a strict superset of `Paper` (`shadow`, `radius`, `withBorder`, padding, polymorphic
 `component` prop) and can be used as a drop-in replacement. `Paper` is deprecated in v10 and will be
@@ -434,8 +436,8 @@ const theme = createTheme({
 });
 ```
 
-Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, and `sunken` keys, matching the four
-surface tokens documented above.
+Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, `sunken`, and `muted` keys, matching
+the five surface tokens documented above.
 
 ## Dropdowns render on the page surface
 
@@ -445,16 +447,44 @@ Floating dropdowns – `Popover`, `Menu`, `HoverCard`, and all `Combobox`-based 
 surrounding content by border and shadow; light mode is visually unchanged. Overriding
 `surfaces.page` in the theme moves modals and dropdowns together with the page background.
 
-## Sunken surfaces and control tracks
+## Sunken surfaces, code surfaces and control tracks
 
-Inset elements now share the `--mantine-color-surface-sunken` token: `SegmentedControl` root,
-`Code`, `Kbd`, and `ScrollArea` scrollbar background. In dark mode these elements are now tonally
-sunken below the page (`dark-9`); in light mode they unify on `gray-1`. Control tracks are a
-separate role: `Switch`, `Slider`, `Progress`, `RingProgress`, and `SemiCircleProgress` share the
-`--mantine-color-track` role variable, anchored to the border tone (`gray-3` / `dark-4`) so the
-unfilled part of a control reads as a rail rather than a hole. Overriding `surfaces.sunken` in the theme (or the
-token itself) restyles all inset elements together; override `--mantine-color-track` to restyle every control
-track at once.
+Wells share the `--mantine-color-surface-sunken` token: the `SegmentedControl` root, the `Tabs`
+`contained` list, and `ScrollArea` scrollbar backgrounds. In dark mode these are tonally sunken
+below the page (`dark-9`); in light mode they unify on `gray-1`. A well always holds a raised child
+(the active segment or tab, drawn on `--mantine-color-surface-panel-2`), which is what the deep
+dark value buys.
+
+Code and inset content use `--mantine-color-surface-muted` instead: `Code`, `Kbd`, `CodeHighlight`,
+`JsonViewer`, and `Typography` `pre`/`code`/`kbd`. It is the same `gray-1` in light mode, but
+`dark-6` in dark mode – one step *above* the page – so a code block reads as raised rather than as a
+hole punched into the page.
+
+Control tracks are a third role: `Switch`, `Slider`, `Progress`, `RingProgress`, and
+`SemiCircleProgress` share the `--mantine-color-track` role variable, anchored to the border tone
+(`gray-3` / `dark-4`) so the unfilled part of a control reads as a rail rather than a hole.
+
+Overriding `surfaces.sunken` or `surfaces.muted` in the theme (or the tokens themselves) restyles
+each group together; override `--mantine-color-track` to restyle every control track at once.
+
+## Focus ring color variable
+
+Focus rings are now drawn with a dedicated `--mantine-color-focus-ring` variable instead of
+`--mantine-primary-color-filled`. It covers the `.mantine-focus-auto` / `.mantine-focus-always`
+outline, the focused `Input` border, and every component that draws its own ring (`Switch`, `Chip`,
+`Pill`, `Rating`, `Tree`, `AngleSlider`, `ColorPicker`, `ColorWheel`, `Editable`, `Timer`,
+`Splitter`, `SegmentedControl`, charts, `DataGrid`, `CalendarHeader`, `EmojiPicker`, `JsonViewer`).
+
+The variable follows `theme.primaryColor`, and its light value is unchanged (`blue-6` by default).
+In dark mode it resolves to shade 5 rather than `primaryShade.dark` (shade 7), so the ring stays
+legible against the darker v10 backgrounds. Override it to restyle focus rings across the entire
+application without affecting filled buttons:
+
+```css
+[data-mantine-color-scheme='dark'] {
+  --mantine-color-focus-ring: var(--mantine-color-lime-4);
+}
+```
 
 ## Disabled state opacity
 

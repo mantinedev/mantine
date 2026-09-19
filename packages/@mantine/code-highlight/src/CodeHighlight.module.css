@@ -19,7 +19,7 @@
     }
   }
 
-  --ch-background: var(--mantine-color-surface-sunken);
+  --ch-background: var(--mantine-color-surface-muted);
 }
 
 .inlineCodeHighlight {
@@ -41,7 +41,7 @@
     }
   }
 
-  --ch-background: var(--mantine-color-surface-sunken);
+  --ch-background: var(--mantine-color-surface-muted);
 }
 
 .pre {

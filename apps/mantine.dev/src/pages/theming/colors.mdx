@@ -244,12 +244,20 @@ Key role variables and their defaults:
     [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
+    [<Code>--mantine-color-surface-muted</Code>, <Code>gray-1</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-focus-ring</Code>, <Code>blue-6</Code>, <Code>blue-5</Code>],
   ]}
 />
 
 Role variables are defined as `var()` references to the underlying shade variables, so overriding
 `--mantine-color-gray-3` still cascades into `--mantine-color-border`. `--mantine-color-body` is
 aliased to `--mantine-color-surface-page`, so overriding the latter also updates the page background.
+
+`--mantine-color-focus-ring` is the color of every focus ring: the `.mantine-focus-auto` /
+`.mantine-focus-always` outline and the focused `Input` border. It follows `theme.primaryColor`, but
+unlike `--mantine-primary-color-filled` it uses shade 5 in dark mode instead of `primaryShade.dark`,
+so the ring stays legible against dark backgrounds. Override it to restyle focus rings everywhere
+without touching filled buttons.
 
 ## Neutral color ladder
 
@@ -379,8 +387,15 @@ const theme = createTheme({
 });
 ```
 
-Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, and `sunken` keys, matching the four
-surface tokens documented above.
+Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, `sunken`, and `muted` keys, matching
+the five surface tokens documented above.
+
+`--mantine-color-surface-muted` is the background of code and inset content – `Code`, `Kbd`,
+`CodeHighlight`, `JsonViewer`, and `Typography` `pre`/`code`/`kbd`. It matches `surface-sunken` in
+light mode (`gray-1`) but sits one step *above* the page in dark mode (`dark-6`), so code reads as
+raised rather than as a hole. `--mantine-color-surface-sunken` stays on the well value (`dark-9`)
+used by the `SegmentedControl` root, the `Tabs` `contained` list, and `ScrollArea` scrollbars, where
+a raised indicator sits inside the well.
 
 ## Color prop
 

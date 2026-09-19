@@ -106,7 +106,7 @@
   &:where([data-focus-ring='auto']) {
     &:focus:focus-visible {
       & .thumb {
-        outline: 2px solid var(--mantine-color-blue-filled);
+        outline: 2px solid var(--mantine-color-focus-ring);
       }
     }
   }
@@ -114,7 +114,7 @@
   &:where([data-focus-ring='always']) {
     &:focus {
       & .thumb {
-        outline: 2px solid var(--mantine-color-blue-filled);
+        outline: 2px solid var(--mantine-color-focus-ring);
       }
     }
   }
@@ -146,7 +146,7 @@
   &:where([data-focus-ring='auto']) {
     &:focus:focus-visible {
       & .thumb {
-        outline: 2px solid var(--mantine-color-blue-filled);
+        outline: 2px solid var(--mantine-color-focus-ring);
       }
     }
   }
@@ -154,7 +154,7 @@
   &:where([data-focus-ring='always']) {
     &:focus {
       & .thumb {
-        outline: 2px solid var(--mantine-color-blue-filled);
+        outline: 2px solid var(--mantine-color-focus-ring);
       }
     }
   }

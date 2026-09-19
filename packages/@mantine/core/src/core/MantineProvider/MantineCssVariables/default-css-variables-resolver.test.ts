@@ -273,6 +273,48 @@ describe('theme.surfaces overrides', () => {
     expect(resolved.dark['--mantine-color-surface-page']).toBe('var(--mantine-color-dark-7)');
     expect(resolved.light['--mantine-color-surface-sunken']).toBe('var(--mantine-color-gray-2)');
   });
+
+  it('applies a theme.surfaces muted override per scheme', () => {
+    const theme = mergeMantineTheme(
+      DEFAULT_THEME,
+      createTheme({ surfaces: { dark: { muted: '#1f2023' } } })
+    );
+    const resolved = defaultCssVariablesResolver(theme);
+    expect(resolved.dark['--mantine-color-surface-muted']).toBe('#1f2023');
+    expect(resolved.light['--mantine-color-surface-muted']).toBe('var(--mantine-color-gray-1)');
+  });
+});
+
+describe('surface-muted token', () => {
+  const result = defaultCssVariablesResolver(DEFAULT_THEME);
+
+  it('matches surface-sunken in light and sits above the page in dark', () => {
+    expect(result.light['--mantine-color-surface-muted']).toBe('var(--mantine-color-gray-1)');
+    expect(result.dark['--mantine-color-surface-muted']).toBe('var(--mantine-color-dark-6)');
+  });
+
+  it('leaves surface-sunken on the well value used by SegmentedControl and Tabs', () => {
+    expect(result.dark['--mantine-color-surface-sunken']).toBe('var(--mantine-color-dark-9)');
+    expect(result.dark['--mantine-color-surface-panel-2']).toBe('var(--mantine-color-dark-5)');
+  });
+});
+
+describe('focus-ring token', () => {
+  const result = defaultCssVariablesResolver(DEFAULT_THEME);
+
+  it('keeps the light value on primaryShade.light and lifts dark off primaryShade.dark', () => {
+    expect(result.light['--mantine-color-focus-ring']).toBe('var(--mantine-color-blue-6)');
+    expect(result.dark['--mantine-color-focus-ring']).toBe('var(--mantine-color-blue-5)');
+    expect(result.dark['--mantine-color-blue-filled']).toBe('var(--mantine-color-blue-7)');
+  });
+
+  it('follows theme.primaryColor', () => {
+    const resolved = defaultCssVariablesResolver(
+      mergeMantineTheme(DEFAULT_THEME, createTheme({ primaryColor: 'grape' }))
+    );
+    expect(resolved.light['--mantine-color-focus-ring']).toBe('var(--mantine-color-grape-6)');
+    expect(resolved.dark['--mantine-color-focus-ring']).toBe('var(--mantine-color-grape-5)');
+  });
 });
 
 describe('disabled opacity', () => {

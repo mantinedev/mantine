@@ -34,6 +34,7 @@ export type AccordionStylesNames =
   | 'control';
 
 export type AccordionVariant = 'default' | 'contained' | 'filled' | 'separated';
+
 export type AccordionCssVariables = {
   root: '--accordion-transition-duration' | '--accordion-chevron-size' | '--accordion-radius';
 };
