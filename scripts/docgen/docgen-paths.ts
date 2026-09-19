@@ -56,6 +56,7 @@ const FILES_PATHS = getPaths([
   // Accordion
   'packages/@mantine/core/src/components/Accordion/AccordionItem/AccordionItem.tsx',
   'packages/@mantine/core/src/components/Accordion/AccordionControl/AccordionControl.tsx',
+  'packages/@mantine/core/src/components/Accordion/AccordionPanel/AccordionPanel.tsx',
 
   // Pill
   'packages/@mantine/core/src/components/Pill/PillGroup/PillGroup.tsx',
@@ -76,7 +77,6 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Combobox/ComboboxTarget/ComboboxTarget.tsx',
   'packages/@mantine/core/src/components/Combobox/ComboboxDropdownTarget/ComboboxDropdownTarget.tsx',
   'packages/@mantine/core/src/components/Combobox/ComboboxEventsTarget/ComboboxEventsTarget.tsx',
-  'packages/@mantine/core/src/components/Combobox/ComboboxDropdown/ComboboxDropdown.tsx',
   'packages/@mantine/core/src/components/Combobox/ComboboxGroup/ComboboxGroup.tsx',
 
   // AppShell

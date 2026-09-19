@@ -15,9 +15,8 @@
 .title {
   font-family: var(--docs-font-primary);
   font-weight: 600;
-  margin-bottom: var(--mantine-spacing-sm);
-  color: var(--mantine-color-bright);
-  padding-inline-start: var(--mantine-spacing-xs);
+  margin-bottom: var(--mantine-spacing-md);
+  padding-inline: var(--mantine-spacing-md);
 
   @mixin smaller-than $docs-mdx-breakpoint {
     font-size: var(--mantine-font-size-xl);
@@ -27,9 +26,8 @@
 .section {
   border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   border-radius: var(--mantine-radius-md);
-  padding: var(--mantine-spacing-sm);
-  padding-bottom: 0;
-  padding-top: var(--mantine-spacing-md);
+  padding-top: var(--mantine-spacing-sm);
+  overflow: clip;
 
   & + & {
     margin-top: var(--mantine-spacing-xl);

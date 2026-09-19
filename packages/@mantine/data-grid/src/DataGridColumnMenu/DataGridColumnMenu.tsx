@@ -20,7 +20,7 @@ export type DataGridColumnMenuStylesNames = 'columnMenu';
 
 export interface DataGridColumnMenuProps
   extends BoxProps, CompoundStylesApiProps<DataGridColumnMenuFactory>, ElementProps<'div'> {
-  /** Column instance from @tanstack/react-table */
+  /** Column instance from `@tanstack/react-table` */
   column: Column<DataGridFeatures, any, unknown>;
 
   /** Props passed to the internal Menu component */

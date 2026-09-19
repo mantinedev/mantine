@@ -244,7 +244,7 @@ Key role variables and their defaults:
     [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
-    [<Code>--mantine-color-surface-muted</Code>, <Code>gray-1</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-surface-muted</Code>, <Code>gray-0</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-focus-ring</Code>, <Code>blue-6</Code>, <Code>blue-5</Code>],
   ]}
 />
@@ -391,11 +391,12 @@ Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, `sunken`, and `m
 the five surface tokens documented above.
 
 `--mantine-color-surface-muted` is the background of code and inset content – `Code`, `Kbd`,
-`CodeHighlight`, `JsonViewer`, and `Typography` `pre`/`code`/`kbd`. It matches `surface-sunken` in
-light mode (`gray-1`) but sits one step *above* the page in dark mode (`dark-6`), so code reads as
-raised rather than as a hole. `--mantine-color-surface-sunken` stays on the well value (`dark-9`)
-used by the `SegmentedControl` root, the `Tabs` `contained` list, and `ScrollArea` scrollbars, where
-a raised indicator sits inside the well.
+`CodeHighlight`, `JsonViewer`, and `Typography` `pre`/`code`/`kbd`. It is one light step off the
+page in light mode (`gray-0`) and sits two steps *above* the page in dark mode (`dark-5`), so code
+reads as raised rather than as a hole and keeps its edge inside a `Card` or a level-1 `Surface`.
+`--mantine-color-surface-sunken` stays on the well value (`gray-1` / `dark-9`) used by the
+`SegmentedControl` root, the `Tabs` `contained` list, and `ScrollArea` scrollbars, where a raised
+indicator sits inside the well.
 
 ## Color prop
 

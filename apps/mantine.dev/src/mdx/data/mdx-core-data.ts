@@ -811,7 +811,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     title: 'Accordion',
     package: '@mantine/core',
     slug: '/core/accordion',
-    props: ['Accordion', 'AccordionItem', 'AccordionControl'],
+    props: ['Accordion', 'AccordionItem', 'AccordionControl', 'AccordionPanel'],
     styles: ['Accordion'],
     componentPrefix: 'Accordion',
     description: 'Divide content into collapsible sections',

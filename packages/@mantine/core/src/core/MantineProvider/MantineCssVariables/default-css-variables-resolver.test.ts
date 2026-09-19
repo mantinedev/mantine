@@ -281,16 +281,20 @@ describe('theme.surfaces overrides', () => {
     );
     const resolved = defaultCssVariablesResolver(theme);
     expect(resolved.dark['--mantine-color-surface-muted']).toBe('#1f2023');
-    expect(resolved.light['--mantine-color-surface-muted']).toBe('var(--mantine-color-gray-1)');
+    expect(resolved.dark['--mantine-color-surface-panel-2']).toBe('var(--mantine-color-dark-5)');
+    expect(resolved.light['--mantine-color-surface-muted']).toBe('var(--mantine-color-gray-0)');
   });
 });
 
 describe('surface-muted token', () => {
   const result = defaultCssVariablesResolver(DEFAULT_THEME);
 
-  it('matches surface-sunken in light and sits above the page in dark', () => {
-    expect(result.light['--mantine-color-surface-muted']).toBe('var(--mantine-color-gray-1)');
-    expect(result.dark['--mantine-color-surface-muted']).toBe('var(--mantine-color-dark-6)');
+  it('sits one step off white in light and above page and panel in dark', () => {
+    expect(result.light['--mantine-color-surface-muted']).toBe('var(--mantine-color-gray-0)');
+    expect(result.light['--mantine-color-surface-sunken']).toBe('var(--mantine-color-gray-1)');
+    expect(result.dark['--mantine-color-surface-muted']).toBe('var(--mantine-color-dark-5)');
+    expect(result.dark['--mantine-color-surface-page']).toBe('var(--mantine-color-dark-7)');
+    expect(result.dark['--mantine-color-surface-panel']).toBe('var(--mantine-color-dark-6)');
   });
 
   it('leaves surface-sunken on the well value used by SegmentedControl and Tabs', () => {

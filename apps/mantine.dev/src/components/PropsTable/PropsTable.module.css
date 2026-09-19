@@ -1,8 +1,40 @@
+.scroll {
+  @mixin larger-than $docs-mdx-breakpoint {
+    overflow-x: clip;
+  }
+}
+
+.scrollInner {
+  @mixin larger-than $docs-mdx-breakpoint {
+    min-width: 0;
+  }
+}
+
+.table {
+  border-top: 1px solid var(--mantine-color-border);
+
+  & th:first-child,
+  & td:first-child {
+    padding-inline-start: var(--mantine-spacing-md);
+  }
+
+  & th:last-child,
+  & td:last-child {
+    padding-inline-end: var(--mantine-spacing-md);
+  }
+
+  & .groupCell + td,
+  & .groupCell + th {
+    padding-inline-start: var(--mantine-spacing-md);
+  }
+}
+
 .propName {
   font-family: var(--mantine-font-family-monospace);
   font-size: 12px;
   max-width: 100%;
   display: inline-block;
+  vertical-align: middle;
   overflow: hidden;
   text-overflow: ellipsis;
 
@@ -10,4 +42,30 @@
     color: var(--mantine-color-dimmed);
     text-decoration: line-through;
   }
+}
+
+.groupCell {
+  vertical-align: top;
+  border-inline-end: 1px solid var(--mantine-color-border);
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    display: none;
+  }
+}
+
+.groupSticky {
+  position: sticky;
+  top: calc(var(--docs-header-height) + var(--mantine-spacing-xs));
+}
+
+.groupLabel {
+  display: block;
+  font-weight: 600;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.groupNote {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--mantine-font-size-xs);
 }

@@ -9136,13 +9136,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^5":
-  version: 5.6.2
-  resolution: "chalk@npm:5.6.2"
-  checksum: 10c0/99a4b0f0e7991796b1e7e3f52dceb9137cae2a9dfc8fc0784a550dc4c558e15ab32ed70b14b21b52beb2679b4892b41a0aa44249bcb996f01e125d58477c6976
-  languageName: node
-  linkType: hard
-
 "chalk@npm:^6.0.0":
   version: 6.0.0
   resolution: "chalk@npm:6.0.0"
@@ -11832,7 +11825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^11, fs-extra@npm:^11.1.1":
+"fs-extra@npm:^11.1.1":
   version: 11.3.2
   resolution: "fs-extra@npm:11.3.2"
   dependencies:
@@ -14702,7 +14695,7 @@ __metadata:
     klona: "npm:^2.0.6"
     lodash: "npm:^4.18.1"
     lowlight: "npm:^3.3.0"
-    mantine-docgen-script: "npm:^1.6.0"
+    mantine-docgen-script: "npm:^2.0.0"
     new-github-release-url: "npm:^2.0.0"
     next: "npm:16.3.2"
     open: "npm:^11.0.1"
@@ -14753,14 +14746,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"mantine-docgen-script@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "mantine-docgen-script@npm:1.6.0"
+"mantine-docgen-script@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "mantine-docgen-script@npm:2.0.0"
   dependencies:
-    chalk: "npm:^5"
-    fs-extra: "npm:^11"
-    react-docgen-typescript: "npm:^2.2.2"
-  checksum: 10c0/0fac32690a55da69a280de13a529aa665e35f46691e48cccb2648ca38185923803dfba4d0e887f505bb324dd2d61acaf646eb1e06901d831a4e8f57e5d959f36
+    chalk: "npm:^6.0.0"
+    fs-extra: "npm:^11.4.0"
+    react-docgen-typescript: "npm:^2.4.0"
+  checksum: 10c0/427ba47aa1a558279ef0877709199a6a78548082b406bd440272fa4d58725bb63452cdaa079b96533c465aad74b1619f759141426e953603c93569a5814afb3d
   languageName: node
   linkType: hard
 
@@ -17950,7 +17943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-docgen-typescript@npm:^2.2.2":
+"react-docgen-typescript@npm:^2.2.2, react-docgen-typescript@npm:^2.4.0":
   version: 2.4.0
   resolution: "react-docgen-typescript@npm:2.4.0"
   peerDependencies:

@@ -348,7 +348,7 @@ New variables (values differ per color scheme):
     [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
-    [<Code>--mantine-color-surface-muted</Code>, <Code>gray-1</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-surface-muted</Code>, <Code>gray-0</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-focus-ring</Code>, <Code>blue-6</Code>, <Code>blue-5</Code>],
   ]}
 />
@@ -456,9 +456,10 @@ below the page (`dark-9`); in light mode they unify on `gray-1`. A well always h
 dark value buys.
 
 Code and inset content use `--mantine-color-surface-muted` instead: `Code`, `Kbd`, `CodeHighlight`,
-`JsonViewer`, and `Typography` `pre`/`code`/`kbd`. It is the same `gray-1` in light mode, but
-`dark-6` in dark mode – one step *above* the page – so a code block reads as raised rather than as a
-hole punched into the page.
+`JsonViewer`, and `Typography` `pre`/`code`/`kbd`. It is `gray-0` in light mode – one light step
+off the page – and `dark-5` in dark mode, two steps *above* the page, so a code block reads as
+raised rather than as a hole punched into the page, and keeps its edge inside a `Card` or a
+level-1 `Surface`.
 
 Control tracks are a third role: `Switch`, `Slider`, `Progress`, `RingProgress`, and
 `SemiCircleProgress` share the `--mantine-color-track` role variable, anchored to the border tone

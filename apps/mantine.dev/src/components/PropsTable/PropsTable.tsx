@@ -1,29 +1,10 @@
-import Fuse from 'fuse.js';
 import { Highlight, Table, Text } from '@mantine/core';
-import docgenData from '@/.docgen/docgen.json';
 import { HtmlText } from '@/components/HtmlText';
 import { TableError } from '@/components/TableError';
 import { TableInlineCode } from '@/components/TableInlineCode';
+import { getPropsTableData } from './get-props-table-data';
 import { prepareType } from './replace-types';
 import classes from './PropsTable.module.css';
-
-export interface DocgenProp {
-  defaultValue: string | null;
-  description: string;
-  name: string;
-  required: boolean;
-  type: {
-    name: string;
-  };
-}
-
-export interface Docgen {
-  description: string;
-  displayName: string;
-  props: Record<string, DocgenProp>;
-}
-
-const PROPS_DATA: Record<string, Docgen> = docgenData as any;
 
 interface PropsTableProps {
   component: string;
@@ -31,40 +12,35 @@ interface PropsTableProps {
 }
 
 export function PropsTable({ component, query }: PropsTableProps) {
-  if (!PROPS_DATA[component]) {
+  const data = getPropsTableData(component, query);
+
+  if (!data) {
     return <TableError errorOf="props" />;
   }
 
-  const props = PROPS_DATA[component].props;
-  const propsArray = Object.keys(props).map((propKey) => ({
-    key: propKey,
-    ...props[propKey],
-  }));
-
-  let filteredPropKeys = Object.keys(props);
-
-  if (query.trim()) {
-    const fuse = new Fuse(propsArray, {
-      keys: ['name', 'description', 'type.name'],
-      threshold: 0.3,
-      minMatchCharLength: 1,
-    });
-
-    const results = fuse.search(query);
-    filteredPropKeys = results.map((result) => result.item.key);
-  }
-
-  const rows = filteredPropKeys.map((propKey) => {
-    const prop = PROPS_DATA[component].props[propKey];
-
-    return (
-      <Table.Tr key={propKey} data-props-table-row>
+  const rows = data.groups.flatMap((group) =>
+    group.props.map((prop, index) => (
+      <Table.Tr key={prop.name} data-props-table-row>
+        {data.withGroups && index === 0 && (
+          <Table.Td rowSpan={group.props.length} className={classes.groupCell}>
+            <div className={classes.groupSticky}>
+              <Text component="span" className={classes.groupLabel}>
+                {group.label}
+              </Text>
+              {group.note && (
+                <Text component="span" className={classes.groupNote}>
+                  {group.note}
+                </Text>
+              )}
+            </div>
+          </Table.Td>
+        )}
         <Table.Td style={{ whiteSpace: 'nowrap' }}>
           <Highlight
             className={classes.propName}
             highlight={query}
             component="span"
-            data-deprecated={prop.description.includes('@deprecated') || undefined}
+            data-deprecated={'deprecated' in prop.tags || undefined}
             title={prop.name}
           >
             {prop.name}
@@ -90,16 +66,30 @@ export function PropsTable({ component, query }: PropsTableProps) {
           )}
         </Table.Td>
       </Table.Tr>
-    );
-  });
+    ))
+  );
 
   return (
-    <Table.ScrollContainer minWidth={800} data-visible={rows.length > 0 || undefined}>
-      <Table layout="fixed">
+    <Table.ScrollContainer
+      minWidth={800}
+      type="native"
+      classNames={{ scrollContainer: classes.scroll, scrollContainerInner: classes.scrollInner }}
+      data-visible={data.matchedCount > 0 || undefined}
+    >
+      <Table
+        layout="fixed"
+        className={classes.table}
+        data-with-groups={data.withGroups || undefined}
+      >
         <Table.Thead>
           <Table.Tr>
-            <Table.Th w={210}>Name</Table.Th>
-            <Table.Th w={310}>Type</Table.Th>
+            {data.withGroups && (
+              <Table.Th w={150} className={classes.groupCell}>
+                Group
+              </Table.Th>
+            )}
+            <Table.Th w={200}>Name</Table.Th>
+            <Table.Th w={300}>Type</Table.Th>
             <Table.Th>Description</Table.Th>
           </Table.Tr>
         </Table.Thead>

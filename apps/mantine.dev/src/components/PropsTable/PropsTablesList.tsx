@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Text, TextInput, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { PhosphorIcons } from '../icons';
-import { getComponentName } from './getComponentName';
+import { getComponentName } from './get-component-name';
 import { PropsTable } from './PropsTable';
 import classes from './PropsTablesList.module.css';
 

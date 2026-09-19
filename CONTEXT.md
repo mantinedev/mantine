@@ -1,6 +1,6 @@
-# Mantine color system
+# Mantine
 
-The color vocabulary of the Mantine component library — the layers between raw palettes and what components actually paint.
+The vocabulary of the Mantine component library: the color layers between raw palettes and what components paint, and the state-ownership terms components share.
 
 ## Language
 
@@ -53,3 +53,27 @@ _Avoid_: semantic token (too broad)
 **Design token**:
 A named theme value that exists identically as a CSS variable in code and a variable in Figma, scheme-aware where its value flips per scheme. Role vars are the semantic subset on the code side; raw ramps and size scales are tokens too.
 _Avoid_: semantic token (too broad), style (Figma's legacy color/text styles)
+
+### Component state
+
+**Controller**:
+The object a component's `use<Component>` hook returns: it owns the component's interactive state and exposes actions and queries on it, and is passed to the component through a `controller` prop. Controlled props (`value`/`defaultValue`/`onChange`) remain sugar over an internally created controller.
+_Avoid_: store (legacy Combobox name), state hook, api object, imperative handle
+
+**Controlled props**:
+The `value`/`defaultValue`/`onChange` trio (or its per-component spelling, e.g. `opened`/`onOpenedChange`) through which a parent owns one piece of a component's state.
+_Avoid_: controlled mode (as if it were a separate rendering mode)
+
+### Props documentation
+
+**Prop category**:
+The kind of a prop on the docs props table, from a fixed vocabulary: state, behavior, content, visual, layout, rendering, elements. Applies only to a component's own props; a prop without one falls into Other.
+_Avoid_: prop type (clashes with TypeScript), tag, group (reserved for the rendered unit)
+
+**Prop origin**:
+The interface that declares a prop: the component's own props or a shared base such as Input, Input.Wrapper or Combobox. Derived from the type declaration, never annotated.
+_Avoid_: source, parent (the docgen field name), inherited props (as a category)
+
+**Prop group**:
+One headed run of rows in the props table. Own props are grouped by category; each shared origin is one flat group with a note pointing at the parent component's page.
+_Avoid_: section (the per-sub-component tables), tab

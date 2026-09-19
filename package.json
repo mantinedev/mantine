@@ -182,7 +182,7 @@
     "jest-axe": "^11.0.0",
     "jest-environment-jsdom": "^30.4.1",
     "lodash": "^4.18.1",
-    "mantine-docgen-script": "^1.6.0",
+    "mantine-docgen-script": "^2.0.0",
     "new-github-release-url": "^2.0.0",
     "next": "16.3.2",
     "open": "^11.0.1",

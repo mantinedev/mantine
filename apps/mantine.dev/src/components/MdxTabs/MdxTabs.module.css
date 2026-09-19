@@ -96,7 +96,7 @@
   padding-inline-start: var(--docs-inline-spacing);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: clip;
   max-width: 100%;
 
   @mixin smaller-than 1450px {

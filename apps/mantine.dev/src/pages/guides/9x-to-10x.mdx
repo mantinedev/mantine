@@ -168,8 +168,9 @@ in dark mode. In dark mode they render tonally sunken below the page instead of 
 `dark-4`/`dark-6` values used in v9.
 
 Code and inset content – `Code`, `Kbd`, `CodeHighlight`, `JsonViewer`, and `Typography`
-`pre`/`code`/`kbd` – use a separate `--mantine-color-surface-muted` token: the same `gray-1` in
-light mode, but `dark-6` in dark mode, one step *above* the page so code reads as raised.
+`pre`/`code`/`kbd` – use a separate `--mantine-color-surface-muted` token: `gray-0` in light mode,
+one step off the page, and `dark-5` in dark mode, two steps *above* the page so code reads as
+raised.
 
 Focus rings use a new `--mantine-color-focus-ring` token instead of
 `--mantine-primary-color-filled`. It follows `theme.primaryColor` and is unchanged in light mode
@@ -219,7 +220,7 @@ Key role variables:
     [<Code>--mantine-color-surface-panel</Code>, 'Raised container background (cards, notifications) and default buttons via --mantine-color-default; more components migrate to this token incrementally'],
     [<Code>--mantine-color-surface-panel-2</Code>, 'Second raised step for nested surfaces'],
     [<Code>--mantine-color-surface-sunken</Code>, 'Well background that holds a raised child (SegmentedControl root, Tabs contained list, scrollbars)'],
-    [<Code>--mantine-color-surface-muted</Code>, 'Code and inset content background (Code, Kbd, CodeHighlight, JsonViewer, Typography pre)'],
+    [<Code>--mantine-color-surface-muted</Code>, 'Code and inset content background (Code, Kbd, CodeHighlight, JsonViewer, Typography pre) – raised above the page in dark mode'],
     [<Code>--mantine-color-focus-ring</Code>, 'Focus ring outline and focused input border'],
   ]}
 />
