@@ -14,46 +14,46 @@ export interface MentionRenderSuggestionInput {
 }
 
 export interface MentionProps {
-  /** Character(s) or pattern that opens this source's dropdown @default '@' */
+  /** Character(s) or pattern that opens this source's dropdown @default '@' @category behavior */
   trigger?: string | RegExp;
 
-  /** Static array of suggestions or a sync/async function that returns matches */
+  /** Static array of suggestions or a sync/async function that returns matches @category appearance */
   data?: MentionItem[] | MentionDataFn;
 
-  /** Template controlling how this mention is stored in the value, or a full serializer @default '@[__display__](__id__)' */
+  /** Template controlling how this mention is stored in the value, or a full serializer @default '@[__display__](__id__)' @category state */
   markup?: string | MentionSerializer;
 
-  /** Customizes the visible text of a stored mention @default (_, display) => display */
+  /** Customizes the visible text of a stored mention @default (_, display) => display @category appearance */
   displayTransform?: MentionDisplayTransform;
 
-  /** If set, the trigger character is kept as a prefix in the visible text of the mention @default false */
+  /** If set, the trigger character is kept as a prefix in the visible text of the mention @default false @category appearance */
   withTrigger?: boolean;
 
-  /** Custom function to render a suggestion row */
+  /** Custom function to render a suggestion row @category appearance */
   renderSuggestion?: (input: MentionRenderSuggestionInput) => React.ReactNode;
 
-  /** Custom empty state for this source */
+  /** Custom empty state for this source @category appearance */
   renderEmpty?: (query: string) => React.ReactNode;
 
-  /** Custom error state when an async `data` function rejects */
+  /** Custom error state when an async `data` function rejects @category appearance */
   renderError?: (query: string, error: unknown) => React.ReactNode;
 
-  /** Called when a suggestion from this source is inserted */
+  /** Called when a suggestion from this source is inserted @category behavior */
   onAdd?: (item: { id: string; display: string; startPos: number; endPos: number }) => void;
 
-  /** If set, a space is appended after inserting a mention @default false */
+  /** If set, a space is appended after inserting a mention @default false @category behavior */
   appendSpaceOnAdd?: boolean;
 
-  /** Debounce async `data` calls, in milliseconds @default 0 */
+  /** Debounce async `data` calls, in milliseconds @default 0 @category behavior */
   debounceMs?: number;
 
-  /** Maximum number of suggestions rendered from array results */
+  /** Maximum number of suggestions rendered from array results @category appearance */
   maxSuggestions?: number;
 
-  /** If set, the query is allowed to contain whitespace @default false */
+  /** If set, the query is allowed to contain whitespace @default false @category behavior */
   allowSpaceInQuery?: boolean;
 
-  /** If set, accents are ignored when the query is matched against array data @default false */
+  /** If set, accents are ignored when the query is matched against array data @default false @category behavior */
   ignoreAccents?: boolean;
 
   /** Class name applied to this source's mentions in the overlay */

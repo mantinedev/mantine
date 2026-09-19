@@ -106,64 +106,64 @@ export type DataGridCssVariables = {
 
 export interface DataGridProps<TData extends RowData = any>
   extends BoxProps, StylesApiProps<DataGridFactory>, ElementProps<'div', 'children'> {
-  /** DataGrid store, can be used to control grid state. If not provided, an internal store is created from `data` and `columns` */
+  /** DataGrid store, can be used to control grid state. If not provided, an internal store is created from `data` and `columns` @category state */
   store?: DataGridStore<TData>;
 
-  /** Data array, required when `store` is not provided */
+  /** Data array, required when `store` is not provided @category appearance */
   data?: TData[];
 
-  /** Column definitions, required when `store` is not provided */
+  /** Column definitions, required when `store` is not provided @category appearance */
   columns?: DataGridColumnDef<TData>[];
 
-  /** Border color, key of `theme.colors` or any valid CSS color */
+  /** Border color, key of `theme.colors` or any valid CSS color @category appearance */
   borderColor?: MantineColor;
 
-  /** Cell spacing, key of `theme.spacing` or any valid CSS value */
+  /** Cell spacing, key of `theme.spacing` or any valid CSS value @category appearance */
   spacing?: MantineSpacing;
 
-  /** Row height in px */
+  /** Row height in px @category appearance */
   rowHeight?: number | string;
 
-  /** Header row height in px */
+  /** Header row height in px @category appearance */
   headerHeight?: number | string;
 
-  /** Grid content */
+  /** Grid content @category appearance */
   children?: React.ReactNode;
 
-  /** Custom icon displayed in sortable column headers when the column is sorted */
+  /** Custom icon displayed in sortable column headers when the column is sorted @category appearance */
   sortedIcon?: React.ReactNode;
 
-  /** Custom icon displayed in sortable column headers when the column is not sorted */
+  /** Custom icon displayed in sortable column headers when the column is not sorted @category appearance */
   unsortedIcon?: React.ReactNode;
 
-  /** Show loading overlay, @default false */
+  /** Show loading overlay, @default false @category behavior */
   loading?: boolean;
 
-  /** Add striped rows styling, @default false */
+  /** Add striped rows styling, @default false @category appearance */
   striped?: boolean;
 
-  /** Add hover highlight on rows, @default false */
+  /** Add hover highlight on rows, @default false @category appearance */
   highlightOnHover?: boolean;
 
-  /** Show row numbers column, @default false */
+  /** Show row numbers column, @default false @category appearance */
   withRowNumbers?: boolean;
 
-  /** Callback when a row is clicked */
+  /** Callback when a row is clicked @category behavior */
   onRowClick?: (row: Row<DataGridFeatures, TData>, event: React.MouseEvent) => void;
 
-  /** Callback when a row is double-clicked */
+  /** Callback when a row is double-clicked @category behavior */
   onRowDoubleClick?: (row: Row<DataGridFeatures, TData>, event: React.MouseEvent) => void;
 
-  /** Callback when a cell is clicked */
+  /** Callback when a cell is clicked @category behavior */
   onCellClick?: (cell: Cell<DataGridFeatures, TData, unknown>, event: React.MouseEvent) => void;
 
-  /** Content to display when data is empty */
+  /** Content to display when data is empty @category appearance */
   emptyState?: React.ReactNode;
 
   /** Enable virtualization for large datasets */
   virtualize?: 'rows' | 'columns' | 'rows,columns';
 
-  /** Fixed height for the scrollable container, required when `virtualize` includes rows */
+  /** Fixed height for the scrollable container, required when `virtualize` includes rows @category appearance */
   height?: number | string;
 
   /** Configuration for virtual scroll behavior */
@@ -178,50 +178,50 @@ export interface DataGridProps<TData extends RowData = any>
     estimateSize?: (index: number) => number;
   };
 
-  /** Callback fired when scroll reaches the bottom of the grid */
+  /** Callback fired when scroll reaches the bottom of the grid @category behavior */
   onScrollToBottom?: () => void;
 
-  /** Render function for expanded row content */
+  /** Render function for expanded row content @category appearance */
   renderExpandedRow?: (props: { row: Row<DataGridFeatures, TData> }) => React.ReactNode;
 
-  /** When true, clicking a row toggles its expansion, @default false */
+  /** When true, clicking a row toggles its expansion, @default false @category behavior */
   expandOnRowClick?: boolean;
 
-  /** Callback when a cell value is edited */
+  /** Callback when a cell value is edited @category state */
   onCellEdit?: (props: {
     row: Row<DataGridFeatures, TData>;
     columnId: string;
     value: unknown;
   }) => void;
 
-  /** Callback when a row is edited */
+  /** Callback when a row is edited @category state */
   onRowEdit?: (props: {
     row: Row<DataGridFeatures, TData>;
     values: Record<string, unknown>;
   }) => void;
 
-  /** How editing is triggered: 'click' for single click, 'doubleClick' for double click, @default 'doubleClick' */
+  /** How editing is triggered: 'click' for single click, 'doubleClick' for double click, @default 'doubleClick' @category behavior */
   editTrigger?: 'click' | 'doubleClick';
 
-  /** Async row update handler. On edit save, called with (newRow, oldRow). If it rejects, the edit is reverted. */
+  /** Async row update handler. On edit save, called with (newRow, oldRow). If it rejects, the edit is reverted. @category behavior */
   processRowUpdate?: (newRow: TData, oldRow: TData) => Promise<TData>;
 
-  /** Called when processRowUpdate rejects */
+  /** Called when processRowUpdate rejects @category behavior */
   onProcessRowUpdateError?: (error: unknown) => void;
 
-  /** When true, clicking a row toggles its selection, @default false */
+  /** When true, clicking a row toggles its selection, @default false @category behavior */
   selectOnRowClick?: boolean;
 
-  /** When true, renders filter inputs in a dedicated row below column headers, @default false */
+  /** When true, renders filter inputs in a dedicated row below column headers, @default false @category appearance */
   headerFilters?: boolean;
 
-  /** Make the header sticky when scrolling, @default false */
+  /** Make the header sticky when scrolling, @default false @category appearance */
   stickyHeader?: boolean;
 
-  /** Labels overrides */
+  /** Labels overrides @category appearance */
   labels?: Partial<DataGridLabels>;
 
-  /** Return height for a specific row, or 'auto' for content-measured height */
+  /** Return height for a specific row, or 'auto' for content-measured height @category appearance */
   getRowHeight?: (row: Row<DataGridFeatures, TData>) => number | 'auto';
 
   /** Estimated row height for initial render before measurement, used with getRowHeight */
@@ -233,16 +233,16 @@ export interface DataGridProps<TData extends RowData = any>
   /** Props passed to the ScrollArea component, applicable only when `withScrollArea` is true */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** When true, renders rows as vertical cards instead of a table, @default false */
+  /** When true, renders rows as vertical cards instead of a table, @default false @category appearance */
   listView?: boolean;
 
-  /** Custom render function for list view items. Receives the row and should return a card/item element */
+  /** Custom render function for list view items. Receives the row and should return a card/item element @category appearance */
   renderListItem?: (props: { row: Row<DataGridFeatures, TData> }) => React.ReactNode;
 
-  /** Table layout algorithm, @default 'fixed' */
+  /** Table layout algorithm, @default 'fixed' @category appearance */
   tableLayout?: 'fixed' | 'auto';
 
-  /** Controls text overflow in body cells, @default 'ellipsis' */
+  /** Controls text overflow in body cells, @default 'ellipsis' @category appearance */
   textOverflow?: 'ellipsis' | 'wrap' | 'clip';
 }
 

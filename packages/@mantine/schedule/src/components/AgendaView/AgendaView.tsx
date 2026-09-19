@@ -53,37 +53,37 @@ export interface AgendaViewProps
   extends BoxProps, StylesApiProps<AgendaViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Start of the date range to display events for */
+  /** Start of the date range to display events for @category state */
   rangeStart: AnyDateValue;
 
-  /** End of the date range to display events for */
+  /** End of the date range to display events for @category state */
   rangeEnd: AnyDateValue;
 
-  /** Events to display */
+  /** Events to display @category appearance */
   events?: ScheduleEventData[];
 
-  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` @category appearance */
   locale?: string;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Labels override for i18n */
+  /** Labels override for i18n @category appearance */
   labels?: ScheduleLabelsOverride;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default 'default' */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default 'default' @category behavior */
   mode?: ScheduleMode;
 
-  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children @category appearance */
   renderEvent?: RenderEvent;
 
-  /** Format for the date group headers @default 'dddd, MMMM D' */
+  /** Format for the date group headers @default 'dddd, MMMM D' @category appearance */
   dateHeaderFormat?: DateLabelFormat;
 
-  /** Format for the header label showing the date range @default 'MMMM D, YYYY' */
+  /** Format for the header label showing the date range @default 'MMMM D, YYYY' @category appearance */
   headerFormat?: DateLabelFormat;
 
-  /** Called when event is clicked */
+  /** Called when event is clicked @category behavior */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** Max number of generated recurring instances per recurring series @default 2000 */
