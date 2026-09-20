@@ -1,11 +1,9 @@
-import { TextInput } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
-import { TextInput } from '@mantine/core';
 import { employees } from './data';
 
 function Demo() {
@@ -21,25 +19,15 @@ function Demo() {
     ],
     withGlobalFilter: true,
     withColumnVisibility: true,
+    withRowSelection: true,
     pageSize: 10,
   });
 
   return (
-    <>
-      <TextInput
-        placeholder="Search..."
-        value={store.globalFilter ?? ''}
-        onChange={(event) => store.setGlobalFilter(event.currentTarget.value)}
-        mb="md"
-      />
-      <DataGrid store={store}>
-        <DataGrid.Toolbar>
-          <DataGrid.ColumnVisibilityToggle />
-        </DataGrid.Toolbar>
-        <DataGrid.Pagination />
-        <DataGrid.StatusBar />
-      </DataGrid>
-    </>
+    <DataGrid store={store}>
+      <DataGrid.Toolbar />
+      <DataGrid.Footer statusFormat="long" />
+    </DataGrid>
   );
 }
 `;
@@ -57,25 +45,15 @@ function Demo() {
     ],
     withGlobalFilter: true,
     withColumnVisibility: true,
+    withRowSelection: true,
     pageSize: 10,
   });
 
   return (
-    <>
-      <TextInput
-        placeholder="Search..."
-        value={store.globalFilter ?? ''}
-        onChange={(event) => store.setGlobalFilter(event.currentTarget.value)}
-        mb="md"
-      />
-      <DataGrid store={store}>
-        <DataGrid.Toolbar>
-          <DataGrid.ColumnVisibilityToggle />
-        </DataGrid.Toolbar>
-        <DataGrid.Pagination />
-        <DataGrid.StatusBar />
-      </DataGrid>
-    </>
+    <DataGrid store={store}>
+      <DataGrid.Toolbar />
+      <DataGrid.Footer statusFormat="long" />
+    </DataGrid>
   );
 }
 

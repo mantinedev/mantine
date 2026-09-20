@@ -57,6 +57,16 @@ describe('@mantine/data-grid/utility-columns', () => {
     it('returns an empty order untouched', () => {
       expect(normalizeColumnOrder([], ['__select__'])).toEqual([]);
     });
+
+    it('moves grouped columns right after the utility block', () => {
+      expect(normalizeColumnOrder([], ['__select__'], ['team'])).toEqual(['__select__', 'team']);
+      expect(normalizeColumnOrder(['name', 'team', 'age'], ['__select__'], ['age'])).toEqual([
+        '__select__',
+        'age',
+        'name',
+        'team',
+      ]);
+    });
   });
 
   describe('normalizeColumnPinning', () => {
@@ -209,12 +219,13 @@ describe('@mantine/data-grid/utility-columns', () => {
     expect(rows[rows.length - 1].querySelector('td[data-utility="select"]')).toBeInTheDocument();
   });
 
-  it('spans group rows over utility columns', () => {
+  it('renders utility cells on group rows', () => {
     const { container } = render(
       <Grid storeOptions={{ withRowSelection: true, grouping: ['age'] }} />
     );
-    const groupCell = container.querySelector('tr[data-group-row] td');
-    expect(groupCell).toHaveAttribute('colspan', '3');
+    const groupRow = container.querySelector('tr[data-group-row]')!;
+    expect(groupRow.querySelectorAll('td')).toHaveLength(3);
+    expect(groupRow.querySelector('td[data-utility="select"] input')).toBeInTheDocument();
   });
 
   it('renders utility header cells in the virtual header', () => {
@@ -234,7 +245,7 @@ describe('@mantine/data-grid/utility-columns', () => {
         </DataGrid.Toolbar>
       </Grid>
     );
-    await userEvent.click(screen.getByRole('button', { name: 'Toggle column visibility' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Columns' }));
     const menu = await screen.findByRole('menu');
     expect(menu).toHaveTextContent('Name');
     expect(menu).toHaveTextContent('Age');

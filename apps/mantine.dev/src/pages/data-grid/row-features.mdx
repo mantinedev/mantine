@@ -35,8 +35,10 @@ function returns `false` render a disabled checkbox and cannot be selected.
 
 ## Bulk actions
 
-Use `store.table.getSelectedRowModel().rows` to access the currently selected rows and build a
-bulk-actions toolbar that appears only when a selection exists.
+Add `DataGrid.SelectionBar` next to `DataGrid.Toolbar`: while rows are selected it takes the
+toolbar's place with the selected count, your bulk action controls and a close button that clears
+the selection. Use `store.table.getSelectedRowModel().rows` or `store.rowSelection` to act on the
+selected rows.
 
 <Demo data={DataGridDemos.rowSelectionBulkActions} />
 

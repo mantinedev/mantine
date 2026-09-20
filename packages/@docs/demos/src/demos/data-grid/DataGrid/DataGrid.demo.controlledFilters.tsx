@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ColumnFiltersState } from '@tanstack/react-table';
-import { Code, Text } from '@mantine/core';
+import { Code, Text, TextInput } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
@@ -8,7 +8,7 @@ import { dataCode, employees } from './_data';
 const code = `
 import { useState } from 'react';
 import { ColumnFiltersState } from '@tanstack/react-table';
-import { Code, Text } from '@mantine/core';
+import { Code, Text, TextInput } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
 
@@ -20,9 +20,9 @@ function Demo() {
     columns: [
       { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
       { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
-      { accessorKey: 'department', header: 'Department', enableColumnFilter: true },
-      { accessorKey: 'salary', header: 'Salary', enableColumnFilter: true },
-      { accessorKey: 'status', header: 'Status', enableColumnFilter: true },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'salary', header: 'Salary' },
+      { accessorKey: 'status', header: 'Status' },
     ],
     columnFilters,
     onColumnFiltersChange: setColumnFilters,
@@ -30,6 +30,12 @@ function Demo() {
 
   return (
     <>
+      <TextInput
+        placeholder="Filter by first name"
+        value={(store.getColumnFilterValue('firstName') as string) ?? ''}
+        onChange={(event) => store.setColumnFilter('firstName', event.currentTarget.value)}
+        mb="md"
+      />
       <Text mb="md">
         Active filters: <Code>{JSON.stringify(columnFilters)}</Code>
       </Text>
@@ -47,9 +53,9 @@ function Demo() {
     columns: [
       { accessorKey: 'firstName', header: 'First Name', enableColumnFilter: true },
       { accessorKey: 'lastName', header: 'Last Name', enableColumnFilter: true },
-      { accessorKey: 'department', header: 'Department', enableColumnFilter: true },
-      { accessorKey: 'salary', header: 'Salary', enableColumnFilter: true },
-      { accessorKey: 'status', header: 'Status', enableColumnFilter: true },
+      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'salary', header: 'Salary' },
+      { accessorKey: 'status', header: 'Status' },
     ],
     columnFilters,
     onColumnFiltersChange: setColumnFilters,
@@ -57,6 +63,12 @@ function Demo() {
 
   return (
     <>
+      <TextInput
+        placeholder="Filter by first name"
+        value={(store.getColumnFilterValue('firstName') as string) ?? ''}
+        onChange={(event) => store.setColumnFilter('firstName', event.currentTarget.value)}
+        mb="md"
+      />
       <Text mb="md">
         Active filters: <Code>{JSON.stringify(columnFilters)}</Code>
       </Text>

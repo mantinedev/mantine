@@ -75,8 +75,9 @@ const store = useDataGrid({
 
 ## RTL support
 
-Set `columnResizeDirection` to `'rtl'` when rendering the grid in a right-to-left layout so that
-drag handles appear and behave correctly:
+`columnResizeDirection` defaults to the direction of the closest `DirectionProvider`, so a grid
+rendered inside an RTL layout resizes correctly without extra configuration. Pass the option
+explicitly to override the detected direction:
 
 ```tsx
 const store = useDataGrid({
@@ -86,3 +87,9 @@ const store = useDataGrid({
   columnResizeDirection: 'rtl',
 });
 ```
+
+## Resize handles
+
+One handle is rendered at every boundary between two resizable columns and is revealed when either
+neighbour is hovered. While a handle is dragged, a guide line marks the new edge across the whole
+grid. Double-click a handle to autosize the column to its content.

@@ -12,9 +12,15 @@ import {
 import { useDataGridContext } from '../DataGrid.context';
 import type { DataGridFeatures } from '../table-features';
 import { DataGridCell } from './DataGridCell';
+import {
+  handleRowClick,
+  hasExpandedPanel,
+  hasRowClickBehavior,
+  isRowStriped,
+} from './row-interactions';
 import classes from '../DataGrid.module.css';
 
-export type DataGridRowStylesNames = 'tr' | 'td' | 'treeIndent' | 'treeToggle';
+export type DataGridRowStylesNames = 'tr' | 'td' | 'treeIndent' | 'treeToggle' | 'treeLabel';
 
 export interface DataGridRowProps
   extends BoxProps, CompoundStylesApiProps<DataGridRowFactory>, ElementProps<'tr'> {
@@ -42,45 +48,13 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
   );
 
   const ctx = useDataGridContext();
-  const isSelected = ctx.withRowSelection && row.getIsSelected();
-  const isStriped = ctx.striped && rowIndex % 2 === (ctx.striped === 'odd' ? 0 : 1);
+  const isSelected = row.getIsSelected();
+  const isStriped = isRowStriped(ctx, row);
   const rowPinned = ctx.withRowPinning ? row.getIsPinned() : false;
   const rowHeight = ctx.getRowHeight?.(row);
   const heightStyle = typeof rowHeight === 'number' ? { height: `${rowHeight}px` } : undefined;
 
-  const handleRowClick = (event: React.MouseEvent) => {
-    if (ctx.onRowClick) {
-      ctx.onRowClick(row, event);
-    }
-    if (ctx.expandOnRowClick && ctx.withRowExpansion) {
-      row.toggleExpanded();
-    }
-    if (ctx.selectOnRowClick && ctx.withRowSelection && row.getCanSelect()) {
-      if (event.shiftKey) {
-        const rows = ctx.table.getRowModel().rows;
-        const selected = ctx.table.getSelectedRowModel().rows;
-        const lastSelected = selected.length > 0 ? selected[selected.length - 1] : null;
-        if (lastSelected) {
-          const startIdx = rows.findIndex((r) => r.id === lastSelected.id);
-          const endIdx = rows.findIndex((r) => r.id === row.id);
-          const [from, to] = startIdx < endIdx ? [startIdx, endIdx] : [endIdx, startIdx];
-          const updates: Record<string, true> = {};
-          for (let i = from; i <= to; i++) {
-            if (rows[i].getCanSelect()) {
-              updates[rows[i].id] = true;
-            }
-          }
-          ctx.table.setRowSelection((prev) => ({ ...prev, ...updates }));
-        } else {
-          row.toggleSelected(true);
-        }
-      } else if (event.metaKey || event.ctrlKey) {
-        row.toggleSelected();
-      } else {
-        ctx.table.setRowSelection({ [row.id]: true });
-      }
-    }
-  };
+  const handleClick = (event: React.MouseEvent) => handleRowClick(ctx, row, event);
 
   const handleRowDoubleClick = ctx.onRowDoubleClick
     ? (event: React.MouseEvent) => {
@@ -165,16 +139,18 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
   return (
     <Box
       component="tr"
-      tabIndex={rowIndex === 0 ? 0 : -1}
+      tabIndex={ctx.withCellSelection ? undefined : rowIndex === 0 ? 0 : -1}
       data-row-index={rowIndex}
       data-row-id={row.id}
       data-selected={isSelected || undefined}
       data-striped={isStriped || undefined}
+      data-expanded={hasExpandedPanel(ctx, row) || undefined}
+      data-tree-row={ctx.withTreeData || undefined}
+      data-depth={ctx.withTreeData ? row.depth : undefined}
+      data-leaf={(ctx.withTreeData && !row.getCanExpand()) || undefined}
       data-pinned-top={rowPinned === 'top' || undefined}
       data-pinned-bottom={rowPinned === 'bottom' || undefined}
-      onClick={
-        ctx.onRowClick || ctx.expandOnRowClick || ctx.selectOnRowClick ? handleRowClick : undefined
-      }
+      onClick={hasRowClickBehavior(ctx) ? handleClick : undefined}
       onDoubleClick={handleRowDoubleClick}
       onDragOver={ctx.withRowReorder ? handleDragOver : undefined}
       onDrop={ctx.withRowReorder ? handleDrop : undefined}

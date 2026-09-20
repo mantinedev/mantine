@@ -40,20 +40,33 @@ export function getUtilityColumnIds(flags: UtilityColumnFlags): string[] {
   return getActiveUtilityColumns(flags).map((name) => UTILITY_COLUMN_IDS[name]);
 }
 
-export function normalizeColumnOrder(
-  order: ColumnOrderState,
-  utilityIds: string[]
-): ColumnOrderState {
-  if (order.length === 0) {
-    return order;
-  }
-
-  const missing = utilityIds.filter((id) => !order.includes(id));
-  return missing.length > 0 ? [...missing, ...order] : order;
-}
-
 function sameIds(a: string[], b: string[]) {
   return a.length === b.length && a.every((id, index) => id === b[index]);
+}
+
+/**
+ * Keeps utility columns at the head of the order and, when `groupingIds` is
+ * given, moves the grouped columns right after them (the grid's replacement
+ * for TanStack's `groupedColumnMode: 'reorder'`, which would otherwise place
+ * grouped columns in front of the utility columns).
+ */
+export function normalizeColumnOrder(
+  order: ColumnOrderState,
+  utilityIds: string[],
+  groupingIds: string[] = []
+): ColumnOrderState {
+  const missing = order.length === 0 ? [] : utilityIds.filter((id) => !order.includes(id));
+  const withUtilities = missing.length > 0 ? [...missing, ...order] : order;
+  const grouped = groupingIds.filter((id) => !utilityIds.includes(id));
+
+  if (grouped.length === 0) {
+    return withUtilities;
+  }
+
+  const utilityHead = withUtilities.filter((id) => utilityIds.includes(id));
+  const rest = withUtilities.filter((id) => !utilityIds.includes(id) && !grouped.includes(id));
+  const next = [...(utilityHead.length > 0 ? utilityHead : utilityIds), ...grouped, ...rest];
+  return sameIds(next, withUtilities) ? withUtilities : next;
 }
 
 export function normalizeColumnPinning(
@@ -119,9 +132,12 @@ function SelectCell({ row }: { row: DataGridRow<any> }) {
     );
   }
 
+  const checked = row.getIsGrouped() ? row.getIsAllSubRowsSelected() : row.getIsSelected();
+
   return (
     <Checkbox
-      checked={row.getIsSelected()}
+      checked={checked}
+      indeterminate={!checked && row.getIsSomeSelected()}
       onChange={row.getToggleSelectedHandler()}
       onClick={stopPropagation}
       aria-label={ctx.labels.selectRow}
@@ -134,7 +150,7 @@ function SelectCell({ row }: { row: DataGridRow<any> }) {
 function ExpandCell({ row }: { row: DataGridRow<any> }) {
   const ctx = useDataGridContext();
 
-  if (!row.getCanExpand()) {
+  if (row.getIsGrouped() || !row.getCanExpand()) {
     return null;
   }
 

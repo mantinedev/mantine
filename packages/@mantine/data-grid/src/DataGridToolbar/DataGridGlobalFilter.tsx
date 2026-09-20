@@ -10,16 +10,17 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { SearchIcon } from '../icons';
 import classes from '../DataGrid.module.css';
 
 export type DataGridGlobalFilterStylesNames = 'globalFilter';
 
 export interface DataGridGlobalFilterProps
   extends BoxProps, CompoundStylesApiProps<DataGridGlobalFilterFactory>, ElementProps<'div'> {
-  /** Placeholder text for the search input */
+  /** Placeholder text for the search input, `labels.globalFilterPlaceholder` by default */
   placeholder?: string;
 
-  /** Props passed to the internal TextInput component */
+  /** Props passed down to the `TextInput` component, `size` defaults to `store.controlSize` */
   textInputProps?: Partial<TextInputProps>;
 }
 
@@ -42,7 +43,8 @@ export const DataGridGlobalFilter = factory<DataGridGlobalFilterFactory>((props)
   return (
     <Box {...ctx.getStyles('globalFilter', { className, classNames, style, styles })} {...others}>
       <TextInput
-        size="sm"
+        size={ctx.store.controlSize}
+        leftSection={<SearchIcon />}
         {...textInputProps}
         value={(ctx.table.store.state.globalFilter as string) ?? ''}
         onChange={(event) => ctx.table.setGlobalFilter(event.currentTarget.value)}

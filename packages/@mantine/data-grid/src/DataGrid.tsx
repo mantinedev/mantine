@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
-import { Cell, Row, RowData } from '@tanstack/react-table';
+import React, { useCallback, useMemo, useRef } from 'react';
+import { Cell, Column, Row, RowData } from '@tanstack/react-table';
 import {
   Box,
   BoxProps,
@@ -20,6 +20,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { useMergedRef } from '@mantine/hooks';
 import { DataGridProvider } from './DataGrid.context';
 import { DataGridColumnDef } from './DataGrid.types';
 import {
@@ -32,16 +33,23 @@ import {
 import { DataGridColumnMenu, DataGridColumnMenuFactory } from './DataGridColumnMenu';
 import { DataGridFooter, DataGridFooterFactory } from './DataGridFooter';
 import { DataGridHeader, DataGridHeaderFactory } from './DataGridHeader';
-import { DataGridPagination, DataGridPaginationFactory } from './DataGridPagination';
-import { DataGridStatusBar, DataGridStatusBarFactory } from './DataGridStatusBar';
+import { DataGridHeaderOverlays } from './DataGridHeader/DataGridHeaderOverlays';
+import { useHeaderInteractions } from './DataGridHeader/use-header-interactions';
+import { DataGridSelectionBar, DataGridSelectionBarFactory } from './DataGridSelectionBar';
+import { DataGridTfoot, DataGridTfootFactory } from './DataGridTfoot';
 import {
   DataGridColumnVisibilityToggle,
   DataGridColumnVisibilityToggleFactory,
+  DataGridExportButton,
+  DataGridExportButtonFactory,
   DataGridGlobalFilter,
   DataGridGlobalFilterFactory,
+  DataGridRowCount,
+  DataGridRowCountFactory,
   DataGridToolbar,
   DataGridToolbarFactory,
 } from './DataGridToolbar';
+import { getSelectedCount } from './get-selected-count';
 import { DataGridStore, useDataGrid } from './hooks';
 import { DEFAULT_LABELS, DataGridLabels } from './labels';
 import type { DataGridFeatures } from './table-features';
@@ -62,7 +70,6 @@ export type DataGridStylesNames =
   | 'toolbar'
   | 'globalFilter'
   | 'columnVisibilityToggle'
-  | 'pagination'
   | 'loadingOverlay'
   | 'selectionCheckbox'
   | 'selectAllCheckbox'
@@ -74,8 +81,6 @@ export type DataGridStylesNames =
   | 'groupHeader'
   | 'groupToggle'
   | 'aggregationCell'
-  | 'statusBar'
-  | 'statusBarInfo'
   | 'scrollContainer'
   | 'virtualScrollContainer'
   | 'virtualGrid'
@@ -87,7 +92,23 @@ export type DataGridStylesNames =
   | 'columnMenu'
   | 'dragHandle'
   | 'listView'
-  | 'listItem';
+  | 'listItem'
+  | 'headerLabel'
+  | 'resizeGuide'
+  | 'dropIndicator'
+  | 'dragGhost'
+  | 'footer'
+  | 'footerStatus'
+  | 'footerPageSize'
+  | 'footerPagination'
+  | 'exportButton'
+  | 'rowCount'
+  | 'selectionBar'
+  | 'selectionBarCount'
+  | 'selectionBarClose'
+  | 'treeLabel'
+  | 'aggregationLabel'
+  | 'aggregationValue';
 
 export type DataGridCssVariables = {
   root:
@@ -104,7 +125,8 @@ export type DataGridCssVariables = {
     | '--dg-striped-color'
     | '--dg-hover-color'
     | '--dg-selected-color'
-    | '--dg-pinned-shadow';
+    | '--dg-pinned-shadow'
+    | '--dg-footer-height';
 };
 
 export interface DataGridProps<TData extends RowData = any>
@@ -150,6 +172,18 @@ export interface DataGridProps<TData extends RowData = any>
 
   /** Custom icon displayed in sortable column headers when the column is not sorted @category appearance */
   unsortedIcon?: React.ReactNode;
+
+  /** Controls when the unsorted arrow is visible: `'hover'` reveals it on header hover, `'always'` keeps it visible, @default 'hover' @category appearance */
+  sortIndicator?: 'hover' | 'always';
+
+  /** Controls where the sort arrow sits: `'trailing'` at the far edge of the header, `'inline'` next to the label, @default 'trailing' @category appearance */
+  sortIndicatorPosition?: 'trailing' | 'inline';
+
+  /** Determines whether a column menu button is rendered in column headers, @default false @category appearance */
+  withColumnMenu?: boolean;
+
+  /** Additional items rendered at the end of every column menu, separated by a divider @category appearance */
+  columnMenuItems?: (column: Column<DataGridFeatures, TData, unknown>) => React.ReactNode;
 
   /** Show loading overlay, @default false @category behavior */
   loading?: boolean;
@@ -224,9 +258,6 @@ export interface DataGridProps<TData extends RowData = any>
   /** When true, clicking a row toggles its selection, @default false @category behavior */
   selectOnRowClick?: boolean;
 
-  /** When true, renders filter inputs in a dedicated row below column headers, @default false @category appearance */
-  headerFilters?: boolean;
-
   /** Make the header sticky when scrolling, @default false @category appearance */
   stickyHeader?: boolean;
 
@@ -245,8 +276,8 @@ export interface DataGridProps<TData extends RowData = any>
   /** Props passed to the ScrollArea component, applicable only when `withScrollArea` is true */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** When true, renders rows as vertical cards instead of a table, @default false @category appearance */
-  listView?: boolean;
+  /** Renders rows as a vertical list instead of a table, `true` = `'cards'`, @default false @category appearance */
+  listView?: boolean | 'cards' | 'flat';
 
   /** Custom render function for list view items. Receives the row and should return a card/item element @category appearance */
   renderListItem?: (props: { row: Row<DataGridFeatures, TData> }) => React.ReactNode;
@@ -256,6 +287,15 @@ export interface DataGridProps<TData extends RowData = any>
 
   /** Controls text overflow in body cells, @default 'ellipsis' @category appearance */
   textOverflow?: 'ellipsis' | 'wrap' | 'clip';
+
+  /** Paints group rows with the striped color, @default false @category appearance */
+  withTintedGroupRows?: boolean;
+
+  /** Draws guide lines between tree rows, `false` keeps the indent and chevron only, @default true @category appearance */
+  withTreeLines?: boolean;
+
+  /** Paints expanded rows and their panels with the striped color and drops the rule between them, @default false @category appearance */
+  withTintedExpandedRows?: boolean;
 }
 
 export type DataGridFactory = Factory<{
@@ -268,12 +308,14 @@ export type DataGridFactory = Factory<{
     Header: typeof DataGridHeader;
     Body: typeof DataGridBody;
     VirtualBody: typeof DataGridVirtualBody;
+    Tfoot: typeof DataGridTfoot;
     Footer: typeof DataGridFooter;
     Toolbar: typeof DataGridToolbar;
     GlobalFilter: typeof DataGridGlobalFilter;
     ColumnVisibilityToggle: typeof DataGridColumnVisibilityToggle;
-    Pagination: typeof DataGridPagination;
-    StatusBar: typeof DataGridStatusBar;
+    ExportButton: typeof DataGridExportButton;
+    RowCount: typeof DataGridRowCount;
+    SelectionBar: typeof DataGridSelectionBar;
     ColumnMenu: typeof DataGridColumnMenu;
   };
 }>;
@@ -302,12 +344,16 @@ const varsResolver = createVarsResolver<DataGridFactory>(
           : undefined,
         '--dg-selected-color': undefined,
         '--dg-pinned-shadow': undefined,
+        '--dg-footer-height': undefined,
       },
     };
   }
 );
 
-export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<any>) => {
+export const DataGrid = genericFactory<DataGridFactory>(((
+  _props: DataGridProps<any>,
+  ref: React.ForwardedRef<HTMLDivElement>
+) => {
   const props = useProps('DataGrid', defaultProps, _props);
   const {
     classNames,
@@ -332,6 +378,10 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
     attributes,
     sortedIcon,
     unsortedIcon,
+    sortIndicator = 'hover',
+    sortIndicatorPosition = 'trailing',
+    withColumnMenu = false,
+    columnMenuItems,
     loading,
     striped,
     highlightOnHover,
@@ -352,7 +402,6 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
     processRowUpdate,
     onProcessRowUpdateError,
     selectOnRowClick,
-    headerFilters,
     stickyHeader,
     labels: labelsProp,
     getRowHeight,
@@ -363,6 +412,9 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
     renderListItem,
     tableLayout = 'fixed',
     textOverflow = 'ellipsis',
+    withTintedGroupRows,
+    withTreeLines = true,
+    withTintedExpandedRows,
     ...others
   } = props;
 
@@ -388,33 +440,58 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
 
   const store = storeProp ?? internalStore;
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
+  const rootRef = useRef<HTMLDivElement>(null);
+  const mergedRef = useMergedRef(ref, rootRef);
+  const headerInteractions = useHeaderInteractions({
+    store,
+    withColumnReorder: store.withColumnReorder,
+    withColumnResizing: store.withColumnResizing,
+    rootRef,
+  });
+  const listViewMode = listView === true ? 'cards' : listView || false;
   const hasColumnFooter = store.table
     .getFooterGroups()
     .some((group) => group.headers.some((header) => header.column.columnDef.footer !== undefined));
   const hasAggregation = store.aggregatedColumnIds.length > 0;
-  const hasFooter = hasColumnFooter || hasAggregation;
+  const hasTfoot = hasColumnFooter || hasAggregation;
   const scrollContainerRef = store.scrollContainerRef;
   const withRowVirtualization = virtualize === 'rows' || virtualize === 'rows,columns';
   const withColumnVirtualization = virtualize === 'columns' || virtualize === 'rows,columns';
 
-  const rowModel = store.table.getRowModel();
+  const withRowPinning = withRowVirtualization ? false : store.withRowPinning;
+  const indexRows = withRowPinning ? store.table.getCenterRows() : store.table.getRowModel().rows;
   const pageIndex = store.pagination?.pageIndex ?? 0;
   const pageSize = store.pagination?.pageSize ?? 0;
   const rowNumbers = useMemo(() => {
     const numbers = new Map<string, number>();
     let current = store.withPagination ? pageIndex * pageSize : 0;
-    for (const row of rowModel.rows) {
+    for (const row of indexRows) {
       if (!row.getIsGrouped()) {
         current += 1;
         numbers.set(row.id, current);
       }
     }
     return numbers;
-  }, [rowModel, store.withPagination, pageIndex, pageSize]);
+  }, [indexRows, store.withPagination, pageIndex, pageSize]);
   const getRowNumber = useCallback(
     (row: Row<DataGridFeatures, any>) => rowNumbers.get(row.id),
     [rowNumbers]
   );
+
+  const childArray = React.Children.toArray(children);
+  const isToolbar = (child: React.ReactNode) =>
+    React.isValidElement(child) && child.type === DataGridToolbar;
+  const isSelectionBar = (child: React.ReactNode) =>
+    React.isValidElement(child) && child.type === DataGridSelectionBar;
+  const toolbarChildren = childArray.filter(isToolbar);
+  const selectionBarChild = childArray.find(isSelectionBar) as
+    | React.ReactElement<{ floating?: boolean }>
+    | undefined;
+  const otherChildren = childArray.filter((child) => !isToolbar(child) && !isSelectionBar(child));
+  const selectedCount = getSelectedCount(store.rowSelection);
+  const selectionBarVisible = selectionBarChild !== undefined && selectedCount > 0;
+  const floatingSelectionBar = selectionBarVisible && !!selectionBarChild.props.floating;
+  const toolbarHidden = selectionBarVisible && !floatingSelectionBar;
 
   const withVirtualization = withRowVirtualization || withColumnVirtualization;
   if (process.env.NODE_ENV !== 'production' && withVirtualization && store.withRowReorder) {
@@ -465,7 +542,7 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
         withVirtualization: withRowVirtualization,
         withColumnVirtualization,
         withGrouping: store.withGrouping,
-        withRowPinning: withRowVirtualization ? false : store.withRowPinning,
+        withRowPinning,
         withEditing: store.withEditing,
         withFaceting: store.withFaceting,
         withTreeData: store.withTreeData,
@@ -491,14 +568,23 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
         processRowUpdate,
         onProcessRowUpdateError,
         selectOnRowClick: selectOnRowClick ?? false,
-        headerFilters: headerFilters ?? false,
-        listView: listView ?? false,
+        listView: listViewMode,
         renderListItem,
         getRowHeight,
         estimateRowHeight,
+        sortIndicator,
+        sortIndicatorPosition,
+        withColumnMenu,
+        columnMenuItems,
+        headerInteractions: headerInteractions.interactions,
+        toolbarHidden,
+        withTintedGroupRows: withTintedGroupRows ?? false,
+        withTreeLines,
+        withTintedExpandedRows: withTintedExpandedRows ?? false,
       }}
     >
       <Box
+        ref={mergedRef}
         {...getStyles('root')}
         mod={[
           {
@@ -514,16 +600,23 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
             'sticky-header': stickyHeader || undefined,
             'table-layout': tableLayout === 'auto' ? 'auto' : undefined,
             'text-overflow': textOverflow !== 'ellipsis' ? textOverflow : undefined,
+            'sort-indicator': sortIndicator,
+            'sort-indicator-position': sortIndicatorPosition,
+            'cell-selection': store.withCellSelection,
+            'tinted-group-rows': withTintedGroupRows,
+            'tree-lines': store.withTreeData && withTreeLines,
+            'tinted-expanded-rows': withTintedExpandedRows,
+            'list-view': listViewMode || undefined,
           },
           mod,
         ]}
         data-size={store.size}
+        data-selection-bar-visible={selectionBarVisible || undefined}
         {...others}
       >
-        {React.Children.map(children, (child) =>
-          React.isValidElement(child) && child.type === DataGridToolbar ? child : null
-        )}
-        {listView ? (
+        {selectionBarVisible && !floatingSelectionBar && selectionBarChild}
+        {toolbarChildren}
+        {listViewMode ? (
           <DataGridListView />
         ) : (
           <>
@@ -536,9 +629,9 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
                   scrollContainerRef={scrollContainerRef}
                   onScroll={onScrollToBottom ? handleScroll : undefined}
                 />
-                {hasFooter && (
+                {hasTfoot && (
                   <table {...getStyles('table')}>
-                    <DataGridFooter />
+                    <DataGridTfoot />
                   </table>
                 )}
               </>
@@ -552,7 +645,7 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
                 <table {...getStyles('table')}>
                   <DataGridHeader />
                   <DataGridBody />
-                  {hasFooter && <DataGridFooter />}
+                  {hasTfoot && <DataGridTfoot />}
                 </table>
               </div>
             ) : withScrollArea ? (
@@ -567,23 +660,27 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
                 <table {...getStyles('table')}>
                   <DataGridHeader />
                   <DataGridBody />
-                  {hasFooter && <DataGridFooter />}
+                  {hasTfoot && <DataGridTfoot />}
                 </table>
               </ScrollArea>
             ) : (
-              <div style={{ overflowX: 'auto' }}>
+              <div ref={scrollContainerRef} style={{ overflowX: 'auto' }}>
                 <table {...getStyles('table')}>
                   <DataGridHeader />
                   <DataGridBody />
-                  {hasFooter && <DataGridFooter />}
+                  {hasTfoot && <DataGridTfoot />}
                 </table>
               </div>
             )}
           </>
         )}
-        {React.Children.map(children, (child) =>
-          React.isValidElement(child) && child.type === DataGridToolbar ? null : child
-        )}
+        {otherChildren}
+        {floatingSelectionBar && selectionBarChild}
+        <DataGridHeaderOverlays
+          drag={headerInteractions.drag}
+          dropTarget={headerInteractions.dropTarget}
+          guide={headerInteractions.guide}
+        />
         {loading && <LoadingOverlay visible {...getStyles('loadingOverlay')} />}
       </Box>
     </DataGridProvider>
@@ -596,12 +693,14 @@ DataGrid.displayName = '@mantine/data-grid/DataGrid';
 DataGrid.Header = DataGridHeader;
 DataGrid.Body = DataGridBody;
 DataGrid.VirtualBody = DataGridVirtualBody;
+DataGrid.Tfoot = DataGridTfoot;
 DataGrid.Footer = DataGridFooter;
 DataGrid.Toolbar = DataGridToolbar;
 DataGrid.GlobalFilter = DataGridGlobalFilter;
 DataGrid.ColumnVisibilityToggle = DataGridColumnVisibilityToggle;
-DataGrid.Pagination = DataGridPagination;
-DataGrid.StatusBar = DataGridStatusBar;
+DataGrid.ExportButton = DataGridExportButton;
+DataGrid.RowCount = DataGridRowCount;
+DataGrid.SelectionBar = DataGridSelectionBar;
 DataGrid.ColumnMenu = DataGridColumnMenu;
 
 export namespace DataGrid {
@@ -624,6 +723,11 @@ export namespace DataGrid {
     export type Factory = DataGridVirtualBodyFactory;
   }
 
+  export namespace Tfoot {
+    export type Props = import('./DataGridTfoot').DataGridTfootProps;
+    export type Factory = DataGridTfootFactory;
+  }
+
   export namespace Footer {
     export type Props = import('./DataGridFooter').DataGridFooterProps;
     export type Factory = DataGridFooterFactory;
@@ -644,18 +748,23 @@ export namespace DataGrid {
     export type Factory = DataGridColumnVisibilityToggleFactory;
   }
 
-  export namespace Pagination {
-    export type Props = import('./DataGridPagination').DataGridPaginationProps;
-    export type Factory = DataGridPaginationFactory;
-  }
-
-  export namespace StatusBar {
-    export type Props = import('./DataGridStatusBar').DataGridStatusBarProps;
-    export type Factory = DataGridStatusBarFactory;
-  }
-
   export namespace ColumnMenu {
     export type Props = import('./DataGridColumnMenu').DataGridColumnMenuProps;
     export type Factory = DataGridColumnMenuFactory;
+  }
+
+  export namespace ExportButton {
+    export type Props = import('./DataGridToolbar').DataGridExportButtonProps;
+    export type Factory = DataGridExportButtonFactory;
+  }
+
+  export namespace RowCount {
+    export type Props = import('./DataGridToolbar').DataGridRowCountProps;
+    export type Factory = DataGridRowCountFactory;
+  }
+
+  export namespace SelectionBar {
+    export type Props = import('./DataGridSelectionBar').DataGridSelectionBarProps;
+    export type Factory = DataGridSelectionBarFactory;
   }
 }

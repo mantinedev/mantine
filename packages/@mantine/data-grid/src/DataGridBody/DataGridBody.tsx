@@ -9,8 +9,10 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { getPinnedStyles } from '../get-pinned-styles';
 import { DataGridGroupRow } from './DataGridGroupRow';
 import { DataGridRow } from './DataGridRow';
+import { handleRowKeyDown, hasExpandedPanel } from './row-interactions';
 import classes from '../DataGrid.module.css';
 
 export type DataGridBodyStylesNames =
@@ -41,50 +43,18 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
   const bottomRows = ctx.withRowPinning ? ctx.table.getBottomRows() : [];
   const rows = ctx.withRowPinning ? ctx.table.getCenterRows() : ctx.table.getRowModel().rows;
   const allEmpty = topRows.length === 0 && rows.length === 0 && bottomRows.length === 0;
-  const totalColumns = ctx.table.getVisibleLeafColumns().length;
+  const visibleColumns = ctx.table.getVisibleLeafColumns();
+  const totalColumns = visibleColumns.length;
+  const utilityColumns = visibleColumns.filter((column) => column.columnDef.meta?.utility);
+  const dataColumnCount = totalColumns - utilityColumns.length;
 
   const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLTableSectionElement>) => {
-      const target = event.target as HTMLElement;
-      const row = target.closest('tr');
-      if (!row) {
-        return;
-      }
-
-      const table = row.closest('table');
-      if (!table) {
-        return;
-      }
-
-      const rowElements = Array.from(table.querySelectorAll<HTMLElement>('tbody > tr'));
-      const currentIndex = rowElements.indexOf(row as HTMLElement);
-
-      if (event.key === 'ArrowDown') {
-        event.preventDefault();
-        const nextRow = rowElements[currentIndex + 1];
-        if (nextRow) {
-          nextRow.focus();
-        }
-      } else if (event.key === 'ArrowUp') {
-        event.preventDefault();
-        const prevRow = rowElements[currentIndex - 1];
-        if (prevRow) {
-          prevRow.focus();
-        }
-      } else if (event.key === 'Enter') {
-        const rowId = row.dataset.rowId;
-        if (rowId) {
-          const tableRow = ctx.table.getRow(rowId);
-          if (tableRow && ctx.withRowExpansion) {
-            event.preventDefault();
-            tableRow.toggleExpanded();
-          }
-        }
-      } else if (event.key === 'Escape') {
-        (event.target as HTMLElement).blur();
-      }
-    },
-    [ctx.table, ctx.withRowExpansion]
+    (event: React.KeyboardEvent<HTMLTableSectionElement>) =>
+      handleRowKeyDown(event, ctx, {
+        scopeSelector: 'table',
+        rowSelector: 'tbody > tr[data-row-id]',
+      }),
+    [ctx]
   );
 
   const [pinnedTopOffset, setPinnedTopOffset] = useState(0);
@@ -108,27 +78,34 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
           {ctx.withGrouping && row.getIsGrouped() ? (
             <DataGridGroupRow
               row={row}
-              totalColumns={totalColumns}
+              rowIndex={globalIndex}
               classNames={classNames}
               styles={styles}
             />
           ) : (
             <DataGridRow row={row} rowIndex={globalIndex} classNames={classNames} styles={styles} />
           )}
-          {ctx.withRowExpansion &&
-            !ctx.withTreeData &&
-            row.getIsExpanded() &&
-            !row.getIsGrouped() &&
-            ctx.renderExpandedRow && (
-              <tr {...ctx.getStyles('tr', { classNames, styles })}>
+          {hasExpandedPanel(ctx, row) && (
+            <tr data-expanded-row {...ctx.getStyles('tr', { classNames, styles })}>
+              {utilityColumns.map((column) => (
                 <td
-                  colSpan={totalColumns}
-                  {...ctx.getStyles('expandedRow', { classNames, styles })}
-                >
-                  {ctx.renderExpandedRow({ row })}
-                </td>
-              </tr>
-            )}
+                  key={column.id}
+                  data-utility={column.columnDef.meta?.utility}
+                  data-pinned-left={
+                    (ctx.withColumnPinning && column.getIsPinned() === 'start') || undefined
+                  }
+                  {...ctx.getStyles('td', { classNames, styles })}
+                  style={ctx.withColumnPinning ? getPinnedStyles(column) : undefined}
+                />
+              ))}
+              <td
+                colSpan={dataColumnCount}
+                {...ctx.getStyles('expandedRow', { classNames, styles })}
+              >
+                {ctx.renderExpandedRow!({ row })}
+              </td>
+            </tr>
+          )}
         </React.Fragment>
       );
     });

@@ -18,3 +18,18 @@ export type {
   DataGridColumnVisibilityToggleFactory,
   DataGridColumnVisibilityToggleStylesNames,
 } from './DataGridColumnVisibilityToggle';
+
+export { DataGridExportButton } from './DataGridExportButton';
+export type {
+  DataGridExportButtonProps,
+  DataGridExportButtonFactory,
+  DataGridExportButtonStylesNames,
+  DataGridExportFormat,
+} from './DataGridExportButton';
+
+export { DataGridRowCount } from './DataGridRowCount';
+export type {
+  DataGridRowCountProps,
+  DataGridRowCountFactory,
+  DataGridRowCountStylesNames,
+} from './DataGridRowCount';

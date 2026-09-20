@@ -24,11 +24,11 @@ export type {
 export * from './DataGridHeader/index';
 export * from './DataGridBody/index';
 export * from './DataGridFooter/index';
+export * from './DataGridTfoot/index';
+export * from './DataGridSelectionBar/index';
 export * from './DataGridToolbar/index';
-export * from './DataGridPagination/index';
-export * from './DataGridStatusBar/index';
 export * from './DataGridColumnMenu/index';
-export * from './DataGridFilters/index';
+export * from './filters/index';
 export * from './labels';
 export * from './export/index';
 export * from './column-autosize/index';
@@ -45,3 +45,5 @@ export { dataGridFeatures } from './table-features';
 export type { DataGridFeatures } from './table-features';
 
 export { flexRender } from '@tanstack/react-table';
+
+export { formatLabel, renderLabel } from './format-label';

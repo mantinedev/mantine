@@ -1,5 +1,3 @@
-import React, { useCallback, useRef } from 'react';
-import { flexRender } from '@tanstack/react-table';
 import {
   Box,
   BoxProps,
@@ -7,13 +5,11 @@ import {
   ElementProps,
   factory,
   Factory,
-  UnstyledButton,
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
-import { FilterDispatcher } from '../DataGridFilters';
 import { getPinnedStyles } from '../get-pinned-styles';
-import { DefaultUnsortedIcon, SortIcon } from '../icons';
+import { DataGridHeaderCellContent, getHeaderCellAttributes } from './DataGridHeaderCell';
 import classes from '../DataGrid.module.css';
 
 export type DataGridHeaderStylesNames =
@@ -21,6 +17,7 @@ export type DataGridHeaderStylesNames =
   | 'tr'
   | 'th'
   | 'headerCell'
+  | 'headerLabel'
   | 'sortIcon'
   | 'resizeHandle';
 
@@ -42,45 +39,6 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
   );
 
   const ctx = useDataGridContext();
-  const dragColumnRef = useRef<string | null>(null);
-
-  const handleDragStart = useCallback((e: React.DragEvent, columnId: string) => {
-    dragColumnRef.current = columnId;
-    e.dataTransfer.effectAllowed = 'move';
-  }, []);
-
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-  }, []);
-
-  const handleDrop = useCallback(
-    (e: React.DragEvent, targetColumnId: string) => {
-      e.preventDefault();
-      const sourceColumnId = dragColumnRef.current;
-      if (!sourceColumnId || sourceColumnId === targetColumnId) {
-        return;
-      }
-
-      const currentOrder =
-        ctx.table.store.state.columnOrder.length > 0
-          ? ctx.table.store.state.columnOrder
-          : ctx.table.getAllLeafColumns().map((c) => c.id);
-
-      const sourceIndex = currentOrder.indexOf(sourceColumnId);
-      const targetIndex = currentOrder.indexOf(targetColumnId);
-      if (sourceIndex === -1 || targetIndex === -1) {
-        return;
-      }
-
-      const newOrder = [...currentOrder];
-      newOrder.splice(sourceIndex, 1);
-      newOrder.splice(targetIndex, 0, sourceColumnId);
-      ctx.table.setColumnOrder(newOrder);
-      dragColumnRef.current = null;
-    },
-    [ctx.table]
-  );
 
   return (
     <Box
@@ -90,48 +48,19 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
     >
       {ctx.table.getHeaderGroups().map((headerGroup) => (
         <tr key={headerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
-          {headerGroup.headers.map((header) => {
-            const canSort = ctx.withSorting && header.column.getCanSort();
-            const sortDirection = header.column.getIsSorted();
-            const ariaSort =
-              sortDirection === 'asc'
-                ? 'ascending'
-                : sortDirection === 'desc'
-                  ? 'descending'
-                  : canSort
-                    ? 'none'
-                    : undefined;
-
+          {headerGroup.headers.map((header, index) => {
             const isPinned = ctx.withColumnPinning ? header.column.getIsPinned() : false;
             const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(header.column) : undefined;
-            const isResizing = header.column.getIsResizing();
             const utility = header.column.columnDef.meta?.utility;
-            const meta = header.column.columnDef.meta;
-
-            const reorderProps =
-              ctx.withColumnReorder && !utility
-                ? {
-                    draggable: true,
-                    onDragStart: (e: React.DragEvent) => handleDragStart(e, header.column.id),
-                    onDragOver: handleDragOver,
-                    onDrop: (e: React.DragEvent) => handleDrop(e, header.column.id),
-                  }
-                : {};
 
             return (
               <th
                 key={header.id}
+                ref={ctx.headerInteractions.registerHeaderCell(header)}
                 colSpan={header.colSpan}
-                aria-sort={ariaSort}
-                data-sort-asc={sortDirection === 'asc' || undefined}
-                data-sort-desc={sortDirection === 'desc' || undefined}
-                data-sortable={canSort || undefined}
+                {...getHeaderCellAttributes(header, ctx)}
                 data-pinned-left={isPinned === 'start' || undefined}
                 data-pinned-right={isPinned === 'end' || undefined}
-                data-resizing={isResizing || undefined}
-                data-utility={utility}
-                data-align={meta?.align}
-                data-actions={meta?.type === 'actions' || undefined}
                 {...ctx.getStyles('th', { classNames, styles })}
                 style={{
                   ...pinnedStyles,
@@ -140,75 +69,19 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                       ? header.getSize()
                       : undefined,
                 }}
-                {...reorderProps}
+                {...ctx.headerInteractions.getReorderHandlers(header)}
               >
-                {header.isPlaceholder ? null : (
-                  <>
-                    {canSort ? (
-                      <UnstyledButton
-                        onClick={header.column.getToggleSortingHandler()}
-                        {...ctx.getStyles('headerCell', { classNames, styles })}
-                      >
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        <span {...ctx.getStyles('sortIcon', { classNames, styles })}>
-                          {sortDirection
-                            ? (ctx.sortedIcon ?? <SortIcon size={12} />)
-                            : (ctx.unsortedIcon ?? <DefaultUnsortedIcon />)}
-                        </span>
-                      </UnstyledButton>
-                    ) : (
-                      <div {...ctx.getStyles('headerCell', { classNames, styles })}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                      </div>
-                    )}
-                    {ctx.withFiltering && !ctx.headerFilters && header.column.getCanFilter() && (
-                      <div onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-                        <FilterDispatcher column={header.column} />
-                      </div>
-                    )}
-                  </>
-                )}
-                {ctx.withColumnResizing && header.column.getCanResize() && (
-                  <div
-                    {...ctx.getStyles('resizeHandle', { classNames, styles })}
-                    onPointerDown={header.getResizeHandler()}
-                    onTouchStart={header.getResizeHandler()}
-                    onClick={(e: React.MouseEvent) => e.stopPropagation()}
-                    data-resizing={isResizing || undefined}
-                  />
-                )}
+                <DataGridHeaderCellContent
+                  header={header}
+                  isLast={index === headerGroup.headers.length - 1}
+                  classNames={classNames}
+                  styles={styles}
+                />
               </th>
             );
           })}
         </tr>
       ))}
-      {ctx.headerFilters && ctx.withFiltering && (
-        <tr {...ctx.getStyles('tr', { classNames, styles })}>
-          {ctx.table.getVisibleLeafColumns().map((column) => {
-            const isPinned = ctx.withColumnPinning ? column.getIsPinned() : false;
-            const pinnedStyle = ctx.withColumnPinning ? getPinnedStyles(column) : undefined;
-
-            return (
-              <th
-                key={column.id}
-                data-utility={column.columnDef.meta?.utility}
-                data-pinned-left={isPinned === 'start' || undefined}
-                data-pinned-right={isPinned === 'end' || undefined}
-                {...ctx.getStyles('th', { classNames, styles })}
-                style={{
-                  ...pinnedStyle,
-                  width:
-                    ctx.withColumnResizing || ctx.tableLayout === 'fixed'
-                      ? column.getSize()
-                      : undefined,
-                }}
-              >
-                {column.getCanFilter() ? <FilterDispatcher column={column} /> : null}
-              </th>
-            );
-          })}
-        </tr>
-      )}
     </Box>
   );
 });

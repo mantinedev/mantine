@@ -79,7 +79,12 @@ describe('@mantine/data-grid/column-meta', () => {
           ]}
         />
       );
-      expect(container.querySelector('tfoot')).toHaveTextContent('Total: 55 years / 2 people');
+      expect(container.querySelector('tfoot .mantine-DataGrid-aggregationLabel')).toHaveTextContent(
+        'Total'
+      );
+      expect(container.querySelector('tfoot .mantine-DataGrid-aggregationValue')).toHaveTextContent(
+        '55 years / 2 people'
+      );
     });
   });
 
@@ -170,7 +175,7 @@ describe('@mantine/data-grid/column-meta', () => {
         'Full name',
         'Age',
       ]);
-      await userEvent.click(screen.getByRole('button', { name: 'Toggle column visibility' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Columns' }));
       const menu = await screen.findByRole('menu');
       expect(menu).toHaveTextContent('Full name');
     });

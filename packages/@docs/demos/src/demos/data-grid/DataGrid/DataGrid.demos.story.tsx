@@ -43,29 +43,9 @@ export const Demo_controlledFilters = {
   render: renderDemo(demos.controlledFilters),
 };
 
-export const Demo_selectFilter = {
-  name: '⭐ Demo: selectFilter',
-  render: renderDemo(demos.selectFilter),
-};
-
-export const Demo_multiSelectFilter = {
-  name: '⭐ Demo: multiSelectFilter',
-  render: renderDemo(demos.multiSelectFilter),
-};
-
-export const Demo_rangeFilter = {
-  name: '⭐ Demo: rangeFilter',
-  render: renderDemo(demos.rangeFilter),
-};
-
 export const Demo_customFilterFn = {
   name: '⭐ Demo: customFilterFn',
   render: renderDemo(demos.customFilterFn),
-};
-
-export const Demo_disableFilterPerColumn = {
-  name: '⭐ Demo: disableFilterPerColumn',
-  render: renderDemo(demos.disableFilterPerColumn),
 };
 
 export const Demo_globalFilterExclude = {

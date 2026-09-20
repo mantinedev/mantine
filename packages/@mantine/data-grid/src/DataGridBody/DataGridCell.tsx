@@ -12,11 +12,12 @@ import {
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 import { getPinnedStyles } from '../get-pinned-styles';
-import { ExpandChevron } from '../icons';
 import type { DataGridFeatures } from '../table-features';
+import { TreeCellContent } from './DataGridTreeCell';
+import { useCellSelection } from './use-cell-selection';
 import classes from '../DataGrid.module.css';
 
-export type DataGridCellStylesNames = 'td' | 'editCell' | 'treeIndent' | 'treeToggle';
+export type DataGridCellStylesNames = 'td' | 'editCell' | 'treeIndent' | 'treeToggle' | 'treeLabel';
 
 export interface DataGridCellProps
   extends BoxProps, CompoundStylesApiProps<DataGridCellFactory>, ElementProps<'td'> {
@@ -68,41 +69,7 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
 
   const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(cell.column) : undefined;
 
-  const cellRef = useRef<HTMLTableCellElement>(null);
-  const withCellSelection = ctx.withCellSelection;
-  const isCellSelected = withCellSelection && cell.getIsSelected();
-  const isCellFocused = withCellSelection && cell.getIsFocused();
-  const selectionEdges = withCellSelection ? cell.getSelectionEdges() : undefined;
-
-  useEffect(() => {
-    if (isCellFocused && cellRef.current && document.activeElement !== cellRef.current) {
-      cellRef.current.focus();
-    }
-  }, [isCellFocused]);
-
-  const handleSelectionKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
-      const directions = {
-        ArrowUp: 'up',
-        ArrowDown: 'down',
-        ArrowLeft: 'left',
-        ArrowRight: 'right',
-      } as const;
-
-      const direction = directions[event.key as keyof typeof directions];
-      if (!direction) {
-        return;
-      }
-
-      event.preventDefault();
-      if (event.shiftKey) {
-        ctx.table.extendCellSelection(direction);
-      } else {
-        ctx.table.moveCellSelection(direction);
-      }
-    },
-    [ctx.table]
-  );
+  const cellSelection = useCellSelection<HTMLTableCellElement>(cell);
 
   const canEdit = ctx.withEditing && !utility && !cell.column.columnDef.meta?.disableEditing;
   const editComponent = cell.column.columnDef.meta?.editComponent;
@@ -204,17 +171,8 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
       data-pinned-right={isPinned === 'end' || undefined}
       data-editing={isEditing || undefined}
       data-saving={isSaving || undefined}
-      data-selected={isCellSelected || undefined}
-      data-focused={isCellFocused || undefined}
-      data-edge-top={selectionEdges?.top || undefined}
-      data-edge-bottom={selectionEdges?.bottom || undefined}
-      data-edge-left={selectionEdges?.left || undefined}
-      data-edge-right={selectionEdges?.right || undefined}
-      tabIndex={withCellSelection ? cell.getTabIndex() : undefined}
-      ref={withCellSelection ? cellRef : undefined}
-      onMouseDown={withCellSelection ? cell.getSelectionStartHandler() : undefined}
-      onMouseEnter={withCellSelection ? cell.getSelectionExtendHandler() : undefined}
-      onKeyDown={withCellSelection ? handleSelectionKeyDown : undefined}
+      ref={cellSelection.ref}
+      {...cellSelection.props}
       onClick={
         ctx.onCellClick || (canEdit && ctx.editTrigger === 'click') ? composedClick : undefined
       }
@@ -246,26 +204,9 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
           )}
         </div>
       ) : treeData ? (
-        <div
-          {...ctx.getStyles('treeIndent', { classNames, styles })}
-          style={{ paddingLeft: treeData.row.depth * 20 }}
-        >
-          {ctx.withRowExpansion && treeData.row.getCanExpand() ? (
-            <button
-              type="button"
-              aria-expanded={treeData.row.getIsExpanded()}
-              aria-label={treeData.row.getIsExpanded() ? 'Collapse row' : 'Expand row'}
-              onClick={(e: React.MouseEvent) => {
-                e.stopPropagation();
-                treeData.row.toggleExpanded();
-              }}
-              {...ctx.getStyles('treeToggle', { classNames, styles })}
-            >
-              <ExpandChevron expanded={treeData.row.getIsExpanded()} />
-            </button>
-          ) : null}
+        <TreeCellContent row={treeData.row} classNames={classNames} styles={styles}>
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
-        </div>
+        </TreeCellContent>
       ) : (
         flexRender(cell.column.columnDef.cell, cell.getContext())
       )}

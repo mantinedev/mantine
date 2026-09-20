@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
-  type BuiltInFilterFn,
   CellSelectionState,
   ColumnFiltersState,
   ColumnOrderState,
@@ -18,12 +17,12 @@ import {
   RowSelectionState,
   SortingState,
   TableOptions,
+  Updater,
   useTable,
 } from '@tanstack/react-table';
-import type { MantineSize } from '@mantine/core';
+import { type MantineSize, useDirection } from '@mantine/core';
 import { DATA_GRID_SIZES, type DataGridControlSize, getControlSize } from '../data-grid-sizes';
 import type { DataGridColumnDef, DataGridRow, DataGridTable } from '../DataGrid.types';
-import { createOperatorFilterFn as createOperatorFilterFnLocal } from '../DataGridFilters/filter-operators';
 import { createDataGridFeatures, type DataGridFeatures } from '../table-features';
 import {
   createUtilityColumns,
@@ -45,57 +44,6 @@ function defaultSortingDisabled<TData extends RowData>(
         columns: defaultSortingDisabled(col.columns),
       }),
   }));
-}
-
-function defaultFilteringDisabled<TData extends RowData>(
-  columns: readonly DataGridColumnDef<TData>[]
-): DataGridColumnDef<TData>[] {
-  return columns.map((col) => ({
-    enableColumnFilter:
-      col.meta?.filterVariant !== undefined ||
-      col.meta?.filterOperators !== undefined ||
-      col.filterFn !== undefined,
-    ...col,
-    ...('columns' in col &&
-      col.columns && {
-        columns: defaultFilteringDisabled(col.columns),
-      }),
-  }));
-}
-
-const FILTER_VARIANT_TO_FN = {
-  range: 'inNumberRange',
-  multiSelect: 'arrIncludesSome',
-  select: 'equals',
-  boolean: 'equals',
-} as const satisfies Record<string, BuiltInFilterFn>;
-
-function processFilterColumns<TData extends RowData>(
-  columns: readonly DataGridColumnDef<TData>[]
-): DataGridColumnDef<TData>[] {
-  return columns.map((col) => {
-    const variant = col.meta?.filterVariant;
-    const operators = col.meta?.filterOperators;
-    const defaultFilterFn =
-      variant && variant in FILTER_VARIANT_TO_FN
-        ? FILTER_VARIANT_TO_FN[variant as keyof typeof FILTER_VARIANT_TO_FN]
-        : undefined;
-    let operatorFilterFn: FilterFn<DataGridFeatures, TData> | undefined;
-    if (operators && operators.length > 0 && !col.filterFn) {
-      operatorFilterFn = createOperatorFilterFnLocal(operators);
-    }
-    return {
-      ...(operatorFilterFn ? { filterFn: operatorFilterFn } : {}),
-      ...(defaultFilterFn && !col.filterFn && !operatorFilterFn
-        ? { filterFn: defaultFilterFn }
-        : {}),
-      ...col,
-      ...('columns' in col &&
-        col.columns && {
-          columns: processFilterColumns(col.columns),
-        }),
-    };
-  });
 }
 
 const ACTIONS_COLUMN_DEFAULTS = {
@@ -149,6 +97,15 @@ function collectAggregatedColumnIds<TData extends RowData>(
   }
 
   return acc;
+}
+
+export interface DataGridFacetedValue {
+  value: string;
+  label: string;
+}
+
+function isEmptyFilterValue(value: unknown): boolean {
+  return value === undefined || value === null || value === '';
 }
 
 export interface DataGridStore<TData extends RowData = any> {
@@ -232,6 +189,24 @@ export interface DataGridStore<TData extends RowData = any> {
 
   /** Current column filters state */
   columnFilters: ColumnFiltersState;
+
+  /** Update the column filters state with a value or an updater function */
+  setColumnFilters: (updater: Updater<ColumnFiltersState>) => void;
+
+  /** Set the filter value of one column, `undefined`, `null` and `''` remove the entry; ignored for columns with `enableColumnFilter: false` */
+  setColumnFilter: (columnId: string, value: unknown) => void;
+
+  /** Clear all column filters */
+  resetColumnFilters: () => void;
+
+  /** Current filter value of the given column */
+  getColumnFilterValue: (columnId: string) => unknown;
+
+  /** Unique values of the given column, sorted, arrays flattened, nulls dropped; empty unless `withFaceting` is set */
+  getFacetedUniqueValues: (columnId: string) => DataGridFacetedValue[];
+
+  /** Numeric `[min, max]` of the given column, `undefined` unless `withFaceting` is set */
+  getFacetedMinMaxValues: (columnId: string) => [number, number] | undefined;
 
   /** Current global filter value */
   globalFilter: any;
@@ -367,7 +342,7 @@ export interface UseDataGridOptions<TData extends RowData> {
   /** Column resize mode, @default 'onEnd' */
   columnResizeMode?: ColumnResizeMode;
 
-  /** Direction for column resizing, useful for RTL layouts */
+  /** Direction for column resizing, defaults to the `DirectionProvider` direction */
   columnResizeDirection?: 'ltr' | 'rtl';
 
   /** Controlled column sizing state */
@@ -513,6 +488,7 @@ export function useDataGrid<TData extends RowData>(
   options: UseDataGridOptions<TData>
 ): DataGridStore<TData> {
   const { data, columns, getRowId, tableOptions } = options;
+  const { dir } = useDirection();
 
   const {
     withSorting,
@@ -581,10 +557,7 @@ export function useDataGrid<TData extends RowData>(
   );
 
   const sortProcessed = withSorting ? defaultSortingDisabled(columns) : columns;
-  const filterProcessed = withFiltering ? defaultFilteringDisabled(sortProcessed) : sortProcessed;
-  const dataColumns = processActionsColumns(
-    withFiltering ? processFilterColumns(filterProcessed) : filterProcessed
-  );
+  const dataColumns = processActionsColumns(sortProcessed);
   const processedColumns =
     utilityIds.length > 0 ? [...utilityColumns, ...dataColumns] : dataColumns;
 
@@ -596,8 +569,21 @@ export function useDataGrid<TData extends RowData>(
   );
   const withUtilityOrder = utilityIds.length > 0;
   const withUtilityPinning = utilityIds.length > 0 && withColumnPinning;
+  const groupedColumnMode = options.groupedColumnMode ?? 'reorder';
+  const withGroupedReorder = withGrouping && withUtilityOrder && groupedColumnMode === 'reorder';
+  const tableRef = useRef<DataGridTable<TData> | null>(null);
+  const currentGrouping = withGroupedReorder
+    ? (options.grouping ??
+      tableRef.current?.store.state.grouping ??
+      tableOptions?.initialState?.grouping ??
+      [])
+    : [];
   const columnOrder = withUtilityOrder
-    ? normalizeColumnOrder(options.columnOrder ?? internalColumnOrder, utilityIds)
+    ? normalizeColumnOrder(
+        options.columnOrder ?? internalColumnOrder,
+        utilityIds,
+        withGroupedReorder ? currentGrouping : []
+      )
     : options.columnOrder;
   const columnPinning = withUtilityPinning
     ? normalizeColumnPinning(options.columnPinning ?? internalColumnPinning, utilityIds)
@@ -680,9 +666,7 @@ export function useDataGrid<TData extends RowData>(
     ...(withColumnResizing && {
       enableColumnResizing: true,
       columnResizeMode: options.columnResizeMode ?? 'onEnd',
-      ...(options.columnResizeDirection !== undefined && {
-        columnResizeDirection: options.columnResizeDirection,
-      }),
+      columnResizeDirection: options.columnResizeDirection ?? dir,
     }),
     ...(withColumnPinning && { enableColumnPinning: true }),
     ...(withRowPinning && {
@@ -700,9 +684,11 @@ export function useDataGrid<TData extends RowData>(
     }),
     ...(withGrouping && {
       autoResetExpanded: false,
-      ...(options.groupedColumnMode !== undefined && {
-        groupedColumnMode: options.groupedColumnMode,
-      }),
+      ...(withGroupedReorder
+        ? { groupedColumnMode: false as const }
+        : options.groupedColumnMode !== undefined && {
+            groupedColumnMode: options.groupedColumnMode,
+          }),
     }),
     ...(options.getSubRows && { getSubRows: options.getSubRows }),
     ...(options.getRowCanExpand
@@ -720,7 +706,7 @@ export function useDataGrid<TData extends RowData>(
       maxLeafRowFilterDepth: options.maxLeafRowFilterDepth,
     }),
     ...(options.manualExpanding !== undefined && { manualExpanding: options.manualExpanding }),
-    enableCellSelection: withCellSelection,
+    enableCellSelection: withCellSelection ? (cell) => !cell.row.getIsGrouped() : false,
 
     // Controlled state and handlers
     ...(Object.keys(controlledState).length > 0 && { state: controlledState }),
@@ -740,6 +726,7 @@ export function useDataGrid<TData extends RowData>(
   };
 
   const table = useTable(tableConfig);
+  tableRef.current = table;
   const state = table.store.state;
 
   const aggregatedColumnIds = useMemo(() => collectAggregatedColumnIds(columns), [columns]);
@@ -768,6 +755,56 @@ export function useDataGrid<TData extends RowData>(
       container.scrollTo({ left: cell.offsetLeft, behavior: 'smooth' });
     }
   }, []);
+
+  const setColumnFilter = (columnId: string, value: unknown) => {
+    const column = table.getColumn(columnId);
+    if (column && !column.getCanFilter()) {
+      return;
+    }
+
+    table.setColumnFilters((old) => {
+      const filters = old ?? [];
+      if (isEmptyFilterValue(value)) {
+        return filters.filter((filter) => filter.id !== columnId);
+      }
+
+      const index = filters.findIndex((filter) => filter.id === columnId);
+      if (index === -1) {
+        return [...filters, { id: columnId, value }];
+      }
+
+      return filters.map((filter) => (filter.id === columnId ? { id: columnId, value } : filter));
+    });
+  };
+
+  const getColumnFilterValue = (columnId: string) =>
+    state.columnFilters.find((filter) => filter.id === columnId)?.value;
+
+  const getFacetedUniqueValues = (columnId: string): DataGridFacetedValue[] => {
+    const column = withFaceting ? table.getColumn(columnId) : undefined;
+    if (!column) {
+      return [];
+    }
+
+    const unique = new Set<string>();
+    for (const key of column.getFacetedUniqueValues().keys()) {
+      const values = Array.isArray(key) ? key : [key];
+      for (const item of values) {
+        if (item !== null && item !== undefined) {
+          unique.add(String(item));
+        }
+      }
+    }
+
+    return Array.from(unique)
+      .sort()
+      .map((value) => ({ value, label: value }));
+  };
+
+  const getFacetedMinMaxValues = (columnId: string) => {
+    const column = withFaceting ? table.getColumn(columnId) : undefined;
+    return column?.getFacetedMinMaxValues();
+  };
 
   const getScrollPosition = useCallback(() => {
     const container = scrollContainerRef.current;
@@ -805,6 +842,12 @@ export function useDataGrid<TData extends RowData>(
     controlSize,
     sorting: state.sorting,
     columnFilters: state.columnFilters,
+    setColumnFilters: table.setColumnFilters,
+    setColumnFilter,
+    resetColumnFilters: () => table.resetColumnFilters(),
+    getColumnFilterValue,
+    getFacetedUniqueValues,
+    getFacetedMinMaxValues,
     globalFilter: state.globalFilter,
     setGlobalFilter: table.setGlobalFilter,
     pagination: state.pagination,

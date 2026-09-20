@@ -6,8 +6,13 @@ export default Layout(MDX_DATA.DataGridFiltering);
 
 ## Column filters
 
-Pass `withFiltering` to `useDataGrid` to display filter inputs below each column header.
-Each column gets a text input that filters rows using a case-insensitive string match by default.
+DataGrid owns the column filter state but renders no filter inputs: build the filter UI
+you need with `@mantine/core` components and connect it to the store. `useDataGrid` infers
+`withFiltering` from columns with `enableColumnFilter` or `filterFn`; the store exposes
+`setColumnFilter(columnId, value)` (`undefined`, `null` and `''` remove the entry),
+`setColumnFilters(updater)`, `resetColumnFilters()`, `getColumnFilterValue(columnId)` and
+`columnFilters`. Enable `withFaceting` to read `getFacetedUniqueValues(columnId)` and
+`getFacetedMinMaxValues(columnId)` for select options and range bounds.
 
 <Demo data={DataGridDemos.columnFilters} />
 
@@ -25,36 +30,24 @@ The state follows the TanStack Table `ColumnFiltersState` format -- an array of 
 
 <Demo data={DataGridDemos.controlledFilters} />
 
-## Filter variants
+## Operator filters
 
-By default, each column uses a text input for filtering. You can change the filter UI per column
-by setting `meta.filterVariant` on the column definition. The supported variants are `text`, `select`,
-`multiSelect`, `range`, `dateRange`, and `boolean`.
+`stringOperators`, `numberOperators` and `booleanOperators` describe operator sets
+(contains, equals, greater than, ...). Pass `filterFn: createOperatorFilterFn(stringOperators)`
+on a column and store an `{ operator, value }` object as its filter value:
 
-Enable `withFaceting` on `useDataGrid` to automatically populate select options from your data
-and provide min/max hints for range filters.
+```tsx
+import { createOperatorFilterFn, stringOperators, useDataGrid } from '@mantine/data-grid';
 
-## Select filter
+const store = useDataGrid({
+  data,
+  columns: [
+    { accessorKey: 'name', header: 'Name', filterFn: createOperatorFilterFn(stringOperators) },
+  ],
+});
 
-Set `meta: { filterVariant: 'select' }` on a column to render a select dropdown instead of a text input.
-When `withFaceting` is enabled, the dropdown options are automatically derived from the unique values in the column.
-
-<Demo data={DataGridDemos.selectFilter} />
-
-## Multi-select filter
-
-Set `meta: { filterVariant: 'multiSelect' }` to allow filtering by multiple values simultaneously.
-Rows that match any of the selected values are shown.
-
-<Demo data={DataGridDemos.multiSelectFilter} />
-
-## Number range filter
-
-Set `meta: { filterVariant: 'range' }` to display a popover with two number inputs and a range slider
-for filtering within a numeric range. When `withFaceting` is enabled, the slider bounds and input
-placeholders are automatically derived from the min and max values in the column data.
-
-<Demo data={DataGridDemos.rangeFilter} />
+store.setColumnFilter('name', { operator: 'startsWith', value: 'A' });
+```
 
 ## Custom filter functions
 
@@ -66,10 +59,8 @@ exact match filter on the department column.
 
 ## Disable filtering per column
 
-Set `enableColumnFilter: false` on a column definition to exclude it from filtering while other
-columns remain filterable.
-
-<Demo data={DataGridDemos.disableFilterPerColumn} />
+Set `enableColumnFilter: false` on a column definition to make `column.getCanFilter()` return
+`false` for it; `store.setColumnFilter` ignores writes for such columns.
 
 ## Global filter column exclusion
 

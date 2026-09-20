@@ -83,14 +83,6 @@ describe('inferFeatureFlags', () => {
       expect(flags.withFiltering).toBe(true);
     });
 
-    it('infers from column meta.filterVariant', () => {
-      const flags = inferFeatureFlags({
-        ...baseOptions,
-        columns: [{ accessorKey: 'dept', meta: { filterVariant: 'select' } }],
-      });
-      expect(flags.withFiltering).toBe(true);
-    });
-
     it('infers from column filterFn', () => {
       const flags = inferFeatureFlags({
         ...baseOptions,
@@ -99,17 +91,10 @@ describe('inferFeatureFlags', () => {
       expect(flags.withFiltering).toBe(true);
     });
 
-    it('infers from column meta.filterOperators', () => {
+    it('infers from a custom filterFn function', () => {
       const flags = inferFeatureFlags({
         ...baseOptions,
-        columns: [
-          {
-            accessorKey: 'name',
-            meta: {
-              filterOperators: [{ label: 'Contains', value: 'contains', filterFn: () => true }],
-            },
-          },
-        ],
+        columns: [{ accessorKey: 'name', filterFn: (() => true) as any }],
       });
       expect(flags.withFiltering).toBe(true);
     });

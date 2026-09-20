@@ -11,10 +11,14 @@ how many rows are displayed per page (defaults to `10`).
 
 <Demo data={DataGridDemos.pagination} />
 
-## Page size selector
+## Footer
 
-The pagination component includes a page size selector by default. Use the `pageSizeOptions` prop
-on `DataGrid` to customize the available options (e.g., `pageSizeOptions={[5, 10, 25, 50]}`).
+`DataGrid.Footer` renders the status text, the page size select and the pagination controls.
+Use `pageSizeOptions` to customize the page size select (e.g., `pageSizeOptions={[5, 10, 25, 50]}`),
+`withPageSize={false}` to hide it, `pagination="arrows"` for previous / next controls with a page
+label, `pagination="none"` for the status only and `statusFormat="long"` for the
+`Showing 1–10 of 20 · 2 selected` status format. Under `manualPagination` without `rowCount`
+the status falls back to `Page 1 of 2`.
 
 ## Controlled pagination
 

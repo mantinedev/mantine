@@ -1,7 +1,8 @@
 import React from 'react';
-import { Cell, Row, Table as ReactTable } from '@tanstack/react-table';
+import { Cell, Column, Row, Table as ReactTable } from '@tanstack/react-table';
 import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { DataGridFactory } from './DataGrid';
+import type { DataGridHeaderInteractions } from './DataGridHeader/use-header-interactions';
 import type { DataGridStore } from './hooks';
 import type { DataGridLabels } from './labels';
 import type { DataGridFeatures } from './table-features';
@@ -58,9 +59,17 @@ export interface DataGridContextValue {
   processRowUpdate?: (newRow: any, oldRow: any) => Promise<any>;
   onProcessRowUpdateError?: (error: unknown) => void;
   selectOnRowClick: boolean;
-  headerFilters: boolean;
-  listView: boolean;
+  listView: false | 'cards' | 'flat';
   renderListItem?: (props: { row: Row<DataGridFeatures, any> }) => React.ReactNode;
+  sortIndicator: 'hover' | 'always';
+  sortIndicatorPosition: 'trailing' | 'inline';
+  withColumnMenu: boolean;
+  columnMenuItems?: (column: Column<DataGridFeatures, any, unknown>) => React.ReactNode;
+  headerInteractions: DataGridHeaderInteractions;
+  toolbarHidden: boolean;
+  withTintedGroupRows: boolean;
+  withTreeLines: boolean;
+  withTintedExpandedRows: boolean;
 }
 
 export const [DataGridProvider, useDataGridContext] = createSafeContext<DataGridContextValue>(

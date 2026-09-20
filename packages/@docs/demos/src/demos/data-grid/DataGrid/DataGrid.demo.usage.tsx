@@ -380,7 +380,7 @@ function Demo() {
           <Text size="sm" c="dimmed">
             {selectedCount > 0 ? \`\${selectedCount} rows selected\` : '\\u00A0'}
           </Text>
-          <DataGrid.Pagination />
+          <DataGrid.Footer />
         </Group>
       </DataGrid>
     </>
@@ -569,7 +569,7 @@ function Demo() {
           <Text size="sm" c="dimmed">
             {selectedCount > 0 ? `${selectedCount} rows selected` : '\u00A0'}
           </Text>
-          <DataGrid.Pagination />
+          <DataGrid.Footer />
         </Group>
       </DataGrid>
     </>

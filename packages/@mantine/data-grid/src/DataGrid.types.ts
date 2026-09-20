@@ -11,15 +11,10 @@ import {
   SortFn,
   Table as ReactTable,
 } from '@tanstack/react-table';
-import type { FilterOperator } from './DataGridFilters/filter-operators';
 import type { DataGridFeatures } from './table-features';
 import type { DataGridUtilityColumn } from './utility-columns/utility-columns';
 
 export interface DataGridColumnMeta<TData extends RowData = any, TValue = unknown> {
-  filterVariant?: 'text' | 'select' | 'multiSelect' | 'range' | 'boolean';
-  filterOperators?: FilterOperator[];
-  filterOptions?: Array<{ value: string; label: string }> | string[];
-  filterPlaceholder?: string;
   /** Human-readable column label used by the column visibility menu, list view and export, falls back to a string `header`, then the column id */
   label?: string;
 

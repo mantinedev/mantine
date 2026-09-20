@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { flexRender, Header } from '@tanstack/react-table';
+import React, { useCallback, useMemo } from 'react';
+import { Cell, Header } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
   BoxProps,
@@ -8,15 +8,25 @@ import {
   factory,
   Factory,
   rem,
-  UnstyledButton,
   useProps,
 } from '@mantine/core';
 import { getRowHeightEstimate } from '../data-grid-sizes';
 import { useDataGridContext } from '../DataGrid.context';
-import { FilterDispatcher } from '../DataGridFilters';
+import {
+  DataGridHeaderCellContent,
+  getHeaderCellAttributes,
+} from '../DataGridHeader/DataGridHeaderCell';
 import { getPinnedStyles } from '../get-pinned-styles';
-import { DefaultUnsortedIcon, ExpandChevron, SortIcon } from '../icons';
 import type { DataGridFeatures } from '../table-features';
+import { getGroupLabelCellId } from './DataGridGroupCell';
+import { DataGridVirtualCell } from './DataGridVirtualCell';
+import {
+  handleRowClick,
+  handleRowKeyDown,
+  hasExpandedPanel,
+  hasRowClickBehavior,
+  isRowStriped,
+} from './row-interactions';
 import classes from '../DataGrid.module.css';
 
 export type DataGridVirtualBodyStylesNames =
@@ -29,7 +39,11 @@ export type DataGridVirtualBodyStylesNames =
   | 'expandedRow'
   | 'sortIcon'
   | 'headerCell'
-  | 'resizeHandle';
+  | 'headerLabel'
+  | 'resizeHandle'
+  | 'treeIndent'
+  | 'treeToggle'
+  | 'treeLabel';
 
 export interface DataGridVirtualBodyProps
   extends BoxProps, CompoundStylesApiProps<DataGridVirtualBodyFactory>, ElementProps<'div'> {
@@ -90,6 +104,15 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
   );
 
   const overscan = virtualScrollConfig?.overscan ?? 10;
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) =>
+      handleRowKeyDown(event, ctx, {
+        scopeSelector: '[role="grid"]',
+        rowSelector: '[role="row"][data-row-id]',
+      }),
+    [ctx]
+  );
 
   const hasAutoHeight = useMemo(
     () => ctx.getRowHeight != null && rows.some((row) => ctx.getRowHeight!(row) === 'auto'),
@@ -187,85 +210,33 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
   }, [visibleColumns]);
 
   function renderCellContent(
-    row: ReturnType<(typeof rows)[number]['getVisibleCells']> extends (infer C)[] ? C : never,
+    cell: Cell<DataGridFeatures, any, unknown>,
     cellIndex: number,
-    rowObj: (typeof rows)[number]
+    rowObj: (typeof rows)[number],
+    groupLabelCellId?: string
   ) {
-    const isPinned = ctx.withColumnPinning ? row.column.getIsPinned() : false;
-    const cellColIndex = cellIndex + 1;
-    const meta = row.column.columnDef.meta;
-    const utility = meta?.utility;
-    const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(row.column) : undefined;
-
-    const handleCellClick = ctx.onCellClick
-      ? (event: React.MouseEvent) => {
-          ctx.onCellClick!(row, event);
-        }
-      : undefined;
-
-    const handleCellKeyDown = handleCellClick
-      ? (event: React.KeyboardEvent) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            handleCellClick(event as unknown as React.MouseEvent);
-          }
-        }
-      : undefined;
-
-    const isTreeFirstCell = ctx.withTreeData && cellIndex === firstDataColumnIndex;
-
     return (
-      <div
-        key={row.id}
-        role="gridcell"
-        aria-colindex={cellColIndex}
-        tabIndex={handleCellClick ? 0 : undefined}
-        data-utility={utility}
-        data-align={meta?.align}
-        data-actions={meta?.type === 'actions' || undefined}
-        data-pinned-left={isPinned === 'start' || undefined}
-        data-pinned-right={isPinned === 'end' || undefined}
-        onClick={handleCellClick}
-        onKeyDown={handleCellKeyDown}
-        {...ctx.getStyles('virtualCell', { classNames, styles })}
-        style={{
-          ...pinnedStyles,
-          width: `var(--dg-col-${cellIndex})`,
-        }}
-      >
-        {isTreeFirstCell ? (
-          <div
-            {...ctx.getStyles('treeIndent', { classNames, styles })}
-            style={{ paddingLeft: rowObj.depth * 20 }}
-          >
-            {ctx.withRowExpansion && rowObj.getCanExpand() ? (
-              <button
-                type="button"
-                aria-expanded={rowObj.getIsExpanded()}
-                aria-label={rowObj.getIsExpanded() ? 'Collapse row' : 'Expand row'}
-                onClick={(e: React.MouseEvent) => {
-                  e.stopPropagation();
-                  rowObj.toggleExpanded();
-                }}
-                {...ctx.getStyles('treeToggle', { classNames, styles })}
-              >
-                <ExpandChevron expanded={rowObj.getIsExpanded()} />
-              </button>
-            ) : null}
-            {flexRender(row.column.columnDef.cell, row.getContext())}
-          </div>
-        ) : (
-          flexRender(row.column.columnDef.cell, row.getContext())
-        )}
-      </div>
+      <DataGridVirtualCell
+        key={cell.id}
+        cell={cell}
+        cellIndex={cellIndex}
+        row={rowObj}
+        isTreeFirstCell={ctx.withTreeData && cellIndex === firstDataColumnIndex}
+        groupLabelCellId={groupLabelCellId}
+        classNames={classNames}
+        styles={styles}
+      />
     );
   }
 
   function renderVirtualizedCells(
     row: (typeof rows)[number],
-    cells: ReturnType<typeof row.getVisibleCells>
+    cells: ReturnType<typeof row.getVisibleCells>,
+    groupLabelCellId?: string
   ) {
-    const leftPinned = allCellsPinned.left.map((idx) => renderCellContent(cells[idx], idx, row));
+    const leftPinned = allCellsPinned.left.map((idx) =>
+      renderCellContent(cells[idx], idx, row, groupLabelCellId)
+    );
     const virtualCells = virtualColumnItems!.filter(
       (item) => !pinnedColumnIndexSet.has(item.index)
     );
@@ -292,13 +263,15 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
                 transform: `translateX(${virtualCol.start - leftPinnedWidth}px)`,
               }}
             >
-              {renderCellContent(cell, virtualCol.index, row)}
+              {renderCellContent(cell, virtualCol.index, row, groupLabelCellId)}
             </div>
           );
         })}
       </div>
     );
-    const rightPinned = allCellsPinned.right.map((idx) => renderCellContent(cells[idx], idx, row));
+    const rightPinned = allCellsPinned.right.map((idx) =>
+      renderCellContent(cells[idx], idx, row, groupLabelCellId)
+    );
     return (
       <>
         {leftPinned}
@@ -310,40 +283,49 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
 
   function renderAllCells(
     row: (typeof rows)[number],
-    cells: ReturnType<typeof row.getVisibleCells>
+    cells: ReturnType<typeof row.getVisibleCells>,
+    groupLabelCellId?: string
   ) {
-    return cells.map((cell, cellIndex) => renderCellContent(cell, cellIndex, row));
+    return cells.map((cell, cellIndex) =>
+      renderCellContent(cell, cellIndex, row, groupLabelCellId)
+    );
+  }
+
+  function renderGroupRowContent(row: (typeof rows)[number], rowIndex: number) {
+    const cells = row.getVisibleCells();
+    const labelCellId = getGroupLabelCellId(cells);
+
+    return (
+      <div
+        role="row"
+        aria-rowindex={rowIndex + 2}
+        aria-expanded={row.getIsExpanded()}
+        tabIndex={ctx.withCellSelection ? undefined : rowIndex === 0 ? 0 : -1}
+        data-group-row
+        data-row-index={rowIndex}
+        data-row-id={row.id}
+        onClick={() => row.toggleExpanded()}
+        {...ctx.getStyles('virtualRow', { classNames, styles })}
+      >
+        {withColumnVirt
+          ? renderVirtualizedCells(row, cells, labelCellId)
+          : renderAllCells(row, cells, labelCellId)}
+      </div>
+    );
   }
 
   function renderRowContent(row: (typeof rows)[number], rowIndex: number) {
-    const isSelected = ctx.withRowSelection && row.getIsSelected();
-    const isStriped = ctx.striped && rowIndex % 2 === (ctx.striped === 'odd' ? 0 : 1);
-    const isExpanded =
-      ctx.withRowExpansion && !ctx.withTreeData && row.getIsExpanded() && ctx.renderExpandedRow;
+    if (ctx.withGrouping && row.getIsGrouped()) {
+      return renderGroupRowContent(row, rowIndex);
+    }
 
-    const handleRowClick = (event: React.MouseEvent) => {
-      if (ctx.onRowClick) {
-        ctx.onRowClick(row, event);
-      }
-      if (ctx.expandOnRowClick && ctx.withRowExpansion) {
-        row.toggleExpanded();
-      }
-    };
+    const isSelected = row.getIsSelected();
+    const isStriped = isRowStriped(ctx, row);
+    const isExpanded = hasExpandedPanel(ctx, row);
 
     const handleRowDoubleClick = ctx.onRowDoubleClick
       ? (event: React.MouseEvent) => {
           ctx.onRowDoubleClick!(row, event);
-        }
-      : undefined;
-
-    const hasRowClickHandler = !!(ctx.onRowClick || ctx.expandOnRowClick);
-
-    const handleRowKeyDown = hasRowClickHandler
-      ? (event: React.KeyboardEvent) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            handleRowClick(event as unknown as React.MouseEvent);
-          }
         }
       : undefined;
 
@@ -354,11 +336,18 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         <div
           role="row"
           aria-rowindex={rowIndex + 2}
-          tabIndex={hasRowClickHandler ? 0 : undefined}
+          tabIndex={ctx.withCellSelection ? undefined : rowIndex === 0 ? 0 : -1}
+          data-row-index={rowIndex}
+          data-row-id={row.id}
           data-selected={isSelected || undefined}
           data-striped={isStriped || undefined}
-          onClick={hasRowClickHandler ? handleRowClick : undefined}
-          onKeyDown={handleRowKeyDown}
+          data-expanded={isExpanded || undefined}
+          data-tree-row={ctx.withTreeData || undefined}
+          data-depth={ctx.withTreeData ? row.depth : undefined}
+          data-leaf={(ctx.withTreeData && !row.getCanExpand()) || undefined}
+          onClick={
+            hasRowClickBehavior(ctx) ? (event) => handleRowClick(ctx, row, event) : undefined
+          }
           onDoubleClick={handleRowDoubleClick}
           {...ctx.getStyles('virtualRow', { classNames, styles })}
         >
@@ -368,9 +357,34 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
           <div
             role="row"
             aria-rowindex={rowIndex + 2}
-            {...ctx.getStyles('expandedRow', { classNames, styles })}
+            data-expanded-row
+            {...ctx.getStyles('virtualRow', { classNames, styles })}
           >
-            {ctx.renderExpandedRow!({ row })}
+            {visibleColumns.map((column, index) =>
+              column.columnDef.meta?.utility ? (
+                <div
+                  key={column.id}
+                  role="gridcell"
+                  aria-colindex={index + 1}
+                  data-utility={column.columnDef.meta.utility}
+                  data-pinned-left={
+                    (ctx.withColumnPinning && column.getIsPinned() === 'start') || undefined
+                  }
+                  {...ctx.getStyles('virtualCell', { classNames, styles })}
+                  style={{
+                    ...(ctx.withColumnPinning ? getPinnedStyles(column) : undefined),
+                    width: `var(--dg-col-${index})`,
+                  }}
+                />
+              ) : null
+            )}
+            <div
+              role="gridcell"
+              aria-colindex={firstDataColumnIndex + 1}
+              {...ctx.getStyles('expandedRow', { classNames, styles })}
+            >
+              {ctx.renderExpandedRow!({ row })}
+            </div>
           </div>
         )}
       </>
@@ -402,41 +416,23 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         })
       : rows.map((row, rowIndex) => <div key={row.id}>{renderRowContent(row, rowIndex)}</div>);
 
-  function renderHeaderCell(header: Header<DataGridFeatures, any, unknown>, headerIndex: number) {
-    const canSort = ctx.withSorting && header.column.getCanSort();
-    const sortDirection = header.column.getIsSorted();
-    const ariaSort =
-      sortDirection === 'asc'
-        ? ('ascending' as const)
-        : sortDirection === 'desc'
-          ? ('descending' as const)
-          : canSort
-            ? ('none' as const)
-            : undefined;
-
+  function renderHeaderCell(
+    header: Header<DataGridFeatures, any, unknown>,
+    headerIndex: number,
+    isLast: boolean
+  ) {
     const isPinned = ctx.withColumnPinning ? header.column.getIsPinned() : false;
-    const isResizing = header.column.getIsResizing();
     const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(header.column) : undefined;
-
-    const colIndex = headerIndex + 1;
-    const utility = header.column.columnDef.meta?.utility;
-    const meta = header.column.columnDef.meta;
 
     return (
       <div
         key={header.id}
+        ref={ctx.headerInteractions.registerHeaderCell(header)}
         role="columnheader"
-        aria-colindex={colIndex}
-        aria-sort={ariaSort}
-        data-sort-asc={sortDirection === 'asc' || undefined}
-        data-sort-desc={sortDirection === 'desc' || undefined}
-        data-sortable={canSort || undefined}
+        aria-colindex={headerIndex + 1}
+        {...getHeaderCellAttributes(header, ctx)}
         data-pinned-left={isPinned === 'start' || undefined}
         data-pinned-right={isPinned === 'end' || undefined}
-        data-resizing={isResizing || undefined}
-        data-utility={utility}
-        data-align={meta?.align}
-        data-actions={meta?.type === 'actions' || undefined}
         {...ctx.getStyles('virtualCell', { classNames, styles })}
         style={{
           ...pinnedStyles,
@@ -444,45 +440,16 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
             header.colSpan > 1
               ? header.getLeafHeaders().reduce((sum, leaf) => sum + leaf.getSize(), 0)
               : `var(--dg-col-${headerIndex})`,
-          fontWeight: 'var(--mantine-font-weight-medium)' as any,
           position: isPinned ? 'sticky' : 'relative',
         }}
+        {...ctx.headerInteractions.getReorderHandlers(header)}
       >
-        {header.isPlaceholder ? null : (
-          <>
-            {canSort ? (
-              <UnstyledButton
-                onClick={header.column.getToggleSortingHandler()}
-                {...ctx.getStyles('headerCell', { classNames, styles })}
-              >
-                {flexRender(header.column.columnDef.header, header.getContext())}
-                <span {...ctx.getStyles('sortIcon', { classNames, styles })}>
-                  {sortDirection
-                    ? (ctx.sortedIcon ?? <SortIcon size={12} />)
-                    : (ctx.unsortedIcon ?? <DefaultUnsortedIcon />)}
-                </span>
-              </UnstyledButton>
-            ) : (
-              <div {...ctx.getStyles('headerCell', { classNames, styles })}>
-                {flexRender(header.column.columnDef.header, header.getContext())}
-              </div>
-            )}
-            {ctx.withFiltering && !ctx.headerFilters && header.column.getCanFilter() && (
-              <div onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-                <FilterDispatcher column={header.column} />
-              </div>
-            )}
-          </>
-        )}
-        {ctx.withColumnResizing && header.column.getCanResize() && (
-          <div
-            {...ctx.getStyles('resizeHandle', { classNames, styles })}
-            onPointerDown={header.getResizeHandler()}
-            onTouchStart={header.getResizeHandler()}
-            onClick={(e: React.MouseEvent) => e.stopPropagation()}
-            data-resizing={isResizing || undefined}
-          />
-        )}
+        <DataGridHeaderCellContent
+          header={header}
+          isLast={isLast}
+          classNames={classNames}
+          styles={styles}
+        />
       </div>
     );
   }
@@ -491,8 +458,12 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     headers: Header<DataGridFeatures, any, unknown>[],
     isLeafRow: boolean
   ) {
+    const lastIndex = headers.length - 1;
+
     if (isLeafRow) {
-      const leftPinned = allCellsPinned.left.map((idx) => renderHeaderCell(headers[idx], idx));
+      const leftPinned = allCellsPinned.left.map((idx) =>
+        renderHeaderCell(headers[idx], idx, idx === lastIndex)
+      );
       const virtualHeaders = virtualColumnItems!.filter(
         (item) => !pinnedColumnIndexSet.has(item.index)
       );
@@ -517,12 +488,18 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
                 transform: `translateX(${virtualCol.start - leftPinnedWidth}px)`,
               }}
             >
-              {renderHeaderCell(headers[virtualCol.index], virtualCol.index)}
+              {renderHeaderCell(
+                headers[virtualCol.index],
+                virtualCol.index,
+                virtualCol.index === lastIndex
+              )}
             </div>
           ))}
         </div>
       );
-      const rightPinned = allCellsPinned.right.map((idx) => renderHeaderCell(headers[idx], idx));
+      const rightPinned = allCellsPinned.right.map((idx) =>
+        renderHeaderCell(headers[idx], idx, idx === lastIndex)
+      );
       return (
         <>
           {leftPinned}
@@ -542,7 +519,11 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     });
 
     return (
-      <>{visibleHeaders.map((header, headerIndex) => renderHeaderCell(header, headerIndex))}</>
+      <>
+        {visibleHeaders.map((header, headerIndex) =>
+          renderHeaderCell(header, headerIndex, header === headers[lastIndex])
+        )}
+      </>
     );
   }
 
@@ -606,6 +587,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         role="grid"
         aria-rowcount={rows.length + 1}
         aria-colcount={totalColumns}
+        onKeyDown={handleKeyDown}
         {...ctx.getStyles('virtualGrid', { classNames, styles })}
         style={columnWidthVars}
       >
@@ -622,7 +604,11 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
                   headerGroups[headerGroups.length - 1].id === headerGroup.id
                 )
               : headerGroup.headers.map((header, headerIndex) =>
-                  renderHeaderCell(header, headerIndex)
+                  renderHeaderCell(
+                    header,
+                    headerIndex,
+                    headerIndex === headerGroup.headers.length - 1
+                  )
                 )}
           </div>
         ))}

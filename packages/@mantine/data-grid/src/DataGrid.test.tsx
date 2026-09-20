@@ -1,5 +1,6 @@
+import { act } from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
-import { DataGrid, DataGridProps, DataGridStylesNames, useDataGrid } from './index';
+import { DataGrid, DataGridProps, DataGridStore, DataGridStylesNames, useDataGrid } from './index';
 
 const columns = [
   { accessorKey: 'name', header: 'Name' },
@@ -172,21 +173,21 @@ describe('@mantine/data-grid/DataGrid', () => {
       { accessorKey: 'age', header: 'Age', enableColumnFilter: true },
     ];
 
-    it('renders filter inputs when columns have enableColumnFilter', () => {
-      render(<DataGridWithStore storeOptions={{ data, columns: filterColumns }} />);
-      expect(screen.getByPlaceholderText('Filter name...')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Filter age...')).toBeInTheDocument();
+    it('renders no filter inputs for filterable columns', () => {
+      const { container } = render(
+        <DataGridWithStore storeOptions={{ data, columns: filterColumns }} />
+      );
+      expect(container.querySelector('thead input')).not.toBeInTheDocument();
     });
 
-    it('does not render filter inputs when columns lack enableColumnFilter', () => {
-      render(<DataGrid {...defaultProps} />);
-      expect(screen.queryByPlaceholderText('Filter name...')).not.toBeInTheDocument();
-    });
-
-    it('filters rows based on text input', async () => {
-      render(<DataGridWithStore storeOptions={{ data, columns: filterColumns }} />);
-      const filterInput = screen.getByPlaceholderText('Filter name...');
-      await userEvent.type(filterInput, 'Alice');
+    it('filters rows from the column filter state', () => {
+      let store: DataGridStore | null = null;
+      function Grid() {
+        store = useDataGrid<any>({ data, columns: filterColumns });
+        return <DataGrid store={store} />;
+      }
+      render(<Grid />);
+      act(() => store!.setColumnFilter('name', 'Alice'));
 
       expect(screen.getByText('Alice')).toBeInTheDocument();
       expect(screen.queryByText('Bob')).not.toBeInTheDocument();
@@ -203,10 +204,10 @@ describe('@mantine/data-grid/DataGrid', () => {
     it('paginates rows when pageSize is set', () => {
       const { container } = render(
         <DataGridWithStore storeOptions={{ data: paginationData, columns, pageSize: 5 }}>
-          <DataGrid.Pagination />
+          <DataGrid.Footer />
         </DataGridWithStore>
       );
-      expect(container.querySelector('.mantine-DataGrid-pagination')).toBeInTheDocument();
+      expect(container.querySelector('.mantine-DataGrid-footer')).toBeInTheDocument();
       const rows = container.querySelectorAll('tbody tr');
       expect(rows).toHaveLength(5);
     });

@@ -16,11 +16,23 @@ import {
 import type { DataGridFeatures } from '../table-features';
 
 export interface FilterOperator {
+  /** Human-readable operator name, rendered by user-land filter UI */
   label: string;
+
+  /** Operator id stored in the column filter value as `operator` */
   value: string;
+
+  /** TanStack filter function applied when this operator is active */
   filterFn: FilterFn<DataGridFeatures, any>;
+
   /** When true the operator matches on the cell alone and ignores its input value */
   valueless?: boolean;
+}
+
+/** Column filter value shape expected by `createOperatorFilterFn` */
+export interface OperatorFilterValue {
+  operator: string;
+  value: unknown;
 }
 
 const filterFn_notWeakEquals = constructFilterFn({
@@ -55,6 +67,10 @@ export const booleanOperators: FilterOperator[] = [
   { label: 'Is false', value: 'isFalse', filterFn: filterFn_isFalse, valueless: true },
 ];
 
+/**
+ * Builds a column `filterFn` that reads an `{ operator, value }` filter state
+ * and applies the matching operator from `operators`
+ */
 export function createOperatorFilterFn(
   operators: FilterOperator[]
 ): FilterFn<DataGridFeatures, any> {
@@ -66,7 +82,7 @@ export function createOperatorFilterFn(
         return true;
       }
 
-      const { operator, value } = filterValue as { operator: string; value: unknown };
+      const { operator, value } = filterValue as OperatorFilterValue;
       const op = operatorMap.get(operator);
 
       if (!op) {

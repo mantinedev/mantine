@@ -21,7 +21,7 @@ function Demo() {
 
   return (
     <DataGrid store={store}>
-      <DataGrid.Pagination />
+      <DataGrid.Footer />
     </DataGrid>
   );
 }
@@ -42,7 +42,7 @@ function Demo() {
 
   return (
     <DataGrid store={store}>
-      <DataGrid.Pagination />
+      <DataGrid.Footer />
     </DataGrid>
   );
 }

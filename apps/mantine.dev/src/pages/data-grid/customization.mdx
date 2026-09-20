@@ -45,28 +45,68 @@ wrapping, and conditional rendering.
 
 Available compound components:
 
-- `DataGrid.Toolbar` -- container for toolbar items
+- `DataGrid.Toolbar` -- toolbar bar, renders global filter, column visibility toggle and export button when empty
 - `DataGrid.GlobalFilter` -- global search input
-- `DataGrid.ColumnVisibilityToggle` -- column visibility menu
+- `DataGrid.ColumnVisibilityToggle` -- labeled column visibility menu button
+- `DataGrid.ExportButton` -- export menu (CSV, Excel, print, copy to clipboard)
+- `DataGrid.RowCount` -- total / filtered row count text
+- `DataGrid.SelectionBar` -- bulk actions bar shown in the toolbar slot while rows are selected
 - `DataGrid.Header` -- table header with column headers
 - `DataGrid.Body` -- table body with data rows
 - `DataGrid.VirtualBody` -- virtualized table body
-- `DataGrid.Footer` -- table footer
-- `DataGrid.Pagination` -- pagination controls
-- `DataGrid.StatusBar` -- status bar showing row counts
+- `DataGrid.Tfoot` -- table footer (`<tfoot>` with column footers and totals)
+- `DataGrid.Footer` -- footer chrome bar with status text, page size select and pagination
 
-## Status bar
+## Toolbar
 
-`DataGrid.StatusBar` displays total row count, filtered row count, and selected row count.
-Add it as a child of `DataGrid` when using the compound component pattern.
+An empty `<DataGrid.Toolbar />` renders the global filter (with `withGlobalFilter`), a spacer,
+the column visibility toggle (with `withColumnVisibility`) and the export button. Any children
+replace this default. Controls take their size from `store.controlSize`, use it for your own
+buttons to match.
 
 ```tsx
-const store = useDataGrid({ data, columns, withRowSelection: true });
+<DataGrid store={store}>
+  <DataGrid.Toolbar>
+    <DataGrid.GlobalFilter />
+    <DataGrid.RowCount />
+    <Button size={store.controlSize} variant="default" ml="auto">
+      Add employee
+    </Button>
+    <DataGrid.ExportButton fileName="employees" formats={['csv', 'excel']} />
+  </DataGrid.Toolbar>
+</DataGrid>
+```
+
+## Selection bar
+
+`DataGrid.SelectionBar` takes the toolbar's place while rows are selected: it renders the selected
+count, your bulk action controls and a close button that clears the selection. With `floating`
+it floats above the grid content instead and the toolbar stays visible.
+
+```tsx
+<DataGrid store={store}>
+  <DataGrid.Toolbar />
+  <DataGrid.SelectionBar>
+    <Button size={store.controlSize} color="red" variant="light" onClick={deleteSelected}>
+      Delete
+    </Button>
+  </DataGrid.SelectionBar>
+</DataGrid>
+```
+
+## Footer
+
+`DataGrid.Footer` renders the status text (`1–10 of 20`, or `20 rows` without pagination),
+the page size select and pagination controls in one bar at the bottom of the grid.
+Use `statusFormat="long"` to render `Showing 1–10 of 20 · 2 selected`, `pagination="arrows"`
+for previous / next controls with a page label, `pagination="none"` for the status only and
+`withPageSize={false}` to hide the page size select. Pass `children` to replace the default content.
+
+```tsx
+const store = useDataGrid({ data, columns, withRowSelection: true, pageSize: 10 });
 
 <DataGrid store={store}>
-  <DataGrid.Header />
-  <DataGrid.Body />
-  <DataGrid.StatusBar />
+  <DataGrid.Footer statusFormat="long" pagination="arrows" />
 </DataGrid>
 ```
 
@@ -79,14 +119,13 @@ only override what you need.
 <DataGrid
   store={store}
   labels={{
-    paginationRowsPerPage: '{count} par page',
-    paginationOf: 'sur',
-    filterPlaceholder: 'Filtrer...',
+    pageSize: '{count} par page',
+    pageSizeLabel: 'Lignes par page',
+    footerRange: '{from}–{to} sur {total}',
+    footerRows: '{count} lignes',
+    footerSelected: '{count} selectionnees',
     globalFilterPlaceholder: 'Rechercher...',
     emptyStateText: 'Aucune donnee disponible',
-    statusBarTotalRows: '{count} lignes au total',
-    statusBarFilteredRows: '{count} filtrees',
-    statusBarSelectedRows: '{count} selectionnees',
   }}
 />
 ```
@@ -131,18 +170,23 @@ with your preferred storage mechanism. The controlled state options in `useDataG
 
 ## Column menu
 
-`DataGrid.ColumnMenu` renders the per-column action menu (sort, filter, pin, hide) for a given column.
-It is included automatically inside `DataGrid.Header`, but you can render it manually when building
-a fully custom header:
+Set `withColumnMenu` on `DataGrid` to render a menu button in every column header. The menu lists
+sort, move, pin, hide, group and reset size items depending on the features enabled in the store,
+and `columnMenuItems` appends your own items after them. Set `meta.disableColumnMenu` on a column
+to hide its menu:
 
 ```tsx
-<DataGrid store={store}>
-  <DataGrid.Header />
-  <DataGrid.Body />
-</DataGrid>
+<DataGrid
+  store={store}
+  withColumnMenu
+  columnMenuItems={(column) => (
+    <Menu.Item onClick={() => console.log(column.id)}>Inspect column</Menu.Item>
+  )}
+/>
 ```
 
-To render the column menu inside your own header cell, pass the `column` instance from the header context:
+`DataGrid.ColumnMenu` is the component behind the button. To render the column menu inside your
+own header cell, pass the `column` instance from the header context:
 
 ```tsx
 <DataGrid store={store}>

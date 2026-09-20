@@ -22,8 +22,6 @@ function hasEnableColumnFilter<TData extends RowData>(
   return columns.some(
     (col) =>
       col.enableColumnFilter === true ||
-      col.meta?.filterVariant !== undefined ||
-      col.meta?.filterOperators !== undefined ||
       col.filterFn !== undefined ||
       ('columns' in col && col.columns && hasEnableColumnFilter(col.columns))
   );

@@ -48,10 +48,11 @@
   --dg-footer-height-xl: rem(52px);
   --dg-footer-height: 0px;
 
+  --dg-tree-indent: rem(20px);
   --dg-border-color: var(--mantine-color-border);
   --dg-row-border-color: var(--dg-border-color);
   --dg-hover-color: var(--mantine-color-hover-strong);
-  --dg-selected-color: var(--mantine-primary-color-light);
+  --dg-selected-color: var(--mantine-color-selected);
   --dg-pinned-shadow: rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1);
 
   @mixin where-light {
@@ -67,7 +68,7 @@
   font-size: var(--dg-font-size);
   line-height: var(--mantine-line-height);
 
-  &:where([data-with-table-border]) {
+  &:where([data-with-table-border]):not([data-list-view='cards']) {
     border: rem(1px) solid var(--dg-border-color);
     border-radius: var(--dg-radius);
   }
@@ -128,11 +129,6 @@
     border-bottom: 0;
   }
 
-  &:focus-visible {
-    outline: rem(2px) solid var(--mantine-color-focus-ring);
-    outline-offset: rem(-2px);
-  }
-
   &:where([data-pinned-top]),
   &:where([data-pinned-bottom]) {
     background: var(--mantine-color-body);
@@ -189,6 +185,7 @@
   --dg-td-shadow-divider: 0 0 0 0 transparent;
   --dg-td-shadow-rule: 0 0 0 0 transparent;
 
+  position: relative;
   padding: var(--dg-cell-padding-y) var(--dg-cell-padding-x);
   height: var(--dg-row-height);
   overflow: clip;
@@ -198,31 +195,6 @@
   box-shadow:
     var(--dg-td-shadow-edit), var(--dg-td-shadow-focus), var(--dg-td-shadow-edge),
     var(--dg-td-shadow-divider), var(--dg-td-shadow-rule);
-
-  &:where([data-selected]) {
-    background-color: var(--mantine-primary-color-light);
-  }
-
-  &:where([data-focused]) {
-    outline: rem(2px) solid var(--mantine-color-focus-ring);
-    outline-offset: rem(-2px);
-  }
-
-  &:where([data-edge-top]) {
-    border-top: rem(1px) solid var(--mantine-primary-color-filled);
-  }
-
-  &:where([data-edge-bottom]) {
-    border-bottom: rem(1px) solid var(--mantine-primary-color-filled);
-  }
-
-  &:where([data-edge-left]) {
-    border-left: rem(1px) solid var(--mantine-primary-color-filled);
-  }
-
-  &:where([data-edge-right]) {
-    border-right: rem(1px) solid var(--mantine-primary-color-filled);
-  }
 }
 
 .th,
@@ -270,32 +242,67 @@
 }
 
 .headerCell {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: rem(4px);
+  width: 100%;
+  min-width: 0;
+  flex: none;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  user-select: none;
 
-  &:where(button) {
-    width: 100%;
-    font: inherit;
-    user-select: none;
+  &:focus-visible {
+    outline: none;
+  }
+
+  :where(.root[data-sort-indicator-position='inline']) & {
+    justify-content: flex-start;
+  }
+
+  :where(.th, .virtualCell)[data-align='end'] > & {
+    flex-direction: row-reverse;
+  }
+
+  :where(.th, .virtualCell)[data-align='center'] > & {
+    justify-content: center;
+  }
+
+  :where(.th, .virtualCell)[data-utility] > & {
+    justify-content: center;
+  }
+}
+
+.headerLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  :where(.th, .virtualCell)[data-utility] & {
+    overflow: visible;
   }
 }
 
 .sortIcon {
   display: inline-flex;
   align-items: center;
-  opacity: 0.5;
-  margin-inline-start: rem(2px);
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--dg-icon-size);
+  height: var(--dg-icon-size);
+
+  :where(.root[data-sort-indicator='hover'])
+    :where(.th, .virtualCell):not(:hover, :focus-within, [data-sort-asc], [data-sort-desc])
+    & {
+    opacity: 0;
+  }
 
   :where(.th[data-sort-asc]) &,
   :where(.virtualCell[data-sort-asc]) & {
-    opacity: 1;
     transform: rotate(180deg);
-  }
-
-  :where(.th[data-sort-desc]) &,
-  :where(.virtualCell[data-sort-desc]) & {
-    opacity: 1;
   }
 }
 
@@ -309,35 +316,45 @@
 }
 
 .globalFilter {
-  max-width: rem(300px);
-}
-
-.pagination {
-  display: flex;
-  align-items: center;
-  padding: rem(10px) rem(12px);
+  flex: 0 1 rem(240px);
+  min-width: 0;
 }
 
 .resizeHandle {
   position: absolute;
   top: 0;
+  bottom: 0;
   inset-inline-end: 0;
-  width: rem(4px);
-  height: 100%;
+  width: rem(8px);
   cursor: col-resize;
   user-select: none;
   touch-action: none;
-  background: var(--dg-border-color);
   opacity: 0;
-  transition: opacity 150ms ease;
+  z-index: 1;
 
-  :where(.th):hover & {
+  &::before {
+    content: '';
+    position: absolute;
+    top: rem(8px);
+    bottom: rem(8px);
+    inset-inline-end: rem(2px);
+    width: rem(3px);
+    border-radius: rem(2px);
+    background-color: var(--mantine-color-border-strong);
+  }
+
+  :where(.th, .virtualCell):hover > &,
+  :where(.th):has(+ .th:hover) > &,
+  :where(.virtualCell):has(+ .virtualCell:hover) > & {
     opacity: 1;
   }
 
   &:where([data-resizing]) {
     opacity: 1;
-    background: var(--mantine-primary-color-filled);
+
+    &::before {
+      background-color: var(--mantine-primary-color-filled);
+    }
   }
 }
 
@@ -371,6 +388,12 @@
 
 .expandedRow {
   padding: rem(12px) var(--dg-cell-padding-x);
+  font: inherit;
+
+  :where(.virtualRow) > & {
+    flex: 1;
+    min-width: 0;
+  }
 }
 
 .rowNumber {
@@ -388,38 +411,36 @@
 }
 
 .groupHeader {
-  padding: 0 var(--dg-cell-padding-x);
   display: flex;
   align-items: center;
-  gap: var(--mantine-spacing-xs);
-  font-weight: var(--mantine-font-weight-medium);
+  gap: rem(4px);
+  min-width: 0;
 }
 
 .groupToggle {
-  all: unset;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--mantine-color-text);
 }
 
-/* Styles API selector for aggregation cells, geometry comes from .td */
-/* stylelint-disable-next-line block-no-empty */
 .aggregationCell {
+  height: auto;
+}
+
+.aggregationLabel {
+  font-size: max(rem(11px), calc(var(--dg-font-size) - rem(2px)));
+  font-weight: 500;
+}
+
+.aggregationValue {
+  font-weight: 600;
 }
 
 /* Styles API selector for the ScrollArea wrapper; ScrollArea provides its own styles */
 /* stylelint-disable-next-line block-no-empty */
 .scrollContainer {
-}
-
-.statusBar {
-  padding: rem(10px) rem(12px);
-  border-top: rem(1px) solid var(--dg-border-color);
-}
-
-.statusBarInfo {
-  white-space: nowrap;
 }
 
 .virtualScrollContainer {
@@ -473,6 +494,7 @@
   --dg-td-shadow-divider: 0 0 0 0 transparent;
   --dg-td-shadow-rule: 0 0 0 0 transparent;
 
+  position: relative;
   padding: var(--dg-cell-padding-y) var(--dg-cell-padding-x);
   height: var(--dg-row-height);
   display: flex;
@@ -503,9 +525,52 @@
 }
 
 .treeIndent {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: rem(4px);
+  min-width: 0;
+  padding-inline-start: calc(var(--dg-tree-depth, 0) * var(--dg-tree-indent));
+
+  & > [data-tree-guide] {
+    position: absolute;
+    top: rem(-1px);
+    bottom: rem(-1px);
+    width: var(--dg-tree-indent);
+    inset-inline-start: calc(
+      var(--dg-cell-padding-x) + var(--dg-tree-level, 0) * var(--dg-tree-indent)
+    );
+    pointer-events: none;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      inset-inline-start: calc(var(--dg-tree-indent) / 2);
+      width: rem(1px);
+      background-color: var(--dg-border-color);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      inset-inline-start: calc(var(--dg-tree-indent) / 2);
+      inset-inline-end: 0;
+      height: rem(1px);
+      background-color: var(--dg-border-color);
+    }
+
+    &:where([data-line='through'])::after,
+    &:where([data-line='none'])::before,
+    &:where([data-line='none'])::after {
+      display: none;
+    }
+
+    &:where([data-line='end'])::before {
+      bottom: 50%;
+    }
+  }
 }
 
 .treeToggle {
@@ -514,12 +579,47 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  width: rem(20px);
+  width: var(--dg-tree-indent);
   flex-shrink: 0;
+
+  &:where([data-hidden]) {
+    visibility: hidden;
+  }
+}
+
+.treeLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  :where(.root[data-text-overflow='wrap']) & {
+    white-space: normal;
+  }
 }
 
 .columnMenu {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: var(--dg-cell-padding-x);
+  transform: translateY(-50%);
   display: inline-flex;
+  opacity: 0;
+
+  :where(.th, .virtualCell):hover > &,
+  :where(.th, .virtualCell):focus-within > &,
+  &:has([data-expanded]) {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    opacity: 1;
+  }
+}
+
+:where(.th, .virtualCell):has(> .columnMenu) > .headerCell {
+  width: calc(100% - var(--dg-icon-size) - rem(8px));
 }
 
 .dragHandle {
@@ -538,15 +638,68 @@
   display: flex;
   flex-direction: column;
   gap: rem(8px);
+
+  :where(.root[data-list-view='flat']) & {
+    gap: 0;
+  }
 }
 
 .listItem {
   border: rem(1px) solid var(--dg-border-color);
   border-radius: var(--dg-radius);
   padding: var(--dg-cell-padding-x);
+  outline: none;
+
+  :where(.root[data-list-view='flat']) & {
+    border-inline: 0;
+    border-top: 0;
+    border-radius: 0;
+    border-bottom-color: var(--dg-row-border-color);
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  &:focus-visible {
+    outline: rem(2px) solid var(--mantine-color-focus-ring);
+    outline-offset: rem(-2px);
+  }
 
   &:where([data-selected]) {
     background-color: var(--dg-selected-color);
+  }
+
+  &:where([data-group-row]) {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  @mixin hover {
+    :where(.root[data-highlight-on-hover]) &:hover {
+      background-color: var(--dg-hover-color);
+    }
+
+    :where(.root[data-highlight-on-hover]) &:where([data-selected]):hover {
+      background-color: var(--dg-selected-color);
+    }
+  }
+}
+
+[data-list-field] {
+  display: flex;
+  justify-content: space-between;
+  gap: rem(8px);
+  padding: rem(4px) 0;
+  min-width: 0;
+
+  & > [data-list-label] {
+    font-weight: 600;
+  }
+
+  & > [data-list-value] {
+    min-width: 0;
+    text-align: end;
   }
 }
 
@@ -591,9 +744,12 @@
   vertical-align: middle;
 }
 
+.expandIcon {
+  width: calc(var(--dg-icon-size) + rem(4px));
+}
+
 .expandIcon,
 .treeToggle {
-  width: calc(var(--dg-icon-size) + rem(4px));
   height: calc(var(--dg-icon-size) + rem(4px));
   border-radius: var(--mantine-radius-sm);
   color: var(--mantine-color-text);
@@ -655,4 +811,382 @@
 :where(.root[data-column-borders='data'])
   .virtualCell:where([data-utility]):has(+ :not([data-utility])) {
   border-inline-end: rem(1px) solid var(--dg-border-color);
+}
+
+.virtualCell {
+  &:where([data-sortable]) {
+    cursor: pointer;
+    user-select: none;
+
+    @mixin hover {
+      &:hover {
+        background-color: var(--dg-hover-color);
+      }
+    }
+  }
+}
+
+:where(.virtualGridHeader) .virtualCell {
+  padding-block: 0;
+  height: var(--dg-header-height);
+  font-weight: 600;
+}
+
+.th:has(> .headerCell:focus-visible) {
+  --dg-th-shadow-focus: inset 0 0 0 rem(2px) var(--mantine-color-focus-ring);
+}
+
+:where(.virtualGridHeader) .virtualCell:has(> .headerCell:focus-visible) {
+  --dg-td-shadow-focus: inset 0 0 0 rem(2px) var(--mantine-color-focus-ring);
+}
+
+.th,
+.virtualCell {
+  &:where([data-dragging]) {
+    opacity: 0.4;
+  }
+
+  &:where([data-header-group]):not(:last-child) {
+    border-inline-end: rem(1px) solid var(--dg-border-color);
+  }
+
+  &[data-placeholder] {
+    border-inline-end: 0;
+  }
+}
+
+:where(.root:has([data-dragging])) :where(.th, .virtualCell)[data-sortable]:hover {
+  background-color: transparent;
+}
+
+.resizeGuide {
+  position: absolute;
+  width: rem(1px);
+  background-color: var(--mantine-primary-color-filled);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.dropIndicator {
+  position: absolute;
+  width: rem(2px);
+  background-color: var(--mantine-primary-color-filled);
+  pointer-events: none;
+  z-index: 4;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: rem(-3px);
+    left: rem(-3px);
+    width: rem(8px);
+    height: rem(8px);
+    border-radius: 50%;
+    background-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.dragGhost {
+  position: fixed;
+  z-index: var(--mantine-z-index-overlay);
+  display: flex;
+  align-items: center;
+  height: var(--dg-header-height);
+  padding: 0 var(--dg-cell-padding-x);
+  font-size: var(--dg-font-size);
+  font-weight: 600;
+  line-height: var(--mantine-line-height);
+  color: var(--mantine-color-text);
+  background-color: var(--mantine-color-body);
+  border: rem(1px) solid var(--dg-border-color, var(--mantine-color-border));
+  border-radius: var(--mantine-radius-sm);
+  box-shadow: var(--mantine-shadow-md);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: rem(16px);
+  height: var(--dg-footer-height);
+  padding: 0 rem(12px);
+  border-top: rem(1px) solid var(--dg-border-color);
+  white-space: nowrap;
+  color: var(--mantine-color-text);
+  font-weight: 400;
+}
+
+.footerStatus {
+  margin-inline-end: auto;
+
+  & > span {
+    font-weight: 500;
+  }
+}
+
+.footerPagination {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+}
+
+.root:where(:has(> .footer)) {
+  --dg-footer-height: var(--dg-footer-height-sm);
+
+  &:where([data-size='xs']) {
+    --dg-footer-height: var(--dg-footer-height-xs);
+  }
+
+  &:where([data-size='md']) {
+    --dg-footer-height: var(--dg-footer-height-md);
+  }
+
+  &:where([data-size='lg']) {
+    --dg-footer-height: var(--dg-footer-height-lg);
+  }
+
+  &:where([data-size='xl']) {
+    --dg-footer-height: var(--dg-footer-height-xl);
+  }
+}
+
+.toolbar > [data-toolbar-spacer] {
+  flex: 1;
+}
+
+.exportButton {
+  display: inline-flex;
+}
+
+.rowCount {
+  color: var(--mantine-color-text);
+  white-space: nowrap;
+}
+
+.toolbar:where([data-hidden]) {
+  display: none;
+}
+
+.selectionBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(8px);
+  padding: rem(10px) rem(12px);
+  background-color: var(--mantine-color-body);
+  border-bottom: rem(1px) solid var(--dg-border-color);
+
+  &:where([data-floating]) {
+    position: absolute;
+    inset-inline: 0;
+    bottom: calc(var(--dg-footer-height, 0px) + rem(16px));
+    z-index: 5;
+    width: fit-content;
+    min-height: rem(48px);
+    margin-inline: auto;
+    padding-block: rem(8px);
+    padding-inline: rem(14px) rem(8px);
+    border: rem(1px) solid var(--dg-border-color);
+    border-radius: var(--mantine-radius-md);
+    box-shadow: var(--mantine-shadow-lg);
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+}
+
+.selectionBarCount {
+  font-weight: 600;
+}
+
+.selectionBarClose {
+  margin-inline-start: auto;
+}
+
+/* Phase D: body features */
+
+.tr {
+  &:where([data-selected]) > .td:first-child::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: rem(-1px);
+    bottom: rem(-1px);
+    width: rem(2px);
+    background-color: var(--mantine-primary-color-filled);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &:focus-visible > .td {
+    --dg-td-shadow-focus:
+      inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
+      inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
+  }
+
+  &:focus-visible > .td:first-child {
+    --dg-td-shadow-focus:
+      inset rem(2px) 0 0 0 var(--mantine-color-focus-ring),
+      inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
+      inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
+  }
+
+  &:focus-visible > .td:last-child {
+    --dg-td-shadow-focus:
+      inset rem(-2px) 0 0 0 var(--mantine-color-focus-ring),
+      inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
+      inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
+  }
+
+  &:focus-visible > .td:first-child:last-child {
+    --dg-td-shadow-focus: inset 0 0 0 rem(2px) var(--mantine-color-focus-ring);
+  }
+
+  @mixin where-rtl {
+    &:focus-visible > .td:first-child {
+      --dg-td-shadow-focus:
+        inset rem(-2px) 0 0 0 var(--mantine-color-focus-ring),
+        inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
+        inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
+    }
+
+    &:focus-visible > .td:last-child {
+      --dg-td-shadow-focus:
+        inset rem(2px) 0 0 0 var(--mantine-color-focus-ring),
+        inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
+        inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
+    }
+  }
+}
+
+.virtualRow {
+  position: relative;
+  outline: none;
+
+  &:where([data-selected])::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: rem(-1px);
+    bottom: rem(-1px);
+    width: rem(2px);
+    background-color: var(--mantine-primary-color-filled);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &:focus-visible > .virtualCell {
+    --dg-td-shadow-focus:
+      inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
+      inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
+  }
+
+  &:focus-visible > .virtualCell:first-child {
+    --dg-td-shadow-focus:
+      inset rem(2px) 0 0 0 var(--mantine-color-focus-ring),
+      inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
+      inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
+  }
+
+  &:focus-visible > .virtualCell:last-child {
+    --dg-td-shadow-focus:
+      inset rem(-2px) 0 0 0 var(--mantine-color-focus-ring),
+      inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
+      inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
+  }
+}
+
+:where(.root[data-cell-selection]) :where(.td, .virtualCell) {
+  user-select: none;
+}
+
+.td,
+.virtualCell {
+  --dg-edge-top: 0 0 0 0 transparent;
+  --dg-edge-bottom: 0 0 0 0 transparent;
+  --dg-edge-left: 0 0 0 0 transparent;
+  --dg-edge-right: 0 0 0 0 transparent;
+
+  &:where([data-selected]) {
+    background-color: var(--mantine-primary-color-light);
+  }
+
+  &:where([data-focused]) {
+    background-color: transparent;
+    outline: rem(2px) solid var(--mantine-color-focus-ring);
+    outline-offset: rem(-2px);
+  }
+
+  &:where([data-edge-top]) {
+    --dg-edge-top: inset 0 rem(1px) 0 0 var(--mantine-primary-color-filled);
+  }
+
+  &:where([data-edge-bottom]) {
+    --dg-edge-bottom: inset 0 rem(-1px) 0 0 var(--mantine-primary-color-filled);
+  }
+
+  &:where([data-edge-left]) {
+    --dg-edge-left: inset rem(1px) 0 0 0 var(--mantine-primary-color-filled);
+  }
+
+  &:where([data-edge-right]) {
+    --dg-edge-right: inset rem(-1px) 0 0 0 var(--mantine-primary-color-filled);
+  }
+
+  &:where([data-edge-top], [data-edge-bottom], [data-edge-left], [data-edge-right]) {
+    --dg-td-shadow-edge:
+      var(--dg-edge-top), var(--dg-edge-bottom), var(--dg-edge-left), var(--dg-edge-right);
+  }
+}
+
+.tr,
+.virtualRow {
+  &:where([data-group-row]) {
+    cursor: pointer;
+    user-select: none;
+
+    @mixin hover {
+      &:hover {
+        background-color: var(--dg-hover-color);
+      }
+    }
+  }
+
+  :where(.root[data-tinted-group-rows]) &:where([data-group-row]) {
+    background-color: var(--dg-striped-color);
+  }
+}
+
+[data-group-label] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 400;
+
+  & > [data-group-value] {
+    font-weight: 600;
+  }
+}
+
+.tr,
+.virtualRow {
+  &:where([data-expanded-row]) {
+    cursor: default;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  :where(.root[data-tinted-expanded-rows]) &:where([data-expanded], [data-expanded-row]) {
+    background-color: var(--dg-striped-color);
+  }
+
+  :where(.root[data-tinted-expanded-rows]) &:where([data-expanded]) {
+    border-bottom-color: transparent;
+  }
+
+  :where(.root[data-tinted-expanded-rows]) &:where([data-expanded][data-selected]) {
+    background-color: var(--dg-selected-color);
+  }
 }

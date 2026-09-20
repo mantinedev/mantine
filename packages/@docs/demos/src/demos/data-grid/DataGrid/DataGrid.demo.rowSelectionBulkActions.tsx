@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { RowSelectionState } from '@tanstack/react-table';
-import { Button, Group, Text } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
@@ -8,7 +8,7 @@ import { dataCode, employees } from './_data';
 const code = `
 import { useState } from 'react';
 import { RowSelectionState } from '@tanstack/react-table';
-import { Button, Group, Text } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
 
@@ -26,36 +26,27 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary' },
     ],
     withRowSelection: true,
+    withGlobalFilter: true,
     rowSelection,
     onRowSelectionChange: setRowSelection,
     getRowId: (row) => row.id,
   });
 
-  const selectedRows = store.table.getSelectedRowModel().rows;
-
   const handleDeleteSelected = () => {
-    const selectedIds = new Set(selectedRows.map((row) => row.id));
+    const selectedIds = new Set(Object.keys(rowSelection));
     setData((current) => current.filter((row) => !selectedIds.has(row.id)));
     setRowSelection({});
   };
 
   return (
-    <>
-      {selectedRows.length > 0 && (
-        <Group mb="md" p="sm" bg="var(--mantine-color-blue-light)" style={{ borderRadius: 'var(--mantine-radius-sm)' }}>
-          <Text size="sm" fw={500} c="blue">
-            {selectedRows.length} row{selectedRows.length > 1 ? 's' : ''} selected
-          </Text>
-          <Button size="xs" color="red" onClick={handleDeleteSelected}>
-            Delete selected
-          </Button>
-          <Button size="xs" variant="default" onClick={() => setRowSelection({})}>
-            Clear selection
-          </Button>
-        </Group>
-      )}
-      <DataGrid store={store} />
-    </>
+    <DataGrid store={store}>
+      <DataGrid.Toolbar />
+      <DataGrid.SelectionBar>
+        <Button size={store.controlSize} color="red" variant="light" onClick={handleDeleteSelected}>
+          Delete selected
+        </Button>
+      </DataGrid.SelectionBar>
+    </DataGrid>
   );
 }
 `;
@@ -74,41 +65,27 @@ function Demo() {
       { accessorKey: 'salary', header: 'Salary' },
     ],
     withRowSelection: true,
+    withGlobalFilter: true,
     rowSelection,
     onRowSelectionChange: setRowSelection,
     getRowId: (row) => row.id,
   });
 
-  const selectedRows = store.table.getSelectedRowModel().rows;
-
   const handleDeleteSelected = () => {
-    const selectedIds = new Set(selectedRows.map((row) => row.id));
+    const selectedIds = new Set(Object.keys(rowSelection));
     setData((current) => current.filter((row) => !selectedIds.has(row.id)));
     setRowSelection({});
   };
 
   return (
-    <>
-      {selectedRows.length > 0 && (
-        <Group
-          mb="md"
-          p="sm"
-          bg="var(--mantine-color-blue-light)"
-          style={{ borderRadius: 'var(--mantine-radius-sm)' }}
-        >
-          <Text size="sm" fw={500} c="blue">
-            {selectedRows.length} row{selectedRows.length > 1 ? 's' : ''} selected
-          </Text>
-          <Button size="xs" color="red" onClick={handleDeleteSelected}>
-            Delete selected
-          </Button>
-          <Button size="xs" variant="default" onClick={() => setRowSelection({})}>
-            Clear selection
-          </Button>
-        </Group>
-      )}
-      <DataGrid store={store} />
-    </>
+    <DataGrid store={store}>
+      <DataGrid.Toolbar />
+      <DataGrid.SelectionBar>
+        <Button size={store.controlSize} color="red" variant="light" onClick={handleDeleteSelected}>
+          Delete selected
+        </Button>
+      </DataGrid.SelectionBar>
+    </DataGrid>
   );
 }
 

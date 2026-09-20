@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Badge, Box, Group, Stack, Text } from '@mantine/core';
+import { Badge, Box, Button, Group, Menu, Select, Stack, Text, TextInput } from '@mantine/core';
 import { DataGrid, useDataGrid, DataGridColumnDef } from './index';
 
 export default { title: 'DataGrid' };
@@ -296,10 +296,28 @@ export function ColumnFilters() {
     columns,
     getRowId: (row) => row.id,
     withFiltering: true,
+    withFaceting: true,
   });
   return (
     <Box p="md">
-      <DataGrid store={store} />
+      <DataGrid store={store}>
+        <DataGrid.Toolbar>
+          <TextInput
+            size={store.controlSize}
+            placeholder="First name contains"
+            value={(store.getColumnFilterValue('firstName') as string) ?? ''}
+            onChange={(event) => store.setColumnFilter('firstName', event.currentTarget.value)}
+          />
+          <Select
+            size={store.controlSize}
+            placeholder="Department"
+            clearable
+            data={store.getFacetedUniqueValues('department')}
+            value={(store.getColumnFilterValue('department') as string) ?? null}
+            onChange={(value) => store.setColumnFilter('department', value)}
+          />
+        </DataGrid.Toolbar>
+      </DataGrid>
     </Box>
   );
 }
@@ -332,7 +350,7 @@ export function Pagination() {
   return (
     <Box p="md">
       <DataGrid store={store}>
-        <DataGrid.Pagination pageSizeOptions={[5, 10, 20]} />
+        <DataGrid.Footer pageSizeOptions={[5, 10, 20]} />
       </DataGrid>
     </Box>
   );
@@ -613,10 +631,157 @@ export function CompoundComponents() {
   return (
     <Box p="md">
       <DataGrid store={store}>
-        <DataGrid.Pagination pageSizeOptions={[5, 10, 20]} />
-        <DataGrid.StatusBar />
+        <DataGrid.Toolbar />
+        <DataGrid.Footer pageSizeOptions={[5, 10, 20]} />
       </DataGrid>
     </Box>
+  );
+}
+
+export function Footer() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withRowSelection: true,
+    pageSize: 5,
+  });
+  return (
+    <Stack p="md">
+      <DataGrid store={store}>
+        <DataGrid.Footer />
+      </DataGrid>
+      <DataGrid store={store}>
+        <DataGrid.Footer statusFormat="long" pagination="arrows" />
+      </DataGrid>
+      <DataGrid store={store}>
+        <DataGrid.Footer pagination="none" />
+      </DataGrid>
+      <DataGrid store={store}>
+        <DataGrid.Footer withPageSize={false} />
+      </DataGrid>
+    </Stack>
+  );
+}
+
+export function FooterSizes() {
+  return (
+    <Stack p="md">
+      {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+        <SizedFooterGrid key={size} size={size} />
+      ))}
+    </Stack>
+  );
+}
+
+function SizedFooterGrid({ size }: { size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }) {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    pageSize: 3,
+    size,
+  });
+  return (
+    <DataGrid store={store}>
+      <DataGrid.Footer statusFormat="long" />
+    </DataGrid>
+  );
+}
+
+export function ToolbarSizes() {
+  return (
+    <Stack p="md">
+      {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+        <SizedToolbarGrid key={size} size={size} />
+      ))}
+    </Stack>
+  );
+}
+
+function SizedToolbarGrid({ size }: { size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }) {
+  const store = useDataGrid({
+    data: employees.slice(0, 3),
+    columns,
+    getRowId: (row) => row.id,
+    withGlobalFilter: true,
+    withColumnVisibility: true,
+    size,
+  });
+  return (
+    <DataGrid store={store}>
+      <DataGrid.Toolbar />
+    </DataGrid>
+  );
+}
+
+export function ExportButton() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+  });
+  return (
+    <Box p="md">
+      <DataGrid store={store}>
+        <DataGrid.Toolbar>
+          <DataGrid.ExportButton fileName="employees" />
+          <DataGrid.ExportButton formats={['csv']}>Download CSV</DataGrid.ExportButton>
+        </DataGrid.Toolbar>
+      </DataGrid>
+    </Box>
+  );
+}
+
+export function RowCount() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withGlobalFilter: true,
+  });
+  return (
+    <Box p="md">
+      <DataGrid store={store}>
+        <DataGrid.Toolbar>
+          <DataGrid.GlobalFilter />
+          <DataGrid.RowCount />
+        </DataGrid.Toolbar>
+      </DataGrid>
+    </Box>
+  );
+}
+
+export function SelectionBar() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withRowSelection: true,
+    withGlobalFilter: true,
+    pageSize: 5,
+  });
+  return (
+    <Stack p="md">
+      <DataGrid store={store}>
+        <DataGrid.Toolbar />
+        <DataGrid.SelectionBar>
+          <Button size={store.controlSize} color="red" variant="light">
+            Delete
+          </Button>
+        </DataGrid.SelectionBar>
+        <DataGrid.Footer />
+      </DataGrid>
+      <DataGrid store={store}>
+        <DataGrid.Toolbar />
+        <DataGrid.SelectionBar floating>
+          <Button size={store.controlSize} color="red" variant="light">
+            Delete
+          </Button>
+        </DataGrid.SelectionBar>
+        <DataGrid.Footer />
+      </DataGrid>
+    </Stack>
   );
 }
 
@@ -662,9 +827,113 @@ export function AllFeatures() {
           );
         }}
       >
-        <DataGrid.Pagination />
-        <DataGrid.StatusBar />
+        <DataGrid.Footer />
       </DataGrid>
+    </Box>
+  );
+}
+
+export function SortIndicators() {
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'Name', enableSorting: true },
+      { accessorKey: 'department', header: 'Department', enableSorting: true },
+      {
+        accessorKey: 'salary',
+        header: 'Salary',
+        enableSorting: true,
+        meta: { align: 'end' },
+        cell: (info) => `$${info.getValue<number>().toLocaleString()}`,
+      },
+      { accessorKey: 'status', header: 'Status', meta: { align: 'center' } },
+    ],
+    getRowId: (row) => row.id,
+  });
+
+  return (
+    <Stack p="md">
+      <Text fw={600}>hover / trailing (default)</Text>
+      <DataGrid store={store} />
+      <Text fw={600}>always / trailing</Text>
+      <DataGrid store={store} sortIndicator="always" />
+      <Text fw={600}>always / inline</Text>
+      <DataGrid store={store} sortIndicator="always" sortIndicatorPosition="inline" />
+    </Stack>
+  );
+}
+
+export function ColumnMenu() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withColumnVisibility: true,
+    withColumnPinning: true,
+    withColumnResizing: true,
+    withColumnReorder: true,
+    withGrouping: true,
+  });
+
+  return (
+    <Box p="md">
+      <DataGrid
+        store={store}
+        withColumnMenu
+        columnMenuItems={(column) => (
+          <Menu.Item onClick={() => console.log(column.id)}>Log column id</Menu.Item>
+        )}
+      />
+    </Box>
+  );
+}
+
+export function ColumnReorder() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withColumnReorder: true,
+    withRowSelection: true,
+  });
+
+  return (
+    <Box p="md">
+      <DataGrid store={store} />
+    </Box>
+  );
+}
+
+export function HeaderGroups() {
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      {
+        id: 'person',
+        header: 'Person',
+        columns: [
+          { accessorKey: 'firstName', header: 'First name', enableSorting: true },
+          { accessorKey: 'lastName', header: 'Last name', enableSorting: true },
+        ],
+      },
+      {
+        id: 'work',
+        header: 'Work',
+        columns: [
+          { accessorKey: 'department', header: 'Department', enableSorting: true },
+          { accessorKey: 'salary', header: 'Salary', enableSorting: true, meta: { align: 'end' } },
+        ],
+      },
+      { accessorKey: 'status', header: 'Status' },
+    ],
+    getRowId: (row) => row.id,
+    withColumnResizing: true,
+    withColumnReorder: true,
+  });
+
+  return (
+    <Box p="md">
+      <DataGrid store={store} withColumnMenu withColumnBorders />
     </Box>
   );
 }

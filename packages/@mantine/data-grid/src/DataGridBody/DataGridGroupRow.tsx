@@ -10,19 +10,20 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
-import { ExpandChevron } from '../icons';
+import { getPinnedStyles } from '../get-pinned-styles';
 import type { DataGridFeatures } from '../table-features';
+import { getGroupLabelCellId, GroupCellContent, toggleGroupRowKey } from './DataGridGroupCell';
 import classes from '../DataGrid.module.css';
 
-export type DataGridGroupRowStylesNames = 'tr' | 'groupHeader' | 'groupToggle' | 'aggregationCell';
+export type DataGridGroupRowStylesNames = 'tr' | 'td' | 'groupHeader' | 'groupToggle';
 
 export interface DataGridGroupRowProps
   extends BoxProps, CompoundStylesApiProps<DataGridGroupRowFactory>, ElementProps<'tr'> {
   /** TanStack row instance */
   row: Row<DataGridFeatures, any>;
 
-  /** Total number of visible columns including feature columns */
-  totalColumns: number;
+  /** Zero-based visual row index */
+  rowIndex: number;
 }
 
 export type DataGridGroupRowFactory = Factory<{
@@ -33,37 +34,55 @@ export type DataGridGroupRowFactory = Factory<{
 }>;
 
 export const DataGridGroupRow = factory<DataGridGroupRowFactory>((props) => {
-  const { className, style, classNames, styles, row, totalColumns, ...others } = useProps(
+  const { className, style, classNames, styles, row, rowIndex, ...others } = useProps(
     'DataGridGroupRow',
     null,
     props
   );
 
   const ctx = useDataGridContext();
-  const isExpanded = row.getIsExpanded();
-  const groupingColumnId = row.groupingColumnId;
-  const groupingValue = row.groupingValue;
+  const cells = row.getVisibleCells();
+  const labelCellId = getGroupLabelCellId(cells);
 
   return (
     <Box
       component="tr"
       data-group-row
+      data-row-id={row.id}
+      data-row-index={rowIndex}
+      aria-expanded={row.getIsExpanded()}
+      tabIndex={ctx.withCellSelection ? undefined : rowIndex === 0 ? 0 : -1}
+      onClick={() => row.toggleExpanded()}
       {...ctx.getStyles('tr', { className, classNames, style, styles })}
       {...others}
     >
-      <td colSpan={totalColumns} {...ctx.getStyles('groupHeader', { classNames, styles })}>
-        <button
-          type="button"
-          onClick={() => row.toggleExpanded()}
-          aria-label={isExpanded ? ctx.labels.groupCollapse : ctx.labels.groupExpand}
-          {...ctx.getStyles('groupToggle', { classNames, styles })}
-        >
-          <ExpandChevron expanded={isExpanded} />
-        </button>
-        <span>
-          {groupingColumnId}: {String(groupingValue)} ({row.subRows.length})
-        </span>
-      </td>
+      {cells.map((cell) => {
+        const meta = cell.column.columnDef.meta;
+        const isPinned = ctx.withColumnPinning ? cell.column.getIsPinned() : false;
+        const isLabelCell = cell.id === labelCellId;
+        const focusTarget = isLabelCell && ctx.withCellSelection;
+
+        return (
+          <td
+            key={cell.id}
+            data-utility={meta?.utility}
+            data-align={meta?.align}
+            data-pinned-left={isPinned === 'start' || undefined}
+            data-pinned-right={isPinned === 'end' || undefined}
+            tabIndex={focusTarget ? -1 : undefined}
+            onKeyDown={focusTarget ? (event) => toggleGroupRowKey(event, row) : undefined}
+            {...ctx.getStyles('td', { classNames, styles })}
+            style={ctx.withColumnPinning ? getPinnedStyles(cell.column) : undefined}
+          >
+            <GroupCellContent
+              cell={cell}
+              isLabelCell={isLabelCell}
+              classNames={classNames}
+              styles={styles}
+            />
+          </td>
+        );
+      })}
     </Box>
   );
 });

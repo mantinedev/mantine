@@ -37,7 +37,7 @@ function Demo() {
         Current page: <Code>{JSON.stringify(pagination)}</Code>
       </Text>
       <DataGrid store={store}>
-        <DataGrid.Pagination />
+        <DataGrid.Footer />
       </DataGrid>
     </>
   );
@@ -69,7 +69,7 @@ function Demo() {
         Current page: <Code>{JSON.stringify(pagination)}</Code>
       </Text>
       <DataGrid store={store}>
-        <DataGrid.Pagination />
+        <DataGrid.Footer />
       </DataGrid>
     </>
   );

@@ -1,7 +1,7 @@
 import {
-  ActionIcon,
   Box,
   BoxProps,
+  Button,
   Checkbox,
   CompoundStylesApiProps,
   ElementProps,
@@ -23,8 +23,11 @@ export interface DataGridColumnVisibilityToggleProps
     BoxProps,
     CompoundStylesApiProps<DataGridColumnVisibilityToggleFactory>,
     ElementProps<'div'> {
-  /** Props passed to the internal Menu component */
+  /** Props passed down to the `Menu` component */
   menuProps?: Partial<MenuProps>;
+
+  /** Button label, `labels.columnVisibilityLabel` by default */
+  children?: React.ReactNode;
 }
 
 export type DataGridColumnVisibilityToggleFactory = Factory<{
@@ -36,7 +39,7 @@ export type DataGridColumnVisibilityToggleFactory = Factory<{
 
 export const DataGridColumnVisibilityToggle = factory<DataGridColumnVisibilityToggleFactory>(
   (props) => {
-    const { className, style, classNames, styles, menuProps, ...others } = useProps(
+    const { className, style, classNames, styles, menuProps, children, ...others } = useProps(
       'DataGridColumnVisibilityToggle',
       null,
       props
@@ -54,9 +57,9 @@ export const DataGridColumnVisibilityToggle = factory<DataGridColumnVisibilityTo
       >
         <Menu withinPortal position="bottom-end" {...menuProps}>
           <Menu.Target>
-            <ActionIcon variant="default" aria-label={ctx.labels.columnVisibilityLabel}>
-              <ColumnsIcon />
-            </ActionIcon>
+            <Button variant="default" size={ctx.store.controlSize} leftSection={<ColumnsIcon />}>
+              {children ?? ctx.labels.columnVisibilityLabel}
+            </Button>
           </Menu.Target>
           <Menu.Dropdown>
             {allColumns.map((column) => (
