@@ -1,6 +1,5 @@
 import path from 'node:path';
 import fs from 'fs-extra';
-import { removeReactImport } from './remove-react-import';
 
 export function generateExamplesCode(examplesFolder: string) {
   const examples = fs
@@ -13,14 +12,12 @@ export function generateExamplesCode(examplesFolder: string) {
       .readdirSync(examplePath)
       .filter((item) => item.endsWith('.tsx') || item.endsWith('.ts') || item.endsWith('.css'));
 
-    const mainFileContent = removeReactImport(
-      fs.readFileSync(path.join(examplePath, `${exampleName}.tsx`), 'utf-8')
-    );
+    const mainFileContent = fs.readFileSync(path.join(examplePath, `${exampleName}.tsx`), 'utf-8');
     const otherFilesContent = exampleContents
       .filter((file) => file !== `${exampleName}.tsx`)
       .map((file) => ({
         name: file,
-        content: removeReactImport(fs.readFileSync(path.join(examplePath, file), 'utf-8')),
+        content: fs.readFileSync(path.join(examplePath, file), 'utf-8'),
       }));
 
     return [
