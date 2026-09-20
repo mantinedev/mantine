@@ -69,6 +69,7 @@ apps/help.mantine.dev/next-env.d.ts
 /claude/
 .agents/
 /docs
+/CONTEXT.md
 /codex
 /.claude/worktrees
 /.playwright-mcp/
