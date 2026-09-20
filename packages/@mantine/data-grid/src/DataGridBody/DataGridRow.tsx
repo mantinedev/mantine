@@ -3,29 +3,18 @@ import { Row } from '@tanstack/react-table';
 import {
   Box,
   BoxProps,
-  Checkbox,
   CompoundStylesApiProps,
   ElementProps,
   factory,
   Factory,
-  Radio,
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
-import { ExpandChevron, GripIcon } from '../icons';
 import type { DataGridFeatures } from '../table-features';
 import { DataGridCell } from './DataGridCell';
 import classes from '../DataGrid.module.css';
 
-export type DataGridRowStylesNames =
-  | 'tr'
-  | 'td'
-  | 'selectionCheckbox'
-  | 'expandIcon'
-  | 'rowNumber'
-  | 'treeIndent'
-  | 'treeToggle'
-  | 'dragHandle';
+export type DataGridRowStylesNames = 'tr' | 'td' | 'treeIndent' | 'treeToggle';
 
 export interface DataGridRowProps
   extends BoxProps, CompoundStylesApiProps<DataGridRowFactory>, ElementProps<'tr'> {
@@ -54,7 +43,7 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
 
   const ctx = useDataGridContext();
   const isSelected = ctx.withRowSelection && row.getIsSelected();
-  const isStriped = ctx.striped && rowIndex % 2 === 1;
+  const isStriped = ctx.striped && rowIndex % 2 === (ctx.striped === 'odd' ? 0 : 1);
   const rowPinned = ctx.withRowPinning ? row.getIsPinned() : false;
   const rowHeight = ctx.getRowHeight?.(row);
   const heightStyle = typeof rowHeight === 'number' ? { height: `${rowHeight}px` } : undefined;
@@ -99,11 +88,6 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
       }
     : undefined;
 
-  const handleDragStart = (e: React.DragEvent) => {
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', row.id);
-  };
-
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
@@ -147,6 +131,9 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
   const dataCells = useMemo(() => {
     const visibleCells = row.getVisibleCells();
     const cells: React.ReactNode[] = [];
+    const firstDataCellIndex = visibleCells.findIndex(
+      (cell) => !cell.column.columnDef.meta?.utility
+    );
 
     for (let i = 0; i < visibleCells.length; i++) {
       const cell = visibleCells[i];
@@ -167,7 +154,7 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
           rowSpan={rowSpan > 1 ? rowSpan : undefined}
           classNames={classNames}
           styles={styles}
-          treeData={ctx.withTreeData && i === 0 ? { row } : undefined}
+          treeData={ctx.withTreeData && i === firstDataCellIndex ? { row } : undefined}
         />
       );
     }
@@ -183,7 +170,6 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
       data-row-id={row.id}
       data-selected={isSelected || undefined}
       data-striped={isStriped || undefined}
-      data-hover={ctx.highlightOnHover || undefined}
       data-pinned-top={rowPinned === 'top' || undefined}
       data-pinned-bottom={rowPinned === 'bottom' || undefined}
       onClick={
@@ -195,62 +181,6 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
       {...ctx.getStyles('tr', { className, classNames, style: [heightStyle, style], styles })}
       {...others}
     >
-      {ctx.withRowReorder && (
-        <td
-          {...ctx.getStyles('td', { classNames, styles })}
-          {...ctx.getStyles('dragHandle', { classNames, styles })}
-          draggable
-          onDragStart={handleDragStart}
-          aria-label={ctx.labels.dragToReorder ?? 'Drag to reorder'}
-        >
-          <GripIcon />
-        </td>
-      )}
-      {ctx.withRowSelection && (
-        <td
-          {...ctx.getStyles('td', { classNames, styles })}
-          onClick={(e: React.MouseEvent) => e.stopPropagation()}
-        >
-          {row.getCanSelect() &&
-            (ctx.table.options.enableMultiRowSelection === false ? (
-              <Radio
-                checked={row.getIsSelected()}
-                onChange={row.getToggleSelectedHandler()}
-                {...ctx.getStyles('selectionCheckbox', { classNames, styles })}
-              />
-            ) : (
-              <Checkbox
-                checked={row.getIsSelected()}
-                onChange={row.getToggleSelectedHandler()}
-                {...ctx.getStyles('selectionCheckbox', { classNames, styles })}
-              />
-            ))}
-        </td>
-      )}
-      {ctx.withRowExpansion && !ctx.withTreeData && (
-        <td {...ctx.getStyles('td', { classNames, styles })}>
-          <button
-            type="button"
-            aria-expanded={row.getIsExpanded()}
-            aria-label={row.getIsExpanded() ? 'Collapse row' : 'Expand row'}
-            onClick={(e: React.MouseEvent) => {
-              e.stopPropagation();
-              row.toggleExpanded();
-            }}
-            {...ctx.getStyles('expandIcon', { classNames, styles })}
-          >
-            <ExpandChevron expanded={row.getIsExpanded()} />
-          </button>
-        </td>
-      )}
-      {ctx.withRowNumbers && (
-        <td
-          {...ctx.getStyles('td', { classNames, styles })}
-          {...ctx.getStyles('rowNumber', { classNames, styles })}
-        >
-          {rowIndex + 1}
-        </td>
-      )}
       {dataCells}
     </Box>
   );

@@ -58,6 +58,8 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
   } = useProps('DataGridCell', null, props);
 
   const ctx = useDataGridContext();
+  const meta = cell.column.columnDef.meta;
+  const utility = meta?.utility;
   const isPinned = ctx.withColumnPinning ? cell.column.getIsPinned() : false;
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState<unknown>('');
@@ -102,7 +104,7 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
     [ctx.table]
   );
 
-  const canEdit = ctx.withEditing && !cell.column.columnDef.meta?.disableEditing;
+  const canEdit = ctx.withEditing && !utility && !cell.column.columnDef.meta?.disableEditing;
   const editComponent = cell.column.columnDef.meta?.editComponent;
 
   const startEditing = useCallback(
@@ -195,6 +197,9 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
       colSpan={colSpan}
       rowSpan={rowSpan}
       data-col-index={colIndex}
+      data-utility={utility}
+      data-align={meta?.align}
+      data-actions={meta?.type === 'actions' || undefined}
       data-pinned-left={isPinned === 'start' || undefined}
       data-pinned-right={isPinned === 'end' || undefined}
       data-editing={isEditing || undefined}

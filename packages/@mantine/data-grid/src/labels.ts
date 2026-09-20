@@ -8,10 +8,11 @@ export interface DataGridLabels {
   statusBarFilteredRows: string;
   statusBarSelectedRows: string;
   columnVisibilityLabel: string;
-  densityCompact: string;
-  densityDefault: string;
-  densityComfortable: string;
-  densityToggleLabel: string;
+  rowNumber: string;
+  selectAll: string;
+  selectRow: string;
+  expandRow: string;
+  collapseRow: string;
   groupCollapse: string;
   groupExpand: string;
   editSave: string;
@@ -41,10 +42,11 @@ export const DEFAULT_LABELS: DataGridLabels = {
   statusBarFilteredRows: '{count} filtered',
   statusBarSelectedRows: '{count} selected',
   columnVisibilityLabel: 'Toggle column visibility',
-  densityCompact: 'Compact',
-  densityDefault: 'Default',
-  densityComfortable: 'Comfortable',
-  densityToggleLabel: 'Toggle density',
+  rowNumber: '#',
+  selectAll: 'Select all rows',
+  selectRow: 'Select row',
+  expandRow: 'Expand row',
+  collapseRow: 'Collapse row',
   groupCollapse: 'Collapse group',
   groupExpand: 'Expand group',
   editSave: 'Save',

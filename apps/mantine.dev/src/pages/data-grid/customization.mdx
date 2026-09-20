@@ -19,26 +19,21 @@ DataGrid exposes the following CSS variables on the root element:
 <DataTable
   head={['Variable', 'Description', 'Default']}
   data={[
-    ['`--dg-row-height`', 'Row height', '`40px`'],
-    ['`--dg-header-height`', 'Header row height', '`40px`'],
-    ['`--dg-border-color`', 'Border color', '`var(--mantine-color-default-border)`'],
-    ['`--dg-stripe-color`', 'Striped row background', '`var(--mantine-color-gray-0)`'],
-    ['`--dg-hover-color`', 'Row hover background', '`var(--mantine-color-gray-1)`'],
+    ['`--dg-font-size`', 'Font size of cell content', 'from `size`, `13px` at `sm`'],
+    ['`--dg-row-height`', 'Row height', 'from `size`, `32px` at `sm`'],
+    ['`--dg-header-height`', 'Header row height', 'from `size`, equals row height'],
+    ['`--dg-cell-padding-x`', 'Horizontal cell padding', 'from `size`, `10px` at `sm`'],
+    ['`--dg-cell-padding-y`', 'Vertical cell padding', 'from `size`, `5px` at `sm`'],
+    ['`--dg-control-size`', 'Checkbox and radio size in utility columns', 'from `size`, `14px` at `sm`'],
+    ['`--dg-icon-size`', 'Chevron, grip and sort arrow size', 'from `size`, `16px` at `sm`'],
+    ['`--dg-radius`', 'Frame border-radius', '`theme.defaultRadius`'],
+    ['`--dg-border-color`', 'Frame, header and tfoot rule color', '`var(--mantine-color-border)`'],
+    ['`--dg-row-border-color`', 'Rule color between rows', '`var(--dg-border-color)`'],
+    ['`--dg-striped-color`', 'Striped row background', '`var(--mantine-color-gray-0)`'],
+    ['`--dg-hover-color`', 'Row hover background', '`var(--mantine-color-hover-strong)`'],
     ['`--dg-selected-color`', 'Selected row background', '`var(--mantine-primary-color-light)`'],
-    ['`--dg-pinned-shadow`', 'Shadow for pinned columns', '`4px 0 8px rgba(0,0,0,0.1)`'],
-    ['`--dg-font-size`', 'Cell font size', '`var(--mantine-font-size-sm)`'],
-    ['`--dg-spacing`', 'Cell padding', '`var(--mantine-spacing-xs)`'],
   ]}
 />
-
-## Density toggle
-
-Add a density toggle to the toolbar to let users switch between compact, default, and comfortable
-spacing. The toggle cycles through the three density modes.
-
-<Demo data={DataGridDemos.density} />
-
-You can also control density programmatically with `density` and `onDensityChange` options in `useDataGrid`.
 
 ## Compound components
 
@@ -53,7 +48,6 @@ Available compound components:
 - `DataGrid.Toolbar` -- container for toolbar items
 - `DataGrid.GlobalFilter` -- global search input
 - `DataGrid.ColumnVisibilityToggle` -- column visibility menu
-- `DataGrid.DensityToggle` -- density toggle button
 - `DataGrid.Header` -- table header with column headers
 - `DataGrid.Body` -- table body with data rows
 - `DataGrid.VirtualBody` -- virtualized table body
@@ -93,9 +87,6 @@ only override what you need.
     statusBarTotalRows: '{count} lignes au total',
     statusBarFilteredRows: '{count} filtrees',
     statusBarSelectedRows: '{count} selectionnees',
-    densityCompact: 'Compact',
-    densityDefault: 'Normal',
-    densityComfortable: 'Confortable',
   }}
 />
 ```

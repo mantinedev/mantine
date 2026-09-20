@@ -3,12 +3,10 @@ import { flexRender } from '@tanstack/react-table';
 import {
   Box,
   BoxProps,
-  Checkbox,
   CompoundStylesApiProps,
   ElementProps,
   factory,
   Factory,
-  rem,
   UnstyledButton,
   useProps,
 } from '@mantine/core';
@@ -24,9 +22,7 @@ export type DataGridHeaderStylesNames =
   | 'th'
   | 'headerCell'
   | 'sortIcon'
-  | 'resizeHandle'
-  | 'selectAllCheckbox'
-  | 'rowNumber';
+  | 'resizeHandle';
 
 export interface DataGridHeaderProps
   extends BoxProps, CompoundStylesApiProps<DataGridHeaderFactory>, ElementProps<'thead'> {}
@@ -94,58 +90,6 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
     >
       {ctx.table.getHeaderGroups().map((headerGroup) => (
         <tr key={headerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
-          {ctx.withRowReorder && (
-            <th
-              {...ctx.getStyles('th', { classNames, styles })}
-              style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
-            />
-          )}
-          {ctx.withRowSelection && ctx.table.options.enableMultiRowSelection !== false && (
-            <th
-              {...ctx.getStyles('th', { classNames, styles })}
-              style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
-            >
-              <Checkbox
-                checked={
-                  ctx.withPagination
-                    ? ctx.table.getIsAllPageRowsSelected()
-                    : ctx.table.getIsAllRowsSelected()
-                }
-                indeterminate={
-                  ctx.withPagination
-                    ? ctx.table.getIsSomePageRowsSelected()
-                    : ctx.table.getIsSomeRowsSelected()
-                }
-                onChange={
-                  ctx.withPagination
-                    ? ctx.table.getToggleAllPageRowsSelectedHandler()
-                    : ctx.table.getToggleAllRowsSelectedHandler()
-                }
-                {...ctx.getStyles('selectAllCheckbox', { classNames, styles })}
-              />
-            </th>
-          )}
-          {ctx.withRowSelection && ctx.table.options.enableMultiRowSelection === false && (
-            <th
-              {...ctx.getStyles('th', { classNames, styles })}
-              style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
-            />
-          )}
-          {ctx.withRowExpansion && !ctx.withTreeData && (
-            <th
-              {...ctx.getStyles('th', { classNames, styles })}
-              style={ctx.tableLayout === 'fixed' ? { width: rem(40) } : undefined}
-            />
-          )}
-          {ctx.withRowNumbers && (
-            <th
-              {...ctx.getStyles('th', { classNames, styles })}
-              {...ctx.getStyles('rowNumber', { classNames, styles })}
-              style={ctx.tableLayout === 'fixed' ? { width: rem(48) } : undefined}
-            >
-              #
-            </th>
-          )}
           {headerGroup.headers.map((header) => {
             const canSort = ctx.withSorting && header.column.getCanSort();
             const sortDirection = header.column.getIsSorted();
@@ -161,15 +105,18 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
             const isPinned = ctx.withColumnPinning ? header.column.getIsPinned() : false;
             const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(header.column) : undefined;
             const isResizing = header.column.getIsResizing();
+            const utility = header.column.columnDef.meta?.utility;
+            const meta = header.column.columnDef.meta;
 
-            const reorderProps = ctx.withColumnReorder
-              ? {
-                  draggable: true,
-                  onDragStart: (e: React.DragEvent) => handleDragStart(e, header.column.id),
-                  onDragOver: handleDragOver,
-                  onDrop: (e: React.DragEvent) => handleDrop(e, header.column.id),
-                }
-              : {};
+            const reorderProps =
+              ctx.withColumnReorder && !utility
+                ? {
+                    draggable: true,
+                    onDragStart: (e: React.DragEvent) => handleDragStart(e, header.column.id),
+                    onDragOver: handleDragOver,
+                    onDrop: (e: React.DragEvent) => handleDrop(e, header.column.id),
+                  }
+                : {};
 
             return (
               <th
@@ -182,11 +129,14 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                 data-pinned-left={isPinned === 'start' || undefined}
                 data-pinned-right={isPinned === 'end' || undefined}
                 data-resizing={isResizing || undefined}
+                data-utility={utility}
+                data-align={meta?.align}
+                data-actions={meta?.type === 'actions' || undefined}
                 {...ctx.getStyles('th', { classNames, styles })}
                 style={{
                   ...pinnedStyles,
                   width:
-                    ctx.withColumnResizing || ctx.tableLayout === 'fixed'
+                    ctx.withColumnResizing || ctx.tableLayout === 'fixed' || utility
                       ? header.getSize()
                       : undefined,
                 }}
@@ -234,12 +184,6 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
       ))}
       {ctx.headerFilters && ctx.withFiltering && (
         <tr {...ctx.getStyles('tr', { classNames, styles })}>
-          {ctx.withRowReorder && <th {...ctx.getStyles('th', { classNames, styles })} />}
-          {ctx.withRowSelection && <th {...ctx.getStyles('th', { classNames, styles })} />}
-          {ctx.withRowExpansion && !ctx.withTreeData && (
-            <th {...ctx.getStyles('th', { classNames, styles })} />
-          )}
-          {ctx.withRowNumbers && <th {...ctx.getStyles('th', { classNames, styles })} />}
           {ctx.table.getVisibleLeafColumns().map((column) => {
             const isPinned = ctx.withColumnPinning ? column.getIsPinned() : false;
             const pinnedStyle = ctx.withColumnPinning ? getPinnedStyles(column) : undefined;
@@ -247,6 +191,7 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
             return (
               <th
                 key={column.id}
+                data-utility={column.columnDef.meta?.utility}
                 data-pinned-left={isPinned === 'start' || undefined}
                 data-pinned-right={isPinned === 'end' || undefined}
                 {...ctx.getStyles('th', { classNames, styles })}

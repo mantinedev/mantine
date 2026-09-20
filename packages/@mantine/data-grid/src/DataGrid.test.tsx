@@ -32,6 +32,7 @@ describe('@mantine/data-grid/DataGrid', () => {
     component: DataGrid,
     props: defaultProps,
     varsResolver: true,
+    size: false,
     displayName: '@mantine/data-grid/DataGrid',
     stylesApiSelectors: ['root', 'table'],
   });
@@ -291,8 +292,8 @@ describe('@mantine/data-grid/DataGrid', () => {
   });
 
   describe('row numbers', () => {
-    it('renders row numbers when withRowNumbers is true', () => {
-      render(<DataGrid {...defaultProps} withRowNumbers />);
+    it('renders row numbers when withRowNumbers is set on the store', () => {
+      render(<DataGridWithStore storeOptions={{ data, columns, withRowNumbers: true }} />);
       expect(screen.getByText('#')).toBeInTheDocument();
       expect(screen.getByText('1')).toBeInTheDocument();
       expect(screen.getByText('2')).toBeInTheDocument();
@@ -370,6 +371,160 @@ describe('@mantine/data-grid/DataGrid', () => {
 
       expect(container.querySelector('td[data-selected]')).toBeInTheDocument();
       expect(container.querySelector('td[data-focused]')).toBeInTheDocument();
+    });
+  });
+
+  describe('size', () => {
+    it('emits data-size sm and the size-resolved variables by default', () => {
+      const { container } = render(<DataGrid {...defaultProps} />);
+      const root = container.querySelector('.mantine-DataGrid-root') as HTMLElement;
+      expect(root).toHaveAttribute('data-size', 'sm');
+      expect(root.style.getPropertyValue('--dg-row-height')).toBe('var(--dg-row-height-sm)');
+      expect(root.style.getPropertyValue('--dg-font-size')).toBe('var(--dg-font-size-sm)');
+      expect(root.style.getPropertyValue('--dg-header-height')).toBe('var(--dg-header-height-sm)');
+      expect(root.style.getPropertyValue('--dg-cell-padding-x')).toBe(
+        'var(--dg-cell-padding-x-sm)'
+      );
+      expect(root.style.getPropertyValue('--dg-cell-padding-y')).toBe(
+        'var(--dg-cell-padding-y-sm)'
+      );
+      expect(root.style.getPropertyValue('--dg-control-size')).toBe('var(--dg-control-size-sm)');
+      expect(root.style.getPropertyValue('--dg-icon-size')).toBe('var(--dg-icon-size-sm)');
+    });
+
+    it('follows the store size', () => {
+      const { container } = render(
+        <DataGridWithStore storeOptions={{ data, columns, size: 'lg' }} />
+      );
+      const root = container.querySelector('.mantine-DataGrid-root') as HTMLElement;
+      expect(root).toHaveAttribute('data-size', 'lg');
+      expect(root.style.getPropertyValue('--dg-row-height')).toBe('var(--dg-row-height-lg)');
+    });
+
+    it('does not emit data-density', () => {
+      const { container } = render(<DataGrid {...defaultProps} />);
+      expect(container.querySelector('[data-density]')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('frame and separators', () => {
+    const root = (container: HTMLElement) =>
+      container.querySelector('.mantine-DataGrid-root') as HTMLElement;
+
+    it('is framed with the default radius by default', () => {
+      const { container } = render(<DataGrid {...defaultProps} />);
+      expect(root(container)).toHaveAttribute('data-with-table-border');
+      expect(root(container).style.getPropertyValue('--dg-radius')).toBe(
+        'var(--mantine-radius-default)'
+      );
+    });
+
+    it('drops the frame with withTableBorder false and resolves radius', () => {
+      const { container } = render(
+        <DataGrid {...defaultProps} withTableBorder={false} radius="lg" />
+      );
+      expect(root(container)).not.toHaveAttribute('data-with-table-border');
+      expect(root(container).style.getPropertyValue('--dg-radius')).toBe(
+        'var(--mantine-radius-lg)'
+      );
+    });
+
+    it('draws row borders by default and supports subtle and none', () => {
+      const { container, rerender } = render(<DataGrid {...defaultProps} />);
+      expect(root(container)).toHaveAttribute('data-with-row-borders');
+      expect(root(container)).not.toHaveAttribute('data-row-borders');
+
+      rerender(
+        <>
+          <DataGrid {...defaultProps} withRowBorders="subtle" />
+        </>
+      );
+      expect(root(container)).toHaveAttribute('data-with-row-borders');
+      expect(root(container)).toHaveAttribute('data-row-borders', 'subtle');
+
+      rerender(
+        <>
+          <DataGrid {...defaultProps} withRowBorders={false} />
+        </>
+      );
+      expect(root(container)).not.toHaveAttribute('data-with-row-borders');
+    });
+
+    it('stripes odd rows by default and even rows on request', () => {
+      const { container, rerender } = render(<DataGrid {...defaultProps} striped />);
+      let rows = container.querySelectorAll('tbody tr');
+      expect(rows[0]).toHaveAttribute('data-striped');
+      expect(rows[1]).not.toHaveAttribute('data-striped');
+      expect(rows[2]).toHaveAttribute('data-striped');
+
+      rerender(
+        <>
+          <DataGrid {...defaultProps} striped="even" />
+        </>
+      );
+      rows = container.querySelectorAll('tbody tr');
+      expect(rows[0]).not.toHaveAttribute('data-striped');
+      expect(rows[1]).toHaveAttribute('data-striped');
+
+      rerender(
+        <>
+          <DataGrid {...defaultProps} />
+        </>
+      );
+      expect(container.querySelector('tbody tr[data-striped]')).not.toBeInTheDocument();
+    });
+
+    it('resolves stripedColor and highlightOnHoverColor into variables', () => {
+      const { container } = render(
+        <DataGrid
+          {...defaultProps}
+          stripedColor="red"
+          highlightOnHoverColor="blue"
+          borderColor="green"
+        />
+      );
+      expect(root(container).style.getPropertyValue('--dg-striped-color')).toBe(
+        'var(--mantine-color-red-filled)'
+      );
+      expect(root(container).style.getPropertyValue('--dg-hover-color')).toBe(
+        'var(--mantine-color-blue-filled)'
+      );
+      expect(root(container).style.getPropertyValue('--dg-border-color')).toBe(
+        'var(--mantine-color-green-filled)'
+      );
+    });
+
+    it('reflects column borders on the root', () => {
+      const { container, rerender } = render(<DataGrid {...defaultProps} withColumnBorders />);
+      expect(root(container)).toHaveAttribute('data-column-borders', 'all');
+      rerender(
+        <>
+          <DataGrid {...defaultProps} withColumnBorders="data" />
+        </>
+      );
+      expect(root(container)).toHaveAttribute('data-column-borders', 'data');
+      rerender(
+        <>
+          <DataGrid {...defaultProps} />
+        </>
+      );
+      expect(root(container)).not.toHaveAttribute('data-column-borders');
+    });
+
+    it('drives hover highlight from the root instead of per-row attributes', () => {
+      const { container } = render(<DataGrid {...defaultProps} highlightOnHover />);
+      expect(root(container)).toHaveAttribute('data-highlight-on-hover');
+      expect(container.querySelector('tr[data-hover]')).not.toBeInTheDocument();
+    });
+
+    it('is static by default', () => {
+      const { container } = render(<DataGrid {...defaultProps} />);
+      expect(root(container)).not.toHaveAttribute('data-highlight-on-hover');
+    });
+
+    it('reflects tabularNums on the root', () => {
+      const { container } = render(<DataGrid {...defaultProps} tabularNums />);
+      expect(root(container)).toHaveAttribute('data-tabular-nums');
     });
   });
 });

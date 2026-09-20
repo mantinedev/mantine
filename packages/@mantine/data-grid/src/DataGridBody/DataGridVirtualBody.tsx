@@ -3,21 +3,19 @@ import { flexRender, Header } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
   BoxProps,
-  Checkbox,
   CompoundStylesApiProps,
   ElementProps,
   factory,
   Factory,
-  Radio,
   rem,
   UnstyledButton,
   useProps,
 } from '@mantine/core';
+import { getRowHeightEstimate } from '../data-grid-sizes';
 import { useDataGridContext } from '../DataGrid.context';
 import { FilterDispatcher } from '../DataGridFilters';
-import { getExtraColumnsCount } from '../get-extra-columns-count';
 import { getPinnedStyles } from '../get-pinned-styles';
-import { DefaultUnsortedIcon, ExpandChevron, GripIcon, SortIcon } from '../icons';
+import { DefaultUnsortedIcon, ExpandChevron, SortIcon } from '../icons';
 import type { DataGridFeatures } from '../table-features';
 import classes from '../DataGrid.module.css';
 
@@ -29,14 +27,9 @@ export type DataGridVirtualBodyStylesNames =
   | 'virtualCell'
   | 'emptyState'
   | 'expandedRow'
-  | 'selectionCheckbox'
-  | 'selectAllCheckbox'
-  | 'expandIcon'
-  | 'rowNumber'
   | 'sortIcon'
   | 'headerCell'
-  | 'resizeHandle'
-  | 'dragHandle';
+  | 'resizeHandle';
 
 export interface DataGridVirtualBodyProps
   extends BoxProps, CompoundStylesApiProps<DataGridVirtualBodyFactory>, ElementProps<'div'> {
@@ -91,8 +84,10 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
   const withColumnVirt = ctx.withColumnVirtualization;
   const withRowVirt = ctx.withVirtualization;
 
-  const extraColCount = getExtraColumnsCount(ctx);
-  const totalColumns = visibleColumns.length + extraColCount;
+  const totalColumns = visibleColumns.length;
+  const firstDataColumnIndex = visibleColumns.findIndex(
+    (column) => !column.columnDef.meta?.utility
+  );
 
   const overscan = virtualScrollConfig?.overscan ?? 10;
 
@@ -101,20 +96,17 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     [ctx.getRowHeight, rows]
   );
 
-  const estimateSize =
-    virtualScrollConfig?.estimateSize ??
-    ((index: number) => {
-      if (ctx.getRowHeight) {
-        const row = rows[index];
-        if (row) {
-          const h = ctx.getRowHeight(row);
-          if (typeof h === 'number') {
-            return h;
-          }
-        }
-      }
-      return ctx.estimateRowHeight ?? 36;
-    });
+  const estimateSize = (index: number) =>
+    getRowHeightEstimate(
+      {
+        estimateSize: virtualScrollConfig?.estimateSize,
+        getRowHeight: ctx.getRowHeight,
+        estimateRowHeight: ctx.estimateRowHeight,
+        size: ctx.store.size,
+      },
+      rows[index],
+      index
+    );
 
   const rowVirtualizer = useVirtualizer({
     count: withRowVirt ? rows.length : 0,
@@ -194,15 +186,15 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     return vars;
   }, [visibleColumns]);
 
-  const extraColOffset = extraColCount;
-
   function renderCellContent(
     row: ReturnType<(typeof rows)[number]['getVisibleCells']> extends (infer C)[] ? C : never,
     cellIndex: number,
     rowObj: (typeof rows)[number]
   ) {
     const isPinned = ctx.withColumnPinning ? row.column.getIsPinned() : false;
-    const cellColIndex = cellIndex + 1 + extraColOffset;
+    const cellColIndex = cellIndex + 1;
+    const meta = row.column.columnDef.meta;
+    const utility = meta?.utility;
     const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(row.column) : undefined;
 
     const handleCellClick = ctx.onCellClick
@@ -220,7 +212,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         }
       : undefined;
 
-    const isTreeFirstCell = ctx.withTreeData && cellIndex === 0;
+    const isTreeFirstCell = ctx.withTreeData && cellIndex === firstDataColumnIndex;
 
     return (
       <div
@@ -228,6 +220,9 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         role="gridcell"
         aria-colindex={cellColIndex}
         tabIndex={handleCellClick ? 0 : undefined}
+        data-utility={utility}
+        data-align={meta?.align}
+        data-actions={meta?.type === 'actions' || undefined}
         data-pinned-left={isPinned === 'start' || undefined}
         data-pinned-right={isPinned === 'end' || undefined}
         onClick={handleCellClick}
@@ -322,7 +317,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
 
   function renderRowContent(row: (typeof rows)[number], rowIndex: number) {
     const isSelected = ctx.withRowSelection && row.getIsSelected();
-    const isStriped = ctx.striped && rowIndex % 2 === 1;
+    const isStriped = ctx.striped && rowIndex % 2 === (ctx.striped === 'odd' ? 0 : 1);
     const isExpanded =
       ctx.withRowExpansion && !ctx.withTreeData && row.getIsExpanded() && ctx.renderExpandedRow;
 
@@ -362,71 +357,11 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
           tabIndex={hasRowClickHandler ? 0 : undefined}
           data-selected={isSelected || undefined}
           data-striped={isStriped || undefined}
-          data-hover={ctx.highlightOnHover || undefined}
           onClick={hasRowClickHandler ? handleRowClick : undefined}
           onKeyDown={handleRowKeyDown}
           onDoubleClick={handleRowDoubleClick}
           {...ctx.getStyles('virtualRow', { classNames, styles })}
         >
-          {ctx.withRowReorder && (
-            <div
-              role="gridcell"
-              {...ctx.getStyles('virtualCell', { classNames, styles })}
-              {...ctx.getStyles('dragHandle', { classNames, styles })}
-            >
-              <GripIcon />
-            </div>
-          )}
-          {ctx.withRowSelection && (
-            <div
-              role="gridcell"
-              aria-colindex={1}
-              {...ctx.getStyles('virtualCell', { classNames, styles })}
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
-            >
-              {row.getCanSelect() &&
-                (ctx.table.options.enableMultiRowSelection === false ? (
-                  <Radio
-                    checked={row.getIsSelected()}
-                    onChange={row.getToggleSelectedHandler()}
-                    {...ctx.getStyles('selectionCheckbox', { classNames, styles })}
-                  />
-                ) : (
-                  <Checkbox
-                    checked={row.getIsSelected()}
-                    onChange={row.getToggleSelectedHandler()}
-                    {...ctx.getStyles('selectionCheckbox', { classNames, styles })}
-                  />
-                ))}
-            </div>
-          )}
-          {ctx.withRowExpansion && !ctx.withTreeData && (
-            <div
-              role="gridcell"
-              aria-colindex={ctx.withRowSelection ? 2 : 1}
-              {...ctx.getStyles('virtualCell', { classNames, styles })}
-            >
-              <button
-                type="button"
-                onClick={(e: React.MouseEvent) => {
-                  e.stopPropagation();
-                  row.toggleExpanded();
-                }}
-                {...ctx.getStyles('expandIcon', { classNames, styles })}
-              >
-                <ExpandChevron expanded={row.getIsExpanded()} />
-              </button>
-            </div>
-          )}
-          {ctx.withRowNumbers && (
-            <div
-              role="gridcell"
-              {...ctx.getStyles('virtualCell', { classNames, styles })}
-              {...ctx.getStyles('rowNumber', { classNames, styles })}
-            >
-              {rowIndex + 1}
-            </div>
-          )}
           {withColumnVirt ? renderVirtualizedCells(row, cells) : renderAllCells(row, cells)}
         </div>
         {isExpanded && (
@@ -483,7 +418,9 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     const isResizing = header.column.getIsResizing();
     const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(header.column) : undefined;
 
-    const colIndex = headerIndex + 1 + extraColOffset;
+    const colIndex = headerIndex + 1;
+    const utility = header.column.columnDef.meta?.utility;
+    const meta = header.column.columnDef.meta;
 
     return (
       <div
@@ -497,6 +434,9 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         data-pinned-left={isPinned === 'start' || undefined}
         data-pinned-right={isPinned === 'end' || undefined}
         data-resizing={isResizing || undefined}
+        data-utility={utility}
+        data-align={meta?.align}
+        data-actions={meta?.type === 'actions' || undefined}
         {...ctx.getStyles('virtualCell', { classNames, styles })}
         style={{
           ...pinnedStyles,
@@ -676,58 +616,6 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
             aria-rowindex={1}
             {...ctx.getStyles('virtualGridHeader', { classNames, styles })}
           >
-            {ctx.withRowReorder && (
-              <div role="columnheader" {...ctx.getStyles('virtualCell', { classNames, styles })} />
-            )}
-            {ctx.withRowSelection && ctx.table.options.enableMultiRowSelection !== false && (
-              <div
-                role="columnheader"
-                aria-colindex={1}
-                {...ctx.getStyles('virtualCell', { classNames, styles })}
-              >
-                <Checkbox
-                  checked={
-                    ctx.withPagination
-                      ? ctx.table.getIsAllPageRowsSelected()
-                      : ctx.table.getIsAllRowsSelected()
-                  }
-                  indeterminate={
-                    ctx.withPagination
-                      ? ctx.table.getIsSomePageRowsSelected()
-                      : ctx.table.getIsSomeRowsSelected()
-                  }
-                  onChange={
-                    ctx.withPagination
-                      ? ctx.table.getToggleAllPageRowsSelectedHandler()
-                      : ctx.table.getToggleAllRowsSelectedHandler()
-                  }
-                  {...ctx.getStyles('selectAllCheckbox', { classNames, styles })}
-                />
-              </div>
-            )}
-            {ctx.withRowSelection && ctx.table.options.enableMultiRowSelection === false && (
-              <div
-                role="columnheader"
-                aria-colindex={1}
-                {...ctx.getStyles('virtualCell', { classNames, styles })}
-              />
-            )}
-            {ctx.withRowExpansion && !ctx.withTreeData && (
-              <div
-                role="columnheader"
-                aria-colindex={ctx.withRowSelection ? 2 : 1}
-                {...ctx.getStyles('virtualCell', { classNames, styles })}
-              />
-            )}
-            {ctx.withRowNumbers && (
-              <div
-                role="columnheader"
-                {...ctx.getStyles('virtualCell', { classNames, styles })}
-                {...ctx.getStyles('rowNumber', { classNames, styles })}
-              >
-                #
-              </div>
-            )}
             {withColumnVirt
               ? renderVirtualizedHeaders(
                   headerGroup.headers,

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { Table as ReactTable } from '@tanstack/react-table';
+import type { MantineSize } from '@mantine/core';
 import type { DataGridFeatures } from '../table-features';
 
 export type DataGridPersistableState =
@@ -15,7 +16,7 @@ export type DataGridPersistableState =
   | 'expanded'
   | 'grouping'
   | 'rowPinning'
-  | 'density';
+  | 'size';
 
 export interface UseDataGridStateOptions {
   /** Unique key for localStorage */
@@ -27,11 +28,11 @@ export interface UseDataGridStateOptions {
   /** TanStack Table instance */
   table: ReactTable<DataGridFeatures, any>;
 
-  /** Current density value (not part of TanStack state) */
-  density?: string;
+  /** Current size value (not part of TanStack state) */
+  size?: MantineSize;
 
-  /** Callback to restore density */
-  onDensityRestore?: (density: string) => void;
+  /** Callback to restore size */
+  onSizeRestore?: (size: MantineSize) => void;
 }
 
 function readPersistedState(key: string): Record<string, unknown> | null {
@@ -55,7 +56,7 @@ function writePersistedState(key: string, state: Record<string, unknown>) {
 }
 
 export function useDataGridState(options: UseDataGridStateOptions) {
-  const { stateStorageKey, persistedState, table, density, onDensityRestore } = options;
+  const { stateStorageKey, persistedState, table, size, onSizeRestore } = options;
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const restoredRef = useRef(false);
 
@@ -71,9 +72,9 @@ export function useDataGridState(options: UseDataGridStateOptions) {
     }
 
     for (const key of persistedState) {
-      if (key === 'density') {
-        if (saved.density && onDensityRestore) {
-          onDensityRestore(saved.density as string);
+      if (key === 'size') {
+        if (saved.size && onSizeRestore) {
+          onSizeRestore(saved.size as MantineSize);
         }
         continue;
       }
@@ -86,7 +87,7 @@ export function useDataGridState(options: UseDataGridStateOptions) {
         }
       }
     }
-  }, [stateStorageKey, persistedState, table, onDensityRestore]);
+  }, [stateStorageKey, persistedState, table, onSizeRestore]);
 
   const persistState = useCallback(() => {
     if (!stateStorageKey || !persistedState || persistedState.length === 0) {
@@ -102,8 +103,8 @@ export function useDataGridState(options: UseDataGridStateOptions) {
       const toPersist: Record<string, unknown> = {};
 
       for (const key of persistedState) {
-        if (key === 'density') {
-          toPersist.density = density;
+        if (key === 'size') {
+          toPersist.size = size;
         } else {
           toPersist[key] = (tableState as any)[key];
         }
@@ -111,7 +112,7 @@ export function useDataGridState(options: UseDataGridStateOptions) {
 
       writePersistedState(stateStorageKey, toPersist);
     }, 300);
-  }, [stateStorageKey, persistedState, table, density]);
+  }, [stateStorageKey, persistedState, table, size]);
 
   useEffect(() => {
     persistState();

@@ -10,6 +10,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { getColumnLabel } from '../get-column-label';
 import classes from '../DataGrid.module.css';
 
 export type DataGridListViewStylesNames = 'listView' | 'listItem';
@@ -40,21 +41,22 @@ export const DataGridListView = factory<DataGridListViewFactory>((props) => {
       data-row-id={row.id}
       data-selected={(ctx.withRowSelection && row.getIsSelected()) || undefined}
     >
-      {row.getVisibleCells().map((cell: any) => (
-        <div
-          key={cell.id}
-          style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0' }}
-        >
-          <Box component="span" fw={600} fz="sm">
-            {typeof cell.column.columnDef.header === 'string'
-              ? cell.column.columnDef.header
-              : cell.column.id}
-          </Box>
-          <Box component="span" fz="sm">
-            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </Box>
-        </div>
-      ))}
+      {row
+        .getVisibleCells()
+        .filter((cell: any) => !cell.column.columnDef.meta?.utility)
+        .map((cell: any) => (
+          <div
+            key={cell.id}
+            style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0' }}
+          >
+            <Box component="span" fw={600} fz="sm">
+              {getColumnLabel(cell.column)}
+            </Box>
+            <Box component="span" fz="sm">
+              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            </Box>
+          </div>
+        ))}
     </div>
   );
 

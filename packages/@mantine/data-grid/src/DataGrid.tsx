@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Cell, Row, RowData } from '@tanstack/react-table';
 import {
   Box,
@@ -7,11 +7,12 @@ import {
   ElementProps,
   genericFactory,
   Factory,
-  getSpacing,
+  getRadius,
+  getSize,
   getThemeColor,
   LoadingOverlay,
   MantineColor,
-  MantineSpacing,
+  MantineRadius,
   rem,
   ScrollArea,
   ScrollAreaProps,
@@ -36,8 +37,6 @@ import { DataGridStatusBar, DataGridStatusBarFactory } from './DataGridStatusBar
 import {
   DataGridColumnVisibilityToggle,
   DataGridColumnVisibilityToggleFactory,
-  DataGridDensityToggle,
-  DataGridDensityToggleFactory,
   DataGridGlobalFilter,
   DataGridGlobalFilterFactory,
   DataGridToolbar,
@@ -63,7 +62,6 @@ export type DataGridStylesNames =
   | 'toolbar'
   | 'globalFilter'
   | 'columnVisibilityToggle'
-  | 'densityToggle'
   | 'pagination'
   | 'loadingOverlay'
   | 'selectionCheckbox'
@@ -93,15 +91,20 @@ export type DataGridStylesNames =
 
 export type DataGridCssVariables = {
   root:
+    | '--dg-font-size'
     | '--dg-row-height'
     | '--dg-header-height'
+    | '--dg-cell-padding-x'
+    | '--dg-cell-padding-y'
+    | '--dg-control-size'
+    | '--dg-icon-size'
+    | '--dg-radius'
     | '--dg-border-color'
-    | '--dg-stripe-color'
+    | '--dg-row-border-color'
+    | '--dg-striped-color'
     | '--dg-hover-color'
     | '--dg-selected-color'
-    | '--dg-pinned-shadow'
-    | '--dg-font-size'
-    | '--dg-spacing';
+    | '--dg-pinned-shadow';
 };
 
 export interface DataGridProps<TData extends RowData = any>
@@ -115,17 +118,29 @@ export interface DataGridProps<TData extends RowData = any>
   /** Column definitions, required when `store` is not provided @category appearance */
   columns?: DataGridColumnDef<TData>[];
 
+  /** Determines whether the grid should have a 1px border, @default true @category appearance */
+  withTableBorder?: boolean;
+
+  /** Key of `theme.radius` or any valid CSS value to set border-radius of the frame, `theme.defaultRadius` by default @category appearance */
+  radius?: MantineRadius;
+
+  /** Determines whether rows are separated by a rule, `'subtle'` uses a lighter rule color, @default true @category appearance */
+  withRowBorders?: boolean | 'subtle';
+
+  /** Determines whether columns are separated by a rule, `'data'` draws rules between data columns only, @default false @category appearance */
+  withColumnBorders?: boolean | 'data';
+
   /** Border color, key of `theme.colors` or any valid CSS color @category appearance */
   borderColor?: MantineColor;
 
-  /** Cell spacing, key of `theme.spacing` or any valid CSS value @category appearance */
-  spacing?: MantineSpacing;
+  /** Background color of striped rows, key of `theme.colors` or any valid CSS color @category appearance */
+  stripedColor?: MantineColor;
 
-  /** Row height in px @category appearance */
-  rowHeight?: number | string;
+  /** Background color of hovered rows, key of `theme.colors` or any valid CSS color @category appearance */
+  highlightOnHoverColor?: MantineColor;
 
-  /** Header row height in px @category appearance */
-  headerHeight?: number | string;
+  /** Determines whether numbers in cells should use tabular figures, @default false @category appearance */
+  tabularNums?: boolean;
 
   /** Grid content @category appearance */
   children?: React.ReactNode;
@@ -139,14 +154,11 @@ export interface DataGridProps<TData extends RowData = any>
   /** Show loading overlay, @default false @category behavior */
   loading?: boolean;
 
-  /** Add striped rows styling, @default false @category appearance */
-  striped?: boolean;
+  /** Adds striped rows styling, `true` stripes odd rows, @default false @category appearance */
+  striped?: boolean | 'odd' | 'even';
 
   /** Add hover highlight on rows, @default false @category appearance */
   highlightOnHover?: boolean;
-
-  /** Show row numbers column, @default false @category appearance */
-  withRowNumbers?: boolean;
 
   /** Callback when a row is clicked @category behavior */
   onRowClick?: (row: Row<DataGridFeatures, TData>, event: React.MouseEvent) => void;
@@ -224,7 +236,7 @@ export interface DataGridProps<TData extends RowData = any>
   /** Return height for a specific row, or 'auto' for content-measured height @category appearance */
   getRowHeight?: (row: Row<DataGridFeatures, TData>) => number | 'auto';
 
-  /** Estimated row height for initial render before measurement, used with getRowHeight */
+  /** Estimated row height in px for the virtual body before measurement, defaults to the row height of the current `size` */
   estimateRowHeight?: number;
 
   /** Use ScrollArea component for horizontal scrolling, @default true */
@@ -260,7 +272,6 @@ export type DataGridFactory = Factory<{
     Toolbar: typeof DataGridToolbar;
     GlobalFilter: typeof DataGridGlobalFilter;
     ColumnVisibilityToggle: typeof DataGridColumnVisibilityToggle;
-    DensityToggle: typeof DataGridDensityToggle;
     Pagination: typeof DataGridPagination;
     StatusBar: typeof DataGridStatusBar;
     ColumnMenu: typeof DataGridColumnMenu;
@@ -270,19 +281,30 @@ export type DataGridFactory = Factory<{
 const defaultProps = {} satisfies Partial<DataGridProps>;
 
 const varsResolver = createVarsResolver<DataGridFactory>(
-  (theme, { borderColor, spacing, rowHeight, headerHeight }) => ({
-    root: {
-      '--dg-row-height': rowHeight ? rem(rowHeight) : undefined,
-      '--dg-header-height': headerHeight ? rem(headerHeight) : undefined,
-      '--dg-border-color': borderColor ? getThemeColor(borderColor, theme) : undefined,
-      '--dg-stripe-color': undefined,
-      '--dg-hover-color': undefined,
-      '--dg-selected-color': undefined,
-      '--dg-pinned-shadow': undefined,
-      '--dg-font-size': undefined,
-      '--dg-spacing': getSpacing(spacing),
-    },
-  })
+  (theme, { borderColor, stripedColor, highlightOnHoverColor, radius, store }) => {
+    const size = store?.size ?? 'sm';
+
+    return {
+      root: {
+        '--dg-font-size': getSize(size, 'dg-font-size'),
+        '--dg-row-height': getSize(size, 'dg-row-height'),
+        '--dg-header-height': getSize(size, 'dg-header-height'),
+        '--dg-cell-padding-x': getSize(size, 'dg-cell-padding-x'),
+        '--dg-cell-padding-y': getSize(size, 'dg-cell-padding-y'),
+        '--dg-control-size': getSize(size, 'dg-control-size'),
+        '--dg-icon-size': getSize(size, 'dg-icon-size'),
+        '--dg-radius': getRadius(radius),
+        '--dg-border-color': borderColor ? getThemeColor(borderColor, theme) : undefined,
+        '--dg-row-border-color': undefined,
+        '--dg-striped-color': stripedColor ? getThemeColor(stripedColor, theme) : undefined,
+        '--dg-hover-color': highlightOnHoverColor
+          ? getThemeColor(highlightOnHoverColor, theme)
+          : undefined,
+        '--dg-selected-color': undefined,
+        '--dg-pinned-shadow': undefined,
+      },
+    };
+  }
 );
 
 export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<any>) => {
@@ -297,10 +319,14 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
     store: storeProp,
     data,
     columns,
+    withTableBorder = true,
+    radius,
+    withRowBorders = true,
+    withColumnBorders,
     borderColor,
-    spacing,
-    rowHeight,
-    headerHeight,
+    stripedColor,
+    highlightOnHoverColor,
+    tabularNums,
     children,
     mod,
     attributes,
@@ -309,7 +335,6 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
     loading,
     striped,
     highlightOnHover,
-    withRowNumbers,
     onRowClick,
     onRowDoubleClick,
     onCellClick,
@@ -372,6 +397,33 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
   const withRowVirtualization = virtualize === 'rows' || virtualize === 'rows,columns';
   const withColumnVirtualization = virtualize === 'columns' || virtualize === 'rows,columns';
 
+  const rowModel = store.table.getRowModel();
+  const pageIndex = store.pagination?.pageIndex ?? 0;
+  const pageSize = store.pagination?.pageSize ?? 0;
+  const rowNumbers = useMemo(() => {
+    const numbers = new Map<string, number>();
+    let current = store.withPagination ? pageIndex * pageSize : 0;
+    for (const row of rowModel.rows) {
+      if (!row.getIsGrouped()) {
+        current += 1;
+        numbers.set(row.id, current);
+      }
+    }
+    return numbers;
+  }, [rowModel, store.withPagination, pageIndex, pageSize]);
+  const getRowNumber = useCallback(
+    (row: Row<DataGridFeatures, any>) => rowNumbers.get(row.id),
+    [rowNumbers]
+  );
+
+  const withVirtualization = withRowVirtualization || withColumnVirtualization;
+  if (process.env.NODE_ENV !== 'production' && withVirtualization && store.withRowReorder) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      '[@mantine/data-grid] row reorder is not supported with `virtualize`, remove `onRowOrderChange` or `withRowReorder` from useDataGrid'
+    );
+  }
+
   const handleScroll = useCallback(() => {
     if (!onScrollToBottom) {
       return;
@@ -407,9 +459,9 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
         withColumnReorder: store.withColumnReorder,
         withRowSelection: store.withRowSelection,
         withRowExpansion: store.withRowExpansion,
-        striped: striped ?? false,
-        highlightOnHover: highlightOnHover ?? false,
-        withRowNumbers: withRowNumbers ?? false,
+        striped: striped === true ? 'odd' : striped || false,
+        withRowNumbers: store.withRowNumbers,
+        getRowNumber,
         withVirtualization: withRowVirtualization,
         withColumnVirtualization,
         withGrouping: store.withGrouping,
@@ -427,8 +479,6 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
         stickyHeader: stickyHeader ?? false,
         expandOnRowClick: expandOnRowClick ?? false,
         editingMode: store.editingMode,
-        density: store.density,
-        onDensityChange: store.setDensity,
         labels,
         renderExpandedRow,
         emptyState,
@@ -454,14 +504,20 @@ export const DataGrid = genericFactory<DataGridFactory>(((_props: DataGridProps<
           {
             loading,
             virtualized: withRowVirtualization || withColumnVirtualization || undefined,
+            'with-table-border': withTableBorder,
+            'with-row-borders': !!withRowBorders,
+            'row-borders': withRowBorders === 'subtle' ? 'subtle' : undefined,
+            'column-borders':
+              withColumnBorders === 'data' ? 'data' : withColumnBorders ? 'all' : undefined,
+            'highlight-on-hover': highlightOnHover,
+            'tabular-nums': tabularNums,
             'sticky-header': stickyHeader || undefined,
             'table-layout': tableLayout === 'auto' ? 'auto' : undefined,
             'text-overflow': textOverflow !== 'ellipsis' ? textOverflow : undefined,
           },
           mod,
         ]}
-        data-virtualized={withRowVirtualization || withColumnVirtualization || undefined}
-        data-density={store.density}
+        data-size={store.size}
         {...others}
       >
         {React.Children.map(children, (child) =>
@@ -544,7 +600,6 @@ DataGrid.Footer = DataGridFooter;
 DataGrid.Toolbar = DataGridToolbar;
 DataGrid.GlobalFilter = DataGridGlobalFilter;
 DataGrid.ColumnVisibilityToggle = DataGridColumnVisibilityToggle;
-DataGrid.DensityToggle = DataGridDensityToggle;
 DataGrid.Pagination = DataGridPagination;
 DataGrid.StatusBar = DataGridStatusBar;
 DataGrid.ColumnMenu = DataGridColumnMenu;
@@ -587,11 +642,6 @@ export namespace DataGrid {
   export namespace ColumnVisibilityToggle {
     export type Props = import('./DataGridToolbar').DataGridColumnVisibilityToggleProps;
     export type Factory = DataGridColumnVisibilityToggleFactory;
-  }
-
-  export namespace DensityToggle {
-    export type Props = import('./DataGridToolbar').DataGridDensityToggleProps;
-    export type Factory = DataGridDensityToggleFactory;
   }
 
   export namespace Pagination {

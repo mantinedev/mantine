@@ -6,8 +6,6 @@ import type { DataGridStore } from './hooks';
 import type { DataGridLabels } from './labels';
 import type { DataGridFeatures } from './table-features';
 
-export type DataGridDensity = 'compact' | 'default' | 'comfortable';
-
 export interface DataGridContextValue {
   getStyles: GetStylesApi<DataGridFactory>;
   store: DataGridStore;
@@ -26,9 +24,9 @@ export interface DataGridContextValue {
   withColumnReorder: boolean;
   withRowSelection: boolean;
   withRowExpansion: boolean;
-  striped: boolean;
-  highlightOnHover: boolean;
+  striped: 'odd' | 'even' | false;
   withRowNumbers: boolean;
+  getRowNumber: (row: Row<DataGridFeatures, any>) => number | undefined;
   withVirtualization: boolean;
   withColumnVirtualization: boolean;
   withGrouping: boolean;
@@ -44,8 +42,6 @@ export interface DataGridContextValue {
   stickyHeader: boolean;
   expandOnRowClick: boolean;
   editingMode: 'cell' | 'row' | undefined;
-  density: DataGridDensity;
-  onDensityChange: (density: DataGridDensity) => void;
   labels: DataGridLabels;
   renderExpandedRow?: (props: { row: Row<DataGridFeatures, any> }) => React.ReactNode;
   emptyState?: React.ReactNode;

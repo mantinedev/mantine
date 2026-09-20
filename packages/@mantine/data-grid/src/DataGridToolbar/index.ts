@@ -18,10 +18,3 @@ export type {
   DataGridColumnVisibilityToggleFactory,
   DataGridColumnVisibilityToggleStylesNames,
 } from './DataGridColumnVisibilityToggle';
-
-export { DataGridDensityToggle } from './DataGridDensityToggle';
-export type {
-  DataGridDensityToggleProps,
-  DataGridDensityToggleFactory,
-  DataGridDensityToggleStylesNames,
-} from './DataGridDensityToggle';

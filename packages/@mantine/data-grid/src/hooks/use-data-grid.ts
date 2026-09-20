@@ -20,10 +20,17 @@ import {
   TableOptions,
   useTable,
 } from '@tanstack/react-table';
-import type { DataGridDensity } from '../DataGrid.context';
+import type { MantineSize } from '@mantine/core';
+import { DATA_GRID_SIZES, type DataGridControlSize, getControlSize } from '../data-grid-sizes';
 import type { DataGridColumnDef, DataGridRow, DataGridTable } from '../DataGrid.types';
 import { createOperatorFilterFn as createOperatorFilterFnLocal } from '../DataGridFilters/filter-operators';
 import { createDataGridFeatures, type DataGridFeatures } from '../table-features';
+import {
+  createUtilityColumns,
+  getUtilityColumnIds,
+  normalizeColumnOrder,
+  normalizeColumnPinning,
+} from '../utility-columns/utility-columns';
 import { inferFeatureFlags } from './infer-feature-flags';
 import { useDeepCompareMemo } from './use-deep-compare-memo';
 
@@ -87,6 +94,34 @@ function processFilterColumns<TData extends RowData>(
         col.columns && {
           columns: processFilterColumns(col.columns),
         }),
+    };
+  });
+}
+
+const ACTIONS_COLUMN_DEFAULTS = {
+  size: 80,
+  enableSorting: false,
+  enableColumnFilter: false,
+  enableResizing: false,
+} as const;
+
+function processActionsColumns<TData extends RowData>(
+  columns: readonly DataGridColumnDef<TData>[]
+): DataGridColumnDef<TData>[] {
+  return columns.map((col) => {
+    if ('columns' in col && col.columns) {
+      return { ...col, columns: processActionsColumns(col.columns) };
+    }
+
+    if (col.meta?.type !== 'actions') {
+      return col;
+    }
+
+    return {
+      ...ACTIONS_COLUMN_DEFAULTS,
+      header: '',
+      ...col,
+      meta: { align: 'end', disableExport: true, ...col.meta },
     };
   });
 }
@@ -171,6 +206,9 @@ export interface DataGridStore<TData extends RowData = any> {
   /** Whether spreadsheet-style cell range selection is enabled */
   withCellSelection: boolean;
 
+  /** Whether the row number column is rendered */
+  withRowNumbers: boolean;
+
   /** Ids of columns that explicitly declare an `aggregationFn`, shown in the footer */
   aggregatedColumnIds: string[];
 
@@ -180,11 +218,14 @@ export interface DataGridStore<TData extends RowData = any> {
   /** Editing mode, `undefined` when editing is disabled */
   editingMode: 'cell' | 'row' | undefined;
 
-  /** Current grid density */
-  density: DataGridDensity;
+  /** Current grid size, @default 'sm' */
+  size: MantineSize;
 
-  /** Update grid density */
-  setDensity: (density: DataGridDensity) => void;
+  /** Update grid size */
+  setSize: (size: MantineSize) => void;
+
+  /** Size of chrome controls (toolbar, selection bar, footer) resolved from `size` */
+  controlSize: DataGridControlSize;
 
   /** Current sorting state */
   sorting: SortingState;
@@ -422,11 +463,11 @@ export interface UseDataGridOptions<TData extends RowData> {
   /** Editing mode, enables inline editing when set */
   editingMode?: 'cell' | 'row';
 
-  /** Grid density, @default 'default' */
-  density?: DataGridDensity;
+  /** Grid size, controls font size, row height, cell padding and control sizes, @default 'sm' */
+  size?: MantineSize;
 
-  /** Callback when density changes */
-  onDensityChange?: (density: DataGridDensity) => void;
+  /** Callback when size changes */
+  onSizeChange?: (size: MantineSize) => void;
 
   /** Function to extract sub-rows from a row for tree data */
   getSubRows?: (originalRow: TData, index: number) => TData[] | undefined;
@@ -454,6 +495,9 @@ export interface UseDataGridOptions<TData extends RowData> {
 
   /** Enable spreadsheet-style cell range selection, @default false */
   withCellSelection?: boolean;
+
+  /** Renders a row number column, numbers count data rows continuously across pages, @default false */
+  withRowNumbers?: boolean;
 
   /** Controlled cell selection state */
   cellSelection?: CellSelectionState;
@@ -514,14 +558,56 @@ export function useDataGrid<TData extends RowData>(
     ]
   );
 
-  // Density state (Mantine-specific, not part of TanStack)
-  const [densityState, setDensityState] = useState<DataGridDensity>(options.density ?? 'default');
-  const density = options.density ?? densityState;
-  const setDensity = options.onDensityChange ?? setDensityState;
+  const [sizeState, setSizeState] = useState<MantineSize>(options.size ?? 'sm');
+  const size = options.size ?? sizeState;
+  const setSize = options.onSizeChange ?? setSizeState;
+  const controlSize = getControlSize(size);
+
+  const withRowNumbers = options.withRowNumbers ?? false;
+  const utilityFlags = {
+    withRowReorder,
+    withRowSelection,
+    withRowExpansion,
+    withTreeData,
+    withRowNumbers,
+  };
+  const utilityIds = useMemo(
+    () => getUtilityColumnIds(utilityFlags),
+    [withRowReorder, withRowSelection, withRowExpansion, withTreeData, withRowNumbers]
+  );
+  const utilityColumns = useMemo(
+    () => createUtilityColumns<TData>(utilityFlags, size),
+    [utilityIds, size]
+  );
 
   const sortProcessed = withSorting ? defaultSortingDisabled(columns) : columns;
   const filterProcessed = withFiltering ? defaultFilteringDisabled(sortProcessed) : sortProcessed;
-  const processedColumns = withFiltering ? processFilterColumns(filterProcessed) : filterProcessed;
+  const dataColumns = processActionsColumns(
+    withFiltering ? processFilterColumns(filterProcessed) : filterProcessed
+  );
+  const processedColumns =
+    utilityIds.length > 0 ? [...utilityColumns, ...dataColumns] : dataColumns;
+
+  const [internalColumnOrder, setInternalColumnOrder] = useState<ColumnOrderState>(
+    () => tableOptions?.initialState?.columnOrder ?? []
+  );
+  const [internalColumnPinning, setInternalColumnPinning] = useState<ColumnPinningState>(
+    () => tableOptions?.initialState?.columnPinning ?? { start: [], end: [] }
+  );
+  const withUtilityOrder = utilityIds.length > 0;
+  const withUtilityPinning = utilityIds.length > 0 && withColumnPinning;
+  const columnOrder = withUtilityOrder
+    ? normalizeColumnOrder(options.columnOrder ?? internalColumnOrder, utilityIds)
+    : options.columnOrder;
+  const columnPinning = withUtilityPinning
+    ? normalizeColumnPinning(options.columnPinning ?? internalColumnPinning, utilityIds)
+    : options.columnPinning;
+  const onColumnOrderChange: OnChangeFn<ColumnOrderState> | undefined = withUtilityOrder
+    ? (options.onColumnOrderChange ?? setInternalColumnOrder)
+    : options.onColumnOrderChange;
+  const onColumnPinningChange: OnChangeFn<ColumnPinningState> | undefined = withUtilityPinning
+    ? (options.onColumnPinningChange ?? setInternalColumnPinning)
+    : options.onColumnPinningChange;
 
   // Build controlled state object from provided values.
   // useDeepCompareMemo stabilizes the reference so TanStack memos don't
@@ -532,9 +618,9 @@ export function useDataGrid<TData extends RowData>(
     ...(options.globalFilter !== undefined && { globalFilter: options.globalFilter }),
     ...(options.pagination !== undefined && { pagination: options.pagination }),
     ...(options.columnSizing !== undefined && { columnSizing: options.columnSizing }),
-    ...(options.columnPinning !== undefined && { columnPinning: options.columnPinning }),
+    ...(columnPinning !== undefined && { columnPinning }),
     ...(options.columnVisibility !== undefined && { columnVisibility: options.columnVisibility }),
-    ...(options.columnOrder !== undefined && { columnOrder: options.columnOrder }),
+    ...(columnOrder !== undefined && { columnOrder }),
     ...(options.rowSelection !== undefined && { rowSelection: options.rowSelection }),
     ...(options.expanded !== undefined && { expanded: options.expanded }),
     ...(options.grouping !== undefined && { grouping: options.grouping }),
@@ -549,11 +635,11 @@ export function useDataGrid<TData extends RowData>(
     ...(options.onGlobalFilterChange && { onGlobalFilterChange: options.onGlobalFilterChange }),
     ...(options.onPaginationChange && { onPaginationChange: options.onPaginationChange }),
     ...(options.onColumnSizingChange && { onColumnSizingChange: options.onColumnSizingChange }),
-    ...(options.onColumnPinningChange && { onColumnPinningChange: options.onColumnPinningChange }),
+    ...(onColumnPinningChange && { onColumnPinningChange }),
     ...(options.onColumnVisibilityChange && {
       onColumnVisibilityChange: options.onColumnVisibilityChange,
     }),
-    ...(options.onColumnOrderChange && { onColumnOrderChange: options.onColumnOrderChange }),
+    ...(onColumnOrderChange && { onColumnOrderChange }),
     ...(options.onRowSelectionChange && { onRowSelectionChange: options.onRowSelectionChange }),
     ...(options.onExpandedChange && { onExpandedChange: options.onExpandedChange }),
     ...(options.onGroupingChange && { onGroupingChange: options.onGroupingChange }),
@@ -660,17 +746,16 @@ export function useDataGrid<TData extends RowData>(
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const scrollToRow = useCallback((index: number) => {
-    const container = scrollContainerRef.current;
-    if (!container) {
-      return;
-    }
-    const rowHeight = parseInt(
-      getComputedStyle(container).getPropertyValue('--dg-row-height') || '36',
-      10
-    );
-    container.scrollTo({ top: index * rowHeight, behavior: 'smooth' });
-  }, []);
+  const scrollToRow = useCallback(
+    (index: number) => {
+      const container = scrollContainerRef.current;
+      if (!container) {
+        return;
+      }
+      container.scrollTo({ top: index * DATA_GRID_SIZES[size].rowHeight, behavior: 'smooth' });
+    },
+    [size]
+  );
 
   const scrollToColumn = useCallback((index: number) => {
     const container = scrollContainerRef.current;
@@ -711,11 +796,13 @@ export function useDataGrid<TData extends RowData>(
     withTreeData,
     withRowReorder,
     withCellSelection,
+    withRowNumbers,
     aggregatedColumnIds,
     onRowOrderChange: options.onRowOrderChange,
     editingMode: options.editingMode,
-    density,
-    setDensity,
+    size,
+    setSize,
+    controlSize,
     sorting: state.sorting,
     columnFilters: state.columnFilters,
     globalFilter: state.globalFilter,

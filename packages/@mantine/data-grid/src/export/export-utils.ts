@@ -1,4 +1,5 @@
 import { Column, Table, RowData } from '@tanstack/react-table';
+import { getColumnLabel } from '../get-column-label';
 import type { DataGridFeatures } from '../table-features';
 
 export type ExportRowScope = 'all' | 'filtered' | 'selected' | 'page';
@@ -19,7 +20,9 @@ export function getExportColumns<TData extends RowData>(
           >[])
         : table.getVisibleLeafColumns();
 
-  return allColumns.filter((col) => !col.columnDef.meta?.disableExport);
+  return allColumns.filter(
+    (col) => !col.columnDef.meta?.utility && !col.columnDef.meta?.disableExport
+  );
 }
 
 export function getExportRows<TData extends RowData>(
@@ -41,10 +44,7 @@ export function getExportRows<TData extends RowData>(
 export function getExportHeaders<TData extends RowData>(
   columns: Column<DataGridFeatures, TData, unknown>[]
 ): string[] {
-  return columns.map((col) => {
-    const header = col.columnDef.header;
-    return typeof header === 'string' ? header : col.id;
-  });
+  return columns.map((col) => getColumnLabel(col));
 }
 
 export function triggerDownload(blob: Blob, fileName: string): void {

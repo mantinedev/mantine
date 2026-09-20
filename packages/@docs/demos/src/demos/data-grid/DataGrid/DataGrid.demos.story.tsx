@@ -273,11 +273,6 @@ export const Demo_compoundComponents = {
   render: renderDemo(demos.compoundComponents),
 };
 
-export const Demo_density = {
-  name: '⭐ Demo: density',
-  render: renderDemo(demos.density),
-};
-
 export const Demo_treeData = {
   name: '⭐ Demo: treeData',
   render: renderDemo(demos.treeData),

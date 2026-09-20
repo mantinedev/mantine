@@ -52,7 +52,6 @@ export { groupedColumnMode } from './DataGrid.demo.groupedColumnMode';
 export { fullServerSide } from './DataGrid.demo.fullServerSide';
 export { stylesApi } from './DataGrid.demo.stylesApi';
 export { compoundComponents } from './DataGrid.demo.compoundComponents';
-export { density } from './DataGrid.demo.density';
 export { treeData } from './DataGrid.demo.treeData';
 export { treeDataFiltering } from './DataGrid.demo.treeDataFiltering';
 export { treeDataPagination } from './DataGrid.demo.treeDataPagination';

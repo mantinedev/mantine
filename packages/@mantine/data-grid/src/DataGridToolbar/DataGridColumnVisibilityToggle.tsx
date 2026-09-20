@@ -12,6 +12,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { getColumnLabel } from '../get-column-label';
 import { ColumnsIcon } from '../icons';
 import classes from '../DataGrid.module.css';
 
@@ -42,7 +43,9 @@ export const DataGridColumnVisibilityToggle = factory<DataGridColumnVisibilityTo
     );
 
     const ctx = useDataGridContext();
-    const allColumns = ctx.table.getAllLeafColumns();
+    const allColumns = ctx.table
+      .getAllLeafColumns()
+      .filter((column) => !column.columnDef.meta?.utility && column.getCanHide());
 
     return (
       <Box
@@ -69,7 +72,7 @@ export const DataGridColumnVisibilityToggle = factory<DataGridColumnVisibilityTo
                   />
                 }
               >
-                {typeof column.columnDef.header === 'string' ? column.columnDef.header : column.id}
+                {getColumnLabel(column)}
               </Menu.Item>
             ))}
           </Menu.Dropdown>

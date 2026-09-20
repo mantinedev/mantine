@@ -17,7 +17,6 @@ export const DataGridStylesApi: StylesApiData<DataGridFactory> = {
     toolbar: 'Top toolbar container',
     globalFilter: 'Global search input wrapper in toolbar',
     columnVisibilityToggle: 'Column visibility toggle button',
-    densityToggle: 'Density toggle button',
     pagination: 'Pagination controls container',
     loadingOverlay: 'Loading overlay container',
     selectionCheckbox: 'Row selection checkbox',
@@ -48,15 +47,22 @@ export const DataGridStylesApi: StylesApiData<DataGridFactory> = {
 
   vars: {
     root: {
-      '--dg-row-height': 'Controls default row height',
-      '--dg-header-height': 'Controls header row height',
-      '--dg-border-color': 'Controls border color of cells and grid',
-      '--dg-stripe-color': 'Controls background color of striped rows',
+      '--dg-font-size': 'Controls font size of cell content, resolved from `size`',
+      '--dg-row-height': 'Controls row height, resolved from `size`',
+      '--dg-header-height': 'Controls header row height, resolved from `size`',
+      '--dg-cell-padding-x': 'Controls horizontal cell padding, resolved from `size`',
+      '--dg-cell-padding-y': 'Controls vertical cell padding, resolved from `size`',
+      '--dg-control-size':
+        'Controls checkbox and radio size in utility columns, resolved from `size`',
+      '--dg-icon-size': 'Controls size of chevrons, grips and sort arrows, resolved from `size`',
+      '--dg-radius': 'Controls border-radius of the frame, resolved from `radius`',
+      '--dg-border-color': 'Controls border color of the frame, header and tfoot rules',
+      '--dg-row-border-color':
+        'Controls color of rules between rows, defaults to `--dg-border-color`',
+      '--dg-striped-color': 'Controls background color of striped rows',
       '--dg-hover-color': 'Controls background color on row hover',
       '--dg-selected-color': 'Controls background color of selected rows',
       '--dg-pinned-shadow': 'Controls box-shadow on pinned columns',
-      '--dg-font-size': 'Controls font size of cell content',
-      '--dg-spacing': 'Controls cell padding',
     },
   },
 

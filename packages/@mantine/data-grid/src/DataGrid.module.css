@@ -1,24 +1,83 @@
 .root {
-  --dg-row-height: var(--dg-row-height, auto);
-  --dg-header-height: var(--dg-header-height, auto);
-  --dg-border-color: var(--dg-border-color);
-  --dg-stripe-color: var(--dg-stripe-color);
-  --dg-hover-color: var(--dg-hover-color);
-  --dg-selected-color: var(--dg-selected-color);
-  --dg-pinned-shadow: var(--dg-pinned-shadow);
-  --dg-font-size: var(--dg-font-size);
-  --dg-spacing: var(--dg-spacing);
+  --dg-font-size-xs: rem(12px);
+  --dg-font-size-sm: rem(13px);
+  --dg-font-size-md: rem(14px);
+  --dg-font-size-lg: rem(15px);
+  --dg-font-size-xl: rem(16px);
 
-  position: relative;
+  --dg-row-height-xs: rem(28px);
+  --dg-row-height-sm: rem(32px);
+  --dg-row-height-md: rem(36px);
+  --dg-row-height-lg: rem(44px);
+  --dg-row-height-xl: rem(52px);
 
-  &:where([data-density='compact']) {
-    --dg-spacing: var(--mantine-spacing-xs);
-    --dg-row-height: rem(28px);
+  --dg-header-height-xs: var(--dg-row-height-xs);
+  --dg-header-height-sm: var(--dg-row-height-sm);
+  --dg-header-height-md: var(--dg-row-height-md);
+  --dg-header-height-lg: var(--dg-row-height-lg);
+  --dg-header-height-xl: var(--dg-row-height-xl);
+
+  --dg-cell-padding-x-xs: rem(8px);
+  --dg-cell-padding-x-sm: rem(10px);
+  --dg-cell-padding-x-md: rem(12px);
+  --dg-cell-padding-x-lg: rem(14px);
+  --dg-cell-padding-x-xl: rem(16px);
+
+  --dg-cell-padding-y-xs: rem(4px);
+  --dg-cell-padding-y-sm: rem(5px);
+  --dg-cell-padding-y-md: rem(6px);
+  --dg-cell-padding-y-lg: rem(7px);
+  --dg-cell-padding-y-xl: rem(8px);
+
+  --dg-control-size-xs: rem(12px);
+  --dg-control-size-sm: rem(14px);
+  --dg-control-size-md: rem(16px);
+  --dg-control-size-lg: rem(18px);
+  --dg-control-size-xl: rem(20px);
+
+  --dg-icon-size-xs: rem(14px);
+  --dg-icon-size-sm: rem(16px);
+  --dg-icon-size-md: rem(16px);
+  --dg-icon-size-lg: rem(18px);
+  --dg-icon-size-xl: rem(20px);
+
+  --dg-footer-height-xs: rem(36px);
+  --dg-footer-height-sm: rem(40px);
+  --dg-footer-height-md: rem(44px);
+  --dg-footer-height-lg: rem(48px);
+  --dg-footer-height-xl: rem(52px);
+  --dg-footer-height: 0px;
+
+  --dg-border-color: var(--mantine-color-border);
+  --dg-row-border-color: var(--dg-border-color);
+  --dg-hover-color: var(--mantine-color-hover-strong);
+  --dg-selected-color: var(--mantine-primary-color-light);
+  --dg-pinned-shadow: rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1);
+
+  @mixin where-light {
+    --dg-striped-color: var(--mantine-color-gray-0);
   }
 
-  &:where([data-density='comfortable']) {
-    --dg-spacing: var(--mantine-spacing-md);
-    --dg-row-height: rem(48px);
+  @mixin where-dark {
+    --dg-striped-color: var(--mantine-color-dark-6);
+  }
+
+  position: relative;
+  overflow: clip;
+  font-size: var(--dg-font-size);
+  line-height: var(--mantine-line-height);
+
+  &:where([data-with-table-border]) {
+    border: rem(1px) solid var(--dg-border-color);
+    border-radius: var(--dg-radius);
+  }
+
+  &:where([data-row-borders='subtle']) {
+    --dg-row-border-color: var(--mantine-color-border-subtle);
+  }
+
+  &:where([data-tabular-nums]) {
+    font-variant-numeric: tabular-nums;
   }
 }
 
@@ -27,19 +86,6 @@
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  font-size: var(--dg-font-size, var(--mantine-font-size-sm));
-  line-height: var(--mantine-line-height);
-  --dg-border-color: var(--mantine-color-border);
-
-  --dg-hover-color: var(--mantine-color-hover-strong);
-
-  @mixin where-light {
-    --dg-stripe-color: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    --dg-stripe-color: var(--mantine-color-dark-6);
-  }
 
   :where(.root[data-table-layout='auto']) & {
     table-layout: auto;
@@ -72,8 +118,15 @@
 }
 
 .tr {
-  border-bottom: rem(1px) solid var(--dg-border-color);
   outline: none;
+
+  :where(.root[data-with-row-borders]) & {
+    border-bottom: rem(1px) solid var(--dg-row-border-color);
+  }
+
+  :where(.tbody:last-of-type) > &:last-child {
+    border-bottom: 0;
+  }
 
   &:focus-visible {
     outline: rem(2px) solid var(--mantine-color-focus-ring);
@@ -86,69 +139,66 @@
   }
 
   &:where([data-striped]) {
-    background-color: var(--dg-stripe-color);
+    background-color: var(--dg-striped-color);
   }
 
   &:where([data-selected]) {
-    background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
-    border-color: var(--mantine-primary-color-light);
+    background-color: var(--dg-selected-color);
   }
 
-  &:where([data-hover]):hover {
-    background-color: var(--dg-hover-color);
-  }
+  @mixin hover {
+    :where(.root[data-highlight-on-hover] .tbody) > &:hover {
+      background-color: var(--dg-hover-color);
+    }
 
-  &:where([data-selected]):hover {
-    background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+    :where(.root[data-highlight-on-hover] .tbody) > &:where([data-selected]):hover {
+      background-color: var(--dg-selected-color);
+    }
   }
 }
 
 .th {
+  --dg-th-shadow-focus: 0 0 0 0 transparent;
+  --dg-th-shadow-divider: 0 0 0 0 transparent;
+  --dg-th-shadow-rule: 0 0 0 0 transparent;
+
   text-align: start;
-  font-weight: var(--mantine-font-weight-medium);
-  padding: calc(var(--dg-spacing, var(--mantine-spacing-xs)) / 2)
-    var(--dg-spacing, var(--mantine-spacing-xs));
-  height: var(--dg-header-height, auto);
+  font-weight: 600;
+  padding: 0 var(--dg-cell-padding-x);
+  height: var(--dg-header-height);
   position: relative;
+  overflow: clip;
+  box-shadow: var(--dg-th-shadow-focus), var(--dg-th-shadow-divider), var(--dg-th-shadow-rule);
 
   &:where([data-sortable]) {
     cursor: pointer;
     user-select: none;
 
-    &:hover {
-      background-color: var(--dg-hover-color);
+    @mixin hover {
+      &:hover {
+        background-color: var(--dg-hover-color);
+      }
     }
   }
 }
 
-.th,
 .td {
-  &:where([data-pinned-left]),
-  &:where([data-pinned-right]) {
-    position: sticky;
-    z-index: 1;
-    background: var(--mantine-color-body);
-  }
+  --dg-td-shadow-edit: 0 0 0 0 transparent;
+  --dg-td-shadow-focus: 0 0 0 0 transparent;
+  --dg-td-shadow-edge: 0 0 0 0 transparent;
+  --dg-td-shadow-divider: 0 0 0 0 transparent;
+  --dg-td-shadow-rule: 0 0 0 0 transparent;
 
-  &:where([data-pinned-left]) {
-    box-shadow: var(--dg-pinned-shadow, rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
-  }
-
-  &:where([data-pinned-right]) {
-    box-shadow: var(--dg-pinned-shadow, rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
-  }
-}
-
-.td {
-  padding: calc(var(--dg-spacing, var(--mantine-spacing-xs)) / 2)
-    var(--dg-spacing, var(--mantine-spacing-xs));
-  height: var(--dg-row-height, auto);
-  overflow: hidden;
+  padding: var(--dg-cell-padding-y) var(--dg-cell-padding-x);
+  height: var(--dg-row-height);
+  overflow: clip;
+  overflow-clip-margin: rem(1px);
   text-overflow: ellipsis;
   white-space: nowrap;
-}
+  box-shadow:
+    var(--dg-td-shadow-edit), var(--dg-td-shadow-focus), var(--dg-td-shadow-edge),
+    var(--dg-td-shadow-divider), var(--dg-td-shadow-rule);
 
-.td {
   &:where([data-selected]) {
     background-color: var(--mantine-primary-color-light);
   }
@@ -173,6 +223,40 @@
   &:where([data-edge-right]) {
     border-right: rem(1px) solid var(--mantine-primary-color-filled);
   }
+}
+
+.th,
+.td {
+  &:where([data-pinned-left]),
+  &:where([data-pinned-right]) {
+    position: sticky;
+    z-index: 1;
+    background: var(--mantine-color-body);
+  }
+}
+
+.th {
+  &:where([data-pinned-left]) {
+    --dg-th-shadow-divider: var(--dg-pinned-shadow);
+  }
+
+  &:where([data-pinned-right]) {
+    --dg-th-shadow-divider: rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1);
+  }
+}
+
+.td {
+  &:where([data-pinned-left]) {
+    --dg-td-shadow-divider: var(--dg-pinned-shadow);
+  }
+
+  &:where([data-pinned-right]) {
+    --dg-td-shadow-divider: rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1);
+  }
+}
+
+:where(.root[data-column-borders]) :where(.th, .td):not(:last-child) {
+  border-inline-end: rem(1px) solid var(--dg-border-color);
 }
 
 :where(.root[data-text-overflow='wrap']) :where(.td, .virtualCell) {
@@ -217,9 +301,11 @@
 
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  padding: var(--dg-spacing, var(--mantine-spacing-xs));
-  gap: var(--mantine-spacing-sm);
+  padding: rem(10px) rem(12px);
+  gap: rem(8px);
+  border-bottom: rem(1px) solid var(--dg-border-color);
 }
 
 .globalFilter {
@@ -229,7 +315,7 @@
 .pagination {
   display: flex;
   align-items: center;
-  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  padding: rem(10px) rem(12px);
 }
 
 .resizeHandle {
@@ -256,7 +342,7 @@
 }
 
 .tfoot {
-  border-top: rem(2px) solid var(--dg-border-color);
+  border-top: rem(1px) solid var(--dg-border-color);
 }
 
 .columnVisibilityToggle {
@@ -284,12 +370,10 @@
 }
 
 .expandedRow {
-  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  padding: rem(12px) var(--dg-cell-padding-x);
 }
 
 .rowNumber {
-  color: var(--mantine-color-dimmed);
-  width: rem(1px);
   white-space: nowrap;
 }
 
@@ -304,7 +388,7 @@
 }
 
 .groupHeader {
-  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  padding: 0 var(--dg-cell-padding-x);
   display: flex;
   align-items: center;
   gap: var(--mantine-spacing-xs);
@@ -319,8 +403,9 @@
   cursor: pointer;
 }
 
+/* Styles API selector for aggregation cells, geometry comes from .td */
+/* stylelint-disable-next-line block-no-empty */
 .aggregationCell {
-  padding: var(--dg-spacing, var(--mantine-spacing-xs));
 }
 
 /* Styles API selector for the ScrollArea wrapper; ScrollArea provides its own styles */
@@ -329,16 +414,12 @@
 }
 
 .statusBar {
-  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  padding: rem(10px) rem(12px);
   border-top: rem(1px) solid var(--dg-border-color);
 }
 
 .statusBarInfo {
   white-space: nowrap;
-}
-
-.densityToggle {
-  display: inline-flex;
 }
 
 .virtualScrollContainer {
@@ -348,19 +429,6 @@
 
 .virtualGrid {
   width: 100%;
-  font-size: var(--dg-font-size, var(--mantine-font-size-sm));
-  line-height: var(--mantine-line-height);
-  --dg-border-color: var(--mantine-color-border);
-
-  --dg-hover-color: var(--mantine-color-hover-strong);
-
-  @mixin where-light {
-    --dg-stripe-color: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    --dg-stripe-color: var(--mantine-color-dark-6);
-  }
 }
 
 .virtualGridHeader {
@@ -374,36 +442,49 @@
 
 .virtualRow {
   display: flex;
-  border-bottom: rem(1px) solid var(--dg-border-color);
+
+  :where(.root[data-with-row-borders]) & {
+    border-bottom: rem(1px) solid var(--dg-row-border-color);
+  }
 
   &:where([data-striped]) {
-    background-color: var(--dg-stripe-color);
+    background-color: var(--dg-striped-color);
   }
 
   &:where([data-selected]) {
-    background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
-    border-color: var(--mantine-primary-color-light);
+    background-color: var(--dg-selected-color);
   }
 
-  &:where([data-hover]):hover {
-    background-color: var(--dg-hover-color);
-  }
+  @mixin hover {
+    :where(.root[data-highlight-on-hover]) &:hover {
+      background-color: var(--dg-hover-color);
+    }
 
-  &:where([data-selected]):hover {
-    background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+    :where(.root[data-highlight-on-hover]) &:where([data-selected]):hover {
+      background-color: var(--dg-selected-color);
+    }
   }
 }
 
 .virtualCell {
-  padding: calc(var(--dg-spacing, var(--mantine-spacing-xs)) / 2)
-    var(--dg-spacing, var(--mantine-spacing-xs));
-  height: var(--dg-row-height, auto);
+  --dg-td-shadow-edit: 0 0 0 0 transparent;
+  --dg-td-shadow-focus: 0 0 0 0 transparent;
+  --dg-td-shadow-edge: 0 0 0 0 transparent;
+  --dg-td-shadow-divider: 0 0 0 0 transparent;
+  --dg-td-shadow-rule: 0 0 0 0 transparent;
+
+  padding: var(--dg-cell-padding-y) var(--dg-cell-padding-x);
+  height: var(--dg-row-height);
   display: flex;
   align-items: center;
-  overflow: hidden;
+  overflow: clip;
+  overflow-clip-margin: rem(1px);
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
+  box-shadow:
+    var(--dg-td-shadow-edit), var(--dg-td-shadow-focus), var(--dg-td-shadow-edge),
+    var(--dg-td-shadow-divider), var(--dg-td-shadow-rule);
 
   &:where([data-pinned-left]),
   &:where([data-pinned-right]) {
@@ -413,11 +494,11 @@
   }
 
   &:where([data-pinned-left]) {
-    box-shadow: var(--dg-pinned-shadow, rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+    --dg-td-shadow-divider: var(--dg-pinned-shadow);
   }
 
   &:where([data-pinned-right]) {
-    box-shadow: var(--dg-pinned-shadow, rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1));
+    --dg-td-shadow-divider: rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -446,7 +527,6 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--mantine-color-dimmed);
   white-space: nowrap;
 
   &:active {
@@ -457,15 +537,122 @@
 .listView {
   display: flex;
   flex-direction: column;
-  gap: var(--dg-spacing, var(--mantine-spacing-xs));
+  gap: rem(8px);
 }
 
 .listItem {
-  border: 1px solid var(--dg-border-color, var(--mantine-color-default-border));
-  border-radius: var(--mantine-radius-sm);
-  padding: var(--dg-spacing, var(--mantine-spacing-xs));
+  border: rem(1px) solid var(--dg-border-color);
+  border-radius: var(--dg-radius);
+  padding: var(--dg-cell-padding-x);
 
   &:where([data-selected]) {
-    background-color: var(--dg-selected-color, var(--mantine-primary-color-light));
+    background-color: var(--dg-selected-color);
   }
+}
+
+.th,
+.td {
+  &:where([data-utility]) {
+    padding: 0;
+    text-align: center;
+  }
+
+  &:where([data-utility='rowNumber']) {
+    padding-inline-end: var(--dg-cell-padding-x);
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.virtualCell {
+  &:where([data-utility]) {
+    padding: 0;
+    justify-content: center;
+  }
+
+  &:where([data-utility='rowNumber']) {
+    padding-inline-end: var(--dg-cell-padding-x);
+    justify-content: flex-end;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+:where(.root[data-column-borders='data']) :where(.th, .td):where([data-utility]) {
+  border-inline-end: 0;
+}
+
+:where(.root[data-column-borders='data'])
+  :where(.th, .td):where([data-utility]):has(+ :not([data-utility])) {
+  border-inline-end: rem(1px) solid var(--dg-border-color);
+}
+
+.selectionCheckbox,
+.selectAllCheckbox {
+  vertical-align: middle;
+}
+
+.expandIcon,
+.treeToggle {
+  width: calc(var(--dg-icon-size) + rem(4px));
+  height: calc(var(--dg-icon-size) + rem(4px));
+  border-radius: var(--mantine-radius-sm);
+  color: var(--mantine-color-text);
+
+  @mixin hover {
+    &:hover {
+      background-color: var(--dg-hover-color);
+    }
+  }
+}
+
+.th,
+.td {
+  &:where([data-align='center']) {
+    text-align: center;
+  }
+
+  &:where([data-align='end']) {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.th {
+  &:where([data-align='center']) > .headerCell {
+    justify-content: center;
+  }
+
+  &:where([data-align='end']) > .headerCell {
+    justify-content: flex-end;
+  }
+}
+
+.virtualCell {
+  &:where([data-align='center']) {
+    justify-content: center;
+  }
+
+  &:where([data-align='end']) {
+    justify-content: flex-end;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.td {
+  &:where([data-actions]) {
+    padding-block: 0;
+  }
+}
+
+:where(.root[data-column-borders]) .virtualCell:not(:last-child) {
+  border-inline-end: rem(1px) solid var(--dg-border-color);
+}
+
+:where(.root[data-column-borders='data']) .virtualCell:where([data-utility]) {
+  border-inline-end: 0;
+}
+
+:where(.root[data-column-borders='data'])
+  .virtualCell:where([data-utility]):has(+ :not([data-utility])) {
+  border-inline-end: rem(1px) solid var(--dg-border-color);
 }

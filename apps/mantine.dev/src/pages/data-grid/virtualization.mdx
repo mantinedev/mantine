@@ -29,7 +29,7 @@ scrollable container size.
 Fine-tune virtual scroll behavior with the `virtualScrollConfig` prop:
 
 - `overscan` -- number of rows rendered above and below the visible area (default: `5`)
-- `estimateSize` -- function returning the estimated row height in pixels (default: uses `--dg-row-height`)
+- `estimateSize` -- function returning the estimated row height in pixels (default: the row height of the current `size`)
 
 ```tsx
 <DataGrid

@@ -454,11 +454,44 @@ export function StripedHover() {
   );
 }
 
+export function Sizes() {
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+  return (
+    <Stack p="md" gap="xl">
+      {sizes.map((size) => (
+        <SizedGrid key={size} size={size} />
+      ))}
+    </Stack>
+  );
+}
+
+function SizedGrid({ size }: { size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }) {
+  const store = useDataGrid({
+    data: employees.slice(0, 4),
+    columns,
+    getRowId: (row) => row.id,
+    size,
+    withRowSelection: true,
+    withRowNumbers: true,
+  });
+  return (
+    <Stack gap="xs">
+      <Text size="sm">size = {size}</Text>
+      <DataGrid store={store} />
+    </Stack>
+  );
+}
+
 export function RowNumbers() {
-  const store = useDataGrid({ data: employees, columns, getRowId: (row) => row.id });
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withRowNumbers: true,
+  });
   return (
     <Box p="md">
-      <DataGrid store={store} withRowNumbers />
+      <DataGrid store={store} />
     </Box>
   );
 }
@@ -551,21 +584,6 @@ export function Editing() {
   );
 }
 
-export function Density() {
-  const store = useDataGrid({ data: employees, columns, getRowId: (row) => row.id });
-  return (
-    <Box p="md">
-      <DataGrid store={store}>
-        <DataGrid.Toolbar>
-          <Group justify="flex-end">
-            <DataGrid.DensityToggle />
-          </Group>
-        </DataGrid.Toolbar>
-      </DataGrid>
-    </Box>
-  );
-}
-
 export function CompoundComponents() {
   const columnsWithFooter: DataGridColumnDef<Employee>[] = [
     { accessorKey: 'firstName', header: 'Name', footer: 'Total' },
@@ -619,6 +637,7 @@ export function AllFeatures() {
     withRowSelection: true,
     withRowExpansion: true,
     withGrouping: true,
+    withRowNumbers: true,
     editingMode: 'cell',
   });
 
@@ -626,7 +645,6 @@ export function AllFeatures() {
     <Box p="md">
       <DataGrid
         store={store}
-        withRowNumbers
         striped
         highlightOnHover
         stickyHeader

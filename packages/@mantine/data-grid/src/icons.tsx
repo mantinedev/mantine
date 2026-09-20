@@ -1,5 +1,3 @@
-import { AccordionChevron } from '@mantine/core';
-
 export function SortIcon({ size = 12 }: { size?: number | string }) {
   return (
     <svg
@@ -21,13 +19,24 @@ export function SortIcon({ size = 12 }: { size?: number | string }) {
 
 export function ExpandChevron({ expanded }: { expanded: boolean }) {
   return (
-    <AccordionChevron
-      size={16}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       style={{
+        display: 'block',
+        width: 'var(--dg-icon-size)',
+        height: 'var(--dg-icon-size)',
         transform: expanded ? 'rotate(0deg)' : 'rotate(-90deg)',
         transition: 'transform 150ms ease',
       }}
-    />
+    >
+      <path d="M6 9l6 6 6-6" />
+    </svg>
   );
 }
 
@@ -35,11 +44,9 @@ export function GripIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
       viewBox="0 0 24 24"
       fill="currentColor"
-      style={{ display: 'block' }}
+      style={{ display: 'block', width: 'var(--dg-icon-size)', height: 'var(--dg-icon-size)' }}
     >
       <circle cx="9" cy="5" r="1.5" />
       <circle cx="15" cy="5" r="1.5" />

@@ -13,15 +13,35 @@ import {
 } from '@tanstack/react-table';
 import type { FilterOperator } from './DataGridFilters/filter-operators';
 import type { DataGridFeatures } from './table-features';
+import type { DataGridUtilityColumn } from './utility-columns/utility-columns';
 
 export interface DataGridColumnMeta<TData extends RowData = any, TValue = unknown> {
   filterVariant?: 'text' | 'select' | 'multiSelect' | 'range' | 'boolean';
   filterOperators?: FilterOperator[];
   filterOptions?: Array<{ value: string; label: string }> | string[];
   filterPlaceholder?: string;
+  /** Human-readable column label used by the column visibility menu, list view and export, falls back to a string `header`, then the column id */
+  label?: string;
+
+  /** Horizontal alignment of header, body and footer cells, `end` also enables tabular figures, @default 'start' */
+  align?: 'start' | 'center' | 'end';
+
+  /** `'actions'` marks a user display column that holds row action buttons: 80px wide, end-aligned, not sortable, filterable, resizable or exported */
+  type?: 'actions';
+
+  /** Set by the grid on its injected utility columns (reorder, select, expand, rowNumber), read-only */
+  utility?: DataGridUtilityColumn;
+
+  /** Hides the column menu for this column when `withColumnMenu` is set */
+  disableColumnMenu?: boolean;
+
   disableEditing?: boolean;
   disableExport?: boolean;
   aggregationLabel?: string;
+
+  /** Formats the aggregated value rendered in the totals row, defaults to `String(value)` */
+  formatAggregatedValue?: (value: unknown, rows: Row<DataGridFeatures, TData>[]) => ReactNode;
+
   editComponent?: (props: {
     value: unknown;
     onChange: (value: unknown) => void;
