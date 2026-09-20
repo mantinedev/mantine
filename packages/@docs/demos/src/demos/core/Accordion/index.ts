@@ -1,4 +1,5 @@
 export { configurator } from './Accordion.demo.configurator';
+export { controller } from './Accordion.demo.controller';
 export { disabled } from './Accordion.demo.disabled';
 export { disableCollapse } from './Accordion.demo.disableCollapse';
 export { chevron } from './Accordion.demo.chevron';

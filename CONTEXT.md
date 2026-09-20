@@ -56,6 +56,10 @@ _Avoid_: semantic token (too broad), style (Figma's legacy color/text styles)
 
 ### Component state
 
+**Size**:
+The single prop, `size`, that scales a component's geometry (font, heights, paddings, controls) as one of five theme keys, xs to xl, never a free number where several dimensions move together. For DataGrid it is store state the user can switch at runtime.
+_Avoid_: density, compact / comfortable (the retired DataGrid axis), scale
+
 **Controller**:
 The object a component's `use<Component>` hook returns: it owns the component's interactive state and exposes actions and queries on it, and is passed to the component through a `controller` prop. Controlled props (`value`/`defaultValue`/`onChange`) remain sugar over an internally created controller.
 _Avoid_: store (legacy Combobox name), state hook, api object, imperative handle
@@ -63,6 +67,14 @@ _Avoid_: store (legacy Combobox name), state hook, api object, imperative handle
 **Controlled props**:
 The `value`/`defaultValue`/`onChange` trio (or its per-component spelling, e.g. `opened`/`onOpenedChange`) through which a parent owns one piece of a component's state.
 _Avoid_: controlled mode (as if it were a separate rendering mode)
+
+**User-land UI**:
+Interface a component deliberately does not render — the user builds it from core inputs on top of state the component owns and exposes (e.g. the data grid keeps column filter state and faceting helpers but ships no filter inputs). The library provides the state, the logic and a documented pattern; the pixels are the user's.
+_Avoid_: custom UI (implies an override of something shipped), headless (the whole component is not headless, only that surface)
+
+**Interactive header**:
+A header cell whose own body is the click target — in the data grid, a sortable column. Distinct from a header that merely *contains* controls (a menu kebab, a select-all checkbox): only an interactive header takes a hover background and a cell-level focus ring, because the background is the affordance of the cell's own action.
+_Avoid_: clickable header (says nothing about what is clickable), active header (reads as a state, not a kind)
 
 ### Props documentation
 

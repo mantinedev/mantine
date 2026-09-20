@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Box,
   BoxProps,
@@ -34,6 +35,8 @@ export const AccordionItem = factory<AccordionItemFactory>((props) => {
   );
 
   const ctx = useAccordionContext();
+
+  useEffect(() => ctx.registerItem(value), [value, ctx.registerItem]);
 
   return (
     <AccordionItemProvider value={{ value }}>

@@ -17,6 +17,59 @@ Accordion is commonly used for:
 
 <Demo data={AccordionDemos.configurator} />
 
+## Controlling with useAccordion
+
+`Accordion` manages its own state by default, and `value`/`defaultValue`/`onChange` props are
+enough for most cases. When you need to control the accordion from outside – from a button, a
+keyboard shortcut or another component – create a controller with the `useAccordion` hook and pass
+it to `Accordion` with the `controller` prop. The controller exposes actions that props cannot
+express, for example `expandAll` and `collapseAll`:
+
+<Demo data={AccordionDemos.controller} />
+
+`useAccordion` accepts the state options that `Accordion` accepts as props, and returns the current
+state, actions and queries:
+
+```tsx
+import { useAccordion } from '@mantine/core';
+
+function Demo() {
+  const controller = useAccordion({
+    multiple: true, // -> allow several items to be expanded at the same time
+    defaultValue: ['item-1'], // -> uncontrolled initial value
+    // value, onChange -> controlled state, same as on Accordion
+    // disableCollapse -> prevent collapsing the last expanded item (multiple: false only)
+  });
+
+  // State
+  controller.value; // -> string[] when multiple is set, string | null otherwise
+  controller.multiple; // -> resolved multiple option
+
+  // Actions
+  controller.toggle('item-1'); // -> expand if collapsed, collapse if expanded
+  controller.expand('item-1');
+  controller.collapse('item-1');
+  controller.expandAll(); // -> expands all mounted items, requires multiple
+  controller.collapseAll();
+  controller.setValue(['item-1']); // -> replaces the value
+
+  // Queries
+  controller.isExpanded('item-1'); // -> boolean
+  controller.getExpandedItems(); // -> string[] in both modes
+  controller.getItems(); // -> values of all mounted Accordion.Item components
+
+  return <Accordion controller={controller}>{/* items */}</Accordion>;
+}
+```
+
+The controller owns the state, so when the `controller` prop is set, the `multiple`, `value`,
+`defaultValue`, `onChange` and `disableCollapse` props of `Accordion` are ignored – pass them to
+`useAccordion` instead. The type of `value` and `onChange` follows the `multiple` option of the
+hook, exactly as it follows the `multiple` prop on `Accordion`.
+
+One controller drives one `Accordion`. `expandAll` and `getItems` only know about items that are
+currently mounted, so they reflect what is on the screen rather than a static list.
+
 ## order prop
 
 The `order` prop (used in all demos on this page) sets the heading level for the `Accordion.Control` root element.

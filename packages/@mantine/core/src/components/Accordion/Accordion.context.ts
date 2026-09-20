@@ -11,6 +11,7 @@ export interface AccordionContextValue {
   chevron: React.ReactNode;
   onChange: (value: string) => void;
   isItemActive: (value: string) => boolean;
+  registerItem: (value: string) => () => void;
   getControlId: (value: string) => string;
   getRegionId: (value: string) => string;
   getStyles: GetStylesApi<AccordionFactory>;

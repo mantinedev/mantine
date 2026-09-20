@@ -1,4 +1,4 @@
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -11,6 +11,7 @@ import {
   MantineRadius,
   rem,
   StylesApiProps,
+  useController,
   useProps,
   useStyles,
 } from '../../core';
@@ -21,6 +22,7 @@ import { AccordionControl, type AccordionControlProps } from './AccordionControl
 import type { AccordionItemContextValue } from './AccordionItem.context';
 import { AccordionItem, type AccordionItemProps } from './AccordionItem/AccordionItem';
 import { AccordionPanel, type AccordionPanelProps } from './AccordionPanel/AccordionPanel';
+import { useAccordion, type UseAccordionReturnValue } from './use-accordion/use-accordion';
 import classes from './Accordion.module.css';
 export type AccordionStylesNames =
   | 'root'
@@ -44,7 +46,10 @@ export interface AccordionProps<Multiple extends boolean = false>
     BoxProps,
     StylesApiProps<AccordionFactory>,
     ElementProps<'div', 'value' | 'defaultValue' | 'onChange'> {
-  /** If set, multiple items can be opened at the same time @default false @category state */
+  /** Controller returned by the `useAccordion` hook. When provided, the state is owned by the controller and `multiple`, `value`, `defaultValue`, `onChange` and `disableCollapse` props are ignored @category state */
+  controller?: UseAccordionReturnValue<Multiple>;
+
+  /** If set, multiple items can be opened at the same time. Ignored when `controller` is set @default false @category state */
   multiple?: Multiple;
 
   /** Controlled component value @category state */
@@ -143,6 +148,7 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
     unstyled,
     vars,
     children,
+    controller,
     multiple,
     value,
     defaultValue,
@@ -166,31 +172,14 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
   } = props;
 
   const uid = useId(id);
-  const [_value, handleChange] = useUncontrolled({
+
+  const accordion = useController(useAccordion, controller, {
+    multiple,
     value,
     defaultValue,
-    finalValue: multiple ? ([] as any) : null,
     onChange,
+    disableCollapse,
   });
-
-  const isItemActive = (itemValue: string) =>
-    Array.isArray(_value) ? _value.includes(itemValue) : itemValue === _value;
-
-  const handleItemChange = (itemValue: string) => {
-    if (!Array.isArray(_value) && disableCollapse && itemValue === _value) {
-      return;
-    }
-
-    const nextValue = Array.isArray(_value)
-      ? _value.includes(itemValue)
-        ? _value.filter((selectedValue) => selectedValue !== itemValue)
-        : [..._value, itemValue]
-      : itemValue === _value
-        ? null
-        : (itemValue as any);
-
-    handleChange(nextValue);
-  };
 
   const getStyles = useStyles<AccordionFactory>({
     name: 'Accordion',
@@ -209,8 +198,9 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
   return (
     <AccordionProvider
       value={{
-        isItemActive,
-        onChange: handleItemChange,
+        isItemActive: accordion.isExpanded,
+        onChange: accordion.toggle,
+        registerItem: accordion.registerItem,
         getControlId: getSafeId(
           `${uid}-control`,
           'Accordion.Item component was rendered with invalid value or without value'
@@ -249,6 +239,7 @@ Accordion.Chevron = AccordionChevron;
 
 export namespace Accordion {
   export type Props = AccordionProps;
+  export type Controller<Multiple extends boolean = false> = UseAccordionReturnValue<Multiple>;
   export type StylesNames = AccordionStylesNames;
   export type CssVariables = AccordionCssVariables;
   export type Factory = AccordionFactory;

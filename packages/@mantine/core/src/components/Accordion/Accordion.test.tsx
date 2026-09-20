@@ -1,9 +1,15 @@
+import { act } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Accordion, AccordionProps, AccordionStylesNames } from './Accordion';
 import { AccordionChevron } from './AccordionChevron';
 import { AccordionControl } from './AccordionControl/AccordionControl';
 import { AccordionItem } from './AccordionItem/AccordionItem';
 import { AccordionPanel } from './AccordionPanel/AccordionPanel';
+import {
+  useAccordion,
+  UseAccordionOptions,
+  UseAccordionReturnValue,
+} from './use-accordion/use-accordion';
 
 const defaultProps = {
   transitionDuration: 0,
@@ -358,6 +364,195 @@ describe('@mantine/core/Accordion', () => {
 
     expect(screen.getByText('test-item-1').parentElement).toHaveStyle({
       display: 'none',
+    });
+  });
+
+  describe('controller prop', () => {
+    function ControllerAccordion<Multiple extends boolean = false>({
+      options,
+      capture,
+      children,
+      ...others
+    }: {
+      options?: UseAccordionOptions<Multiple>;
+      capture: (controller: UseAccordionReturnValue<Multiple>) => void;
+    } & Partial<AccordionProps<Multiple>>) {
+      const controller = useAccordion<Multiple>(options);
+      capture(controller);
+
+      return (
+        <Accordion controller={controller} transitionDuration={0} {...others}>
+          {children ?? defaultProps.children}
+        </Accordion>
+      );
+    }
+
+    it('renders the state owned by the controller', () => {
+      let controller: UseAccordionReturnValue<false> = null as any;
+      render(
+        <ControllerAccordion
+          options={{ defaultValue: 'item-2' }}
+          capture={(c) => {
+            controller = c;
+          }}
+        />
+      );
+
+      expect(screen.getByText('test-item-2')).toBeInTheDocument();
+      expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
+      expect(controller.value).toBe('item-2');
+    });
+
+    it('updates the controller when an item is clicked', async () => {
+      let controller: UseAccordionReturnValue<false> = null as any;
+      render(
+        <ControllerAccordion
+          capture={(c) => {
+            controller = c;
+          }}
+        />
+      );
+
+      await userEvent.click(screen.getAllByRole('button')[0]);
+      expect(controller.value).toBe('item-1');
+      expect(controller.isExpanded('item-1')).toBe(true);
+      expect(screen.getByText('test-item-1')).toBeInTheDocument();
+    });
+
+    it('updates the rendered items when a controller action is called from outside', () => {
+      let controller: UseAccordionReturnValue<true> = null as any;
+      render(
+        <ControllerAccordion
+          options={{ multiple: true }}
+          capture={(c) => {
+            controller = c;
+          }}
+        />
+      );
+
+      act(() => controller.expandAll());
+
+      expect(screen.getByText('test-item-1')).toBeInTheDocument();
+      expect(screen.getByText('test-item-2')).toBeInTheDocument();
+      expect(screen.getByText('test-item-3')).toBeInTheDocument();
+
+      act(() => controller.collapseAll());
+      expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
+    });
+
+    it('registers mounted items on the controller in render order', () => {
+      let controller: UseAccordionReturnValue<false> = null as any;
+      render(
+        <ControllerAccordion
+          capture={(c) => {
+            controller = c;
+          }}
+        />
+      );
+
+      expect(controller.getItems()).toStrictEqual(['item-1', 'item-2', 'item-3']);
+    });
+
+    it('unregisters items when they are unmounted without resetting the controller', () => {
+      let controller: UseAccordionReturnValue<true> = null as any;
+      const capture = (c: UseAccordionReturnValue<true>) => {
+        controller = c;
+      };
+
+      const { rerender } = render(
+        <ControllerAccordion options={{ multiple: true }} capture={capture} />
+      );
+
+      expect(controller.getItems()).toStrictEqual(['item-1', 'item-2', 'item-3']);
+
+      act(() => controller.expand('item-2'));
+      expect(controller.value).toStrictEqual(['item-2']);
+
+      rerender(
+        <>
+          <ControllerAccordion options={{ multiple: true }} capture={capture}>
+            <Accordion.Item value="item-1">
+              <Accordion.Control>Label 1</Accordion.Control>
+              <Accordion.Panel>test-item-1</Accordion.Panel>
+            </Accordion.Item>
+          </ControllerAccordion>
+        </>
+      );
+
+      expect(controller.getItems()).toStrictEqual(['item-1']);
+      expect(controller.value).toStrictEqual(['item-2']);
+    });
+
+    it('ignores value, defaultValue and onChange props when controller is set', async () => {
+      const onChange = jest.fn();
+      let controller: UseAccordionReturnValue<false> = null as any;
+
+      function Wrapper() {
+        const c = useAccordion();
+        controller = c;
+        return (
+          <Accordion
+            controller={c}
+            value="item-3"
+            defaultValue="item-2"
+            onChange={onChange}
+            transitionDuration={0}
+          >
+            {defaultProps.children}
+          </Accordion>
+        );
+      }
+
+      render(<Wrapper />);
+      expect(screen.queryAllByText('test-item-3')).toHaveLength(0);
+
+      await userEvent.click(screen.getAllByRole('button')[0]);
+      expect(controller.value).toBe('item-1');
+      expect(screen.getByText('test-item-1')).toBeInTheDocument();
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('supports multiple mode through the controller', async () => {
+      let controller: UseAccordionReturnValue<true> = null as any;
+      render(
+        <ControllerAccordion
+          options={{ multiple: true }}
+          capture={(c) => {
+            controller = c;
+          }}
+        />
+      );
+
+      await userEvent.click(screen.getAllByRole('button')[0]);
+      await userEvent.click(screen.getAllByRole('button')[1]);
+
+      expect(controller.value).toStrictEqual(['item-1', 'item-2']);
+      expect(screen.getByText('test-item-1')).toBeInTheDocument();
+      expect(screen.getByText('test-item-2')).toBeInTheDocument();
+    });
+
+    it('supports disableCollapse passed as a controller option', async () => {
+      let controller: UseAccordionReturnValue<false> = null as any;
+      render(
+        <ControllerAccordion
+          options={{ defaultValue: 'item-1', disableCollapse: true }}
+          capture={(c) => {
+            controller = c;
+          }}
+        />
+      );
+
+      await userEvent.click(screen.getAllByRole('button')[0]);
+      expect(controller.value).toBe('item-1');
+      expect(screen.getByText('test-item-1')).toBeInTheDocument();
+    });
+
+    it('calls the controller onChange when an item is clicked', async () => {
+      const onChange = jest.fn();
+      render(<ControllerAccordion options={{ onChange }} capture={() => {}} />);
+
+      await userEvent.click(screen.getAllByRole('button')[1]);
+      expect(onChange).toHaveBeenLastCalledWith('item-2');
     });
   });
 });

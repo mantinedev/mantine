@@ -26,6 +26,7 @@ export { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakp
 export { getBaseValue } from './get-base-value/get-base-value';
 export { getContextItemIndex } from './get-context-item-index/get-context-item-index';
 export { useHovered } from './use-hovered/use-hovered';
+export { useController } from './use-controller/use-controller';
 export { createUseExternalEvents } from './create-use-external-events/create-use-external-events';
 export { getEnv } from './get-env/get-env';
 export { memoize } from './memoize/memoize';
