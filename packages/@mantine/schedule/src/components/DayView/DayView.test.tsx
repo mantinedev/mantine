@@ -1083,6 +1083,160 @@ describe('@mantine/schedule/DayView', () => {
     });
   });
 
+  describe('background events resize', () => {
+    const handleSelector = '.mantine-DayView-dayViewBackgroundEventResizeHandle';
+
+    const resizeProps: DayViewProps = {
+      date: '2025-11-03',
+      startTime: '08:00:00',
+      endTime: '16:00:00',
+      intervalMinutes: 30,
+      events: [
+        {
+          id: 'bg-1',
+          title: 'Unavailable',
+          start: '2025-11-03 12:00:00',
+          end: '2025-11-03 13:00:00',
+          color: 'gray',
+          display: 'background',
+        },
+      ],
+    };
+
+    const mockContainerRect = () =>
+      jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+        top: 0,
+        left: 0,
+        right: 480,
+        bottom: 480,
+        width: 480,
+        height: 480,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      } as DOMRect);
+
+    it('renders resize handles with withEventResize and withInteractiveBackgroundEvents', () => {
+      const { container } = render(
+        <DayView {...resizeProps} withEventResize withInteractiveBackgroundEvents />
+      );
+
+      const handles = container.querySelectorAll(handleSelector);
+      expect(handles).toHaveLength(2);
+      expect(handles[0]).toHaveAttribute('data-edge', 'top');
+      expect(handles[1]).toHaveAttribute('data-edge', 'bottom');
+      expect(container.querySelector('.mantine-DayView-dayViewBackgroundEvent')).toHaveAttribute(
+        'data-resizable'
+      );
+    });
+
+    it('does not render resize handles without withInteractiveBackgroundEvents', () => {
+      const { container } = render(<DayView {...resizeProps} withEventResize />);
+      expect(container.querySelector(handleSelector)).not.toBeInTheDocument();
+    });
+
+    it('does not render resize handles without withEventResize', () => {
+      const { container } = render(<DayView {...resizeProps} withInteractiveBackgroundEvents />);
+      expect(container.querySelector(handleSelector)).not.toBeInTheDocument();
+    });
+
+    it('does not render resize handles in static mode', () => {
+      const { container } = render(
+        <DayView {...resizeProps} withEventResize withInteractiveBackgroundEvents mode="static" />
+      );
+      expect(container.querySelector(handleSelector)).not.toBeInTheDocument();
+    });
+
+    it('does not render resize handles on all day background events', () => {
+      const { container } = render(
+        <DayView
+          {...resizeProps}
+          withEventResize
+          withInteractiveBackgroundEvents
+          events={[
+            {
+              id: 'bg-all-day',
+              title: 'Holiday',
+              start: '2025-11-03 00:00:00',
+              end: '2025-11-04 00:00:00',
+              color: 'gray',
+              display: 'background',
+            },
+          ]}
+        />
+      );
+
+      expect(container.querySelector(handleSelector)).not.toBeInTheDocument();
+    });
+
+    it('respects canResizeEvent for background events', () => {
+      const { container } = render(
+        <DayView
+          {...resizeProps}
+          withEventResize
+          withInteractiveBackgroundEvents
+          canResizeEvent={(event) => event.display !== 'background'}
+        />
+      );
+
+      expect(container.querySelector(handleSelector)).not.toBeInTheDocument();
+    });
+
+    it('calls onEventResize when a background event edge is dragged', () => {
+      const spy = mockContainerRect();
+      const onEventResize = jest.fn();
+
+      const { container } = render(
+        <DayView
+          {...resizeProps}
+          withEventResize
+          withInteractiveBackgroundEvents
+          onEventResize={onEventResize}
+        />
+      );
+
+      fireEvent.pointerDown(container.querySelectorAll(handleSelector)[1]);
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointermove', { clientY: 360 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({
+          eventId: 'bg-1',
+          newStart: '2025-11-03 12:00:00',
+          newEnd: '2025-11-03 14:00:00',
+        })
+      );
+      spy.mockRestore();
+    });
+
+    it('does not call onEventClick when a resize ends on the background event', () => {
+      const spy = mockContainerRect();
+      const onEventClick = jest.fn();
+
+      const { container } = render(
+        <DayView
+          {...resizeProps}
+          withEventResize
+          withInteractiveBackgroundEvents
+          onEventClick={onEventClick}
+        />
+      );
+
+      const bgEvent = container.querySelector('.mantine-DayView-dayViewBackgroundEvent')!;
+      fireEvent.pointerDown(container.querySelectorAll(handleSelector)[1]);
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointermove', { clientY: 360 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+      fireEvent.click(bgEvent);
+
+      expect(onEventClick).not.toHaveBeenCalled();
+      spy.mockRestore();
+    });
+  });
+
   describe('eventOverlapMode', () => {
     const overlappingEvents = [
       {

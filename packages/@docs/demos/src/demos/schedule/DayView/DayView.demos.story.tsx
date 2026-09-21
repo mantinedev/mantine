@@ -173,6 +173,11 @@ export const Demo_interactiveBackgroundEvents = {
   render: renderDemo(demos.interactiveBackgroundEvents),
 };
 
+export const Demo_resizableBackgroundEvents = {
+  name: '⭐ Demo: resizableBackgroundEvents',
+  render: renderDemo(demos.resizableBackgroundEvents),
+};
+
 export const Demo_customHeader = {
   name: '⭐ Demo: customHeader',
   render: renderDemo(demos.customHeader),

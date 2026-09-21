@@ -25,6 +25,7 @@ export const WeekViewStylesApi: StylesApiData<WeekViewFactory> = {
     weekViewWeekLabel: 'Week label',
     weekViewWeekNumber: 'Week number indicator',
     weekViewBackgroundEvent: 'Background event element',
+    weekViewBackgroundEventResizeHandle: 'Resize handle of an interactive background event',
     weekViewDragPreview: 'Ghost preview shown at the snapped position while dragging an event',
     header: 'Header container, part of ScheduleHeader',
     headerControl: 'Header control element, part of ScheduleHeader',
