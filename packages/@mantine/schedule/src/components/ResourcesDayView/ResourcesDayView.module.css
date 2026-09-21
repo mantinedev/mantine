@@ -362,6 +362,13 @@
       background-color: var(--bg-event-hover);
     }
   }
+
+  /* The resized edge repeatedly crosses the pointer, so hover feedback would flicker */
+  &:where([data-resizing]) {
+    @mixin hover {
+      background-color: var(--bg-event-bg);
+    }
+  }
 }
 
 .resourcesDayViewAllDayEvent {
@@ -425,9 +432,47 @@
   pointer-events: none;
 }
 
+/* The resizing background event is the one that set `data-event-interaction`, so it must
+   keep capturing pointer events. */
 .resourcesDayView:where([data-event-interaction], [data-slot-dragging])
-  .resourcesDayViewBackgroundEvent {
+  .resourcesDayViewBackgroundEvent:not([data-resizing]) {
   pointer-events: none;
+
+  & .resourcesDayViewResizeHandle {
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+.resourcesDayViewBackgroundEvent {
+  & .resourcesDayViewResizeHandle {
+    background-color: var(--bg-event-color);
+
+    &:where([data-edge='start']) {
+      left: 0;
+    }
+
+    &:where([data-edge='end']) {
+      right: 0;
+    }
+  }
+
+  &:hover .resourcesDayViewResizeHandle {
+    opacity: 0.5;
+  }
+
+  & .resourcesDayViewResizeHandle:hover {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourcesDayViewResizeHandle:where([data-active]) {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourcesDayViewResizeHandle:not([data-active]) {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .resourcesDayView:where([data-resizing]) {

@@ -1157,6 +1157,152 @@ describe('@mantine/schedule/WeekView', () => {
     });
   });
 
+  describe('background events resize', () => {
+    const handleSelector = '.mantine-WeekView-weekViewBackgroundEventResizeHandle';
+
+    const resizeProps: WeekViewProps = {
+      date: '2025-11-03 00:00:00',
+      startTime: '08:00:00',
+      endTime: '16:00:00',
+      intervalMinutes: 30,
+      events: [
+        {
+          id: 'bg-1',
+          title: 'Unavailable',
+          start: '2025-11-03 12:00:00',
+          end: '2025-11-03 13:00:00',
+          color: 'gray',
+          display: 'background',
+        },
+      ],
+    };
+
+    it('renders resize handles with withEventResize and withInteractiveBackgroundEvents', () => {
+      const { container } = render(
+        <WeekView {...resizeProps} withEventResize withInteractiveBackgroundEvents />
+      );
+
+      const handles = container.querySelectorAll(handleSelector);
+      expect(handles).toHaveLength(2);
+      expect(handles[0]).toHaveAttribute('data-edge', 'top');
+      expect(handles[1]).toHaveAttribute('data-edge', 'bottom');
+    });
+
+    it('does not render resize handles without withInteractiveBackgroundEvents', () => {
+      const { container } = render(<WeekView {...resizeProps} withEventResize />);
+      expect(container.querySelector(handleSelector)).not.toBeInTheDocument();
+    });
+
+    it('does not render resize handles on all day background events', () => {
+      const { container } = render(
+        <WeekView
+          {...resizeProps}
+          withEventResize
+          withInteractiveBackgroundEvents
+          events={[
+            {
+              id: 'bg-all-day',
+              title: 'Holiday',
+              start: '2025-11-03 00:00:00',
+              end: '2025-11-04 00:00:00',
+              color: 'gray',
+              display: 'background',
+            },
+          ]}
+        />
+      );
+
+      expect(container.querySelector(handleSelector)).not.toBeInTheDocument();
+    });
+
+    it('previews a resize only on the day segment being dragged', () => {
+      const spy = jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+        top: 0,
+        left: 0,
+        right: 480,
+        bottom: 480,
+        width: 480,
+        height: 480,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      } as DOMRect);
+
+      const { container } = render(
+        <WeekView
+          {...resizeProps}
+          withEventResize
+          withInteractiveBackgroundEvents
+          events={[
+            {
+              id: 'bg-overnight',
+              title: 'Maintenance',
+              start: '2025-11-03 14:00:00',
+              end: '2025-11-04 10:00:00',
+              color: 'gray',
+              display: 'background',
+            },
+          ]}
+        />
+      );
+
+      const segments = container.querySelectorAll('.mantine-WeekView-weekViewBackgroundEvent');
+      expect(segments).toHaveLength(2);
+
+      fireEvent.pointerDown(segments[0].querySelectorAll(handleSelector)[1]);
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointermove', { clientY: 420 }));
+      });
+
+      expect(segments[0]).toHaveAttribute('data-resizing');
+      expect(segments[1]).not.toHaveAttribute('data-resizing');
+
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+      spy.mockRestore();
+    });
+
+    it('calls onEventResize when a background event edge is dragged', () => {
+      const spy = jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+        top: 0,
+        left: 0,
+        right: 480,
+        bottom: 480,
+        width: 480,
+        height: 480,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      } as DOMRect);
+      const onEventResize = jest.fn();
+
+      const { container } = render(
+        <WeekView
+          {...resizeProps}
+          withEventResize
+          withInteractiveBackgroundEvents
+          onEventResize={onEventResize}
+        />
+      );
+
+      fireEvent.pointerDown(container.querySelectorAll(handleSelector)[1]);
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointermove', { clientY: 360 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({
+          eventId: 'bg-1',
+          newStart: '2025-11-03 12:00:00',
+          newEnd: '2025-11-03 14:00:00',
+        })
+      );
+      spy.mockRestore();
+    });
+  });
+
   describe('all-day drag interaction mod', () => {
     const allDayDragEvent = {
       id: 'all-day-1',
