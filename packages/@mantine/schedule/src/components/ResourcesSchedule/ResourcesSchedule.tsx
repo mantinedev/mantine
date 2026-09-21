@@ -218,7 +218,7 @@ export interface ResourcesScheduleProps
   /** Called when a drop or resize is rejected @category behavior */
   onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
 
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Applies to `day` and `week` views only – `ResourcesMonthView` does not render background events separately. @default false @category behavior */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Applies to `day` and `week` views only – `ResourcesMonthView` does not render background events separately. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false @category behavior */
   withInteractiveBackgroundEvents?: boolean;
 
   /** Max number of generated recurring instances @default 2000 */
