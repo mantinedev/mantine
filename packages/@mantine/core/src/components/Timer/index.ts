@@ -25,6 +25,6 @@ export type {
   TimerControlFactory,
   TimerControlStylesNames,
 } from './TimerControl';
-export type { UseTimerOptions, UseTimerReturnValue } from './use-timer';
+export type { TimerControllerOptions, TimerController } from './use-timer';
 export type { TimerValue } from './get-timer-value';
 export type { TimerDurationInput, TimerDurationObject } from './parse-duration';

@@ -5,8 +5,8 @@ import {
   BoxProps,
   createVarsResolver,
   ElementProps,
-  genericFactory,
   Factory,
+  genericFactory,
   getRadius,
   getSize,
   getThemeColor,
@@ -18,6 +18,7 @@ import {
   ScrollArea,
   ScrollAreaProps,
   StylesApiProps,
+  useController,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -440,12 +441,10 @@ export const DataGrid = genericFactory<DataGridFactory>(((
     varsResolver,
   });
 
-  const internalStore = useDataGrid({
+  const store = useController(useDataGrid, storeProp, {
     data: data ?? [],
     columns: columns ?? [],
   });
-
-  const store = storeProp ?? internalStore;
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
   const rootRef = useRef<HTMLDivElement>(null);
   const mergedRef = useMergedRef(ref, rootRef);

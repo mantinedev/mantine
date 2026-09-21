@@ -8,6 +8,7 @@ import {
   MantineThemeComponent,
   rem,
   StylesApiProps,
+  useController,
   useProps,
   useStyles,
 } from '../../core';
@@ -185,8 +186,7 @@ export const Combobox = (_props: ComboboxProps) => {
         }
       : middlewares;
 
-  const uncontrolledStore = useCombobox();
-  const store = controlledStore || uncontrolledStore;
+  const store = useController(useCombobox, controlledStore, {});
 
   const getStyles = useStyles<ComboboxFactory>({
     name: __staticSelector || 'Combobox',

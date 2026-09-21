@@ -78,6 +78,8 @@ export function useFloatingWindow<T extends HTMLElement>(
   const isDraggingRef = useRef(false);
   const initialized = useRef(false);
   const enabledRef = useRefValue(options.enabled);
+  const constrainToViewportRef = useRefValue(options.constrainToViewport);
+  const constrainOffsetRef = useRefValue(options.constrainOffset);
   const onPositionChangeRef = useRefValue(options.onPositionChange);
   const onDragStartRef = useRefValue(options.onDragStart);
   const onDragEndRef = useRefValue(options.onDragEnd);
@@ -246,47 +248,44 @@ export function useFloatingWindow<T extends HTMLElement>(
     };
   }, [options.constrainToViewport, options.constrainOffset]);
 
-  const setPosition = useCallback(
-    (position: FloatingWindowPositionConfig) => {
-      const el = ref.current;
-      if (!el) {
-        return;
-      }
+  const setPosition = useCallback((position: FloatingWindowPositionConfig) => {
+    const el = ref.current;
+    if (!el) {
+      return;
+    }
 
-      const offset = options.constrainOffset ?? 0;
-      const rect = el.getBoundingClientRect();
+    const offset = constrainOffsetRef.current ?? 0;
+    const rect = el.getBoundingClientRect();
 
-      let x: number | undefined;
-      let y: number | undefined;
+    let x: number | undefined;
+    let y: number | undefined;
 
-      if (position.left != null) {
-        x = position.left;
-      } else if (position.right != null) {
-        x = window.innerWidth - rect.width - position.right;
-      }
+    if (position.left != null) {
+      x = position.left;
+    } else if (position.right != null) {
+      x = window.innerWidth - rect.width - position.right;
+    }
 
-      if (position.top != null) {
-        y = position.top;
-      } else if (position.bottom != null) {
-        y = window.innerHeight - rect.height - position.bottom;
-      }
+    if (position.top != null) {
+      y = position.top;
+    } else if (position.bottom != null) {
+      y = window.innerHeight - rect.height - position.bottom;
+    }
 
-      x = x ?? pos.current.x;
-      y = y ?? pos.current.y;
+    x = x ?? pos.current.x;
+    y = y ?? pos.current.y;
 
-      if (options.constrainToViewport) {
-        const clamped = clampToViewport(x, y, el, offset);
-        x = clamped.x;
-        y = clamped.y;
-      }
+    if (constrainToViewportRef.current) {
+      const clamped = clampToViewport(x, y, el, offset);
+      x = clamped.x;
+      y = clamped.y;
+    }
 
-      pos.current = { x, y };
-      el.style.left = `${x}px`;
-      el.style.top = `${y}px`;
-      onPositionChangeRef.current?.({ x, y });
-    },
-    [options.constrainToViewport, options.constrainOffset]
-  );
+    pos.current = { x, y };
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    onPositionChangeRef.current?.({ x, y });
+  }, []);
 
   return {
     ref: assignRef,

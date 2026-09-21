@@ -51,8 +51,8 @@ export type {
   EditableCancelTriggerStylesNames,
 } from './EditableCancelTrigger';
 export type {
-  UseEditableOptions,
-  UseEditableReturnValue,
+  EditableControllerOptions,
+  EditableController,
   EditableActivationMode,
   EditableSubmitMode,
 } from './use-editable';

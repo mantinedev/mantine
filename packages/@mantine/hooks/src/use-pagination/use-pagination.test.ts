@@ -1,7 +1,14 @@
 import { act, renderHook } from '@testing-library/react';
+import { tests } from '@mantine-tests/core';
 import { usePagination } from './use-pagination';
 
 describe('@mantine/hooks/use-pagination', () => {
+  tests.itSupportsControllerMemoization({
+    hook: () => usePagination({ total: 10 }),
+    actions: ['setPage', 'next', 'previous', 'first', 'last'],
+    changeState: (controller) => controller.setPage(5),
+  });
+
   it('setPage function sets active page', () => {
     const { result } = renderHook(() => usePagination({ total: 10 }));
 
@@ -109,5 +116,24 @@ describe('@mantine/hooks/use-pagination', () => {
 
     act(() => result.current.setPage(20));
     expect(result.current.active).toBe(15);
+  });
+
+  it('returns total', () => {
+    const { result } = renderHook(() => usePagination({ total: 10 }));
+    expect(result.current.total).toBe(10);
+  });
+
+  it('next and previous use the current page after the state changes', () => {
+    const { result } = renderHook(() => usePagination({ total: 10 }));
+    const { next, previous } = result.current;
+
+    act(() => next());
+    expect(result.current.active).toBe(2);
+
+    act(() => next());
+    expect(result.current.active).toBe(3);
+
+    act(() => previous());
+    expect(result.current.active).toBe(2);
   });
 });

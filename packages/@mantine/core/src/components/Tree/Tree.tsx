@@ -10,6 +10,7 @@ import {
   getSpacing,
   MantineSpacing,
   StylesApiProps,
+  useController,
   useProps,
   useStyles,
 } from '../../core';
@@ -194,8 +195,7 @@ export const Tree = factory<TreeFactory>((_props) => {
     ...others
   } = props;
 
-  const defaultController = useTree();
-  const controller = tree || defaultController;
+  const controller = useController(useTree, tree, {});
 
   const dragStateRef = useRef<TreeDragState>({ draggedValue: null, currentDropTarget: null });
 

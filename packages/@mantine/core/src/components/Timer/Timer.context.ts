@@ -1,10 +1,10 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { TimerFactory } from './Timer';
-import type { UseTimerReturnValue } from './use-timer';
+import type { TimerController } from './use-timer';
 
 export interface TimerContextValue {
   getStyles: GetStylesApi<TimerFactory>;
-  controller: UseTimerReturnValue;
+  controller: TimerController;
 }
 
 export const [TimerProvider, useTimerContext] = createSafeContext<TimerContextValue>(

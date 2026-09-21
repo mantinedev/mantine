@@ -28,6 +28,12 @@ export { PaginationItems } from './PaginationItems/PaginationItems';
 export { PaginationLabel } from './PaginationLabel/PaginationLabel';
 export { PaginationRoot } from './PaginationRoot/PaginationRoot';
 export { usePaginationContext } from './Pagination.context';
+export { usePagination } from '@mantine/hooks';
+
+export type {
+  UsePaginationReturnValue as PaginationController,
+  UsePaginationOptions as PaginationControllerOptions,
+} from '@mantine/hooks';
 
 export type {
   PaginationProps,

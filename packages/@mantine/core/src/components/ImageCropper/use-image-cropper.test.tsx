@@ -1,7 +1,25 @@
 import { act, renderHook } from '@testing-library/react';
+import { tests } from '@mantine-tests/core';
 import { useImageCropper } from './use-image-cropper';
 
 describe('@mantine/core/useImageCropper', () => {
+  tests.itSupportsControllerMemoization({
+    hook: () => useImageCropper(),
+    actions: [
+      'setZoom',
+      'zoomBy',
+      'setRotation',
+      'rotateBy',
+      'flipHorizontal',
+      'flipVertical',
+      'setCrop',
+      'reset',
+      'getCropData',
+      'getCroppedImage',
+    ],
+    changeState: (controller) => controller.setZoom(2),
+  });
+
   it('returns the initial state', () => {
     const { result } = renderHook(() => useImageCropper());
     expect(result.current.zoom).toBe(1);
@@ -122,5 +140,33 @@ describe('@mantine/core/useImageCropper', () => {
   it('rejects getCroppedImage when the image is not loaded', async () => {
     const { result } = renderHook(() => useImageCropper());
     await expect(result.current.getCroppedImage()).rejects.toThrow(/not loaded/);
+  });
+
+  it('reads the current min/max zoom bounds after the options change', () => {
+    const { result, rerender } = renderHook(
+      ({ maxZoom }: { maxZoom: number }) => useImageCropper({ maxZoom }),
+      { initialProps: { maxZoom: 3 } }
+    );
+
+    const { setZoom } = result.current;
+    rerender({ maxZoom: 6 });
+
+    act(() => setZoom(10));
+    expect(result.current.zoom).toBe(6);
+  });
+
+  it('getCroppedImage keeps its identity and reads the current crop shape', () => {
+    const { result, rerender } = renderHook<
+      ReturnType<typeof useImageCropper>,
+      { cropShape: 'rectangle' | 'circle' }
+    >(({ cropShape }) => useImageCropper({ cropShape }), {
+      initialProps: { cropShape: 'rectangle' },
+    });
+
+    const { getCroppedImage } = result.current;
+    rerender({ cropShape: 'circle' });
+
+    expect(result.current.getCroppedImage).toBe(getCroppedImage);
+    expect(result.current.cropShape).toBe('circle');
   });
 });

@@ -1,6 +1,6 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { EditableFactory } from './Editable';
-import type { UseEditableReturnValue } from './use-editable';
+import type { EditableController } from './use-editable';
 
 export interface EditablePlaceholder {
   edit?: string;
@@ -9,7 +9,7 @@ export interface EditablePlaceholder {
 
 export interface EditableContextValue {
   getStyles: GetStylesApi<EditableFactory>;
-  controller: UseEditableReturnValue;
+  controller: EditableController;
   inputRef: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
   previewRef: React.RefObject<HTMLDivElement | null>;
   returningFocusRef: React.RefObject<boolean>;

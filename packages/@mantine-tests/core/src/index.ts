@@ -1,5 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { axe } from './axe';
+// Hooks tests
+import { itSupportsControllerMemoization } from './hooks/it-supports-controller-memoization';
 import { itConnectsLabelAndInput } from './inputs/it-connects-label-and-input';
 import { itHandlesSwitchCheckboxState } from './inputs/it-handles-switch-checkbox-state';
 import { itSupportsInputAsterisk } from './inputs/it-supports-input-asterisk';
@@ -78,6 +80,8 @@ export const tests = {
   itSupportsInputWrapperElements,
   itHandlesSwitchCheckboxState,
   itConnectsLabelAndInput,
+
+  itSupportsControllerMemoization,
 
   itSupportsSystemProps,
   itSupportsInputWrapperProps,

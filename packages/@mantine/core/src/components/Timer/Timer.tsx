@@ -5,6 +5,7 @@ import {
   factory,
   Factory,
   StylesApiProps,
+  useController,
   useProps,
   useStyles,
 } from '../../core';
@@ -16,7 +17,7 @@ import { TimerProvider } from './Timer.context';
 import { TimerControl, TimerControlStylesNames } from './TimerControl';
 import { TimerSegment, TimerSegmentStylesNames } from './TimerSegment';
 import { TimerSeparator, TimerSeparatorStylesNames } from './TimerSeparator';
-import { useTimer, UseTimerReturnValue } from './use-timer';
+import { useTimer, TimerController } from './use-timer';
 import classes from './Timer.module.css';
 
 export type TimerStylesNames =
@@ -30,7 +31,7 @@ export type TimerStylesNames =
 export interface TimerProps
   extends BoxProps, StylesApiProps<TimerFactory>, ElementProps<'div', 'onChange'> {
   /** Controller returned by the `useTimer` hook. When provided, the timer is controlled externally and the option props below are ignored @category state */
-  controller?: UseTimerReturnValue;
+  controller?: TimerController;
 
   /** Initial elapsed (stopwatch) or remaining (countdown) time in milliseconds, `0` by default @category state */
   startMs?: number;
@@ -105,13 +106,15 @@ export const Timer = factory<TimerFactory>((_props) => {
     ...others
   } = props;
 
-  const selfController = useTimer(
-    controller
-      ? undefined
-      : { startMs, targetMs, countdown, interval, autoStart, onTick, onComplete }
-  );
-
-  const timer = controller ?? selfController;
+  const timer = useController(useTimer, controller, {
+    startMs,
+    targetMs,
+    countdown,
+    interval,
+    autoStart,
+    onTick,
+    onComplete,
+  });
 
   const getStyles = useStyles<TimerFactory>({
     name: 'Timer',

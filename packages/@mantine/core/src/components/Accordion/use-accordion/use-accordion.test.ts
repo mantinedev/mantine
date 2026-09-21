@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { tests } from '@mantine-tests/core';
 import { useAccordion } from './use-accordion';
 
 function registerItems(
@@ -11,6 +12,23 @@ function registerItems(
 }
 
 describe('@mantine/core/Accordion/use-accordion', () => {
+  tests.itSupportsControllerMemoization({
+    hook: () => useAccordion({ multiple: true }),
+    actions: [
+      'setValue',
+      'toggle',
+      'expand',
+      'collapse',
+      'expandAll',
+      'collapseAll',
+      'isExpanded',
+      'getExpandedItems',
+      'getItems',
+      'registerItem',
+    ],
+    changeState: (controller) => controller.expand('item-1'),
+  });
+
   it('returns null as the initial value in single mode', () => {
     const hook = renderHook(() => useAccordion());
     expect(hook.result.current.value).toBeNull();

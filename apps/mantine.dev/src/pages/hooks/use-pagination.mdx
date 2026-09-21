@@ -119,6 +119,9 @@ export interface UsePaginationReturnValue {
   /** Active page number */
   active: number;
 
+  /** Total amount of pages, same value as the `total` option */
+  total: number;
+
   /** Function to set active page */
   setPage: (page: number) => void;
 

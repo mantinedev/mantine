@@ -7,8 +7,8 @@ import { AccordionItem } from './AccordionItem/AccordionItem';
 import { AccordionPanel } from './AccordionPanel/AccordionPanel';
 import {
   useAccordion,
-  UseAccordionOptions,
-  UseAccordionReturnValue,
+  AccordionControllerOptions,
+  AccordionController,
 } from './use-accordion/use-accordion';
 
 const defaultProps = {
@@ -374,8 +374,8 @@ describe('@mantine/core/Accordion', () => {
       children,
       ...others
     }: {
-      options?: UseAccordionOptions<Multiple>;
-      capture: (controller: UseAccordionReturnValue<Multiple>) => void;
+      options?: AccordionControllerOptions<Multiple>;
+      capture: (controller: AccordionController<Multiple>) => void;
     } & Partial<AccordionProps<Multiple>>) {
       const controller = useAccordion<Multiple>(options);
       capture(controller);
@@ -388,7 +388,7 @@ describe('@mantine/core/Accordion', () => {
     }
 
     it('renders the state owned by the controller', () => {
-      let controller: UseAccordionReturnValue<false> = null as any;
+      let controller: AccordionController<false> = null as any;
       render(
         <ControllerAccordion
           options={{ defaultValue: 'item-2' }}
@@ -404,7 +404,7 @@ describe('@mantine/core/Accordion', () => {
     });
 
     it('updates the controller when an item is clicked', async () => {
-      let controller: UseAccordionReturnValue<false> = null as any;
+      let controller: AccordionController<false> = null as any;
       render(
         <ControllerAccordion
           capture={(c) => {
@@ -420,7 +420,7 @@ describe('@mantine/core/Accordion', () => {
     });
 
     it('updates the rendered items when a controller action is called from outside', () => {
-      let controller: UseAccordionReturnValue<true> = null as any;
+      let controller: AccordionController<true> = null as any;
       render(
         <ControllerAccordion
           options={{ multiple: true }}
@@ -441,7 +441,7 @@ describe('@mantine/core/Accordion', () => {
     });
 
     it('registers mounted items on the controller in render order', () => {
-      let controller: UseAccordionReturnValue<false> = null as any;
+      let controller: AccordionController<false> = null as any;
       render(
         <ControllerAccordion
           capture={(c) => {
@@ -454,8 +454,8 @@ describe('@mantine/core/Accordion', () => {
     });
 
     it('unregisters items when they are unmounted without resetting the controller', () => {
-      let controller: UseAccordionReturnValue<true> = null as any;
-      const capture = (c: UseAccordionReturnValue<true>) => {
+      let controller: AccordionController<true> = null as any;
+      const capture = (c: AccordionController<true>) => {
         controller = c;
       };
 
@@ -485,7 +485,7 @@ describe('@mantine/core/Accordion', () => {
 
     it('ignores value, defaultValue and onChange props when controller is set', async () => {
       const onChange = jest.fn();
-      let controller: UseAccordionReturnValue<false> = null as any;
+      let controller: AccordionController<false> = null as any;
 
       function Wrapper() {
         const c = useAccordion();
@@ -513,7 +513,7 @@ describe('@mantine/core/Accordion', () => {
     });
 
     it('supports multiple mode through the controller', async () => {
-      let controller: UseAccordionReturnValue<true> = null as any;
+      let controller: AccordionController<true> = null as any;
       render(
         <ControllerAccordion
           options={{ multiple: true }}
@@ -532,7 +532,7 @@ describe('@mantine/core/Accordion', () => {
     });
 
     it('supports disableCollapse passed as a controller option', async () => {
-      let controller: UseAccordionReturnValue<false> = null as any;
+      let controller: AccordionController<false> = null as any;
       render(
         <ControllerAccordion
           options={{ defaultValue: 'item-1', disableCollapse: true }}

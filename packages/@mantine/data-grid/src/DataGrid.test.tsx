@@ -19,6 +19,11 @@ const defaultProps: DataGridProps = {
   columns,
 };
 
+function DataGridToggleStore({ withStore }: { withStore: boolean }) {
+  const store = useDataGrid({ data, columns });
+  return withStore ? <DataGrid store={store} /> : <DataGrid data={data} columns={columns} />;
+}
+
 function DataGridWithStore({
   storeOptions,
   ...props
@@ -686,5 +691,20 @@ describe('@mantine/data-grid/DataGrid', () => {
       expect(wrappers).toHaveLength(1);
       expect(wrappers[0]).toHaveTextContent('Charlie');
     });
+  });
+
+  it('renders data and columns when the store prop is removed at runtime', () => {
+    const { rerender } = render(<DataGridToggleStore withStore />);
+    expect(screen.getByText('Alice')).toBeInTheDocument();
+
+    rerender(
+      <>
+        <DataGridToggleStore withStore={false} />
+      </>
+    );
+
+    expect(screen.getByText('Alice')).toBeInTheDocument();
+    expect(screen.getByText('Bob')).toBeInTheDocument();
+    expect(screen.getByText('Name')).toBeInTheDocument();
   });
 });

@@ -6,6 +6,7 @@ import {
   factory,
   Factory,
   StylesApiProps,
+  useController,
   useProps,
   useStyles,
 } from '../../core';
@@ -22,7 +23,7 @@ import {
   EditableActivationMode,
   EditableSubmitMode,
   useEditable,
-  UseEditableReturnValue,
+  EditableController,
 } from './use-editable';
 import classes from './Editable.module.css';
 
@@ -39,7 +40,7 @@ export type EditableStylesNames =
 export interface EditableProps
   extends BoxProps, StylesApiProps<EditableFactory>, ElementProps<'div', 'onChange'> {
   /** Controller returned by the `useEditable` hook. When provided, the editing state is controlled externally and the option props below are ignored */
-  controller?: UseEditableReturnValue;
+  controller?: EditableController;
 
   /** Controlled value @category state */
   value?: string;
@@ -171,27 +172,21 @@ export const Editable = factory<EditableFactory>((_props) => {
     ...others
   } = props;
 
-  const selfController = useEditable(
-    controller
-      ? undefined
-      : {
-          value,
-          defaultValue,
-          onChange,
-          onValueCommit,
-          onValueRevert,
-          editing,
-          defaultEditing,
-          onEditingChange,
-          activationMode,
-          submitMode,
-          selectOnFocus,
-          disabled,
-          readOnly,
-        }
-  );
-
-  const editable = controller ?? selfController;
+  const editable = useController(useEditable, controller, {
+    value,
+    defaultValue,
+    onChange,
+    onValueCommit,
+    onValueRevert,
+    editing,
+    defaultEditing,
+    onEditingChange,
+    activationMode,
+    submitMode,
+    selectOnFocus,
+    disabled,
+    readOnly,
+  });
 
   const getStyles = useStyles<EditableFactory>({
     name: 'Editable',

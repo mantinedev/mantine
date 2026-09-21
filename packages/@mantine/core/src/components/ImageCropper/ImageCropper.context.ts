@@ -1,10 +1,10 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { ImageCropperFactory } from './ImageCropper';
-import type { ImageCropperCropShape, UseImageCropperReturnValue } from './use-image-cropper';
+import type { ImageCropperCropShape, ImageCropperController } from './use-image-cropper';
 
 export interface ImageCropperContextValue {
   getStyles: GetStylesApi<ImageCropperFactory>;
-  controller: UseImageCropperReturnValue;
+  controller: ImageCropperController;
   src: string | undefined;
   crossOrigin: React.ImgHTMLAttributes<HTMLImageElement>['crossOrigin'];
   cropShape: ImageCropperCropShape;

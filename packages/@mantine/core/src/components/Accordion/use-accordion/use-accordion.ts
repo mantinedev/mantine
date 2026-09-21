@@ -2,7 +2,7 @@ import { useCallback, useMemo, useRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import type { AccordionValue } from '../Accordion.types';
 
-export interface UseAccordionOptions<Multiple extends boolean = false> {
+export interface AccordionControllerOptions<Multiple extends boolean = false> {
   /** If set, multiple items can be expanded at the same time, `false` by default */
   multiple?: Multiple;
 
@@ -19,7 +19,7 @@ export interface UseAccordionOptions<Multiple extends boolean = false> {
   disableCollapse?: boolean;
 }
 
-export interface UseAccordionReturnValue<Multiple extends boolean = false> {
+export interface AccordionController<Multiple extends boolean = false> {
   /** Resolved `multiple` option, also used to infer the controller type on the `controller` prop */
   multiple: Multiple;
 
@@ -66,8 +66,8 @@ function toArray(value: string | string[] | null): string[] {
 }
 
 export function useAccordion<Multiple extends boolean = false>(
-  options: UseAccordionOptions<Multiple> = {}
-): UseAccordionReturnValue<Multiple> {
+  options: AccordionControllerOptions<Multiple> = {}
+): AccordionController<Multiple> {
   const {
     multiple = false as Multiple,
     value: valueProp,
@@ -210,24 +210,6 @@ export function useAccordion<Multiple extends boolean = false>(
       getItems,
       registerItem,
     }),
-    [
-      multiple,
-      value,
-      setValue,
-      toggle,
-      expand,
-      collapse,
-      expandAll,
-      collapseAll,
-      isExpanded,
-      getExpandedItems,
-      getItems,
-      registerItem,
-    ]
+    [multiple, value]
   );
-}
-
-export namespace useAccordion {
-  export type Options<Multiple extends boolean = false> = UseAccordionOptions<Multiple>;
-  export type ReturnValue<Multiple extends boolean = false> = UseAccordionReturnValue<Multiple>;
 }

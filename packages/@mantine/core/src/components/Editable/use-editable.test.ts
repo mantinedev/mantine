@@ -1,7 +1,14 @@
 import { act, renderHook } from '@testing-library/react';
+import { tests } from '@mantine-tests/core';
 import { useEditable } from './use-editable';
 
 describe('@mantine/core/useEditable', () => {
+  tests.itSupportsControllerMemoization({
+    hook: () => useEditable({ defaultValue: 'hello' }),
+    actions: ['edit', 'submit', 'cancel', 'setValue'],
+    changeState: (controller) => controller.edit(),
+  });
+
   it('returns the initial value and is not editing by default', () => {
     const hook = renderHook(() => useEditable({ defaultValue: 'hello' }));
     expect(hook.result.current.value).toBe('hello');

@@ -372,6 +372,57 @@ customized `thumb` styles with Styles API, check that they still look as intende
 `thumbSize` prop to restore the previous size and the new `variant="filled"` to get a thumb
 filled with the slider color.
 
+## Controller hook types renamed
+
+`useTimer`, `useEditable` and `useImageCropper` now name their types `<Component>Controller` and
+`<Component>ControllerOptions`. The old names and the `useHook.Options`/`useHook.ReturnValue`
+namespace aliases have been removed without deprecated aliases:
+
+<DataTable
+  head={['9.x', '10.x']}
+  data={[
+    ['`UseTimerOptions`', '`TimerControllerOptions`'],
+    ['`UseTimerReturnValue`', '`TimerController`'],
+    ['`UseEditableOptions`', '`EditableControllerOptions`'],
+    ['`UseEditableReturnValue`', '`EditableController`'],
+    ['`UseImageCropperOptions`', '`ImageCropperControllerOptions`'],
+    ['`UseImageCropperReturnValue`', '`ImageCropperController`'],
+  ]}
+/>
+
+Only the type names changed – the hooks, their options and their return values are the same:
+
+```tsx
+// 9.x
+import type { UseTimerReturnValue } from '@mantine/core';
+
+// 10.x
+import type { TimerController } from '@mantine/core';
+```
+
+## Controller hooks return a memoized object
+
+`useTimer`, `useEditable`, `useImageCropper` and `usePagination` used to return a new object on every
+render. They now return an object that only changes identity when their state changes, and every
+action on it keeps a stable identity for the lifetime of the hook.
+
+If your code uses the returned object as a `useEffect` or `useCallback` dependency, that effect will
+now run less often – depend on the individual actions or state fields instead:
+
+```tsx
+const timer = useTimer();
+
+// Ran on every render in 9.x, runs only when the timer state changes in 10.x
+useEffect(() => {
+  /* ... */
+}, [timer]);
+
+// Use this instead
+useEffect(() => {
+  /* ... */
+}, [timer.running]);
+```
+
 ## v9 opt-out
 
 If your application cannot migrate immediately, you can restore the full v9 colors, variant

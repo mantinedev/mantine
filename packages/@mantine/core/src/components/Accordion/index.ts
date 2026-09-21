@@ -12,7 +12,10 @@ import type { AccordionControlProps } from './AccordionControl/AccordionControl'
 import type { AccordionItemContextValue } from './AccordionItem.context';
 import type { AccordionItemProps } from './AccordionItem/AccordionItem';
 import type { AccordionPanelProps } from './AccordionPanel/AccordionPanel';
-import type { UseAccordionOptions, UseAccordionReturnValue } from './use-accordion/use-accordion';
+import type {
+  AccordionControllerOptions,
+  AccordionController,
+} from './use-accordion/use-accordion';
 
 export { Accordion } from './Accordion';
 export { AccordionChevron } from './AccordionChevron';
@@ -37,6 +40,6 @@ export type {
   AccordionHeadingOrder,
   AccordionContextValue,
   AccordionItemContextValue,
-  UseAccordionOptions,
-  UseAccordionReturnValue,
+  AccordionControllerOptions,
+  AccordionController,
 };

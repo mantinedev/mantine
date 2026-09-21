@@ -1,10 +1,10 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 
 export type EditableActivationMode = 'focus' | 'click' | 'dblclick' | 'none';
 export type EditableSubmitMode = 'both' | 'enter' | 'blur' | 'none';
 
-export interface UseEditableOptions {
+export interface EditableControllerOptions {
   /** Controlled value */
   value?: string;
 
@@ -45,7 +45,7 @@ export interface UseEditableOptions {
   readOnly?: boolean;
 }
 
-export interface UseEditableReturnValue {
+export interface EditableController {
   /** Current value */
   value: string;
 
@@ -80,7 +80,7 @@ export interface UseEditableReturnValue {
   setValue: (value: string) => void;
 }
 
-export function useEditable(options: UseEditableOptions = {}): UseEditableReturnValue {
+export function useEditable(options: EditableControllerOptions = {}): EditableController {
   const {
     value: valueProp,
     defaultValue,
@@ -163,22 +163,20 @@ export function useEditable(options: UseEditableOptions = {}): UseEditableReturn
     onValueRevertRef.current?.(previousValueRef.current);
   }, []);
 
-  return {
-    value,
-    editing,
-    activationMode,
-    submitMode,
-    selectOnFocus,
-    disabled,
-    readOnly,
-    edit,
-    submit,
-    cancel,
-    setValue,
-  };
-}
-
-export namespace useEditable {
-  export type Options = UseEditableOptions;
-  export type ReturnValue = UseEditableReturnValue;
+  return useMemo(
+    () => ({
+      value,
+      editing,
+      activationMode,
+      submitMode,
+      selectOnFocus,
+      disabled,
+      readOnly,
+      edit,
+      submit,
+      cancel,
+      setValue,
+    }),
+    [value, editing, activationMode, submitMode, selectOnFocus, disabled, readOnly]
+  );
 }

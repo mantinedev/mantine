@@ -70,6 +70,9 @@ hook, exactly as it follows the `multiple` prop on `Accordion`.
 One controller drives one `Accordion`. `expandAll` and `getItems` only know about items that are
 currently mounted, so they reflect what is on the screen rather than a static list.
 
+The controller is typed as `AccordionController<Multiple>` and its options as
+`AccordionControllerOptions<Multiple>`, both exported from `@mantine/core`.
+
 ## order prop
 
 The `order` prop (used in all demos on this page) sets the heading level for the `Accordion.Control` root element.

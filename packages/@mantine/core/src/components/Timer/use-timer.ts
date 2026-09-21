@@ -3,7 +3,7 @@ import { useDidUpdate, useIsomorphicEffect } from '@mantine/hooks';
 import { getDisplayMs, getTimerValue, TimerValue } from './get-timer-value';
 import { parseDuration } from './parse-duration';
 
-export interface UseTimerOptions {
+export interface TimerControllerOptions {
   /** Initial elapsed (stopwatch) or remaining (countdown) time in milliseconds, `0` by default */
   startMs?: number;
 
@@ -27,7 +27,7 @@ export interface UseTimerOptions {
   onComplete?: () => void;
 }
 
-export interface UseTimerReturnValue {
+export interface TimerController {
   /** Current timer value split into `totalMs` and time segments */
   value: TimerValue;
 
@@ -62,7 +62,7 @@ export interface UseTimerReturnValue {
   restart: () => void;
 }
 
-export function useTimer(options: UseTimerOptions = {}): UseTimerReturnValue {
+export function useTimer(options: TimerControllerOptions = {}): TimerController {
   const {
     startMs = 0,
     targetMs,
@@ -284,25 +284,22 @@ export function useTimer(options: UseTimerOptions = {}): UseTimerReturnValue {
     return Math.min(1, Math.max(0, traveled / span));
   }, [totalMs, countdown, initialMs, lowerBound, upperBound, isCompleteValue]);
 
-  return {
-    value,
-    formatted: value,
-    running,
-    paused,
-    progress,
-    interval,
-    start,
-    pause,
-    resume: start,
-    reset,
-    restart,
-  };
+  return useMemo(
+    () => ({
+      value,
+      formatted: value,
+      running,
+      paused,
+      progress,
+      interval,
+      start,
+      pause,
+      resume: start,
+      reset,
+      restart,
+    }),
+    [value, running, paused, progress, interval]
+  );
 }
 
 useTimer.parse = parseDuration;
-
-export namespace useTimer {
-  export type Options = UseTimerOptions;
-  export type ReturnValue = UseTimerReturnValue;
-  export type Value = TimerValue;
-}

@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { tests } from '@mantine-tests/core';
 import type { TreeNodeData } from './Tree';
 import { getTreeExpandedState, useTree } from './use-tree';
 
@@ -29,6 +30,46 @@ const data: TreeNodeData[] = [
 ];
 
 describe('getTreeExpandedState', () => {
+  tests.itSupportsControllerMemoization({
+    hook: () => useTree({ multiple: true }),
+    actions: [
+      'initialize',
+      'toggleExpanded',
+      'collapse',
+      'expand',
+      'expandAllNodes',
+      'collapseAllNodes',
+      'setExpandedState',
+      'checkNode',
+      'uncheckNode',
+      'checkAllNodes',
+      'uncheckAllNodes',
+      'setCheckedState',
+      'toggleSelected',
+      'select',
+      'deselect',
+      'clearSelected',
+      'setSelectedState',
+      'getCheckedNodes',
+      'isNodeChecked',
+      'isNodeIndeterminate',
+      'isNodeLoading',
+      'getNodeLoadError',
+      'loadNode',
+      'invalidateNode',
+    ],
+    setup: (controller) => controller.initialize(data),
+    changeState: (controller) => controller.select('src'),
+  });
+
+  it('returns a new controller when the node data changes', () => {
+    const hook = renderHook(() => useTree());
+    const initial = hook.result.current;
+
+    act(() => hook.result.current.initialize(data));
+    expect(hook.result.current).not.toBe(initial);
+  });
+
   it('returns all nodes collapsed when given an empty array', () => {
     const state = getTreeExpandedState(data, []);
     expect(Object.values(state).every((v) => v === false)).toBe(true);
@@ -533,6 +574,53 @@ describe('@mantine/core/Tree/use-tree', () => {
       expect(result.current.isNodeLoading('documents')).toBe(false);
     });
 
+    it('returns a new controller when the loading state changes', async () => {
+      let resolveLoad: () => void;
+      const onLoadChildren = jest.fn(
+        () =>
+          new Promise<void>((resolve) => {
+            resolveLoad = resolve;
+          })
+      );
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      const beforeLoad = result.current;
+
+      let loadPromise: Promise<void>;
+      act(() => {
+        loadPromise = result.current.loadNode('documents');
+      });
+
+      expect(result.current).not.toBe(beforeLoad);
+
+      const whileLoading = result.current;
+
+      await act(async () => {
+        resolveLoad!();
+        await loadPromise!;
+      });
+
+      expect(result.current).not.toBe(whileLoading);
+    });
+
+    it('returns a new controller when a node fails to load', async () => {
+      const onLoadChildren = jest.fn(() => Promise.reject(new Error('failed')));
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      const beforeLoad = result.current;
+
+      await act(async () => {
+        await result.current.loadNode('documents');
+      });
+
+      expect(result.current).not.toBe(beforeLoad);
+      expect(result.current.getNodeLoadError('documents')?.message).toBe('failed');
+    });
+
     it('loadNode does not call onLoadChildren twice for same node', async () => {
       const onLoadChildren = jest.fn(
         () =>
@@ -707,5 +795,28 @@ describe('@mantine/core/Tree/use-tree', () => {
       expect(result.current.isNodeLoading('documents')).toBe(false);
       expect(result.current.isNodeLoading('nonexistent')).toBe(false);
     });
+  });
+
+  it('actions captured before a state change operate on the current state', () => {
+    const hook = renderHook(() => useTree({ multiple: true }));
+    act(() => hook.result.current.initialize(data));
+
+    const { select } = hook.result.current;
+
+    act(() => select('src'));
+    act(() => select('package.json'));
+
+    expect(hook.result.current.selectedState).toStrictEqual(['src', 'package.json']);
+  });
+
+  it('queries captured before a state change read the current state', () => {
+    const hook = renderHook(() => useTree({ multiple: true }));
+    act(() => hook.result.current.initialize(data));
+
+    const { isNodeChecked } = hook.result.current;
+    expect(isNodeChecked('package.json')).toBe(false);
+
+    act(() => hook.result.current.checkNode('package.json'));
+    expect(isNodeChecked('package.json')).toBe(true);
   });
 });

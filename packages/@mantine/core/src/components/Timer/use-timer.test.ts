@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { tests } from '@mantine-tests/core';
 import { useTimer } from './use-timer';
 
 describe('@mantine/core/useTimer', () => {
@@ -16,6 +17,12 @@ describe('@mantine/core/useTimer', () => {
 
   afterAll(() => {
     jest.useRealTimers();
+  });
+
+  tests.itSupportsControllerMemoization({
+    hook: () => useTimer({ startMs: 5000 }),
+    actions: ['start', 'pause', 'resume', 'reset', 'restart'],
+    changeState: (controller) => controller.start(),
   });
 
   it('returns the initial value without starting automatically', () => {

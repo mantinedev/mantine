@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { clamp, useDidUpdate, useUncontrolled } from '@mantine/hooks';
+import { clamp, useCallbackRef, useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import {
   computeCroppedArea,
   getContainedSize,
@@ -24,7 +24,7 @@ export interface ResolvedImageCropperFlip {
   vertical: boolean;
 }
 
-export interface UseImageCropperOptions {
+export interface ImageCropperControllerOptions {
   /** Crop aspect ratio, e.g. `1` or `16 / 9`. Defaults to the viewport aspect ratio when not set */
   aspectRatio?: number;
 
@@ -88,7 +88,7 @@ export interface ImageCropperInternal {
   commit: () => void;
 }
 
-export interface UseImageCropperReturnValue {
+export interface ImageCropperController {
   /** Current zoom value */
   zoom: number;
 
@@ -155,7 +155,9 @@ export interface UseImageCropperReturnValue {
 
 const DEFAULT_CROP: ImageCropperPoint = { x: 0, y: 0 };
 
-export function useImageCropper(options: UseImageCropperOptions = {}): UseImageCropperReturnValue {
+export function useImageCropper(
+  options: ImageCropperControllerOptions = {}
+): ImageCropperController {
   const {
     aspectRatio,
     cropShape = 'rectangle',
@@ -195,14 +197,14 @@ export function useImageCropper(options: UseImageCropperOptions = {}): UseImageC
 
   const cropRef = useRef<ImageCropperPoint>(crop);
   cropRef.current = crop;
-  const zoomRef = useRef(zoom);
-  zoomRef.current = zoom;
-  const rotationRef = useRef(rotation);
-  rotationRef.current = rotation;
-  const flipRef = useRef(flip);
-  flipRef.current = flip;
-  const onCropChangeRef = useRef(onCropChange);
-  onCropChangeRef.current = onCropChange;
+
+  const latest = useRef<{
+    zoom: number;
+    rotation: number;
+    flip: ResolvedImageCropperFlip;
+  }>(null!);
+
+  latest.current = { zoom, rotation, flip };
 
   const initialRef = useRef({
     zoom: options.defaultZoom ?? 1,
@@ -221,7 +223,7 @@ export function useImageCropper(options: UseImageCropperOptions = {}): UseImageC
     image: null,
   });
 
-  const resolveAspect = useCallback(() => {
+  const resolveAspect = useCallbackRef(() => {
     if (cropShape === 'circle') {
       return 1;
     }
@@ -230,25 +232,25 @@ export function useImageCropper(options: UseImageCropperOptions = {}): UseImageC
     }
     const { container } = geometryRef.current;
     return container.width && container.height ? container.width / container.height : 1;
-  }, [aspectRatio, cropShape]);
+  });
 
-  const emitCropChange = useCallback(() => {
+  const emitCropChange = useCallbackRef(() => {
     const geometry = geometryRef.current;
-    if (!geometry.media || !geometry.cropSize || !onCropChangeRef.current) {
+    if (!geometry.media || !geometry.cropSize || !onCropChange) {
       return;
     }
 
-    onCropChangeRef.current(
+    onCropChange(
       computeCroppedArea({
         crop: cropRef.current,
         mediaSize: geometry.media,
         cropSize: geometry.cropSize,
         aspect: geometry.aspect,
-        zoom: zoomRef.current,
-        rotation: rotationRef.current,
+        zoom: latest.current.zoom,
+        rotation: latest.current.rotation,
       })
     );
-  }, []);
+  });
 
   const applyCrop = useCallback((next: ImageCropperPoint) => {
     const geometry = geometryRef.current;
@@ -262,8 +264,8 @@ export function useImageCropper(options: UseImageCropperOptions = {}): UseImageC
       next,
       geometry.media,
       geometry.cropSize,
-      zoomRef.current,
-      rotationRef.current
+      latest.current.zoom,
+      latest.current.rotation
     );
     cropRef.current = restricted;
     setCropState(restricted);
@@ -338,56 +340,50 @@ export function useImageCropper(options: UseImageCropperOptions = {}): UseImageC
     [applyCrop]
   );
 
-  const setZoom = useCallback(
-    (next: number) => {
-      const value = clamp(next, minZoom, maxZoom);
-      zoomRef.current = value;
-      setZoomValue(value);
-    },
-    [maxZoom, minZoom, setZoomValue]
-  );
+  const setZoom = useCallbackRef((next: number) => {
+    const value = clamp(next, minZoom, maxZoom);
+    latest.current.zoom = value;
+    setZoomValue(value);
+  });
 
-  const zoomBy = useCallback((delta: number) => setZoom(zoomRef.current + delta), [setZoom]);
+  const zoomBy = useCallback((delta: number) => setZoom(latest.current.zoom + delta), [setZoom]);
 
-  const setRotation = useCallback(
-    (next: number) => {
-      rotationRef.current = next;
-      setRotationValue(next);
-    },
-    [setRotationValue]
-  );
+  const setRotation = useCallbackRef((next: number) => {
+    latest.current.rotation = next;
+    setRotationValue(next);
+  });
 
   const rotateBy = useCallback(
-    (delta: number) => setRotation(rotationRef.current + delta),
+    (delta: number) => setRotation(latest.current.rotation + delta),
     [setRotation]
   );
 
-  const flipHorizontal = useCallback(() => {
-    const next = { ...flipRef.current, horizontal: !flipRef.current.horizontal };
-    flipRef.current = next;
+  const flipHorizontal = useCallbackRef(() => {
+    const next = { ...latest.current.flip, horizontal: !latest.current.flip.horizontal };
+    latest.current.flip = next;
     setFlipValue(next);
     emitCropChange();
-  }, [emitCropChange, setFlipValue]);
+  });
 
-  const flipVertical = useCallback(() => {
-    const next = { ...flipRef.current, vertical: !flipRef.current.vertical };
-    flipRef.current = next;
+  const flipVertical = useCallbackRef(() => {
+    const next = { ...latest.current.flip, vertical: !latest.current.flip.vertical };
+    latest.current.flip = next;
     setFlipValue(next);
     emitCropChange();
-  }, [emitCropChange, setFlipValue]);
+  });
 
-  const reset = useCallback(() => {
+  const reset = useCallbackRef(() => {
     const initial = initialRef.current;
-    zoomRef.current = initial.zoom;
-    rotationRef.current = initial.rotation;
-    flipRef.current = { ...initial.flip };
+    latest.current.zoom = initial.zoom;
+    latest.current.rotation = initial.rotation;
+    latest.current.flip = { ...initial.flip };
     cropRef.current = DEFAULT_CROP;
     setZoomValue(initial.zoom);
     setRotationValue(initial.rotation);
     setFlipValue({ ...initial.flip });
     setCropState(DEFAULT_CROP);
     emitCropChange();
-  }, [emitCropChange, setFlipValue, setRotationValue, setZoomValue]);
+  });
 
   useDidUpdate(() => {
     applyCrop(cropRef.current);
@@ -409,23 +405,26 @@ export function useImageCropper(options: UseImageCropperOptions = {}): UseImageC
       mediaSize: geometry.media,
       cropSize: geometry.cropSize,
       aspect: geometry.aspect,
-      zoom: zoomRef.current,
-      rotation: rotationRef.current,
+      zoom: latest.current.zoom,
+      rotation: latest.current.rotation,
     }).pixels;
   }, []);
 
-  const getCroppedImage = useCallback(
-    (imageOptions?: GetCroppedImageOptions) => {
-      const geometry = geometryRef.current;
-      const area = getCropData();
-      if (!geometry.image || !area) {
-        return Promise.reject(new Error('ImageCropper: image is not loaded yet'));
-      }
+  const getCroppedImage = useCallbackRef((imageOptions?: GetCroppedImageOptions) => {
+    const geometry = geometryRef.current;
+    const area = getCropData();
+    if (!geometry.image || !area) {
+      return Promise.reject(new Error('ImageCropper: image is not loaded yet'));
+    }
 
-      return rasterizeCroppedImage(geometry.image, area, flipRef.current, cropShape, imageOptions);
-    },
-    [cropShape, getCropData]
-  );
+    return rasterizeCroppedImage(
+      geometry.image,
+      area,
+      latest.current.flip,
+      cropShape,
+      imageOptions
+    );
+  });
 
   const commit = useCallback(() => emitCropChange(), [emitCropChange]);
 
@@ -441,34 +440,30 @@ export function useImageCropper(options: UseImageCropperOptions = {}): UseImageC
     [commit, panBy, registerImage, setContainerSize]
   );
 
-  return {
-    zoom,
-    rotation,
-    flip,
-    crop,
-    cropSize,
-    aspectRatio: cropShape === 'circle' ? 1 : aspectRatio,
-    cropShape,
-    minZoom,
-    maxZoom,
-    zoomStep,
-    setZoom,
-    zoomBy,
-    setRotation,
-    rotateBy,
-    flipHorizontal,
-    flipVertical,
-    setCrop,
-    reset,
-    getCropData,
-    getCroppedImage,
-    _internal,
-  };
-}
-
-export namespace useImageCropper {
-  export type Options = UseImageCropperOptions;
-  export type ReturnValue = UseImageCropperReturnValue;
-  export type Area = ImageCropperArea;
-  export type CropData = ImageCropperCropData;
+  return useMemo(
+    () => ({
+      zoom,
+      rotation,
+      flip,
+      crop,
+      cropSize,
+      aspectRatio: cropShape === 'circle' ? 1 : aspectRatio,
+      cropShape,
+      minZoom,
+      maxZoom,
+      zoomStep,
+      setZoom,
+      zoomBy,
+      setRotation,
+      rotateBy,
+      flipHorizontal,
+      flipVertical,
+      setCrop,
+      reset,
+      getCropData,
+      getCroppedImage,
+      _internal,
+    }),
+    [zoom, rotation, flip, crop, cropSize, aspectRatio, cropShape, minZoom, maxZoom, zoomStep]
+  );
 }

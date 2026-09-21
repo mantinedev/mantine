@@ -1,5 +1,6 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
+import { useCallbackRef } from '../utils';
 
 function range(start: number, end: number) {
   const length = end - start + 1;
@@ -38,6 +39,9 @@ export interface UsePaginationReturnValue {
   /** Active page number */
   active: number;
 
+  /** Total amount of pages, same value as the `total` option */
+  total: number;
+
   /** Function to set active page */
   setPage: (page: number) => void;
 
@@ -75,23 +79,20 @@ export function usePagination({
     finalValue: _initialPage,
   });
 
-  const setPage = useCallback(
-    (pageNumber: number) => {
-      if (pageNumber < _startValue) {
-        setActivePage(_startValue);
-      } else if (pageNumber > _endValue) {
-        setActivePage(_endValue);
-      } else {
-        setActivePage(pageNumber);
-      }
-    },
-    [_startValue, _endValue, setActivePage]
-  );
+  const setPage = useCallbackRef((pageNumber: number) => {
+    if (pageNumber < _startValue) {
+      setActivePage(_startValue);
+    } else if (pageNumber > _endValue) {
+      setActivePage(_endValue);
+    } else {
+      setActivePage(pageNumber);
+    }
+  });
 
-  const next = useCallback(() => setPage(activePage + 1), [activePage, setPage]);
-  const previous = useCallback(() => setPage(activePage - 1), [activePage, setPage]);
-  const first = useCallback(() => setPage(_startValue), [setPage, _startValue]);
-  const last = useCallback(() => setPage(_endValue), [_endValue, setPage]);
+  const next = useCallbackRef(() => setPage(activePage + 1));
+  const previous = useCallbackRef(() => setPage(activePage - 1));
+  const first = useCallbackRef(() => setPage(_startValue));
+  const last = useCallbackRef(() => setPage(_endValue));
 
   const paginationRange = useMemo((): (number | 'dots')[] => {
     const totalPageNumbers = siblings * 2 + 3 + boundaries * 2;
@@ -132,15 +133,19 @@ export function usePagination({
     ];
   }, [_total, siblings, activePage, _startValue, _endValue, boundaries]);
 
-  return {
-    range: paginationRange,
-    active: activePage,
-    setPage,
-    next,
-    previous,
-    first,
-    last,
-  };
+  return useMemo(
+    () => ({
+      range: paginationRange,
+      active: activePage,
+      total,
+      setPage,
+      next,
+      previous,
+      first,
+      last,
+    }),
+    [paginationRange, activePage, total]
+  );
 }
 
 export namespace usePagination {

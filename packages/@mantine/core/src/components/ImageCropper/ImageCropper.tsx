@@ -5,6 +5,7 @@ import {
   factory,
   Factory,
   StylesApiProps,
+  useController,
   useProps,
   useStyles,
 } from '../../core';
@@ -18,7 +19,7 @@ import {
   ImageCropperCropShape,
   ResolvedImageCropperFlip,
   useImageCropper,
-  UseImageCropperReturnValue,
+  ImageCropperController,
 } from './use-image-cropper';
 import classes from './ImageCropper.module.css';
 
@@ -35,7 +36,7 @@ export type ImageCropperStylesNames =
 export interface ImageCropperProps
   extends BoxProps, StylesApiProps<ImageCropperFactory>, ElementProps<'div', 'onChange'> {
   /** Controller returned by the `useImageCropper` hook. When provided, the option props below are ignored */
-  controller?: UseImageCropperReturnValue;
+  controller?: ImageCropperController;
 
   /** Image source, can be an object URL, data URL or remote URL @category appearance */
   src?: string;
@@ -158,29 +159,23 @@ export const ImageCropper = factory<ImageCropperFactory>((_props) => {
     ...others
   } = props;
 
-  const selfController = useImageCropper(
-    controller
-      ? undefined
-      : {
-          aspectRatio,
-          cropShape,
-          zoom,
-          defaultZoom,
-          minZoom,
-          maxZoom,
-          zoomStep,
-          rotation,
-          defaultRotation,
-          flip,
-          defaultFlip,
-          onZoomChange,
-          onRotationChange,
-          onFlipChange,
-          onCropChange,
-        }
-  );
-
-  const cropper = controller ?? selfController;
+  const cropper = useController(useImageCropper, controller, {
+    aspectRatio,
+    cropShape,
+    zoom,
+    defaultZoom,
+    minZoom,
+    maxZoom,
+    zoomStep,
+    rotation,
+    defaultRotation,
+    flip,
+    defaultFlip,
+    onZoomChange,
+    onRotationChange,
+    onFlipChange,
+    onCropChange,
+  });
 
   const getStyles = useStyles<ImageCropperFactory>({
     name: 'ImageCropper',

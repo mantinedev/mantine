@@ -22,7 +22,7 @@ import { AccordionControl, type AccordionControlProps } from './AccordionControl
 import type { AccordionItemContextValue } from './AccordionItem.context';
 import { AccordionItem, type AccordionItemProps } from './AccordionItem/AccordionItem';
 import { AccordionPanel, type AccordionPanelProps } from './AccordionPanel/AccordionPanel';
-import { useAccordion, type UseAccordionReturnValue } from './use-accordion/use-accordion';
+import { useAccordion, type AccordionController } from './use-accordion/use-accordion';
 import classes from './Accordion.module.css';
 export type AccordionStylesNames =
   | 'root'
@@ -47,7 +47,7 @@ export interface AccordionProps<Multiple extends boolean = false>
     StylesApiProps<AccordionFactory>,
     ElementProps<'div', 'value' | 'defaultValue' | 'onChange'> {
   /** Controller returned by the `useAccordion` hook. When provided, the state is owned by the controller and `multiple`, `value`, `defaultValue`, `onChange` and `disableCollapse` props are ignored @category state */
-  controller?: UseAccordionReturnValue<Multiple>;
+  controller?: AccordionController<Multiple>;
 
   /** If set, multiple items can be opened at the same time. Ignored when `controller` is set @default false @category state */
   multiple?: Multiple;
@@ -239,7 +239,7 @@ Accordion.Chevron = AccordionChevron;
 
 export namespace Accordion {
   export type Props = AccordionProps;
-  export type Controller<Multiple extends boolean = false> = UseAccordionReturnValue<Multiple>;
+  export type Controller<Multiple extends boolean = false> = AccordionController<Multiple>;
   export type StylesNames = AccordionStylesNames;
   export type CssVariables = AccordionCssVariables;
   export type Factory = AccordionFactory;

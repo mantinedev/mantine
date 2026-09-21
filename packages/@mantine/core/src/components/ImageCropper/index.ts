@@ -16,8 +16,8 @@ export type { ImageCropperControlsProps } from './ImageCropperControls';
 
 export { useImageCropper } from './use-image-cropper';
 export type {
-  UseImageCropperOptions,
-  UseImageCropperReturnValue,
+  ImageCropperControllerOptions,
+  ImageCropperController,
   ImageCropperCropShape,
   ResolvedImageCropperFlip,
 } from './use-image-cropper';
