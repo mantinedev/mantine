@@ -735,4 +735,76 @@ describe('@mantine/core/NumberInput', () => {
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(getInput()).toHaveProperty('selectionStart', 11);
   });
+  it('clamps string values on blur when trimLeadingZeroesOnBlur is false', async () => {
+    render(
+      <NumberInput
+        min={0}
+        max={20}
+        decimalScale={2}
+        fixedDecimalScale
+        trimLeadingZeroesOnBlur={false}
+      />
+    );
+
+    focusInput();
+    await enterText('100');
+    blurInput();
+    expectValue('20.00');
+  });
+
+  it('does not change in range string values on blur when trimLeadingZeroesOnBlur is false', async () => {
+    const spy = jest.fn();
+    render(
+      <NumberInput
+        min={0}
+        max={20}
+        decimalScale={2}
+        fixedDecimalScale
+        trimLeadingZeroesOnBlur={false}
+        onChange={spy}
+      />
+    );
+
+    focusInput();
+    await enterText('5');
+    blurInput();
+    expectValue('5.00');
+    expect(spy).toHaveBeenLastCalledWith('5.00');
+  });
+
+  it('does not clamp string values on blur when clampBehavior is none', async () => {
+    render(<NumberInput min={10} max={50} clampBehavior="none" />);
+
+    focusInput();
+    await enterText('007');
+    blurInput();
+    expectValue('7');
+  });
+
+  it('does not clamp values with trailing decimal separator when clampBehavior is none', async () => {
+    render(<NumberInput min={10} max={50} clampBehavior="none" />);
+
+    focusInput();
+    await enterText('100.');
+    blurInput();
+    expectValue('100.');
+  });
+
+  it('clamps values with more than 15 decimal places on blur', async () => {
+    render(<NumberInput min={10} max={50} />);
+
+    focusInput();
+    await enterText('100.1234567890123456');
+    blurInput();
+    expectValue('50');
+  });
+
+  it('preserves trailing decimal separator when value is clamped on blur', async () => {
+    render(<NumberInput min={10} max={50} />);
+
+    focusInput();
+    await enterText('100.');
+    blurInput();
+    expectValue('50.');
+  });
 });

@@ -202,7 +202,7 @@ export interface ScheduleProps
   /** Called when a drop or resize is rejected */
   onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
 
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Applies to `day`, `week` and `month` views only – `YearView` and the `MobileMonthView` used by `layout="responsive"` on small screens do not render background events at all. @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Applies to `day`, `week` and `month` views only – `YearView` and the `MobileMonthView` used by `layout="responsive"` on small screens do not render background events at all. Combined with `withEventResize`, timed background events in `day` and `week` views can also be resized by dragging their edges. @default false */
   withInteractiveBackgroundEvents?: boolean;
 
   /** Max number of generated recurring instances per recurring series @default 2000 */
