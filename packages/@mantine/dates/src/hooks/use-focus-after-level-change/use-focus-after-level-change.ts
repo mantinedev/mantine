@@ -12,7 +12,11 @@ interface PendingFocus {
   level: string;
 }
 
-export function useFocusAfterLevelChange({ rootRef, level, disabled }: UseFocusAfterLevelChangeInput) {
+export function useFocusAfterLevelChange({
+  rootRef,
+  level,
+  disabled,
+}: UseFocusAfterLevelChangeInput) {
   const pending = useRef<PendingFocus | null>(null);
 
   useEffect(() => {
