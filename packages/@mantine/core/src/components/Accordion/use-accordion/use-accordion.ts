@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useCallbackRef, useUncontrolled } from '@mantine/hooks';
 import type { AccordionValue } from '../Accordion.types';
 
 export interface AccordionControllerOptions<Multiple extends boolean = false> {
@@ -85,99 +85,71 @@ export function useAccordion<Multiple extends boolean = false>(
 
   const itemsRef = useRef<string[]>([]);
   const valueRef = useRef(value);
-  const multipleRef = useRef(multiple);
-  const disableCollapseRef = useRef(disableCollapse);
-  const setValueStateRef = useRef(setValueState);
-  const controlledRef = useRef(valueProp !== undefined);
-
   valueRef.current = value;
-  multipleRef.current = multiple;
-  disableCollapseRef.current = disableCollapse;
-  setValueStateRef.current = setValueState;
-  controlledRef.current = valueProp !== undefined;
 
-  const writeValue = useCallback((next: AccordionValue<Multiple>) => {
-    if (!controlledRef.current) {
+  const writeValue = useCallbackRef((next: AccordionValue<Multiple>) => {
+    if (valueProp === undefined) {
       valueRef.current = next;
     }
 
-    setValueStateRef.current(next);
-  }, []);
+    setValueState(next);
+  });
 
-  const commit = useCallback(
-    (items: string[]) => {
-      writeValue(
-        (multipleRef.current
-          ? items
-          : (items[items.length - 1] ?? null)) as AccordionValue<Multiple>
-      );
-    },
-    [writeValue]
-  );
+  const commit = useCallbackRef((items: string[]) => {
+    writeValue((multiple ? items : (items[items.length - 1] ?? null)) as AccordionValue<Multiple>);
+  });
 
-  const setValue = useCallback(
-    (next: AccordionValue<Multiple>) => {
-      writeValue(next);
-    },
-    [writeValue]
-  );
+  const setValue = useCallbackRef((next: AccordionValue<Multiple>) => {
+    writeValue(next);
+  });
 
-  const expand = useCallback(
-    (item: string) => {
-      const current = toArray(valueRef.current);
+  const expand = useCallbackRef((item: string) => {
+    const current = toArray(valueRef.current);
 
-      if (current.includes(item)) {
-        return;
-      }
+    if (current.includes(item)) {
+      return;
+    }
 
-      commit(multipleRef.current ? [...current, item] : [item]);
-    },
-    [commit]
-  );
+    commit(multiple ? [...current, item] : [item]);
+  });
 
-  const collapse = useCallback(
-    (item: string) => {
-      const current = toArray(valueRef.current);
+  const collapse = useCallbackRef((item: string) => {
+    const current = toArray(valueRef.current);
 
-      if (!current.includes(item)) {
-        return;
-      }
+    if (!current.includes(item)) {
+      return;
+    }
 
-      if (!multipleRef.current && disableCollapseRef.current) {
-        return;
-      }
+    if (!multiple && disableCollapse) {
+      return;
+    }
 
-      commit(current.filter((selected) => selected !== item));
-    },
-    [commit]
-  );
+    commit(current.filter((selected) => selected !== item));
+  });
 
-  const toggle = useCallback(
-    (item: string) => {
-      if (toArray(valueRef.current).includes(item)) {
-        collapse(item);
-      } else {
-        expand(item);
-      }
-    },
-    [collapse, expand]
-  );
+  const toggle = useCallbackRef((item: string) => {
+    if (toArray(valueRef.current).includes(item)) {
+      collapse(item);
+    } else {
+      expand(item);
+    }
+  });
 
-  const expandAll = useCallback(() => {
-    if (!multipleRef.current) {
+  const expandAll = useCallbackRef(() => {
+    if (!multiple) {
       return;
     }
 
     commit([...itemsRef.current]);
-  }, [commit]);
+  });
 
-  const collapseAll = useCallback(() => {
-    if (!multipleRef.current && disableCollapseRef.current) {
+  const collapseAll = useCallbackRef(() => {
+    if (!multiple && disableCollapse) {
       return;
     }
 
     commit([]);
-  }, [commit]);
+  });
 
   const isExpanded = useCallback((item: string) => toArray(valueRef.current).includes(item), []);
 

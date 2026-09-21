@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDidUpdate } from '../use-did-update/use-did-update';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { useCallbackRef } from '../utils';
 
 export interface UseCountdownFormatted {
   /** Number of whole days remaining */
@@ -90,27 +91,26 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
   const runningRef = useRef(false);
   const completedRef = useRef(false);
 
-  const isTargetModeRef = useRef(isTargetMode);
-  const targetDateRef = useRef(targetDate);
-  const clampedCountStartRef = useRef(clampedCountStart);
-  const resolvedAutoStartRef = useRef(resolvedAutoStart);
-  const onCompleteRef = useRef(onComplete);
-  const onTickRef = useRef(onTick);
-
   countRef.current = count;
-  isTargetModeRef.current = isTargetMode;
-  targetDateRef.current = targetDate;
-  clampedCountStartRef.current = clampedCountStart;
-  resolvedAutoStartRef.current = resolvedAutoStart;
-  onCompleteRef.current = onComplete;
-  onTickRef.current = onTick;
+
+  const handleComplete = useCallbackRef(onComplete);
+  const handleTick = useCallbackRef(onTick);
+
+  const latest = useRef<{
+    isTargetMode: boolean;
+    targetDate: UseCountdownOptions['targetDate'];
+    clampedCountStart: number;
+    resolvedAutoStart: boolean;
+  }>(null!);
+
+  latest.current = { isTargetMode, targetDate, clampedCountStart, resolvedAutoStart };
 
   const complete = useCallback(() => {
     runningRef.current = false;
     setRunning(false);
     if (!completedRef.current) {
       completedRef.current = true;
-      onCompleteRef.current?.();
+      handleComplete();
     }
   }, []);
 
@@ -120,10 +120,10 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
     }
 
     let end: number;
-    if (isTargetModeRef.current) {
-      end = getTargetTime(targetDateRef.current!);
+    if (latest.current.isTargetMode) {
+      end = getTargetTime(latest.current.targetDate!);
     } else {
-      const base = countRef.current > 0 ? countRef.current : clampedCountStartRef.current;
+      const base = countRef.current > 0 ? countRef.current : latest.current.clampedCountStart;
       end = Date.now() + base;
     }
 
@@ -157,16 +157,16 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
     setRunning(false);
     completedRef.current = false;
 
-    if (isTargetModeRef.current) {
-      const end = getTargetTime(targetDateRef.current!);
+    if (latest.current.isTargetMode) {
+      const end = getTargetTime(latest.current.targetDate!);
       endRef.current = end;
       const remaining = Math.max(0, end - Date.now());
       countRef.current = remaining;
       setCount(remaining);
     } else {
       endRef.current = 0;
-      countRef.current = clampedCountStartRef.current;
-      setCount(clampedCountStartRef.current);
+      countRef.current = latest.current.clampedCountStart;
+      setCount(latest.current.clampedCountStart);
     }
   }, []);
 
@@ -178,7 +178,7 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
     const id = window.setInterval(() => {
       const remaining = Math.max(0, endRef.current - Date.now());
       setCount(remaining);
-      onTickRef.current?.(remaining);
+      handleTick(remaining);
 
       if (remaining <= 0) {
         window.clearInterval(id);
@@ -192,14 +192,13 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
   useIsomorphicEffect(() => {
     if (resolvedAutoStart) {
       start();
-    } else if (isTargetModeRef.current) {
-      const end = getTargetTime(targetDateRef.current!);
+    } else if (latest.current.isTargetMode) {
+      const end = getTargetTime(latest.current.targetDate!);
       endRef.current = end;
       const remaining = Math.max(0, end - Date.now());
       countRef.current = remaining;
       setCount(remaining);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const targetTime = isTargetMode ? getTargetTime(targetDate!) : null;
@@ -210,8 +209,8 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
       setRunning(false);
       completedRef.current = false;
       endRef.current = 0;
-      countRef.current = clampedCountStartRef.current;
-      setCount(clampedCountStartRef.current);
+      countRef.current = latest.current.clampedCountStart;
+      setCount(latest.current.clampedCountStart);
       return;
     }
 
@@ -227,7 +226,7 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
       return;
     }
 
-    if (!wasRunning && resolvedAutoStartRef.current) {
+    if (!wasRunning && latest.current.resolvedAutoStart) {
       start();
     }
   }, [targetTime]);

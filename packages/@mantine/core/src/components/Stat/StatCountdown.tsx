@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useIsomorphicEffect } from '@mantine/hooks';
+import { useCallbackRef, useIsomorphicEffect } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -121,11 +121,8 @@ export const StatCountdown = factory<StatCountdownFactory>((_props) => {
   const targetRef = useRef(target);
   targetRef.current = target;
 
-  const onTickRef = useRef(onTick);
-  onTickRef.current = onTick;
-
-  const onFinishRef = useRef(onFinish);
-  onFinishRef.current = onFinish;
+  const handleTick = useCallbackRef(onTick);
+  const handleFinish = useCallbackRef(onFinish);
 
   const finishedRef = useRef(false);
 
@@ -143,11 +140,11 @@ export const StatCountdown = factory<StatCountdownFactory>((_props) => {
 
       const next = Math.max(0, targetRef.current - Date.now());
       setRemaining(next);
-      onTickRef.current?.(next);
+      handleTick(next);
 
       if (next <= 0) {
         finishedRef.current = true;
-        onFinishRef.current?.();
+        handleFinish();
         return;
       }
 

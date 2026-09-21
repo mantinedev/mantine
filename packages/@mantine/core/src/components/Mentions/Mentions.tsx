@@ -597,7 +597,6 @@ export const Mentions = factory<MentionsFactory>((_props) => {
     } else {
       combobox.closeDropdown();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, queryState.loading, queryState.error, suggestions.length]);
 
   useEffect(() => {
@@ -605,7 +604,6 @@ export const Mentions = factory<MentionsFactory>((_props) => {
       setSelectedOptionId(combobox.selectFirstOption());
       setSelectedIndex(combobox.getSelectedOptionIndex());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [suggestions, combobox.dropdownOpened]);
 
   useIsomorphicEffect(() => {
@@ -621,7 +619,6 @@ export const Mentions = factory<MentionsFactory>((_props) => {
       left: coords.left - textareaRef.current.scrollLeft,
       height: coords.height,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, _value]);
 
   const inlineTopItem = suggestionsDisplay === 'inline' && query ? suggestions[0] : undefined;

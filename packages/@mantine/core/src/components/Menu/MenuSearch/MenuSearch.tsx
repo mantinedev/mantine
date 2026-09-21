@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useMergedRef } from '@mantine/hooks';
+import { useCallbackRef, useMergedRef } from '@mantine/hooks';
 import { createEventHandler, ElementProps, factory, Factory, useProps } from '../../../core';
 import { Input, InputProps } from '../../Input/Input';
 import { useMenuContext } from '../Menu.context';
@@ -69,8 +69,7 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
   const ctx = useMenuContext();
   const inputRef = useRef<HTMLInputElement>(null);
   const mergedRef = useMergedRef(ref, inputRef);
-  const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
+  const emitChange = useCallbackRef(onChange);
 
   useEffect(() => {
     const unregister = ctx.registerSearch();
@@ -80,7 +79,7 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
   useEffect(() => {
     if (clearSearchOnClose) {
       ctx.searchExitClearRef.current = () => {
-        onChangeRef.current?.({
+        emitChange({
           currentTarget: { value: '' },
         } as unknown as React.ChangeEvent<HTMLInputElement>);
       };

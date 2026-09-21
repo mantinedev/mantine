@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useDidUpdate, useIsomorphicEffect } from '@mantine/hooks';
+import { useCallbackRef, useDidUpdate, useIsomorphicEffect } from '@mantine/hooks';
 import { getDisplayMs, getTimerValue, TimerValue } from './get-timer-value';
 import { parseDuration } from './parse-duration';
 
@@ -90,54 +90,51 @@ export function useTimer(options: TimerControllerOptions = {}): TimerController 
   const runningRef = useRef(false);
   const completedRef = useRef(false);
 
-  const countdownRef = useRef(countdown);
-  const intervalRef = useRef(interval);
-  const initialMsRef = useRef(initialMs);
-  const lowerBoundRef = useRef(lowerBound);
-  const upperBoundRef = useRef(upperBound);
-  const onTickRef = useRef(onTick);
-  const onCompleteRef = useRef(onComplete);
+  const handleTick = useCallbackRef(onTick);
+  const handleComplete = useCallbackRef(onComplete);
 
-  countdownRef.current = countdown;
-  intervalRef.current = interval;
-  initialMsRef.current = initialMs;
-  lowerBoundRef.current = lowerBound;
-  upperBoundRef.current = upperBound;
-  onTickRef.current = onTick;
-  onCompleteRef.current = onComplete;
+  const latest = useRef<{
+    countdown: boolean;
+    interval: number;
+    initialMs: number;
+    lowerBound: number;
+    upperBound: number | undefined;
+  }>(null!);
+
+  latest.current = { countdown, interval, initialMs, lowerBound, upperBound };
 
   const setDisplay = (raw: number) => {
     totalMsRef.current = raw;
     setTotalMs(
       getDisplayMs(
         raw,
-        intervalRef.current,
-        countdownRef.current,
-        initialMsRef.current,
-        lowerBoundRef.current
+        latest.current.interval,
+        latest.current.countdown,
+        latest.current.initialMs,
+        latest.current.lowerBound
       )
     );
   };
 
   const clampValue = useCallback((raw: number) => {
-    if (countdownRef.current) {
-      return Math.max(lowerBoundRef.current, raw);
+    if (latest.current.countdown) {
+      return Math.max(latest.current.lowerBound, raw);
     }
-    return upperBoundRef.current !== undefined
-      ? Math.min(raw, upperBoundRef.current)
+    return latest.current.upperBound !== undefined
+      ? Math.min(raw, latest.current.upperBound)
       : Math.max(0, raw);
   }, []);
 
   const isCompleteValue = useCallback((value: number) => {
-    if (countdownRef.current) {
-      return value <= lowerBoundRef.current;
+    if (latest.current.countdown) {
+      return value <= latest.current.lowerBound;
     }
-    return upperBoundRef.current !== undefined && value >= upperBoundRef.current;
+    return latest.current.upperBound !== undefined && value >= latest.current.upperBound;
   }, []);
 
   const computeCurrent = useCallback(() => {
     const elapsed = Date.now() - startedAtRef.current;
-    const raw = countdownRef.current
+    const raw = latest.current.countdown
       ? baseValueRef.current - elapsed
       : baseValueRef.current + elapsed;
     return clampValue(raw);
@@ -149,7 +146,7 @@ export function useTimer(options: TimerControllerOptions = {}): TimerController 
     setPaused(false);
     if (!completedRef.current) {
       completedRef.current = true;
-      onCompleteRef.current?.();
+      handleComplete();
     }
   }, []);
 
@@ -195,14 +192,14 @@ export function useTimer(options: TimerControllerOptions = {}): TimerController 
   const reset = useCallback(() => {
     runningRef.current = false;
     completedRef.current = false;
-    baseValueRef.current = initialMsRef.current;
-    setDisplay(initialMsRef.current);
+    baseValueRef.current = latest.current.initialMs;
+    setDisplay(latest.current.initialMs);
     setRunning(false);
     setPaused(false);
   }, []);
 
   const restart = useCallback(() => {
-    runFrom(initialMsRef.current);
+    runFrom(latest.current.initialMs);
   }, [runFrom]);
 
   useEffect(() => {
@@ -213,11 +210,11 @@ export function useTimer(options: TimerControllerOptions = {}): TimerController 
     let timeoutId: number;
 
     const distanceToBoundary = (current: number) =>
-      countdownRef.current
-        ? current - lowerBoundRef.current
-        : upperBoundRef.current === undefined
+      latest.current.countdown
+        ? current - latest.current.lowerBound
+        : latest.current.upperBound === undefined
           ? Infinity
-          : upperBoundRef.current - current;
+          : latest.current.upperBound - current;
 
     const scheduleNext = () => {
       const elapsed = Date.now() - startedAtRef.current;
@@ -233,14 +230,14 @@ export function useTimer(options: TimerControllerOptions = {}): TimerController 
 
       const current = computeCurrent();
       setDisplay(current);
-      onTickRef.current?.(
+      handleTick(
         getTimerValue(
           getDisplayMs(
             current,
-            intervalRef.current,
-            countdownRef.current,
-            initialMsRef.current,
-            lowerBoundRef.current
+            latest.current.interval,
+            latest.current.countdown,
+            latest.current.initialMs,
+            latest.current.lowerBound
           )
         )
       );
@@ -260,14 +257,12 @@ export function useTimer(options: TimerControllerOptions = {}): TimerController 
 
   useIsomorphicEffect(() => {
     if (autoStart) {
-      runFrom(initialMsRef.current);
+      runFrom(latest.current.initialMs);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useDidUpdate(() => {
     reset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialMs, countdown]);
 
   const value = useMemo(() => getTimerValue(totalMs), [totalMs]);

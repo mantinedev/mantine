@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { safePolygon, type HandleCloseContext } from '@floating-ui/react';
+import { useCallbackRef } from '@mantine/hooks';
 import { useDirection } from '../../core';
 import type { CascaderOption, CascaderSafeAreaPolygonOptions } from './Cascader';
 
@@ -26,8 +27,7 @@ export function useCascaderSafeArea({ safeAreaPolygon, onFlush }: UseCascaderSaf
   const dirRef = useRef(dir);
   dirRef.current = dir;
 
-  const onFlushRef = useRef(onFlush);
-  onFlushRef.current = onFlush;
+  const handleFlush = useCallbackRef(onFlush);
 
   const blockedLevelRef = useRef<number | null>(null);
   const pendingRef = useRef<{ level: number; option: CascaderOption } | null>(null);
@@ -63,7 +63,7 @@ export function useCascaderSafeArea({ safeAreaPolygon, onFlush }: UseCascaderSaf
           disarm();
 
           if (pending) {
-            onFlushRef.current(pending.level, pending.option);
+            handleFlush(pending.level, pending.option);
           }
         },
       } as unknown as HandleCloseContext);

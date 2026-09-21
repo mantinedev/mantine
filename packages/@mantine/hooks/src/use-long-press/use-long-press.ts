@@ -147,7 +147,6 @@ export function useLongPress(
     }
 
     return handlers;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onLongPress, threshold, onCancel, onFinish, onStart, cancelOnMove, eventsKey]);
 }
 

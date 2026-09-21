@@ -123,7 +123,6 @@ export function useMentionsQuery({
           ? filter({ query, items })
           : defaultFilter({ query, items }, ignoreAccents);
     return { items: capItems(filtered, maxSuggestions), loading: false, error: null };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFunctionData, enabled, query, sourceIndex, data, filter, maxSuggestions, ignoreAccents]);
 
   if (!enabled || query == null || !source) {

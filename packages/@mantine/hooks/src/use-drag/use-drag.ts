@@ -1,6 +1,7 @@
 // Required to disable for webkit-user-select, although deprecated, it is still required for Safari support
 /* eslint-disable @typescript-eslint/no-deprecated */
 import { useCallback, useRef, useState } from 'react';
+import { useCallbackRef } from '../utils';
 
 type Vector2 = [number, number];
 
@@ -135,8 +136,7 @@ export function useDrag<T extends HTMLElement = any>(
 ): UseDragReturnValue<T> {
   const [active, setActive] = useState(false);
 
-  const handlerRef = useRef(handler);
-  handlerRef.current = handler;
+  const handleDrag = useCallbackRef(handler);
 
   const optionsRef = useRef(options);
   optionsRef.current = options;
@@ -236,7 +236,7 @@ export function useDrag<T extends HTMLElement = any>(
         s.firstFired = true;
         activateDrag();
 
-        handlerRef.current({
+        handleDrag({
           xy: [event.clientX, event.clientY],
           initial: [event.clientX, event.clientY],
           movement: [0, 0],
@@ -298,7 +298,7 @@ export function useDrag<T extends HTMLElement = any>(
       s.prevXY = [event.clientX, event.clientY];
       s.prevTimestamp = event.timeStamp;
 
-      handlerRef.current({
+      handleDrag({
         xy: [event.clientX, event.clientY],
         initial: [...s.startXY],
         movement,
@@ -333,7 +333,7 @@ export function useDrag<T extends HTMLElement = any>(
           const maxDist = Math.max(dist[0], dist[1]);
           const isTap = maxDist < (opts.tapThreshold ?? 3);
 
-          handlerRef.current({
+          handleDrag({
             xy: [event.clientX, event.clientY],
             initial: [...s.startXY],
             movement: mov,
@@ -367,7 +367,7 @@ export function useDrag<T extends HTMLElement = any>(
       const maxDistance = Math.max(distance[0], distance[1]);
       const tap = opts.filterTaps === true && maxDistance < (opts.tapThreshold ?? 3);
 
-      handlerRef.current({
+      handleDrag({
         xy: [event.clientX, event.clientY],
         initial: [...s.startXY],
         movement,
@@ -397,7 +397,7 @@ export function useDrag<T extends HTMLElement = any>(
       const rawMovement: Vector2 = [event.clientX - s.startXY[0], event.clientY - s.startXY[1]];
       const movement = applyAxisConstraint(rawMovement);
 
-      handlerRef.current({
+      handleDrag({
         xy: [event.clientX, event.clientY],
         initial: [...s.startXY],
         movement,

@@ -1,4 +1,5 @@
 import { RefCallback, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallbackRef } from '../utils';
 
 export interface UseScrollerOptions {
   /** Amount of pixels to scroll when calling scroll functions, `200` by default */
@@ -63,8 +64,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
   const startX = useRef(0);
   const scrollLeftStart = useRef(0);
 
-  const onScrollStateChangeRef = useRef(onScrollStateChange);
-  onScrollStateChangeRef.current = onScrollStateChange;
+  const handleScrollStateChange = useCallbackRef(onScrollStateChange);
 
   const updateScrollState = useCallback(() => {
     const container = containerRef.current;
@@ -86,7 +86,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
       setCanScrollStart(newCanScrollStart);
       setCanScrollEnd(newCanScrollEnd);
 
-      onScrollStateChangeRef.current?.({
+      handleScrollStateChange({
         canScrollStart: newCanScrollStart,
         canScrollEnd: newCanScrollEnd,
       });

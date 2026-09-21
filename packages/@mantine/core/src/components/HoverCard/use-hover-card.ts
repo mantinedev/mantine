@@ -9,7 +9,7 @@ import {
   useHover,
   useInteractions,
 } from '@floating-ui/react';
-import { useId } from '@mantine/hooks';
+import { useCallbackRef, useId } from '@mantine/hooks';
 import { HoverCardGroupContext } from './HoverCardGroup/HoverCardGroup';
 
 interface UseHoverCard {
@@ -120,8 +120,7 @@ export function useHoverCard(settings: UseHoverCard) {
     }
   }, [clearTimeouts, settings.closeDelay, onChange]);
 
-  const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
+  const handleChange = useCallbackRef(onChange);
 
   useEffect(() => () => clearTimeouts(), [clearTimeouts]);
 
@@ -138,7 +137,7 @@ export function useHoverCard(settings: UseHoverCard) {
     const observer = new IntersectionObserver(() => {
       if (!node.isConnected || node.getClientRects().length === 0) {
         clearTimeouts();
-        onChangeRef.current(false);
+        handleChange(false);
       }
     });
 

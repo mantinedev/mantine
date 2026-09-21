@@ -236,7 +236,6 @@ export const Editable = factory<EditableFactory>((_props) => {
     }
 
     isFirstRenderRef.current = false;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editable.editing]);
 
   return (

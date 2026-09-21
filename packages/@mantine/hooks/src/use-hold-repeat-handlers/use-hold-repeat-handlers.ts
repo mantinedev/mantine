@@ -139,7 +139,6 @@ export function useHoldRepeatHandlers(
     });
 
     return handlers;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [start, stop, eventsKey, keysKey, preventDefault]);
 }
 
