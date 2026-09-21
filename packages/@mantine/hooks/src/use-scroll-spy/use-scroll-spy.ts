@@ -1,10 +1,25 @@
 import React, { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { randomId } from '../utils';
 
+function resolveHeadingNode(heading: HTMLElement, selector: string, index: number): HTMLElement {
+  if (heading.isConnected) {
+    return heading;
+  }
+
+  const nodeById = heading.id ? document.getElementById(heading.id) : null;
+
+  if (nodeById) {
+    return nodeById;
+  }
+
+  return document.querySelectorAll<HTMLElement>(selector)[index] || heading;
+}
+
 function getHeadingsData(
   headings: HTMLElement[],
   getDepth: (element: HTMLElement) => number,
-  getValue: (element: HTMLElement) => string
+  getValue: (element: HTMLElement) => string,
+  selector: string
 ): UseScrollSpyHeadingData[] {
   const result: UseScrollSpyHeadingData[] = [];
 
@@ -14,7 +29,7 @@ function getHeadingsData(
       depth: getDepth(heading),
       value: getValue(heading),
       id: heading.id || randomId(),
-      getNode: () => (heading.id ? document.getElementById(heading.id)! : heading),
+      getNode: () => resolveHeadingNode(heading, selector, i),
     });
   }
 
@@ -135,7 +150,8 @@ export function useScrollSpy({
     const headings = getHeadingsData(
       Array.from(document.querySelectorAll(selector)),
       getDepth,
-      getValue
+      getValue,
+      selector
     );
     headingsRef.current = headings;
     setInitialized(true);

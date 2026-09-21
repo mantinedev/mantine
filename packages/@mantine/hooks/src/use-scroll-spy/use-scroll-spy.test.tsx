@@ -67,6 +67,30 @@ describe('@mantine/hooks/use-scroll-spy', () => {
     unmount();
   });
 
+  it('resolves heading nodes again after their DOM nodes have been replaced', () => {
+    const container = document.createElement('div');
+    container.innerHTML = '<h2>First</h2><h2>Second</h2>';
+    document.body.appendChild(container);
+
+    const { result } = renderHook(() => useScrollSpy({ selector: 'h2' }));
+    expect(result.current.data).toHaveLength(2);
+
+    const initialNodes = result.current.data.map((heading) => heading.getNode());
+    container.innerHTML = '<h2>First</h2><h2>Second</h2>';
+
+    expect(initialNodes.every((node) => node.isConnected)).toBe(false);
+    expect(result.current.data.map((heading) => heading.getNode().isConnected)).toStrictEqual([
+      true,
+      true,
+    ]);
+    expect(result.current.data.map((heading) => heading.getNode().textContent)).toStrictEqual([
+      'First',
+      'Second',
+    ]);
+
+    document.body.removeChild(container);
+  });
+
   it('resolves a React ref that is attached to an element rendered in the same pass', () => {
     const addSpy = jest.spyOn(HTMLElement.prototype, 'addEventListener');
 

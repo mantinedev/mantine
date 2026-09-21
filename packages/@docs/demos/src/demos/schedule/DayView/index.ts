@@ -33,6 +33,7 @@ export { recurringEvents } from './DayView.demo.recurringEvents';
 export { backgroundEvents } from './DayView.demo.backgroundEvents';
 export { backgroundEventsCustomStyle } from './DayView.demo.backgroundEventsCustomStyle';
 export { interactiveBackgroundEvents } from './DayView.demo.interactiveBackgroundEvents';
+export { resizableBackgroundEvents } from './DayView.demo.resizableBackgroundEvents';
 export { customHeader } from './DayView.demo.customHeader';
 export { localization } from './DayView.demo.localization';
 export { getTimeSlotProps } from './DayView.demo.getTimeSlotProps';

@@ -367,6 +367,19 @@ describe('@mantine/schedule/MobileMonthView', () => {
     expect(screen.getByText('All day')).toBeInTheDocument();
   });
 
+  it('supports allDay label override for all-day events', () => {
+    render(
+      <MobileMonthView
+        {...defaultProps}
+        selectedDate="2025-11-15"
+        labels={{ allDay: 'Ganztägig' }}
+      />
+    );
+
+    expect(screen.getByText('Ganztägig')).toBeInTheDocument();
+    expect(screen.queryByText('All day')).not.toBeInTheDocument();
+  });
+
   it('hides outside days when withOutsideDays is false', () => {
     const { container } = render(<MobileMonthView {...defaultProps} withOutsideDays={false} />);
     const hiddenDays = container.querySelectorAll(

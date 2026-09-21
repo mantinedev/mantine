@@ -226,10 +226,64 @@
       background-color: var(--bg-event-hover);
     }
   }
+
+  /* The resized edge repeatedly crosses the pointer, so hover feedback would flicker */
+  &:where([data-resizing]) {
+    @mixin hover {
+      background-color: var(--bg-event-bg);
+    }
+  }
 }
 
-.dayView:where([data-event-interaction], [data-slot-dragging]) .dayViewBackgroundEvent {
+.dayViewBackgroundEventResizeHandle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  max-width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  cursor: ns-resize;
+  pointer-events: all;
+  z-index: 4;
+  touch-action: none;
+  background-color: var(--bg-event-color);
+  opacity: 0;
+  transition: opacity 100ms ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px -6px;
+  }
+
+  &:where([data-edge='top']) {
+    top: 0;
+  }
+
+  &:where([data-edge='bottom']) {
+    bottom: 0;
+  }
+
+  .dayViewBackgroundEvent:where(:hover, [data-resizing]) & {
+    opacity: 0.5;
+  }
+
+  @mixin hover {
+    opacity: 0.8;
+  }
+}
+
+/* The resizing background event is the one that set `data-event-interaction`, so it must
+   keep capturing pointer events. */
+.dayView:where([data-event-interaction], [data-slot-dragging])
+  .dayViewBackgroundEvent:not([data-resizing]) {
   pointer-events: none;
+
+  & .dayViewBackgroundEventResizeHandle {
+    pointer-events: none;
+    opacity: 0;
+  }
 }
 
 .dayViewAllDay {

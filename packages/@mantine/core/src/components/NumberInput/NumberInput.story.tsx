@@ -355,3 +355,47 @@ export function Paste() {
     </div>
   );
 }
+
+const clampConfigs: { label: string; props: NumberInputProps }[] = [
+  {
+    label: 'Broken – fixedDecimalScale + trimLeadingZeroesOnBlur={false}',
+    props: { decimalScale: 2, fixedDecimalScale: true, trimLeadingZeroesOnBlur: false },
+  },
+  {
+    label: 'Works – same, but trimLeadingZeroesOnBlur is default',
+    props: { decimalScale: 2, fixedDecimalScale: true },
+  },
+  {
+    label: 'Works – trimLeadingZeroesOnBlur={false}, no fixedDecimalScale',
+    props: { decimalScale: 2, trimLeadingZeroesOnBlur: false },
+  },
+];
+
+function ClampInput({ label, props }: (typeof clampConfigs)[number]) {
+  const [value, setValue] = useState<NumberInputValue>('');
+  return (
+    <NumberInput
+      label={label}
+      description={`Value: ${value === '' ? 'empty' : String(value)} (${typeof value})`}
+      placeholder="Type 100, then blur"
+      min={0}
+      max={20}
+      hideControls
+      value={value}
+      onChange={setValue}
+      {...props}
+    />
+  );
+}
+
+export function ClampWithDecimalScale() {
+  return (
+    <div style={{ padding: 40, maxWidth: 560 }}>
+      <Stack>
+        {clampConfigs.map((config) => (
+          <ClampInput key={config.label} {...config} />
+        ))}
+      </Stack>
+    </div>
+  );
+}

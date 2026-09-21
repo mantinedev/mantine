@@ -384,9 +384,6 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
     onDropdownClose: () => {
       onDropdownClose?.();
       combobox.resetSelectedOption();
-      if (searchable) {
-        combobox.focusTarget();
-      }
     },
   });
 
@@ -434,6 +431,7 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
         unstyled={unstyled}
         attributes={attributes}
         onOptionSubmit={handleOptionSubmit}
+        returnFocus
         {...comboboxProps}
         {...others}
       >
