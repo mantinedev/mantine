@@ -3,27 +3,89 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.DataGridAccessibility);
 
+## Focus model
+
+A grid has exactly one focus model for its body. Without `withCellSelection`, rows are the focus
+targets: the first rendered row has `tabindex="0"`, the others `-1`, and a focused row shows a 2px
+inset ring on every cell. With `withCellSelection`, cells are the focus targets (roving `tabindex`
+managed by TanStack Table), rows carry no `tabindex` and the focused cell shows a 2px focus ring.
+The same model serves the table body, the virtualized body and the list view.
+
 ## Keyboard navigation
 
-DataGrid supports keyboard navigation for rows:
+Row focus model:
 
-- **Arrow Up/Down** — Move focus between rows
-- **Enter** — Toggle row expansion (when row expansion is enabled)
-- **Escape** — Remove focus from the current row
-- **Space/Enter** on sortable header — Toggle sort direction
+<DataTable
+  head={['Key', 'Action']}
+  data={[
+    ['`Tab`', 'Moves focus into the grid (the first row) and out of it'],
+    ['`ArrowDown` / `ArrowUp`', 'Move focus to the next / previous row'],
+    ['`Home` / `End`', 'Move focus to the first / last rendered row'],
+    ['`Enter`', 'Calls `onRowClick`, toggles expansion of an expandable row, toggles a group row; starts editing when editing is enabled and the row is editable'],
+    ['`F2`', 'Starts editing the focused row when editing is enabled'],
+    ['`Space`', 'Toggles selection of the focused row under `selectOnRowClick`, toggles a group row'],
+    ['`Shift + Space`', 'Extends the selection range under `selectOnRowClick`'],
+    ['`Escape`', 'Blurs the focused row'],
+  ]}
+/>
+
+Cell focus model (`withCellSelection`):
+
+<DataTable
+  head={['Key', 'Action']}
+  data={[
+    ['`Arrow` keys', 'Move the focused cell and start a new range there'],
+    ['`Shift + Arrow`', 'Extends the current range in that direction'],
+    ['`Enter` / `F2`', 'Starts editing the focused cell when editing is enabled'],
+  ]}
+/>
+
+Editing:
+
+<DataTable
+  head={['Key', 'Action']}
+  data={[
+    ['`Enter`', 'Saves the drafts (validation runs first)'],
+    ['`Escape`', 'Cancels editing and drops the drafts'],
+    ['`Tab` / `Shift + Tab`', 'Moves between the editors of the row in row editing mode, wrapping around'],
+  ]}
+/>
+
+Header:
+
+<DataTable
+  head={['Key', 'Action']}
+  data={[
+    ['`Tab`', 'Moves between sortable header buttons, column menu buttons and other header controls; non-sortable headers are not in the tab order'],
+    ['`Enter` / `Space`', 'Toggles the sort of a sortable header, opens the column menu'],
+    ['Column menu items', '**Move left** / **Move right** reorder columns from the keyboard when `withColumnReorder` is enabled'],
+  ]}
+/>
+
+Keys pressed inside controls within a row (checkboxes, buttons, editors) and inside a nested grid
+rendered in an expansion panel are never intercepted by the row handler.
 
 ## ARIA attributes
 
-- Sortable column headers include `aria-sort` (`ascending`, `descending`, or `none`)
-- Selection checkboxes have appropriate labels
-- Expand/collapse buttons have `aria-expanded` state
+- Sortable column headers carry `aria-sort` (`ascending`, `descending` or `none`) and render a button for the sort action
+- The column menu button is labelled with the `columnMenu` label (`Column menu`) and carries `aria-expanded` while open
+- Selection checkboxes and radios are labelled with the `selectAll` and `selectRow` labels; expand toggles with `expandRow` / `collapseRow`, the reorder grip with `dragToReorder`
+- Group rows carry `aria-expanded`; expandable rows carry `aria-expanded` in the virtualized body
+- A row with a pending async save carries `aria-busy`; invalid editor cells carry `aria-invalid`
+- The table (or the `role="grid"` container) carries `aria-busy` while `loading` is set; skeleton rows are `aria-hidden`
+- The virtualized body uses `role="grid"`, `aria-rowcount`, `role="row"` with `aria-rowindex`, and `role="gridcell"` / `role="columnheader"` with `aria-colindex`
 
 ## Focus management
 
-Rows with `tabindex="0"` are focusable. In virtualized mode, focus is maintained when rows
-scroll in and out of view.
+- When editing ends, focus returns to the row (or to the cell under cell selection) so keyboard users keep their place
+- The default editor is focused and its content selected when editing starts; in row mode the originating cell's editor is focused, or the first editable one
+- The row focus ring, the header focus ring and the editing rings are drawn as inset box-shadows, so they are never clipped by the frame
+- In virtualized mode, rows that scroll out of the window are unmounted; move focus with the arrow keys to keep it inside the rendered window
 
 ## Screen readers
 
-DataGrid renders semantic HTML table elements (`<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, `<td>`)
-which screen readers interpret natively. Row position information is conveyed through the HTML structure.
+The table body renders semantic HTML table elements (`<table>`, `<thead>`, `<tbody>`, `<tfoot>`,
+`<tr>`, `<th>`, `<td>`), which screen readers interpret natively; row position is conveyed by the
+table structure. The virtualized body relies on the ARIA grid roles listed above. The status text
+of `DataGrid.Footer`, the row count and the selection bar count are plain text; they are not live
+regions.

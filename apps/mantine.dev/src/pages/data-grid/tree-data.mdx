@@ -7,14 +7,43 @@ export default Layout(MDX_DATA.DataGridTreeData);
 ## Basic tree data
 
 Use `getSubRows` in `useDataGrid` to define how child rows are accessed from your data.
-DataGrid automatically renders indentation and expand/collapse controls based on row depth.
+DataGrid renders the tree in the first visible data column: rows are indented by 20px per level, a
+chevron toggles rows that have children, and guide lines connect every level.
 
 <Demo data={DataGridDemos.treeData} />
+
+## Tree lines
+
+Guide lines are on by default (`withTreeLines`): a vertical line runs through every ancestor level
+at 10px, a horizontal connector leads to the chevron, and the line closes at the last sibling. The
+geometry is fixed at every grid size and the lines use `--dg-border-color`. The chevron slot is
+reserved on leaf rows so labels of siblings line up. Rows carry `data-tree-row`, `data-depth` and
+`data-leaf`.
+
+Set `withTreeLines={false}` for a plain indent with the chevron only:
+
+<Demo data={DataGridDemos.treeDataPlainIndent} />
+
+## Icons and custom labels
+
+The tree cell wraps the output of the column's `cell` renderer in a `treeLabel` block that truncates
+long content with an ellipsis (or wraps it under `textOverflow="wrap"`), so icons and any other
+inline content are rendered by the column itself:
+
+<Demo data={DataGridDemos.treeDataIcons} />
+
+## Tree column
+
+The tree always lives in the first visible data column: put the column that should carry the
+indentation and the chevron first in your column definitions (or first in `columnOrder`). No expand
+utility column is injected for tree data; `withRowExpansion` and `renderExpandedRow` are ignored
+because expansion reveals the child rows.
 
 ## Filtering through tree hierarchy
 
 Set `filterFromLeafRows` to `true` to filter from leaf rows upward. When a leaf row matches
-the filter, its parent rows are automatically included to maintain the tree structure.
+the filter, its parent rows are automatically included to maintain the tree structure, and the
+guide lines close at the last visible sibling.
 
 <Demo data={DataGridDemos.treeDataFiltering} />
 
@@ -24,11 +53,6 @@ By default, expanded sub-rows count toward the page size. Set `paginateExpandedR
 to only count top-level rows when paginating.
 
 <Demo data={DataGridDemos.treeDataPagination} />
-
-## Manual tree column
-
-By default, the first data column shows the expand/collapse toggle. You can control which
-column renders the tree toggle by placing it as the first column in your column definitions.
 
 ## Server-side expansion
 
@@ -47,3 +71,14 @@ const store = useDataGrid({
   getRowCanExpand: (row) => (row.original.children?.length ?? 0) > 0,
 });
 ```
+
+## Selection
+
+With `withRowSelection`, `enableSubRowSelection` (default `true`) makes selecting a parent select
+its children. Tree rows take the ordinary selected look and the row focus model; the toggle buttons
+are labelled with the `expandRow` / `collapseRow` labels.
+
+## List view and row reorder
+
+In list view tree rows render flat, without indentation. Row reorder is not available with tree
+data.

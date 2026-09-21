@@ -1,5 +1,16 @@
 import { useState } from 'react';
-import { Badge, Box, Button, Group, Menu, Select, Stack, Text, TextInput } from '@mantine/core';
+import {
+  Badge,
+  Box,
+  Button,
+  Group,
+  Menu,
+  Popover,
+  Select,
+  Stack,
+  Text,
+  TextInput,
+} from '@mantine/core';
 import { DataGrid, useDataGrid, DataGridColumnDef } from './index';
 
 export default { title: 'DataGrid' };
@@ -297,25 +308,68 @@ export function ColumnFilters() {
     getRowId: (row) => row.id,
     withFiltering: true,
     withFaceting: true,
+    withGlobalFilter: true,
   });
+  const activeCount = store.columnFilters.length;
   return (
     <Box p="md">
       <DataGrid store={store}>
         <DataGrid.Toolbar>
-          <TextInput
-            size={store.controlSize}
-            placeholder="First name contains"
-            value={(store.getColumnFilterValue('firstName') as string) ?? ''}
-            onChange={(event) => store.setColumnFilter('firstName', event.currentTarget.value)}
-          />
-          <Select
-            size={store.controlSize}
-            placeholder="Department"
-            clearable
-            data={store.getFacetedUniqueValues('department')}
-            value={(store.getColumnFilterValue('department') as string) ?? null}
-            onChange={(value) => store.setColumnFilter('department', value)}
-          />
+          <DataGrid.GlobalFilter />
+          <Popover position="bottom-start" shadow="md" width={260}>
+            <Popover.Target>
+              <Button
+                variant="default"
+                size={store.controlSize}
+                rightSection={
+                  activeCount > 0 ? (
+                    <Badge size="xs" circle>
+                      {activeCount}
+                    </Badge>
+                  ) : null
+                }
+              >
+                Filters
+              </Button>
+            </Popover.Target>
+            <Popover.Dropdown>
+              <Stack gap="xs">
+                <TextInput
+                  size="xs"
+                  label="Name contains"
+                  value={(store.getColumnFilterValue('firstName') as string) ?? ''}
+                  onChange={(event) =>
+                    store.setColumnFilter('firstName', event.currentTarget.value)
+                  }
+                />
+                <Select
+                  size="xs"
+                  label="Department"
+                  clearable
+                  data={store.getFacetedUniqueValues('department')}
+                  value={(store.getColumnFilterValue('department') as string) ?? null}
+                  onChange={(value) => store.setColumnFilter('department', value)}
+                />
+                <Select
+                  size="xs"
+                  label="Status"
+                  clearable
+                  data={store.getFacetedUniqueValues('status')}
+                  value={(store.getColumnFilterValue('status') as string) ?? null}
+                  onChange={(value) => store.setColumnFilter('status', value)}
+                />
+                <Button
+                  size="xs"
+                  variant="subtle"
+                  disabled={activeCount === 0}
+                  onClick={() => store.resetColumnFilters()}
+                >
+                  Clear filters
+                </Button>
+              </Stack>
+            </Popover.Dropdown>
+          </Popover>
+          <DataGrid.RowCount />
         </DataGrid.Toolbar>
       </DataGrid>
     </Box>
@@ -348,11 +402,46 @@ export function Pagination() {
     pageSize: 5,
   });
   return (
-    <Box p="md">
+    <Stack p="md">
+      <Text fw={600}>pagination="pages" (default)</Text>
       <DataGrid store={store}>
         <DataGrid.Footer pageSizeOptions={[5, 10, 20]} />
       </DataGrid>
-    </Box>
+      <Text fw={600}>pagination="arrows"</Text>
+      <DataGrid store={store}>
+        <DataGrid.Footer pagination="arrows" pageSizeOptions={[5, 10, 20]} />
+      </DataGrid>
+      <Text fw={600}>pagination="none", status only</Text>
+      <DataGrid store={store}>
+        <DataGrid.Footer pagination="none" />
+      </DataGrid>
+      <Text fw={600}>custom footer children</Text>
+      <DataGrid store={store}>
+        <DataGrid.Footer>
+          <Text size="sm">
+            Page {store.pagination.pageIndex + 1} of {store.table.getPageCount()}
+          </Text>
+          <Group gap="xs" ml="auto">
+            <Button
+              size={store.controlSize}
+              variant="default"
+              disabled={!store.table.getCanPreviousPage()}
+              onClick={() => store.table.previousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              size={store.controlSize}
+              variant="default"
+              disabled={!store.table.getCanNextPage()}
+              onClick={() => store.table.nextPage()}
+            >
+              Next
+            </Button>
+          </Group>
+        </DataGrid.Footer>
+      </DataGrid>
+    </Stack>
   );
 }
 
@@ -464,11 +553,86 @@ export function RowExpansion() {
 }
 
 export function StripedHover() {
-  const store = useDataGrid({ data: employees, columns, getRowId: (row) => row.id });
+  const store = useDataGrid({
+    data: employees.slice(0, 8),
+    columns,
+    getRowId: (row) => row.id,
+    withRowSelection: true,
+  });
   return (
-    <Box p="md">
+    <Stack p="md">
+      <Text fw={600}>striped + highlightOnHover</Text>
       <DataGrid store={store} striped highlightOnHover />
-    </Box>
+      <Text fw={600}>striped="even" without row rules</Text>
+      <DataGrid store={store} striped="even" withRowBorders={false} highlightOnHover />
+      <Text fw={600}>stripedColor + highlightOnHoverColor</Text>
+      <DataGrid
+        store={store}
+        striped
+        stripedColor="var(--mantine-primary-color-light)"
+        highlightOnHover
+        highlightOnHoverColor="var(--mantine-color-yellow-light)"
+      />
+    </Stack>
+  );
+}
+
+export function Frame() {
+  const store = useDataGrid({
+    data: employees.slice(0, 5),
+    columns,
+    getRowId: (row) => row.id,
+    withGlobalFilter: true,
+    pageSize: 5,
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>default frame (theme.defaultRadius)</Text>
+      <DataGrid store={store}>
+        <DataGrid.Toolbar />
+        <DataGrid.Footer />
+      </DataGrid>
+      <Text fw={600}>radius="xl"</Text>
+      <DataGrid store={store} radius="xl">
+        <DataGrid.Toolbar />
+        <DataGrid.Footer />
+      </DataGrid>
+      <Text fw={600}>radius={0}</Text>
+      <DataGrid store={store} radius={0} />
+      <Text fw={600}>withTableBorder={false} (toolbar and footer rules stay)</Text>
+      <DataGrid store={store} withTableBorder={false}>
+        <DataGrid.Toolbar />
+        <DataGrid.Footer />
+      </DataGrid>
+      <Text fw={600}>borderColor="violet"</Text>
+      <DataGrid store={store} borderColor="violet" withColumnBorders />
+    </Stack>
+  );
+}
+
+export function Separators() {
+  const store = useDataGrid({
+    data: employees.slice(0, 6),
+    columns,
+    getRowId: (row) => row.id,
+    withRowSelection: true,
+    withRowNumbers: true,
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>withRowBorders (default)</Text>
+      <DataGrid store={store} />
+      <Text fw={600}>withRowBorders="subtle"</Text>
+      <DataGrid store={store} withRowBorders="subtle" />
+      <Text fw={600}>withRowBorders={false}</Text>
+      <DataGrid store={store} withRowBorders={false} />
+      <Text fw={600}>withColumnBorders (every column, utility columns included)</Text>
+      <DataGrid store={store} withColumnBorders />
+      <Text fw={600}>withColumnBorders="data" (utility columns share one divider)</Text>
+      <DataGrid store={store} withColumnBorders="data" />
+      <Text fw={600}>striped + withColumnBorders, subtle rules, tabularNums</Text>
+      <DataGrid store={store} striped withColumnBorders withRowBorders="subtle" tabularNums />
+    </Stack>
   );
 }
 
@@ -591,17 +755,36 @@ export function StickyHeader() {
 }
 
 export function Grouping() {
+  const groupedColumns: DataGridColumnDef<Employee>[] = [
+    { accessorKey: 'firstName', header: 'Name', enableSorting: true },
+    { accessorKey: 'department', header: 'Department', enableSorting: true },
+    {
+      accessorKey: 'salary',
+      header: 'Salary',
+      enableSorting: true,
+      meta: { align: 'end' },
+      aggregationFn: 'mean',
+      cell: (info) => `$${info.getValue<number>().toLocaleString()}`,
+      aggregatedCell: (info) => `avg $${Math.round(info.getValue<number>()).toLocaleString()}`,
+    },
+    { accessorKey: 'status', header: 'Status' },
+  ];
   const store = useDataGrid({
     data: employees,
-    columns,
+    columns: groupedColumns,
     getRowId: (row) => row.id,
     withGrouping: true,
+    withRowSelection: true,
+    withRowNumbers: true,
     grouping: ['department'],
   });
   return (
-    <Box p="md">
-      <DataGrid store={store} />
-    </Box>
+    <Stack p="md">
+      <Text fw={600}>plain group rows (default)</Text>
+      <DataGrid store={store} striped highlightOnHover />
+      <Text fw={600}>withTintedGroupRows</Text>
+      <DataGrid store={store} withTintedGroupRows highlightOnHover />
+    </Stack>
   );
 }
 
@@ -815,12 +998,12 @@ export function AllFeatures() {
     columns,
     getRowId: (row) => row.id,
     withSorting: true,
-    withFiltering: true,
     withGlobalFilter: true,
     pageSize: 10,
     withColumnResizing: true,
     withColumnPinning: true,
     withColumnVisibility: true,
+    withColumnReorder: true,
     withRowSelection: true,
     withRowExpansion: true,
     withGrouping: true,
@@ -838,6 +1021,7 @@ export function AllFeatures() {
         striped
         highlightOnHover
         stickyHeader
+        withColumnMenu
         height={500}
         renderExpandedRow={({ row }) => (
           <Text size="sm" p="sm">
@@ -845,7 +1029,13 @@ export function AllFeatures() {
           </Text>
         )}
       >
-        <DataGrid.Footer />
+        <DataGrid.Toolbar />
+        <DataGrid.SelectionBar>
+          <Button size={store.controlSize} variant="light" color="red">
+            Delete
+          </Button>
+        </DataGrid.SelectionBar>
+        <DataGrid.Footer statusFormat="long" />
       </DataGrid>
     </Box>
   );
@@ -1068,5 +1258,322 @@ export function RowEditing() {
         Type "Error" as the first name to see a rejected save. {log.join(' · ')}
       </Text>
     </Box>
+  );
+}
+
+export function CellSelection() {
+  const store = useDataGrid({
+    data: employees.slice(0, 8),
+    columns,
+    getRowId: (row) => row.id,
+    withCellSelection: true,
+    withRowNumbers: true,
+    withRowSelection: true,
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>drag or shift+click to select a range, arrows move the focused cell</Text>
+      <DataGrid store={store} />
+      <Text fw={600}>virtual body</Text>
+      <DataGrid store={store} virtualize="rows" height={220} />
+    </Stack>
+  );
+}
+
+export function ListView() {
+  const store = useDataGrid({
+    data: employees.slice(0, 5),
+    columns,
+    getRowId: (row) => row.id,
+    withRowSelection: true,
+    withGlobalFilter: true,
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>listView (cards)</Text>
+      <DataGrid store={store} listView selectOnRowClick>
+        <DataGrid.Toolbar />
+      </DataGrid>
+      <Text fw={600}>listView="flat"</Text>
+      <DataGrid store={store} listView="flat" selectOnRowClick highlightOnHover>
+        <DataGrid.Toolbar />
+        <DataGrid.Footer pagination="none" />
+      </DataGrid>
+      <Text fw={600}>custom renderListItem</Text>
+      <DataGrid
+        store={store}
+        listView
+        renderListItem={({ row }) => (
+          <Group justify="space-between">
+            <div>
+              <Text fw={600}>
+                {row.original.firstName} {row.original.lastName}
+              </Text>
+              <Text size="sm" c="dimmed">
+                {row.original.email}
+              </Text>
+            </div>
+            <Badge variant="light">{row.original.department}</Badge>
+          </Group>
+        )}
+      />
+    </Stack>
+  );
+}
+
+interface TreeEmployee extends Employee {
+  subRows?: TreeEmployee[];
+}
+
+const treeEmployees: TreeEmployee[] = [
+  {
+    ...employees[0],
+    subRows: [
+      { ...employees[5], subRows: [employees[10], employees[15]] },
+      { ...employees[1], subRows: [employees[6]] },
+      employees[11],
+    ],
+  },
+  { ...employees[4], subRows: [employees[9], employees[14], employees[19]] },
+  employees[3],
+];
+
+const treeColumns: DataGridColumnDef<TreeEmployee>[] = [
+  { accessorKey: 'firstName', header: 'Name' },
+  { accessorKey: 'department', header: 'Department' },
+  {
+    accessorKey: 'salary',
+    header: 'Salary',
+    meta: { align: 'end' },
+    cell: (info) => `$${info.getValue<number>().toLocaleString()}`,
+  },
+];
+
+export function TreeData() {
+  const store = useDataGrid({
+    data: treeEmployees,
+    columns: treeColumns,
+    getRowId: (row) => row.id,
+    getSubRows: (row) => row.subRows,
+    withRowSelection: true,
+    withRowNumbers: true,
+    expanded: true,
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>withTreeLines (default)</Text>
+      <DataGrid store={store} />
+      <Text fw={600}>withTreeLines={'{false}'}, striped</Text>
+      <DataGrid store={store} withTreeLines={false} striped />
+      <Text fw={600}>virtual body</Text>
+      <DataGrid store={store} virtualize="rows" height={260} />
+    </Stack>
+  );
+}
+
+export function ExpandedRows() {
+  const store = useDataGrid({
+    data: employees.slice(0, 6),
+    columns,
+    getRowId: (row) => row.id,
+    withRowExpansion: true,
+    withRowSelection: true,
+    expanded: { '2': true, '4': true },
+  });
+  const renderExpandedRow = ({ row }: { row: { original: Employee } }) => (
+    <Text size="sm">
+      {row.original.firstName} {row.original.lastName} · {row.original.email} · $
+      {row.original.salary.toLocaleString()}
+    </Text>
+  );
+  return (
+    <Stack p="md">
+      <Text fw={600}>plain (default), expandOnRowClick, striped</Text>
+      <DataGrid store={store} striped expandOnRowClick renderExpandedRow={renderExpandedRow} />
+      <Text fw={600}>withTintedExpandedRows</Text>
+      <DataGrid
+        store={store}
+        withTintedExpandedRows
+        highlightOnHover
+        expandOnRowClick
+        renderExpandedRow={renderExpandedRow}
+      />
+      <Text fw={600}>virtual body</Text>
+      <DataGrid
+        store={store}
+        virtualize="rows"
+        height={280}
+        expandOnRowClick
+        renderExpandedRow={renderExpandedRow}
+      />
+    </Stack>
+  );
+}
+
+export function Totals() {
+  const totalsColumns: DataGridColumnDef<Employee>[] = [
+    { accessorKey: 'firstName', header: 'Name', footer: 'Totals' },
+    { accessorKey: 'department', header: 'Department', aggregationFn: 'uniqueCount' },
+    {
+      accessorKey: 'salary',
+      header: 'Salary',
+      meta: {
+        align: 'end',
+        aggregationLabel: 'Payroll',
+        formatAggregatedValue: (value) => `$${Number(value).toLocaleString()}`,
+      },
+      aggregationFn: 'sum',
+      cell: (info) => `$${info.getValue<number>().toLocaleString()}`,
+    },
+    {
+      id: 'meanSalary',
+      accessorFn: (row) => row.salary,
+      header: 'Mean salary',
+      meta: {
+        align: 'end',
+        formatAggregatedValue: (value) => `$${Math.round(Number(value)).toLocaleString()}`,
+      },
+      aggregationFn: 'mean',
+      cell: (info) => `$${info.getValue<number>().toLocaleString()}`,
+    },
+    { accessorKey: 'status', header: 'Status', aggregationFn: 'count' },
+  ];
+  const store = useDataGrid({
+    data: employees,
+    columns: totalsColumns,
+    getRowId: (row) => row.id,
+    withGlobalFilter: true,
+    withRowSelection: true,
+    pageSize: 5,
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>totals over every filtered row, footer after the tfoot</Text>
+      <DataGrid store={store}>
+        <DataGrid.Toolbar />
+        <DataGrid.Footer />
+      </DataGrid>
+      <Text fw={600}>virtual body</Text>
+      <DataGrid store={store} virtualize="rows" height={200} />
+    </Stack>
+  );
+}
+
+export function CellStatus() {
+  const [data, setData] = useState(employees.slice(0, 8));
+  const [saved] = useState(() => new Map(employees.map((item) => [item.id, item])));
+  const store = useDataGrid({
+    data,
+    columns: [
+      { accessorKey: 'firstName', header: 'First name' },
+      { accessorKey: 'lastName', header: 'Last name' },
+      {
+        accessorKey: 'email',
+        header: 'Email',
+        meta: {
+          validate: (value) => (String(value).includes('@') ? null : 'Enter a valid email'),
+        },
+      },
+      {
+        accessorKey: 'salary',
+        header: 'Salary',
+        meta: {
+          align: 'end',
+          validate: (value) => (Number(value) >= 30000 ? null : 'Salary must be at least 30000'),
+        },
+      },
+    ],
+    getRowId: (row) => row.id,
+    editingMode: 'cell',
+    getCellStatus: ({ row, columnId, value }) => {
+      if (columnId === 'salary' && Number(value) > 100000) {
+        return 'invalid';
+      }
+      const original = saved.get(row.id);
+      return original && (original as any)[columnId] !== value ? 'dirty' : undefined;
+    },
+    onEditSave: ({ newRow }) => {
+      setData((prev) => prev.map((item) => (item.id === newRow.id ? newRow : item)));
+    },
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>
+        double-click to edit: changed cells are dirty, salaries above 100000 are invalid, an invalid
+        draft blocks the save
+      </Text>
+      <DataGrid store={store} striped highlightOnHover />
+      <Text fw={600}>virtual body</Text>
+      <DataGrid store={store} virtualize="rows" height={220} />
+    </Stack>
+  );
+}
+
+export function VirtualizationParity() {
+  const [data, setData] = useState(manyRows);
+  const parityColumns: DataGridColumnDef<Employee>[] = [
+    { accessorKey: 'firstName', header: 'Name', enableSorting: true },
+    { accessorKey: 'department', header: 'Department', enableSorting: true },
+    {
+      accessorKey: 'salary',
+      header: 'Salary',
+      enableSorting: true,
+      meta: { align: 'end' },
+      cell: (info) => `$${info.getValue<number>().toLocaleString()}`,
+    },
+    { accessorKey: 'email', header: 'Email', size: 260 },
+    { accessorKey: 'status', header: 'Status', meta: { align: 'center' } },
+  ];
+  const store = useDataGrid({
+    data,
+    columns: parityColumns,
+    getRowId: (row) => row.id,
+    withRowSelection: true,
+    withRowNumbers: true,
+    withRowExpansion: true,
+    withColumnPinning: true,
+    withColumnResizing: true,
+    withColumnReorder: true,
+    columnPinning: { start: ['firstName'], end: ['status'] },
+    rowSelection: { '1': true, '2': true },
+    editingMode: 'cell',
+    onEditSave: ({ newRow }) => {
+      setData((prev) => prev.map((item) => (item.id === newRow.id ? newRow : item)));
+    },
+  });
+  const renderExpandedRow = ({ row }: { row: { original: Employee } }) => (
+    <Text size="sm">{row.original.email}</Text>
+  );
+  return (
+    <Stack p="md" style={{ maxWidth: 760 }}>
+      <Text fw={600}>table body</Text>
+      <DataGrid
+        store={store}
+        striped
+        highlightOnHover
+        withColumnMenu
+        sortIndicator="always"
+        stickyHeader
+        height={260}
+        renderExpandedRow={renderExpandedRow}
+      >
+        <DataGrid.Toolbar />
+        <DataGrid.Footer pagination="none" />
+      </DataGrid>
+      <Text fw={600}>virtual body, same store and props</Text>
+      <DataGrid
+        store={store}
+        striped
+        highlightOnHover
+        withColumnMenu
+        sortIndicator="always"
+        virtualize="rows"
+        height={260}
+        renderExpandedRow={renderExpandedRow}
+      >
+        <DataGrid.Toolbar />
+        <DataGrid.Footer pagination="none" />
+      </DataGrid>
+    </Stack>
   );
 }

@@ -151,4 +151,22 @@ describe('@mantine/data-grid/totals-row', () => {
       totalsRow(container).querySelector('.mantine-DataGrid-aggregationValue')
     ).toHaveTextContent('90');
   });
+
+  describe('column footer rows', () => {
+    it('renders no column footer row when no column defines footer', () => {
+      const { container } = render(<Grid />);
+      expect(container.querySelectorAll('tfoot tr')).toHaveLength(1);
+      expect(container.querySelector('tfoot tr td[class*="aggregationCell"]')).toBeInTheDocument();
+    });
+
+    it('renders the column footer row before the totals row when a column defines footer', () => {
+      const { container } = render(
+        <Grid columns={[{ accessorKey: 'name', header: 'Name', footer: 'Totals' }, columns[1]]} />
+      );
+      const rows = container.querySelectorAll('tfoot tr');
+      expect(rows).toHaveLength(2);
+      expect(rows[0]).toHaveTextContent('Totals');
+      expect(rows[1].querySelector('[class*="aggregationValue"]')).toHaveTextContent('90');
+    });
+  });
 });

@@ -28,7 +28,11 @@ const store = useDataGrid({
 ## Server-side filtering
 
 Set `manualFiltering` to disable client-side filtering. Use controlled `columnFilters`
-and `onColumnFiltersChange` to pass filter state to your API.
+and `onColumnFiltersChange` to pass filter state to your API. The grid renders no filter inputs:
+bind your own controls to `store.setColumnFilter` / `store.getColumnFilterValue` or to
+`store.setGlobalFilter`, exactly as for client-side filtering (see [Filtering](/data-grid/filtering)).
+The filter values are whatever your controls store; the grid never interprets them under
+`manualFiltering`.
 
 ```tsx
 const store = useDataGrid({
@@ -44,7 +48,8 @@ const store = useDataGrid({
 ## Server-side pagination
 
 Set `manualPagination` and provide `rowCount` so DataGrid knows the total number of pages
-without having all data in memory.
+without having all data in memory. `DataGrid.Footer` reads the same value to render the
+`1–10 of 200` range and the page count; without `rowCount` the status falls back to `Page 1 of 2`.
 
 ```tsx
 const store = useDataGrid({
@@ -60,7 +65,10 @@ const store = useDataGrid({
 ## Full example
 
 The following example combines server-side sorting, filtering, and pagination with a simulated
-API delay. The `loading` prop shows an overlay while data is being fetched.
+API delay. The `loading` prop renders skeleton rows on the first load and then, with
+`loadingVariant="bar"`, a progress bar under the header that keeps the current rows visible and
+interactive while the next page is fetched. See [States](/data-grid/states) for the other loading
+variants.
 
 <Demo data={DataGridDemos.fullServerSide} />
 
@@ -82,7 +90,7 @@ const store = useDataGrid({
 
 ## Debounced filtering
 
-When triggering API calls from column filter inputs, debounce the filter value to avoid
+When triggering API calls from filter controls, debounce the filter value to avoid
 sending a request on every keystroke:
 
 ```tsx
@@ -114,22 +122,28 @@ const store = useDataGrid({
 });
 ```
 
-## Faceted filter options
+## Filter options from the API
 
-When using server-side filtering, the API typically returns available filter values alongside the data.
-Pass these as column `filterSelectOptions` to display a select dropdown instead of a free-text input.
+When using server-side filtering, the API typically returns the available filter values alongside
+the data (`withFaceting` would only see the current page). Feed them to your own filter controls,
+for example a `Select` in the toolbar:
 
 ```tsx
-const columns = [
-  {
-    accessorKey: 'department',
-    header: 'Department',
-    filterSelectOptions: facetedValues.department,
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    filterSelectOptions: ['active', 'inactive'],
-  },
-];
+<DataGrid store={store}>
+  <DataGrid.Toolbar>
+    <Select
+      size={store.controlSize}
+      placeholder="Department"
+      clearable
+      data={facets.department}
+      value={(store.getColumnFilterValue('department') as string) ?? null}
+      onChange={(value) => store.setColumnFilter('department', value)}
+    />
+  </DataGrid.Toolbar>
+</DataGrid>
 ```
+
+## Empty results
+
+The `emptyState` payload reports `rowCount` from the `rowCount` option, so a server-side grid can
+tell an empty data source from an empty page of results, see [States](/data-grid/states).

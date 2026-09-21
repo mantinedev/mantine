@@ -418,6 +418,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
                 ctx.withRowExpansion || hasAutoHeight ? rowVirtualizer.measureElement : undefined
               }
               data-index={virtualItem.index}
+              data-last-row={virtualItem.index === rows.length - 1 || undefined}
               style={{
                 position: 'absolute',
                 top: 0,
@@ -430,7 +431,11 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
             </div>
           );
         })
-      : rows.map((row, rowIndex) => <div key={row.id}>{renderRowContent(row, rowIndex)}</div>);
+      : rows.map((row, rowIndex) => (
+          <div key={row.id} data-last-row={rowIndex === rows.length - 1 || undefined}>
+            {renderRowContent(row, rowIndex)}
+          </div>
+        ));
 
   function renderHeaderCell(
     header: Header<DataGridFeatures, any, unknown>,

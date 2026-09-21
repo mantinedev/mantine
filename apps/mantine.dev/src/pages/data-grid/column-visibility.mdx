@@ -7,7 +7,11 @@ export default Layout(MDX_DATA.DataGridColumnVisibility);
 ## Basic column visibility
 
 Pass `withColumnVisibility` to `useDataGrid` to allow users to show and hide columns.
-Use `DataGrid.ColumnVisibilityToggle` inside `DataGrid.Toolbar` to render the labeled `Columns` button with the toggle menu.
+`DataGrid.ColumnVisibilityToggle` renders a labeled `Columns` button (the `columnVisibilityLabel`
+label, or `children`) with a checkbox menu of the columns; an empty `<DataGrid.Toolbar />`
+renders it automatically when column visibility is enabled. The menu lists data columns only:
+utility columns and columns with `enableHiding: false` are left out, and `menuProps` configures the
+menu.
 
 <Demo data={DataGridDemos.columnVisibility} />
 
@@ -22,9 +26,15 @@ The state is an object mapping column IDs to boolean values. Access current stat
 ## Disable hiding per column
 
 Set `enableHiding: false` on column definitions to prevent specific columns from being hidden.
-These columns appear as disabled in the visibility toggle menu.
+These columns are not listed in the visibility toggle menu and get no **Hide column** item in the
+column menu.
 
 <Demo data={DataGridDemos.columnVisibilityEnableHiding} />
+
+## Column menu
+
+With `withColumnMenu` on `DataGrid`, every hideable column gets a **Hide column** item in its
+header menu, see [Customization](/data-grid/customization#column-menu).
 
 ## Toggle all columns
 
@@ -63,3 +73,6 @@ const store = useDataGrid({
   columnVisibility: { email: false, startDate: false },
 });
 ```
+
+Hiding a utility column through state (for example `{ __select__: false }`) is possible but not
+exposed in the menu.

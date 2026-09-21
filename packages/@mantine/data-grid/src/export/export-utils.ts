@@ -2,7 +2,10 @@ import { Column, Table, RowData } from '@tanstack/react-table';
 import { getColumnLabel } from '../get-column-label';
 import type { DataGridFeatures } from '../table-features';
 
+/** Rows included in an export: every row, the filtered rows, the selected rows or the current page */
 export type ExportRowScope = 'all' | 'filtered' | 'selected' | 'page';
+
+/** Columns included in an export: the visible columns, every column or an explicit list of column ids; utility columns and `meta.disableExport` columns are always excluded */
 export type ExportColumnScope = 'visible' | 'all' | string[];
 
 export function getExportColumns<TData extends RowData>(

@@ -36,14 +36,24 @@ export interface DataGridEditingState {
 }
 
 export interface DataGridEditStartPayload<TFeatures extends TableFeatures, TData extends RowData> {
+  /** Row that entered edit mode */
   row: Row<TFeatures, TData>;
+
+  /** Column that received focus, `null` when editing started from an actions button or the keyboard in row mode */
   columnId: string | null;
 }
 
 export interface DataGridEditSavePayload<TFeatures extends TableFeatures, TData extends RowData> {
+  /** Row being saved */
   row: Row<TFeatures, TData>;
+
+  /** Row data with the drafts written back through each column's `accessorKey` */
   newRow: TData;
+
+  /** Row data before the edit, `row.original` */
   oldRow: TData;
+
+  /** Ids of the columns whose draft differs from the current value */
   changedColumnIds: string[];
 }
 
@@ -51,17 +61,26 @@ export interface DataGridEditSaveErrorPayload<
   TFeatures extends TableFeatures,
   TData extends RowData,
 > {
+  /** Row whose save failed */
   row: Row<TFeatures, TData>;
+
+  /** Row data that was passed to `onEditSave` */
   newRow: TData;
 }
 
 export interface DataGridEditCancelPayload<TFeatures extends TableFeatures, TData extends RowData> {
+  /** Row whose drafts were discarded */
   row: Row<TFeatures, TData>;
 }
 
 export interface DataGridCellStatusPayload<TFeatures extends TableFeatures, TData extends RowData> {
+  /** Row of the cell */
   row: Row<TFeatures, TData>;
+
+  /** Column id of the cell */
   columnId: string;
+
+  /** Current cell value */
   value: unknown;
 }
 

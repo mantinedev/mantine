@@ -33,7 +33,10 @@ export interface DataGridColumnMeta<TData extends RowData = any, TValue = unknow
   /** Excludes the column from cell and row editing */
   disableEditing?: boolean;
 
+  /** Excludes the column from every export format and from `DataGrid.ExportButton` */
   disableExport?: boolean;
+
+  /** Label rendered above the aggregated value in the totals row, replaces the label derived from a string `aggregationFn` */
   aggregationLabel?: string;
 
   /** Formats the aggregated value rendered in the totals row, defaults to `String(value)` */

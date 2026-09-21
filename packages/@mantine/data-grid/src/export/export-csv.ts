@@ -10,11 +10,22 @@ import {
 } from './export-utils';
 
 export interface ExportCsvOptions {
+  /** File name without the `.csv` extension, @default 'data-grid-export' */
   fileName?: string;
+
+  /** Value separator, @default ',' */
   delimiter?: string;
+
+  /** Whether the first line holds the column labels, @default true */
   includeHeaders?: boolean;
+
+  /** Rows to export, @default 'all' */
   rows?: ExportRowScope;
+
+  /** Columns to export, @default 'visible' */
   columns?: ExportColumnScope;
+
+  /** Formats a cell value before it is written, `String(value)` by default */
   valueFormatter?: (value: unknown, columnId: string) => string;
 }
 

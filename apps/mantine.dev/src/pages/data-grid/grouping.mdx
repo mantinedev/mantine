@@ -7,14 +7,35 @@ export default Layout(MDX_DATA.DataGridGrouping);
 ## Basic grouping
 
 Pass `grouping` with an array of column IDs to `useDataGrid` to group rows by one or more columns.
-Group headers show the grouped value with an expand/collapse toggle to show or hide the rows within.
+Each group renders a group row with a chevron, the grouped value and the number of rows in the
+group; expand a group to reveal its rows.
 
 <Demo data={DataGridDemos.grouping} />
+
+## Group rows
+
+A group row is rendered per column, like any other row: utility cells behave as on a data row
+(the selection checkbox selects every leaf, the row number cell stays empty), the grouping column's
+cell holds the label (or the first visible data column when the grouping column is hidden), columns
+with an `aggregationFn` render their `aggregatedCell`, and the rest stay empty. The label reads
+`Department: Engineering (5)`: the column label (`meta.label`, a string `header` or the id) and the
+count at weight 400, the value at weight 600, rendered through the column's `cell` when it is a
+function. The count is the number of leaf rows in the group (`row.getLeafRows().length`), across
+nested groups.
+
+The whole row toggles the group: click anywhere on it, or press `Enter` / `Space` while it is
+focused; the chevron is decorative and the `tr` carries `aria-expanded`. Group rows always take the
+hover background, never the selected look, and carry `data-group-row`. Set `withTintedGroupRows` on
+`DataGrid` to paint them with `--dg-striped-color`:
+
+<Demo data={DataGridDemos.groupingTinted} />
 
 ## Interactive grouping
 
 Use controlled `grouping` state with `onGroupingChange` to toggle grouping per column dynamically.
-Buttons or other controls can add or remove column IDs from the grouping array.
+Buttons or other controls can add or remove column IDs from the grouping array. With
+`withColumnMenu` on `DataGrid`, every column that can be grouped gets **Group by this column** /
+**Ungroup** items in its header menu.
 
 <Demo data={DataGridDemos.groupingInteractive} />
 
@@ -27,10 +48,40 @@ The order of IDs determines the grouping depth — the first ID is the outermost
 
 ## Aggregation
 
-Add `aggregationFn` and `aggregatedCell` to column definitions to display computed values in group header rows.
+Add `aggregationFn` and `aggregatedCell` to column definitions to display computed values in group rows.
 TanStack Table provides built-in aggregation functions: `sum`, `min`, `max`, `mean`, `median`, `count`, `unique`, `uniqueCount`, `first`, `last` and `extent`.
 
 <Demo data={DataGridDemos.groupingAggregation} />
+
+## Totals row
+
+Every column with an `aggregationFn` also gets a cell in the totals row of `DataGrid.Tfoot`, which
+the grid renders automatically under the body (after any column `footer` row). The cell stacks a
+label above the value: the label is `meta.aggregationLabel`, or for a built-in aggregation name one
+of the `aggregationSum` (`Sum`), `aggregationCount`, `aggregationMean` (`Average`),
+`aggregationMin`, `aggregationMax`, `aggregationMedian`, `aggregationUnique`,
+`aggregationUniqueCount` and `aggregationExtent` (`Range`) labels; custom functions get no label.
+The value is formatted by `meta.formatAggregatedValue(value, rows)` (`String(value)` by default)
+and aggregates the filtered rows across every page, group rows excluded. Cells follow `meta.align`;
+the `aggregationCell`, `aggregationLabel` and `aggregationValue` selectors style them.
+
+```tsx
+const columns = [
+  {
+    accessorKey: 'salary',
+    header: 'Salary',
+    aggregationFn: 'sum',
+    meta: {
+      align: 'end',
+      aggregationLabel: 'Payroll',
+      formatAggregatedValue: (value) => `$${Number(value).toLocaleString()}`,
+    },
+  },
+];
+```
+
+The totals row is rendered whether or not the grid is grouped, so an `aggregationFn` on a plain
+grid is the way to get a totals row.
 
 ## Custom aggregation
 
@@ -70,13 +121,19 @@ The `groupedColumnMode` option controls what happens to a column after it is use
 <DataTable
   head={['Value', 'Behavior']}
   data={[
-    ["`'reorder'` (default)", 'Grouped columns are moved to the front of the column list'],
+    ["`'reorder'` (default)", 'Grouped columns are moved to the front of the data columns, right after the utility columns'],
     ["`'remove'`", 'Grouped columns are hidden from the table'],
     ['`false`', 'Grouped columns stay in their original position'],
   ]}
 />
 
 <Demo data={DataGridDemos.groupedColumnMode} />
+
+## Group selection
+
+With `withRowSelection`, the checkbox of a group row selects or deselects every leaf row of the
+group and shows the indeterminate state while only some of them are selected. Group rows themselves
+never carry `data-selected`.
 
 ## Expand and collapse all groups
 
@@ -121,3 +178,8 @@ function Demo() {
   return <DataGrid store={store} />;
 }
 ```
+
+## Cell selection
+
+Under `withCellSelection` group cells are excluded from ranges; the label cell of a group row is
+the keyboard target and `Enter` / `Space` toggle the group.

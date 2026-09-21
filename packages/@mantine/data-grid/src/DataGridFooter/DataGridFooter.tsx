@@ -17,6 +17,8 @@ import { formatLabel, renderLabel } from '../format-label';
 import { getSelectedCount } from '../get-selected-count';
 import classes from '../DataGrid.module.css';
 
+const PAGE_SIZE_SELECT_WIDTH = { xs: 110, sm: 122, md: 138 } as const;
+
 export type DataGridFooterStylesNames =
   | 'footer'
   | 'footerStatus'
@@ -146,7 +148,7 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
                 label: formatLabel(labels.pageSize, { count: size }),
               }))}
               aria-label={labels.pageSizeLabel}
-              w={selectProps?.w ?? 110}
+              w={selectProps?.w ?? PAGE_SIZE_SELECT_WIDTH[store.controlSize]}
             />
           )}
           {resolvedPagination !== 'none' && (

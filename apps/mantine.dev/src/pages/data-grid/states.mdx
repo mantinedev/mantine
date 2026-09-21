@@ -1,0 +1,78 @@
+import { DataGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DataGridStates);
+
+## Empty state
+
+Pass `emptyState` to `DataGrid` to render content when the body would paint no rows: an empty
+data source, filters that match nothing, or a page past the end. Nothing is rendered when the prop
+is absent. The content goes into one bare full-width body cell (`tbody > tr > td[colSpan]`, or the
+equivalent row in the virtualized body) with no padding, rule, hover, stripe, selection or focus
+behavior, so its look is entirely yours; the `emptyState` selector targets the cell.
+
+`emptyState` can be a node or a function receiving `DataGridEmptyStatePayload`:
+
+<DataTable
+  head={['Field', 'Description']}
+  data={[
+    ['`rowCount`', 'Total number of rows before filtering; the `rowCount` option of `useDataGrid` when set, so server-side grids report the server total'],
+    ['`filteredRowCount`', 'Number of top-level rows left after column and global filters'],
+    ['`isFiltered`', 'Whether a column filter or a non-empty global filter is active (read from the state, so it is correct under `manualFiltering`)'],
+    ['`table`', 'The table instance, for example to clear filters'],
+  ]}
+/>
+
+<Demo data={DataGridDemos.emptyState} />
+
+The empty state is never shown while `loading` is set (the grid renders skeleton rows instead) and
+is shown when only pinned rows would be visible but the center body is empty.
+
+## Loading
+
+Set `loading` on `DataGrid` to put the grid in the loading state. The root carries `data-loading`
+and `data-loading-variant`, the table (or `role="grid"` element) carries `aria-busy`, and what is
+rendered depends on whether the grid already has rows:
+
+- **First load**: with `loading` and no rows, the body renders skeleton rows whatever the variant, so the grid keeps its height and shape before the first data arrives.
+- **Existing rows**: `loadingVariant` decides what happens over the rows that are already displayed.
+
+<Demo data={DataGridDemos.loadingVariants} />
+
+## Loading variants
+
+<DataTable
+  head={['Variant', 'Rendering']}
+  data={[
+    ['`overlay` (default)', 'A core `LoadingOverlay` over the body only (the toolbar, header and footer stay clear; the tfoot is covered) with a 2px blur and 60% background opacity; interaction is blocked while it is visible'],
+    ['`bar`', 'A 2px primary indeterminate progress bar on the header rule; the body rows are dimmed to 50% opacity and stay interactive, which suits background refreshes and infinite scroll. The animation is static under `prefers-reduced-motion`'],
+    ['`skeleton`', 'Skeleton rows replace the existing rows'],
+  ]}
+/>
+
+Skeleton rows count the page size under pagination, otherwise `skeletonRowCount` (`10` by
+default). Each data cell holds a core `Skeleton` bar (`skeleton` selector) sized from the grid font
+size with a deterministic width, aligned by `meta.align`; utility cells stay empty and the rows take
+no hover, stripe, selection or focus. `loadingOverlayProps` is passed down to the `LoadingOverlay`
+of the `overlay` variant (its loader is sized from `store.controlSize`):
+
+```tsx
+<DataGrid
+  store={store}
+  loading={isFetching}
+  loadingVariant="overlay"
+  loadingOverlayProps={{ loaderProps: { type: 'dots' }, overlayProps: { blur: 0 } }}
+/>
+
+<DataGrid store={store} loading={isFetching} loadingVariant="skeleton" skeletonRowCount={5} />
+```
+
+In list view there are no skeleton rows: `overlay` and `skeleton` render the overlay and `bar`
+renders the bar. The virtualized body renders the same variants through the root attributes.
+
+## Server-side example
+
+A typical server-side grid renders skeleton rows on the first load and a bar while a new page,
+sort or filter is fetched; the [full server-side example](/data-grid/server-side#full-example)
+combines `loading` with `loadingVariant="bar"`.

@@ -12,12 +12,15 @@ function Demo() {
       data={employees}
       striped
       highlightOnHover
+      withRowBorders={false}
+      stripedColor="var(--mantine-color-blue-light)"
+      highlightOnHoverColor="var(--mantine-color-blue-light-hover)"
       columns={[
         { accessorKey: 'firstName', header: 'First Name' },
         { accessorKey: 'lastName', header: 'Last Name' },
         { accessorKey: 'email', header: 'Email', size: 220 },
         { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'salary', header: 'Salary' },
+        { accessorKey: 'salary', header: 'Salary', meta: { align: 'end' } },
       ]}
     />
   );
@@ -30,12 +33,15 @@ function Demo() {
       data={employees}
       striped
       highlightOnHover
+      withRowBorders={false}
+      stripedColor="var(--mantine-color-blue-light)"
+      highlightOnHoverColor="var(--mantine-color-blue-light-hover)"
       columns={[
         { accessorKey: 'firstName', header: 'First Name' },
         { accessorKey: 'lastName', header: 'Last Name' },
         { accessorKey: 'email', header: 'Email', size: 220 },
         { accessorKey: 'department', header: 'Department' },
-        { accessorKey: 'salary', header: 'Salary' },
+        { accessorKey: 'salary', header: 'Salary', meta: { align: 'end' } },
       ]}
     />
   );

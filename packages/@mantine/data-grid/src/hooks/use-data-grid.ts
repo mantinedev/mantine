@@ -108,8 +108,12 @@ function collectAggregatedColumnIds<TData extends RowData>(
   return acc;
 }
 
+/** One faceted value returned by `store.getFacetedUniqueValues`, shaped for `Select` and `MultiSelect` `data` */
 export interface DataGridFacetedValue {
+  /** Stringified cell value, used as the filter value */
   value: string;
+
+  /** Display label, equal to `value` */
   label: string;
 }
 

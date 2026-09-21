@@ -79,7 +79,7 @@ const columns = [
   columnHelper.accessor('age', { header: 'Age' }),
   columnHelper.display({
     id: 'actions',
-    header: 'Actions',
+    meta: { type: 'actions' },
     cell: () => <Button size="xs">Edit</Button>,
   }),
 ];
@@ -117,23 +117,30 @@ controlled state or column-level flags:
   head={['Feature', 'Inferred from']}
   data={[
     ['Sorting', 'Columns with `enableSorting: true`'],
-    ['Column filtering', '`columnFilters` or `onColumnFiltersChange`'],
+    ['Column filtering', 'Columns with `enableColumnFilter` or `filterFn`'],
     ['Global filter', '`globalFilter` or `onGlobalFilterChange`'],
-    ['Pagination', '`pagination` or `onPaginationChange`'],
-    ['Column resizing', '`columnSizing`, `onColumnSizingChange`, or `columnResizeMode`'],
+    ['Pagination', '`pagination`, `onPaginationChange`, `pageSize`, `pageCount`, `rowCount` or `manualPagination`'],
+    ['Column resizing', '`columnSizing`, `onColumnSizingChange` or `columnResizeMode`'],
     ['Column pinning', '`columnPinning` or `onColumnPinningChange`'],
     ['Column visibility', '`columnVisibility` or `onColumnVisibilityChange`'],
     ['Column reorder', '`columnOrder` or `onColumnOrderChange`'],
     ['Row selection', '`rowSelection` or `onRowSelectionChange`'],
-    ['Row expansion', '`expanded` or `onExpandedChange`'],
+    ['Row expansion', '`expanded`, `onExpandedChange` or `getSubRows`'],
     ['Grouping', '`grouping` or `onGroupingChange`'],
+    ['Row pinning', '`rowPinning`, `onRowPinningChange` or `enableRowPinning`'],
+    ['Tree data', '`getSubRows`'],
+    ['Row reorder', '`onRowOrderChange`'],
     ['Cell selection', '`cellSelection` or `onCellSelectionChange`'],
     ['Editing', '`editingMode` is set'],
   ]}
 />
 
-Presentation props like `striped`, `highlightOnHover`, `stickyHeader`,
-and `virtualize` are set directly on the `DataGrid` component.
+Every `with*` flag can also be set explicitly to force a feature on or off. Features that render a
+column (`withRowSelection`, `withRowExpansion`, `withRowNumbers`, `withRowReorder`) and the grid
+`size` are `useDataGrid` options as well, because the store owns the column model. Appearance props
+such as `withTableBorder`, `radius`, `withRowBorders`, `striped`, `withColumnBorders`,
+`highlightOnHover`, `stickyHeader` and `virtualize` are set directly on the `DataGrid` component,
+see [Customization](/data-grid/customization).
 
 ## Peer dependencies
 

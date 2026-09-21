@@ -6,20 +6,59 @@ export default Layout(MDX_DATA.DataGridColumnFeatures);
 
 ## Column reorder
 
-Pass `withColumnReorder` to `useDataGrid` to enable drag-and-drop column reordering.
-Users can drag column headers to rearrange the column order.
+Pass `withColumnReorder` to `useDataGrid` to enable column reordering. Users drag a column header
+with the pointer (mouse, pen or touch): the drag starts after 4px of movement so a plain click
+still sorts, a ghost of the header label follows the pointer, the source header is dimmed, and a
+2px drop line with a dot marks the target edge, decided by the pointer position relative to the
+middle of the hovered header.
 
 <Demo data={DataGridDemos.columnReorder} />
 
+Valid targets are data columns in the same pin region and, under header groups, in the same parent
+group; utility columns and group headers are never targets. Dropping writes `columnOrder` through
+the store, where utility columns are always kept first. With `withColumnMenu` the column menu adds
+**Move left** and **Move right** items, which reorder from the keyboard with the same target rules
+(they follow the visual direction under RTL). There is no auto-scroll while dragging.
+
 Use `columnOrder` and `onColumnOrderChange` for controlled state. Reset the column order
-with `store.table.setColumnOrder([])`.
+with `store.table.setColumnOrder([])`; the store re-prepends any utility column id missing from
+the order, also when it restores persisted state.
 
 ## Header groups
 
 Group columns under shared headers by nesting column definitions. Use the `columns` property
-on a column definition to create header groups.
+on a column definition to create header groups. Group header cells carry `data-header-group`,
+draw a divider at their inline end (placeholders carry `data-placeholder` and draw nothing), keep
+their label start-aligned and take the same height as every other header row. Group headers keep
+their resize handle (resizing a group resizes its leaves proportionally) but have no sort button,
+column menu or drag behavior.
 
 <Demo data={DataGridDemos.headerGroups} />
+
+## Column alignment
+
+Set `meta.align` (`'start' | 'center' | 'end'`, default `start`) on a column to align its header,
+body and tfoot cells; the value is reflected as `data-align` on the cells. End-aligned columns use
+tabular figures automatically, which is the intended setting for numbers:
+
+```tsx
+const columns = [
+  { accessorKey: 'name', header: 'Name' },
+  { accessorKey: 'status', header: 'Status', meta: { align: 'center' } },
+  { accessorKey: 'amount', header: 'Amount', meta: { align: 'end' } },
+];
+```
+
+## Utility columns
+
+Features that need their own column inject a TanStack display column at the start of the grid:
+`__reorder__` (`withRowReorder`), `__select__` (`withRowSelection`), `__expand__`
+(`withRowExpansion` without tree data) and `__rowNumber__` (`withRowNumbers`), in that order. They
+carry `meta.utility`, cannot be sorted, filtered, resized or hidden through the UI, are excluded
+from export and the column menu, are forced to the start of `columnPinning.start` under column
+pinning, and get their width from the grid `size` (overridable through `columnSizing`). The ids are
+exported as `UTILITY_COLUMN_IDS`, and code that iterates `table.getAllColumns()` should skip
+columns with `meta.utility`.
 
 ## Cell spanning
 
@@ -67,3 +106,4 @@ cell independently, so `spanRows` and `spanColumns` are ignored for grids that u
 - [Column sizing](/data-grid/column-sizing) -- resize, min/max constraints
 - [Column visibility](/data-grid/column-visibility) -- show/hide columns
 - [Pinning](/data-grid/pinning) -- pin columns and rows
+- [Customization](/data-grid/customization#column-menu) -- column menu

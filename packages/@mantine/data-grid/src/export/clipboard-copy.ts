@@ -4,9 +4,16 @@ import { formatCsv } from './export-csv';
 import type { ExportColumnScope, ExportRowScope } from './export-utils';
 
 export interface ClipboardCopyOptions {
+  /** Rows to copy, @default 'all' */
   rows?: ExportRowScope;
+
+  /** Columns to copy, @default 'visible' */
   columns?: ExportColumnScope;
+
+  /** Whether the first line holds the column labels, @default false */
   includeHeaders?: boolean;
+
+  /** Formats a cell value before it is copied, `String(value)` by default */
   valueFormatter?: (value: unknown, columnId: string) => string;
 }
 

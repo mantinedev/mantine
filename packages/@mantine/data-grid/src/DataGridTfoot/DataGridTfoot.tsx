@@ -63,13 +63,21 @@ export const DataGridTfoot = factory<DataGridTfootFactory>((props) => {
     [filteredRowModel]
   );
 
+  const footerGroups = ctx.table
+    .getFooterGroups()
+    .filter((group) =>
+      group.headers.some(
+        (header) => !header.isPlaceholder && header.column.columnDef.footer !== undefined
+      )
+    );
+
   return (
     <Box
       component="tfoot"
       {...ctx.getStyles('tfoot', { className, classNames, style, styles })}
       {...others}
     >
-      {ctx.table.getFooterGroups().map((footerGroup) => (
+      {footerGroups.map((footerGroup) => (
         <tr key={footerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
           {footerGroup.headers.map((header) => (
             <td

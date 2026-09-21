@@ -217,7 +217,7 @@ export interface DataGridProps<TData extends RowData = any>
   /** Enable virtualization for large datasets */
   virtualize?: 'rows' | 'columns' | 'rows,columns';
 
-  /** Fixed height for the scrollable container, required when `virtualize` includes rows @category appearance */
+  /** Fixed height of the scroll container, the grid scrolls inside its frame and `stickyHeader` / pinned rows stick within it; required when `virtualize` includes rows @category appearance */
   height?: number | string;
 
   /** Configuration for virtual scroll behavior */
@@ -244,7 +244,7 @@ export interface DataGridProps<TData extends RowData = any>
   /** When true, clicking a row toggles its selection, @default false @category behavior */
   selectOnRowClick?: boolean;
 
-  /** Make the header sticky when scrolling, @default false @category appearance */
+  /** Makes the header stick to the top of the grid's scroll container, set `height` so the grid scrolls inside its frame, @default false @category appearance */
   stickyHeader?: boolean;
 
   /** Offset from the top of the scroll container at which the sticky header sticks, numbers are converted to rem @category appearance */
@@ -708,9 +708,12 @@ export const DataGrid = genericFactory<DataGridFactory>(((
               scrollbarSize={4}
               viewportRef={viewportRef}
               offsetScrollbars="x"
-              scrollbars="x"
-              {...getStyles('scrollContainer')}
+              scrollbars={height ? 'xy' : 'x'}
               {...scrollAreaProps}
+              {...getStyles('scrollContainer', {
+                className: scrollAreaProps?.className,
+                style: [height ? { height: rem(height) } : undefined, scrollAreaProps?.style],
+              })}
             >
               <table aria-busy={isLoading || undefined} {...getStyles('table')}>
                 <DataGridHeader />
@@ -719,7 +722,10 @@ export const DataGrid = genericFactory<DataGridFactory>(((
               </table>
             </ScrollArea>
           ) : (
-            <div ref={viewportRef} style={{ overflowX: 'auto' }}>
+            <div
+              ref={viewportRef}
+              style={height ? { overflow: 'auto', height: rem(height) } : { overflowX: 'auto' }}
+            >
               <table aria-busy={isLoading || undefined} {...getStyles('table')}>
                 <DataGridHeader />
                 <DataGridBody />

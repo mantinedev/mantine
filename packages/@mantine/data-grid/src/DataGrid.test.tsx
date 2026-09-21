@@ -1,5 +1,6 @@
 import { act } from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { mockVirtualViewport } from './virtual-test-utils';
 import { DataGrid, DataGridProps, DataGridStore, DataGridStylesNames, useDataGrid } from './index';
 
 const columns = [
@@ -282,6 +283,51 @@ describe('@mantine/data-grid/DataGrid', () => {
       render(<DataGrid data={[]} columns={columns} emptyState={<div>No data available</div>} />);
       expect(screen.getByText('No data available')).toBeInTheDocument();
     });
+
+    it('renders the empty state in one full-width body cell', () => {
+      const { container } = render(
+        <DataGrid data={[]} columns={columns} emptyState={<div>No data available</div>} />
+      );
+      const cell = container.querySelector('tbody tr[data-empty-row] > td') as HTMLElement;
+      expect(cell).toHaveAttribute('colspan', '2');
+      expect(cell).toHaveClass('mantine-DataGrid-emptyState');
+      expect(container.querySelectorAll('tbody tr')).toHaveLength(1);
+    });
+
+    it('calls the emptyState function with the row counts and filter state', () => {
+      const emptyState = jest.fn(() => <div>Nothing matches</div>);
+      let store: DataGridStore | null = null;
+      function Grid() {
+        store = useDataGrid<any>({
+          data,
+          columns: [
+            { accessorKey: 'name', header: 'Name', enableColumnFilter: true },
+            { accessorKey: 'age', header: 'Age' },
+          ],
+        });
+        return <DataGrid store={store} emptyState={emptyState} />;
+      }
+      render(<Grid />);
+      expect(emptyState).not.toHaveBeenCalled();
+
+      act(() => store!.setColumnFilter('name', 'Zed'));
+      expect(screen.getByText('Nothing matches')).toBeInTheDocument();
+      expect(emptyState).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          rowCount: 3,
+          filteredRowCount: 0,
+          isFiltered: true,
+          table: store!.table,
+        })
+      );
+    });
+
+    it('does not render the empty state while loading', () => {
+      render(
+        <DataGrid data={[]} columns={columns} loading emptyState={<div>No data available</div>} />
+      );
+      expect(screen.queryByText('No data available')).not.toBeInTheDocument();
+    });
   });
 
   describe('striped and hover', () => {
@@ -289,6 +335,24 @@ describe('@mantine/data-grid/DataGrid', () => {
       const { container } = render(<DataGrid {...defaultProps} striped />);
       const stripedRows = container.querySelectorAll('tbody tr[data-striped]');
       expect(stripedRows.length).toBeGreaterThan(0);
+    });
+
+    it('skips expansion panels in the stripe index', async () => {
+      const { container } = render(
+        <DataGridWithStore
+          storeOptions={{ data, columns, withRowExpansion: true }}
+          striped
+          renderExpandedRow={({ row }) => <div>Details for {row.original.name}</div>}
+        />
+      );
+      await userEvent.click(screen.getAllByRole('button')[0]);
+      const rows = Array.from(container.querySelectorAll('tbody tr'));
+      expect(rows).toHaveLength(4);
+      expect(rows[0]).toHaveAttribute('data-striped');
+      expect(rows[1]).toHaveAttribute('data-expanded-row');
+      expect(rows[1]).not.toHaveAttribute('data-striped');
+      expect(rows[2]).not.toHaveAttribute('data-striped');
+      expect(rows[3]).toHaveAttribute('data-striped');
     });
   });
 
@@ -299,6 +363,18 @@ describe('@mantine/data-grid/DataGrid', () => {
       expect(screen.getByText('1')).toBeInTheDocument();
       expect(screen.getByText('2')).toBeInTheDocument();
       expect(screen.getByText('3')).toBeInTheDocument();
+    });
+
+    it('renders row numbers in an injected utility column that is not on DataGrid props', () => {
+      const { container } = render(
+        <DataGridWithStore storeOptions={{ data, columns, withRowNumbers: true }} />
+      );
+      const header = container.querySelector('thead th[data-utility="rowNumber"]');
+      expect(header).toHaveTextContent('#');
+      expect(container.querySelectorAll('tbody td[data-utility="rowNumber"]')).toHaveLength(3);
+      expect(
+        container.querySelector('tbody td[data-utility="rowNumber"] .mantine-DataGrid-rowNumber')
+      ).toHaveTextContent('1');
     });
   });
 
@@ -526,6 +602,89 @@ describe('@mantine/data-grid/DataGrid', () => {
     it('reflects tabularNums on the root', () => {
       const { container } = render(<DataGrid {...defaultProps} tabularNums />);
       expect(root(container)).toHaveAttribute('data-tabular-nums');
+    });
+  });
+
+  describe('height', () => {
+    it('does not constrain the scroll container without height', () => {
+      const { container } = render(<DataGrid {...defaultProps} />);
+      const scrollArea = container.querySelector(
+        '.mantine-DataGrid-scrollContainer'
+      ) as HTMLElement;
+      expect(scrollArea.style.height).toBe('');
+      expect(container.querySelector('.mantine-ScrollArea-viewport')).toHaveAttribute(
+        'data-scrollbars',
+        'x'
+      );
+    });
+
+    it('sizes the ScrollArea and enables vertical scrolling when height is set', () => {
+      const { container } = render(<DataGrid {...defaultProps} height={300} stickyHeader />);
+      const scrollArea = container.querySelector(
+        '.mantine-DataGrid-scrollContainer'
+      ) as HTMLElement;
+      expect(scrollArea.style.height).toBe('calc(18.75rem * var(--mantine-scale))');
+      expect(container.querySelector('.mantine-ScrollArea-viewport')).toHaveAttribute(
+        'data-scrollbars',
+        'xy'
+      );
+      expect(container.querySelector('.mantine-DataGrid-root')).toHaveAttribute(
+        'data-sticky-header'
+      );
+    });
+
+    it('keeps the height when scrollAreaProps carry their own style and className', () => {
+      const { container } = render(
+        <DataGrid
+          {...defaultProps}
+          height={300}
+          scrollAreaProps={{ className: 'custom-scroll-area', style: { background: 'red' } }}
+        />
+      );
+      const scrollArea = container.querySelector(
+        '.mantine-DataGrid-scrollContainer'
+      ) as HTMLElement;
+      expect(scrollArea.style.height).toBe('calc(18.75rem * var(--mantine-scale))');
+      expect(scrollArea.style.background).toBe('red');
+      expect(scrollArea).toHaveClass('custom-scroll-area');
+    });
+
+    it('sizes the plain scroll container when height is set without ScrollArea', () => {
+      const { container } = render(
+        <DataGrid {...defaultProps} height="20rem" withScrollArea={false} />
+      );
+      const wrapper = container.querySelector('table')!.parentElement as HTMLElement;
+      expect(wrapper.style.height).toBe('20rem');
+      expect(wrapper.style.overflow).toBe('auto');
+    });
+  });
+
+  describe('virtual body last row', () => {
+    let restoreViewport: () => void;
+
+    beforeEach(() => {
+      restoreViewport = mockVirtualViewport();
+    });
+
+    afterEach(() => {
+      restoreViewport();
+    });
+
+    it('marks the last data row so its rule is dropped', () => {
+      const { container } = render(<DataGrid {...defaultProps} virtualize="rows" height={300} />);
+      const wrappers = container.querySelectorAll('[data-index]');
+      expect(wrappers).toHaveLength(3);
+      expect(wrappers[0]).not.toHaveAttribute('data-last-row');
+      expect(wrappers[2]).toHaveAttribute('data-last-row');
+    });
+
+    it('marks the last row of the column-virtualized body', () => {
+      const { container } = render(
+        <DataGrid {...defaultProps} virtualize="columns" height={300} />
+      );
+      const wrappers = container.querySelectorAll('[data-last-row]');
+      expect(wrappers).toHaveLength(1);
+      expect(wrappers[0]).toHaveTextContent('Charlie');
     });
   });
 });

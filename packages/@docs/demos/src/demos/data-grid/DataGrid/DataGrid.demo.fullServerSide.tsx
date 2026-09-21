@@ -118,7 +118,7 @@ function Demo() {
   });
 
   return (
-    <DataGrid store={store} loading={loading}>
+    <DataGrid store={store} loading={loading} loadingVariant="bar">
       <DataGrid.Footer />
     </DataGrid>
   );
@@ -258,7 +258,7 @@ function Demo() {
   });
 
   return (
-    <DataGrid store={store} loading={loading}>
+    <DataGrid store={store} loading={loading} loadingVariant="bar">
       <DataGrid.Footer />
     </DataGrid>
   );

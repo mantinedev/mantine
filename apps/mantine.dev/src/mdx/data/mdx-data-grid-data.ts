@@ -94,6 +94,15 @@ export const MDX_DATA_GRID_DATA: Record<string, Frontmatter> = {
     docs: 'data-grid/virtualization.mdx',
   },
 
+  DataGridStates: {
+    title: 'States',
+    package: '@mantine/data-grid',
+    slug: '/data-grid/states',
+    description: 'DataGrid empty state and loading variants',
+    search: 'empty state, loading, skeleton, overlay, progress bar, no data',
+    docs: 'data-grid/states.mdx',
+  },
+
   DataGridEditing: {
     title: 'Editing',
     package: '@mantine/data-grid',

@@ -129,7 +129,8 @@
 
   :where(.tbody:last-of-type) > &:last-child,
   :where(.tbody:has(+ .tbody[data-pinned='bottom'])) > &:last-child,
-  :where(.tbody[data-pinned]) > & {
+  :where(.tbody[data-pinned]) > &,
+  :where(.tfoot) > &:last-child {
     border-bottom: 0;
   }
 
@@ -346,7 +347,7 @@
   }
 }
 
-:where(.root[data-column-pinning]) :where(.tr, .virtualRow) {
+:where(.root[data-column-pinning]) :where(.tr, .virtualRow, .virtualGridHeader) {
   background-color: var(--mantine-color-body);
 }
 
@@ -577,7 +578,8 @@
 }
 
 .virtualGrid {
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
 }
 
 [data-virtual-thead] {
@@ -913,11 +915,15 @@
   }
 
   &:where([data-align='end']) > .headerCell {
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 }
 
 .virtualCell {
+  &:where([data-align='end']) > .headerCell {
+    justify-content: flex-start;
+  }
+
   &:where([data-align='center']) {
     justify-content: center;
   }
@@ -1570,4 +1576,17 @@
   gap: rem(4px);
   padding: rem(4px);
   transform: translateY(-50%);
+}
+
+.selectionCheckbox,
+.selectAllCheckbox {
+  display: inline-flex;
+}
+
+.virtualCell {
+  flex-shrink: 0;
+}
+
+:where([data-last-row]) > .virtualRow:last-child {
+  border-bottom: 0;
 }

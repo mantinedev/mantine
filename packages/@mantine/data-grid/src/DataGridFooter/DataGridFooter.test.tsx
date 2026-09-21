@@ -264,4 +264,27 @@ describe('@mantine/data-grid/DataGridFooter', () => {
     expect(container.querySelector('.mantine-DataGrid-footerStatus')).not.toBeInTheDocument();
     expect(container.querySelector('.mantine-DataGrid-footerPagination')).not.toBeInTheDocument();
   });
+
+  describe('page size select width', () => {
+    it('widens the page size select with the control size', () => {
+      const { container, rerender } = render(<Grid storeOptions={{ pageSize: 5 }} />);
+      const select = () =>
+        container.querySelector('.mantine-DataGrid-footerPageSize') as HTMLElement;
+      expect(select().style.width).toContain('6.875rem');
+
+      rerender(
+        <>
+          <Grid storeOptions={{ pageSize: 5, size: 'md' }} />
+        </>
+      );
+      expect(select().style.width).toContain('7.625rem');
+
+      rerender(
+        <>
+          <Grid storeOptions={{ pageSize: 5, size: 'xl' }} />
+        </>
+      );
+      expect(select().style.width).toContain('8.625rem');
+    });
+  });
 });

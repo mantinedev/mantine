@@ -4,63 +4,110 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.DataGridFiltering);
 
-## Column filters
+## Overview
 
-DataGrid owns the column filter state but renders no filter inputs: build the filter UI
-you need with `@mantine/core` components and connect it to the store. `useDataGrid` infers
-`withFiltering` from columns with `enableColumnFilter` or `filterFn`; the store exposes
-`setColumnFilter(columnId, value)` (`undefined`, `null` and `''` remove the entry),
-`setColumnFilters(updater)`, `resetColumnFilters()`, `getColumnFilterValue(columnId)` and
-`columnFilters`. Enable `withFaceting` to read `getFacetedUniqueValues(columnId)` and
-`getFacetedMinMaxValues(columnId)` for select options and range bounds.
+DataGrid owns the filter state but renders no filter inputs. Build the filter UI you need with
+`@mantine/core` components (a popover, selects, chips, a search input) and connect it to the store,
+which exposes everything the UI needs:
 
-<Demo data={DataGridDemos.columnFilters} />
+<DataTable
+  head={['Store member', 'Description']}
+  data={[
+    ['`columnFilters`', 'Current `ColumnFiltersState`, an array of `{ id, value }` entries; its length is the number of active filters'],
+    ['`setColumnFilter(columnId, value)`', 'Sets the filter value of one column; `undefined`, `null` and `\'\'` remove the entry; writes to columns with `enableColumnFilter: false` are ignored'],
+    ['`setColumnFilters(updater)`', 'Replaces the whole state with a value or an updater function (not guarded, any column id is accepted)'],
+    ['`resetColumnFilters()`', 'Clears every column filter'],
+    ['`getColumnFilterValue(columnId)`', 'Reads the current filter value of a column'],
+    ['`getFacetedUniqueValues(columnId)`', 'Sorted `{ value, label }[]` of the distinct values in a column (arrays flattened, `null` / `undefined` dropped, values stringified); empty unless `withFaceting` is set'],
+    ['`getFacetedMinMaxValues(columnId)`', '`[min, max]` of a numeric column, `undefined` unless `withFaceting` is set'],
+    ['`globalFilter` / `setGlobalFilter(value)`', 'Global search value and setter'],
+  ]}
+/>
+
+Column filtering is enabled automatically when any column defines `enableColumnFilter: true` or a
+`filterFn`; pass `withFiltering: true` to enable it for every column, or `withFiltering: false` to
+turn it off. A column filters through its `filterFn` (one of TanStack's built-in names such as
+`includesString`, `equals`, `inNumberRange`, `arrIncludes`, or a function); the default is
+`includesString` for strings and `auto` otherwise. The raw TanStack maps stay reachable through
+`store.table` (`table.getColumn(id).getFilterValue()`, `getFacetedUniqueValues()`) when you need
+them.
 
 ## Global search
 
-Pass `withGlobalFilter` to `useDataGrid` to enable cross-column search. Use `store.globalFilter`
-and `store.setGlobalFilter` to connect your own search input.
+Pass `withGlobalFilter` to `useDataGrid` to enable cross-column search. `DataGrid.GlobalFilter`
+renders a search input bound to the store inside `DataGrid.Toolbar` (an empty `<DataGrid.Toolbar />`
+renders it automatically); use `store.globalFilter` and `store.setGlobalFilter` to connect any other
+input.
 
 <Demo data={DataGridDemos.globalFilter} />
+
+## Filters popover
+
+The common layout is a **Filters** button in the toolbar that opens a popover with one control per
+filterable column and shows the active count in a badge. Every control reads its value with
+`getColumnFilterValue` and writes it with `setColumnFilter`; **Clear all** calls
+`resetColumnFilters`:
+
+<Demo data={DataGridDemos.columnFilters} />
+
+## Faceted filters
+
+Pass `withFaceting: true` to `useDataGrid` to compute the distinct values and the numeric range of
+every column from the data. `getFacetedUniqueValues(columnId)` returns `{ value, label }[]`, ready
+to be passed as `data` to `Select` or `MultiSelect`; `getFacetedMinMaxValues(columnId)` returns
+`[min, max]` for a `RangeSlider` or a pair of number inputs. Combine them with the matching
+`filterFn` (`equals` for a single value, `arrIncludesSome` for a multi-select, `inNumberRange` for a
+`[min, max]` tuple):
+
+<Demo data={DataGridDemos.facetedFilters} />
+
+Faceting is never inferred: without `withFaceting` both getters return empty results.
+
+## Operator filters
+
+`stringOperators`, `numberOperators` and `booleanOperators` describe operator sets (contains,
+equals, starts with, is empty, greater than, is true, ...). Each entry has a `label` for your UI, a
+`value` stored in the filter state, the TanStack `filterFn` it applies and a `valueless` flag for
+operators that ignore the input (`isEmpty`, `isNotEmpty`, `isTrue`, `isFalse`). Set
+`filterFn: createOperatorFilterFn(stringOperators)` on the column and store an
+`{ operator, value }` object (`OperatorFilterValue`) as its filter value:
+
+<Demo data={DataGridDemos.operatorFilters} />
+
+Build your own operator set by passing an array of `FilterOperator` objects to
+`createOperatorFilterFn`; an unknown operator or an empty value (for operators that take one) lets
+every row through.
+
+## Filter chips
+
+Render `store.columnFilters` as removable pills to show which filters are active. `getColumnLabel`
+(exported from `@mantine/data-grid`) resolves the label the grid itself uses for a column:
+`meta.label`, then a string `header`, then the column id.
+
+<Demo data={DataGridDemos.filterChips} />
 
 ## Controlled filters
 
 Pass `columnFilters` and `onColumnFiltersChange` to `useDataGrid` to control filter state externally.
 The state follows the TanStack Table `ColumnFiltersState` format -- an array of `{ id: string, value: unknown }` objects.
+The store setters keep working with controlled state, they go through `onColumnFiltersChange`.
 
 <Demo data={DataGridDemos.controlledFilters} />
-
-## Operator filters
-
-`stringOperators`, `numberOperators` and `booleanOperators` describe operator sets
-(contains, equals, greater than, ...). Pass `filterFn: createOperatorFilterFn(stringOperators)`
-on a column and store an `{ operator, value }` object as its filter value:
-
-```tsx
-import { createOperatorFilterFn, stringOperators, useDataGrid } from '@mantine/data-grid';
-
-const store = useDataGrid({
-  data,
-  columns: [
-    { accessorKey: 'name', header: 'Name', filterFn: createOperatorFilterFn(stringOperators) },
-  ],
-});
-
-store.setColumnFilter('name', { operator: 'startsWith', value: 'A' });
-```
 
 ## Custom filter functions
 
 You can provide a custom `filterFn` on any column definition. The function receives the row, column ID,
 and filter value, and returns `true` if the row should be included. The example below uses a case-sensitive
-exact match filter on the department column.
+exact match filter on the department column. Type it with `DataGridFilterFn` so it is bound to the
+grid's feature set.
 
 <Demo data={DataGridDemos.customFilterFn} />
 
 ## Disable filtering per column
 
 Set `enableColumnFilter: false` on a column definition to make `column.getCanFilter()` return
-`false` for it; `store.setColumnFilter` ignores writes for such columns.
+`false` for it; `store.setColumnFilter` ignores writes for such columns. Note that
+`store.setColumnFilters` and TanStack's own `column.setFilterValue` are not guarded.
 
 ## Global filter column exclusion
 
@@ -72,18 +119,21 @@ The global filter will only match against columns that have global filtering ena
 ## Fuzzy search
 
 Import the `fuzzyFilter` utility from `@mantine/data-grid` and pass it as `globalFilterFn` to
-`useDataGrid` for typo-tolerant, ranked global search powered by match-sorter.
+`useDataGrid` for typo-tolerant, ranked global search powered by match-sorter. `fuzzySort` is
+exported alongside it to sort rows by their match rank.
 
 <Demo data={DataGridDemos.fuzzySearch} />
 
-## Debounced server-side filtering
+## Debounced and server-side filtering
 
-When filtering is handled server-side, you can debounce the filter value to avoid sending a request
-on every keystroke. Use `useDebouncedValue` from `@mantine/hooks` with controlled filter state:
+When filtering is handled server-side, set `manualFiltering` to `true` so the grid never filters
+the rows it receives, keep the filter state controlled, and debounce it before sending a request.
+Use `useDebouncedValue` from `@mantine/hooks`:
 
 ```tsx
 import { useState } from 'react';
 import { ColumnFiltersState } from '@tanstack/react-table';
+import { TextInput } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 
@@ -109,16 +159,24 @@ function Demo() {
     onColumnFiltersChange: setColumnFilters,
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <DataGrid store={store}>
+      <DataGrid.Toolbar>
+        <TextInput
+          size={store.controlSize}
+          placeholder="First name"
+          value={(store.getColumnFilterValue('firstName') as string) ?? ''}
+          onChange={(event) => store.setColumnFilter('firstName', event.currentTarget.value)}
+        />
+      </DataGrid.Toolbar>
+    </DataGrid>
+  );
 }
 ```
 
-## Server-side filtering
-
-For server-side filtering, set `manualFiltering` to `true` and handle filtering in your data fetching logic.
 See the [Server-side](/data-grid/server-side) page for a complete example.
 
-## Clear filters
+## Empty results
 
-Column filters can be cleared individually by emptying the filter input. To clear all filters programmatically,
-set the controlled `columnFilters` state to an empty array.
+When every row is filtered out the body renders the `emptyState` slot; its payload tells you whether
+a filter is active so you can offer a "Clear filters" action, see [States](/data-grid/states).

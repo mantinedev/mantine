@@ -10,11 +10,22 @@ import {
 } from './export-utils';
 
 export interface ExportExcelOptions {
+  /** File name without the `.xls` extension, @default 'data-grid-export' */
   fileName?: string;
+
+  /** Worksheet name, @default 'Sheet1' */
   sheetName?: string;
+
+  /** Rows to export, @default 'all' */
   rows?: ExportRowScope;
+
+  /** Columns to export, @default 'visible' */
   columns?: ExportColumnScope;
+
+  /** Formats a cell value before it is written, `String(value)` by default */
   valueFormatter?: (value: unknown, columnId: string) => string;
+
+  /** Whether the first row holds the column labels, @default true */
   includeHeaders?: boolean;
 }
 

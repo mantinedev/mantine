@@ -8,10 +8,8 @@ import {
   Popover,
   Select,
   Stack,
-  Text,
-  TextInput,
 } from '@mantine/core';
-import { DataGrid, useDataGrid } from '@mantine/data-grid';
+import { DataGrid, DataGridStore, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 
 interface Order {
@@ -198,40 +196,108 @@ export const orders: Order[] = generateOrders(1000);
 
 const code = `
 import { useState } from 'react';
-import { Badge, Button, Group, NumberFormatter, NumberInput, Popover, Select, Stack, Text, TextInput } from '@mantine/core';
-import { DataGrid, useDataGrid } from '@mantine/data-grid';
+import { Badge, Button, Group, NumberFormatter, NumberInput, Popover, Select, Stack } from '@mantine/core';
+import { DataGrid, DataGridStore, useDataGrid } from '@mantine/data-grid';
 import { orders, statusColors } from './data';
 import type { Order } from './data';
 
-function Demo() {
-  const [filterOpened, setFilterOpened] = useState(false);
+function FiltersPopover({ store }: { store: DataGridStore<Order> }) {
+  const [opened, setOpened] = useState(false);
+  const activeCount = store.columnFilters.length;
+  const amount = (store.getColumnFilterValue('amount') as [number?, number?] | undefined) ?? [];
 
+  const setAmount = (index: 0 | 1, value: string | number) => {
+    const next: [number?, number?] = [amount[0], amount[1]];
+    next[index] = typeof value === 'number' ? value : undefined;
+    store.setColumnFilter('amount', next[0] == null && next[1] == null ? undefined : next);
+  };
+
+  return (
+    <Popover opened={opened} onChange={setOpened} position="bottom-start" shadow="md">
+      <Popover.Target>
+        <Button
+          variant="default"
+          size={store.controlSize}
+          onClick={() => setOpened((o) => !o)}
+          rightSection={
+            activeCount > 0 ? (
+              <Badge size="xs" circle>
+                {activeCount}
+              </Badge>
+            ) : null
+          }
+        >
+          Filters
+        </Button>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Stack gap="sm" w={260}>
+          <Select
+            label="Status"
+            placeholder="All statuses"
+            clearable
+            size="xs"
+            data={store.getFacetedUniqueValues('status')}
+            value={(store.getColumnFilterValue('status') as string) ?? null}
+            onChange={(value) => store.setColumnFilter('status', value)}
+          />
+          <Select
+            label="Payment"
+            placeholder="All methods"
+            clearable
+            size="xs"
+            data={store.getFacetedUniqueValues('method')}
+            value={(store.getColumnFilterValue('method') as string) ?? null}
+            onChange={(value) => store.setColumnFilter('method', value)}
+          />
+          <Group grow gap="xs">
+            <NumberInput
+              label="Min amount"
+              placeholder="Min"
+              size="xs"
+              prefix="$"
+              value={amount[0] ?? ''}
+              onChange={(value) => setAmount(0, value)}
+            />
+            <NumberInput
+              label="Max amount"
+              placeholder="Max"
+              size="xs"
+              prefix="$"
+              value={amount[1] ?? ''}
+              onChange={(value) => setAmount(1, value)}
+            />
+          </Group>
+          <Group justify="flex-end">
+            <Button
+              size="xs"
+              variant="subtle"
+              disabled={activeCount === 0}
+              onClick={() => store.resetColumnFilters()}
+            >
+              Clear all
+            </Button>
+          </Group>
+        </Stack>
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+
+function Demo() {
   const store = useDataGrid({
     data: orders,
     columns: [
-      {
-        accessorKey: 'id',
-        header: 'Order',
-        size: 110,
-        enableSorting: true,
-      },
-      {
-        accessorKey: 'customer',
-        header: 'Customer',
-        size: 160,
-        enableSorting: true,
-      },
-      {
-        accessorKey: 'product',
-        header: 'Product',
-        size: 180,
-        enableSorting: true,
-      },
+      { accessorKey: 'id', header: 'Order', size: 110, enableSorting: true },
+      { accessorKey: 'customer', header: 'Customer', size: 160, enableSorting: true },
+      { accessorKey: 'product', header: 'Product', size: 180, enableSorting: true },
       {
         accessorKey: 'amount',
         header: 'Amount',
         size: 120,
         enableSorting: true,
+        filterFn: 'inNumberRange',
+        meta: { align: 'end' },
         cell: ({ getValue }) => (
           <NumberFormatter
             value={getValue() as number}
@@ -246,6 +312,7 @@ function Demo() {
         header: 'Status',
         size: 130,
         enableSorting: true,
+        filterFn: 'equals',
         cell: ({ getValue }) => {
           const status = getValue() as Order['status'];
           return (
@@ -267,156 +334,136 @@ function Demo() {
             year: 'numeric',
           }),
       },
-      {
-        accessorKey: 'method',
-        header: 'Payment',
-        size: 130,
-      },
+      { accessorKey: 'method', header: 'Payment', size: 130, filterFn: 'equals' },
     ],
+    getRowId: (row) => row.id,
     withGlobalFilter: true,
     withRowSelection: true,
+    withColumnVisibility: true,
     withFaceting: true,
     pageSize: 20,
   });
 
-  const selectedCount = Object.keys(store.rowSelection).length;
-
   return (
-    <>
-      <Group mb="md">
-        <TextInput
-          placeholder="Search orders..."
-          value={store.globalFilter ?? ''}
-          onChange={(event) => store.setGlobalFilter(event.currentTarget.value)}
-
-          style={{ flex: 1, maxWidth: 300 }}
-        />
-        <Popover opened={filterOpened} onChange={setFilterOpened} position="bottom-start" width={260}>
-          <Popover.Target>
-            <Button
-              variant="default"
-
-              onClick={() => setFilterOpened((o) => !o)}
-            >
-              Filters
-            </Button>
-          </Popover.Target>
-          <Popover.Dropdown>
-            <Stack gap="sm">
-              <Select
-                label="Status"
-                placeholder="All statuses"
-                data={['pending', 'processing', 'shipped', 'delivered', 'cancelled']}
-                value={(store.table.getColumn('status')?.getFilterValue() as string) ?? null}
-                onChange={(value) =>
-                  store.table.getColumn('status')?.setFilterValue(value || undefined)
-                }
-                clearable
-                size="xs"
-              />
-              <Select
-                label="Payment"
-                placeholder="All methods"
-                data={['Credit Card', 'PayPal', 'Bank Transfer']}
-                value={(store.table.getColumn('method')?.getFilterValue() as string) ?? null}
-                onChange={(value) =>
-                  store.table.getColumn('method')?.setFilterValue(value || undefined)
-                }
-                clearable
-                size="xs"
-              />
-              <Group grow gap="xs">
-                <NumberInput
-                  label="Min amount"
-                  placeholder="Min"
-                  size="xs"
-                  prefix="$"
-                  value={
-                    (store.table.getColumn('amount')?.getFilterValue() as
-                      | [number | undefined, number | undefined]
-                      | undefined)?.[0] ?? ''
-                  }
-                  onChange={(value) => {
-                    const current = (store.table.getColumn('amount')?.getFilterValue() as
-                      | [number | undefined, number | undefined]
-                      | undefined) ?? [undefined, undefined];
-                    const min = typeof value === 'number' ? value : undefined;
-                    store.table
-                      .getColumn('amount')
-                      ?.setFilterValue(
-                        min == null && current[1] == null ? undefined : [min, current[1]]
-                      );
-                  }}
-                />
-                <NumberInput
-                  label="Max amount"
-                  placeholder="Max"
-                  size="xs"
-                  prefix="$"
-                  value={
-                    (store.table.getColumn('amount')?.getFilterValue() as
-                      | [number | undefined, number | undefined]
-                      | undefined)?.[1] ?? ''
-                  }
-                  onChange={(value) => {
-                    const current = (store.table.getColumn('amount')?.getFilterValue() as
-                      | [number | undefined, number | undefined]
-                      | undefined) ?? [undefined, undefined];
-                    const max = typeof value === 'number' ? value : undefined;
-                    store.table
-                      .getColumn('amount')
-                      ?.setFilterValue(
-                        current[0] == null && max == null ? undefined : [current[0], max]
-                      );
-                  }}
-                />
-              </Group>
-            </Stack>
-          </Popover.Dropdown>
-        </Popover>
-      </Group>
-      <DataGrid store={store} highlightOnHover striped>
-        <Group justify="space-between" p="xs">
-          <Text size="sm" c="dimmed">
-            {selectedCount > 0 ? \`\${selectedCount} rows selected\` : '\\u00A0'}
-          </Text>
-          <DataGrid.Footer />
-        </Group>
-      </DataGrid>
-    </>
+    <DataGrid store={store} highlightOnHover>
+      <DataGrid.Toolbar>
+        <DataGrid.GlobalFilter placeholder="Search orders..." />
+        <FiltersPopover store={store} />
+        <div style={{ flex: 1 }} />
+        <DataGrid.ColumnVisibilityToggle />
+        <DataGrid.ExportButton fileName="orders" />
+      </DataGrid.Toolbar>
+      <DataGrid.SelectionBar>
+        <Button size={store.controlSize} variant="default">
+          Mark as shipped
+        </Button>
+        <Button size={store.controlSize} variant="light" color="red">
+          Cancel orders
+        </Button>
+      </DataGrid.SelectionBar>
+      <DataGrid.Footer statusFormat="long" />
+    </DataGrid>
   );
 }
 `;
 
-function Demo() {
-  const [filterOpened, setFilterOpened] = useState(false);
+function FiltersPopover({ store }: { store: DataGridStore<Order> }) {
+  const [opened, setOpened] = useState(false);
+  const activeCount = store.columnFilters.length;
+  const amount = (store.getColumnFilterValue('amount') as [number?, number?] | undefined) ?? [];
 
-  const store = useDataGrid({
+  const setAmount = (index: 0 | 1, value: string | number) => {
+    const next: [number?, number?] = [amount[0], amount[1]];
+    next[index] = typeof value === 'number' ? value : undefined;
+    store.setColumnFilter('amount', next[0] == null && next[1] == null ? undefined : next);
+  };
+
+  return (
+    <Popover opened={opened} onChange={setOpened} position="bottom-start" shadow="md">
+      <Popover.Target>
+        <Button
+          variant="default"
+          size={store.controlSize}
+          onClick={() => setOpened((o) => !o)}
+          rightSection={
+            activeCount > 0 ? (
+              <Badge size="xs" circle>
+                {activeCount}
+              </Badge>
+            ) : null
+          }
+        >
+          Filters
+        </Button>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Stack gap="sm" w={260}>
+          <Select
+            label="Status"
+            placeholder="All statuses"
+            clearable
+            size="xs"
+            data={store.getFacetedUniqueValues('status')}
+            value={(store.getColumnFilterValue('status') as string) ?? null}
+            onChange={(value) => store.setColumnFilter('status', value)}
+          />
+          <Select
+            label="Payment"
+            placeholder="All methods"
+            clearable
+            size="xs"
+            data={store.getFacetedUniqueValues('method')}
+            value={(store.getColumnFilterValue('method') as string) ?? null}
+            onChange={(value) => store.setColumnFilter('method', value)}
+          />
+          <Group grow gap="xs">
+            <NumberInput
+              label="Min amount"
+              placeholder="Min"
+              size="xs"
+              prefix="$"
+              value={amount[0] ?? ''}
+              onChange={(value) => setAmount(0, value)}
+            />
+            <NumberInput
+              label="Max amount"
+              placeholder="Max"
+              size="xs"
+              prefix="$"
+              value={amount[1] ?? ''}
+              onChange={(value) => setAmount(1, value)}
+            />
+          </Group>
+          <Group justify="flex-end">
+            <Button
+              size="xs"
+              variant="subtle"
+              disabled={activeCount === 0}
+              onClick={() => store.resetColumnFilters()}
+            >
+              Clear all
+            </Button>
+          </Group>
+        </Stack>
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+
+function Demo() {
+  const store = useDataGrid<Order>({
     data: orders,
     columns: [
-      {
-        accessorKey: 'id',
-        header: 'Order',
-        size: 110,
-        enableSorting: true,
-      },
-      {
-        accessorKey: 'customer',
-        header: 'Customer',
-        size: 160,
-        enableSorting: true,
-      },
-      {
-        accessorKey: 'product',
-        header: 'Product',
-        size: 180,
-        enableSorting: true,
-      },
+      { accessorKey: 'id', header: 'Order', size: 110, enableSorting: true },
+      { accessorKey: 'customer', header: 'Customer', size: 160, enableSorting: true },
+      { accessorKey: 'product', header: 'Product', size: 180, enableSorting: true },
       {
         accessorKey: 'amount',
         header: 'Amount',
         size: 120,
         enableSorting: true,
+        filterFn: 'inNumberRange',
+        meta: { align: 'end' },
         cell: ({ getValue }) => (
           <NumberFormatter
             value={getValue() as number}
@@ -431,6 +478,7 @@ function Demo() {
         header: 'Status',
         size: 130,
         enableSorting: true,
+        filterFn: 'equals',
         cell: ({ getValue }) => {
           const status = getValue() as Order['status'];
           return (
@@ -452,127 +500,35 @@ function Demo() {
             year: 'numeric',
           }),
       },
-      {
-        accessorKey: 'method',
-        header: 'Payment',
-        size: 130,
-      },
+      { accessorKey: 'method', header: 'Payment', size: 130, filterFn: 'equals' },
     ],
+    getRowId: (row) => row.id,
     withGlobalFilter: true,
     withRowSelection: true,
+    withColumnVisibility: true,
     withFaceting: true,
     pageSize: 20,
   });
 
-  const selectedCount = Object.keys(store.rowSelection).length;
-
   return (
-    <>
-      <Group mb="md">
-        <TextInput
-          placeholder="Search orders..."
-          value={store.globalFilter ?? ''}
-          onChange={(event) => store.setGlobalFilter(event.currentTarget.value)}
-          style={{ flex: 1, maxWidth: 300 }}
-        />
-        <Popover
-          opened={filterOpened}
-          onChange={setFilterOpened}
-          position="bottom-start"
-          width={260}
-        >
-          <Popover.Target>
-            <Button variant="default" onClick={() => setFilterOpened((o) => !o)}>
-              Filters
-            </Button>
-          </Popover.Target>
-          <Popover.Dropdown>
-            <Stack gap="sm">
-              <Select
-                label="Status"
-                placeholder="All statuses"
-                data={['pending', 'processing', 'shipped', 'delivered', 'cancelled']}
-                value={(store.table.getColumn('status')?.getFilterValue() as string) ?? null}
-                onChange={(value) =>
-                  store.table.getColumn('status')?.setFilterValue(value || undefined)
-                }
-                clearable
-                size="xs"
-              />
-              <Select
-                label="Payment"
-                placeholder="All methods"
-                data={['Credit Card', 'PayPal', 'Bank Transfer']}
-                value={(store.table.getColumn('method')?.getFilterValue() as string) ?? null}
-                onChange={(value) =>
-                  store.table.getColumn('method')?.setFilterValue(value || undefined)
-                }
-                clearable
-                size="xs"
-              />
-              <Group grow gap="xs">
-                <NumberInput
-                  label="Min amount"
-                  placeholder="Min"
-                  size="xs"
-                  prefix="$"
-                  value={
-                    (
-                      store.table.getColumn('amount')?.getFilterValue() as
-                        | [number | undefined, number | undefined]
-                        | undefined
-                    )?.[0] ?? ''
-                  }
-                  onChange={(value) => {
-                    const current = (store.table.getColumn('amount')?.getFilterValue() as
-                      | [number | undefined, number | undefined]
-                      | undefined) ?? [undefined, undefined];
-                    const min = typeof value === 'number' ? value : undefined;
-                    store.table
-                      .getColumn('amount')
-                      ?.setFilterValue(
-                        min == null && current[1] == null ? undefined : [min, current[1]]
-                      );
-                  }}
-                />
-                <NumberInput
-                  label="Max amount"
-                  placeholder="Max"
-                  size="xs"
-                  prefix="$"
-                  value={
-                    (
-                      store.table.getColumn('amount')?.getFilterValue() as
-                        | [number | undefined, number | undefined]
-                        | undefined
-                    )?.[1] ?? ''
-                  }
-                  onChange={(value) => {
-                    const current = (store.table.getColumn('amount')?.getFilterValue() as
-                      | [number | undefined, number | undefined]
-                      | undefined) ?? [undefined, undefined];
-                    const max = typeof value === 'number' ? value : undefined;
-                    store.table
-                      .getColumn('amount')
-                      ?.setFilterValue(
-                        current[0] == null && max == null ? undefined : [current[0], max]
-                      );
-                  }}
-                />
-              </Group>
-            </Stack>
-          </Popover.Dropdown>
-        </Popover>
-      </Group>
-      <DataGrid store={store} highlightOnHover striped>
-        <Group justify="space-between" p="xs">
-          <Text size="sm" c="dimmed">
-            {selectedCount > 0 ? `${selectedCount} rows selected` : '\u00A0'}
-          </Text>
-          <DataGrid.Footer />
-        </Group>
-      </DataGrid>
-    </>
+    <DataGrid store={store} highlightOnHover>
+      <DataGrid.Toolbar>
+        <DataGrid.GlobalFilter placeholder="Search orders..." />
+        <FiltersPopover store={store} />
+        <div style={{ flex: 1 }} />
+        <DataGrid.ColumnVisibilityToggle />
+        <DataGrid.ExportButton fileName="orders" />
+      </DataGrid.Toolbar>
+      <DataGrid.SelectionBar>
+        <Button size={store.controlSize} variant="default">
+          Mark as shipped
+        </Button>
+        <Button size={store.controlSize} variant="light" color="red">
+          Cancel orders
+        </Button>
+      </DataGrid.SelectionBar>
+      <DataGrid.Footer statusFormat="long" />
+    </DataGrid>
   );
 }
 

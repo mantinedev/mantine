@@ -1,10 +1,10 @@
-import { ArrowsDownUpIcon, SortAscendingIcon } from '@phosphor-icons/react';
+import { ArrowDownIcon, ArrowsDownUpIcon } from '@phosphor-icons/react';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, employees } from './_data';
 
 const code = `
-import { ArrowsDownUpIcon, SortAscendingIcon } from '@phosphor-icons/react';
+import { ArrowDownIcon, ArrowsDownUpIcon } from '@phosphor-icons/react';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { employees } from './data';
 
@@ -15,14 +15,15 @@ function Demo() {
       { accessorKey: 'firstName', header: 'First Name', enableSorting: true },
       { accessorKey: 'lastName', header: 'Last Name', enableSorting: true },
       { accessorKey: 'department', header: 'Department', enableSorting: true },
-      { accessorKey: 'salary', header: 'Salary', enableSorting: true },
+      { accessorKey: 'salary', header: 'Salary', enableSorting: true, meta: { align: 'end' } },
     ],
   });
 
   return (
     <DataGrid
       store={store}
-      sortedIcon={<SortAscendingIcon size={14} />}
+      sortIndicator="always"
+      sortedIcon={<ArrowDownIcon size={14} />}
       unsortedIcon={<ArrowsDownUpIcon size={14} />}
     />
   );
@@ -36,14 +37,15 @@ function Demo() {
       { accessorKey: 'firstName', header: 'First Name', enableSorting: true },
       { accessorKey: 'lastName', header: 'Last Name', enableSorting: true },
       { accessorKey: 'department', header: 'Department', enableSorting: true },
-      { accessorKey: 'salary', header: 'Salary', enableSorting: true },
+      { accessorKey: 'salary', header: 'Salary', enableSorting: true, meta: { align: 'end' } },
     ],
   });
 
   return (
     <DataGrid
       store={store}
-      sortedIcon={<SortAscendingIcon size={14} />}
+      sortIndicator="always"
+      sortedIcon={<ArrowDownIcon size={14} />}
       unsortedIcon={<ArrowsDownUpIcon size={14} />}
     />
   );

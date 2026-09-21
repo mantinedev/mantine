@@ -25,7 +25,7 @@ function Demo() {
     <DataGrid
       store={store}
       renderExpandedRow={({ row }) => (
-        <Group p="md" gap="xl">
+        <Group gap="xl">
           <Text size="sm">Email: {row.original.email}</Text>
           <Text size="sm">Start date: {row.original.startDate}</Text>
           <Text size="sm">
@@ -55,7 +55,7 @@ function Demo() {
     <DataGrid
       store={store}
       renderExpandedRow={({ row }) => (
-        <Group p="md" gap="xl">
+        <Group gap="xl">
           <Text size="sm">Email: {row.original.email}</Text>
           <Text size="sm">Start date: {row.original.startDate}</Text>
           <Text size="sm">

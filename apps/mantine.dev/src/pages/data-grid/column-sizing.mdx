@@ -6,15 +6,26 @@ export default Layout(MDX_DATA.DataGridColumnSizing);
 
 ## Basic column resizing
 
-Pass `withColumnResizing` to `useDataGrid` to allow users to drag column borders to resize them.
+Pass `withColumnResizing` to `useDataGrid` to allow users to drag column boundaries to resize them.
 Set initial column widths using the `size` property in column definitions.
 
 <Demo data={DataGridDemos.columnResizing} />
 
+## Resize handles
+
+One handle is rendered at every boundary between two columns, at the end edge of the column it
+resizes, and is revealed when either neighbour is hovered. There is no handle before the first
+column, after the last column, or after a column with `enableResizing: false`. The hit area is 8px
+wide with a 3px pill that turns primary while dragging; `touch-action: none` makes it work on touch
+devices. While a handle is dragged, a 1px guide line marks the new edge across the whole grid.
+Double-click a handle to autosize the column to its content (`autosizeColumns` is exported for
+programmatic use).
+
 ## Resize mode
 
 DataGrid supports two resize modes: `'onEnd'` (default) updates column widths when the user
-releases the drag handle, while `'onChange'` updates widths in real-time during dragging.
+releases the drag handle, with the guide line previewing the new edge, while `'onChange'` updates
+widths in real-time during dragging.
 
 <Demo data={DataGridDemos.columnResizeMode} />
 
@@ -47,6 +58,9 @@ const columns = [
 const store = useDataGrid({ data, columns, withColumnResizing: true });
 ```
 
+Utility columns (selection, expand, row numbers, reorder) and actions columns are never
+resizable; their widths come from the grid `size` and can be overridden through `columnSizing`.
+
 ## Column size defaults
 
 TanStack Table uses these defaults when `size`, `minSize`, or `maxSize` are not specified:
@@ -73,6 +87,18 @@ const store = useDataGrid({
 });
 ```
 
+## Table layout
+
+`tableLayout` (`'fixed'` by default) decides how column widths are applied. With `fixed` every
+column takes its `size` exactly; with `auto` the browser distributes the remaining width and
+`size` is a hint. `textOverflow` (`'ellipsis' | 'wrap' | 'clip'`) controls what happens to cell
+content wider than the column.
+
+## Header groups
+
+Resize handles stay on group headers: dragging a group boundary resizes the leaf columns under it
+proportionally, and double-click autosizes all of them.
+
 ## RTL support
 
 `columnResizeDirection` defaults to the direction of the closest `DirectionProvider`, so a grid
@@ -87,9 +113,3 @@ const store = useDataGrid({
   columnResizeDirection: 'rtl',
 });
 ```
-
-## Resize handles
-
-One handle is rendered at every boundary between two resizable columns and is revealed when either
-neighbour is hovered. While a handle is dragged, a guide line marks the new edge across the whole
-grid. Double-click a handle to autosize the column to its content.

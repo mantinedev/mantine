@@ -578,6 +578,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.DataGridPinning,
       MDX_DATA.DataGridRowFeatures,
       MDX_DATA.DataGridVirtualization,
+      MDX_DATA.DataGridStates,
       MDX_DATA.DataGridEditing,
       MDX_DATA.DataGridGrouping,
       MDX_DATA.DataGridServerSide,

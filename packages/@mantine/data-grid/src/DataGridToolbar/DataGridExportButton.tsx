@@ -26,16 +26,16 @@ export type DataGridExportFormat = 'csv' | 'excel' | 'print' | 'copy';
 
 export interface DataGridExportButtonProps
   extends BoxProps, CompoundStylesApiProps<DataGridExportButtonFactory>, ElementProps<'div'> {
-  /** Export formats rendered as menu items in the given order, a single format renders a plain button, @default ['csv', 'excel', 'print', 'copy'] */
+  /** Export formats rendered as menu items in the given order, a single format renders a plain button, @default ['csv', 'excel', 'print', 'copy'] @category appearance */
   formats?: DataGridExportFormat[];
 
-  /** File name without extension used by the csv and excel exports, @default 'data' */
+  /** File name without extension used by the csv and excel exports, @default 'data' @category behavior */
   fileName?: string;
 
-  /** Rows included in every export, @default 'all' */
+  /** Rows included in every export, @default 'all' @category behavior */
   rows?: ExportRowScope;
 
-  /** Columns included in every export, @default 'visible' */
+  /** Columns included in every export, @default 'visible' @category behavior */
   columns?: ExportColumnScope;
 
   /** Options passed to `exportToCsv` */
@@ -53,10 +53,10 @@ export interface DataGridExportButtonProps
   /** Props passed down to the `Menu` component */
   menuProps?: Partial<MenuProps>;
 
-  /** Button label, `labels.exportLabel` by default */
+  /** Button label, `labels.exportLabel` by default @category appearance */
   children?: React.ReactNode;
 
-  /** Called after an export has been triggered */
+  /** Called after an export has been triggered @category behavior */
   onExport?: (format: DataGridExportFormat) => void;
 }
 

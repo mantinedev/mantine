@@ -6,19 +6,56 @@ export default Layout(MDX_DATA.DataGridPagination);
 
 ## Basic pagination
 
-Pass `withPagination` to `useDataGrid` to split data across pages. Use `pageSize` to control
-how many rows are displayed per page (defaults to `10`).
+Pass `pageSize` (or `withPagination`) to `useDataGrid` to split data across pages; the default page
+size is `10`. Add `DataGrid.Footer` as a child of `DataGrid` to render the chrome bar at the bottom
+of the frame: an empty `<DataGrid.Footer />` shows the status text, the page size select and the
+page buttons.
 
 <Demo data={DataGridDemos.pagination} />
 
-## Footer
+The footer height is fixed per grid size and its controls take the cascaded control size
+(`store.controlSize`). The row numbers of `withRowNumbers` and the `{from}–{to}` range of the status
+count data rows continuously across pages: page 2 of a 10-row page size starts at 11.
 
-`DataGrid.Footer` renders the status text, the page size select and the pagination controls.
-Use `pageSizeOptions` to customize the page size select (e.g., `pageSizeOptions={[5, 10, 25, 50]}`),
-`withPageSize={false}` to hide it, `pagination="arrows"` for previous / next controls with a page
-label, `pagination="none"` for the status only and `statusFormat="long"` for the
-`Showing 1–10 of 20 · 2 selected` status format. Under `manualPagination` without `rowCount`
-the status falls back to `Page 1 of 2`.
+## Status formats
+
+`statusFormat` picks between two status texts. `compact` (default) renders `1–10 of 20`; `long`
+renders `Showing 1–10 of 20 · 2 selected`. The selected count is appended only in the `long` format,
+only when `withRowSelection` is on and only while at least one row is selected. Without pagination
+the status becomes `20 rows` / `20 rows · 2 selected`, and an empty grid reads `0 rows`.
+
+<Demo data={DataGridDemos.footerStatusFormats} />
+
+## Arrows
+
+`pagination="arrows"` replaces the page buttons with a `Page 1 of 2` label and previous / next
+controls, which suits grids with many pages:
+
+<Demo data={DataGridDemos.footerArrows} />
+
+## Status only
+
+`pagination="none"` renders the status text alone, without page buttons or the page size select.
+The footer resolves to this mode by itself when the store has no pagination, so a footer on an
+unpaginated grid is a row count bar:
+
+<Demo data={DataGridDemos.footerStatusOnly} />
+
+## Page size
+
+The page size `Select` lists `pageSizeOptions` (`[10, 25, 50, 100]` by default); the current page
+size is always included and the list is sorted. Set `withPageSize={false}` to hide the select and
+`selectProps` to configure it. Items are labelled through the `pageSize` label (`{count} / page`)
+and the select carries the `pageSizeLabel` aria-label (`Rows per page`):
+
+```tsx
+<DataGrid store={store}>
+  <DataGrid.Footer pageSizeOptions={[5, 10, 25]} selectProps={{ w: 130 }} />
+</DataGrid>
+```
+
+The footer never hides on a single page; pass `paginationProps={{ hideWithOnePage: true }}` to
+opt in. `paginationProps` is forwarded to the core `Pagination` component.
 
 ## Controlled pagination
 
@@ -26,6 +63,20 @@ Pass `pagination` and `onPaginationChange` to `useDataGrid` to control paginatio
 The state follows the TanStack Table `PaginationState` format -- `{ pageIndex: number, pageSize: number }`.
 
 <Demo data={DataGridDemos.controlledPagination} />
+
+## Custom footer
+
+Pass `children` to `DataGrid.Footer` to replace the status, page size select and pagination with
+your own controls. The bar keeps its height, padding and top rule; `store.pagination`,
+`store.table.getRowCount()` and the navigation methods below give you everything the default
+content uses:
+
+<Demo data={DataGridDemos.customFooter} />
+
+The footer sets the `--dg-footer-height` CSS variable on the grid root, which the floating
+[selection bar](/data-grid/row-features#bulk-actions) uses to sit above the footer. A footer built
+outside `DataGrid.Footer` (for example a bar outside the frame) should set that variable itself if
+it is combined with a floating selection bar.
 
 ## Page navigation methods
 
@@ -36,33 +87,36 @@ store.table.firstPage();
 store.table.previousPage();
 store.table.nextPage();
 store.table.lastPage();
+store.table.setPageIndex(2);
+store.table.setPageSize(25);
 store.table.getCanPreviousPage();
 store.table.getCanNextPage();
 store.table.getPageCount();
+store.table.getRowCount();
 ```
 
-Use these to build a custom pagination UI or to navigate programmatically in response to events.
+Use these to build a custom footer or to navigate programmatically in response to events.
 
 ## Auto-reset page index
 
 By default, the page index resets to `0` when sorting or filtering changes. Pass `autoResetPageIndex: false`
-via `tableOptions` to disable this behavior:
+to `useDataGrid` to disable this behavior:
 
 ```tsx
 const store = useDataGrid({
   data,
   columns,
-  tableOptions: {
-    autoResetPageIndex: false,
-  },
+  autoResetPageIndex: false,
 });
 ```
 
 ## Server-side pagination
 
 For server-side pagination, set `manualPagination` to `true` and provide `rowCount` with the total
-number of rows. Alternatively, use `pageCount` directly when you know the total number of pages
-rather than the total number of rows:
+number of rows. The footer needs `rowCount` to render the `1–10 of 200` range and the page count;
+with `manualPagination` and no `rowCount` it falls back to `Page 1 of 2` in both status formats.
+Alternatively, use `pageCount` directly when you know the total number of pages rather than the
+total number of rows:
 
 ```tsx
 const store = useDataGrid({
@@ -71,8 +125,16 @@ const store = useDataGrid({
   manualPagination: true,
   pagination,
   onPaginationChange,
-  pageCount: Math.ceil(totalRows / pageSize),
+  rowCount: totalRows,
 });
 ```
 
 See the [Server-side](/data-grid/server-side) page for a complete example.
+
+## Labels
+
+The footer texts are translated through the `labels` prop: `footerRange` (`{from}–{to} of {total}`),
+`footerRangeLong` (`Showing {from}–{to} of {total}`), `footerRows` (`{count} rows`),
+`footerSelected` (`{count} selected`), `footerPage` (`Page {page} of {total}`), `pageSize`,
+`pageSizeLabel`, `paginationPrevious` and `paginationNext`. The `·` separator between the range and
+the selected count is fixed.

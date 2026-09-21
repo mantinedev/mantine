@@ -20,9 +20,9 @@ The table below lists every TanStack Table feature and its current status in Dat
   head={['Feature', 'Status', 'How to use']}
   data={[
     ['Sorting', 'Built-in', '`enableSorting: true` on columns'],
-    ['Column Filtering', 'Built-in', '`withFiltering` or controlled state'],
+    ['Column Filtering', 'Built-in', '`enableColumnFilter` / `filterFn` on columns, state through the store'],
     ['Global Filtering', 'Built-in', '`withGlobalFilter` or controlled state'],
-    ['Pagination', 'Built-in', '`withPagination` or controlled state'],
+    ['Pagination', 'Built-in', '`pageSize`, `withPagination` or controlled state'],
     ['Column Sizing', 'Built-in', '`withColumnResizing` or controlled state'],
     ['Column Resizing', 'Built-in', '`withColumnResizing`, `columnResizeMode`'],
     ['Column Pinning', 'Built-in', '`columnPinning` state (`start` / `end`)'],
@@ -40,6 +40,7 @@ The table below lists every TanStack Table feature and its current status in Dat
     ['Row Virtualization', 'Built-in', "`virtualize=\"rows\"`"],
     ['Column Virtualization', 'Built-in', "`virtualize=\"columns\"`"],
     ['Row Reordering', 'Built-in', '`withRowReorder: true`'],
+    ['Editing', 'Grid feature', '`editingMode` in `useDataGrid`, registered as `editingFeature`'],
     ['Custom Sort Functions', 'Per column', '`sortFn` on a column definition'],
     ['Custom Filter Functions', 'Per column', '`filterFn` on a column definition'],
     ['Debug Mode', 'Via `tableOptions`', '`tableOptions: { debugTable: true }`'],
@@ -86,6 +87,40 @@ This matters because `table.getRowModel()` resolves to the paginated row model. 
 registers the paginated row model when the grid is actually paginated, so an unpaginated grid keeps
 rendering all of its rows.
 
+## Editing feature
+
+Inline editing is implemented as a TanStack Table feature, `editingFeature`, registered on every
+DataGrid table. It adds the `editing` state slice with the `onEditingChange` option, and the
+`startEditing` / `saveEditing` / `cancelEditing` / `setEditing` table APIs, `getCanEdit` /
+`getIsEditing` / `getIsSaving` / `startEditing` / `saveEditing` / `cancelEditing` on rows,
+`getCanEdit` on columns and `getCanEdit` / `getIsEditing` / `getEditingValue` /
+`setEditingValue` / `getEditingError` on cells. The types are merged into `@tanstack/table-core`
+through module augmentation, so the APIs are typed on the bound `DataGridRow` / `DataGridCell`
+types. `editingFeature` is exported for tables built by hand with `useTable`. The augmentation
+requires `@tanstack/table-core` to be resolvable from your project, which is the case whenever
+`@tanstack/react-table` is installed with a hoisting package manager.
+
+## Utility columns
+
+The grid injects TanStack display columns for its own features, with the ids exported as
+`UTILITY_COLUMN_IDS`:
+
+<DataTable
+  head={['Id', 'Injected by', '`meta.utility`']}
+  data={[
+    ['`__reorder__`', '`withRowReorder`', '`reorder`'],
+    ['`__select__`', '`withRowSelection`', '`select`'],
+    ['`__expand__`', '`withRowExpansion` (without tree data)', '`expand`'],
+    ['`__rowNumber__`', '`withRowNumbers`', '`rowNumber`'],
+  ]}
+/>
+
+They are ordinary columns for TanStack: they appear in `table.getAllColumns()`,
+`getVisibleLeafColumns()`, header groups, `row.getVisibleCells()` and `columnOrder`. Code that
+iterates the columns for its own purposes (a custom visibility menu, an export, a column picker)
+should skip columns with `meta.utility`. The store keeps them first in `columnOrder` and at the
+head of `columnPinning.start`, and `columnVisibility: { __select__: false }` hides one.
+
 ## Using tableOptions
 
 Any TanStack Table option not directly exposed by `useDataGrid` can be passed through `tableOptions`:
@@ -119,7 +154,7 @@ store.table.atoms.sorting.get();
 ```
 
 Commonly used slices are also mirrored on the DataGrid store directly (`store.sorting`,
-`store.pagination`, `store.rowSelection` and so on).
+`store.pagination`, `store.rowSelection`, `store.editing` and so on).
 
 ## Module format
 

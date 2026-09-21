@@ -12,10 +12,31 @@ descending, and unsorted states.
 
 <Demo data={DataGridDemos.sorting} />
 
+## Sort indicators
+
+A sorted column shows a single arrow at full text color, pointing down for descending and rotated
+for ascending. Columns that are sortable but not sorted show a double chevron only while the
+header is hovered or focused; set `sortIndicator="always"` to keep it visible. `sortIndicatorPosition`
+controls where the arrow sits: `trailing` (default) pushes it to the far edge of the header cell,
+`inline` keeps it next to the label.
+
+The arrow side follows the column alignment (`meta.align`): start-aligned columns place the arrow at
+the end edge, end-aligned columns place it right before the label, centered columns keep it inline.
+Long labels are truncated with an ellipsis and never push the arrow out of the cell.
+
+<Demo data={DataGridDemos.sortIndicators} />
+
+Only sortable headers take a hover background and enter the tab order; a non-sortable header is a
+plain label. Both rules are reflected on the root as `data-sort-indicator` and
+`data-sort-indicator-position`, so one set of CSS rules drives the table header and the virtualized
+header.
+
 ## Multi-column sort
 
 Hold `Shift` and click additional column headers to sort by multiple columns simultaneously.
-Enable multi-sort by passing `enableMultiSort: true` via `tableOptions`.
+Every sorted column shows its arrow; the grid renders no precedence numbers. Pass
+`enableMultiSort: true` to `useDataGrid` (or through `tableOptions`) to turn multi-sort on, and
+`maxMultiSortColCount` to cap the number of sorted columns.
 
 <Demo data={DataGridDemos.multiSort} />
 
@@ -28,12 +49,19 @@ The state follows the TanStack Table `SortingState` format -- an array of `{ id:
 
 ## Custom sort icons
 
-Use the `sortedIcon` and `unsortedIcon` props to replace the default sort indicator icons.
-The `sortedIcon` is displayed when a column is actively sorted -- it rotates automatically
-for ascending and descending directions via CSS. The `unsortedIcon` is displayed on sortable
-columns that are not currently sorted.
+Use the `sortedIcon` and `unsortedIcon` props to replace the default indicators. `sortedIcon` must
+be direction-agnostic: the grid renders the same node for both directions and rotates it by 180
+degrees with CSS for ascending order, so pass a plain "down" arrow rather than an icon that already
+encodes a direction. `unsortedIcon` is displayed on sortable columns that are not sorted, following
+the `sortIndicator` reveal rule. Both icons are rendered at `--dg-icon-size` by default.
 
 <Demo data={DataGridDemos.customSortIcons} />
+
+## Column menu
+
+With `withColumnMenu` set on `DataGrid`, every sortable column gets **Sort ascending**,
+**Sort descending** and **Clear sort** items in its column menu, see
+[Customization](/data-grid/customization#column-menu).
 
 ## Custom sort functions
 
@@ -78,31 +106,27 @@ TanStack Table provides the following built-in sort function names that can be u
 ## Sort removal behavior
 
 By default, clicking a sorted column header cycles through ascending → descending → unsorted.
-Pass `enableSortingRemoval: false` via `tableOptions` to skip the unsorted state and cycle only
+Pass `enableSortingRemoval: false` to `useDataGrid` to skip the unsorted state and cycle only
 between ascending and descending:
 
 ```tsx
 const store = useDataGrid({
   data,
   columns,
-  tableOptions: {
-    enableSortingRemoval: false,
-  },
+  enableSortingRemoval: false,
 });
 ```
 
 ## Sort direction
 
 By default, the first click on a sortable column header sorts ascending. Pass `sortDescFirst: true`
-via `tableOptions` to sort descending on the first click:
+to `useDataGrid` to sort descending on the first click:
 
 ```tsx
 const store = useDataGrid({
   data,
   columns,
-  tableOptions: {
-    sortDescFirst: true,
-  },
+  sortDescFirst: true,
 });
 ```
 
@@ -113,5 +137,6 @@ See the [Server-side](/data-grid/server-side) page for a complete example.
 
 ## Accessibility
 
-DataGrid adds `aria-sort` attributes to sortable column headers automatically. Headers are focusable
-and can be activated with `Enter` or `Space` keys.
+Sortable column headers render a button with `aria-sort` (`ascending`, `descending` or `none`) on
+the `th`. The button is focusable and can be activated with `Enter` or `Space`; the focus ring is
+drawn as a 2px inset ring on the whole header cell. Non-sortable headers never enter the tab order.

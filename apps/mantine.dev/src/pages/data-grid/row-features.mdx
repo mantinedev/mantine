@@ -6,11 +6,18 @@ export default Layout(MDX_DATA.DataGridRowFeatures);
 
 ## Row selection
 
-Pass `withRowSelection` to `useDataGrid` to add checkbox selection to each row. A select-all
-checkbox is rendered in the header. Use `rowSelection` and `onRowSelectionChange` for controlled
-state. The `getRowId` option is required to provide stable row identifiers.
+Pass `withRowSelection` to `useDataGrid` to add a checkbox column (`__select__`) as the first
+column of the grid, with a select-all checkbox in the header. Use `rowSelection` and
+`onRowSelectionChange` for controlled state. The `getRowId` option is required to provide stable
+row identifiers.
 
 <Demo data={DataGridDemos.rowSelection} />
+
+Selected rows take the `--dg-selected-color` fill (`--mantine-color-selected` by default) and a
+continuous 2px primary bar at the start edge; the fill wins over stripes and stays the same on
+hover. The `data-selected` attribute is set from `row.getIsSelected()` on every row, also when the
+checkbox column is off, so a custom selection column (a display column plus `enableRowSelection`)
+gets the same look. Group rows never take the selected look.
 
 ## Controlled selection
 
@@ -22,7 +29,7 @@ Selection state is keyed by row IDs (from `getRowId`), not positional indexes.
 ## Single selection
 
 Set `enableMultiRowSelection` to `false` to restrict selection to one row at a time. The header
-checkbox is hidden in single-select mode and each row renders a radio-style indicator.
+cell is empty in single-select mode and each row renders a radio control.
 
 <Demo data={DataGridDemos.rowSelectionSingle} />
 
@@ -33,22 +40,39 @@ function returns `false` render a disabled checkbox and cannot be selected.
 
 <Demo data={DataGridDemos.rowSelectionPerRow} />
 
+## Select on row click
+
+Set `selectOnRowClick` on `DataGrid` to toggle selection by clicking anywhere on a row: a plain
+click selects only that row, `Shift + click` extends the selection to a range from the last
+selected row, `Ctrl / Cmd + click` toggles the row without touching the others. With the keyboard,
+`Space` toggles the focused row and `Shift + Space` extends the range.
+
 ## Bulk actions
 
 Add `DataGrid.SelectionBar` next to `DataGrid.Toolbar`: while rows are selected it takes the
 toolbar's place with the selected count, your bulk action controls and a close button that clears
 the selection. Use `store.table.getSelectedRowModel().rows` or `store.rowSelection` to act on the
-selected rows.
+selected rows. See [Customization](/data-grid/customization#selection-bar) for the floating
+variant and the bar's props.
 
 <Demo data={DataGridDemos.rowSelectionBulkActions} />
 
 ## Row expansion
 
-Pass `withRowExpansion` to `useDataGrid` to allow rows to expand and show additional detail content.
-Use the `renderExpandedRow` prop on `DataGrid` to define the expanded content. Click the expand icon
-to toggle a row.
+Pass `withRowExpansion` to `useDataGrid` to add an expand column (`__expand__`) and let rows show
+additional detail content. Use the `renderExpandedRow` prop on `DataGrid` to define the expanded
+content. Click the expand icon to toggle a row, or press `Enter` on a focused row.
 
 <Demo data={DataGridDemos.rowExpansion} />
+
+The expansion panel is a structural row (`tr[data-expanded-row]`) under the parent
+(`tr[data-expanded]`): one empty cell per utility column and one cell spanning the data columns
+with `12px` vertical and `--dg-cell-padding-x` horizontal padding. The panel inherits the grid font,
+is never striped, hovered, selected or focusable, and keeps the rules between the parent and the
+panel and under the panel. Set `withTintedExpandedRows` to paint the parent and its panel with
+`--dg-striped-color` and drop the rule between them:
+
+<Demo data={DataGridDemos.expandedRowsTinted} />
 
 ## Controlled expansion
 
@@ -69,38 +93,58 @@ store.table.toggleAllRowsExpanded(false);
 
 ## Conditional expansion
 
-Use `getRowCanExpand` in `tableOptions` to control which rows display the expand toggle. Rows for
+Use `getRowCanExpand` in `useDataGrid` to control which rows display the expand toggle. Rows for
 which the function returns `false` will not show an expand icon:
 
 ```tsx
 const store = useDataGrid({
-  tableOptions: {
-    getRowCanExpand: (row) => row.original.hasDetails,
-  },
+  data,
+  columns,
+  withRowExpansion: true,
+  getRowCanExpand: (row) => row.original.hasDetails,
 });
 ```
 
 ## Expand on click
 
 Set `expandOnRowClick` to `true` on `DataGrid` to toggle row expansion when clicking anywhere on
-the row, instead of requiring the expand icon.
-
-## Striped and hover
-
-Set `striped` to add alternating row colors and `highlightOnHover` to highlight rows
-on mouse hover. These props can be used together or independently.
-
-<Demo data={DataGridDemos.stripedHover} />
+the row, instead of requiring the expand icon. `renderExpandedRow` is ignored for tree data
+(`getSubRows`), where expansion reveals child rows instead of a panel.
 
 ## Row numbers
 
-Set `withRowNumbers` in `useDataGrid` to display a row number column; numbers count data rows
-continuously across pages.
+Set `withRowNumbers` in `useDataGrid` to add a row number column (`__rowNumber__`) with a `#`
+header (the `rowNumber` label). Numbers count data rows only and run continuously across pages;
+group rows, expansion panels and pinned rows take no number, and stripes use the same index so both
+stay in step around them.
+
+## Row focus and keyboard navigation
+
+Without cell selection, rows are the focus targets: the first rendered row has `tabindex="0"`, the
+others `-1`, and a focused row shows a 2px inset ring. The same handler serves the table body, the
+virtualized body and the list view:
+
+<DataTable
+  head={['Key', 'Action']}
+  data={[
+    ['`ArrowDown` / `ArrowUp`', 'Move focus to the next / previous row'],
+    ['`Home` / `End`', 'Move focus to the first / last rendered row'],
+    ['`Enter`', 'Calls `onRowClick` and toggles expansion (or starts editing when editing is enabled and the row is editable)'],
+    ['`F2`', 'Starts editing the row when editing is enabled'],
+    ['`Space`', 'Toggles selection under `selectOnRowClick`; on a group row toggles the group'],
+    ['`Shift + Space`', 'Extends the selection range under `selectOnRowClick`'],
+    ['`Escape`', 'Blurs the row'],
+  ]}
+/>
+
+Keys pressed inside controls within a row (checkboxes, buttons, editors) are never intercepted.
+With `withCellSelection` the cells become the focus targets and rows carry no `tabindex`, see
+below.
 
 ## Row click and double-click
 
 Use `onRowClick` and `onRowDoubleClick` props on `DataGrid` to respond to row interactions.
-Both callbacks receive the `row` object and the `event`:
+Both callbacks receive the `row` object and the `event`; `onCellClick` receives the `cell`:
 
 ```tsx
 <DataGrid
@@ -116,12 +160,26 @@ Both callbacks receive the `row` object and the `event`:
 
 ## Cell selection
 
-Pass `withCellSelection` to `useDataGrid` to enable spreadsheet-style cell range selection. Users can
-click a cell to focus it, drag across cells to select a range, extend a range with Shift, and add or
-subtract additional ranges with Ctrl/Cmd. Arrow keys move the focused cell and Shift + arrow keys
-extend the selection.
+Pass `withCellSelection` to `useDataGrid` to enable spreadsheet-style cell range selection. Cells
+become the focus targets (roving `tabindex`), the root carries `data-cell-selection` and text
+selection inside cells is disabled. Selected cells take the `--mantine-primary-color-light` fill
+with 1px primary edges around each range; the focused cell is transparent with a 2px focus ring.
+Group rows are excluded from ranges.
 
 <Demo data={DataGridDemos.cellSelection} />
+
+<DataTable
+  head={['Interaction', 'Action']}
+  data={[
+    ['Click', 'Focuses the cell and starts a new single-cell range'],
+    ['Drag', 'Selects the range from the pressed cell to the cell under the pointer'],
+    ['`Shift + click`', 'Extends the current range to the clicked cell'],
+    ['`Ctrl / Cmd + click`', 'Adds or removes a cell from the selection as another range'],
+    ['`Arrow` keys', 'Move the focused cell and start a new range there'],
+    ['`Shift + Arrow`', 'Extends the current range in that direction'],
+    ['`Enter` / `F2`', 'Starts editing the focused cell when editing is enabled'],
+  ]}
+/>
 
 Cell selection state can be controlled with `cellSelection` and `onCellSelectionChange`. The current
 selection is available on the store as `store.cellSelection`, and the table instance exposes helpers
@@ -136,6 +194,39 @@ store.table.getSelectedCellRangesData(); // values as [region][row][column]
 ```
 
 Set `enableCellSelection: false` on a column definition to exclude it from selection.
+
+## List view
+
+Set `listView` on `DataGrid` to render every row as a vertical list item instead of a table row,
+for narrow screens or card layouts. `listView` (or `listView="cards"`) renders bordered cards with
+the grid radius and an 8px gap, and drops the frame border around them; `listView="flat"` renders
+items divided by row rules inside the frame. Toolbar, selection bar and footer stay where they are.
+
+<Demo data={DataGridDemos.listView} />
+
+The default item content is one label / value pair per visible data column (utility columns are
+skipped, labels come from `meta.label`, a string `header` or the column id). Pass `renderListItem`
+to supply the content of an item; the grid still renders the item wrapper with its border, padding,
+focus ring and selection fill:
+
+```tsx
+<DataGrid
+  store={store}
+  listView
+  renderListItem={({ row }) => (
+    <Group justify="space-between">
+      <Text fw={500}>
+        {row.original.firstName} {row.original.lastName}
+      </Text>
+      <Badge>{row.original.department}</Badge>
+    </Group>
+  )}
+/>
+```
+
+Items follow the row focus model (roving `tabindex`, arrow keys, `Enter`, `Space`), take the
+selected fill without the bar, and hover under `highlightOnHover`. Group rows render as heading
+items that toggle on click, tree rows render flat, and no editor is rendered in list view.
 
 ## Row reorder
 
@@ -154,8 +245,9 @@ const store = useDataGrid({
 });
 ```
 
-A drag handle column is added automatically as the first column. Users drag rows by the handle to
-reorder them.
+A drag handle column (`__reorder__`) is added automatically as the first column; the grip is always
+visible so it works on touch devices. Users drag rows by the handle to reorder them.
 
 Sorting is automatically disabled when `withRowReorder` is active, because a manual row order and
-a sort-derived order cannot coexist.
+a sort-derived order cannot coexist. Row reorder is not available with tree data, grouping or
+`virtualize`.

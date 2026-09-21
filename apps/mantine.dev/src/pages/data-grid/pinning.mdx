@@ -6,28 +6,37 @@ export default Layout(MDX_DATA.DataGridPinning);
 
 ## Column pinning
 
-Pin columns to the left or right edge of the grid so they remain visible while scrolling
-horizontally. Pass `columnPinning` to `useDataGrid` with arrays of column IDs to pin.
+Pin columns to the start or end edge of the grid so they remain visible while scrolling
+horizontally. Pass `columnPinning` to `useDataGrid` with `start` and `end` arrays of column IDs.
 
 <Demo data={DataGridDemos.columnPinning} />
 
+Pinned cells carry `data-pinned="start"` or `data-pinned="end"` on the `th` and `td`; the last
+pinned cell on each side adds `data-pinned-edge`, draws a 1px divider, and shows a shadow only while
+the grid is scrolled away from that side (root `data-overflow-start` / `data-overflow-end`). The
+shadow is not colorable. Utility columns (selection, expand, row numbers, reorder) are always
+pinned first and cannot be unpinned, so the pinned edge lands after the last pinned data column.
+
 ## Pin multiple columns
 
-Pin multiple columns to the left and right edges simultaneously.
+Pin multiple columns to the start and end edges simultaneously.
 
 <Demo data={DataGridDemos.columnPinningMultiple} />
 
 ## Interactive column pinning
 
 Use controlled `columnPinning` and `onColumnPinningChange` to let users pin and unpin
-columns dynamically.
+columns dynamically. With `withColumnMenu` on `DataGrid`, every column gets **Pin to left** /
+**Pin to right** / **Unpin** items in its header menu.
 
 <Demo data={DataGridDemos.columnPinningInteractive} />
 
 ## Row pinning
 
 Pin rows to the top or bottom of the grid so they remain visible while scrolling vertically.
-Pass `rowPinning` to `useDataGrid` with arrays of row IDs (from `getRowId`) to pin.
+Pass `rowPinning` to `useDataGrid` with arrays of row IDs (from `getRowId`) to pin. Pinned rows
+render in their own `tbody` with `data-pinned="top"` / `data-pinned="bottom"` (mirrored on each
+`tr`), redraw their rules, take no stripe and no row number, and hover and select normally.
 
 <Demo data={DataGridDemos.rowPinning} />
 
@@ -47,10 +56,26 @@ pinned columns stay fixed horizontally.
 
 ## Pinning with header groups
 
-Column pinning works with grouped headers. When columns within a group are pinned, the group
-header spans the pinned columns correctly.
+Column pinning works with grouped headers. A group header is pinned when every visible leaf column
+under it is pinned to the same side; a group whose leaves are split between pinned and unpinned
+columns is rendered unpinned.
 
 <Demo data={DataGridDemos.pinningWithGroups} />
+
+## Sticky header
+
+Set `stickyHeader` on `DataGrid` to keep the header visible while the page scrolls. Every header
+row takes the body background and redraws its rule, and pinned header cells stay above the body.
+`stickyHeaderOffset` (a number in px, converted to rem, or any CSS length) sets where the header
+sticks, for example under a fixed app header:
+
+```tsx
+<DataGrid store={store} stickyHeader stickyHeaderOffset={60} />
+```
+
+Top-pinned rows stick right under the sticky header. The virtualized body scrolls inside its own
+container, so its header is always sticky at the top of that container and `stickyHeaderOffset`
+does not apply to it.
 
 ## keepPinnedRows
 
@@ -100,12 +125,12 @@ store.rowPinning    // { top: ['1'], bottom: [] }
 DataGrid implements column pinning with CSS `position: sticky` on individual `<th>` and `<td>`
 elements. This keeps the DOM in a single flat table structure, which preserves native accessibility
 semantics and avoids the synchronization overhead of TanStack's split-table rendering approach
-(where pinned and non-pinned columns are rendered in separate `<table>` elements). The tradeoff
-is that row heights must remain consistent across all columns, which is the standard case for
-data grids.
+(where pinned and non-pinned columns are rendered in separate `<table>` elements). Every pinned
+cell gets its offset from a private CSS variable and inherits the background of its row, so stripes,
+hover and selection show through; under column pinning rows are painted with the body color to
+cover the scrolling cells behind them.
 
 ## Limitations
 
-Row pinning is not supported when `virtualize` includes rows. Virtualized mode uses a
-different rendering path for performance, and row pinning requires the standard table body renderer.
-Column pinning works with both standard and virtualized grids.
+- A grid rendered on a tinted surface: rows under column pinning are opaque in `--mantine-color-body`, so pinned cells cover a colored background. Override the row background through the Styles API if the grid sits on a tinted panel.
+- Row pinning is not supported with any `virtualize` value: it is turned off with a warning in development. Column pinning works with both standard and virtualized grids.

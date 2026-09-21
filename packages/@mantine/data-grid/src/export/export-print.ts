@@ -4,9 +4,16 @@ import { formatCsv } from './export-csv';
 import type { ExportColumnScope, ExportRowScope } from './export-utils';
 
 export interface ExportPrintOptions {
+  /** Document title of the print window */
   title?: string;
+
+  /** Rows to print, @default 'all' */
   rows?: ExportRowScope;
+
+  /** Columns to print, @default 'visible' */
   columns?: ExportColumnScope;
+
+  /** Formats a cell value before it is printed, `String(value)` by default */
   valueFormatter?: (value: unknown, columnId: string) => string;
 }
 

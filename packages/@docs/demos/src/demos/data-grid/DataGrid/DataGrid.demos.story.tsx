@@ -277,3 +277,138 @@ export const Demo_cellSpanning = {
   name: '⭐ Demo: cellSpanning',
   render: renderDemo(demos.cellSpanning),
 };
+
+export const Demo_facetedFilters = {
+  name: '⭐ Demo: facetedFilters',
+  render: renderDemo(demos.facetedFilters),
+};
+
+export const Demo_operatorFilters = {
+  name: '⭐ Demo: operatorFilters',
+  render: renderDemo(demos.operatorFilters),
+};
+
+export const Demo_filterChips = {
+  name: '⭐ Demo: filterChips',
+  render: renderDemo(demos.filterChips),
+};
+
+export const Demo_sizeToggle = {
+  name: '⭐ Demo: sizeToggle',
+  render: renderDemo(demos.sizeToggle),
+};
+
+export const Demo_toolbarComposed = {
+  name: '⭐ Demo: toolbarComposed',
+  render: renderDemo(demos.toolbarComposed),
+};
+
+export const Demo_exportButton = {
+  name: '⭐ Demo: exportButton',
+  render: renderDemo(demos.exportButton),
+};
+
+export const Demo_selectionBar = {
+  name: '⭐ Demo: selectionBar',
+  render: renderDemo(demos.selectionBar),
+};
+
+export const Demo_selectionBarFloating = {
+  name: '⭐ Demo: selectionBarFloating',
+  render: renderDemo(demos.selectionBarFloating),
+};
+
+export const Demo_footerStatusFormats = {
+  name: '⭐ Demo: footerStatusFormats',
+  render: renderDemo(demos.footerStatusFormats),
+};
+
+export const Demo_footerArrows = {
+  name: '⭐ Demo: footerArrows',
+  render: renderDemo(demos.footerArrows),
+};
+
+export const Demo_footerStatusOnly = {
+  name: '⭐ Demo: footerStatusOnly',
+  render: renderDemo(demos.footerStatusOnly),
+};
+
+export const Demo_customFooter = {
+  name: '⭐ Demo: customFooter',
+  render: renderDemo(demos.customFooter),
+};
+
+export const Demo_listView = {
+  name: '⭐ Demo: listView',
+  render: renderDemo(demos.listView),
+};
+
+export const Demo_groupingTinted = {
+  name: '⭐ Demo: groupingTinted',
+  render: renderDemo(demos.groupingTinted),
+};
+
+export const Demo_treeDataIcons = {
+  name: '⭐ Demo: treeDataIcons',
+  render: renderDemo(demos.treeDataIcons),
+};
+
+export const Demo_treeDataPlainIndent = {
+  name: '⭐ Demo: treeDataPlainIndent',
+  render: renderDemo(demos.treeDataPlainIndent),
+};
+
+export const Demo_expandedRowsTinted = {
+  name: '⭐ Demo: expandedRowsTinted',
+  render: renderDemo(demos.expandedRowsTinted),
+};
+
+export const Demo_emptyState = {
+  name: '⭐ Demo: emptyState',
+  render: renderDemo(demos.emptyState),
+};
+
+export const Demo_loadingVariants = {
+  name: '⭐ Demo: loadingVariants',
+  render: renderDemo(demos.loadingVariants),
+};
+
+export const Demo_floatingEditActions = {
+  name: '⭐ Demo: floatingEditActions',
+  render: renderDemo(demos.floatingEditActions),
+};
+
+export const Demo_cellValidation = {
+  name: '⭐ Demo: cellValidation',
+  render: renderDemo(demos.cellValidation),
+};
+
+export const Demo_columnMenu = {
+  name: '⭐ Demo: columnMenu',
+  render: renderDemo(demos.columnMenu),
+};
+
+export const Demo_frame = {
+  name: '⭐ Demo: frame',
+  render: renderDemo(demos.frame),
+};
+
+export const Demo_separators = {
+  name: '⭐ Demo: separators',
+  render: renderDemo(demos.separators),
+};
+
+export const Demo_sizes = {
+  name: '⭐ Demo: sizes',
+  render: renderDemo(demos.sizes),
+};
+
+export const Demo_sortIndicators = {
+  name: '⭐ Demo: sortIndicators',
+  render: renderDemo(demos.sortIndicators),
+};
+
+export const Demo_actionsColumn = {
+  name: '⭐ Demo: actionsColumn',
+  render: renderDemo(demos.actionsColumn),
+};
