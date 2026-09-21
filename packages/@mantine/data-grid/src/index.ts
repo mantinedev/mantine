@@ -19,6 +19,7 @@ export type {
   DataGridColumn,
   DataGridFilterFn,
   DataGridSortFn,
+  DataGridEmptyStatePayload,
 } from './DataGrid.types';
 
 export * from './DataGridHeader/index';
@@ -47,3 +48,17 @@ export type { DataGridFeatures } from './table-features';
 export { flexRender } from '@tanstack/react-table';
 
 export { formatLabel, renderLabel } from './format-label';
+
+export { editingFeature } from './editing-feature';
+export type {
+  DataGridEditingMode,
+  DataGridEditingState,
+  DataGridEditingStatus,
+  DataGridCellStatus,
+  DataGridEditStartPayload,
+  DataGridEditSavePayload,
+  DataGridEditSaveErrorPayload,
+  DataGridEditCancelPayload,
+  DataGridCellStatusPayload,
+} from './editing-feature';
+export type { DataGridEditComponentProps } from './DataGrid.types';

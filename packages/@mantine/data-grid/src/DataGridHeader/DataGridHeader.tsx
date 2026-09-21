@@ -7,8 +7,9 @@ import {
   Factory,
   useProps,
 } from '@mantine/core';
+import { useMergedRef } from '@mantine/hooks';
 import { useDataGridContext } from '../DataGrid.context';
-import { getPinnedStyles } from '../get-pinned-styles';
+import { getPinnedHeaderProps } from '../get-pinned-cell-props';
 import { DataGridHeaderCellContent, getHeaderCellAttributes } from './DataGridHeaderCell';
 import classes from '../DataGrid.module.css';
 
@@ -32,25 +33,26 @@ export type DataGridHeaderFactory = Factory<{
 }>;
 
 export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
-  const { className, style, classNames, styles, ...others } = useProps(
+  const { className, style, classNames, styles, ref, ...others } = useProps(
     'DataGridHeader',
     null,
     props
   );
 
   const ctx = useDataGridContext();
+  const theadRef = useMergedRef(ref, ctx.theadRef);
 
   return (
     <Box
       component="thead"
+      ref={theadRef}
       {...ctx.getStyles('thead', { className, classNames, style, styles })}
       {...others}
     >
       {ctx.table.getHeaderGroups().map((headerGroup) => (
         <tr key={headerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
           {headerGroup.headers.map((header, index) => {
-            const isPinned = ctx.withColumnPinning ? header.column.getIsPinned() : false;
-            const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(header.column) : undefined;
+            const pinned = getPinnedHeaderProps(header, ctx.withColumnPinning);
             const utility = header.column.columnDef.meta?.utility;
 
             return (
@@ -59,11 +61,11 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                 ref={ctx.headerInteractions.registerHeaderCell(header)}
                 colSpan={header.colSpan}
                 {...getHeaderCellAttributes(header, ctx)}
-                data-pinned-left={isPinned === 'start' || undefined}
-                data-pinned-right={isPinned === 'end' || undefined}
+                data-pinned={pinned['data-pinned']}
+                data-pinned-edge={pinned['data-pinned-edge']}
                 {...ctx.getStyles('th', { classNames, styles })}
                 style={{
-                  ...pinnedStyles,
+                  ...pinned.style,
                   width:
                     ctx.withColumnResizing || ctx.tableLayout === 'fixed' || utility
                       ? header.getSize()

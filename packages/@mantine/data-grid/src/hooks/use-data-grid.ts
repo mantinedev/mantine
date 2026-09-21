@@ -23,6 +23,15 @@ import {
 import { type MantineSize, useDirection } from '@mantine/core';
 import { DATA_GRID_SIZES, type DataGridControlSize, getControlSize } from '../data-grid-sizes';
 import type { DataGridColumnDef, DataGridRow, DataGridTable } from '../DataGrid.types';
+import type {
+  DataGridCellStatus,
+  DataGridCellStatusPayload,
+  DataGridEditCancelPayload,
+  DataGridEditingState,
+  DataGridEditSaveErrorPayload,
+  DataGridEditSavePayload,
+  DataGridEditStartPayload,
+} from '../editing-feature';
 import { createDataGridFeatures, type DataGridFeatures } from '../table-features';
 import {
   createUtilityColumns,
@@ -174,6 +183,9 @@ export interface DataGridStore<TData extends RowData = any> {
 
   /** Editing mode, `undefined` when editing is disabled */
   editingMode: 'cell' | 'row' | undefined;
+
+  /** Current editing target with its drafts, `null` while nothing is edited */
+  editing: DataGridEditingState | null;
 
   /** Current grid size, @default 'sm' */
   size: MantineSize;
@@ -438,6 +450,35 @@ export interface UseDataGridOptions<TData extends RowData> {
   /** Editing mode, enables inline editing when set */
   editingMode?: 'cell' | 'row';
 
+  /** Pointer gesture that starts editing a cell, @default 'doubleClick' */
+  editTrigger?: 'click' | 'doubleClick';
+
+  /** Called when a row or cell enters edit mode */
+  onEditStart?: (payload: DataGridEditStartPayload<DataGridFeatures, TData>) => void;
+
+  /** Called on commit with the updated row; return a promise to keep the editor open until it settles, reject to keep it open with the drafts */
+  onEditSave?: (payload: DataGridEditSavePayload<DataGridFeatures, TData>) => void | Promise<void>;
+
+  /** Called when `onEditSave` throws or rejects */
+  onEditSaveError?: (
+    error: unknown,
+    payload: DataGridEditSaveErrorPayload<DataGridFeatures, TData>
+  ) => void;
+
+  /** Called when editing is cancelled */
+  onEditCancel?: (payload: DataGridEditCancelPayload<DataGridFeatures, TData>) => void;
+
+  /** Returns the status tint of a body cell: `'dirty'` or `'invalid'` */
+  getCellStatus?: (
+    payload: DataGridCellStatusPayload<DataGridFeatures, TData>
+  ) => DataGridCellStatus;
+
+  /** Controlled editing state */
+  editing?: DataGridEditingState | null;
+
+  /** Callback when the editing state changes */
+  onEditingChange?: OnChangeFn<DataGridEditingState | null>;
+
   /** Grid size, controls font size, row height, cell padding and control sizes, @default 'sm' */
   size?: MantineSize;
 
@@ -612,6 +653,7 @@ export function useDataGrid<TData extends RowData>(
     ...(options.grouping !== undefined && { grouping: options.grouping }),
     ...(options.rowPinning !== undefined && { rowPinning: options.rowPinning }),
     ...(options.cellSelection !== undefined && { cellSelection: options.cellSelection }),
+    ...(options.editing !== undefined && { editing: options.editing }),
   });
 
   // Build change handlers
@@ -633,6 +675,7 @@ export function useDataGrid<TData extends RowData>(
     ...(options.onCellSelectionChange && {
       onCellSelectionChange: options.onCellSelectionChange,
     }),
+    ...(options.onEditingChange && { onEditingChange: options.onEditingChange }),
   };
 
   // Build TanStack Table config
@@ -707,6 +750,15 @@ export function useDataGrid<TData extends RowData>(
     }),
     ...(options.manualExpanding !== undefined && { manualExpanding: options.manualExpanding }),
     enableCellSelection: withCellSelection ? (cell) => !cell.row.getIsGrouped() : false,
+    ...(withEditing && {
+      editingMode: options.editingMode,
+      editTrigger: options.editTrigger,
+      onEditStart: options.onEditStart,
+      onEditSave: options.onEditSave,
+      onEditSaveError: options.onEditSaveError,
+      onEditCancel: options.onEditCancel,
+    }),
+    ...(options.getCellStatus && { getCellStatus: options.getCellStatus }),
 
     // Controlled state and handlers
     ...(Object.keys(controlledState).length > 0 && { state: controlledState }),
@@ -837,6 +889,7 @@ export function useDataGrid<TData extends RowData>(
     aggregatedColumnIds,
     onRowOrderChange: options.onRowOrderChange,
     editingMode: options.editingMode,
+    editing: state.editing,
     size,
     setSize,
     controlSize,

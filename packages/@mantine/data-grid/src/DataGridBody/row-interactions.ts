@@ -144,10 +144,23 @@ export function handleRowKeyDown(
       return;
     }
 
+    case 'F2':
     case 'Enter': {
       if (row.getIsGrouped()) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          row.toggleExpanded();
+        }
+        return;
+      }
+
+      if (!ctx.listView && ctx.withEditing && row.getCanEdit()) {
         event.preventDefault();
-        row.toggleExpanded();
+        row.startEditing();
+        return;
+      }
+
+      if (event.key === 'F2') {
         return;
       }
 

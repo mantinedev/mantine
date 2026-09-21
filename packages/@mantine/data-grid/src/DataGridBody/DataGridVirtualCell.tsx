@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Cell, flexRender, Row } from '@tanstack/react-table';
+import { useMergedRef } from '@mantine/hooks';
 import { useDataGridContext } from '../DataGrid.context';
-import { getPinnedStyles } from '../get-pinned-styles';
+import { getPinnedCellProps } from '../get-pinned-cell-props';
 import type { DataGridFeatures } from '../table-features';
 import { GroupCellContent, toggleGroupRowKey } from './DataGridGroupCell';
 import { TreeCellContent } from './DataGridTreeCell';
+import { useCellEditing } from './use-cell-editing';
 import { useCellSelection } from './use-cell-selection';
 
 interface DataGridVirtualCellProps {
@@ -27,19 +29,33 @@ export function DataGridVirtualCell({
   styles,
 }: DataGridVirtualCellProps) {
   const ctx = useDataGridContext();
-  const isPinned = ctx.withColumnPinning ? cell.column.getIsPinned() : false;
   const meta = cell.column.columnDef.meta;
-  const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(cell.column) : undefined;
+  const pinned = getPinnedCellProps(cell.column, ctx.withColumnPinning);
+  const elementRef = useRef<HTMLDivElement>(null);
   const cellSelection = useCellSelection<HTMLDivElement>(cell);
+  const editing = useCellEditing(cell, elementRef, { classNames, styles });
+  const mergedRef = useMergedRef(elementRef, cellSelection.ref);
   const isGroupRow = row.getIsGrouped();
   const isLabelCell = isGroupRow && cell.id === groupLabelCellId;
   const groupFocusTarget = isLabelCell && ctx.withCellSelection;
 
-  const handleCellClick = ctx.onCellClick
-    ? (event: React.MouseEvent) => {
-        ctx.onCellClick!(cell, event);
-      }
-    : undefined;
+  const handleCellClick =
+    ctx.onCellClick || editing.handlers.onClick
+      ? (event: React.MouseEvent) => {
+          ctx.onCellClick?.(cell, event);
+          editing.handlers.onClick?.(event);
+        }
+      : undefined;
+
+  const handleKeyDown =
+    cellSelection.props.onKeyDown || editing.handlers.onKeyDown
+      ? (event: React.KeyboardEvent) => {
+          editing.handlers.onKeyDown?.(event);
+          if (!event.defaultPrevented) {
+            cellSelection.props.onKeyDown?.(event);
+          }
+        }
+      : undefined;
 
   const sharedProps = {
     role: 'gridcell',
@@ -47,11 +63,11 @@ export function DataGridVirtualCell({
     'data-utility': meta?.utility,
     'data-align': meta?.align,
     'data-actions': meta?.type === 'actions' || undefined,
-    'data-pinned-left': isPinned === 'start' || undefined,
-    'data-pinned-right': isPinned === 'end' || undefined,
+    'data-pinned': pinned['data-pinned'],
+    'data-pinned-edge': pinned['data-pinned-edge'],
     ...ctx.getStyles('virtualCell', { classNames, styles }),
     style: {
-      ...pinnedStyles,
+      ...pinned.style,
       width: `var(--dg-col-${cellIndex})`,
     },
   };
@@ -76,17 +92,21 @@ export function DataGridVirtualCell({
   return (
     <div
       {...sharedProps}
-      ref={cellSelection.ref}
+      ref={mergedRef}
       {...cellSelection.props}
+      {...editing.attributes}
       onClick={handleCellClick}
+      onDoubleClick={editing.handlers.onDoubleClick}
+      onKeyDown={handleKeyDown}
     >
-      {isTreeFirstCell ? (
-        <TreeCellContent row={row} classNames={classNames} styles={styles}>
-          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-        </TreeCellContent>
-      ) : (
-        flexRender(cell.column.columnDef.cell, cell.getContext())
-      )}
+      {editing.editor ??
+        (isTreeFirstCell ? (
+          <TreeCellContent row={row} classNames={classNames} styles={styles}>
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </TreeCellContent>
+        ) : (
+          flexRender(cell.column.columnDef.cell, cell.getContext())
+        ))}
     </div>
   );
 }

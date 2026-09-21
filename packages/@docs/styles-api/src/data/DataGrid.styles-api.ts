@@ -17,14 +17,14 @@ export const DataGridStylesApi: StylesApiData<DataGridFactory> = {
     toolbar: 'Top toolbar container',
     globalFilter: 'Global search input wrapper in toolbar',
     columnVisibilityToggle: 'Column visibility toggle button wrapper in toolbar',
-    loadingOverlay: 'Loading overlay container',
+    loadingOverlay: 'LoadingOverlay rendered over the body by the `overlay` loading variant',
     selectionCheckbox: 'Row selection checkbox',
     selectAllCheckbox: 'Header select-all checkbox',
     expandIcon: 'Row expand/collapse icon button',
     expandedRow: 'Expanded row content cell',
     rowNumber: 'Row number cell',
-    emptyState: 'Empty state content cell',
-    editCell: 'Cell content wrapper when in editing mode',
+    emptyState: 'Full-width body cell that holds the `emptyState` content',
+    editCell: 'Editor wrapper rendered inside a cell in edit mode',
     groupHeader: 'Group row header cell content',
     groupToggle: 'Group row expand/collapse toggle button',
     aggregationCell: 'Totals row cell in the table footer',
@@ -56,6 +56,11 @@ export const DataGridStylesApi: StylesApiData<DataGridFactory> = {
     selectionBar: 'Selection bar rendered in the toolbar slot while rows are selected',
     selectionBarCount: 'Selected rows count inside the selection bar',
     selectionBarClose: 'Close button inside the selection bar that clears the selection',
+    loadingBar:
+      'Indeterminate 2px progress bar rendered under the header by the `bar` loading variant',
+    skeleton: 'Skeleton bar rendered in every data cell of a skeleton row while loading',
+    editActions:
+      'Floating Save / Cancel pill rendered next to the editing row with `withFloatingEditActions`',
   },
 
   vars: {
@@ -75,9 +80,11 @@ export const DataGridStylesApi: StylesApiData<DataGridFactory> = {
       '--dg-striped-color': 'Controls background color of striped rows',
       '--dg-hover-color': 'Controls background color on row hover',
       '--dg-selected-color': 'Controls background color of selected rows',
-      '--dg-pinned-shadow': 'Controls box-shadow on pinned columns',
       '--dg-footer-height':
         'Height of `DataGrid.Footer`, `0px` without a footer; set it on a custom footer so the floating selection bar sits above it',
+      '--dg-dirty-color': 'Background of cells reported as `dirty` by `getCellStatus`',
+      '--dg-invalid-color':
+        'Background of cells reported as `invalid` by `getCellStatus`, of editors that fail `meta.validate` and of a rejected save',
     },
   },
 

@@ -6,19 +6,54 @@ export default Layout(MDX_DATA.DataGridEditing);
 
 ## Cell editing
 
-Set `editingMode="cell"` in `useDataGrid` to enable inline cell editing. Double-click a cell to enter
-edit mode. Press `Enter` to save the value or `Escape` to cancel. The `onCellEdit` callback on `DataGrid`
-receives the row, column ID, and new value.
+Set `editingMode="cell"` in `useDataGrid` to enable inline cell editing. Double-click a cell
+(or press `Enter` / `F2` on a focused row) to open its editor. Press `Enter` to save or `Escape`
+to cancel; moving focus out of the editor also saves. The `onEditSave` option of `useDataGrid`
+receives the updated row:
 
 <Demo data={DataGridDemos.cellEditing} />
 
 ## Row editing
 
-Set `editingMode="row"` to edit all cells in a row simultaneously. When a row enters edit mode,
-Save and Cancel buttons appear. The `onRowEdit` callback receives the row and a `values` object
-containing all edited column values.
+Set `editingMode="row"` to edit every editable cell of a row at once. Row editing is started from
+an actions column that you declare with `meta.type: 'actions'`: its cell reads
+`row.getIsEditing()` and calls `row.startEditing()`, `row.saveEditing()` and
+`row.cancelEditing()`. Clicking outside the row saves it, `Escape` cancels, `Tab` and
+`Shift + Tab` move between the editors of the row:
 
 <Demo data={DataGridDemos.rowEditing} />
+
+Set `withFloatingEditActions` prop on `DataGrid` to render a floating Save / Cancel pill next to
+the row being edited instead of (or in addition to) an actions column. The button labels come
+from the `saveRow` and `cancelRow` labels.
+
+## Editing callbacks
+
+All editing options live in `useDataGrid`:
+
+<DataTable
+  head={['Option', 'Description']}
+  data={[
+    ['editingMode', '`cell` or `row`, editing is disabled when omitted'],
+    ['editTrigger', '`doubleClick` (default) or `click`, the pointer gesture that opens an editor'],
+    ['onEditStart', 'Called with `{ row, columnId }` when a row or cell enters edit mode'],
+    [
+      'onEditSave',
+      'Called with `{ row, newRow, oldRow, changedColumnIds }` on commit; return a promise to keep the editor open until it settles',
+    ],
+    [
+      'onEditSaveError',
+      'Called with `(error, { row, newRow })` when `onEditSave` throws or rejects, the editor stays open with the drafts',
+    ],
+    ['onEditCancel', 'Called with `{ row }` when editing is cancelled'],
+    ['getCellStatus', 'Returns `dirty` or `invalid` to tint a cell, see cell status below'],
+    ['editing / onEditingChange', 'Controlled editing state, `null` while nothing is edited'],
+  ]}
+/>
+
+The editing state is exposed as `store.editing` and can be driven imperatively with
+`store.table.startEditing(rowId, columnId?)`, `store.table.saveEditing()` and
+`store.table.cancelEditing()`.
 
 ## Modal editing
 
@@ -39,7 +74,7 @@ This approach gives full control over the edit UI and validation flow.
 ## Custom edit components
 
 Define a custom `editComponent` in the column `meta` to replace the default text input with any
-Mantine component. The callback receives `{ value, onChange, onSave, onCancel, cell }`.
+Mantine component. The callback receives `{ value, onChange, onSave, onCancel, error, cell }`:
 
 <Demo data={DataGridDemos.customEditComponent} />
 
@@ -57,26 +92,40 @@ const columns = [
 ```
 
 Read-only columns like IDs or computed fields should use this flag so users cannot accidentally
-modify them.
-
-## Limitations
-
-Inline editing is not supported when `virtualize` includes rows. Virtualized mode uses a
-different rendering path for performance, and editing requires the standard table body renderer.
-If you need both editing and large datasets, consider using server-side pagination instead of
-virtualization.
+modify them. Utility columns, display columns and the actions column are never editable.
 
 ## Validation
 
-Validate edited values before saving by checking in the `onCellEdit` or `onRowEdit` callback.
-Return early or show a notification if validation fails.
+Add `meta.validate` to a column to validate drafts before they are saved. A non-empty return value
+marks the editor as invalid, shows the message in a tooltip and blocks the save until the value
+changes:
 
 ```tsx
-onCellEdit={({ row, columnId, value }) => {
-  if (columnId === 'salary' && Number(value) < 0) {
-    notifications.show({ message: 'Salary cannot be negative', color: 'red' });
-    return;
-  }
-  updateData(row.original.id, columnId, value);
-}}
+const columns = [
+  {
+    accessorKey: 'salary',
+    header: 'Salary',
+    meta: {
+      validate: (value) => (Number(value) < 0 ? 'Salary cannot be negative' : null),
+    },
+  },
+];
+```
+
+Rejecting the promise returned from `onEditSave` keeps the editor open with the drafts and marks
+it invalid until the next change; use `onEditSaveError` to report the error.
+
+## Cell status
+
+Use `getCellStatus` to tint body cells that need attention, for example rows that have unsaved
+changes or values that failed a server-side check. Return `dirty` or `invalid`; the colors are
+controlled by the `--dg-dirty-color` and `--dg-invalid-color` CSS variables:
+
+```tsx
+const store = useDataGrid({
+  data,
+  columns,
+  getCellStatus: ({ row, columnId }) =>
+    pendingChanges.has(`${row.id}:${columnId}`) ? 'dirty' : undefined,
+});
 ```

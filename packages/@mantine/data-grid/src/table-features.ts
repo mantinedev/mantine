@@ -15,6 +15,7 @@ import {
   tableFeatures,
 } from '@tanstack/react-table';
 import type { DataGridColumnMeta } from './DataGrid.types';
+import { editingFeature } from './editing-feature';
 
 const metaSlots = {
   columnMeta: metaHelper<DataGridColumnMeta<any, any>>(),
@@ -32,6 +33,7 @@ const metaSlots = {
 export const dataGridFeatures = tableFeatures({
   ...stockFeatures,
   ...metaSlots,
+  editingFeature,
   sortedRowModel: createSortedRowModel(),
   filteredRowModel: createFilteredRowModel(),
   paginatedRowModel: createPaginatedRowModel(),
@@ -68,6 +70,7 @@ export function createDataGridFeatures(flags: DataGridRowModelFlags): DataGridFe
   return tableFeatures({
     ...stockFeatures,
     ...metaSlots,
+    editingFeature,
     ...(flags.withSorting && { sortedRowModel: createSortedRowModel() }),
     ...((flags.withFiltering || flags.withGlobalFilter) && {
       filteredRowModel: createFilteredRowModel(),

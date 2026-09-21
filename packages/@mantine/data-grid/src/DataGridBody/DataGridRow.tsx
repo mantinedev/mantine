@@ -50,6 +50,8 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
   const ctx = useDataGridContext();
   const isSelected = row.getIsSelected();
   const isStriped = isRowStriped(ctx, row);
+  const isEditing = ctx.withEditing && row.getIsEditing();
+  const isSaving = isEditing && row.getIsSaving();
   const rowPinned = ctx.withRowPinning ? row.getIsPinned() : false;
   const rowHeight = ctx.getRowHeight?.(row);
   const heightStyle = typeof rowHeight === 'number' ? { height: `${rowHeight}px` } : undefined;
@@ -148,8 +150,10 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
       data-tree-row={ctx.withTreeData || undefined}
       data-depth={ctx.withTreeData ? row.depth : undefined}
       data-leaf={(ctx.withTreeData && !row.getCanExpand()) || undefined}
-      data-pinned-top={rowPinned === 'top' || undefined}
-      data-pinned-bottom={rowPinned === 'bottom' || undefined}
+      data-pinned={rowPinned || undefined}
+      data-editing={isEditing || undefined}
+      data-saving={isSaving || undefined}
+      aria-busy={isSaving || undefined}
       onClick={hasRowClickBehavior(ctx) ? handleClick : undefined}
       onDoubleClick={handleRowDoubleClick}
       onDragOver={ctx.withRowReorder ? handleDragOver : undefined}

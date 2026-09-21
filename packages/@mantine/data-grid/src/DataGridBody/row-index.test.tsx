@@ -73,7 +73,7 @@ describe('@mantine/data-grid/row-index', () => {
       <Grid storeOptions={{ withRowPinning: true, rowPinning: { top: ['b'], bottom: [] } }} />
     );
     const rows = Array.from(container.querySelectorAll('tbody tr[data-row-id]'));
-    expect(rows[0]).toHaveAttribute('data-pinned-top');
+    expect(rows[0]).toHaveAttribute('data-pinned', 'top');
     expect(rows[0]).not.toHaveAttribute('data-striped');
     expect(numberOf(rows[0])).toBe('');
     expect(rows.slice(1).map(numberOf)).toEqual(['1', '2', '3']);

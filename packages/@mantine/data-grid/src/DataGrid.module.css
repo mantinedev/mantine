@@ -53,7 +53,6 @@
   --dg-row-border-color: var(--dg-border-color);
   --dg-hover-color: var(--mantine-color-hover-strong);
   --dg-selected-color: var(--mantine-color-selected);
-  --dg-pinned-shadow: rem(2px) 0 rem(4px) rgba(0, 0, 0, 0.1);
 
   @mixin where-light {
     --dg-striped-color: var(--mantine-color-gray-0);
@@ -96,25 +95,28 @@
 .tbody {
   border-collapse: inherit;
 
-  &:where([data-pinned-top]) {
+  &:where([data-pinned='top']) {
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 2;
+
+    :where(.root[data-sticky-header]) & {
+      top: calc(var(--dg-sticky-header-offset, 0px) + var(--dg-thead-height, 0px));
+    }
   }
 
-  &:where([data-pinned-bottom]) {
+  &:where([data-pinned='bottom']) {
     position: sticky;
     bottom: 0;
-    z-index: 1;
+    z-index: 2;
   }
 }
 
 .thead {
   :where(.root[data-sticky-header]) & {
     position: sticky;
-    top: 0;
-    z-index: 1;
-    background: var(--mantine-color-body);
+    top: var(--dg-sticky-header-offset, 0px);
+    z-index: 2;
   }
 }
 
@@ -125,13 +127,14 @@
     border-bottom: rem(1px) solid var(--dg-row-border-color);
   }
 
-  :where(.tbody:last-of-type) > &:last-child {
+  :where(.tbody:last-of-type) > &:last-child,
+  :where(.tbody:has(+ .tbody[data-pinned='bottom'])) > &:last-child,
+  :where(.tbody[data-pinned]) > & {
     border-bottom: 0;
   }
 
-  &:where([data-pinned-top]),
-  &:where([data-pinned-bottom]) {
-    background: var(--mantine-color-body);
+  :where(.tbody[data-pinned]) > :where(&) {
+    background-color: var(--mantine-color-body);
   }
 
   &:where([data-striped]) {
@@ -199,32 +202,152 @@
 
 .th,
 .td {
-  &:where([data-pinned-left]),
-  &:where([data-pinned-right]) {
+  &:where([data-pinned]) {
     position: sticky;
     z-index: 1;
-    background: var(--mantine-color-body);
+    background-color: inherit;
+  }
+
+  &:where([data-pinned='start']) {
+    inset-inline-start: var(--dg-pinned-offset);
+  }
+
+  &:where([data-pinned='end']) {
+    inset-inline-end: var(--dg-pinned-offset);
+  }
+
+  &:where([data-pinned-edge]) {
+    overflow-clip-margin: rem(12px);
+  }
+}
+
+.th,
+.td,
+.virtualCell {
+  &:where([data-pinned-edge]) {
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: rem(10px);
+      pointer-events: none;
+      display: none;
+    }
+  }
+
+  &:where([data-pinned='start'][data-pinned-edge])::after {
+    inset-inline-start: 100%;
+
+    @mixin where-light {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.12), transparent);
+    }
+
+    @mixin where-dark {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.45), transparent);
+    }
+
+    @mixin where-rtl {
+      @mixin where-light {
+        background: linear-gradient(to left, rgba(0, 0, 0, 0.12), transparent);
+      }
+
+      @mixin where-dark {
+        background: linear-gradient(to left, rgba(0, 0, 0, 0.45), transparent);
+      }
+    }
+  }
+
+  &:where([data-pinned='end'][data-pinned-edge])::after {
+    inset-inline-end: 100%;
+
+    @mixin where-light {
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.12), transparent);
+    }
+
+    @mixin where-dark {
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.45), transparent);
+    }
+
+    @mixin where-rtl {
+      @mixin where-light {
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.12), transparent);
+      }
+
+      @mixin where-dark {
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.45), transparent);
+      }
+    }
+  }
+
+  :where(.root[data-overflow-start]) &:where([data-pinned='start'][data-pinned-edge])::after,
+  :where(.root[data-overflow-end]) &:where([data-pinned='end'][data-pinned-edge])::after {
+    display: block;
   }
 }
 
 .th {
-  &:where([data-pinned-left]) {
-    --dg-th-shadow-divider: var(--dg-pinned-shadow);
+  &:where([data-pinned='start'][data-pinned-edge]) {
+    --dg-th-shadow-divider: inset rem(-1px) 0 0 var(--dg-border-color);
   }
 
-  &:where([data-pinned-right]) {
-    --dg-th-shadow-divider: rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1);
+  &:where([data-pinned='end'][data-pinned-edge]) {
+    --dg-th-shadow-divider: inset rem(1px) 0 0 var(--dg-border-color);
+  }
+
+  @mixin where-rtl {
+    &:where([data-pinned='start'][data-pinned-edge]) {
+      --dg-th-shadow-divider: inset rem(1px) 0 0 var(--dg-border-color);
+    }
+
+    &:where([data-pinned='end'][data-pinned-edge]) {
+      --dg-th-shadow-divider: inset rem(-1px) 0 0 var(--dg-border-color);
+    }
   }
 }
 
-.td {
-  &:where([data-pinned-left]) {
-    --dg-td-shadow-divider: var(--dg-pinned-shadow);
+.td,
+.virtualCell {
+  &:where([data-pinned='start'][data-pinned-edge]) {
+    --dg-td-shadow-divider: inset rem(-1px) 0 0 var(--dg-border-color);
   }
 
-  &:where([data-pinned-right]) {
-    --dg-td-shadow-divider: rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1);
+  &:where([data-pinned='end'][data-pinned-edge]) {
+    --dg-td-shadow-divider: inset rem(1px) 0 0 var(--dg-border-color);
   }
+
+  @mixin where-rtl {
+    &:where([data-pinned='start'][data-pinned-edge]) {
+      --dg-td-shadow-divider: inset rem(1px) 0 0 var(--dg-border-color);
+    }
+
+    &:where([data-pinned='end'][data-pinned-edge]) {
+      --dg-td-shadow-divider: inset rem(-1px) 0 0 var(--dg-border-color);
+    }
+  }
+}
+
+:where(.root[data-column-borders])
+  :where(.th, .td, .virtualCell):where([data-pinned='start'][data-pinned-edge]):not(:last-child) {
+  --dg-th-shadow-divider: 0 0 0 0 transparent;
+  --dg-td-shadow-divider: 0 0 0 0 transparent;
+}
+
+:where(.root[data-column-borders='data'])
+  :where(.th, .td, .virtualCell):where([data-pinned='start'][data-pinned-edge][data-utility]):not(
+    :has(+ :not([data-utility]))
+  ) {
+  --dg-th-shadow-divider: inset rem(-1px) 0 0 var(--dg-border-color);
+  --dg-td-shadow-divider: inset rem(-1px) 0 0 var(--dg-border-color);
+
+  @mixin where-rtl {
+    --dg-th-shadow-divider: inset rem(1px) 0 0 var(--dg-border-color);
+    --dg-td-shadow-divider: inset rem(1px) 0 0 var(--dg-border-color);
+  }
+}
+
+:where(.root[data-column-pinning]) :where(.tr, .virtualRow) {
+  background-color: var(--mantine-color-body);
 }
 
 :where(.root[data-column-borders]) :where(.th, .td):not(:last-child) {
@@ -366,8 +489,9 @@
   display: inline-flex;
 }
 
+/* Styles API selector for the LoadingOverlay rendered by the overlay loading variant */
+/* stylelint-disable-next-line block-no-empty */
 .loadingOverlay {
-  border-radius: inherit;
 }
 
 .selectionCheckbox {
@@ -401,9 +525,13 @@
 }
 
 .emptyState {
-  padding: var(--mantine-spacing-xl);
-  text-align: center;
-  color: var(--mantine-color-dimmed);
+  padding: 0;
+  height: auto;
+
+  :where(.virtualRow) > & {
+    flex: 1;
+    min-width: 0;
+  }
 }
 
 .editCell {
@@ -452,12 +580,15 @@
   width: 100%;
 }
 
-.virtualGridHeader {
-  display: flex;
+[data-virtual-thead] {
   position: sticky;
   top: 0;
   z-index: 2;
-  background: var(--mantine-color-body);
+  background-color: var(--mantine-color-body);
+}
+
+.virtualGridHeader {
+  display: flex;
   border-bottom: rem(1px) solid var(--dg-border-color);
 }
 
@@ -508,19 +639,22 @@
     var(--dg-td-shadow-edit), var(--dg-td-shadow-focus), var(--dg-td-shadow-edge),
     var(--dg-td-shadow-divider), var(--dg-td-shadow-rule);
 
-  &:where([data-pinned-left]),
-  &:where([data-pinned-right]) {
+  &:where([data-pinned]) {
     position: sticky;
     z-index: 1;
-    background: var(--mantine-color-body);
+    background-color: inherit;
   }
 
-  &:where([data-pinned-left]) {
-    --dg-td-shadow-divider: var(--dg-pinned-shadow);
+  &:where([data-pinned='start']) {
+    inset-inline-start: var(--dg-pinned-offset);
   }
 
-  &:where([data-pinned-right]) {
-    --dg-td-shadow-divider: rem(-2px) 0 rem(4px) rgba(0, 0, 0, 0.1);
+  &:where([data-pinned='end']) {
+    inset-inline-end: var(--dg-pinned-offset);
+  }
+
+  &:where([data-pinned-edge]) {
+    overflow-clip-margin: rem(12px);
   }
 }
 
@@ -1189,4 +1323,251 @@
   :where(.root[data-tinted-expanded-rows]) &:where([data-expanded][data-selected]) {
     background-color: var(--dg-selected-color);
   }
+}
+
+:where(.root[data-sticky-header]) .th {
+  background-color: var(--mantine-color-body);
+
+  &:where([data-pinned]) {
+    z-index: 3;
+  }
+}
+
+:where(.root[data-sticky-header][data-with-row-borders]) :where(.thead) > .tr {
+  border-bottom: 0;
+}
+
+:where(.root[data-sticky-header][data-with-row-borders]) .th {
+  --dg-th-shadow-rule: inset 0 rem(-1px) 0 var(--dg-row-border-color);
+}
+
+:where(.tbody[data-pinned]) .td:where([data-pinned]) {
+  z-index: 3;
+}
+
+:where(.root[data-with-row-borders]) :where(.tbody[data-pinned='top']) > .tr > .td {
+  --dg-td-shadow-rule: inset 0 rem(-1px) 0 var(--dg-row-border-color);
+}
+
+:where(.root[data-with-row-borders]) :where(.tbody[data-pinned='bottom']) > .tr:first-child > .td {
+  --dg-td-shadow-rule: inset 0 rem(1px) 0 var(--dg-row-border-color);
+}
+
+:where(.root[data-with-row-borders])
+  :where(.tbody[data-pinned='bottom'])
+  > .tr:not(:first-child, :last-child)
+  > .td {
+  --dg-td-shadow-rule: inset 0 rem(-1px) 0 var(--dg-row-border-color);
+}
+
+:where(.root[data-with-row-borders])
+  :where(.tbody[data-pinned='bottom'])
+  > .tr:first-child:not(:last-child)
+  > .td {
+  --dg-td-shadow-rule:
+    inset 0 rem(1px) 0 var(--dg-row-border-color), inset 0 rem(-1px) 0 var(--dg-row-border-color);
+}
+
+.root {
+  --dg-loading-row-opacity: 0.5;
+}
+
+.tr,
+.virtualRow {
+  &:where([data-empty-row], [data-skeleton-row]) {
+    cursor: default;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+:where(.root[data-loading-variant='bar']) :where(.tbody) > .tr,
+:where(.root[data-loading-variant='bar']) .virtualRow:where([data-row-id]) {
+  opacity: var(--dg-loading-row-opacity);
+}
+
+.skeleton {
+  display: block;
+
+  :where(.td[data-align='center']) > & {
+    margin-inline: auto;
+  }
+
+  :where(.td[data-align='end']) > & {
+    margin-inline-start: auto;
+  }
+}
+
+@keyframes dg-loading-bar {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(250%);
+  }
+}
+
+@keyframes dg-loading-bar-rtl {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(-250%);
+  }
+}
+
+.loadingBar {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(var(--dg-thead-height, 0px) - rem(1px));
+  height: rem(2px);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 40%;
+    background-color: var(--mantine-primary-color-filled);
+    animation: dg-loading-bar 1.2s ease-in-out infinite;
+
+    @mixin where-rtl {
+      animation-name: dg-loading-bar-rtl;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      width: 100%;
+      animation: none;
+    }
+  }
+}
+
+.root {
+  --dg-dirty-color: color-mix(in srgb, var(--mantine-color-yellow-filled) 12%, transparent);
+  --dg-invalid-color: color-mix(in srgb, var(--mantine-color-error) 8%, transparent);
+}
+
+.td,
+.virtualCell {
+  &:where([data-dirty]) {
+    background-color: var(--dg-dirty-color);
+  }
+
+  &:where([data-invalid]) {
+    background-color: var(--dg-invalid-color);
+  }
+
+  &:where([data-editing]) {
+    padding: 0;
+  }
+}
+
+.editCell {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: calc(var(--dg-row-height) - rem(1px));
+  padding-inline: var(--dg-cell-padding-x);
+  font: inherit;
+
+  & > * {
+    flex: 1;
+    min-width: 0;
+  }
+
+  & input[data-editor] {
+    font: inherit;
+    color: inherit;
+  }
+
+  :where(.td, .virtualCell)[data-align='center'] > & {
+    justify-content: center;
+
+    & input[data-editor] {
+      text-align: center;
+    }
+  }
+
+  :where(.td, .virtualCell)[data-align='end'] > & {
+    justify-content: flex-end;
+
+    & input[data-editor] {
+      text-align: end;
+    }
+  }
+}
+
+:where(.root[data-editing-mode='cell']) :where(.td, .virtualCell)[data-editing] {
+  --dg-td-shadow-edit: inset 0 0 0 rem(2px) var(--mantine-primary-color-filled);
+}
+
+:where(.root[data-editing-mode='row']) {
+  .tr[data-editing] > .td,
+  .virtualRow[data-editing] > .virtualCell {
+    --dg-td-shadow-edit:
+      inset 0 rem(2px) 0 0 var(--mantine-primary-color-filled),
+      inset 0 rem(-2px) 0 0 var(--mantine-primary-color-filled);
+  }
+
+  .tr[data-editing] > .td:first-child,
+  .virtualRow[data-editing] > .virtualCell:first-child {
+    --dg-td-shadow-edit:
+      inset rem(2px) 0 0 0 var(--mantine-primary-color-filled),
+      inset 0 rem(2px) 0 0 var(--mantine-primary-color-filled),
+      inset 0 rem(-2px) 0 0 var(--mantine-primary-color-filled);
+  }
+
+  .tr[data-editing] > .td:last-child,
+  .virtualRow[data-editing] > .virtualCell:last-child {
+    --dg-td-shadow-edit:
+      inset rem(-2px) 0 0 0 var(--mantine-primary-color-filled),
+      inset 0 rem(2px) 0 0 var(--mantine-primary-color-filled),
+      inset 0 rem(-2px) 0 0 var(--mantine-primary-color-filled);
+  }
+
+  .tr[data-editing] > .td:first-child:last-child,
+  .virtualRow[data-editing] > .virtualCell:first-child:last-child,
+  .tr[data-editing] > .td[data-editing]:focus-within,
+  .virtualRow[data-editing] > .virtualCell[data-editing]:focus-within {
+    --dg-td-shadow-edit: inset 0 0 0 rem(2px) var(--mantine-primary-color-filled);
+  }
+
+  @mixin where-rtl {
+    .tr[data-editing] > .td:first-child,
+    .virtualRow[data-editing] > .virtualCell:first-child {
+      --dg-td-shadow-edit:
+        inset rem(-2px) 0 0 0 var(--mantine-primary-color-filled),
+        inset 0 rem(2px) 0 0 var(--mantine-primary-color-filled),
+        inset 0 rem(-2px) 0 0 var(--mantine-primary-color-filled);
+    }
+
+    .tr[data-editing] > .td:last-child,
+    .virtualRow[data-editing] > .virtualCell:last-child {
+      --dg-td-shadow-edit:
+        inset rem(2px) 0 0 0 var(--mantine-primary-color-filled),
+        inset 0 rem(2px) 0 0 var(--mantine-primary-color-filled),
+        inset 0 rem(-2px) 0 0 var(--mantine-primary-color-filled);
+    }
+  }
+}
+
+.editActions {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: rem(12px);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: rem(4px);
+  padding: rem(4px);
+  transform: translateY(-50%);
 }

@@ -526,15 +526,28 @@ export function Virtualization() {
 export function Loading() {
   const store = useDataGrid({ data: employees, columns, getRowId: (row) => row.id });
   return (
-    <Box p="md">
+    <Stack p="md">
+      <Text fw={600}>overlay (default)</Text>
       <DataGrid store={store} loading />
-    </Box>
+      <Text fw={600}>bar</Text>
+      <DataGrid store={store} loading loadingVariant="bar" />
+      <Text fw={600}>skeleton</Text>
+      <DataGrid store={store} loading loadingVariant="skeleton" skeletonRowCount={5} />
+      <Text fw={600}>first load (no rows, any variant)</Text>
+      <DataGrid data={[]} columns={columns} loading loadingVariant="bar" />
+    </Stack>
   );
 }
 
 export function EmptyState() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withGlobalFilter: true,
+  });
   return (
-    <Box p="md">
+    <Stack p="md">
       <DataGrid
         data={[]}
         columns={columns}
@@ -549,7 +562,22 @@ export function EmptyState() {
           </Stack>
         }
       />
-    </Box>
+      <DataGrid
+        store={store}
+        emptyState={({ isFiltered, filteredRowCount, rowCount }) => (
+          <Stack align="center" gap="xs" py="xl">
+            <Text size="lg" fw={500} c="dimmed">
+              {isFiltered ? 'No matching employees' : 'No employees'}
+            </Text>
+            <Text size="sm" c="dimmed">
+              {filteredRowCount} of {rowCount} rows match
+            </Text>
+          </Stack>
+        )}
+      >
+        <DataGrid.Toolbar />
+      </DataGrid>
+    </Stack>
   );
 }
 
@@ -584,20 +612,14 @@ export function Editing() {
     columns,
     getRowId: (row) => row.id,
     editingMode: 'cell',
+    onEditSave: ({ newRow }) => {
+      setData((prev) => prev.map((item) => (item.id === newRow.id ? newRow : item)));
+    },
   });
 
   return (
     <Box p="md">
-      <DataGrid
-        store={store}
-        onCellEdit={({ row, columnId, value }) => {
-          setData((prev) =>
-            prev.map((item) =>
-              item.id === row.original.id ? { ...item, [columnId]: value } : item
-            )
-          );
-        }}
-      />
+      <DataGrid store={store} />
     </Box>
   );
 }
@@ -804,6 +826,9 @@ export function AllFeatures() {
     withGrouping: true,
     withRowNumbers: true,
     editingMode: 'cell',
+    onEditSave: ({ newRow }) => {
+      setData((prev) => prev.map((item) => (item.id === newRow.id ? newRow : item)));
+    },
   });
 
   return (
@@ -819,13 +844,6 @@ export function AllFeatures() {
             Details for {row.original.firstName} {row.original.lastName} — {row.original.department}
           </Text>
         )}
-        onCellEdit={({ row, columnId, value }) => {
-          setData((prev) =>
-            prev.map((item) =>
-              item.id === row.original.id ? { ...item, [columnId]: value } : item
-            )
-          );
-        }}
       >
         <DataGrid.Footer />
       </DataGrid>
@@ -934,6 +952,121 @@ export function HeaderGroups() {
   return (
     <Box p="md">
       <DataGrid store={store} withColumnMenu withColumnBorders />
+    </Box>
+  );
+}
+
+export function PinnedRows() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withRowPinning: true,
+    withRowSelection: true,
+    rowPinning: { top: [employees[0].id, employees[1].id], bottom: [employees[2].id] },
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>sticky header + pinned rows, striped</Text>
+      <DataGrid store={store} stickyHeader striped highlightOnHover height={300} />
+      <Text fw={600}>pinned rows without sticky header</Text>
+      <DataGrid store={store} height={300} />
+    </Stack>
+  );
+}
+
+export function PinnedColumnsOverflow() {
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      ...columns,
+      { accessorKey: 'email', header: 'Email', size: 260 },
+      { accessorKey: 'department', header: 'Department 2', size: 200 },
+      { accessorKey: 'salary', header: 'Salary 2', size: 200 },
+    ],
+    getRowId: (row) => row.id,
+    withColumnPinning: true,
+    withRowSelection: true,
+    withColumnResizing: true,
+    columnPinning: { start: ['firstName'], end: ['status'] },
+  });
+  return (
+    <Stack p="md" style={{ maxWidth: 720 }}>
+      <Text fw={600}>scroll horizontally: divider always, shadow only while overflowing</Text>
+      <DataGrid store={store} striped highlightOnHover />
+      <Text fw={600}>withColumnBorders (edge divider suppressed by the column border)</Text>
+      <DataGrid store={store} withColumnBorders />
+    </Stack>
+  );
+}
+
+export function RowEditing() {
+  const [data, setData] = useState(employees);
+  const [log, setLog] = useState<string[]>([]);
+  const store = useDataGrid({
+    data,
+    columns: [
+      { accessorKey: 'firstName', header: 'First name' },
+      { accessorKey: 'lastName', header: 'Last name' },
+      { accessorKey: 'email', header: 'Email', meta: { disableEditing: true } },
+      {
+        accessorKey: 'salary',
+        header: 'Salary',
+        meta: {
+          align: 'end',
+          validate: (value) => (Number(value) > 0 ? null : 'Salary must be positive'),
+        },
+      },
+      {
+        id: 'actions',
+        meta: { type: 'actions' },
+        cell: ({ row }) => (
+          <Group gap={4} justify="flex-end" wrap="nowrap">
+            {row.getIsEditing() ? (
+              <>
+                <Button size="compact-xs" onClick={() => row.saveEditing()}>
+                  Save
+                </Button>
+                <Button size="compact-xs" variant="subtle" onClick={() => row.cancelEditing()}>
+                  Cancel
+                </Button>
+              </>
+            ) : (
+              <Button size="compact-xs" variant="subtle" onClick={() => row.startEditing()}>
+                Edit
+              </Button>
+            )}
+          </Group>
+        ),
+      },
+    ],
+    getRowId: (row) => row.id,
+    editingMode: 'row',
+    getCellStatus: ({ row, columnId }) =>
+      columnId === 'salary' && row.original.salary > 90000 ? 'dirty' : undefined,
+    onEditStart: ({ row }) => setLog((prev) => [...prev, `start ${row.id}`]),
+    onEditCancel: ({ row }) => setLog((prev) => [...prev, `cancel ${row.id}`]),
+    onEditSave: ({ newRow, changedColumnIds }) =>
+      new Promise<void>((resolve, reject) => {
+        setTimeout(() => {
+          if (newRow.firstName === 'Error') {
+            reject(new Error('Rejected by the server'));
+            return;
+          }
+          setData((prev) => prev.map((item) => (item.id === newRow.id ? newRow : item)));
+          setLog((prev) => [...prev, `save ${newRow.id}: ${changedColumnIds.join(', ')}`]);
+          resolve();
+        }, 600);
+      }),
+    onEditSaveError: (error) => setLog((prev) => [...prev, `error: ${String(error)}`]),
+  });
+
+  return (
+    <Box p="md">
+      <DataGrid store={store} withFloatingEditActions striped highlightOnHover />
+      <Text size="sm" mt="md" c="dimmed">
+        Type "Error" as the first name to see a rejected save. {log.join(' · ')}
+      </Text>
     </Box>
   );
 }

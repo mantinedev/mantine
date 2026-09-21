@@ -1,6 +1,5 @@
 export interface DataGridLabels {
   globalFilterPlaceholder: string;
-  emptyStateText: string;
   columnVisibilityLabel: string;
   rowNumber: string;
   selectAll: string;
@@ -52,11 +51,12 @@ export interface DataGridLabels {
   aggregationUnique: string;
   aggregationUniqueCount: string;
   aggregationExtent: string;
+  saveRow: string;
+  cancelRow: string;
 }
 
 export const DEFAULT_LABELS: DataGridLabels = {
   globalFilterPlaceholder: 'Search...',
-  emptyStateText: 'No data available',
   columnVisibilityLabel: 'Columns',
   rowNumber: '#',
   selectAll: 'Select all rows',
@@ -108,4 +108,6 @@ export const DEFAULT_LABELS: DataGridLabels = {
   aggregationUnique: 'Unique',
   aggregationUniqueCount: 'Unique count',
   aggregationExtent: 'Range',
+  saveRow: 'Save',
+  cancelRow: 'Cancel',
 };

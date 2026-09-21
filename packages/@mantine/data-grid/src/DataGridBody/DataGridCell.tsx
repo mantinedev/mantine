@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Cell, flexRender, Row } from '@tanstack/react-table';
 import {
   Box,
@@ -7,13 +7,14 @@ import {
   ElementProps,
   factory,
   Factory,
-  TextInput,
   useProps,
 } from '@mantine/core';
+import { useMergedRef } from '@mantine/hooks';
 import { useDataGridContext } from '../DataGrid.context';
-import { getPinnedStyles } from '../get-pinned-styles';
+import { getPinnedCellProps } from '../get-pinned-cell-props';
 import type { DataGridFeatures } from '../table-features';
 import { TreeCellContent } from './DataGridTreeCell';
+import { useCellEditing } from './use-cell-editing';
 import { useCellSelection } from './use-cell-selection';
 import classes from '../DataGrid.module.css';
 
@@ -61,102 +62,30 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
   const ctx = useDataGridContext();
   const meta = cell.column.columnDef.meta;
   const utility = meta?.utility;
-  const isPinned = ctx.withColumnPinning ? cell.column.getIsPinned() : false;
-  const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState<unknown>('');
-  const [isSaving, setIsSaving] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const pinned = getPinnedCellProps(cell.column, ctx.withColumnPinning);
 
-  const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(cell.column) : undefined;
-
+  const elementRef = useRef<HTMLTableCellElement>(null);
   const cellSelection = useCellSelection<HTMLTableCellElement>(cell);
+  const editing = useCellEditing(cell, elementRef, { classNames, styles });
+  const mergedRef = useMergedRef(elementRef, cellSelection.ref);
 
-  const canEdit = ctx.withEditing && !utility && !cell.column.columnDef.meta?.disableEditing;
-  const editComponent = cell.column.columnDef.meta?.editComponent;
+  const handleClick =
+    ctx.onCellClick || editing.handlers.onClick
+      ? (event: React.MouseEvent) => {
+          ctx.onCellClick?.(cell, event);
+          editing.handlers.onClick?.(event);
+        }
+      : undefined;
 
-  const startEditing = useCallback(
-    (event: React.MouseEvent) => {
-      if (canEdit) {
-        event.stopPropagation();
-        setEditValue(editComponent ? cell.getValue() : String(cell.getValue() ?? ''));
-        setIsEditing(true);
-      }
-    },
-    [canEdit, cell, editComponent]
-  );
-
-  useEffect(() => {
-    if (isEditing && inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.select();
-    }
-  }, [isEditing]);
-
-  const handleSave = useCallback(() => {
-    if (isSaving) {
-      return;
-    }
-
-    const doSave = () => {
-      if (ctx.editingMode === 'row' && ctx.onRowEdit) {
-        const values: Record<string, unknown> = {};
-        cell.row.getAllCells().forEach((c) => {
-          values[c.column.id] = c.column.id === cell.column.id ? editValue : c.getValue();
-        });
-        ctx.onRowEdit({ row: cell.row, values });
-      } else if (ctx.onCellEdit) {
-        ctx.onCellEdit({ row: cell.row, columnId: cell.column.id, value: editValue });
-      }
-      setIsEditing(false);
-    };
-
-    if (ctx.processRowUpdate) {
-      const oldRow = cell.row.original;
-      const newRow = { ...oldRow, [cell.column.id]: editValue };
-      setIsSaving(true);
-      ctx
-        .processRowUpdate(newRow, oldRow)
-        .then(() => {
-          doSave();
-        })
-        .catch((error: unknown) => {
-          ctx.onProcessRowUpdateError?.(error);
-          setIsEditing(false);
-        })
-        .finally(() => {
-          setIsSaving(false);
-        });
-    } else {
-      doSave();
-    }
-  }, [ctx, cell, editValue, isSaving]);
-
-  const handleCancel = useCallback(() => {
-    setIsEditing(false);
-  }, []);
-
-  const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
-      if (event.key === 'Enter') {
-        handleSave();
-      } else if (event.key === 'Escape') {
-        handleCancel();
-      }
-    },
-    [handleSave, handleCancel]
-  );
-
-  const composedClick = useCallback(
-    (event: React.MouseEvent) => {
-      if (ctx.onCellClick) {
-        ctx.onCellClick(cell, event);
-      }
-      if (canEdit && ctx.editTrigger === 'click') {
-        startEditing(event);
-      }
-    },
-    [ctx.onCellClick, cell, canEdit, ctx.editTrigger, startEditing]
-  );
+  const handleKeyDown =
+    cellSelection.props.onKeyDown || editing.handlers.onKeyDown
+      ? (event: React.KeyboardEvent) => {
+          editing.handlers.onKeyDown?.(event);
+          if (!event.defaultPrevented) {
+            cellSelection.props.onKeyDown?.(event);
+          }
+        }
+      : undefined;
 
   return (
     <Box
@@ -167,49 +96,26 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
       data-utility={utility}
       data-align={meta?.align}
       data-actions={meta?.type === 'actions' || undefined}
-      data-pinned-left={isPinned === 'start' || undefined}
-      data-pinned-right={isPinned === 'end' || undefined}
-      data-editing={isEditing || undefined}
-      data-saving={isSaving || undefined}
-      ref={cellSelection.ref}
+      data-pinned={pinned['data-pinned']}
+      data-pinned-edge={pinned['data-pinned-edge']}
+      ref={mergedRef}
       {...cellSelection.props}
-      onClick={
-        ctx.onCellClick || (canEdit && ctx.editTrigger === 'click') ? composedClick : undefined
-      }
-      onDoubleClick={canEdit && ctx.editTrigger === 'doubleClick' ? startEditing : undefined}
+      {...editing.attributes}
+      onClick={handleClick}
+      onDoubleClick={editing.handlers.onDoubleClick}
+      onKeyDown={handleKeyDown}
       {...ctx.getStyles('td', { className, classNames, style, styles })}
-      style={{ ...pinnedStyles }}
+      style={pinned.style}
       {...others}
     >
-      {isEditing ? (
-        <div {...ctx.getStyles('editCell', { classNames, styles })}>
-          {editComponent ? (
-            editComponent({
-              value: editValue,
-              onChange: (v) => setEditValue(v),
-              onSave: handleSave,
-              onCancel: handleCancel,
-              cell,
-            })
-          ) : (
-            <TextInput
-              ref={inputRef}
-              size="xs"
-              value={String(editValue ?? '')}
-              onChange={(e) => setEditValue(e.currentTarget.value)}
-              onKeyDown={handleKeyDown}
-              onBlur={handleSave}
-              disabled={isSaving}
-            />
-          )}
-        </div>
-      ) : treeData ? (
-        <TreeCellContent row={treeData.row} classNames={classNames} styles={styles}>
-          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-        </TreeCellContent>
-      ) : (
-        flexRender(cell.column.columnDef.cell, cell.getContext())
-      )}
+      {editing.editor ??
+        (treeData ? (
+          <TreeCellContent row={treeData.row} classNames={classNames} styles={styles}>
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </TreeCellContent>
+        ) : (
+          flexRender(cell.column.columnDef.cell, cell.getContext())
+        ))}
     </Box>
   );
 });

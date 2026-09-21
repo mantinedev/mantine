@@ -2,6 +2,7 @@ import React from 'react';
 import { Cell, Column, Row, Table as ReactTable } from '@tanstack/react-table';
 import { createSafeContext, GetStylesApi } from '@mantine/core';
 import type { DataGridFactory } from './DataGrid';
+import type { DataGridEmptyStatePayload } from './DataGrid.types';
 import type { DataGridHeaderInteractions } from './DataGridHeader/use-header-interactions';
 import type { DataGridStore } from './hooks';
 import type { DataGridLabels } from './labels';
@@ -45,19 +46,11 @@ export interface DataGridContextValue {
   editingMode: 'cell' | 'row' | undefined;
   labels: DataGridLabels;
   renderExpandedRow?: (props: { row: Row<DataGridFeatures, any> }) => React.ReactNode;
-  emptyState?: React.ReactNode;
+  emptyState?: React.ReactNode | ((payload: DataGridEmptyStatePayload<any>) => React.ReactNode);
   onRowClick?: (row: Row<DataGridFeatures, any>, event: React.MouseEvent) => void;
   onRowDoubleClick?: (row: Row<DataGridFeatures, any>, event: React.MouseEvent) => void;
   onCellClick?: (cell: Cell<DataGridFeatures, any, unknown>, event: React.MouseEvent) => void;
-  onCellEdit?: (props: {
-    row: Row<DataGridFeatures, any>;
-    columnId: string;
-    value: unknown;
-  }) => void;
-  onRowEdit?: (props: { row: Row<DataGridFeatures, any>; values: Record<string, unknown> }) => void;
   editTrigger: 'click' | 'doubleClick';
-  processRowUpdate?: (newRow: any, oldRow: any) => Promise<any>;
-  onProcessRowUpdateError?: (error: unknown) => void;
   selectOnRowClick: boolean;
   listView: false | 'cards' | 'flat';
   renderListItem?: (props: { row: Row<DataGridFeatures, any> }) => React.ReactNode;
@@ -70,6 +63,11 @@ export interface DataGridContextValue {
   withTintedGroupRows: boolean;
   withTreeLines: boolean;
   withTintedExpandedRows: boolean;
+  theadRef: (node: HTMLElement | null) => void;
+  loading: boolean;
+  loadingVariant: 'overlay' | 'bar' | 'skeleton';
+  skeletonRowCount: number;
+  withSkeletonRows: boolean;
 }
 
 export const [DataGridProvider, useDataGridContext] = createSafeContext<DataGridContextValue>(

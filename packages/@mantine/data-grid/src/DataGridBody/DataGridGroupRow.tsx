@@ -10,7 +10,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
-import { getPinnedStyles } from '../get-pinned-styles';
+import { getPinnedCellProps } from '../get-pinned-cell-props';
 import type { DataGridFeatures } from '../table-features';
 import { getGroupLabelCellId, GroupCellContent, toggleGroupRowKey } from './DataGridGroupCell';
 import classes from '../DataGrid.module.css';
@@ -58,7 +58,7 @@ export const DataGridGroupRow = factory<DataGridGroupRowFactory>((props) => {
     >
       {cells.map((cell) => {
         const meta = cell.column.columnDef.meta;
-        const isPinned = ctx.withColumnPinning ? cell.column.getIsPinned() : false;
+        const pinned = getPinnedCellProps(cell.column, ctx.withColumnPinning);
         const isLabelCell = cell.id === labelCellId;
         const focusTarget = isLabelCell && ctx.withCellSelection;
 
@@ -67,12 +67,12 @@ export const DataGridGroupRow = factory<DataGridGroupRowFactory>((props) => {
             key={cell.id}
             data-utility={meta?.utility}
             data-align={meta?.align}
-            data-pinned-left={isPinned === 'start' || undefined}
-            data-pinned-right={isPinned === 'end' || undefined}
+            data-pinned={pinned['data-pinned']}
+            data-pinned-edge={pinned['data-pinned-edge']}
             tabIndex={focusTarget ? -1 : undefined}
             onKeyDown={focusTarget ? (event) => toggleGroupRowKey(event, row) : undefined}
             {...ctx.getStyles('td', { classNames, styles })}
-            style={ctx.withColumnPinning ? getPinnedStyles(cell.column) : undefined}
+            style={pinned.style}
           >
             <GroupCellContent
               cell={cell}

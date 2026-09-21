@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import {
   Box,
   BoxProps,
@@ -9,7 +9,8 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
-import { getPinnedStyles } from '../get-pinned-styles';
+import { getPinnedCellProps } from '../get-pinned-cell-props';
+import { getSkeletonRowCount, resolveEmptyState, SkeletonBar } from './body-states';
 import { DataGridGroupRow } from './DataGridGroupRow';
 import { DataGridRow } from './DataGridRow';
 import { handleRowKeyDown, hasExpandedPanel } from './row-interactions';
@@ -23,7 +24,8 @@ export type DataGridBodyStylesNames =
   | 'emptyState'
   | 'groupHeader'
   | 'groupToggle'
-  | 'aggregationCell';
+  | 'aggregationCell'
+  | 'skeleton';
 
 export interface DataGridBodyProps
   extends BoxProps, CompoundStylesApiProps<DataGridBodyFactory>, ElementProps<'tbody'> {}
@@ -43,6 +45,7 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
   const bottomRows = ctx.withRowPinning ? ctx.table.getBottomRows() : [];
   const rows = ctx.withRowPinning ? ctx.table.getCenterRows() : ctx.table.getRowModel().rows;
   const allEmpty = topRows.length === 0 && rows.length === 0 && bottomRows.length === 0;
+  const emptyStateContent = !ctx.loading && allEmpty ? resolveEmptyState(ctx) : null;
   const visibleColumns = ctx.table.getVisibleLeafColumns();
   const totalColumns = visibleColumns.length;
   const utilityColumns = visibleColumns.filter((column) => column.columnDef.meta?.utility);
@@ -55,19 +58,6 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
         rowSelector: 'tbody > tr[data-row-id]',
       }),
     [ctx]
-  );
-
-  const [pinnedTopOffset, setPinnedTopOffset] = useState(0);
-  const pinnedTopRef = useCallback(
-    (node: HTMLElement | null) => {
-      if (node && ctx.stickyHeader) {
-        const thead = node.parentElement?.querySelector('thead');
-        if (thead) {
-          setPinnedTopOffset(thead.offsetHeight);
-        }
-      }
-    },
-    [ctx.stickyHeader]
   );
 
   const renderRows = (rowList: typeof rows, startIndex = 0) =>
@@ -87,17 +77,19 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
           )}
           {hasExpandedPanel(ctx, row) && (
             <tr data-expanded-row {...ctx.getStyles('tr', { classNames, styles })}>
-              {utilityColumns.map((column) => (
-                <td
-                  key={column.id}
-                  data-utility={column.columnDef.meta?.utility}
-                  data-pinned-left={
-                    (ctx.withColumnPinning && column.getIsPinned() === 'start') || undefined
-                  }
-                  {...ctx.getStyles('td', { classNames, styles })}
-                  style={ctx.withColumnPinning ? getPinnedStyles(column) : undefined}
-                />
-              ))}
+              {utilityColumns.map((column) => {
+                const pinned = getPinnedCellProps(column, ctx.withColumnPinning);
+                return (
+                  <td
+                    key={column.id}
+                    data-utility={column.columnDef.meta?.utility}
+                    data-pinned={pinned['data-pinned']}
+                    data-pinned-edge={pinned['data-pinned-edge']}
+                    {...ctx.getStyles('td', { classNames, styles })}
+                    style={pinned.style}
+                  />
+                );
+              })}
               <td
                 colSpan={dataColumnCount}
                 {...ctx.getStyles('expandedRow', { classNames, styles })}
@@ -110,15 +102,60 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
       );
     });
 
+  const renderSkeletonRows = () =>
+    Array.from({ length: getSkeletonRowCount(ctx) }, (_, rowIndex) => (
+      <tr
+        key={rowIndex}
+        aria-hidden
+        data-skeleton-row
+        {...ctx.getStyles('tr', { classNames, styles })}
+      >
+        {visibleColumns.map((column, columnIndex) => {
+          const meta = column.columnDef.meta;
+          const pinned = getPinnedCellProps(column, ctx.withColumnPinning);
+          return (
+            <td
+              key={column.id}
+              data-utility={meta?.utility}
+              data-align={meta?.align}
+              data-pinned={pinned['data-pinned']}
+              data-pinned-edge={pinned['data-pinned-edge']}
+              {...ctx.getStyles('td', { classNames, styles })}
+              style={pinned.style}
+            >
+              {!meta?.utility && (
+                <SkeletonBar
+                  rowIndex={rowIndex}
+                  columnIndex={columnIndex}
+                  classNames={classNames}
+                  styles={styles}
+                />
+              )}
+            </td>
+          );
+        })}
+      </tr>
+    ));
+
+  if (ctx.withSkeletonRows) {
+    return (
+      <Box
+        component="tbody"
+        {...ctx.getStyles('tbody', { className, classNames, style, styles })}
+        {...others}
+      >
+        {renderSkeletonRows()}
+      </Box>
+    );
+  }
+
   return (
     <>
       {ctx.withRowPinning && topRows.length > 0 && (
         <tbody
-          ref={pinnedTopRef}
-          data-pinned-top
+          data-pinned="top"
           onKeyDown={handleKeyDown}
           {...ctx.getStyles('tbody', { className, classNames, style, styles })}
-          style={{ top: pinnedTopOffset > 0 ? pinnedTopOffset : undefined }}
         >
           {renderRows(topRows, 0)}
         </tbody>
@@ -129,10 +166,10 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
         {...ctx.getStyles('tbody', { className, classNames, style, styles })}
         {...others}
       >
-        {allEmpty && ctx.emptyState ? (
-          <tr {...ctx.getStyles('tr', { classNames, styles })}>
+        {emptyStateContent !== null && emptyStateContent !== undefined ? (
+          <tr data-empty-row {...ctx.getStyles('tr', { classNames, styles })}>
             <td colSpan={totalColumns} {...ctx.getStyles('emptyState', { classNames, styles })}>
-              {ctx.emptyState}
+              {emptyStateContent}
             </td>
           </tr>
         ) : (
@@ -141,7 +178,7 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
       </Box>
       {ctx.withRowPinning && bottomRows.length > 0 && (
         <tbody
-          data-pinned-bottom
+          data-pinned="bottom"
           onKeyDown={handleKeyDown}
           {...ctx.getStyles('tbody', { className, classNames, style, styles })}
         >

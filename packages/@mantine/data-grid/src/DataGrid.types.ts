@@ -30,20 +30,40 @@ export interface DataGridColumnMeta<TData extends RowData = any, TValue = unknow
   /** Hides the column menu for this column when `withColumnMenu` is set */
   disableColumnMenu?: boolean;
 
+  /** Excludes the column from cell and row editing */
   disableEditing?: boolean;
+
   disableExport?: boolean;
   aggregationLabel?: string;
 
   /** Formats the aggregated value rendered in the totals row, defaults to `String(value)` */
   formatAggregatedValue?: (value: unknown, rows: Row<DataGridFeatures, TData>[]) => ReactNode;
 
-  editComponent?: (props: {
-    value: unknown;
-    onChange: (value: unknown) => void;
-    onSave: () => void;
-    onCancel: () => void;
-    cell: Cell<DataGridFeatures, TData, TValue>;
-  }) => ReactNode;
+  /** Renders a custom editor instead of the default text input while the cell is edited */
+  editComponent?: (props: DataGridEditComponentProps<TData, TValue>) => ReactNode;
+
+  /** Validates a draft value, a non-empty return marks the editor invalid and blocks the save */
+  validate?: (value: unknown, row: Row<DataGridFeatures, TData>) => ReactNode | null | undefined;
+}
+
+export interface DataGridEditComponentProps<TData extends RowData = any, TValue = unknown> {
+  /** Current draft value */
+  value: unknown;
+
+  /** Updates the draft value */
+  onChange: (value: unknown) => void;
+
+  /** Commits the drafts of the editing target */
+  onSave: () => void;
+
+  /** Leaves edit mode and drops the drafts */
+  onCancel: () => void;
+
+  /** Validation message of the current draft, `undefined` when valid */
+  error: ReactNode | undefined;
+
+  /** Cell being edited */
+  cell: Cell<DataGridFeatures, TData, TValue>;
 }
 
 /** Column definition bound to the feature set DataGrid registers */
@@ -88,4 +108,19 @@ export function createDataGridColumnHelper<TData extends RowData>(): ColumnHelpe
   TData
 > {
   return createColumnHelper<DataGridFeatures, TData>();
+}
+
+/** Payload of the `emptyState` function form */
+export interface DataGridEmptyStatePayload<TData extends RowData = any> {
+  /** Total number of rows before filtering, `rowCount` from `useDataGrid` when set */
+  rowCount: number;
+
+  /** Number of rows left after column and global filters */
+  filteredRowCount: number;
+
+  /** Whether a column filter or the global filter is active */
+  isFiltered: boolean;
+
+  /** The underlying table instance */
+  table: DataGridTable<TData>;
 }

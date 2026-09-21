@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Cell, Column, Row, RowData } from '@tanstack/react-table';
 import {
   Box,
@@ -11,6 +11,7 @@ import {
   getSize,
   getThemeColor,
   LoadingOverlay,
+  LoadingOverlayProps,
   MantineColor,
   MantineRadius,
   rem,
@@ -22,7 +23,7 @@ import {
 } from '@mantine/core';
 import { useMergedRef } from '@mantine/hooks';
 import { DataGridProvider } from './DataGrid.context';
-import { DataGridColumnDef } from './DataGrid.types';
+import { DataGridColumnDef, DataGridEmptyStatePayload } from './DataGrid.types';
 import {
   DataGridBody,
   DataGridBodyFactory,
@@ -31,6 +32,7 @@ import {
   DataGridVirtualBodyFactory,
 } from './DataGridBody';
 import { DataGridColumnMenu, DataGridColumnMenuFactory } from './DataGridColumnMenu';
+import { DataGridEditActions } from './DataGridEditActions/DataGridEditActions';
 import { DataGridFooter, DataGridFooterFactory } from './DataGridFooter';
 import { DataGridHeader, DataGridHeaderFactory } from './DataGridHeader';
 import { DataGridHeaderOverlays } from './DataGridHeader/DataGridHeaderOverlays';
@@ -51,6 +53,8 @@ import {
 } from './DataGridToolbar';
 import { getSelectedCount } from './get-selected-count';
 import { DataGridStore, useDataGrid } from './hooks';
+import { useOverflowState } from './hooks/use-overflow-state';
+import { useTheadHeight } from './hooks/use-thead-height';
 import { DEFAULT_LABELS, DataGridLabels } from './labels';
 import type { DataGridFeatures } from './table-features';
 import classes from './DataGrid.module.css';
@@ -108,7 +112,10 @@ export type DataGridStylesNames =
   | 'selectionBarClose'
   | 'treeLabel'
   | 'aggregationLabel'
-  | 'aggregationValue';
+  | 'aggregationValue'
+  | 'loadingBar'
+  | 'skeleton'
+  | 'editActions';
 
 export type DataGridCssVariables = {
   root:
@@ -125,8 +132,9 @@ export type DataGridCssVariables = {
     | '--dg-striped-color'
     | '--dg-hover-color'
     | '--dg-selected-color'
-    | '--dg-pinned-shadow'
-    | '--dg-footer-height';
+    | '--dg-footer-height'
+    | '--dg-dirty-color'
+    | '--dg-invalid-color';
 };
 
 export interface DataGridProps<TData extends RowData = any>
@@ -185,7 +193,7 @@ export interface DataGridProps<TData extends RowData = any>
   /** Additional items rendered at the end of every column menu, separated by a divider @category appearance */
   columnMenuItems?: (column: Column<DataGridFeatures, TData, unknown>) => React.ReactNode;
 
-  /** Show loading overlay, @default false @category behavior */
+  /** Puts the grid in the loading state: skeleton rows on first load, then the `loadingVariant` over existing rows, @default false @category behavior */
   loading?: boolean;
 
   /** Adds striped rows styling, `true` stripes odd rows, @default false @category appearance */
@@ -203,8 +211,8 @@ export interface DataGridProps<TData extends RowData = any>
   /** Callback when a cell is clicked @category behavior */
   onCellClick?: (cell: Cell<DataGridFeatures, TData, unknown>, event: React.MouseEvent) => void;
 
-  /** Content to display when data is empty @category appearance */
-  emptyState?: React.ReactNode;
+  /** Content rendered in one full-width body cell when no rows are displayed and the grid is not loading, a function receives the row counts, filter state and table @category appearance */
+  emptyState?: React.ReactNode | ((payload: DataGridEmptyStatePayload<TData>) => React.ReactNode);
 
   /** Enable virtualization for large datasets */
   virtualize?: 'rows' | 'columns' | 'rows,columns';
@@ -233,33 +241,14 @@ export interface DataGridProps<TData extends RowData = any>
   /** When true, clicking a row toggles its expansion, @default false @category behavior */
   expandOnRowClick?: boolean;
 
-  /** Callback when a cell value is edited @category state */
-  onCellEdit?: (props: {
-    row: Row<DataGridFeatures, TData>;
-    columnId: string;
-    value: unknown;
-  }) => void;
-
-  /** Callback when a row is edited @category state */
-  onRowEdit?: (props: {
-    row: Row<DataGridFeatures, TData>;
-    values: Record<string, unknown>;
-  }) => void;
-
-  /** How editing is triggered: 'click' for single click, 'doubleClick' for double click, @default 'doubleClick' @category behavior */
-  editTrigger?: 'click' | 'doubleClick';
-
-  /** Async row update handler. On edit save, called with (newRow, oldRow). If it rejects, the edit is reverted. @category behavior */
-  processRowUpdate?: (newRow: TData, oldRow: TData) => Promise<TData>;
-
-  /** Called when processRowUpdate rejects @category behavior */
-  onProcessRowUpdateError?: (error: unknown) => void;
-
   /** When true, clicking a row toggles its selection, @default false @category behavior */
   selectOnRowClick?: boolean;
 
   /** Make the header sticky when scrolling, @default false @category appearance */
   stickyHeader?: boolean;
+
+  /** Offset from the top of the scroll container at which the sticky header sticks, numbers are converted to rem @category appearance */
+  stickyHeaderOffset?: number | string;
 
   /** Labels overrides @category appearance */
   labels?: Partial<DataGridLabels>;
@@ -296,6 +285,18 @@ export interface DataGridProps<TData extends RowData = any>
 
   /** Paints expanded rows and their panels with the striped color and drops the rule between them, @default false @category appearance */
   withTintedExpandedRows?: boolean;
+
+  /** What `loading` renders over existing rows: an overlay, a 2px progress bar under the header, or skeleton rows in place of the rows, @default 'overlay' @category appearance */
+  loadingVariant?: 'overlay' | 'bar' | 'skeleton';
+
+  /** Number of skeleton rows rendered while loading without pagination, with pagination the page size is used, @default 10 @category appearance */
+  skeletonRowCount?: number;
+
+  /** Props passed down to the `LoadingOverlay` component rendered by the `'overlay'` loading variant @category appearance */
+  loadingOverlayProps?: LoadingOverlayProps;
+
+  /** Renders a floating Save / Cancel pill next to the row being edited, row editing mode only, @default false @category appearance */
+  withFloatingEditActions?: boolean;
 }
 
 export type DataGridFactory = Factory<{
@@ -343,8 +344,9 @@ const varsResolver = createVarsResolver<DataGridFactory>(
           ? getThemeColor(highlightOnHoverColor, theme)
           : undefined,
         '--dg-selected-color': undefined,
-        '--dg-pinned-shadow': undefined,
         '--dg-footer-height': undefined,
+        '--dg-dirty-color': undefined,
+        '--dg-invalid-color': undefined,
       },
     };
   }
@@ -396,13 +398,9 @@ export const DataGrid = genericFactory<DataGridFactory>(((
     onScrollToBottom,
     renderExpandedRow,
     expandOnRowClick,
-    onCellEdit,
-    onRowEdit,
-    editTrigger,
-    processRowUpdate,
-    onProcessRowUpdateError,
     selectOnRowClick,
     stickyHeader,
+    stickyHeaderOffset,
     labels: labelsProp,
     getRowHeight,
     estimateRowHeight,
@@ -415,6 +413,10 @@ export const DataGrid = genericFactory<DataGridFactory>(((
     withTintedGroupRows,
     withTreeLines = true,
     withTintedExpandedRows,
+    loadingVariant = 'overlay',
+    skeletonRowCount = 10,
+    loadingOverlayProps,
+    withFloatingEditActions,
     ...others
   } = props;
 
@@ -422,7 +424,12 @@ export const DataGrid = genericFactory<DataGridFactory>(((
     name: 'DataGrid',
     props,
     className,
-    style,
+    style: [
+      style,
+      stickyHeader && stickyHeaderOffset !== undefined
+        ? ({ '--dg-sticky-header-offset': rem(stickyHeaderOffset) } as React.CSSProperties)
+        : undefined,
+    ],
     classes,
     classNames,
     styles,
@@ -442,6 +449,7 @@ export const DataGrid = genericFactory<DataGridFactory>(((
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
   const rootRef = useRef<HTMLDivElement>(null);
   const mergedRef = useMergedRef(ref, rootRef);
+  const theadRef = useTheadHeight(rootRef);
   const headerInteractions = useHeaderInteractions({
     store,
     withColumnReorder: store.withColumnReorder,
@@ -454,11 +462,30 @@ export const DataGrid = genericFactory<DataGridFactory>(((
     .some((group) => group.headers.some((header) => header.column.columnDef.footer !== undefined));
   const hasAggregation = store.aggregatedColumnIds.length > 0;
   const hasTfoot = hasColumnFooter || hasAggregation;
+  const overflow = useOverflowState(store.withColumnPinning);
   const scrollContainerRef = store.scrollContainerRef;
+  const viewportRef = useMergedRef(scrollContainerRef, overflow.ref);
   const withRowVirtualization = virtualize === 'rows' || virtualize === 'rows,columns';
   const withColumnVirtualization = virtualize === 'columns' || virtualize === 'rows,columns';
 
-  const withRowPinning = withRowVirtualization ? false : store.withRowPinning;
+  const withVirtualization = withRowVirtualization || withColumnVirtualization;
+  const withRowPinning = withVirtualization ? false : store.withRowPinning;
+  const isLoading = !!loading;
+  const bodyEmpty = withRowPinning
+    ? store.table.getTopRows().length === 0 &&
+      store.table.getCenterRows().length === 0 &&
+      store.table.getBottomRows().length === 0
+    : store.table.getRowModel().rows.length === 0;
+  const withSkeletonRows =
+    isLoading && !listViewMode && (bodyEmpty || loadingVariant === 'skeleton');
+  const withLoadingOverlay = isLoading && !withSkeletonRows && loadingVariant !== 'bar';
+  const withLoadingBar = isLoading && !withSkeletonRows && loadingVariant === 'bar';
+  if (process.env.NODE_ENV !== 'production' && withVirtualization && store.withRowPinning) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      '[@mantine/data-grid] row pinning is not supported with `virtualize`, remove `withRowPinning` or `rowPinning` from useDataGrid'
+    );
+  }
   const indexRows = withRowPinning ? store.table.getCenterRows() : store.table.getRowModel().rows;
   const pageIndex = store.pagination?.pageIndex ?? 0;
   const pageSize = store.pagination?.pageSize ?? 0;
@@ -493,7 +520,29 @@ export const DataGrid = genericFactory<DataGridFactory>(((
   const floatingSelectionBar = selectionBarVisible && !!selectionBarChild.props.floating;
   const toolbarHidden = selectionBarVisible && !floatingSelectionBar;
 
-  const withVirtualization = withRowVirtualization || withColumnVirtualization;
+  const tableRef = useRef(store.table);
+  tableRef.current = store.table;
+  const editingRowId = store.editingMode === 'row' ? store.editing?.rowId : undefined;
+  useEffect(() => {
+    if (!editingRowId) {
+      return undefined;
+    }
+
+    const handleMouseDown = (event: MouseEvent) => {
+      const target = event.target;
+      if (
+        target instanceof Element &&
+        target.closest('[data-editing][data-row-id], [data-edit-actions], [data-portal]')
+      ) {
+        return;
+      }
+      tableRef.current.saveEditing();
+    };
+
+    document.addEventListener('mousedown', handleMouseDown);
+    return () => document.removeEventListener('mousedown', handleMouseDown);
+  }, [editingRowId]);
+
   if (process.env.NODE_ENV !== 'production' && withVirtualization && store.withRowReorder) {
     // eslint-disable-next-line no-console
     console.warn(
@@ -562,11 +611,7 @@ export const DataGrid = genericFactory<DataGridFactory>(((
         onRowClick,
         onRowDoubleClick,
         onCellClick,
-        onCellEdit,
-        onRowEdit,
-        editTrigger: editTrigger ?? 'doubleClick',
-        processRowUpdate,
-        onProcessRowUpdateError,
+        editTrigger: store.table.options.editTrigger ?? 'doubleClick',
         selectOnRowClick: selectOnRowClick ?? false,
         listView: listViewMode,
         renderListItem,
@@ -581,6 +626,11 @@ export const DataGrid = genericFactory<DataGridFactory>(((
         withTintedGroupRows: withTintedGroupRows ?? false,
         withTreeLines,
         withTintedExpandedRows: withTintedExpandedRows ?? false,
+        theadRef,
+        loading: isLoading,
+        loadingVariant,
+        skeletonRowCount,
+        withSkeletonRows,
       }}
     >
       <Box
@@ -607,81 +657,104 @@ export const DataGrid = genericFactory<DataGridFactory>(((
             'tree-lines': store.withTreeData && withTreeLines,
             'tinted-expanded-rows': withTintedExpandedRows,
             'list-view': listViewMode || undefined,
+            'column-pinning': store.withColumnPinning,
+            'overflow-start': overflow.state.start,
+            'overflow-end': overflow.state.end,
+            'loading-variant': isLoading ? loadingVariant : undefined,
           },
           mod,
         ]}
         data-size={store.size}
         data-selection-bar-visible={selectionBarVisible || undefined}
+        data-editing-mode={store.editingMode}
         {...others}
       >
         {selectionBarVisible && !floatingSelectionBar && selectionBarChild}
         {toolbarChildren}
-        {listViewMode ? (
-          <DataGridListView />
-        ) : (
-          <>
-            {withRowVirtualization || withColumnVirtualization ? (
-              <>
-                <DataGridVirtualBody
-                  height={height}
-                  virtualScrollConfig={virtualScrollConfig}
-                  virtualColumnConfig={virtualColumnConfig}
-                  scrollContainerRef={scrollContainerRef}
-                  onScroll={onScrollToBottom ? handleScroll : undefined}
-                />
-                {hasTfoot && (
-                  <table {...getStyles('table')}>
-                    <DataGridTfoot />
-                  </table>
-                )}
-              </>
-            ) : onScrollToBottom && height ? (
-              <div
-                ref={scrollContainerRef}
-                onScroll={handleScroll}
-                {...getStyles('virtualScrollContainer')}
-                style={{ height: rem(height), overflow: 'auto' }}
-              >
+        <div style={{ position: 'relative' }}>
+          {listViewMode ? (
+            <DataGridListView />
+          ) : withRowVirtualization || withColumnVirtualization ? (
+            <>
+              <DataGridVirtualBody
+                height={height}
+                virtualScrollConfig={virtualScrollConfig}
+                virtualColumnConfig={virtualColumnConfig}
+                ref={viewportRef}
+                scrollContainerRef={scrollContainerRef}
+                onScroll={onScrollToBottom ? handleScroll : undefined}
+              />
+              {hasTfoot && (
                 <table {...getStyles('table')}>
-                  <DataGridHeader />
-                  <DataGridBody />
-                  {hasTfoot && <DataGridTfoot />}
+                  <DataGridTfoot />
                 </table>
-              </div>
-            ) : withScrollArea ? (
-              <ScrollArea
-                scrollbarSize={4}
-                ref={scrollContainerRef}
-                offsetScrollbars="x"
-                scrollbars="x"
-                {...getStyles('scrollContainer')}
-                {...scrollAreaProps}
-              >
-                <table {...getStyles('table')}>
-                  <DataGridHeader />
-                  <DataGridBody />
-                  {hasTfoot && <DataGridTfoot />}
-                </table>
-              </ScrollArea>
-            ) : (
-              <div ref={scrollContainerRef} style={{ overflowX: 'auto' }}>
-                <table {...getStyles('table')}>
-                  <DataGridHeader />
-                  <DataGridBody />
-                  {hasTfoot && <DataGridTfoot />}
-                </table>
-              </div>
-            )}
-          </>
-        )}
+              )}
+            </>
+          ) : onScrollToBottom && height ? (
+            <div
+              ref={viewportRef}
+              onScroll={handleScroll}
+              {...getStyles('virtualScrollContainer')}
+              style={{ height: rem(height), overflow: 'auto' }}
+            >
+              <table aria-busy={isLoading || undefined} {...getStyles('table')}>
+                <DataGridHeader />
+                <DataGridBody />
+                {hasTfoot && <DataGridTfoot />}
+              </table>
+            </div>
+          ) : withScrollArea ? (
+            <ScrollArea
+              scrollbarSize={4}
+              viewportRef={viewportRef}
+              offsetScrollbars="x"
+              scrollbars="x"
+              {...getStyles('scrollContainer')}
+              {...scrollAreaProps}
+            >
+              <table aria-busy={isLoading || undefined} {...getStyles('table')}>
+                <DataGridHeader />
+                <DataGridBody />
+                {hasTfoot && <DataGridTfoot />}
+              </table>
+            </ScrollArea>
+          ) : (
+            <div ref={viewportRef} style={{ overflowX: 'auto' }}>
+              <table aria-busy={isLoading || undefined} {...getStyles('table')}>
+                <DataGridHeader />
+                <DataGridBody />
+                {hasTfoot && <DataGridTfoot />}
+              </table>
+            </div>
+          )}
+          {withLoadingOverlay && (
+            <LoadingOverlay
+              visible
+              {...loadingOverlayProps}
+              overlayProps={{
+                blur: 2,
+                backgroundOpacity: 0.6,
+                ...loadingOverlayProps?.overlayProps,
+              }}
+              loaderProps={{ size: store.controlSize, ...loadingOverlayProps?.loaderProps }}
+              {...getStyles('loadingOverlay', {
+                className: loadingOverlayProps?.className,
+                style: [{ top: 'var(--dg-thead-height, 0px)' }, loadingOverlayProps?.style],
+              })}
+            />
+          )}
+          {withLoadingBar && <div aria-hidden {...getStyles('loadingBar')} />}
+        </div>
         {otherChildren}
         {floatingSelectionBar && selectionBarChild}
+        {withFloatingEditActions && store.editingMode === 'row' && !listViewMode && (
+          <DataGridEditActions rootRef={rootRef} />
+        )}
         <DataGridHeaderOverlays
           drag={headerInteractions.drag}
           dropTarget={headerInteractions.dropTarget}
           guide={headerInteractions.guide}
         />
-        {loading && <LoadingOverlay visible {...getStyles('loadingOverlay')} />}
       </Box>
     </DataGridProvider>
   );

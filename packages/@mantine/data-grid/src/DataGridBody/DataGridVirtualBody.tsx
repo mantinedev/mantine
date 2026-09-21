@@ -10,14 +10,16 @@ import {
   rem,
   useProps,
 } from '@mantine/core';
+import { useMergedRef } from '@mantine/hooks';
 import { getRowHeightEstimate } from '../data-grid-sizes';
 import { useDataGridContext } from '../DataGrid.context';
 import {
   DataGridHeaderCellContent,
   getHeaderCellAttributes,
 } from '../DataGridHeader/DataGridHeaderCell';
-import { getPinnedStyles } from '../get-pinned-styles';
+import { getPinnedCellProps, getPinnedHeaderProps } from '../get-pinned-cell-props';
 import type { DataGridFeatures } from '../table-features';
+import { getSkeletonRowCount, resolveEmptyState, SkeletonBar } from './body-states';
 import { getGroupLabelCellId } from './DataGridGroupCell';
 import { DataGridVirtualCell } from './DataGridVirtualCell';
 import {
@@ -43,7 +45,8 @@ export type DataGridVirtualBodyStylesNames =
   | 'resizeHandle'
   | 'treeIndent'
   | 'treeToggle'
-  | 'treeLabel';
+  | 'treeLabel'
+  | 'skeleton';
 
 export interface DataGridVirtualBodyProps
   extends BoxProps, CompoundStylesApiProps<DataGridVirtualBodyFactory>, ElementProps<'div'> {
@@ -87,13 +90,21 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     virtualColumnConfig,
     scrollContainerRef,
     onScroll,
+    ref,
     ...others
   } = useProps('DataGridVirtualBody', null, props);
+  const containerRef = useMergedRef(ref, scrollContainerRef);
 
   const ctx = useDataGridContext();
   const rows = ctx.table.getRowModel().rows;
   const headerGroups = ctx.table.getHeaderGroups();
-  const visibleColumns = ctx.table.getVisibleLeafColumns();
+  const visibleColumns = ctx.withColumnPinning
+    ? [
+        ...ctx.table.getPinnedVisibleLeafColumns('start'),
+        ...ctx.table.getPinnedVisibleLeafColumns('center'),
+        ...ctx.table.getPinnedVisibleLeafColumns('end'),
+      ]
+    : ctx.table.getVisibleLeafColumns();
 
   const withColumnVirt = ctx.withColumnVirtualization;
   const withRowVirt = ctx.withVirtualization;
@@ -322,6 +333,8 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     const isSelected = row.getIsSelected();
     const isStriped = isRowStriped(ctx, row);
     const isExpanded = hasExpandedPanel(ctx, row);
+    const isEditing = ctx.withEditing && row.getIsEditing();
+    const isSaving = isEditing && row.getIsSaving();
 
     const handleRowDoubleClick = ctx.onRowDoubleClick
       ? (event: React.MouseEvent) => {
@@ -345,6 +358,9 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
           data-tree-row={ctx.withTreeData || undefined}
           data-depth={ctx.withTreeData ? row.depth : undefined}
           data-leaf={(ctx.withTreeData && !row.getCanExpand()) || undefined}
+          data-editing={isEditing || undefined}
+          data-saving={isSaving || undefined}
+          aria-busy={isSaving || undefined}
           onClick={
             hasRowClickBehavior(ctx) ? (event) => handleRowClick(ctx, row, event) : undefined
           }
@@ -360,24 +376,24 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
             data-expanded-row
             {...ctx.getStyles('virtualRow', { classNames, styles })}
           >
-            {visibleColumns.map((column, index) =>
-              column.columnDef.meta?.utility ? (
+            {visibleColumns.map((column, index) => {
+              if (!column.columnDef.meta?.utility) {
+                return null;
+              }
+              const pinned = getPinnedCellProps(column, ctx.withColumnPinning);
+              return (
                 <div
                   key={column.id}
                   role="gridcell"
                   aria-colindex={index + 1}
                   data-utility={column.columnDef.meta.utility}
-                  data-pinned-left={
-                    (ctx.withColumnPinning && column.getIsPinned() === 'start') || undefined
-                  }
+                  data-pinned={pinned['data-pinned']}
+                  data-pinned-edge={pinned['data-pinned-edge']}
                   {...ctx.getStyles('virtualCell', { classNames, styles })}
-                  style={{
-                    ...(ctx.withColumnPinning ? getPinnedStyles(column) : undefined),
-                    width: `var(--dg-col-${index})`,
-                  }}
+                  style={{ ...pinned.style, width: `var(--dg-col-${index})` }}
                 />
-              ) : null
-            )}
+              );
+            })}
             <div
               role="gridcell"
               aria-colindex={firstDataColumnIndex + 1}
@@ -421,8 +437,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     headerIndex: number,
     isLast: boolean
   ) {
-    const isPinned = ctx.withColumnPinning ? header.column.getIsPinned() : false;
-    const pinnedStyles = ctx.withColumnPinning ? getPinnedStyles(header.column) : undefined;
+    const pinned = getPinnedHeaderProps(header, ctx.withColumnPinning);
 
     return (
       <div
@@ -431,16 +446,15 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         role="columnheader"
         aria-colindex={headerIndex + 1}
         {...getHeaderCellAttributes(header, ctx)}
-        data-pinned-left={isPinned === 'start' || undefined}
-        data-pinned-right={isPinned === 'end' || undefined}
+        data-pinned={pinned['data-pinned']}
+        data-pinned-edge={pinned['data-pinned-edge']}
         {...ctx.getStyles('virtualCell', { classNames, styles })}
         style={{
-          ...pinnedStyles,
+          ...pinned.style,
           width:
             header.colSpan > 1
               ? header.getLeafHeaders().reduce((sum, leaf) => sum + leaf.getSize(), 0)
               : `var(--dg-col-${headerIndex})`,
-          position: isPinned ? 'sticky' : 'relative',
         }}
         {...ctx.headerInteractions.getReorderHandlers(header)}
       >
@@ -527,53 +541,67 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
     );
   }
 
-  const bodyContent = withRowVirt ? (
-    <div style={{ height: totalRowSize, position: 'relative' }}>
-      {rows.length === 0 && ctx.emptyState ? (
-        <div
-          role="row"
-          {...ctx.getStyles('virtualRow', { classNames, styles })}
-          style={{ position: 'relative' }}
-        >
-          <div
-            role="gridcell"
-            aria-colindex={1}
-            {...ctx.getStyles('emptyState', { classNames, styles })}
-            style={{ gridColumn: `1 / -1` }}
-          >
-            {ctx.emptyState}
-          </div>
-        </div>
-      ) : (
-        renderedRows
-      )}
+  const emptyStateContent = !ctx.loading && rows.length === 0 ? resolveEmptyState(ctx) : null;
+
+  const renderSkeletonRows = () =>
+    Array.from({ length: getSkeletonRowCount(ctx) }, (_, rowIndex) => (
+      <div
+        key={rowIndex}
+        role="row"
+        aria-hidden
+        data-skeleton-row
+        {...ctx.getStyles('virtualRow', { classNames, styles })}
+      >
+        {visibleColumns.map((column, columnIndex) => {
+          const meta = column.columnDef.meta;
+          const pinned = getPinnedCellProps(column, ctx.withColumnPinning);
+          return (
+            <div
+              key={column.id}
+              role="gridcell"
+              data-utility={meta?.utility}
+              data-align={meta?.align}
+              data-pinned={pinned['data-pinned']}
+              data-pinned-edge={pinned['data-pinned-edge']}
+              {...ctx.getStyles('virtualCell', { classNames, styles })}
+              style={{ ...pinned.style, width: `var(--dg-col-${columnIndex})` }}
+            >
+              {!meta?.utility && (
+                <SkeletonBar
+                  rowIndex={rowIndex}
+                  columnIndex={columnIndex}
+                  classNames={classNames}
+                  styles={styles}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    ));
+
+  const bodyContent = ctx.withSkeletonRows ? (
+    <div>{renderSkeletonRows()}</div>
+  ) : emptyStateContent !== null && emptyStateContent !== undefined ? (
+    <div role="row" data-empty-row {...ctx.getStyles('virtualRow', { classNames, styles })}>
+      <div
+        role="gridcell"
+        aria-colindex={1}
+        aria-colspan={totalColumns}
+        {...ctx.getStyles('emptyState', { classNames, styles })}
+      >
+        {emptyStateContent}
+      </div>
     </div>
+  ) : withRowVirt ? (
+    <div style={{ height: totalRowSize, position: 'relative' }}>{renderedRows}</div>
   ) : (
-    <div>
-      {rows.length === 0 && ctx.emptyState ? (
-        <div
-          role="row"
-          {...ctx.getStyles('virtualRow', { classNames, styles })}
-          style={{ position: 'relative' }}
-        >
-          <div
-            role="gridcell"
-            aria-colindex={1}
-            {...ctx.getStyles('emptyState', { classNames, styles })}
-            style={{ gridColumn: `1 / -1` }}
-          >
-            {ctx.emptyState}
-          </div>
-        </div>
-      ) : (
-        renderedRows
-      )}
-    </div>
+    <div>{renderedRows}</div>
   );
 
   return (
     <div
-      ref={scrollContainerRef}
+      ref={containerRef}
       onScroll={onScroll}
       {...ctx.getStyles('virtualScrollContainer', {
         className,
@@ -587,31 +615,34 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         role="grid"
         aria-rowcount={rows.length + 1}
         aria-colcount={totalColumns}
+        aria-busy={ctx.loading || undefined}
         onKeyDown={handleKeyDown}
         {...ctx.getStyles('virtualGrid', { classNames, styles })}
         style={columnWidthVars}
       >
-        {headerGroups.map((headerGroup) => (
-          <div
-            key={headerGroup.id}
-            role="row"
-            aria-rowindex={1}
-            {...ctx.getStyles('virtualGridHeader', { classNames, styles })}
-          >
-            {withColumnVirt
-              ? renderVirtualizedHeaders(
-                  headerGroup.headers,
-                  headerGroups[headerGroups.length - 1].id === headerGroup.id
-                )
-              : headerGroup.headers.map((header, headerIndex) =>
-                  renderHeaderCell(
-                    header,
-                    headerIndex,
-                    headerIndex === headerGroup.headers.length - 1
+        <div role="rowgroup" data-virtual-thead ref={ctx.theadRef}>
+          {headerGroups.map((headerGroup) => (
+            <div
+              key={headerGroup.id}
+              role="row"
+              aria-rowindex={1}
+              {...ctx.getStyles('virtualGridHeader', { classNames, styles })}
+            >
+              {withColumnVirt
+                ? renderVirtualizedHeaders(
+                    headerGroup.headers,
+                    headerGroups[headerGroups.length - 1].id === headerGroup.id
                   )
-                )}
-          </div>
-        ))}
+                : headerGroup.headers.map((header, headerIndex) =>
+                    renderHeaderCell(
+                      header,
+                      headerIndex,
+                      headerIndex === headerGroup.headers.length - 1
+                    )
+                  )}
+            </div>
+          ))}
+        </div>
 
         {bodyContent}
       </div>
