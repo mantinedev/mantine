@@ -123,7 +123,8 @@
   padding-top: calc(var(--app-shell-header-offset, 0rem) + var(--app-shell-padding));
   padding-bottom: calc(var(--app-shell-footer-offset, 0rem) + var(--app-shell-padding));
   min-height: 100dvh;
-  transition-property: padding;
+  transition-property: padding, width, margin;
+
 
   :where([data-mode='static']) & {
     padding-inline-start: var(--app-shell-padding);
