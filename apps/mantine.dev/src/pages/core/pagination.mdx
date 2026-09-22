@@ -49,11 +49,12 @@ Without a controller, calling `usePagination` yourself and wiring `value`/`onCha
 `Pagination` runs the range computation twice, and the range you read is the one **your** options
 produce, not the one the component renders – `siblings` and `boundaries` can come from
 `theme.components.Pagination.defaultProps`, which your copy of the hook cannot see. The `controller`
-prop removes the second computation and makes `range` and `active` the exact values on screen.
+prop removes the second computation and makes `getRange()` and `getActive()` return the exact values
+on screen.
 
 `usePagination` is a `@mantine/hooks` hook, so it keeps the naming of that package: options are
 spelled `page`/`initialPage`/`onChange` rather than `value`/`defaultValue`, and the active page is
-returned as `active`. It is re-exported from `@mantine/core` for convenience, and `@mantine/core`
+read with `getActive()`. It is re-exported from `@mantine/core` for convenience, and `@mantine/core`
 supplies the `PaginationController` and `PaginationControllerOptions` type aliases:
 
 ```tsx

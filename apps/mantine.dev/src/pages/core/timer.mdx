@@ -78,10 +78,10 @@ import { useTimer } from '@mantine/core';
 function Demo() {
   const timer = useTimer({ countdown: true, startMs: 60 * 1000 });
 
-  timer.value; // -> { totalMs, days, hours, minutes, seconds, milliseconds }
-  timer.running; // -> boolean, true while the timer is counting
-  timer.paused; // -> boolean, true when the timer is started and then paused
-  timer.progress; // -> number from 0 to 1 when the boundary is set
+  timer.getValue(); // -> { totalMs, days, hours, minutes, seconds, milliseconds }
+  timer.isRunning(); // -> boolean, true while the timer is counting
+  timer.isPaused(); // -> boolean, true when the timer is started and then paused
+  timer.getProgress(); // -> number from 0 to 1 when the boundary is set
 
   timer.start();
   timer.pause();
@@ -119,8 +119,8 @@ how the pattern works across all components:
 
 ## Progress
 
-When `targetMs` is set (or in countdown mode, where it defaults to `0`), the controller exposes a
-`progress` value from `0` to `1`. It is convenient for binding the timer to a
+When `targetMs` is set (or in countdown mode, where it defaults to `0`), the controller's
+`getProgress()` returns a value from `0` to `1`. It is convenient for binding the timer to a
 [Progress](/core/progress) bar or a [RingProgress](/core/ring-progress):
 
 <Demo data={TimerDemos.progress} />

@@ -30,7 +30,7 @@ function Demo() {
               <>
                 <ActionIcon
                   variant="subtle"
-                  size={store.controlSize}
+                  size={store.getControlSize()}
                   aria-label="Save"
                   onClick={() => row.saveEditing()}
                 >
@@ -39,7 +39,7 @@ function Demo() {
                 <ActionIcon
                   variant="subtle"
                   color="gray"
-                  size={store.controlSize}
+                  size={store.getControlSize()}
                   aria-label="Cancel"
                   onClick={() => row.cancelEditing()}
                 >
@@ -50,7 +50,7 @@ function Demo() {
               <ActionIcon
                 variant="subtle"
                 color="gray"
-                size={store.controlSize}
+                size={store.getControlSize()}
                 aria-label="Edit"
                 onClick={() => row.startEditing()}
               >
@@ -91,7 +91,7 @@ function Demo() {
               <>
                 <ActionIcon
                   variant="subtle"
-                  size={store.controlSize}
+                  size={store.getControlSize()}
                   aria-label="Save"
                   onClick={() => row.saveEditing()}
                 >
@@ -100,7 +100,7 @@ function Demo() {
                 <ActionIcon
                   variant="subtle"
                   color="gray"
-                  size={store.controlSize}
+                  size={store.getControlSize()}
                   aria-label="Cancel"
                   onClick={() => row.cancelEditing()}
                 >
@@ -111,7 +111,7 @@ function Demo() {
               <ActionIcon
                 variant="subtle"
                 color="gray"
-                size={store.controlSize}
+                size={store.getControlSize()}
                 aria-label="Edit"
                 onClick={() => row.startEditing()}
               >

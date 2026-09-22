@@ -16,8 +16,29 @@ describe('@mantine/core/useImageCropper', () => {
       'reset',
       'getCropData',
       'getCroppedImage',
+      'getZoom',
+      'getRotation',
+      'getFlip',
+      'getCrop',
+      'getCropSize',
     ],
     changeState: (controller) => controller.setZoom(2),
+  });
+
+  it('returns current state from getters', () => {
+    const hook = renderHook(() => useImageCropper());
+    expect(hook.result.current.getZoom()).toBe(hook.result.current.zoom);
+    expect(hook.result.current.getRotation()).toBe(0);
+    expect(hook.result.current.getFlip()).toEqual(hook.result.current.flip);
+    expect(hook.result.current.getCrop()).toEqual({ x: 0, y: 0 });
+    expect(hook.result.current.getCropSize()).toBe(null);
+
+    act(() => hook.result.current.setZoom(2));
+    act(() => hook.result.current.setRotation(90));
+    act(() => hook.result.current.flipHorizontal());
+    expect(hook.result.current.getZoom()).toBe(2);
+    expect(hook.result.current.getRotation()).toBe(90);
+    expect(hook.result.current.getFlip().horizontal).toBe(true);
   });
 
   it('returns the initial state', () => {

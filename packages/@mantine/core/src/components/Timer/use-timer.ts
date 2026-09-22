@@ -46,6 +46,18 @@ export interface TimerController {
   /** Resolved tick interval in milliseconds */
   interval: number;
 
+  /** Returns current timer value split into `totalMs` and time segments */
+  getValue: () => TimerValue;
+
+  /** Returns progress from `0` to `1` between `startMs` and `targetMs`, `0` when the boundary is not set */
+  getProgress: () => number;
+
+  /** Returns `true` while the timer is actively counting */
+  isRunning: () => boolean;
+
+  /** Returns `true` when the timer has been started and is currently paused */
+  isPaused: () => boolean;
+
   /** Starts the timer from its current value */
   start: () => void;
 
@@ -279,6 +291,14 @@ export function useTimer(options: TimerControllerOptions = {}): TimerController 
     return Math.min(1, Math.max(0, traveled / span));
   }, [totalMs, countdown, initialMs, lowerBound, upperBound, isCompleteValue]);
 
+  const stateRef = useRef({ value, running, paused, progress });
+  stateRef.current = { value, running, paused, progress };
+
+  const getValue = useCallback(() => stateRef.current.value, []);
+  const getProgress = useCallback(() => stateRef.current.progress, []);
+  const isRunning = useCallback(() => stateRef.current.running, []);
+  const isPaused = useCallback(() => stateRef.current.paused, []);
+
   return useMemo(
     () => ({
       value,
@@ -287,6 +307,10 @@ export function useTimer(options: TimerControllerOptions = {}): TimerController 
       paused,
       progress,
       interval,
+      getValue,
+      getProgress,
+      isRunning,
+      isPaused,
       start,
       pause,
       resume: start,

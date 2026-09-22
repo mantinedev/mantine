@@ -12,13 +12,13 @@ function Demo() {
       <Timer controller={timer} format="mm:ss:SS" fz={40} fw={700} />
 
       <Text c="dimmed" size="sm">
-        running: {String(timer.running)}, paused: {String(timer.paused)}
+        running: {String(timer.isRunning())}, paused: {String(timer.isPaused())}
       </Text>
 
       <Group>
-        <Button onClick={timer.start} disabled={timer.running}>Start</Button>
-        <Button onClick={timer.pause} disabled={!timer.running} variant="default">Pause</Button>
-        <Button onClick={timer.resume} disabled={timer.running} variant="default">Resume</Button>
+        <Button onClick={timer.start} disabled={timer.isRunning()}>Start</Button>
+        <Button onClick={timer.pause} disabled={!timer.isRunning()} variant="default">Pause</Button>
+        <Button onClick={timer.resume} disabled={timer.isRunning()} variant="default">Resume</Button>
         <Button onClick={timer.reset} variant="default">Reset</Button>
         <Button onClick={timer.restart} variant="default">Restart</Button>
       </Group>
@@ -35,17 +35,17 @@ function Demo() {
       <Timer controller={timer} format="mm:ss:SS" fz={40} fw={700} />
 
       <Text c="dimmed" size="sm">
-        running: {String(timer.running)}, paused: {String(timer.paused)}
+        running: {String(timer.isRunning())}, paused: {String(timer.isPaused())}
       </Text>
 
       <Group>
-        <Button onClick={timer.start} disabled={timer.running}>
+        <Button onClick={timer.start} disabled={timer.isRunning()}>
           Start
         </Button>
-        <Button onClick={timer.pause} disabled={!timer.running} variant="default">
+        <Button onClick={timer.pause} disabled={!timer.isRunning()} variant="default">
           Pause
         </Button>
-        <Button onClick={timer.resume} disabled={timer.running} variant="default">
+        <Button onClick={timer.resume} disabled={timer.isRunning()} variant="default">
           Resume
         </Button>
         <Button onClick={timer.reset} variant="default">

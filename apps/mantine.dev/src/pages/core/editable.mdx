@@ -108,8 +108,8 @@ import { useEditable } from '@mantine/core';
 function Demo() {
   const editable = useEditable({ defaultValue: 'Project name' });
 
-  editable.value; // -> current value
-  editable.editing; // -> boolean, true while the field is in edit mode
+  editable.getValue(); // -> current value
+  editable.isEditing(); // -> boolean, true while the field is in edit mode
 
   editable.edit(); // enters edit mode
   editable.submit(); // commits the edit

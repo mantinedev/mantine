@@ -468,7 +468,7 @@ handlers, and `renderNode` support.
 import { FlatTreeNode, flattenTreeData, useTree } from '@mantine/core';
 
 const tree = useTree();
-const flatList = flattenTreeData(data, tree.expandedState);
+const flatList = flattenTreeData(data, tree.getExpandedState());
 // flatList is FlattenedTreeNodeData[] – spread each entry into FlatTreeNode
 ```
 

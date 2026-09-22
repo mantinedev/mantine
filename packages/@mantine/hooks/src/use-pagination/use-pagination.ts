@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
 import { useCallbackRef } from '../utils';
 
@@ -41,6 +41,12 @@ export interface UsePaginationReturnValue {
 
   /** Total amount of pages, same value as the `total` option */
   total: number;
+
+  /** Function to get active page number */
+  getActive: () => number;
+
+  /** Function to get array of page numbers and dots */
+  getRange: () => (number | 'dots')[];
 
   /** Function to set active page */
   setPage: (page: number) => void;
@@ -133,11 +139,19 @@ export function usePagination({
     ];
   }, [_total, siblings, activePage, _startValue, _endValue, boundaries]);
 
+  const latest = useRef({ active: activePage, range: paginationRange });
+  latest.current = { active: activePage, range: paginationRange };
+
+  const getActive = useCallback(() => latest.current.active, []);
+  const getRange = useCallback(() => latest.current.range, []);
+
   return useMemo(
     () => ({
       range: paginationRange,
       active: activePage,
       total,
+      getActive,
+      getRange,
       setPage,
       next,
       previous,

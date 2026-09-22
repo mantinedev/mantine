@@ -36,7 +36,7 @@ them.
 
 Pass `withGlobalFilter` to `useDataGrid` to enable cross-column search. `DataGrid.GlobalFilter`
 renders a search input bound to the store inside `DataGrid.Toolbar` (an empty `<DataGrid.Toolbar />`
-renders it automatically); use `store.globalFilter` and `store.setGlobalFilter` to connect any other
+renders it automatically); use `store.getGlobalFilter()` and `store.setGlobalFilter` to connect any other
 input.
 
 <Demo data={DataGridDemos.globalFilter} />
@@ -80,7 +80,7 @@ every row through.
 
 ## Filter chips
 
-Render `store.columnFilters` as removable pills to show which filters are active. `getColumnLabel`
+Render `store.getColumnFilters()` as removable pills to show which filters are active. `getColumnLabel`
 (exported from `@mantine/data-grid`) resolves the label the grid itself uses for a column:
 `meta.label`, then a string `header`, then the column id.
 
@@ -163,7 +163,7 @@ function Demo() {
     <DataGrid store={store}>
       <DataGrid.Toolbar>
         <TextInput
-          size={store.controlSize}
+          size={store.getControlSize()}
           placeholder="First name"
           value={(store.getColumnFilterValue('firstName') as string) ?? ''}
           onChange={(event) => store.setColumnFilter('firstName', event.currentTarget.value)}

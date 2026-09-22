@@ -31,7 +31,7 @@ function Demo() {
         <DataGrid.GlobalFilter />
         <DataGrid.RowCount />
         <div style={{ flex: 1 }} />
-        <Button size={store.controlSize} leftSection={<PlusIcon size={14} />}>
+        <Button size={store.getControlSize()} leftSection={<PlusIcon size={14} />}>
           Add employee
         </Button>
         <DataGrid.ColumnVisibilityToggle />
@@ -64,7 +64,7 @@ function Demo() {
         <DataGrid.GlobalFilter />
         <DataGrid.RowCount />
         <div style={{ flex: 1 }} />
-        <Button size={store.controlSize} leftSection={<PlusIcon size={14} />}>
+        <Button size={store.getControlSize()} leftSection={<PlusIcon size={14} />}>
           Add employee
         </Button>
         <DataGrid.ColumnVisibilityToggle />

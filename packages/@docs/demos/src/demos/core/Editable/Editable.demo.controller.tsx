@@ -18,7 +18,7 @@ function Demo() {
       </Group>
 
       <Text size="sm">
-        Value: {editable.value} — editing: {editable.editing ? 'yes' : 'no'}
+        Value: {editable.getValue()} — editing: {editable.isEditing() ? 'yes' : 'no'}
       </Text>
     </Stack>
   );
@@ -45,7 +45,7 @@ function Demo() {
       </Group>
 
       <Text size="sm">
-        Value: {editable.value} — editing: {editable.editing ? 'yes' : 'no'}
+        Value: {editable.getValue()} — editing: {editable.isEditing() ? 'yes' : 'no'}
       </Text>
     </Stack>
   );

@@ -78,8 +78,8 @@ The Combobox store is an object with the following properties:
 
 ```tsx
 interface ComboboxStore {
-  /** Current dropdown opened state */
-  dropdownOpened: boolean;
+  /** Returns current dropdown opened state */
+  isDropdownOpened(): boolean;
 
   /** Opens dropdown */
   openDropdown(eventSource?: 'keyboard' | 'mouse' | 'unknown'): void;
@@ -92,8 +92,8 @@ interface ComboboxStore {
     eventSource?: 'keyboard' | 'mouse' | 'unknown'
   ): void;
 
-  /** Selected option index */
-  selectedOptionIndex: number;
+  /** Returns selected option index, `-1` if none of the options is selected */
+  getSelectedOptionIndex(): number;
 
   /** Selects `Combobox.Option` by index */
   selectOption(index: number): void;
@@ -132,8 +132,8 @@ interface ComboboxStore {
    */
   updateSelectedOptionIndex(target?: 'active' | 'selected'): void;
 
-  /** List id, used for `aria-*` attributes */
-  listId: string | null;
+  /** Returns list id, used for `aria-*` attributes */
+  getListId(): string | null;
 
   /** Sets list id */
   setListId(id: string): void;

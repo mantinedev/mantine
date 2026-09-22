@@ -11,8 +11,8 @@ function Demo() {
 
   return (
     <>
-      <Text>Active page: {pagination.active}</Text>
-      <Text>Range: [{pagination.range.join(', ')}]</Text>
+      <Text>Active page: {pagination.getActive()}</Text>
+      <Text>Range: [{pagination.getRange().join(', ')}]</Text>
       <Group mt="md" gap={4}>
         <Button size="compact-sm" variant="default" onClick={pagination.first}>
           First
@@ -20,7 +20,7 @@ function Demo() {
         <Button size="compact-sm" variant="default" onClick={pagination.previous}>
           Previous
         </Button>
-        {pagination.range.map((page, index) =>
+        {pagination.getRange().map((page, index) =>
           page === 'dots' ? (
             <span key={index}>...</span>
           ) : (
@@ -28,7 +28,7 @@ function Demo() {
               size="compact-sm"
               key={index}
               onClick={() => pagination.setPage(page)}
-              variant={pagination.active === page ? 'filled' : 'default'}
+              variant={pagination.getActive() === page ? 'filled' : 'default'}
               miw={34}
             >
               {page}
@@ -52,8 +52,8 @@ function Demo() {
 
   return (
     <>
-      <Text>Active page: {pagination.active}</Text>
-      <Text>Range: [{pagination.range.join(', ')}]</Text>
+      <Text>Active page: {pagination.getActive()}</Text>
+      <Text>Range: [{pagination.getRange().join(', ')}]</Text>
       <Group mt="md" gap={4}>
         <Button size="compact-sm" variant="default" onClick={pagination.first}>
           First
@@ -61,7 +61,7 @@ function Demo() {
         <Button size="compact-sm" variant="default" onClick={pagination.previous}>
           Previous
         </Button>
-        {pagination.range.map((page, index) =>
+        {pagination.getRange().map((page, index) =>
           page === 'dots' ? (
             <span key={index}>...</span>
           ) : (
@@ -69,7 +69,7 @@ function Demo() {
               size="compact-sm"
               key={index}
               onClick={() => pagination.setPage(page)}
-              variant={pagination.active === page ? 'filled' : 'default'}
+              variant={pagination.getActive() === page ? 'filled' : 'default'}
               miw={34}
             >
               {page}

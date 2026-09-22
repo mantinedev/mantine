@@ -64,10 +64,8 @@ function Demo() {
     initialExpandedState,
   });
 
-  const flatList = useMemo(
-    () => flattenTreeData(largeData, tree.expandedState),
-    [tree.expandedState]
-  );
+  const expandedState = tree.getExpandedState();
+  const flatList = useMemo(() => flattenTreeData(largeData, expandedState), [expandedState]);
 
   const scrollParentRef = useRef<HTMLDivElement>(null);
 
@@ -152,10 +150,8 @@ function Demo() {
     initialExpandedState,
   });
 
-  const flatList = useMemo(
-    () => flattenTreeData(largeData, tree.expandedState),
-    [tree.expandedState]
-  );
+  const expandedState = tree.getExpandedState();
+  const flatList = useMemo(() => flattenTreeData(largeData, expandedState), [expandedState]);
 
   const scrollParentRef = useRef<HTMLDivElement>(null);
 

@@ -3,7 +3,7 @@ import { clamp, useCallbackRef, useDidUpdate, useUncontrolled } from '@mantine/h
 import {
   computeCroppedArea,
   getContainedSize,
-  getCropSize,
+  getCropSize as computeCropSize,
   ImageCropperArea,
   ImageCropperCropData,
   ImageCropperMediaSize,
@@ -104,6 +104,21 @@ export interface ImageCropperController {
   /** Size of the crop window in viewport pixels, `null` until the image and viewport are measured */
   cropSize: ImageCropperSize | null;
 
+  /** Returns current zoom value */
+  getZoom: () => number;
+
+  /** Returns current rotation value in degrees */
+  getRotation: () => number;
+
+  /** Returns current flip state */
+  getFlip: () => ResolvedImageCropperFlip;
+
+  /** Returns current crop offset in pixels relative to the viewport center */
+  getCrop: () => ImageCropperPoint;
+
+  /** Returns size of the crop window in viewport pixels, `null` until the image and viewport are measured */
+  getCropSize: () => ImageCropperSize | null;
+
   /** Resolved crop aspect ratio */
   aspectRatio: number | undefined;
 
@@ -197,6 +212,8 @@ export function useImageCropper(
 
   const cropRef = useRef<ImageCropperPoint>(crop);
   cropRef.current = crop;
+  const cropSizeRef = useRef(cropSize);
+  cropSizeRef.current = cropSize;
 
   const latest = useRef<{
     zoom: number;
@@ -278,7 +295,7 @@ export function useImageCropper(
     }
 
     geometry.aspect = resolveAspect();
-    geometry.cropSize = getCropSize(geometry.media, geometry.container, geometry.aspect);
+    geometry.cropSize = computeCropSize(geometry.media, geometry.container, geometry.aspect);
     setCropSizeState(geometry.cropSize);
     applyCrop(cropRef.current);
     emitCropChange();
@@ -440,6 +457,12 @@ export function useImageCropper(
     [commit, panBy, registerImage, setContainerSize]
   );
 
+  const getZoom = useCallback(() => latest.current.zoom, []);
+  const getRotation = useCallback(() => latest.current.rotation, []);
+  const getFlip = useCallback(() => latest.current.flip, []);
+  const getCrop = useCallback(() => cropRef.current, []);
+  const getCropSize = useCallback(() => cropSizeRef.current, []);
+
   return useMemo(
     () => ({
       zoom,
@@ -447,6 +470,11 @@ export function useImageCropper(
       flip,
       crop,
       cropSize,
+      getZoom,
+      getRotation,
+      getFlip,
+      getCrop,
+      getCropSize,
       aspectRatio: cropShape === 'circle' ? 1 : aspectRatio,
       cropShape,
       minZoom,

@@ -33,7 +33,7 @@ function Demo() {
     <DataGrid store={store}>
       <DataGrid.Toolbar>
         <Select
-          size={store.controlSize}
+          size={store.getControlSize()}
           placeholder="Department"
           clearable
           data={store.getFacetedUniqueValues('department')}
@@ -41,7 +41,7 @@ function Demo() {
           onChange={(value) => store.setColumnFilter('department', value)}
         />
         <Select
-          size={store.controlSize}
+          size={store.getControlSize()}
           placeholder="Status"
           clearable
           data={store.getFacetedUniqueValues('status')}
@@ -65,9 +65,9 @@ function Demo() {
           />
         </Group>
         <Button
-          size={store.controlSize}
+          size={store.getControlSize()}
           variant="subtle"
-          disabled={store.columnFilters.length === 0}
+          disabled={store.getColumnFilters().length === 0}
           onClick={() => store.resetColumnFilters()}
         >
           Reset
@@ -106,7 +106,7 @@ function Demo() {
     <DataGrid store={store}>
       <DataGrid.Toolbar>
         <Select
-          size={store.controlSize}
+          size={store.getControlSize()}
           placeholder="Department"
           clearable
           data={store.getFacetedUniqueValues('department')}
@@ -114,7 +114,7 @@ function Demo() {
           onChange={(value) => store.setColumnFilter('department', value)}
         />
         <Select
-          size={store.controlSize}
+          size={store.getControlSize()}
           placeholder="Status"
           clearable
           data={store.getFacetedUniqueValues('status')}
@@ -138,9 +138,9 @@ function Demo() {
           />
         </Group>
         <Button
-          size={store.controlSize}
+          size={store.getControlSize()}
           variant="subtle"
-          disabled={store.columnFilters.length === 0}
+          disabled={store.getColumnFilters().length === 0}
           onClick={() => store.resetColumnFilters()}
         >
           Reset

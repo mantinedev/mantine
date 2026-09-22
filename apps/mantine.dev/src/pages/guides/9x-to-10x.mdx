@@ -445,7 +445,7 @@ render. They now return an object that only changes identity when their state ch
 action on it keeps a stable identity for the lifetime of the hook.
 
 If your code uses the returned object as a `useEffect` or `useCallback` dependency, that effect will
-now run less often – depend on the individual actions or state fields instead:
+now run less often – depend on the individual actions, or on state read through the hook's getters, instead:
 
 ```tsx
 const timer = useTimer();
@@ -456,9 +456,11 @@ useEffect(() => {
 }, [timer]);
 
 // Use this instead
+const running = timer.isRunning();
+
 useEffect(() => {
   /* ... */
-}, [timer.running]);
+}, [running]);
 ```
 
 ## v9 opt-out

@@ -42,11 +42,11 @@ Stripes and rules are independent, so "stripes without rules" is `striped withRo
 ## Size
 
 `size` is a `useDataGrid` option (`'xs' | 'sm' | 'md' | 'lg' | 'xl'`, default `sm`) exposed as
-`store.size` / `store.setSize` and persisted by `useDataGridState` under the `size` key. It sets the
+`store.getSize()` / `store.setSize` and persisted by `useDataGridState` under the `size` key. It sets the
 font size, row and header height, cell padding, the checkbox / radio size, the icon size and the
-footer height, and cascades a **control size** to the chrome (`store.controlSize`: `xs` for `xs` /
+footer height, and cascades a **control size** to the chrome (`store.getControlSize()`: `xs` for `xs` /
 `sm` grids, `sm` for `md`, `md` for `lg` / `xl`) that the toolbar, selection bar, footer and loading
-overlay use. Pass `store.controlSize` to your own buttons and inputs inside the grid so they match.
+overlay use. Pass `store.getControlSize()` to your own buttons and inputs inside the grid so they match.
 
 <DataTable
   head={['size', 'Font', 'Row height', 'Padding x / y', 'Control', 'Icon', 'Control size', 'Footer height']}
@@ -138,7 +138,7 @@ Available compound components:
 An empty `<DataGrid.Toolbar />` renders the global filter (with `withGlobalFilter`), a spacer,
 the column visibility toggle (with `withColumnVisibility`) and the export button. Any children
 replace this default. The bar wraps its controls, keeps `10px 12px` padding and an 8px gap at every
-size, and draws a 1px bottom rule. Controls take their size from `store.controlSize`, use it for
+size, and draws a 1px bottom rule. Controls take their size from `store.getControlSize()`, use it for
 your own buttons to match; a `div` with `flex: 1` is the spacer.
 
 <Demo data={DataGridDemos.toolbarComposed} />
@@ -168,7 +168,7 @@ grid renders it in the toolbar slot instead of the toolbar (the root carries
 `data-selection-bar-visible`): the selected count (`selectionBarSelected` label, counted from the
 selection state), your bulk action controls as `children`, and a close button that clears the
 selection (`selectionBarClear` label). It shares the toolbar's padding and gap, so controls sized
-with `store.controlSize` line up with the toolbar. Without a toolbar the grid grows by one bar
+with `store.getControlSize()` line up with the toolbar. Without a toolbar the grid grows by one bar
 while the selection is active.
 
 <Demo data={DataGridDemos.selectionBar} />
@@ -289,8 +289,8 @@ The full list of keys is the `DataGridLabels` type, exported from the package to
 
 ## State persistence
 
-Save and restore grid state using the store. Access current state directly from `store.sorting`,
-`store.columnFilters`, `store.pagination`, `store.size`, etc.
+Save and restore grid state using the store. Access current state directly from `store.getSorting()`,
+`store.getColumnFilters()`, `store.getPagination()`, `store.getSize()`, etc.
 
 ```tsx
 import { useState, useEffect } from 'react';

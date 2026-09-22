@@ -5,19 +5,20 @@ const code = `
 import { Button, Group, Pagination, Stack, Text, usePagination } from '@mantine/core';
 
 function Demo() {
-  const pagination = usePagination({ total: 20, siblings: 2 });
+  const total = 20;
+  const pagination = usePagination({ total, siblings: 2 });
 
   return (
     <Stack align="center">
       <Pagination controller={pagination} />
 
       <Text size="sm">
-        Page {pagination.active} of {pagination.total}, showing{' '}
-        {pagination.range.filter((item) => item !== 'dots').length} controls
+        Page {pagination.getActive()} of {total}, showing{' '}
+        {pagination.getRange().filter((item) => item !== 'dots').length} controls
       </Text>
 
       <Group>
-        <Button variant="default" onClick={pagination.first} disabled={pagination.active === 1}>
+        <Button variant="default" onClick={pagination.first} disabled={pagination.getActive() === 1}>
           First
         </Button>
         <Button variant="default" onClick={pagination.previous}>
@@ -29,7 +30,7 @@ function Demo() {
         <Button
           variant="default"
           onClick={pagination.last}
-          disabled={pagination.active === pagination.total}
+          disabled={pagination.getActive() === total}
         >
           Last
         </Button>
@@ -40,19 +41,24 @@ function Demo() {
 `;
 
 function Demo() {
-  const pagination = usePagination({ total: 20, siblings: 2 });
+  const total = 20;
+  const pagination = usePagination({ total, siblings: 2 });
 
   return (
     <Stack align="center">
       <Pagination controller={pagination} />
 
       <Text size="sm">
-        Page {pagination.active} of {pagination.total}, showing{' '}
-        {pagination.range.filter((item) => item !== 'dots').length} controls
+        Page {pagination.getActive()} of {total}, showing{' '}
+        {pagination.getRange().filter((item) => item !== 'dots').length} controls
       </Text>
 
       <Group>
-        <Button variant="default" onClick={pagination.first} disabled={pagination.active === 1}>
+        <Button
+          variant="default"
+          onClick={pagination.first}
+          disabled={pagination.getActive() === 1}
+        >
           First
         </Button>
         <Button variant="default" onClick={pagination.previous}>
@@ -64,7 +70,7 @@ function Demo() {
         <Button
           variant="default"
           onClick={pagination.last}
-          disabled={pagination.active === pagination.total}
+          disabled={pagination.getActive() === total}
         >
           Last
         </Button>

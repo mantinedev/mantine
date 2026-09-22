@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { useCallbackRef, useUncontrolled } from '@mantine/hooks';
 
 export type EditableActivationMode = 'focus' | 'click' | 'dblclick' | 'none';
@@ -51,6 +51,12 @@ export interface EditableController {
 
   /** `true` while the field is in edit mode */
   editing: boolean;
+
+  /** Returns current value */
+  getValue: () => string;
+
+  /** Returns `true` while the field is in edit mode */
+  isEditing: () => boolean;
 
   /** Resolved activation mode */
   activationMode: EditableActivationMode;
@@ -113,6 +119,11 @@ export function useEditable(options: EditableControllerOptions = {}): EditableCo
 
   const editingRef = useRef(editing);
   editingRef.current = editing;
+  const valueRef = useRef(value);
+  valueRef.current = value;
+
+  const getValue = useCallback(() => valueRef.current, []);
+  const isEditing = useCallback(() => editingRef.current, []);
   const previousValueRef = useRef(value);
 
   const setValue = useCallbackRef((next: string) => {
@@ -152,6 +163,8 @@ export function useEditable(options: EditableControllerOptions = {}): EditableCo
     () => ({
       value,
       editing,
+      getValue,
+      isEditing,
       activationMode,
       submitMode,
       selectOnFocus,

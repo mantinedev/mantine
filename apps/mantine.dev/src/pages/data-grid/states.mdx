@@ -55,7 +55,7 @@ Skeleton rows count the page size under pagination, otherwise `skeletonRowCount`
 default). Each data cell holds a core `Skeleton` bar (`skeleton` selector) sized from the grid font
 size with a deterministic width, aligned by `meta.align`; utility cells stay empty and the rows take
 no hover, stripe, selection or focus. `loadingOverlayProps` is passed down to the `LoadingOverlay`
-of the `overlay` variant (its loader is sized from `store.controlSize`):
+of the `overlay` variant (its loader is sized from `store.getControlSize()`):
 
 ```tsx
 <DataGrid

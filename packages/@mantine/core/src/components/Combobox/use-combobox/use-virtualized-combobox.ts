@@ -77,6 +77,11 @@ export function useVirtualizedCombobox(
   const listId = useRef<string | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
   const targetRef = useRef<HTMLElement | null>(null);
+  const dropdownOpenedRef = useRef(dropdownOpened);
+  dropdownOpenedRef.current = dropdownOpened;
+
+  const isDropdownOpened = useCallback(() => dropdownOpenedRef.current, []);
+  const getListId = useCallback(() => listId.current, []);
   const focusSearchTimeout = useRef<number>(-1);
   const focusTargetTimeout = useRef<number>(-1);
 
@@ -217,6 +222,7 @@ export function useVirtualizedCombobox(
 
   return {
     dropdownOpened,
+    isDropdownOpened,
     openDropdown,
     closeDropdown,
     toggleDropdown,
@@ -232,6 +238,7 @@ export function useVirtualizedCombobox(
     updateSelectedOptionIndex,
 
     listId: listId.current,
+    getListId,
     setListId,
     clickSelectedOption,
 

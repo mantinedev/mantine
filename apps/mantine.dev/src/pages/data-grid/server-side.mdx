@@ -132,7 +132,7 @@ for example a `Select` in the toolbar:
 <DataGrid store={store}>
   <DataGrid.Toolbar>
     <Select
-      size={store.controlSize}
+      size={store.getControlSize()}
       placeholder="Department"
       clearable
       data={facets.department}

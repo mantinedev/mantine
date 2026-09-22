@@ -26,7 +26,7 @@ function Demo() {
       <DataGrid.Toolbar>
         <Popover position="bottom-start" shadow="md">
           <Popover.Target>
-            <Button size={store.controlSize} variant="default">
+            <Button size={store.getControlSize()} variant="default">
               Add filter
             </Button>
           </Popover.Target>
@@ -57,12 +57,12 @@ function Demo() {
             </Stack>
           </Popover.Dropdown>
         </Popover>
-        {store.columnFilters.map((filter) => {
+        {store.getColumnFilters().map((filter) => {
           const column = store.table.getColumn(filter.id);
           return column ? (
             <Pill
               key={filter.id}
-              size={store.controlSize}
+              size={store.getControlSize()}
               withRemoveButton
               onRemove={() => store.setColumnFilter(filter.id, undefined)}
             >
@@ -70,8 +70,8 @@ function Demo() {
             </Pill>
           ) : null;
         })}
-        {store.columnFilters.length > 0 && (
-          <Button size={store.controlSize} variant="subtle" onClick={() => store.resetColumnFilters()}>
+        {store.getColumnFilters().length > 0 && (
+          <Button size={store.getControlSize()} variant="subtle" onClick={() => store.resetColumnFilters()}>
             Clear all
           </Button>
         )}
@@ -99,7 +99,7 @@ function Demo() {
       <DataGrid.Toolbar>
         <Popover position="bottom-start" shadow="md">
           <Popover.Target>
-            <Button size={store.controlSize} variant="default">
+            <Button size={store.getControlSize()} variant="default">
               Add filter
             </Button>
           </Popover.Target>
@@ -130,12 +130,12 @@ function Demo() {
             </Stack>
           </Popover.Dropdown>
         </Popover>
-        {store.columnFilters.map((filter) => {
+        {store.getColumnFilters().map((filter) => {
           const column = store.table.getColumn(filter.id);
           return column ? (
             <Pill
               key={filter.id}
-              size={store.controlSize}
+              size={store.getControlSize()}
               withRemoveButton
               onRemove={() => store.setColumnFilter(filter.id, undefined)}
             >
@@ -143,9 +143,9 @@ function Demo() {
             </Pill>
           ) : null;
         })}
-        {store.columnFilters.length > 0 && (
+        {store.getColumnFilters().length > 0 && (
           <Button
-            size={store.controlSize}
+            size={store.getControlSize()}
             variant="subtle"
             onClick={() => store.resetColumnFilters()}
           >

@@ -46,7 +46,7 @@ sortable, filterable or resizable, no column menu, excluded from export, an empt
 supply one, and no vertical cell padding. Its cell reads `row.getIsEditing()` from the ordinary cell
 context and calls `row.startEditing()`, `row.saveEditing()` and `row.cancelEditing()` to switch
 between Edit / Delete and Save / Cancel. The grid never sizes your buttons: pass
-`size={store.controlSize}` to `ActionIcon` so they match the grid size.
+`size={store.getControlSize()}` to `ActionIcon` so they match the grid size.
 
 <Demo data={DataGridDemos.actionsColumn} />
 
@@ -174,7 +174,7 @@ modify them. Utility columns, display columns and the actions column are never e
 
 ## Imperative API and controlled state
 
-The editing state is exposed as `store.editing` (`{ rowId, columnId, values, status? } | null`)
+The editing state is exposed as `store.getEditing()` (`{ rowId, columnId, values, status? } | null`)
 and can be controlled with `editing` / `onEditingChange` like any other TanStack state slice.
 The table, rows and cells expose the feature API:
 

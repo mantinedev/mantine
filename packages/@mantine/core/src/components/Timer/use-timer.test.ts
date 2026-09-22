@@ -21,8 +21,33 @@ describe('@mantine/core/useTimer', () => {
 
   tests.itSupportsControllerMemoization({
     hook: () => useTimer({ startMs: 5000 }),
-    actions: ['start', 'pause', 'resume', 'reset', 'restart'],
+    actions: [
+      'start',
+      'pause',
+      'resume',
+      'reset',
+      'restart',
+      'getValue',
+      'getProgress',
+      'isRunning',
+      'isPaused',
+    ],
     changeState: (controller) => controller.start(),
+  });
+
+  it('returns current state from getters', () => {
+    const hook = renderHook(() => useTimer({ startMs: 5000, targetMs: 0, countdown: true }));
+    expect(hook.result.current.getValue().totalMs).toBe(5000);
+    expect(hook.result.current.getProgress()).toBe(0);
+    expect(hook.result.current.isRunning()).toBe(false);
+    expect(hook.result.current.isPaused()).toBe(false);
+
+    act(() => hook.result.current.start());
+    expect(hook.result.current.isRunning()).toBe(true);
+
+    act(() => hook.result.current.pause());
+    expect(hook.result.current.isRunning()).toBe(false);
+    expect(hook.result.current.isPaused()).toBe(true);
   });
 
   it('returns the initial value without starting automatically', () => {

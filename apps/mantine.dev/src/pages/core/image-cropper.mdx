@@ -77,9 +77,10 @@ function Demo() {
 }
 ```
 
-The controller exposes the current state (`zoom`, `rotation`, `flip`, `crop`) and the following
-actions:
+The controller exposes the following actions and queries:
 
+- `getZoom()`, `getRotation()`, `getFlip()`, `getCrop()` – current zoom, rotation, flip and crop position
+- `getCropSize()` – size of the crop window, `null` until the image and viewport are measured
 - `setZoom(value)` / `zoomBy(delta)` – set or change zoom, clamped to `minZoom`/`maxZoom`
 - `setRotation(degrees)` / `rotateBy(delta)` – set or change rotation
 - `flipHorizontal()` / `flipVertical()` – toggle mirroring on each axis

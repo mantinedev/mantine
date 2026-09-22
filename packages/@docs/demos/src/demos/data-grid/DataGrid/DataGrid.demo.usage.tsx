@@ -203,7 +203,7 @@ import type { Order } from './data';
 
 function FiltersPopover({ store }: { store: DataGridStore<Order> }) {
   const [opened, setOpened] = useState(false);
-  const activeCount = store.columnFilters.length;
+  const activeCount = store.getColumnFilters().length;
   const amount = (store.getColumnFilterValue('amount') as [number?, number?] | undefined) ?? [];
 
   const setAmount = (index: 0 | 1, value: string | number) => {
@@ -217,7 +217,7 @@ function FiltersPopover({ store }: { store: DataGridStore<Order> }) {
       <Popover.Target>
         <Button
           variant="default"
-          size={store.controlSize}
+          size={store.getControlSize()}
           onClick={() => setOpened((o) => !o)}
           rightSection={
             activeCount > 0 ? (
@@ -354,10 +354,10 @@ function Demo() {
         <DataGrid.ExportButton fileName="orders" />
       </DataGrid.Toolbar>
       <DataGrid.SelectionBar>
-        <Button size={store.controlSize} variant="default">
+        <Button size={store.getControlSize()} variant="default">
           Mark as shipped
         </Button>
-        <Button size={store.controlSize} variant="light" color="red">
+        <Button size={store.getControlSize()} variant="light" color="red">
           Cancel orders
         </Button>
       </DataGrid.SelectionBar>
@@ -369,7 +369,7 @@ function Demo() {
 
 function FiltersPopover({ store }: { store: DataGridStore<Order> }) {
   const [opened, setOpened] = useState(false);
-  const activeCount = store.columnFilters.length;
+  const activeCount = store.getColumnFilters().length;
   const amount = (store.getColumnFilterValue('amount') as [number?, number?] | undefined) ?? [];
 
   const setAmount = (index: 0 | 1, value: string | number) => {
@@ -383,7 +383,7 @@ function FiltersPopover({ store }: { store: DataGridStore<Order> }) {
       <Popover.Target>
         <Button
           variant="default"
-          size={store.controlSize}
+          size={store.getControlSize()}
           onClick={() => setOpened((o) => !o)}
           rightSection={
             activeCount > 0 ? (
@@ -520,10 +520,10 @@ function Demo() {
         <DataGrid.ExportButton fileName="orders" />
       </DataGrid.Toolbar>
       <DataGrid.SelectionBar>
-        <Button size={store.controlSize} variant="default">
+        <Button size={store.getControlSize()} variant="default">
           Mark as shipped
         </Button>
-        <Button size={store.controlSize} variant="light" color="red">
+        <Button size={store.getControlSize()} variant="light" color="red">
           Cancel orders
         </Button>
       </DataGrid.SelectionBar>

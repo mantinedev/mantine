@@ -70,7 +70,7 @@ function Demo() {
       <DataGrid.Toolbar>
         <Group gap={4} wrap="nowrap">
           <Select
-            size={store.controlSize}
+            size={store.getControlSize()}
             w={130}
             allowDeselect={false}
             data={stringOperatorOptions}
@@ -83,7 +83,7 @@ function Demo() {
             }}
           />
           <TextInput
-            size={store.controlSize}
+            size={store.getControlSize()}
             placeholder="First name"
             disabled={nameValueless}
             value={typeof nameValue === 'string' ? nameValue : ''}
@@ -92,7 +92,7 @@ function Demo() {
         </Group>
         <Group gap={4} wrap="nowrap">
           <Select
-            size={store.controlSize}
+            size={store.getControlSize()}
             w={72}
             allowDeselect={false}
             data={numberOperatorOptions}
@@ -105,7 +105,7 @@ function Demo() {
             }}
           />
           <NumberInput
-            size={store.controlSize}
+            size={store.getControlSize()}
             placeholder="Salary"
             prefix="$"
             thousandSeparator
@@ -165,7 +165,7 @@ function Demo() {
       <DataGrid.Toolbar>
         <Group gap={4} wrap="nowrap">
           <Select
-            size={store.controlSize}
+            size={store.getControlSize()}
             w={130}
             allowDeselect={false}
             data={stringOperatorOptions}
@@ -178,7 +178,7 @@ function Demo() {
             }}
           />
           <TextInput
-            size={store.controlSize}
+            size={store.getControlSize()}
             placeholder="First name"
             disabled={nameValueless}
             value={typeof nameValue === 'string' ? nameValue : ''}
@@ -187,7 +187,7 @@ function Demo() {
         </Group>
         <Group gap={4} wrap="nowrap">
           <Select
-            size={store.controlSize}
+            size={store.getControlSize()}
             w={72}
             allowDeselect={false}
             data={numberOperatorOptions}
@@ -200,7 +200,7 @@ function Demo() {
             }}
           />
           <NumberInput
-            size={store.controlSize}
+            size={store.getControlSize()}
             placeholder="Salary"
             prefix="$"
             thousandSeparator

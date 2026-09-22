@@ -10,7 +10,7 @@ function Demo() {
   return (
     <Stack>
       <Timer controller={timer} format="ss:SSS" fz={32} fw={700} style={{ alignSelf: 'center' }} />
-      <Progress value={timer.progress * 100} transitionDuration={50} />
+      <Progress value={timer.getProgress() * 100} transitionDuration={50} />
     </Stack>
   );
 }
@@ -22,7 +22,7 @@ function Demo() {
   return (
     <Stack>
       <Timer controller={timer} format="ss:SSS" fz={32} fw={700} style={{ alignSelf: 'center' }} />
-      <Progress value={timer.progress * 100} transitionDuration={50} />
+      <Progress value={timer.getProgress() * 100} transitionDuration={50} />
     </Stack>
   );
 }

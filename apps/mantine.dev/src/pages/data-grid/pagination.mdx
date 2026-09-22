@@ -14,7 +14,7 @@ page buttons.
 <Demo data={DataGridDemos.pagination} />
 
 The footer height is fixed per grid size and its controls take the cascaded control size
-(`store.controlSize`). The row numbers of `withRowNumbers` and the `{from}–{to}` range of the status
+(`store.getControlSize()`). The row numbers of `withRowNumbers` and the `{from}–{to}` range of the status
 count data rows continuously across pages: page 2 of a 10-row page size starts at 11.
 
 ## Status formats
@@ -67,7 +67,7 @@ The state follows the TanStack Table `PaginationState` format -- `{ pageIndex: n
 ## Custom footer
 
 Pass `children` to `DataGrid.Footer` to replace the status, page size select and pagination with
-your own controls. The bar keeps its height, padding and top rule; `store.pagination`,
+your own controls. The bar keeps its height, padding and top rule; `store.getPagination()`,
 `store.table.getRowCount()` and the navigation methods below give you everything the default
 content uses:
 

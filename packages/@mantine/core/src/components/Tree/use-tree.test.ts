@@ -57,9 +57,27 @@ describe('getTreeExpandedState', () => {
       'getNodeLoadError',
       'loadNode',
       'invalidateNode',
+      'getExpandedState',
+      'getSelectedState',
+      'getCheckedState',
+      'getAnchorNode',
     ],
     setup: (controller) => controller.initialize(data),
     changeState: (controller) => controller.select('src'),
+  });
+
+  it('returns current state from getters', () => {
+    const hook = renderHook(() => useTree({ multiple: true }));
+    act(() => hook.result.current.initialize(data));
+    expect(hook.result.current.getSelectedState()).toEqual([]);
+    expect(hook.result.current.getAnchorNode()).toBe(null);
+
+    act(() => hook.result.current.expand('src'));
+    act(() => hook.result.current.select('package.json'));
+    act(() => hook.result.current.checkNode('package.json'));
+    expect(hook.result.current.getExpandedState().src).toBe(true);
+    expect(hook.result.current.getSelectedState()).toEqual(['package.json']);
+    expect(hook.result.current.getCheckedState()).toEqual(['package.json']);
   });
 
   it('returns a new controller when the node data changes', () => {

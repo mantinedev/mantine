@@ -20,7 +20,7 @@ function Demo() {
     pageSize: 5,
   });
 
-  const { pageIndex, pageSize } = store.pagination;
+  const { pageIndex, pageSize } = store.getPagination();
   const total = store.table.getRowCount();
 
   return (
@@ -32,7 +32,7 @@ function Demo() {
         </Text>
         <Group gap="xs" ml="auto">
           <Button
-            size={store.controlSize}
+            size={store.getControlSize()}
             variant="default"
             disabled={!store.table.getCanPreviousPage()}
             onClick={() => store.table.previousPage()}
@@ -40,7 +40,7 @@ function Demo() {
             Previous
           </Button>
           <Button
-            size={store.controlSize}
+            size={store.getControlSize()}
             variant="default"
             disabled={!store.table.getCanNextPage()}
             onClick={() => store.table.nextPage()}
@@ -66,7 +66,7 @@ function Demo() {
     pageSize: 5,
   });
 
-  const { pageIndex, pageSize } = store.pagination;
+  const { pageIndex, pageSize } = store.getPagination();
   const total = store.table.getRowCount();
 
   return (
@@ -78,7 +78,7 @@ function Demo() {
         </Text>
         <Group gap="xs" ml="auto">
           <Button
-            size={store.controlSize}
+            size={store.getControlSize()}
             variant="default"
             disabled={!store.table.getCanPreviousPage()}
             onClick={() => store.table.previousPage()}
@@ -86,7 +86,7 @@ function Demo() {
             Previous
           </Button>
           <Button
-            size={store.controlSize}
+            size={store.getControlSize()}
             variant="default"
             disabled={!store.table.getCanNextPage()}
             onClick={() => store.table.nextPage()}

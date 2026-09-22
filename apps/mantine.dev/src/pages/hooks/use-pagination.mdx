@@ -16,22 +16,22 @@ import { usePagination } from '@mantine/hooks';
 
 const pagination = usePagination({ total: 10, initialPage: 1 });
 
-pagination.range; // -> [1, 2, 3, 4, 5, 'dots', 10];
+pagination.getRange(); // -> [1, 2, 3, 4, 5, 'dots', 10];
 
 pagination.setPage(5);
-pagination.range; // -> [1, 'dots', 4, 5, 6, 'dots', 10];
+pagination.getRange(); // -> [1, 'dots', 4, 5, 6, 'dots', 10];
 
 pagination.next();
-pagination.range; // -> [1, 'dots', 5, 6, 7, 'dots', 10];
+pagination.getRange(); // -> [1, 'dots', 5, 6, 7, 'dots', 10];
 
 pagination.previous();
-pagination.range; // -> [1, 'dots', 4, 5, 6, 'dots', 10];
+pagination.getRange(); // -> [1, 'dots', 4, 5, 6, 'dots', 10];
 
 pagination.last();
-pagination.range; // -> [1, 'dots', 6, 7, 8, 9, 10];
+pagination.getRange(); // -> [1, 'dots', 6, 7, 8, 9, 10];
 
 pagination.first();
-pagination.range; // -> [1, 2, 3, 4, 5, 'dots', 10];
+pagination.getRange(); // -> [1, 2, 3, 4, 5, 'dots', 10];
 ```
 
 ## Controlled
@@ -47,7 +47,7 @@ const pagination = usePagination({ total: 10, page, onChange });
 
 // Will call onChange with 5
 pagination.setPage(5);
-pagination.range; // -> [1, 'dots', 4, 5, 6, 'dots', 10];
+pagination.getRange(); // -> [1, 'dots', 4, 5, 6, 'dots', 10];
 
 // ... All other examples work the same
 ```
@@ -113,14 +113,11 @@ export interface UsePaginationOptions {
 }
 
 export interface UsePaginationReturnValue {
-  /** Array of page numbers and dots */
-  range: (number | 'dots')[];
+  /** Function to get active page number */
+  getActive: () => number;
 
-  /** Active page number */
-  active: number;
-
-  /** Total amount of pages, same value as the `total` option */
-  total: number;
+  /** Function to get array of page numbers and dots */
+  getRange: () => (number | 'dots')[];
 
   /** Function to set active page */
   setPage: (page: number) => void;

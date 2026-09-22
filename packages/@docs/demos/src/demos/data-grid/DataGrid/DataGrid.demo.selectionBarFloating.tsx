@@ -53,10 +53,10 @@ function Demo() {
     <DataGrid store={store}>
       <DataGrid.Toolbar />
       <DataGrid.SelectionBar floating>
-        <Button size={store.controlSize} variant="default" onClick={deactivateSelected}>
+        <Button size={store.getControlSize()} variant="default" onClick={deactivateSelected}>
           Deactivate
         </Button>
-        <Button size={store.controlSize} variant="light" color="red" onClick={deleteSelected}>
+        <Button size={store.getControlSize()} variant="light" color="red" onClick={deleteSelected}>
           Delete
         </Button>
       </DataGrid.SelectionBar>
@@ -107,10 +107,10 @@ function Demo() {
     <DataGrid store={store}>
       <DataGrid.Toolbar />
       <DataGrid.SelectionBar floating>
-        <Button size={store.controlSize} variant="default" onClick={deactivateSelected}>
+        <Button size={store.getControlSize()} variant="default" onClick={deactivateSelected}>
           Deactivate
         </Button>
-        <Button size={store.controlSize} variant="light" color="red" onClick={deleteSelected}>
+        <Button size={store.getControlSize()} variant="light" color="red" onClick={deleteSelected}>
           Delete
         </Button>
       </DataGrid.SelectionBar>

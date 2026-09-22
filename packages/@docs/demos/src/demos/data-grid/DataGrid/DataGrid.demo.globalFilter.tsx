@@ -25,7 +25,7 @@ function Demo() {
     <>
       <TextInput
         placeholder="Search..."
-        value={store.globalFilter ?? ''}
+        value={store.getGlobalFilter() ?? ''}
         onChange={(event) => store.setGlobalFilter(event.currentTarget.value)}
         mb="md"
       />
@@ -52,7 +52,7 @@ function Demo() {
     <>
       <TextInput
         placeholder="Search..."
-        value={store.globalFilter ?? ''}
+        value={store.getGlobalFilter() ?? ''}
         onChange={(event) => store.setGlobalFilter(event.currentTarget.value)}
         mb="md"
       />

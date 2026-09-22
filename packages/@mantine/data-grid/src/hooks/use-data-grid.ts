@@ -21,7 +21,11 @@ import {
   useTable,
 } from '@tanstack/react-table';
 import { type MantineSize, useDirection } from '@mantine/core';
-import { DATA_GRID_SIZES, type DataGridControlSize, getControlSize } from '../data-grid-sizes';
+import {
+  DATA_GRID_SIZES,
+  type DataGridControlSize,
+  getControlSize as resolveControlSize,
+} from '../data-grid-sizes';
 import type { DataGridColumnDef, DataGridRow, DataGridTable } from '../DataGrid.types';
 import type {
   DataGridCellStatus,
@@ -259,6 +263,54 @@ export interface DataGridStore<TData extends RowData = any> {
 
   /** Current cell selection state */
   cellSelection: CellSelectionState;
+
+  /** Returns current editing target with its drafts, `null` while nothing is edited */
+  getEditing: () => DataGridEditingState | null;
+
+  /** Returns current grid size */
+  getSize: () => MantineSize;
+
+  /** Returns size of chrome controls (toolbar, selection bar, footer) resolved from `size` */
+  getControlSize: () => DataGridControlSize;
+
+  /** Returns current sorting state */
+  getSorting: () => SortingState;
+
+  /** Returns current column filters state */
+  getColumnFilters: () => ColumnFiltersState;
+
+  /** Returns current global filter value */
+  getGlobalFilter: () => any;
+
+  /** Returns current pagination state */
+  getPagination: () => PaginationState;
+
+  /** Returns current column sizing state */
+  getColumnSizing: () => ColumnSizingState;
+
+  /** Returns current column pinning state */
+  getColumnPinning: () => ColumnPinningState;
+
+  /** Returns current column visibility state */
+  getColumnVisibility: () => ColumnVisibilityState;
+
+  /** Returns current column order state */
+  getColumnOrder: () => ColumnOrderState;
+
+  /** Returns current row selection state */
+  getRowSelection: () => RowSelectionState;
+
+  /** Returns current expanded state */
+  getExpanded: () => ExpandedState;
+
+  /** Returns current grouping state */
+  getGrouping: () => GroupingState;
+
+  /** Returns current row pinning state */
+  getRowPinning: () => RowPinningState;
+
+  /** Returns current cell selection state */
+  getCellSelection: () => CellSelectionState;
 
   /** Ref to the scroll container DOM element */
   scrollContainerRef: React.RefObject<HTMLDivElement | null>;
@@ -582,7 +634,7 @@ export function useDataGrid<TData extends RowData>(
   const [sizeState, setSizeState] = useState<MantineSize>(options.size ?? 'sm');
   const size = options.size ?? sizeState;
   const setSize = options.onSizeChange ?? setSizeState;
-  const controlSize = getControlSize(size);
+  const controlSize = resolveControlSize(size);
 
   const withRowNumbers = options.withRowNumbers ?? false;
   const utilityFlags = {
@@ -862,6 +914,26 @@ export function useDataGrid<TData extends RowData>(
     return column?.getFacetedMinMaxValues();
   };
 
+  const latestState = useRef({ state, size, controlSize });
+  latestState.current = { state, size, controlSize };
+
+  const getEditing = useCallback(() => latestState.current.state.editing, []);
+  const getSize = useCallback(() => latestState.current.size, []);
+  const getControlSize = useCallback(() => latestState.current.controlSize, []);
+  const getSorting = useCallback(() => latestState.current.state.sorting, []);
+  const getColumnFilters = useCallback(() => latestState.current.state.columnFilters, []);
+  const getGlobalFilter = useCallback(() => latestState.current.state.globalFilter, []);
+  const getPagination = useCallback(() => latestState.current.state.pagination, []);
+  const getColumnSizing = useCallback(() => latestState.current.state.columnSizing, []);
+  const getColumnPinning = useCallback(() => latestState.current.state.columnPinning, []);
+  const getColumnVisibility = useCallback(() => latestState.current.state.columnVisibility, []);
+  const getColumnOrder = useCallback(() => latestState.current.state.columnOrder, []);
+  const getRowSelection = useCallback(() => latestState.current.state.rowSelection, []);
+  const getExpanded = useCallback(() => latestState.current.state.expanded, []);
+  const getGrouping = useCallback(() => latestState.current.state.grouping, []);
+  const getRowPinning = useCallback(() => latestState.current.state.rowPinning, []);
+  const getCellSelection = useCallback(() => latestState.current.state.cellSelection, []);
+
   const getScrollPosition = useCallback(() => {
     const container = scrollContainerRef.current;
     if (!container) {
@@ -917,6 +989,22 @@ export function useDataGrid<TData extends RowData>(
     grouping: state.grouping,
     rowPinning: state.rowPinning,
     cellSelection: state.cellSelection,
+    getEditing,
+    getSize,
+    getControlSize,
+    getSorting,
+    getColumnFilters,
+    getGlobalFilter,
+    getPagination,
+    getColumnSizing,
+    getColumnPinning,
+    getColumnVisibility,
+    getColumnOrder,
+    getRowSelection,
+    getExpanded,
+    getGrouping,
+    getRowPinning,
+    getCellSelection,
     scrollContainerRef,
     scrollToRow,
     scrollToColumn,

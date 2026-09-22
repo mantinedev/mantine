@@ -31,7 +31,7 @@ function Demo() {
           ml="auto"
           size="xs"
           data={['xs', 'sm', 'md', 'lg', 'xl']}
-          value={store.size}
+          value={store.getSize()}
           onChange={(value) => store.setSize(value as MantineSize)}
         />
       </DataGrid.Toolbar>
@@ -64,7 +64,7 @@ function Demo() {
           ml="auto"
           size="xs"
           data={['xs', 'sm', 'md', 'lg', 'xl']}
-          value={store.size}
+          value={store.getSize()}
           onChange={(value) => store.setSize(value as MantineSize)}
         />
       </DataGrid.Toolbar>

@@ -5,8 +5,18 @@ import { usePagination } from './use-pagination';
 describe('@mantine/hooks/use-pagination', () => {
   tests.itSupportsControllerMemoization({
     hook: () => usePagination({ total: 10 }),
-    actions: ['setPage', 'next', 'previous', 'first', 'last'],
+    actions: ['setPage', 'next', 'previous', 'first', 'last', 'getActive', 'getRange'],
     changeState: (controller) => controller.setPage(5),
+  });
+
+  it('returns active page and range from getters', () => {
+    const hook = renderHook(() => usePagination({ total: 10, initialPage: 3 }));
+    expect(hook.result.current.getActive()).toBe(3);
+    expect(hook.result.current.getRange()).toEqual(hook.result.current.range);
+
+    act(() => hook.result.current.setPage(7));
+    expect(hook.result.current.getActive()).toBe(7);
+    expect(hook.result.current.getRange()).toEqual(hook.result.current.range);
   });
 
   it('setPage function sets active page', () => {

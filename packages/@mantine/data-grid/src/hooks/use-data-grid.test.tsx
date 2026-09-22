@@ -45,3 +45,35 @@ describe('@mantine/data-grid/use-data-grid size', () => {
     expect((hook.result.current as any).setDensity).toBeUndefined();
   });
 });
+
+describe('@mantine/data-grid/use-data-grid getters', () => {
+  it('returns current state from getters', () => {
+    const hook = renderHook(() =>
+      useDataGrid({ data, columns, withSorting: true, withFiltering: true, withGlobalFilter: true })
+    );
+    expect(hook.result.current.getSize()).toBe('sm');
+    expect(hook.result.current.getSorting()).toEqual([]);
+    expect(hook.result.current.getColumnFilters()).toEqual([]);
+
+    act(() => hook.result.current.setSize('lg'));
+    act(() => hook.result.current.table.setSorting([{ id: 'age', desc: true }]));
+    act(() => hook.result.current.setColumnFilter('name', 'Ali'));
+    act(() => hook.result.current.setGlobalFilter('Bob'));
+
+    expect(hook.result.current.getSize()).toBe('lg');
+    expect(hook.result.current.getControlSize()).toBe(hook.result.current.controlSize);
+    expect(hook.result.current.getSorting()).toEqual([{ id: 'age', desc: true }]);
+    expect(hook.result.current.getColumnFilters()).toEqual([{ id: 'name', value: 'Ali' }]);
+    expect(hook.result.current.getGlobalFilter()).toBe('Bob');
+    expect(hook.result.current.getPagination()).toEqual(hook.result.current.pagination);
+  });
+
+  it('keeps getters stable between renders', () => {
+    const hook = renderHook(() => useDataGrid({ data, columns, withSorting: true }));
+    const initial = hook.result.current;
+    act(() => hook.result.current.table.setSorting([{ id: 'age', desc: false }]));
+    expect(hook.result.current.getSorting).toBe(initial.getSorting);
+    expect(hook.result.current.getSize).toBe(initial.getSize);
+    expect(hook.result.current.getCellSelection).toBe(initial.getCellSelection);
+  });
+});

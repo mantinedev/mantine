@@ -51,7 +51,7 @@ selected row, `Ctrl / Cmd + click` toggles the row without touching the others. 
 
 Add `DataGrid.SelectionBar` next to `DataGrid.Toolbar`: while rows are selected it takes the
 toolbar's place with the selected count, your bulk action controls and a close button that clears
-the selection. Use `store.table.getSelectedRowModel().rows` or `store.rowSelection` to act on the
+the selection. Use `store.table.getSelectedRowModel().rows` or `store.getRowSelection()` to act on the
 selected rows. See [Customization](/data-grid/customization#selection-bar) for the floating
 variant and the bar's props.
 
@@ -182,7 +182,7 @@ Group rows are excluded from ranges.
 />
 
 Cell selection state can be controlled with `cellSelection` and `onCellSelectionChange`. The current
-selection is available on the store as `store.cellSelection`, and the table instance exposes helpers
+selection is available on the store as `store.getCellSelection()`, and the table instance exposes helpers
 for reading it:
 
 ```tsx

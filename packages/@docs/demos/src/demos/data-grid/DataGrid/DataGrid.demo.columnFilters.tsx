@@ -21,7 +21,7 @@ function Demo() {
     withFaceting: true,
   });
 
-  const activeCount = store.columnFilters.length;
+  const activeCount = store.getColumnFilters().length;
 
   return (
     <DataGrid store={store}>
@@ -29,7 +29,7 @@ function Demo() {
         <Popover position="bottom-start" shadow="md">
           <Popover.Target>
             <Button
-              size={store.controlSize}
+              size={store.getControlSize()}
               variant="default"
               rightSection={activeCount > 0 ? <Badge size="xs" circle>{activeCount}</Badge> : null}
             >
@@ -92,7 +92,7 @@ function Demo() {
     withFaceting: true,
   });
 
-  const activeCount = store.columnFilters.length;
+  const activeCount = store.getColumnFilters().length;
 
   return (
     <DataGrid store={store}>
@@ -100,7 +100,7 @@ function Demo() {
         <Popover position="bottom-start" shadow="md">
           <Popover.Target>
             <Button
-              size={store.controlSize}
+              size={store.getControlSize()}
               variant="default"
               rightSection={
                 activeCount > 0 ? (

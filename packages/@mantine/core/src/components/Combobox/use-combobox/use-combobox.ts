@@ -9,6 +9,9 @@ export interface ComboboxStore {
   /** Current dropdown opened state */
   dropdownOpened: boolean;
 
+  /** Returns current dropdown opened state */
+  isDropdownOpened: () => boolean;
+
   /** Opens dropdown */
   openDropdown: (eventSource?: ComboboxDropdownEventSource) => void;
 
@@ -66,6 +69,9 @@ export interface ComboboxStore {
 
   /** List id, used for `aria-*` attributes */
   listId: string | null;
+
+  /** Returns list id, used for `aria-*` attributes */
+  getListId: () => string | null;
 
   /** Sets list id */
   setListId: (id: string) => void;
@@ -126,6 +132,11 @@ export function useCombobox({
   const selectedOptionIndex = useRef<number>(-1);
   const searchRef = useRef<HTMLInputElement | null>(null);
   const targetRef = useRef<HTMLElement | null>(null);
+  const dropdownOpenedRef = useRef(dropdownOpened);
+  dropdownOpenedRef.current = dropdownOpened;
+
+  const isDropdownOpened = useCallback(() => dropdownOpenedRef.current, []);
+  const getListId = useCallback(() => listId.current, []);
   const focusSearchTimeout = useRef<number>(-1);
   const focusTargetTimeout = useRef<number>(-1);
   const selectedIndexUpdateTimeout = useRef<number>(-1);
@@ -315,6 +326,7 @@ export function useCombobox({
 
   return {
     dropdownOpened,
+    isDropdownOpened,
     openDropdown,
     closeDropdown,
     toggleDropdown,
@@ -330,6 +342,7 @@ export function useCombobox({
     updateSelectedOptionIndex,
 
     listId: listId.current,
+    getListId,
     setListId,
     clickSelectedOption,
 

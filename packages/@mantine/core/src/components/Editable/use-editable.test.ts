@@ -5,8 +5,20 @@ import { useEditable } from './use-editable';
 describe('@mantine/core/useEditable', () => {
   tests.itSupportsControllerMemoization({
     hook: () => useEditable({ defaultValue: 'hello' }),
-    actions: ['edit', 'submit', 'cancel', 'setValue'],
+    actions: ['edit', 'submit', 'cancel', 'setValue', 'getValue', 'isEditing'],
     changeState: (controller) => controller.edit(),
+  });
+
+  it('returns current state from getters', () => {
+    const hook = renderHook(() => useEditable({ defaultValue: 'hello' }));
+    expect(hook.result.current.getValue()).toBe('hello');
+    expect(hook.result.current.isEditing()).toBe(false);
+
+    act(() => hook.result.current.edit());
+    expect(hook.result.current.isEditing()).toBe(true);
+
+    act(() => hook.result.current.setValue('world'));
+    expect(hook.result.current.getValue()).toBe('world');
   });
 
   it('returns the initial value and is not editing by default', () => {

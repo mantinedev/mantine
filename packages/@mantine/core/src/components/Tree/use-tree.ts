@@ -150,6 +150,18 @@ export interface UseTreeReturnType {
    */
   anchorNode: string | null;
 
+  /** Returns a record of `node.value` and boolean values that represent nodes expanded state */
+  getExpandedState: () => TreeExpandedState;
+
+  /** Returns an array of selected nodes values */
+  getSelectedState: () => string[];
+
+  /** Returns an array of checked nodes values */
+  getCheckedState: () => string[];
+
+  /** Returns the value of the node that was last clicked, `null` if there is none */
+  getAnchorNode: () => string | null;
+
   /** Initializes tree state based on provided data, called automatically by the Tree component */
   initialize: (data: TreeNodeData[]) => void;
 
@@ -543,6 +555,11 @@ export function useTree({
     });
   }, []);
 
+  const getExpandedState = useCallback(() => latest.current.expandedState, []);
+  const getSelectedState = useCallback(() => latest.current.selectedState, []);
+  const getCheckedState = useCallback(() => latest.current.checkedState, []);
+  const getAnchorNode = useCallback(() => latest.current.anchorNode, []);
+
   return useMemo(
     () => ({
       checkStrictly,
@@ -552,6 +569,10 @@ export function useTree({
       checkedState: _checkedState,
       anchorNode,
       initialize,
+      getExpandedState,
+      getSelectedState,
+      getCheckedState,
+      getAnchorNode,
 
       toggleExpanded,
       collapse,
