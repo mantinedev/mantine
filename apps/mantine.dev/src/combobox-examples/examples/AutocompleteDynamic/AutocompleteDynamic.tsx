@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Combobox, TextInput, useCombobox } from '@mantine/core';
 
 export function AutocompleteDynamic() {
-  const combobox = useCombobox();
+  const store = useCombobox();
   const [value, setValue] = useState('');
 
   const options = ['gmail.com', 'outlook.com', 'mantine.dev'].map((item) => (
@@ -15,9 +15,9 @@ export function AutocompleteDynamic() {
     <Combobox
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
-      store={combobox}
+      store={store}
       withinPortal={false}
     >
       <Combobox.Target>
@@ -27,12 +27,12 @@ export function AutocompleteDynamic() {
           value={value}
           onChange={(event) => {
             setValue(event.currentTarget.value);
-            combobox.openDropdown();
-            combobox.updateSelectedOptionIndex();
+            store.openDropdown();
+            store.updateSelectedOptionIndex();
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
-          onBlur={() => combobox.closeDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
+          onBlur={() => store.closeDropdown()}
         />
       </Combobox.Target>
 

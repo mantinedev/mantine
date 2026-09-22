@@ -9,8 +9,8 @@ import { InputBase, Combobox, useCombobox } from '@mantine/core';
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -29,27 +29,27 @@ function Demo() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       onOptionSubmit={(val) => {
         setValue(val);
         setSearch(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
         <InputBase
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
           onBlur={() => {
-            combobox.closeDropdown();
+            store.closeDropdown();
             setSearch(value || '');
           }}
           placeholder="Search value"
           value={search}
           onChange={(event) => {
-            combobox.updateSelectedOptionIndex();
+            store.updateSelectedOptionIndex();
             setSearch(event.currentTarget.value);
           }}
         />
@@ -68,8 +68,8 @@ function Demo() {
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -88,27 +88,27 @@ function Demo() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       onOptionSubmit={(val) => {
         setValue(val);
         setSearch(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
         <InputBase
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
           onBlur={() => {
-            combobox.closeDropdown();
+            store.closeDropdown();
             setSearch(value || '');
           }}
           placeholder="Search value"
           value={search}
           onChange={(event) => {
-            combobox.updateSelectedOptionIndex();
+            store.updateSelectedOptionIndex();
             setSearch(event.currentTarget.value);
           }}
         />

@@ -30,9 +30,9 @@ and handlers to update it. The created store must be passed to the `store` prop 
 import { Combobox, useCombobox } from '@mantine/core';
 
 function Demo() {
-  const combobox = useCombobox();
+  const store = useCombobox();
   return (
-    <Combobox store={combobox}>{/* Your implementation */}</Combobox>
+    <Combobox store={store}>{/* Your implementation */}</Combobox>
   );
 }
 ```
@@ -167,12 +167,12 @@ For example, to open the dropdown, call `openDropdown` handler:
 import { Button, Combobox, useCombobox } from '@mantine/core';
 
 function Demo() {
-  const combobox = useCombobox();
+  const store = useCombobox();
 
   return (
     <Combobox>
       <Combobox.Target>
-        <Button onClick={() => combobox.openDropdown()}>
+        <Button onClick={() => store.openDropdown()}>
           Open dropdown
         </Button>
       </Combobox.Target>
@@ -191,13 +191,13 @@ when it is closed:
 import { Combobox, useCombobox } from '@mantine/core';
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownOpen: () => combobox.selectFirstOption(),
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownOpen: () => store.selectFirstOption(),
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   return (
-    <Combobox store={combobox}>{/* Your implementation */}</Combobox>
+    <Combobox store={store}>{/* Your implementation */}</Combobox>
   );
 }
 ```
@@ -248,15 +248,15 @@ Example of using `updateSelectedOptionIndex` handler in searchable select compon
 ## Search input
 
 If you prefer search input inside the dropdown, use `Combobox.Search` component.
-To focus the search input, call `combobox.focusSearchInput`, usually it is done
+To focus the search input, call `store.focusSearchInput`, usually it is done
 when the dropdown is opened. To prevent focus loss after the dropdown is closed,
-call `combobox.focusTarget`:
+call `store.focusTarget`:
 
 <Demo data={ComboboxDemos.buttonSearch} />
 
 ## Select first option
 
-Use `combobox.selectFirstOption` function to select the first option. It is useful
+Use `store.selectFirstOption` function to select the first option. It is useful
 if you want to select the first option when user searching for options in the list.
 If there are no options available, it will do nothing.
 
@@ -268,7 +268,7 @@ Set `active` prop on `Combobox.Option` component to mark it as active.
 By default, an active option does not have any styles, you can use `data-combobox-active`
 [data attribute](/styles/data-attributes) to style it.
 
-`combobox.selectActiveOption` function selects active option. Usually, it is called
+`store.selectActiveOption` function selects active option. Usually, it is called
 when the dropdown is opened:
 
 <Demo data={ComboboxDemos.activeOption} />

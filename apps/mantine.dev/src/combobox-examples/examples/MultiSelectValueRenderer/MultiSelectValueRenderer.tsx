@@ -4,9 +4,9 @@ import { countriesData, flags } from './countries-data';
 import { CountryPill } from './CountryPill';
 
 export function MultiSelectValueRenderer() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
+    onDropdownOpen: () => store.updateSelectedOptionIndex('active'),
   });
 
   const [value, setValue] = useState<string[]>([]);
@@ -41,9 +41,9 @@ export function MultiSelectValueRenderer() {
   });
 
   return (
-    <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
+    <Combobox store={store} onOptionSubmit={handleValueSelect} withinPortal={false}>
       <Combobox.DropdownTarget>
-        <PillsInput pointer onClick={() => combobox.toggleDropdown()}>
+        <PillsInput pointer onClick={() => store.toggleDropdown()}>
           <Pill.Group>
             {values.length > 0 ? (
               values
@@ -54,7 +54,7 @@ export function MultiSelectValueRenderer() {
             <Combobox.EventsTarget>
               <PillsInput.Field
                 type="hidden"
-                onBlur={() => combobox.closeDropdown()}
+                onBlur={() => store.closeDropdown()}
                 onKeyDown={(event) => {
                   if (event.key === 'Backspace' && value.length > 0) {
                     event.preventDefault();

@@ -9,8 +9,8 @@ import { Combobox, TextInput, useCombobox } from '@mantine/core';
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState('');
@@ -27,15 +27,15 @@ function Demo() {
 
   useEffect(() => {
     // we need to wait for options to render before we can select first one
-    combobox.selectFirstOption();
+    store.selectFirstOption();
   }, [value]);
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -45,11 +45,11 @@ function Demo() {
           value={value}
           onChange={(event) => {
             setValue(event.currentTarget.value);
-            combobox.openDropdown();
+            store.openDropdown();
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
-          onBlur={() => combobox.closeDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
+          onBlur={() => store.closeDropdown()}
         />
       </Combobox.Target>
 
@@ -66,8 +66,8 @@ function Demo() {
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState('');
@@ -84,15 +84,15 @@ function Demo() {
 
   useEffect(() => {
     // We need to wait for options to render before we can select first one
-    combobox.selectFirstOption();
+    store.selectFirstOption();
   }, [value]);
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -102,11 +102,11 @@ function Demo() {
           value={value}
           onChange={(event) => {
             setValue(event.currentTarget.value);
-            combobox.openDropdown();
+            store.openDropdown();
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
-          onBlur={() => combobox.closeDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
+          onBlur={() => store.closeDropdown()}
         />
       </Combobox.Target>
 

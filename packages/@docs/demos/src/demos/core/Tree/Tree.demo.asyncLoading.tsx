@@ -63,7 +63,7 @@ function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePaylo
 
 function Demo() {
   const [data, setData] = useState(initialData);
-  const tree = useTree({
+  const store = useTree({
     onLoadChildren: async (value) => {
       const children = await fetchChildren(value);
       setData((prev) => mergeAsyncChildren(prev, value, children));
@@ -73,7 +73,7 @@ function Demo() {
   return (
     <Tree
       data={data}
-      tree={tree}
+      store={store}
       withLines
       renderNode={(payload) => <Leaf {...payload} />}
     />
@@ -123,14 +123,16 @@ function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePaylo
 
 function Demo() {
   const [data, setData] = useState(initialData);
-  const tree = useTree({
+  const store = useTree({
     onLoadChildren: async (value) => {
       const children = await fetchChildren(value);
       setData((prev) => mergeAsyncChildren(prev, value, children));
     },
   });
 
-  return <Tree data={data} tree={tree} withLines renderNode={(payload) => <Leaf {...payload} />} />;
+  return (
+    <Tree data={data} store={store} withLines renderNode={(payload) => <Leaf {...payload} />} />
+  );
 }
 
 export const asyncLoading: MantineDemo = {

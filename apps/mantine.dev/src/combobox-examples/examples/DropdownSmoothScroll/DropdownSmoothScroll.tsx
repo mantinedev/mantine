@@ -34,9 +34,9 @@ const groceries = [
 ];
 
 export function DropdownSmoothScroll() {
-  const combobox = useCombobox({
+  const store = useCombobox({
     scrollBehavior: 'smooth',
-    onDropdownClose: () => combobox.resetSelectedOption(),
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState('');
@@ -55,9 +55,9 @@ export function DropdownSmoothScroll() {
     <Combobox
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
-      store={combobox}
+      store={store}
       withinPortal={false}
     >
       <Combobox.Target>
@@ -67,12 +67,12 @@ export function DropdownSmoothScroll() {
           value={value}
           onChange={(event) => {
             setValue(event.currentTarget.value);
-            combobox.openDropdown();
-            combobox.updateSelectedOptionIndex();
+            store.openDropdown();
+            store.updateSelectedOptionIndex();
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
-          onBlur={() => combobox.closeDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
+          onBlur={() => store.closeDropdown()}
         />
       </Combobox.Target>
 

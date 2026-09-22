@@ -9,9 +9,9 @@ import { PillsInput, Pill, Combobox, CheckIcon, Group, useCombobox } from '@mant
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
+    onDropdownOpen: () => store.updateSelectedOptionIndex('active'),
   });
 
   const [search, setSearch] = useState('');
@@ -43,20 +43,20 @@ function Demo() {
     ));
 
   return (
-    <Combobox store={combobox} onOptionSubmit={handleValueSelect}>
+    <Combobox store={store} onOptionSubmit={handleValueSelect}>
       <Combobox.DropdownTarget>
-        <PillsInput onClick={() => combobox.openDropdown()}>
+        <PillsInput onClick={() => store.openDropdown()}>
           <Pill.Group>
             {values}
 
             <Combobox.EventsTarget>
               <PillsInput.Field
-                onFocus={() => combobox.openDropdown()}
-                onBlur={() => combobox.closeDropdown()}
+                onFocus={() => store.openDropdown()}
+                onBlur={() => store.closeDropdown()}
                 value={search}
                 placeholder="Search values"
                 onChange={(event) => {
-                  combobox.updateSelectedOptionIndex();
+                  store.updateSelectedOptionIndex();
                   setSearch(event.currentTarget.value);
                 }}
                 onKeyDown={(event) => {
@@ -84,9 +84,9 @@ function Demo() {
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
+    onDropdownOpen: () => store.updateSelectedOptionIndex('active'),
   });
 
   const [search, setSearch] = useState('');
@@ -118,20 +118,20 @@ function Demo() {
     ));
 
   return (
-    <Combobox store={combobox} onOptionSubmit={handleValueSelect}>
+    <Combobox store={store} onOptionSubmit={handleValueSelect}>
       <Combobox.DropdownTarget>
-        <PillsInput onClick={() => combobox.openDropdown()}>
+        <PillsInput onClick={() => store.openDropdown()}>
           <Pill.Group>
             {values}
 
             <Combobox.EventsTarget>
               <PillsInput.Field
-                onFocus={() => combobox.openDropdown()}
-                onBlur={() => combobox.closeDropdown()}
+                onFocus={() => store.openDropdown()}
+                onBlur={() => store.closeDropdown()}
                 value={search}
                 placeholder="Search values"
                 onChange={(event) => {
-                  combobox.updateSelectedOptionIndex();
+                  store.updateSelectedOptionIndex();
                   setSearch(event.currentTarget.value);
                 }}
                 onKeyDown={(event) => {

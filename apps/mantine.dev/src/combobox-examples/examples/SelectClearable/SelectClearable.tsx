@@ -11,8 +11,8 @@ const groceries = [
 ];
 
 export function SelectClearable() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -25,11 +25,11 @@ export function SelectClearable() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target targetType="button">
@@ -49,7 +49,7 @@ export function SelectClearable() {
               <Combobox.Chevron />
             )
           }
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           rightSectionPointerEvents={value === null ? 'none' : 'all'}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}

@@ -11,8 +11,8 @@ const groceries = [
 ];
 
 export function AutocompleteSelectFirstOption() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState('');
@@ -29,16 +29,16 @@ export function AutocompleteSelectFirstOption() {
 
   useEffect(() => {
     // We need to wait for options to render before we can select first one
-    combobox.selectFirstOption();
+    store.selectFirstOption();
   }, [value]);
 
   return (
     <Combobox
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
-      store={combobox}
+      store={store}
       withinPortal={false}
     >
       <Combobox.Target>
@@ -48,11 +48,11 @@ export function AutocompleteSelectFirstOption() {
           value={value}
           onChange={(event) => {
             setValue(event.currentTarget.value);
-            combobox.openDropdown();
+            store.openDropdown();
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
-          onBlur={() => combobox.closeDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
+          onBlur={() => store.closeDropdown()}
         />
       </Combobox.Target>
 

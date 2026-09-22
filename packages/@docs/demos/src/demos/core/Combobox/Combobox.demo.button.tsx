@@ -10,8 +10,8 @@ const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots
 
 function Demo() {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const options = groceries.map((item) => (
@@ -33,17 +33,17 @@ function Demo() {
       </Box>
 
       <Combobox
-        store={combobox}
+        store={store}
         width={250}
         position="bottom-start"
         withArrow
         onOptionSubmit={(val) => {
           setSelectedItem(val);
-          combobox.closeDropdown();
+          store.closeDropdown();
         }}
       >
         <Combobox.Target>
-          <Button onClick={() => combobox.toggleDropdown()}>Pick item</Button>
+          <Button onClick={() => store.toggleDropdown()}>Pick item</Button>
         </Combobox.Target>
 
         <Combobox.Dropdown>
@@ -59,8 +59,8 @@ const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots
 
 function Demo() {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const options = groceries.map((item) => (
@@ -82,17 +82,17 @@ function Demo() {
       </Box>
 
       <Combobox
-        store={combobox}
+        store={store}
         width={250}
         position="bottom-start"
         withArrow
         onOptionSubmit={(val) => {
           setSelectedItem(val);
-          combobox.closeDropdown();
+          store.closeDropdown();
         }}
       >
         <Combobox.Target>
-          <Button onClick={() => combobox.toggleDropdown()}>Pick item</Button>
+          <Button onClick={() => store.toggleDropdown()}>Pick item</Button>
         </Combobox.Target>
 
         <Combobox.Dropdown>

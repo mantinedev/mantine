@@ -4,9 +4,9 @@ import { CheckIcon, Combobox, Group, Pill, PillsInput, useCombobox } from '@mant
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 export function MultiSelectCreatable() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
+    onDropdownOpen: () => store.updateSelectedOptionIndex('active'),
   });
 
   const [search, setSearch] = useState('');
@@ -49,20 +49,20 @@ export function MultiSelectCreatable() {
     ));
 
   return (
-    <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
+    <Combobox store={store} onOptionSubmit={handleValueSelect} withinPortal={false}>
       <Combobox.DropdownTarget>
-        <PillsInput onClick={() => combobox.openDropdown()}>
+        <PillsInput onClick={() => store.openDropdown()}>
           <Pill.Group>
             {values}
 
             <Combobox.EventsTarget>
               <PillsInput.Field
-                onFocus={() => combobox.openDropdown()}
-                onBlur={() => combobox.closeDropdown()}
+                onFocus={() => store.openDropdown()}
+                onBlur={() => store.closeDropdown()}
                 value={search}
                 placeholder="Search values"
                 onChange={(event) => {
-                  combobox.updateSelectedOptionIndex();
+                  store.updateSelectedOptionIndex();
                   setSearch(event.currentTarget.value);
                 }}
                 onKeyDown={(event) => {

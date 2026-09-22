@@ -105,21 +105,21 @@ export function Controlled() {
 }
 
 export function ExternalController() {
-  const editable = useEditable({ defaultValue: 'Controller value', activationMode: 'click' });
+  const controller = useEditable({ defaultValue: 'Controller value', activationMode: 'click' });
 
   return (
     <Stack p={40} maw={320}>
-      <Editable controller={editable} />
-      <Text>value: {editable.value}</Text>
-      <Text>editing: {String(editable.editing)}</Text>
+      <Editable controller={controller} />
+      <Text>value: {controller.value}</Text>
+      <Text>editing: {String(controller.editing)}</Text>
       <Group>
-        <button type="button" onClick={editable.edit}>
+        <button type="button" onClick={controller.edit}>
           edit
         </button>
-        <button type="button" onClick={editable.submit}>
+        <button type="button" onClick={controller.submit}>
           submit
         </button>
-        <button type="button" onClick={editable.cancel}>
+        <button type="button" onClick={controller.cancel}>
           cancel
         </button>
       </Group>

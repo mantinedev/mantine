@@ -19,7 +19,7 @@ export function VirtualizedOptions() {
   const virtuoso = useRef<VirtuosoHandle>(null);
   const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
 
-  const combobox = useVirtualizedCombobox({
+  const store = useVirtualizedCombobox({
     opened,
     onOpenedChange: setOpened,
     onDropdownOpen: () => {
@@ -48,14 +48,14 @@ export function VirtualizedOptions() {
     const option = largeData[index];
     setValue(option.value);
     setActiveOptionIndex(index);
-    combobox.closeDropdown();
-    combobox.resetSelectedOption();
+    store.closeDropdown();
+    store.resetSelectedOption();
   }
 
   return (
-    <Combobox store={combobox} resetSelectionOnOptionHover={false} keepMounted>
+    <Combobox store={store} resetSelectionOnOptionHover={false} keepMounted>
       <Combobox.Target targetType="button">
-        <InputBase component="button" onClick={() => combobox.toggleDropdown()} pointer>
+        <InputBase component="button" onClick={() => store.toggleDropdown()} pointer>
           {value || <Input.Placeholder>Pick a value</Input.Placeholder>}
         </InputBase>
       </Combobox.Target>

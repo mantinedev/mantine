@@ -6,31 +6,31 @@ import { Button, Group, Pagination, Stack, Text, usePagination } from '@mantine/
 
 function Demo() {
   const total = 20;
-  const pagination = usePagination({ total, siblings: 2 });
+  const controller = usePagination({ total, siblings: 2 });
 
   return (
     <Stack align="center">
-      <Pagination controller={pagination} />
+      <Pagination controller={controller} />
 
       <Text size="sm">
-        Page {pagination.getActive()} of {total}, showing{' '}
-        {pagination.getRange().filter((item) => item !== 'dots').length} controls
+        Page {controller.getActive()} of {total}, showing{' '}
+        {controller.getRange().filter((item) => item !== 'dots').length} controls
       </Text>
 
       <Group>
-        <Button variant="default" onClick={pagination.first} disabled={pagination.getActive() === 1}>
+        <Button variant="default" onClick={controller.first} disabled={controller.getActive() === 1}>
           First
         </Button>
-        <Button variant="default" onClick={pagination.previous}>
+        <Button variant="default" onClick={controller.previous}>
           Previous
         </Button>
-        <Button variant="default" onClick={pagination.next}>
+        <Button variant="default" onClick={controller.next}>
           Next
         </Button>
         <Button
           variant="default"
-          onClick={pagination.last}
-          disabled={pagination.getActive() === total}
+          onClick={controller.last}
+          disabled={controller.getActive() === total}
         >
           Last
         </Button>
@@ -42,35 +42,35 @@ function Demo() {
 
 function Demo() {
   const total = 20;
-  const pagination = usePagination({ total, siblings: 2 });
+  const controller = usePagination({ total, siblings: 2 });
 
   return (
     <Stack align="center">
-      <Pagination controller={pagination} />
+      <Pagination controller={controller} />
 
       <Text size="sm">
-        Page {pagination.getActive()} of {total}, showing{' '}
-        {pagination.getRange().filter((item) => item !== 'dots').length} controls
+        Page {controller.getActive()} of {total}, showing{' '}
+        {controller.getRange().filter((item) => item !== 'dots').length} controls
       </Text>
 
       <Group>
         <Button
           variant="default"
-          onClick={pagination.first}
-          disabled={pagination.getActive() === 1}
+          onClick={controller.first}
+          disabled={controller.getActive() === 1}
         >
           First
         </Button>
-        <Button variant="default" onClick={pagination.previous}>
+        <Button variant="default" onClick={controller.previous}>
           Previous
         </Button>
-        <Button variant="default" onClick={pagination.next}>
+        <Button variant="default" onClick={controller.next}>
           Next
         </Button>
         <Button
           variant="default"
-          onClick={pagination.last}
-          disabled={pagination.getActive() === total}
+          onClick={controller.last}
+          disabled={controller.getActive() === total}
         >
           Last
         </Button>

@@ -11,8 +11,8 @@ const groceries = [
 ];
 
 export function SelectCreatable() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [data, setData] = useState(groceries);
@@ -32,7 +32,7 @@ export function SelectCreatable() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         if (val === '$create') {
@@ -43,7 +43,7 @@ export function SelectCreatable() {
           setSearch(val);
         }
 
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -51,14 +51,14 @@ export function SelectCreatable() {
           rightSection={<Combobox.Chevron />}
           value={search}
           onChange={(event) => {
-            combobox.openDropdown();
-            combobox.updateSelectedOptionIndex();
+            store.openDropdown();
+            store.updateSelectedOptionIndex();
             setSearch(event.currentTarget.value);
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
           onBlur={() => {
-            combobox.closeDropdown();
+            store.closeDropdown();
             setSearch(value || '');
           }}
           placeholder="Search value"

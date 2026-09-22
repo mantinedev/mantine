@@ -12,8 +12,8 @@ const groceries = [
 ];
 
 export function DropdownPositionStyles() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -26,12 +26,12 @@ export function DropdownPositionStyles() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       offset={0}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target targetType="button">
@@ -40,7 +40,7 @@ export function DropdownPositionStyles() {
           type="button"
           pointer
           rightSection={<Combobox.Chevron />}
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           rightSectionPointerEvents="none"
           classNames={{ input: classes.input }}
         >

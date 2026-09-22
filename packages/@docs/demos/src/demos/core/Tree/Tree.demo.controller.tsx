@@ -26,14 +26,14 @@ function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePaylo
 }
 
 function Demo() {
-  const tree = useTree();
+  const store = useTree();
 
   return (
     <>
-      <Tree data={data} tree={tree} withLines renderNode={(payload) => <Leaf {...payload} />} />
+      <Tree data={data} store={store} withLines renderNode={(payload) => <Leaf {...payload} />} />
       <Group mt="md">
-        <Button onClick={() => tree.expandAllNodes()}>Expand all</Button>
-        <Button onClick={() => tree.collapseAllNodes()}>Collapse all</Button>
+        <Button onClick={() => store.expandAllNodes()}>Expand all</Button>
+        <Button onClick={() => store.collapseAllNodes()}>Collapse all</Button>
       </Group>
     </>
   );
@@ -58,14 +58,14 @@ function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePaylo
 }
 
 function Demo() {
-  const tree = useTree();
+  const store = useTree();
 
   return (
     <>
-      <Tree data={data} tree={tree} withLines renderNode={(payload) => <Leaf {...payload} />} />
+      <Tree data={data} store={store} withLines renderNode={(payload) => <Leaf {...payload} />} />
       <Group mt="md">
-        <Button onClick={() => tree.expandAllNodes()}>Expand all</Button>
-        <Button onClick={() => tree.collapseAllNodes()}>Collapse all</Button>
+        <Button onClick={() => store.expandAllNodes()}>Expand all</Button>
+        <Button onClick={() => store.collapseAllNodes()}>Collapse all</Button>
       </Group>
     </>
   );

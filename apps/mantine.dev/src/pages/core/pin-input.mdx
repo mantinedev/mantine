@@ -38,28 +38,28 @@ state, actions and queries:
 import { PinInput, usePinInput } from '@mantine/core';
 
 function Demo() {
-  const pinInput = usePinInput({
+  const controller = usePinInput({
     length: 6, // -> number of inputs, 4 by default
     defaultValue: '12', // -> uncontrolled initial value
     // value, onChange, onComplete -> same as on PinInput
   });
 
   // Actions
-  pinInput.setValue('123456'); // -> sets all inputs at once
-  pinInput.setFieldValue(0, '9'); // -> sets the value of a single input
-  pinInput.clear(); // -> clears all inputs
-  pinInput.focus(2); // -> focuses the third input
-  pinInput.focusNext();
-  pinInput.focusPrevious();
+  controller.setValue('123456'); // -> sets all inputs at once
+  controller.setFieldValue(0, '9'); // -> sets the value of a single input
+  controller.clear(); // -> clears all inputs
+  controller.focus(2); // -> focuses the third input
+  controller.focusNext();
+  controller.focusPrevious();
 
   // Queries
-  pinInput.getValue(); // -> current value as a string, for example '12'
-  pinInput.getFieldValues(); // -> value of each input, for example ['1', '2', '', '', '', '']
-  pinInput.getFocusedIndex(); // -> index of the focused input, -1 when none of them is focused
-  pinInput.isComplete(); // -> boolean, true when all inputs have a value
-  pinInput.getInputNode(2); // -> input element at the given index, null if PinInput is not mounted
+  controller.getValue(); // -> current value as a string, for example '12'
+  controller.getFieldValues(); // -> value of each input, for example ['1', '2', '', '', '', '']
+  controller.getFocusedIndex(); // -> index of the focused input, -1 when none of them is focused
+  controller.isComplete(); // -> boolean, true when all inputs have a value
+  controller.getInputNode(2); // -> input element at the given index, null if PinInput is not mounted
 
-  return <PinInput controller={pinInput} />;
+  return <PinInput controller={controller} />;
 }
 ```
 

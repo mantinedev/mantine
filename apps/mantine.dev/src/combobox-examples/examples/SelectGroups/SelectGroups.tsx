@@ -2,19 +2,19 @@ import { useState } from 'react';
 import { Combobox, Input, InputBase, useCombobox } from '@mantine/core';
 
 export function SelectGroups() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target targetType="button">
@@ -23,7 +23,7 @@ export function SelectGroups() {
           type="button"
           pointer
           rightSection={<Combobox.Chevron />}
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           rightSectionPointerEvents="none"
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}

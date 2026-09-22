@@ -219,13 +219,16 @@ Components that support controllers:
 - [Timer](/core/timer#usetimer-hook) – `useTimer` hook
 - [Editable](/core/editable#useeditable-hook) – `useEditable` hook
 - [ImageCropper](/core/image-cropper#controller) – `useImageCropper` hook
-- [Tree](/core/tree#usetree-hook) – `useTree` hook
-- [Combobox](/core/combobox#usecombobox-hook) – `useCombobox` hook
-- [DataGrid](/data-grid/getting-started#store-hook) – `useDataGrid` hook
+
+[Combobox](/core/combobox#usecombobox-hook), [Tree](/core/tree#usetree-hook) and
+[DataGrid](/data-grid/getting-started#store-hook) work with a **store** instead – the same hook-and-prop
+shape, meant as a building block for your own components rather than for driving the component as is.
+`Tree` now takes its store through the `store` prop, see the [migration guide](/guides/9x-to-10x).
 
 `useTimer`, `useEditable` and `useImageCropper` have their types renamed to `<Component>Controller`
-and `<Component>ControllerOptions`; the hooks that predate the naming keep the type names they
-shipped with (`ComboboxStore`, `DataGridStore`, `UseTreeInput`, `UsePaginationOptions`). The renamed
+and `<Component>ControllerOptions`; `usePagination` keeps the type names it shipped with
+(`UsePaginationOptions`, `UsePaginationReturnValue`), and the stores use `ComboboxStore`,
+`DataGridStore` and `TreeStore`. The renamed
 types are listed in the [migration guide](/guides/9x-to-10x).
 
 ## Modal.Footer and Drawer.Footer

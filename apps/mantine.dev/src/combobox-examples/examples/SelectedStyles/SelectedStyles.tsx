@@ -12,8 +12,8 @@ const groceries = [
 ];
 
 export function SelectedStyles() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -23,7 +23,7 @@ export function SelectedStyles() {
       value={item}
       key={item}
       className={classes.option}
-      onMouseOver={() => combobox.selectOption(index)}
+      onMouseOver={() => store.selectOption(index)}
     >
       {item}
     </Combobox.Option>
@@ -31,11 +31,11 @@ export function SelectedStyles() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target targetType="button">
@@ -44,14 +44,14 @@ export function SelectedStyles() {
           type="button"
           pointer
           rightSection={<Combobox.Chevron />}
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           rightSectionPointerEvents="none"
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>
       </Combobox.Target>
 
-      <Combobox.Dropdown onMouseLeave={() => combobox.resetSelectedOption()}>
+      <Combobox.Dropdown onMouseLeave={() => store.resetSelectedOption()}>
         <Combobox.Options>{options}</Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>

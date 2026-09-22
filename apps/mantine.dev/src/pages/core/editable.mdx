@@ -106,15 +106,15 @@ same options as `Editable` and returns the editing state and actions:
 import { useEditable } from '@mantine/core';
 
 function Demo() {
-  const editable = useEditable({ defaultValue: 'Project name' });
+  const controller = useEditable({ defaultValue: 'Project name' });
 
-  editable.getValue(); // -> current value
-  editable.isEditing(); // -> boolean, true while the field is in edit mode
+  controller.getValue(); // -> current value
+  controller.isEditing(); // -> boolean, true while the field is in edit mode
 
-  editable.edit(); // enters edit mode
-  editable.submit(); // commits the edit
-  editable.cancel(); // cancels the edit and reverts the value
-  editable.setValue('New value'); // updates the value
+  controller.edit(); // enters edit mode
+  controller.submit(); // commits the edit
+  controller.cancel(); // cancels the edit and reverts the value
+  controller.setValue('New value'); // updates the value
 
   return null;
 }

@@ -101,8 +101,8 @@ export interface RenderTreeNodePayload {
   /** Node data from the `data` prop of `Tree` */
   node: TreeNodeData;
 
-  /** Tree controller instance, return value of `useTree` hook */
-  tree: TreeController;
+  /** Tree store instance, return value of `useTree` hook */
+  store: TreeStore;
 
   /** Props to spread into the root node element */
   elementProps: {
@@ -123,9 +123,9 @@ export interface RenderTreeNodePayload {
 
 ## useTree hook
 
-`useTree` hook can be used to control selected and expanded state of the tree. It is `Tree`'s
-controller – see the [Controllers](/guides/controllers) guide for how the pattern works across all
-components.
+`useTree` hook can be used to control selected and expanded state of the tree. It returns
+`Tree`'s store – see the [Controllers](/guides/controllers#stores) guide for how stores differ from
+controllers.
 
 The hook accepts an object with the following properties:
 
@@ -277,7 +277,7 @@ export interface UseTreeReturnType {
 }
 ```
 
-You can pass the value returned by the `useTree` hook to the `tree` prop of the `Tree` component
+You can pass the store returned by the `useTree` hook to the `store` prop of the `Tree` component
 to control tree state:
 
 <Demo data={TreeDemos.controller} />
@@ -337,19 +337,19 @@ function Demo() {
     { label: 'Documents', value: 'documents', hasChildren: true },
   ]);
 
-  const tree = useTree({
+  const store = useTree({
     onLoadChildren: async (value) => {
       const children = await fetchChildren(value);
       setData((prev) => mergeAsyncChildren(prev, value, children));
     },
   });
 
-  return <Tree data={data} tree={tree} />;
+  return <Tree data={data} store={store} />;
 }
 ```
 
 The `renderNode` payload includes `isLoading` and `loadError` fields that you can use
-to display a loading indicator or an error message. Use `tree.invalidateNode(value)` to clear
+to display a loading indicator or an error message. Use `store.invalidateNode(value)` to clear
 the cache for a node and allow re-fetching on next expand.
 
 <Demo data={TreeDemos.asyncLoading} />
@@ -467,8 +467,8 @@ handlers, and `renderNode` support.
 ```tsx
 import { FlatTreeNode, flattenTreeData, useTree } from '@mantine/core';
 
-const tree = useTree();
-const flatList = flattenTreeData(data, tree.getExpandedState());
+const store = useTree();
+const flatList = flattenTreeData(data, store.getExpandedState());
 // flatList is FlattenedTreeNodeData[] – spread each entry into FlatTreeNode
 ```
 

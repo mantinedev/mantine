@@ -111,8 +111,8 @@ function findLabel(nodes: TreeNode[], value: string): string | null {
 }
 
 export function TreeSelectCombobox() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -125,11 +125,11 @@ export function TreeSelectCombobox() {
   const flatNodes = flattenTree(data, expanded);
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (!combobox.dropdownOpened) {
+    if (!store.dropdownOpened) {
       return;
     }
 
-    const index = combobox.getSelectedOptionIndex();
+    const index = store.getSelectedOptionIndex();
     if (index < 0 || index >= flatNodes.length) {
       return;
     }
@@ -149,7 +149,7 @@ export function TreeSelectCombobox() {
         event.preventDefault();
         const parentIndex = flatNodes.findIndex((n) => n.node.value === current.parent);
         if (parentIndex >= 0) {
-          combobox.selectOption(parentIndex);
+          store.selectOption(parentIndex);
         }
       }
     }
@@ -157,11 +157,11 @@ export function TreeSelectCombobox() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -170,7 +170,7 @@ export function TreeSelectCombobox() {
           type="button"
           pointer
           rightSection={<Combobox.Chevron />}
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           onKeyDown={handleKeyDown}
           rightSectionPointerEvents="none"
         >

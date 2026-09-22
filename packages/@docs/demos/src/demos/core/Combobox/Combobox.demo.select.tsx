@@ -9,8 +9,8 @@ import { Input, InputBase, Combobox, useCombobox } from '@mantine/core';
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -23,10 +23,10 @@ function Demo() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -36,7 +36,7 @@ function Demo() {
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>
@@ -53,8 +53,8 @@ function Demo() {
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -67,10 +67,10 @@ function Demo() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -80,7 +80,7 @@ function Demo() {
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>

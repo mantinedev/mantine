@@ -4,9 +4,9 @@ import { CheckIcon, Combobox, Group, Input, Pill, PillsInput, useCombobox } from
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 export function BasicMultiSelect() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
+    onDropdownOpen: () => store.updateSelectedOptionIndex('active'),
   });
 
   const [value, setValue] = useState<string[]>([]);
@@ -35,9 +35,9 @@ export function BasicMultiSelect() {
   ));
 
   return (
-    <Combobox store={combobox} onOptionSubmit={handleValueSelect} withinPortal={false}>
+    <Combobox store={store} onOptionSubmit={handleValueSelect} withinPortal={false}>
       <Combobox.DropdownTarget>
-        <PillsInput pointer onClick={() => combobox.toggleDropdown()}>
+        <PillsInput pointer onClick={() => store.toggleDropdown()}>
           <Pill.Group>
             {values.length > 0 ? (
               values
@@ -48,7 +48,7 @@ export function BasicMultiSelect() {
             <Combobox.EventsTarget>
               <PillsInput.Field
                 type="hidden"
-                onBlur={() => combobox.closeDropdown()}
+                onBlur={() => store.closeDropdown()}
                 onKeyDown={(event) => {
                   if (event.key === 'Backspace' && value.length > 0) {
                     event.preventDefault();

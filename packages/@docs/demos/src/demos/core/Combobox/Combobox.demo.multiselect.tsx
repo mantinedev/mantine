@@ -9,9 +9,9 @@ import { PillsInput, Pill, Input, Combobox, CheckIcon, Group, useCombobox } from
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
+    onDropdownOpen: () => store.updateSelectedOptionIndex('active'),
   });
 
   const [value, setValue] = useState<string[]>([]);
@@ -40,9 +40,9 @@ function Demo() {
   ));
 
   return (
-    <Combobox store={combobox} onOptionSubmit={handleValueSelect}>
+    <Combobox store={store} onOptionSubmit={handleValueSelect}>
       <Combobox.DropdownTarget>
-        <PillsInput pointer onClick={() => combobox.toggleDropdown()}>
+        <PillsInput pointer onClick={() => store.toggleDropdown()}>
           <Pill.Group>
             {values.length > 0 ? (
               values
@@ -53,7 +53,7 @@ function Demo() {
             <Combobox.EventsTarget>
               <PillsInput.Field
                 type="hidden"
-                onBlur={() => combobox.closeDropdown()}
+                onBlur={() => store.closeDropdown()}
                 onKeyDown={(event) => {
                   if (event.key === 'Backspace' && value.length > 0) {
                     event.preventDefault();
@@ -77,9 +77,9 @@ function Demo() {
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
+    onDropdownOpen: () => store.updateSelectedOptionIndex('active'),
   });
 
   const [value, setValue] = useState<string[]>([]);
@@ -108,9 +108,9 @@ function Demo() {
   ));
 
   return (
-    <Combobox store={combobox} onOptionSubmit={handleValueSelect}>
+    <Combobox store={store} onOptionSubmit={handleValueSelect}>
       <Combobox.DropdownTarget>
-        <PillsInput pointer onClick={() => combobox.toggleDropdown()}>
+        <PillsInput pointer onClick={() => store.toggleDropdown()}>
           <Pill.Group>
             {values.length > 0 ? (
               values
@@ -121,7 +121,7 @@ function Demo() {
             <Combobox.EventsTarget>
               <PillsInput.Field
                 type="hidden"
-                onBlur={() => combobox.closeDropdown()}
+                onBlur={() => store.closeDropdown()}
                 onKeyDown={(event) => {
                   if (event.key === 'Backspace' && value.length > 0) {
                     event.preventDefault();

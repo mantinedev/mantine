@@ -33,7 +33,7 @@ function Demo() {
     overscan: 5,
   });
 
-  const combobox = useVirtualizedCombobox({
+  const store = useVirtualizedCombobox({
     opened,
     onOpenedChange: setOpened,
     onDropdownOpen: () => {
@@ -62,14 +62,14 @@ function Demo() {
     const option = largeData[index];
     setValue(option.value);
     setActiveOptionIndex(index);
-    combobox.closeDropdown();
-    combobox.resetSelectedOption();
+    store.closeDropdown();
+    store.resetSelectedOption();
   }
 
   return (
-    <Combobox store={combobox} resetSelectionOnOptionHover={false} keepMounted>
+    <Combobox store={store} resetSelectionOnOptionHover={false} keepMounted>
       <Combobox.Target>
-        <InputBase component="button" onClick={() => combobox.toggleDropdown()} pointer>
+        <InputBase component="button" onClick={() => store.toggleDropdown()} pointer>
           {value || <Input.Placeholder>Pick a value</Input.Placeholder>}
         </InputBase>
       </Combobox.Target>
@@ -139,7 +139,7 @@ function Demo() {
     overscan: 5,
   });
 
-  const combobox = useVirtualizedCombobox({
+  const store = useVirtualizedCombobox({
     opened,
     onOpenedChange: setOpened,
     onDropdownOpen: () => {
@@ -168,14 +168,14 @@ function Demo() {
     const option = largeData[index];
     setValue(option.value);
     setActiveOptionIndex(index);
-    combobox.closeDropdown();
-    combobox.resetSelectedOption();
+    store.closeDropdown();
+    store.resetSelectedOption();
   }
 
   return (
-    <Combobox store={combobox} resetSelectionOnOptionHover={false} keepMounted>
+    <Combobox store={store} resetSelectionOnOptionHover={false} keepMounted>
       <Combobox.Target>
-        <InputBase component="button" onClick={() => combobox.toggleDropdown()} pointer>
+        <InputBase component="button" onClick={() => store.toggleDropdown()} pointer>
           {value || <Input.Placeholder>Pick a value</Input.Placeholder>}
         </InputBase>
       </Combobox.Target>

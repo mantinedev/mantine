@@ -3,7 +3,7 @@ import { Box, findElementAncestor, GetStylesApi } from '../../core';
 import { Loader } from '../Loader';
 import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import type { RenderNode, TreeDragState, TreeFactory, TreeNodeData } from './Tree';
-import type { TreeController } from './use-tree';
+import type { TreeStore } from './use-tree';
 import { TreeAllowDrop, useTreeNodeDragDrop } from './use-tree-node-drag-drop';
 
 function getValuesRange(anchor: string | null, value: string | undefined, flatValues: string[]) {
@@ -34,7 +34,7 @@ interface TreeNodeProps {
   node: TreeNodeData;
   getStyles: GetStylesApi<TreeFactory>;
   rootIndex: number | undefined;
-  controller: TreeController;
+  store: TreeStore;
   expandOnClick: boolean | undefined;
   flatValues: string[];
   isSubtree?: boolean;
@@ -56,7 +56,7 @@ export function TreeNode({
   node,
   getStyles,
   rootIndex,
-  controller,
+  store,
   expandOnClick,
   selectOnClick,
   isSubtree,
@@ -77,9 +77,9 @@ export function TreeNode({
   const hasLoadedChildren = Array.isArray(node.children) && node.children.length > 0;
   const hasAsyncChildren = !!node.hasChildren && !hasLoadedChildren;
   const hasChildren = hasLoadedChildren || hasAsyncChildren;
-  const isLoading = controller.isNodeLoading(node.value);
-  const loadError = controller.getNodeLoadError(node.value);
-  const isExpanded = controller.expandedState[node.value] || false;
+  const isLoading = store.isNodeLoading(node.value);
+  const loadError = store.getNodeLoadError(node.value);
+  const isExpanded = store.expandedState[node.value] || false;
 
   const nested = (node.children || []).map((child) => (
     <TreeNode
@@ -89,7 +89,7 @@ export function TreeNode({
       getStyles={getStyles}
       rootIndex={undefined}
       level={level + 1}
-      controller={controller}
+      store={store}
       expandOnClick={expandOnClick}
       isSubtree
       renderNode={renderNode}
@@ -127,7 +127,7 @@ export function TreeNode({
         nextNode?.setAttribute('data-focus-ring', 'true');
         nextNode?.focus();
       } else {
-        controller.expand(node.value);
+        store.expand(node.value);
       }
     }
 
@@ -135,7 +135,7 @@ export function TreeNode({
       event.stopPropagation();
       event.preventDefault();
       if (isExpanded && hasChildren) {
-        controller.collapse(node.value);
+        store.collapse(node.value);
       } else if (isSubtree) {
         const parentNode = findElementAncestor(
           event.currentTarget as HTMLElement,
@@ -173,8 +173,8 @@ export function TreeNode({
         const selectNode = nodes[nextIndex];
 
         if (selectNode) {
-          controller.setSelectedState(
-            getValuesRange(controller.anchorNode, selectNode.dataset.value, flatValues)
+          store.setSelectedState(
+            getValuesRange(store.anchorNode, selectNode.dataset.value, flatValues)
           );
         }
       }
@@ -184,15 +184,15 @@ export function TreeNode({
       if (expandOnSpace) {
         event.stopPropagation();
         event.preventDefault();
-        controller.toggleExpanded(node.value);
+        store.toggleExpanded(node.value);
       }
 
       if (checkOnSpace) {
         event.stopPropagation();
         event.preventDefault();
-        controller.isNodeChecked(node.value)
-          ? controller.uncheckNode(node.value)
-          : controller.checkNode(node.value);
+        store.isNodeChecked(node.value)
+          ? store.uncheckNode(node.value)
+          : store.checkNode(node.value);
       }
     }
   };
@@ -200,20 +200,20 @@ export function TreeNode({
   const handleNodeClick = (event: React.MouseEvent) => {
     event.stopPropagation();
 
-    if (allowRangeSelection && event.shiftKey && controller.anchorNode) {
-      controller.setSelectedState(getValuesRange(controller.anchorNode, node.value, flatValues));
+    if (allowRangeSelection && event.shiftKey && store.anchorNode) {
+      store.setSelectedState(getValuesRange(store.anchorNode, node.value, flatValues));
       ref.current?.focus();
     } else {
       if (expandOnClick) {
-        controller.toggleExpanded(node.value);
+        store.toggleExpanded(node.value);
       }
 
-      selectOnClick && controller.select(node.value);
+      selectOnClick && store.select(node.value);
       ref.current?.focus();
     }
   };
 
-  const selected = controller.selectedState.includes(node.value);
+  const selected = store.selectedState.includes(node.value);
   const elementProps = {
     ...getStyles('label'),
     onClick: handleNodeClick,
@@ -249,7 +249,7 @@ export function TreeNode({
           level,
           selected,
           isRoot: level === 1,
-          tree: controller,
+          store,
           expanded: isExpanded,
           hasChildren,
           isLoading,

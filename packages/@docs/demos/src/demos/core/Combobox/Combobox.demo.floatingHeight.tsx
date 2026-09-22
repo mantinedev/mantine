@@ -22,8 +22,8 @@ const countries = [
 ];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -36,11 +36,11 @@ function Demo() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       floatingHeight="viewport"
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -50,7 +50,7 @@ function Demo() {
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick a country</Input.Placeholder>}
         </InputBase>
@@ -174,8 +174,8 @@ const countries = [
 ];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -188,11 +188,11 @@ function Demo() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       floatingHeight="viewport"
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -202,7 +202,7 @@ function Demo() {
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick a country</Input.Placeholder>}
         </InputBase>

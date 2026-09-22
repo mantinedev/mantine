@@ -16,7 +16,7 @@ import {
 } from '../../core';
 import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import { TreeNode } from './TreeNode';
-import { TreeController, useTree } from './use-tree';
+import { TreeStore, useTree } from './use-tree';
 import type { TreeAllowDrop, TreeDragHandleProps } from './use-tree-node-drag-drop';
 import classes from './Tree.module.css';
 
@@ -53,8 +53,8 @@ export interface RenderTreeNodePayload {
   /** Node data from the `data` prop of `Tree` */
   node: TreeNodeData;
 
-  /** Tree controller instance, return value of `useTree` hook */
-  tree: TreeController;
+  /** Tree store instance, return value of `useTree` hook */
+  store: TreeStore;
 
   /** Props to spread into the root node element */
   elementProps: {
@@ -107,8 +107,8 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** If set, tree node is selected on click @default false @category behavior */
   selectOnClick?: boolean;
 
-  /** Use-tree hook instance that can be used to manipulate component state @category state */
-  tree?: TreeController;
+  /** Store returned by the `useTree` hook that can be used to manipulate component state @category state */
+  store?: TreeStore;
 
   /** A function to render tree node label @category appearance */
   renderNode?: RenderNode;
@@ -177,7 +177,7 @@ export const Tree = factory<TreeFactory>((_props) => {
     vars,
     data,
     expandOnClick,
-    tree,
+    store: storeProp,
     renderNode,
     selectOnClick,
     clearSelectionOnOutsideClick,
@@ -195,7 +195,7 @@ export const Tree = factory<TreeFactory>((_props) => {
     ...others
   } = props;
 
-  const controller = useController(useTree, tree, {});
+  const store = useController(useTree, storeProp, {});
 
   const dragStateRef = useRef<TreeDragState>({ draggedValue: null, currentDropTarget: null });
 
@@ -214,7 +214,7 @@ export const Tree = factory<TreeFactory>((_props) => {
   });
 
   const clickOutsideRef = useClickOutside(
-    () => clearSelectionOnOutsideClick && controller.clearSelected()
+    () => clearSelectionOnOutsideClick && store.clearSelected()
   );
 
   const mergedRef = useMergedRef(ref, clickOutsideRef);
@@ -222,7 +222,7 @@ export const Tree = factory<TreeFactory>((_props) => {
   const flatValues = useMemo(() => getFlatValues(data), [data]);
 
   useEffect(() => {
-    controller.initialize(data);
+    store.initialize(data);
   }, [data]);
 
   const nodes = data.map((node, index) => (
@@ -233,7 +233,7 @@ export const Tree = factory<TreeFactory>((_props) => {
       rootIndex={index}
       expandOnClick={expandOnClick}
       selectOnClick={selectOnClick}
-      controller={controller}
+      store={store}
       renderNode={renderNode}
       flatValues={flatValues}
       allowRangeSelection={allowRangeSelection}
@@ -255,7 +255,7 @@ export const Tree = factory<TreeFactory>((_props) => {
       {...getStyles('root')}
       {...others}
       role="tree"
-      aria-multiselectable={controller.multiple}
+      aria-multiselectable={store.multiple}
       data-tree-root
       data-with-lines={withLines || undefined}
     >

@@ -138,7 +138,7 @@ export function TreeSelectVirtualized() {
     overscan: 10,
   });
 
-  const combobox = useVirtualizedCombobox({
+  const store = useVirtualizedCombobox({
     opened,
     onOpenedChange: setOpened,
     onDropdownClose: () => setSelectedValue(null),
@@ -169,16 +169,16 @@ export function TreeSelectVirtualized() {
       return;
     }
     setValue(node.value);
-    combobox.closeDropdown();
-    combobox.resetSelectedOption();
+    store.closeDropdown();
+    store.resetSelectedOption();
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (!combobox.dropdownOpened) {
+    if (!store.dropdownOpened) {
       return;
     }
 
-    const index = combobox.getSelectedOptionIndex();
+    const index = store.getSelectedOptionIndex();
     if (index < 0 || index >= flatNodes.length) {
       return;
     }
@@ -198,21 +198,21 @@ export function TreeSelectVirtualized() {
         event.preventDefault();
         const parentIndex = flatNodes.findIndex((n) => n.node.value === current.parent);
         if (parentIndex >= 0) {
-          combobox.selectOption(parentIndex);
+          store.selectOption(parentIndex);
         }
       }
     }
   };
 
   return (
-    <Combobox store={combobox} withinPortal={false} resetSelectionOnOptionHover={false} keepMounted>
+    <Combobox store={store} withinPortal={false} resetSelectionOnOptionHover={false} keepMounted>
       <Combobox.Target targetType="button">
         <InputBase
           component="button"
           type="button"
           pointer
           rightSection={<Combobox.Chevron />}
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           onKeyDown={handleKeyDown}
           rightSectionPointerEvents="none"
         >

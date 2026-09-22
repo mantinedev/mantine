@@ -12,8 +12,8 @@ const groceries = [
 
 export function BasicButton() {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const options = groceries.map((item) => (
@@ -25,18 +25,18 @@ export function BasicButton() {
   return (
     <>
       <Combobox
-        store={combobox}
+        store={store}
         width={250}
         position="bottom-start"
         withArrow
         withinPortal={false}
         onOptionSubmit={(val) => {
           setSelectedItem(val);
-          combobox.closeDropdown();
+          store.closeDropdown();
         }}
       >
         <Combobox.Target>
-          <Button onClick={() => combobox.toggleDropdown()}>Pick item</Button>
+          <Button onClick={() => store.toggleDropdown()}>Pick item</Button>
         </Combobox.Target>
 
         <Combobox.Dropdown>

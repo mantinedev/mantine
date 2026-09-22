@@ -266,16 +266,16 @@ export function Chevron() {
 }
 
 export function DifferentTargets() {
-  const combobox = useCombobox();
+  const store = useCombobox();
 
   return (
     <div style={{ padding: 40, display: 'flex', gap: 20 }}>
-      <Combobox store={combobox}>
+      <Combobox store={store}>
         <Combobox.EventsTarget>
           <TextInput
             placeholder="Focus me"
-            onFocus={() => combobox.openDropdown()}
-            onBlur={() => combobox.closeDropdown()}
+            onFocus={() => store.openDropdown()}
+            onBlur={() => store.closeDropdown()}
           />
         </Combobox.EventsTarget>
 
@@ -297,11 +297,11 @@ export function DifferentTargets() {
 }
 
 export function WithoutDropdown() {
-  const combobox = useCombobox();
+  const store = useCombobox();
 
   return (
     <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <Combobox store={combobox}>
+      <Combobox store={store}>
         <Combobox.EventsTarget>
           <TextInput placeholder="Without dropdown" />
         </Combobox.EventsTarget>
@@ -430,8 +430,8 @@ const groceries = [
 ];
 
 export function SearchWithScrollArea() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState('');
@@ -450,13 +450,13 @@ export function SearchWithScrollArea() {
     <Combobox
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
-      store={combobox}
+      store={store}
       withinPortal={false}
     >
       <Combobox.Target>
-        <Button onClick={() => combobox.openDropdown()}>{value || 'Select an item'}</Button>
+        <Button onClick={() => store.openDropdown()}>{value || 'Select an item'}</Button>
       </Combobox.Target>
 
       <Combobox.Dropdown>
@@ -472,8 +472,8 @@ export function SearchWithScrollArea() {
 }
 
 export function BottomRightAbsolute() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -495,10 +495,10 @@ export function BottomRightAbsolute() {
 
         <div style={{ position: 'absolute', right: 10, bottom: 10 }}>
           <Combobox
-            store={combobox}
+            store={store}
             onOptionSubmit={(val) => {
               setValue(val);
-              combobox.closeDropdown();
+              store.closeDropdown();
             }}
           >
             <Combobox.Target>
@@ -508,7 +508,7 @@ export function BottomRightAbsolute() {
                 pointer
                 rightSection={<Combobox.Chevron />}
                 rightSectionPointerEvents="none"
-                onClick={() => combobox.toggleDropdown()}
+                onClick={() => store.toggleDropdown()}
               >
                 {value || <Input.Placeholder>Pick value (bottom-right)</Input.Placeholder>}
               </InputBase>
@@ -525,8 +525,8 @@ export function BottomRightAbsolute() {
 }
 
 export function BottomLeftAbsolute() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -548,10 +548,10 @@ export function BottomLeftAbsolute() {
 
         <div style={{ position: 'absolute', left: 10, bottom: 10 }}>
           <Combobox
-            store={combobox}
+            store={store}
             onOptionSubmit={(val) => {
               setValue(val);
-              combobox.closeDropdown();
+              store.closeDropdown();
             }}
           >
             <Combobox.Target>
@@ -561,7 +561,7 @@ export function BottomLeftAbsolute() {
                 pointer
                 rightSection={<Combobox.Chevron />}
                 rightSectionPointerEvents="none"
-                onClick={() => combobox.toggleDropdown()}
+                onClick={() => store.toggleDropdown()}
               >
                 {value || <Input.Placeholder>Pick value (bottom-left)</Input.Placeholder>}
               </InputBase>
@@ -578,8 +578,8 @@ export function BottomLeftAbsolute() {
 }
 
 export function InputWithSections() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -593,10 +593,10 @@ export function InputWithSections() {
   return (
     <div style={{ padding: 40 }}>
       <Combobox
-        store={combobox}
+        store={store}
         onOptionSubmit={(val) => {
           setValue(val);
-          combobox.closeDropdown();
+          store.closeDropdown();
         }}
         width="target"
       >
@@ -609,7 +609,7 @@ export function InputWithSections() {
             leftSection={<span>L</span>}
             rightSection={<Combobox.Chevron />}
             rightSectionPointerEvents="none"
-            onClick={() => combobox.toggleDropdown()}
+            onClick={() => store.toggleDropdown()}
           >
             {value || <Input.Placeholder>Pick a grocery</Input.Placeholder>}
           </Input>
@@ -646,7 +646,7 @@ export function ConditionalRenderNearBottom() {
 }
 
 function NearBottomCombobox() {
-  const combobox = useCombobox();
+  const store = useCombobox();
   const [value, setValue] = useState<string | null>(null);
 
   const options = ['React', 'Angular', 'Svelte', 'Vue', 'Ember', 'Backbone', 'Preact'].map(
@@ -659,10 +659,10 @@ function NearBottomCombobox() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -672,7 +672,7 @@ function NearBottomCombobox() {
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>

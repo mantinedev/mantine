@@ -355,16 +355,16 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
   const isCheckbox = mode === 'checkbox';
   const _id = useId(id);
 
-  const combobox = useCombobox({
+  const store = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
     onDropdownOpen: () => {
       onDropdownOpen?.();
-      combobox.updateSelectedOptionIndex('active', { scrollIntoView: true });
+      store.updateSelectedOptionIndex('active', { scrollIntoView: true });
     },
     onDropdownClose: () => {
       onDropdownClose?.();
-      combobox.resetSelectedOption();
+      store.resetSelectedOption();
     },
   });
 
@@ -427,7 +427,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
 
   const handleSearchChange = (val: string) => {
     setSearchValue(val);
-    combobox.resetSelectedOption();
+    store.resetSelectedOption();
   };
 
   const [_value, setValue] = useUncontrolled({
@@ -539,7 +539,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
       }
       const nextValue = allowDeselect && val === _value ? null : val;
       setValue(nextValue);
-      combobox.closeDropdown();
+      store.closeDropdown();
       if (clearSearchOnChange) {
         handleSearchChange(nextValue ? getNodeLabel(nextValue) : '');
       }
@@ -607,7 +607,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
 
     if (event.key === ' ' && !searchable && isMulti) {
       event.preventDefault();
-      combobox.toggleDropdown();
+      store.toggleDropdown();
     }
 
     if (event.key === 'Backspace' && _searchValue.length === 0 && isMulti) {
@@ -619,11 +619,11 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
       }
     }
 
-    if (!combobox.dropdownOpened) {
+    if (!store.dropdownOpened) {
       return;
     }
 
-    const index = combobox.getSelectedOptionIndex();
+    const index = store.getSelectedOptionIndex();
     if (index < 0 || index >= flatNodesRef.current.length) {
       return;
     }
@@ -647,7 +647,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
           (n) => n.node.value === currentNode.parent
         );
         if (parentIndex >= 0) {
-          combobox.selectOption(parentIndex);
+          store.selectOption(parentIndex);
         }
       }
     }
@@ -666,7 +666,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
 
   const prevDropdownOpenedRef = useRef(false);
   useEffect(() => {
-    if (combobox.dropdownOpened && !prevDropdownOpenedRef.current && searchable && _value) {
+    if (store.dropdownOpened && !prevDropdownOpenedRef.current && searchable && _value) {
       const targets = Array.isArray(_value) ? _value : [_value];
       const newExpanded = { ..._expandedState };
       let changed = false;
@@ -684,11 +684,11 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
       if (changed) {
         setExpandedState(newExpanded);
         requestAnimationFrame(() => {
-          combobox.updateSelectedOptionIndex('active', { scrollIntoView: true });
+          store.updateSelectedOptionIndex('active', { scrollIntoView: true });
         });
       }
     }
-    prevDropdownOpenedRef.current = combobox.dropdownOpened;
+    prevDropdownOpenedRef.current = store.dropdownOpened;
   });
 
   const clearButton = (
@@ -698,7 +698,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
         onClear?.();
         setValue(isMulti ? [] : null);
         handleSearchChange('');
-        combobox.focusTarget();
+        store.focusTarget();
       }}
     />
   );
@@ -851,7 +851,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     return (
       <>
         <Combobox
-          store={combobox}
+          store={store}
           classNames={resolvedClassNames}
           styles={resolvedStyles}
           unstyled={unstyled}
@@ -914,8 +914,8 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
                 multiline: true,
               }}
               pointer={!searchable}
-              onClick={() => (searchable ? combobox.openDropdown() : combobox.toggleDropdown())}
-              data-expanded={combobox.dropdownOpened || undefined}
+              onClick={() => (searchable ? store.openDropdown() : store.toggleDropdown())}
+              data-expanded={store.dropdownOpened || undefined}
               id={_id}
               required={required}
               mod={mod}
@@ -939,12 +939,12 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
                     onFocus={(event) => {
                       onFocus?.(event);
                       if (openOnFocus && searchable) {
-                        combobox.openDropdown();
+                        store.openDropdown();
                       }
                     }}
                     onBlur={(event) => {
                       onBlur?.(event);
-                      combobox.closeDropdown();
+                      store.closeDropdown();
                       handleSearchChange('');
                     }}
                     onKeyDown={handleKeyDown}
@@ -956,7 +956,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
 
                       handleSearchChange(event.currentTarget.value);
                       if (searchable) {
-                        combobox.openDropdown();
+                        store.openDropdown();
                       }
                     }}
                     disabled={disabled}
@@ -984,7 +984,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
   return (
     <>
       <Combobox
-        store={combobox}
+        store={store}
         __staticSelector="TreeSelect"
         classNames={resolvedClassNames}
         styles={resolvedStyles}
@@ -1024,23 +1024,23 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
               }
 
               handleSearchChange(event.currentTarget.value);
-              combobox.openDropdown();
+              store.openDropdown();
             }}
             onFocus={(event) => {
               if (openOnFocus && searchable) {
-                combobox.openDropdown();
+                store.openDropdown();
               }
               onFocus?.(event);
             }}
             onBlur={(event) => {
               if (searchable) {
-                combobox.closeDropdown();
+                store.closeDropdown();
               }
               handleSearchChange(_value ? getNodeLabel(_value as string) : '');
               onBlur?.(event);
             }}
             onClick={(event) => {
-              searchable ? combobox.openDropdown() : combobox.toggleDropdown();
+              searchable ? store.openDropdown() : store.toggleDropdown();
               onClick?.(event);
             }}
             onKeyDown={handleKeyDown}

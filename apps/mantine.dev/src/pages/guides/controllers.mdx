@@ -37,14 +37,14 @@ currently mounted – something you cannot reconstruct from outside the componen
 import { Accordion, Button, useAccordion } from '@mantine/core';
 
 function Demo() {
-  const accordion = useAccordion({ multiple: true });
+  const controller = useAccordion({ multiple: true });
 
   return (
     <>
-      <Button onClick={accordion.expandAll}>Expand all</Button>
-      <Button onClick={accordion.collapseAll}>Collapse all</Button>
+      <Button onClick={controller.expandAll}>Expand all</Button>
+      <Button onClick={controller.collapseAll}>Collapse all</Button>
 
-      <Accordion controller={accordion}>
+      <Accordion controller={controller}>
         <Accordion.Item value="first">{/* ... */}</Accordion.Item>
         <Accordion.Item value="second">{/* ... */}</Accordion.Item>
       </Accordion>
@@ -78,20 +78,20 @@ import { Accordion, useAccordion } from '@mantine/core';
 
 function Demo() {
   // The hook accepts the same state options the component accepts as props
-  const accordion = useAccordion({
+  const controller = useAccordion({
     multiple: true,
     defaultValue: ['first'],
     onChange: (value) => console.log(value),
   });
 
-  return <Accordion controller={accordion}>{/* items */}</Accordion>;
+  return <Accordion controller={controller}>{/* items */}</Accordion>;
 }
 ```
 
 Most controller hooks can be called with no arguments – `useAccordion()` is valid and gives you a
 controller with the component's default state, because every one of its options is optional. A hook
-whose component genuinely needs a value to work still requires it: `usePagination({ total })` and
-`useDataGrid({ data, columns })` cannot be called empty.
+whose component genuinely needs a value to work still requires it: `usePagination({ total })` cannot
+be called empty.
 
 A controller is meant to drive one component instance. You can pass the same controller to two
 components – they will share the value – but queries that depend on mounted children see all of
@@ -105,12 +105,12 @@ are ignored.** Pass them to the hook instead:
 
 ```tsx
 // ✅ Options go to the hook
-const accordion = useAccordion({ multiple: true, defaultValue: ['first'] });
-<Accordion controller={accordion} />
+const controller = useAccordion({ multiple: true, defaultValue: ['first'] });
+<Accordion controller={controller} />
 
 // ❌ multiple and defaultValue are ignored – the controller already decides them
-const accordion = useAccordion();
-<Accordion controller={accordion} multiple defaultValue={['first']} />
+const controller = useAccordion();
+<Accordion controller={controller} multiple defaultValue={['first']} />
 ```
 
 This happens silently: there is no runtime warning. The `controller` prop's description in each
@@ -133,39 +133,35 @@ This means the controller is a normal part of your render, and you can read its 
 query functions:
 
 ```tsx
-const accordion = useAccordion({ multiple: true });
+const controller = useAccordion({ multiple: true });
 
 return (
   <>
-    <Text>{accordion.getValue().length} items expanded</Text>
-    <Button disabled={accordion.getValue().length === 0} onClick={accordion.collapseAll}>
+    <Text>{controller.getValue().length} items expanded</Text>
+    <Button disabled={controller.getValue().length === 0} onClick={controller.collapseAll}>
       Collapse all
     </Button>
-    <Accordion controller={accordion}>{/* items */}</Accordion>
+    <Accordion controller={controller}>{/* items */}</Accordion>
   </>
 );
 ```
 
 Two guarantees are worth knowing when you write effects and memos against a controller:
 
-- **Actions and queries are stable for the lifetime of the controller.** `accordion.expandAll` is
+- **Actions and queries are stable for the lifetime of the controller.** `controller.expandAll` is
   the same function on every render, so it is safe as a `useEffect` or `useCallback` dependency and
   safe to pass to a memoised child.
 - **The controller object itself is not a meaningful dependency.** It is memoised on its state, so
   it changes only when the state changes – but do not build on its identity. Depend on the specific
   actions and queries you use.
 
-Both guarantees hold for the components listed below except the two that predate them. `useCombobox`
-returns a new object on every render, and its dropdown actions (`openDropdown`, `closeDropdown`,
-`toggleDropdown`) change identity whenever the dropdown opens or closes. `useDataGrid` also returns a
-new store on every render. Treat the members of those two as ordinary callbacks rather than stable
-references.
+Both guarantees hold for every component listed below.
 
 `onChange` fires synchronously inside the action that caused the change, exactly as it does with
 controlled props.
 
-State is read through `get<X>()` functions – `stepper.getActive()`, `menubar.getOpenIndex()`,
-`timePicker.getHours()`. They are stable like the actions, and they always return the latest value:
+State is read through `get<X>()` functions – `getActive()` on `useStepper`, `getOpenIndex()` on
+`useMenubar`, `getHours()` on `useTimePicker`. They are stable like the actions, and they always return the latest value:
 during render, because the component re-renders when the state changes, and inside effects and
 callbacks, where a value captured by a closure would be stale.
 
@@ -219,8 +215,8 @@ Controller types are named after the component and exported from the same packag
 ```tsx
 import type { AccordionController, AccordionControllerOptions } from '@mantine/core';
 
-function expandEverything(accordion: AccordionController<true>) {
-  accordion.expandAll();
+function expandEverything(controller: AccordionController<true>) {
+  controller.expandAll();
 }
 ```
 
@@ -254,18 +250,6 @@ The inferred type flows through the `controller` prop, so `Accordion` narrows it
       <Code>useCalendar</Code>,
       <Code>controller</Code>,
       <Code>CalendarController</Code>,
-    ],
-    [
-      <MdxLink href="/core/combobox">Combobox</MdxLink>,
-      <Code>useCombobox</Code>,
-      <Code>store</Code>,
-      <Code>ComboboxStore</Code>,
-    ],
-    [
-      <MdxLink href="/data-grid/data-grid">DataGrid</MdxLink>,
-      <Code>useDataGrid</Code>,
-      <Code>store</Code>,
-      <Code>DataGridStore</Code>,
     ],
     [
       <MdxLink href="/core/editable">Editable</MdxLink>,
@@ -315,20 +299,9 @@ The inferred type flows through the `controller` prop, so `Accordion` narrows it
       <Code>controller</Code>,
       <Code>TimerController</Code>,
     ],
-    [
-      <MdxLink href="/core/tree">Tree</MdxLink>,
-      <Code>useTree</Code>,
-      <Code>tree</Code>,
-      <Code>TreeController</Code>,
-    ],
   ]}
 />
 
-`Combobox`, `Tree` and `DataGrid` predate the `controller` name and keep the prop names they shipped
-with – `store`, `tree` and `store`. They are controllers in every other respect, but they also keep
-the method names they shipped with, so check their own pages rather than assuming the vocabulary
-above: `useTree` spells its bulk actions `expandAllNodes` and `collapseAllNodes`, not `expandAll` and
-`collapseAll`.
 
 [usePagination](/hooks/use-pagination) lives in `@mantine/hooks` because it is useful on its own,
 and is re-exported from `@mantine/core` together with its controller-named types, so both imports
@@ -356,3 +329,55 @@ import type { CalendarController, TimePickerController } from '@mantine/dates';
 A hook that returns an object is not automatically a controller. `useFloatingWindow` and
 `useModalsStack` return objects that a component consumes, but they do not own component state and
 are not passed with a `controller` prop.
+
+## Stores
+
+`Combobox`, `Tree` and `DataGrid` work with a **store** instead of a controller. A store is created
+and passed the same way – a `use<Component>` hook whose result goes to the component's `store` prop –
+but it serves a different purpose:
+
+- A **controller** drives a component that you use as is. `Stepper` with `useStepper` is the
+  complete component, and the controller adds actions and queries next to its props.
+- A **store** is a building block for your own component. `Combobox` with `useCombobox` is the base
+  that `Select`, `Autocomplete` and `MultiSelect` are built on, and you use it the same way – to build
+  a component with its own props and behavior, for example a select that can create new options.
+
+Stores follow the naming of the hooks they shipped with rather than the vocabulary above – for
+example, `useTree` spells its bulk actions `expandAllNodes` and `collapseAllNodes`, not `expandAll`
+and `collapseAll` – so check each component's page. `useCombobox` and `useDataGrid` also return a
+new object on every render, and `useCombobox`'s dropdown actions (`openDropdown`, `closeDropdown`,
+`toggleDropdown`) change identity whenever the dropdown opens or closes, so treat the members of those
+two as ordinary callbacks rather than stable references.
+
+```tsx
+import { Tree, useTree } from '@mantine/core';
+
+function Demo() {
+  const store = useTree({ initialExpandedState: { src: true } });
+  return <Tree data={data} store={store} />;
+}
+```
+
+<DataTable
+  head={['Component', 'Hook', 'Prop', 'Store type']}
+  data={[
+    [
+      <MdxLink href="/core/combobox">Combobox</MdxLink>,
+      <Code>useCombobox</Code>,
+      <Code>store</Code>,
+      <Code>ComboboxStore</Code>,
+    ],
+    [
+      <MdxLink href="/data-grid/data-grid">DataGrid</MdxLink>,
+      <Code>useDataGrid</Code>,
+      <Code>store</Code>,
+      <Code>DataGridStore</Code>,
+    ],
+    [
+      <MdxLink href="/core/tree">Tree</MdxLink>,
+      <Code>useTree</Code>,
+      <Code>store</Code>,
+      <Code>TreeStore</Code>,
+    ],
+  ]}
+/>

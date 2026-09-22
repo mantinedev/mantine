@@ -15,9 +15,9 @@ const groceries = [
 export function DropdownOptionsAnimation() {
   const [animating, setAnimating] = useState(false);
 
-  const combobox = useCombobox({
+  const store = useCombobox({
     onDropdownClose: () => {
-      combobox.resetSelectedOption();
+      store.resetSelectedOption();
       setAnimating(false);
     },
 
@@ -39,11 +39,11 @@ export function DropdownOptionsAnimation() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target targetType="button">
@@ -52,7 +52,7 @@ export function DropdownOptionsAnimation() {
           type="button"
           pointer
           rightSection={<Combobox.Chevron />}
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           rightSectionPointerEvents="none"
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}

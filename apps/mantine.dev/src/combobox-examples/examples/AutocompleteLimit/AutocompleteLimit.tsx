@@ -22,7 +22,7 @@ function getFilteredOptions(data: string[], searchQuery: string, limit: number) 
 }
 
 export function AutocompleteLimit() {
-  const combobox = useCombobox();
+  const store = useCombobox();
   const [value, setValue] = useState('');
   const filteredOptions = getFilteredOptions(MOCKDATA, value, 7);
 
@@ -36,10 +36,10 @@ export function AutocompleteLimit() {
     <Combobox
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
       withinPortal={false}
-      store={combobox}
+      store={store}
     >
       <Combobox.Target>
         <TextInput
@@ -48,11 +48,11 @@ export function AutocompleteLimit() {
           value={value}
           onChange={(event) => {
             setValue(event.currentTarget.value);
-            combobox.openDropdown();
+            store.openDropdown();
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
-          onBlur={() => combobox.closeDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
+          onBlur={() => store.closeDropdown()}
         />
       </Combobox.Target>
 

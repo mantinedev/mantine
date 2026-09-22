@@ -12,15 +12,15 @@ const groceries = [
 
 export function SelectDropdownSearch() {
   const [search, setSearch] = useState('');
-  const combobox = useCombobox({
+  const store = useCombobox({
     onDropdownClose: () => {
-      combobox.resetSelectedOption();
-      combobox.focusTarget();
+      store.resetSelectedOption();
+      store.focusTarget();
       setSearch('');
     },
 
     onDropdownOpen: () => {
-      combobox.focusSearchInput();
+      store.focusSearchInput();
     },
   });
 
@@ -36,11 +36,11 @@ export function SelectDropdownSearch() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target targetType="button">
@@ -49,7 +49,7 @@ export function SelectDropdownSearch() {
           type="button"
           pointer
           rightSection={<Combobox.Chevron />}
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           rightSectionPointerEvents="none"
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}

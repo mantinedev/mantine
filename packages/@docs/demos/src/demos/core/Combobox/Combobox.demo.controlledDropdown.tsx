@@ -10,7 +10,7 @@ const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots
 
 function Demo() {
   const [opened, setOpened] = useState(false);
-  const combobox = useCombobox({ opened });
+  const store = useCombobox({ opened });
 
   const options = groceries.map((item) => (
     <Combobox.Option value={item} key={item}>
@@ -24,7 +24,7 @@ function Demo() {
         Toggle dropdown
       </Button>
 
-      <Combobox store={combobox}>
+      <Combobox store={store}>
         <Combobox.Target>
           <TextInput
             label="Autocomplete"
@@ -46,7 +46,7 @@ const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots
 
 function Demo() {
   const [opened, setOpened] = useState(false);
-  const combobox = useCombobox({ opened });
+  const store = useCombobox({ opened });
 
   const options = groceries.map((item) => (
     <Combobox.Option value={item} key={item}>
@@ -60,7 +60,7 @@ function Demo() {
         Toggle dropdown
       </Button>
 
-      <Combobox store={combobox}>
+      <Combobox store={store}>
         <Combobox.Target>
           <TextInput
             label="Autocomplete"

@@ -246,18 +246,18 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const _ref = useMergedRef(inputRef, ref);
 
-  const combobox = useCombobox({
+  const store = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
     onDropdownOpen: () => {
       onDropdownOpen?.();
       if (selectFirstOptionOnDropdownOpen) {
-        combobox.selectFirstOption();
+        store.selectFirstOption();
       }
     },
     onDropdownClose: () => {
       onDropdownClose?.();
-      combobox.resetSelectedOption();
+      store.resetSelectedOption();
     },
   });
 
@@ -288,7 +288,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
 
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
-    combobox.resetSelectedOption();
+    store.resetSelectedOption();
   };
 
   const getStyles = useStyles<TagsInputFactory>({
@@ -361,7 +361,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
       event.preventDefault();
 
       const hasActiveSelection = !!document.querySelector<HTMLDivElement>(
-        `#${combobox.listId} [data-combobox-option][data-combobox-selected]`
+        `#${store.listId} [data-combobox-option][data-combobox-selected]`
       );
 
       if (hasActiveSelection) {
@@ -448,7 +448,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {
-      combobox.selectFirstOption();
+      store.selectFirstOption();
     }
   }, [selectFirstOptionOnChange, _value, _searchValue]);
 
@@ -459,7 +459,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
         setValue([]);
         handleSearchChange('');
         inputRef.current?.focus();
-        combobox.openDropdown();
+        store.openDropdown();
         onClear?.();
       }}
     />
@@ -468,7 +468,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
   return (
     <>
       <Combobox
-        store={combobox}
+        store={store}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
@@ -487,7 +487,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
             setValue([..._value, optionsLockup[val].value]);
           }
 
-          combobox.resetSelectedOption();
+          store.resetSelectedOption();
         }}
         {...comboboxProps}
       >
@@ -553,12 +553,12 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
                   onKeyDown={handleInputKeydown}
                   onFocus={(event) => {
                     onFocus?.(event);
-                    openOnFocus && combobox.openDropdown();
+                    openOnFocus && store.openDropdown();
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);
                     acceptValueOnBlur && handleValueSelect(_searchValue);
-                    combobox.closeDropdown();
+                    store.closeDropdown();
                   }}
                   onPaste={handlePaste}
                   value={_searchValue}

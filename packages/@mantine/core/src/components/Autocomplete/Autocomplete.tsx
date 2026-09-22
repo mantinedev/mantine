@@ -151,25 +151,25 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
     onChange,
   });
 
-  const combobox = useCombobox({
+  const store = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
     onDropdownOpen: () => {
       onDropdownOpen?.();
       if (selectFirstOptionOnDropdownOpen) {
-        combobox.selectFirstOption();
+        store.selectFirstOption();
       }
     },
     onDropdownClose: () => {
       onDropdownClose?.();
       // Required for autoSelectOnBlur to work correctly
-      setTimeout(combobox.resetSelectedOption, 0);
+      setTimeout(store.resetSelectedOption, 0);
     },
   });
 
   const handleValueChange = (value: string) => {
     setValue(value);
-    combobox.resetSelectedOption();
+    store.resetSelectedOption();
   };
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<AutocompleteFactory>({
@@ -180,7 +180,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {
-      combobox.selectFirstOption();
+      store.selectFirstOption();
     }
   }, [selectFirstOptionOnChange, _value]);
 
@@ -196,7 +196,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       __staticSelector="Autocomplete"
       classNames={resolvedClassNames}
       styles={resolvedStyles}
@@ -209,7 +209,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
       onOptionSubmit={(val) => {
         onOptionSubmit?.(val);
         handleValueChange(optionsLockup[val].label);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
       {...comboboxProps}
     >
@@ -228,23 +228,23 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
           error={error}
           onChange={(event) => {
             handleValueChange(event.currentTarget.value);
-            combobox.openDropdown();
-            selectFirstOptionOnChange && combobox.selectFirstOption();
+            store.openDropdown();
+            selectFirstOptionOnChange && store.selectFirstOption();
           }}
           onFocus={(event) => {
-            openOnFocus && combobox.openDropdown();
+            openOnFocus && store.openDropdown();
             onFocus?.(event);
           }}
           onBlur={(event) => {
             if (autoSelectOnBlur) {
-              combobox.clickSelectedOption();
+              store.clickSelectedOption();
             }
 
-            combobox.closeDropdown();
+            store.closeDropdown();
             onBlur?.(event);
           }}
           onClick={(event) => {
-            combobox.openDropdown();
+            store.openDropdown();
             onClick?.(event);
           }}
           classNames={resolvedClassNames}

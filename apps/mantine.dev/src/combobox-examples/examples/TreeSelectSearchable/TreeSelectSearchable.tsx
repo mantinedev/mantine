@@ -133,8 +133,8 @@ function getAllParentValues(nodes: TreeNode[]): Record<string, boolean> {
 }
 
 export function TreeSelectSearchable() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -162,11 +162,11 @@ export function TreeSelectSearchable() {
   const flatNodes = flattenTree(filteredData, resolvedExpanded);
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (!combobox.dropdownOpened || search.trim().length > 0) {
+    if (!store.dropdownOpened || search.trim().length > 0) {
       return;
     }
 
-    const index = combobox.getSelectedOptionIndex();
+    const index = store.getSelectedOptionIndex();
     if (index < 0 || index >= flatNodes.length) {
       return;
     }
@@ -186,7 +186,7 @@ export function TreeSelectSearchable() {
         event.preventDefault();
         const parentIndex = flatNodes.findIndex((n) => n.node.value === current.parent);
         if (parentIndex >= 0) {
-          combobox.selectOption(parentIndex);
+          store.selectOption(parentIndex);
         }
       }
     }
@@ -194,12 +194,12 @@ export function TreeSelectSearchable() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
         setSearch(findLabel(data, val) || '');
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -208,13 +208,13 @@ export function TreeSelectSearchable() {
           value={search}
           onChange={(event) => {
             setSearch(event.currentTarget.value);
-            combobox.openDropdown();
-            combobox.resetSelectedOption();
+            store.openDropdown();
+            store.resetSelectedOption();
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
           onBlur={() => {
-            combobox.closeDropdown();
+            store.closeDropdown();
             if (value) {
               setSearch(findLabel(data, value) || '');
             } else {

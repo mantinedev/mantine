@@ -32,11 +32,11 @@ function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePaylo
 }
 
 function Demo() {
-  const tree = useTree({
+  const store = useTree({
     initialExpandedState: getTreeExpandedState(data, ['src', 'src/components']),
   });
 
-  return <Tree data={data} tree={tree} withLines renderNode={(payload) => <Leaf {...payload} />} />;
+  return <Tree data={data} store={store} withLines renderNode={(payload) => <Leaf {...payload} />} />;
 }
 `;
 
@@ -58,11 +58,13 @@ function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePaylo
 }
 
 function Demo() {
-  const tree = useTree({
+  const store = useTree({
     initialExpandedState: getTreeExpandedState(data, ['src', 'src/components']),
   });
 
-  return <Tree data={data} tree={tree} withLines renderNode={(payload) => <Leaf {...payload} />} />;
+  return (
+    <Tree data={data} store={store} withLines renderNode={(payload) => <Leaf {...payload} />} />
+  );
 }
 
 export const expandedState: MantineDemo = {

@@ -7,25 +7,25 @@ import { Button, Code, Group, Stack, Text } from '@mantine/core';
 import { TimePicker, useTimePicker } from '@mantine/dates';
 
 function Demo() {
-  const timePicker = useTimePicker({ withSeconds: true });
+  const controller = useTimePicker({ withSeconds: true });
 
   return (
     <Stack>
-      <TimePicker controller={timePicker} withDropdown />
+      <TimePicker controller={controller} withDropdown />
 
       <Text size="sm">
-        Value: <Code>{timePicker.getValue() || 'empty'}</Code>, hours: <Code>{String(timePicker.getHours())}</Code>,
-        minutes: <Code>{String(timePicker.getMinutes())}</Code>, seconds: <Code>{String(timePicker.getSeconds())}</Code>
+        Value: <Code>{controller.getValue() || 'empty'}</Code>, hours: <Code>{String(controller.getHours())}</Code>,
+        minutes: <Code>{String(controller.getMinutes())}</Code>, seconds: <Code>{String(controller.getSeconds())}</Code>
       </Text>
 
       <Group>
-        <Button variant="default" onClick={() => timePicker.setValue('09:30:00')}>
+        <Button variant="default" onClick={() => controller.setValue('09:30:00')}>
           Set 09:30:00
         </Button>
-        <Button variant="default" onClick={() => timePicker.focus('minutes')}>
+        <Button variant="default" onClick={() => controller.focus('minutes')}>
           Focus minutes
         </Button>
-        <Button variant="default" onClick={timePicker.clear} disabled={!timePicker.hasValue()}>
+        <Button variant="default" onClick={controller.clear} disabled={!controller.hasValue()}>
           Clear
         </Button>
       </Group>
@@ -35,27 +35,27 @@ function Demo() {
 `;
 
 function Demo() {
-  const timePicker = useTimePicker({ withSeconds: true });
+  const controller = useTimePicker({ withSeconds: true });
 
   return (
     <Stack>
-      <TimePicker controller={timePicker} withDropdown />
+      <TimePicker controller={controller} withDropdown />
 
       <Text size="sm">
-        Value: <Code>{timePicker.getValue() || 'empty'}</Code>, hours:{' '}
-        <Code>{String(timePicker.getHours())}</Code>, minutes:{' '}
-        <Code>{String(timePicker.getMinutes())}</Code>, seconds:{' '}
-        <Code>{String(timePicker.getSeconds())}</Code>
+        Value: <Code>{controller.getValue() || 'empty'}</Code>, hours:{' '}
+        <Code>{String(controller.getHours())}</Code>, minutes:{' '}
+        <Code>{String(controller.getMinutes())}</Code>, seconds:{' '}
+        <Code>{String(controller.getSeconds())}</Code>
       </Text>
 
       <Group>
-        <Button variant="default" onClick={() => timePicker.setValue('09:30:00')}>
+        <Button variant="default" onClick={() => controller.setValue('09:30:00')}>
           Set 09:30:00
         </Button>
-        <Button variant="default" onClick={() => timePicker.focus('minutes')}>
+        <Button variant="default" onClick={() => controller.focus('minutes')}>
           Focus minutes
         </Button>
-        <Button variant="default" onClick={timePicker.clear} disabled={!timePicker.hasValue()}>
+        <Button variant="default" onClick={controller.clear} disabled={!controller.hasValue()}>
           Clear
         </Button>
       </Group>

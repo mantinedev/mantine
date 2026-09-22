@@ -9,8 +9,8 @@ const groceries = [
 const allGroceries = groceries.reduce<string[]>((acc, group) => [...acc, ...group.options], []);
 
 export function SelectGroupsSearchable() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
@@ -43,12 +43,12 @@ export function SelectGroupsSearchable() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
         setSearch(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -56,14 +56,14 @@ export function SelectGroupsSearchable() {
           rightSection={<Combobox.Chevron />}
           value={search}
           onChange={(event) => {
-            combobox.openDropdown();
-            combobox.updateSelectedOptionIndex();
+            store.openDropdown();
+            store.updateSelectedOptionIndex();
             setSearch(event.currentTarget.value);
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
           onBlur={() => {
-            combobox.closeDropdown();
+            store.closeDropdown();
             setSearch(value || '');
           }}
           placeholder="Search value"

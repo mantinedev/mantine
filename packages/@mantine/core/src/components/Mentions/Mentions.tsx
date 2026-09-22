@@ -280,8 +280,8 @@ export const Mentions = factory<MentionsFactory>((_props) => {
   const [caretStyle, setCaretStyle] = useState<React.CSSProperties | null>(null);
   const [selection, setSelection] = useState({ start: 0, end: 0 });
 
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const { plainText, spans } = getMentionModel(_value, sources);
@@ -365,7 +365,7 @@ export const Mentions = factory<MentionsFactory>((_props) => {
     pendingCaretRef.current = entry.caret;
     setSelection({ start: entry.caret, end: entry.caret });
     setQuery(null);
-    combobox.closeDropdown();
+    store.closeDropdown();
     historyRef.current.lastType = null;
   };
 
@@ -498,7 +498,7 @@ export const Mentions = factory<MentionsFactory>((_props) => {
     pendingCaretRef.current = caretPlain;
     setSelection({ start: caretPlain, end: caretPlain });
     setQuery(null);
-    combobox.closeDropdown();
+    store.closeDropdown();
     activeSource.props.onAdd?.({
       id: item.id,
       display,
@@ -544,30 +544,30 @@ export const Mentions = factory<MentionsFactory>((_props) => {
       return;
     }
 
-    if (!combobox.dropdownOpened) {
+    if (!store.dropdownOpened) {
       return;
     }
 
     if (event.nativeEvent.code === 'ArrowDown') {
       event.preventDefault();
-      setSelectedOptionId(combobox.selectNextOption());
-      setSelectedIndex(combobox.getSelectedOptionIndex());
+      setSelectedOptionId(store.selectNextOption());
+      setSelectedIndex(store.getSelectedOptionIndex());
     } else if (event.nativeEvent.code === 'ArrowUp') {
       event.preventDefault();
-      setSelectedOptionId(combobox.selectPreviousOption());
-      setSelectedIndex(combobox.getSelectedOptionIndex());
+      setSelectedOptionId(store.selectPreviousOption());
+      setSelectedIndex(store.getSelectedOptionIndex());
     } else if (
       (event.nativeEvent.code === 'Enter' ||
         event.nativeEvent.code === 'NumpadEnter' ||
         event.key === 'Tab') &&
       !event.nativeEvent.isComposing &&
-      combobox.getSelectedOptionIndex() !== -1
+      store.getSelectedOptionIndex() !== -1
     ) {
       event.preventDefault();
-      combobox.clickSelectedOption();
+      store.clickSelectedOption();
     } else if (event.key === 'Escape') {
       event.preventDefault();
-      combobox.closeDropdown();
+      store.closeDropdown();
       setQuery(null);
     }
   };
@@ -593,18 +593,18 @@ export const Mentions = factory<MentionsFactory>((_props) => {
         !!activeSource?.props.renderEmpty);
 
     if (shouldOpen) {
-      combobox.openDropdown();
+      store.openDropdown();
     } else {
-      combobox.closeDropdown();
+      store.closeDropdown();
     }
   }, [query, queryState.loading, queryState.error, suggestions.length]);
 
   useEffect(() => {
-    if (combobox.dropdownOpened && suggestions.length > 0) {
-      setSelectedOptionId(combobox.selectFirstOption());
-      setSelectedIndex(combobox.getSelectedOptionIndex());
+    if (store.dropdownOpened && suggestions.length > 0) {
+      setSelectedOptionId(store.selectFirstOption());
+      setSelectedIndex(store.getSelectedOptionIndex());
     }
-  }, [suggestions, combobox.dropdownOpened]);
+  }, [suggestions, store.dropdownOpened]);
 
   useIsomorphicEffect(() => {
     if (anchorMode !== 'caret' || !query || !textareaRef.current) {
@@ -720,11 +720,9 @@ export const Mentions = factory<MentionsFactory>((_props) => {
           aria-labelledby={ariaLabelledby}
           role={singleLine ? 'combobox' : undefined}
           aria-autocomplete="list"
-          aria-expanded={singleLine ? combobox.dropdownOpened : undefined}
-          aria-controls={combobox.dropdownOpened ? (combobox.listId ?? undefined) : undefined}
-          aria-activedescendant={
-            combobox.dropdownOpened ? (selectedOptionId ?? undefined) : undefined
-          }
+          aria-expanded={singleLine ? store.dropdownOpened : undefined}
+          aria-controls={store.dropdownOpened ? (store.listId ?? undefined) : undefined}
+          aria-activedescendant={store.dropdownOpened ? (selectedOptionId ?? undefined) : undefined}
           aria-haspopup="listbox"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
@@ -732,7 +730,7 @@ export const Mentions = factory<MentionsFactory>((_props) => {
           onFocus={onFocus}
           onBlur={(event: React.FocusEvent<HTMLTextAreaElement>) => {
             onBlur?.(event);
-            combobox.closeDropdown();
+            store.closeDropdown();
           }}
           onClick={(event: React.MouseEvent<HTMLTextAreaElement>) => {
             onClick?.(event);
@@ -770,7 +768,7 @@ export const Mentions = factory<MentionsFactory>((_props) => {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       __staticSelector="Mentions"
       classNames={resolvedClassNames}
       styles={resolvedStyles}

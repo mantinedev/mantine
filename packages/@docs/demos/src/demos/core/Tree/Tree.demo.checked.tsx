@@ -14,10 +14,10 @@ const renderTreeNode = ({
   hasChildren,
   isRoot,
   elementProps,
-  tree,
+  store,
 }: RenderTreeNodePayload) => {
-  const checked = tree.isNodeChecked(node.value);
-  const indeterminate = tree.isNodeIndeterminate(node.value);
+  const checked = store.isNodeChecked(node.value);
+  const indeterminate = store.isNodeIndeterminate(node.value);
 
   return (
     <Group gap="xs" {...elementProps}>
@@ -26,10 +26,10 @@ const renderTreeNode = ({
         size="xs"
         indeterminate={indeterminate}
         mis={isRoot ? undefined : 2}
-        onClick={() => (!checked ? tree.checkNode(node.value) : tree.uncheckNode(node.value))}
+        onClick={() => (!checked ? store.checkNode(node.value) : store.uncheckNode(node.value))}
       />
 
-      <Group gap={6} onClick={() => tree.toggleExpanded(node.value)}>
+      <Group gap={6} onClick={() => store.toggleExpanded(node.value)}>
         {hasChildren ? (
           expanded ? (
             <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
@@ -64,10 +64,10 @@ const renderTreeNode = ({
   hasChildren,
   isRoot,
   elementProps,
-  tree,
+  store,
 }: RenderTreeNodePayload) => {
-  const checked = tree.isNodeChecked(node.value);
-  const indeterminate = tree.isNodeIndeterminate(node.value);
+  const checked = store.isNodeChecked(node.value);
+  const indeterminate = store.isNodeIndeterminate(node.value);
 
   return (
     <Group gap="xs" {...elementProps}>
@@ -76,10 +76,10 @@ const renderTreeNode = ({
         size="xs"
         indeterminate={indeterminate}
         mis={isRoot ? undefined : 2}
-        onClick={() => (!checked ? tree.checkNode(node.value) : tree.uncheckNode(node.value))}
+        onClick={() => (!checked ? store.checkNode(node.value) : store.uncheckNode(node.value))}
       />
 
-      <Group gap={6} onClick={() => tree.toggleExpanded(node.value)}>
+      <Group gap={6} onClick={() => store.toggleExpanded(node.value)}>
         {hasChildren ? (
           expanded ? (
             <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />

@@ -126,37 +126,37 @@ state, actions and queries:
 import { Menubar, useMenubar } from '@mantine/core';
 
 function Demo() {
-  const menubar = useMenubar({
+  const controller = useMenubar({
     defaultOpenIndex: 0, // -> uncontrolled initial value
     loop: false, // -> same as the loop prop of Menubar
     // openIndex, onOpenChange -> controlled state, same as on Menubar
   });
 
   // Actions
-  menubar.openMenu(1); // -> opens the menu and moves the tab stop to it
-  menubar.openMenu(1, 'hover'); // -> same, recorded as opened by hover
-  menubar.closeMenu();
-  menubar.toggleMenu(1);
-  menubar.setOpenIndex(1); // -> sets the index directly, null closes all menus
-  menubar.setActiveIndex(1); // -> moves the tab stop without moving DOM focus
+  controller.openMenu(1); // -> opens the menu and moves the tab stop to it
+  controller.openMenu(1, 'hover'); // -> same, recorded as opened by hover
+  controller.closeMenu();
+  controller.toggleMenu(1);
+  controller.setOpenIndex(1); // -> sets the index directly, null closes all menus
+  controller.setActiveIndex(1); // -> moves the tab stop without moving DOM focus
 
   // Focus actions
-  menubar.focusMenu(1); // -> moves the tab stop to the menu and focuses its target
-  menubar.focusNextMenu(); // -> next enabled menu, respects loop
-  menubar.focusPreviousMenu();
-  menubar.focusFirstMenu();
-  menubar.focusLastMenu();
-  menubar.focusMenuItem(1, 'first'); // -> focuses the first item of the opened menu dropdown
+  controller.focusMenu(1); // -> moves the tab stop to the menu and focuses its target
+  controller.focusNextMenu(); // -> next enabled menu, respects loop
+  controller.focusPreviousMenu();
+  controller.focusFirstMenu();
+  controller.focusLastMenu();
+  controller.focusMenuItem(1, 'first'); // -> focuses the first item of the opened menu dropdown
 
   // Queries
-  menubar.getOpenIndex(); // -> index of the opened menu, null when all menus are closed
-  menubar.getActiveIndex(); // -> index of the menu that holds the menubar tab stop
-  menubar.isMenuOpen(1); // -> boolean
-  menubar.getMenuCount(); // -> number of Menubar.Menu components rendered by Menubar
-  menubar.getEnabledIndexes(); // -> indexes of the menus that are not disabled
-  menubar.getOpenSource(); // -> 'click' | 'hover' | null
+  controller.getOpenIndex(); // -> index of the opened menu, null when all menus are closed
+  controller.getActiveIndex(); // -> index of the menu that holds the menubar tab stop
+  controller.isMenuOpen(1); // -> boolean
+  controller.getMenuCount(); // -> number of Menubar.Menu components rendered by Menubar
+  controller.getEnabledIndexes(); // -> indexes of the menus that are not disabled
+  controller.getOpenSource(); // -> 'click' | 'hover' | null
 
-  return <Menubar controller={menubar}>{/* menus */}</Menubar>;
+  return <Menubar controller={controller}>{/* menus */}</Menubar>;
 }
 ```
 

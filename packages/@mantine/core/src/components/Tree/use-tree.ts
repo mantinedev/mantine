@@ -616,4 +616,4 @@ export function useTree({
   );
 }
 
-export type TreeController = ReturnType<typeof useTree>;
+export type TreeStore = ReturnType<typeof useTree>;

@@ -369,27 +369,27 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
     onChange: onSearchChange,
   });
 
-  const combobox = useCombobox({
+  const store = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
     onDropdownOpen: () => {
       onDropdownOpen?.();
       if (searchable) {
-        combobox.focusSearchInput();
+        store.focusSearchInput();
       }
       if (selectFirstOptionOnDropdownOpen) {
-        combobox.selectFirstOption();
+        store.selectFirstOption();
       }
     },
     onDropdownClose: () => {
       onDropdownClose?.();
-      combobox.resetSelectedOption();
+      store.resetSelectedOption();
     },
   });
 
   const handleSearchChange = (val: string) => {
     setSearchValue(val);
-    combobox.resetSelectedOption();
+    store.resetSelectedOption();
   };
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<ComboboxPopoverFactory>({
@@ -409,11 +409,11 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
       } else {
         setValue([...currentValue, option.value] as any);
       }
-      combobox.updateSelectedOptionIndex('selected');
+      store.updateSelectedOptionIndex('selected');
     } else {
       const nextValue = allowDeselect && `${option.value}` === `${_value}` ? null : option.value;
       setValue(nextValue as any);
-      combobox.closeDropdown();
+      store.closeDropdown();
     }
 
     if (searchable) {
@@ -424,7 +424,7 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
   return (
     <>
       <Combobox
-        store={combobox}
+        store={store}
         __staticSelector="ComboboxPopover"
         classNames={resolvedClassNames}
         styles={resolvedStyles}

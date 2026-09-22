@@ -5,24 +5,35 @@ const code = `
 import { Progress, Stack, Timer, useTimer } from '@mantine/core';
 
 function Demo() {
-  const timer = useTimer({ countdown: true, startMs: 30 * 1000, autoStart: true, interval: 50 });
+  const controller = useTimer({ countdown: true, startMs: 30 * 1000, autoStart: true, interval: 50 });
 
   return (
     <Stack>
-      <Timer controller={timer} format="ss:SSS" fz={32} fw={700} style={{ alignSelf: 'center' }} />
-      <Progress value={timer.getProgress() * 100} transitionDuration={50} />
+      <Timer controller={controller} format="ss:SSS" fz={32} fw={700} style={{ alignSelf: 'center' }} />
+      <Progress value={controller.getProgress() * 100} transitionDuration={50} />
     </Stack>
   );
 }
 `;
 
 function Demo() {
-  const timer = useTimer({ countdown: true, startMs: 30 * 1000, autoStart: true, interval: 50 });
+  const controller = useTimer({
+    countdown: true,
+    startMs: 30 * 1000,
+    autoStart: true,
+    interval: 50,
+  });
 
   return (
     <Stack>
-      <Timer controller={timer} format="ss:SSS" fz={32} fw={700} style={{ alignSelf: 'center' }} />
-      <Progress value={timer.getProgress() * 100} transitionDuration={50} />
+      <Timer
+        controller={controller}
+        format="ss:SSS"
+        fz={32}
+        fw={700}
+        style={{ alignSelf: 'center' }}
+      />
+      <Progress value={controller.getProgress() * 100} transitionDuration={50} />
     </Stack>
   );
 }

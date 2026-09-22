@@ -11,25 +11,25 @@ const groceries = [
 ];
 
 export function SelectOptionOnHover() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [value, setValue] = useState<string | null>(null);
 
   const options = groceries.map((item, index) => (
-    <Combobox.Option value={item} key={item} onMouseOver={() => combobox.selectOption(index)}>
+    <Combobox.Option value={item} key={item} onMouseOver={() => store.selectOption(index)}>
       {item}
     </Combobox.Option>
   ));
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target targetType="button">
@@ -38,14 +38,14 @@ export function SelectOptionOnHover() {
           type="button"
           pointer
           rightSection={<Combobox.Chevron />}
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           rightSectionPointerEvents="none"
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>
       </Combobox.Target>
 
-      <Combobox.Dropdown onMouseLeave={() => combobox.resetSelectedOption()}>
+      <Combobox.Dropdown onMouseLeave={() => store.resetSelectedOption()}>
         <Combobox.Options>{options}</Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>

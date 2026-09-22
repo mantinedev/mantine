@@ -109,7 +109,7 @@ function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePaylo
 
 function Demo() {
   const [search, setSearch] = useState('');
-  const tree = useTree();
+  const store = useTree();
   const fuzzyFilter = useMemo(() => createFuzzyFilter(data), []);
 
   const filteredData = useMemo(
@@ -121,9 +121,9 @@ function Demo() {
     setSearch(value);
     if (value.trim()) {
       const next = filterTreeData(data, value, fuzzyFilter);
-      tree.setExpandedState(getTreeExpandedState(next, '*'));
+      store.setExpandedState(getTreeExpandedState(next, '*'));
     } else {
-      tree.collapseAllNodes();
+      store.collapseAllNodes();
     }
   };
 
@@ -137,7 +137,7 @@ function Demo() {
       />
       <Tree
         data={filteredData}
-        tree={tree}
+        store={store}
         withLines
         renderNode={(payload) => <Leaf {...payload} />}
       />
@@ -225,7 +225,7 @@ function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePaylo
 
 function Demo() {
   const [search, setSearch] = useState('');
-  const tree = useTree();
+  const store = useTree();
   const fuzzyFilter = useMemo(() => createFuzzyFilter(data), []);
 
   const filteredData = useMemo(
@@ -237,9 +237,9 @@ function Demo() {
     setSearch(value);
     if (value.trim()) {
       const next = filterTreeData(data, value, fuzzyFilter);
-      tree.setExpandedState(getTreeExpandedState(next, '*'));
+      store.setExpandedState(getTreeExpandedState(next, '*'));
     } else {
-      tree.collapseAllNodes();
+      store.collapseAllNodes();
     }
   };
 
@@ -253,7 +253,7 @@ function Demo() {
       />
       <Tree
         data={filteredData}
-        tree={tree}
+        store={store}
         withLines
         renderNode={(payload) => <Leaf {...payload} />}
       />

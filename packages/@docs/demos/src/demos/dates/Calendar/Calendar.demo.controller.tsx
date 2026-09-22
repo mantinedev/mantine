@@ -7,29 +7,29 @@ import { Button, Group, Stack, Text } from '@mantine/core';
 import { Calendar, useCalendar } from '@mantine/dates';
 
 function Demo() {
-  const calendar = useCalendar({ defaultDate: '2024-06-15' });
+  const controller = useCalendar({ defaultDate: '2024-06-15' });
 
   return (
     <Stack align="center">
       <Group justify="center">
-        <Button variant="default" onClick={calendar.previous}>
+        <Button variant="default" onClick={controller.previous}>
           Previous
         </Button>
-        <Button variant="default" onClick={calendar.next}>
+        <Button variant="default" onClick={controller.next}>
           Next
         </Button>
-        <Button variant="default" onClick={() => calendar.setDate(new Date())}>
+        <Button variant="default" onClick={() => controller.setDate(new Date())}>
           Today
         </Button>
-        <Button variant="default" onClick={() => calendar.setLevel('decade')}>
+        <Button variant="default" onClick={() => controller.setLevel('decade')}>
           Decade level
         </Button>
       </Group>
 
-      <Calendar controller={calendar} />
+      <Calendar controller={controller} />
 
       <Text size="sm" c="dimmed">
-        Displayed {calendar.getLevel()}: {calendar.getDisplayedDate()}
+        Displayed {controller.getLevel()}: {controller.getDisplayedDate()}
       </Text>
     </Stack>
   );
@@ -37,29 +37,29 @@ function Demo() {
 `;
 
 function Demo() {
-  const calendar = useCalendar({ defaultDate: '2024-06-15' });
+  const controller = useCalendar({ defaultDate: '2024-06-15' });
 
   return (
     <Stack align="center">
       <Group justify="center">
-        <Button variant="default" onClick={calendar.previous}>
+        <Button variant="default" onClick={controller.previous}>
           Previous
         </Button>
-        <Button variant="default" onClick={calendar.next}>
+        <Button variant="default" onClick={controller.next}>
           Next
         </Button>
-        <Button variant="default" onClick={() => calendar.setDate(new Date())}>
+        <Button variant="default" onClick={() => controller.setDate(new Date())}>
           Today
         </Button>
-        <Button variant="default" onClick={() => calendar.setLevel('decade')}>
+        <Button variant="default" onClick={() => controller.setLevel('decade')}>
           Decade level
         </Button>
       </Group>
 
-      <Calendar controller={calendar} />
+      <Calendar controller={controller} />
 
       <Text size="sm" c="dimmed">
-        Displayed {calendar.getLevel()}: {calendar.getDisplayedDate()}
+        Displayed {controller.getLevel()}: {controller.getDisplayedDate()}
       </Text>
     </Stack>
   );

@@ -11,8 +11,8 @@ const groceries = [
 ];
 
 export function AutocompleteHighlight() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
   const [value, setValue] = useState('');
   const shouldFilterOptions = !groceries.some((item) => item === value);
@@ -32,10 +32,10 @@ export function AutocompleteHighlight() {
     <Combobox
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
       withinPortal={false}
-      store={combobox}
+      store={store}
     >
       <Combobox.Target>
         <TextInput
@@ -44,12 +44,12 @@ export function AutocompleteHighlight() {
           value={value}
           onChange={(event) => {
             setValue(event.currentTarget.value);
-            combobox.updateSelectedOptionIndex();
-            combobox.openDropdown();
+            store.updateSelectedOptionIndex();
+            store.openDropdown();
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
-          onBlur={() => combobox.closeDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
+          onBlur={() => store.closeDropdown()}
         />
       </Combobox.Target>
 

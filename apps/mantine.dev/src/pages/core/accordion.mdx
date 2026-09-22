@@ -35,7 +35,7 @@ state, actions and queries:
 import { useAccordion } from '@mantine/core';
 
 function Demo() {
-  const accordion = useAccordion({
+  const controller = useAccordion({
     multiple: true, // -> allow several items to be expanded at the same time
     defaultValue: ['item-1'], // -> uncontrolled initial value
     // value, onChange -> controlled state, same as on Accordion
@@ -43,20 +43,20 @@ function Demo() {
   });
 
   // Actions
-  accordion.toggle('item-1'); // -> expand if collapsed, collapse if expanded
-  accordion.expand('item-1');
-  accordion.collapse('item-1');
-  accordion.expandAll(); // -> expands all mounted items, requires multiple
-  accordion.collapseAll();
-  accordion.setValue(['item-1']); // -> replaces the value
+  controller.toggle('item-1'); // -> expand if collapsed, collapse if expanded
+  controller.expand('item-1');
+  controller.collapse('item-1');
+  controller.expandAll(); // -> expands all mounted items, requires multiple
+  controller.collapseAll();
+  controller.setValue(['item-1']); // -> replaces the value
 
   // Queries
-  accordion.getValue(); // -> string[] when multiple is set, string | null otherwise
-  accordion.isExpanded('item-1'); // -> boolean
-  accordion.getExpandedItems(); // -> string[] in both modes
-  accordion.getItems(); // -> values of all mounted Accordion.Item components
+  controller.getValue(); // -> string[] when multiple is set, string | null otherwise
+  controller.isExpanded('item-1'); // -> boolean
+  controller.getExpandedItems(); // -> string[] in both modes
+  controller.getItems(); // -> values of all mounted Accordion.Item components
 
-  return <Accordion controller={accordion}>{/* items */}</Accordion>;
+  return <Accordion controller={controller}>{/* items */}</Accordion>;
 }
 ```
 

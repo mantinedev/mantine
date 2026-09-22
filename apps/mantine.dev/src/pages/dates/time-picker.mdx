@@ -49,31 +49,31 @@ current state, actions and queries:
 import { TimePicker, useTimePicker } from '@mantine/dates';
 
 function Demo() {
-  const timePicker = useTimePicker({
+  const controller = useTimePicker({
     defaultValue: '12:30', // -> uncontrolled initial value
     // value, onChange -> controlled state, same as on TimePicker
     // type, format, amPmLabels, withSeconds, min, max, pasteSplit -> same as on TimePicker
   });
 
   // Actions
-  timePicker.setValue('14:30:00'); // -> sets all fields from a time string
-  timePicker.setHours(14);
-  timePicker.setMinutes(30);
-  timePicker.setSeconds(0);
-  timePicker.setAmPm('PM');
-  timePicker.clear(); // -> clears all fields and focuses the hours field
-  timePicker.clamp(); // -> clamps the current value to min and max
-  timePicker.focus('minutes'); // -> 'hours' | 'minutes' | 'seconds' | 'amPm'
+  controller.setValue('14:30:00'); // -> sets all fields from a time string
+  controller.setHours(14);
+  controller.setMinutes(30);
+  controller.setSeconds(0);
+  controller.setAmPm('PM');
+  controller.clear(); // -> clears all fields and focuses the hours field
+  controller.clamp(); // -> clamps the current value to min and max
+  controller.focus('minutes'); // -> 'hours' | 'minutes' | 'seconds' | 'amPm'
 
   // Queries
-  timePicker.getValue(); // -> current value in hh:mm:ss or hh:mm 24h format, '' if it is not complete
-  timePicker.getHours(); // -> number | null
-  timePicker.getMinutes(); // -> number | null
-  timePicker.getSeconds(); // -> number | null
-  timePicker.getAmPm(); // -> string | null, always null in 24h format
-  timePicker.hasValue(); // -> boolean, true if at least one field has a value
+  controller.getValue(); // -> current value in hh:mm:ss or hh:mm 24h format, '' if it is not complete
+  controller.getHours(); // -> number | null
+  controller.getMinutes(); // -> number | null
+  controller.getSeconds(); // -> number | null
+  controller.getAmPm(); // -> string | null, always null in 24h format
+  controller.hasValue(); // -> boolean, true if at least one field has a value
 
-  return <TimePicker controller={timePicker} />;
+  return <TimePicker controller={controller} />;
 }
 ```
 

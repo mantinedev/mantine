@@ -5,27 +5,27 @@ const code = `
 import { Button, Group, PinInput, Stack, Text, usePinInput } from '@mantine/core';
 
 function Demo() {
-  const pinInput = usePinInput({ length: 6 });
+  const controller = usePinInput({ length: 6 });
 
   return (
     <Stack align="center">
-      <PinInput controller={pinInput} type="number" />
+      <PinInput controller={controller} type="number" />
 
       <Text size="sm">
-        Value: {pinInput.getValue() || '(empty)'} – {pinInput.isComplete() ? 'complete' : 'incomplete'}
+        Value: {controller.getValue() || '(empty)'} – {controller.isComplete() ? 'complete' : 'incomplete'}
       </Text>
 
       <Group>
-        <Button variant="default" onClick={() => pinInput.focus(0)}>
+        <Button variant="default" onClick={() => controller.focus(0)}>
           Focus first
         </Button>
-        <Button variant="default" onClick={pinInput.focusNext}>
+        <Button variant="default" onClick={controller.focusNext}>
           Focus next
         </Button>
-        <Button variant="default" onClick={() => pinInput.setValue('123456')}>
+        <Button variant="default" onClick={() => controller.setValue('123456')}>
           Fill
         </Button>
-        <Button variant="default" onClick={pinInput.clear} disabled={pinInput.getValue() === ''}>
+        <Button variant="default" onClick={controller.clear} disabled={controller.getValue() === ''}>
           Clear
         </Button>
       </Group>
@@ -35,28 +35,32 @@ function Demo() {
 `;
 
 function Demo() {
-  const pinInput = usePinInput({ length: 6 });
+  const controller = usePinInput({ length: 6 });
 
   return (
     <Stack align="center">
-      <PinInput controller={pinInput} type="number" />
+      <PinInput controller={controller} type="number" />
 
       <Text size="sm">
-        Value: {pinInput.getValue() || '(empty)'} –{' '}
-        {pinInput.isComplete() ? 'complete' : 'incomplete'}
+        Value: {controller.getValue() || '(empty)'} –{' '}
+        {controller.isComplete() ? 'complete' : 'incomplete'}
       </Text>
 
       <Group>
-        <Button variant="default" onClick={() => pinInput.focus(0)}>
+        <Button variant="default" onClick={() => controller.focus(0)}>
           Focus first
         </Button>
-        <Button variant="default" onClick={pinInput.focusNext}>
+        <Button variant="default" onClick={controller.focusNext}>
           Focus next
         </Button>
-        <Button variant="default" onClick={() => pinInput.setValue('123456')}>
+        <Button variant="default" onClick={() => controller.setValue('123456')}>
           Fill
         </Button>
-        <Button variant="default" onClick={pinInput.clear} disabled={pinInput.getValue() === ''}>
+        <Button
+          variant="default"
+          onClick={controller.clear}
+          disabled={controller.getValue() === ''}
+        >
           Clear
         </Button>
       </Group>

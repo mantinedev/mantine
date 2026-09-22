@@ -7,21 +7,21 @@ import { Button, Code, Group, Menu, Menubar, Stack, Text, useMenubar } from '@ma
 import { useWindowEvent } from '@mantine/hooks';
 
 function Demo() {
-  const menubar = useMenubar();
+  const controller = useMenubar();
 
   // Alt + F opens the File menu and moves focus into it,
   // which the openIndex prop alone cannot do
   useWindowEvent('keydown', (event) => {
     if (event.altKey && event.code === 'KeyF') {
       event.preventDefault();
-      menubar.openMenu(0);
-      menubar.focusMenuItem(0, 'first');
+      controller.openMenu(0);
+      controller.focusMenuItem(0, 'first');
     }
   });
 
   return (
     <Stack>
-      <Menubar controller={menubar}>
+      <Menubar controller={controller}>
         <Menubar.Menu width={220}>
           <Menubar.Target>File</Menubar.Target>
           <Menubar.Dropdown>
@@ -48,29 +48,29 @@ function Demo() {
       </Menubar>
 
       <Group>
-        <Button variant="default" onClick={() => menubar.focusPreviousMenu()}>
+        <Button variant="default" onClick={() => controller.focusPreviousMenu()}>
           Focus previous
         </Button>
-        <Button variant="default" onClick={() => menubar.focusNextMenu()}>
+        <Button variant="default" onClick={() => controller.focusNextMenu()}>
           Focus next
         </Button>
         <Button
           variant="default"
           onClick={() => {
-            menubar.openMenu(menubar.getActiveIndex());
-            menubar.focusMenuItem(menubar.getActiveIndex(), 'first');
+            controller.openMenu(controller.getActiveIndex());
+            controller.focusMenuItem(controller.getActiveIndex(), 'first');
           }}
         >
           Open focused menu
         </Button>
-        <Button variant="default" onClick={menubar.closeMenu}>
+        <Button variant="default" onClick={controller.closeMenu}>
           Close
         </Button>
       </Group>
 
       <Text size="sm">
-        Opened: <Code>{String(menubar.getOpenIndex())}</Code>, focused:{' '}
-        <Code>{menubar.getActiveIndex()}</Code>, menus: <Code>{menubar.getMenuCount()}</Code>. Press{' '}
+        Opened: <Code>{String(controller.getOpenIndex())}</Code>, focused:{' '}
+        <Code>{controller.getActiveIndex()}</Code>, menus: <Code>{controller.getMenuCount()}</Code>. Press{' '}
         <Code>Alt + F</Code> to open the File menu from anywhere.
       </Text>
     </Stack>
@@ -79,19 +79,19 @@ function Demo() {
 `;
 
 function Demo() {
-  const menubar = useMenubar();
+  const controller = useMenubar();
 
   useWindowEvent('keydown', (event) => {
     if (event.altKey && event.code === 'KeyF') {
       event.preventDefault();
-      menubar.openMenu(0);
-      menubar.focusMenuItem(0, 'first');
+      controller.openMenu(0);
+      controller.focusMenuItem(0, 'first');
     }
   });
 
   return (
     <Stack>
-      <Menubar controller={menubar}>
+      <Menubar controller={controller}>
         <Menubar.Menu width={220}>
           <Menubar.Target>File</Menubar.Target>
           <Menubar.Dropdown>
@@ -118,30 +118,30 @@ function Demo() {
       </Menubar>
 
       <Group>
-        <Button variant="default" onClick={() => menubar.focusPreviousMenu()}>
+        <Button variant="default" onClick={() => controller.focusPreviousMenu()}>
           Focus previous
         </Button>
-        <Button variant="default" onClick={() => menubar.focusNextMenu()}>
+        <Button variant="default" onClick={() => controller.focusNextMenu()}>
           Focus next
         </Button>
         <Button
           variant="default"
           onClick={() => {
-            menubar.openMenu(menubar.getActiveIndex());
-            menubar.focusMenuItem(menubar.getActiveIndex(), 'first');
+            controller.openMenu(controller.getActiveIndex());
+            controller.focusMenuItem(controller.getActiveIndex(), 'first');
           }}
         >
           Open focused menu
         </Button>
-        <Button variant="default" onClick={menubar.closeMenu}>
+        <Button variant="default" onClick={controller.closeMenu}>
           Close
         </Button>
       </Group>
 
       <Text size="sm">
-        Opened: <Code>{String(menubar.getOpenIndex())}</Code>, focused:{' '}
-        <Code>{menubar.getActiveIndex()}</Code>, menus: <Code>{menubar.getMenuCount()}</Code>. Press{' '}
-        <Code>Alt + F</Code> to open the File menu from anywhere.
+        Opened: <Code>{String(controller.getOpenIndex())}</Code>, focused:{' '}
+        <Code>{controller.getActiveIndex()}</Code>, menus: <Code>{controller.getMenuCount()}</Code>.
+        Press <Code>Alt + F</Code> to open the File menu from anywhere.
       </Text>
     </Stack>
   );

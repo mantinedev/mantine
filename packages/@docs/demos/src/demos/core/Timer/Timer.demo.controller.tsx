@@ -5,22 +5,22 @@ const code = `
 import { Button, Group, Stack, Text, Timer, useTimer } from '@mantine/core';
 
 function Demo() {
-  const timer = useTimer({ countdown: true, startMs: 60 * 1000, interval: 100 });
+  const controller = useTimer({ countdown: true, startMs: 60 * 1000, interval: 100 });
 
   return (
     <Stack align="center">
-      <Timer controller={timer} format="mm:ss:SS" fz={40} fw={700} />
+      <Timer controller={controller} format="mm:ss:SS" fz={40} fw={700} />
 
       <Text c="dimmed" size="sm">
-        running: {String(timer.isRunning())}, paused: {String(timer.isPaused())}
+        running: {String(controller.isRunning())}, paused: {String(controller.isPaused())}
       </Text>
 
       <Group>
-        <Button onClick={timer.start} disabled={timer.isRunning()}>Start</Button>
-        <Button onClick={timer.pause} disabled={!timer.isRunning()} variant="default">Pause</Button>
-        <Button onClick={timer.resume} disabled={timer.isRunning()} variant="default">Resume</Button>
-        <Button onClick={timer.reset} variant="default">Reset</Button>
-        <Button onClick={timer.restart} variant="default">Restart</Button>
+        <Button onClick={controller.start} disabled={controller.isRunning()}>Start</Button>
+        <Button onClick={controller.pause} disabled={!controller.isRunning()} variant="default">Pause</Button>
+        <Button onClick={controller.resume} disabled={controller.isRunning()} variant="default">Resume</Button>
+        <Button onClick={controller.reset} variant="default">Reset</Button>
+        <Button onClick={controller.restart} variant="default">Restart</Button>
       </Group>
     </Stack>
   );
@@ -28,30 +28,30 @@ function Demo() {
 `;
 
 function Demo() {
-  const timer = useTimer({ countdown: true, startMs: 60 * 1000, interval: 100 });
+  const controller = useTimer({ countdown: true, startMs: 60 * 1000, interval: 100 });
 
   return (
     <Stack align="center">
-      <Timer controller={timer} format="mm:ss:SS" fz={40} fw={700} />
+      <Timer controller={controller} format="mm:ss:SS" fz={40} fw={700} />
 
       <Text c="dimmed" size="sm">
-        running: {String(timer.isRunning())}, paused: {String(timer.isPaused())}
+        running: {String(controller.isRunning())}, paused: {String(controller.isPaused())}
       </Text>
 
       <Group>
-        <Button onClick={timer.start} disabled={timer.isRunning()}>
+        <Button onClick={controller.start} disabled={controller.isRunning()}>
           Start
         </Button>
-        <Button onClick={timer.pause} disabled={!timer.isRunning()} variant="default">
+        <Button onClick={controller.pause} disabled={!controller.isRunning()} variant="default">
           Pause
         </Button>
-        <Button onClick={timer.resume} disabled={timer.isRunning()} variant="default">
+        <Button onClick={controller.resume} disabled={controller.isRunning()} variant="default">
           Resume
         </Button>
-        <Button onClick={timer.reset} variant="default">
+        <Button onClick={controller.reset} variant="default">
           Reset
         </Button>
-        <Button onClick={timer.restart} variant="default">
+        <Button onClick={controller.restart} variant="default">
           Restart
         </Button>
       </Group>

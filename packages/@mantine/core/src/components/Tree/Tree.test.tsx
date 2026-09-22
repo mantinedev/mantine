@@ -84,8 +84,8 @@ describe('@mantine/core/Tree', () => {
 
     it('handles Space to expand/collapse when expandOnSpace is true', async () => {
       const TestComponent = () => {
-        const tree = useTree();
-        return <Tree data={complexTreeData} tree={tree} expandOnSpace />;
+        const store = useTree();
+        return <Tree data={complexTreeData} store={store} expandOnSpace />;
       };
 
       render(<TestComponent />);
@@ -122,8 +122,8 @@ describe('@mantine/core/Tree', () => {
   describe('Selection', () => {
     it('selects node on click when selectOnClick is true', async () => {
       const TestComponent = () => {
-        const tree = useTree();
-        return <Tree data={complexTreeData} tree={tree} selectOnClick />;
+        const store = useTree();
+        return <Tree data={complexTreeData} store={store} selectOnClick />;
       };
 
       render(<TestComponent />);
@@ -137,11 +137,11 @@ describe('@mantine/core/Tree', () => {
   describe('Checked state', () => {
     it('checks node on space when checkOnSpace is true', async () => {
       const TestComponent = () => {
-        const tree = useTree();
+        const store = useTree();
         return (
           <div>
-            <Tree data={complexTreeData} tree={tree} checkOnSpace />
-            <div data-testid="checked">{JSON.stringify(tree.checkedState)}</div>
+            <Tree data={complexTreeData} store={store} checkOnSpace />
+            <div data-testid="checked">{JSON.stringify(store.checkedState)}</div>
           </div>
         );
       };
@@ -161,11 +161,11 @@ describe('@mantine/core/Tree', () => {
   describe('Outside click', () => {
     it('clears selection on outside click when clearSelectionOnOutsideClick is true', async () => {
       const TestComponent = () => {
-        const tree = useTree();
+        const store = useTree();
         return (
           <div>
             <div data-testid="outside">Outside</div>
-            <Tree data={complexTreeData} tree={tree} selectOnClick clearSelectionOnOutsideClick />
+            <Tree data={complexTreeData} store={store} selectOnClick clearSelectionOnOutsideClick />
           </div>
         );
       };
@@ -205,7 +205,7 @@ describe('@mantine/core/Tree', () => {
           expanded: expect.any(Boolean),
           hasChildren: expect.any(Boolean),
           selected: expect.any(Boolean),
-          tree: expect.any(Object),
+          store: expect.any(Object),
           elementProps: expect.any(Object),
         })
       );

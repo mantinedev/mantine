@@ -217,27 +217,27 @@ export const Select = genericFactory<SelectFactory>((_props) => {
     onChange: onSearchChange,
   });
 
-  const combobox = useCombobox({
+  const store = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
     onDropdownOpen: () => {
       onDropdownOpen?.();
       if (selectFirstOptionOnDropdownOpen) {
-        combobox.selectFirstOption();
+        store.selectFirstOption();
       } else {
-        combobox.updateSelectedOptionIndex('active', { scrollIntoView: true });
+        store.updateSelectedOptionIndex('active', { scrollIntoView: true });
       }
     },
     onDropdownClose: () => {
       onDropdownClose?.();
       // Required for autoSelectOnBlur to work correctly
-      setTimeout(combobox.resetSelectedOption, 0);
+      setTimeout(store.resetSelectedOption, 0);
     },
   });
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
-    combobox.resetSelectedOption();
+    store.resetSelectedOption();
   };
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<SelectFactory>({
@@ -248,7 +248,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {
-      combobox.selectFirstOption();
+      store.selectFirstOption();
     }
   }, [selectFirstOptionOnChange, search]);
 
@@ -303,7 +303,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
   return (
     <>
       <Combobox
-        store={combobox}
+        store={store}
         __staticSelector="Select"
         classNames={resolvedClassNames}
         styles={resolvedStyles}
@@ -325,7 +325,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
 
           nextValue !== _value && setValue(nextValue as any, optionLockup);
           !controlled && handleSearchChange(nextValue != null ? optionLockup?.label || '' : '');
-          combobox.closeDropdown();
+          store.closeDropdown();
         }}
         {...comboboxProps}
       >
@@ -370,19 +370,19 @@ export const Select = genericFactory<SelectFactory>((_props) => {
               }
 
               handleSearchChange(event.currentTarget.value);
-              combobox.openDropdown();
-              selectFirstOptionOnChange && combobox.selectFirstOption();
+              store.openDropdown();
+              selectFirstOptionOnChange && store.selectFirstOption();
             }}
             onFocus={(event) => {
-              openOnFocus && !!searchable && combobox.openDropdown();
+              openOnFocus && !!searchable && store.openDropdown();
               onFocus?.(event);
             }}
             onBlur={(event) => {
               if (autoSelectOnBlur) {
-                combobox.clickSelectedOption();
+                store.clickSelectedOption();
               }
 
-              !!searchable && combobox.closeDropdown();
+              !!searchable && store.closeDropdown();
               const optionLockup =
                 _value != null &&
                 (`${_value}` in optionsLockup
@@ -392,7 +392,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
               onBlur?.(event);
             }}
             onClick={(event) => {
-              searchable ? combobox.openDropdown() : combobox.toggleDropdown();
+              searchable ? store.openDropdown() : store.toggleDropdown();
               onClick?.(event);
             }}
             classNames={resolvedClassNames}

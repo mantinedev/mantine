@@ -58,17 +58,17 @@ const data: TreeNodeData[] = [
 ];
 
 export function Usage() {
-  const tree = useTree();
+  const store = useTree();
   return (
     <div style={{ padding: 40 }}>
-      <Tree data={data} tree={tree} />
+      <Tree data={data} store={store} />
     </div>
   );
 }
 
 export function Controller() {
   const [expandedState, setExpandedState] = useState(getTreeExpandedState(data, '*'));
-  const tree = useTree({
+  const store = useTree({
     onNodeCollapse: (value) => console.log('Node collapsed:', value),
     onNodeExpand: (value) => console.log('Node expanded:', value),
     expandedState,
@@ -79,9 +79,9 @@ export function Controller() {
 
   return (
     <div style={{ padding: 40 }}>
-      <Tree data={data} tree={tree} />
-      <Button onClick={() => tree.expandAllNodes()}>Expand all</Button>
-      <Button onClick={() => tree.collapseAllNodes()}>Collapse all</Button>
+      <Tree data={data} store={store} />
+      <Button onClick={() => store.expandAllNodes()}>Expand all</Button>
+      <Button onClick={() => store.collapseAllNodes()}>Collapse all</Button>
       <Button onClick={() => setExpandedState(getTreeExpandedState(data, '*'))}>
         Expand external
       </Button>
@@ -90,11 +90,11 @@ export function Controller() {
 }
 
 export function RenderNode() {
-  const tree = useTree();
+  const store = useTree();
   return (
     <div style={{ padding: 40 }}>
       <Tree
-        tree={tree}
+        store={store}
         data={data}
         renderNode={({ node, expanded, hasChildren, elementProps }) => (
           <Group gap="xs" {...elementProps}>
@@ -135,7 +135,7 @@ const emptyChildrenData: TreeNodeData[] = [
 ];
 
 export function EmptyChildren() {
-  const tree = useTree({ initialExpandedState: { root: true } });
+  const store = useTree({ initialExpandedState: { root: true } });
   return (
     <div style={{ padding: 40 }}>
       <Text size="sm" c="dimmed" mb="md" maw={480}>
@@ -144,7 +144,7 @@ export function EmptyChildren() {
         (Child 3), or no <code>children</code> key (Child 4) are treated as leaves.
       </Text>
       <Tree
-        tree={tree}
+        store={store}
         data={emptyChildrenData}
         renderNode={({ node, expanded, hasChildren, elementProps }) => (
           <Group gap="xs" {...elementProps}>
@@ -163,17 +163,17 @@ export function EmptyChildren() {
 }
 
 export function ExpandOnDoubleClick() {
-  const tree = useTree();
+  const store = useTree();
 
   return (
     <div style={{ padding: 40 }}>
       <Tree
-        tree={tree}
+        store={store}
         data={data}
         expandOnClick={false}
         style={{ userSelect: 'none' }}
         renderNode={({ node, expanded, hasChildren, elementProps }) => (
-          <Group gap="xs" {...elementProps} onDoubleClick={() => tree.toggleExpanded(node.value)}>
+          <Group gap="xs" {...elementProps} onDoubleClick={() => store.toggleExpanded(node.value)}>
             <span>{node.label}</span>
             {hasChildren && (
               <CaretDownIcon
@@ -189,7 +189,7 @@ export function ExpandOnDoubleClick() {
 }
 
 export function WithActivityStatePreservation() {
-  const tree = useTree({ initialExpandedState: { src: true, 'src/components': true } });
+  const store = useTree({ initialExpandedState: { src: true, 'src/components': true } });
   const [lastExpanded, setLastExpanded] = useState<string | null>(null);
 
   return (
@@ -201,7 +201,7 @@ export function WithActivityStatePreservation() {
 
       <Tree
         data={data}
-        tree={tree}
+        store={store}
         keepMounted
         renderNode={({ node, expanded, hasChildren, elementProps }) => (
           <Group
@@ -235,18 +235,18 @@ export function WithActivityStatePreservation() {
 }
 
 export function SelectOnClick() {
-  const tree = useTree();
+  const store = useTree();
 
   return (
     <div style={{ padding: 40 }}>
       <Tree
-        tree={tree}
+        store={store}
         data={data}
         selectOnClick
         expandOnSpace={false}
         clearSelectionOnOutsideClick
         renderNode={({ node, expanded, hasChildren, elementProps }) => (
-          <Group gap="xs" {...elementProps} onDoubleClick={() => tree.toggleExpanded(node.value)}>
+          <Group gap="xs" {...elementProps} onDoubleClick={() => store.toggleExpanded(node.value)}>
             <span>{node.label}</span>
             {hasChildren && (
               <CaretDownIcon
@@ -263,7 +263,7 @@ export function SelectOnClick() {
 
 export function DragDrop() {
   const [treeData, setTreeData] = useState(data);
-  const tree = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
+  const store = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
 
   const handleDragDrop = (payload: TreeDragDropPayload) => {
     setTreeData((current) => moveTreeNode(current, payload));
@@ -273,7 +273,7 @@ export function DragDrop() {
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Tree
         data={treeData}
-        tree={tree}
+        store={store}
         onDragDrop={handleDragDrop}
         renderNode={({ node, expanded, hasChildren, elementProps }) => (
           <Group gap="xs" {...elementProps}>
@@ -293,7 +293,7 @@ export function DragDrop() {
 
 export function DragDropWithRenderNode() {
   const [treeData, setTreeData] = useState(data);
-  const tree = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
+  const store = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
 
   const handleDragDrop = (payload: TreeDragDropPayload) => {
     console.log('Drop:', payload);
@@ -302,7 +302,7 @@ export function DragDropWithRenderNode() {
 
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <Tree data={treeData} tree={tree} onDragDrop={handleDragDrop} />
+      <Tree data={treeData} store={store} onDragDrop={handleDragDrop} />
     </div>
   );
 }
@@ -340,14 +340,14 @@ function generateLargeTree(count: number): TreeNodeData[] {
 const largeData = generateLargeTree(1000);
 
 export function LargeTreeNoDragDrop() {
-  const tree = useTree({ initialExpandedState: getTreeExpandedState(largeData, '*') });
+  const store = useTree({ initialExpandedState: getTreeExpandedState(largeData, '*') });
 
   return (
     <div style={{ padding: 40, maxWidth: 500, height: '100vh', overflow: 'auto' }}>
       <Text size="sm" c="dimmed" mb="md">
         1000 nodes, all expanded, no drag-and-drop
       </Text>
-      <Tree data={largeData} tree={tree} />
+      <Tree data={largeData} store={store} />
     </div>
   );
 }
@@ -367,7 +367,7 @@ export function AsyncLoading() {
     { label: 'readme.md', value: 'readme.md' },
   ]);
 
-  const tree = useTree({
+  const store = useTree({
     onLoadChildren: async (value) => {
       await new Promise((resolve) => {
         setTimeout(resolve, 1500);
@@ -389,7 +389,7 @@ export function AsyncLoading() {
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Tree
         data={treeData}
-        tree={tree}
+        store={store}
         renderNode={({ node, expanded, hasChildren: hc, elementProps, isLoading }) => (
           <Group gap="xs" {...elementProps}>
             {isLoading ? (
@@ -421,7 +421,7 @@ export function AsyncLoadingDefault() {
     { label: 'readme.md', value: 'readme.md' },
   ]);
 
-  const tree = useTree({
+  const store = useTree({
     onLoadChildren: async (value) => {
       await new Promise((resolve) => {
         setTimeout(resolve, 1000);
@@ -441,7 +441,7 @@ export function AsyncLoadingDefault() {
       <Text size="sm" c="dimmed" mb="md">
         Default rendering (no renderNode) with async loading
       </Text>
-      <Tree data={treeData} tree={tree} />
+      <Tree data={treeData} store={store} />
     </div>
   );
 }
@@ -453,7 +453,7 @@ export function AsyncLoadingWithError() {
     { label: 'readme.md', value: 'readme.md' },
   ]);
 
-  const tree = useTree({
+  const store = useTree({
     onLoadChildren: async (value) => {
       await new Promise((resolve) => {
         setTimeout(resolve, 1000);
@@ -475,7 +475,7 @@ export function AsyncLoadingWithError() {
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Tree
         data={treeData}
-        tree={tree}
+        store={store}
         renderNode={({ node, expanded, hasChildren: hc, elementProps, isLoading, loadError }) => (
           <Group gap="xs" {...elementProps}>
             <span>{node.label}</span>
@@ -496,8 +496,8 @@ export function AsyncLoadingWithError() {
                 c="red"
                 onClick={(e) => {
                   e.stopPropagation();
-                  tree.invalidateNode(node.value);
-                  tree.loadNode(node.value);
+                  store.invalidateNode(node.value);
+                  store.loadNode(node.value);
                 }}
                 style={{ cursor: 'pointer' }}
               >
@@ -517,7 +517,7 @@ export function AsyncLoadingWithInvalidation() {
     { label: 'Dynamic folder', value: 'dynamic', hasChildren: true },
   ]);
 
-  const tree = useTree({
+  const store = useTree({
     onLoadChildren: async (value) => {
       await new Promise((resolve) => {
         setTimeout(resolve, 800);
@@ -536,22 +536,22 @@ export function AsyncLoadingWithInvalidation() {
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Button
         onClick={() => {
-          tree.invalidateNode('dynamic');
+          store.invalidateNode('dynamic');
           setTreeData([{ label: 'Dynamic folder', value: 'dynamic', hasChildren: true }]);
-          tree.collapse('dynamic');
+          store.collapse('dynamic');
         }}
         mb="md"
       >
         Invalidate & reload
       </Button>
-      <Tree data={treeData} tree={tree} />
+      <Tree data={treeData} store={store} />
     </div>
   );
 }
 
 export function LargeTreeWithDragDrop() {
   const [treeData, setTreeData] = useState(largeData);
-  const tree = useTree({ initialExpandedState: getTreeExpandedState(largeData, '*') });
+  const store = useTree({ initialExpandedState: getTreeExpandedState(largeData, '*') });
 
   return (
     <div style={{ padding: 40, maxWidth: 500, height: '100vh', overflow: 'auto' }}>
@@ -560,7 +560,7 @@ export function LargeTreeWithDragDrop() {
       </Text>
       <Tree
         data={treeData}
-        tree={tree}
+        store={store}
         onDragDrop={(payload) => setTreeData((current) => moveTreeNode(current, payload))}
       />
     </div>
@@ -568,21 +568,21 @@ export function LargeTreeWithDragDrop() {
 }
 
 export function WithLines() {
-  const tree = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
+  const store = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <Tree data={data} tree={tree} withLines />
+      <Tree data={data} store={store} withLines />
     </div>
   );
 }
 
 export function WithLinesCustom() {
-  const tree = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
+  const store = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Tree
         data={data}
-        tree={tree}
+        store={store}
         withLines
         style={{
           '--tree-line-width': '2px',
@@ -594,7 +594,7 @@ export function WithLinesCustom() {
 }
 
 export function CheckStrictly() {
-  const tree = useTree({
+  const store = useTree({
     checkStrictly: true,
     initialExpandedState: getTreeExpandedState(data, '*'),
   });
@@ -606,12 +606,12 @@ export function CheckStrictly() {
       </Text>
       <Tree
         data={data}
-        tree={tree}
+        store={store}
         expandOnClick={false}
         levelOffset={23}
         renderNode={({ node, expanded, hasChildren, elementProps }) => {
-          const checked = tree.isNodeChecked(node.value);
-          const indeterminate = tree.isNodeIndeterminate(node.value);
+          const checked = store.isNodeChecked(node.value);
+          const indeterminate = store.isNodeIndeterminate(node.value);
 
           return (
             <Group gap="xs" {...elementProps}>
@@ -619,10 +619,10 @@ export function CheckStrictly() {
                 checked={checked}
                 indeterminate={indeterminate}
                 onClick={() =>
-                  checked ? tree.uncheckNode(node.value) : tree.checkNode(node.value)
+                  checked ? store.uncheckNode(node.value) : store.checkNode(node.value)
                 }
               />
-              <Group gap={5} onClick={() => tree.toggleExpanded(node.value)}>
+              <Group gap={5} onClick={() => store.toggleExpanded(node.value)}>
                 <span>{node.label}</span>
                 {hasChildren && (
                   <CaretDownIcon
@@ -636,15 +636,15 @@ export function CheckStrictly() {
         }}
       />
       <Group mt="md">
-        <Button size="xs" onClick={() => tree.checkAllNodes()}>
+        <Button size="xs" onClick={() => store.checkAllNodes()}>
           Check all
         </Button>
-        <Button size="xs" onClick={() => tree.uncheckAllNodes()}>
+        <Button size="xs" onClick={() => store.uncheckAllNodes()}>
           Uncheck all
         </Button>
       </Group>
       <Text size="xs" c="dimmed" mt="sm">
-        Checked: {tree.checkedState.join(', ') || 'none'}
+        Checked: {store.checkedState.join(', ') || 'none'}
       </Text>
     </div>
   );
@@ -663,14 +663,14 @@ function getMatchingAncestors(nodes: TreeNodeData[], query: string): string[] {
 
 export function SearchHighlight() {
   const [search, setSearch] = useState('');
-  const tree = useTree({ initialExpandedState: getTreeExpandedState(data, []) });
+  const store = useTree({ initialExpandedState: getTreeExpandedState(data, []) });
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
     if (value.trim()) {
-      tree.setExpandedState(getTreeExpandedState(data, getMatchingAncestors(data, value)));
+      store.setExpandedState(getTreeExpandedState(data, getMatchingAncestors(data, value)));
     } else {
-      tree.collapseAllNodes();
+      store.collapseAllNodes();
     }
   };
 
@@ -684,7 +684,7 @@ export function SearchHighlight() {
       />
       <Tree
         data={data}
-        tree={tree}
+        store={store}
         renderNode={({ node, elementProps }) => {
           const label = typeof node.label === 'string' ? node.label : node.value;
           return (
@@ -702,7 +702,7 @@ export function SearchHighlight() {
 
 export function SearchFilter() {
   const [search, setSearch] = useState('');
-  const tree = useTree();
+  const store = useTree();
 
   const filteredData = useMemo(() => filterTreeData(data, search), [search]);
 
@@ -710,9 +710,9 @@ export function SearchFilter() {
     setSearch(value);
     if (value.trim()) {
       const next = filterTreeData(data, value);
-      tree.setExpandedState(getTreeExpandedState(next, '*'));
+      store.setExpandedState(getTreeExpandedState(next, '*'));
     } else {
-      tree.collapseAllNodes();
+      store.collapseAllNodes();
     }
   };
 
@@ -724,7 +724,7 @@ export function SearchFilter() {
         value={search}
         onChange={(event) => handleSearchChange(event.currentTarget.value)}
       />
-      <Tree data={filteredData} tree={tree} />
+      <Tree data={filteredData} store={store} />
     </div>
   );
 }
@@ -763,10 +763,10 @@ function generateVirtualizedTreeData(count: number): TreeNodeData[] {
 const virtualizedData = generateVirtualizedTreeData(10000);
 
 export function Virtualized() {
-  const tree = useTree({ initialExpandedState: getTreeExpandedState(virtualizedData, '*') });
+  const store = useTree({ initialExpandedState: getTreeExpandedState(virtualizedData, '*') });
   const flatList = useMemo(
-    () => flattenTreeData(virtualizedData, tree.expandedState),
-    [tree.expandedState]
+    () => flattenTreeData(virtualizedData, store.expandedState),
+    [store.expandedState]
   );
 
   const scrollParentRef = useRef<HTMLDivElement>(null);
@@ -784,10 +784,10 @@ export function Virtualized() {
         10,000 nodes, virtualized with @tanstack/react-virtual ({flatList.length} visible)
       </Text>
       <Group mb="md">
-        <Button size="xs" onClick={() => tree.expandAllNodes()}>
+        <Button size="xs" onClick={() => store.expandAllNodes()}>
           Expand all
         </Button>
-        <Button size="xs" onClick={() => tree.collapseAllNodes()}>
+        <Button size="xs" onClick={() => store.collapseAllNodes()}>
           Collapse all
         </Button>
       </Group>
@@ -801,7 +801,7 @@ export function Virtualized() {
             <FlatTreeNode
               key={flatList[virtualItem.index].node.value}
               {...flatList[virtualItem.index]}
-              tree={tree}
+              store={store}
               expandOnClick
               selectOnClick
               tabIndex={virtualItem.index === 0 ? 0 : -1}

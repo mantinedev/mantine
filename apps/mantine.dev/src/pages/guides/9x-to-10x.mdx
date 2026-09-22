@@ -438,6 +438,46 @@ import type { UseTimerReturnValue } from '@mantine/core';
 import type { TimerController } from '@mantine/core';
 ```
 
+## Tree store prop
+
+`Tree` now receives the value returned by `useTree` through the `store` prop instead of `tree`, and
+the `TreeController` type is renamed to `TreeStore`. The `tree` field of the `renderNode` payload and
+the `tree` prop of `FlatTreeNode` are renamed to `store` as well:
+
+```tsx
+// 9.x
+import { Tree, useTree } from '@mantine/core';
+
+function Demo() {
+  const tree = useTree();
+  return (
+    <Tree
+      data={data}
+      tree={tree}
+      renderNode={({ node, tree }) => (
+        <div onClick={() => tree.toggleExpanded(node.value)}>{node.label}</div>
+      )}
+    />
+  );
+}
+
+// 10.x
+import { Tree, useTree } from '@mantine/core';
+
+function Demo() {
+  const store = useTree();
+  return (
+    <Tree
+      data={data}
+      store={store}
+      renderNode={({ node, store }) => (
+        <div onClick={() => store.toggleExpanded(node.value)}>{node.label}</div>
+      )}
+    />
+  );
+}
+```
+
 ## Controller hooks return a memoized object
 
 `useTimer`, `useEditable`, `useImageCropper` and `usePagination` used to return a new object on every
@@ -448,15 +488,15 @@ If your code uses the returned object as a `useEffect` or `useCallback` dependen
 now run less often – depend on the individual actions, or on state read through the hook's getters, instead:
 
 ```tsx
-const timer = useTimer();
+const controller = useTimer();
 
 // Ran on every render in 9.x, runs only when the timer state changes in 10.x
 useEffect(() => {
   /* ... */
-}, [timer]);
+}, [controller]);
 
 // Use this instead
-const running = timer.isRunning();
+const running = controller.isRunning();
 
 useEffect(() => {
   /* ... */

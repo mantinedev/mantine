@@ -76,11 +76,11 @@ describe('@mantine/core/Timer', () => {
 
   it('Timer.Control invokes the bound controller action', () => {
     function ControlTest() {
-      const timer = useTimer({ startMs: 0 });
+      const controller = useTimer({ startMs: 0 });
       return (
         <div>
-          <span data-testid="state">{timer.running ? 'running' : 'stopped'}</span>
-          <Timer controller={timer}>
+          <span data-testid="state">{controller.running ? 'running' : 'stopped'}</span>
+          <Timer controller={controller}>
             <Timer.Control action="start">start</Timer.Control>
             <Timer.Control action="pause">pause</Timer.Control>
           </Timer>
@@ -100,8 +100,8 @@ describe('@mantine/core/Timer', () => {
 
   it('binds to an external controller', () => {
     function Wrapper() {
-      const timer = useTimer({ countdown: true, startMs: 5000 });
-      return <Timer controller={timer} format="mm:ss" />;
+      const controller = useTimer({ countdown: true, startMs: 5000 });
+      return <Timer controller={controller} format="mm:ss" />;
     }
 
     render(<Wrapper />);
@@ -110,8 +110,8 @@ describe('@mantine/core/Timer', () => {
 
   it('derives aria-live from the controller interval when controlled', () => {
     function Wrapper() {
-      const timer = useTimer({ interval: 50 });
-      return <Timer controller={timer} />;
+      const controller = useTimer({ interval: 50 });
+      return <Timer controller={controller} />;
     }
 
     render(<Wrapper />);
@@ -122,8 +122,10 @@ describe('@mantine/core/Timer', () => {
     const onComplete = jest.fn();
 
     function Wrapper() {
-      const timer = useTimer({ countdown: true, startMs: 5000 });
-      return <Timer controller={timer} countdown startMs={0} autoStart onComplete={onComplete} />;
+      const controller = useTimer({ countdown: true, startMs: 5000 });
+      return (
+        <Timer controller={controller} countdown startMs={0} autoStart onComplete={onComplete} />
+      );
     }
 
     render(<Wrapper />);

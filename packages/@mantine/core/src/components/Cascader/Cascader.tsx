@@ -364,7 +364,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
   const separatorString =
     typeof separator === 'string' || typeof separator === 'number' ? String(separator) : '/';
 
-  const combobox = useCombobox({
+  const store = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
     onDropdownOpen: () => {
@@ -392,7 +392,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
     expandTrigger,
     onLeafSelect: () => {
       if (shouldCloseOnSelect) {
-        combobox.closeDropdown();
+        store.closeDropdown();
       }
     },
   });
@@ -479,7 +479,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
   const handleSearchChange = (nextValue: string) => {
     setSearchValue(nextValue);
     if (canInteract) {
-      combobox.openDropdown();
+      store.openDropdown();
     }
   };
 
@@ -487,7 +487,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
     onKeyDown?.(event);
 
     if (event.key === 'Escape') {
-      combobox.closeDropdown();
+      store.closeDropdown();
       return;
     }
 
@@ -495,7 +495,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
       return;
     }
 
-    if (!combobox.dropdownOpened) {
+    if (!store.dropdownOpened) {
       const opensDropdown =
         event.key === 'ArrowDown' ||
         event.key === 'ArrowUp' ||
@@ -506,7 +506,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
       if (opensDropdown) {
         event.preventDefault();
         cascader.setKeyboardNav(true);
-        combobox.openDropdown();
+        store.openDropdown();
 
         if (!cascader.value && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
           const rootIndex =
@@ -536,7 +536,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
         cascader.setValue(null);
         cascader.setActivePath([]);
         setSearchValue('');
-        combobox.focusTarget();
+        store.focusTarget();
       }}
     />
   );
@@ -628,7 +628,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
   return (
     <>
       <Combobox
-        store={combobox}
+        store={store}
         __staticSelector="Cascader"
         classNames={resolvedClassNames}
         styles={resolvedStyles}
@@ -647,7 +647,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
           cascader.selectPath(flatPath.path);
           cascader.setActivePath(flatPath.path);
           if (shouldCloseOnSelect) {
-            combobox.closeDropdown();
+            store.closeDropdown();
           }
         }}
         {...comboboxProps}
@@ -688,21 +688,21 @@ export const Cascader = factory<CascaderFactory>((_props) => {
             }}
             onFocus={(event) => {
               if (openOnFocus && searchable && canInteract) {
-                combobox.openDropdown();
+                store.openDropdown();
               }
               onFocus?.(event);
             }}
             onBlur={(event) => {
-              combobox.closeDropdown();
+              store.closeDropdown();
               onBlur?.(event);
             }}
             onClick={(event) => {
               if (canInteract) {
                 cascader.setKeyboardNav(false);
                 if (searchable) {
-                  combobox.openDropdown();
+                  store.openDropdown();
                 } else {
-                  combobox.toggleDropdown();
+                  store.toggleDropdown();
                 }
               }
               onClick?.(event);

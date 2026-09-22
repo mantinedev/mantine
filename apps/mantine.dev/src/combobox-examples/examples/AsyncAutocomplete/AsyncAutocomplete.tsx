@@ -51,8 +51,8 @@ function getAsyncData(searchQuery: string, signal: AbortSignal) {
 }
 
 export function AsyncAutocomplete() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [loading, setLoading] = useState(false);
@@ -86,10 +86,10 @@ export function AsyncAutocomplete() {
     <Combobox
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
       withinPortal={false}
-      store={combobox}
+      store={store}
     >
       <Combobox.Target>
         <TextInput
@@ -99,17 +99,17 @@ export function AsyncAutocomplete() {
           onChange={(event) => {
             setValue(event.currentTarget.value);
             fetchOptions(event.currentTarget.value);
-            combobox.resetSelectedOption();
-            combobox.openDropdown();
+            store.resetSelectedOption();
+            store.openDropdown();
           }}
-          onClick={() => combobox.openDropdown()}
+          onClick={() => store.openDropdown()}
           onFocus={() => {
-            combobox.openDropdown();
+            store.openDropdown();
             if (data === null) {
               fetchOptions(value);
             }
           }}
-          onBlur={() => combobox.closeDropdown()}
+          onBlur={() => store.closeDropdown()}
           rightSection={loading && <Loader size={18} />}
         />
       </Combobox.Target>

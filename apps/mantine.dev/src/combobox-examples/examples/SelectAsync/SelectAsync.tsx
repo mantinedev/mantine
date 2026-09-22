@@ -21,15 +21,15 @@ export function SelectAsync() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<string[]>([]);
 
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
     onDropdownOpen: () => {
       if (data.length === 0 && !loading) {
         setLoading(true);
         getAsyncData().then((response) => {
           setData(response);
           setLoading(false);
-          combobox.resetSelectedOption();
+          store.resetSelectedOption();
         });
       }
     },
@@ -43,11 +43,11 @@ export function SelectAsync() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target targetType="button">
@@ -56,7 +56,7 @@ export function SelectAsync() {
           type="button"
           pointer
           rightSection={loading ? <Loader size={18} /> : <Combobox.Chevron />}
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           rightSectionPointerEvents="none"
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}

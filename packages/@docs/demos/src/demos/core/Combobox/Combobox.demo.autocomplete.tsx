@@ -9,7 +9,7 @@ import { Combobox, TextInput, useCombobox } from '@mantine/core';
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox();
+  const store = useCombobox();
   const [value, setValue] = useState('');
   const shouldFilterOptions = !groceries.some((item) => item === value);
   const filteredOptions = shouldFilterOptions
@@ -24,10 +24,10 @@ function Demo() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -37,12 +37,12 @@ function Demo() {
           value={value}
           onChange={(event) => {
             setValue(event.currentTarget.value);
-            combobox.openDropdown();
-            combobox.updateSelectedOptionIndex();
+            store.openDropdown();
+            store.updateSelectedOptionIndex();
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
-          onBlur={() => combobox.closeDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
+          onBlur={() => store.closeDropdown()}
         />
       </Combobox.Target>
 
@@ -59,7 +59,7 @@ function Demo() {
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox();
+  const store = useCombobox();
   const [value, setValue] = useState('');
   const shouldFilterOptions = !groceries.some((item) => item === value);
   const filteredOptions = shouldFilterOptions
@@ -74,10 +74,10 @@ function Demo() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       onOptionSubmit={(optionValue) => {
         setValue(optionValue);
-        combobox.closeDropdown();
+        store.closeDropdown();
       }}
     >
       <Combobox.Target>
@@ -87,12 +87,12 @@ function Demo() {
           value={value}
           onChange={(event) => {
             setValue(event.currentTarget.value);
-            combobox.openDropdown();
-            combobox.updateSelectedOptionIndex();
+            store.openDropdown();
+            store.updateSelectedOptionIndex();
           }}
-          onClick={() => combobox.openDropdown()}
-          onFocus={() => combobox.openDropdown()}
-          onBlur={() => combobox.closeDropdown()}
+          onClick={() => store.openDropdown()}
+          onFocus={() => store.openDropdown()}
+          onBlur={() => store.closeDropdown()}
         />
       </Combobox.Target>
 

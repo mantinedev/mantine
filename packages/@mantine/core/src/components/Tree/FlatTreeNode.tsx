@@ -2,7 +2,7 @@ import { memo, useRef } from 'react';
 import { findElementAncestor } from '../../core';
 import type { FlatTreeLineState } from './flatten-tree-data/flatten-tree-data';
 import type { RenderNode, TreeNodeData } from './Tree';
-import type { TreeController } from './use-tree';
+import type { TreeStore } from './use-tree';
 import classes from './Tree.module.css';
 
 export interface FlatTreeNodeProps {
@@ -21,8 +21,8 @@ export interface FlatTreeNodeProps {
   /** Whether the node is expanded */
   expanded: boolean;
 
-  /** Tree controller instance, return value of `useTree` hook */
-  tree: TreeController;
+  /** Tree store instance, return value of `useTree` hook */
+  store: TreeStore;
 
   /** If set, tree node with children is expanded on click @default true */
   expandOnClick?: boolean;
@@ -56,7 +56,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
   parent,
   hasChildren,
   expanded,
-  tree,
+  store,
   expandOnClick = true,
   selectOnClick,
   expandOnSpace = true,
@@ -67,19 +67,19 @@ export const FlatTreeNode = memo(function FlatTreeNode({
   linesPath,
 }: FlatTreeNodeProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isLoading = tree.isNodeLoading(node.value);
-  const loadError = tree.getNodeLoadError(node.value);
-  const selected = tree.selectedState.includes(node.value);
+  const isLoading = store.isNodeLoading(node.value);
+  const loadError = store.getNodeLoadError(node.value);
+  const selected = store.selectedState.includes(node.value);
 
   const handleClick = (event: React.MouseEvent) => {
     event.stopPropagation();
 
     if (expandOnClick && hasChildren) {
-      tree.toggleExpanded(node.value);
+      store.toggleExpanded(node.value);
     }
 
     if (selectOnClick) {
-      tree.select(node.value);
+      store.select(node.value);
     }
 
     ref.current?.focus();
@@ -104,7 +104,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
           nextNode?.focus();
         }
       } else if (hasChildren) {
-        tree.expand(node.value);
+        store.expand(node.value);
       }
     }
 
@@ -113,7 +113,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
       event.preventDefault();
 
       if (expanded && hasChildren) {
-        tree.collapse(node.value);
+        store.collapse(node.value);
       } else if (parent) {
         const root = findElementAncestor(event.currentTarget as HTMLElement, '[data-tree-root]');
         const parentElement = root?.querySelector<HTMLElement>(
@@ -152,16 +152,16 @@ export const FlatTreeNode = memo(function FlatTreeNode({
       if (expandOnSpace) {
         event.stopPropagation();
         event.preventDefault();
-        tree.toggleExpanded(node.value);
+        store.toggleExpanded(node.value);
       }
 
       if (checkOnSpace) {
         event.stopPropagation();
         event.preventDefault();
-        if (tree.isNodeChecked(node.value)) {
-          tree.uncheckNode(node.value);
+        if (store.isNodeChecked(node.value)) {
+          store.uncheckNode(node.value);
         } else {
-          tree.checkNode(node.value);
+          store.checkNode(node.value);
         }
       }
     }
@@ -219,7 +219,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
           level,
           selected,
           isRoot: level === 1,
-          tree,
+          store,
           expanded,
           hasChildren,
           isLoading,

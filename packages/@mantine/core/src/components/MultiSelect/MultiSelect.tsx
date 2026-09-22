@@ -265,18 +265,18 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   const optionsLockup = getOptionsLockup(parsedData);
   const retainedSelectedOptions = useRef<Record<string, ComboboxItem<Primitive>>>({});
 
-  const combobox = useCombobox({
+  const store = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
     onDropdownOpen: () => {
       onDropdownOpen?.();
       if (selectFirstOptionOnDropdownOpen) {
-        combobox.selectFirstOption();
+        store.selectFirstOption();
       }
     },
     onDropdownClose: () => {
       onDropdownClose?.();
-      combobox.resetSelectedOption();
+      store.resetSelectedOption();
     },
   });
 
@@ -307,7 +307,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
 
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
-    combobox.resetSelectedOption();
+    store.resetSelectedOption();
   };
 
   const getStyles = useStyles<MultiSelectFactory>({
@@ -335,7 +335,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
 
     if (event.key === ' ' && !searchable) {
       event.preventDefault();
-      combobox.toggleDropdown();
+      store.toggleDropdown();
     }
 
     if (event.key === 'Backspace' && _searchValue.length === 0 && _value.length > 0) {
@@ -387,7 +387,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {
-      combobox.selectFirstOption();
+      store.selectFirstOption();
     }
   }, [selectFirstOptionOnChange, _searchValue]);
 
@@ -419,7 +419,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   return (
     <>
       <Combobox
-        store={combobox}
+        store={store}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
@@ -433,7 +433,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
           if (clearSearchOnChange) {
             handleSearchChange('');
           }
-          combobox.updateSelectedOptionIndex('selected');
+          store.updateSelectedOptionIndex('selected');
 
           if (_value.includes(optionsLockup[`${val}`].value as any)) {
             setValue(_value.filter((v) => v !== optionsLockup[`${val}`].value));
@@ -500,8 +500,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
               multiline: true,
             }}
             pointer={!searchable}
-            onClick={() => (searchable ? combobox.openDropdown() : combobox.toggleDropdown())}
-            data-expanded={combobox.dropdownOpened || undefined}
+            onClick={() => (searchable ? store.openDropdown() : store.toggleDropdown())}
+            data-expanded={store.dropdownOpened || undefined}
             id={_id}
             required={required}
             mod={mod}
@@ -525,11 +525,11 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
                   unstyled={unstyled}
                   onFocus={(event) => {
                     onFocus?.(event);
-                    openOnFocus && searchable && combobox.openDropdown();
+                    openOnFocus && searchable && store.openDropdown();
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);
-                    combobox.closeDropdown();
+                    store.closeDropdown();
                     handleSearchChange('');
                   }}
                   onKeyDown={handleInputKeydown}
@@ -555,8 +555,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
                     }
 
                     handleSearchChange(event.currentTarget.value);
-                    searchable && combobox.openDropdown();
-                    selectFirstOptionOnChange && combobox.selectFirstOption();
+                    searchable && store.openDropdown();
+                    selectFirstOptionOnChange && store.selectFirstOption();
                   }}
                   disabled={disabled}
                   readOnly={readOnly || !searchable}

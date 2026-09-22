@@ -222,10 +222,10 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     onChange: () => {},
   });
 
-  const combobox = useCombobox({
+  const store = useCombobox({
     opened: dropdownOpened,
     onDropdownOpen: () => {
-      combobox.focusSearchInput();
+      store.focusSearchInput();
       onDropdownOpen?.();
     },
     onDropdownClose: () => {
@@ -357,7 +357,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
     const clamped = clampToMask(newRaw, country);
     handleValueChange(clamped, country);
-    combobox.closeDropdown();
+    store.closeDropdown();
     focusInputAfterDialCode(country, clamped);
   };
 
@@ -393,7 +393,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       __staticSelector="PhoneInput"
       classNames={resolvedClassNames}
       styles={resolvedStyles}
@@ -412,7 +412,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
             <UnstyledButton
               type="button"
               disabled={disabled || readOnly}
-              onClick={() => combobox.toggleDropdown()}
+              onClick={() => store.toggleDropdown()}
               aria-label={selectedCountry ? selectedCountry.name : 'Select country'}
               {...getStyles('countryButton', { focusable: true })}
             >
@@ -442,7 +442,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
             value={search}
             onChange={(event) => {
               setSearch(event.currentTarget.value);
-              combobox.resetSelectedOption();
+              store.resetSelectedOption();
             }}
             placeholder="Search countries"
           />

@@ -60,11 +60,11 @@ const largeData = generateTreeData(2000);
 const initialExpandedState = getTreeExpandedState(largeData, '*');
 
 function Demo() {
-  const tree = useTree({
+  const store = useTree({
     initialExpandedState,
   });
 
-  const expandedState = tree.getExpandedState();
+  const expandedState = store.getExpandedState();
   const flatList = useMemo(() => flattenTreeData(largeData, expandedState), [expandedState]);
 
   const scrollParentRef = useRef<HTMLDivElement>(null);
@@ -91,7 +91,7 @@ function Demo() {
           <FlatTreeNode
             key={flatList[virtualItem.index].node.value}
             {...flatList[virtualItem.index]}
-            tree={tree}
+            store={store}
             expandOnClick
             selectOnClick
             tabIndex={virtualItem.index === 0 ? 0 : -1}
@@ -146,11 +146,11 @@ const largeData = generateTreeData(2000);
 const initialExpandedState = getTreeExpandedState(largeData, '*');
 
 function Demo() {
-  const tree = useTree({
+  const store = useTree({
     initialExpandedState,
   });
 
-  const expandedState = tree.getExpandedState();
+  const expandedState = store.getExpandedState();
   const flatList = useMemo(() => flattenTreeData(largeData, expandedState), [expandedState]);
 
   const scrollParentRef = useRef<HTMLDivElement>(null);
@@ -174,7 +174,7 @@ function Demo() {
           <FlatTreeNode
             key={flatList[virtualItem.index].node.value}
             {...flatList[virtualItem.index]}
-            tree={tree}
+            store={store}
             expandOnClick
             selectOnClick
             tabIndex={virtualItem.index === 0 ? 0 : -1}

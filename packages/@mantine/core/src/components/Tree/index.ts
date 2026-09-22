@@ -7,7 +7,7 @@ import type {
   TreeProps,
   TreeStylesNames,
 } from './Tree';
-import type { TreeController, UseTreeInput, UseTreeReturnType } from './use-tree';
+import type { TreeStore, UseTreeInput, UseTreeReturnType } from './use-tree';
 
 export { Tree } from './Tree';
 export { useTree, getTreeExpandedState } from './use-tree';
@@ -26,7 +26,7 @@ export type {
   RenderTreeNodePayload,
   UseTreeInput,
   UseTreeReturnType,
-  TreeController,
+  TreeStore,
   CheckedNodeStatus,
 };
 

@@ -30,10 +30,10 @@ const renderTreeNode = ({
   hasChildren,
   isRoot,
   elementProps,
-  tree,
+  store,
 }: RenderTreeNodePayload) => {
-  const checked = tree.isNodeChecked(node.value);
-  const indeterminate = tree.isNodeIndeterminate(node.value);
+  const checked = store.isNodeChecked(node.value);
+  const indeterminate = store.isNodeIndeterminate(node.value);
 
   return (
     <Group gap="xs" {...elementProps}>
@@ -42,10 +42,10 @@ const renderTreeNode = ({
         size="xs"
         indeterminate={indeterminate}
         mis={isRoot ? undefined : 2}
-        onClick={() => (!checked ? tree.checkNode(node.value) : tree.uncheckNode(node.value))}
+        onClick={() => (!checked ? store.checkNode(node.value) : store.uncheckNode(node.value))}
       />
 
-      <Group gap={6} onClick={() => tree.toggleExpanded(node.value)}>
+      <Group gap={6} onClick={() => store.toggleExpanded(node.value)}>
         {hasChildren ? (
           expanded ? (
             <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
@@ -62,7 +62,7 @@ const renderTreeNode = ({
 };
 
 function Demo() {
-  const tree = useTree({
+  const store = useTree({
     initialExpandedState: getTreeExpandedState(data, '*'),
     initialCheckedState: [
       'node_modules',
@@ -74,12 +74,12 @@ function Demo() {
   return (
     <>
       <Group mb="md">
-        <Button onClick={() => tree.checkAllNodes()}>Check all</Button>
-        <Button onClick={() => tree.uncheckAllNodes()}>Uncheck all</Button>
+        <Button onClick={() => store.checkAllNodes()}>Check all</Button>
+        <Button onClick={() => store.uncheckAllNodes()}>Uncheck all</Button>
       </Group>
 
       <Tree
-        tree={tree}
+        store={store}
         data={data}
         levelOffset={23}
         expandOnClick={false}
@@ -97,10 +97,10 @@ const renderTreeNode = ({
   hasChildren,
   isRoot,
   elementProps,
-  tree,
+  store,
 }: RenderTreeNodePayload) => {
-  const checked = tree.isNodeChecked(node.value);
-  const indeterminate = tree.isNodeIndeterminate(node.value);
+  const checked = store.isNodeChecked(node.value);
+  const indeterminate = store.isNodeIndeterminate(node.value);
 
   return (
     <Group gap="xs" {...elementProps}>
@@ -109,10 +109,10 @@ const renderTreeNode = ({
         size="xs"
         indeterminate={indeterminate}
         mis={isRoot ? undefined : 2}
-        onClick={() => (!checked ? tree.checkNode(node.value) : tree.uncheckNode(node.value))}
+        onClick={() => (!checked ? store.checkNode(node.value) : store.uncheckNode(node.value))}
       />
 
-      <Group gap={6} onClick={() => tree.toggleExpanded(node.value)}>
+      <Group gap={6} onClick={() => store.toggleExpanded(node.value)}>
         {hasChildren ? (
           expanded ? (
             <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
@@ -129,7 +129,7 @@ const renderTreeNode = ({
 };
 
 function Demo() {
-  const tree = useTree({
+  const store = useTree({
     initialExpandedState: getTreeExpandedState(data, '*'),
     initialCheckedState: [
       'node_modules',
@@ -141,12 +141,12 @@ function Demo() {
   return (
     <>
       <Group mb="md">
-        <Button onClick={() => tree.checkAllNodes()}>Check all</Button>
-        <Button onClick={() => tree.uncheckAllNodes()}>Uncheck all</Button>
+        <Button onClick={() => store.checkAllNodes()}>Check all</Button>
+        <Button onClick={() => store.uncheckAllNodes()}>Uncheck all</Button>
       </Group>
 
       <Tree
-        tree={tree}
+        store={store}
         data={data}
         levelOffset={23}
         expandOnClick={false}

@@ -84,18 +84,18 @@ function getMatchingAncestors(
 
 function Demo() {
   const [search, setSearch] = useState('');
-  const tree = useTree({
+  const store = useTree({
     initialExpandedState: getTreeExpandedState(data, []),
   });
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
     if (value.trim()) {
-      tree.setExpandedState(
+      store.setExpandedState(
         getTreeExpandedState(data, getMatchingAncestors(data, value))
       );
     } else {
-      tree.collapseAllNodes();
+      store.collapseAllNodes();
     }
   };
 
@@ -109,7 +109,7 @@ function Demo() {
       />
       <Tree
         data={data}
-        tree={tree}
+        store={store}
         withLines
         renderNode={({ node, elementProps, hasChildren, expanded }) => {
           const label =
@@ -187,16 +187,16 @@ function getMatchingAncestors(nodes: TreeNodeData[], query: string): string[] {
 
 function Demo() {
   const [search, setSearch] = useState('');
-  const tree = useTree({
+  const store = useTree({
     initialExpandedState: getTreeExpandedState(data, []),
   });
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
     if (value.trim()) {
-      tree.setExpandedState(getTreeExpandedState(data, getMatchingAncestors(data, value)));
+      store.setExpandedState(getTreeExpandedState(data, getMatchingAncestors(data, value)));
     } else {
-      tree.collapseAllNodes();
+      store.collapseAllNodes();
     }
   };
 
@@ -210,7 +210,7 @@ function Demo() {
       />
       <Tree
         data={data}
-        tree={tree}
+        store={store}
         withLines
         renderNode={({ node, elementProps, hasChildren, expanded }) => {
           const label = typeof node.label === 'string' ? node.label : node.value;

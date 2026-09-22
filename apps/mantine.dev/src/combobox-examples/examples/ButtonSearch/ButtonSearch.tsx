@@ -13,15 +13,15 @@ const groceries = [
 export function ButtonSearch() {
   const [search, setSearch] = useState('');
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
-  const combobox = useCombobox({
+  const store = useCombobox({
     onDropdownClose: () => {
-      combobox.resetSelectedOption();
-      combobox.focusTarget();
+      store.resetSelectedOption();
+      store.focusTarget();
       setSearch('');
     },
 
     onDropdownOpen: () => {
-      combobox.focusSearchInput();
+      store.focusSearchInput();
     },
   });
 
@@ -36,18 +36,18 @@ export function ButtonSearch() {
   return (
     <>
       <Combobox
-        store={combobox}
+        store={store}
         width={250}
         position="bottom-start"
         withArrow
         withinPortal={false}
         onOptionSubmit={(val) => {
           setSelectedItem(val);
-          combobox.closeDropdown();
+          store.closeDropdown();
         }}
       >
         <Combobox.Target withAriaAttributes={false}>
-          <Button onClick={() => combobox.toggleDropdown()}>Pick item</Button>
+          <Button onClick={() => store.toggleDropdown()}>Pick item</Button>
         </Combobox.Target>
 
         <Combobox.Dropdown>

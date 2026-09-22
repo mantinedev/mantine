@@ -251,7 +251,7 @@ function Leaf({ node, expanded, hasChildren, elementProps, search }: LeafProps) 
 function Demo() {
   const [treeData, setTreeData] = useState(data);
   const [search, setSearch] = useState('');
-  const tree = useTree({
+  const store = useTree({
     initialSelectedState: ['components/inputs/button'],
     initialExpandedState: getTreeExpandedState(data, ['components', 'components/inputs']),
   });
@@ -264,7 +264,7 @@ function Demo() {
   const handleSearchChange = (value: string) => {
     setSearch(value);
     if (value.trim()) {
-      tree.setExpandedState(getTreeExpandedState(filterTreeData(treeData, value), '*'));
+      store.setExpandedState(getTreeExpandedState(filterTreeData(treeData, value), '*'));
     }
   };
 
@@ -280,7 +280,7 @@ function Demo() {
       <Tree
         classNames={{ root: classes.root }}
         data={filteredData}
-        tree={tree}
+        store={store}
         withLines
         selectOnClick
         clearSelectionOnOutsideClick
@@ -356,7 +356,7 @@ function Leaf({ node, expanded, hasChildren, elementProps, search }: LeafProps) 
 function Demo() {
   const [treeData, setTreeData] = useState(docsData);
   const [search, setSearch] = useState('');
-  const tree = useTree({
+  const store = useTree({
     initialSelectedState: ['components/inputs/button'],
     initialExpandedState: getTreeExpandedState(docsData, ['components', 'components/inputs']),
   });
@@ -369,7 +369,7 @@ function Demo() {
   const handleSearchChange = (value: string) => {
     setSearch(value);
     if (value.trim()) {
-      tree.setExpandedState(getTreeExpandedState(filterTreeData(treeData, value), '*'));
+      store.setExpandedState(getTreeExpandedState(filterTreeData(treeData, value), '*'));
     }
   };
 
@@ -385,7 +385,7 @@ function Demo() {
       <Tree
         classNames={{ root: classes.root }}
         data={filteredData}
-        tree={tree}
+        store={store}
         withLines
         selectOnClick
         clearSelectionOnOutsideClick

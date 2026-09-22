@@ -6,10 +6,10 @@ const code = `
 import { Combobox, TextInput, useCombobox } from '@mantine/core';
 
 function Demo() {
-  const combobox = useCombobox({ opened: true });
+  const store = useCombobox({ opened: true });
 
   return (
-    <Combobox store={combobox}{{props}}>
+    <Combobox store={store}{{props}}>
       <Combobox.Target>
         <TextInput placeholder="Pick value" />
       </Combobox.Target>
@@ -42,12 +42,12 @@ function Demo() {
 `;
 
 function Demo(props: any) {
-  const combobox = useCombobox({
+  const store = useCombobox({
     opened: true,
   });
 
   return (
-    <Combobox store={combobox} {...props} middlewares={{ flip: false, shift: false }}>
+    <Combobox store={store} {...props} middlewares={{ flip: false, shift: false }}>
       <Combobox.Target>
         <TextInput placeholder="Pick value" />
       </Combobox.Target>

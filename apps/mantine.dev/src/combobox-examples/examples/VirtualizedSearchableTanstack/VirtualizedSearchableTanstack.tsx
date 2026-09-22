@@ -35,7 +35,7 @@ export function VirtualizedSearchableTanstack() {
     overscan: 5,
   });
 
-  const combobox = useVirtualizedCombobox({
+  const store = useVirtualizedCombobox({
     opened,
     onOpenedChange: setOpened,
     onDropdownOpen: () => {
@@ -56,7 +56,7 @@ export function VirtualizedSearchableTanstack() {
 
   useEffect(() => {
     if (opened) {
-      combobox.selectFirstOption();
+      store.selectFirstOption();
     }
   }, [filteredData]);
 
@@ -64,26 +64,26 @@ export function VirtualizedSearchableTanstack() {
     const option = filteredData[index];
     setValue(option.label);
     setSearch(option.label);
-    combobox.closeDropdown();
-    combobox.resetSelectedOption();
+    store.closeDropdown();
+    store.resetSelectedOption();
   }
 
   return (
-    <Combobox store={combobox} resetSelectionOnOptionHover={false}>
+    <Combobox store={store} resetSelectionOnOptionHover={false}>
       <Combobox.Target>
         <TextInput
           placeholder="Search options"
           value={search}
           onChange={(event) => {
             setSearch(event.currentTarget.value);
-            combobox.openDropdown();
+            store.openDropdown();
           }}
-          onFocus={() => combobox.openDropdown()}
+          onFocus={() => store.openDropdown()}
           onBlur={() => {
-            combobox.closeDropdown();
+            store.closeDropdown();
             setSearch(value);
           }}
-          onClick={() => combobox.openDropdown()}
+          onClick={() => store.openDropdown()}
         />
       </Combobox.Target>
       <Combobox.Dropdown hidden={filteredData.length === 0}>

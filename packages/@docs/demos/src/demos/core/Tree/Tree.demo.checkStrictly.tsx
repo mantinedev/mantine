@@ -14,9 +14,9 @@ const renderTreeNode = ({
   hasChildren,
   isRoot,
   elementProps,
-  tree,
+  store,
 }: RenderTreeNodePayload) => {
-  const checked = tree.isNodeChecked(node.value);
+  const checked = store.isNodeChecked(node.value);
 
   return (
     <Group gap="xs" {...elementProps}>
@@ -26,12 +26,12 @@ const renderTreeNode = ({
         mis={isRoot ? undefined : 2}
         onClick={() =>
           checked
-            ? tree.uncheckNode(node.value)
-            : tree.checkNode(node.value)
+            ? store.uncheckNode(node.value)
+            : store.checkNode(node.value)
         }
       />
 
-      <Group gap={6} onClick={() => tree.toggleExpanded(node.value)}>
+      <Group gap={6} onClick={() => store.toggleExpanded(node.value)}>
         {hasChildren ? (
           expanded ? (
             <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
@@ -48,11 +48,11 @@ const renderTreeNode = ({
 };
 
 function Demo() {
-  const tree = useTree({ checkStrictly: true });
+  const store = useTree({ checkStrictly: true });
   return (
     <Tree
       data={data}
-      tree={tree}
+      store={store}
       levelOffset={23}
       expandOnClick={false}
       withLines
@@ -68,9 +68,9 @@ const renderTreeNode = ({
   hasChildren,
   isRoot,
   elementProps,
-  tree,
+  store,
 }: RenderTreeNodePayload) => {
-  const checked = tree.isNodeChecked(node.value);
+  const checked = store.isNodeChecked(node.value);
 
   return (
     <Group gap="xs" {...elementProps}>
@@ -78,10 +78,10 @@ const renderTreeNode = ({
         checked={checked}
         size="xs"
         mis={isRoot ? undefined : 2}
-        onClick={() => (checked ? tree.uncheckNode(node.value) : tree.checkNode(node.value))}
+        onClick={() => (checked ? store.uncheckNode(node.value) : store.checkNode(node.value))}
       />
 
-      <Group gap={6} onClick={() => tree.toggleExpanded(node.value)}>
+      <Group gap={6} onClick={() => store.toggleExpanded(node.value)}>
         {hasChildren ? (
           expanded ? (
             <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
@@ -98,11 +98,11 @@ const renderTreeNode = ({
 };
 
 function Demo() {
-  const tree = useTree({ checkStrictly: true });
+  const store = useTree({ checkStrictly: true });
   return (
     <Tree
       data={data}
-      tree={tree}
+      store={store}
       levelOffset={23}
       expandOnClick={false}
       withLines

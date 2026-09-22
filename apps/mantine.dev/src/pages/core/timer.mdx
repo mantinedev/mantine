@@ -76,18 +76,18 @@ options as `Timer` and returns the timer state and actions:
 import { useTimer } from '@mantine/core';
 
 function Demo() {
-  const timer = useTimer({ countdown: true, startMs: 60 * 1000 });
+  const controller = useTimer({ countdown: true, startMs: 60 * 1000 });
 
-  timer.getValue(); // -> { totalMs, days, hours, minutes, seconds, milliseconds }
-  timer.isRunning(); // -> boolean, true while the timer is counting
-  timer.isPaused(); // -> boolean, true when the timer is started and then paused
-  timer.getProgress(); // -> number from 0 to 1 when the boundary is set
+  controller.getValue(); // -> { totalMs, days, hours, minutes, seconds, milliseconds }
+  controller.isRunning(); // -> boolean, true while the timer is counting
+  controller.isPaused(); // -> boolean, true when the timer is started and then paused
+  controller.getProgress(); // -> number from 0 to 1 when the boundary is set
 
-  timer.start();
-  timer.pause();
-  timer.resume();
-  timer.reset(); // stops and resets the value to startMs
-  timer.restart(); // resets and starts again
+  controller.start();
+  controller.pause();
+  controller.resume();
+  controller.reset(); // stops and resets the value to startMs
+  controller.restart(); // resets and starts again
 
   return null;
 }

@@ -9,11 +9,11 @@ import { Button, Group, ImageCropper, Stack, Text, useImageCropper } from '@mant
 const image = 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-9.png';
 
 function Demo() {
-  const imageCropper = useImageCropper({ cropShape: 'circle' });
+  const controller = useImageCropper({ cropShape: 'circle' });
   const [preview, setPreview] = useState<string | null>(null);
 
   const handleExport = async () => {
-    const dataUrl = (await imageCropper.getCroppedImage({ output: 'dataURL' })) as string;
+    const dataUrl = (await controller.getCroppedImage({ output: 'dataURL' })) as string;
     setPreview(dataUrl);
   };
 
@@ -23,7 +23,7 @@ function Demo() {
         <ImageCropper
           src={image}
           crossOrigin="anonymous"
-          controller={imageCropper}
+          controller={controller}
           withControls
         />
         <Button onClick={handleExport}>Crop image</Button>
@@ -52,18 +52,18 @@ function Demo() {
 const image = 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-9.png';
 
 function Demo() {
-  const imageCropper = useImageCropper({ cropShape: 'circle' });
+  const controller = useImageCropper({ cropShape: 'circle' });
   const [preview, setPreview] = useState<string | null>(null);
 
   const handleExport = async () => {
-    const dataUrl = (await imageCropper.getCroppedImage({ output: 'dataURL' })) as string;
+    const dataUrl = (await controller.getCroppedImage({ output: 'dataURL' })) as string;
     setPreview(dataUrl);
   };
 
   return (
     <Group align="flex-start" justify="center">
       <Stack w={300}>
-        <ImageCropper src={image} crossOrigin="anonymous" controller={imageCropper} withControls />
+        <ImageCropper src={image} crossOrigin="anonymous" controller={controller} withControls />
         <Button onClick={handleExport}>Crop image</Button>
       </Stack>
 

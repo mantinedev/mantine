@@ -11,13 +11,13 @@ const groceries = [
 ];
 
 export function SelectActive() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
     onDropdownOpen: (eventSource) => {
       if (eventSource === 'keyboard') {
-        combobox.selectActiveOption();
+        store.selectActiveOption();
       } else {
-        combobox.updateSelectedOptionIndex('active');
+        store.updateSelectedOptionIndex('active');
       }
     },
   });
@@ -35,12 +35,12 @@ export function SelectActive() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       resetSelectionOnOptionHover
       withinPortal={false}
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.updateSelectedOptionIndex('active');
+        store.updateSelectedOptionIndex('active');
       }}
     >
       <Combobox.Target targetType="button">
@@ -50,7 +50,7 @@ export function SelectActive() {
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>

@@ -58,21 +58,21 @@ export function CustomLayout() {
 }
 
 export function ExternalController() {
-  const timer = useTimer({ countdown: true, startMs: 60_000, interval: 100 });
+  const controller = useTimer({ countdown: true, startMs: 60_000, interval: 100 });
 
   return (
     <Stack p={40}>
-      <Timer controller={timer} format="mm:ss:SSS" />
-      <Text>progress: {timer.progress.toFixed(2)}</Text>
+      <Timer controller={controller} format="mm:ss:SSS" />
+      <Text>progress: {controller.progress.toFixed(2)}</Text>
       <Text>
-        running: {String(timer.running)}, paused: {String(timer.paused)}
+        running: {String(controller.running)}, paused: {String(controller.paused)}
       </Text>
       <Group>
-        <Button onClick={timer.start}>Start</Button>
-        <Button onClick={timer.pause}>Pause</Button>
-        <Button onClick={timer.resume}>Resume</Button>
-        <Button onClick={timer.reset}>Reset</Button>
-        <Button onClick={timer.restart}>Restart</Button>
+        <Button onClick={controller.start}>Start</Button>
+        <Button onClick={controller.pause}>Pause</Button>
+        <Button onClick={controller.resume}>Resume</Button>
+        <Button onClick={controller.reset}>Reset</Button>
+        <Button onClick={controller.restart}>Restart</Button>
       </Group>
     </Stack>
   );

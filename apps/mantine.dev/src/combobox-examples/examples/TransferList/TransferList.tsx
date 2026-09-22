@@ -14,7 +14,7 @@ interface RenderListProps {
 }
 
 function RenderList({ options, onTransfer, type }: RenderListProps) {
-  const combobox = useCombobox();
+  const store = useCombobox();
   const [value, setValue] = useState<string[]>([]);
   const [search, setSearch] = useState('');
 
@@ -30,7 +30,7 @@ function RenderList({ options, onTransfer, type }: RenderListProps) {
         value={item}
         key={item}
         active={value.includes(item)}
-        onMouseOver={() => combobox.resetSelectedOption()}
+        onMouseOver={() => store.resetSelectedOption()}
       >
         <Group gap="sm">
           <Checkbox
@@ -47,7 +47,7 @@ function RenderList({ options, onTransfer, type }: RenderListProps) {
 
   return (
     <div className={classes.renderList} data-type={type}>
-      <Combobox store={combobox} onOptionSubmit={handleValueSelect}>
+      <Combobox store={store} onOptionSubmit={handleValueSelect}>
         <Combobox.EventsTarget>
           <Group wrap="nowrap" gap={0} className={classes.controls}>
             <TextInput
@@ -57,7 +57,7 @@ function RenderList({ options, onTransfer, type }: RenderListProps) {
               value={search}
               onChange={(event) => {
                 setSearch(event.currentTarget.value);
-                combobox.updateSelectedOptionIndex();
+                store.updateSelectedOptionIndex();
               }}
             />
             <ActionIcon

@@ -5,7 +5,7 @@ import classes from './SelectList.module.css';
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 export function SelectList() {
-  const combobox = useCombobox();
+  const store = useCombobox();
 
   const [value, setValue] = useState<string[]>([]);
   const [search, setSearch] = useState('');
@@ -22,7 +22,7 @@ export function SelectList() {
         value={item}
         key={item}
         active={value.includes(item)}
-        onMouseOver={() => combobox.resetSelectedOption()}
+        onMouseOver={() => store.resetSelectedOption()}
       >
         <Group gap="sm">
           <Checkbox
@@ -38,7 +38,7 @@ export function SelectList() {
     ));
 
   return (
-    <Combobox store={combobox} onOptionSubmit={handleValueSelect}>
+    <Combobox store={store} onOptionSubmit={handleValueSelect}>
       <Combobox.EventsTarget>
         <TextInput
           placeholder="Search groceries"
@@ -46,7 +46,7 @@ export function SelectList() {
           value={search}
           onChange={(event) => {
             setSearch(event.currentTarget.value);
-            combobox.updateSelectedOptionIndex();
+            store.updateSelectedOptionIndex();
           }}
         />
       </Combobox.EventsTarget>

@@ -133,11 +133,11 @@ describe('@mantine/core/Editable', () => {
 
   it('binds to an external controller', () => {
     function Wrapper() {
-      const editable = useEditable({ defaultValue: 'Controller', activationMode: 'click' });
+      const controller = useEditable({ defaultValue: 'Controller', activationMode: 'click' });
       return (
         <div>
-          <span data-testid="editing">{String(editable.editing)}</span>
-          <Editable controller={editable} />
+          <span data-testid="editing">{String(controller.editing)}</span>
+          <Editable controller={controller} />
         </div>
       );
     }

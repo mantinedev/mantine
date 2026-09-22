@@ -17,11 +17,11 @@ function LockedStep({ step }: { step?: number; children?: React.ReactNode }) {
 }
 
 function Demo() {
-  const stepper = useStepper();
+  const controller = useStepper();
 
   return (
     <>
-      <Stepper controller={stepper}>
+      <Stepper controller={controller}>
         <Stepper.Step label="Account" description="Create an account">
           Step 1 content: Create an account
         </Stepper.Step>
@@ -35,10 +35,10 @@ function Demo() {
       </Stepper>
 
       <Group justify="center" mt="xl">
-        <Button variant="default" onClick={stepper.previous} disabled={stepper.isFirst()}>
+        <Button variant="default" onClick={controller.previous} disabled={controller.isFirst()}>
           Back
         </Button>
-        <Button onClick={stepper.next}>Next step</Button>
+        <Button onClick={controller.next}>Next step</Button>
       </Group>
     </>
   );
@@ -54,11 +54,11 @@ function LockedStep({ step }: { step?: number; children?: React.ReactNode }) {
 }
 
 function Demo() {
-  const stepper = useStepper();
+  const controller = useStepper();
 
   return (
     <>
-      <Stepper controller={stepper}>
+      <Stepper controller={controller}>
         <Stepper.Step label="Account" description="Create an account">
           <Content>Step 1 content: Create an account</Content>
         </Stepper.Step>
@@ -73,10 +73,10 @@ function Demo() {
       </Stepper>
 
       <Group justify="center" mt="xl">
-        <Button variant="default" onClick={stepper.previous} disabled={stepper.isFirst()}>
+        <Button variant="default" onClick={controller.previous} disabled={controller.isFirst()}>
           Back
         </Button>
-        <Button onClick={stepper.next}>Next step</Button>
+        <Button onClick={controller.next}>Next step</Button>
       </Group>
     </>
   );

@@ -283,8 +283,8 @@ function TreeOption({
 }
 
 export function TreeMultiSelectCombobox() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
   });
 
   const [selected, setSelected] = useState<string[]>([]);
@@ -321,11 +321,11 @@ export function TreeMultiSelectCombobox() {
       setSelected((prev) => prev.slice(0, -1));
     }
 
-    if (!combobox.dropdownOpened) {
+    if (!store.dropdownOpened) {
       return;
     }
 
-    const index = combobox.getSelectedOptionIndex();
+    const index = store.getSelectedOptionIndex();
     if (index < 0 || index >= flatNodes.length) {
       return;
     }
@@ -345,7 +345,7 @@ export function TreeMultiSelectCombobox() {
         event.preventDefault();
         const parentIndex = flatNodes.findIndex((n) => n.node.value === current.parent);
         if (parentIndex >= 0) {
-          combobox.selectOption(parentIndex);
+          store.selectOption(parentIndex);
         }
       }
     }
@@ -362,11 +362,11 @@ export function TreeMultiSelectCombobox() {
   ));
 
   return (
-    <Combobox store={combobox} withinPortal={false} onOptionSubmit={handleOptionSubmit}>
+    <Combobox store={store} withinPortal={false} onOptionSubmit={handleOptionSubmit}>
       <Combobox.DropdownTarget>
         <PillsInput
           pointer
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
         >

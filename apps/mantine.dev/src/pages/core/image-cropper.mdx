@@ -71,9 +71,9 @@ See the [Controllers](/guides/controllers) guide for how the pattern works acros
 import { ImageCropper, useImageCropper } from '@mantine/core';
 
 function Demo() {
-  const imageCropper = useImageCropper({ cropShape: 'circle', maxZoom: 4 });
+  const controller = useImageCropper({ cropShape: 'circle', maxZoom: 4 });
 
-  return <ImageCropper src="/image.png" controller={imageCropper} withControls />;
+  return <ImageCropper src="/image.png" controller={controller} withControls />;
 }
 ```
 
@@ -97,8 +97,8 @@ or a data URL. It accepts `type` (`'image/png'`, `'image/jpeg'` or `'image/webp'
 <Demo data={ImageCropperDemos.exportImage} />
 
 ```tsx
-const blob = await imageCropper.getCroppedImage({ type: 'image/jpeg', quality: 0.9 });
-const dataURL = await imageCropper.getCroppedImage({ output: 'dataURL' });
+const blob = await controller.getCroppedImage({ type: 'image/jpeg', quality: 0.9 });
+const dataURL = await controller.getCroppedImage({ output: 'dataURL' });
 ```
 
 Because the export goes through a canvas, exporting a remote image requires the image host to send

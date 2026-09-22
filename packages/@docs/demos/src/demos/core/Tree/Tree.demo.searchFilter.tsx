@@ -82,7 +82,7 @@ function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePaylo
 
 function Demo() {
   const [search, setSearch] = useState('');
-  const tree = useTree();
+  const store = useTree();
 
   const filteredData = useMemo(
     () => filterTreeData(data, search),
@@ -93,9 +93,9 @@ function Demo() {
     setSearch(value);
     if (value.trim()) {
       const next = filterTreeData(data, value);
-      tree.setExpandedState(getTreeExpandedState(next, '*'));
+      store.setExpandedState(getTreeExpandedState(next, '*'));
     } else {
-      tree.collapseAllNodes();
+      store.collapseAllNodes();
     }
   };
 
@@ -109,7 +109,7 @@ function Demo() {
       />
       <Tree
         data={filteredData}
-        tree={tree}
+        store={store}
         withLines
         renderNode={(payload) => <Leaf {...payload} />}
       />
@@ -174,7 +174,7 @@ function Leaf({ node, expanded, hasChildren, elementProps }: RenderTreeNodePaylo
 
 function Demo() {
   const [search, setSearch] = useState('');
-  const tree = useTree();
+  const store = useTree();
 
   const filteredData = useMemo(() => filterTreeData(data, search), [search]);
 
@@ -182,9 +182,9 @@ function Demo() {
     setSearch(value);
     if (value.trim()) {
       const next = filterTreeData(data, value);
-      tree.setExpandedState(getTreeExpandedState(next, '*'));
+      store.setExpandedState(getTreeExpandedState(next, '*'));
     } else {
-      tree.collapseAllNodes();
+      store.collapseAllNodes();
     }
   };
 
@@ -198,7 +198,7 @@ function Demo() {
       />
       <Tree
         data={filteredData}
-        tree={tree}
+        store={store}
         withLines
         renderNode={(payload) => <Leaf {...payload} />}
       />

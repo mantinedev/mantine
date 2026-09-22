@@ -9,13 +9,13 @@ import { Input, InputBase, Combobox, useCombobox, CheckIcon, Group } from '@mant
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
     onDropdownOpen: (eventSource) => {
       if (eventSource === 'keyboard') {
-        combobox.selectActiveOption();
+        store.selectActiveOption();
       } else {
-        combobox.updateSelectedOptionIndex('active');
+        store.updateSelectedOptionIndex('active');
       }
     },
   });
@@ -33,11 +33,11 @@ function Demo() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       resetSelectionOnOptionHover
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.updateSelectedOptionIndex('active');
+        store.updateSelectedOptionIndex('active');
       }}
     >
       <Combobox.Target targetType="button">
@@ -47,7 +47,7 @@ function Demo() {
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>
@@ -64,13 +64,13 @@ function Demo() {
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
 function Demo() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
     onDropdownOpen: (eventSource) => {
       if (eventSource === 'keyboard') {
-        combobox.selectActiveOption();
+        store.selectActiveOption();
       } else {
-        combobox.updateSelectedOptionIndex('active');
+        store.updateSelectedOptionIndex('active');
       }
     },
   });
@@ -88,11 +88,11 @@ function Demo() {
 
   return (
     <Combobox
-      store={combobox}
+      store={store}
       resetSelectionOnOptionHover
       onOptionSubmit={(val) => {
         setValue(val);
-        combobox.updateSelectedOptionIndex('active');
+        store.updateSelectedOptionIndex('active');
       }}
     >
       <Combobox.Target targetType="button">
@@ -102,7 +102,7 @@ function Demo() {
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
-          onClick={() => combobox.toggleDropdown()}
+          onClick={() => store.toggleDropdown()}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>
