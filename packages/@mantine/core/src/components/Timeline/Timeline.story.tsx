@@ -485,3 +485,56 @@ export function AlignRight() {
     </div>
   );
 }
+
+function WrappedItem({ index, children }: { index?: number; children?: React.ReactNode }) {
+  return (
+    <div>
+      <Timeline.Item index={index} title="Wrapped in a div" opposite="52 minutes ago">
+        {children}
+      </Timeline.Item>
+    </div>
+  );
+}
+
+export function WrappedOppositeItem() {
+  return (
+    <div style={{ margin: 40, maxWidth: 600 }}>
+      <Timeline active={1} bulletSize={24} lineWidth={2}>
+        <Timeline.Item title="First" opposite="2 hours ago">
+          <Text size="sm">Direct child</Text>
+        </Timeline.Item>
+        <WrappedItem>
+          <Text size="sm">Rendered through a wrapper that adds a div</Text>
+        </WrappedItem>
+        <Timeline.Item title="Third" opposite="34 minutes ago">
+          <Text size="sm">Direct child</Text>
+        </Timeline.Item>
+      </Timeline>
+    </div>
+  );
+}
+
+export function NestedTimelineWithOpposite() {
+  return (
+    <div style={{ margin: 40, maxWidth: 600 }}>
+      <Timeline active={1} bulletSize={24} lineWidth={2}>
+        <Timeline.Item title="Outer first">
+          <Text size="sm">The outer timeline has no opposite content</Text>
+        </Timeline.Item>
+        <Timeline.Item title="Outer second">
+          <Timeline active={0} bulletSize={16} lineWidth={2} mt="md">
+            <Timeline.Item title="Inner first" opposite="2 hours ago">
+              <Text size="sm">The inner timeline does</Text>
+            </Timeline.Item>
+            <Timeline.Item title="Inner second" opposite="1 hour ago">
+              <Text size="sm">Inner content</Text>
+            </Timeline.Item>
+          </Timeline>
+        </Timeline.Item>
+        <Timeline.Item title="Outer third">
+          <Text size="sm">The outer layout must stay unchanged</Text>
+        </Timeline.Item>
+      </Timeline>
+    </div>
+  );
+}

@@ -16,6 +16,7 @@ import {
   SwitchDemos,
   TabsDemos,
   ThemingDemos,
+  TimelineDemos,
 } from '@docs/demos';
 import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
@@ -387,8 +388,22 @@ receives or by declaring it with the `step` prop:
 
 The content of a wrapped step is passed as the wrapper's children, and a step that ends up without
 an index renders as inactive and is not focusable instead of looking clickable and doing nothing.
-As part of this, `Stepper` no longer overwrites the `step`, `state`, `allowStepClick` and `onClick`
-props of `Stepper.Step` – see the [migration guide](/guides/9x-to-10x) if you set any of them.
+`Stepper.Step` now also honours the `step`, `state`, `allowStepClick` and `onClick` props when they
+are set – see the [migration guide](/guides/9x-to-10x) if you set any of them today.
+
+## Wrapping Timeline.Item
+
+`Timeline.Item` can now be wrapped in another component, the same way as
+[Stepper.Step](/core/stepper/#wrapping-stepperstep). `Timeline` infers the index of each item from
+its position in `Timeline` children and could not reach an item through a wrapper, so a wrapped item
+was never active. `Timeline.Item` now derives its own state from the parent `Timeline`, and the
+index reaches it either by forwarding the props the wrapper receives or by declaring it with the new
+`index` prop:
+
+<Demo data={TimelineDemos.wrappedItem} />
+
+`Timeline.Item` also gains `active` and `lineActive` props that take over from the state derived
+from the `active` prop of `Timeline`, so an item can be active while the line after it is not.
 
 ## Tabs variants
 

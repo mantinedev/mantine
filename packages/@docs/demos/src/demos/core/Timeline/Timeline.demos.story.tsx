@@ -27,3 +27,8 @@ export const Demo_alternate = {
   name: '⭐ Demo: alternate',
   render: renderDemo(demos.alternate),
 };
+
+export const Demo_wrappedItem = {
+  name: '⭐ Demo: wrappedItem',
+  render: renderDemo(demos.wrappedItem),
+};

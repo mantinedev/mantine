@@ -5,7 +5,7 @@
   --tl-radius: 1000px;
   --tl-color: var(--mantine-primary-color-filled);
 
-  &:where(:not([data-opposite])) {
+  &:where(:not(:has(> .item > .itemOpposite, > * > .item > .itemOpposite))) {
     &:where([data-align='left']) {
       padding-inline-start: var(--offset);
     }
@@ -39,33 +39,33 @@
     border-inline-start: var(--item-border);
     display: var(--timeline-line-display, none);
 
-    .root:where(:not([data-opposite]))[data-align='left'] & {
+    .root:where(:not(:has(> .item > .itemOpposite, > * > .item > .itemOpposite)))[data-align='left'] & {
       --timeline-line-start: calc(var(--tl-line-width) * -1);
       --timeline-line-end: auto;
     }
 
-    .root:where(:not([data-opposite]))[data-align='right'] & {
+    .root:where(:not(:has(> .item > .itemOpposite, > * > .item > .itemOpposite)))[data-align='right'] & {
       --timeline-line-start: auto;
       --timeline-line-end: calc(var(--tl-line-width) * -1);
     }
 
-    .root:where([data-opposite]) & {
+    .root:where(:has(> .item > .itemOpposite, > * > .item > .itemOpposite)) & {
       --timeline-line-start: calc(50% - var(--tl-line-width) / 2);
       --timeline-line-end: auto;
     }
   }
 
-  .root:where(:not([data-opposite])):where([data-align='left']) & {
+  .root:where(:not(:has(> .item > .itemOpposite, > * > .item > .itemOpposite))):where([data-align='left']) & {
     padding-inline-start: var(--offset);
     text-align: start;
   }
 
-  .root:where(:not([data-opposite])):where([data-align='right']) & {
+  .root:where(:not(:has(> .item > .itemOpposite, > * > .item > .itemOpposite))):where([data-align='right']) & {
     padding-inline-end: var(--offset);
     text-align: end;
   }
 
-  .root:where([data-opposite]) & {
+  .root:where(:has(> .item > .itemOpposite, > * > .item > .itemOpposite)) & {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   }
@@ -78,11 +78,11 @@
     }
   }
 
-  &:where(:not(:last-of-type)) {
+  &:where(:not([data-last])) {
     --timeline-line-display: block;
   }
 
-  &:where(:not(:first-of-type)) {
+  &:where(:not([data-first])) {
     margin-top: var(--mantine-spacing-xl);
   }
 }
@@ -102,17 +102,17 @@
 
   border-color: var(--mantine-color-border);
 
-  .root:where(:not([data-opposite])):where([data-align='left']) & {
+  .root:where(:not(:has(> .item > .itemOpposite, > * > .item > .itemOpposite))):where([data-align='left']) & {
     inset-inline-start: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
     inset-inline-end: auto;
   }
 
-  .root:where(:not([data-opposite])):where([data-align='right']) & {
+  .root:where(:not(:has(> .item > .itemOpposite, > * > .item > .itemOpposite))):where([data-align='right']) & {
     inset-inline-start: auto;
     inset-inline-end: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
   }
 
-  .root:where([data-opposite]) & {
+  .root:where(:has(> .item > .itemOpposite, > * > .item > .itemOpposite)) & {
     position: relative;
     inset-inline-start: unset;
     inset-inline-end: unset;
@@ -138,38 +138,38 @@
 }
 
 .itemBody {
-  .root:where(:not([data-opposite])):where([data-align='left']) & {
+  .root:where(:not(:has(> .item > .itemOpposite, > * > .item > .itemOpposite))):where([data-align='left']) & {
     padding-inline-start: var(--offset);
     text-align: start;
   }
 
-  .root:where(:not([data-opposite])):where([data-align='right']) & {
+  .root:where(:not(:has(> .item > .itemOpposite, > * > .item > .itemOpposite))):where([data-align='right']) & {
     padding-inline-end: var(--offset);
     text-align: end;
   }
 
-  .root:where([data-opposite]):where([data-align='left']) & {
+  .root:where(:has(> .item > .itemOpposite, > * > .item > .itemOpposite)):where([data-align='left']) & {
     grid-column: 3;
     grid-row: 1;
     padding-inline-start: var(--offset);
     text-align: start;
   }
 
-  .root:where([data-opposite]):where([data-align='right']) & {
+  .root:where(:has(> .item > .itemOpposite, > * > .item > .itemOpposite)):where([data-align='right']) & {
     grid-column: 1;
     grid-row: 1;
     padding-inline-end: var(--offset);
     text-align: end;
   }
 
-  .root:where([data-opposite]):where([data-align='left']) .item:where([data-alternate]) & {
+  .root:where(:has(> .item > .itemOpposite, > * > .item > .itemOpposite)):where([data-align='left']) .item:where([data-alternate]) & {
     grid-column: 1;
     padding-inline-start: 0;
     padding-inline-end: var(--offset);
     text-align: end;
   }
 
-  .root:where([data-opposite]):where([data-align='right']) .item:where([data-alternate]) & {
+  .root:where(:has(> .item > .itemOpposite, > * > .item > .itemOpposite)):where([data-align='right']) .item:where([data-alternate]) & {
     grid-column: 3;
     padding-inline-end: 0;
     padding-inline-start: var(--offset);

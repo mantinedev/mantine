@@ -39,33 +39,53 @@ the position of content and opposite:
 
 <Demo data={TimelineDemos.bullet} />
 
-## Wrap Timeline.Item
+## Wrapping Timeline.Item
 
-`Timeline` component relies on `Timeline.Item` order. Wrapping `Timeline.Item` is not supported.
-Instead, you will need to use different approaches:
+`Timeline` infers the index of each item from its position in `Timeline` children, and uses it
+together with the `active` prop to decide which items and which lines are active. When you wrap
+`Timeline.Item` in your own component, `Timeline` sees that component instead of the item and cannot
+reach the item to supply the index – so the index has to reach `Timeline.Item` another way. Either
+forward the props your wrapper receives, or declare the index with the `index` prop:
+
+<Demo data={TimelineDemos.wrappedItem} />
+
+```tsx
+import { Timeline, Tooltip } from '@mantine/core';
+
+// Forward the props Timeline passes to the wrapper
+function ForwardingItem(props: Timeline.Item.Props) {
+  return <Timeline.Item title="Commits" {...props} />;
+}
+
+// Or declare the index explicitly when the wrapper cannot forward
+function DeclaredItem({ children }: { children?: React.ReactNode }) {
+  return (
+    <Tooltip label="Reviewed by Robert Gluesticker" position="right">
+      <Timeline.Item index={1} title="Commits">
+        {children}
+      </Timeline.Item>
+    </Tooltip>
+  );
+}
+```
+
+Unlike the index, the content of a wrapped item is not a problem: `Timeline` renders each item where
+you put it and never reads its children, so a wrapper can render them itself.
+
+An item that ends up without an index is never active. You can also set the `active` and
+`lineActive` props on `Timeline.Item` directly to take over from the derived state – they are
+independent, so an item can be active while the line after it is not:
 
 ```tsx
 import { Timeline } from '@mantine/core';
 
-// This will not work, step children will not render
-function WillNotWork() {
-  return <Timeline.Item title="Nope">It will not work</Timeline.Item>;
-}
-
-// Create a separate component for children
-function WillWork() {
-  return <div>This will work as expected!</div>;
-}
-
 function Demo() {
   return (
     <Timeline active={1}>
-      <Timeline.Item title="Regular item">First item</Timeline.Item>
-      <WillNotWork />
-      <Timeline.Item title="Works as expected">
-        <WillWork />
+      <Timeline.Item title="Derived from active">Item 1</Timeline.Item>
+      <Timeline.Item title="Always active" active lineActive>
+        Item 2
       </Timeline.Item>
-      <Timeline.Item title="Regular item">Third item</Timeline.Item>
     </Timeline>
   );
 }

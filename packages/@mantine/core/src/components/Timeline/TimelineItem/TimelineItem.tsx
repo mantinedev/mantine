@@ -13,6 +13,7 @@ import {
   useProps,
 } from '../../../core';
 import { useTimelineContext } from '../Timeline.context';
+import { resolveItemProps } from './resolve-item-props';
 import classes from '../Timeline.module.css';
 
 export type TimelineItemStylesNames =
@@ -25,9 +26,14 @@ export type TimelineItemStylesNames =
 
 export interface TimelineItemProps
   extends BoxProps, CompoundStylesApiProps<TimelineItemFactory>, ElementProps<'div', 'title'> {
-  __active?: boolean;
-  __lineActive?: boolean;
-  __align?: 'right' | 'left';
+  /** 0-based item index. Inferred from the position of the component in `Timeline` children when not set – declare it when `Timeline.Item` is wrapped in another component */
+  index?: number;
+
+  /** Marks the item as active, derived from `index` and the active item of the parent `Timeline` when not set */
+  active?: boolean;
+
+  /** Marks the line after the item as active, derived from `index` and the active item of the parent `Timeline` when not set */
+  lineActive?: boolean;
 
   /** Item title, displayed next to the bullet */
   title?: React.ReactNode;
@@ -69,9 +75,9 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
     style,
     styles,
     vars,
-    __active,
-    __align,
-    __lineActive,
+    index,
+    active,
+    lineActive,
     __vars,
     bullet,
     opposite,
@@ -89,7 +95,7 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
   const theme = useMantineTheme();
 
   const stylesApiProps = { classNames, styles };
-  const bodyFirst = (__align === 'left' && !!alternate) || (__align === 'right' && !alternate);
+  const resolved = resolveItemProps({ index, active, lineActive, alternate }, ctx);
 
   const oppositeNode = opposite != null && (
     <div {...ctx.getStyles('itemOpposite', stylesApiProps)}>{opposite}</div>
@@ -105,7 +111,16 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
   return (
     <Box
       {...ctx.getStyles('item', { ...stylesApiProps, className, style })}
-      mod={[{ 'line-active': __lineActive, active: __active, alternate }, mod]}
+      mod={[
+        {
+          'line-active': resolved.lineActive,
+          active: resolved.active,
+          first: resolved.first,
+          last: resolved.last,
+          alternate,
+        },
+        mod,
+      ]}
       __vars={{
         '--tli-radius': radius !== undefined ? getRadius(radius) : undefined,
         '--tli-color': color ? getThemeColor(color, theme) : undefined,
@@ -113,16 +128,16 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
       }}
       {...others}
     >
-      {bodyFirst ? bodyNode : oppositeNode}
+      {resolved.bodyFirst ? bodyNode : oppositeNode}
 
       <Box
         {...ctx.getStyles('itemBullet', stylesApiProps)}
-        mod={{ 'with-child': !!bullet, align: __align, active: __active }}
+        mod={{ 'with-child': !!bullet, align: resolved.align, active: resolved.active }}
       >
         {bullet}
       </Box>
 
-      {bodyFirst ? oppositeNode : bodyNode}
+      {resolved.bodyFirst ? oppositeNode : bodyNode}
     </Box>
   );
 });

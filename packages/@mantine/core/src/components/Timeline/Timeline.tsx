@@ -126,24 +126,17 @@ export const Timeline = factory<TimelineFactory>((_props) => {
     varsResolver,
   });
 
-  const _children = Children.toArray(children);
-  const hasOpposite = _children.some((item: any) => item.props?.opposite != null);
-  const items = _children.map((item: any, index) =>
-    cloneElement(item, {
-      unstyled,
-      __align: align,
-      __active:
-        item.props?.active ||
-        (reverseActive ? active >= _children.length - index - 1 : active >= index),
-      __lineActive:
-        item.props?.lineActive ||
-        (reverseActive ? active >= _children.length - index - 1 : active - 1 >= index),
-    })
+  const activeIndex = active ?? -1;
+  const _children = Children.toArray(children) as React.ReactElement<TimelineItemProps>[];
+  const items = _children.map((item, index) =>
+    cloneElement(item, { index: item.props.index ?? index })
   );
 
   return (
-    <TimelineProvider value={{ getStyles }}>
-      <Box {...getStyles('root')} mod={[{ align, opposite: hasOpposite }, mod]} {...others}>
+    <TimelineProvider
+      value={{ getStyles, active: activeIndex, itemsCount: _children.length, reverseActive, align }}
+    >
+      <Box {...getStyles('root')} mod={[{ align }, mod]} {...others}>
         {items}
       </Box>
     </TimelineProvider>
