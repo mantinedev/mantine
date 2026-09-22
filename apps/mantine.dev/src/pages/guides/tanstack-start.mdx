@@ -1,0 +1,98 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.TanStackStart);
+
+# Usage with TanStack Start
+
+<GetTemplates type="tanstack-start" />
+
+## Generate new application
+
+Follow the [TanStack Start quick start guide](https://tanstack.com/start/latest/docs/framework/react/quick-start)
+to create a new TanStack Start application:
+
+```bash
+npx @tanstack/cli@latest create
+```
+
+## Installation
+
+<PackagesInstallation />
+
+## PostCSS setup
+
+Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
+
+<InstallScript
+  packages="postcss postcss-preset-mantine postcss-simple-vars"
+  dev
+/>
+
+Create a `postcss.config.mjs` file at the root of your application with the following content:
+
+```js
+export default {
+  plugins: {
+    'postcss-preset-mantine': {},
+    'postcss-simple-vars': {
+      variables: {
+        'mantine-breakpoint-xs': '36em',
+        'mantine-breakpoint-sm': '48em',
+        'mantine-breakpoint-md': '62em',
+        'mantine-breakpoint-lg': '75em',
+        'mantine-breakpoint-xl': '88em',
+      },
+    },
+  },
+};
+```
+
+## Setup
+
+Add styles imports, [MantineProvider](/theming/mantine-provider/) and [ColorSchemeScript](/theming/color-schemes)
+to `src/routes/__root.tsx`. Styles are imported with the `?url` suffix and added to the
+`links` array of the root route so that they are included in the server-rendered HTML.
+Mantine styles must be the first stylesheet in the `links` array, before any other styles
+of your application:
+
+```tsx
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import mantineCoreStyles from '@mantine/core/styles.css?url';
+
+import { createRootRoute, HeadContent, Scripts } from '@tanstack/react-router';
+import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
+
+export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      { charSet: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    ],
+    links: [{ rel: 'stylesheet', href: mantineCoreStyles }],
+  }),
+  shellComponent: RootDocument,
+});
+
+function RootDocument({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" {...mantineHtmlProps}>
+      <head>
+        <ColorSchemeScript />
+        <HeadContent />
+      </head>
+      <body>
+        <MantineProvider>{children}</MantineProvider>
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+```
+
+All set! Start the development server:
+
+```bash
+npm run dev
+```
