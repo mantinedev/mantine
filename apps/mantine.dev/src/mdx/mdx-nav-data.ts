@@ -125,7 +125,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
   },
   {
     category: 'Styles integrations',
-    pages: [MDX_DATA.Emotion, MDX_DATA.UsageWithSass, MDX_DATA.VanillaExtract],
+    pages: [MDX_DATA.Emotion, MDX_DATA.UsageWithSass, MDX_DATA.VanillaExtract, MDX_DATA.StyleX],
   },
   {
     category: 'Other',
