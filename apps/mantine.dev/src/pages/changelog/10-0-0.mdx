@@ -10,7 +10,6 @@ import {
   TableOfContentsDemos,
   ModalDemos,
   NotificationDemos,
-  PaginationDemos,
   PillsInputDemos,
   SliderDemos,
   StepperDemos,
@@ -193,24 +192,35 @@ labels are gone.
 ## Controller hooks
 
 Components that own state can now be driven with a **controller** – an object returned by a
-`use<Component>` hook that owns the state and exposes actions and queries on it. Pass it back to the
-component with the `controller` prop to control it from anywhere in your application, including
-actions that props cannot express, such as `expandAll` and `collapseAll`:
+`use<Component>` hook that owns the component's state and exposes actions and queries on it. Pass it
+to the component with the `controller` prop to control it from anywhere in your application,
+including actions that props cannot express, such as `expandAll` and `collapseAll`:
 
 <Demo data={AccordionDemos.controller} />
 
-[Accordion](/core/accordion) and [Stepper](/core/stepper) gain this in 10.0 with the new
-`useAccordion` and `useStepper` hooks, [Pagination](/core/pagination) gains the `controller` prop for
-the `usePagination` hook it already had, and the hooks that
-already shipped the pattern – `useTimer`, `useEditable`, `useImageCropper`, `useTree`, `useCombobox`
-and `useDataGrid` – are now documented as one pattern. `useTimer`, `useEditable` and
-`useImageCropper` have their types renamed to `<Component>Controller` and
-`<Component>ControllerOptions`; the hooks that predate the naming keep the type names they shipped
-with (`ComboboxStore`, `DataGridStore`, `UseTreeInput`, `UsePaginationOptions`). A controller never
-removes or renames a prop, so adopting one is always additive.
+A controller never removes or renames a prop, so adopting one is always additive – the component
+keeps working with `value`, `defaultValue` and `onChange` as before. The
+[Controllers](/guides/controllers) guide covers when to reach for a controller and how it coexists
+with controlled props.
 
-The [Controllers](/guides/controllers) guide covers when to reach for a controller, how it coexists
-with `value`/`defaultValue`/`onChange` and the full list of components that ship one. The renamed
+Components that support controllers:
+
+- [Accordion](/core/accordion#controlling-with-useaccordion) – new `useAccordion` hook
+- [Stepper](/core/stepper#controlling-with-usestepper) – new `useStepper` hook. `Stepper` can now
+  also own its active step: `active` is optional, use `defaultActive` and `onActiveChange` instead
+- [Pagination](/core/pagination#controlling-with-usepagination) – new `controller` prop for the
+  existing `usePagination` hook
+- [PinInput](/core/pin-input#controlling-with-usepininput) – new `usePinInput` hook
+- [Timer](/core/timer#usetimer-hook) – `useTimer` hook
+- [Editable](/core/editable#useeditable-hook) – `useEditable` hook
+- [ImageCropper](/core/image-cropper#controller) – `useImageCropper` hook
+- [Tree](/core/tree#usetree-hook) – `useTree` hook
+- [Combobox](/core/combobox#usecombobox-hook) – `useCombobox` hook
+- [DataGrid](/data-grid/getting-started#store-hook) – `useDataGrid` hook
+
+`useTimer`, `useEditable` and `useImageCropper` have their types renamed to `<Component>Controller`
+and `<Component>ControllerOptions`; the hooks that predate the naming keep the type names they
+shipped with (`ComboboxStore`, `DataGridStore`, `UseTreeInput`, `UsePaginationOptions`). The renamed
 types are listed in the [migration guide](/guides/9x-to-10x).
 
 ## Modal.Footer and Drawer.Footer
@@ -366,31 +376,6 @@ uses the `border` color and fills towards the next step with a transition, and c
 are not reached yet have a hover state:
 
 <Demo data={StepperDemos.usage} />
-
-## Stepper controller and uncontrolled state
-
-[Stepper](/core/stepper) can now own its active step. `active` is no longer required – pass
-`defaultActive` instead and subscribe to changes with the new `onActiveChange` prop, and steps become
-clickable without an `onStepClick` handler. For step navigation, the new `useStepper` hook returns a
-controller with `next`, `previous`, `first`, `last` and `complete`, each clamped against the number
-of steps that `Stepper` actually rendered – which is knowledge only `Stepper` has, so counting the
-steps by hand to clamp the index is no longer necessary:
-
-<Demo data={StepperDemos.controller} />
-
-## Pagination controller
-
-[Pagination](/core/pagination) now accepts a `controller` prop, so the
-[use-pagination](/hooks/use-pagination) hook you already had can drive the component directly
-instead of being wired back through `value` and `onChange`:
-
-<Demo data={PaginationDemos.controller} />
-
-Passing the controller replaces `total`, `value`, `defaultValue`, `onChange`, `siblings`,
-`boundaries` and `startValue` – they are all hook options now – and `total` becomes optional on
-`Pagination`. `range` and `active` read from the controller are the values the component actually
-renders, which is not true of a second `usePagination` call: `siblings` and `boundaries` can come
-from `theme.components.Pagination.defaultProps`, which your own copy of the hook cannot see.
 
 ## Wrapping Stepper.Step
 

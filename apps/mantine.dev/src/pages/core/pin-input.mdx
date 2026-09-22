@@ -20,6 +20,74 @@ function Demo() {
 }
 ```
 
+## Controlling with usePinInput
+
+`value`/`defaultValue`/`onChange` cover reading and writing the pin, but they cannot express
+anything that involves the inputs themselves. `PinInput` renders one input per character and its
+`ref` points at the **first** input only, so there is no way to focus input 3, clear the pin and put
+the caret back at the start, or ask which input the user is on. Create a controller with the
+`usePinInput` hook and pass it to `PinInput` with the `controller` prop to get those actions. The
+[Controllers](/guides/controllers) guide covers how the pattern works across all components:
+
+<Demo data={PinInputDemos.controller} />
+
+`usePinInput` accepts the state options that `PinInput` accepts as props, and returns the current
+state, actions and queries:
+
+```tsx
+import { PinInput, usePinInput } from '@mantine/core';
+
+function Demo() {
+  const pin = usePinInput({
+    length: 6, // -> number of inputs, 4 by default
+    defaultValue: '12', // -> uncontrolled initial value
+    // value, onChange, onComplete -> same as on PinInput
+  });
+
+  // State
+  pin.value; // -> current value as a string, for example '12'
+  pin.fieldValues; // -> value of each input, for example ['1', '2', '', '', '', '']
+  pin.focusedIndex; // -> index of the focused input, -1 when none of them is focused
+  pin.length; // -> number of inputs
+
+  // Actions
+  pin.setValue('123456'); // -> sets all inputs at once
+  pin.setFieldValue(0, '9'); // -> sets the value of a single input
+  pin.clear(); // -> clears all inputs
+  pin.focus(2); // -> focuses the third input
+  pin.focusNext();
+  pin.focusPrevious();
+
+  // Queries
+  pin.isComplete(); // -> boolean, true when all inputs have a value
+  pin.getInputNode(2); // -> input element at the given index, null if PinInput is not mounted
+
+  return <PinInput controller={pin} />;
+}
+```
+
+The controller owns the state, so when the `controller` prop is set, the `value`, `defaultValue`,
+`onChange`, `onComplete` and `length` props of `PinInput` are ignored – pass them to `usePinInput`
+instead. Everything else, including `type`, `mask`, `manageFocus` and `disabled`, stays on the
+component: those props decide how a keystroke is interpreted and how the inputs look, not what the
+next value is.
+
+`value` is a string and `fieldValues` is an array of characters, because the two are not the same
+thing: `PinInput` allows a gap in the middle, so a pin with the third input cleared is
+`fieldValues: ['1', '2', '', '4']` and `value: '124'`. Use `fieldValues` when the position matters.
+
+`focus`, `focusNext`, `focusPrevious` and `getInputNode` need the input elements, which the
+associated `PinInput` registers after it renders. They are no-op (`getInputNode` returns `null`)
+while no `PinInput` is mounted with the controller. One controller drives one `PinInput`:
+registration is keyed by input index, so two `PinInput` components sharing a controller focus the
+inputs of the one that rendered last.
+
+`onComplete` is called once per completion by the controller, including when the value is set with
+`setValue` or `setFieldValue` rather than typed.
+
+The controller is typed as `PinInputController` and its options as `PinInputControllerOptions`, both
+exported from `@mantine/core`.
+
 ## Uncontrolled
 
 `PinInput` can be used with uncontrolled forms the same way as a native input element.

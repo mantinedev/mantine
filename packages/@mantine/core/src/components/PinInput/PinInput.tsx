@@ -1,5 +1,4 @@
-import { useRef, useState } from 'react';
-import { assignRef, useId, useUncontrolled } from '@mantine/hooks';
+import { assignRef, useId } from '@mantine/hooks';
 import {
   BoxProps,
   createVarsResolver,
@@ -12,6 +11,7 @@ import {
   MantineSize,
   MantineSpacing,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -20,6 +20,7 @@ import { Group } from '../Group';
 import { Input, InputProps } from '../Input';
 import { InputBase } from '../InputBase';
 import { createPinArray } from './create-pin-array/create-pin-array';
+import { usePinInput, type PinInputController } from './use-pin-input/use-pin-input';
 import classes from './PinInput.module.css';
 
 const regex = {
@@ -54,6 +55,9 @@ export interface PinInputProps
 
   /** If set, the first input is focused when component is mounted @default false @category behavior */
   autoFocus?: boolean;
+
+  /** Controller returned by the `usePinInput` hook. When provided, the state is owned by the controller and `value`, `defaultValue`, `onChange`, `onComplete` and `length` props are ignored @category state */
+  controller?: PinInputController;
 
   /** Controlled component value @category state */
   value?: string;
@@ -94,7 +98,7 @@ export interface PinInputProps
   /** Changes input type to `"password"` @default false @category appearance */
   mask?: boolean;
 
-  /** Number of inputs @default 4 @category appearance */
+  /** Number of inputs, ignored when `controller` is set @default 4 @category appearance */
   length?: number;
 
   /** If set, the user cannot edit the value @category behavior */
@@ -167,6 +171,7 @@ export const PinInput = factory<PinInputFactory>((props) => {
     styles,
     unstyled,
     length,
+    controller,
     onChange,
     onComplete,
     manageFocus,
@@ -215,32 +220,16 @@ export const PinInput = factory<PinInputFactory>((props) => {
     props,
   });
 
-  const [focusedIndex, setFocusedIndex] = useState(-1);
-  const inputsRef = useRef<Array<HTMLInputElement>>([]);
-  const currentLength = length ?? 4;
-
-  const completedRef = useRef(false);
-
-  const [_value, setValues] = useUncontrolled<string[]>({
-    value: value !== undefined ? createPinArray(currentLength, value) : undefined,
-    defaultValue: defaultValue?.split('').slice(0, currentLength),
-    finalValue: createPinArray(currentLength, ''),
-    onChange: (val) => {
-      const stringValue = val.join('').trim();
-      onChange?.(stringValue);
-      if (stringValue.length === currentLength && !completedRef.current) {
-        completedRef.current = true;
-        onComplete?.(stringValue);
-      } else if (stringValue.length < currentLength) {
-        completedRef.current = false;
-      }
-    },
+  const pinInput = useController(usePinInput, controller, {
+    length,
+    value,
+    defaultValue,
+    onChange,
+    onComplete,
   });
 
-  const currentValue =
-    _value.length !== currentLength ? createPinArray(currentLength, _value.join('')) : _value;
-
-  const _valueToString = currentValue.join('').trim();
+  const currentLength = pinInput.length;
+  const currentValue = pinInput.fieldValues;
 
   const validate = (code: string) => {
     const re = type instanceof RegExp ? type : type && type in regex ? regex[type] : null;
@@ -248,28 +237,13 @@ export const PinInput = factory<PinInputFactory>((props) => {
   };
 
   const focusInputField = (dir: 'next' | 'prev', index: number) => {
-    if (!manageFocus) {
-      return;
-    }
-
-    if (dir === 'next') {
-      const nextIndex = index + 1;
-      if (nextIndex < currentLength) {
-        inputsRef.current[nextIndex]?.focus();
-      }
-    } else if (dir === 'prev') {
-      const prevIndex = index - 1;
-      if (prevIndex >= 0) {
-        inputsRef.current[prevIndex]?.focus();
-      }
+    if (manageFocus) {
+      pinInput.focus(dir === 'next' ? index + 1 : index - 1);
     }
   };
 
   const setFieldValue = (val: string, index: number) => {
-    const values = [...currentValue];
-    values[index] = val;
-    setValues(values);
-    return values;
+    pinInput.setFieldValue(index, val);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -280,7 +254,7 @@ export const PinInput = factory<PinInputFactory>((props) => {
       if (isPaste) {
         const isValid = validate(inputValue);
         if (isValid) {
-          setValues(createPinArray(currentLength, inputValue));
+          pinInput.setValue(inputValue);
           const filledCount = Math.min(inputValue.length, currentLength);
           if (filledCount < currentLength) {
             focusInputField('next', filledCount - 1);
@@ -378,11 +352,11 @@ export const PinInput = factory<PinInputFactory>((props) => {
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>, index: number) => {
     event.target.select();
-    setFocusedIndex(index);
+    pinInput.setFocusedIndex(index);
   };
 
   const handleBlur = () => {
-    setFocusedIndex(-1);
+    pinInput.setFocusedIndex(-1);
   };
 
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
@@ -392,13 +366,9 @@ export const PinInput = factory<PinInputFactory>((props) => {
 
     if (isValid) {
       const pasteArray = createPinArray(currentLength, pasteData);
-      setValues(pasteArray);
+      pinInput.setValue(pasteData);
       const filledCount = pasteArray.filter((val) => val !== '').length;
-      if (filledCount >= currentLength) {
-        inputsRef.current[currentLength - 1]?.focus();
-      } else {
-        inputsRef.current[filledCount]?.focus();
-      }
+      pinInput.focus(Math.min(filledCount, currentLength - 1));
     }
   };
 
@@ -447,11 +417,12 @@ export const PinInput = factory<PinInputFactory>((props) => {
             ref={(node) => {
               if (node) {
                 index === 0 && assignRef(ref, node);
-                inputsRef.current[index] = node;
               }
+
+              pinInput.registerInput(index, node);
             }}
             autoComplete={oneTimeCode ? 'one-time-code' : 'off'}
-            placeholder={focusedIndex === index ? '' : placeholder}
+            placeholder={pinInput.focusedIndex === index ? '' : placeholder}
             value={char}
             autoFocus={autoFocus && index === 0}
             unstyled={unstyled}
@@ -462,7 +433,7 @@ export const PinInput = factory<PinInputFactory>((props) => {
         ))}
       </Group>
 
-      <input type="hidden" name={name} form={form} value={_valueToString} {...hiddenInputProps} />
+      <input type="hidden" name={name} form={form} value={pinInput.value} {...hiddenInputProps} />
     </>
   );
 });
