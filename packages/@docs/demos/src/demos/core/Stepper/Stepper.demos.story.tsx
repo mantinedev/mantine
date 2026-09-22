@@ -13,6 +13,16 @@ export const Demo_configurator = {
   render: renderDemo(demos.configurator),
 };
 
+export const Demo_controller = {
+  name: '⭐ Demo: controller',
+  render: renderDemo(demos.controller),
+};
+
+export const Demo_wrappedStep = {
+  name: '⭐ Demo: wrappedStep',
+  render: renderDemo(demos.wrappedStep),
+};
+
 export const Demo_icons = {
   name: '⭐ Demo: icons',
   render: renderDemo(demos.icons),

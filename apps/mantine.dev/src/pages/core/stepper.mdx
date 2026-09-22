@@ -6,7 +6,69 @@ export default Layout(MDX_DATA.Stepper);
 
 ## Usage
 
+`Stepper` is controlled by default: pass the index of the active step with the `active` prop and
+update it in `onStepClick`. To let `Stepper` manage the state, use `defaultActive` instead of
+`active` and subscribe to changes with `onActiveChange`:
+
 <Demo data={StepperDemos.usage} />
+
+## Controlling with useStepper
+
+`active`/`defaultActive`/`onActiveChange` cover most cases, but they cannot express step navigation:
+only `Stepper` knows how many `Stepper.Step` components are rendered and whether
+`Stepper.Completed` is present, so moving to the next step means clamping the index against a step
+count that you have to count yourself. Create a controller with the `useStepper` hook and pass it to
+`Stepper` with the `controller` prop to get those actions. The [Controllers](/guides/controllers)
+guide covers how the pattern works across all components:
+
+<Demo data={StepperDemos.controller} />
+
+`useStepper` accepts the state options that `Stepper` accepts as props, and returns the current
+state, actions and queries:
+
+```tsx
+import { Stepper, useStepper } from '@mantine/core';
+
+function Demo() {
+  const stepper = useStepper({
+    defaultActive: 1, // -> uncontrolled initial value
+    // active, onActiveChange -> controlled state, same as on Stepper
+  });
+
+  // State
+  stepper.active; // -> index of the active step
+
+  // Actions
+  stepper.next(); // -> next step, stops at the last step or at Stepper.Completed
+  stepper.previous(); // -> previous step, stops at the first step
+  stepper.first();
+  stepper.last();
+  stepper.complete(); // -> moves past the last step, renders Stepper.Completed
+  stepper.setActive(2); // -> sets the index directly, the value is not clamped
+
+  // Queries
+  stepper.isCompleted(0); // -> boolean, true if the step has been passed
+  stepper.isFirst(); // -> boolean
+  stepper.isLast(); // -> boolean
+  stepper.getStepCount(); // -> number of Stepper.Step components rendered by Stepper
+
+  return <Stepper controller={stepper}>{/* steps */}</Stepper>;
+}
+```
+
+The controller owns the state, so when the `controller` prop is set, the `active`, `defaultActive`
+and `onActiveChange` props of `Stepper` are ignored – pass them to `useStepper` instead.
+
+`next`, `last`, `complete`, `isLast` and `getStepCount` need the step count, which the associated
+`Stepper` reports after it renders. They are no-op (`isLast` returns `false`, `getStepCount` returns
+`0`) while no `Stepper` is mounted with the controller, and `getStepCount` is a function rather than
+a field because the step count is not reactive – reading it does not re-render the component that
+owns the controller. One controller drives one `Stepper`: registration is replaced rather than
+accumulated, so two `Stepper` components sharing a controller report only the step count of the one
+that rendered last.
+
+The controller is typed as `StepperController` and its options as `StepperControllerOptions`, both
+exported from `@mantine/core`.
 
 ## Allow step select
 
@@ -105,42 +167,76 @@ function MyStepper() {
 }
 ```
 
-## Wrap Stepper.Step
+## Wrapping Stepper.Step
 
-`Stepper` component relies on `Stepper.Step` order. Wrapping `Stepper.Step` is not supported.
-Instead, you will need to use different approaches:
+`Stepper` infers the index of each step from its position in `Stepper` children. When you wrap
+`Stepper.Step` in your own component, `Stepper` sees that component instead of the step and cannot
+reach the step to supply the index – so the index has to reach `Stepper.Step` another way. Either
+forward the props your wrapper receives, or declare the index with the `step` prop:
+
+<Demo data={StepperDemos.wrappedStep} />
 
 ```tsx
-import { Stepper } from '@mantine/core';
+import { Stepper, Tooltip } from '@mantine/core';
 
-// This will not work, step children will not render
-function WillNotWork() {
-  return (
-    <Stepper.Step label="Nope" description="It will not work">
-      This part will not render
-    </Stepper.Step>
-  );
+// Forward the props Stepper passes to the wrapper
+function ForwardingStep(props: Stepper.Step.Props) {
+  return <Stepper.Step label="Verification" {...props} />;
 }
 
-// Create a separate component for children
-function WillWork() {
-  return <div>This will work as expected!</div>;
+// Or declare the index explicitly when the wrapper cannot forward
+function DeclaredStep({ children }: { children?: React.ReactNode }) {
+  return (
+    <Tooltip label="You need an invite to complete this step">
+      <Stepper.Step step={1} label="Invite" />
+    </Tooltip>
+  );
+}
+```
+
+A wrapped step that ends up without an index renders as inactive and is not focusable, rather than
+as a step that looks clickable but does nothing.
+
+### Content of a wrapped step
+
+`Stepper` renders the content of the active step below the steps, so it reads that content from the
+element it can see – your wrapper. Pass the content as the **wrapper's** children and do not render
+it inside the wrapper:
+
+```tsx
+import { Stepper, Tooltip } from '@mantine/core';
+
+// `children` is declared so the content can be passed, and is deliberately not rendered:
+// Stepper takes it and renders it in the content section
+function DeclaredStep({ step }: { step?: number; children?: React.ReactNode }) {
+  return (
+    <Tooltip label="You need an invite to complete this step">
+      <Stepper.Step step={step} label="Invite" />
+    </Tooltip>
+  );
 }
 
 function Demo() {
   return (
     <Stepper active={1}>
-      <Stepper.Step label="Regular step">First step</Stepper.Step>
-      {/* Wrapped Stepper.Step will not render children, do not do that */}
-      <WillNotWork />
-      <Stepper.Step label="Step with custom content">
-        <WillWork />
-      </Stepper.Step>
-      <Stepper.Step label="Regular step">Third step</Stepper.Step>
+      <Stepper.Step label="Account">Step 1 content</Stepper.Step>
+      <DeclaredStep step={1}>Step 2 content</DeclaredStep>
     </Stepper>
   );
 }
 ```
+
+This is why a component that uses its own children for something else – `Tooltip`, `Popover` and
+similar – cannot be used as the outermost wrapper: `Stepper` would render that component's children,
+which are the step itself, into the content section. Put it inside your own wrapper instead, as
+above.
+
+### What cannot be wrapped
+
+`Stepper.Completed` is matched by component type, and no prop can declare that through a wrapper.
+A wrapped `Stepper.Completed` is counted as a regular step: it adds to the step count reported by
+[useStepper](#controlling-with-usestepper), renders nothing in the steps row, and its content is
+never shown. Render it directly as a child of `Stepper`.
 
 ## Accessibility
 

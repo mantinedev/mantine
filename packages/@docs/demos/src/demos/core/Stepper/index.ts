@@ -1,5 +1,7 @@
 export { usage } from './Stepper.demo.usage';
 export { configurator } from './Stepper.demo.configurator';
+export { controller } from './Stepper.demo.controller';
+export { wrappedStep } from './Stepper.demo.wrappedStep';
 export { icons } from './Stepper.demo.icons';
 export { iconSizeConfigurator } from './Stepper.demo.iconSizeConfigurator';
 export { iconsOnly } from './Stepper.demo.iconsOnly';

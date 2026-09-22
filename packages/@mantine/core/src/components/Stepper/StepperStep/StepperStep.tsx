@@ -16,6 +16,7 @@ import { UnstyledButton } from '../../UnstyledButton';
 import { getStepColorText } from '../get-step-color-text';
 import type { StepFragmentComponent } from '../Stepper';
 import { useStepperContext } from '../Stepper.context';
+import { resolveStepProps, type StepperStepState } from './resolve-step-props';
 import classes from '../Stepper.module.css';
 
 const getStepFragment = (
@@ -43,11 +44,11 @@ export type StepperStepStylesNames =
 
 export interface StepperStepProps
   extends BoxProps, CompoundStylesApiProps<StepperStepFactory>, ElementProps<'button'> {
-  /** 0-based step index, automatically set by Stepper component @category state */
+  /** 0-based step index. Inferred from the position of the component in `Stepper` children when not set – declare it when `Stepper.Step` is wrapped in another component @category state */
   step?: number;
 
-  /** Step state, automatically set by Stepper component based on active prop. stepInactive: not reached, stepProgress: current, stepCompleted: passed @category state */
-  state?: 'stepInactive' | 'stepProgress' | 'stepCompleted';
+  /** Step state, derived from the `step` index and the active step of the parent `Stepper` when not set. stepInactive: not reached, stepProgress: current, stepCompleted: passed @category state */
+  state?: StepperStepState;
 
   /** Key of `theme.colors`, by default controlled by Stepper component @category appearance */
   color?: MantineColor;
@@ -79,7 +80,7 @@ export interface StepperStepProps
   /** Indicates loading state of the step @category behavior */
   loading?: boolean;
 
-  /** Set to false to disable clicks on step @category behavior */
+  /** Set to false to disable clicks on step. Derived from `allowStepSelect` and the parent `Stepper` when not set @category behavior */
   allowStepClick?: boolean;
 
   /** Should step selection be allowed @category behavior */
@@ -101,8 +102,6 @@ export type StepperStepFactory = Factory<{
 
 const defaultProps = {
   withIcon: true,
-  allowStepClick: true,
-  iconPosition: 'left',
 } satisfies Partial<StepperStepProps>;
 
 export const StepperStep = factory<StepperStepFactory>((props) => {
@@ -128,6 +127,7 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
     iconPosition,
     orientation,
     mod,
+    onClick,
     ...others
   } = useProps('StepperStep', defaultProps, props);
 
@@ -135,10 +135,25 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
   const theme = useMantineTheme();
   const stylesApi = { classNames, styles };
 
-  const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
+  const resolved = resolveStepProps(
+    {
+      step,
+      state,
+      allowStepClick,
+      allowStepSelect,
+      color,
+      icon,
+      completedIcon,
+      progressIcon,
+      iconPosition,
+      orientation,
+    },
+    ctx
+  );
+
   const dataAttributes = {
-    'data-progress': state === 'stepProgress' || undefined,
-    'data-completed': state === 'stepCompleted' || undefined,
+    'data-progress': resolved.state === 'stepProgress' || undefined,
+    'data-completed': resolved.state === 'stepCompleted' || undefined,
   };
 
   return (
@@ -146,24 +161,35 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
       {...ctx.getStyles('step', { className, style, variant: ctx.orientation, ...stylesApi })}
       mod={[
         {
-          iconPosition: iconPosition || ctx.iconPosition,
-          allowClick: allowStepClick,
+          iconPosition: resolved.iconPosition,
+          allowClick: resolved.allowStepClick,
           labelPosition: ctx.labelPosition,
         },
         mod,
       ]}
       {...dataAttributes}
       {...others}
-      __vars={{
-        '--step-color': color ? getThemeColor(color, theme) : undefined,
-        '--step-color-text': color ? getStepColorText(color, theme) : undefined,
+      onClick={(event) => {
+        onClick?.(event);
+
+        if (resolved.allowStepClick && step !== undefined) {
+          ctx.onStepSelect(step);
+        }
       }}
-      tabIndex={allowStepClick ? 0 : -1}
+      __vars={{
+        '--step-color': resolved.color ? getThemeColor(resolved.color, theme) : undefined,
+        '--step-color-text': resolved.color ? getStepColorText(resolved.color, theme) : undefined,
+      }}
+      tabIndex={resolved.allowStepClick ? 0 : -1}
     >
       {withIcon && (
         <span {...ctx.getStyles('stepWrapper', stylesApi)}>
           <span {...ctx.getStyles('stepIcon', stylesApi)} {...dataAttributes}>
-            <Transition mounted={state === 'stepCompleted'} transition="pop" duration={200}>
+            <Transition
+              mounted={resolved.state === 'stepCompleted'}
+              transition="pop"
+              duration={200}
+            >
               {(transitionStyles) => (
                 <span
                   {...ctx.getStyles('stepCompletedIcon', { style: transitionStyles, ...stylesApi })}
@@ -175,30 +201,30 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
                       {...ctx.getStyles('stepLoader', stylesApi)}
                     />
                   ) : (
-                    getStepFragment(completedIcon, step) || <CheckIcon size="60%" />
+                    getStepFragment(resolved.completedIcon, step) || <CheckIcon size="60%" />
                   )}
                 </span>
               )}
             </Transition>
 
-            {state !== 'stepCompleted' ? (
+            {resolved.state !== 'stepCompleted' ? (
               <span {...ctx.getStyles('stepIconContent', stylesApi)}>
                 {loading ? (
                   <Loader
                     {...ctx.getStyles('stepLoader', stylesApi)}
                     size="calc(var(--stepper-icon-size) / 2)"
-                    color={color}
+                    color={resolved.color}
                   />
                 ) : (
-                  getStepFragment(_icon || icon, step)
+                  getStepFragment(resolved.icon, step)
                 )}
               </span>
             ) : null}
           </span>
-          {orientation === 'vertical' && (
+          {resolved.orientation === 'vertical' && (
             <span
               {...ctx.getStyles('verticalSeparator', stylesApi)}
-              data-active={state === 'stepCompleted' || undefined}
+              data-active={resolved.state === 'stepCompleted' || undefined}
             />
           )}
         </span>
@@ -208,7 +234,7 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
         <span
           {...ctx.getStyles('stepBody', stylesApi)}
           data-orientation={ctx.orientation}
-          data-icon-position={iconPosition || ctx.iconPosition}
+          data-icon-position={resolved.iconPosition}
         >
           {label && (
             <span {...ctx.getStyles('stepLabel', stylesApi)}>{getStepFragment(label, step)}</span>

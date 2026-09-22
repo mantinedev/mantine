@@ -165,7 +165,9 @@ controlled props.
 Values read through a `get<X>()` function rather than a field are deliberately spelled as functions:
 they are read on demand and are not reactive by themselves. `getItems()` on an accordion reports
 what is mounted at the moment you call it, so it returns an empty array on the very first render,
-before children have mounted.
+before children have mounted. The same applies to `getStepCount()` on a stepper: it reports what the
+`Stepper` rendered, so it returns `0` until one is mounted with the controller, and the actions that
+depend on it – `next`, `last` and `complete` – do nothing until then.
 
 ## Actions, queries and naming
 
@@ -261,6 +263,12 @@ The inferred type flows through the `controller` prop, so `Accordion` narrows it
       <Code>useImageCropper</Code>,
       <Code>controller</Code>,
       <Code>ImageCropperController</Code>,
+    ],
+    [
+      <MdxLink href="/core/stepper">Stepper</MdxLink>,
+      <Code>useStepper</Code>,
+      <Code>controller</Code>,
+      <Code>StepperController</Code>,
     ],
     [
       <MdxLink href="/core/timer">Timer</MdxLink>,

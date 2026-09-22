@@ -197,7 +197,8 @@ actions that props cannot express, such as `expandAll` and `collapseAll`:
 
 <Demo data={AccordionDemos.controller} />
 
-[Accordion](/core/accordion) gains this in 10.0 with the new `useAccordion` hook, and the hooks that
+[Accordion](/core/accordion) and [Stepper](/core/stepper) gain this in 10.0 with the new
+`useAccordion` and `useStepper` hooks, and the hooks that
 already shipped the pattern – `useTimer`, `useEditable`, `useImageCropper`, `useTree`, `useCombobox`,
 `useDataGrid` and `usePagination` – are now documented as one pattern. `useTimer`, `useEditable` and
 `useImageCropper` have their types renamed to `<Component>Controller` and
@@ -362,6 +363,32 @@ uses the `border` color and fills towards the next step with a transition, and c
 are not reached yet have a hover state:
 
 <Demo data={StepperDemos.usage} />
+
+## Stepper controller and uncontrolled state
+
+[Stepper](/core/stepper) can now own its active step. `active` is no longer required – pass
+`defaultActive` instead and subscribe to changes with the new `onActiveChange` prop, and steps become
+clickable without an `onStepClick` handler. For step navigation, the new `useStepper` hook returns a
+controller with `next`, `previous`, `first`, `last` and `complete`, each clamped against the number
+of steps that `Stepper` actually rendered – which is knowledge only `Stepper` has, so counting the
+steps by hand to clamp the index is no longer necessary:
+
+<Demo data={StepperDemos.controller} />
+
+## Wrapping Stepper.Step
+
+`Stepper.Step` can now be wrapped in another component. `Stepper` infers the index of each step from
+its position in `Stepper` children and could not reach a step through a wrapper, so wrapping
+silently produced a step with no state, no icon and no click. `Stepper.Step` now derives its own
+state from the parent `Stepper`, and the index reaches it either by forwarding the props the wrapper
+receives or by declaring it with the `step` prop:
+
+<Demo data={StepperDemos.wrappedStep} />
+
+The content of a wrapped step is passed as the wrapper's children, and a step that ends up without
+an index renders as inactive and is not focusable instead of looking clickable and doing nothing.
+As part of this, `Stepper` no longer overwrites the `step`, `state`, `allowStepClick` and `onClick`
+props of `Stepper.Step` – see the [migration guide](/guides/9x-to-10x) if you set any of them.
 
 ## Tabs variants
 

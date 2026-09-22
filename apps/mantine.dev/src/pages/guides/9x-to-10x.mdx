@@ -372,6 +372,31 @@ customized `thumb` styles with Styles API, check that they still look as intende
 `thumbSize` prop to restore the previous size and the new `variant="filled"` to get a thumb
 filled with the slider color.
 
+## Stepper.Step props are no longer overwritten
+
+[Stepper](/core/stepper) used to compute `step`, `state`, `allowStepClick` and `onClick` for every
+`Stepper.Step` and overwrite whatever the step itself declared, so setting any of them had no
+effect. `Stepper.Step` now derives its own state and those four props are honoured when set. If you
+passed any of them to a `Stepper.Step` rendered inside a `Stepper`, they did nothing in v9 and take
+effect in v10 – remove them to keep the previous behavior:
+
+```tsx
+import { Stepper } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stepper active={1}>
+      {/* v9: step and state were ignored, v10: this step is inactive and shows icon 6 */}
+      <Stepper.Step label="First" step={5} state="stepInactive" />
+      <Stepper.Step label="Second" />
+    </Stepper>
+  );
+}
+```
+
+The change is what makes a wrapped `Stepper.Step` work – see
+[Wrapping Stepper.Step](/core/stepper/#wrapping-stepperstep).
+
 ## Controller hook types renamed
 
 `useTimer`, `useEditable` and `useImageCropper` now name their types `<Component>Controller` and

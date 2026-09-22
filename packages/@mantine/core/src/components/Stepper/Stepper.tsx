@@ -1,4 +1,4 @@
-import { Activity, Children, cloneElement } from 'react';
+import { Activity, Children, cloneElement, useEffect } from 'react';
 import {
   Box,
   BoxProps,
@@ -19,6 +19,7 @@ import {
   MantineSpacing,
   rem,
   StylesApiProps,
+  useController,
   useProps,
   useStyles,
 } from '../../core';
@@ -26,6 +27,7 @@ import { getStepColorText } from './get-step-color-text';
 import { StepperProvider, type StepperContextValue } from './Stepper.context';
 import { StepperCompleted, StepperCompletedProps } from './StepperCompleted/StepperCompleted';
 import { StepperStep, StepperStepProps } from './StepperStep/StepperStep';
+import { useStepper, type StepperController } from './use-stepper/use-stepper';
 import classes from './Stepper.module.css';
 export type StepFragmentComponent = React.FC<{ step: number }>;
 
@@ -65,8 +67,17 @@ export interface StepperProps
   /** Called when a clickable step is clicked with its 0-based index. Not called for the currently active step. @category behavior */
   onStepClick?: (stepIndex: number) => void;
 
+  /** Controller returned by the `useStepper` hook. When provided, the state is owned by the controller and `active`, `defaultActive` and `onActiveChange` props are ignored @category state */
+  controller?: StepperController;
+
   /** Index of the active step @category state */
-  active: number;
+  active?: number;
+
+  /** Uncontrolled index of the active step initial value @default 0 @category state */
+  defaultActive?: number;
+
+  /** Called when the active step index changes @category state */
+  onActiveChange?: (active: number) => void;
 
   /** Step icon @default step index + 1 @category appearance */
   icon?: React.ReactNode | StepFragmentComponent;
@@ -162,7 +173,10 @@ export const Stepper = factory<StepperFactory>((_props) => {
     vars,
     children,
     onStepClick,
+    controller,
     active,
+    defaultActive,
+    onActiveChange,
     icon,
     completedIcon,
     progressIcon,
@@ -181,6 +195,12 @@ export const Stepper = factory<StepperFactory>((_props) => {
     attributes,
     ...others
   } = props;
+
+  const stepper = useController(useStepper, controller, {
+    active,
+    defaultActive,
+    onActiveChange,
+  });
 
   const getStyles = useStyles<StepperFactory>({
     name: 'Stepper',
@@ -204,47 +224,29 @@ export const Stepper = factory<StepperFactory>((_props) => {
     (item) => item.type === StepperCompleted
   ) as React.ReactElement<StepperCompletedProps>;
 
+  const stepsCount = _children.length;
+  const withCompleted = completedStep !== undefined;
+  const activeStep = stepper.active;
+  const stepsSelectable =
+    typeof onStepClick === 'function' ||
+    controller !== undefined ||
+    active === undefined ||
+    typeof onActiveChange === 'function';
+
+  useEffect(
+    () => stepper.registerSteps(stepsCount, withCompleted),
+    [stepper.registerSteps, stepsCount, withCompleted]
+  );
+
   const items = _children.reduce<React.ReactElement<StepperStepProps>[]>(
     (acc, item: React.ReactElement<StepperStepProps>, index) => {
-      const state =
-        active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive';
+      acc.push(cloneElement(item, { key: index, step: item.props.step ?? index }));
 
-      const shouldAllowSelect = () => {
-        if (typeof onStepClick !== 'function') {
-          return false;
-        }
-
-        if (typeof item.props.allowStepSelect === 'boolean') {
-          return item.props.allowStepSelect;
-        }
-
-        return state === 'stepCompleted' || allowNextStepsSelect;
-      };
-
-      const isStepSelectionEnabled = shouldAllowSelect();
-
-      acc.push(
-        cloneElement(item, {
-          icon: item.props.icon || icon || index + 1,
-          key: index,
-          step: index,
-          state,
-          onClick: () => isStepSelectionEnabled && onStepClick?.(index),
-          allowStepClick: isStepSelectionEnabled,
-          completedIcon: item.props.completedIcon || completedIcon,
-          progressIcon: item.props.progressIcon || progressIcon,
-          color: item.props.color || color,
-          iconSize,
-          iconPosition: item.props.iconPosition || iconPosition,
-          orientation,
-        })
-      );
-
-      if (orientation === 'horizontal' && index !== _children.length - 1) {
+      if (orientation === 'horizontal' && index !== stepsCount - 1) {
         acc.push(
           <div
             {...getStyles('separator')}
-            data-active={index < active || undefined}
+            data-active={index < activeStep || undefined}
             data-orientation={orientation}
             key={`separator-${index}`}
           />
@@ -256,19 +258,19 @@ export const Stepper = factory<StepperFactory>((_props) => {
     []
   );
 
-  const stepContent = _children[active]?.props?.children;
+  const stepContent = _children[activeStep]?.props?.children;
   const completedContent = completedStep?.props?.children;
-  const content = active > _children.length - 1 ? completedContent : stepContent;
+  const content = activeStep > stepsCount - 1 ? completedContent : stepContent;
 
   const contentSection = keepMounted ? (
     <>
       {_children.map((child, index) => (
-        <Activity key={index} mode={active === index ? 'visible' : 'hidden'}>
+        <Activity key={index} mode={activeStep === index ? 'visible' : 'hidden'}>
           <div {...getStyles('content')}>{child.props.children}</div>
         </Activity>
       ))}
       {completedStep && (
-        <Activity mode={active > _children.length - 1 ? 'visible' : 'hidden'}>
+        <Activity mode={activeStep > stepsCount - 1 ? 'visible' : 'hidden'}>
           <div {...getStyles('content')}>{completedStep.props.children}</div>
         </Activity>
       )}
@@ -284,6 +286,17 @@ export const Stepper = factory<StepperFactory>((_props) => {
         orientation,
         iconPosition,
         labelPosition: orientation === 'vertical' ? undefined : labelPosition,
+        active: activeStep,
+        icon,
+        completedIcon,
+        progressIcon,
+        color,
+        allowNextStepsSelect,
+        stepsSelectable,
+        onStepSelect: (step: number) => {
+          stepper.setActive(step);
+          onStepClick?.(step);
+        },
       }}
     >
       <Box {...getStyles('root')} size={size} {...others}>
@@ -312,6 +325,7 @@ Stepper.Step = StepperStep;
 
 export namespace Stepper {
   export type Props = StepperProps;
+  export type Controller = StepperController;
   export type StylesNames = StepperStylesNames;
   export type CssVariables = StepperCssVariables;
   export type Factory = StepperFactory;
