@@ -1,4 +1,5 @@
 import {
+  AccordionDemos,
   AlertDemos,
   BlockquoteDemos,
   ColorPickerDemos,
@@ -186,6 +187,27 @@ reverts the drafts; `--dg-stripe-color` is renamed to `--dg-striped-color` and `
 `--dg-pinned-shadow` are removed; the `pagination`, `statusBar`, `statusBarInfo` and
 `densityToggle` selectors and the density, status bar, filter placeholder and `emptyStateText`
 labels are gone.
+
+## Controller hooks
+
+Components that own state can now be driven with a **controller** – an object returned by a
+`use<Component>` hook that owns the state and exposes actions and queries on it. Pass it back to the
+component with the `controller` prop to control it from anywhere in your application, including
+actions that props cannot express, such as `expandAll` and `collapseAll`:
+
+<Demo data={AccordionDemos.controller} />
+
+[Accordion](/core/accordion) gains this in 10.0 with the new `useAccordion` hook, and the hooks that
+already shipped the pattern – `useTimer`, `useEditable`, `useImageCropper`, `useTree`, `useCombobox`,
+`useDataGrid` and `usePagination` – are now documented as one pattern. `useTimer`, `useEditable` and
+`useImageCropper` have their types renamed to `<Component>Controller` and
+`<Component>ControllerOptions`; the hooks that predate the naming keep the type names they shipped
+with (`ComboboxStore`, `DataGridStore`, `UseTreeInput`, `UsePaginationOptions`). A controller never
+removes or renames a prop, so adopting one is always additive.
+
+The [Controllers](/guides/controllers) guide covers when to reach for a controller, how it coexists
+with `value`/`defaultValue`/`onChange` and the full list of components that ship one. The renamed
+types are listed in the [migration guide](/guides/9x-to-10x).
 
 ## Modal.Footer and Drawer.Footer
 

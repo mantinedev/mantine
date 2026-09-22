@@ -1,0 +1,301 @@
+import { Code } from '@mantine/core';
+import { MdxLink } from '@/components/MdxProvider';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Controllers);
+
+# Controllers
+
+Some Mantine components expose their state through a **controller** – an object returned by a
+`use<Component>` hook that you create yourself and pass back to the component. The controller owns
+the component's state and exposes actions and queries on it, so you can drive the component from
+anywhere in your application instead of only from its props.
+
+This guide explains the pattern once. Each component that supports a controller documents its own
+actions and queries on its own page.
+
+## Controller vs controlled props
+
+Every stateful Mantine component works without a controller. `value`/`defaultValue`/`onChange`
+(or the component's own spelling, for example `opened`/`onChange`) are enough for most cases, and
+nothing about controllers changes how they behave – see
+[Controlled vs Uncontrolled](/guides/controlled-vs-uncontrolled) for those.
+
+The difference is **where the state lives and what you can do with it**:
+
+- With **controlled props**, you own the value in your own `useState` and the component reads it.
+  You can set the value, and that is all – anything else has to be reimplemented from scratch.
+- With a **controller**, the hook owns the value and hands you back actions and queries built on
+  knowledge the component has and you do not.
+
+`Accordion` is the clearest example. With props you can set which items are expanded. With a
+controller you can also call `expandAll()`, which needs to know every `Accordion.Item` that is
+currently mounted – something you cannot reconstruct from outside the component.
+
+```tsx
+import { Accordion, Button, useAccordion } from '@mantine/core';
+
+function Demo() {
+  const controller = useAccordion({ multiple: true });
+
+  return (
+    <>
+      <Button onClick={controller.expandAll}>Expand all</Button>
+      <Button onClick={controller.collapseAll}>Collapse all</Button>
+
+      <Accordion controller={controller}>
+        <Accordion.Item value="first">{/* ... */}</Accordion.Item>
+        <Accordion.Item value="second">{/* ... */}</Accordion.Item>
+      </Accordion>
+    </>
+  );
+}
+```
+
+## When to use a controller
+
+Reach for a controller when one of these is true:
+
+- **You need an action props cannot express.** `expandAll()`, `nextStep()`, `clear()` – anything
+  that depends on state the component owns internally.
+- **You need to drive the component from outside its subtree.** The hook can be called in a parent,
+  a context provider or a layout, and the actions passed anywhere, without lifting the value and
+  re-implementing every transition by hand.
+- **You need to read state that is not reported by `onChange`.** Controllers expose queries such as
+  `isExpanded(item)` or `getItems()`.
+- **You want several parts of your UI to share one component's state** – a toolbar, a keyboard
+  shortcut handler and the component itself, all driven from the same object.
+
+If you only need to set the value, use the props. The controller is additive and never required.
+
+## Creating and passing a controller
+
+Call the hook, then pass its result to the component:
+
+```tsx
+import { Accordion, useAccordion } from '@mantine/core';
+
+function Demo() {
+  // The hook accepts the same state options the component accepts as props
+  const controller = useAccordion({
+    multiple: true,
+    defaultValue: ['first'],
+    onChange: (value) => console.log(value),
+  });
+
+  return <Accordion controller={controller}>{/* items */}</Accordion>;
+}
+```
+
+Controller hooks that are part of a component can be called with no arguments – `useAccordion()` is
+valid and gives you a controller with the component's default state. `usePagination` is the
+exception: it needs `total` to compute the page range, so it always takes options.
+
+A controller is meant to drive one component instance. You can pass the same controller to two
+components – they will share the value – but queries that depend on mounted children see all of
+them at once: two accordions sharing a controller register into the same item list, so `getItems()`
+and `expandAll()` cover both.
+
+## Coexistence with props
+
+**When a `controller` prop is set, the controller owns the state and the component's own state props
+are ignored.** Pass them to the hook instead:
+
+```tsx
+// ✅ Options go to the hook
+const controller = useAccordion({ multiple: true, defaultValue: ['first'] });
+<Accordion controller={controller} />
+
+// ❌ multiple and defaultValue are ignored – the controller already decides them
+const controller = useAccordion();
+<Accordion controller={controller} multiple defaultValue={['first']} />
+```
+
+This happens silently: there is no runtime warning. The `controller` prop's description in each
+component's props table names exactly which props it supersedes, and that is the list to check.
+
+What a controller supersedes is **every prop it owns**, which is not the same as every prop that
+looks like state. A prop that decides what the next value will be belongs to the controller even
+when it reads as behavior – `Accordion`'s `disableCollapse`, or `Editable`'s `activationMode`,
+`submitMode`, `selectOnFocus`, `disabled` and `readOnly`. Check the `controller` prop's description
+on the component you are using: it names the full list.
+
+Styling and rendering props – `size`, `radius`, `variant`, `classNames`, children – are never
+affected. And adding a controller to a component never removes or renames a prop, so it is always
+safe to adopt one in existing code.
+
+## Reactivity
+
+A controller is reactive: when its state changes, the component that called the hook re-renders.
+This means the controller is a normal part of your render, and you can read state off it directly:
+
+```tsx
+const controller = useAccordion({ multiple: true });
+
+return (
+  <>
+    <Text>{controller.value.length} items expanded</Text>
+    <Button disabled={controller.value.length === 0} onClick={controller.collapseAll}>
+      Collapse all
+    </Button>
+    <Accordion controller={controller}>{/* items */}</Accordion>
+  </>
+);
+```
+
+Two guarantees are worth knowing when you write effects and memos against a controller:
+
+- **Actions and queries are stable for the lifetime of the controller.** `controller.expandAll` is
+  the same function on every render, so it is safe as a `useEffect` or `useCallback` dependency and
+  safe to pass to a memoised child.
+- **The controller object itself is not a meaningful dependency.** It is memoised on its state, so
+  it changes only when the state changes – but do not build on its identity. Depend on the specific
+  fields or actions you use.
+
+Both guarantees hold for the components listed below except the two that predate them. `useCombobox`
+returns a new object on every render, and its dropdown actions (`openDropdown`, `closeDropdown`,
+`toggleDropdown`) change identity whenever the dropdown opens or closes. `useDataGrid` also returns a
+new store on every render. Treat the members of those two as ordinary callbacks rather than stable
+references.
+
+`onChange` fires synchronously inside the action that caused the change, exactly as it does with
+controlled props.
+
+Values read through a `get<X>()` function rather than a field are deliberately spelled as functions:
+they are read on demand and are not reactive by themselves. `getItems()` on an accordion reports
+what is mounted at the moment you call it, so it returns an empty array on the very first render,
+before children have mounted.
+
+## Actions, queries and naming
+
+Controllers follow a consistent vocabulary across components, so the accordion's actions read the
+same way as the tree's:
+
+<DataTable
+  head={['Shape', 'Meaning']}
+  data={[
+    [<Code>set&lt;Field&gt;</Code>, 'Replaces a piece of state directly'],
+    [
+      <Code>open / close, expand / collapse, select / deselect, check / uncheck</Code>,
+      'Antonym pairs, one state change each',
+    ],
+    [<Code>toggle</Code>, 'Flips a piece of state'],
+    [<Code>expandAll, collapseAll, selectAll</Code>, 'Bulk version of the single action'],
+    [<Code>next / previous, first / last</Code>, 'Relative movement, always spelled out'],
+    [<Code>is&lt;X&gt; / has&lt;X&gt;</Code>, 'Predicate, returns a boolean'],
+    [<Code>get&lt;X&gt;()</Code>, 'Query read on demand, always a function'],
+  ]}
+/>
+
+An action that does not apply to the component's current mode is still present and does nothing –
+`expandAll()` on an accordion without `multiple` is a no-op rather than a type error, so a
+controller passed around your application never changes shape.
+
+Controller options and state use the **same names as the component's props**. If the component
+spells its state `opened`/`onChange`, so does the controller; nothing is renamed to a generic
+`value`. `usePagination` is the exception, because it shipped before the rule: it takes
+`page`/`initialPage` and returns `active`, where `Pagination` uses `value` and `defaultValue`.
+
+Some controller fields exist for the component's internal wiring rather than for you – for example
+`registerItem`, which `Accordion.Item` uses to register itself. They are documented as such in each
+controller's type.
+
+## TypeScript
+
+Controller types are named after the component and exported from the same package:
+
+```tsx
+import type { AccordionController, AccordionControllerOptions } from '@mantine/core';
+
+function expandEverything(controller: AccordionController<true>) {
+  controller.expandAll();
+}
+```
+
+Where a component's state type depends on an option, the controller carries that option as a
+generic and infers it from what you pass to the hook:
+
+```tsx
+const single = useAccordion();
+single.value; // -> string | null
+
+const multiple = useAccordion({ multiple: true });
+multiple.value; // -> string[]
+```
+
+The inferred type flows through the `controller` prop, so `Accordion` narrows its own `value` and
+`onChange` types to match the controller you gave it.
+
+## Components that support controllers
+
+<DataTable
+  head={['Component', 'Hook', 'Prop', 'Controller type']}
+  data={[
+    [
+      <MdxLink href="/core/accordion">Accordion</MdxLink>,
+      <Code>useAccordion</Code>,
+      <Code>controller</Code>,
+      <Code>AccordionController</Code>,
+    ],
+    [
+      <MdxLink href="/core/combobox">Combobox</MdxLink>,
+      <Code>useCombobox</Code>,
+      <Code>store</Code>,
+      <Code>ComboboxStore</Code>,
+    ],
+    [
+      <MdxLink href="/data-grid/data-grid">DataGrid</MdxLink>,
+      <Code>useDataGrid</Code>,
+      <Code>store</Code>,
+      <Code>DataGridStore</Code>,
+    ],
+    [
+      <MdxLink href="/core/editable">Editable</MdxLink>,
+      <Code>useEditable</Code>,
+      <Code>controller</Code>,
+      <Code>EditableController</Code>,
+    ],
+    [
+      <MdxLink href="/core/image-cropper">ImageCropper</MdxLink>,
+      <Code>useImageCropper</Code>,
+      <Code>controller</Code>,
+      <Code>ImageCropperController</Code>,
+    ],
+    [
+      <MdxLink href="/core/timer">Timer</MdxLink>,
+      <Code>useTimer</Code>,
+      <Code>controller</Code>,
+      <Code>TimerController</Code>,
+    ],
+    [
+      <MdxLink href="/core/tree">Tree</MdxLink>,
+      <Code>useTree</Code>,
+      <Code>tree</Code>,
+      <Code>TreeController</Code>,
+    ],
+  ]}
+/>
+
+`Combobox`, `Tree` and `DataGrid` predate the `controller` name and keep the prop names they shipped
+with – `store`, `tree` and `store`. They are controllers in every other respect, but they also keep
+the method names they shipped with, so check their own pages rather than assuming the vocabulary
+above: `useTree` spells its bulk actions `expandAllNodes` and `collapseAllNodes`, not `expandAll` and
+`collapseAll`.
+
+[usePagination](/hooks/use-pagination) is also a controller. It lives in `@mantine/hooks` because
+it is useful on its own, and is re-exported from `@mantine/core` together with its controller-named
+types, so both imports work:
+
+```tsx
+import { usePagination } from '@mantine/core';
+import type { PaginationController, PaginationControllerOptions } from '@mantine/core';
+
+// or, equivalently
+import { usePagination } from '@mantine/hooks';
+import type { UsePaginationOptions, UsePaginationReturnValue } from '@mantine/hooks';
+```
+
+A hook that returns an object is not automatically a controller. `useFloatingWindow` and
+`useModalsStack` return objects that a component consumes, but they do not own component state and
+are not passed with a `controller` prop.

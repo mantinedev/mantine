@@ -154,4 +154,13 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     search: 'Controlled vs Uncontrolled components in React',
     hideHeader: true,
   },
+
+  Controllers: {
+    title: 'Controllers',
+    slug: '/guides/controllers',
+    search: 'Control component state with a use<Component> hook and the controller prop',
+    searchTags:
+      'controller, useAccordion, useTimer, useEditable, useImageCropper, useTree, useCombobox, useDataGrid, usePagination, store, controller prop',
+    hideHeader: true,
+  },
 };

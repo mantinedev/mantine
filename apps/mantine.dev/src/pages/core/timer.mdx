@@ -112,7 +112,8 @@ function Demo() {
 
 To control the timer from outside the component, create a controller with `useTimer` and pass it
 to `Timer` with the `controller` prop. When a controller is provided, the option props on `Timer`
-are ignored – the controller owns the state:
+are ignored – the controller owns the state. See the [Controllers](/guides/controllers) guide for
+how the pattern works across all components:
 
 <Demo data={TimerDemos.controller} />
 

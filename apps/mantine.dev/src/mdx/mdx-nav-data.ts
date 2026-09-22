@@ -147,6 +147,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.Polymorphic,
       MDX_DATA.CustomComponents,
       MDX_DATA.ControlledVsUncontrolled,
+      MDX_DATA.Controllers,
     ],
   },
 ];

@@ -101,3 +101,7 @@ Single-context — one `CONTEXT.md` and `docs/adr/` at the repo root. See `docs/
 ### Prop categories
 
 The four `@category` values for docs props tables, the deciding question and placement rules for each, and when a component gets tagged. See `docs/agents/prop-categories.md`.
+
+### Controller convention
+
+The rules every `use<Component>` controller hook follows — naming, shape, coexistence with controlled props, ref stability — and the checklist for building a new one. See `docs/agents/controller-convention.md`.
