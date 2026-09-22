@@ -19,11 +19,10 @@ export function MenubarDropdown(props: MenubarDropdownProps) {
   });
 
   const switchToAdjacent = (direction: 1 | -1) => {
-    const nextIndex = ctx.getAdjacentIndex(menuCtx.index, direction);
+    const nextIndex = ctx.controller.getAdjacentIndex(menuCtx.index, direction);
     if (nextIndex !== menuCtx.index) {
-      ctx.setActiveIndex(nextIndex);
-      ctx.openMenu(nextIndex, 'click');
-      ctx.focusMenuItem(nextIndex, 'first');
+      ctx.controller.openMenu(nextIndex);
+      ctx.controller.focusMenuItem(nextIndex, 'first');
     }
   };
 
@@ -33,8 +32,8 @@ export function MenubarDropdown(props: MenubarDropdownProps) {
     // Tabbing out of an open menu dismisses it. Focus is moved to the trigger first
     // so the browser continues the tab sequence from the menubar position.
     if (event.key === 'Tab') {
-      ctx.focusTarget(menuCtx.index);
-      ctx.closeMenu();
+      ctx.controller.focusTarget(menuCtx.index);
+      ctx.controller.closeMenu();
       return;
     }
 
@@ -58,15 +57,15 @@ export function MenubarDropdown(props: MenubarDropdownProps) {
       switchToAdjacent(-1);
     } else if (event.key === 'Escape') {
       const index = menuCtx.index;
-      ctx.setActiveIndex(index);
-      window.setTimeout(() => ctx.focusTarget(index), 0);
+      ctx.controller.setActiveIndex(index);
+      window.setTimeout(() => ctx.controller.focusTarget(index), 0);
     }
   });
 
   return (
     <Menu.Dropdown
       {...others}
-      data-menubar-dropdown={ctx.id}
+      data-menubar-dropdown={ctx.controller.id}
       data-mantine-stop-propagation
       onKeyDown={handleKeyDown}
       onMouseEnter={handleMouseEnter}

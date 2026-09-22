@@ -19,18 +19,18 @@ export function MenubarMenu({ children, transitionProps, ...others }: MenubarMen
   const [index, setIndex] = useState(-1);
 
   useIsomorphicEffect(() => {
-    const next = ctx.getMenuIndex(id);
+    const next = ctx.controller.getMenuIndex(id);
     setIndex((current) => (current === next ? current : next));
   });
 
-  const opened = ctx.openIndex !== null && index !== -1 && ctx.openIndex === index;
+  const opened =
+    ctx.controller.openIndex !== null && index !== -1 && ctx.controller.openIndex === index;
 
   const handleChange = (value: boolean) => {
     if (value) {
-      ctx.openMenu(index, 'click');
-      ctx.setActiveIndex(index);
+      ctx.controller.openMenu(index);
     } else {
-      ctx.closeMenu();
+      ctx.controller.closeMenu();
     }
   };
 
@@ -39,7 +39,7 @@ export function MenubarMenu({ children, transitionProps, ...others }: MenubarMen
   const baseDuration = transitionProps?.duration ?? DEFAULT_TRANSITION_DURATION;
   const baseExitDuration = transitionProps?.exitDuration ?? baseDuration;
   const animateEnter = ctx.getPreviousOpenIndex() === null;
-  const animateExit = ctx.openIndex === null;
+  const animateExit = ctx.controller.openIndex === null;
   const resolvedTransitionProps = {
     ...transitionProps,
     duration: animateEnter ? baseDuration : 0,
@@ -50,7 +50,7 @@ export function MenubarMenu({ children, transitionProps, ...others }: MenubarMen
     <MenubarMenuContextProvider value={{ id, index, opened }}>
       <Menu
         position={ctx.position}
-        loop={ctx.loop}
+        loop={ctx.controller.loop}
         unstyled={ctx.unstyled}
         menuItemTabIndex={-1}
         trapFocus={false}

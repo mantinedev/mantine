@@ -108,6 +108,81 @@ index of the opened `Menubar.Menu` (in DOM order) or `null` when all menus are c
 
 For uncontrolled usage with an initially open menu, use the `defaultOpenIndex` prop instead.
 
+## Controlling with useMenubar
+
+`openIndex`/`defaultOpenIndex`/`onOpenChange` can set which menu is open, and that is all they can
+do. They cannot move focus: menus are identified by their DOM order index, so opening a menu from a
+keyboard shortcut and landing focus on its first item requires the list of rendered targets, which
+only `Menubar` has. Create a controller with the `useMenubar` hook and pass it to `Menubar` with the
+`controller` prop to get those actions. The [Controllers](/guides/controllers) guide covers how the
+pattern works across all components:
+
+<Demo data={MenubarDemos.controller} />
+
+`useMenubar` accepts the state options that `Menubar` accepts as props, and returns the current
+state, actions and queries:
+
+```tsx
+import { Menubar, useMenubar } from '@mantine/core';
+
+function Demo() {
+  const menubar = useMenubar({
+    defaultOpenIndex: 0, // -> uncontrolled initial value
+    loop: false, // -> same as the loop prop of Menubar
+    // openIndex, onOpenChange -> controlled state, same as on Menubar
+  });
+
+  // State
+  menubar.openIndex; // -> index of the opened menu, null when all menus are closed
+  menubar.activeIndex; // -> index of the menu that holds the menubar tab stop
+  menubar.loop; // -> resolved loop option
+
+  // Actions
+  menubar.openMenu(1); // -> opens the menu and moves the tab stop to it
+  menubar.openMenu(1, 'hover'); // -> same, recorded as opened by hover
+  menubar.closeMenu();
+  menubar.toggleMenu(1);
+  menubar.setOpenIndex(1); // -> sets the index directly, null closes all menus
+  menubar.setActiveIndex(1); // -> moves the tab stop without moving DOM focus
+
+  // Focus actions
+  menubar.focusMenu(1); // -> moves the tab stop to the menu and focuses its target
+  menubar.focusNextMenu(); // -> next enabled menu, respects loop
+  menubar.focusPreviousMenu();
+  menubar.focusFirstMenu();
+  menubar.focusLastMenu();
+  menubar.focusMenuItem(1, 'first'); // -> focuses the first item of the opened menu dropdown
+
+  // Queries
+  menubar.isMenuOpen(1); // -> boolean
+  menubar.getMenuCount(); // -> number of Menubar.Menu components rendered by Menubar
+  menubar.getEnabledIndexes(); // -> indexes of the menus that are not disabled
+  menubar.getOpenSource(); // -> 'click' | 'hover' | null
+
+  return <Menubar controller={menubar}>{/* menus */}</Menubar>;
+}
+```
+
+The controller owns the state, so when the `controller` prop is set, the `openIndex`,
+`defaultOpenIndex`, `onOpenChange` and `loop` props of `Menubar` are ignored – pass them to
+`useMenubar` instead. `trigger` and `position` are not owned by the controller and keep working as
+props.
+
+Every query and focus action reads the targets rendered by the associated `Menubar`, which reports
+its root element to the controller when it mounts. They are no-op (`getMenuCount()` returns `0`,
+`getEnabledIndexes()` returns an empty array) while no `Menubar` is mounted with the controller, and
+they are functions rather than fields because the rendered menus are not reactive – reading them
+does not re-render the component that owns the controller. One controller drives one `Menubar`:
+the root element is replaced rather than accumulated, so two `Menubar` components sharing a
+controller report only the menus of the one that mounted last.
+
+`focusMenuItem` focuses an item of a dropdown that is already opened. Call it after `openMenu` – it
+waits for the dropdown to render before moving focus, so the two compose into "open this menu and
+step into it", which is what a global keyboard shortcut needs.
+
+The controller is typed as `MenubarController` and its options as `MenubarControllerOptions`, both
+exported from `@mantine/core`.
+
 ## Position
 
 By default, dropdowns are positioned at `bottom-start` relative to their target. Change the

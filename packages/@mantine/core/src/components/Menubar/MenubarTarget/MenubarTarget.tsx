@@ -57,7 +57,7 @@ export function MenubarTarget(props: MenubarTargetProps) {
   const { dir } = useDirection();
 
   const isDisabled = disabled || dataDisabled;
-  const isActive = ctx.activeIndex === menuCtx.index;
+  const isActive = ctx.controller.activeIndex === menuCtx.index;
 
   // Before the menu indexes resolve from the DOM (first render / SSR HTML), every target
   // would otherwise compute `tabIndex={-1}`, leaving the menubar with no tab stop until
@@ -65,22 +65,20 @@ export function MenubarTarget(props: MenubarTargetProps) {
   const isUnresolvedTabStop = menuCtx.index === -1 && !isDisabled;
 
   const moveToAdjacent = (direction: 1 | -1) => {
-    const nextIndex = ctx.getAdjacentIndex(menuCtx.index, direction);
-    ctx.setActiveIndex(nextIndex);
-    ctx.focusTarget(nextIndex);
-    if (ctx.openIndex !== null) {
-      ctx.openMenu(nextIndex, 'click');
+    const nextIndex = ctx.controller.getAdjacentIndex(menuCtx.index, direction);
+    ctx.controller.focusMenu(nextIndex);
+    if (ctx.controller.openIndex !== null) {
+      ctx.controller.openMenu(nextIndex);
     }
   };
 
   const openAndFocusItem = (itemPosition: 'first' | 'last') => {
-    ctx.openMenu(menuCtx.index, 'click');
-    ctx.setActiveIndex(menuCtx.index);
-    ctx.focusMenuItem(menuCtx.index, itemPosition);
+    ctx.controller.openMenu(menuCtx.index);
+    ctx.controller.focusMenuItem(menuCtx.index, itemPosition);
   };
 
   const typeAhead = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    const targets = ctx.getTargets();
+    const targets = ctx.controller.getTargets();
     if (targets.length === 0) {
       return;
     }
@@ -96,10 +94,10 @@ export function MenubarTarget(props: MenubarTargetProps) {
         getTargetLabel(node).startsWith(char)
       ) {
         event.preventDefault();
-        ctx.setActiveIndex(index);
+        ctx.controller.setActiveIndex(index);
         node.focus();
-        if (ctx.openIndex !== null) {
-          ctx.openMenu(index, 'click');
+        if (ctx.controller.openIndex !== null) {
+          ctx.controller.openMenu(index);
         }
         break;
       }
@@ -110,11 +108,10 @@ export function MenubarTarget(props: MenubarTargetProps) {
     if (isDisabled) {
       return;
     }
-    if (ctx.openIndex === menuCtx.index && ctx.getOpenSource() !== 'hover') {
-      ctx.closeMenu();
+    if (ctx.controller.openIndex === menuCtx.index && ctx.controller.getOpenSource() !== 'hover') {
+      ctx.controller.closeMenu();
     } else {
-      ctx.openMenu(menuCtx.index, 'click');
-      ctx.setActiveIndex(menuCtx.index);
+      ctx.controller.openMenu(menuCtx.index);
     }
   });
 
@@ -124,14 +121,12 @@ export function MenubarTarget(props: MenubarTargetProps) {
     }
     ctx.cancelClose();
     if (ctx.trigger === 'hover') {
-      ctx.openMenu(menuCtx.index, 'hover');
-      ctx.setActiveIndex(menuCtx.index);
-    } else if (ctx.openIndex !== null && ctx.openIndex !== menuCtx.index) {
+      ctx.controller.openMenu(menuCtx.index, 'hover');
+    } else if (ctx.controller.openIndex !== null && ctx.controller.openIndex !== menuCtx.index) {
       // Hover-switching with trigger="click" continues a click-driven interaction:
       // keep 'click' as the open source so that the next click on the target
       // closes the menu, same as a click-opened menu (desktop application pattern)
-      ctx.openMenu(menuCtx.index, 'click');
-      ctx.setActiveIndex(menuCtx.index);
+      ctx.controller.openMenu(menuCtx.index);
     }
   });
 
@@ -141,7 +136,9 @@ export function MenubarTarget(props: MenubarTargetProps) {
     }
   });
 
-  const handleFocus = createEventHandler<any>(onFocus, () => ctx.setActiveIndex(menuCtx.index));
+  const handleFocus = createEventHandler<any>(onFocus, () =>
+    ctx.controller.setActiveIndex(menuCtx.index)
+  );
 
   const handleKeyDown = createEventHandler<any>(onKeyDown, (event) => {
     if (isDisabled) {
@@ -164,26 +161,17 @@ export function MenubarTarget(props: MenubarTargetProps) {
       openAndFocusItem('last');
     } else if (event.key === 'Home') {
       event.preventDefault();
-      const enabled = ctx.getEnabledIndexes();
-      if (enabled.length > 0) {
-        ctx.setActiveIndex(enabled[0]);
-        ctx.focusTarget(enabled[0]);
-      }
+      ctx.controller.focusFirstMenu();
     } else if (event.key === 'End') {
       event.preventDefault();
-      const enabled = ctx.getEnabledIndexes();
-      if (enabled.length > 0) {
-        const last = enabled[enabled.length - 1];
-        ctx.setActiveIndex(last);
-        ctx.focusTarget(last);
-      }
+      ctx.controller.focusLastMenu();
     } else if (event.key === 'Escape') {
       if (menuCtx.opened) {
-        ctx.closeMenu();
+        ctx.controller.closeMenu();
       }
     } else if (event.key === 'Tab') {
       if (menuCtx.opened) {
-        ctx.closeMenu();
+        ctx.controller.closeMenu();
       }
     } else if (isPrintableKey(event)) {
       typeAhead(event);

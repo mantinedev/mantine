@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState } from 'react';
-import { useId, useIsomorphicEffect, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useCallback, useRef } from 'react';
+import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -7,6 +7,7 @@ import {
   factory,
   Factory,
   StylesApiProps,
+  useController,
   useProps,
   useStyles,
 } from '../../core';
@@ -15,6 +16,7 @@ import { MenubarContextProvider, type MenubarContextValue } from './Menubar.cont
 import { MenubarDropdown, type MenubarDropdownProps } from './MenubarDropdown/MenubarDropdown';
 import { MenubarMenu, type MenubarMenuProps } from './MenubarMenu/MenubarMenu';
 import { MenubarTarget, type MenubarTargetProps } from './MenubarTarget/MenubarTarget';
+import { useMenubar, type MenubarController } from './use-menubar/use-menubar';
 import classes from './Menubar.module.css';
 
 export type MenubarStylesNames = 'root' | 'target';
@@ -34,6 +36,9 @@ export interface MenubarProps
   extends BoxProps, StylesApiProps<MenubarFactory>, ElementProps<'div'> {
   /** `Menubar.Menu` components */
   children?: React.ReactNode;
+
+  /** Controller returned by the `useMenubar` hook. When provided, the state is owned by the controller and `openIndex`, `defaultOpenIndex`, `onOpenChange` and `loop` props are ignored */
+  controller?: MenubarController;
 
   /** Index of the controlled opened menu, `null` closes all menus */
   openIndex?: number | null;
@@ -70,6 +75,7 @@ export const Menubar = factory<MenubarFactory>((_props) => {
     unstyled,
     vars,
     children,
+    controller,
     openIndex,
     defaultOpenIndex,
     onOpenChange,
@@ -94,31 +100,12 @@ export const Menubar = factory<MenubarFactory>((_props) => {
     attributes,
   });
 
-  const rootRef = useRef<HTMLDivElement>(null);
-  const menubarId = useId();
-
-  const [_openIndex, setOpenIndex] = useUncontrolled<number | null>({
-    value: openIndex,
-    defaultValue: defaultOpenIndex,
-    finalValue: null,
-    onChange: onOpenChange,
+  const menubar = useController(useMenubar, controller, {
+    openIndex,
+    defaultOpenIndex,
+    onOpenChange,
+    loop,
   });
-
-  const [activeIndex, setActiveIndex] = useState(0);
-  const openSourceRef = useRef<'click' | 'hover' | null>(null);
-
-  const openMenu = useCallback(
-    (index: number, source: 'click' | 'hover') => {
-      openSourceRef.current = source;
-      setOpenIndex(index);
-    },
-    [setOpenIndex]
-  );
-
-  const closeMenu = useCallback(() => {
-    openSourceRef.current = null;
-    setOpenIndex(null);
-  }, [setOpenIndex]);
 
   const closeTimeoutRef = useRef(-1);
 
@@ -128,143 +115,53 @@ export const Menubar = factory<MenubarFactory>((_props) => {
 
   const scheduleClose = useCallback(() => {
     window.clearTimeout(closeTimeoutRef.current);
-    closeTimeoutRef.current = window.setTimeout(closeMenu, 120);
-  }, [closeMenu]);
+    closeTimeoutRef.current = window.setTimeout(menubar.closeMenu, 120);
+  }, [menubar.closeMenu]);
 
   useIsomorphicEffect(() => () => window.clearTimeout(closeTimeoutRef.current), []);
 
-  const getOpenSource = useCallback(() => openSourceRef.current, []);
-
-  const previousOpenIndexRef = useRef<number | null>(_openIndex);
+  const previousOpenIndexRef = useRef<number | null>(menubar.openIndex);
   const getPreviousOpenIndex = useCallback(() => previousOpenIndexRef.current, []);
 
   useIsomorphicEffect(() => {
-    previousOpenIndexRef.current = _openIndex;
+    previousOpenIndexRef.current = menubar.openIndex;
   });
 
-  const getTargets = useCallback(
-    () =>
-      Array.from(
-        rootRef.current?.querySelectorAll<HTMLButtonElement>('[data-menubar-target]') ?? []
-      ),
-    []
-  );
-
-  const getMenuIndex = useCallback(
-    (id: string) => getTargets().findIndex((node) => node.getAttribute('data-menubar-id') === id),
-    [getTargets]
-  );
-
-  const getEnabledIndexes = useCallback(
-    () =>
-      getTargets().reduce<number[]>((acc, node, index) => {
-        if (!node.disabled && !node.hasAttribute('data-disabled')) {
-          acc.push(index);
-        }
-        return acc;
-      }, []),
-    [getTargets]
-  );
-
-  const focusTarget = useCallback(
-    (index: number) => {
-      getTargets()[index]?.focus();
-    },
-    [getTargets]
-  );
-
-  const focusMenuItem = useCallback(
-    (index: number, itemPosition: 'first' | 'last') => {
-      window.setTimeout(() => {
-        const target = getTargets()[index];
-        const controls = target?.getAttribute('aria-controls');
-        const dropdown = controls
-          ? document.getElementById(controls)
-          : document.querySelector<HTMLElement>(`[data-menubar-dropdown="${menubarId}"]`);
-        const items = dropdown?.querySelectorAll<HTMLElement>(
-          '[data-menu-item]:not([data-disabled])'
-        );
-
-        if (items && items.length > 0) {
-          const item = itemPosition === 'first' ? items[0] : items[items.length - 1];
-          item?.focus();
-        }
-      }, 40);
-    },
-    [getTargets]
-  );
-
-  const getAdjacentIndex = useCallback(
-    (current: number, direction: 1 | -1) => {
-      const enabled = getEnabledIndexes();
-
-      if (enabled.length === 0) {
-        return current;
-      }
-
-      const currentPosition = enabled.indexOf(current);
-      let nextPosition = currentPosition === -1 ? 0 : currentPosition + direction;
-
-      if (loop) {
-        nextPosition = (nextPosition + enabled.length) % enabled.length;
-      } else {
-        nextPosition = Math.max(0, Math.min(enabled.length - 1, nextPosition));
-      }
-
-      return enabled[nextPosition] ?? current;
-    },
-    [getEnabledIndexes, loop]
-  );
-
   useIsomorphicEffect(() => {
-    const enabled = getEnabledIndexes();
+    const enabled = menubar.getEnabledIndexes();
     if (enabled.length === 0) {
       return;
     }
 
     // While a menu is open, the single tab stop must stay on the opened menu's target,
     // including when it was opened programmatically via openIndex/defaultOpenIndex.
-    if (_openIndex !== null && enabled.includes(_openIndex)) {
-      if (activeIndex !== _openIndex) {
-        setActiveIndex(_openIndex);
+    if (menubar.openIndex !== null && enabled.includes(menubar.openIndex)) {
+      if (menubar.activeIndex !== menubar.openIndex) {
+        menubar.setActiveIndex(menubar.openIndex);
       }
       return;
     }
 
-    if (!enabled.includes(activeIndex)) {
-      setActiveIndex(enabled[0]);
+    if (!enabled.includes(menubar.activeIndex)) {
+      menubar.setActiveIndex(enabled[0]);
     }
   });
 
   const contextValue: MenubarContextValue = {
     getStyles,
-    id: menubarId,
-    openIndex: _openIndex,
-    setOpenIndex,
-    openMenu,
-    closeMenu,
+    controller: menubar,
     scheduleClose,
     cancelClose,
-    getOpenSource,
     getPreviousOpenIndex,
-    activeIndex,
-    setActiveIndex,
     trigger: trigger!,
-    loop: loop!,
     position: position!,
     unstyled,
-    getMenuIndex,
-    getTargets,
-    getEnabledIndexes,
-    getAdjacentIndex,
-    focusTarget,
-    focusMenuItem,
   };
 
   return (
     <MenubarContextProvider value={contextValue}>
       <Box
-        ref={useMergedRef(ref, rootRef)}
+        ref={useMergedRef(ref, menubar.registerRoot)}
         role="menubar"
         aria-orientation="horizontal"
         mod={mod}
