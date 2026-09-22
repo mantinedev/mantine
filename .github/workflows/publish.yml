@@ -123,6 +123,9 @@ jobs:
       (needs.prepare.outputs.release_type == 'patch' ||
       needs.prepare.outputs.release_type == 'minor_major') && !inputs.package
     runs-on: ubuntu-latest
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
