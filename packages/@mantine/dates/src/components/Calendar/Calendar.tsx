@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { useEffect, useImperativeHandle, useRef } from 'react';
 import {
   Box,
@@ -7,13 +6,14 @@ import {
   Factory,
   factory,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
-import { useMergedRef, useUncontrolled } from '@mantine/hooks';
-import { useFocusAfterLevelChange, useUncontrolledDates } from '../../hooks';
+import { useMergedRef } from '@mantine/hooks';
+import { useFocusAfterLevelChange } from '../../hooks';
 import { CalendarLevel, DateStringValue } from '../../types';
-import { getDefaultClampedDate, toDateString } from '../../utils';
+import { getDefaultClampedDate } from '../../utils';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { MonthLevelSettings } from '../MonthLevel';
@@ -21,6 +21,15 @@ import { MonthLevelGroup, MonthLevelGroupStylesNames } from '../MonthLevelGroup'
 import { YearLevelSettings } from '../YearLevel';
 import { YearLevelGroup, YearLevelGroupStylesNames } from '../YearLevelGroup';
 import { clampLevel } from './clamp-level/clamp-level';
+import {
+  type CalendarShiftUnit,
+  shiftCalendarDate,
+} from './shift-calendar-date/shift-calendar-date';
+import {
+  useCalendar,
+  type CalendarController,
+  type CalendarControllerOptions,
+} from './use-calendar/use-calendar';
 
 export type CalendarStylesNames =
   | MonthLevelGroupStylesNames
@@ -160,6 +169,9 @@ export interface CalendarProps
 
   /** Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) @category behavior */
   enableKeyboardNavigation?: boolean;
+
+  /** Controller returned by the `useCalendar` hook. When provided, the displayed date and level are owned by the controller and `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel` and `onLevelChange` props are ignored @category state */
+  controller?: CalendarController;
 }
 
 export type CalendarFactory = Factory<{
@@ -254,6 +266,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     onPreviousMonth,
     static: isStatic,
     enableKeyboardNavigation,
+    controller,
     withNativeLevelSelect,
     yearsSelectRange,
     fullWidth,
@@ -268,29 +281,20 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     props,
   });
 
-  const [_level, setLevel] = useUncontrolled({
-    value: level ? clampLevel(level, minLevel, maxLevel) : undefined,
-    defaultValue: defaultLevel ? clampLevel(defaultLevel, minLevel, maxLevel) : undefined,
-    finalValue: clampLevel(undefined, minLevel, maxLevel),
-    onChange: onLevelChange,
+  const calendar = useController(useCalendar, controller, {
+    date,
+    defaultDate,
+    onDateChange,
+    level: level ? clampLevel(level, minLevel, maxLevel) : undefined,
+    defaultLevel: clampLevel(defaultLevel, minLevel, maxLevel),
+    onLevelChange,
   });
 
-  const [_date, setDate, dateControlled] = useUncontrolledDates({
-    type: 'default',
-    value: toDateString(date),
-    defaultValue: toDateString(defaultDate),
-    onChange: onDateChange as any,
-  });
+  const _level = clampLevel(calendar.level, minLevel, maxLevel);
+  const disableNativeLevelSelect = calendar.dateReadOnly;
 
-  const disableNativeLevelSelect = dateControlled && !onDateChange;
-
-  useImperativeHandle(__setDateRef, () => (date: DateStringValue) => {
-    setDate(date);
-  });
-
-  useImperativeHandle(__setLevelRef, () => (level: CalendarLevel) => {
-    setLevel(level);
-  });
+  useImperativeHandle(__setDateRef, () => calendar.setDate);
+  useImperativeHandle(__setLevelRef, () => calendar.setLevel);
 
   const stylesApiProps = {
     __staticSelector: __staticSelector || 'Calendar',
@@ -307,47 +311,36 @@ export const Calendar = factory<CalendarFactory>((_props) => {
   if (fallbackDateRef.current === null) {
     fallbackDateRef.current = getDefaultClampedDate({ minDate, maxDate });
   }
-  const currentDate = _date || fallbackDateRef.current;
+  const fallbackDate = fallbackDateRef.current;
+  const currentDate = calendar.date || fallbackDate;
 
-  const handleNextMonth = () => {
-    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'month').format('YYYY-MM-DD');
-    onNextMonth?.(nextDate);
-    setDate(nextDate);
+  useEffect(
+    () =>
+      calendar.registerCalendar({
+        minLevel,
+        maxLevel,
+        columnsToScroll: _columnsToScroll,
+        fallbackDate,
+      }),
+    [calendar.registerCalendar, minLevel, maxLevel, _columnsToScroll, fallbackDate]
+  );
+
+  const shiftDate = (
+    amount: number,
+    unit: CalendarShiftUnit,
+    onShift: ((date: DateStringValue) => void) | undefined
+  ) => {
+    const nextDate = shiftCalendarDate(currentDate, amount, unit, _columnsToScroll);
+    onShift?.(nextDate);
+    calendar.setDate(nextDate);
   };
 
-  const handlePreviousMonth = () => {
-    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'month').format('YYYY-MM-DD');
-    onPreviousMonth?.(nextDate);
-    setDate(nextDate);
-  };
-
-  const handleNextYear = () => {
-    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'year').format('YYYY-MM-DD');
-    onNextYear?.(nextDate);
-    setDate(nextDate);
-  };
-
-  const handlePreviousYear = () => {
-    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'year').format('YYYY-MM-DD');
-    onPreviousYear?.(nextDate);
-    setDate(nextDate);
-  };
-
-  const handleNextDecade = () => {
-    const nextDate = dayjs(currentDate)
-      .add(10 * _columnsToScroll, 'year')
-      .format('YYYY-MM-DD');
-    onNextDecade?.(nextDate);
-    setDate(nextDate);
-  };
-
-  const handlePreviousDecade = () => {
-    const nextDate = dayjs(currentDate)
-      .subtract(10 * _columnsToScroll, 'year')
-      .format('YYYY-MM-DD');
-    onPreviousDecade?.(nextDate);
-    setDate(nextDate);
-  };
+  const handleNextMonth = () => shiftDate(1, 'month', onNextMonth);
+  const handlePreviousMonth = () => shiftDate(-1, 'month', onPreviousMonth);
+  const handleNextYear = () => shiftDate(1, 'year', onNextYear);
+  const handlePreviousYear = () => shiftDate(-1, 'year', onPreviousYear);
+  const handleNextDecade = () => shiftDate(10, 'year', onNextDecade);
+  const handlePreviousDecade = () => shiftDate(-10, 'year', onPreviousDecade);
 
   const calendarRef = useRef<HTMLDivElement>(null);
 
@@ -359,7 +352,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
 
   const changeLevel = (nextLevel: CalendarLevel) => {
     focusAfterLevelChange();
-    setLevel(nextLevel);
+    calendar.setLevel(nextLevel);
   };
 
   useEffect(() => {
@@ -457,7 +450,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           monthLabelFormat={monthLabelFormat}
           __onDayClick={__onDayClick}
           __onDayMouseEnter={__onDayMouseEnter}
-          __onDateChange={setDate}
+          __onDateChange={calendar.setDate}
           __disableNativeLevelSelect={disableNativeLevelSelect}
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
@@ -496,11 +489,11 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           yearLabelFormat={yearLabelFormat}
           __onControlMouseEnter={onMonthMouseEnter}
           __onControlClick={(_event, payload) => {
-            __updateDateOnMonthSelect && setDate(payload);
+            __updateDateOnMonthSelect && calendar.setDate(payload);
             changeLevel(clampLevel('month', minLevel, maxLevel));
             onMonthSelect?.(payload);
           }}
-          __onDateChange={setDate}
+          __onDateChange={calendar.setDate}
           __disableNativeLevelSelect={disableNativeLevelSelect}
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
@@ -531,7 +524,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
           decadeLabelFormat={decadeLabelFormat}
           __onControlMouseEnter={onYearMouseEnter}
           __onControlClick={(_event, payload) => {
-            __updateDateOnYearSelect && setDate(payload);
+            __updateDateOnYearSelect && calendar.setDate(payload);
             changeLevel(clampLevel('year', minLevel, maxLevel));
             onYearSelect?.(payload);
           }}
@@ -556,6 +549,8 @@ Calendar.displayName = '@mantine/dates/Calendar';
 
 export namespace Calendar {
   export type Props = CalendarProps;
+  export type Controller = CalendarController;
+  export type ControllerOptions = CalendarControllerOptions;
   export type StylesNames = CalendarStylesNames;
   export type AriaLabels = CalendarAriaLabels;
   export type Settings = CalendarSettings;

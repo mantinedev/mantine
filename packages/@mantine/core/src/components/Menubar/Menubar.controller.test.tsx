@@ -13,35 +13,35 @@ const focusElement = (element: HTMLElement) => act(() => element.focus());
 const expectMenuOpen = (itemText: string) => expect(screen.getByText(itemText)).toBeInTheDocument();
 const expectAllClosed = () => expect(screen.queryAllByRole('menu')).toHaveLength(0);
 
+function ControllerTest({
+  options,
+  menus = ['File', 'Edit', 'View'],
+  onController,
+  ...props
+}: Partial<MenubarProps> & {
+  options?: MenubarControllerOptions;
+  menus?: string[];
+  onController: (controller: MenubarController) => void;
+}) {
+  const controller = useMenubar(options);
+  onController(controller);
+
+  return (
+    <Menubar controller={controller} {...props}>
+      {menus.map((menu) => (
+        <Menubar.Menu key={menu} withinPortal={false} transitionProps={{ duration: 0 }}>
+          <Menubar.Target>{menu}</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Item>{`${menu} item 1`}</Menu.Item>
+            <Menu.Item>{`${menu} item 2`}</Menu.Item>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+      ))}
+    </Menubar>
+  );
+}
+
 describe('@mantine/core/Menubar/controller', () => {
-  function ControllerTest({
-    options,
-    menus = ['File', 'Edit', 'View'],
-    onController,
-    ...props
-  }: Partial<MenubarProps> & {
-    options?: MenubarControllerOptions;
-    menus?: string[];
-    onController: (controller: MenubarController) => void;
-  }) {
-    const controller = useMenubar(options);
-    onController(controller);
-
-    return (
-      <Menubar controller={controller} {...props}>
-        {menus.map((menu) => (
-          <Menubar.Menu key={menu} withinPortal={false} transitionProps={{ duration: 0 }}>
-            <Menubar.Target>{menu}</Menubar.Target>
-            <Menubar.Dropdown>
-              <Menu.Item>{`${menu} item 1`}</Menu.Item>
-              <Menu.Item>{`${menu} item 2`}</Menu.Item>
-            </Menubar.Dropdown>
-          </Menubar.Menu>
-        ))}
-      </Menubar>
-    );
-  }
-
   let controller: MenubarController = null as any;
   const captureController = (value: MenubarController) => {
     controller = value;

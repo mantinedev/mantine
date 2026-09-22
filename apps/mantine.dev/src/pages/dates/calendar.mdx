@@ -15,6 +15,66 @@ include any logic for date selection:
 
 <Demo data={CalendarDemos.usage} />
 
+## Controlling with useCalendar
+
+`Calendar` manages the displayed date and level on its own, and the
+`date`/`defaultDate`/`onDateChange` and `level`/`defaultLevel`/`onLevelChange` props are enough for
+most cases. When you need to drive the calendar from outside – from a toolbar, a keyboard shortcut
+or another component – create a controller with the `useCalendar` hook and pass it to `Calendar`
+with the `controller` prop. The controller exposes actions that props cannot express, for example
+stepping the displayed period with the same `columnsToScroll` the component uses and setting the
+level with the component's own `minLevel`/`maxLevel` clamping. The
+[Controllers](/guides/controllers) guide covers how the pattern works across all components:
+
+<Demo data={CalendarDemos.controller} />
+
+`useCalendar` accepts the state options that `Calendar` accepts as props, and returns the current
+state, actions and queries:
+
+```tsx
+import { Calendar, useCalendar } from '@mantine/dates';
+
+function Demo() {
+  const controller = useCalendar({
+    defaultDate: '2024-06-15', // -> uncontrolled initial displayed date
+    defaultLevel: 'month', // -> uncontrolled initial displayed level
+    // date, onDateChange -> controlled displayed date, same as on Calendar
+    // level, onLevelChange -> controlled displayed level, same as on Calendar
+  });
+
+  // State
+  controller.date; // -> displayed date, null until it is set
+  controller.level; // -> 'month' | 'year' | 'decade'
+
+  // Actions
+  controller.setDate('2024-08-01'); // -> also accepts a Date object
+  controller.setLevel('year'); // -> clamped to minLevel/maxLevel of the Calendar
+  controller.next(); // -> steps forward by the current level
+  controller.previous();
+  controller.nextMonth(); // -> also nextYear, nextDecade
+  controller.previousMonth(); // -> also previousYear, previousDecade
+
+  // Queries
+  controller.getDisplayedDate(); // -> the date the Calendar displays
+  controller.getDisplayedLevel(); // -> level clamped to minLevel/maxLevel of the Calendar
+
+  return <Calendar controller={controller} />;
+}
+```
+
+The controller owns the displayed date and level, so when the `controller` prop is set, the `date`,
+`defaultDate`, `onDateChange`, `level`, `defaultLevel` and `onLevelChange` props of `Calendar` are
+ignored – pass them to `useCalendar` instead. Every other prop, including `minLevel`, `maxLevel`,
+`minDate`, `maxDate`, `numberOfColumns` and `columnsToScroll`, stays on the component.
+
+The stepping actions and `getDisplayedDate` depend on values that only a mounted `Calendar` knows –
+the resolved `columnsToScroll`, the `minLevel`/`maxLevel` clamping and the date the calendar falls
+back to when `date` is `null`. They are no-ops and return `null` until a `Calendar` with the
+controller is rendered.
+
+The controller is typed as `CalendarController` and its options as `CalendarControllerOptions`, both
+exported from `@mantine/dates`.
+
 ## Custom date pickers
 
 Use `Calendar` as a base for custom date pickers. For example, you can create a date picker

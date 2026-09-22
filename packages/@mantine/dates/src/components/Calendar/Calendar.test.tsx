@@ -622,4 +622,18 @@ describe('@mantine/dates/Calendar', () => {
     await userEvent.tab();
     expect(document.body).toHaveFocus();
   });
+
+  it('clamps defaultLevel on mount and keeps it when maxLevel is relaxed later', () => {
+    const { rerender } = render(
+      <Calendar {...defaultProps} defaultLevel="decade" maxLevel="year" />
+    );
+    expectHeaderLevel('year', '2022');
+
+    rerender(
+      <>
+        <Calendar {...defaultProps} defaultLevel="decade" maxLevel="decade" />
+      </>
+    );
+    expectHeaderLevel('year', '2022');
+  });
 });

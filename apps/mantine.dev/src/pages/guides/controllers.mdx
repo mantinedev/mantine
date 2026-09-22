@@ -168,7 +168,9 @@ they are read on demand and are not reactive by themselves. `getItems()` on an a
 what is mounted at the moment you call it, so it returns an empty array on the very first render,
 before children have mounted. The same applies to `getStepCount()` on a stepper: it reports what the
 `Stepper` rendered, so it returns `0` until one is mounted with the controller, and the actions that
-depend on it – `next`, `last` and `complete` – do nothing until then.
+depend on it – `next`, `last` and `complete` – do nothing until then. `getDisplayedDate()` on a
+calendar works the same way: it returns `null` and the stepping actions do nothing until a
+`Calendar` with the controller is rendered.
 
 ## Actions, queries and naming
 
@@ -240,6 +242,12 @@ The inferred type flows through the `controller` prop, so `Accordion` narrows it
       <Code>useAccordion</Code>,
       <Code>controller</Code>,
       <Code>AccordionController</Code>,
+    ],
+    [
+      <MdxLink href="/dates/calendar">Calendar</MdxLink>,
+      <Code>useCalendar</Code>,
+      <Code>controller</Code>,
+      <Code>CalendarController</Code>,
     ],
     [
       <MdxLink href="/core/combobox">Combobox</MdxLink>,
@@ -321,6 +329,15 @@ import type { PaginationController, PaginationControllerOptions } from '@mantine
 // or, equivalently
 import { usePagination } from '@mantine/hooks';
 import type { UsePaginationOptions, UsePaginationReturnValue } from '@mantine/hooks';
+```
+
+Controllers of components that do not live in `@mantine/core` are exported from their own package
+next to the component they drive, with the same controller names. [useCalendar](/dates/calendar) and
+its `CalendarController`/`CalendarControllerOptions` types are imported from `@mantine/dates`:
+
+```tsx
+import { Calendar, useCalendar } from '@mantine/dates';
+import type { CalendarController, CalendarControllerOptions } from '@mantine/dates';
 ```
 
 A hook that returns an object is not automatically a controller. `useFloatingWindow` and
