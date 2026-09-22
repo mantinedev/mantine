@@ -24,6 +24,9 @@ describe('@mantine/core/PinInput/use-pin-input', () => {
   tests.itSupportsControllerMemoization({
     hook: () => usePinInput(),
     actions: [
+      'getValue',
+      'getFieldValues',
+      'getFocusedIndex',
       'setValue',
       'setFieldValue',
       'clear',
@@ -36,6 +39,17 @@ describe('@mantine/core/PinInput/use-pin-input', () => {
       'registerInput',
     ],
     changeState: (controller) => controller.setValue('12'),
+  });
+
+  it('returns current state from getters', () => {
+    const hook = renderHook(() => usePinInput({ length: 4, defaultValue: '12' }));
+    expect(hook.result.current.getValue()).toBe('12');
+    expect(hook.result.current.getFieldValues()).toEqual(['1', '2', '', '']);
+    expect(hook.result.current.getFocusedIndex()).toBe(-1);
+
+    act(() => hook.result.current.setValue('1234'));
+    expect(hook.result.current.getValue()).toBe('1234');
+    expect(hook.result.current.getFieldValues()).toEqual(['1', '2', '3', '4']);
   });
 
   it('returns an empty value and 4 fields by default', () => {

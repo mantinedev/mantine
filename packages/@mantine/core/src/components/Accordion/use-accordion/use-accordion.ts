@@ -26,6 +26,9 @@ export interface AccordionController<Multiple extends boolean = false> {
   /** Current value */
   value: AccordionValue<Multiple>;
 
+  /** Returns current value, `string[]` when `multiple` is set, `string | null` otherwise */
+  getValue: () => AccordionValue<Multiple>;
+
   /** Sets the value directly, payload type depends on `multiple` option */
   setValue: (value: AccordionValue<Multiple>) => void;
 
@@ -153,6 +156,8 @@ export function useAccordion<Multiple extends boolean = false>(
 
   const isExpanded = useCallback((item: string) => toArray(valueRef.current).includes(item), []);
 
+  const getValue = useCallback(() => valueRef.current, []);
+
   const getExpandedItems = useCallback(() => toArray(valueRef.current), []);
 
   const getItems = useCallback(() => [...itemsRef.current], []);
@@ -171,6 +176,7 @@ export function useAccordion<Multiple extends boolean = false>(
     () => ({
       multiple,
       value,
+      getValue,
       setValue,
       toggle,
       expand,

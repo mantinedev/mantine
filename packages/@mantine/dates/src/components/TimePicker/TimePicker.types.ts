@@ -2,6 +2,8 @@ export type TimePickerFormat = '12h' | '24h';
 
 export type TimePickerType = 'time' | 'duration';
 
+export type TimePickerField = 'hours' | 'minutes' | 'seconds' | 'amPm';
+
 export interface TimePickerAmPmLabels {
   am: string;
   pm: string;

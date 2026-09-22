@@ -15,6 +15,7 @@ describe('@mantine/core/Accordion/use-accordion', () => {
   tests.itSupportsControllerMemoization({
     hook: () => useAccordion({ multiple: true }),
     actions: [
+      'getValue',
       'setValue',
       'toggle',
       'expand',
@@ -27,6 +28,14 @@ describe('@mantine/core/Accordion/use-accordion', () => {
       'registerItem',
     ],
     changeState: (controller) => controller.expand('item-1'),
+  });
+
+  it('returns current value from getValue', () => {
+    const hook = renderHook(() => useAccordion({ multiple: true, defaultValue: ['first'] }));
+    expect(hook.result.current.getValue()).toEqual(['first']);
+
+    act(() => hook.result.current.expand('second'));
+    expect(hook.result.current.getValue()).toEqual(['first', 'second']);
   });
 
   it('returns null as the initial value in single mode', () => {

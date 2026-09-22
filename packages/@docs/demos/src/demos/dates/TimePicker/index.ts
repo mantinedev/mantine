@@ -21,3 +21,4 @@ export { dropdownWidth } from './TimePicker.demo.dropdownWidth';
 export { withPlaceholders } from './TimePicker.demo.withPlaceholders';
 export { duration } from './TimePicker.demo.duration';
 export { minHoursDigits } from './TimePicker.demo.minHoursDigits';
+export { controller } from './TimePicker.demo.controller';

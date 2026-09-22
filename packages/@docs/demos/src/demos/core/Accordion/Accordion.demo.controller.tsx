@@ -7,7 +7,7 @@ import { Accordion, Button, Group, Text, useAccordion } from '@mantine/core';
 import { data } from './data';
 
 function Demo() {
-  const controller = useAccordion({ multiple: true });
+  const accordion = useAccordion({ multiple: true });
 
   const items = data.map((item) => (
     <Accordion.Item key={item.value} value={item.value}>
@@ -19,21 +19,21 @@ function Demo() {
   return (
     <>
       <Group justify="center" mb="md">
-        <Button onClick={controller.expandAll}>Expand all</Button>
-        <Button variant="default" onClick={controller.collapseAll}>
+        <Button onClick={accordion.expandAll}>Expand all</Button>
+        <Button variant="default" onClick={accordion.collapseAll}>
           Collapse all
         </Button>
-        <Button variant="default" onClick={() => controller.toggle('Bananas')}>
+        <Button variant="default" onClick={() => accordion.toggle('Bananas')}>
           Toggle bananas
         </Button>
       </Group>
 
-      <Accordion controller={controller} order={3}>
+      <Accordion controller={accordion} order={3}>
         {items}
       </Accordion>
 
       <Text ta="center" mt="md" size="sm" c="dimmed">
-        Expanded: {controller.getExpandedItems().join(', ') || 'none'}
+        Expanded: {accordion.getExpandedItems().join(', ') || 'none'}
       </Text>
     </>
   );
@@ -41,7 +41,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const controller = useAccordion({ multiple: true });
+  const accordion = useAccordion({ multiple: true });
 
   const items = data.map((item) => (
     <Accordion.Item key={item.value} value={item.value}>
@@ -53,21 +53,21 @@ function Demo() {
   return (
     <>
       <Group justify="center" mb="md">
-        <Button onClick={controller.expandAll}>Expand all</Button>
-        <Button variant="default" onClick={controller.collapseAll}>
+        <Button onClick={accordion.expandAll}>Expand all</Button>
+        <Button variant="default" onClick={accordion.collapseAll}>
           Collapse all
         </Button>
-        <Button variant="default" onClick={() => controller.toggle('Bananas')}>
+        <Button variant="default" onClick={() => accordion.toggle('Bananas')}>
           Toggle bananas
         </Button>
       </Group>
 
-      <Accordion controller={controller} order={3}>
+      <Accordion controller={accordion} order={3}>
         {items}
       </Accordion>
 
       <Text ta="center" mt="md" size="sm" c="dimmed">
-        Expanded: {controller.getExpandedItems().join(', ') || 'none'}
+        Expanded: {accordion.getExpandedItems().join(', ') || 'none'}
       </Text>
     </>
   );

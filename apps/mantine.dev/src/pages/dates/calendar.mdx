@@ -35,30 +35,28 @@ state, actions and queries:
 import { Calendar, useCalendar } from '@mantine/dates';
 
 function Demo() {
-  const controller = useCalendar({
+  const calendar = useCalendar({
     defaultDate: '2024-06-15', // -> uncontrolled initial displayed date
     defaultLevel: 'month', // -> uncontrolled initial displayed level
     // date, onDateChange -> controlled displayed date, same as on Calendar
     // level, onLevelChange -> controlled displayed level, same as on Calendar
   });
 
-  // State
-  controller.date; // -> displayed date, null until it is set
-  controller.level; // -> 'month' | 'year' | 'decade'
-
   // Actions
-  controller.setDate('2024-08-01'); // -> also accepts a Date object
-  controller.setLevel('year'); // -> clamped to minLevel/maxLevel of the Calendar
-  controller.next(); // -> steps forward by the current level
-  controller.previous();
-  controller.nextMonth(); // -> also nextYear, nextDecade
-  controller.previousMonth(); // -> also previousYear, previousDecade
+  calendar.setDate('2024-08-01'); // -> also accepts a Date object
+  calendar.setLevel('year'); // -> clamped to minLevel/maxLevel of the Calendar
+  calendar.next(); // -> steps forward by the current level
+  calendar.previous();
+  calendar.nextMonth(); // -> also nextYear, nextDecade
+  calendar.previousMonth(); // -> also previousYear, previousDecade
 
   // Queries
-  controller.getDisplayedDate(); // -> the date the Calendar displays
-  controller.getDisplayedLevel(); // -> level clamped to minLevel/maxLevel of the Calendar
+  calendar.getDate(); // -> displayed date, null until it is set
+  calendar.getLevel(); // -> 'month' | 'year' | 'decade'
+  calendar.getDisplayedDate(); // -> the date the Calendar displays, falls back when date is null
+  calendar.getDisplayedLevel(); // -> level clamped to minLevel/maxLevel of the Calendar
 
-  return <Calendar controller={controller} />;
+  return <Calendar controller={calendar} />;
 }
 ```
 

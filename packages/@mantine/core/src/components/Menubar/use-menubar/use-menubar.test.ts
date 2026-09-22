@@ -50,6 +50,8 @@ describe('@mantine/core/Menubar/use-menubar', () => {
   tests.itSupportsControllerMemoization({
     hook: () => useMenubar(),
     actions: [
+      'getOpenIndex',
+      'getActiveIndex',
       'setOpenIndex',
       'setActiveIndex',
       'openMenu',
@@ -72,6 +74,17 @@ describe('@mantine/core/Menubar/use-menubar', () => {
       'focusTarget',
     ],
     changeState: (controller) => controller.openMenu(1),
+  });
+
+  it('returns open and active indexes from getters', () => {
+    const hook = renderHook(() => useMenubar({ defaultOpenIndex: 1 }));
+    expect(hook.result.current.getOpenIndex()).toBe(1);
+
+    act(() => hook.result.current.setActiveIndex(2));
+    expect(hook.result.current.getActiveIndex()).toBe(2);
+
+    act(() => hook.result.current.closeMenu());
+    expect(hook.result.current.getOpenIndex()).toBe(null);
   });
 
   it('returns the default state', () => {

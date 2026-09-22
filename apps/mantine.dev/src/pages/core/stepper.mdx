@@ -35,9 +35,6 @@ function Demo() {
     // active, onActiveChange -> controlled state, same as on Stepper
   });
 
-  // State
-  stepper.active; // -> index of the active step
-
   // Actions
   stepper.next(); // -> next step, stops at the last step or at Stepper.Completed
   stepper.previous(); // -> previous step, stops at the first step
@@ -47,6 +44,7 @@ function Demo() {
   stepper.setActive(2); // -> sets the index directly, the value is not clamped
 
   // Queries
+  stepper.getActive(); // -> index of the active step
   stepper.isCompleted(0); // -> boolean, true if the step has been passed
   stepper.isFirst(); // -> boolean
   stepper.isLast(); // -> boolean

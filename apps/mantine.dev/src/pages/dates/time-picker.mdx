@@ -31,6 +31,67 @@ function Demo() {
 }
 ```
 
+## Controlling with useTimePicker
+
+`value`/`defaultValue`/`onChange` report only complete values: while the user is halfway through
+entering a time, `onChange` is called with an empty string, so from the outside every incomplete
+state looks the same. Create a controller with the `useTimePicker` hook and pass it to `TimePicker`
+with the `controller` prop to read the individual fields, move focus between them and set or clear
+the value from anywhere in your application. The [Controllers](/guides/controllers) guide covers how
+the pattern works across all components:
+
+<Demo data={TimePickerDemos.controller} />
+
+`useTimePicker` accepts the state options that `TimePicker` accepts as props, and returns the
+current state, actions and queries:
+
+```tsx
+import { TimePicker, useTimePicker } from '@mantine/dates';
+
+function Demo() {
+  const timePicker = useTimePicker({
+    defaultValue: '12:30', // -> uncontrolled initial value
+    // value, onChange -> controlled state, same as on TimePicker
+    // type, format, amPmLabels, withSeconds, min, max, pasteSplit -> same as on TimePicker
+  });
+
+  // Actions
+  timePicker.setValue('14:30:00'); // -> sets all fields from a time string
+  timePicker.setHours(14);
+  timePicker.setMinutes(30);
+  timePicker.setSeconds(0);
+  timePicker.setAmPm('PM');
+  timePicker.clear(); // -> clears all fields and focuses the hours field
+  timePicker.clamp(); // -> clamps the current value to min and max
+  timePicker.focus('minutes'); // -> 'hours' | 'minutes' | 'seconds' | 'amPm'
+
+  // Queries
+  timePicker.getValue(); // -> current value in hh:mm:ss or hh:mm 24h format, '' if it is not complete
+  timePicker.getHours(); // -> number | null
+  timePicker.getMinutes(); // -> number | null
+  timePicker.getSeconds(); // -> number | null
+  timePicker.getAmPm(); // -> string | null, always null in 24h format
+  timePicker.hasValue(); // -> boolean, true if at least one field has a value
+
+  return <TimePicker controller={timePicker} />;
+}
+```
+
+The controller owns the state, so when the `controller` prop is set, the `value`, `defaultValue`,
+`onChange`, `type`, `format`, `amPmLabels`, `withSeconds`, `min`, `max` and `pasteSplit` props of
+`TimePicker` are ignored – pass them to `useTimePicker` instead. `type`, `format`, `withSeconds` and
+`amPmLabels` also decide which fields are rendered, so a controller created with `format: '12h'`
+renders the am/pm field even if the component is left with the default `format` prop.
+
+Options that reach `TimePicker` through `theme.components.TimePicker.defaultProps` do not reach a
+controller you create yourself – pass them to `useTimePicker` as well.
+
+`focus` is a no-op until a `TimePicker` is mounted with the controller, because it works on the
+fields that component renders.
+
+The controller is typed as `TimePickerController` and its options as `TimePickerControllerOptions`,
+both exported from `@mantine/dates`.
+
 ## With seconds
 
 Set the `withSeconds` prop to enable seconds input. Note that if this prop is used,

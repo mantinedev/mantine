@@ -57,8 +57,8 @@ function Demo() {
         <Button
           variant="default"
           onClick={() => {
-            menubar.openMenu(menubar.activeIndex);
-            menubar.focusMenuItem(menubar.activeIndex, 'first');
+            menubar.openMenu(menubar.getActiveIndex());
+            menubar.focusMenuItem(menubar.getActiveIndex(), 'first');
           }}
         >
           Open focused menu
@@ -69,8 +69,8 @@ function Demo() {
       </Group>
 
       <Text size="sm">
-        Opened: <Code>{String(menubar.openIndex)}</Code>, focused:{' '}
-        <Code>{menubar.activeIndex}</Code>, menus: <Code>{menubar.getMenuCount()}</Code>. Press{' '}
+        Opened: <Code>{String(menubar.getOpenIndex())}</Code>, focused:{' '}
+        <Code>{menubar.getActiveIndex()}</Code>, menus: <Code>{menubar.getMenuCount()}</Code>. Press{' '}
         <Code>Alt + F</Code> to open the File menu from anywhere.
       </Text>
     </Stack>
@@ -127,8 +127,8 @@ function Demo() {
         <Button
           variant="default"
           onClick={() => {
-            menubar.openMenu(menubar.activeIndex);
-            menubar.focusMenuItem(menubar.activeIndex, 'first');
+            menubar.openMenu(menubar.getActiveIndex());
+            menubar.focusMenuItem(menubar.getActiveIndex(), 'first');
           }}
         >
           Open focused menu
@@ -139,8 +139,8 @@ function Demo() {
       </Group>
 
       <Text size="sm">
-        Opened: <Code>{String(menubar.openIndex)}</Code>, focused:{' '}
-        <Code>{menubar.activeIndex}</Code>, menus: <Code>{menubar.getMenuCount()}</Code>. Press{' '}
+        Opened: <Code>{String(menubar.getOpenIndex())}</Code>, focused:{' '}
+        <Code>{menubar.getActiveIndex()}</Code>, menus: <Code>{menubar.getMenuCount()}</Code>. Press{' '}
         <Code>Alt + F</Code> to open the File menu from anywhere.
       </Text>
     </Stack>

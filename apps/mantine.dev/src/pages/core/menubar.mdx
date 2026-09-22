@@ -132,11 +132,6 @@ function Demo() {
     // openIndex, onOpenChange -> controlled state, same as on Menubar
   });
 
-  // State
-  menubar.openIndex; // -> index of the opened menu, null when all menus are closed
-  menubar.activeIndex; // -> index of the menu that holds the menubar tab stop
-  menubar.loop; // -> resolved loop option
-
   // Actions
   menubar.openMenu(1); // -> opens the menu and moves the tab stop to it
   menubar.openMenu(1, 'hover'); // -> same, recorded as opened by hover
@@ -154,6 +149,8 @@ function Demo() {
   menubar.focusMenuItem(1, 'first'); // -> focuses the first item of the opened menu dropdown
 
   // Queries
+  menubar.getOpenIndex(); // -> index of the opened menu, null when all menus are closed
+  menubar.getActiveIndex(); // -> index of the menu that holds the menubar tab stop
   menubar.isMenuOpen(1); // -> boolean
   menubar.getMenuCount(); // -> number of Menubar.Menu components rendered by Menubar
   menubar.getEnabledIndexes(); // -> indexes of the menus that are not disabled

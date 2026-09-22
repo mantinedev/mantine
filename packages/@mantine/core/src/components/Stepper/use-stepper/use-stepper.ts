@@ -16,6 +16,9 @@ export interface StepperController {
   /** Index of the active step */
   active: number;
 
+  /** Returns the index of the active step */
+  getActive: () => number;
+
   /** Sets the index of the active step, the value is not clamped to the number of steps */
   setActive: (active: number) => void;
 
@@ -118,6 +121,8 @@ export function useStepper(options: StepperControllerOptions = {}): StepperContr
     setActive(stepsRef.current.count);
   });
 
+  const getActive = useCallback(() => activeRef.current, []);
+
   const isCompleted = useCallback((step: number) => activeRef.current > step, []);
 
   const isFirst = useCallback(() => activeRef.current === 0, []);
@@ -144,6 +149,7 @@ export function useStepper(options: StepperControllerOptions = {}): StepperContr
     () => ({
       active,
       setActive,
+      getActive,
       next,
       previous,
       first,

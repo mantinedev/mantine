@@ -18,6 +18,7 @@ import {
   PopoverProps,
   ScrollAreaProps,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -30,16 +31,19 @@ import { TimeControlsList } from './TimeControlsList/TimeControlsList';
 import { TimePickerProvider } from './TimePicker.context';
 import {
   TimePickerAmPmLabels,
+  TimePickerField,
   TimePickerFormat,
   TimePickerPasteSplit,
   TimePickerPresets,
   TimePickerType,
 } from './TimePicker.types';
 import { TimePresets } from './TimePresets/TimePresets';
-import { useTimePicker } from './use-time-picker';
-import { clampTime } from './utils/clamp-time/clamp-time';
+import {
+  TimePickerController,
+  TimePickerControllerOptions,
+  useTimePicker,
+} from './use-time-picker';
 import { getParsedTime } from './utils/get-parsed-time/get-parsed-time';
-import { getTimeString } from './utils/get-time-string/get-time-string';
 import { padTime } from './utils/pad-time/pad-time';
 import classes from './TimePicker.module.css';
 
@@ -205,6 +209,9 @@ export interface TimePickerProps
 
   /** Minimum number of digits displayed in the hours input, applicable only when `type="duration"` is set @default 2 @category appearance */
   minHoursDigits?: number;
+
+  /** Controller returned by the `useTimePicker` hook. When provided, the state is owned by the controller and `value`, `defaultValue`, `onChange`, `type`, `format`, `amPmLabels`, `withSeconds`, `min`, `max` and `pasteSplit` props are ignored @category state */
+  controller?: TimePickerController;
 }
 
 export type TimePickerFactory = Factory<{
@@ -256,12 +263,12 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
     hoursStep,
     minutesStep,
     secondsStep,
-    withSeconds,
+    withSeconds: withSecondsProp,
     hoursInputLabel,
     minutesInputLabel,
     secondsInputLabel,
     amPmInputLabel,
-    amPmLabels,
+    amPmLabels: amPmLabelsProp,
     clearable,
     clearSectionMode,
     onMouseDown,
@@ -301,13 +308,9 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
     minutesPlaceholder,
     secondsPlaceholder,
     minHoursDigits,
+    controller: controllerProp,
     ...others
   } = props;
-
-  const isDuration = type === 'duration';
-  const format = isDuration ? '24h' : _format!;
-  const resolvedHoursPlaceholder =
-    isDuration && hoursPlaceholder === '--' ? '-'.repeat(minHoursDigits!) : hoursPlaceholder;
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<TimePickerFactory>({
     classNames,
@@ -329,21 +332,23 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
     varsResolver,
   });
 
-  const controller = useTimePicker({
+  const controller = useController(useTimePicker, controllerProp, {
     value,
     defaultValue,
     onChange,
-    format,
-    amPmLabels,
-    withSeconds,
+    type,
+    format: _format,
+    amPmLabels: amPmLabelsProp,
+    withSeconds: withSecondsProp,
     min,
     max,
-    clearable,
-    disabled,
-    readOnly,
     pasteSplit,
-    type: type!,
   });
+
+  const isDuration = controller.type === 'duration';
+  const isClearable = clearable && !readOnly && !disabled && controller.hasValue();
+  const resolvedHoursPlaceholder =
+    isDuration && hoursPlaceholder === '--' ? '-'.repeat(minHoursDigits!) : hoursPlaceholder;
 
   const _hoursRef = useMergedRef(controller.refs.hours, hoursRef);
   const _minutesRef = useMergedRef(controller.refs.minutes, minutesRef);
@@ -362,7 +367,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
   };
 
   const handlePresetSelect = (timeString: string) => {
-    controller.setTimeString(timeString);
+    controller.setValue(timeString);
 
     if (closeDropdownOnPresetSelect) {
       setDropdownOpened(false);
@@ -372,21 +377,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
 
   const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
-      const computedValue = controller.values;
-      const timeString = getTimeString({
-        ...computedValue,
-        format,
-        amPmLabels,
-        withSeconds: !!withSeconds,
-      });
-
-      if (timeString.valid && (min || max)) {
-        const clamped = clampTime(timeString.value, min, max, !!withSeconds);
-
-        if (clamped.timeString !== timeString.value) {
-          controller.setTimeString(clamped.timeString);
-        }
-      }
+      controller.clamp();
       hasFocusRef.current = false;
       onBlur?.(event);
     }
@@ -441,7 +432,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                 }}
               />
             }
-            __clearable={controller.isClearable}
+            __clearable={isClearable}
             __clearSectionMode={clearSectionMode}
             labelProps={{ htmlFor: hoursInputId, ...labelProps }}
             style={style}
@@ -461,17 +452,17 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                     className: hoursInputProps?.className,
                     style: isDuration
                       ? {
-                          width: `calc(${Math.max(minHoursDigits!, padTime(controller.values.hours ?? 0).length)}ch + 0.3em)`,
+                          width: `calc(${Math.max(minHoursDigits!, padTime(controller.hours ?? 0).length)}ch + 0.3em)`,
                           ...hoursInputProps?.style,
                         }
                       : hoursInputProps?.style,
                   })}
-                  value={controller.values.hours}
+                  value={controller.hours}
                   onChange={controller.setHours}
                   onNextInput={() => controller.focus('minutes')}
-                  min={format === '12h' ? 1 : 0}
-                  max={isDuration ? DURATION_HOURS_MAX : format === '12h' ? 12 : 23}
-                  allowTemporaryZero={format === '12h'}
+                  min={controller.format === '12h' ? 1 : 0}
+                  max={isDuration ? DURATION_HOURS_MAX : controller.format === '12h' ? 12 : 23}
+                  allowTemporaryZero={controller.format === '12h'}
                   disableAutoAdvance={isDuration}
                   focusable
                   step={hoursStep}
@@ -488,7 +479,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                     const actualInputValue = event.currentTarget.value;
                     const numericValue = actualInputValue ? parseInt(actualInputValue, 10) : null;
 
-                    if (format === '12h' && numericValue === 0) {
+                    if (controller.format === '12h' && numericValue === 0) {
                       controller.setHours(12);
                     }
                     hoursInputProps?.onBlur?.(event);
@@ -502,7 +493,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                     className: minutesInputProps?.className,
                     style: minutesInputProps?.style,
                   })}
-                  value={controller.values.minutes}
+                  value={controller.minutes}
                   onChange={controller.setMinutes}
                   min={0}
                   max={59}
@@ -511,7 +502,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   ref={_minutesRef}
                   onPreviousInput={() => controller.focus('hours')}
                   onNextInput={() =>
-                    withSeconds ? controller.focus('seconds') : controller.focus('amPm')
+                    controller.withSeconds ? controller.focus('seconds') : controller.focus('amPm')
                   }
                   aria-label={minutesInputLabel}
                   tabIndex={-1}
@@ -525,7 +516,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   placeholder={minutesPlaceholder}
                 />
 
-                {withSeconds && (
+                {controller.withSeconds && (
                   <>
                     <span>:</span>
                     <SpinInput
@@ -534,7 +525,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                         className: secondsInputProps?.className,
                         style: secondsInputProps?.style,
                       })}
-                      value={controller.values.seconds}
+                      value={controller.seconds}
                       onChange={controller.setSeconds}
                       min={0}
                       max={59}
@@ -557,17 +548,19 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   </>
                 )}
 
-                {format === '12h' && !isDuration && (
+                {controller.format === '12h' && !isDuration && (
                   <AmPmInput
                     {...amPmSelectProps}
                     inputType={withDropdown ? 'input' : 'select'}
-                    labels={amPmLabels}
-                    value={controller.values.amPm}
+                    labels={controller.amPmLabels}
+                    value={controller.amPm}
                     onChange={controller.setAmPm}
                     ref={_amPmRef}
                     aria-label={amPmInputLabel}
                     onPreviousInput={() =>
-                      withSeconds ? controller.focus('seconds') : controller.focus('minutes')
+                      controller.withSeconds
+                        ? controller.focus('seconds')
+                        : controller.focus('minutes')
                     }
                     readOnly={readOnly}
                     disabled={disabled}
@@ -586,7 +579,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
               type="hidden"
               name={name}
               form={form}
-              value={controller.hiddenInputValue}
+              value={controller.value}
               {...hiddenInputProps}
             />
           </InputBase>
@@ -597,20 +590,20 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
         >
           {presets ? (
             <TimePresets
-              value={controller.hiddenInputValue}
+              value={controller.value}
               onChange={handlePresetSelect}
-              format={format}
+              format={controller.format}
               presets={presets}
-              amPmLabels={amPmLabels}
-              withSeconds={withSeconds || false}
+              amPmLabels={controller.amPmLabels}
+              withSeconds={controller.withSeconds || false}
             />
           ) : (
             <div {...getStyles('controlsListGroup')}>
               <TimeControlsList
-                min={format === '12h' ? 1 : 0}
-                max={format === '12h' ? 12 : 23}
+                min={controller.format === '12h' ? 1 : 0}
+                max={controller.format === '12h' ? 12 : 23}
                 step={hoursStep}
-                value={controller.values.hours}
+                value={controller.hours}
                 onSelect={controller.setHours}
                 reversed={reverseTimeControlsList}
               />
@@ -618,24 +611,24 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                 min={0}
                 max={59}
                 step={minutesStep}
-                value={controller.values.minutes}
+                value={controller.minutes}
                 onSelect={controller.setMinutes}
                 reversed={reverseTimeControlsList}
               />
-              {withSeconds && (
+              {controller.withSeconds && (
                 <TimeControlsList
                   min={0}
                   max={59}
                   step={secondsStep}
-                  value={controller.values.seconds}
+                  value={controller.seconds}
                   onSelect={controller.setSeconds}
                   reversed={reverseTimeControlsList}
                 />
               )}
-              {format === '12h' && (
+              {controller.format === '12h' && (
                 <AmPmControlsList
-                  labels={amPmLabels}
-                  value={controller.values.amPm}
+                  labels={controller.amPmLabels}
+                  value={controller.amPm}
                   onSelect={controller.setAmPm}
                 />
               )}
@@ -660,4 +653,7 @@ export namespace TimePicker {
   export type AmPmLabels = TimePickerAmPmLabels;
   export type PasteSplit = TimePickerPasteSplit;
   export type Presets = TimePickerPresets;
+  export type Field = TimePickerField;
+  export type Controller = TimePickerController;
+  export type ControllerOptions = TimePickerControllerOptions;
 }

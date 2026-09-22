@@ -117,3 +117,8 @@ export const Demo_minHoursDigits = {
   name: '⭐ Demo: minHoursDigits',
   render: renderDemo(demos.minHoursDigits),
 };
+
+export const Demo_controller = {
+  name: '⭐ Demo: controller',
+  render: renderDemo(demos.controller),
+};

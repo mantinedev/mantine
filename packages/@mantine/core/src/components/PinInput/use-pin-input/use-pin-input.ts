@@ -20,7 +20,7 @@ export interface PinInputControllerOptions {
 }
 
 export interface PinInputController {
-  /** Number of inputs, also used to clamp every action that takes an index */
+  /** Resolved `length` option, used internally by `PinInput` to render the inputs and to clamp every action that takes an index */
   length: number;
 
   /** Current value */
@@ -31,6 +31,15 @@ export interface PinInputController {
 
   /** Index of the focused input, `-1` when none of the inputs is focused */
   focusedIndex: number;
+
+  /** Returns current value */
+  getValue: () => string;
+
+  /** Returns value of each input, always `length` items, empty string for an input that has no value */
+  getFieldValues: () => string[];
+
+  /** Returns index of the focused input, `-1` when none of the inputs is focused */
+  getFocusedIndex: () => number;
 
   /** Sets the value of all inputs at once, the value is truncated to `length` characters */
   setValue: (value: string) => void;
@@ -149,6 +158,12 @@ export function usePinInput(options: PinInputControllerOptions = {}): PinInputCo
     focus(current === -1 ? currentLength - 1 : current - 1);
   });
 
+  const getValue = useCallback(() => latest.current.fieldValues.join('').trim(), []);
+
+  const getFieldValues = useCallback(() => latest.current.fieldValues, []);
+
+  const getFocusedIndex = useCallback(() => latest.current.focusedIndex, []);
+
   const isComplete = useCallback(
     () => latest.current.fieldValues.join('').trim().length === latest.current.length,
     []
@@ -171,6 +186,9 @@ export function usePinInput(options: PinInputControllerOptions = {}): PinInputCo
       value,
       fieldValues,
       focusedIndex,
+      getValue,
+      getFieldValues,
+      getFocusedIndex,
       setValue,
       setFieldValue,
       clear,

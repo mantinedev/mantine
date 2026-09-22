@@ -16,6 +16,7 @@ describe('@mantine/core/Stepper/use-stepper', () => {
   tests.itSupportsControllerMemoization({
     hook: () => useStepper(),
     actions: [
+      'getActive',
       'setActive',
       'next',
       'previous',
@@ -30,6 +31,14 @@ describe('@mantine/core/Stepper/use-stepper', () => {
     ],
     setup: (controller) => controller.registerSteps(3, true),
     changeState: (controller) => controller.next(),
+  });
+
+  it('returns the active step from getActive', () => {
+    const hook = renderHook(() => useStepper({ defaultActive: 2 }));
+    expect(hook.result.current.getActive()).toBe(2);
+
+    act(() => hook.result.current.setActive(1));
+    expect(hook.result.current.getActive()).toBe(1);
   });
 
   it('returns 0 as the initial active step', () => {

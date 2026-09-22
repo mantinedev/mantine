@@ -50,6 +50,12 @@ export interface CalendarController {
   /** Displayed level. The associated `Calendar` clamps it to its own `minLevel`/`maxLevel` when it renders */
   level: CalendarLevel;
 
+  /** Returns the value of `date`, `null` until it is set. Use `getDisplayedDate` to get the date the associated `Calendar` actually displays */
+  getDate: () => DateStringValue | null;
+
+  /** Returns the value of `level` before clamping. Use `getDisplayedLevel` to get the level the associated `Calendar` actually displays */
+  getLevel: () => CalendarLevel;
+
   /** `true` when `date` is controlled and `onDateChange` is not set, used internally by `Calendar` to disable the native level select */
   dateReadOnly: boolean;
 
@@ -154,6 +160,10 @@ export function useCalendar(options: CalendarControllerOptions = {}): CalendarCo
     setLevelState(nextLevel);
   });
 
+  const getDate = useCallback(() => dateRef.current, []);
+
+  const getLevel = useCallback(() => levelRef.current, []);
+
   const getDisplayedDate = useCallback(
     () => dateRef.current ?? settingsRef.current.fallbackDate,
     []
@@ -219,6 +229,8 @@ export function useCalendar(options: CalendarControllerOptions = {}): CalendarCo
     () => ({
       date,
       level,
+      getDate,
+      getLevel,
       dateReadOnly,
       setDate,
       setLevel,

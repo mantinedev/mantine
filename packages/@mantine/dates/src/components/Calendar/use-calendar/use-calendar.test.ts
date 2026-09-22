@@ -22,6 +22,8 @@ describe('@mantine/dates/Calendar/use-calendar', () => {
   tests.itSupportsControllerMemoization({
     hook: () => useCalendar(),
     actions: [
+      'getDate',
+      'getLevel',
       'setDate',
       'setLevel',
       'next',
@@ -38,6 +40,17 @@ describe('@mantine/dates/Calendar/use-calendar', () => {
     ],
     setup: (controller) => controller.registerCalendar(defaultSettings),
     changeState: (controller) => controller.nextMonth(),
+  });
+
+  it('returns date and level from getters', () => {
+    const hook = renderHook(() => useCalendar({ defaultDate: '2024-06-15', defaultLevel: 'year' }));
+    expect(hook.result.current.getDate()).toBe('2024-06-15');
+    expect(hook.result.current.getLevel()).toBe('year');
+
+    act(() => hook.result.current.setDate('2025-01-01'));
+    act(() => hook.result.current.setLevel('decade'));
+    expect(hook.result.current.getDate()).toBe('2025-01-01');
+    expect(hook.result.current.getLevel()).toBe('decade');
   });
 
   it('returns null date and month level by default', () => {

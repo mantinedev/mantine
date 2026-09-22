@@ -30,7 +30,13 @@ export interface MenubarController {
   /** Moves the menubar tab stop to the given menu without moving DOM focus */
   setActiveIndex: (index: number) => void;
 
-  /** Resolved `loop` option, controls whether menu navigation wraps around */
+  /** Returns the DOM order index of the opened menu, `null` when all menus are closed */
+  getOpenIndex: () => number | null;
+
+  /** Returns the DOM order index of the menu that holds the single menubar tab stop */
+  getActiveIndex: () => number;
+
+  /** Resolved `loop` option, controls whether menu navigation wraps around, used internally by `Menubar.Menu` */
   loop: boolean;
 
   /** Opens the menu at the given index and moves the tab stop to it. `source` records whether the menu was opened by click or hover: it decides whether dropdown transitions play and whether the next click on the target closes the menu. */
@@ -155,6 +161,10 @@ export function useMenubar(options: MenubarControllerOptions = {}): MenubarContr
   );
 
   const getOpenSource = useCallback(() => openSourceRef.current, []);
+
+  const getOpenIndex = useCallback(() => openIndexRef.current, []);
+
+  const getActiveIndex = useCallback(() => activeIndexRef.current, []);
 
   const isMenuOpen = useCallback((index: number) => openIndexRef.current === index, []);
 
@@ -282,6 +292,8 @@ export function useMenubar(options: MenubarControllerOptions = {}): MenubarContr
       setOpenIndex,
       activeIndex,
       setActiveIndex,
+      getOpenIndex,
+      getActiveIndex,
       loop,
       openMenu,
       closeMenu,
