@@ -10,6 +10,7 @@ const withMDX = createMdx({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  agentRules: false,
   pageExtensions: ['tsx', 'mdx'],
   reactStrictMode: true,
   trailingSlash: true,

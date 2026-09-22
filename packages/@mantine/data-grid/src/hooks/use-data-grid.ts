@@ -529,10 +529,8 @@ export interface UseDataGridOptions<TData extends RowData> {
   tableOptions?: Partial<TableOptions<DataGridFeatures, TData>>;
 }
 
-const EMPTY_OPTIONS: UseDataGridOptions<any> = { data: [], columns: [] };
-
 export function useDataGrid<TData extends RowData>(
-  options: UseDataGridOptions<TData> = EMPTY_OPTIONS
+  options: UseDataGridOptions<TData>
 ): DataGridStore<TData> {
   const { data, columns, getRowId, tableOptions } = options;
   const { dir } = useDirection();

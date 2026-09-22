@@ -35,8 +35,8 @@ describe('@mantine/core/useController', () => {
     expect(hook.result.current).toBe(external);
   });
 
-  it('does not pass the options to the hook when the controller prop is set', () => {
-    const useTestController = jest.fn((options?: TestOptions): TestController => ({
+  it('passes the options it is given to the hook, controller prop or not', () => {
+    const useTestController = jest.fn((options: TestOptions): TestController => ({
       id: 'self',
       options,
     }));
@@ -44,7 +44,7 @@ describe('@mantine/core/useController', () => {
 
     renderHook(() => useController(useTestController, external, { initial: 'a' }));
 
-    expect(useTestController).toHaveBeenCalledWith(undefined);
+    expect(useTestController).toHaveBeenCalledWith({ initial: 'a' });
   });
 
   it('calls the controller hook on every render, with and without the controller prop', () => {

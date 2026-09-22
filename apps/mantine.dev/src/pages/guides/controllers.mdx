@@ -88,9 +88,10 @@ function Demo() {
 }
 ```
 
-Controller hooks that are part of a component can be called with no arguments – `useAccordion()` is
-valid and gives you a controller with the component's default state. `usePagination` is the
-exception: it needs `total` to compute the page range, so it always takes options.
+Most controller hooks can be called with no arguments – `useAccordion()` is valid and gives you a
+controller with the component's default state, because every one of its options is optional. A hook
+whose component genuinely needs a value to work still requires it: `usePagination({ total })` and
+`useDataGrid({ data, columns })` cannot be called empty.
 
 A controller is meant to drive one component instance. You can pass the same controller to two
 components – they will share the value – but queries that depend on mounted children see all of
@@ -265,6 +266,12 @@ The inferred type flows through the `controller` prop, so `Accordion` narrows it
       <Code>ImageCropperController</Code>,
     ],
     [
+      <MdxLink href="/core/pagination">Pagination</MdxLink>,
+      <Code>usePagination</Code>,
+      <Code>controller</Code>,
+      <Code>PaginationController</Code>,
+    ],
+    [
       <MdxLink href="/core/stepper">Stepper</MdxLink>,
       <Code>useStepper</Code>,
       <Code>controller</Code>,
@@ -291,9 +298,9 @@ the method names they shipped with, so check their own pages rather than assumin
 above: `useTree` spells its bulk actions `expandAllNodes` and `collapseAllNodes`, not `expandAll` and
 `collapseAll`.
 
-[usePagination](/hooks/use-pagination) is also a controller. It lives in `@mantine/hooks` because
-it is useful on its own, and is re-exported from `@mantine/core` together with its controller-named
-types, so both imports work:
+[usePagination](/hooks/use-pagination) lives in `@mantine/hooks` because it is useful on its own,
+and is re-exported from `@mantine/core` together with its controller-named types, so both imports
+work:
 
 ```tsx
 import { usePagination } from '@mantine/core';

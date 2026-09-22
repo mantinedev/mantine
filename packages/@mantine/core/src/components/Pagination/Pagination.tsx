@@ -114,6 +114,7 @@ export const Pagination = factory<PaginationFactory>((_props) => {
     lastIcon,
     firstIcon,
     dotsIcon,
+    controller,
     total,
     gap,
     hideWithOnePage,
@@ -123,7 +124,9 @@ export const Pagination = factory<PaginationFactory>((_props) => {
     ...others
   } = props;
 
-  if (total <= 0 || (hideWithOnePage && total === 1)) {
+  const resolvedTotal = controller ? controller.total : (total ?? 0);
+
+  if (resolvedTotal <= 0 || (hideWithOnePage && resolvedTotal === 1)) {
     return null;
   }
 
@@ -143,7 +146,7 @@ export const Pagination = factory<PaginationFactory>((_props) => {
   ) : null;
 
   return (
-    <PaginationRoot total={total} layout={layout} {...others}>
+    <PaginationRoot controller={controller} total={total} layout={layout} {...others}>
       <Group gap={gap}>
         {withEdges && <PaginationFirst icon={firstIcon} {...getControlProps?.('first')} />}
         {withControls && (

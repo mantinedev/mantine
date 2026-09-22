@@ -1,4 +1,4 @@
-import { usePagination } from '@mantine/hooks';
+import { usePagination, type UsePaginationReturnValue } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -17,6 +17,7 @@ import {
   MantineRadius,
   MantineSize,
   StylesApiProps,
+  useController,
   useProps,
   useStyles,
 } from '../../../core';
@@ -41,8 +42,11 @@ export interface PaginationRootProps
   /** `height` and `min-width` of controls @default 'md' @category appearance */
   size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
 
-  /** Total number of pages, must be an integer @category state */
-  total: number;
+  /** Controller returned by the `usePagination` hook. When provided, the state is owned by the controller and `total`, `value`, `defaultValue`, `onChange`, `siblings`, `boundaries` and `startValue` props are ignored @category state */
+  controller?: UsePaginationReturnValue;
+
+  /** Total number of pages, must be an integer. Required unless `controller` is set. @category state */
+  total?: number;
 
   /** Active page for controlled component, must be an integer in [1, total] interval @category state */
   value?: number;
@@ -128,6 +132,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
     styles,
     unstyled,
     vars,
+    controller,
     total,
     value,
     defaultValue,
@@ -164,11 +169,11 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
     varsResolver,
   });
 
-  const { range, setPage, next, previous, active, first, last } = usePagination({
+  const pagination = useController(usePagination, controller, {
     page: value,
     initialPage: defaultValue,
     onChange,
-    total,
+    total: total ?? 0,
     siblings,
     boundaries,
     startValue,
@@ -177,17 +182,17 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
   return (
     <PaginationProvider
       value={{
-        total,
-        range,
-        active,
+        total: pagination.total,
+        range: pagination.range,
+        active: pagination.active,
         disabled,
         layout,
         getItemProps,
-        onChange: setPage,
-        onNext: createEventHandler(onNextPage, next),
-        onPrevious: createEventHandler(onPreviousPage, previous),
-        onFirst: createEventHandler(onFirstPage, first),
-        onLast: createEventHandler(onLastPage, last),
+        onChange: pagination.setPage,
+        onNext: createEventHandler(onNextPage, pagination.next),
+        onPrevious: createEventHandler(onPreviousPage, pagination.previous),
+        onFirst: createEventHandler(onFirstPage, pagination.first),
+        onLast: createEventHandler(onLastPage, pagination.last),
         getStyles,
       }}
     >

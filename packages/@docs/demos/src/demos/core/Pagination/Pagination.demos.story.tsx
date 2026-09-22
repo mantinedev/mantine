@@ -8,6 +8,11 @@ export const Demo_configurator = {
   render: renderDemo(demos.configurator),
 };
 
+export const Demo_controller = {
+  name: '⭐ Demo: controller',
+  render: renderDemo(demos.controller),
+};
+
 export const Demo_siblings = {
   name: '⭐ Demo: siblings',
   render: renderDemo(demos.siblings),

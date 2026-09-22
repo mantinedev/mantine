@@ -53,7 +53,7 @@ import {
   DataGridToolbarFactory,
 } from './DataGridToolbar';
 import { getSelectedCount } from './get-selected-count';
-import { DataGridStore, useDataGrid } from './hooks';
+import { DataGridStore, useDataGrid, UseDataGridOptions } from './hooks';
 import { useOverflowState } from './hooks/use-overflow-state';
 import { useTheadHeight } from './hooks/use-thead-height';
 import { DEFAULT_LABELS, DataGridLabels } from './labels';
@@ -324,6 +324,8 @@ export type DataGridFactory = Factory<{
 
 const defaultProps = {} satisfies Partial<DataGridProps>;
 
+const EMPTY_STORE_OPTIONS: UseDataGridOptions<any> = { data: [], columns: [] };
+
 const varsResolver = createVarsResolver<DataGridFactory>(
   (theme, { borderColor, stripedColor, highlightOnHoverColor, radius, store }) => {
     const size = store?.size ?? 'sm';
@@ -441,10 +443,11 @@ export const DataGrid = genericFactory<DataGridFactory>(((
     varsResolver,
   });
 
-  const store = useController(useDataGrid, storeProp, {
-    data: data ?? [],
-    columns: columns ?? [],
-  });
+  const store = useController(
+    useDataGrid,
+    storeProp,
+    storeProp ? EMPTY_STORE_OPTIONS : { data: data ?? [], columns: columns ?? [] }
+  );
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
   const rootRef = useRef<HTMLDivElement>(null);
   const mergedRef = useMergedRef(ref, rootRef);

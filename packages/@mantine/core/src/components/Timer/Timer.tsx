@@ -106,15 +106,11 @@ export const Timer = factory<TimerFactory>((_props) => {
     ...others
   } = props;
 
-  const timer = useController(useTimer, controller, {
-    startMs,
-    targetMs,
-    countdown,
-    interval,
-    autoStart,
-    onTick,
-    onComplete,
-  });
+  const timer = useController(
+    useTimer,
+    controller,
+    controller ? {} : { startMs, targetMs, countdown, interval, autoStart, onTick, onComplete }
+  );
 
   const getStyles = useStyles<TimerFactory>({
     name: 'Timer',

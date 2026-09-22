@@ -10,6 +10,7 @@ import {
   TableOfContentsDemos,
   ModalDemos,
   NotificationDemos,
+  PaginationDemos,
   PillsInputDemos,
   SliderDemos,
   StepperDemos,
@@ -199,9 +200,10 @@ actions that props cannot express, such as `expandAll` and `collapseAll`:
 <Demo data={AccordionDemos.controller} />
 
 [Accordion](/core/accordion) and [Stepper](/core/stepper) gain this in 10.0 with the new
-`useAccordion` and `useStepper` hooks, and the hooks that
-already shipped the pattern – `useTimer`, `useEditable`, `useImageCropper`, `useTree`, `useCombobox`,
-`useDataGrid` and `usePagination` – are now documented as one pattern. `useTimer`, `useEditable` and
+`useAccordion` and `useStepper` hooks, [Pagination](/core/pagination) gains the `controller` prop for
+the `usePagination` hook it already had, and the hooks that
+already shipped the pattern – `useTimer`, `useEditable`, `useImageCropper`, `useTree`, `useCombobox`
+and `useDataGrid` – are now documented as one pattern. `useTimer`, `useEditable` and
 `useImageCropper` have their types renamed to `<Component>Controller` and
 `<Component>ControllerOptions`; the hooks that predate the naming keep the type names they shipped
 with (`ComboboxStore`, `DataGridStore`, `UseTreeInput`, `UsePaginationOptions`). A controller never
@@ -375,6 +377,20 @@ of steps that `Stepper` actually rendered – which is knowledge only `Stepper` 
 steps by hand to clamp the index is no longer necessary:
 
 <Demo data={StepperDemos.controller} />
+
+## Pagination controller
+
+[Pagination](/core/pagination) now accepts a `controller` prop, so the
+[use-pagination](/hooks/use-pagination) hook you already had can drive the component directly
+instead of being wired back through `value` and `onChange`:
+
+<Demo data={PaginationDemos.controller} />
+
+Passing the controller replaces `total`, `value`, `defaultValue`, `onChange`, `siblings`,
+`boundaries` and `startValue` – they are all hook options now – and `total` becomes optional on
+`Pagination`. `range` and `active` read from the controller are the values the component actually
+renders, which is not true of a second `usePagination` call: `siblings` and `boundaries` can come
+from `theme.components.Pagination.defaultProps`, which your own copy of the hook cannot see.
 
 ## Wrapping Stepper.Step
 

@@ -28,6 +28,43 @@ function Demo() {
 }
 ```
 
+## Controlling with usePagination
+
+`Pagination` manages its own state by default, and `total`/`value`/`defaultValue`/`onChange` props
+are enough for most cases. When you need to drive the pagination from outside – from a button, a
+keyboard shortcut or another component – create a controller with the
+[use-pagination](/hooks/use-pagination/) hook and pass it to `Pagination` with the `controller`
+prop. The [Controllers](/guides/controllers) guide covers how the pattern works across all
+components:
+
+<Demo data={PaginationDemos.controller} />
+
+The controller owns the state, so when the `controller` prop is set, the `total`, `value`,
+`defaultValue`, `onChange`, `siblings`, `boundaries` and `startValue` props of `Pagination` are
+ignored – pass them to `usePagination` instead. `onNextPage`, `onPreviousPage`, `onFirstPage` and
+`onLastPage` are not state props: they notify you that a control was clicked and keep working
+alongside a controller.
+
+Without a controller, calling `usePagination` yourself and wiring `value`/`onChange` back into
+`Pagination` runs the range computation twice, and the range you read is the one **your** options
+produce, not the one the component renders – `siblings` and `boundaries` can come from
+`theme.components.Pagination.defaultProps`, which your copy of the hook cannot see. The `controller`
+prop removes the second computation and makes `range` and `active` the exact values on screen.
+
+`usePagination` is a `@mantine/hooks` hook, so it keeps the naming of that package: options are
+spelled `page`/`initialPage`/`onChange` rather than `value`/`defaultValue`, and the active page is
+returned as `active`. It is re-exported from `@mantine/core` for convenience, and `@mantine/core`
+supplies the `PaginationController` and `PaginationControllerOptions` type aliases:
+
+```tsx
+import { usePagination } from '@mantine/core';
+import type { PaginationController } from '@mantine/core';
+
+// or, equivalently
+import { usePagination } from '@mantine/hooks';
+import type { UsePaginationReturnValue } from '@mantine/hooks';
+```
+
 ## Siblings
 
 Control the number of active item siblings with the `siblings` prop:

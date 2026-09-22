@@ -10,10 +10,10 @@
  * @param options - Options used to create the controller when the `controller` prop is not set
  */
 export function useController<Controller, Options>(
-  useControllerHook: (options?: Options) => Controller,
+  useControllerHook: (options: Options) => Controller,
   controller: Controller | undefined,
   options: Options
 ): Controller {
-  const selfController = useControllerHook(controller ? undefined : options);
+  const selfController = useControllerHook(options);
   return controller ?? selfController;
 }
