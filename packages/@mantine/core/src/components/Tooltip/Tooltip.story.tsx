@@ -290,14 +290,7 @@ export function Interactive() {
         offset={20}
         interactive
         withArrow
-        label={
-          <span>
-            Move the pointer here –{' '}
-            <a href="https://mantine.dev" style={{ color: 'inherit' }}>
-              link
-            </a>
-          </span>
-        }
+        label="Move the pointer here – the tooltip stays open while you read or select this text"
       >
         <button type="button" style={{ position: 'fixed', top: 160, left: 200 }}>
           Interactive tooltip
