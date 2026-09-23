@@ -177,3 +177,8 @@ export const Demo_floatingHeight = {
   name: '⭐ Demo: floatingHeight',
   render: renderDemo(demos.floatingHeight),
 };
+
+export const Demo_validation = {
+  name: '⭐ Demo: validation',
+  render: renderDemo(demos.validation),
+};

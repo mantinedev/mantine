@@ -17,6 +17,12 @@ interface GetSplittedTagsInput {
   currentTags: string[];
   isDuplicate?: (value: string, currentValues: string[]) => boolean;
   onDuplicate?: (value: string) => void;
+  isValidTag?: (value: string, currentValues: string[]) => boolean;
+}
+
+interface GetSplittedTagsResult {
+  tags: string[];
+  invalid: string[];
 }
 
 export function getSplittedTags({
@@ -27,26 +33,30 @@ export function getSplittedTags({
   currentTags,
   isDuplicate,
   onDuplicate,
-}: GetSplittedTagsInput) {
-  const splitted = splitTags(splitChars, value);
-  const merged: string[] = [];
+  isValidTag,
+}: GetSplittedTagsInput): GetSplittedTagsResult {
+  const invalid: string[] = [];
+  const merged = [...currentTags];
 
-  if (allowDuplicates) {
-    merged.push(...currentTags, ...splitted);
-  } else {
-    merged.push(...currentTags);
-    for (const tag of splitted) {
-      const checkDuplicate = isDuplicate
-        ? (val: string) => isDuplicate(val, merged)
-        : (val: string) => merged.some((t) => t.toLowerCase() === val.toLowerCase());
-
-      if (checkDuplicate(tag)) {
-        onDuplicate?.(tag);
-      } else {
-        merged.push(tag);
-      }
+  for (const tag of splitTags(splitChars, value)) {
+    if (isValidTag && !isValidTag(tag, merged)) {
+      invalid.push(tag);
+      continue;
     }
+
+    const duplicated =
+      !allowDuplicates &&
+      (isDuplicate
+        ? isDuplicate(tag, merged)
+        : merged.some((item) => item.toLowerCase() === tag.toLowerCase()));
+
+    if (duplicated) {
+      onDuplicate?.(tag);
+      continue;
+    }
+
+    merged.push(tag);
   }
 
-  return maxTags ? merged.slice(0, maxTags) : merged;
+  return { tags: maxTags ? merged.slice(0, maxTags) : merged, invalid };
 }

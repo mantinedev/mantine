@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef } from 'react';
-import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useId, useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -8,6 +8,7 @@ import {
   Factory,
   Primitive,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -24,7 +25,6 @@ import {
   getParsedComboboxData,
   OptionsDropdown,
   OptionsFilter,
-  useCombobox,
   usePillsReorder,
 } from '../Combobox';
 import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
@@ -39,7 +39,7 @@ import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
 import { ScrollAreaProps } from '../ScrollArea';
 import { filterPickedTags } from './filter-picked-tags';
-import { getSplittedTags } from './get-splitted-tags';
+import { TagsInputStore, useTagsInput } from './use-tags-input/use-tags-input';
 
 export type TagsInputStylesNames =
   | __InputStylesNames
@@ -132,6 +132,9 @@ export interface TagsInputProps
 
   /** If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false @category behavior */
   withPillsReorder?: boolean;
+
+  /** Store returned by the `useTagsInput` hook. When provided, value, search and dropdown state and tag submission rules are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen`, `onDropdownClose`, `maxTags`, `onMaxTags`, `allowDuplicates`, `isDuplicate`, `onDuplicate` and `splitChars` props are ignored. The store is also passed to the underlying `Combobox`, `comboboxProps.store` is ignored @category state */
+  store?: TagsInputStore;
 }
 
 export type TagsInputFactory = Factory<{
@@ -237,6 +240,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     loading,
     loadingPosition,
     withPillsReorder,
+    store: storeProp,
     ...others
   } = props;
 
@@ -246,32 +250,44 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const _ref = useMergedRef(inputRef, ref);
 
-  const store = useCombobox({
-    opened: dropdownOpened,
-    defaultOpened: defaultDropdownOpened,
-    onDropdownOpen: () => {
-      onDropdownOpen?.();
+  const store = useController(useTagsInput, storeProp, {
+    value,
+    defaultValue,
+    onChange,
+    searchValue,
+    defaultSearchValue,
+    onSearchChange,
+    dropdownOpened,
+    defaultDropdownOpened,
+    onDropdownOpen,
+    onDropdownClose,
+    maxTags,
+    onMaxTags,
+    allowDuplicates,
+    isDuplicate,
+    onDuplicate,
+    splitChars,
+  });
+
+  store.registerDropdownCallbacks({
+    onOpen: () => {
       if (selectFirstOptionOnDropdownOpen) {
         store.selectFirstOption();
       }
     },
-    onDropdownClose: () => {
-      onDropdownClose?.();
+    onClose: () => {
       store.resetSelectedOption();
     },
   });
+
+  const _value = store.value;
+  const _searchValue = store.search;
+  const setValue = store.setValue;
 
   const {
     styleProps,
     rest: { type, autoComplete, ...rest },
   } = extractStyleProps(others);
-
-  const [_value, setValue] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: [],
-    onChange,
-  });
 
   const { getPillProps, getListProps, handleInputKeyDown } = usePillsReorder({
     value: _value,
@@ -279,15 +295,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     enabled: withPillsReorder && !disabled && !readOnly,
   });
 
-  const [_searchValue, setSearchValue] = useUncontrolled({
-    value: searchValue,
-    defaultValue: defaultSearchValue,
-    finalValue: '',
-    onChange: onSearchChange,
-  });
-
   const handleSearchChange = (value: string) => {
-    setSearchValue(value);
+    store.setSearch(value);
     store.resetSelectedOption();
   };
 
@@ -307,27 +316,11 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
   });
 
   const handleValueSelect = (val: string) => {
-    const isDuplicated = isDuplicate
-      ? isDuplicate(val, _value)
-      : _value.some((tag) => tag.toLowerCase() === val.toLowerCase());
+    const added = store.addTag(val);
+    store.resetSelectedOption();
 
-    if (isDuplicated) {
-      onDuplicate?.(val);
-      if (!allowDuplicates) {
-        handleSearchChange('');
-        return;
-      }
-    }
-
-    if (_value.length >= maxTags) {
-      onMaxTags?.(val);
-      return;
-    }
-
-    onOptionSubmit?.(val);
-    handleSearchChange('');
-    if (val.length > 0) {
-      setValue([..._value, val]);
+    if (added) {
+      onOptionSubmit?.(val);
     }
   };
 
@@ -341,19 +334,9 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     const inputValue = _searchValue.trim();
     const { length } = inputValue;
 
-    if (splitChars.includes(event.key) && length > 0) {
-      setValue(
-        getSplittedTags({
-          splitChars,
-          allowDuplicates,
-          maxTags,
-          value: _searchValue,
-          currentTags: _value,
-          isDuplicate,
-          onDuplicate,
-        })
-      );
-      handleSearchChange('');
+    if (store.isSplitChar(event.key) && length > 0) {
+      store.addSplittedTags(_searchValue);
+      store.resetSelectedOption();
       event.preventDefault();
     }
 
@@ -391,18 +374,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
 
     if (event.clipboardData) {
       const pastedText = event.clipboardData.getData('text/plain');
-      setValue(
-        getSplittedTags({
-          splitChars,
-          allowDuplicates,
-          maxTags,
-          value: `${_searchValue}${pastedText}`,
-          currentTags: _value,
-          isDuplicate,
-          onDuplicate,
-        })
-      );
-      handleSearchChange('');
+      store.addSplittedTags(`${_searchValue}${pastedText}`);
+      store.resetSelectedOption();
     }
   };
 
@@ -468,7 +441,6 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
   return (
     <>
       <Combobox
-        store={store}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
@@ -480,16 +452,11 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');
-
-          if (_value.length >= maxTags) {
-            onMaxTags?.(val);
-          } else {
-            setValue([..._value, optionsLockup[val].value]);
-          }
-
+          store.addTag(optionsLockup[val].value);
           store.resetSelectedOption();
         }}
         {...comboboxProps}
+        store={store}
       >
         <Combobox.DropdownTarget>
           <PillsInput

@@ -12,6 +12,7 @@ import {
   NotificationDemos,
   PillsInputDemos,
   SelectDemos,
+  TagsInputDemos,
   SliderDemos,
   StepperDemos,
   SwitchDemos,
@@ -229,9 +230,9 @@ Components that support controllers:
 - [ImageCropper](/core/image-cropper#controller) – `useImageCropper` hook
 
 [Combobox](/core/combobox#usecombobox-hook), [Tree](/core/tree#usetree-hook),
-[DataGrid](/data-grid/getting-started#store-hook), [Select](/core/select#building-on-select-with-useselect)
-and [MultiSelect](/core/multi-select#building-on-multiselect-with-usemultiselect)
-work with a **store** instead – the same hook-and-prop shape, meant as a building block for your own
+[DataGrid](/data-grid/getting-started#store-hook), [Select](/core/select#building-on-select-with-useselect),
+[MultiSelect](/core/multi-select#building-on-multiselect-with-usemultiselect)
+and [TagsInput](/core/tags-input#building-on-tagsinput-with-usetagsinput) work with a **store** instead – the same hook-and-prop shape, meant as a building block for your own
 components rather than for driving the component as is. `Tree` now takes its store through the `store`
 prop, see the [migration guide](/guides/9x-to-10x).
 
@@ -239,6 +240,11 @@ The new `useSelect` store lets you build your own component on top of `Select` t
 search and label handling – for example, a select that can create new options:
 
 <Demo data={SelectDemos.creatable} />
+
+The new `useTagsInput` store does the same for `TagsInput` and adds an `isValidTag` option, so you can
+build, for example, an input that accepts only valid emails:
+
+<Demo data={TagsInputDemos.validation} />
 
 `useTimer`, `useEditable` and `useImageCropper` have their types renamed to `<Component>Controller`
 and `<Component>ControllerOptions`; `usePagination` keeps the type names it shipped with
