@@ -1,4 +1,5 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { memo, Profiler, useState } from 'react';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Table, TableProps, TableStylesNames } from './Table';
 import {
   TableCaption,
@@ -87,6 +88,105 @@ describe('@mantine/core/Table', () => {
 
     rerender(<Table tabularNums={false} />);
     expect(screen.getByRole('table')).not.toHaveAttribute('data-tabular-nums');
+  });
+
+  it('does not rerender memoized rows when parent rerenders with the same table props', async () => {
+    let rowRenders = 0;
+    const onRowRender = () => {
+      rowRenders += 1;
+    };
+
+    const Row = memo(() => (
+      <Profiler id="row" onRender={onRowRender}>
+        <Table.Tr>
+          <Table.Td>cell</Table.Td>
+        </Table.Tr>
+      </Profiler>
+    ));
+
+    function Demo() {
+      const [counter, setCounter] = useState(0);
+      return (
+        <>
+          <button type="button" onClick={() => setCounter((c) => c + 1)}>
+            rerender {counter}
+          </button>
+          <Table striped>
+            <Table.Tbody>
+              <Row />
+              <Row />
+            </Table.Tbody>
+          </Table>
+        </>
+      );
+    }
+
+    render(<Demo />);
+    rowRenders = 0;
+    await userEvent.click(screen.getByRole('button'));
+    expect(rowRenders).toBe(0);
+  });
+
+  it('updates memoized rows when table props change', async () => {
+    const Row = memo(() => (
+      <Table.Tr>
+        <Table.Td>cell</Table.Td>
+      </Table.Tr>
+    ));
+
+    function Demo() {
+      const [striped, setStriped] = useState(false);
+      return (
+        <>
+          <button type="button" onClick={() => setStriped(true)}>
+            stripe
+          </button>
+          <Table striped={striped}>
+            <Table.Tbody>
+              <Row />
+            </Table.Tbody>
+          </Table>
+        </>
+      );
+    }
+
+    render(<Demo />);
+    expect(screen.getByRole('row')).not.toHaveAttribute('data-striped');
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.getByRole('row')).toHaveAttribute('data-striped', 'odd');
+  });
+
+  it('updates memoized cells when classNames function depends on table props', async () => {
+    const Row = memo(() => (
+      <Table.Tr>
+        <Table.Td>cell</Table.Td>
+      </Table.Tr>
+    ));
+
+    const classNames = (_theme: any, props: TableProps) => ({
+      td: props.layout === 'fixed' ? 'fixed-td' : 'auto-td',
+    });
+
+    function Demo() {
+      const [layout, setLayout] = useState<'auto' | 'fixed'>('auto');
+      return (
+        <>
+          <button type="button" onClick={() => setLayout('fixed')}>
+            layout
+          </button>
+          <Table layout={layout} classNames={classNames}>
+            <Table.Tbody>
+              <Row />
+            </Table.Tbody>
+          </Table>
+        </>
+      );
+    }
+
+    render(<Demo />);
+    expect(screen.getByRole('cell')).toHaveClass('auto-td');
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.getByRole('cell')).toHaveClass('fixed-td');
   });
 
   it('exposes Table.Caption, Table.Tbody, Table.Td, Table.Tfoot, Table.Th, Table.Tr, Table.Thead components', () => {
