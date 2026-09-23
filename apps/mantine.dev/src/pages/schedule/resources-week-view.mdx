@@ -22,6 +22,37 @@ the top of the column and stack when there are several; all-day events with
 
 <Demo data={ResourcesWeekViewDemos.allDayEvents} />
 
+## Interactive background events
+
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
+background event calls `onEventClick` with the event object, the same as for regular events –
+use `event.display === 'background'` to tell them apart in the handler.
+
+Note that an interactive background event covers the time slots underneath it: clicks and
+drag-to-select in its range go to the event instead of the grid. Interactive background
+events still cannot be dragged.
+
+<Demo data={ResourcesWeekViewDemos.interactiveBackgroundEvents} />
+
+## Resizable background events
+
+When `withEventResize` is set together with `withInteractiveBackgroundEvents`, background
+events render resize handles on their start and end edges. Dragging a handle calls
+`onEventResize` with the background event, the same way it does for regular events – use
+`event.display === 'background'` to tell them apart in the handler.
+
+All-day background events are never resizable. To keep background events fixed while
+regular events stay resizable, return `false` from `canResizeEvent`:
+
+```tsx
+<ResourcesWeekView
+  withEventResize
+  withInteractiveBackgroundEvents
+  canResizeEvent={(event) => event.display !== 'background'}
+/>
+```
+
+
 ## Drag and drop
 
 Enable cross-resource drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback
@@ -29,6 +60,14 @@ receives the target `resourceId` as the fifth argument, allowing you to update t
 assignment. Events can be dragged across both resources and days.
 
 <Demo data={ResourcesWeekViewDemos.dragDrop} />
+
+## Drag interval
+
+By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
+to use a different snap step for dragging – for example, a grid with 30-minute slots whose events
+can be moved in 15-minute increments. A ghost preview shows where the event will land:
+
+<Demo data={ResourcesWeekViewDemos.eventDragInterval} />
 
 ## Event form
 
@@ -45,12 +84,34 @@ and slot granularity.
 
 <Demo data={ResourcesWeekViewDemos.timeRange} />
 
+## Multi-hour intervals
+
+`intervalMinutes` accepts values that divide evenly into an hour (for example `15` or `30`)
+or whole numbers of hours (for example `120` or `240`). Multi-hour intervals render wider
+columns that each span several hours, which is useful for displaying long time ranges compactly.
+
+<Demo data={ResourcesWeekViewDemos.multiHourIntervals} />
+
 ## Current time indicator
 
 Use `withCurrentTimeIndicator` to display a line at the current time. Set `withCurrentTimeBubble={false}`
 to hide the time bubble label.
 
 <Demo data={ResourcesWeekViewDemos.currentTimeIndicator} />
+
+## Current time indicator in a different timezone
+
+`@mantine/schedule` works with timezone-agnostic `YYYY-MM-DD HH:mm:ss` strings and does not
+perform any timezone conversions on its own. By default, the current time indicator is positioned
+based on the user's local time.
+
+To display the indicator in a different timezone, use the `getCurrentTime` prop. It is a function
+that returns the current time and is called on every tick, so the indicator keeps updating
+automatically. In the example below, the current time is converted to the selected timezone with
+the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone) – switch the timezone to
+see the indicator and the time bubble move accordingly:
+
+<Demo data={ResourcesWeekViewDemos.timezone} />
 
 ## First day of week
 
@@ -152,6 +213,14 @@ Resizing is constrained to the day the event belongs to: an event cannot be resi
 days. To make an event cover several days, update its `start` and `end` dates directly in your data.
 
 Use `canResizeEvent` to control which events can be resized.
+
+## Resize interval
+
+By default events snap to `intervalMinutes` when resized. Set `eventResizeInterval` to use a
+different snap step for resizing – for example, a grid with 30-minute slots whose events can be
+resized in 15-minute increments:
+
+<Demo data={ResourcesWeekViewDemos.eventResizeInterval} />
 
 ## Static mode
 

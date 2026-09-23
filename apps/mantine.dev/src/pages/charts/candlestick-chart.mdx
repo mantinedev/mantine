@@ -1,0 +1,102 @@
+import { CandlestickChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.CandlestickChart);
+
+## Usage
+
+`CandlestickChart` is a financial chart that displays open, high, low and close (OHLC)
+values as candles. Each candle is colored based on its direction: candles with
+`close >= open` (price went up) use `upColor`, candles with `close < open`
+(price went down) use `downColor`. The thin line (wick) shows the high–low range,
+the thick body shows the open–close range.
+
+<Demo data={CandlestickChartDemos.usage} />
+
+## Data
+
+`CandlestickChart` requires an array of objects as the `data` prop. Set the `dataKey`
+prop to the key that is used for the x-axis (category) values. By default, the chart
+reads OHLC values from the `open`, `high`, `low` and `close` keys of each data object:
+
+```tsx
+import { CandlestickChart } from '@mantine/charts';
+
+const data = [
+  { date: 'Mar 01', open: 136, high: 142, low: 133, close: 140 },
+  { date: 'Mar 02', open: 140, high: 145, low: 138, close: 139 },
+  { date: 'Mar 03', open: 139, high: 141, low: 129, close: 131 },
+];
+
+function Demo() {
+  return <CandlestickChart h={300} data={data} dataKey="date" />;
+}
+```
+
+Unlike other charts, the y-axis is not anchored to zero – its domain is calculated
+from the minimum low and maximum high values in the data with a small padding, so that
+candles fill the available vertical space. To control the domain manually, pass
+`domain` through `yAxisProps`.
+
+## Custom data keys
+
+If your data uses keys other than `open`/`high`/`low`/`close`, map them with the
+`dataKeys` prop:
+
+<Demo data={CandlestickChartDemos.dataKeys} />
+
+## Colors
+
+Use `upColor` and `downColor` props to change the colors of rising and falling candles.
+Colors are referenced from [theme](/theming/colors/) the same way as in other components,
+for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS color value is also accepted.
+
+<Demo data={CandlestickChartDemos.colors} />
+
+## Candle width
+
+By default, candles take up the available category width. Use the `maxCandleWidth`
+prop to limit the maximum candle width in px:
+
+<Demo data={CandlestickChartDemos.maxCandleWidth} />
+
+## Value formatter
+
+To format values on the y-axis and inside the tooltip, use the `valueFormatter` prop.
+It accepts a function that takes a number value as an argument and returns a formatted value:
+
+<Demo data={CandlestickChartDemos.valueFormatter} />
+
+## Tooltip labels
+
+The tooltip displays open, high, low and close values with English labels by default.
+Use the `labels` prop to change them:
+
+```tsx
+import { CandlestickChart } from '@mantine/charts';
+
+function Demo() {
+  return (
+    <CandlestickChart
+      data={data}
+      dataKey="date"
+      labels={{ open: 'Ouverture', high: 'Haut', low: 'Bas', close: 'Clôture' }}
+    />
+  );
+}
+```
+
+## Axis labels
+
+Use `xAxisLabel` and `yAxisLabel` props to display axis labels:
+
+<Demo data={CandlestickChartDemos.axisLabels} />
+
+## Reference lines
+
+Use the `referenceLines` prop to render reference lines. Reference lines are useful for
+highlighting support and resistance levels. Each line is positioned by its `y` data value
+and supports a theme `color` and a `label`:
+
+<Demo data={CandlestickChartDemos.referenceLines} />

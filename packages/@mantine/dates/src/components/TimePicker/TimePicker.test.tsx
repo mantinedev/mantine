@@ -63,6 +63,26 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-minutes')).toHaveValue('00');
   });
 
+  // https://github.com/mantinedev/mantine/issues/9128
+  it('selects input content when the value is assigned externally to a focused input', async () => {
+    const { rerender } = render(
+      <TimePicker {...defaultProps} format="24h" value="" onChange={() => {}} />
+    );
+
+    const hoursInput = screen.getByLabelText('test-hours') as HTMLInputElement;
+    await userEvent.click(hoursInput);
+
+    rerender(
+      <>
+        <TimePicker {...defaultProps} format="24h" value="00:00" onChange={() => {}} />
+      </>
+    );
+
+    expect(hoursInput).toHaveValue('00');
+    expect(hoursInput.selectionStart).toBe(0);
+    expect(hoursInput.selectionEnd).toBe(2);
+  });
+
   it('handles backspace key correctly', async () => {
     render(<TimePicker {...defaultProps} withSeconds format="24h" />);
 
@@ -278,6 +298,56 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-minutes')).toHaveValue('34');
     expect(screen.getByLabelText('test-seconds')).toHaveValue('00');
     expect(spy).toHaveBeenLastCalledWith('13:34:00');
+  });
+
+  // https://github.com/mantinedev/mantine/issues/9041
+  it('does not include seconds in pasted value when withSeconds is false', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} format="24h" onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('13:34:56');
+
+    expect(screen.getByLabelText('test-hours')).toHaveValue('13');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('34');
+    expect(spy).toHaveBeenLastCalledWith('13:34');
+  });
+
+  // https://github.com/mantinedev/mantine/issues/9041
+  it('emits clamped value without seconds on blur when withSeconds is false', async () => {
+    const spy = jest.fn();
+    render(
+      <>
+        <TimePicker {...defaultProps} format="24h" min="09:00" max="17:00" onChange={spy} />
+        <button type="button">outside</button>
+      </>
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.type(screen.getByLabelText('test-hours'), '18');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '30');
+    await userEvent.click(screen.getByText('outside'));
+
+    expect(spy).toHaveBeenLastCalledWith('17:00');
+    expect(spy.mock.calls.every(([value]) => !/^\d{2}:\d{2}:\d{2}$/.test(value))).toBe(true);
+  });
+
+  // https://github.com/mantinedev/mantine/issues/9041
+  it('does not append seconds on blur for an in-range value when withSeconds is false', async () => {
+    const spy = jest.fn();
+    render(
+      <>
+        <TimePicker {...defaultProps} format="24h" min="09:00" max="17:00" onChange={spy} />
+        <button type="button">outside</button>
+      </>
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.type(screen.getByLabelText('test-hours'), '10');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '00');
+    await userEvent.click(screen.getByText('outside'));
+
+    expect(spy).toHaveBeenLastCalledWith('10:00');
   });
 
   it('calls onChange function when the value is valid (24h format)', async () => {

@@ -52,6 +52,8 @@ const customFormatMonthsNames = [
   'Dec 22',
 ];
 
+const functionFormatMonthsNames = defaultMonthNames.map((_, index) => `#${index + 1}`);
+
 function expectMonthNames(container: HTMLElement, monthNames: string[]) {
   expect(
     Array.from(container.querySelectorAll('table button')).map((node) => node.textContent)
@@ -84,6 +86,16 @@ export function itSupportsMonthsListProps(options: Options, name = 'supports mon
         <options.component {...options.props} monthsListFormat="MMM YY" />
       );
       expectMonthNames(container, customFormatMonthsNames);
+    });
+
+    it('supports monthsListFormat as a function', () => {
+      const { container } = render(
+        <options.component
+          {...options.props}
+          monthsListFormat={(date: string) => `#${dayjs(date).month() + 1}`}
+        />
+      );
+      expectMonthNames(container, functionFormatMonthsNames);
     });
 
     it('disables months if they are before minDate', () => {

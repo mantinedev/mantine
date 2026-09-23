@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { type KeyboardEvent, useMemo, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { Combobox, Input, InputBase, ScrollArea, useCombobox } from '@mantine/core';
+import { Combobox, Input, InputBase, ScrollArea, useVirtualizedCombobox } from '@mantine/core';
 
 interface TreeNode {
   value: string;
@@ -29,21 +29,25 @@ function ChevronIcon({ size = 16 }: { size?: number }) {
 interface FlatNode {
   node: TreeNode;
   level: number;
+  parent: string | null;
   hasChildren: boolean;
+  expanded: boolean;
 }
 
 function flattenTree(
   nodes: TreeNode[],
   expanded: Record<string, boolean>,
-  level: number = 1
+  level: number = 1,
+  parent: string | null = null
 ): FlatNode[] {
   const result: FlatNode[] = [];
   nodes.forEach((node) => {
     const hasChildren = !!node.children?.length;
-    result.push({ node, level, hasChildren });
+    const isExpanded = !!expanded[node.value];
+    result.push({ node, level, parent, hasChildren, expanded: isExpanded });
 
-    if (hasChildren && expanded[node.value]) {
-      result.push(...flattenTree(node.children!, expanded, level + 1));
+    if (hasChildren && isExpanded) {
+      result.push(...flattenTree(node.children!, expanded, level + 1, node.value));
     }
   });
   return result;
@@ -110,10 +114,8 @@ function generateTreeData(): TreeNode[] {
 const largeData = generateTreeData();
 
 export function TreeSelectVirtualized() {
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-  });
-
+  const [opened, setOpened] = useState(false);
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [value, setValue] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
@@ -123,6 +125,11 @@ export function TreeSelectVirtualized() {
   };
 
   const flatNodes = useMemo(() => flattenTree(largeData, expanded), [expanded]);
+  const activeOptionIndex = value ? flatNodes.findIndex((n) => n.node.value === value) : -1;
+
+  const selectedOptionIndex = selectedValue
+    ? flatNodes.findIndex((n) => n.node.value === selectedValue)
+    : -1;
 
   const virtualizer = useVirtualizer({
     count: flatNodes.length,
@@ -131,22 +138,82 @@ export function TreeSelectVirtualized() {
     overscan: 10,
   });
 
+  const combobox = useVirtualizedCombobox({
+    opened,
+    onOpenedChange: setOpened,
+    onDropdownClose: () => setSelectedValue(null),
+    onDropdownOpen: () => {
+      if (activeOptionIndex !== -1) {
+        setSelectedValue(value);
+        requestAnimationFrame(() => {
+          virtualizer.scrollToIndex(activeOptionIndex, { align: 'auto' });
+        });
+      }
+    },
+    totalOptionsCount: flatNodes.length,
+    getOptionId: (index) => (flatNodes[index] ? `tsv-${flatNodes[index].node.value}` : null),
+    selectedOptionIndex,
+    activeOptionIndex,
+    setSelectedOptionIndex: (index) => {
+      setSelectedValue(index === -1 ? null : (flatNodes[index]?.node.value ?? null));
+      if (index !== -1) {
+        virtualizer.scrollToIndex(index, { align: 'auto' });
+      }
+    },
+    onSelectedOptionSubmit: onOptionSubmit,
+  });
+
+  function onOptionSubmit(index: number) {
+    const node = flatNodes[index]?.node;
+    if (!node) {
+      return;
+    }
+    setValue(node.value);
+    combobox.closeDropdown();
+    combobox.resetSelectedOption();
+  }
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!combobox.dropdownOpened) {
+      return;
+    }
+
+    const index = combobox.getSelectedOptionIndex();
+    if (index < 0 || index >= flatNodes.length) {
+      return;
+    }
+
+    const current = flatNodes[index];
+
+    if (event.key === 'ArrowRight' && current.hasChildren && !current.expanded) {
+      event.preventDefault();
+      toggleExpand(current.node.value);
+    }
+
+    if (event.key === 'ArrowLeft') {
+      if (current.hasChildren && current.expanded) {
+        event.preventDefault();
+        toggleExpand(current.node.value);
+      } else if (current.parent) {
+        event.preventDefault();
+        const parentIndex = flatNodes.findIndex((n) => n.node.value === current.parent);
+        if (parentIndex >= 0) {
+          combobox.selectOption(parentIndex);
+        }
+      }
+    }
+  };
+
   return (
-    <Combobox
-      store={combobox}
-      withinPortal={false}
-      onOptionSubmit={(val) => {
-        setValue(val);
-        combobox.closeDropdown();
-      }}
-    >
-      <Combobox.Target>
+    <Combobox store={combobox} withinPortal={false} resetSelectionOnOptionHover={false} keepMounted>
+      <Combobox.Target targetType="button">
         <InputBase
           component="button"
           type="button"
           pointer
           rightSection={<Combobox.Chevron />}
           onClick={() => combobox.toggleDropdown()}
+          onKeyDown={handleKeyDown}
           rightSectionPointerEvents="none"
         >
           {(value && findLabel(largeData, value)) || (
@@ -166,15 +233,16 @@ export function TreeSelectVirtualized() {
             <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
               {virtualizer.getVirtualItems().map((virtualItem) => {
                 const flatNode = flatNodes[virtualItem.index];
-                const isSelected = value === flatNode.node.value;
-                const isExpanded = !!expanded[flatNode.node.value];
+                const isExpanded = flatNode.expanded;
 
                 return (
                   <Combobox.Option
                     key={flatNode.node.value}
+                    id={`tsv-${flatNode.node.value}`}
                     value={flatNode.node.value}
-                    active={isSelected}
-                    aria-selected={isSelected}
+                    active={virtualItem.index === activeOptionIndex}
+                    selected={virtualItem.index === selectedOptionIndex}
+                    onClick={() => onOptionSubmit(virtualItem.index)}
                     style={{
                       position: 'absolute',
                       top: 0,
@@ -195,6 +263,7 @@ export function TreeSelectVirtualized() {
                       <span
                         role="button"
                         tabIndex={0}
+                        aria-label={isExpanded ? 'Collapse' : 'Expand'}
                         onClick={(e) => {
                           e.stopPropagation();
                           e.preventDefault();
@@ -217,7 +286,8 @@ export function TreeSelectVirtualized() {
                           height: 20,
                           borderRadius: 'var(--mantine-radius-sm)',
                           cursor: 'pointer',
-                          color: 'var(--mantine-color-dimmed)',
+                          color: 'inherit',
+                          opacity: 0.6,
                           transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
                           transition: 'transform 150ms ease',
                         }}

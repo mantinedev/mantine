@@ -26,6 +26,7 @@ export function changeErrorIndices<T extends Record<PropertyKey, any>>(
   // Remove all errors if the corresponding item was removed
   if (change === -1) {
     clearedErrors = clearListState(`${pathString}.${index}`, clearedErrors);
+    delete clearedErrors[`${pathString}.${index}`];
   }
 
   const cloned = { ...clearedErrors };

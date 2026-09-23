@@ -47,3 +47,13 @@ export const Demo_store = {
   name: '⭐ Demo: store',
   render: renderDemo(demos.store),
 };
+
+export const Demo_renderNotification = {
+  name: '⭐ Demo: renderNotification',
+  render: renderDemo(demos.renderNotification),
+};
+
+export const Demo_stacked = {
+  name: '⭐ Demo: stacked',
+  render: renderDemo(demos.stacked),
+};

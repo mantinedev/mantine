@@ -1,7 +1,8 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import utc from 'dayjs/plugin/utc';
+import { renderToString } from 'react-dom/server';
+import { MantineProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, tests } from '@mantine-tests/core';
 import {
@@ -25,6 +26,17 @@ describe('@mantine/schedule/CurrentTimeIndicator', () => {
       'currentTimeIndicatorLine',
       'currentTimeIndicatorThumb',
     ],
+  });
+
+  it('does not render wall-clock dependent markup during server rendering', () => {
+    const html = renderToString(
+      <MantineProvider>
+        <CurrentTimeIndicator />
+      </MantineProvider>
+    );
+
+    expect(html).not.toContain('--top-offset');
+    expect(html).not.toContain('mantine-CurrentTimeIndicator-currentTimeIndicator');
   });
 
   it('renders correct time in bubble', () => {

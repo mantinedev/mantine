@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import dayjs from 'dayjs';
 import tz from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
+import { useState } from 'react';
 import { Select, Stack } from '@mantine/core';
 import { DayView, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';

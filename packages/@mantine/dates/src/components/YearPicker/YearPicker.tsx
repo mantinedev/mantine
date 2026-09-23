@@ -54,6 +54,9 @@ export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
       CalendarBaseProps,
       'onNextYear' | 'onPreviousYear' | 'onNextMonth' | 'onPreviousMonth' | 'hasNextLevel'
     > {
+  /** Determines whether level select controls should be rendered as native `<select>` elements @default false */
+  withNativeLevelSelect?: boolean;
+
   /** Predefined values to pick from */
   presets?: YearPickerPreset<Type>[];
 

@@ -47,6 +47,12 @@ export interface MonthLevelProps
 
   /** Determines whether the calendar should take the full width of its container @default false */
   fullWidth?: boolean;
+
+  /** Called when date is changed via native level select */
+  __onDateChange?: (date: DateStringValue) => void;
+
+  /** Disables native level selects when date changes would not take effect */
+  __disableNativeLevelSelect?: boolean;
 }
 
 export type MonthLevelFactory = Factory<{
@@ -101,6 +107,8 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
     withNext,
     withPrevious,
     headerControlsOrder,
+    withNativeLevelSelect,
+    yearsSelectRange,
 
     // Other props
     monthLabelFormat,
@@ -108,6 +116,8 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
     styles,
     unstyled,
     __staticSelector,
+    __onDateChange,
+    __disableNativeLevelSelect,
     size,
     static: isStatic,
     fullWidth,
@@ -152,6 +162,13 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
         }
         __preventFocus={__preventFocus}
         __stopPropagation={__stopPropagation}
+        __calendarLevel="month"
+        __date={month}
+        __locale={locale || ctx.locale}
+        __onDateChange={__onDateChange}
+        __disableNativeLevelSelect={__disableNativeLevelSelect}
+        __minDate={minDate}
+        __maxDate={maxDate}
         nextIcon={nextIcon}
         previousIcon={previousIcon}
         nextLabel={nextLabel}
@@ -166,6 +183,8 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
         withNext={withNext}
         withPrevious={withPrevious}
         headerControlsOrder={headerControlsOrder}
+        withNativeLevelSelect={withNativeLevelSelect}
+        yearsSelectRange={yearsSelectRange}
         fullWidth={fullWidth}
         {...stylesApiProps}
       />

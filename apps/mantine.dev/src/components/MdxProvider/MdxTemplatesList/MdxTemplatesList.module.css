@@ -12,7 +12,7 @@
 }
 
 .iconCell {
-  @mixin smaller-than em(500px) {
+  @mixin smaller-than 500px {
     display: none;
   }
 }

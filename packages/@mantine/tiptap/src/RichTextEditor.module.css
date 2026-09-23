@@ -3,6 +3,19 @@
   border: 1px solid;
   border-radius: var(--mantine-radius-default);
 
+  /* Clip children to the rounded corners so the sticky toolbar does not overflow the rounded
+     border (which caused square-corner cutouts when the sticky toolbar reached the bottom
+     edge). `clip` is used instead of `hidden` because it does not create a scroll container,
+     so `position: sticky` on the toolbar keeps working.
+
+     Scoped to editors that actually have a sticky toolbar: clipping is also a Floating UI
+     boundary, and Tiptap appends `BubbleMenu` and `FloatingMenu` inside the editor rather
+     than into a portal, so an unconditional clip would constrain every floating menu to the
+     editor box even when there is nothing to clip. */
+  &:where(:has(> [data-sticky])) {
+    overflow: clip;
+  }
+
   @mixin where-light {
     border-color: var(--mantine-color-gray-4);
   }
@@ -151,10 +164,195 @@
       font-weight: 700;
     }
   }
+
+  /* The table node view is wrapped in `.tableWrapper` inside the editor (it is not part of
+     `editor.getHTML()` output). Keep only functional styles here – horizontal scroll and
+     bottom spacing – so the table itself is styled directly and renders the same way when the
+     generated HTML is displayed with the Typography component. */
+  & :global(.tableWrapper) {
+    margin-bottom: var(--mantine-spacing-sm);
+    overflow-x: auto;
+  }
+
+  & :global(table) {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+    overflow: hidden;
+
+    @mixin where-light {
+      --rte-table-border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin where-dark {
+      --rte-table-border-color: var(--mantine-color-dark-4);
+    }
+  }
+
+  & :global(td),
+  & :global(th) {
+    position: relative;
+    min-width: 1em;
+    padding: 7px var(--mantine-spacing-xs);
+    border: 1px solid var(--rte-table-border-color);
+    vertical-align: top;
+    box-sizing: border-box;
+  }
+
+  & :global(th) {
+    text-align: start;
+  }
+
+  & :global(.selectedCell) {
+    background-color: color-mix(in srgb, var(--mantine-primary-color-light) 30%, transparent);
+  }
+
+  & :global(.column-resize-handle) {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: -2px;
+    width: 4px;
+    pointer-events: none;
+    background-color: var(--mantine-primary-color-filled);
+  }
+
+  /* ProseMirror gap cursor (appears when navigating above/below a table) renders
+     a hardcoded black caret – recolor it so it stays visible in both schemes */
+  & :global(.ProseMirror-gapcursor::after) {
+    border-top-color: var(--mantine-color-text);
+  }
+
+  /* Details node view: a wrapper with a toggle button and a content column holding the summary
+     and the collapsible content. The extension does not render a visible marker, so the disclosure
+     triangle is drawn here and rotated when the node is expanded. */
+  & :global([data-type='details']) {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--mantine-spacing-xs);
+    margin-bottom: var(--mantine-spacing-sm);
+    padding: var(--mantine-spacing-sm);
+    border: 1px solid var(--rte-details-border-color);
+    border-radius: var(--mantine-radius-default);
+
+    @mixin where-light {
+      --rte-details-border-color: var(--mantine-color-gray-3);
+      --rte-details-button-hover: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      --rte-details-border-color: var(--mantine-color-dark-4);
+      --rte-details-button-hover: var(--mantine-color-dark-5);
+    }
+  }
+
+  & :global([data-type='details'] > button) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--mantine-radius-sm);
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  /* The default toggle button is empty (the extension only sets an aria-label), so the size, hover
+     affordance and disclosure triangle are scoped to `:empty`. A custom `renderToggleButton` fills
+     the button with its own content and is left untouched to avoid a clipped or duplicated marker.
+     The height matches one line of the summary so the centered triangle lines up with the summary
+     text (both start at the top of the flex row). */
+  & :global([data-type='details'] > button:empty) {
+    width: 1.25rem;
+    height: calc(1em * var(--mantine-line-height));
+  }
+
+  & :global([data-type='details'] > button:empty:hover) {
+    background-color: var(--rte-details-button-hover);
+  }
+
+  & :global([data-type='details'] > button:empty::before) {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 6px;
+    border-color: transparent transparent transparent currentColor;
+  }
+
+  /* Rotate the disclosure triangle when the section is expanded. Derive the state from the
+     content's `hidden` attribute (toggled by the node view) rather than the `.is-open` class, so a
+     custom `openClassName` option is handled. Scope to the node's own content so a nested expanded
+     details does not rotate an outer collapsed one. */
+  &
+    :global(
+      [data-type='details']:has(> div > [data-type='detailsContent']:not([hidden]))
+        > button:empty::before
+    ) {
+    transform: rotate(90deg);
+  }
+
+  & :global([data-type='details'] > div) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mantine-spacing-xs);
+    width: 100%;
+    min-width: 0;
+  }
+
+  & :global([data-type='details'] summary) {
+    font-weight: 600;
+  }
+
+  & :global([data-type='detailsContent'][hidden]) {
+    display: none;
+  }
+
+  & :global([data-type='detailsContent'] > *:last-child) {
+    margin-bottom: 0;
+  }
 }
 
 .linkEditorDropdown {
   background-color: var(--mantine-color-body);
+}
+
+.tableInsertDropdown {
+  background-color: var(--mantine-color-body);
+  padding: var(--mantine-spacing-xs);
+}
+
+.tableInsertGrid {
+  display: grid;
+  grid-template-columns: repeat(var(--rte-table-insert-columns, 10), 1fr);
+  gap: 3px;
+}
+
+.tableInsertCell {
+  width: 20px;
+  height: 20px;
+
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-2);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-5);
+  }
+
+  &[data-active] {
+    background-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.tableInsertLabel {
+  margin-top: var(--mantine-spacing-xs);
+  text-align: center;
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
 }
 
 .control {
@@ -197,8 +395,7 @@
 
   &:where([data-disabled]) {
     cursor: not-allowed;
-    color: var(--mantine-color-disabled-color);
-    background-color: var(--mantine-color-disabled);
+    opacity: 0.5;
   }
 
   &:where([data-interactive]:not([data-disabled])) {
@@ -377,7 +574,7 @@
     width: 18px;
     height: 18px;
     border: 1px solid;
-    border-radius: var(--mantine-radius-default);
+    border-radius: var(--mantine-radius-sm);
     vertical-align: middle;
     position: relative;
 

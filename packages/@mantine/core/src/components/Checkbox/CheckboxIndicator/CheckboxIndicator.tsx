@@ -136,10 +136,11 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props) => {
   });
 
   const ctx = use(CheckboxCardContext);
+  const _indeterminate = typeof indeterminate === 'boolean' ? indeterminate : ctx?.indeterminate;
   const _checked =
     typeof checked === 'boolean' || typeof indeterminate === 'boolean'
       ? checked || indeterminate
-      : ctx?.checked || false;
+      : ctx?.checked || ctx?.indeterminate || false;
 
   return (
     <Box
@@ -148,7 +149,7 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props) => {
       mod={[{ checked: _checked, disabled }, mod]}
       {...others}
     >
-      <Icon indeterminate={indeterminate} {...getStyles('icon')} />
+      <Icon indeterminate={_indeterminate} {...getStyles('icon')} />
     </Box>
   );
 });

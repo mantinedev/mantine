@@ -1,0 +1,393 @@
+import { CascaderDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Cascader);
+
+## Usage
+
+`Cascader` lets users select a value from hierarchical data by drilling down through
+cascading columns: picking an option in one column reveals its children in a new column
+to the right. The value is an ordered path from the root option to the selected node,
+for example `['asia', 'jp', 'tokyo']`.
+
+`Cascader` is useful for large hierarchical datasets where a nested dropdown would be hard
+to navigate – locations (continent → country → city), categories, organization structures, etc.
+
+All demos on this page switch to the [flat list layout](#flat-list-layout) on small screens, so
+the cascading columns and interactions like hover expand and keyboard navigation cannot be fully
+tested on mobile devices – open the demos on a larger screen to try them out.
+
+<Demo data={CascaderDemos.usage} />
+
+## Data prop
+
+Data passed to the `data` prop is an array of `CascaderOption` objects:
+
+- Each option must have a unique `value` across the whole data tree
+- `label` is optional, `value` is used when it is not set
+- `children` contains an array of nested options
+- `disabled` prevents an option from being selected or expanded
+
+```tsx
+import { CascaderOption } from '@mantine/core';
+
+const data: CascaderOption[] = [
+  {
+    value: 'asia',
+    label: 'Asia',
+    children: [
+      {
+        value: 'jp',
+        label: 'Japan',
+        children: [{ value: 'tokyo', label: 'Tokyo' }],
+      },
+    ],
+  },
+];
+```
+
+## Value and onChange
+
+`Cascader` value is an ordered array of option values (a path from root to node) or `null`
+when nothing is selected. The `onChange` callback is called with the selected path and the
+resolved chain of `CascaderOption` objects:
+
+```tsx
+import { useState } from 'react';
+import { Cascader, CascaderOption } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[] | null>(['europe', 'fr', 'paris']);
+
+  const handleChange = (path: string[] | null, options: CascaderOption[]) => {
+    setValue(path);
+    console.log(path, options);
+  };
+
+  return <Cascader data={data} value={value} onChange={handleChange} />;
+}
+```
+
+By default, only leaf options (options without children) can be selected. Clicking a parent
+option only expands the next column.
+
+## Change on select
+
+Set the `changeOnSelect` prop to allow selecting any option, not only leaves. When enabled,
+clicking a parent option both selects its path and expands the next column, so any intermediate
+level is a valid value:
+
+<Demo data={CascaderDemos.changeOnSelect} />
+
+## Close on select
+
+`closeOnSelect` controls whether the dropdown is closed after a value is selected. When it is not
+set, it defaults to the opposite of [allowDeselect](#allow-deselect): the dropdown stays open by
+default (so the selection can be toggled off), unless `allowDeselect={false}` is set. Set
+`closeOnSelect` explicitly to override this behavior:
+
+<Demo data={CascaderDemos.closeOnSelect} />
+
+## Allow deselect
+
+By default, clicking the selected option again removes the value. Set `allowDeselect={false}` to
+disable this behavior:
+
+<Demo data={CascaderDemos.allowDeselect} />
+
+## Expand trigger
+
+By default, the next column is opened when an option is clicked. Set `expandTrigger="hover"`
+to open the next column on hover instead – selecting a leaf still requires a click:
+
+<Demo data={CascaderDemos.hoverExpand} />
+
+With `expandTrigger="hover"`, the open column stays in place while the cursor moves diagonally
+toward it – options that the cursor passes over on the way do not replace it. Set
+`safeAreaPolygon={false}` to expand on every hover immediately, or pass an object to configure
+[Floating UI `safePolygon`](https://floating-ui.com/docs/useHover#safepolygon) options:
+
+<Demo data={CascaderDemos.safeAreaPolygon} />
+
+## Flat list layout
+
+Cascading columns require horizontal space and are not ideal for narrow screens, which makes them
+a poor fit for mobile layouts. Set `withColumns={false}` to render options as a flat list of full
+paths (the same way as search results) instead of columns – this layout works well on mobile:
+
+<Demo data={CascaderDemos.flatList} />
+
+The most common use case is to render columns on desktop and the flat list on mobile. Combine
+`withColumns` with the [use-matches](/hooks/use-matches/) hook to switch between the two layouts
+depending on the screen size. All demos on this page use this technique – resize the window to see
+the layout change:
+
+```tsx
+import { Cascader, useMatches } from '@mantine/core';
+
+function Demo() {
+  const withColumns = useMatches({ base: false, sm: true });
+  return <Cascader withColumns={withColumns} data={data} />;
+}
+```
+
+## Max displayed levels
+
+Deep hierarchies can produce many columns. Use the `maxDisplayedLevels` prop (`3` by default) to
+limit how many columns are displayed next to each other. When you drill deeper than the limit, the
+earliest columns are replaced by the deeper ones and a control is displayed on the left. Click it
+to reveal the previous levels; a control on the right then lets you return to the deeper levels:
+
+<Demo data={CascaderDemos.maxDisplayedLevels} />
+
+## Searchable
+
+Set the `searchable` prop to allow filtering options. In search mode, the columns are replaced
+with a flat list of full paths that match the query:
+
+<Demo data={CascaderDemos.searchable} />
+
+Use the `filter` prop to customize how paths are matched and `renderSearchOption` to customize
+how search results are rendered:
+
+```tsx
+import { Cascader, CascaderOption } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Cascader
+      searchable
+      data={data}
+      filter={(query, options: CascaderOption[]) =>
+        options.some((option) => String(option.label).toLowerCase().includes(query.toLowerCase()))
+      }
+      renderSearchOption={(query, options) => options.map((option) => option.label).join(' → ')}
+    />
+  );
+}
+```
+
+## Controlled search value
+
+Use `searchValue` and `onSearchChange` props to control the search value:
+
+```tsx
+import { useState } from 'react';
+import { Cascader } from '@mantine/core';
+
+function Demo() {
+  const [searchValue, setSearchValue] = useState('');
+  return (
+    <Cascader
+      searchable
+      data={data}
+      searchValue={searchValue}
+      onSearchChange={setSearchValue}
+    />
+  );
+}
+```
+
+## Nothing found
+
+Set the `nothingFoundMessage` prop to display a message when no options match the search query:
+
+<Demo data={CascaderDemos.nothingFound} />
+
+## Display value
+
+By default, the selected path is displayed in the input as option labels joined by the `separator`
+(`/` by default). Use the `separator` prop to change the divider and the `formatValue` prop to
+fully customize the input label:
+
+<Demo data={CascaderDemos.formatValue} />
+
+## Column width
+
+Use the `columnWidth` prop to set a fixed width for every column and `maxDropdownHeight` to control
+the height of a column before it becomes scrollable (`260` by default):
+
+<Demo data={CascaderDemos.columnWidth} />
+
+## Custom option rendering
+
+Use the `renderOption` prop to customize how options are rendered in columns. The function receives
+the option and its column level:
+
+<Demo data={CascaderDemos.renderOption} />
+
+## Check icon
+
+Use the `withCheckIcon` prop to toggle the check icon on the selected option and `checkIconPosition`
+to change its position (`left` or `right`):
+
+<Demo data={CascaderDemos.checkIcon} />
+
+## Disabled options
+
+Set the `disabled` property on an option to prevent it from being selected or expanded. Disabled
+options are skipped during keyboard navigation:
+
+<Demo data={CascaderDemos.disabledOptions} />
+
+## Left and right sections
+
+`Cascader` supports `leftSection` and `rightSection` props the same way as other inputs. These
+sections are usually used to add icons:
+
+<Demo data={CascaderDemos.sections} />
+
+## Clearable
+
+Set the `clearable` prop to display the clear button when a value is selected:
+
+<Demo data={CascaderDemos.clearable} />
+
+Use the `clearSectionMode` prop to control how the clear button and `rightSection` are rendered:
+
+<Demo data={CascaderDemos.clearSectionMode} />
+
+## Scrollable columns
+
+Each column is scrollable. Use the `maxDropdownHeight` prop to control the height of a column
+before it becomes scrollable and `scrollAreaProps` to pass props down to the
+[ScrollArea](/core/scroll-area) in each column:
+
+<Demo data={CascaderDemos.scrollArea} />
+
+## Control dropdown opened state
+
+Use `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props to
+control the dropdown opened state:
+
+```tsx
+import { Cascader } from '@mantine/core';
+
+function Demo() {
+  const [dropdownOpened, setDropdownOpened] = useState(false);
+  return (
+    <Cascader
+      data={data}
+      dropdownOpened={dropdownOpened}
+      onDropdownOpen={() => setDropdownOpened(true)}
+      onDropdownClose={() => setDropdownOpened(false)}
+    />
+  );
+}
+```
+
+## Dropdown position
+
+Use `comboboxProps` to pass props down to the underlying [Combobox](/core/combobox) and
+[Popover](/core/popover). For example, set `position` to change the dropdown position:
+
+<Demo data={CascaderDemos.dropdownPosition} />
+
+## Dropdown offset
+
+<Demo data={CascaderDemos.dropdownOffset} />
+
+## Dropdown width
+
+In flat list mode (`withColumns={false}`) the dropdown width can be controlled with
+`comboboxProps={{ width }}`. In columns mode the dropdown is sized to the columns:
+
+<Demo data={CascaderDemos.dropdownWidth} />
+
+## Dropdown padding
+
+<Demo data={CascaderDemos.dropdownPadding} />
+
+## Dropdown shadow
+
+<Demo data={CascaderDemos.dropdownShadow} />
+
+## Dropdown animation
+
+<Demo data={CascaderDemos.dropdownAnimation} />
+
+## Inside Popover
+
+To use `Cascader` inside a `Popover`, set `comboboxProps={{ withinPortal: false }}`:
+
+<Demo data={CascaderDemos.withinPopover} />
+
+<ComboboxProps component="Cascader" />
+
+## Styles API
+
+Use the [Styles API](/styles/styles-api/) to customize `Cascader` styles:
+
+<Demo data={CascaderDemos.stylesApi} />
+
+<InputSections component="Cascader" />
+
+## Input props
+
+<InputFeatures component="Cascader" element="input" />
+
+<Demo data={CascaderDemos.configurator} />
+
+## Read only
+
+Set `readOnly` to make the input read only. When `readOnly` is set, `Cascader` will not open the
+dropdown and will not call the `onChange` function.
+
+<Demo data={CascaderDemos.readOnly} />
+
+## Disabled
+
+Set `disabled` to disable the input. When `disabled` is set, the user cannot interact with the
+input and `Cascader` will not open the dropdown.
+
+<Demo data={CascaderDemos.disabled} />
+
+## Error state
+
+<Demo data={CascaderDemos.error} />
+
+## Success state
+
+<Demo data={CascaderDemos.success} />
+
+## Loading state
+
+Set the `loading` prop to display a loader in the right section instead of the chevron:
+
+<Demo data={CascaderDemos.loading} />
+
+## Accessibility
+
+`Cascader` columns are rendered as nested listboxes with `option` elements. To make the component
+accessible, set the `label` prop or pass `aria-label` to the component:
+
+```tsx
+import { Cascader } from '@mantine/core';
+
+// Set aria-label when the input does not have a visible label
+function Demo() {
+  return <Cascader data={data} aria-label="Pick location" />;
+}
+```
+
+## Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowDown/ArrowUp',
+      description: 'Opens the dropdown, then moves between options in the current column',
+    },
+    { key: 'ArrowRight', description: 'Expands the highlighted option into the next column' },
+    {
+      key: 'ArrowLeft',
+      description: 'Collapses the current column and moves back to the previous one',
+    },
+    {
+      key: 'Enter',
+      description: 'Expands a parent option or selects the highlighted leaf option',
+    },
+    { key: 'Escape', description: 'Closes the dropdown' },
+  ]}
+/>

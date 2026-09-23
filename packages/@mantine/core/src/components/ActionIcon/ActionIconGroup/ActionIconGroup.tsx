@@ -80,7 +80,7 @@ export const ActionIconGroup = factory<ActionIconGroupFactory>((_props) => {
     <Box
       {...getStyles('group')}
       variant={variant}
-      mod={[{ 'data-orientation': orientation }, mod]}
+      mod={[{ orientation }, mod]}
       role="group"
       {...others}
     />

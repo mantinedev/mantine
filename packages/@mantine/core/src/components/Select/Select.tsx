@@ -23,6 +23,8 @@ import {
   OptionsFilter,
   useCombobox,
 } from '../Combobox';
+import { getOptionByLabel } from '../Combobox/get-options-lockup/get-option-by-label';
+import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
   __InputStylesNames,
@@ -354,6 +356,19 @@ export const Select = genericFactory<SelectFactory>((_props) => {
             readOnly={readOnly || !searchable}
             value={search}
             onChange={(event) => {
+              if (isExternalInputChange(event)) {
+                if (!readOnly) {
+                  const externalOption = getOptionByLabel(optionsLockup, event.currentTarget.value);
+
+                  if (externalOption && `${externalOption.value}` !== `${_value}`) {
+                    setValue(externalOption.value as any, externalOption);
+                    !controlled && handleSearchChange(externalOption.label);
+                  }
+                }
+
+                return;
+              }
+
               handleSearchChange(event.currentTarget.value);
               combobox.openDropdown();
               selectFirstOptionOnChange && combobox.selectFirstOption();

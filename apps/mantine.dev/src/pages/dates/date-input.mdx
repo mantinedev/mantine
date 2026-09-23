@@ -36,6 +36,32 @@ Example of using DateInput with a custom format:
 
 <Demo data={DateInputDemos.format} />
 
+`valueFormat` also accepts a function that receives the value as a `YYYY-MM-DD` string and returns
+the formatted value. Use it to format the value with
+[Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+instead of dayjs – see [formatting without dayjs](/dates/getting-started/#formatting-without-dayjs).
+
+Note that `valueFormat` is also used to parse user input – a function cannot be used for that.
+When `valueFormat` is a function, typed values are parsed as `YYYY-MM-DD` strings.
+Set the `dateParser` prop to support other formats:
+
+```tsx
+import { DateInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateInput
+      valueFormat={(date) =>
+        new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(new Date(`${date}T00:00:00`))
+      }
+      dateParser={(input) => {
+        const parsed = new Date(input);
+        return Number.isNaN(parsed.getTime()) ? null : parsed;
+      }}
+    />
+  );
+}
+```
 
 ## With time
 

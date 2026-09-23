@@ -165,7 +165,6 @@ export function useCombobox({
     const root = getRootElement(targetRef.current);
     const selected = findElementBySelector(`#${listId.current} [data-combobox-selected]`, root);
     selected?.removeAttribute('data-combobox-selected');
-    selected?.removeAttribute('aria-selected');
   }, []);
 
   const selectOption = useCallback(
@@ -186,7 +185,6 @@ export function useCombobox({
       if (items?.[nextIndex] && !items[nextIndex].hasAttribute('data-combobox-disabled')) {
         clearSelectedItem();
         items[nextIndex].setAttribute('data-combobox-selected', 'true');
-        items[nextIndex].setAttribute('aria-selected', 'true');
         items[nextIndex].scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
         return items[nextIndex].id;
       }

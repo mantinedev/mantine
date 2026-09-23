@@ -139,9 +139,16 @@ Set the `maxValues` prop to limit the number of selected values in multiple and 
 
 The `renderNode` callback allows you to customize node rendering in the dropdown.
 It is called with an object containing `node`, `level`, `expanded`, `hasChildren`,
-`selected`, `checked`, and `indeterminate` properties:
+`selected`, `checked`, `indeterminate` and `expand` properties:
 
 <Demo data={TreeSelectDemos.renderNode} />
+
+The payload also includes an `expand` function that toggles the expanded state of the node.
+Use it to build a custom expand control inside `renderNode` without controlling the expanded
+state externally. Set `expandOnClick={false}` if you want expanding to happen only through your
+custom control:
+
+<Demo data={TreeSelectDemos.renderNodeExpand} />
 
 ## Scrollable dropdown
 

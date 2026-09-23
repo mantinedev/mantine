@@ -1,5 +1,6 @@
 export { configurator } from './Accordion.demo.configurator';
 export { disabled } from './Accordion.demo.disabled';
+export { disableCollapse } from './Accordion.demo.disableCollapse';
 export { chevron } from './Accordion.demo.chevron';
 export { icons } from './Accordion.demo.icons';
 export { label } from './Accordion.demo.label';

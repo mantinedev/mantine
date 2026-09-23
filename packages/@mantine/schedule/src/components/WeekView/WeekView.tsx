@@ -15,7 +15,6 @@ import {
   ScrollAreaAutosizeProps,
   StylesApiProps,
   UnstyledButton,
-  useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -34,6 +33,7 @@ import {
   DateTimeStringValue,
   DayOfWeek,
   ScheduleEventData,
+  ScheduleEventOverlapMode,
   ScheduleMode,
   ScheduleViewLevel,
 } from '../../types';
@@ -43,7 +43,9 @@ import {
   expandRecurringEvents,
   formatDate,
   getBusinessHoursMod,
+  getDayPosition,
   getDayTimeIntervals,
+  getTimeAxisEventStyle,
   getWeekDays,
   getWeekNumber,
   isAllDayEvent,
@@ -57,6 +59,7 @@ import {
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
+import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
@@ -90,6 +93,8 @@ export type WeekViewStylesNames =
   | 'weekViewWeekLabel'
   | 'weekViewWeekNumber'
   | 'weekViewBackgroundEvent'
+  | 'weekViewBackgroundEventResizeHandle'
+  | 'weekViewDragPreview'
   | CurrentTimeIndicatorStylesNames
   | CombinedScheduleHeaderStylesNames
   | AgendaViewStylesNames;
@@ -114,7 +119,7 @@ export interface WeekViewProps
   /** End time for the day view, in `HH:mm:ss` format @default 23:59:59 */
   endTime?: string;
 
-  /** Number of minutes for each interval in the day view @default 60 */
+  /** Number of minutes for each interval in the day view. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours (e.g. `120`, `240`) @default 60 */
   intervalMinutes?: number;
 
   /** If set, grid lines are displayed for intervals smaller than one hour, for example 15 and 30 minutes intervals @default true */
@@ -134,6 +139,12 @@ export interface WeekViewProps
 
   /** If set to false, weekend days are hidden @default true */
   withWeekendDays?: boolean;
+
+  /** Determines how events that overlap in time are laid out: `columns` splits the available width between them, `cascade` indents each event and stacks it over the previous one @default 'columns' */
+  eventOverlapMode?: ScheduleEventOverlapMode;
+
+  /** Time in ms the pointer must rest on an event before it is raised above the events covering it, only used with `eventOverlapMode="cascade"` @default 600 */
+  eventOverlapRaiseDelay?: number;
 
   /** If set to true, highlights today in the weekday row @default false */
   highlightToday?: boolean;
@@ -224,6 +235,9 @@ export interface WeekViewProps
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  eventDragInterval?: number;
+
   /** Called when any event drag starts */
   onEventDragStart?: (event: ScheduleEventData) => void;
 
@@ -242,6 +256,9 @@ export interface WeekViewProps
 
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
+  withInteractiveBackgroundEvents?: boolean;
 
   /** If set, enables drag-to-select time slot ranges @default false */
   withDragSlotSelect?: boolean;
@@ -277,6 +294,9 @@ export interface WeekViewProps
 
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  eventResizeInterval?: number;
 
   /** Max number of generated recurring instances per recurring series @default 2000 */
   recurrenceExpansionLimit?: number;
@@ -319,6 +339,9 @@ const defaultProps = {
   withDragSlotSelect: false,
   withEventResize: false,
   mode: 'default',
+  withInteractiveBackgroundEvents: false,
+  eventOverlapMode: 'columns',
+  eventOverlapRaiseDelay: 600,
 } satisfies Partial<WeekViewProps>;
 
 const varsResolver = createVarsResolver<WeekViewFactory>(
@@ -349,6 +372,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withSubHourGridLines,
     slotLabelFormat,
     withWeekendDays,
+    eventOverlapMode,
+    eventOverlapRaiseDelay,
     weekendDays,
     firstDayOfWeek,
     weekdayFormat,
@@ -381,11 +406,13 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
+    eventDragInterval,
     onEventDragStart,
     onEventDragEnd,
     onTimeSlotClick,
     onAllDaySlotClick,
     onEventClick,
+    withInteractiveBackgroundEvents,
     withDragSlotSelect,
     onSlotDragEnd,
     mode,
@@ -395,6 +422,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    eventResizeInterval,
     recurrenceExpansionLimit,
     getTimeSlotProps,
     withAgenda,
@@ -432,7 +460,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     radius,
   };
 
-  const theme = useMantineTheme();
   const [scrolled, setScrolled] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
@@ -445,15 +472,51 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
   type DropTargetSlot = { day: string; slotIndex: number };
 
+  const dragOffsetRef = useRef<{ offset: number; size: number }>({ offset: 0, size: 0 });
+
+  const getDropTimeForSlot = (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
+    const slotTime = slots[target.slotIndex].startTime;
+    return calculateDropTime({
+      draggedEvent,
+      targetDate: target.day,
+      targetSlotTime: slotTime,
+      intervalMinutes,
+      dragIntervalMinutes: eventDragInterval,
+      slotOffset: eventDragInterval == null ? undefined : dragOffsetRef.current.offset,
+      slotSize: eventDragInterval == null ? undefined : dragOffsetRef.current.size,
+      startTime,
+      endTime,
+    });
+  };
+
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, target: DropTargetSlot) => {
       if (!onExternalEventDrop) {
         return;
       }
       const slotDate = dayjs(target.day).format('YYYY-MM-DD');
-      onExternalEventDrop(e.dataTransfer, `${slotDate} ${slots[target.slotIndex].startTime}`);
+      const slotTime = slots[target.slotIndex].startTime;
+
+      if (eventDragInterval == null) {
+        onExternalEventDrop(e.dataTransfer, `${slotDate} ${slotTime}`);
+        return;
+      }
+
+      const slotStart = `${slotDate} ${slotTime}`;
+      const { start } = calculateDropTime({
+        draggedEvent: { start: slotStart, end: slotStart } as ScheduleEventData,
+        targetDate: target.day,
+        targetSlotTime: slotTime,
+        intervalMinutes,
+        dragIntervalMinutes: eventDragInterval,
+        slotOffset: dragOffsetRef.current.offset,
+        slotSize: dragOffsetRef.current.size,
+        startTime,
+        endTime,
+      });
+      onExternalEventDrop(e.dataTransfer, dayjs(start).format('YYYY-MM-DD HH:mm:ss'));
     },
-    [onExternalEventDrop, slots]
+    [onExternalEventDrop, slots, eventDragInterval, intervalMinutes, startTime, endTime]
   );
 
   const handleExternalAllDayDrop = useCallback(
@@ -473,17 +536,30 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
-    calculateDropTarget: (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
-      const slotTime = slots[target.slotIndex].startTime;
-      return calculateDropTime({
-        draggedEvent,
-        targetDate: target.day,
-        targetSlotTime: slotTime,
-        intervalMinutes,
-      });
-    },
+    calculateDropTarget: getDropTimeForSlot,
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
   });
+
+  const updateDragPreview = (target: DropTargetSlot) => {
+    const draggedEvent = dragDrop.dragContextValue.draggedEvent;
+    if (eventDragInterval == null || !draggedEvent) {
+      return;
+    }
+    const { start, end } = getDropTimeForSlot(target, draggedEvent);
+    const newStart = dayjs(start).format('YYYY-MM-DD HH:mm:ss');
+    if (
+      dragDrop.dragPreview?.start !== newStart ||
+      dragDrop.dragPreview?.target.day !== target.day
+    ) {
+      dragDrop.setDragPreview({
+        start: newStart,
+        end: dayjs(end).format('YYYY-MM-DD HH:mm:ss'),
+        target,
+      });
+    }
+  };
+
+  const suppressDropHighlight = eventDragInterval != null && dragDrop.dragContextValue.isDragging;
 
   const allDayDragDrop = useDragDropHandlers<string>({
     enabled: withEventsDragAndDrop,
@@ -520,8 +596,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     startTime,
     endTime,
     intervalMinutes,
+    resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
+    withBackgroundEvents: withInteractiveBackgroundEvents,
   });
 
   const withDragHandlers = (withEventsDragAndDrop || !!onExternalEventDrop) && mode !== 'static';
@@ -574,6 +652,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     weekendDays: ctx.getWeekendDays(weekendDays),
     withWeekendDays,
+    eventOverlapMode,
   });
 
   const timeValues = slots.reduce<React.ReactNode[]>((acc, interval) => {
@@ -653,6 +732,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     });
 
     if (slotIndex >= 0) {
+      const rect = daySlots[slotIndex]!.getBoundingClientRect();
+      dragOffsetRef.current = { offset: event.clientY - rect.top, size: rect.height };
       return slotIndex;
     }
 
@@ -667,10 +748,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     const lastRect = lastSlot.getBoundingClientRect();
 
     if (event.clientY < firstRect.top) {
+      dragOffsetRef.current = { offset: 0, size: firstRect.height };
       return 0;
     }
 
     if (event.clientY > lastRect.bottom) {
+      dragOffsetRef.current = { offset: lastRect.height, size: lastRect.height };
       return daySlots.length - 1;
     }
 
@@ -763,44 +846,64 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     </UnstyledButton>
   ));
 
+  const interactiveBackgroundEvents = withInteractiveBackgroundEvents && mode !== 'static';
+
   const days = weekdays.map((day, dayIndex) => {
     const allBgEvents = weekEvents.backgroundEvents[day] || [];
 
     const backgroundEventNodes = allBgEvents
       .filter((event) => !event.position.allDay)
       .map((event) => {
-        const colors = theme.variantColorResolver({
-          color: event.color || theme.primaryColor,
-          theme,
-          variant: 'light',
-          autoContrast: true,
-        });
+        const eventDate = dayjs(day).format('YYYY-MM-DD');
+        const isResizable = eventResize.isResizableEvent(event);
+        const resizePosition = eventResize.getResizePosition(event.id, eventDate);
 
-        const bgEventBody =
-          typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-        const bgEventProps = {
-          key: `bg-${event.id}`,
-          ...getStyles('weekViewBackgroundEvent', {
-            style: {
-              top: `${event.position.top}%`,
-              height: `${event.position.height}%`,
-              width: '100%',
-            },
-          }),
-          __vars: {
-            '--bg-event-bg': colors.background,
-            '--bg-event-color': colors.color,
-          },
-          children: bgEventBody,
-        };
-
-        if (typeof renderEvent === 'function') {
-          return renderEvent(event, bgEventProps as any);
-        }
-
-        const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
-        return <Box key={bgEventKey} {...restBgEventProps} />;
+        return (
+          <ScheduleBackgroundEvent<'top' | 'bottom'>
+            key={`bg-${event.id}`}
+            event={event}
+            renderEvent={renderEvent}
+            renderEventBody={renderEventBody}
+            interactive={interactiveBackgroundEvents}
+            onEventClick={
+              onEventClick
+                ? (clickedEvent, e) => {
+                    if (!eventResize.wasResizing()) {
+                      onEventClick(clickedEvent, e);
+                    }
+                  }
+                : undefined
+            }
+            withResize={isResizable}
+            isResizing={resizePosition !== null}
+            resizeHandleProps={getStyles('weekViewBackgroundEventResizeHandle')}
+            onResizeStart={
+              isResizable
+                ? (edge, e) => {
+                    const container = daySlotsContainersRef.current[dayIndex];
+                    if (container) {
+                      eventResize.handleResizeStart({
+                        event,
+                        edge,
+                        container,
+                        originalTop: event.position.top,
+                        originalHeight: event.position.height,
+                        eventDate,
+                        pointerEvent: e,
+                      });
+                    }
+                  }
+                : undefined
+            }
+            {...getStyles('weekViewBackgroundEvent', {
+              style: {
+                top: `${resizePosition ? resizePosition.top : event.position.top}%`,
+                height: `${resizePosition ? resizePosition.height : event.position.height}%`,
+                width: '100%',
+              },
+            })}
+          />
+        );
       });
 
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
@@ -851,12 +954,18 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
                 }
               : undefined
           }
+          mod={{ cascade: eventOverlapMode === 'cascade' }}
           style={{
             position: 'absolute',
-            top: `calc(${eventTop}% + 1px)`,
+            ...getTimeAxisEventStyle({
+              start: eventTop,
+              span: eventHeight,
+              axis: 'vertical',
+            }),
             left: `${event.position.offset}%`,
             width: `${event.position.width}%`,
-            height: `calc(${eventHeight}% - 1px)`,
+            '--event-z-index': event.position.column + 3,
+            '--event-z-index-raised': event.position.overlaps + 3,
           }}
         />
       );
@@ -891,6 +1000,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           const slotIndex = getSlotIndexFromDragPoint(event, dayIdx);
           if (slotIndex !== null) {
             dragDrop.handleDragOver(event, { day: dayStr, slotIndex });
+            updateDragPreview({ day: dayStr, slotIndex });
           }
         }}
         onDaySlotsDragLeave={dragDrop.handleDragLeave}
@@ -901,7 +1011,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           }
         }}
         dropTargetSlotIndex={
-          dragDrop.dropTarget?.day === day ? dragDrop.dropTarget.slotIndex : undefined
+          !suppressDropHighlight && dragDrop.dropTarget?.day === day
+            ? dragDrop.dropTarget.slotIndex
+            : undefined
         }
         withDragSlotSelect={withDragSlotSelect}
         onSlotPointerDown={slotDragSelect.handleSlotPointerDown}
@@ -913,6 +1025,31 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       >
         {backgroundEventNodes}
         {dayEvents}
+        {dragDrop.dragPreview?.target.day === day && dragDrop.dragContextValue.draggedEvent && (
+          <Box
+            {...getStyles('weekViewDragPreview', {
+              style: (() => {
+                const { top, height } = getDayPosition({
+                  event: {
+                    ...dragDrop.dragContextValue.draggedEvent,
+                    start: dragDrop.dragPreview.start,
+                    end: dragDrop.dragPreview.end,
+                  },
+                  startTime,
+                  endTime,
+                  intervalMinutes,
+                });
+                return {
+                  position: 'absolute',
+                  insetInlineStart: 0,
+                  insetInlineEnd: 0,
+                  top: `${top}%`,
+                  height: `${height}%`,
+                };
+              })(),
+            })}
+          />
+        )}
       </WeekViewDay>
     );
   });
@@ -974,41 +1111,24 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     const dayWidth = 100 / weekdays.length;
     const dayOffset = dayIndex * dayWidth;
 
-    return allDayBgEvents.map((event) => {
-      const colors = theme.variantColorResolver({
-        color: event.color || theme.primaryColor,
-        theme,
-        variant: 'light',
-        autoContrast: true,
-      });
-
-      const bgEventBody =
-        typeof renderEventBody === 'function' ? renderEventBody(event) : event.title;
-
-      const bgEventProps = {
-        key: `bg-allday-${event.id}-${day}`,
-        ...getStyles('weekViewBackgroundEvent', {
+    return allDayBgEvents.map((event) => (
+      <ScheduleBackgroundEvent
+        key={`bg-allday-${event.id}-${day}`}
+        event={event}
+        renderEvent={renderEvent}
+        renderEventBody={renderEventBody}
+        interactive={interactiveBackgroundEvents}
+        onEventClick={onEventClick}
+        {...getStyles('weekViewBackgroundEvent', {
           style: {
             top: 0,
             height: '100%',
             left: `${dayOffset}%`,
             width: `${dayWidth}%`,
           },
-        }),
-        __vars: {
-          '--bg-event-bg': colors.background,
-          '--bg-event-color': colors.color,
-        },
-        children: bgEventBody,
-      };
-
-      if (typeof renderEvent === 'function') {
-        return renderEvent(event, bgEventProps as any);
-      }
-
-      const { key: bgEventKey, ...restBgEventProps } = bgEventProps;
-      return <Box key={bgEventKey} {...restBgEventProps} />;
-    });
+        })}
+      />
+    ));
   });
 
   // Extra rows show on hover = total rows - 2 visible rows (starts from 0, so -1)
@@ -1068,6 +1188,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         <Box
           {...getStyles('weekViewRoot')}
           __vars={{
+            '--event-raise-delay': `${eventOverlapRaiseDelay}ms`,
             '--indicator-offset-index':
               currentWeekdayIndex === -1 ? undefined : `${currentWeekdayIndex + 1}`,
             '--number-of-days': withWeekendDays
@@ -1078,6 +1199,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             'with-weekends': withWeekendDays,
             'hide-sub-hour-grid-lines': !withSubHourGridLines,
             'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
+            'all-day-dragging': allDayDragDrop.dragContextValue.isDragging,
           }}
         >
           <ScrollArea.Autosize

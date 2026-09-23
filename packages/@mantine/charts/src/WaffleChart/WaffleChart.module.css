@@ -1,0 +1,49 @@
+.root {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+
+  &[data-vertical] {
+    flex-direction: row;
+  }
+}
+
+.cell {
+  rx: var(--waffle-cell-radius);
+
+  &[data-empty] {
+    fill: var(--waffle-empty-color, var(--mantine-color-default-border));
+  }
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+
+  [data-vertical] > & {
+    flex-direction: column;
+  }
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--mantine-spacing-xs) / 2);
+  cursor: default;
+  padding: calc(var(--mantine-spacing-xs) / 2) calc(var(--mantine-spacing-sm) / 2);
+}
+
+.legendSwatch {
+  display: block;
+  width: rem(12px);
+  height: rem(12px);
+  border-radius: var(--waffle-cell-radius, rem(2px));
+  flex-shrink: 0;
+}
+
+.legendLabel {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-text);
+  line-height: 1;
+}

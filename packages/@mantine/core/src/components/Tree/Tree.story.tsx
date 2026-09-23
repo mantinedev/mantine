@@ -112,6 +112,56 @@ export function RenderNode() {
   );
 }
 
+const emptyChildrenData: TreeNodeData[] = [
+  {
+    label: 'Root',
+    value: 'root',
+    children: [
+      {
+        label: 'Child 1 (has children)',
+        value: 'child-1',
+        children: [{ label: 'Grandchild 1', value: 'grandchild-1' }],
+      },
+      { label: 'Child 2 (children: [])', value: 'child-2', children: [] },
+      {
+        label: 'Child 3 (children: [], hasChildren: false)',
+        value: 'child-3',
+        children: [],
+        hasChildren: false,
+      },
+      { label: 'Child 4 (leaf, no children key)', value: 'child-4' },
+    ],
+  },
+];
+
+export function EmptyChildren() {
+  const tree = useTree({ initialExpandedState: { root: true } });
+  return (
+    <div style={{ padding: 40 }}>
+      <Text size="sm" c="dimmed" mb="md" maw={480}>
+        Only <strong>Child 1</strong> should render an expand chevron. Nodes with an empty{' '}
+        <code>children: []</code> array (Child 2), an explicit <code>hasChildren: false</code>{' '}
+        (Child 3), or no <code>children</code> key (Child 4) are treated as leaves.
+      </Text>
+      <Tree
+        tree={tree}
+        data={emptyChildrenData}
+        renderNode={({ node, expanded, hasChildren, elementProps }) => (
+          <Group gap="xs" {...elementProps}>
+            {hasChildren && (
+              <CaretDownIcon
+                size={18}
+                style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              />
+            )}
+            <span>{node.label}</span>
+          </Group>
+        )}
+      />
+    </div>
+  );
+}
+
 export function ExpandOnDoubleClick() {
   const tree = useTree();
 

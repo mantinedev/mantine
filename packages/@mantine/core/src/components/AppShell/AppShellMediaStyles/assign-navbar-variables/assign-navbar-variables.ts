@@ -26,7 +26,7 @@ export function assignNavbarVariables({
   const collapsedNavbarTransform = 'translateX(calc(var(--app-shell-navbar-width) * -1))';
   const collapsedNavbarTransformRtl = 'translateX(var(--app-shell-navbar-width))';
 
-  if (navbar?.breakpoint && !navbar?.collapsed?.mobile) {
+  if (navbar?.breakpoint !== undefined && !navbar?.collapsed?.mobile) {
     maxMediaStyles[navbar?.breakpoint] = maxMediaStyles[navbar?.breakpoint] || {};
     maxMediaStyles[navbar?.breakpoint]['--app-shell-navbar-offset'] = '0px';
     maxMediaStyles[navbar?.breakpoint]['--app-shell-navbar-width'] = '100%';
@@ -65,7 +65,7 @@ export function assignNavbarVariables({
     });
   }
 
-  if (navbar?.breakpoint && mode === 'static') {
+  if (navbar?.breakpoint !== undefined && mode === 'static') {
     minMediaStyles[navbar.breakpoint] = minMediaStyles[navbar.breakpoint] || {};
     minMediaStyles[navbar.breakpoint]['--app-shell-navbar-position'] = 'sticky';
     minMediaStyles[navbar.breakpoint]['--app-shell-navbar-grid-row'] = '2';

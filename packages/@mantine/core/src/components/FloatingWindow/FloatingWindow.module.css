@@ -1,4 +1,6 @@
 .root {
   position: fixed;
   z-index: var(--floating-window-z-index);
+  width: var(--floating-window-width, auto);
+  height: var(--floating-window-height, auto);
 }

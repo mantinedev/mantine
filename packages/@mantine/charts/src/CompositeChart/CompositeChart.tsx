@@ -11,6 +11,8 @@ import {
   Line,
   LineProps,
   ComposedChart as ReChartsCompositeChart,
+  ReferenceArea,
+  ReferenceDot,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -31,6 +33,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
@@ -151,6 +154,7 @@ const defaultProps = {
   connectNulls: true,
   strokeWidth: 2,
   curveType: 'monotone',
+  accessibilityLayer: true,
 } satisfies Partial<CompositeChartProps>;
 
 const varsResolver = createVarsResolver<CompositeChartFactory>(
@@ -190,6 +194,8 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     gridProps,
     tooltipProps,
     referenceLines,
+    referenceAreas,
+    referenceDots,
     withDots,
     dotProps,
     activeDotProps,
@@ -213,6 +219,11 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     maxBarWidth,
     composedChartProps,
     attributes,
+    accessibilityLayer,
+    withBrush,
+    brushProps,
+    gridColor,
+    textColor,
     ...others
   } = props;
 
@@ -366,25 +377,75 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
     return null;
   });
 
-  const referenceLinesItems = referenceLines?.map((line, index) => {
-    const color = getThemeColor(line.color, theme);
-    return (
-      <ReferenceLine
-        key={index}
-        stroke={line.color ? color : 'var(--chart-grid-color)'}
-        strokeWidth={1}
-        yAxisId={line.yAxisId || undefined}
-        {...line}
-        label={{
-          fill: line.color ? color : 'currentColor',
-          fontSize: 12,
-          position: line.labelPosition ?? 'insideBottomLeft',
-          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
-        }}
-        {...getStyles('referenceLine')}
-      />
-    );
-  });
+  const referenceLinesItems = referenceLines?.map(
+    ({ color: lineColor, labelPosition, ...line }, index) => {
+      const color = getThemeColor(lineColor, theme);
+      return (
+        <ReferenceLine
+          key={index}
+          stroke={lineColor ? color : 'var(--chart-grid-color)'}
+          strokeWidth={1}
+          yAxisId={line.yAxisId || undefined}
+          {...line}
+          label={{
+            fill: lineColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'insideBottomLeft',
+            ...(typeof line.label === 'object' ? line.label : { value: line.label }),
+          }}
+          {...getStyles('referenceLine')}
+        />
+      );
+    }
+  );
+
+  const referenceAreasItems = referenceAreas?.map(
+    ({ color: areaColor, labelPosition, ...area }, index) => {
+      const color = getThemeColor(areaColor, theme);
+      return (
+        <ReferenceArea
+          key={index}
+          fill={areaColor ? color : 'var(--chart-grid-color)'}
+          fillOpacity={0.2}
+          stroke={areaColor ? color : 'var(--chart-grid-color)'}
+          strokeOpacity={0.6}
+          yAxisId={area.yAxisId || undefined}
+          {...area}
+          label={{
+            fill: areaColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'insideTop',
+            ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+          }}
+          {...getStyles('referenceArea')}
+        />
+      );
+    }
+  );
+
+  const referenceDotsItems = referenceDots?.map(
+    ({ color: dotColor, labelPosition, ...dot }, index) => {
+      const color = getThemeColor(dotColor, theme);
+      return (
+        <ReferenceDot
+          key={index}
+          r={5}
+          fill={dotColor ? color : 'var(--chart-grid-color)'}
+          stroke="var(--mantine-color-body)"
+          strokeWidth={2}
+          yAxisId={dot.yAxisId || undefined}
+          {...dot}
+          label={{
+            fill: dotColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'top',
+            ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+          }}
+          {...getStyles('referenceDot')}
+        />
+      );
+    }
+  );
 
   const sharedYAxisProps = {
     axisLine: false,
@@ -407,8 +468,10 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
+          accessibilityLayer={accessibilityLayer}
           {...composedChartProps}
         >
+          {referenceAreasItems}
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -527,6 +590,15 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
 
           {lines}
           {referenceLinesItems}
+          {referenceDotsItems}
+          {withBrush && (
+            <ChartBrush
+              dataKey={dataKey}
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+              {...brushProps}
+            />
+          )}
           {children}
         </ReChartsCompositeChart>
       </ResponsiveContainer>

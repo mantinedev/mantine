@@ -137,3 +137,8 @@ export const Demo_fullWidth = {
   name: '⭐ Demo: fullWidth',
   render: renderDemo(demos.fullWidth),
 };
+
+export const Demo_nativeLevelSelect = {
+  name: '⭐ Demo: nativeLevelSelect',
+  render: renderDemo(demos.nativeLevelSelect),
+};

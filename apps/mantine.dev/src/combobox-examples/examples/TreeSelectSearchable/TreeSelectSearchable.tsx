@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { type KeyboardEvent, useMemo, useState } from 'react';
 import { CheckIcon, Combobox, ScrollArea, TextInput, useCombobox } from '@mantine/core';
 
 interface TreeNode {
@@ -57,7 +57,9 @@ function ChevronIcon({ size = 16 }: { size?: number }) {
 interface FlatNode {
   node: TreeNode;
   level: number;
+  parent: string | null;
   hasChildren: boolean;
+  expanded: boolean;
   isLastChild: boolean;
   lineGuides: boolean[];
 }
@@ -66,24 +68,28 @@ function flattenTree(
   nodes: TreeNode[],
   expanded: Record<string, boolean>,
   level: number = 1,
-  parentGuides: boolean[] = []
+  parentGuides: boolean[] = [],
+  parent: string | null = null
 ): FlatNode[] {
   const result: FlatNode[] = [];
   nodes.forEach((node, index) => {
     const isLast = index === nodes.length - 1;
     const hasChildren = !!node.children?.length;
+    const isExpanded = !!expanded[node.value];
     const childGuides = level >= 2 ? [...parentGuides, !isLast] : [];
 
     result.push({
       node,
       level,
+      parent,
       hasChildren,
+      expanded: isExpanded,
       isLastChild: isLast,
       lineGuides: level >= 2 ? parentGuides : [],
     });
 
-    if (hasChildren && expanded[node.value]) {
-      result.push(...flattenTree(node.children!, expanded, level + 1, childGuides));
+    if (hasChildren && isExpanded) {
+      result.push(...flattenTree(node.children!, expanded, level + 1, childGuides, node.value));
     }
   });
   return result;
@@ -155,6 +161,37 @@ export function TreeSelectSearchable() {
 
   const flatNodes = flattenTree(filteredData, resolvedExpanded);
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!combobox.dropdownOpened || search.trim().length > 0) {
+      return;
+    }
+
+    const index = combobox.getSelectedOptionIndex();
+    if (index < 0 || index >= flatNodes.length) {
+      return;
+    }
+
+    const current = flatNodes[index];
+
+    if (event.key === 'ArrowRight' && current.hasChildren && !current.expanded) {
+      event.preventDefault();
+      toggleExpand(current.node.value);
+    }
+
+    if (event.key === 'ArrowLeft') {
+      if (current.hasChildren && current.expanded) {
+        event.preventDefault();
+        toggleExpand(current.node.value);
+      } else if (current.parent) {
+        event.preventDefault();
+        const parentIndex = flatNodes.findIndex((n) => n.node.value === current.parent);
+        if (parentIndex >= 0) {
+          combobox.selectOption(parentIndex);
+        }
+      }
+    }
+  };
+
   return (
     <Combobox
       store={combobox}
@@ -184,6 +221,7 @@ export function TreeSelectSearchable() {
               setSearch('');
             }
           }}
+          onKeyDown={handleKeyDown}
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
         />
@@ -270,6 +308,7 @@ export function TreeSelectSearchable() {
                       <span
                         role="button"
                         tabIndex={0}
+                        aria-label={isExpanded ? 'Collapse' : 'Expand'}
                         onClick={(e) => {
                           e.stopPropagation();
                           e.preventDefault();
@@ -292,7 +331,8 @@ export function TreeSelectSearchable() {
                           height: 20,
                           borderRadius: 'var(--mantine-radius-sm)',
                           cursor: 'pointer',
-                          color: 'var(--mantine-color-dimmed)',
+                          color: 'inherit',
+                          opacity: 0.6,
                           transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
                           transition: 'transform 150ms ease',
                         }}

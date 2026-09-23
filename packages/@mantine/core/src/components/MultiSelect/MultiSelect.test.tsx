@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  externalInputFill,
   inputDefaultProps,
   inputStylesApiSelectors,
   render,
@@ -278,6 +279,25 @@ describe('@mantine/core/MultiSelect', () => {
     expect(document.querySelector('input[name="test"]')).toHaveValue('test-1|test-2');
   });
 
+  it('does not change aria-selected of options when the highlighted option changes', async () => {
+    render(<MultiSelect data={['ID', 'Tax', 'Total']} defaultValue={['ID', 'Total']} />);
+    await userEvent.click(screen.getByRole('combobox'));
+
+    const getAriaSelected = () =>
+      screen.getAllByRole('option').map((option) => option.getAttribute('aria-selected'));
+
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+  });
+
   describe('withPillsReorder', () => {
     const reorderProps: MultiSelectProps = {
       ...defaultProps,
@@ -515,6 +535,70 @@ describe('@mantine/core/MultiSelect', () => {
       } finally {
         computedSpy.mockRestore();
       }
+    });
+  });
+
+  describe('external input changes (autofill)', () => {
+    const autofillProps: MultiSelectProps = {
+      ...defaultProps,
+      searchable: true,
+      name: 'test-multi-select',
+      data: ['Germany', 'Armenia'],
+    };
+
+    const getHiddenInput = () => document.querySelector('input[name="test-multi-select"]');
+
+    it('selects the option with a matching label', async () => {
+      render(<MultiSelect {...autofillProps} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Germany');
+      expect(getHiddenInput()).toHaveValue('Germany');
+    });
+
+    it('ignores label casing and surrounding whitespace when matching', async () => {
+      render(<MultiSelect {...autofillProps} />);
+      await externalInputFill(screen.getByRole('combobox'), '  gERMANY ');
+      expect(getHiddenInput()).toHaveValue('Germany');
+    });
+
+    it('does not deselect an option that is already selected', async () => {
+      render(<MultiSelect {...autofillProps} defaultValue={['Germany']} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Germany');
+      expect(getHiddenInput()).toHaveValue('Germany');
+    });
+
+    it('does not select more options than maxValues allows', async () => {
+      render(<MultiSelect {...autofillProps} defaultValue={['Armenia']} maxValues={1} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Germany');
+      expect(getHiddenInput()).toHaveValue('Armenia');
+    });
+
+    it('does not leave the search value in the input when the label does not match', async () => {
+      render(<MultiSelect {...autofillProps} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Georgia');
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(getHiddenInput()).toHaveValue('');
+    });
+
+    it('does not change the value of a readOnly MultiSelect', async () => {
+      render(<MultiSelect {...autofillProps} readOnly />);
+      await externalInputFill(screen.getByRole('combobox'), 'Germany');
+      expect(getHiddenInput()).toHaveValue('');
+    });
+
+    it('does not open the dropdown', async () => {
+      render(<MultiSelect {...autofillProps} />);
+      await externalInputFill(screen.getByRole('combobox'), 'Georgia');
+      expect(screen.queryByRole('option')).toBe(null);
+    });
+
+    it('does not interfere with typing', async () => {
+      render(<MultiSelect {...autofillProps} />);
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.type(screen.getByRole('combobox'), 'Germ');
+      expect(screen.getByRole('combobox')).toHaveValue('Germ');
+      expect(screen.getByRole('option', { name: 'Germany' })).toBeVisible();
+      expect(screen.queryByRole('option', { name: 'Armenia' })).toBe(null);
+      expect(getHiddenInput()).toHaveValue('');
     });
   });
 });

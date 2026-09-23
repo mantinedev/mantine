@@ -1,7 +1,6 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
-import { fireEvent } from '@testing-library/react';
+import 'dayjs/locale/ru';
+import { act, createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -153,6 +152,20 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     expect(spy).toHaveBeenCalledWith(expect.any(String));
   });
 
+  it('navigates to getCurrentTime date when Today control is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <ResourcesDayView
+        {...defaultProps}
+        onDateChange={spy}
+        getCurrentTime={() => '2025-12-25 10:00:00'}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'Today' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-12-25 10:00:00')));
+  });
+
   it('view tabs call onViewChange with day, week, month', async () => {
     const spy = jest.fn();
     render(<ResourcesDayView {...defaultProps} onViewChange={spy} />);
@@ -260,6 +273,44 @@ describe('@mantine/schedule/ResourcesDayView', () => {
         '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicatorTimeBubble'
       )
     ).not.toBeInTheDocument();
+
+    jest.useRealTimers();
+  });
+
+  it('uses getCurrentTime to decide whether the indicator is displayed by default', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-16 10:30:00'));
+
+    const { container, rerender } = render(<ResourcesDayView {...defaultProps} />);
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicator')
+    ).not.toBeInTheDocument();
+
+    rerender(<ResourcesDayView {...defaultProps} getCurrentTime={() => '2025-01-15 10:30:00'} />);
+    expect(
+      container.querySelector('.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicator')
+    ).toBeInTheDocument();
+
+    jest.useRealTimers();
+  });
+
+  it('uses getCurrentTime for the current time bubble', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-15 11:15:00'));
+
+    const { container } = render(
+      <ResourcesDayView
+        {...defaultProps}
+        slotLabelFormat="HH:mm"
+        withCurrentTimeIndicator
+        withCurrentTimeBubble
+        getCurrentTime={() => '2025-01-15 09:30:00'}
+      />
+    );
+
+    expect(
+      container.querySelector(
+        '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicatorTimeBubble'
+      )
+    ).toHaveTextContent('09:30');
 
     jest.useRealTimers();
   });
@@ -968,5 +1019,319 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       '.mantine-ResourcesDayView-resourcesDayViewGroupColumnEmpty'
     );
     expect(emptyGroupCells.length).toBe(1);
+  });
+
+  describe('eventResizeInterval prop', () => {
+    it('resizes on eventResizeInterval independently of intervalMinutes', () => {
+      const rect = {
+        top: 0,
+        left: 0,
+        right: 240,
+        bottom: 240,
+        width: 240,
+        height: 240,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      };
+      const spy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockReturnValue(rect as DOMRect);
+      const onEventResize = jest.fn();
+
+      const { container } = render(
+        <ResourcesDayView
+          {...defaultProps}
+          intervalMinutes={60}
+          eventResizeInterval={15}
+          withEventResize
+          onEventResize={onEventResize}
+          events={[
+            {
+              id: 1,
+              title: 'Event',
+              start: '2025-01-15 09:00:00',
+              end: '2025-01-15 10:00:00',
+              color: 'blue',
+              payload: {},
+              resourceId: 'room-a',
+            },
+          ]}
+        />
+      );
+
+      const handle = container.querySelector('[data-edge="end"]')!;
+      fireEvent.pointerDown(handle);
+      act(() => {
+        // 240px spans 08:00-12:00, so clientX 165 = 165 min from 08:00 = 10:45 - a 15-min
+        // boundary that the 60-min grid interval could not produce
+        document.dispatchEvent(new MouseEvent('pointermove', { clientX: 165 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({ newEnd: '2025-01-15 10:45:00' })
+      );
+      spy.mockRestore();
+    });
+  });
+
+  describe('eventDragInterval prop', () => {
+    const dragEvents = [
+      {
+        id: 1,
+        title: 'E',
+        start: '2025-01-15 09:00:00',
+        end: '2025-01-15 10:00:00',
+        color: 'blue',
+        payload: {},
+        resourceId: 'room-a',
+      },
+    ];
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'dragOver' | 'drop', clientX?: number) => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      if (clientX !== undefined) {
+        Object.defineProperty(event, 'clientX', { value: clientX, configurable: true });
+      }
+      fireEvent(node, event);
+    };
+
+    // Give the target row's slots distinct 30px-wide rects (clientX 165 -> slot 5, +15px -> 10:45).
+    const mockRowSlotRects = (row: Element) => {
+      Array.from(row.querySelectorAll('.mantine-ResourcesDayView-resourcesDayViewRowSlot')).forEach(
+        (node, i) => {
+          (node as HTMLElement).getBoundingClientRect = () =>
+            ({
+              top: 0,
+              bottom: 30,
+              left: i * 30,
+              right: (i + 1) * 30,
+              width: 30,
+              height: 30,
+              x: i * 30,
+              y: 0,
+              toJSON: () => {},
+            }) as DOMRect;
+        }
+      );
+    };
+
+    it('drops on eventDragInterval independently of intervalMinutes', () => {
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <ResourcesDayView
+          date="2025-01-15"
+          resources={resources}
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={onEventDrop}
+          events={dragEvents}
+        />
+      );
+
+      const row = container.querySelectorAll(
+        '.mantine-ResourcesDayView-resourcesDayViewRowSlots'
+      )[0];
+      mockRowSlotRects(row);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(row, 'drop', 165);
+
+      expect(onEventDrop).toHaveBeenCalledWith(
+        expect.objectContaining({ newStart: '2025-01-15 10:45:00' })
+      );
+    });
+
+    it('shows a drag ghost at the snapped position and clears it', () => {
+      const { container } = render(
+        <ResourcesDayView
+          date="2025-01-15"
+          resources={resources}
+          startTime="08:00:00"
+          endTime="16:00:00"
+          intervalMinutes={30}
+          eventDragInterval={15}
+          withEventsDragAndDrop
+          onEventDrop={jest.fn()}
+          events={dragEvents}
+        />
+      );
+
+      const row = container.querySelectorAll(
+        '.mantine-ResourcesDayView-resourcesDayViewRowSlots'
+      )[0];
+      mockRowSlotRects(row);
+      const eventNode = container.querySelector('[data-event-id="1"]')!;
+
+      fireDrag(eventNode, 'dragStart');
+      fireDrag(row, 'dragOver', 165);
+
+      expect(
+        container.querySelector('.mantine-ResourcesDayView-resourcesDayViewDragPreview')
+      ).toBeInTheDocument();
+
+      fireEvent.dragLeave(row);
+      expect(
+        container.querySelector('.mantine-ResourcesDayView-resourcesDayViewDragPreview')
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  describe('background events', () => {
+    const backgroundEventProps: ResourcesDayViewProps = {
+      ...defaultProps,
+      events: [
+        {
+          id: 'bg-1',
+          title: 'Unavailable',
+          start: '2025-01-15 09:00:00',
+          end: '2025-01-15 10:00:00',
+          color: 'gray',
+          display: 'background',
+          resourceId: 'room-a',
+        },
+      ],
+    };
+
+    it('renders background events as non-interactive divs by default', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <ResourcesDayView {...backgroundEventProps} onEventClick={spy} />
+      );
+      const bgEvent = container.querySelector(
+        '.mantine-ResourcesDayView-resourcesDayViewBackgroundEvent'
+      )!;
+
+      expect(bgEvent.tagName).toBe('DIV');
+      await userEvent.click(bgEvent);
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('calls onEventClick when a background event is clicked with withInteractiveBackgroundEvents', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <ResourcesDayView
+          {...backgroundEventProps}
+          withInteractiveBackgroundEvents
+          onEventClick={spy}
+        />
+      );
+      const bgEvent = container.querySelector(
+        '.mantine-ResourcesDayView-resourcesDayViewBackgroundEvent'
+      )!;
+
+      expect(bgEvent.tagName).toBe('BUTTON');
+      await userEvent.click(bgEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls[0][0].id).toBe('bg-1');
+    });
+
+    it('does not make background events interactive in static mode', () => {
+      const { container } = render(
+        <ResourcesDayView {...backgroundEventProps} withInteractiveBackgroundEvents mode="static" />
+      );
+      expect(
+        container.querySelector('.mantine-ResourcesDayView-resourcesDayViewBackgroundEvent')!
+          .tagName
+      ).toBe('DIV');
+    });
+
+    const bgHandleSelector =
+      '.mantine-ResourcesDayView-resourcesDayViewBackgroundEvent .mantine-ResourcesDayView-resourcesDayViewResizeHandle';
+
+    it('renders resize handles with withEventResize and withInteractiveBackgroundEvents', () => {
+      const { container } = render(
+        <ResourcesDayView
+          {...backgroundEventProps}
+          withEventResize
+          withInteractiveBackgroundEvents
+        />
+      );
+
+      const handles = container.querySelectorAll(bgHandleSelector);
+      expect(handles).toHaveLength(2);
+      expect(handles[0]).toHaveAttribute('data-edge', 'start');
+      expect(handles[1]).toHaveAttribute('data-edge', 'end');
+    });
+
+    it('does not render resize handles without withInteractiveBackgroundEvents', () => {
+      const { container } = render(<ResourcesDayView {...backgroundEventProps} withEventResize />);
+      expect(container.querySelector(bgHandleSelector)).not.toBeInTheDocument();
+    });
+
+    it('does not render resize handles on all day background events', () => {
+      const { container } = render(
+        <ResourcesDayView
+          {...defaultProps}
+          withEventResize
+          withInteractiveBackgroundEvents
+          events={[
+            {
+              id: 'bg-all-day',
+              title: 'Holiday',
+              start: '2025-01-15 00:00:00',
+              end: '2025-01-16 00:00:00',
+              color: 'gray',
+              display: 'background',
+              resourceId: 'room-a',
+            },
+          ]}
+        />
+      );
+
+      expect(container.querySelector(bgHandleSelector)).not.toBeInTheDocument();
+    });
+
+    it('calls onEventResize when a background event edge is dragged', () => {
+      const spy = jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+        top: 0,
+        left: 0,
+        right: 240,
+        bottom: 240,
+        width: 240,
+        height: 240,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      } as DOMRect);
+      const onEventResize = jest.fn();
+
+      const { container } = render(
+        <ResourcesDayView
+          {...backgroundEventProps}
+          withEventResize
+          withInteractiveBackgroundEvents
+          onEventResize={onEventResize}
+        />
+      );
+
+      fireEvent.pointerDown(container.querySelectorAll(bgHandleSelector)[1]);
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointermove', { clientX: 180 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({
+          eventId: 'bg-1',
+          newStart: '2025-01-15 09:00:00',
+          newEnd: '2025-01-15 11:00:00',
+        })
+      );
+      spy.mockRestore();
+    });
   });
 });

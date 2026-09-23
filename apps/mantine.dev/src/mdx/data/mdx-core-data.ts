@@ -89,6 +89,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/action-icon.mdx',
     searchTags: 'icon button, clickable icon, square button, toolbar button',
   },
+  ActionBar: {
+    title: 'ActionBar',
+    package: '@mantine/core',
+    slug: '/core/action-bar',
+    description: 'A fixed-position bottom bar for bulk selection actions',
+    props: ['ActionBar'],
+    styles: ['ActionBar'],
+    source: '@mantine/core/src/components/ActionBar/ActionBar.tsx',
+    docs: 'core/action-bar.mdx',
+  },
   CloseButton: {
     title: 'CloseButton',
     package: '@mantine/core',
@@ -1319,6 +1329,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     description: 'Select with hierarchical tree data',
     source: '@mantine/core/src/components/TreeSelect/TreeSelect.tsx',
     docs: 'core/tree-select.mdx',
+  },
+
+  Cascader: {
+    title: 'Cascader',
+    package: '@mantine/core',
+    slug: '/core/cascader',
+    props: ['Cascader'],
+    styles: ['Cascader'],
+    description: 'Select a path from hierarchical data with cascading columns',
+    source: '@mantine/core/src/components/Cascader/Cascader.tsx',
+    docs: 'core/cascader.mdx',
+    searchTags: 'cascading select, hierarchical select, drill down, miller columns, path picker',
   },
 
   SemiCircleProgress: {

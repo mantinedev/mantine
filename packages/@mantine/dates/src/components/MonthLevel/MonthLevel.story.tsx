@@ -1,6 +1,5 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { useState } from 'react';
 import { MonthLevel, MonthLevelProps } from './MonthLevel';
 

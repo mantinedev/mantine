@@ -19,9 +19,17 @@ type RemoveScrollProps = Omit<React.ComponentProps<typeof RemoveScroll>, 'childr
 
 export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   unstyled?: boolean;
+  __handledEscapeEvents?: WeakSet<KeyboardEvent>;
 
   /** If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. @default false */
   keepMounted?: boolean;
+
+  /** Controls how the modal/drawer is hidden when `keepMounted` is set:
+   * `'activity'` - hidden with React 19 `Activity` component,
+   * `'display-none'` - hidden with `display: none` styles
+   * @default 'activity'
+   */
+  keepMountedMode?: 'activity' | 'display-none';
 
   /** Controls opened state */
   opened: boolean;
@@ -83,6 +91,7 @@ export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
 
 export function ModalBase({
   keepMounted,
+  keepMountedMode = 'activity',
   opened,
   onClose,
   id,
@@ -103,10 +112,20 @@ export function ModalBase({
   __vars,
   unstyled,
   removeScrollProps,
+  __handledEscapeEvents,
   ...others
 }: ModalBaseProps) {
   const { _id, titleMounted, bodyMounted, shouldLockScroll, setTitleMounted, setBodyMounted } =
-    useModal({ id, transitionProps, opened, trapFocus, closeOnEscape, onClose, returnFocus });
+    useModal({
+      id,
+      transitionProps,
+      opened,
+      trapFocus,
+      closeOnEscape,
+      onClose,
+      returnFocus,
+      handledEscapeEvents: __handledEscapeEvents,
+    });
 
   const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};
 
@@ -119,7 +138,7 @@ export function ModalBase({
           closeOnClickOutside,
           onExitTransitionEnd,
           onEnterTransitionEnd,
-          transitionProps: { ...transitionProps, keepMounted },
+          transitionProps: { ...transitionProps, keepMounted, keepMountedMode },
           getTitleId: () => `${_id}-title`,
           getBodyId: () => `${_id}-body`,
           titleMounted,

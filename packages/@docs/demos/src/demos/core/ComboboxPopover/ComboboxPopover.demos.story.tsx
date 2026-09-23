@@ -92,3 +92,8 @@ export const Demo_dropdownWidth = {
   name: '⭐ Demo: dropdownWidth',
   render: renderDemo(demos.dropdownWidth),
 };
+
+export const Demo_stylesApi = {
+  name: '⭐ Demo: stylesApi',
+  render: renderDemo(demos.stylesApi),
+};

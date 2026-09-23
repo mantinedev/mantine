@@ -1,5 +1,10 @@
 import dayjs from 'dayjs';
-import { AnyDateValue, DayPositionedEventData, ScheduleEventData } from '../../../types';
+import {
+  AnyDateValue,
+  DayPositionedEventData,
+  ScheduleEventData,
+  ScheduleEventOverlapMode,
+} from '../../../types';
 import { getDayPosition, isAllDayEvent, isEventInTimeRange, validateEvent } from '../../../utils';
 import { getDayPositionedEvents } from './get-day-positioned-events';
 
@@ -9,6 +14,7 @@ interface GetDayViewEventsInput {
   startTime?: string;
   endTime?: string;
   intervalMinutes?: number;
+  eventOverlapMode?: ScheduleEventOverlapMode;
 }
 
 export function getDayViewEvents({
@@ -17,6 +23,7 @@ export function getDayViewEvents({
   startTime,
   endTime,
   intervalMinutes,
+  eventOverlapMode,
 }: GetDayViewEventsInput) {
   if (events === undefined) {
     return {
@@ -70,6 +77,7 @@ export function getDayViewEvents({
     endTime,
     intervalMinutes,
     date,
+    eventOverlapMode,
   });
 
   const allDayEvents: DayPositionedEventData[] = [];

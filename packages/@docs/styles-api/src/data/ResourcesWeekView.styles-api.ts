@@ -25,6 +25,8 @@ export const ResourcesWeekViewStylesApi: StylesApiData<ResourcesWeekViewFactory>
     resourcesWeekViewCurrentTimeIndicatorThumb: 'Current time indicator thumb',
     resourcesWeekViewCurrentTimeIndicatorTimeBubble: 'Current time indicator time bubble',
     resourcesWeekViewEventWrapper: 'Event wrapper element',
+    resourcesWeekViewDragPreview:
+      'Ghost preview shown at the snapped position while dragging an event',
     resourcesWeekViewResizeHandle: 'Event resize handle element',
     resourcesWeekViewGroupColumn: 'Group label column element',
     resourcesWeekViewGroupColumnEmpty: 'Empty group column cell for ungrouped resources',

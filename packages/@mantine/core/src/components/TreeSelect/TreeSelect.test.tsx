@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  externalInputFill,
   inputDefaultProps,
   inputStylesApiSelectors,
   render,
@@ -363,6 +364,53 @@ describe('@mantine/core/TreeSelect', () => {
       expect(spy).toHaveBeenCalled();
       expect(spy.mock.calls[0][0]).toContain('fruits');
     });
+
+    it('exposes expand handler in renderNode payload to toggle expanded state', async () => {
+      render(
+        <TreeSelect
+          {...defaultProps}
+          dropdownOpened
+          renderNode={({ node, hasChildren, expand }) => (
+            <span>
+              {hasChildren && (
+                <button type="button" aria-label={`toggle-${node.value}`} onClick={expand} />
+              )}
+              {node.label}
+            </span>
+          )}
+        />
+      );
+
+      expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
+
+      await userEvent.click(screen.getByLabelText('toggle-fruits'));
+      expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
+
+      await userEvent.click(screen.getByLabelText('toggle-fruits'));
+      expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
+    });
+
+    it('renderNode expand handler is a no-op without side effects for leaf nodes', async () => {
+      const onExpandedChange = jest.fn();
+      const onChange = jest.fn();
+      render(
+        <TreeSelect
+          {...defaultProps}
+          dropdownOpened
+          onExpandedChange={onExpandedChange}
+          onChange={onChange}
+          renderNode={({ node, expand }) => (
+            <button type="button" aria-label={`toggle-${node.value}`} onClick={expand}>
+              {node.label}
+            </button>
+          )}
+        />
+      );
+
+      await userEvent.click(screen.getByLabelText('toggle-milk'));
+      expect(onExpandedChange).not.toHaveBeenCalled();
+      expect(onChange).not.toHaveBeenCalled();
+    });
   });
 
   describe('search', () => {
@@ -668,6 +716,45 @@ describe('@mantine/core/TreeSelect', () => {
       await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
       expect(document.querySelector('input[name="test"]')).toHaveValue('apple');
       expect(input).toHaveValue('');
+    });
+  });
+
+  describe('external input changes (autofill)', () => {
+    const getHiddenInput = () => document.querySelector('input[name="test"]');
+
+    it('does not display phantom text in single mode', async () => {
+      render(
+        <TreeSelect {...defaultProps} searchable name="test" defaultValue="apple" data={treeData} />
+      );
+
+      await externalInputFill(screen.getByRole('textbox'), 'Broccoli');
+      expect(screen.getByRole('textbox')).toHaveValue('Apple');
+      expect(getHiddenInput()).toHaveValue('apple');
+    });
+
+    it('does not display phantom text in multiple mode', async () => {
+      render(
+        <TreeSelect {...defaultProps} searchable mode="multiple" name="test" data={treeData} />
+      );
+
+      await externalInputFill(screen.getByRole('textbox'), 'Broccoli');
+      expect(screen.getByRole('textbox')).toHaveValue('');
+      expect(getHiddenInput()).toHaveValue('');
+    });
+
+    it('does not open the dropdown', async () => {
+      render(<TreeSelect {...defaultProps} searchable name="test" data={treeData} />);
+      await externalInputFill(screen.getByRole('textbox'), 'Broccoli');
+      expect(screen.queryByRole('option')).toBe(null);
+    });
+
+    it('does not interfere with typing', async () => {
+      render(<TreeSelect {...defaultProps} searchable name="test" data={treeData} />);
+      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.type(screen.getByRole('textbox'), 'Broc');
+      expect(screen.getByRole('textbox')).toHaveValue('Broc');
+      expect(screen.getByRole('option', { name: 'Broccoli' })).toBeVisible();
+      expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
     });
   });
 });

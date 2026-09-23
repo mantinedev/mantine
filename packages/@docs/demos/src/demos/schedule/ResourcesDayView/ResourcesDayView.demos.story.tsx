@@ -13,6 +13,11 @@ export const Demo_allDayEvents = {
   render: renderDemo(demos.allDayEvents),
 };
 
+export const Demo_interactiveBackgroundEvents = {
+  name: '⭐ Demo: interactiveBackgroundEvents',
+  render: renderDemo(demos.interactiveBackgroundEvents),
+};
+
 export const Demo_dragDrop = {
   name: '⭐ Demo: dragDrop',
   render: renderDemo(demos.dragDrop),
@@ -21,6 +26,16 @@ export const Demo_dragDrop = {
 export const Demo_eventResize = {
   name: '⭐ Demo: eventResize',
   render: renderDemo(demos.eventResize),
+};
+
+export const Demo_eventResizeInterval = {
+  name: '⭐ Demo: eventResizeInterval',
+  render: renderDemo(demos.eventResizeInterval),
+};
+
+export const Demo_eventDragInterval = {
+  name: '⭐ Demo: eventDragInterval',
+  render: renderDemo(demos.eventDragInterval),
 };
 
 export const Demo_eventForm = {
@@ -68,6 +83,11 @@ export const Demo_timeRange = {
   render: renderDemo(demos.timeRange),
 };
 
+export const Demo_multiHourIntervals = {
+  name: '⭐ Demo: multiHourIntervals',
+  render: renderDemo(demos.multiHourIntervals),
+};
+
 export const Demo_slotWidth = {
   name: '⭐ Demo: slotWidth',
   render: renderDemo(demos.slotWidth),
@@ -91,6 +111,11 @@ export const Demo_scrollAreaProps = {
 export const Demo_currentTimeIndicator = {
   name: '⭐ Demo: currentTimeIndicator',
   render: renderDemo(demos.currentTimeIndicator),
+};
+
+export const Demo_timezone = {
+  name: '⭐ Demo: timezone',
+  render: renderDemo(demos.timezone),
 };
 
 export const Demo_permissions = {

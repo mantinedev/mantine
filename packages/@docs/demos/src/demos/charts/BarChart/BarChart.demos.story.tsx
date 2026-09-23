@@ -162,3 +162,18 @@ export const Demo_referenceArea = {
   name: '⭐ Demo: referenceArea',
   render: renderDemo(demos.referenceArea),
 };
+
+export const Demo_referenceAreas = {
+  name: '⭐ Demo: referenceAreas',
+  render: renderDemo(demos.referenceAreas),
+};
+
+export const Demo_referenceDots = {
+  name: '⭐ Demo: referenceDots',
+  render: renderDemo(demos.referenceDots),
+};
+
+export const Demo_brush = {
+  name: '⭐ Demo: brush',
+  render: renderDemo(demos.brush),
+};

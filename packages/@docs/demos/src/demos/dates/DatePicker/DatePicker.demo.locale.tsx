@@ -1,5 +1,4 @@
 import 'dayjs/locale/ru';
-
 import { DatePicker } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 

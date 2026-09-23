@@ -15,3 +15,4 @@ export { locale } from './MonthPicker.demo.locale';
 export { fullWidth } from './MonthPicker.demo.fullWidth';
 export { presets } from './MonthPicker.demo.presets';
 export { presetsRange } from './MonthPicker.demo.presetsRange';
+export { nativeLevelSelect } from './MonthPicker.demo.nativeLevelSelect';
