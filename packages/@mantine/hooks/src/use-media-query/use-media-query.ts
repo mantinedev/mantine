@@ -12,8 +12,7 @@ function getInitialValue(query: string, initialValue?: boolean) {
   if (typeof window !== 'undefined' && 'matchMedia' in window) {
     try {
       return window.matchMedia(query).matches;
-    } catch (e) {
-      // Safari iframe compatibility issue
+    } catch {
       return false;
     }
   }

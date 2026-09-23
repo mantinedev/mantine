@@ -8,11 +8,8 @@ describe('@mantine/hooks/use-media-query', () => {
     window.matchMedia = original;
   });
 
-  it('does not crash on render when matchMedia throws and the value is read synchronously', () => {
-    // Safari throws when matchMedia is called inside a cross-origin iframe (#8189)
-    window.matchMedia = (() => {
-      throw new Error('SecurityError');
-    }) as any;
+  it('does not crash on render when matchMedia returns null and the value is read synchronously', () => {
+    window.matchMedia = (() => null) as any;
 
     const hook = renderHook(() =>
       useMediaQuery('(min-width: 200px)', undefined, { getInitialValueInEffect: false })
