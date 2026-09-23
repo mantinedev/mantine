@@ -3,12 +3,9 @@ import { act } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { clickControl, clickInput, expectValue } from '@mantine-tests/dates';
 import { DatePickerType } from '../../types';
+import type { PickerInputController, PickerInputControllerOptions } from '../PickerInputBase';
 import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
-import {
-  useDatePickerInput,
-  type DatePickerInputController,
-  type DatePickerInputControllerOptions,
-} from './use-date-picker-input/use-date-picker-input';
+import { useDatePickerInput } from './use-date-picker-input/use-date-picker-input';
 
 const defaultProps = {
   popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },
@@ -30,8 +27,8 @@ function ControllerInput<Type extends DatePickerType = 'default'>({
   capture,
   ...others
 }: {
-  options?: DatePickerInputControllerOptions;
-  capture: (controller: DatePickerInputController) => void;
+  options?: PickerInputControllerOptions;
+  capture: (controller: PickerInputController) => void;
 } & DatePickerInputProps<Type>) {
   const controller = useDatePickerInput(options);
   capture(controller);
@@ -63,12 +60,30 @@ function PopoverOpenedInput({
   );
 }
 
+function PopoverStateInput({ onChange }: { onChange: (opened: boolean) => void }) {
+  const [opened, setOpened] = useState(false);
+  return (
+    <DatePickerInput
+      {...(defaultProps as any)}
+      defaultValue="2024-06-15"
+      popoverProps={{
+        ...defaultProps.popoverProps,
+        opened,
+        onChange: (next: boolean) => {
+          onChange(next);
+          setOpened(next);
+        },
+      }}
+    />
+  );
+}
+
 function ControlledOpenedInput({
   onToggle,
   capture,
 }: {
   onToggle: (setOpened: (opened: boolean) => void) => void;
-  capture: (controller: DatePickerInputController) => void;
+  capture: (controller: PickerInputController) => void;
 }) {
   const [opened, setOpened] = useState(false);
   onToggle(setOpened);
@@ -84,7 +99,7 @@ function ControlledOpenedInput({
 
 describe('@mantine/dates/DatePickerInput/controller', () => {
   it('opens the dropdown from outside at the month of the value', () => {
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     const { container } = render(
       <ControllerInput defaultValue="2024-06-15" capture={(c) => (controller = c)} />
     );
@@ -97,7 +112,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
   });
 
   it('navigates levels and dates through the controller', () => {
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     render(<ControllerInput defaultValue="2024-06-15" capture={(c) => (controller = c)} />);
 
     act(() => controller.openDropdown());
@@ -112,7 +127,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
   });
 
   it('opens on a given level when the level is set right after openDropdown', () => {
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     render(<ControllerInput defaultValue="2024-06-15" capture={(c) => (controller = c)} />);
 
     act(() => {
@@ -124,7 +139,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
   });
 
   it('resets the displayed date and level to the value and defaultLevel on every open', async () => {
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     const { container } = render(
       <ControllerInput
         options={{ defaultLevel: 'month' }}
@@ -148,7 +163,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
 
   it('reports opens and closes made by the component itself', async () => {
     const spy = jest.fn();
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     const { container } = render(
       <ControllerInput
         options={{ onDropdownOpenedChange: spy }}
@@ -168,7 +183,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
   });
 
   it('keeps the input opening its own dropdown with the keyboard', async () => {
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     const { container } = render(
       <ControllerInput defaultValue="2024-06-15" capture={(c) => (controller = c)} />
     );
@@ -181,7 +196,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
 
   it('clears a half-selected range when the dropdown is closed through the controller', async () => {
     const spy = jest.fn();
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     const { container } = render(
       <ControllerInput
         type="range"
@@ -237,7 +252,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
   });
 
   it('does not show the dropdown of a disabled input when the controller starts opened', () => {
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     const { container } = render(
       <ControllerInput
         disabled
@@ -252,7 +267,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
 
   it('hides the dropdown without changing controller state when the input becomes disabled', () => {
     const onDropdownOpenedChange = jest.fn();
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     const { container, rerender } = render(
       <ControllerInput options={{ onDropdownOpenedChange }} capture={(c) => (controller = c)} />
     );
@@ -336,7 +351,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
 
   it('resets the calendar when the parent opens a controlled dropdown', async () => {
     let setOpened: (opened: boolean) => void = () => {};
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     render(
       <ControlledOpenedInput
         onToggle={(fn) => (setOpened = fn)}
@@ -355,7 +370,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
   });
 
   it('keeps level set right after openDropdown', () => {
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     render(<ControllerInput defaultValue="2024-06-15" capture={(c) => (controller = c)} />);
 
     act(() => {
@@ -367,7 +382,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
   });
 
   it('ignores date and level props when a controller is provided', () => {
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     render(
       <ControllerInput
         options={{ defaultDate: '2024-06-15' }}
@@ -383,7 +398,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
   });
 
   it('does not open the dropdown of a disabled or read only input', () => {
-    let controller: DatePickerInputController = null as any;
+    let controller: PickerInputController = null as any;
     const { container, rerender } = render(
       <ControllerInput disabled capture={(c) => (controller = c)} />
     );
@@ -415,5 +430,35 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
     await clickInput(container);
     expectHeader('month', 'June 2024');
     expectValue(container, 'June 15, 2024');
+  });
+
+  it('reports the input opens and closes to popoverProps.onChange', async () => {
+    const spy = jest.fn();
+    const { container } = render(<PopoverStateInput onChange={spy} />);
+
+    await clickInput(container);
+    expect(spy).toHaveBeenLastCalledWith(true);
+    expect(getDropdown(container)).not.toBe(null);
+
+    await clickControl(container, 10);
+    expect(spy).toHaveBeenLastCalledWith(false);
+    expect(getDropdown(container)).toBe(null);
+    expectValue(container, 'June 6, 2024');
+  });
+
+  it('ignores popoverProps.opened when a controller is provided', () => {
+    let controller: PickerInputController = null as any;
+    const { container } = render(
+      <ControllerInput
+        popoverProps={{ ...defaultProps.popoverProps, opened: true }}
+        capture={(c) => (controller = c)}
+      />
+    );
+
+    expect(getDropdown(container)).toBe(null);
+    act(() => controller.openDropdown());
+    expect(getDropdown(container)).not.toBe(null);
+    act(() => controller.closeDropdown());
+    expect(getDropdown(container)).toBe(null);
   });
 });

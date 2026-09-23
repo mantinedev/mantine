@@ -58,3 +58,8 @@ export const Demo_weekControlProps = {
   name: '⭐ Demo: weekControlProps',
   render: renderDemo(demos.weekControlProps),
 };
+
+export const Demo_controller = {
+  name: '⭐ Demo: controller',
+  render: renderDemo(demos.controller),
+};

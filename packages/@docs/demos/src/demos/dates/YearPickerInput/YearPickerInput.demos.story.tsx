@@ -67,3 +67,8 @@ export const Demo_presetsRange = {
   name: '⭐ Demo: presetsRange',
   render: renderDemo(demos.presetsRange),
 };
+
+export const Demo_controller = {
+  name: '⭐ Demo: controller',
+  render: renderDemo(demos.controller),
+};

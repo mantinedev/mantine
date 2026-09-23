@@ -101,9 +101,6 @@ export interface PickerInputBaseProps
 
   /** Set when the dropdown content includes presets, reduces dropdown start padding @category appearance */
   withPresets?: boolean;
-
-  /** Determines whether a half-selected range is cleared when the user dismisses the dropdown, set to `false` when the parent component clears it on every close @default true */
-  __clearIncompleteRangeOnClose?: boolean;
 }
 
 export type PickerInputBaseFactory = Factory<{
@@ -144,7 +141,6 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
     onDropdownClose,
     withTime,
     withPresets,
-    __clearIncompleteRangeOnClose = true,
     ref,
     ...others
   } = useInputProps('PickerInputBase', { size: 'sm' }, _props);
@@ -179,11 +175,6 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
   );
 
   const handleClose = () => {
-    const isInvalidRangeValue = type === 'range' && Array.isArray(value) && value[0] && !value[1];
-    if (isInvalidRangeValue && __clearIncompleteRangeOnClose) {
-      onClear();
-    }
-
     dropdownHandlers.close();
   };
 
@@ -210,12 +201,14 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
           trapFocus
           returnFocus={false}
           unstyled={unstyled}
-          onClose={onDropdownClose}
           {...popoverProps}
           disabled={popoverProps?.disabled || dropdownType === 'modal' || readOnly}
+          onClose={() => {
+            onDropdownClose?.();
+            popoverProps?.onClose?.();
+          }}
           onChange={(_opened) => {
             if (!_opened) {
-              popoverProps?.onClose?.();
               handleClose();
             }
           }}

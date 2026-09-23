@@ -1,20 +1,20 @@
 import { act, renderHook } from '@testing-library/react';
 import { tests } from '@mantine-tests/core';
-import {
-  DatePickerInputControllerOptions,
-  DatePickerInputRegisteredSettings,
-  useDatePickerInput,
-} from './use-date-picker-input';
+import type {
+  PickerInputControllerOptions,
+  PickerInputRegisteredSettings,
+} from '../../PickerInputBase';
+import { useDatePickerInput } from './use-date-picker-input';
 
-const defaultSettings: DatePickerInputRegisteredSettings = {
+const defaultSettings: PickerInputRegisteredSettings = {
   valueDate: null,
   fallbackDate: '2022-04-11',
   disabled: false,
 };
 
 function renderController(
-  options: DatePickerInputControllerOptions = {},
-  settings: Partial<DatePickerInputRegisteredSettings> = {}
+  options: PickerInputControllerOptions = {},
+  settings: Partial<PickerInputRegisteredSettings> = {}
 ) {
   const hook = renderHook(() => useDatePickerInput(options));
   act(() => {

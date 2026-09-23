@@ -9,12 +9,17 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
-import { useDatesInput } from '../../hooks';
 import { DatePickerType } from '../../types';
-import { getDefaultClampedDate } from '../../utils';
 import { pickCalendarProps } from '../Calendar';
-import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
+import {
+  DateInputSharedProps,
+  PickerInputBase,
+  type PickerInputController,
+  type PickerInputControllerOptions,
+} from '../PickerInputBase';
+import { usePickerInput } from '../PickerInputBase/use-picker-input/use-picker-input';
 import { YearPicker, YearPickerBaseProps, YearPickerStylesNames } from '../YearPicker';
+import { useYearPickerInput } from './use-year-picker-input/use-year-picker-input';
 
 export type YearPickerInputStylesNames = __InputStylesNames | 'placeholder' | YearPickerStylesNames;
 
@@ -26,6 +31,9 @@ export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
     StylesApiProps<YearPickerInputFactory> {
   /** `dayjs` format to display input value @default "YYYY" @category appearance */
   valueFormat?: string;
+
+  /** Controller returned by the `useYearPickerInput` hook. When provided, the dropdown opened state and the displayed date are owned by the controller and `date`, `defaultDate`, `onDateChange`, `popoverProps.opened` and `popoverProps.onChange` props are ignored @category state */
+  controller?: PickerInputController;
 }
 
 export type YearPickerInputFactory = Factory<{
@@ -75,6 +83,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
       valueFormatter,
       presets,
       attributes,
+      controller: controllerProp,
       ...rest
     } = props;
 
@@ -86,15 +95,13 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
 
     const { calendarProps, others } = pickCalendarProps(rest);
 
-    const {
-      _value,
-      setValue,
-      formattedValue,
-      dropdownHandlers,
-      dropdownOpened,
-      onClear,
-      shouldClear,
-    } = useDatesInput({
+    const pickerInput = usePickerInput({
+      useControllerHook: useYearPickerInput,
+      controller: controllerProp,
+      calendarProps,
+      minLevel: 'decade',
+      maxLevel: calendarProps.maxLevel,
+      defaultDate: calendarProps.defaultDate,
       type: type as any,
       value,
       defaultValue,
@@ -105,24 +112,31 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
       closeOnChange,
       sortDates,
       valueFormatter,
+      minDate,
+      maxDate,
+      disabled: others.disabled,
+      readOnly: others.readOnly,
+      dropdownType,
+      popoverProps: others.popoverProps,
     });
 
     return (
       <PickerInputBase
-        formattedValue={formattedValue}
+        formattedValue={pickerInput.datesInput.formattedValue}
         withPresets={!!presets}
-        dropdownOpened={dropdownOpened}
-        dropdownHandlers={dropdownHandlers}
+        dropdownOpened={pickerInput.dropdownOpened}
+        dropdownHandlers={pickerInput.dropdownHandlers}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
-        onClear={onClear}
-        shouldClear={shouldClear}
-        value={_value}
+        onClear={pickerInput.datesInput.onClear}
+        shouldClear={pickerInput.datesInput.shouldClear}
+        value={pickerInput.datesInput._value}
         size={size}
         variant={variant}
         dropdownType={dropdownType}
         {...others}
+        popoverProps={pickerInput.popoverProps}
         type={type as any}
         __staticSelector="YearPickerInput"
         attributes={attributes}
@@ -132,14 +146,9 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
           size={size}
           variant={variant}
           type={type}
-          value={_value}
-          defaultDate={
-            calendarProps.defaultDate ||
-            (Array.isArray(_value)
-              ? _value[0] || getDefaultClampedDate({ maxDate, minDate })
-              : _value || getDefaultClampedDate({ maxDate, minDate }))
-          }
-          onChange={setValue}
+          value={pickerInput.datesInput._value}
+          controller={pickerInput.controller}
+          onChange={pickerInput.datesInput.setValue}
           locale={locale}
           classNames={resolvedClassNames}
           styles={resolvedStyles}
@@ -163,4 +172,6 @@ export namespace YearPickerInput {
   export type Props<Type extends DatePickerType = 'default'> = YearPickerInputProps<Type>;
   export type StylesNames = YearPickerInputStylesNames;
   export type Factory = YearPickerInputFactory;
+  export type Controller = PickerInputController;
+  export type ControllerOptions = PickerInputControllerOptions;
 }

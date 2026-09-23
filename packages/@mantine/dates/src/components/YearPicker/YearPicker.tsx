@@ -21,7 +21,7 @@ import {
   DateValue,
   PickerBaseProps,
 } from '../../types';
-import { Calendar, CalendarBaseProps, pickCalendarProps } from '../Calendar';
+import { Calendar, CalendarBaseProps, CalendarController, pickCalendarProps } from '../Calendar';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { PresetsList } from '../PresetsList';
@@ -72,6 +72,9 @@ export interface YearPickerProps<Type extends DatePickerType = 'default'>
     YearPickerBaseProps<Type>,
     StylesApiProps<YearPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
+  /** Controller returned by the `useCalendar` hook. When provided, the displayed date is owned by the controller and `date`, `defaultDate` and `onDateChange` props are ignored @category state */
+  controller?: CalendarController;
+
   /** Called when year is selected @category behavior */
   onYearSelect?: (date: DateStringValue) => void;
 }
@@ -124,6 +127,7 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
     unstyled,
     size,
     attributes,
+    controller,
     ...rest
   } = props;
 
@@ -184,6 +188,7 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
         ...getControlProps(date),
         ...getYearControlProps?.(date),
       })}
+      controller={controller}
       __setDateRef={setDateRef}
       __setLevelRef={setLevelRef}
       __stopPropagation={__stopPropagation}

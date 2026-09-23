@@ -21,7 +21,7 @@ import {
   DateValue,
   PickerBaseProps,
 } from '../../types';
-import { Calendar, CalendarBaseProps, pickCalendarProps } from '../Calendar';
+import { Calendar, CalendarBaseProps, CalendarController, pickCalendarProps } from '../Calendar';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { PresetsList } from '../PresetsList';
@@ -87,6 +87,9 @@ export interface MonthPickerProps<Type extends DatePickerType = 'default'>
     MonthPickerBaseProps<Type>,
     StylesApiProps<MonthPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
+  /** Controller returned by the `useCalendar` hook. When provided, the displayed date and level are owned by the controller and `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel` and `onLevelChange` props are ignored @category state */
+  controller?: CalendarController;
+
   /** Called when month is selected @category behavior */
   onMonthSelect?: (date: DateStringValue) => void;
 }
@@ -139,6 +142,7 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     unstyled,
     size,
     attributes,
+    controller,
     onLevelChange,
     ...rest
   } = props;
@@ -201,6 +205,7 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
         ...getMonthControlProps?.(date),
       })}
       onLevelChange={onLevelChange as any}
+      controller={controller}
       __setDateRef={setDateRef}
       __setLevelRef={setLevelRef}
       __stopPropagation={__stopPropagation}

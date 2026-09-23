@@ -18,3 +18,4 @@ export { maxLevel } from './WeekPicker.demo.maxLevel';
 export { fullWidth } from './WeekPicker.demo.fullWidth';
 export { locale } from './WeekPicker.demo.locale';
 export { nativeLevelSelect } from './WeekPicker.demo.nativeLevelSelect';
+export { controller } from './WeekPicker.demo.controller';

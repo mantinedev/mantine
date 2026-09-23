@@ -13,3 +13,4 @@ export { yearsListFormat } from './YearPickerInput.demo.yearsListFormat';
 export { decadeLabelFormat } from './YearPickerInput.demo.decadeLabelFormat';
 export { presets } from './YearPickerInput.demo.presets';
 export { presetsRange } from './YearPickerInput.demo.presetsRange';
+export { controller } from './YearPickerInput.demo.controller';

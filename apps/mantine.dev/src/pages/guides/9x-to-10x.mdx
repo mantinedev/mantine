@@ -478,11 +478,12 @@ function Demo() {
 }
 ```
 
-## DatePickerInput calendar theme defaults
+## Picker inputs calendar theme defaults
 
-`DatePickerInput` now drives its calendar through a controller, so `defaultLevel` and `defaultDate` set
-in `theme.components.Calendar.defaultProps` or `theme.components.DatePicker.defaultProps` no longer apply
-to the calendar inside `DatePickerInput`. Set them on `DatePickerInput` instead:
+`DatePickerInput`, `MonthPickerInput`, `YearPickerInput` and `WeekPickerInput` now drive their pickers
+through a controller, so `defaultLevel` and `defaultDate` set in the theme `defaultProps` of `Calendar`,
+`DatePicker`, `MonthPicker`, `YearPicker` or `WeekPicker` no longer apply to the dropdown of the input.
+Set them on the input component instead:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -496,6 +497,26 @@ const theme = createTheme({
   },
 });
 ```
+
+## Picker inputs popoverProps.opened
+
+`DatePickerInput`, `MonthPickerInput`, `YearPickerInput` and `WeekPickerInput` now call
+`popoverProps.onChange` on every dropdown open and close, including the input click and the close after
+a date is picked. If you pass `popoverProps.opened`, update it in `popoverProps.onChange`, otherwise the
+input can no longer open or close its dropdown:
+
+```tsx
+import { useState } from 'react';
+import { DatePickerInput } from '@mantine/dates';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  return <DatePickerInput popoverProps={{ opened, onChange: setOpened }} />;
+}
+```
+
+When you pass the `controller` prop, `popoverProps.opened` and `popoverProps.onChange` are ignored. Pass
+`dropdownOpened` and `onDropdownOpenedChange` to the controller hook instead.
 
 ## Combobox store listId and selectedOptionIndex
 

@@ -13,3 +13,4 @@ export { controlledDate } from './YearPicker.demo.controlledDate';
 export { fullWidth } from './YearPicker.demo.fullWidth';
 export { presets } from './YearPicker.demo.presets';
 export { presetsRange } from './YearPicker.demo.presetsRange';
+export { controller } from './YearPicker.demo.controller';

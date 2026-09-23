@@ -14,3 +14,4 @@ export { presetsRange } from './WeekPickerInput.demo.presetsRange';
 export { maxLevel } from './WeekPickerInput.demo.maxLevel';
 export { clearSectionMode } from './WeekPickerInput.demo.clearSectionMode';
 export { nativeLevelSelect } from './WeekPickerInput.demo.nativeLevelSelect';
+export { controller } from './WeekPickerInput.demo.controller';

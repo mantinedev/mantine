@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useDisclosure, type UseDisclosureHandlers } from '@mantine/hooks';
+import { useDidUpdate, useDisclosure, type UseDisclosureHandlers } from '@mantine/hooks';
 import { useDatesContext } from '../../components/DatesProvider';
 import { DatePickerType, DatePickerValue } from '../../types';
 import { DateFormatter, getFormattedDate } from '../../utils';
@@ -75,6 +75,12 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   const onClear = () => setValue(type === 'range' ? [null, null] : type === 'multiple' ? [] : null);
   const shouldClear =
     type === 'range' ? !!_value[0] : type === 'multiple' ? _value.length > 0 : _value !== null;
+
+  useDidUpdate(() => {
+    if (!dropdownOpened && type === 'range' && Array.isArray(_value) && _value[0] && !_value[1]) {
+      onClear();
+    }
+  }, [dropdownOpened]);
 
   return {
     _value,

@@ -45,3 +45,8 @@ export const Demo_nativeLevelSelect = {
   name: '⭐ Demo: nativeLevelSelect',
   render: renderDemo(demos.nativeLevelSelect),
 };
+
+export const Demo_controller = {
+  name: '⭐ Demo: controller',
+  render: renderDemo(demos.controller),
+};

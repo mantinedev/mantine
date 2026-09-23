@@ -93,6 +93,18 @@ months is displayed partially; set `hideOutsideDates={false}` to always display 
 
 <Demo data={WeekPickerDemos.hideOutsideDates} />
 
+## Controlling with useCalendar
+
+`WeekPicker` accepts the same controller as [Calendar](/dates/calendar/#controlling-with-usecalendar):
+create it with the `useCalendar` hook and pass it with the `controller` prop to drive the displayed
+date and level from outside, for example from a toolbar. The controller does not own the selected
+value – keep using `value`/`onChange` for it:
+
+<Demo data={WeekPickerDemos.controller} />
+
+When the `controller` prop is set, the `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel`
+and `onLevelChange` props are ignored – pass them to `useCalendar` instead.
+
 ## Min and max date
 
 Set the `minDate` and `maxDate` props to define minimum and maximum dates. Days outside of the range are disabled,
