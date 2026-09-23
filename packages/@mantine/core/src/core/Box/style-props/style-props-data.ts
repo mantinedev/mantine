@@ -69,3 +69,6 @@ export const STYLE_PROPS_DATA: Record<keyof MantineStyleProps, SystemPropData> =
   display: { type: 'identity', property: 'display' },
   flex: { type: 'identity', property: 'flex' },
 };
+
+/** @deprecated Use `STYLE_PROPS_DATA` instead */
+export const STYlE_PROPS_DATA = STYLE_PROPS_DATA;
