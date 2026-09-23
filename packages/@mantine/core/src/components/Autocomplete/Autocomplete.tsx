@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useId } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -7,6 +7,7 @@ import {
   Factory,
   Primitive,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
 } from '../../core';
@@ -21,7 +22,6 @@ import {
   getParsedComboboxData,
   OptionsDropdown,
   OptionsFilter,
-  useCombobox,
 } from '../Combobox';
 import {
   __BaseInputProps,
@@ -32,6 +32,7 @@ import {
 } from '../Input';
 import { InputBase } from '../InputBase';
 import { ScrollAreaProps } from '../ScrollArea';
+import { AutocompleteStore, useAutocomplete } from './use-autocomplete/use-autocomplete';
 
 export type RenderAutocompleteOption = (
   input: ComboboxLikeRenderOptionInput<ComboboxGenericItem>
@@ -81,6 +82,9 @@ export interface AutocompleteProps
 
   /** If set, the dropdown opens when the input receives focus @default true @category behavior */
   openOnFocus?: boolean;
+
+  /** Store returned by the `useAutocomplete` hook. When provided, value and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props are ignored. The store is also passed to the underlying `Combobox`, `comboboxProps.store` is ignored @category state */
+  store?: AutocompleteStore;
 }
 
 export type AutocompleteFactory = Factory<{
@@ -137,6 +141,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
     autoSelectOnBlur,
     openOnFocus,
     attributes,
+    store: storeProp,
     ...others
   } = props;
 
@@ -144,31 +149,31 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
 
-  const [_value, setValue] = useUncontrolled({
+  const store = useController(useAutocomplete, storeProp, {
     value,
     defaultValue,
-    finalValue: '',
     onChange,
+    dropdownOpened,
+    defaultDropdownOpened,
+    onDropdownOpen,
+    onDropdownClose,
   });
 
-  const store = useCombobox({
-    opened: dropdownOpened,
-    defaultOpened: defaultDropdownOpened,
-    onDropdownOpen: () => {
-      onDropdownOpen?.();
+  store.registerDropdownCallbacks({
+    onOpen: () => {
       if (selectFirstOptionOnDropdownOpen) {
         store.selectFirstOption();
       }
     },
-    onDropdownClose: () => {
-      onDropdownClose?.();
-      // Required for autoSelectOnBlur to work correctly
+    onClose: () => {
       setTimeout(store.resetSelectedOption, 0);
     },
   });
 
+  const _value = store.value;
+
   const handleValueChange = (value: string) => {
-    setValue(value);
+    store.setValue(value);
     store.resetSelectedOption();
   };
 
@@ -196,7 +201,6 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
 
   return (
     <Combobox
-      store={store}
       __staticSelector="Autocomplete"
       classNames={resolvedClassNames}
       styles={resolvedStyles}
@@ -212,6 +216,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
         store.closeDropdown();
       }}
       {...comboboxProps}
+      store={store}
     >
       <Combobox.Target autoComplete={autoComplete} withExpandedAttribute>
         <InputBase

@@ -1,6 +1,7 @@
 import {
   AccordionDemos,
   AlertDemos,
+  AutocompleteDemos,
   BlockquoteDemos,
   ColorPickerDemos,
   DataGridDemos,
@@ -231,8 +232,9 @@ Components that support controllers:
 
 [Combobox](/core/combobox#usecombobox-hook), [Tree](/core/tree#usetree-hook),
 [DataGrid](/data-grid/getting-started#store-hook), [Select](/core/select#building-on-select-with-useselect),
-[MultiSelect](/core/multi-select#building-on-multiselect-with-usemultiselect)
-and [TagsInput](/core/tags-input#building-on-tagsinput-with-usetagsinput) work with a **store** instead – the same hook-and-prop shape, meant as a building block for your own
+[MultiSelect](/core/multi-select#building-on-multiselect-with-usemultiselect),
+[TagsInput](/core/tags-input#building-on-tagsinput-with-usetagsinput)
+and [Autocomplete](/core/autocomplete#building-on-autocomplete-with-useautocomplete) work with a **store** instead – the same hook-and-prop shape, meant as a building block for your own
 components rather than for driving the component as is. `Tree` now takes its store through the `store`
 prop, see the [migration guide](/guides/9x-to-10x).
 
@@ -245,6 +247,11 @@ The new `useTagsInput` store does the same for `TagsInput` and adds an `isValidT
 build, for example, an input that accepts only valid emails:
 
 <Demo data={TagsInputDemos.validation} />
+
+`useAutocomplete` gives access to the highlighted option of `Autocomplete` – for example, a field
+that completes the highlighted option on Tab:
+
+<Demo data={AutocompleteDemos.store} />
 
 `useTimer`, `useEditable` and `useImageCropper` have their types renamed to `<Component>Controller`
 and `<Component>ControllerOptions`; `usePagination` keeps the type names it shipped with

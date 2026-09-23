@@ -27,3 +27,4 @@ export { autoSelectOnBlur } from './Autocomplete.demo.autoSelectOnBlur';
 export { fuzzySearch } from './Autocomplete.demo.fuzzySearch';
 export { loading } from './Autocomplete.demo.loading';
 export { floatingHeight } from './Autocomplete.demo.floatingHeight';
+export { store } from './Autocomplete.demo.store';

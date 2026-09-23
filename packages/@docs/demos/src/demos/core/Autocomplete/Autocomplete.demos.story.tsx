@@ -142,3 +142,8 @@ export const Demo_openOnFocus = {
   name: '⭐ Demo: openOnFocus',
   render: renderDemo(demos.openOnFocus),
 };
+
+export const Demo_store = {
+  name: '⭐ Demo: store',
+  render: renderDemo(demos.store),
+};

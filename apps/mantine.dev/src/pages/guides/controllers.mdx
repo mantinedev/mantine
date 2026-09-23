@@ -350,7 +350,7 @@ are not passed with a `controller` prop.
 
 ## Stores
 
-`Combobox`, `Tree`, `DataGrid`, `Select`, `MultiSelect` and `TagsInput` work with a **store** instead of a controller. A store is created
+`Combobox`, `Tree`, `DataGrid`, `Select`, `MultiSelect`, `TagsInput` and `Autocomplete` work with a **store** instead of a controller. A store is created
 and passed the same way – a `use<Component>` hook whose result goes to the component's `store` prop –
 but it serves a different purpose:
 
@@ -377,6 +377,12 @@ function Demo() {
 <DataTable
   head={['Component', 'Hook', 'Prop', 'Store type']}
   data={[
+    [
+      <MdxLink href="/core/autocomplete">Autocomplete</MdxLink>,
+      <Code>useAutocomplete</Code>,
+      <Code>store</Code>,
+      <Code>AutocompleteStore</Code>,
+    ],
     [
       <MdxLink href="/core/combobox">Combobox</MdxLink>,
       <Code>useCombobox</Code>,
