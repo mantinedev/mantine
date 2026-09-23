@@ -6,7 +6,7 @@ export default { title: 'Tooltip' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Tooltip position="bottom" hoverable label="Tooltip label">
+      <Tooltip position="bottom" interactive label="Tooltip label">
         <button>target</button>
       </Tooltip>
     </div>
@@ -278,7 +278,7 @@ export function Fixed() {
   );
 }
 
-export function Hoverable() {
+export function Interactive() {
   return (
     <div style={{ padding: 40 }}>
       <button type="button" style={{ position: 'fixed', top: 40, left: 200, width: 300 }}>
@@ -288,7 +288,7 @@ export function Hoverable() {
       <Tooltip
         position="top"
         offset={20}
-        hoverable
+        interactive
         withArrow
         label={
           <span>
@@ -300,7 +300,7 @@ export function Hoverable() {
         }
       >
         <button type="button" style={{ position: 'fixed', top: 160, left: 200 }}>
-          Hoverable tooltip
+          Interactive tooltip
         </button>
       </Tooltip>
     </div>

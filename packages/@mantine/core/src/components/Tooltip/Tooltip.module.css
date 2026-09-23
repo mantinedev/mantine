@@ -26,7 +26,7 @@
     position: fixed;
   }
 
-  &:where([data-hoverable]) {
+  &:where([data-interactive]) {
     pointer-events: auto;
   }
 }
