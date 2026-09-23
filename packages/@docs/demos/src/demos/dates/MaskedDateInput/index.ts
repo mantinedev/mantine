@@ -18,3 +18,4 @@ export { clearSectionMode } from './MaskedDateInput.demo.clearSectionMode';
 export { disabled } from './MaskedDateInput.demo.disabled';
 export { readOnly } from './MaskedDateInput.demo.readOnly';
 export { configurator } from './MaskedDateInput.demo.configurator';
+export { controller } from './MaskedDateInput.demo.controller';

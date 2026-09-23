@@ -102,3 +102,8 @@ export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
+
+export const Demo_controller = {
+  name: '⭐ Demo: controller',
+  render: renderDemo(demos.controller),
+};

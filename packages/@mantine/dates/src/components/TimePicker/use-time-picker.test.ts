@@ -26,6 +26,39 @@ describe('@mantine/dates/TimePicker/use-time-picker', () => {
     changeState: (controller) => controller.setValue('12:30'),
   });
 
+  it('calls onChange when field setters complete the time in one handler', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() => useTimePicker({ onChange }));
+
+    act(() => {
+      hook.result.current.setHours(9);
+      hook.result.current.setMinutes(30);
+    });
+
+    expect(onChange).toHaveBeenLastCalledWith('09:30');
+    expect(hook.result.current.getValue()).toBe('09:30');
+  });
+
+  it('reads fields set earlier in the same handler', () => {
+    const hook = renderHook(() => useTimePicker({ withSeconds: true }));
+    const reads: unknown[] = [];
+
+    act(() => {
+      hook.result.current.setHours(9);
+      hook.result.current.setMinutes(30);
+      hook.result.current.setSeconds(15);
+      reads.push(
+        hook.result.current.getHours(),
+        hook.result.current.getMinutes(),
+        hook.result.current.getSeconds(),
+        hook.result.current.getValue(),
+        hook.result.current.hasValue()
+      );
+    });
+
+    expect(reads).toEqual([9, 30, 15, '09:30:15', true]);
+  });
+
   it('returns empty state by default', () => {
     const hook = renderHook(() => useTimePicker());
     expect(hook.result.current.value).toBe('');

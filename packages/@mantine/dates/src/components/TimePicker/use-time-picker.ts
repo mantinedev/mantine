@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useCallbackRef, useDidUpdate } from '@mantine/hooks';
+import { useCallbackRef, useDidUpdate, useLatestRef } from '@mantine/hooks';
 import type {
   TimePickerAmPmLabels,
   TimePickerField,
@@ -167,6 +167,36 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
   const [seconds, setSecondsState] = useState<number | null>(parsedInitialTime.seconds);
   const [amPm, setAmPmState] = useState<string | null>(parsedInitialTime.amPm);
 
+  const fields = useLatestRef({ hours, minutes, seconds, amPm });
+
+  const writeFields = useCallback(
+    (next: {
+      hours?: number | null;
+      minutes?: number | null;
+      seconds?: number | null;
+      amPm?: string | null;
+    }) => {
+      fields.current = { ...fields.current, ...next };
+
+      if (next.hours !== undefined) {
+        setHoursState(next.hours);
+      }
+
+      if (next.minutes !== undefined) {
+        setMinutesState(next.minutes);
+      }
+
+      if (next.seconds !== undefined) {
+        setSecondsState(next.seconds);
+      }
+
+      if (next.amPm !== undefined) {
+        setAmPmState(next.amPm);
+      }
+    },
+    []
+  );
+
   const hoursRef = useRef<HTMLInputElement>(null);
   const minutesRef = useRef<HTMLInputElement>(null);
   const secondsRef = useRef<HTMLInputElement>(null);
@@ -197,10 +227,10 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
 
   const handleTimeChange = useCallbackRef((field: TimePickerField, val: any) => {
     const timeString = getTimeString({
-      hours: field === 'hours' ? val : hours,
-      minutes: field === 'minutes' ? val : minutes,
-      seconds: field === 'seconds' ? val : seconds,
-      amPm: field === 'amPm' ? val : amPm,
+      hours: field === 'hours' ? val : fields.current.hours,
+      minutes: field === 'minutes' ? val : fields.current.minutes,
+      seconds: field === 'seconds' ? val : fields.current.seconds,
+      amPm: field === 'amPm' ? val : fields.current.amPm,
       format,
       withSeconds,
       amPmLabels,
@@ -209,18 +239,7 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
     if (timeString.valid) {
       acceptChange.current = false;
       wasInvalidBefore.current = false;
-      if (field === 'hours') {
-        setHoursState(val);
-      }
-      if (field === 'minutes') {
-        setMinutesState(val);
-      }
-      if (field === 'seconds') {
-        setSecondsState(val);
-      }
-      if (field === 'amPm') {
-        setAmPmState(val);
-      }
+      writeFields({ [field]: val });
 
       onChange?.(timeString.value);
     } else {
@@ -236,10 +255,12 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
     acceptChange.current = false;
 
     const parsedTime = getParsedTime({ time: timeString, amPmLabels, format });
-    setHoursState(parsedTime.hours);
-    setMinutesState(parsedTime.minutes);
-    setSecondsState(parsedTime.seconds);
-    setAmPmState(parsedTime.amPm);
+    writeFields({
+      hours: parsedTime.hours,
+      minutes: parsedTime.minutes,
+      seconds: parsedTime.seconds,
+      amPm: parsedTime.amPm,
+    });
 
     const next = getTimeString({ ...parsedTime, format, withSeconds, amPmLabels });
     wasInvalidBefore.current = !next.valid;
@@ -252,19 +273,19 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
       adjustedValue = ((val - 1) % 12) + 1;
     }
 
-    setHoursState(adjustedValue);
+    writeFields({ hours: adjustedValue });
     handleTimeChange('hours', adjustedValue);
     focus('hours');
   });
 
   const setMinutes = useCallbackRef((val: number | null) => {
-    setMinutesState(val);
+    writeFields({ minutes: val });
     handleTimeChange('minutes', val);
     focus('minutes');
   });
 
   const setSeconds = useCallbackRef((val: number | null) => {
-    setSecondsState(val);
+    writeFields({ seconds: val });
     handleTimeChange('seconds', val);
     focus('seconds');
   });
@@ -274,17 +295,14 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
       return;
     }
 
-    setAmPmState(val);
+    writeFields({ amPm: val });
     handleTimeChange('amPm', val);
     focus('amPm');
   });
 
   const clear = useCallbackRef(() => {
     acceptChange.current = false;
-    setHoursState(null);
-    setMinutesState(null);
-    setSecondsState(null);
-    setAmPmState(null);
+    writeFields({ hours: null, minutes: null, seconds: null, amPm: null });
     onChange?.('');
     wasInvalidBefore.current = true;
     focus('hours');
@@ -305,10 +323,12 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
         withSeconds
       );
       onChange?.(clamped.timeString);
-      setHoursState(parsedTime.hours);
-      setMinutesState(parsedTime.minutes);
-      setSecondsState(parsedTime.seconds);
-      setAmPmState(parsedTime.amPm);
+      writeFields({
+        hours: parsedTime.hours,
+        minutes: parsedTime.minutes,
+        seconds: parsedTime.seconds,
+        amPm: parsedTime.amPm,
+      });
     }
   });
 
@@ -337,40 +357,41 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
   useDidUpdate(() => {
     if (valueProp === '') {
       acceptChange.current = false;
-      setHoursState(null);
-      setMinutesState(null);
-      setSecondsState(null);
-      setAmPmState(null);
+      writeFields({ hours: null, minutes: null, seconds: null, amPm: null });
       acceptChange.current = true;
       return;
     }
 
     if (acceptChange.current && typeof valueProp === 'string') {
       const parsedTime = getParsedTime({ time: valueProp || '', amPmLabels, format });
-      setHoursState(parsedTime.hours);
-      setMinutesState(parsedTime.minutes);
-      setSecondsState(parsedTime.seconds);
-      setAmPmState(parsedTime.amPm);
+      writeFields({
+        hours: parsedTime.hours,
+        minutes: parsedTime.minutes,
+        seconds: parsedTime.seconds,
+        amPm: parsedTime.amPm,
+      });
     }
     acceptChange.current = true;
   }, [valueProp]);
 
   const value = currentTimeString.value;
 
-  const latest = useRef({ value, hours, minutes, seconds, amPm });
-  latest.current = { value, hours, minutes, seconds, amPm };
+  const formatOptions = useLatestRef({ format, withSeconds, amPmLabels });
 
-  const getValue = useCallback(() => latest.current.value, []);
-  const getHours = useCallback(() => latest.current.hours, []);
-  const getMinutes = useCallback(() => latest.current.minutes, []);
-  const getSeconds = useCallback(() => latest.current.seconds, []);
-  const getAmPm = useCallback(() => latest.current.amPm, []);
+  const getValue = useCallback(
+    () => getTimeString({ ...fields.current, ...formatOptions.current }).value,
+    []
+  );
+  const getHours = useCallback(() => fields.current.hours, []);
+  const getMinutes = useCallback(() => fields.current.minutes, []);
+  const getSeconds = useCallback(() => fields.current.seconds, []);
+  const getAmPm = useCallback(() => fields.current.amPm, []);
   const hasValue = useCallback(
     () =>
-      latest.current.hours !== null ||
-      latest.current.minutes !== null ||
-      latest.current.seconds !== null ||
-      latest.current.amPm !== null,
+      fields.current.hours !== null ||
+      fields.current.minutes !== null ||
+      fields.current.seconds !== null ||
+      fields.current.amPm !== null,
     []
   );
 

@@ -17,6 +17,7 @@ import {
   Popover,
   PopoverProps,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -33,7 +34,14 @@ import { AmPmInput } from '../TimePicker/AmPmInput/AmPmInput';
 import { TimePickerProvider } from '../TimePicker/TimePicker.context';
 import { YearLevelSettings } from '../YearLevel';
 import { getDaysInMonth } from './get-days-in-month/get-days-in-month';
-import { useMaskedDateInput } from './use-masked-date-input';
+import {
+  MaskedDateInputAmPmLabels,
+  MaskedDateInputController,
+  MaskedDateInputField,
+  MaskedDateInputFormat,
+  MaskedDateInputPasteSplit,
+  useMaskedDateInput,
+} from './use-masked-date-input';
 import classes from './MaskedDateInput.module.css';
 
 export type MaskedDateInputStylesNames =
@@ -81,10 +89,10 @@ export interface MaskedDateInputProps
   withSeconds?: boolean;
 
   /** Time format, 24h or 12h @default '24h' @category appearance */
-  format?: '24h' | '12h';
+  format?: MaskedDateInputFormat;
 
   /** Labels used for am/pm values @default { am: 'AM', pm: 'PM' } @category appearance */
-  amPmLabels?: { am: string; pm: string };
+  amPmLabels?: MaskedDateInputAmPmLabels;
 
   /** Number by which hours are incremented/decremented @default 1 @category behavior */
   hoursStep?: number;
@@ -216,14 +224,10 @@ export interface MaskedDateInputProps
   onBlur?: (event: React.FocusEvent<HTMLDivElement>) => void;
 
   /** A function to transform pasted values @category behavior */
-  pasteSplit?: (value: string) => {
-    day: number | null;
-    month: number | null;
-    year: number | null;
-    hours?: number | null;
-    minutes?: number | null;
-    seconds?: number | null;
-  };
+  pasteSplit?: MaskedDateInputPasteSplit;
+
+  /** Controller returned by the `useMaskedDateInput` hook. When provided, the state is owned by the controller and `value`, `defaultValue`, `onChange`, `withTime`, `withSeconds`, `format`, `amPmLabels`, `minDate`, `maxDate` and `pasteSplit` props are ignored @category state */
+  controller?: MaskedDateInputController;
 }
 
 export type MaskedDateInputFactory = Factory<{
@@ -326,10 +330,10 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     getDayProps,
     getMonthControlProps,
     getYearControlProps,
+    controller: controllerProp,
     ...others
   } = props;
 
-  const format = _format!;
   const _allowDeselect = allowDeselect !== undefined ? allowDeselect : clearable;
   const ctx = useDatesContext();
 
@@ -354,21 +358,21 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
 
   const { calendarProps, others: restProps } = pickCalendarProps(others);
 
-  const controller = useMaskedDateInput({
+  const controller = useController(useMaskedDateInput, controllerProp, {
     value,
     defaultValue,
     onChange,
     withTime,
     withSeconds,
-    format,
-    amPmLabels: amPmLabels!,
-    clearable,
-    readOnly,
-    disabled,
+    format: _format,
+    amPmLabels,
+    minDate: calendarProps.minDate,
+    maxDate: calendarProps.maxDate,
     pasteSplit,
-    minDate: calendarProps.minDate ? dayjs(calendarProps.minDate).format('YYYY-MM-DD') : undefined,
-    maxDate: calendarProps.maxDate ? dayjs(calendarProps.maxDate).format('YYYY-MM-DD') : undefined,
   });
+
+  const format = controller.format;
+  const isClearable = clearable && !readOnly && !disabled && controller.hasValue();
 
   const _dayRef = useMergedRef(controller.refs.day, dayRef);
   const _monthRef = useMergedRef(controller.refs.month, monthRef);
@@ -410,10 +414,10 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     }
   };
 
-  const fieldsSequence: string[] = [...fieldsOrder!];
-  if (withTime) {
+  const fieldsSequence: MaskedDateInputField[] = [...fieldsOrder!];
+  if (controller.withTime) {
     fieldsSequence.push('hours', 'minutes');
-    if (withSeconds) {
+    if (controller.withSeconds) {
       fieldsSequence.push('seconds');
     }
     if (format === '12h') {
@@ -421,35 +425,33 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     }
   }
 
-  const getNextField = (field: string) => {
+  const getNextField = (field: MaskedDateInputField) => {
     const idx = fieldsSequence.indexOf(field);
     return idx < fieldsSequence.length - 1 ? fieldsSequence[idx + 1] : undefined;
   };
 
-  const getPrevField = (field: string) => {
+  const getPrevField = (field: MaskedDateInputField) => {
     const idx = fieldsSequence.indexOf(field);
     return idx > 0 ? fieldsSequence[idx - 1] : undefined;
   };
 
-  const focusNext = (field: string) => {
+  const focusNext = (field: MaskedDateInputField) => {
     const next = getNextField(field);
     if (next) {
-      controller.focus(next as any);
+      controller.focus(next);
     }
   };
 
-  const focusPrev = (field: string) => {
+  const focusPrev = (field: MaskedDateInputField) => {
     const prev = getPrevField(field);
     if (prev) {
-      controller.focus(prev as any);
+      controller.focus(prev);
     }
   };
 
   const currentDateValue =
-    controller.values.day !== null &&
-    controller.values.month !== null &&
-    controller.values.year !== null
-      ? `${String(controller.values.year).padStart(4, '0')}-${String(controller.values.month).padStart(2, '0')}-${String(controller.values.day).padStart(2, '0')}`
+    controller.day !== null && controller.month !== null && controller.year !== null
+      ? `${String(controller.year).padStart(4, '0')}-${String(controller.month).padStart(2, '0')}-${String(controller.day).padStart(2, '0')}`
       : null;
 
   const _getDayProps = (day: DateStringValue) => ({
@@ -464,13 +466,13 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
       ) {
         controller.clear();
       } else {
-        controller.setFromDateString(day);
+        controller.setValue(day);
       }
       setDropdownOpened(false);
     },
   });
 
-  const dayMax = getDaysInMonth(controller.values.month, controller.values.year);
+  const dayMax = getDaysInMonth(controller.month, controller.year);
 
   const dateFields: Record<string, React.ReactNode> = {
     day: (
@@ -482,7 +484,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
           className: dayInputProps?.className,
           style: dayInputProps?.style,
         })}
-        value={controller.values.day}
+        value={controller.day}
         onChange={controller.setDay}
         min={1}
         max={dayMax}
@@ -513,7 +515,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
           className: monthInputProps?.className,
           style: monthInputProps?.style,
         })}
-        value={controller.values.month}
+        value={controller.month}
         onChange={controller.setMonth}
         min={1}
         max={12}
@@ -544,7 +546,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
           className: yearInputProps?.className,
           style: { width: 'calc(4ch + 0.3em)', ...yearInputProps?.style },
         })}
-        value={controller.values.year}
+        value={controller.year}
         onChange={controller.setYear}
         min={1}
         max={9999}
@@ -588,7 +590,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
           disabled={disabled}
           onClick={(event) => {
             onClick?.(event);
-            controller.focus(fieldsOrder![0] as any);
+            controller.focus(fieldsOrder![0]);
           }}
           onMouseDown={(event) => {
             event.preventDefault();
@@ -617,7 +619,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
               }}
             />
           }
-          __clearable={controller.isClearable}
+          __clearable={isClearable}
           __clearSectionMode={clearSectionMode}
           labelProps={{ htmlFor: dayInputId, ...labelProps }}
           style={style}
@@ -644,7 +646,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
                   </Fragment>
                 ))}
 
-                {withTime && (
+                {controller.withTime && (
                   <>
                     <span {...getStyles('dateSeparator')}>{'\u00A0'}</span>
                     <SpinInput
@@ -653,7 +655,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
                         className: hoursInputProps?.className,
                         style: hoursInputProps?.style,
                       })}
-                      value={controller.values.hours}
+                      value={controller.hours}
                       onChange={controller.setHours}
                       min={format === '12h' ? 1 : 0}
                       max={format === '12h' ? 12 : 23}
@@ -681,7 +683,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
                         className: minutesInputProps?.className,
                         style: minutesInputProps?.style,
                       })}
-                      value={controller.values.minutes}
+                      value={controller.minutes}
                       onChange={controller.setMinutes}
                       min={0}
                       max={59}
@@ -702,7 +704,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
                       }}
                     />
 
-                    {withSeconds && (
+                    {controller.withSeconds && (
                       <>
                         <span {...getStyles('timeSeparator')}>{timeSeparator}</span>
                         <SpinInput
@@ -711,7 +713,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
                             className: secondsInputProps?.className,
                             style: secondsInputProps?.style,
                           })}
-                          value={controller.values.seconds}
+                          value={controller.seconds}
                           onChange={controller.setSeconds}
                           min={0}
                           max={59}
@@ -738,8 +740,8 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
                       <AmPmInput
                         {...amPmSelectProps}
                         inputType="select"
-                        labels={amPmLabels}
-                        value={controller.values.amPm}
+                        labels={controller.amPmLabels}
+                        value={controller.amPm}
                         onChange={controller.setAmPm}
                         ref={_amPmRef}
                         aria-label={amPmInputLabel}
@@ -764,7 +766,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
             type="hidden"
             name={name}
             form={form}
-            value={controller.hiddenInputValue}
+            value={controller.value ?? ''}
             {...hiddenInputProps}
           />
         </InputBase>
@@ -781,8 +783,8 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
           classNames={classNames as any}
           styles={styles as any}
           unstyled={unstyled}
-          minDate={calendarProps.minDate}
-          maxDate={calendarProps.maxDate}
+          minDate={controller.minDate}
+          maxDate={controller.maxDate}
           locale={calendarProps.locale || ctx.getLocale(locale)}
           getDayProps={_getDayProps}
           size={size as MantineSize}

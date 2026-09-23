@@ -105,6 +105,70 @@ provide a custom paste parser that extracts day, month, and year values from a p
 
 <Demo data={MaskedDateInputDemos.pasteSplit} />
 
+## Controlling with useMaskedDateInput
+
+`value`/`defaultValue`/`onChange` report only complete dates: while the user is halfway through
+entering a date, `onChange` is called with `null`, so from the outside every incomplete state looks
+the same. Create a controller with the `useMaskedDateInput` hook and pass it to `MaskedDateInput`
+with the `controller` prop to read the individual fields, move focus between them and set or clear
+the value from anywhere in your application. The [Controllers](/guides/controllers) guide covers how
+the pattern works across all components:
+
+<Demo data={MaskedDateInputDemos.controller} />
+
+`useMaskedDateInput` accepts the state options that `MaskedDateInput` accepts as props, and returns
+the current state, actions and queries:
+
+```tsx
+import { MaskedDateInput, useMaskedDateInput } from '@mantine/dates';
+
+function Demo() {
+  const controller = useMaskedDateInput({
+    defaultValue: '2024-03-15', // -> uncontrolled initial value
+    // value, onChange -> controlled state, same as on MaskedDateInput
+    // withTime, withSeconds, format, amPmLabels, minDate, maxDate, pasteSplit -> same as on MaskedDateInput
+  });
+
+  // Actions
+  controller.setValue('2024-03-15'); // -> sets all fields, a date without time keeps the time fields
+  controller.setValue(null); // -> clears all fields
+  controller.setDay(15);
+  controller.setMonth(3); // -> 1-12
+  controller.setYear(2024);
+  controller.setHours(14);
+  controller.setMinutes(30);
+  controller.setSeconds(0);
+  controller.setAmPm('PM');
+  controller.clear(); // -> clears all fields and focuses the day field
+  controller.focus('year'); // -> 'day' | 'month' | 'year' | 'hours' | 'minutes' | 'seconds' | 'amPm'
+
+  // Queries
+  controller.getValue(); // -> complete value, null if it is not complete or outside of minDate/maxDate
+  controller.getDay(); // -> number | null
+  controller.getMonth(); // -> number | null
+  controller.getYear(); // -> number | null
+  controller.getHours(); // -> number | null
+  controller.getMinutes(); // -> number | null
+  controller.getSeconds(); // -> number | null
+  controller.getAmPm(); // -> string | null, always null in 24h format
+  controller.hasValue(); // -> boolean, true if at least one field has a value
+
+  return <MaskedDateInput controller={controller} />;
+}
+```
+
+The controller owns the state, so when the `controller` prop is set, the `value`, `defaultValue`,
+`onChange`, `withTime`, `withSeconds`, `format`, `amPmLabels`, `minDate`, `maxDate` and `pasteSplit`
+props of `MaskedDateInput` are ignored – pass them to `useMaskedDateInput` instead. `withTime`,
+`withSeconds`, `format` and `amPmLabels` also decide which fields are rendered, and `minDate` and
+`maxDate` also limit the calendar dropdown.
+
+Options that reach `MaskedDateInput` through `theme.components.MaskedDateInput.defaultProps` do not
+reach a controller you create yourself – pass them to `useMaskedDateInput` as well.
+
+`focus` is a no-op until a `MaskedDateInput` is mounted with the controller, because it works on the
+fields that component renders.
+
 ## Clearable
 
 Set the `clearable` prop to display a clear button in the right section of the input.
