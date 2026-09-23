@@ -174,20 +174,14 @@ function useStableGetStyles<Payload extends FactoryPayload>(
   stable: boolean,
   deps: unknown[]
 ): GetStylesApi<Payload> {
-  const latestGetStyles = useRef(getStyles);
   const cache = useRef<{ deps: unknown[]; getStyles: GetStylesApi<Payload> }>(null);
 
   if (!stable) {
     return getStyles;
   }
 
-  latestGetStyles.current = getStyles;
-
   if (!cache.current || !shallowEqual(cache.current.deps, deps, 3)) {
-    cache.current = {
-      deps,
-      getStyles: (selector, options) => latestGetStyles.current(selector, options),
-    };
+    cache.current = { deps, getStyles };
   }
 
   return cache.current.getStyles;

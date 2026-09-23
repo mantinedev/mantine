@@ -1,4 +1,4 @@
-import { memo, Profiler, useState } from 'react';
+import { memo, Profiler, startTransition, Suspense, use, useState } from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Table, TableProps, TableStylesNames } from './Table';
 import {
@@ -187,6 +187,54 @@ describe('@mantine/core/Table', () => {
     expect(screen.getByRole('cell')).toHaveClass('auto-td');
     await userEvent.click(screen.getByRole('button'));
     expect(screen.getByRole('cell')).toHaveClass('fixed-td');
+  });
+
+  it('does not apply styles from uncommitted renders to memoized rows', async () => {
+    const pending = new Promise<never>(() => {});
+
+    function Suspender({ suspend }: { suspend: boolean }) {
+      if (suspend) {
+        use(pending);
+      }
+
+      return null;
+    }
+
+    const Row = memo(() => {
+      const [clicks, setClicks] = useState(0);
+      return (
+        <Table.Tr>
+          <Table.Td onClick={() => setClicks((c) => c + 1)}>clicks {clicks}</Table.Td>
+        </Table.Tr>
+      );
+    });
+
+    function Demo() {
+      const [mode, setMode] = useState<'a' | 'b'>('a');
+      return (
+        <>
+          <button type="button" onClick={() => startTransition(() => setMode('b'))}>
+            switch
+          </button>
+          <Suspense fallback="loading">
+            <Table classNames={{ td: mode === 'a' ? 'td-a' : 'td-b' }}>
+              <Table.Tbody>
+                <Row />
+              </Table.Tbody>
+            </Table>
+            <Suspender suspend={mode === 'b'} />
+          </Suspense>
+        </>
+      );
+    }
+
+    render(<Demo />);
+    await userEvent.click(screen.getByRole('button', { name: 'switch' }));
+    await userEvent.click(screen.getByRole('cell'));
+
+    expect(screen.getByRole('cell')).toHaveTextContent('clicks 1');
+    expect(screen.getByRole('cell')).toHaveClass('td-a');
+    expect(screen.getByRole('cell')).not.toHaveClass('td-b');
   });
 
   it('exposes Table.Caption, Table.Tbody, Table.Td, Table.Tfoot, Table.Th, Table.Tr, Table.Thead components', () => {
