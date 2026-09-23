@@ -332,7 +332,7 @@ are not passed with a `controller` prop.
 
 ## Stores
 
-`Combobox`, `Tree` and `DataGrid` work with a **store** instead of a controller. A store is created
+`Combobox`, `Tree`, `DataGrid` and `Select` work with a **store** instead of a controller. A store is created
 and passed the same way – a `use<Component>` hook whose result goes to the component's `store` prop –
 but it serves a different purpose:
 
@@ -372,6 +372,12 @@ function Demo() {
       <Code>useDataGrid</Code>,
       <Code>store</Code>,
       <Code>DataGridStore</Code>,
+    ],
+    [
+      <MdxLink href="/core/select">Select</MdxLink>,
+      <Code>useSelect</Code>,
+      <Code>store</Code>,
+      <Code>SelectStore</Code>,
     ],
     [
       <MdxLink href="/core/tree">Tree</MdxLink>,

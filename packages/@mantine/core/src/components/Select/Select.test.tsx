@@ -16,6 +16,18 @@ const defaultProps: SelectProps = {
   data: ['test-1', 'test-2'],
 };
 
+function InlineDataSearch() {
+  const [, setSearch] = useState('');
+  return (
+    <Select
+      searchable
+      data={['React', 'Angular']}
+      onSearchChange={setSearch}
+      comboboxProps={{ withinPortal: false }}
+    />
+  );
+}
+
 describe('@mantine/core/Select', () => {
   tests.axe([
     <Select aria-label="test-label" data={['test-1', 'test-2']} key="1" />,
@@ -490,5 +502,11 @@ describe('@mantine/core/Select', () => {
       expect(screen.queryByRole('option', { name: 'Armenia' })).toBe(null);
       expect(getHiddenInput()).toHaveValue('');
     });
+  });
+
+  it('keeps typed search when data is recreated on every render', async () => {
+    render(<InlineDataSearch />);
+    await userEvent.type(screen.getByRole('combobox'), 'Ang');
+    expect(screen.getByRole('combobox')).toHaveValue('Ang');
   });
 });

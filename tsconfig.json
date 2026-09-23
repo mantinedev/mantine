@@ -33,6 +33,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "noEmit": true,
     "noEmitOnError": true,
     "allowJs": true,
     "allowImportingTsExtensions": true,

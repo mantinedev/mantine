@@ -21,9 +21,6 @@ export interface ComboboxStore {
   /** Toggles dropdown opened state */
   toggleDropdown: (eventSource?: ComboboxDropdownEventSource) => void;
 
-  /** Selected option index ref */
-  selectedOptionIndex: number;
-
   /** Returns currently selected option index or `-1` if none of the options is selected */
   getSelectedOptionIndex: () => number;
 
@@ -66,9 +63,6 @@ export interface ComboboxStore {
     target?: 'active' | 'selected' | number,
     options?: { scrollIntoView?: boolean }
   ) => void;
-
-  /** List id, used for `aria-*` attributes */
-  listId: string | null;
 
   /** Returns list id, used for `aria-*` attributes */
   getListId: () => string | null;
@@ -331,7 +325,6 @@ export function useCombobox({
     closeDropdown,
     toggleDropdown,
 
-    selectedOptionIndex: selectedOptionIndex.current,
     getSelectedOptionIndex,
     selectOption,
     selectFirstOption,
@@ -341,7 +334,6 @@ export function useCombobox({
     resetSelectedOption,
     updateSelectedOptionIndex,
 
-    listId: listId.current,
     getListId,
     setListId,
     clickSelectedOption,

@@ -227,7 +227,6 @@ export function useVirtualizedCombobox(
     closeDropdown,
     toggleDropdown,
 
-    selectedOptionIndex,
     getSelectedOptionIndex,
     selectOption,
     selectFirstOption,
@@ -237,7 +236,6 @@ export function useVirtualizedCombobox(
     resetSelectedOption,
     updateSelectedOptionIndex,
 
-    listId: listId.current,
     getListId,
     setListId,
     clickSelectedOption,

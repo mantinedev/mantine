@@ -1,12 +1,34 @@
 import { act, renderHook } from '@testing-library/react';
-import { tests } from '@mantine-tests/core';
 import { usePagination } from './use-pagination';
 
 describe('@mantine/hooks/use-pagination', () => {
-  tests.itSupportsControllerMemoization({
-    hook: () => usePagination({ total: 10 }),
-    actions: ['setPage', 'next', 'previous', 'first', 'last', 'getActive', 'getRange'],
-    changeState: (controller) => controller.setPage(5),
+  it('returns the same controller until the state changes', () => {
+    const hook = renderHook(() => usePagination({ total: 10 }));
+    const initial = hook.result.current;
+    hook.rerender();
+    expect(hook.result.current).toBe(initial);
+
+    act(() => hook.result.current.setPage(5));
+    expect(hook.result.current).not.toBe(initial);
+  });
+
+  it('keeps actions stable when the state changes', () => {
+    const actions = [
+      'setPage',
+      'next',
+      'previous',
+      'first',
+      'last',
+      'getActive',
+      'getRange',
+    ] as const;
+    const hook = renderHook(() => usePagination({ total: 10 }));
+    const initial = actions.map((action) => hook.result.current[action]);
+
+    act(() => hook.result.current.setPage(5));
+    actions.forEach((action, index) => {
+      expect(hook.result.current[action]).toBe(initial[index]);
+    });
   });
 
   it('returns active page and range from getters', () => {

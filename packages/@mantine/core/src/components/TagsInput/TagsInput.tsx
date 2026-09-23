@@ -361,7 +361,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
       event.preventDefault();
 
       const hasActiveSelection = !!document.querySelector<HTMLDivElement>(
-        `#${store.listId} [data-combobox-option][data-combobox-selected]`
+        `#${store.getListId()} [data-combobox-option][data-combobox-selected]`
       );
 
       if (hasActiveSelection) {

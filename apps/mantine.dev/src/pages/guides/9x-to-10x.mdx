@@ -478,6 +478,43 @@ function Demo() {
 }
 ```
 
+## Combobox store listId and selectedOptionIndex
+
+The `listId` and `selectedOptionIndex` fields are removed from the store returned by `useCombobox` and
+`useVirtualizedCombobox`. They held a copy of the value from the last render and could be out of date.
+Use the `getListId()` and `getSelectedOptionIndex()` functions instead, they always return the current
+value:
+
+```tsx
+const combobox = useCombobox();
+
+// 9.x
+combobox.listId;
+combobox.selectedOptionIndex;
+
+// 10.x
+combobox.getListId();
+combobox.getSelectedOptionIndex();
+```
+
+`useVirtualizedCombobox` still accepts the `selectedOptionIndex` option.
+
+## Select comboboxProps.store
+
+`Select` now always uses its own store for the underlying `Combobox`, and a `store` passed in
+`comboboxProps` is ignored. To control the dropdown from outside, create a store with `useSelect` and pass
+it to the `store` prop – it includes every `useCombobox` action:
+
+```tsx
+// 9.x
+const combobox = useCombobox();
+<Select data={data} comboboxProps={{ store: combobox }} />;
+
+// 10.x
+const store = useSelect();
+<Select data={data} store={store} />;
+```
+
 ## Controller hooks return a memoized object
 
 `useTimer`, `useEditable`, `useImageCropper` and `usePagination` used to return a new object on every

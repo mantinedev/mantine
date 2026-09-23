@@ -6,3 +6,4 @@ export { range } from './range/range';
 export { shallowEqual } from './shallow-equal/shallow-equal';
 export { upperFirst } from './upper-first/upper-first';
 export { useCallbackRef } from './use-callback-ref/use-callback-ref';
+export { useLatestRef } from './use-latest-ref/use-latest-ref';

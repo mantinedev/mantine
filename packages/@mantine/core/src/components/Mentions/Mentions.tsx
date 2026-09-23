@@ -721,7 +721,7 @@ export const Mentions = factory<MentionsFactory>((_props) => {
           role={singleLine ? 'combobox' : undefined}
           aria-autocomplete="list"
           aria-expanded={singleLine ? store.dropdownOpened : undefined}
-          aria-controls={store.dropdownOpened ? (store.listId ?? undefined) : undefined}
+          aria-controls={store.dropdownOpened ? (store.getListId() ?? undefined) : undefined}
           aria-activedescendant={store.dropdownOpened ? (selectedOptionId ?? undefined) : undefined}
           aria-haspopup="listbox"
           onChange={handleChange}

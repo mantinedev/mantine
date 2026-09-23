@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { useId, usePrevious, useUncontrolled } from '@mantine/hooks';
+import { useEffect, useMemo } from 'react';
+import { useId, usePrevious } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -8,6 +8,7 @@ import {
   MantineColor,
   Primitive,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
 } from '../../core';
@@ -21,7 +22,6 @@ import {
   getParsedComboboxData,
   OptionsDropdown,
   OptionsFilter,
-  useCombobox,
 } from '../Combobox';
 import { getOptionByLabel } from '../Combobox/get-options-lockup/get-option-by-label';
 import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
@@ -34,6 +34,7 @@ import {
 } from '../Input';
 import { InputBase } from '../InputBase';
 import { ScrollAreaProps } from '../ScrollArea';
+import { SelectStore, useSelect } from './use-select/use-select';
 
 export type SelectStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
@@ -109,6 +110,9 @@ export interface SelectProps<Value extends Primitive = string>
 
   /** Opens dropdown when input receives focus (requires searchable={true}) @default true @category behavior */
   openOnFocus?: boolean;
+
+  /** Store returned by the `useSelect` hook. When provided, value, search and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props are ignored. The store is also passed to the underlying `Combobox`, `comboboxProps.store` is ignored @category state */
+  store?: SelectStore<Value>;
 }
 
 export type SelectFactory = Factory<{
@@ -187,49 +191,54 @@ export const Select = genericFactory<SelectFactory>((_props) => {
     autoSelectOnBlur,
     openOnFocus,
     attributes,
+    store: storeProp,
     ...others
   } = props;
 
   const parsedData = useMemo(() => getParsedComboboxData(data), [data]);
-  const retainedSelectedOptions = useRef<Record<string, ComboboxItem<Primitive>>>({});
   const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
   const _id = useId(id);
+  const initialValue = value !== undefined ? value : defaultValue;
 
-  const [_value, setValue, controlled] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: null,
-    onChange,
-  });
+  const store = useController(
+    useSelect<Primitive>,
+    storeProp as unknown as SelectStore<Primitive> | undefined,
+    {
+      value,
+      defaultValue,
+      onChange: onChange as SelectProps<Primitive>['onChange'],
+      searchValue,
+      defaultSearchValue:
+        defaultSearchValue ??
+        (initialValue != null ? optionsLockup[`${initialValue}`]?.label : undefined),
+      onSearchChange,
+      dropdownOpened,
+      defaultDropdownOpened,
+      onDropdownOpen,
+      onDropdownClose,
+    }
+  );
 
-  const selectedOption =
-    _value != null
-      ? `${_value}` in optionsLockup
-        ? optionsLockup[`${_value}`]
-        : retainedSelectedOptions.current[`${_value}`]
-      : undefined;
+  store.registerOptions(optionsLockup);
+
+  const _value = store.value;
+  const search = store.getSearch();
+  const controlled = store.valueControlled;
+  const setValue = store.setValue;
+  const setSearch = store.setSearch;
+  const selectedOption = store.getValueOption();
   const previousSelectedOption = usePrevious(selectedOption);
+  const controlledValue = controlled ? _value : undefined;
 
-  const [search, setSearch, searchControlled] = useUncontrolled({
-    value: searchValue,
-    defaultValue: defaultSearchValue,
-    finalValue: selectedOption ? selectedOption.label : '',
-    onChange: onSearchChange,
-  });
-
-  const store = useCombobox({
-    opened: dropdownOpened,
-    defaultOpened: defaultDropdownOpened,
-    onDropdownOpen: () => {
-      onDropdownOpen?.();
+  store.registerDropdownCallbacks({
+    onOpen: () => {
       if (selectFirstOptionOnDropdownOpen) {
         store.selectFirstOption();
       } else {
         store.updateSelectedOptionIndex('active', { scrollIntoView: true });
       }
     },
-    onDropdownClose: () => {
-      onDropdownClose?.();
+    onClose: () => {
       // Required for autoSelectOnBlur to work correctly
       setTimeout(store.resetSelectedOption, 0);
     },
@@ -253,45 +262,31 @@ export const Select = genericFactory<SelectFactory>((_props) => {
   }, [selectFirstOptionOnChange, search]);
 
   useEffect(() => {
-    if (value === null) {
+    if (controlledValue === null) {
       handleSearchChange('');
     }
 
     if (
-      value != null &&
+      controlledValue != null &&
       selectedOption &&
       (previousSelectedOption?.value !== selectedOption.value ||
         previousSelectedOption?.label !== selectedOption.label)
     ) {
       handleSearchChange(selectedOption.label);
     }
-  }, [value, selectedOption]);
+  }, [controlledValue, selectedOption]);
 
   useEffect(() => {
-    if (!controlled && !searchControlled) {
-      handleSearchChange(
-        _value != null
-          ? `${_value}` in optionsLockup
-            ? optionsLockup[`${_value}`]?.label
-            : retainedSelectedOptions.current[`${_value}`]?.label || ''
-          : ''
-      );
+    if (!controlled && !store.searchControlled) {
+      handleSearchChange(selectedOption?.label || '');
     }
-  }, [optionsLockup, _value]);
-
-  useEffect(() => {
-    if (_value) {
-      if (`${_value}` in optionsLockup) {
-        retainedSelectedOptions.current[`${_value}`] = optionsLockup[`${_value}`];
-      }
-    }
-  }, [optionsLockup, _value]);
+  }, [_value, selectedOption?.value, selectedOption?.label]);
 
   const clearButton = (
     <Combobox.ClearButton
       {...clearButtonProps}
       onClear={() => {
-        setValue(null, null);
+        setValue(null);
         handleSearchChange('');
         onClear?.();
       }}
@@ -303,7 +298,6 @@ export const Select = genericFactory<SelectFactory>((_props) => {
   return (
     <>
       <Combobox
-        store={store}
         __staticSelector="Select"
         classNames={resolvedClassNames}
         styles={resolvedStyles}
@@ -323,11 +317,12 @@ export const Select = genericFactory<SelectFactory>((_props) => {
 
           const nextValue = optionLockup ? optionLockup.value : null;
 
-          nextValue !== _value && setValue(nextValue as any, optionLockup);
+          nextValue !== _value && setValue(nextValue, optionLockup ?? undefined);
           !controlled && handleSearchChange(nextValue != null ? optionLockup?.label || '' : '');
           store.closeDropdown();
         }}
         {...comboboxProps}
+        store={store}
       >
         <Combobox.Target
           targetType={searchable ? 'input' : 'button'}
@@ -361,7 +356,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
                   const externalOption = getOptionByLabel(optionsLockup, event.currentTarget.value);
 
                   if (externalOption && `${externalOption.value}` !== `${_value}`) {
-                    setValue(externalOption.value as any, externalOption);
+                    setValue(externalOption.value, externalOption);
                     !controlled && handleSearchChange(externalOption.label);
                   }
                 }
@@ -383,11 +378,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
               }
 
               !!searchable && store.closeDropdown();
-              const optionLockup =
-                _value != null &&
-                (`${_value}` in optionsLockup
-                  ? optionsLockup[`${_value}`]
-                  : retainedSelectedOptions.current[`${_value}`]);
+              const optionLockup = store.getValueOption();
               handleSearchChange(optionLockup ? optionLockup.label || '' : '');
               onBlur?.(event);
             }}
