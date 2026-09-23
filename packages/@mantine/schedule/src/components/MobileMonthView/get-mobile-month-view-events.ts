@@ -4,10 +4,18 @@ import { isMultidayEvent, validateEvent } from '../../utils';
 
 export type GroupedEvents = Record<DateStringValue, ScheduleEventData[]>;
 
+function getEventEndDay(event: ScheduleEventData) {
+  const startDay = dayjs(event.start).startOf('day');
+  const end = dayjs(event.end);
+  const endAtMidnight = end.hour() === 0 && end.minute() === 0 && end.second() === 0;
+  const endDay = endAtMidnight ? end.startOf('day').subtract(1, 'day') : end.startOf('day');
+  return endDay.isBefore(startDay) ? startDay : endDay;
+}
+
 function groupEventByDate(event: ScheduleEventData, groupedEvents: GroupedEvents) {
   if (isMultidayEvent(event)) {
     const startDate = dayjs(event.start).startOf('day');
-    const endDate = dayjs(event.end).startOf('day');
+    const endDate = getEventEndDay(event);
 
     for (
       let date = startDate;
@@ -54,7 +62,8 @@ export function getMobileMonthViewEvents({ date, events }: GetMobileMonthViewEve
     }
 
     const overlapsMonth =
-      !dayjs(event.end).isBefore(monthStart, 'day') && !dayjs(event.start).isAfter(monthEnd, 'day');
+      !getEventEndDay(event).isBefore(monthStart, 'day') &&
+      !dayjs(event.start).isAfter(monthEnd, 'day');
 
     if (overlapsMonth) {
       groupEventByDate(validateEvent(event), groupedEvents);

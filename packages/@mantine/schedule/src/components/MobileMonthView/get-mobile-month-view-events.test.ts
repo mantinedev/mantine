@@ -64,7 +64,6 @@ describe('@mantine/schedule/get-mobile-month-view-events', () => {
       '2025-11-05': [events[0]],
       '2025-11-06': [events[0]],
       '2025-11-07': [events[0]],
-      '2025-11-08': [events[0]],
     });
   });
 
@@ -83,7 +82,7 @@ describe('@mantine/schedule/get-mobile-month-view-events', () => {
 
   it('includes multi-day events that started in the previous month', () => {
     const events: ScheduleEventData[] = [
-      testUtils.createEvent({ id: 1, start: '2025-10-30', end: '2025-11-02' }),
+      testUtils.createEvent({ id: 1, start: '2025-10-30 10:00:00', end: '2025-11-02 12:00:00' }),
     ];
 
     const result = getMobileMonthViewEvents({ date: '2025-11-01', events });
@@ -97,7 +96,7 @@ describe('@mantine/schedule/get-mobile-month-view-events', () => {
 
   it('includes multi-day events that end in the next month', () => {
     const events: ScheduleEventData[] = [
-      testUtils.createEvent({ id: 1, start: '2025-11-29', end: '2025-12-02' }),
+      testUtils.createEvent({ id: 1, start: '2025-11-29 10:00:00', end: '2025-12-02 12:00:00' }),
     ];
 
     const result = getMobileMonthViewEvents({ date: '2025-11-01', events });
@@ -106,6 +105,19 @@ describe('@mantine/schedule/get-mobile-month-view-events', () => {
       '2025-11-30': [events[0]],
       '2025-12-01': [events[0]],
       '2025-12-02': [events[0]],
+    });
+  });
+
+  it('treats midnight end of multi-day events as exclusive', () => {
+    const events: ScheduleEventData[] = [
+      testUtils.createEvent({ id: 1, start: '2025-10-29 10:00:00', end: '2025-11-01 00:00:00' }),
+      testUtils.createEvent({ id: 2, start: '2025-11-05 10:00:00', end: '2025-11-07 00:00:00' }),
+    ];
+
+    const result = getMobileMonthViewEvents({ date: '2025-11-01', events });
+    expect(result).toStrictEqual({
+      '2025-11-05': [events[1]],
+      '2025-11-06': [events[1]],
     });
   });
 
