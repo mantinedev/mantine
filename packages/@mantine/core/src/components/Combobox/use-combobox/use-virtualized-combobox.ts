@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import { getFirstIndex, getNextIndex, getPreviousIndex } from './get-index/get-virtualized-index';
 import { ComboboxDropdownEventSource, ComboboxStore } from './use-combobox';
 
@@ -77,113 +77,130 @@ export function useVirtualizedCombobox(
   const listId = useRef<string | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
   const targetRef = useRef<HTMLElement | null>(null);
-  const dropdownOpenedRef = useRef(dropdownOpened);
-  dropdownOpenedRef.current = dropdownOpened;
+  const dropdownOpenedRef = useLatestRef(dropdownOpened);
+  const settings = useLatestRef({
+    loop,
+    totalOptionsCount,
+    isOptionDisabled,
+    getOptionId,
+    selectedOptionIndex,
+    setSelectedOptionIndex,
+    activeOptionIndex,
+    onSelectedOptionSubmit,
+  });
+  const handleDropdownOpen = useCallbackRef(onDropdownOpen);
+  const handleDropdownClose = useCallbackRef(onDropdownClose);
 
   const isDropdownOpened = useCallback(() => dropdownOpenedRef.current, []);
   const getListId = useCallback(() => listId.current, []);
   const focusSearchTimeout = useRef<number>(-1);
   const focusTargetTimeout = useRef<number>(-1);
 
-  const openDropdown: ComboboxStore['openDropdown'] = useCallback(
-    (eventSource = 'unknown') => {
-      if (!dropdownOpened) {
-        setDropdownOpened(true);
-        onDropdownOpen?.(eventSource);
-      }
-    },
-    [setDropdownOpened, onDropdownOpen, dropdownOpened]
-  );
+  const writeDropdownOpened = useCallbackRef((next: boolean) => {
+    if (opened === undefined) {
+      dropdownOpenedRef.current = next;
+    }
 
-  const closeDropdown: ComboboxStore['closeDropdown'] = useCallback(
-    (eventSource = 'unknown') => {
-      if (dropdownOpened) {
-        setDropdownOpened(false);
-        onDropdownClose?.(eventSource);
-      }
-    },
-    [setDropdownOpened, onDropdownClose, dropdownOpened]
-  );
+    setDropdownOpened(next);
+  });
 
-  const toggleDropdown: ComboboxStore['toggleDropdown'] = useCallback(
-    (eventSource = 'unknown') => {
-      if (dropdownOpened) {
-        closeDropdown(eventSource);
-      } else {
-        openDropdown(eventSource);
-      }
-    },
-    [closeDropdown, openDropdown, dropdownOpened]
-  );
+  const openDropdown: ComboboxStore['openDropdown'] = useCallback((eventSource = 'unknown') => {
+    if (!dropdownOpenedRef.current) {
+      writeDropdownOpened(true);
+      handleDropdownOpen(eventSource);
+    }
+  }, []);
 
-  const selectOption = useCallback(
-    (index: number) => {
-      if (totalOptionsCount === 0) {
-        setSelectedOptionIndex(-1);
-        return null;
-      }
+  const closeDropdown: ComboboxStore['closeDropdown'] = useCallback((eventSource = 'unknown') => {
+    if (dropdownOpenedRef.current) {
+      writeDropdownOpened(false);
+      handleDropdownClose(eventSource);
+    }
+  }, []);
 
-      const nextIndex = index >= totalOptionsCount ? 0 : index < 0 ? totalOptionsCount - 1 : index;
+  const toggleDropdown: ComboboxStore['toggleDropdown'] = useCallback((eventSource = 'unknown') => {
+    if (dropdownOpenedRef.current) {
+      closeDropdown(eventSource);
+    } else {
+      openDropdown(eventSource);
+    }
+  }, []);
 
-      if (isOptionDisabled(nextIndex)) {
-        return null;
-      }
+  const selectOption = useCallback((index: number) => {
+    const total = settings.current.totalOptionsCount;
 
-      setSelectedOptionIndex(nextIndex);
-      return getOptionId(nextIndex);
-    },
-    [totalOptionsCount, isOptionDisabled, setSelectedOptionIndex, getOptionId]
-  );
+    if (total === 0) {
+      settings.current.setSelectedOptionIndex(-1);
+      return null;
+    }
+
+    const nextIndex = index >= total ? 0 : index < 0 ? total - 1 : index;
+
+    if (settings.current.isOptionDisabled(nextIndex)) {
+      return null;
+    }
+
+    settings.current.setSelectedOptionIndex(nextIndex);
+    return settings.current.getOptionId(nextIndex);
+  }, []);
 
   const selectActiveOption = useCallback(
-    () => selectOption(activeOptionIndex ?? 0),
-    [selectOption, activeOptionIndex]
+    () => selectOption(settings.current.activeOptionIndex ?? 0),
+    []
   );
 
   const selectNextOption = useCallback(
     () =>
       selectOption(
         getNextIndex({
-          currentIndex: selectedOptionIndex,
-          isOptionDisabled,
-          totalOptionsCount,
-          loop,
+          currentIndex: settings.current.selectedOptionIndex,
+          isOptionDisabled: settings.current.isOptionDisabled,
+          totalOptionsCount: settings.current.totalOptionsCount,
+          loop: settings.current.loop,
         })
       ),
-    [selectOption, selectedOptionIndex, isOptionDisabled, totalOptionsCount, loop]
+    []
   );
 
   const selectPreviousOption = useCallback(
     () =>
       selectOption(
         getPreviousIndex({
-          currentIndex: selectedOptionIndex,
-          isOptionDisabled,
-          totalOptionsCount,
-          loop,
+          currentIndex: settings.current.selectedOptionIndex,
+          isOptionDisabled: settings.current.isOptionDisabled,
+          totalOptionsCount: settings.current.totalOptionsCount,
+          loop: settings.current.loop,
         })
       ),
-    [selectOption, selectedOptionIndex, isOptionDisabled, totalOptionsCount, loop]
+    []
   );
 
   const selectFirstOption = useCallback(
-    () => selectOption(getFirstIndex({ isOptionDisabled, totalOptionsCount })),
-    [selectOption, isOptionDisabled, totalOptionsCount]
+    () =>
+      selectOption(
+        getFirstIndex({
+          isOptionDisabled: settings.current.isOptionDisabled,
+          totalOptionsCount: settings.current.totalOptionsCount,
+        })
+      ),
+    []
   );
 
   const resetSelectedOption = useCallback(() => {
-    setSelectedOptionIndex(-1);
-  }, [setSelectedOptionIndex]);
+    settings.current.setSelectedOptionIndex(-1);
+  }, []);
 
   const clickSelectedOption = useCallback(() => {
+    const index = settings.current.selectedOptionIndex;
+
     if (
-      selectedOptionIndex >= 0 &&
-      selectedOptionIndex < totalOptionsCount &&
-      !isOptionDisabled(selectedOptionIndex)
+      index >= 0 &&
+      index < settings.current.totalOptionsCount &&
+      !settings.current.isOptionDisabled(index)
     ) {
-      onSelectedOptionSubmit?.(selectedOptionIndex);
+      settings.current.onSelectedOptionSubmit?.(index);
     }
-  }, [selectedOptionIndex, totalOptionsCount, isOptionDisabled, onSelectedOptionSubmit]);
+  }, []);
 
   const setListId = useCallback((id: string) => {
     listId.current = id;
@@ -205,45 +222,48 @@ export function useVirtualizedCombobox(
     []
   );
 
-  const getSelectedOptionIndex = useCallback(() => selectedOptionIndex, [selectedOptionIndex]);
+  const getSelectedOptionIndex = useCallback(() => settings.current.selectedOptionIndex, []);
 
   const updateSelectedOptionIndex: ComboboxStore['updateSelectedOptionIndex'] = useCallback(
     (index?: 'active' | 'selected' | number) => {
       if (typeof index === 'number') {
-        setSelectedOptionIndex(index);
+        settings.current.setSelectedOptionIndex(index);
       }
 
-      if (index === 'active' && typeof activeOptionIndex === 'number') {
-        setSelectedOptionIndex(activeOptionIndex);
+      if (index === 'active' && typeof settings.current.activeOptionIndex === 'number') {
+        settings.current.setSelectedOptionIndex(settings.current.activeOptionIndex);
       }
     },
-    [setSelectedOptionIndex, activeOptionIndex]
+    []
   );
 
-  return {
-    dropdownOpened,
-    isDropdownOpened,
-    openDropdown,
-    closeDropdown,
-    toggleDropdown,
+  return useMemo(
+    () => ({
+      dropdownOpened,
+      isDropdownOpened,
+      openDropdown,
+      closeDropdown,
+      toggleDropdown,
 
-    getSelectedOptionIndex,
-    selectOption,
-    selectFirstOption,
-    selectActiveOption,
-    selectNextOption,
-    selectPreviousOption,
-    resetSelectedOption,
-    updateSelectedOptionIndex,
+      getSelectedOptionIndex,
+      selectOption,
+      selectFirstOption,
+      selectActiveOption,
+      selectNextOption,
+      selectPreviousOption,
+      resetSelectedOption,
+      updateSelectedOptionIndex,
 
-    getListId,
-    setListId,
-    clickSelectedOption,
+      getListId,
+      setListId,
+      clickSelectedOption,
 
-    searchRef,
-    focusSearchInput,
+      searchRef,
+      focusSearchInput,
 
-    targetRef,
-    focusTarget,
-  };
+      targetRef,
+      focusTarget,
+    }),
+    [dropdownOpened]
+  );
 }

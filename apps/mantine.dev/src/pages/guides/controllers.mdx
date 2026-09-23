@@ -350,7 +350,7 @@ are not passed with a `controller` prop.
 
 ## Stores
 
-`Combobox`, `Tree`, `DataGrid` and `Select` work with a **store** instead of a controller. A store is created
+`Combobox`, `Tree`, `DataGrid`, `Select` and `MultiSelect` work with a **store** instead of a controller. A store is created
 and passed the same way – a `use<Component>` hook whose result goes to the component's `store` prop –
 but it serves a different purpose:
 
@@ -362,10 +362,8 @@ but it serves a different purpose:
 
 Stores follow the naming of the hooks they shipped with rather than the vocabulary above – for
 example, `useTree` spells its bulk actions `expandAllNodes` and `collapseAllNodes`, not `expandAll`
-and `collapseAll` – so check each component's page. `useCombobox` and `useDataGrid` also return a
-new object on every render, and `useCombobox`'s dropdown actions (`openDropdown`, `closeDropdown`,
-`toggleDropdown`) change identity whenever the dropdown opens or closes, so treat the members of those
-two as ordinary callbacks rather than stable references.
+and `collapseAll` – so check each component's page. `useDataGrid` also returns a new object on
+every render, so treat its members as ordinary callbacks rather than stable references.
 
 ```tsx
 import { Tree, useTree } from '@mantine/core';
@@ -390,6 +388,12 @@ function Demo() {
       <Code>useDataGrid</Code>,
       <Code>store</Code>,
       <Code>DataGridStore</Code>,
+    ],
+    [
+      <MdxLink href="/core/multi-select">MultiSelect</MdxLink>,
+      <Code>useMultiSelect</Code>,
+      <Code>store</Code>,
+      <Code>MultiSelectStore</Code>,
     ],
     [
       <MdxLink href="/core/select">Select</MdxLink>,

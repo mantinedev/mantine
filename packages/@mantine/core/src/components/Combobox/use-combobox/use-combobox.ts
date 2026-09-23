@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import { findElementBySelector, findElementsBySelector, getRootElement } from '../../../core/utils';
 import { getFirstIndex, getNextIndex, getPreviousIndex } from './get-index/get-index';
 
@@ -126,8 +126,10 @@ export function useCombobox({
   const selectedOptionIndex = useRef<number>(-1);
   const searchRef = useRef<HTMLInputElement | null>(null);
   const targetRef = useRef<HTMLElement | null>(null);
-  const dropdownOpenedRef = useRef(dropdownOpened);
-  dropdownOpenedRef.current = dropdownOpened;
+  const dropdownOpenedRef = useLatestRef(dropdownOpened);
+  const settings = useLatestRef({ loop, scrollBehavior });
+  const handleDropdownOpen = useCallbackRef(onDropdownOpen);
+  const handleDropdownClose = useCallbackRef(onDropdownClose);
 
   const isDropdownOpened = useCallback(() => dropdownOpenedRef.current, []);
   const getListId = useCallback(() => listId.current, []);
@@ -135,36 +137,35 @@ export function useCombobox({
   const focusTargetTimeout = useRef<number>(-1);
   const selectedIndexUpdateTimeout = useRef<number>(-1);
 
-  const openDropdown: ComboboxStore['openDropdown'] = useCallback(
-    (eventSource = 'unknown') => {
-      if (!dropdownOpened) {
-        setDropdownOpened(true);
-        onDropdownOpen?.(eventSource);
-      }
-    },
-    [setDropdownOpened, onDropdownOpen, dropdownOpened]
-  );
+  const writeDropdownOpened = useCallbackRef((next: boolean) => {
+    if (opened === undefined) {
+      dropdownOpenedRef.current = next;
+    }
 
-  const closeDropdown: ComboboxStore['closeDropdown'] = useCallback(
-    (eventSource = 'unknown') => {
-      if (dropdownOpened) {
-        setDropdownOpened(false);
-        onDropdownClose?.(eventSource);
-      }
-    },
-    [setDropdownOpened, onDropdownClose, dropdownOpened]
-  );
+    setDropdownOpened(next);
+  });
 
-  const toggleDropdown: ComboboxStore['toggleDropdown'] = useCallback(
-    (eventSource = 'unknown') => {
-      if (dropdownOpened) {
-        closeDropdown(eventSource);
-      } else {
-        openDropdown(eventSource);
-      }
-    },
-    [closeDropdown, openDropdown, dropdownOpened]
-  );
+  const openDropdown: ComboboxStore['openDropdown'] = useCallback((eventSource = 'unknown') => {
+    if (!dropdownOpenedRef.current) {
+      writeDropdownOpened(true);
+      handleDropdownOpen(eventSource);
+    }
+  }, []);
+
+  const closeDropdown: ComboboxStore['closeDropdown'] = useCallback((eventSource = 'unknown') => {
+    if (dropdownOpenedRef.current) {
+      writeDropdownOpened(false);
+      handleDropdownClose(eventSource);
+    }
+  }, []);
+
+  const toggleDropdown: ComboboxStore['toggleDropdown'] = useCallback((eventSource = 'unknown') => {
+    if (dropdownOpenedRef.current) {
+      closeDropdown(eventSource);
+    } else {
+      openDropdown(eventSource);
+    }
+  }, []);
 
   const clearSelectedItem = useCallback(() => {
     const root = getRootElement(targetRef.current);
@@ -190,13 +191,16 @@ export function useCombobox({
       if (items?.[nextIndex] && !items[nextIndex].hasAttribute('data-combobox-disabled')) {
         clearSelectedItem();
         items[nextIndex].setAttribute('data-combobox-selected', 'true');
-        items[nextIndex].scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
+        items[nextIndex].scrollIntoView({
+          block: 'nearest',
+          behavior: settings.current.scrollBehavior,
+        });
         return items[nextIndex].id;
       }
 
       return null;
     },
-    [scrollBehavior, clearSelectedItem]
+    [clearSelectedItem]
   );
 
   const selectActiveOption = useCallback(() => {
@@ -224,8 +228,8 @@ export function useCombobox({
       `#${listId.current} [data-combobox-option]`,
       root
     );
-    return selectOption(getNextIndex(selectedOptionIndex.current, items, loop));
-  }, [selectOption, loop]);
+    return selectOption(getNextIndex(selectedOptionIndex.current, items, settings.current.loop));
+  }, [selectOption]);
 
   const selectPreviousOption = useCallback(() => {
     const root = getRootElement(targetRef.current);
@@ -233,8 +237,10 @@ export function useCombobox({
       `#${listId.current} [data-combobox-option]`,
       root
     );
-    return selectOption(getPreviousIndex(selectedOptionIndex.current, items, loop));
-  }, [selectOption, loop]);
+    return selectOption(
+      getPreviousIndex(selectedOptionIndex.current, items, settings.current.loop)
+    );
+  }, [selectOption]);
 
   const selectFirstOption = useCallback(() => {
     const root = getRootElement(targetRef.current);
@@ -257,7 +263,10 @@ export function useCombobox({
         );
 
         if (options?.scrollIntoView) {
-          items[target]?.scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
+          items[target]?.scrollIntoView({
+            block: 'nearest',
+            behavior: settings.current.scrollBehavior,
+          });
         }
         return;
       }
@@ -273,7 +282,10 @@ export function useCombobox({
         selectedOptionIndex.current = index;
 
         if (options?.scrollIntoView) {
-          items[index]?.scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
+          items[index]?.scrollIntoView({
+            block: 'nearest',
+            behavior: settings.current.scrollBehavior,
+          });
         }
       }, 0);
     },
@@ -318,30 +330,33 @@ export function useCombobox({
     []
   );
 
-  return {
-    dropdownOpened,
-    isDropdownOpened,
-    openDropdown,
-    closeDropdown,
-    toggleDropdown,
+  return useMemo(
+    () => ({
+      dropdownOpened,
+      isDropdownOpened,
+      openDropdown,
+      closeDropdown,
+      toggleDropdown,
 
-    getSelectedOptionIndex,
-    selectOption,
-    selectFirstOption,
-    selectActiveOption,
-    selectNextOption,
-    selectPreviousOption,
-    resetSelectedOption,
-    updateSelectedOptionIndex,
+      getSelectedOptionIndex,
+      selectOption,
+      selectFirstOption,
+      selectActiveOption,
+      selectNextOption,
+      selectPreviousOption,
+      resetSelectedOption,
+      updateSelectedOptionIndex,
 
-    getListId,
-    setListId,
-    clickSelectedOption,
+      getListId,
+      setListId,
+      clickSelectedOption,
 
-    searchRef,
-    focusSearchInput,
+      searchRef,
+      focusSearchInput,
 
-    targetRef,
-    focusTarget,
-  };
+      targetRef,
+      focusTarget,
+    }),
+    [dropdownOpened]
+  );
 }

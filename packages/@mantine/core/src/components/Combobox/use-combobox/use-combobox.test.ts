@@ -1,7 +1,53 @@
 import { act, renderHook } from '@testing-library/react';
-import { useCombobox } from './use-combobox';
+import { tests } from '@mantine-tests/core';
+import { ComboboxStore, useCombobox } from './use-combobox';
+
+const STORE_ACTIONS: (keyof ComboboxStore)[] = [
+  'isDropdownOpened',
+  'openDropdown',
+  'closeDropdown',
+  'toggleDropdown',
+  'getSelectedOptionIndex',
+  'selectOption',
+  'selectFirstOption',
+  'selectActiveOption',
+  'selectNextOption',
+  'selectPreviousOption',
+  'resetSelectedOption',
+  'updateSelectedOptionIndex',
+  'clickSelectedOption',
+  'getListId',
+  'setListId',
+  'focusSearchInput',
+  'focusTarget',
+];
 
 describe('@mantine/core/Combobox/use-combobox', () => {
+  tests.itSupportsControllerMemoization<ComboboxStore>({
+    hook: () => useCombobox({ onDropdownOpen: () => {}, onDropdownClose: () => {} }),
+    actions: STORE_ACTIONS,
+    changeState: (store) => store.openDropdown(),
+  });
+
+  it('reads dropdown state changed earlier in the same handler', () => {
+    const onDropdownOpen = jest.fn();
+    const onDropdownClose = jest.fn();
+    const hook = renderHook(() => useCombobox({ onDropdownOpen, onDropdownClose }));
+    const reads: boolean[] = [];
+
+    act(() => {
+      hook.result.current.openDropdown();
+      reads.push(hook.result.current.isDropdownOpened());
+      hook.result.current.closeDropdown();
+      reads.push(hook.result.current.isDropdownOpened());
+    });
+
+    expect(reads).toEqual([true, false]);
+    expect(onDropdownOpen).toHaveBeenCalledTimes(1);
+    expect(onDropdownClose).toHaveBeenCalledTimes(1);
+    expect(hook.result.current.isDropdownOpened()).toBe(false);
+  });
+
   it('returns current state from getters', () => {
     const hook = renderHook(() => useCombobox());
     const initial = hook.result.current;

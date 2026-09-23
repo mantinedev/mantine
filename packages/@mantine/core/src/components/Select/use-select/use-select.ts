@@ -1,12 +1,11 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import type { Primitive } from '../../../core';
+import type { ComboboxItem, ComboboxStore } from '../../Combobox';
 import {
-  ComboboxDropdownEventSource,
-  ComboboxItem,
-  ComboboxStore,
-  useCombobox,
-} from '../../Combobox';
+  ComboboxDropdownCallbacks,
+  useComboboxWithCallbacks,
+} from '../../Combobox/use-combobox/use-combobox-with-callbacks';
 
 export interface SelectStoreOptions<Value extends Primitive = string> {
   /** Controlled value. Not used to infer the value type, pass it explicitly for non-string values: `useSelect<number>()` */
@@ -38,11 +37,6 @@ export interface SelectStoreOptions<Value extends Primitive = string> {
 
   /** Called when dropdown closes */
   onDropdownClose?: () => void;
-}
-
-export interface SelectDropdownCallbacks {
-  onOpen?: (eventSource: ComboboxDropdownEventSource) => void;
-  onClose?: (eventSource: ComboboxDropdownEventSource) => void;
 }
 
 export interface SelectStore<Value extends Primitive = string> extends ComboboxStore {
@@ -77,7 +71,7 @@ export interface SelectStore<Value extends Primitive = string> extends ComboboxS
   registerOptions: (options: Record<string, ComboboxItem<Value>>) => void;
 
   /** Registers dropdown open and close callbacks, used internally by `Select` on every render */
-  registerDropdownCallbacks: (callbacks: SelectDropdownCallbacks) => void;
+  registerDropdownCallbacks: (callbacks: ComboboxDropdownCallbacks) => void;
 }
 
 export function useSelect<Value extends Primitive = string>(
@@ -96,22 +90,12 @@ export function useSelect<Value extends Primitive = string>(
     onDropdownClose,
   } = options;
 
-  const dropdownCallbacksRef = useRef<SelectDropdownCallbacks>({});
-
-  const combobox = useCombobox({
-    opened: dropdownOpened,
-    defaultOpened: defaultDropdownOpened,
-    onDropdownOpen: (eventSource) => {
-      onDropdownOpen?.();
-      dropdownCallbacksRef.current.onOpen?.(eventSource);
-    },
-    onDropdownClose: (eventSource) => {
-      onDropdownClose?.();
-      dropdownCallbacksRef.current.onClose?.(eventSource);
-    },
+  const { combobox, registerDropdownCallbacks } = useComboboxWithCallbacks({
+    dropdownOpened,
+    defaultDropdownOpened,
+    onDropdownOpen,
+    onDropdownClose,
   });
-
-  const latestCombobox = useLatestRef(combobox);
 
   const [value, setValueState, valueControlled] = useUncontrolled<Value | null>({
     value: valueOption,
@@ -183,29 +167,9 @@ export function useSelect<Value extends Primitive = string>(
     }
   }, []);
 
-  const registerDropdownCallbacks = useCallback((callbacks: SelectDropdownCallbacks) => {
-    dropdownCallbacksRef.current = callbacks;
-  }, []);
-
-  const openDropdown = useCallback(
-    (eventSource?: ComboboxDropdownEventSource) => latestCombobox.current.openDropdown(eventSource),
-    []
-  );
-
-  const closeDropdown = useCallback(
-    (eventSource?: ComboboxDropdownEventSource) =>
-      latestCombobox.current.closeDropdown(eventSource),
-    []
-  );
-
-  const toggleDropdown = useCallback(
-    (eventSource?: ComboboxDropdownEventSource) =>
-      latestCombobox.current.toggleDropdown(eventSource),
-    []
-  );
-
   return useMemo(
     () => ({
+      ...combobox,
       value,
       getValue,
       setValue,
@@ -217,32 +181,7 @@ export function useSelect<Value extends Primitive = string>(
       searchControlled,
       registerOptions,
       registerDropdownCallbacks,
-
-      dropdownOpened: combobox.dropdownOpened,
-      isDropdownOpened: combobox.isDropdownOpened,
-      openDropdown,
-      closeDropdown,
-      toggleDropdown,
-
-      getSelectedOptionIndex: combobox.getSelectedOptionIndex,
-      selectOption: combobox.selectOption,
-      selectFirstOption: combobox.selectFirstOption,
-      selectActiveOption: combobox.selectActiveOption,
-      selectNextOption: combobox.selectNextOption,
-      selectPreviousOption: combobox.selectPreviousOption,
-      resetSelectedOption: combobox.resetSelectedOption,
-      updateSelectedOptionIndex: combobox.updateSelectedOptionIndex,
-      clickSelectedOption: combobox.clickSelectedOption,
-
-      getListId: combobox.getListId,
-      setListId: combobox.setListId,
-
-      searchRef: combobox.searchRef,
-      focusSearchInput: combobox.focusSearchInput,
-
-      targetRef: combobox.targetRef,
-      focusTarget: combobox.focusTarget,
     }),
-    [value, search, valueControlled, searchControlled, combobox.dropdownOpened]
+    [combobox, value, search, valueControlled, searchControlled]
   );
 }

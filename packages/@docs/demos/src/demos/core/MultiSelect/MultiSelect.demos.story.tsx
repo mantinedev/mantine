@@ -172,3 +172,8 @@ export const Demo_floatingHeight = {
   name: '⭐ Demo: floatingHeight',
   render: renderDemo(demos.floatingHeight),
 };
+
+export const Demo_creatable = {
+  name: '⭐ Demo: creatable',
+  render: renderDemo(demos.creatable),
+};

@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useRef } from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { Fragment, useEffect } from 'react';
+import { useId } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -9,6 +9,7 @@ import {
   MantineColor,
   Primitive,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -24,7 +25,6 @@ import {
   getParsedComboboxData,
   OptionsDropdown,
   OptionsFilter,
-  useCombobox,
   usePillsReorder,
 } from '../Combobox';
 import { getOptionByLabel } from '../Combobox/get-options-lockup/get-option-by-label';
@@ -40,6 +40,7 @@ import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
 import { ScrollAreaProps } from '../ScrollArea';
 import { filterPickedValues } from './filter-picked-values';
+import { MultiSelectStore, useMultiSelect } from './use-multi-select/use-multi-select';
 
 const clearSectionOffset: Record<string, number> = {
   xs: 41,
@@ -146,6 +147,9 @@ export interface MultiSelectProps<Value extends Primitive = string>
 
   /** If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false @category behavior */
   withPillsReorder?: boolean;
+
+  /** Store returned by the `useMultiSelect` hook. When provided, value, search and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props are ignored. The store is also passed to the underlying `Combobox`, `comboboxProps.store` is ignored @category state */
+  store?: MultiSelectStore<Value>;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -257,25 +261,40 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     loading,
     loadingPosition,
     withPillsReorder,
+    store: storeProp,
     ...others
   } = props;
 
   const _id = useId(id);
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
-  const retainedSelectedOptions = useRef<Record<string, ComboboxItem<Primitive>>>({});
 
-  const store = useCombobox({
-    opened: dropdownOpened,
-    defaultOpened: defaultDropdownOpened,
-    onDropdownOpen: () => {
-      onDropdownOpen?.();
+  const store = useController(
+    useMultiSelect<Primitive>,
+    storeProp as unknown as MultiSelectStore<Primitive> | undefined,
+    {
+      value,
+      defaultValue,
+      onChange: onChange as MultiSelectProps<Primitive>['onChange'],
+      searchValue,
+      defaultSearchValue,
+      onSearchChange,
+      dropdownOpened,
+      defaultDropdownOpened,
+      onDropdownOpen,
+      onDropdownClose,
+    }
+  );
+
+  store.registerOptions(optionsLockup);
+
+  store.registerDropdownCallbacks({
+    onOpen: () => {
       if (selectFirstOptionOnDropdownOpen) {
         store.selectFirstOption();
       }
     },
-    onDropdownClose: () => {
-      onDropdownClose?.();
+    onClose: () => {
       store.resetSelectedOption();
     },
   });
@@ -285,12 +304,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     rest: { type, autoComplete, ...rest },
   } = extractStyleProps(others);
 
-  const [_value, setValue] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: [],
-    onChange,
-  });
+  const _value = store.value as NonNullable<typeof value>;
+  const setValue = store.setValue;
 
   const { getPillProps, getListProps, handleInputKeyDown } = usePillsReorder({
     value: _value,
@@ -298,15 +313,11 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     enabled: withPillsReorder && !disabled && !readOnly,
   });
 
-  const [_searchValue, setSearchValue] = useUncontrolled({
-    value: searchValue,
-    defaultValue: defaultSearchValue,
-    finalValue: '',
-    onChange: onSearchChange,
-  });
+  const _searchValue = store.search;
+  const valueOptions = store.getValueOptions();
 
   const handleSearchChange = (value: string) => {
-    setSearchValue(value);
+    store.setSearch(value);
     store.resetSelectedOption();
   };
 
@@ -347,7 +358,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   };
 
   const values = _value.map((item, index) => {
-    const optionData = optionsLockup[`${item}`] || retainedSelectedOptions.current[`${item}`];
+    const optionData = valueOptions[index];
     const reorderProps = getPillProps(index);
 
     if (renderPill) {
@@ -380,7 +391,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
         {...getStyles('pill')}
         {...reorderProps}
       >
-        {optionData?.label || item}
+        {optionData.label || item}
       </Pill>
     );
   });
@@ -390,14 +401,6 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
       store.selectFirstOption();
     }
   }, [selectFirstOptionOnChange, _searchValue]);
-
-  useEffect(() => {
-    _value.forEach((val) => {
-      if (`${val}` in optionsLockup) {
-        retainedSelectedOptions.current[`${val}`] = optionsLockup[`${val}`];
-      }
-    });
-  }, [optionsLockup, _value]);
 
   const clearButton = (
     <Combobox.ClearButton
@@ -419,7 +422,6 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   return (
     <>
       <Combobox
-        store={store}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
@@ -445,6 +447,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
           }
         }}
         {...comboboxProps}
+        store={store}
       >
         <Combobox.DropdownTarget>
           <PillsInput

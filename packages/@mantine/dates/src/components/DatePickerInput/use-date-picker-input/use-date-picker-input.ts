@@ -174,23 +174,7 @@ export function useDatePickerInput(
 
   return useMemo(
     () => ({
-      date: calendar.date,
-      level: calendar.level,
-      getDate: calendar.getDate,
-      getLevel: calendar.getLevel,
-      dateReadOnly: calendar.dateReadOnly,
-      setDate: calendar.setDate,
-      setLevel: calendar.setLevel,
-      next: calendar.next,
-      previous: calendar.previous,
-      nextMonth: calendar.nextMonth,
-      previousMonth: calendar.previousMonth,
-      nextYear: calendar.nextYear,
-      previousYear: calendar.previousYear,
-      nextDecade: calendar.nextDecade,
-      previousDecade: calendar.previousDecade,
-      getDisplayedDate: calendar.getDisplayedDate,
-      getDisplayedLevel: calendar.getDisplayedLevel,
+      ...calendar,
       registerCalendar,
       dropdownOpened,
       isDropdownOpened,
@@ -200,6 +184,6 @@ export function useDatePickerInput(
       toggleDropdown,
       registerPickerInput,
     }),
-    [calendar.date, calendar.level, calendar.dateReadOnly, dropdownOpened]
+    [calendar, dropdownOpened]
   );
 }

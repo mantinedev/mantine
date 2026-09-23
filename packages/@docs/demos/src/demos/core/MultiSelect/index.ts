@@ -33,3 +33,4 @@ export { dropdownWidth } from './MultiSelect.demo.dropdownWidth';
 export { fuzzySearch } from './MultiSelect.demo.fuzzySearch';
 export { loading } from './MultiSelect.demo.loading';
 export { floatingHeight } from './MultiSelect.demo.floatingHeight';
+export { creatable } from './MultiSelect.demo.creatable';
