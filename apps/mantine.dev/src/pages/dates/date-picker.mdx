@@ -65,6 +65,19 @@ you can add one month to the current date value:
 
 <Demo data={DatePickerDemos.controlledDate} />
 
+## Controlling with useCalendar
+
+`DatePicker` accepts the same controller as [Calendar](/dates/calendar/#controlling-with-usecalendar):
+create it with the `useCalendar` hook and pass it with the `controller` prop to drive the displayed
+date and level from outside, for example from a toolbar. The controller does not own the selected
+value – keep using `value`/`onChange` for it, so form libraries bind to `DatePicker` as usual:
+
+<Demo data={DatePickerDemos.controller} />
+
+When the `controller` prop is set, the `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel`
+and `onLevelChange` props are ignored – pass them to `useCalendar` instead. See the
+[Calendar](/dates/calendar/#controlling-with-usecalendar) page for the full list of actions and queries.
+
 ## Default level
 
 Set the `defaultLevel` prop to configure the initial level that will be displayed:

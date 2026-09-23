@@ -25,3 +25,4 @@ export { presetsRange } from './DatePicker.demo.presetsRange';
 export { headerControlsOrder } from './DatePicker.demo.headerControlsOrder';
 export { fullWidth } from './DatePicker.demo.fullWidth';
 export { nativeLevelSelect } from './DatePicker.demo.nativeLevelSelect';
+export { controller } from './DatePicker.demo.controller';

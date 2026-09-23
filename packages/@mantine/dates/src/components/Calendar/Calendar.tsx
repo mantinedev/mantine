@@ -10,7 +10,7 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
-import { useMergedRef } from '@mantine/hooks';
+import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useFocusAfterLevelChange } from '../../hooks';
 import { CalendarLevel, DateStringValue } from '../../types';
 import { getDefaultClampedDate } from '../../utils';
@@ -314,9 +314,12 @@ export const Calendar = factory<CalendarFactory>((_props) => {
   const fallbackDate = fallbackDateRef.current;
   const currentDate = calendar.date || fallbackDate;
 
-  useEffect(
+  const instanceRef = useRef({});
+
+  useIsomorphicEffect(
     () =>
       calendar.registerCalendar({
+        instance: instanceRef.current,
         minLevel,
         maxLevel,
         columnsToScroll: _columnsToScroll,

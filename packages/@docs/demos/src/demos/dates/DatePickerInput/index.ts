@@ -24,3 +24,4 @@ export { weekendDays } from './DatePickerInput.demo.weekendDays';
 export { withWeekNumbers } from './DatePickerInput.demo.withWeekNumbers';
 export { headerControlsOrder } from './DatePickerInput.demo.headerControlsOrder';
 export { nativeLevelSelect } from './DatePickerInput.demo.nativeLevelSelect';
+export { controller } from './DatePickerInput.demo.controller';

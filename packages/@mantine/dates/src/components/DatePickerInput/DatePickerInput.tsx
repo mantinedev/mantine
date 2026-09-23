@@ -6,15 +6,23 @@ import {
   InputVariant,
   MantineComponentStaticProperties,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
+import { useDidUpdate } from '@mantine/hooks';
 import { useDatesInput } from '../../hooks';
 import { DatePickerType } from '../../types';
-import { getDefaultClampedDate } from '../../utils';
+import { getDefaultClampedDate, toDateString } from '../../utils';
 import { pickCalendarProps } from '../Calendar';
+import { clampLevel } from '../Calendar/clamp-level/clamp-level';
 import { DatePicker, DatePickerBaseProps, DatePickerStylesNames } from '../DatePicker';
 import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
+import {
+  useDatePickerInput,
+  type DatePickerInputController,
+  type DatePickerInputControllerOptions,
+} from './use-date-picker-input/use-date-picker-input';
 
 export type DatePickerInputStylesNames = __InputStylesNames | 'placeholder' | DatePickerStylesNames;
 
@@ -26,6 +34,9 @@ export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
     StylesApiProps<DatePickerInputFactory> {
   /** `dayjs` format for input value @default "MMMM D, YYYY" @category appearance */
   valueFormat?: string;
+
+  /** Controller returned by the `useDatePickerInput` hook. When provided, the dropdown opened state and the displayed date and level are owned by the controller and `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel` and `onLevelChange` props are ignored @category state */
+  controller?: DatePickerInputController;
 }
 
 export type DatePickerInputFactory = Factory<{
@@ -76,6 +87,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
       valueFormatter,
       presets,
       attributes,
+      controller: controllerProp,
       ...rest
     } = props;
 
@@ -86,16 +98,27 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
     });
 
     const { calendarProps, others } = pickCalendarProps(rest);
+    const { minLevel, maxLevel } = calendarProps;
+    const initialValue = value !== undefined ? value : defaultValue;
+    const initialValueDate = Array.isArray(initialValue) ? initialValue[0] : initialValue;
 
-    const {
-      _value,
-      setValue,
-      formattedValue,
-      dropdownHandlers,
-      dropdownOpened,
-      onClear,
-      shouldClear,
-    } = useDatesInput({
+    const controller = useController(useDatePickerInput, controllerProp, {
+      date: calendarProps.date,
+      defaultDate: toDateString(initialValueDate) || defaultDate,
+      onDateChange: calendarProps.onDateChange,
+      level: calendarProps.level ? clampLevel(calendarProps.level, minLevel, maxLevel) : undefined,
+      defaultLevel: clampLevel(calendarProps.defaultLevel, minLevel, maxLevel),
+      onLevelChange: calendarProps.onLevelChange,
+    });
+
+    const dropdownHandlers = {
+      open: controller.openDropdown,
+      close: controller.closeDropdown,
+      toggle: controller.toggleDropdown,
+      set: controller.setDropdownOpened,
+    };
+
+    const { _value, setValue, formattedValue, onClear, shouldClear } = useDatesInput({
       type: type as any,
       value,
       defaultValue,
@@ -106,15 +129,31 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
       closeOnChange,
       sortDates,
       valueFormatter,
+      dropdown: { opened: controller.dropdownOpened, handlers: dropdownHandlers },
     });
 
-    const _defaultDate = Array.isArray(_value) ? _value[0] || defaultDate : _value || defaultDate;
+    const valueDate =
+      (Array.isArray(_value) ? _value[0] : _value) ||
+      (controllerProp ? null : toDateString(defaultDate)) ||
+      null;
+    const fallbackDate = getDefaultClampedDate({ maxDate, minDate });
+    const cannotOpen = !!(others.disabled || others.readOnly);
+
+    controller.registerPickerInput({ valueDate, fallbackDate, disabled: cannotOpen });
+
+    useDidUpdate(() => {
+      if (!controller.dropdownOpened && type === 'range' && Array.isArray(_value)) {
+        if (_value[0] && !_value[1]) {
+          onClear();
+        }
+      }
+    }, [controller.dropdownOpened]);
 
     return (
       <PickerInputBase
         formattedValue={formattedValue}
         withPresets={!!presets}
-        dropdownOpened={dropdownOpened}
+        dropdownOpened={controller.dropdownOpened && !cannotOpen}
         dropdownHandlers={dropdownHandlers}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
@@ -128,6 +167,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
         {...others}
         type={type as any}
         __staticSelector="DatePickerInput"
+        __clearIncompleteRangeOnClose={false}
         attributes={attributes}
       >
         <DatePicker
@@ -136,7 +176,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
           variant={variant}
           type={type}
           value={_value}
-          defaultDate={_defaultDate || getDefaultClampedDate({ maxDate, minDate })}
+          controller={controller}
           onChange={setValue}
           locale={locale}
           classNames={resolvedClassNames}
@@ -161,4 +201,6 @@ export namespace DatePickerInput {
   export type Props = DatePickerInputProps;
   export type StylesNames = DatePickerInputStylesNames;
   export type Factory = DatePickerInputFactory;
+  export type Controller = DatePickerInputController;
+  export type ControllerOptions = DatePickerInputControllerOptions;
 }

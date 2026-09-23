@@ -478,6 +478,25 @@ function Demo() {
 }
 ```
 
+## DatePickerInput calendar theme defaults
+
+`DatePickerInput` now drives its calendar through a controller, so `defaultLevel` and `defaultDate` set
+in `theme.components.Calendar.defaultProps` or `theme.components.DatePicker.defaultProps` no longer apply
+to the calendar inside `DatePickerInput`. Set them on `DatePickerInput` instead:
+
+```tsx
+import { createTheme } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
+
+const theme = createTheme({
+  components: {
+    DatePickerInput: DatePickerInput.extend({
+      defaultProps: { defaultLevel: 'year' },
+    }),
+  },
+});
+```
+
 ## Combobox store listId and selectedOptionIndex
 
 The `listId` and `selectedOptionIndex` fields are removed from the store returned by `useCombobox` and

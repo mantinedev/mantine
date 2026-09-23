@@ -25,6 +25,7 @@ import {
 import {
   Calendar,
   CalendarBaseProps,
+  CalendarController,
   CalendarProps,
   CalendarSettings,
   CalendarStylesNames,
@@ -91,7 +92,10 @@ export interface DatePickerProps<Type extends DatePickerType = 'default'>
     BoxProps,
     DatePickerBaseProps<Type>,
     StylesApiProps<DatePickerFactory>,
-    ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {}
+    ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
+  /** Controller returned by the `useCalendar` hook. When provided, the displayed date and level are owned by the controller and `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel` and `onLevelChange` props are ignored @category state */
+  controller?: CalendarController;
+}
 
 export type DatePickerFactory = Factory<{
   props: DatePickerProps;
@@ -143,6 +147,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     vars,
     attributes,
     fullWidth,
+    controller,
     ...rest
   } = props;
 
@@ -194,6 +199,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
       {...calendarProps}
       {...(!presets ? others : {})}
       __stopPropagation={__stopPropagation}
+      controller={controller}
       __setDateRef={setDateRef}
       __setLevelRef={setLevelRef}
       minLevel={calendarProps.minLevel || 'month'}

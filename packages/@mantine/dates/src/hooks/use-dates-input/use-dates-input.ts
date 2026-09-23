@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, type UseDisclosureHandlers } from '@mantine/hooks';
 import { useDatesContext } from '../../components/DatesProvider';
 import { DatePickerType, DatePickerValue } from '../../types';
 import { DateFormatter, getFormattedDate } from '../../utils';
@@ -16,6 +16,7 @@ interface UseDatesInput<Type extends DatePickerType = 'default'> {
   sortDates: boolean | undefined;
   labelSeparator: string | undefined;
   valueFormatter: DateFormatter | undefined;
+  dropdown?: { opened: boolean; handlers: UseDisclosureHandlers };
 }
 
 export function useDatesInput<Type extends DatePickerType = 'default'>({
@@ -29,10 +30,13 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   sortDates,
   labelSeparator,
   valueFormatter,
+  dropdown,
 }: UseDatesInput<Type>) {
   const ctx = useDatesContext();
 
-  const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
+  const [ownDropdownOpened, ownDropdownHandlers] = useDisclosure(false);
+  const dropdownOpened = dropdown ? dropdown.opened : ownDropdownOpened;
+  const dropdownHandlers = dropdown ? dropdown.handlers : ownDropdownHandlers;
 
   const [_value, _setValue] = useUncontrolledDates({
     type,

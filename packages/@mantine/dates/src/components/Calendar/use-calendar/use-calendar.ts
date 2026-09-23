@@ -30,6 +30,9 @@ export interface CalendarControllerOptions {
 }
 
 export interface CalendarRegisteredSettings {
+  /** Object that identifies the associated `Calendar` instance, stable for its lifetime and new on every mount */
+  instance?: object;
+
   /** Resolved `minLevel` prop of the associated `Calendar` */
   minLevel: CalendarLevel | undefined;
 
