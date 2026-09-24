@@ -174,11 +174,9 @@ describe('@mantine/code-highlight/CodeHighlightProvider', () => {
     // wrapped in a fragment to match the tree that `render` creates, otherwise the provider
     // is remounted instead of receiving a new adapter
     rerender(
-      <>
-        <CodeHighlightAdapterProvider adapter={freshAdapter}>
-          <CodeHighlight code="const a = 1" language="tsx" />
-        </CodeHighlightAdapterProvider>
-      </>
+      <CodeHighlightAdapterProvider adapter={freshAdapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+      </CodeHighlightAdapterProvider>
     );
 
     await waitFor(() => expect(freshAdapter.loadLanguage).toHaveBeenCalledTimes(1));
@@ -258,12 +256,10 @@ describe('@mantine/code-highlight/CodeHighlightProvider', () => {
     await screen.findByTestId('highlighted-code');
 
     rerender(
-      <>
-        <CodeHighlightAdapterProvider adapter={freshAdapter}>
-          <CodeHighlight code="const a = 1" language="tsx" />
-          <CodeHighlight code="print(1)" language="python" />
-        </CodeHighlightAdapterProvider>
-      </>
+      <CodeHighlightAdapterProvider adapter={freshAdapter}>
+        <CodeHighlight code="const a = 1" language="tsx" />
+        <CodeHighlight code="print(1)" language="python" />
+      </CodeHighlightAdapterProvider>
     );
 
     expect(freshAdapter.loadLanguage).not.toHaveBeenCalled();
@@ -329,8 +325,8 @@ describe('@mantine/code-highlight/CodeHighlightProvider', () => {
     const { rerender } = render(tree(adapterA));
     await waitFor(() => expect(loadContext).toHaveBeenCalledTimes(1));
 
-    rerender(<>{tree(adapterB)}</>);
-    rerender(<>{tree(adapterA)}</>);
+    rerender(tree(adapterB));
+    rerender(tree(adapterA));
 
     await waitFor(() => expect(loadContext).toHaveBeenCalledTimes(2));
 
@@ -385,8 +381,8 @@ describe('@mantine/code-highlight/CodeHighlightProvider', () => {
     });
     await waitFor(() => expect(loadLanguage).toHaveBeenCalledTimes(1));
 
-    rerender(<>{tree(adapterB)}</>);
-    rerender(<>{tree(adapterA)}</>);
+    rerender(tree(adapterB));
+    rerender(tree(adapterA));
 
     await waitFor(() => expect(loadContext).toHaveBeenCalledTimes(2));
 

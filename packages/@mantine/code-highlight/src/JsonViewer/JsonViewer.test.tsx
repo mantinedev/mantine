@@ -357,11 +357,7 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       const { rerender } = render(<JsonViewer value={{ name: 'x' }} />);
       expect(getRow(/"x"/)).not.toHaveAttribute('aria-selected');
 
-      rerender(
-        <>
-          <JsonViewer value={{ name: 'x' }} onValueSelect={() => {}} />
-        </>
-      );
+      rerender(<JsonViewer value={{ name: 'x' }} onValueSelect={() => {}} />);
       expect(getRow(/"x"/)).toHaveAttribute('aria-selected', 'false');
     });
 
@@ -509,13 +505,11 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       expect(screen.queryByText(/"revealed"/)).not.toBeInTheDocument();
 
       rerender(
-        <>
-          <JsonViewer
-            value={value}
-            expandedPaths={['', serializePath(['nested'])]}
-            onExpandedPathsChange={onExpandedPathsChange}
-          />
-        </>
+        <JsonViewer
+          value={value}
+          expandedPaths={['', serializePath(['nested'])]}
+          onExpandedPathsChange={onExpandedPathsChange}
+        />
       );
 
       expect(screen.getByText(/"revealed"/)).toBeInTheDocument();
@@ -635,11 +629,7 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       );
       expect(container.querySelector('.mantine-JsonViewer-toggle')).toBeNull();
 
-      rerender(
-        <>
-          <JsonViewer value={{ a: { b: 1 } }} defaultExpandDepth={1} withChevrons />
-        </>
-      );
+      rerender(<JsonViewer value={{ a: { b: 1 } }} defaultExpandDepth={1} withChevrons />);
       expect(container.querySelector('.mantine-JsonViewer-toggle')).toBeInTheDocument();
     });
 
@@ -648,11 +638,7 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       const { rerender } = render(<JsonViewer value={{ a: 1 }} />);
       expect(screen.queryByLabelText('Copy JSON')).not.toBeInTheDocument();
 
-      rerender(
-        <>
-          <JsonViewer value={{ a: 1 }} withCopyButton />
-        </>
-      );
+      rerender(<JsonViewer value={{ a: 1 }} withCopyButton />);
       await userEvent.click(screen.getByLabelText('Copy JSON'));
       expect(writeText).toHaveBeenCalledWith('{\n  "a": 1\n}');
     });

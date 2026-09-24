@@ -187,11 +187,7 @@ describe('@mantine/core/TourRoot', () => {
       onStepOpen.mockClear();
 
       await act(async () => {
-        rerender(
-          <>
-            <CompoundTour step={1} onStepOpen={onStepOpen} onStepClose={onStepClose} />
-          </>
-        );
+        rerender(<CompoundTour step={1} onStepOpen={onStepOpen} onStepClose={onStepClose} />);
       });
       expect(onStepClose.mock.calls).toEqual([[0]]);
       expect(onStepOpen.mock.calls).toEqual([[1]]);
@@ -202,11 +198,7 @@ describe('@mantine/core/TourRoot', () => {
       const { rerender } = await renderWithAct(<CompoundTour step={1} onStepClose={onStepClose} />);
 
       await act(async () => {
-        rerender(
-          <>
-            <CompoundTour active={false} step={1} onStepClose={onStepClose} />
-          </>
-        );
+        rerender(<CompoundTour active={false} step={1} onStepClose={onStepClose} />);
       });
       expect(onStepClose.mock.calls).toEqual([[1]]);
     });
@@ -221,21 +213,13 @@ describe('@mantine/core/TourRoot', () => {
       expect(onStepClose.mock.calls).toEqual([[1]]);
 
       await act(async () => {
-        rerender(
-          <>
-            <CompoundTour active={false} step={1} {...props} />
-          </>
-        );
+        rerender(<CompoundTour active={false} step={1} {...props} />);
       });
       onStepOpen.mockClear();
       onStepClose.mockClear();
 
       await act(async () => {
-        rerender(
-          <>
-            <CompoundTour active step={0} {...props} />
-          </>
-        );
+        rerender(<CompoundTour active step={0} {...props} />);
       });
       expect(onStepOpen.mock.calls).toEqual([[0]]);
       expect(onStepClose).not.toHaveBeenCalled();

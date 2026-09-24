@@ -167,11 +167,7 @@ describe('@mantine/core/PinInput/controller', () => {
     const { rerender } = render(<Test mounted />);
     expect(controller.getInputNode(0)).not.toBe(null);
 
-    rerender(
-      <>
-        <Test mounted={false} />
-      </>
-    );
+    rerender(<Test mounted={false} />);
 
     expect(controller.getInputNode(0)).toBe(null);
   });

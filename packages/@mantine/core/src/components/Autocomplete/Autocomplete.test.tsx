@@ -101,20 +101,12 @@ describe('@mantine/core/Autocomplete', () => {
       'data-hidden'
     );
 
-    rerender(
-      <>
-        <Autocomplete data={['test-1', 'test-2']} disabled />
-      </>
-    );
+    rerender(<Autocomplete data={['test-1', 'test-2']} disabled />);
     expect(container.querySelector('.mantine-Autocomplete-dropdown')).toHaveAttribute(
       'data-hidden'
     );
 
-    rerender(
-      <>
-        <Autocomplete data={['test-1', 'test-2']} />
-      </>
-    );
+    rerender(<Autocomplete data={['test-1', 'test-2']} />);
     await userEvent.click(screen.getByRole('combobox'));
     expect(container.querySelector('.mantine-Autocomplete-dropdown')).not.toHaveAttribute(
       'data-hidden'
@@ -128,22 +120,18 @@ describe('@mantine/core/Autocomplete', () => {
     expect(container.querySelector('.mantine-InputClearButton-root')).toBe(null);
 
     rerender(
-      <>
-        <Autocomplete data={['test-1', 'test-2']} clearable value="test-1" onChange={() => {}} />
-      </>
+      <Autocomplete data={['test-1', 'test-2']} clearable value="test-1" onChange={() => {}} />
     );
     expect(container.querySelector('.mantine-InputClearButton-root')).toBeInTheDocument();
 
     rerender(
-      <>
-        <Autocomplete
-          data={['test-1', 'test-2']}
-          clearable
-          value="test-1"
-          onChange={() => {}}
-          disabled
-        />
-      </>
+      <Autocomplete
+        data={['test-1', 'test-2']}
+        clearable
+        value="test-1"
+        onChange={() => {}}
+        disabled
+      />
     );
     expect(container.querySelector('.mantine-InputClearButton-root')).toBe(null);
   });

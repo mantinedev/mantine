@@ -33,6 +33,7 @@ export function useContextMenuHandlers({
   const touchActiveRef = useRef(false);
   const gestureHandledRef = useRef(false);
   const touchTargetRef = useRef<object | null>(null);
+  const pressStartedDisabledRef = useRef(false);
   const disabledRef = useLatestRef(disabled);
 
   const openAtPoint = (clientX: number, clientY: number, contextElement: object | null) => {
@@ -89,7 +90,7 @@ export function useContextMenuHandlers({
 
   const longPressHandlers = useLongPress(
     (event) => {
-      if (disabledRef.current || gestureHandledRef.current) {
+      if (disabledRef.current || pressStartedDisabledRef.current || gestureHandledRef.current) {
         return;
       }
 
@@ -110,6 +111,7 @@ export function useContextMenuHandlers({
         touchActiveRef.current = true;
         gestureHandledRef.current = false;
         touchTargetRef.current = event.currentTarget;
+        pressStartedDisabledRef.current = !!disabledRef.current;
       },
       onFinish: (event) => {
         touchActiveRef.current = false;

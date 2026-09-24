@@ -342,11 +342,9 @@ describe('@mantine/lightbox/LightboxSlide', () => {
 
     await act(async () => {
       rerender(
-        <>
-          <LightboxWrapper slides={slides} currentIndex={1}>
-            <LightboxSlide slide={videoSlide} index={1} />
-          </LightboxWrapper>
-        </>
+        <LightboxWrapper slides={slides} currentIndex={1}>
+          <LightboxSlide slide={videoSlide} index={1} />
+        </LightboxWrapper>
       );
     });
 

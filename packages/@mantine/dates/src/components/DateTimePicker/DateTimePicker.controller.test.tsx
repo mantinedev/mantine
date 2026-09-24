@@ -372,22 +372,16 @@ describe('@mantine/dates/DateTimePicker/controller', () => {
     expect(controller.isDropdownOpened()).toBe(true);
 
     rerender(
-      <>
-        <ControllerPicker
-          disabled={false}
-          options={{ defaultDropdownOpened: true }}
-          capture={(c) => (controller = c)}
-        />
-      </>
+      <ControllerPicker
+        disabled={false}
+        options={{ defaultDropdownOpened: true }}
+        capture={(c) => (controller = c)}
+      />
     );
     expect(getDropdown(container)).toBeInTheDocument();
 
     act(() => controller.closeDropdown());
-    rerender(
-      <>
-        <ControllerPicker disabled capture={(c) => (controller = c)} />
-      </>
-    );
+    rerender(<ControllerPicker disabled capture={(c) => (controller = c)} />);
     act(() => controller.openDropdown());
     expect(controller.isDropdownOpened()).toBe(false);
   });
@@ -459,16 +453,14 @@ describe('@mantine/dates/DateTimePicker/controller', () => {
     act(() => controller.openDropdown());
     await userEvent.click(screen.getByRole('button', { name: '10 June 2024' }));
     rerender(
-      <>
-        <ControllerPicker
-          type="range"
-          disabled
-          options={{ defaultDate: '2024-06-01' }}
-          onChange={spy}
-          onDropdownClose={onDropdownClose}
-          capture={(c) => (controller = c)}
-        />
-      </>
+      <ControllerPicker
+        type="range"
+        disabled
+        options={{ defaultDate: '2024-06-01' }}
+        onChange={spy}
+        onDropdownClose={onDropdownClose}
+        capture={(c) => (controller = c)}
+      />
     );
 
     expect(spy).toHaveBeenLastCalledWith(['2024-06-10 00:00:00', null]);

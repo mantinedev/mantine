@@ -291,7 +291,17 @@ export const YearView = factory<YearViewFactory>((_props) => {
             if (!Array.isArray(daysRef.current[currentMonthIndex][weekIndex])) {
               daysRef.current[currentMonthIndex][weekIndex] = [];
             }
-            daysRef.current[currentMonthIndex][weekIndex][dayIndex] = node;
+            const week = daysRef.current[currentMonthIndex][weekIndex];
+            week[dayIndex] = node;
+
+            return () => {
+              if (week[dayIndex] === node) {
+                delete week[dayIndex];
+              }
+              while (week.length > 0 && !week[week.length - 1]) {
+                week.pop();
+              }
+            };
           }}
           __onDayKeyDown={(event, payload) => {
             handleYearViewKeyDown({

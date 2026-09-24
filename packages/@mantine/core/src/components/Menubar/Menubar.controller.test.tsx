@@ -151,9 +151,7 @@ describe('@mantine/core/Menubar/controller', () => {
     expectMenuOpen('Edit item 1');
 
     rerender(
-      <>
-        <ControllerTest onController={captureController} menus={['File', 'Edit', 'View', 'Help']} />
-      </>
+      <ControllerTest onController={captureController} menus={['File', 'Edit', 'View', 'Help']} />
     );
 
     await waitFor(() => expect(controller.getMenuCount()).toBe(4));

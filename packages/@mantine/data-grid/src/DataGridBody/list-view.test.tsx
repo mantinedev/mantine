@@ -29,17 +29,9 @@ describe('@mantine/data-grid/list-view', () => {
   it('resolves listView values onto the root', () => {
     const { container, rerender } = render(<Grid />);
     expect(root(container)).toHaveAttribute('data-list-view', 'cards');
-    rerender(
-      <>
-        <Grid listView="flat" />
-      </>
-    );
+    rerender(<Grid listView="flat" />);
     expect(root(container)).toHaveAttribute('data-list-view', 'flat');
-    rerender(
-      <>
-        <Grid listView={false} />
-      </>
-    );
+    rerender(<Grid listView={false} />);
     expect(root(container)).not.toHaveAttribute('data-list-view');
     expect(container.querySelector('table')).toBeInTheDocument();
   });

@@ -86,18 +86,10 @@ describe('@mantine/core/ColorPicker', () => {
       'var(--mantine-radius-default)'
     );
 
-    rerender(
-      <>
-        <ColorPicker radius="xl" />
-      </>
-    );
+    rerender(<ColorPicker radius="xl" />);
     expect(getWrapper().style.getPropertyValue('--cp-radius')).toBe('var(--mantine-radius-xl)');
 
-    rerender(
-      <>
-        <ColorPicker radius={4} />
-      </>
-    );
+    rerender(<ColorPicker radius={4} />);
     expect(getWrapper().style.getPropertyValue('--cp-radius')).toBe(
       'calc(0.25rem * var(--mantine-scale))'
     );

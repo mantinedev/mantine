@@ -26,13 +26,14 @@ describe('@mantine/dates/TimeGrid', () => {
 
   it('calls onChange with null when time is clicked and allowDeselect is true', async () => {
     const spy = jest.fn();
-    const { rerender } = render(
+    const { unmount } = render(
       <TimeGrid {...defaultProps} onChange={spy} allowDeselect defaultValue="10:00" />
     );
     await userEvent.click(screen.getByRole('button', { name: '10:00' }));
     expect(spy).toHaveBeenLastCalledWith(null);
 
-    rerender(
+    unmount();
+    render(
       <TimeGrid {...defaultProps} onChange={spy} allowDeselect={false} defaultValue="10:00" />
     );
     await userEvent.click(screen.getByRole('button', { name: '10:00' }));

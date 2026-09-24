@@ -210,11 +210,7 @@ describe('@mantine/core/MultiSelect/store', () => {
     );
     expect(getPills(container)).toEqual(['React.js']);
 
-    rerender(
-      <>
-        <StoreTest onStore={(s) => (store = s)} data={[labeled[1]]} />
-      </>
-    );
+    rerender(<StoreTest onStore={(s) => (store = s)} data={[labeled[1]]} />);
     expect(getPills(container)).toEqual(['React.js']);
     expect(store.getValueOptions()).toEqual([labeled[0]]);
   });

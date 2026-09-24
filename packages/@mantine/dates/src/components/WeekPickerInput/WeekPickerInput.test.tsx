@@ -86,9 +86,7 @@ describe('@mantine/dates/WeekPickerInput', () => {
     expectValue(container, 'Mar 2, 2026 – Mar 22, 2026');
 
     rerender(
-      <>
-        <WeekPickerInput {...defaultProps} type="multiple" value={['2026-03-02', '2026-03-16']} />
-      </>
+      <WeekPickerInput {...defaultProps} type="multiple" value={['2026-03-02', '2026-03-16']} />
     );
     expectValue(container, 'Mar 2, 2026 – Mar 8, 2026, Mar 16, 2026 – Mar 22, 2026');
   });

@@ -72,11 +72,7 @@ describe('@mantine/dates/TimePicker', () => {
     const hoursInput = screen.getByLabelText('test-hours') as HTMLInputElement;
     await userEvent.click(hoursInput);
 
-    rerender(
-      <>
-        <TimePicker {...defaultProps} format="24h" value="00:00" onChange={() => {}} />
-      </>
-    );
+    rerender(<TimePicker {...defaultProps} format="24h" value="00:00" onChange={() => {}} />);
 
     expect(hoursInput).toHaveValue('00');
     expect(hoursInput.selectionStart).toBe(0);
@@ -603,10 +599,11 @@ describe('@mantine/dates/TimePicker', () => {
   });
 
   it('displays clear button only when the input has value and clearable prop is set', async () => {
-    const { rerender } = render(<TimePicker {...defaultProps} clearable />);
+    const { unmount } = render(<TimePicker {...defaultProps} clearable />);
     expect(screen.queryByLabelText('test-clear')).not.toBeInTheDocument();
 
-    rerender(<TimePicker {...defaultProps} clearable defaultValue="12:34:55" />);
+    unmount();
+    const { rerender } = render(<TimePicker {...defaultProps} clearable defaultValue="12:34:55" />);
     expect(screen.getByLabelText('test-clear')).toBeInTheDocument();
 
     rerender(<TimePicker {...defaultProps} clearable value="12:34:55" />);

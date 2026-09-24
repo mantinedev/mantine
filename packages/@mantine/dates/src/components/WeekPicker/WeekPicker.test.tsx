@@ -183,16 +183,14 @@ describe('@mantine/dates/WeekPicker', () => {
     );
 
     rerender(
-      <>
-        <WeekPicker
-          {...defaultProps}
-          getWeekControlProps={(weekStart) => ({
-            'aria-label': `Week of ${weekStart}`,
-            onClick: spy,
-            'data-test': weekStart,
-          })}
-        />
-      </>
+      <WeekPicker
+        {...defaultProps}
+        getWeekControlProps={(weekStart) => ({
+          'aria-label': `Week of ${weekStart}`,
+          onClick: spy,
+          'data-test': weekStart,
+        })}
+      />
     );
     expect(weekControls(container)[0]).toHaveAttribute('aria-label', 'Week of 2022-03-28');
     expect(weekControls(container)[0]).toHaveAttribute('data-test', '2022-03-28');
@@ -204,18 +202,10 @@ describe('@mantine/dates/WeekPicker', () => {
     const { container, rerender } = render(<WeekPicker {...defaultProps} hideWeekdays />);
     expect(container.querySelector('thead')).toBe(null);
 
-    rerender(
-      <>
-        <WeekPicker {...defaultProps} excludeDate={(date) => date === '2022-04-12'} />
-      </>
-    );
+    rerender(<WeekPicker {...defaultProps} excludeDate={(date) => date === '2022-04-12'} />);
     expect(days(container)[15]).toBeDisabled();
 
-    rerender(
-      <>
-        <WeekPicker {...defaultProps} renderDay={(date) => `${date}!`} />
-      </>
-    );
+    rerender(<WeekPicker {...defaultProps} renderDay={(date) => `${date}!`} />);
     expect(days(container)[0].textContent).toBe('2022-03-28!');
   });
 
@@ -385,11 +375,7 @@ describe('@mantine/dates/WeekPicker', () => {
       'Apr'
     );
 
-    rerender(
-      <>
-        <WeekPicker {...defaultProps} value="2022-04-11" level="decade" />
-      </>
-    );
+    rerender(<WeekPicker {...defaultProps} value="2022-04-11" level="decade" />);
     expect(container.querySelector('[data-selected]:not([data-week-control])')!.textContent).toBe(
       '2022'
     );

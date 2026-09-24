@@ -84,11 +84,7 @@ describe('@mantine/core/Avatar', () => {
       'John Doe'
     );
 
-    rerender(
-      <>
-        <Avatar name="John Doe" alt="test-alt" />
-      </>
-    );
+    rerender(<Avatar name="John Doe" alt="test-alt" />);
     expect(container.querySelector('.mantine-Avatar-placeholder')).toHaveAttribute(
       'title',
       'test-alt'
@@ -114,11 +110,7 @@ describe('@mantine/core/Avatar', () => {
     fireEvent.error(container.querySelector('img')!);
     expect(container.querySelector('.mantine-Avatar-placeholder')).toBeInTheDocument();
 
-    rerender(
-      <>
-        <Avatar src="other-image.png" />
-      </>
-    );
+    rerender(<Avatar src="other-image.png" />);
     expect(container.querySelector('.mantine-Avatar-placeholder')).not.toBeInTheDocument();
     expect(container.querySelector('img')).toHaveAttribute('src', 'other-image.png');
   });

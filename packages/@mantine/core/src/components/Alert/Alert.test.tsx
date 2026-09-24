@@ -72,11 +72,9 @@ describe('@mantine/core/Alert', () => {
     expect(screen.getByRole('button')).toHaveAttribute('aria-label', 'dismiss');
 
     rerender(
-      <>
-        <Alert withCloseButton closeButtonLabel="dismiss" closeButtonProps={{ 'aria-label': 'x' }}>
-          test
-        </Alert>
-      </>
+      <Alert withCloseButton closeButtonLabel="dismiss" closeButtonProps={{ 'aria-label': 'x' }}>
+        test
+      </Alert>
     );
     expect(screen.getByRole('button')).toHaveAttribute('aria-label', 'x');
   });

@@ -280,11 +280,7 @@ describe('@mantine/lightbox/Lightbox', () => {
     expect(screen.getByLabelText('Go to slide 1')).toBeInTheDocument();
 
     await act(async () => {
-      rerender(
-        <>
-          <Lightbox {...defaultProps} withThumbnails={false} />
-        </>
-      );
+      rerender(<Lightbox {...defaultProps} withThumbnails={false} />);
     });
 
     // The toolbar toggle disappears with the feature, so a strip left behind would be
@@ -608,9 +604,7 @@ describe('@mantine/lightbox/Lightbox store', () => {
 
     await act(async () => {
       rerender(
-        <>
-          <Lightbox {...defaultProps} slides={slides.slice(0, 2)} onIndexChange={onIndexChange} />
-        </>
+        <Lightbox {...defaultProps} slides={slides.slice(0, 2)} onIndexChange={onIndexChange} />
       );
     });
 
@@ -680,11 +674,7 @@ describe('@mantine/lightbox/Lightbox store', () => {
       expect(fullscreen.element).toBe(document.documentElement);
 
       await act(async () => {
-        rerender(
-          <>
-            <Lightbox {...defaultProps} opened={false} withFullscreen />
-          </>
-        );
+        rerender(<Lightbox {...defaultProps} opened={false} withFullscreen />);
       });
 
       expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
@@ -711,11 +701,7 @@ describe('@mantine/lightbox/Lightbox store', () => {
       const { rerender } = await renderWithAct(<Lightbox {...defaultProps} withFullscreen />);
 
       await act(async () => {
-        rerender(
-          <>
-            <Lightbox {...defaultProps} opened={false} withFullscreen />
-          </>
-        );
+        rerender(<Lightbox {...defaultProps} opened={false} withFullscreen />);
       });
 
       expect(fullscreen.exitSpy).not.toHaveBeenCalled();
@@ -730,11 +716,7 @@ describe('@mantine/lightbox/Lightbox store', () => {
       expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
 
       await act(async () => {
-        rerender(
-          <>
-            <Lightbox {...defaultProps} opened={false} withFullscreen />
-          </>
-        );
+        rerender(<Lightbox {...defaultProps} opened={false} withFullscreen />);
       });
 
       expect(fullscreen.exitSpy).toHaveBeenCalledTimes(1);
@@ -749,11 +731,7 @@ describe('@mantine/lightbox/Lightbox store', () => {
       expect(fullscreen.exitSpy).not.toHaveBeenCalled();
 
       await act(async () => {
-        rerender(
-          <>
-            <Lightbox {...defaultProps} opened={false} withFullscreen />
-          </>
-        );
+        rerender(<Lightbox {...defaultProps} opened={false} withFullscreen />);
       });
 
       expect(fullscreen.exitSpy).not.toHaveBeenCalled();
@@ -772,11 +750,7 @@ describe('@mantine/lightbox/Lightbox store', () => {
       expect(screen.getByLabelText('Enter fullscreen')).toBeInTheDocument();
 
       await act(async () => {
-        rerender(
-          <>
-            <Lightbox {...defaultProps} opened={false} withFullscreen />
-          </>
-        );
+        rerender(<Lightbox {...defaultProps} opened={false} withFullscreen />);
       });
 
       expect(fullscreen.exitSpy).toHaveBeenCalled();
@@ -796,11 +770,7 @@ describe('@mantine/lightbox/Lightbox store', () => {
       expect(fullscreen.element).toBe(null);
 
       await act(async () => {
-        rerender(
-          <>
-            <Lightbox {...defaultProps} opened={false} withFullscreen />
-          </>
-        );
+        rerender(<Lightbox {...defaultProps} opened={false} withFullscreen />);
       });
 
       // Still nothing to exit - the request has not completed

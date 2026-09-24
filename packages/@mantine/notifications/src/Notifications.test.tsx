@@ -1524,15 +1524,13 @@ describe('@mantine/core/Notifications', () => {
     // The group is dropped from the tree along with its handlers, so it never gets the
     // `mouseleave` that would release it.
     rerender(
-      <>
-        <Notifications
-          store={store}
-          withinPortal={false}
-          autoClose={1000}
-          transitionDuration={10}
-          layout="default"
-        />
-      </>
+      <Notifications
+        store={store}
+        withinPortal={false}
+        autoClose={1000}
+        transitionDuration={10}
+        layout="default"
+      />
     );
 
     act(() => {
@@ -2129,15 +2127,13 @@ describe('@mantine/core/Notifications', () => {
       });
 
       rerender(
-        <>
-          <Notifications
-            store={store}
-            withinPortal={false}
-            autoClose={1000}
-            transitionDuration={10}
-            withAutoCloseProgress={false}
-          />
-        </>
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress={false}
+        />
       );
 
       expect(screen.getByRole('alert')).toBe(notification);

@@ -177,11 +177,7 @@ describe('@mantine/core/Select/store', () => {
     const { rerender } = render(<StoreTest onStore={(s) => (store = s)} />);
     expect(store.getValueOption()).toEqual({ value: 'React', label: 'React' });
 
-    rerender(
-      <>
-        <StoreTest onStore={(s) => (store = s)} data={['Angular']} />
-      </>
-    );
+    rerender(<StoreTest onStore={(s) => (store = s)} data={['Angular']} />);
     expect(store.getValueOption()).toEqual({ value: 'React', label: 'React' });
     expect(screen.getByRole('combobox')).toHaveValue('React');
   });

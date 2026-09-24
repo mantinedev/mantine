@@ -134,9 +134,7 @@ describe('@mantine/core/AngleSlider', () => {
     expect(getSlider()).toHaveAttribute('aria-valuetext', '45 degrees');
 
     rerender(
-      <>
-        <AngleSlider defaultValue={45} marks={[{ value: 45, label: 'North' }]} aria-label="a" />
-      </>
+      <AngleSlider defaultValue={45} marks={[{ value: 45, label: 'North' }]} aria-label="a" />
     );
     expect(getSlider()).toHaveAttribute('aria-valuetext', 'North');
   });
@@ -156,11 +154,7 @@ describe('@mantine/core/AngleSlider', () => {
     const { rerender } = render(<AngleSlider aria-label="a" />);
     expect(getSlider()).toHaveAttribute('aria-valuemax', '359');
 
-    rerender(
-      <>
-        <AngleSlider step={10} aria-label="a" />
-      </>
-    );
+    rerender(<AngleSlider step={10} aria-label="a" />);
     expect(getSlider()).toHaveAttribute('aria-valuemax', '350');
   });
 

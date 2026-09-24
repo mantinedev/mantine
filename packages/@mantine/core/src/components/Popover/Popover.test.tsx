@@ -141,11 +141,7 @@ describe('@mantine/core/Popover', () => {
     await act(() => Promise.resolve());
     expect(screen.getByRole('dialog')).toHaveAttribute('data-position', 'bottom');
 
-    rerender(
-      <>
-        <TestContainer opened position="top-end" />
-      </>
-    );
+    rerender(<TestContainer opened position="top-end" />);
     await act(() => Promise.resolve());
     expect(screen.getByRole('dialog')).toHaveAttribute('data-position', 'top-end');
 

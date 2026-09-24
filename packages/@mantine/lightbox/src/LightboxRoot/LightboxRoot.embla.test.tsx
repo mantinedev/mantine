@@ -125,11 +125,7 @@ describe('@mantine/lightbox/LightboxRoot embla integration', () => {
     );
 
     await act(async () => {
-      rerender(
-        <>
-          <Lightbox {...defaultProps} currentIndex={1} onIndexChange={onIndexChange} />
-        </>
-      );
+      rerender(<Lightbox {...defaultProps} currentIndex={1} onIndexChange={onIndexChange} />);
     });
 
     expect(mockEmblaMain().selectedScrollSnap()).toBe(1);
@@ -176,14 +172,12 @@ describe('@mantine/lightbox/LightboxRoot embla integration', () => {
     // Out-of-range index that the parent never accepts
     await act(async () => {
       rerender(
-        <>
-          <Lightbox
-            {...defaultProps}
-            slides={slides.slice(0, 2)}
-            currentIndex={2}
-            onIndexChange={onIndexChange}
-          />
-        </>
+        <Lightbox
+          {...defaultProps}
+          slides={slides.slice(0, 2)}
+          currentIndex={2}
+          onIndexChange={onIndexChange}
+        />
       );
     });
 
@@ -193,14 +187,12 @@ describe('@mantine/lightbox/LightboxRoot embla integration', () => {
     // Re-rendering with a brand new onIndexChange identity must not clamp again
     await act(async () => {
       rerender(
-        <>
-          <Lightbox
-            {...defaultProps}
-            slides={slides.slice(0, 2)}
-            currentIndex={2}
-            onIndexChange={onIndexChange}
-          />
-        </>
+        <Lightbox
+          {...defaultProps}
+          slides={slides.slice(0, 2)}
+          currentIndex={2}
+          onIndexChange={onIndexChange}
+        />
       );
     });
 

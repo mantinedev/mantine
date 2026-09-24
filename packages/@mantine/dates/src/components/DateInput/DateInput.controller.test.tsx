@@ -240,11 +240,7 @@ describe('@mantine/dates/DateInput/controller', () => {
     );
 
     expect(controller.getDate()).toBe('2024-06-15');
-    rerender(
-      <>
-        <ControllerInput value="2025-02-01" expose={(c) => (controller = c)} />
-      </>
-    );
+    rerender(<ControllerInput value="2025-02-01" expose={(c) => (controller = c)} />);
     expect(controller.getDate()).toBe('2025-02-01');
   });
 
@@ -288,11 +284,7 @@ describe('@mantine/dates/DateInput/controller', () => {
     act(() => controller.openDropdown());
     expect(controller.isDropdownOpened()).toBe(false);
 
-    rerender(
-      <>
-        <ControllerInput readOnly expose={(c) => (controller = c)} />
-      </>
-    );
+    rerender(<ControllerInput readOnly expose={(c) => (controller = c)} />);
     act(() => controller.openDropdown());
     expect(controller.isDropdownOpened()).toBe(false);
     expect(getDropdown(container)).toBe(null);
@@ -343,11 +335,7 @@ describe('@mantine/dates/DateInput/controller', () => {
     expect(first.getDate()).toBe('2024-06-15');
     expect(second.getDate()).toBe(null);
 
-    rerender(
-      <>
-        <Swap useSecond />
-      </>
-    );
+    rerender(<Swap useSecond />);
     expect(second.getDate()).toBe('2024-06-15');
   });
 });

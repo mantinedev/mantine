@@ -137,11 +137,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     await clickInput(container);
     expect(container.querySelector('[data-dates-dropdown]')).toHaveAttribute('data-with-presets');
 
-    rerender(
-      <>
-        <DatePickerInput {...defaultProps} />
-      </>
-    );
+    rerender(<DatePickerInput {...defaultProps} />);
     expect(container.querySelector('[data-dates-dropdown]')).not.toHaveAttribute(
       'data-with-presets'
     );

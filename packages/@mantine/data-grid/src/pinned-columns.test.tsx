@@ -86,11 +86,7 @@ describe('@mantine/data-grid/pinned-columns', () => {
     const { container, rerender } = render(<Grid />);
     expect(container.querySelector('[data-column-pinning]')).toBeInTheDocument();
 
-    rerender(
-      <>
-        <Grid storeOptions={{ withColumnPinning: false, columnPinning: undefined }} />
-      </>
-    );
+    rerender(<Grid storeOptions={{ withColumnPinning: false, columnPinning: undefined }} />);
     expect(container.querySelector('[data-column-pinning]')).not.toBeInTheDocument();
     expect(container.querySelector('[data-pinned]')).not.toBeInTheDocument();
   });

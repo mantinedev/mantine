@@ -109,11 +109,7 @@ describe('@mantine/data-grid/states/loading', () => {
     expect(root).toHaveAttribute('data-loading-variant', 'bar');
     expect(container.querySelector('table')).toHaveAttribute('aria-busy', 'true');
 
-    rerender(
-      <>
-        <Grid loadingVariant="bar" />
-      </>
-    );
+    rerender(<Grid loadingVariant="bar" />);
     expect(root).not.toHaveAttribute('data-loading');
     expect(root).not.toHaveAttribute('data-loading-variant');
     expect(container.querySelector('table')).not.toHaveAttribute('aria-busy');
@@ -205,19 +201,11 @@ describe('@mantine/data-grid/states/loading', () => {
     expect(container.querySelector('.mantine-DataGrid-loadingOverlay')).toBeInTheDocument();
     expect(container.querySelector('[data-skeleton-row]')).not.toBeInTheDocument();
 
-    rerender(
-      <>
-        <Grid listView loading loadingVariant="skeleton" />
-      </>
-    );
+    rerender(<Grid listView loading loadingVariant="skeleton" />);
     expect(container.querySelector('.mantine-DataGrid-loadingOverlay')).toBeInTheDocument();
     expect(container.querySelectorAll('.mantine-DataGrid-listItem')).toHaveLength(3);
 
-    rerender(
-      <>
-        <Grid listView loading loadingVariant="bar" />
-      </>
-    );
+    rerender(<Grid listView loading loadingVariant="bar" />);
     expect(container.querySelector('.mantine-DataGrid-loadingBar')).toBeInTheDocument();
     expect(container.querySelector('.mantine-DataGrid-loadingOverlay')).not.toBeInTheDocument();
   });
@@ -269,11 +257,7 @@ describe('@mantine/data-grid/states/loading', () => {
       expect(container.querySelector('.mantine-DataGrid-loadingOverlay')).toBeInTheDocument();
       expect(container.querySelectorAll('[role="row"][data-row-id]')).toHaveLength(3);
 
-      rerender(
-        <>
-          <Grid virtualize="rows" height={200} loading loadingVariant="bar" />
-        </>
-      );
+      rerender(<Grid virtualize="rows" height={200} loading loadingVariant="bar" />);
       expect(container.querySelector('.mantine-DataGrid-loadingBar')).toBeInTheDocument();
       expect(rootOf(container)).toHaveAttribute('data-loading-variant', 'bar');
     });

@@ -18,11 +18,7 @@ describe('@mantine/dates/SpinInput', () => {
     const { rerender } = render(<SpinInput {...defaultProps} value={null} />);
 
     await userEvent.click(getInput());
-    rerender(
-      <>
-        <SpinInput {...defaultProps} value={5} />
-      </>
-    );
+    rerender(<SpinInput {...defaultProps} value={5} />);
 
     expect(getInput()).toHaveValue('05');
     expect(getInput().selectionStart).toBe(0);
@@ -35,17 +31,9 @@ describe('@mantine/dates/SpinInput', () => {
     await userEvent.click(getInput());
     await userEvent.keyboard('1');
 
-    rerender(
-      <>
-        <SpinInput {...defaultProps} value={2} />
-      </>
-    );
+    rerender(<SpinInput {...defaultProps} value={2} />);
 
-    rerender(
-      <>
-        <SpinInput {...defaultProps} value={1} />
-      </>
-    );
+    rerender(<SpinInput {...defaultProps} value={1} />);
 
     expect(getInput()).toHaveValue('01');
     expect(getInput().selectionStart).toBe(0);
@@ -58,11 +46,7 @@ describe('@mantine/dates/SpinInput', () => {
     await userEvent.click(getInput());
     await userEvent.keyboard('1');
 
-    rerender(
-      <>
-        <SpinInput {...defaultProps} value={1} />
-      </>
-    );
+    rerender(<SpinInput {...defaultProps} value={1} />);
 
     expect(getInput().selectionStart).toBe(2);
     expect(getInput().selectionEnd).toBe(2);
@@ -71,11 +55,7 @@ describe('@mantine/dates/SpinInput', () => {
   it('does not select input content when the input is not focused', () => {
     const { rerender } = render(<SpinInput {...defaultProps} value={null} />);
 
-    rerender(
-      <>
-        <SpinInput {...defaultProps} value={5} />
-      </>
-    );
+    rerender(<SpinInput {...defaultProps} value={5} />);
 
     expect(getInput()).not.toHaveFocus();
     expect(getInput().selectionStart).toBe(2);

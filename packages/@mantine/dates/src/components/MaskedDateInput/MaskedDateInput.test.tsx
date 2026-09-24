@@ -205,13 +205,11 @@ describe('@mantine/dates/MaskedDateInput', () => {
     expect(screen.getByText('July 2024')).toBeInTheDocument();
 
     rerender(
-      <>
-        <MaskedDateInput
-          {...defaultProps}
-          value="2023-02-10"
-          ariaLabels={{ nextMonth: 'next-month' }}
-        />
-      </>
+      <MaskedDateInput
+        {...defaultProps}
+        value="2023-02-10"
+        ariaLabels={{ nextMonth: 'next-month' }}
+      />
     );
     expect(screen.getByText('February 2023')).toBeInTheDocument();
   });

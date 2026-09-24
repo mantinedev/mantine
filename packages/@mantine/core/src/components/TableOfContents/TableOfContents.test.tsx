@@ -75,11 +75,7 @@ describe('@mantine/core/TableOfContents', () => {
       const { container, rerender } = render(<TableOfContents />);
       expect(getRoot(container).style.getPropertyValue('--toc-size')).toBe('');
 
-      rerender(
-        <>
-          <TableOfContents size="lg" />
-        </>
-      );
+      rerender(<TableOfContents size="lg" />);
       expect(getRoot(container).style.getPropertyValue('--toc-size')).toBe(
         'var(--mantine-font-size-lg)'
       );
@@ -92,11 +88,7 @@ describe('@mantine/core/TableOfContents', () => {
       expect(root.style.getPropertyValue('--toc-padding-x')).toBe('');
       expect(root.style.getPropertyValue('--toc-depth-offset')).toBe('');
 
-      rerender(
-        <>
-          <TableOfContents size="md" />
-        </>
-      );
+      rerender(<TableOfContents size="md" />);
       root = getRoot(container);
       expect(root.style.getPropertyValue('--toc-padding-y')).toBe('var(--toc-padding-y-md)');
       expect(root.style.getPropertyValue('--toc-padding-x')).toBe('var(--toc-padding-x-md)');
@@ -129,11 +121,7 @@ describe('@mantine/core/TableOfContents', () => {
         );
       expect(getOffsets()).toStrictEqual(['0', '1']);
 
-      rerender(
-        <>
-          <TableOfContents minDepthToOffset={0} />
-        </>
-      );
+      rerender(<TableOfContents minDepthToOffset={0} />);
       expect(getOffsets()).toStrictEqual(['1', '2']);
     });
 
@@ -141,18 +129,10 @@ describe('@mantine/core/TableOfContents', () => {
       const { container, rerender } = render(<TableOfContents />);
       expect(getRoot(container)).toHaveAttribute('data-with-guideline');
 
-      rerender(
-        <>
-          <TableOfContents withGuideline={false} />
-        </>
-      );
+      rerender(<TableOfContents withGuideline={false} />);
       expect(getRoot(container)).not.toHaveAttribute('data-with-guideline');
 
-      rerender(
-        <>
-          <TableOfContents variant="filled" />
-        </>
-      );
+      rerender(<TableOfContents variant="filled" />);
       expect(getRoot(container)).not.toHaveAttribute('data-with-guideline');
     });
 

@@ -469,14 +469,12 @@ describe('@mantine/core/Accordion', () => {
       expect(controller.value).toStrictEqual(['item-2']);
 
       rerender(
-        <>
-          <ControllerAccordion options={{ multiple: true }} capture={capture}>
-            <Accordion.Item value="item-1">
-              <Accordion.Control>Label 1</Accordion.Control>
-              <Accordion.Panel>test-item-1</Accordion.Panel>
-            </Accordion.Item>
-          </ControllerAccordion>
-        </>
+        <ControllerAccordion options={{ multiple: true }} capture={capture}>
+          <Accordion.Item value="item-1">
+            <Accordion.Control>Label 1</Accordion.Control>
+            <Accordion.Panel>test-item-1</Accordion.Panel>
+          </Accordion.Item>
+        </ControllerAccordion>
       );
 
       expect(controller.getItems()).toStrictEqual(['item-1']);

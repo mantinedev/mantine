@@ -114,12 +114,10 @@ describe('@mantine/data-grid/DataGridFooter', () => {
       expect(status(container)).toBe('Showing 1–10 of 15 · 2 selected');
 
       rerender(
-        <>
-          <Grid
-            storeOptions={{ pageSize: 10, withRowSelection: true }}
-            footerProps={{ statusFormat: 'compact' }}
-          />
-        </>
+        <Grid
+          storeOptions={{ pageSize: 10, withRowSelection: true }}
+          footerProps={{ statusFormat: 'compact' }}
+        />
       );
       act(() => lastStore!.table.setRowSelection({ '0': true, '3': true }));
       expect(status(container)).toBe('1–10 of 15');
@@ -150,12 +148,10 @@ describe('@mantine/data-grid/DataGridFooter', () => {
       expect(status(container)).toBe('Page 1 of 3');
 
       rerender(
-        <>
-          <Grid
-            storeOptions={{ manualPagination: true, pageCount: 3, pageSize: 5 }}
-            footerProps={{ statusFormat: 'long' }}
-          />
-        </>
+        <Grid
+          storeOptions={{ manualPagination: true, pageCount: 3, pageSize: 5 }}
+          footerProps={{ statusFormat: 'long' }}
+        />
       );
       expect(status(container)).toBe('Page 1 of 3');
     });
@@ -272,18 +268,10 @@ describe('@mantine/data-grid/DataGridFooter', () => {
         container.querySelector('.mantine-DataGrid-footerPageSize') as HTMLElement;
       expect(select().style.width).toContain('6.875rem');
 
-      rerender(
-        <>
-          <Grid storeOptions={{ pageSize: 5, size: 'md' }} />
-        </>
-      );
+      rerender(<Grid storeOptions={{ pageSize: 5, size: 'md' }} />);
       expect(select().style.width).toContain('7.625rem');
 
-      rerender(
-        <>
-          <Grid storeOptions={{ pageSize: 5, size: 'xl' }} />
-        </>
-      );
+      rerender(<Grid storeOptions={{ pageSize: 5, size: 'xl' }} />);
       expect(select().style.width).toContain('8.625rem');
     });
   });

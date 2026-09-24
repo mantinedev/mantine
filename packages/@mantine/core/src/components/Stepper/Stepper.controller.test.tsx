@@ -85,11 +85,7 @@ describe('@mantine/core/Stepper/controller', () => {
     );
     expect(controller.getStepCount()).toBe(3);
 
-    rerender(
-      <>
-        <ControllerTest onController={(value) => (controller = value)} stepsCount={5} />
-      </>
-    );
+    rerender(<ControllerTest onController={(value) => (controller = value)} stepsCount={5} />);
     expect(controller.getStepCount()).toBe(5);
   });
 

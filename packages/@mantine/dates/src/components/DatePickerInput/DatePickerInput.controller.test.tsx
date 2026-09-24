@@ -277,13 +277,11 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
     onDropdownOpenedChange.mockClear();
 
     rerender(
-      <>
-        <ControllerInput
-          disabled
-          options={{ onDropdownOpenedChange }}
-          capture={(c) => (controller = c)}
-        />
-      </>
+      <ControllerInput
+        disabled
+        options={{ onDropdownOpenedChange }}
+        capture={(c) => (controller = c)}
+      />
     );
 
     expect(getDropdown(container)).toBe(null);
@@ -407,11 +405,7 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
     expect(controller.isDropdownOpened()).toBe(false);
     expect(getDropdown(container)).toBe(null);
 
-    rerender(
-      <>
-        <ControllerInput readOnly capture={(c) => (controller = c)} />
-      </>
-    );
+    rerender(<ControllerInput readOnly capture={(c) => (controller = c)} />);
 
     act(() => controller.openDropdown());
     expect(controller.isDropdownOpened()).toBe(false);

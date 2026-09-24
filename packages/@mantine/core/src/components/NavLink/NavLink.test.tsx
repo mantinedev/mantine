@@ -144,11 +144,9 @@ describe('@mantine/core/NavLink', () => {
     expect(getChildren()).toHaveStyle({ '--nl-offset': 'var(--nl-children-offset-md)' });
 
     rerender(
-      <>
-        <NavLink {...defaultProps} size="md" childrenOffset={20} defaultOpened>
-          <div>test-dropdown</div>
-        </NavLink>
-      </>
+      <NavLink {...defaultProps} size="md" childrenOffset={20} defaultOpened>
+        <div>test-dropdown</div>
+      </NavLink>
     );
     expect(getChildren()).toHaveStyle({ '--nl-offset': 'calc(1.25rem * var(--mantine-scale))' });
   });

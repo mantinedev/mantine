@@ -44,18 +44,10 @@ describe('@mantine/data-grid/sticky-header', () => {
       'calc(3rem * var(--mantine-scale))'
     );
 
-    rerender(
-      <>
-        <Grid stickyHeader stickyHeaderOffset="var(--app-header)" />
-      </>
-    );
+    rerender(<Grid stickyHeader stickyHeaderOffset="var(--app-header)" />);
     expect(root.style.getPropertyValue('--dg-sticky-header-offset')).toBe('var(--app-header)');
 
-    rerender(
-      <>
-        <Grid />
-      </>
-    );
+    rerender(<Grid />);
     expect(root).not.toHaveAttribute('data-sticky-header');
     expect(root.style.getPropertyValue('--dg-sticky-header-offset')).toBe('');
   });

@@ -63,23 +63,19 @@ describe('@mantine/core/Collapse', () => {
     );
 
     rerender(
-      <>
-        <Activity mode="hidden">
-          <Collapse expanded>
-            <div>content</div>
-          </Collapse>
-        </Activity>
-      </>
+      <Activity mode="hidden">
+        <Collapse expanded>
+          <div>content</div>
+        </Collapse>
+      </Activity>
     );
 
     rerender(
-      <>
-        <Activity mode="visible">
-          <Collapse expanded>
-            <div>content</div>
-          </Collapse>
-        </Activity>
-      </>
+      <Activity mode="visible">
+        <Collapse expanded>
+          <div>content</div>
+        </Collapse>
+      </Activity>
     );
 
     await waitFor(() =>

@@ -103,7 +103,11 @@ export interface YearViewMonthProps extends YearViewMonthSettings {
   groupedEvents?: GroupedEvents;
 
   /** Assigns ref of every day based on its position in the month, used for keyboard navigation */
-  __getDayRef?: (weekIndex: number, dayIndex: number, node: HTMLButtonElement) => void;
+  __getDayRef?: (
+    weekIndex: number,
+    dayIndex: number,
+    node: HTMLButtonElement
+  ) => void | (() => void);
 
   /** Called when any keydown event is registered on day, used for keyboard navigation */
   __onDayKeyDown?: (
@@ -231,11 +235,7 @@ export function YearViewMonth({
           key={date}
           mod={[{ outside, weekend, today: isToday, static: mode === 'static' }, dayProps.mod]}
           tabIndex={isInTabOrder ? 0 : -1}
-          ref={(node) => {
-            if (node) {
-              __getDayRef?.(weekIndex, dayIndex, node);
-            }
-          }}
+          ref={(node) => (node ? __getDayRef?.(weekIndex, dayIndex, node) : undefined)}
           onKeyDown={(event) => {
             dayProps.onKeyDown?.(event);
             __onDayKeyDown?.(event, { weekIndex, dayIndex, date });

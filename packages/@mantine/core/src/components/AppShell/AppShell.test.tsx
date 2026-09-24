@@ -75,11 +75,7 @@ describe('@mantine/core/AppShell', () => {
       'static'
     );
 
-    rerender(
-      <>
-        <AppShell mode="fixed" />
-      </>
-    );
+    rerender(<AppShell mode="fixed" />);
     expect(container.querySelector('.mantine-AppShell-root')).toHaveAttribute('data-mode', 'fixed');
   });
 
@@ -101,15 +97,13 @@ describe('@mantine/core/AppShell', () => {
     expect(container.querySelector('.mantine-AppShell-main')).toBeInTheDocument();
 
     rerender(
-      <>
-        <AppShell navbar={{ width: 300, breakpoint: 'sm' }} header={{ height: 50 }}>
-          <AppShell.Navbar>navbar</AppShell.Navbar>
-          <AppShell.Header>header</AppShell.Header>
-          <AppShell.Aside>aside</AppShell.Aside>
-          <AppShell.Footer>footer</AppShell.Footer>
-          <AppShell.Main>main</AppShell.Main>
-        </AppShell>
-      </>
+      <AppShell navbar={{ width: 300, breakpoint: 'sm' }} header={{ height: 50 }}>
+        <AppShell.Navbar>navbar</AppShell.Navbar>
+        <AppShell.Header>header</AppShell.Header>
+        <AppShell.Aside>aside</AppShell.Aside>
+        <AppShell.Footer>footer</AppShell.Footer>
+        <AppShell.Main>main</AppShell.Main>
+      </AppShell>
     );
 
     expect(container.querySelector('.mantine-AppShell-navbar')).toBeInTheDocument();

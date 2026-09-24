@@ -6,7 +6,7 @@ export function render(
   themeOverride?: MantineThemeOverride,
   providerProps?: Omit<MantineProviderProps, 'theme'>
 ) {
-  return testingLibraryRender(<>{ui}</>, {
+  return testingLibraryRender(ui, {
     wrapper: ({ children }: { children: React.ReactNode }) => (
       <MantineProvider theme={themeOverride} env="test" {...providerProps}>
         {children}

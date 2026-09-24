@@ -44,11 +44,7 @@ describe('@mantine/core/Slider', () => {
       'default'
     );
 
-    rerender(
-      <>
-        <Slider variant="filled" />
-      </>
-    );
+    rerender(<Slider variant="filled" />);
     expect(container.querySelector('.mantine-Slider-root')).toHaveAttribute(
       'data-variant',
       'filled'
@@ -61,20 +57,12 @@ describe('@mantine/core/Slider', () => {
       '--slider-thumb-size': 'var(--slider-thumb-size-xl)',
     });
 
-    rerender(
-      <>
-        <Slider size={20} />
-      </>
-    );
+    rerender(<Slider size={20} />);
     expect(container.querySelector('.mantine-Slider-root')).toHaveStyle({
       '--slider-thumb-size': 'calc(var(--slider-size) + calc(0.625rem * var(--mantine-scale)))',
     });
 
-    rerender(
-      <>
-        <Slider size="xl" thumbSize={30} />
-      </>
-    );
+    rerender(<Slider size="xl" thumbSize={30} />);
     expect(container.querySelector('.mantine-Slider-root')).toHaveStyle({
       '--slider-thumb-size': 'calc(1.875rem * var(--mantine-scale))',
     });
@@ -404,13 +392,16 @@ describe('@mantine/core/Slider', () => {
   });
 
   it('respects explicit precision prop', async () => {
-    const { container, rerender } = render(<Slider defaultValue={5} step={1} precision={2} />);
+    const { container, unmount } = render(<Slider defaultValue={5} step={1} precision={2} />);
     await pressArrow('right');
     expectInputValue('6', container);
 
-    rerender(<Slider defaultValue={5.12} step={0.1} precision={3} />);
+    unmount();
+    const { container: container2 } = render(
+      <Slider defaultValue={5.12} step={0.1} precision={3} />
+    );
     await userEvent.type(screen.getByRole('slider'), '{arrowright}');
-    expectInputValue('5.22', container);
+    expectInputValue('5.22', container2);
   });
 
   it('sets aria-disabled when disabled', () => {

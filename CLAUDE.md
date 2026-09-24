@@ -56,13 +56,6 @@ After running the commands above, check if `codex` CLI is available (`command -v
 
 **Verifying a new regression test:** temporarily revert the fix, confirm the test fails, then restore the fix. Do this for tests that cover async, timing or lifecycle behavior — that is where a test silently passes for the wrong reason. Skip it for straightforward assertions, where it is pure overhead.
 
-**`rerender` remounts unless the tree shape matches.** `render()` from `@mantine-tests/core` wraps its argument in a fragment, but `rerender(ui)` does not. Passing a differently shaped tree unmounts and remounts the subtree instead of updating it, so tests that change a prop silently test a fresh mount instead. Wrap `rerender` arguments in `<>...</>` to match:
-
-```tsx
-const { rerender } = render(<Provider adapter={a}>...</Provider>);
-rerender(<><Provider adapter={b}>...</Provider></>);
-```
-
 **`StrictMode` does not double-invoke effects** in the jest environment, so a test that relies on it to reproduce a double-mount bug will pass whether or not the bug is fixed.
 
 ## Commit conventions

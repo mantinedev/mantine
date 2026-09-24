@@ -32,11 +32,7 @@ describe('@mantine/core/Breadcrumbs', () => {
     expect(root.tagName).toBe('NAV');
     expect(root).toHaveAttribute('aria-label', 'Breadcrumbs');
 
-    rerender(
-      <>
-        <Breadcrumbs {...defaultProps} aria-label="Test label" />
-      </>
-    );
+    rerender(<Breadcrumbs {...defaultProps} aria-label="Test label" />);
     expect(container.querySelector('.mantine-Breadcrumbs-root')).toHaveAttribute(
       'aria-label',
       'Test label'

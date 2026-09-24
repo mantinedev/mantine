@@ -79,26 +79,22 @@ describe('@mantine/dates/QuarterPickerInput', () => {
     expectValue(container, '2022 Q2');
 
     rerender(
-      <>
-        <QuarterPickerInput
-          {...defaultProps}
-          type="multiple"
-          valueFormat="YYYY [Q]Q"
-          value={['2022-04-01', '2022-10-01']}
-        />
-      </>
+      <QuarterPickerInput
+        {...defaultProps}
+        type="multiple"
+        valueFormat="YYYY [Q]Q"
+        value={['2022-04-01', '2022-10-01']}
+      />
     );
     expectValue(container, '2022 Q2, 2022 Q4');
 
     rerender(
-      <>
-        <QuarterPickerInput
-          {...defaultProps}
-          type="range"
-          valueFormat="YYYY [Q]Q"
-          value={['2022-04-01', '2023-01-01']}
-        />
-      </>
+      <QuarterPickerInput
+        {...defaultProps}
+        type="range"
+        valueFormat="YYYY [Q]Q"
+        value={['2022-04-01', '2023-01-01']}
+      />
     );
     expectValue(container, '2022 Q2 – 2023 Q1');
   });

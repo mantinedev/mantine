@@ -79,11 +79,7 @@ describe('@mantine/core/Tour', () => {
     const { rerender } = await renderWithAct(<DefaultTour step={0} />);
 
     await act(async () => {
-      rerender(
-        <>
-          <DefaultTour step={1} />
-        </>
-      );
+      rerender(<DefaultTour step={1} />);
     });
 
     expect(spy).not.toHaveBeenCalled();
@@ -102,11 +98,7 @@ describe('@mantine/core/Tour', () => {
     expect(screen.getByText('Step 1 Title')).toBeInTheDocument();
 
     await act(async () => {
-      rerender(
-        <>
-          <DefaultTour step={1} />
-        </>
-      );
+      rerender(<DefaultTour step={1} />);
     });
     expect(screen.getByText('Step 2 Title')).toBeInTheDocument();
     expect(screen.getByText('Step 2 Title').parentElement).toBe(tooltip);
@@ -234,11 +226,7 @@ describe('@mantine/core/Tour', () => {
       );
 
       await act(async () => {
-        rerender(
-          <>
-            <CenteredTour active />
-          </>
-        );
+        rerender(<CenteredTour active />);
       });
 
       const tooltip = renderContainer.querySelector<HTMLElement>('.mantine-Tour-tooltip')!;
@@ -378,11 +366,7 @@ describe('@mantine/core/Tour', () => {
       onStepOpen.mockClear();
 
       await act(async () => {
-        rerender(
-          <>
-            <DefaultTour step={1} onStepOpen={onStepOpen} onStepClose={onStepClose} />
-          </>
-        );
+        rerender(<DefaultTour step={1} onStepOpen={onStepOpen} onStepClose={onStepClose} />);
       });
       expect(onStepClose.mock.calls).toEqual([[0]]);
       expect(onStepOpen.mock.calls).toEqual([[1]]);
@@ -403,11 +387,7 @@ describe('@mantine/core/Tour', () => {
       const { rerender } = await renderWithAct(<DefaultTour step={1} onStepClose={onStepClose} />);
 
       await act(async () => {
-        rerender(
-          <>
-            <DefaultTour active={false} step={1} onStepClose={onStepClose} />
-          </>
-        );
+        rerender(<DefaultTour active={false} step={1} onStepClose={onStepClose} />);
       });
       expect(onStepClose.mock.calls).toEqual([[1]]);
     });
@@ -422,11 +402,7 @@ describe('@mantine/core/Tour', () => {
       expect(onStepClose.mock.calls).toEqual([[2]]);
 
       await act(async () => {
-        rerender(
-          <>
-            <DefaultTour active={false} step={2} {...props} />
-          </>
-        );
+        rerender(<DefaultTour active={false} step={2} {...props} />);
       });
       expect(onStepClose.mock.calls).toEqual([[2]]);
 
@@ -434,11 +410,7 @@ describe('@mantine/core/Tour', () => {
       onStepClose.mockClear();
 
       await act(async () => {
-        rerender(
-          <>
-            <DefaultTour active step={0} {...props} />
-          </>
-        );
+        rerender(<DefaultTour active step={0} {...props} />);
       });
       expect(onStepOpen.mock.calls).toEqual([[0]]);
       expect(onStepClose).not.toHaveBeenCalled();
@@ -469,7 +441,7 @@ describe('@mantine/core/Tour', () => {
       const { rerender } = await renderWithAct(ui('a'));
 
       await act(async () => {
-        rerender(<>{ui('b')}</>);
+        rerender(ui('b'));
       });
 
       await userEvent.click(screen.getByText('Skip'));
@@ -489,11 +461,7 @@ describe('@mantine/core/Tour', () => {
       const { rerender } = await renderWithAct(<DefaultTour step={0} />);
 
       await act(async () => {
-        rerender(
-          <>
-            <DefaultTour step={1} />
-          </>
-        );
+        rerender(<DefaultTour step={1} />);
       });
       expect(screen.getByRole('dialog', { name: 'Step 2 Title' })).toBeInTheDocument();
     });
@@ -607,7 +575,7 @@ describe('@mantine/core/Tour', () => {
       expect(renderContainer.querySelector('.mantine-Tour-spotlight')).toBeInTheDocument();
 
       await act(async () => {
-        rerender(<>{ui(1)}</>);
+        rerender(ui(1));
       });
       expect(renderContainer.querySelector('.mantine-Tour-spotlight')).not.toBeInTheDocument();
     });
@@ -640,11 +608,7 @@ describe('@mantine/core/Tour', () => {
       );
 
       await act(async () => {
-        rerender(
-          <>
-            <DefaultTour scrollToHandler={(element) => handler(element)} />
-          </>
-        );
+        rerender(<DefaultTour scrollToHandler={(element) => handler(element)} />);
       });
       expect(handler).toHaveBeenCalledTimes(1);
     });

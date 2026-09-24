@@ -195,11 +195,7 @@ describe('@mantine/core/RollingNumber', () => {
 
   it('keeps the copy value in sync with the current value', () => {
     const { container, rerender } = render(<RollingNumber value={1000} thousandSeparator />);
-    rerender(
-      <>
-        <RollingNumber value={999} thousandSeparator />
-      </>
-    );
+    rerender(<RollingNumber value={999} thousandSeparator />);
     expect(container.querySelector('.mantine-RollingNumber-copyValue')?.textContent).toBe('999');
   });
 

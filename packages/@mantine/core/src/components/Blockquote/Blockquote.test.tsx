@@ -66,11 +66,9 @@ describe('@mantine/core/Blockquote', () => {
     );
 
     rerender(
-      <>
-        <Blockquote {...defaultProps} iconSize={32}>
-          test
-        </Blockquote>
-      </>
+      <Blockquote {...defaultProps} iconSize={32}>
+        test
+      </Blockquote>
     );
     expect(getRoot(container).style.getPropertyValue('--bq-icon-size')).toBe(
       'calc(2rem * var(--mantine-scale))'
@@ -82,11 +80,9 @@ describe('@mantine/core/Blockquote', () => {
     expect(getRoot(container).style.getPropertyValue('--bq-text-wrap')).toBe('');
 
     rerender(
-      <>
-        <Blockquote {...defaultProps} textWrap="balance">
-          test
-        </Blockquote>
-      </>
+      <Blockquote {...defaultProps} textWrap="balance">
+        test
+      </Blockquote>
     );
     expect(getRoot(container).style.getPropertyValue('--bq-text-wrap')).toBe('balance');
   });

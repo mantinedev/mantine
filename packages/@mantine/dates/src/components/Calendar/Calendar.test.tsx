@@ -585,13 +585,11 @@ describe('@mantine/dates/Calendar', () => {
     expectHeaderLevel('month', dayjs().format('MMMM YYYY'));
 
     rerender(
-      <>
-        <Calendar
-          {...defaultProps}
-          defaultDate={undefined}
-          minDate={dayjs().add(2, 'year').format('YYYY-MM-DD')}
-        />
-      </>
+      <Calendar
+        {...defaultProps}
+        defaultDate={undefined}
+        minDate={dayjs().add(2, 'year').format('YYYY-MM-DD')}
+      />
     );
 
     expectHeaderLevel('month', dayjs().format('MMMM YYYY'));
@@ -629,11 +627,7 @@ describe('@mantine/dates/Calendar', () => {
     );
     expectHeaderLevel('year', '2022');
 
-    rerender(
-      <>
-        <Calendar {...defaultProps} defaultLevel="decade" maxLevel="decade" />
-      </>
-    );
+    rerender(<Calendar {...defaultProps} defaultLevel="decade" maxLevel="decade" />);
     expectHeaderLevel('year', '2022');
   });
 });

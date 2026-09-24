@@ -29,11 +29,7 @@ describe('@mantine/core/Badge', () => {
     const { rerender, container } = render(<Badge circle>1</Badge>);
     expect(container.querySelector('.mantine-Badge-root')).toHaveAttribute('data-circle');
 
-    rerender(
-      <>
-        <Badge>1</Badge>
-      </>
-    );
+    rerender(<Badge>1</Badge>);
     expect(container.querySelector('.mantine-Badge-root')).not.toHaveAttribute('data-circle');
   });
 

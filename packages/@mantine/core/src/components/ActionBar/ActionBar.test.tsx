@@ -131,11 +131,9 @@ describe('@mantine/core/ActionBar', () => {
     expect(screen.getByRole('button').className).toContain('mantine-focus-auto');
 
     rerender(
-      <>
-        <ActionBar opened unstyled>
-          <ActionBar.CloseButton />
-        </ActionBar>
-      </>
+      <ActionBar opened unstyled>
+        <ActionBar.CloseButton />
+      </ActionBar>
     );
 
     expect(screen.getByRole('button').className).not.toContain('mantine-focus-auto');

@@ -136,14 +136,12 @@ describe('@mantine/core/ToolbarToggleGroup', () => {
 
     expect(() =>
       rerender(
-        <>
-          <Toolbar>
-            <Toolbar.ToggleGroup type="multiple">
-              <Toolbar.ToggleItem value="bold">Bold</Toolbar.ToggleItem>
-              <Toolbar.ToggleItem value="italic">Italic</Toolbar.ToggleItem>
-            </Toolbar.ToggleGroup>
-          </Toolbar>
-        </>
+        <Toolbar>
+          <Toolbar.ToggleGroup type="multiple">
+            <Toolbar.ToggleItem value="bold">Bold</Toolbar.ToggleItem>
+            <Toolbar.ToggleItem value="italic">Italic</Toolbar.ToggleItem>
+          </Toolbar.ToggleGroup>
+        </Toolbar>
       )
     ).not.toThrow();
 
@@ -165,14 +163,12 @@ describe('@mantine/core/ToolbarToggleGroup', () => {
     );
 
     rerender(
-      <>
-        <Toolbar>
-          <Toolbar.ToggleGroup type="single">
-            <Toolbar.ToggleItem value="bold">Bold</Toolbar.ToggleItem>
-            <Toolbar.ToggleItem value="italic">Italic</Toolbar.ToggleItem>
-          </Toolbar.ToggleGroup>
-        </Toolbar>
-      </>
+      <Toolbar>
+        <Toolbar.ToggleGroup type="single">
+          <Toolbar.ToggleItem value="bold">Bold</Toolbar.ToggleItem>
+          <Toolbar.ToggleItem value="italic">Italic</Toolbar.ToggleItem>
+        </Toolbar.ToggleGroup>
+      </Toolbar>
     );
 
     expect(screen.getByRole('button', { name: 'Bold' })).toHaveAttribute('aria-pressed', 'true');

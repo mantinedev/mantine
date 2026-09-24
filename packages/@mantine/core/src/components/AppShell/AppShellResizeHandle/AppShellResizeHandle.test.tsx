@@ -253,11 +253,7 @@ describe('@mantine/core/AppShellResizeHandle', () => {
 
     expect(handle).toHaveAttribute('aria-valuemax', '400');
 
-    rerender(
-      <>
-        <CallbackShell max={800} />
-      </>
-    );
+    rerender(<CallbackShell max={800} />);
 
     expect(handle).toHaveAttribute('aria-valuemax', '800');
   });
@@ -406,11 +402,7 @@ describe('@mantine/core/AppShellResizeHandle', () => {
 
     expect(controllerRef.current?.activeSection).toBe('navbar');
 
-    rerender(
-      <>
-        <ToggleNavbarShell showNavbar={false} controllerRef={controllerRef} />
-      </>
-    );
+    rerender(<ToggleNavbarShell showNavbar={false} controllerRef={controllerRef} />);
 
     expect(controllerRef.current?.activeSection).toBeNull();
   });
@@ -429,11 +421,7 @@ describe('@mantine/core/AppShellResizeHandle', () => {
 
     expect(controllerRef.current?.activeSection).toBe('aside');
 
-    rerender(
-      <>
-        <DualSectionShell showNavbar={false} controllerRef={controllerRef} />
-      </>
-    );
+    rerender(<DualSectionShell showNavbar={false} controllerRef={controllerRef} />);
 
     expect(controllerRef.current?.activeSection).toBe('aside');
   });

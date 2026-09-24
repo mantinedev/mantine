@@ -73,17 +73,9 @@ describe('@mantine/data-grid/editing', () => {
     it('reflects the editing mode on the root', () => {
       const { container, rerender } = render(<Grid />);
       expect(root(container)).toHaveAttribute('data-editing-mode', 'cell');
-      rerender(
-        <>
-          <Grid storeOptions={{ editingMode: 'row' }} />
-        </>
-      );
+      rerender(<Grid storeOptions={{ editingMode: 'row' }} />);
       expect(root(container)).toHaveAttribute('data-editing-mode', 'row');
-      rerender(
-        <>
-          <Grid storeOptions={{ editingMode: undefined }} />
-        </>
-      );
+      rerender(<Grid storeOptions={{ editingMode: undefined }} />);
       expect(root(container)).not.toHaveAttribute('data-editing-mode');
     });
   });
@@ -414,11 +406,7 @@ describe('@mantine/data-grid/editing', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Keep' }));
       expect(onEditSave).toHaveBeenCalledTimes(1);
 
-      rerender(
-        <>
-          <Grid storeOptions={{ editingMode: 'cell', onEditSave }} withFloatingEditActions />
-        </>
-      );
+      rerender(<Grid storeOptions={{ editingMode: 'cell', onEditSave }} withFloatingEditActions />);
       act(() => lastStore!.table.startEditing('a', 'name'));
       expect(container.querySelector('.mantine-DataGrid-editActions')).not.toBeInTheDocument();
     });
@@ -484,11 +472,7 @@ describe('@mantine/data-grid/editing', () => {
       fireEvent.keyDown(editorsOf(cellsOf(container, 1)[0])[0], { key: 'Escape' });
       expect(rowsOf(container)[1]).toHaveFocus();
 
-      rerender(
-        <>
-          <Grid storeOptions={{ withCellSelection: true }} />
-        </>
-      );
+      rerender(<Grid storeOptions={{ withCellSelection: true }} />);
       const cell = cellsOf(container, 0)[1];
       fireEvent.mouseDown(cell);
       fireEvent.keyDown(cell, { key: 'F2' });

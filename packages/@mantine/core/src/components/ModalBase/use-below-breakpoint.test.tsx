@@ -44,18 +44,10 @@ describe('@mantine/core/ModalBase/use-below-breakpoint', () => {
     const { rerender } = render(<Probe breakpoint={800} />);
     expect(media.queries.at(-1)).toBe('(min-width: 50em)');
 
-    rerender(
-      <>
-        <Probe breakpoint="800px" />
-      </>
-    );
+    rerender(<Probe breakpoint="800px" />);
     expect(media.queries.at(-1)).toBe('(min-width: 50em)');
 
-    rerender(
-      <>
-        <Probe breakpoint="40em" />
-      </>
-    );
+    rerender(<Probe breakpoint="40em" />);
     expect(media.queries.at(-1)).toBe('(min-width: 40em)');
   });
 

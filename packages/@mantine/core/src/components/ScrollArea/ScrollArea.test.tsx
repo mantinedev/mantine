@@ -294,11 +294,9 @@ describe('@mantine/core/ScrollArea', () => {
 
     // Wrapped in a fragment to match the test `render` wrapper so the component updates in place
     rerender(
-      <>
-        <ScrollArea w={100} scrollFade="y">
-          <div style={{ width: 500, height: 500 }}>Content</div>
-        </ScrollArea>
-      </>
+      <ScrollArea w={100} scrollFade="y">
+        <div style={{ width: 500, height: 500 }}>Content</div>
+      </ScrollArea>
     );
 
     expect(viewport).not.toHaveAttribute('data-fade-left');

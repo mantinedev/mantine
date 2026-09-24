@@ -72,7 +72,7 @@ describe('@mantine/core/RangeSlider', () => {
   });
 
   it('enforces minRange constraint during keyboard interaction', async () => {
-    const { container, rerender } = render(
+    const { container, unmount } = render(
       <RangeSlider defaultValue={[10, 50]} minRange={20} pushOnOverlap={false} step={10} />
     );
     expectInputValue('10', container, 0);
@@ -91,19 +91,22 @@ describe('@mantine/core/RangeSlider', () => {
     await userEvent.keyboard('{ArrowRight}');
     expectInputValue('30', container, 0);
 
-    rerender(<RangeSlider defaultValue={[10, 50]} minRange={20} pushOnOverlap={false} step={10} />);
+    unmount();
+    const { container: container2 } = render(
+      <RangeSlider defaultValue={[10, 50]} minRange={20} pushOnOverlap={false} step={10} />
+    );
     const sliders2 = screen.getAllByRole('slider');
     await act(async () => {
       sliders2[1].focus();
     });
     await userEvent.keyboard('{ArrowLeft}');
-    expectInputValue('40', container, 1);
+    expectInputValue('40', container2, 1);
 
     await userEvent.keyboard('{ArrowLeft}');
-    expectInputValue('30', container, 1);
+    expectInputValue('30', container2, 1);
 
     await userEvent.keyboard('{ArrowLeft}');
-    expectInputValue('30', container, 1);
+    expectInputValue('30', container2, 1);
   });
 
   it('enforces maxRange constraint during keyboard interaction', async () => {

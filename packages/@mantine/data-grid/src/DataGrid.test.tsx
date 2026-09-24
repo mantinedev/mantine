@@ -516,19 +516,11 @@ describe('@mantine/data-grid/DataGrid', () => {
       expect(root(container)).toHaveAttribute('data-with-row-borders');
       expect(root(container)).not.toHaveAttribute('data-row-borders');
 
-      rerender(
-        <>
-          <DataGrid {...defaultProps} withRowBorders="subtle" />
-        </>
-      );
+      rerender(<DataGrid {...defaultProps} withRowBorders="subtle" />);
       expect(root(container)).toHaveAttribute('data-with-row-borders');
       expect(root(container)).toHaveAttribute('data-row-borders', 'subtle');
 
-      rerender(
-        <>
-          <DataGrid {...defaultProps} withRowBorders={false} />
-        </>
-      );
+      rerender(<DataGrid {...defaultProps} withRowBorders={false} />);
       expect(root(container)).not.toHaveAttribute('data-with-row-borders');
     });
 
@@ -539,20 +531,12 @@ describe('@mantine/data-grid/DataGrid', () => {
       expect(rows[1]).not.toHaveAttribute('data-striped');
       expect(rows[2]).toHaveAttribute('data-striped');
 
-      rerender(
-        <>
-          <DataGrid {...defaultProps} striped="even" />
-        </>
-      );
+      rerender(<DataGrid {...defaultProps} striped="even" />);
       rows = container.querySelectorAll('tbody tr');
       expect(rows[0]).not.toHaveAttribute('data-striped');
       expect(rows[1]).toHaveAttribute('data-striped');
 
-      rerender(
-        <>
-          <DataGrid {...defaultProps} />
-        </>
-      );
+      rerender(<DataGrid {...defaultProps} />);
       expect(container.querySelector('tbody tr[data-striped]')).not.toBeInTheDocument();
     });
 
@@ -579,17 +563,9 @@ describe('@mantine/data-grid/DataGrid', () => {
     it('reflects column borders on the root', () => {
       const { container, rerender } = render(<DataGrid {...defaultProps} withColumnBorders />);
       expect(root(container)).toHaveAttribute('data-column-borders', 'all');
-      rerender(
-        <>
-          <DataGrid {...defaultProps} withColumnBorders="data" />
-        </>
-      );
+      rerender(<DataGrid {...defaultProps} withColumnBorders="data" />);
       expect(root(container)).toHaveAttribute('data-column-borders', 'data');
-      rerender(
-        <>
-          <DataGrid {...defaultProps} />
-        </>
-      );
+      rerender(<DataGrid {...defaultProps} />);
       expect(root(container)).not.toHaveAttribute('data-column-borders');
     });
 
@@ -697,11 +673,7 @@ describe('@mantine/data-grid/DataGrid', () => {
     const { rerender } = render(<DataGridToggleStore withStore />);
     expect(screen.getByText('Alice')).toBeInTheDocument();
 
-    rerender(
-      <>
-        <DataGridToggleStore withStore={false} />
-      </>
-    );
+    rerender(<DataGridToggleStore withStore={false} />);
 
     expect(screen.getByText('Alice')).toBeInTheDocument();
     expect(screen.getByText('Bob')).toBeInTheDocument();
