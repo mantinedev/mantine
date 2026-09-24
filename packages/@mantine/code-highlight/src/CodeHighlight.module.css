@@ -19,7 +19,13 @@
     }
   }
 
-  --ch-background: var(--mantine-color-surface-muted);
+  @mixin where-light {
+    --ch-background: var(--mantine-color-surface-muted);
+  }
+
+  @mixin where-dark {
+    --ch-background: var(--mantine-color-dark-8);
+  }
 }
 
 .inlineCodeHighlight {
@@ -41,7 +47,13 @@
     }
   }
 
-  --ch-background: var(--mantine-color-surface-muted);
+  @mixin where-light {
+    --ch-background: var(--mantine-color-surface-muted);
+  }
+
+  @mixin where-dark {
+    --ch-background: var(--mantine-color-dark-8);
+  }
 }
 
 .pre {

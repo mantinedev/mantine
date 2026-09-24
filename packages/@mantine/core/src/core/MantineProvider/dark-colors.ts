@@ -9,8 +9,8 @@ export const darkColors: MantineColorsTuple = [
   'oklch(0.27 0 0)',
   'oklch(0.24 0 0)',
   'oklch(0.2 0 0)',
+  'oklch(0.18 0 0)',
   'oklch(0.16 0 0)',
-  'oklch(0.12 0 0)',
 ];
 
 export const darkColdColors: MantineColorsTuple = [
@@ -22,8 +22,8 @@ export const darkColdColors: MantineColorsTuple = [
   'oklch(0.27 0.012 255)',
   'oklch(0.24 0.012 255)',
   'oklch(0.2 0.012 255)',
+  'oklch(0.18 0.012 255)',
   'oklch(0.16 0.012 255)',
-  'oklch(0.12 0.012 255)',
 ];
 
 export const darkWarmColors: MantineColorsTuple = [
@@ -35,8 +35,8 @@ export const darkWarmColors: MantineColorsTuple = [
   'oklch(0.27 0.012 65)',
   'oklch(0.24 0.012 65)',
   'oklch(0.2 0.012 65)',
+  'oklch(0.18 0.012 65)',
   'oklch(0.16 0.012 65)',
-  'oklch(0.12 0.012 65)',
 ];
 
 /** Tinted with the default primary; regenerate for a custom primary. */
@@ -49,6 +49,6 @@ export const darkTintedColors: MantineColorsTuple = [
   'oklch(0.27 0.02 255)',
   'oklch(0.24 0.02 255)',
   'oklch(0.2 0.02 255)',
+  'oklch(0.18 0.02 255)',
   'oklch(0.16 0.02 255)',
-  'oklch(0.12 0.02 255)',
 ];
