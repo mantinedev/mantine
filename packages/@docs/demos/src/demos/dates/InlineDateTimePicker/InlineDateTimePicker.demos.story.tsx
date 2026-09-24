@@ -27,3 +27,8 @@ export const Demo_format = {
   name: '⭐ Demo: format',
   render: renderDemo(demos.format),
 };
+
+export const Demo_controller = {
+  name: '⭐ Demo: controller',
+  render: renderDemo(demos.controller),
+};

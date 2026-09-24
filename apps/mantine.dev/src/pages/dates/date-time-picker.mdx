@@ -38,6 +38,93 @@ for the time picker:
 
 <Demo data={DateTimePickerDemos.timePickerProps} />
 
+## Controlling with useDateTimePicker
+
+`DateTimePicker` opens its dropdown when the input is clicked and closes it when the submit button
+is clicked or `Enter` is pressed in the time input. To open it from somewhere else – a button, a
+keyboard shortcut – or to open it on a given level or date, create a controller with the
+`useDateTimePicker` hook and pass it with the `controller` prop. The input keeps opening and closing
+the dropdown on its own, and every open and close goes through the controller. The
+[Controllers](/guides/controllers) guide covers how the pattern works across all components:
+
+<Demo data={DateTimePickerDemos.controller} />
+
+`useDateTimePicker` has the actions and queries of
+[useDatePickerInput](/dates/date-picker-input/#controlling-with-usedatepickerinput) – the dropdown
+actions together with the navigation actions of [useCalendar](/dates/calendar/#controlling-with-usecalendar) –
+and the time actions of [useInlineDateTimePicker](/dates/inline-date-time-picker/#controlling-with-useinlinedatetimepicker):
+
+```tsx
+import { useState } from 'react';
+import { DateTimePicker, useDateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState<string | null>(null);
+  const controller = useDateTimePicker({
+    defaultLevel: 'month', // -> level the dropdown opens on
+    defaultDate: '2024-06-15', // -> date the dropdown opens on when there is no value
+    // dropdownOpened, defaultDropdownOpened, onDropdownOpenedChange -> dropdown state
+    // date, onDateChange, level, onLevelChange -> same as on useCalendar
+    // defaultTimeValue, time, onTimeChange, endTime, onEndTimeChange -> time inputs
+  });
+
+  // Dropdown actions
+  controller.openDropdown();
+  controller.closeDropdown();
+  controller.toggleDropdown();
+
+  // Navigation actions, same as useCalendar
+  controller.setLevel('year');
+  controller.setDate('2024-08-01');
+  controller.next();
+  controller.previous();
+
+  // Time actions
+  controller.setTime('09:00'); // -> sets the time inputs and the time of the value
+  controller.focusTime('hours'); // -> focuses a field, also right after openDropdown
+  controller.setEndTime('18:00'); // -> end time with type="range"
+  controller.focusEndTime('minutes');
+
+  // Queries
+  controller.isDropdownOpened(); // -> true | false
+  controller.getDate(); // -> displayed date
+  controller.getLevel(); // -> 'month' | 'year' | 'decade'
+  controller.getDisplayedDate(); // -> the date the dropdown displays
+  controller.getDisplayedLevel(); // -> level clamped to minLevel/maxLevel
+  controller.getTime(); // -> time of the time input, also before a date is picked
+  controller.getEndTime(); // -> time of the end time input with type="range"
+
+  return (
+    <DateTimePicker value={value} onChange={setValue} controller={controller} />
+  );
+}
+```
+
+The controller does not own the selected value – keep using `value`/`onChange` (or your form
+library) for it. It owns what the value cannot express: the time entered before a date is picked
+and the end time of an incomplete range. `setTime` updates the time of the value when it has a date.
+When the dropdown is closed, the time set with `setTime` is shown and applied to the value the next
+time it opens. When the `controller` prop is set, the `date`, `defaultDate`, `onDateChange`, `level`,
+`defaultLevel`, `onLevelChange` and `defaultTimeValue` props are ignored – pass them to
+`useDateTimePicker` instead.
+
+Every time the dropdown opens, it starts fresh: the displayed date is reset to the selected value
+(or to `defaultDate` when there is no value), the level is reset to `defaultLevel`, and the time
+inputs show the time of the value, discarding an incomplete time or a time typed before a date was
+picked. To open on a different level, date or time, call `setLevel`, `setDate` or `setTime` right
+after `openDropdown`, as the demo above does. A controlled `date`, `level` or `time` is not reset.
+
+`openDropdown` does nothing while the input is `disabled` or `readOnly`. `closeDropdown` works the
+same way as when the user dismisses the dropdown: with `type="range"`, a range with only the first
+date picked is cleared, the value is clamped to `minDate`/`maxDate` and `onDropdownClose` is called.
+The time inputs are driven through the `DateTimePicker` controller, so `timePickerProps` does not
+accept a `controller`. When the `controller` prop is set, `popoverProps.opened` and
+`popoverProps.onChange` are ignored – pass `dropdownOpened` and `onDropdownOpenedChange` to
+`useDateTimePicker` instead.
+
+The controller is typed as `DateTimePickerController` and its options as
+`DateTimePickerControllerOptions`, both exported from `@mantine/dates`.
+
 ## Value format
 
 Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label:

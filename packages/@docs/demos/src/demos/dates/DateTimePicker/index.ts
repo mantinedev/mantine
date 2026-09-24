@@ -11,3 +11,4 @@ export { timePickerProps } from './DateTimePicker.demo.timePickerProps';
 export { presets } from './DateTimePicker.demo.presets';
 export { range } from './DateTimePicker.demo.range';
 export { nativeLevelSelect } from './DateTimePicker.demo.nativeLevelSelect';
+export { controller } from './DateTimePicker.demo.controller';

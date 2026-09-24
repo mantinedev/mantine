@@ -34,6 +34,62 @@ below the time inputs:
 
 <Demo data={InlineDateTimePickerDemos.rangeControlled} />
 
+## Controlling with useInlineDateTimePicker
+
+To drive the displayed date, level and time inputs from outside, for example from a toolbar, create a
+controller with the `useInlineDateTimePicker` hook and pass it with the `controller` prop. It has
+the navigation actions of [useCalendar](/dates/calendar/#controlling-with-usecalendar) and actions
+for the time inputs. The time inputs are displayed while the calendar shows the month level,
+including when the level is set with the controller:
+
+<Demo data={InlineDateTimePickerDemos.controller} />
+
+```tsx
+import { useState } from 'react';
+import { InlineDateTimePicker, useInlineDateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState<string | null>(null);
+  const controller = useInlineDateTimePicker({
+    defaultDate: '2024-06-15', // -> date displayed when there is no value
+    defaultTimeValue: '09:00', // -> time used when a date is picked with empty time inputs
+    // date, onDateChange, level, defaultLevel, onLevelChange -> same as on useCalendar
+    // time, onTimeChange, endTime, onEndTimeChange -> time inputs in controlled mode
+  });
+
+  // Navigation actions, same as useCalendar
+  controller.next();
+  controller.setLevel('month');
+
+  // Time actions
+  controller.setTime('10:30'); // -> sets the time input and the time of the value
+  controller.setEndTime('18:00'); // -> end time with type="range"
+  controller.focusTime('minutes'); // -> focuses a field of the time input
+  controller.focusEndTime('hours');
+
+  // Queries
+  controller.getTime(); // -> time of the time input, also before a date is picked
+  controller.getEndTime(); // -> time of the end time input with type="range"
+
+  return (
+    <InlineDateTimePicker value={value} onChange={setValue} controller={controller} />
+  );
+}
+```
+
+The controller does not own the selected value – keep using `value`/`onChange` (or your form
+library) for it. It owns what the value cannot express: the time entered before a date is picked
+and the end time of an incomplete range. `getTime` returns the time of the value once a date is
+picked, and `setTime` updates it. `focusTime` called while the time inputs are not displayed (the
+calendar is not on the month level) focuses the field when they are displayed.
+
+When the `controller` prop is set, the `date`, `defaultDate`, `onDateChange`, `level`,
+`defaultLevel`, `onLevelChange` and `defaultTimeValue` props are ignored – pass them to
+`useInlineDateTimePicker` instead. The time inputs are driven through the controller, so
+`timePickerProps` and `endTimePickerProps` do not accept a `controller`. The controller is typed as
+`InlineDateTimePickerController` and its options as `InlineDateTimePickerControllerOptions`, both
+exported from `@mantine/dates`.
+
 ## Value format
 
 Use `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the range preview:

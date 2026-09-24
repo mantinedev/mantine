@@ -500,8 +500,8 @@ const theme = createTheme({
 
 ## Picker inputs popoverProps.opened
 
-`DatePickerInput`, `MonthPickerInput`, `YearPickerInput` and `WeekPickerInput` now call
-`popoverProps.onChange` on every dropdown open and close, including the input click and the close after
+`DatePickerInput`, `MonthPickerInput`, `YearPickerInput`, `WeekPickerInput` and `DateTimePicker` now
+call `popoverProps.onChange` on every dropdown open and close, including the input click and the close after
 a date is picked. If you pass `popoverProps.opened`, update it in `popoverProps.onChange`, otherwise the
 input can no longer open or close its dropdown:
 

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { __InputStylesNames } from '@mantine/core';
 import {
   inputDefaultProps,
@@ -41,6 +42,18 @@ const defaultPropsWithInputProps: DateTimePickerProps = {
   ...defaultProps,
   ...(inputDefaultProps as any),
 };
+
+function PopoverOpenedTest({ onDropdownClose }: { onDropdownClose: () => void }) {
+  const [opened, setOpened] = useState(false);
+  return (
+    <DateTimePicker
+      {...defaultProps}
+      defaultValue="2022-04-11"
+      popoverProps={{ ...defaultProps.popoverProps, opened, onChange: setOpened }}
+      onDropdownClose={onDropdownClose}
+    />
+  );
+}
 
 const getTimePicker = () => screen.getByLabelText('test-time-picker-hours');
 const getSubmitButton = () => screen.getByLabelText('test-submit');
@@ -160,6 +173,67 @@ describe('@mantine/dates/DateTimePicker', () => {
 
     expect(spy).toHaveBeenCalled();
     expectNoPopover(container);
+  });
+
+  it('calls onDropdownClose once when the dropdown is closed with the submit button', async () => {
+    const onDropdownClose = jest.fn();
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        defaultValue="2022-04-11"
+        onDropdownClose={onDropdownClose}
+      />
+    );
+    await clickInput(container);
+    await userEvent.click(getSubmitButton());
+    expect(onDropdownClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onDropdownClose once when the dropdown is closed with the submit button (dropdownType="modal")', async () => {
+    const onDropdownClose = jest.fn();
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        dropdownType="modal"
+        defaultValue="2022-04-11"
+        onDropdownClose={onDropdownClose}
+      />
+    );
+    await clickInput(container);
+    await userEvent.click(getSubmitButton());
+    expectNoModal(container);
+    expect(onDropdownClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('clamps the value and calls onDropdownClose when the modal is dismissed', async () => {
+    const onDropdownClose = jest.fn();
+    const onChange = jest.fn();
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        dropdownType="modal"
+        defaultValue="2022-04-11 10:00:00"
+        minDate="2022-04-11 12:00:00"
+        onChange={onChange}
+        onDropdownClose={onDropdownClose}
+      />
+    );
+    await clickInput(container);
+    await userEvent.keyboard('{Escape}');
+    expectNoModal(container);
+    expect(onChange).toHaveBeenLastCalledWith('2022-04-11 12:00:00');
+    expect(onDropdownClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('closes a dropdown controlled with popoverProps.opened with the submit button', async () => {
+    const onDropdownClose = jest.fn();
+    const { container } = render(<PopoverOpenedTest onDropdownClose={onDropdownClose} />);
+    await clickInput(container);
+    expectOpenedPopover(container);
+
+    await userEvent.click(getSubmitButton());
+    expectNoPopover(container);
+    expect(onDropdownClose).toHaveBeenCalledTimes(1);
   });
 
   it('supports placeholder styles selector in classNames', () => {

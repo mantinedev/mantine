@@ -7,20 +7,22 @@ import {
   genericFactory,
   InputVariant,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useDidUpdate, useDisclosure } from '@mantine/hooks';
+import { useDidUpdate } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DatePickerType, DatePickerValue, DateStringValue } from '../../types';
-import { clampDate } from '../../utils';
+import { clampDate, getDefaultClampedDate, toDateString } from '../../utils';
 import {
   CalendarBaseProps,
   CalendarSettings,
   CalendarStylesNames,
   pickCalendarProps,
 } from '../Calendar';
+import { clampLevel } from '../Calendar/clamp-level/clamp-level';
 import { DatePickerPreset } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
 import {
@@ -33,6 +35,10 @@ import {
   PickerInputBaseStylesNames,
 } from '../PickerInputBase';
 import { TimePickerProps } from '../TimePicker/TimePicker';
+import {
+  useDateTimePicker,
+  type DateTimePickerController,
+} from './use-date-time-picker/use-date-time-picker';
 import classes from './DateTimePicker.module.css';
 
 export type DateTimePickerStylesNames =
@@ -70,10 +76,10 @@ export interface DateTimePickerProps<Type extends DatePickerType = 'default'>
   defaultTimeValue?: string;
 
   /** Props passed down to `TimePicker` component */
-  timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
+  timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value' | 'controller'>;
 
   /** Props passed down to the end time `TimePicker` component in range mode */
-  endTimePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
+  endTimePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value' | 'controller'>;
 
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentProps<'button'>;
@@ -92,6 +98,9 @@ export interface DateTimePickerProps<Type extends DatePickerType = 'default'>
 
   /** Separator between range values @category appearance */
   labelSeparator?: string;
+
+  /** Controller returned by the `useDateTimePicker` hook. When provided, the dropdown opened state and the displayed date and level are owned by the controller and `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel`, `onLevelChange`, `defaultTimeValue`, `popoverProps.opened` and `popoverProps.onChange` props are ignored @category state */
+  controller?: DateTimePickerController;
 }
 
 export type DateTimePickerFactory = Factory<{
@@ -141,6 +150,7 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
     type,
     labelSeparator,
     allowSingleDateInRange,
+    controller: controllerProp,
     ...rest
   } = props;
 
@@ -182,8 +192,58 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
     withTime: true,
   });
 
-  const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
-  const [inlineKey, setInlineKey] = useState(0);
+  const { minLevel, maxLevel } = calendarProps;
+  const _minLevel = minLevel || 'month';
+  const initialValue = value !== undefined ? value : defaultValue;
+  const initialValueDate = Array.isArray(initialValue) ? initialValue[0] : initialValue;
+
+  const {
+    opened: popoverOpened,
+    onChange: onPopoverChange,
+    ...popoverRest
+  } = others.popoverProps || {};
+  const withPopoverState = dropdownType !== 'modal';
+
+  const controller = useController(useDateTimePicker, controllerProp, {
+    date: calendarProps.date,
+    defaultDate: toDateString(initialValueDate) || defaultDate,
+    onDateChange: calendarProps.onDateChange,
+    level: level ? clampLevel(level, _minLevel, maxLevel) : undefined,
+    defaultLevel: clampLevel(defaultLevel, _minLevel, maxLevel),
+    onLevelChange: calendarProps.onLevelChange,
+    dropdownOpened: withPopoverState ? popoverOpened : undefined,
+    onDropdownOpenedChange: withPopoverState ? onPopoverChange : undefined,
+    defaultTimeValue,
+  });
+
+  const dropdownHandlers = {
+    open: controller.openDropdown,
+    close: controller.closeDropdown,
+    toggle: controller.toggleDropdown,
+    set: controller.setDropdownOpened,
+  };
+
+  const valueDate =
+    toDateString(Array.isArray(_value) ? _value[0] : _value) ||
+    (controllerProp ? null : toDateString(defaultDate)) ||
+    null;
+  const cannotOpen = !!(others.disabled || others.readOnly);
+
+  controller.registerPickerInput({
+    valueDate,
+    fallbackDate: getDefaultClampedDate({ minDate, maxDate }),
+    disabled: cannotOpen,
+  });
+
+  const dropdownOpened = controller.dropdownOpened && !cannotOpen;
+  const [openSession, setOpenSession] = useState({ opened: dropdownOpened, key: 0 });
+
+  if (openSession.opened !== dropdownOpened) {
+    setOpenSession({
+      opened: dropdownOpened,
+      key: dropdownOpened ? openSession.key + 1 : openSession.key,
+    });
+  }
 
   const formatDate = (v: DateStringValue | null) => {
     if (!v) {
@@ -213,12 +273,6 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
 
   const formattedValue = getFormattedValue();
 
-  useDidUpdate(() => {
-    if (dropdownOpened) {
-      setInlineKey((k) => k + 1);
-    }
-  }, [dropdownOpened]);
-
   const __stopPropagation = dropdownType === 'popover';
 
   const clearIncompleteRange = () => {
@@ -245,10 +299,11 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
     onDropdownClose?.();
   };
 
-  const handleSubmitOrEnter = () => {
-    handleDropdownClose();
-    dropdownHandlers.close();
-  };
+  useDidUpdate(() => {
+    if (!controller.dropdownOpened) {
+      handleDropdownClose();
+    }
+  }, [controller.dropdownOpened]);
 
   const onClear = () => {
     if (isRange) {
@@ -268,7 +323,7 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
     <PickerInputBase
       formattedValue={formattedValue}
       withPresets={!!presets}
-      dropdownOpened={!rest.disabled ? dropdownOpened : false}
+      dropdownOpened={dropdownOpened}
       dropdownHandlers={dropdownHandlers}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
@@ -280,15 +335,16 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
       variant={variant}
       dropdownType={dropdownType}
       {...others}
+      popoverProps={withPopoverState ? popoverRest : others.popoverProps}
       type={type as any}
       __staticSelector="DateTimePicker"
-      onDropdownClose={handleDropdownClose}
       withTime
       attributes={attributes}
     >
       <InlineDateTimePicker
-        key={inlineKey}
+        key={openSession.key}
         {...calendarProps}
+        controller={controller}
         fullWidth={false}
         type={type as any}
         value={_value as any}
@@ -301,9 +357,6 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
         classNames={resolvedClassNames as any}
         styles={resolvedStyles as any}
         unstyled={unstyled}
-        level={level}
-        defaultLevel={defaultLevel}
-        defaultDate={defaultDate}
         defaultTimeValue={defaultTimeValue}
         presets={presets as any}
         allowSingleDateInRange={allowSingleDateInRange}
@@ -314,10 +367,10 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
         valueFormat={valueFormat}
         labelSeparator={labelSeparator}
         attributes={attributes}
-        onSubmit={handleSubmitOrEnter}
+        onSubmit={controller.closeDropdown}
         __stopPropagation={__stopPropagation}
         __staticSelector="DateTimePicker"
-        __onEnter={handleSubmitOrEnter}
+        __onEnter={controller.closeDropdown}
         __onPresetSelect={handlePresetSelect}
       />
     </PickerInputBase>
