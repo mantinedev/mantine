@@ -21,7 +21,8 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useClickOutside, useId, useMergedRef } from '@mantine/hooks';
+import { useClickOutside, useDidUpdate, useId, useMergedRef } from '@mantine/hooks';
+import { useUncontrolledDates } from '../../hooks';
 import { DateStringValue, DateTimeStringValue } from '../../types';
 import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
 import { useDatesContext } from '../DatesProvider';
@@ -365,6 +366,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     clearable,
     readOnly,
     disabled,
+    fieldsOrder: fieldsOrder!,
     pasteSplit,
     minDate: calendarProps.minDate ? dayjs(calendarProps.minDate).format('YYYY-MM-DD') : undefined,
     maxDate: calendarProps.maxDate ? dayjs(calendarProps.maxDate).format('YYYY-MM-DD') : undefined,
@@ -451,6 +453,19 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     controller.values.year !== null
       ? `${String(controller.values.year).padStart(4, '0')}-${String(controller.values.month).padStart(2, '0')}-${String(controller.values.day).padStart(2, '0')}`
       : null;
+
+  const [calendarDate, setCalendarDate] = useUncontrolledDates({
+    type: 'default',
+    value: calendarProps.date,
+    defaultValue: currentDateValue || calendarProps.defaultDate,
+    onChange: calendarProps.onDateChange as any,
+  });
+
+  useDidUpdate(() => {
+    if (currentDateValue !== null) {
+      setCalendarDate(currentDateValue);
+    }
+  }, [currentDateValue]);
 
   const _getDayProps = (day: DateStringValue) => ({
     ...getDayProps?.(day),
@@ -786,7 +801,8 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
           locale={calendarProps.locale || ctx.getLocale(locale)}
           getDayProps={_getDayProps}
           size={size as MantineSize}
-          date={currentDateValue || undefined}
+          date={calendarDate || undefined}
+          onDateChange={setCalendarDate}
           getMonthControlProps={(date) => ({
             selected: currentDateValue !== null ? isSameMonth(date, currentDateValue) : false,
             ...getMonthControlProps?.(date),
