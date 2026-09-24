@@ -18,6 +18,7 @@ interface UseMaskedDateInputInput {
   clearable: boolean | undefined;
   readOnly: boolean | undefined;
   disabled: boolean | undefined;
+  fieldsOrder: ('day' | 'month' | 'year')[];
   pasteSplit?: (value: string) => {
     day: number | null;
     month: number | null;
@@ -58,6 +59,7 @@ export function useMaskedDateInput({
   clearable,
   readOnly,
   disabled,
+  fieldsOrder,
   pasteSplit,
   minDate,
   maxDate,
@@ -285,7 +287,7 @@ export function useMaskedDateInput({
     setAmPm(null);
     onChange?.(null);
     wasInvalidBefore.current = true;
-    focus('day');
+    focus(fieldsOrder[0]);
   };
 
   const setFromDateString = (dateString: string) => {

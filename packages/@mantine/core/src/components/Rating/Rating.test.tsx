@@ -1,8 +1,31 @@
+import { fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Rating, RatingProps, RatingStylesNames } from './Rating';
 
 const defaultProps: RatingProps = {};
+
+function getRoot(container: HTMLElement) {
+  const root = container.querySelector('[class*="root"]') as HTMLElement;
+  root.getBoundingClientRect = () =>
+    ({
+      left: 0,
+      right: 500,
+      width: 500,
+      top: 0,
+      bottom: 20,
+      height: 20,
+      x: 0,
+      y: 0,
+      toJSON: () => ({}),
+    }) as DOMRect;
+
+  return root;
+}
+
+function touchList(...points: [number, number][]) {
+  return points.map(([clientX, clientY]) => ({ clientX, clientY }));
+}
 
 describe('@mantine/core/Rating', () => {
   tests.itSupportsSystemProps<RatingProps, RatingStylesNames>({
@@ -71,6 +94,91 @@ describe('@mantine/core/Rating', () => {
     await userEvent.click(targetInput!.nextElementSibling as HTMLElement);
 
     expect(spy).toHaveBeenCalledWith(0);
+  });
+
+  it('sets value on touch tap', () => {
+    const spy = jest.fn();
+    const { container } = render(<Rating onChange={spy} defaultValue={0} />);
+    const root = getRoot(container);
+
+    fireEvent.touchStart(root, { touches: touchList([250, 10]) });
+    fireEvent.touchEnd(root, { changedTouches: touchList([250, 10]) });
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(3);
+  });
+
+  it('clears value on touch tap on the same value with allowClear=true', () => {
+    const spy = jest.fn();
+    const { container } = render(<Rating allowClear onChange={spy} defaultValue={3} />);
+    const root = getRoot(container);
+
+    fireEvent.touchStart(root, { touches: touchList([250, 10]) });
+    fireEvent.touchEnd(root, { changedTouches: touchList([250, 10]) });
+
+    expect(spy).toHaveBeenCalledWith(0);
+  });
+
+  it('does not change value when the touch moves before it ends', () => {
+    const spy = jest.fn();
+    const { container } = render(<Rating onChange={spy} defaultValue={0} />);
+    const root = getRoot(container);
+
+    fireEvent.touchStart(root, { touches: touchList([250, 10]) });
+    fireEvent.touchMove(root, { touches: touchList([255, 90]) });
+    fireEvent.touchEnd(root, { changedTouches: touchList([255, 90]) });
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('does not change value when the touch is cancelled', () => {
+    const spy = jest.fn();
+    const { container } = render(<Rating onChange={spy} defaultValue={0} />);
+    const root = getRoot(container);
+
+    fireEvent.touchStart(root, { touches: touchList([250, 10]) });
+    fireEvent.touchCancel(root, { changedTouches: touchList([250, 10]) });
+    fireEvent.touchEnd(root, { changedTouches: touchList([250, 10]) });
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('does not change value on multi touch gestures', () => {
+    const spy = jest.fn();
+    const { container } = render(<Rating onChange={spy} defaultValue={0} />);
+    const root = getRoot(container);
+
+    fireEvent.touchStart(root, { touches: touchList([100, 10], [400, 10]) });
+    fireEvent.touchEnd(root, { changedTouches: touchList([100, 10]) });
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('does not change value on touch tap when readOnly', () => {
+    const spy = jest.fn();
+    const { container } = render(<Rating readOnly onChange={spy} value={2} />);
+    const root = getRoot(container);
+
+    fireEvent.touchStart(root, { touches: touchList([250, 10]) });
+    fireEvent.touchEnd(root, { changedTouches: touchList([250, 10]) });
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('ignores the click emulated by the browser after a touch tap', () => {
+    const spy = jest.fn();
+    const { container } = render(<Rating allowClear onChange={spy} defaultValue={0} />);
+    const root = getRoot(container);
+
+    fireEvent.touchStart(root, { touches: touchList([250, 10]) });
+    fireEvent.touchEnd(root, { changedTouches: touchList([250, 10]) });
+
+    const inputs = screen.getAllByRole('radio') as HTMLInputElement[];
+    const thirdInput = inputs.find((input) => input.value === '3');
+    fireEvent.click(thirdInput!.nextElementSibling as HTMLElement);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(3);
   });
 
   it('changes value on Space key press', async () => {

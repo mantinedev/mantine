@@ -1,8 +1,8 @@
-import { Anchor, Button, Tooltip } from '@mantine/core';
+import { Button, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Anchor, Button, Tooltip } from '@mantine/core';
+import { Button, Tooltip } from '@mantine/core';
 
 function Demo() {
   return (
@@ -11,16 +11,9 @@ function Demo() {
       withArrow
       multiline
       w={220}
-      label={
-        <>
-          Tooltip content can be hovered, for example to follow{' '}
-          <Anchor href="https://mantine.dev" target="_blank" inherit>
-            this link
-          </Anchor>
-        </>
-      }
+      label="This tooltip stays open while you move the pointer onto it, so you can read or select its full contents without it closing."
     >
-      <Button>Interactive tooltip</Button>
+      <Button>Hover to read the tooltip</Button>
     </Tooltip>
   );
 }
@@ -33,16 +26,9 @@ function Demo() {
       withArrow
       multiline
       w={220}
-      label={
-        <>
-          Tooltip content can be hovered, for example to follow{' '}
-          <Anchor href="https://mantine.dev" target="_blank" inherit>
-            this link
-          </Anchor>
-        </>
-      }
+      label="This tooltip stays open while you move the pointer onto it, so you can read or select its full contents without it closing."
     >
-      <Button>Interactive tooltip</Button>
+      <Button>Hover to read the tooltip</Button>
     </Tooltip>
   );
 }

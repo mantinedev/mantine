@@ -98,6 +98,19 @@ describe('@mantine/core/MaskInput', () => {
     expect(screen.getByLabelText('Code')).toHaveValue('12/34/56');
   });
 
+  it('applies transform to defaultValue on mount', () => {
+    render(
+      <MaskInput
+        mask="AAA-999"
+        label="Code"
+        transform={(char) => char.toUpperCase()}
+        defaultValue="abc-123"
+      />
+    );
+
+    expect(screen.getByLabelText('Code')).toHaveValue('ABC-123');
+  });
+
   it('clears the input value when resetRef is called', () => {
     const resetRef = createRef<() => void>();
     const onChangeRaw = jest.fn();

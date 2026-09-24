@@ -235,7 +235,7 @@ export interface ComboboxPopoverProps<
   /** Determines whether the options should be wrapped with ScrollArea.AutoSize @default true */
   withScrollArea?: boolean;
 
-  /** max-height of the dropdown @default 250 */
+  /** max-height of the dropdown @default 220 */
   maxDropdownHeight?: number | string;
 
   /** If set, the first option is selected when dropdown opens @default false */

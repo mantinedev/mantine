@@ -210,6 +210,7 @@ export const LineChart = factory<LineChartFactory>((_props) => {
     withPointLabels,
     attributes,
     gridColor,
+    textColor,
     accessibilityLayer,
     withBrush,
     brushProps,
