@@ -1,43 +1,35 @@
-import { Code } from '@mantine/core';
-import { MdxLink } from '@/components/MdxProvider';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Controllers);
 
-# Controllers
+# Controllers and stores
 
-Some Mantine components expose their state through a **controller** – an object returned by a
-`use<Component>` hook that you create yourself and pass back to the component. The controller owns
-the component's state and exposes actions and queries on it, so you can drive the component from
-anywhere in your application instead of only from its props.
+Some Mantine components can be driven with a hook. Call `use<Component>` in your component,
+get back an object with actions and queries, and pass it to the component with a prop. There are
+two kinds of these objects:
 
-This guide explains the pattern once. Each component that supports a controller documents its own
-actions and queries on its own page.
+- A controller is passed with the `controller` prop. It adds actions and queries to a component
+  that you use as is, for example `expandAll()` on `Accordion` or `next()` on `Stepper`.
+- A store is passed with the `store` prop. It is a building block for your own component:
+  `Select`, `MultiSelect` and `Autocomplete` are built on top of `Combobox` with `useCombobox`,
+  and `useSelect` lets you build your own component on top of `Select` in the same way.
 
-## Controller vs controlled props
+Both are optional. Every component works without them with `value`, `defaultValue` and `onChange`
+props (or the component's own spelling, for example `opened`/`onChange`), see
+[Controlled vs Uncontrolled](/guides/controlled-vs-uncontrolled).
 
-Every stateful Mantine component works without a controller. `value`/`defaultValue`/`onChange`
-(or the component's own spelling, for example `opened`/`onChange`) are enough for most cases, and
-nothing about controllers changes how they behave – see
-[Controlled vs Uncontrolled](/guides/controlled-vs-uncontrolled) for those.
+## Controllers
 
-The difference is **where the state lives and what you can do with it**:
-
-- With **controlled props**, you own the value in your own `useState` and the component reads it.
-  You can set the value, and that is all – anything else has to be reimplemented from scratch.
-- With a **controller**, the hook owns the value and hands you back actions and queries built on
-  knowledge the component has and you do not.
-
-`Accordion` is the clearest example. With props you can set which items are expanded. With a
-controller you can also call `expandAll()`, which needs to know every `Accordion.Item` that is
-currently mounted – something you cannot reconstruct from outside the component.
+A controller owns the component state and exposes actions and queries on it. Create it with the
+hook, pass the same state options that the component accepts as props, and pass the result to the
+component with the `controller` prop:
 
 ```tsx
 import { Accordion, Button, useAccordion } from '@mantine/core';
 
 function Demo() {
-  const controller = useAccordion({ multiple: true });
+  const controller = useAccordion({ multiple: true, defaultValue: ['first'] });
 
   return (
     <>
@@ -53,437 +45,219 @@ function Demo() {
 }
 ```
 
-## When to use a controller
+Use a controller when props are not enough:
 
-Reach for a controller when one of these is true:
+- To call an action that depends on state the component owns internally. `expandAll()` needs the
+  list of mounted `Accordion.Item` components, which you cannot reconstruct from outside.
+- To drive the component from outside its subtree. The hook can be called in a parent, a context
+  provider or a layout, and its actions passed to a toolbar or a keyboard shortcut handler.
+- To read state that `onChange` does not report, for example `isExpanded(item)` or `getItems()`.
 
-- **You need an action props cannot express.** `expandAll()`, `nextStep()`, `clear()` – anything
-  that depends on state the component owns internally.
-- **You need to drive the component from outside its subtree.** The hook can be called in a parent,
-  a context provider or a layout, and the actions passed anywhere, without lifting the value and
-  re-implementing every transition by hand.
-- **You need to read state that is not reported by `onChange`.** Controllers expose queries such as
-  `isExpanded(item)` or `getItems()`.
-- **You want several parts of your UI to share one component's state** – a toolbar, a keyboard
-  shortcut handler and the component itself, all driven from the same object.
+Each component documents the actions and queries of its controller on its own page, see the
+[list of components](#components-with-controllers) below.
 
-If you only need to set the value, use the props. The controller is additive and never required.
+## Stores
 
-## Creating and passing a controller
+A store is created and passed the same way, with a `use<Component>` hook and the `store` prop, but
+it has a different purpose. A controller drives a component that you use as is. A store is a base
+for your own component with its own props and behavior. For example, `useSelect` reuses the value,
+search and dropdown handling of `Select` to build a select that offers to create an option from the
+search text:
 
-Call the hook, then pass its result to the component:
+```tsx
+import { Select, useSelect } from '@mantine/core';
+
+interface CreatableSelectProps {
+  data: string[];
+  onCreate: (item: string) => void;
+}
+
+function CreatableSelect({ data, onCreate }: CreatableSelectProps) {
+  const store = useSelect({
+    onChange: (item) => {
+      if (item !== null && !data.includes(item)) {
+        onCreate(item);
+      }
+    },
+  });
+
+  const search = store.getSearch().trim();
+  const canCreate = search !== '' && !data.includes(search);
+
+  return <Select store={store} searchable data={canCreate ? [...data, search] : data} />;
+}
+```
+
+`Combobox`, `Tree` and `DataGrid` are building blocks by design, so they work with a store as
+well, see the [list of components](#components-with-stores) below.
+
+## Controller and props
+
+When the `controller` prop is set, the controller owns the state and the state props of the
+component are ignored. Pass them to the hook instead:
 
 ```tsx
 import { Accordion, useAccordion } from '@mantine/core';
 
-function Demo() {
-  // The hook accepts the same state options the component accepts as props
-  const controller = useAccordion({
-    multiple: true,
-    defaultValue: ['first'],
-    onChange: (value) => console.log(value),
-  });
+// ✅ State options go to the hook
+const controller = useAccordion({ multiple: true, defaultValue: ['first'] });
+<Accordion controller={controller} />;
 
-  return <Accordion controller={controller}>{/* items */}</Accordion>;
+// ❌ multiple and defaultValue are ignored, the controller already owns them
+const controller = useAccordion();
+<Accordion controller={controller} multiple defaultValue={['first']} />;
+```
+
+The `controller` prop description in the props table of each component lists the props it
+replaces. Styling and rendering props, for example `size`, `variant`, `classNames` and children,
+are never affected, and adding a controller never removes or renames a prop, so it is safe to adopt
+one in existing code. The same rules apply to the `store` prop.
+
+## Reading state
+
+A controller is reactive: the component that called the hook re-renders when the state changes,
+so you can read the state during render with query functions:
+
+```tsx
+import { Accordion, Button, Text, useAccordion } from '@mantine/core';
+
+function Demo() {
+  const controller = useAccordion({ multiple: true });
+  const expanded = controller.getExpandedItems();
+
+  return (
+    <>
+      <Text>{expanded.length} items expanded</Text>
+      <Button disabled={expanded.length === 0} onClick={controller.collapseAll}>
+        Collapse all
+      </Button>
+      <Accordion controller={controller}>{/* items */}</Accordion>
+    </>
+  );
 }
 ```
 
-Most controller hooks can be called with no arguments – `useAccordion()` is valid and gives you a
-controller with the component's default state, because every one of its options is optional. A hook
-whose component genuinely needs a value to work still requires it: `usePagination({ total })` cannot
-be called empty.
-
-A controller is meant to drive one component instance. You can pass the same controller to two
-components – they will share the value – but queries that depend on mounted children see all of
-them at once: two accordions sharing a controller register into the same item list, so `getItems()`
-and `expandAll()` cover both.
-
-## Coexistence with props
-
-**When a `controller` prop is set, the controller owns the state and the component's own state props
-are ignored.** Pass them to the hook instead:
+Actions and queries keep the same identity for the lifetime of the controller, so they are safe as
+`useEffect` and `useCallback` dependencies and as props of memoized components. Queries always
+return the latest value, both during render and inside callbacks, where a value captured by a
+closure would be stale:
 
 ```tsx
-// ✅ Options go to the hook
-const controller = useAccordion({ multiple: true, defaultValue: ['first'] });
-<Accordion controller={controller} />
+import { useEffect } from 'react';
+import { useStepper } from '@mantine/core';
 
-// ❌ multiple and defaultValue are ignored – the controller already decides them
-const controller = useAccordion();
-<Accordion controller={controller} multiple defaultValue={['first']} />
+function Demo() {
+  const controller = useStepper();
+
+  useEffect(() => {
+    const handler = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        controller.next();
+      }
+    };
+
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [controller.next]);
+
+  return null;
+}
 ```
 
-This happens silently: there is no runtime warning. The `controller` prop's description in each
-component's props table names exactly which props it supersedes, and that is the list to check.
-
-What a controller supersedes is **every prop it owns**, which is not the same as every prop that
-looks like state. A prop that decides what the next value will be belongs to the controller even
-when it reads as behavior – `Accordion`'s `disableCollapse`, or `Editable`'s `activationMode`,
-`submitMode`, `selectOnFocus`, `disabled` and `readOnly`. Check the `controller` prop's description
-on the component you are using: it names the full list.
-
-Styling and rendering props – `size`, `radius`, `variant`, `classNames`, children – are never
-affected. And adding a controller to a component never removes or renames a prop, so it is always
-safe to adopt one in existing code.
-
-## Reactivity
-
-A controller is reactive: when its state changes, the component that called the hook re-renders.
-This means the controller is a normal part of your render, and you can read its state with its
-query functions:
-
-```tsx
-const controller = useAccordion({ multiple: true });
-
-return (
-  <>
-    <Text>{controller.getValue().length} items expanded</Text>
-    <Button disabled={controller.getValue().length === 0} onClick={controller.collapseAll}>
-      Collapse all
-    </Button>
-    <Accordion controller={controller}>{/* items */}</Accordion>
-  </>
-);
-```
-
-Two guarantees are worth knowing when you write effects and memos against a controller:
-
-- **Actions and queries are stable for the lifetime of the controller.** `controller.expandAll` is
-  the same function on every render, so it is safe as a `useEffect` or `useCallback` dependency and
-  safe to pass to a memoised child.
-- **The controller object itself is not a meaningful dependency.** It is memoised on its state, so
-  it changes only when the state changes – but do not build on its identity. Depend on the specific
-  actions and queries you use.
-
-Both guarantees hold for every component listed below.
-
-`onChange` fires synchronously inside the action that caused the change, exactly as it does with
-controlled props.
-
-State is read through `get<X>()` functions – `getActive()` on `useStepper`, `getOpenIndex()` on
-`useMenubar`, `getHours()` on `useTimePicker`. They are stable like the actions, and they always return the latest value:
-during render, because the component re-renders when the state changes, and inside effects and
-callbacks, where a value captured by a closure would be stale.
-
-Some queries report what the component has rendered rather than state the controller owns. They are
-read on demand and do not re-render anything by themselves. `getItems()` on an accordion reports
-what is mounted at the moment you call it, so it returns an empty array on the very first render,
-before children have mounted. The same applies to `getStepCount()` on a stepper: it reports what the
-`Stepper` rendered, so it returns `0` until one is mounted with the controller, and the actions that
-depend on it – `next`, `last` and `complete` – do nothing until then. `getDisplayedDate()` on a
-calendar works the same way: it returns `null` and the stepping actions do nothing until a
-`Calendar` with the controller is rendered.
-
-## Actions, queries and naming
-
-Controllers follow a consistent vocabulary across components, so the accordion's actions read the
-same way as the tree's:
-
-<DataTable
-  head={['Shape', 'Meaning']}
-  data={[
-    [<Code>set&lt;Field&gt;</Code>, 'Replaces a piece of state directly'],
-    [
-      <Code>open / close, expand / collapse, select / deselect, check / uncheck</Code>,
-      'Antonym pairs, one state change each',
-    ],
-    [<Code>toggle</Code>, 'Flips a piece of state'],
-    [<Code>expandAll, collapseAll, selectAll</Code>, 'Bulk version of the single action'],
-    [<Code>next / previous, first / last</Code>, 'Relative movement, always spelled out'],
-    [<Code>is&lt;X&gt; / has&lt;X&gt;</Code>, 'Predicate, returns a boolean'],
-    [<Code>get&lt;X&gt;()</Code>, 'Query read on demand, always a function'],
-  ]}
-/>
-
-An action that does not apply to the component's current mode is still present and does nothing –
-`expandAll()` on an accordion without `multiple` is a no-op rather than a type error, so a
-controller passed around your application never changes shape.
-
-Controller options and state use the **same names as the component's props**. If the component
-spells its state `opened`/`onChange`, so does the controller; nothing is renamed to a generic
-`value`. `usePagination` is the exception, because it shipped before the rule: it takes
-`page`/`initialPage` and returns `active`, where `Pagination` uses `value` and `defaultValue`.
-
-Some controller fields exist for the component's internal wiring rather than for you – for example
-`registerItem`, which `Accordion.Item` uses to register itself. They are documented as such in each
-controller's type.
+Queries that depend on rendered children, for example `getItems()` on `Accordion` or
+`getStepCount()` on `Stepper`, report what is mounted at the moment of the call and return an
+empty result before the component is rendered. Stores give the same guarantees, except
+`useDataGrid`, which returns a new object on every render.
 
 ## TypeScript
 
-Controller types are named after the component and exported from the same package:
+Controller and store types are named after the component and exported from the same package as
+the hook. Use them to type a controller that is created in one component and passed to another:
 
 ```tsx
+import { Accordion, useAccordion } from '@mantine/core';
 import type { AccordionController, AccordionControllerOptions } from '@mantine/core';
 
-function expandEverything(controller: AccordionController<true>) {
-  controller.expandAll();
+interface SettingsAccordionProps {
+  controller: AccordionController<true>;
 }
-```
 
-Where a component's state type depends on an option, the controller carries that option as a
-generic and infers it from what you pass to the hook:
+function SettingsAccordion({ controller }: SettingsAccordionProps) {
+  return <Accordion controller={controller}>{/* items */}</Accordion>;
+}
 
-```tsx
-const single = useAccordion();
-single.value; // -> string | null
-
-const multiple = useAccordion({ multiple: true });
-multiple.value; // -> string[]
-```
-
-The inferred type flows through the `controller` prop, so `Accordion` narrows its own `value` and
-`onChange` types to match the controller you gave it.
-
-## Components that support controllers
-
-<DataTable
-  head={['Component', 'Hook', 'Prop', 'Controller type']}
-  data={[
-    [
-      <MdxLink href="/core/accordion">Accordion</MdxLink>,
-      <Code>useAccordion</Code>,
-      <Code>controller</Code>,
-      <Code>AccordionController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/calendar">Calendar</MdxLink>,
-      <Code>useCalendar</Code>,
-      <Code>controller</Code>,
-      <Code>CalendarController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/date-input">DateInput</MdxLink>,
-      <Code>useDateInput</Code>,
-      <Code>controller</Code>,
-      <Code>PickerInputController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/date-picker">DatePicker</MdxLink>,
-      <Code>useCalendar</Code>,
-      <Code>controller</Code>,
-      <Code>CalendarController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/date-picker-input">DatePickerInput</MdxLink>,
-      <Code>useDatePickerInput</Code>,
-      <Code>controller</Code>,
-      <Code>PickerInputController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/date-time-picker">DateTimePicker</MdxLink>,
-      <Code>useDateTimePicker</Code>,
-      <Code>controller</Code>,
-      <Code>DateTimePickerController</Code>,
-    ],
-    [
-      <MdxLink href="/core/editable">Editable</MdxLink>,
-      <Code>useEditable</Code>,
-      <Code>controller</Code>,
-      <Code>EditableController</Code>,
-    ],
-    [
-      <MdxLink href="/core/image-cropper">ImageCropper</MdxLink>,
-      <Code>useImageCropper</Code>,
-      <Code>controller</Code>,
-      <Code>ImageCropperController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/inline-date-time-picker">InlineDateTimePicker</MdxLink>,
-      <Code>useInlineDateTimePicker</Code>,
-      <Code>controller</Code>,
-      <Code>InlineDateTimePickerController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/masked-date-input">MaskedDateInput</MdxLink>,
-      <Code>useMaskedDateInput</Code>,
-      <Code>controller</Code>,
-      <Code>MaskedDateInputController</Code>,
-    ],
-    [
-      <MdxLink href="/core/menubar">Menubar</MdxLink>,
-      <Code>useMenubar</Code>,
-      <Code>controller</Code>,
-      <Code>MenubarController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/month-picker">MonthPicker</MdxLink>,
-      <Code>useCalendar</Code>,
-      <Code>controller</Code>,
-      <Code>CalendarController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/month-picker-input">MonthPickerInput</MdxLink>,
-      <Code>useMonthPickerInput</Code>,
-      <Code>controller</Code>,
-      <Code>PickerInputController</Code>,
-    ],
-    [
-      <MdxLink href="/core/pagination">Pagination</MdxLink>,
-      <Code>usePagination</Code>,
-      <Code>controller</Code>,
-      <Code>PaginationController</Code>,
-    ],
-    [
-      <MdxLink href="/core/pin-input">PinInput</MdxLink>,
-      <Code>usePinInput</Code>,
-      <Code>controller</Code>,
-      <Code>PinInputController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/quarter-picker">QuarterPicker</MdxLink>,
-      <Code>useCalendar</Code>,
-      <Code>controller</Code>,
-      <Code>CalendarController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/quarter-picker-input">QuarterPickerInput</MdxLink>,
-      <Code>useQuarterPickerInput</Code>,
-      <Code>controller</Code>,
-      <Code>PickerInputController</Code>,
-    ],
-    [
-      <MdxLink href="/core/stepper">Stepper</MdxLink>,
-      <Code>useStepper</Code>,
-      <Code>controller</Code>,
-      <Code>StepperController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/time-picker">TimePicker</MdxLink>,
-      <Code>useTimePicker</Code>,
-      <Code>controller</Code>,
-      <Code>TimePickerController</Code>,
-    ],
-    [
-      <MdxLink href="/core/timer">Timer</MdxLink>,
-      <Code>useTimer</Code>,
-      <Code>controller</Code>,
-      <Code>TimerController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/week-picker">WeekPicker</MdxLink>,
-      <Code>useCalendar</Code>,
-      <Code>controller</Code>,
-      <Code>CalendarController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/week-picker-input">WeekPickerInput</MdxLink>,
-      <Code>useWeekPickerInput</Code>,
-      <Code>controller</Code>,
-      <Code>PickerInputController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/year-picker">YearPicker</MdxLink>,
-      <Code>useCalendar</Code>,
-      <Code>controller</Code>,
-      <Code>CalendarController</Code>,
-    ],
-    [
-      <MdxLink href="/dates/year-picker-input">YearPickerInput</MdxLink>,
-      <Code>useYearPickerInput</Code>,
-      <Code>controller</Code>,
-      <Code>PickerInputController</Code>,
-    ],
-  ]}
-/>
-
-
-[usePagination](/hooks/use-pagination) lives in `@mantine/hooks` because it is useful on its own,
-and is re-exported from `@mantine/core` together with its controller-named types, so both imports
-work:
-
-```tsx
-import { usePagination } from '@mantine/core';
-import type { PaginationController, PaginationControllerOptions } from '@mantine/core';
-
-// or, equivalently
-import { usePagination } from '@mantine/hooks';
-import type { UsePaginationOptions, UsePaginationReturnValue } from '@mantine/hooks';
-```
-
-Controllers of components that do not live in `@mantine/core` are exported from their own package
-next to the component they drive, with the same controller names. [useCalendar](/dates/calendar) and
-[useTimePicker](/dates/time-picker), with their `<Component>Controller` and
-`<Component>ControllerOptions` types, are imported from `@mantine/dates`:
-
-```tsx
-import { Calendar, TimePicker, useCalendar, useTimePicker } from '@mantine/dates';
-import type { CalendarController, TimePickerController } from '@mantine/dates';
-```
-
-A hook that returns an object is not automatically a controller. `useFloatingWindow` and
-`useModalsStack` return objects that a component consumes, but they do not own component state and
-are not passed with a `controller` prop.
-
-## Stores
-
-`Combobox`, `Tree`, `DataGrid`, `Select`, `MultiSelect`, `TagsInput` and `Autocomplete` work with a **store** instead of a controller. A store is created
-and passed the same way – a `use<Component>` hook whose result goes to the component's `store` prop –
-but it serves a different purpose:
-
-- A **controller** drives a component that you use as is. `Stepper` with `useStepper` is the
-  complete component, and the controller adds actions and queries next to its props.
-- A **store** is a building block for your own component. `Combobox` with `useCombobox` is the base
-  that `Select`, `Autocomplete` and `MultiSelect` are built on, and you use it the same way – to build
-  a component with its own props and behavior, for example a select that can create new options.
-
-Stores follow the naming of the hooks they shipped with rather than the vocabulary above – for
-example, `useTree` spells its bulk actions `expandAllNodes` and `collapseAllNodes`, not `expandAll`
-and `collapseAll` – so check each component's page. `useDataGrid` also returns a new object on
-every render, so treat its members as ordinary callbacks rather than stable references.
-
-```tsx
-import { Tree, useTree } from '@mantine/core';
+function useSettingsAccordion(options: AccordionControllerOptions<true>) {
+  return useAccordion({ ...options, multiple: true });
+}
 
 function Demo() {
-  const store = useTree({ initialExpandedState: { src: true } });
-  return <Tree data={data} store={store} />;
+  const controller = useSettingsAccordion({ defaultValue: ['profile'] });
+  return <SettingsAccordion controller={controller} />;
 }
 ```
 
-<DataTable
-  head={['Component', 'Hook', 'Prop', 'Store type']}
-  data={[
-    [
-      <MdxLink href="/core/autocomplete">Autocomplete</MdxLink>,
-      <Code>useAutocomplete</Code>,
-      <Code>store</Code>,
-      <Code>AutocompleteStore</Code>,
-    ],
-    [
-      <MdxLink href="/core/combobox">Combobox</MdxLink>,
-      <Code>useCombobox</Code>,
-      <Code>store</Code>,
-      <Code>ComboboxStore</Code>,
-    ],
-    [
-      <MdxLink href="/data-grid/data-grid">DataGrid</MdxLink>,
-      <Code>useDataGrid</Code>,
-      <Code>store</Code>,
-      <Code>DataGridStore</Code>,
-    ],
-    [
-      <MdxLink href="/core/multi-select">MultiSelect</MdxLink>,
-      <Code>useMultiSelect</Code>,
-      <Code>store</Code>,
-      <Code>MultiSelectStore</Code>,
-    ],
-    [
-      <MdxLink href="/core/select">Select</MdxLink>,
-      <Code>useSelect</Code>,
-      <Code>store</Code>,
-      <Code>SelectStore</Code>,
-    ],
-    [
-      <MdxLink href="/core/tags-input">TagsInput</MdxLink>,
-      <Code>useTagsInput</Code>,
-      <Code>store</Code>,
-      <Code>TagsInputStore</Code>,
-    ],
-    [
-      <MdxLink href="/core/tree">Tree</MdxLink>,
-      <Code>useTree</Code>,
-      <Code>store</Code>,
-      <Code>TreeStore</Code>,
-    ],
-  ]}
-/>
+When the state type depends on an option, the type is a generic that is inferred from the options
+passed to the hook and flows through the `controller` prop to the component:
+
+```tsx
+import { useAccordion } from '@mantine/core';
+
+const single = useAccordion();
+single.getValue(); // -> string | null
+
+const multiple = useAccordion({ multiple: true });
+multiple.getValue(); // -> string[]
+```
+
+## Components with controllers
+
+`@mantine/core`:
+
+- [Accordion](/core/accordion#controlling-with-useaccordion), `useAccordion`
+- [Editable](/core/editable#useeditable-hook), `useEditable`
+- [ImageCropper](/core/image-cropper#controller), `useImageCropper`
+- [Menubar](/core/menubar#controlling-with-usemenubar), `useMenubar`
+- [Pagination](/core/pagination#controlling-with-usepagination), `usePagination`, also exported
+  from `@mantine/hooks`
+- [PinInput](/core/pin-input#controlling-with-usepininput), `usePinInput`
+- [Stepper](/core/stepper#controlling-with-usestepper), `useStepper`
+- [Timer](/core/timer#usetimer-hook), `useTimer`
+
+`@mantine/dates`:
+
+- [Calendar](/dates/calendar#controlling-with-usecalendar),
+  [DatePicker](/dates/date-picker#controlling-with-usecalendar),
+  [MonthPicker](/dates/month-picker#controlling-with-usecalendar),
+  [YearPicker](/dates/year-picker#controlling-with-usecalendar),
+  [WeekPicker](/dates/week-picker#controlling-with-usecalendar) and
+  [QuarterPicker](/dates/quarter-picker#controlling-with-usecalendar), `useCalendar`
+- [DatePickerInput](/dates/date-picker-input#controlling-with-usedatepickerinput),
+  `useDatePickerInput`
+- [MonthPickerInput](/dates/month-picker-input#controlling-with-usemonthpickerinput),
+  `useMonthPickerInput`
+- [YearPickerInput](/dates/year-picker-input#controlling-with-useyearpickerinput),
+  `useYearPickerInput`
+- [WeekPickerInput](/dates/week-picker-input#controlling-with-useweekpickerinput),
+  `useWeekPickerInput`
+- [QuarterPickerInput](/dates/quarter-picker-input#controlling-with-usequarterpickerinput),
+  `useQuarterPickerInput`
+- [DateInput](/dates/date-input#controlling-with-usedateinput), `useDateInput`
+- [MaskedDateInput](/dates/masked-date-input#controlling-with-usemaskeddateinput),
+  `useMaskedDateInput`
+- [DateTimePicker](/dates/date-time-picker#controlling-with-usedatetimepicker),
+  `useDateTimePicker`
+- [InlineDateTimePicker](/dates/inline-date-time-picker#controlling-with-useinlinedatetimepicker),
+  `useInlineDateTimePicker`
+- [TimePicker](/dates/time-picker#controlling-with-usetimepicker), `useTimePicker`
+
+## Components with stores
+
+- [Autocomplete](/core/autocomplete#building-on-autocomplete-with-useautocomplete),
+  `useAutocomplete`
+- [Combobox](/core/combobox#usecombobox-hook), `useCombobox`
+- [MultiSelect](/core/multi-select#building-on-multiselect-with-usemultiselect), `useMultiSelect`
+- [Select](/core/select#building-on-select-with-useselect), `useSelect`
+- [TagsInput](/core/tags-input#building-on-tagsinput-with-usetagsinput), `useTagsInput`
+- [Tree](/core/tree#usetree-hook), `useTree`
+- [DataGrid](/data-grid/getting-started#store-hook), `useDataGrid`, exported from
+  `@mantine/data-grid`

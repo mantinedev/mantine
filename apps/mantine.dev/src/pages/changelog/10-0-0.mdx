@@ -1,7 +1,6 @@
 import {
   AccordionDemos,
   AlertDemos,
-  AutocompleteDemos,
   BlockquoteDemos,
   ColorPickerDemos,
   DataGridDemos,
@@ -13,7 +12,6 @@ import {
   NotificationDemos,
   PillsInputDemos,
   SelectDemos,
-  TagsInputDemos,
   SliderDemos,
   StepperDemos,
   SwitchDemos,
@@ -41,241 +39,82 @@ To migrate your application to Mantine 10.0, follow [9.x → 10.x migration guid
 
 ## New @mantine/data-grid package
 
-New [`@mantine/data-grid`](/data-grid/getting-started) package provides a fully-featured data grid
+New [@mantine/data-grid](/data-grid/getting-started) package provides a fully featured data grid
 component built on top of [TanStack Table v9](https://tanstack.com/table) and
-[TanStack Virtual](https://tanstack.com/virtual). It fills the gap left by community libraries with
-first-party Mantine integration, compound component architecture, and full Styles API support.
+[TanStack Virtual](https://tanstack.com/virtual) with compound components and full Styles API
+support. Supported features:
 
-Key features:
-
-- Sorting (single and multi-column) with hover-revealed sort indicators, grid-owned column and global filter state, pagination through `DataGrid.Footer`
-- Column resizing, pinning, visibility toggling, and drag-and-drop reordering
-- Row selection with checkboxes and Shift+click range select
-- Spreadsheet-style cell selection with drag, Shift-extend and keyboard navigation
-- Cell spanning across rows and columns
-- Row expansion with detail panels
-- Row virtualization for 100k+ rows via `@tanstack/react-virtual`
-- Inline editing (cell and row modes) as a TanStack feature with validation, cell status tints and a user-declared actions column
-- Grouping and aggregation with built-in functions
-- Server-side mode for sorting, filtering, and pagination
-- State persistence to localStorage, sessionStorage, or custom storage
-- Compound components for custom layouts (`Toolbar`, `GlobalFilter`, `ColumnVisibilityToggle`, `ExportButton`, `RowCount`, `SelectionBar`, `Footer`, `Tfoot`, `ColumnMenu`)
-- Framed look with `size`, separator props, a column menu, an empty-state slot, three loading variants and a list view, shared by the table body and the virtual body
-- Full accessibility: semantic `<table>` or ARIA grid roles with keyboard navigation
-
-[DataGrid](/data-grid/data-grid) renders a framed data grid with a plain header, a `size` option and
-one attribute-driven look shared by the table body and the virtualized body; every feature is
-enabled through `useDataGrid` options or inferred from the column definitions:
+- Sorting, filtering, global search and pagination, with server-side mode for all of them
+- Column resizing, pinning, visibility toggling, reordering and a column menu
+- Row selection, spreadsheet-style cell selection and cell spanning
+- Row expansion with detail panels, grouping with aggregation and tree data
+- Inline cell and row editing with validation
+- Row virtualization for large datasets
+- State persistence to localStorage, sessionStorage or custom storage
+- Compound components for custom layouts: toolbar, global filter, export button, selection bar and footer
+- Loading and empty states, list view for narrow screens
+- Semantic `table` or ARIA grid roles with keyboard navigation
 
 <Demo data={DataGridDemos.usage} />
 
-## DataGrid cell selection
+## Component controllers and stores
 
-Enable `withCellSelection` for spreadsheet-style cell range selection – click and drag to select a
-range, extend it with Shift, add or subtract ranges with Ctrl/Cmd, and move with the arrow keys:
+Components that own state can now be driven with a hook. Call `use<Component>` in your component
+and pass the result to the component: a controller with the `controller` prop, a store with the
+`store` prop. The [Controllers and stores](/guides/controllers) guide explains the pattern, each
+component documents its own actions and queries.
 
-<Demo data={DataGridDemos.cellSelection} />
-
-## DataGrid cell spanning
-
-Set `spanRows` on a column definition to merge adjacent rows that share the same value, or
-`spanColumns` to make a cell span several columns:
-
-<Demo data={DataGridDemos.cellSpanning} />
-
-## DataGrid redesign
-
-`@mantine/data-grid` has a new default look: a framed grid on the page surface with a `radius`
-prop and a plain header, a grid `size` option (`xs`–`xl`, `sm` by default) on `useDataGrid` that
-replaces density and cascades a control size to the toolbar, selection bar and footer, and
-core-`Table` separator props (`withRowBorders`, `striped`, `withColumnBorders`,
-`highlightOnHover`, plus `withTableBorder`, `stripedColor`, `highlightOnHoverColor` and
-`tabularNums`). Utility columns (selection, expand, row numbers, reorder) are real TanStack display
-columns, `meta.align` aligns header, body and totals cells, and 16 public `--dg-*` CSS variables
-tune every size-derived value and color.
-
-<Demo data={DataGridDemos.frame} />
-<Demo data={DataGridDemos.separators} />
-<Demo data={DataGridDemos.sizes} />
-
-## DataGrid header chrome
-
-The header has a new look shared by the table header and the virtual header: sort arrows are
-revealed on hover (`sortIndicator="always"` keeps them visible, `sortIndicatorPosition="inline"`
-moves them next to the label, the arrow side follows `meta.align`), `withColumnMenu` renders a
-column menu with sort, move, pin, hide, group and reset-size items plus your own
-`columnMenuItems`, column resize handles sit on every boundary with a guide line and double-click
-autosize, columns are reordered with a pointer drag (or **Move left** / **Move right** from the
-menu) and header groups draw their own dividers.
-
-<Demo data={DataGridDemos.sortIndicators} />
-<Demo data={DataGridDemos.columnMenu} />
-<Demo data={DataGridDemos.columnReorder} />
-
-## DataGrid chrome and filters
-
-One empty `<DataGrid.Toolbar />` renders the global search, a labeled `Columns` button and the new
-`DataGrid.ExportButton` (CSV, Excel, print, copy); `DataGrid.RowCount` shows the filtered row
-count; `DataGrid.SelectionBar` takes the toolbar's place while rows are selected (or floats over
-the grid with `floating`); `DataGrid.Footer` replaces `DataGrid.Pagination` and
-`DataGrid.StatusBar` with one bar (`statusFormat`, `pagination="pages" | "arrows" | "none"`,
-`withPageSize`). The `<tfoot>` compound is now `DataGrid.Tfoot`.
-
-The built-in filter inputs (`TextFilter`, `SelectFilter`, `MultiSelectFilter`, `NumberRangeFilter`,
-`BooleanFilter`, `OperatorFilter`, `headerFilters`, `meta.filterVariant` and friends) are removed:
-the grid owns filter state and user-land UI drives it through `store.setColumnFilter`,
-`store.getColumnFilterValue`, `store.getFacetedUniqueValues` and `store.getFacetedMinMaxValues`;
-`createOperatorFilterFn` with `stringOperators` / `numberOperators` / `booleanOperators` is
-exported for operator-based filters. See the [filtering guide](/data-grid/filtering).
-
-<Demo data={DataGridDemos.toolbarComposed} />
-<Demo data={DataGridDemos.columnFilters} />
-<Demo data={DataGridDemos.selectionBar} />
-<Demo data={DataGridDemos.footerStatusFormats} />
-
-## DataGrid rows
-
-Rows have one attribute-driven look shared by the table body, the virtual body and the list view:
-selected rows take a neutral `--dg-selected-color` fill with a continuous primary bar, keyboard
-focus moves between rows (`ArrowUp` / `ArrowDown` / `Home` / `End`, `Enter` for `onRowClick`,
-`Space` and `Shift + Space` for selection under `selectOnRowClick`) unless `withCellSelection`
-makes cells the focus targets, group rows render per column with a `Label: value (count)` heading
-and toggle as a whole (`withTintedGroupRows`), tree rows draw guide lines by default
-(`withTreeLines`), expansion panels are structural rows (`withTintedExpandedRows`), stripes and row
-numbers share one data-row index, the totals row stacks its aggregation label above the value with
-nine new `aggregation*` labels, and `listView` accepts `'cards'` or `'flat'`.
-
-<Demo data={DataGridDemos.groupingTinted} />
-<Demo data={DataGridDemos.treeDataIcons} />
-<Demo data={DataGridDemos.listView} />
-
-## DataGrid states, editing and pinning
-
-`emptyState` accepts a function receiving `{ rowCount, filteredRowCount, isFiltered, table }` and
-renders in one bare full-width cell; `loading` renders skeleton rows on first load and then the
-`loadingVariant` over existing rows (`overlay`, a 2px `bar` under the header, or `skeleton` rows),
-with `skeletonRowCount` and `loadingOverlayProps`.
-
-Editing is a grid-registered TanStack feature: `useDataGrid` takes `editingMode`, `editTrigger`,
-`onEditStart`, `onEditSave`, `onEditSaveError`, `onEditCancel`, `getCellStatus` and a controllable
-`editing` state, the table, rows and cells expose `startEditing` / `saveEditing` / `cancelEditing`,
-row editing is driven by a user-declared actions column (`meta.type: 'actions'`) or the new
-`withFloatingEditActions` pill, `meta.validate` blocks invalid drafts and shows the message in the
-editor, `Enter` / `F2` start editing from the keyboard, `Tab` walks the editors of a row, and cells
-take `--dg-dirty-color` / `--dg-invalid-color` tints through `getCellStatus`. Editing works in the
-virtual body.
-
-Pinned columns, the sticky header and pinned rows share one attribute-driven contract in both
-bodies: cells carry `data-pinned` / `data-pinned-edge`, the edge cell draws a divider and an
-overflow shadow that only appears while the grid is scrolled away from that side,
-`stickyHeaderOffset` sets where the sticky header sticks, and pinned rows live in
-`data-pinned="top" | "bottom"` tbodies with redrawn rules. `height` now also applies to the table
-body, so `stickyHeader` and pinned rows stick inside the grid's own scroll container.
-
-<Demo data={DataGridDemos.emptyState} />
-<Demo data={DataGridDemos.loadingVariants} />
-<Demo data={DataGridDemos.rowEditing} />
-<Demo data={DataGridDemos.cellValidation} />
-
-## DataGrid breaking changes
-
-`@mantine/data-grid` is treated as a new package in 10.0, so these changes ship without a
-migration guide: the built-in filter inputs and `headerFilters` are removed in favour of the store
-filter API above; `DataGrid.Pagination` and `DataGrid.StatusBar` are replaced by `DataGrid.Footer`
-and the table footer compound is now `DataGrid.Tfoot`; `DataGrid.DensityToggle`, `density`,
-`rowHeight`, `headerHeight` and `spacing` are replaced by the `size` option and CSS variables;
-`withRowNumbers` and `editTrigger` move from `<DataGrid>` to `useDataGrid`; the editing callbacks
-`onCellEdit`, `onRowEdit`, `processRowUpdate` and `onProcessRowUpdateError` are replaced by
-`onEditStart` / `onEditSave` / `onEditSaveError` / `onEditCancel`, and a rejected save no longer
-reverts the drafts; `--dg-stripe-color` is renamed to `--dg-striped-color` and `--dg-spacing` /
-`--dg-pinned-shadow` are removed; the `pagination`, `statusBar`, `statusBarInfo` and
-`densityToggle` selectors and the density, status bar, filter placeholder and `emptyStateText`
-labels are gone.
-
-## Controller hooks
-
-Components that own state can now be driven with a **controller** – an object returned by a
-`use<Component>` hook that owns the component's state and exposes actions and queries on it. Pass it
-to the component with the `controller` prop to control it from anywhere in your application,
-including actions that props cannot express, such as `expandAll` and `collapseAll`:
+A controller adds actions and queries to a component that you use as is, for example `expandAll`
+and `collapseAll` on `Accordion`, which props cannot express. Adopting a controller is always
+additive, the component keeps working with `value`, `defaultValue` and `onChange` as before:
 
 <Demo data={AccordionDemos.controller} />
 
-A controller never removes or renames a prop, so adopting one is always additive – the component
-keeps working with `value`, `defaultValue` and `onChange` as before. The
-[Controllers](/guides/controllers) guide covers when to reach for a controller and how it coexists
-with controlled props.
-
-Components that support controllers:
-
-- [Accordion](/core/accordion#controlling-with-useaccordion) – new `useAccordion` hook
-- [Stepper](/core/stepper#controlling-with-usestepper) – new `useStepper` hook. `Stepper` can now
-  also own its active step: `active` is optional, use `defaultActive` and `onActiveChange` instead
-- [Pagination](/core/pagination#controlling-with-usepagination) – new `controller` prop for the
-  existing `usePagination` hook
-- [PinInput](/core/pin-input#controlling-with-usepininput) – new `usePinInput` hook
-- [Menubar](/core/menubar#controlling-with-usemenubar) – new `useMenubar` hook
-- [Calendar](/dates/calendar#controlling-with-usecalendar) – new `useCalendar` hook, imported from
-  `@mantine/dates`
-- [TimePicker](/dates/time-picker#controlling-with-usetimepicker) – new `useTimePicker` hook,
-  imported from `@mantine/dates`
-- [DatePicker](/dates/date-picker#controlling-with-usecalendar),
-  [MonthPicker](/dates/month-picker#controlling-with-usecalendar),
-  [YearPicker](/dates/year-picker#controlling-with-usecalendar),
-  [WeekPicker](/dates/week-picker#controlling-with-usecalendar) and
-  [QuarterPicker](/dates/quarter-picker#controlling-with-usecalendar) – accept the `useCalendar` controller
-- [DatePickerInput](/dates/date-picker-input#controlling-with-usedatepickerinput) – new
-  `useDatePickerInput` hook, imported from `@mantine/dates`. It opens and closes the dropdown and
-  navigates the calendar, the selected value stays on the component
-- [MonthPickerInput](/dates/month-picker-input#controlling-with-usemonthpickerinput),
-  [YearPickerInput](/dates/year-picker-input#controlling-with-useyearpickerinput),
-  [WeekPickerInput](/dates/week-picker-input#controlling-with-useweekpickerinput) and
-  [QuarterPickerInput](/dates/quarter-picker-input#controlling-with-usequarterpickerinput) – new
-  `useMonthPickerInput`, `useYearPickerInput`, `useWeekPickerInput` and `useQuarterPickerInput` hooks,
-  the same as `useDatePickerInput`
-- [DateTimePicker](/dates/date-time-picker#controlling-with-usedatetimepicker) – new
-  `useDateTimePicker` hook, imported from `@mantine/dates`. It opens and closes the dropdown and
-  navigates the calendar, sets and focuses the time inputs, the selected value stays on the component
-- [InlineDateTimePicker](/dates/inline-date-time-picker#controlling-with-useinlinedatetimepicker) –
-  new `useInlineDateTimePicker` hook: navigation actions of `useCalendar` and time input actions
-- [DateInput](/dates/date-input#controlling-with-usedateinput) – new `useDateInput` hook, imported
-  from `@mantine/dates`. It opens and closes the dropdown and navigates the calendar, the selected
-  value stays on the component
-- [MaskedDateInput](/dates/masked-date-input#controlling-with-usemaskeddateinput) – new
-  `useMaskedDateInput` hook, imported from `@mantine/dates`. It reads and sets each date and time
-  field, including incomplete entries that `onChange` does not report, and moves focus between fields
-- [Timer](/core/timer#usetimer-hook) – `useTimer` hook
-- [Editable](/core/editable#useeditable-hook) – `useEditable` hook
-- [ImageCropper](/core/image-cropper#controller) – `useImageCropper` hook
-
-[Combobox](/core/combobox#usecombobox-hook), [Tree](/core/tree#usetree-hook),
-[DataGrid](/data-grid/getting-started#store-hook), [Select](/core/select#building-on-select-with-useselect),
-[MultiSelect](/core/multi-select#building-on-multiselect-with-usemultiselect),
-[TagsInput](/core/tags-input#building-on-tagsinput-with-usetagsinput)
-and [Autocomplete](/core/autocomplete#building-on-autocomplete-with-useautocomplete) work with a **store** instead – the same hook-and-prop shape, meant as a building block for your own
-components rather than for driving the component as is. `Tree` now takes its store through the `store`
-prop, see the [migration guide](/guides/9x-to-10x).
-
-The new `useSelect` store lets you build your own component on top of `Select` that reuses its value,
-search and label handling – for example, a select that can create new options:
+A store is a building block for your own component. For example, `useSelect` reuses the value,
+search and dropdown handling of `Select` to build a select that can create new options:
 
 <Demo data={SelectDemos.creatable} />
 
-The new `useTagsInput` store does the same for `TagsInput` and adds an `isValidTag` option, so you can
-build, for example, an input that accepts only valid emails:
+Components with controllers:
 
-<Demo data={TagsInputDemos.validation} />
+- [Accordion](/core/accordion#controlling-with-useaccordion)
+- [Stepper](/core/stepper#controlling-with-usestepper)
+- [Pagination](/core/pagination#controlling-with-usepagination)
+- [PinInput](/core/pin-input#controlling-with-usepininput)
+- [Menubar](/core/menubar#controlling-with-usemenubar)
+- [Timer](/core/timer#usetimer-hook)
+- [Editable](/core/editable#useeditable-hook)
+- [ImageCropper](/core/image-cropper#controller)
+- [Calendar](/dates/calendar#controlling-with-usecalendar)
+- [DatePicker](/dates/date-picker#controlling-with-usecalendar)
+- [MonthPicker](/dates/month-picker#controlling-with-usecalendar)
+- [YearPicker](/dates/year-picker#controlling-with-usecalendar)
+- [WeekPicker](/dates/week-picker#controlling-with-usecalendar)
+- [QuarterPicker](/dates/quarter-picker#controlling-with-usecalendar)
+- [DatePickerInput](/dates/date-picker-input#controlling-with-usedatepickerinput)
+- [MonthPickerInput](/dates/month-picker-input#controlling-with-usemonthpickerinput)
+- [YearPickerInput](/dates/year-picker-input#controlling-with-useyearpickerinput)
+- [WeekPickerInput](/dates/week-picker-input#controlling-with-useweekpickerinput)
+- [QuarterPickerInput](/dates/quarter-picker-input#controlling-with-usequarterpickerinput)
+- [DateInput](/dates/date-input#controlling-with-usedateinput)
+- [MaskedDateInput](/dates/masked-date-input#controlling-with-usemaskeddateinput)
+- [DateTimePicker](/dates/date-time-picker#controlling-with-usedatetimepicker)
+- [InlineDateTimePicker](/dates/inline-date-time-picker#controlling-with-useinlinedatetimepicker)
+- [TimePicker](/dates/time-picker#controlling-with-usetimepicker)
 
-`useAutocomplete` gives access to the highlighted option of `Autocomplete` – for example, a field
-that completes the highlighted option on Tab:
+Components with stores:
 
-<Demo data={AutocompleteDemos.store} />
+- [Combobox](/core/combobox#usecombobox-hook)
+- [Select](/core/select#building-on-select-with-useselect)
+- [MultiSelect](/core/multi-select#building-on-multiselect-with-usemultiselect)
+- [TagsInput](/core/tags-input#building-on-tagsinput-with-usetagsinput)
+- [Autocomplete](/core/autocomplete#building-on-autocomplete-with-useautocomplete)
+- [Tree](/core/tree#usetree-hook)
+- [DataGrid](/data-grid/getting-started#store-hook)
 
-`useTimer`, `useEditable` and `useImageCropper` have their types renamed to `<Component>Controller`
-and `<Component>ControllerOptions`; `usePagination` keeps the type names it shipped with
-(`UsePaginationOptions`, `UsePaginationReturnValue`), and the stores use `ComboboxStore`,
-`DataGridStore` and `TreeStore`. The renamed
-types are listed in the [migration guide](/guides/9x-to-10x).
+`Tree` now takes its store through the `store` prop, and the types of `useTimer`, `useEditable` and
+`useImageCropper` are renamed to `<Component>Controller` and `<Component>ControllerOptions`, see the
+[migration guide](/guides/9x-to-10x).
 
 ## Modal.Footer and Drawer.Footer
 

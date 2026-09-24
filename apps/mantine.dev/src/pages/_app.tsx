@@ -3,6 +3,7 @@ import '@docs/demos/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/charts/styles.css';
 import '@mantine/code-highlight/styles.css';
+import '@mantine/data-grid/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/dropzone/styles.css';
 import '@mantine/emoji/styles.css';
