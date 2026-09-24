@@ -126,6 +126,24 @@ function findLastEnabled(total: number, isItemDisabled: (index: number) => boole
   return 0;
 }
 
+function findEnabledInRow(
+  row: number,
+  startCol: number,
+  step: number,
+  columns: number,
+  total: number,
+  isItemDisabled: (index: number) => boolean
+): number | null {
+  for (let col = startCol; col >= 0 && col < columns; col += step) {
+    const candidate = row * columns + col;
+    if (candidate < total && !isItemDisabled(candidate)) {
+      return candidate;
+    }
+  }
+
+  return null;
+}
+
 const defaultIsItemDisabled = () => false;
 
 export function useRovingIndex(input: UseRovingIndexInput): UseRovingIndexReturnValue {
@@ -192,24 +210,14 @@ export function useRovingIndex(input: UseRovingIndexInput): UseRovingIndexReturn
 
       switch (event.key) {
         case 'ArrowRight': {
-          const targetCol = isRtl ? col - 1 : col + 1;
-          if (targetCol >= 0 && targetCol < columns! && row * columns! + targetCol < total) {
-            const candidate = row * columns! + targetCol;
-            if (!isItemDisabled(candidate)) {
-              nextIndex = candidate;
-            }
-          }
+          const step = isRtl ? -1 : 1;
+          nextIndex = findEnabledInRow(row, col + step, step, columns!, total, isItemDisabled);
           break;
         }
 
         case 'ArrowLeft': {
-          const targetCol = isRtl ? col + 1 : col - 1;
-          if (targetCol >= 0 && targetCol < columns! && row * columns! + targetCol < total) {
-            const candidate = row * columns! + targetCol;
-            if (!isItemDisabled(candidate)) {
-              nextIndex = candidate;
-            }
-          }
+          const step = isRtl ? 1 : -1;
+          nextIndex = findEnabledInRow(row, col + step, step, columns!, total, isItemDisabled);
           break;
         }
 

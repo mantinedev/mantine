@@ -10,7 +10,11 @@ function getInitialValue(query: string, initialValue?: boolean) {
   }
 
   if (typeof window !== 'undefined' && 'matchMedia' in window) {
-    return window.matchMedia(query).matches;
+    try {
+      return window.matchMedia(query).matches;
+    } catch {
+      return false;
+    }
   }
 
   return false;

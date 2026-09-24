@@ -1,5 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
-import { useThrottledCallback } from './use-throttled-callback';
+import {
+  useThrottledCallback,
+  useThrottledCallbackWithClearTimeout,
+} from './use-throttled-callback';
 
 describe('useThrottledCallback', () => {
   beforeEach(() => {
@@ -49,5 +52,26 @@ describe('useThrottledCallback', () => {
     });
 
     expect(callback).toHaveBeenCalledWith('test');
+  });
+
+  it('resets active state and permits subsequent calls after clearTimeout', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useThrottledCallbackWithClearTimeout(callback, 100));
+
+    act(() => {
+      result.current[0](1);
+    });
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(1);
+
+    act(() => {
+      result.current[1]();
+    });
+
+    act(() => {
+      result.current[0](2);
+    });
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenCalledWith(2);
   });
 });

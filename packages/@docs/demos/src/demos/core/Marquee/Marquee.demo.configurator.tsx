@@ -61,7 +61,7 @@ export const configurator: MantineDemo = {
       max: 100000,
       step: 1000,
       initialValue: 40000,
-      libraryValue: 40000,
+      libraryValue: 100000,
     },
     { prop: 'gap', type: 'size', initialValue: 'md', libraryValue: 'md' },
     { prop: 'fadeEdges', type: 'boolean', initialValue: true, libraryValue: true },

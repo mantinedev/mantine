@@ -67,6 +67,37 @@ describe('@mantine/hooks/use-mask', () => {
       expect(input.value).toBe('');
     });
 
+    it('applies transform to the initial input value', () => {
+      const input = document.createElement('input');
+      input.value = 'abc';
+      const { result } = renderHook(() =>
+        useMask({ mask: 'AAA', transform: (char) => char.toUpperCase() })
+      );
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      expect(input.value).toBe('ABC');
+      expect(result.current.value).toBe('ABC');
+      expect(result.current.rawValue).toBe('ABC');
+    });
+
+    it('applies transform to the initial input value that contains literals', () => {
+      const input = document.createElement('input');
+      input.value = '(123) abc';
+      const { result } = renderHook(() =>
+        useMask({ mask: '(999) AAA', transform: (char) => char.toUpperCase() })
+      );
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      expect(input.value).toBe('(123) ABC');
+      expect(result.current.rawValue).toBe('123ABC');
+    });
+
     it('sets aria-invalid when invalid option is true', () => {
       const input = document.createElement('input');
       const { result } = renderHook(() => useMask({ mask: '999', invalid: true }));

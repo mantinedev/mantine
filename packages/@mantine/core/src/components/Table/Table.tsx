@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   Box,
   BoxProps,
@@ -217,20 +218,35 @@ export const Table = factory<TableFactory>((_props) => {
     rootSelector: 'table',
     vars,
     varsResolver,
+    stable: true,
   });
 
+  const stripedValue = striped === true ? 'odd' : striped || undefined;
+  const resolvedCaptionSide = captionSide || 'bottom';
+
+  const contextValue = useMemo<TableContextValue>(
+    () => ({
+      getStyles,
+      stickyHeader,
+      striped: stripedValue,
+      highlightOnHover,
+      withColumnBorders,
+      withRowBorders,
+      captionSide: resolvedCaptionSide,
+    }),
+    [
+      getStyles,
+      stickyHeader,
+      stripedValue,
+      highlightOnHover,
+      withColumnBorders,
+      withRowBorders,
+      resolvedCaptionSide,
+    ]
+  );
+
   return (
-    <TableProvider
-      value={{
-        getStyles,
-        stickyHeader,
-        striped: striped === true ? 'odd' : striped || undefined,
-        highlightOnHover,
-        withColumnBorders,
-        withRowBorders,
-        captionSide: captionSide || 'bottom',
-      }}
-    >
+    <TableProvider value={contextValue}>
       <Box
         component="table"
         mod={[{ withTableBorder, tabularNums }, mod]}
