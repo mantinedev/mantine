@@ -153,8 +153,7 @@ export function useCalendar(options: CalendarControllerOptions = {}): CalendarCo
   });
 
   const setLevel = useCallbackRef((next: CalendarLevel) => {
-    const { minLevel, maxLevel } = settingsRef.current;
-    const nextLevel = clampLevel(next, minLevel, maxLevel);
+    const nextLevel = clampLevel(next, settingsRef.current.minLevel, settingsRef.current.maxLevel);
 
     if (levelProp === undefined) {
       levelRef.current = nextLevel;
@@ -190,8 +189,7 @@ export function useCalendar(options: CalendarControllerOptions = {}): CalendarCo
   const previousDecade = useCallbackRef(() => shift(-10, 'year'));
 
   const getDisplayedLevel = useCallback(() => {
-    const { minLevel, maxLevel } = settingsRef.current;
-    return clampLevel(levelRef.current, minLevel, maxLevel);
+    return clampLevel(levelRef.current, settingsRef.current.minLevel, settingsRef.current.maxLevel);
   }, []);
 
   const next = useCallbackRef(() => {

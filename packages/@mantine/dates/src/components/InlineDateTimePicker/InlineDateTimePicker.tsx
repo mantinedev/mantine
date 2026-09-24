@@ -199,19 +199,18 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
     : (_value as DateStringValue | null) || defaultDate;
 
   const minLevel = calendarProps.minLevel || 'month';
-  const { maxLevel } = calendarProps;
 
   const controller = useController(useInlineDateTimePicker, controllerProp, {
     date: calendarProps.date,
     defaultDate: _defaultDate || getDefaultClampedDate({ maxDate, minDate }),
     onDateChange: calendarProps.onDateChange,
-    level: level ? clampLevel(level, minLevel, maxLevel) : undefined,
-    defaultLevel: clampLevel(defaultLevel, minLevel, maxLevel),
+    level: level ? clampLevel(level, minLevel, calendarProps.maxLevel) : undefined,
+    defaultLevel: clampLevel(defaultLevel, minLevel, calendarProps.maxLevel),
     onLevelChange: calendarProps.onLevelChange,
     defaultTimeValue,
   });
 
-  const withTimeInputs = clampLevel(controller.level, minLevel, maxLevel) === 'month';
+  const withTimeInputs = clampLevel(controller.level, minLevel, calendarProps.maxLevel) === 'month';
   const [mountFocus] = useState(controller.getPendingTimeFocus);
 
   const getAutofocusProps = (target: TimeEntryTarget, field: TimePickerField) =>

@@ -9,3 +9,4 @@ export { deselect } from './DateInput.demo.deselect';
 export { time } from './DateInput.demo.time';
 export { disabled } from './DateInput.demo.disabled';
 export { presets } from './DateInput.demo.presets';
+export { controller } from './DateInput.demo.controller';

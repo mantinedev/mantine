@@ -102,6 +102,73 @@ to the last known valid date value.
 
 <Demo data={DateInputDemos.disabled} />
 
+## Controlling with useDateInput
+
+`DateInput` opens its dropdown when the input is focused, clicked or typed into, and closes it when
+the input loses focus, `Escape` is pressed or a date is picked. To open it from somewhere else – a button,
+a keyboard shortcut – or to open it on a given level or date, create a controller with the `useDateInput`
+hook and pass it with the `controller` prop. The input keeps opening and closing the dropdown on its own,
+and every open and close goes through the controller. The [Controllers](/guides/controllers) guide covers
+how the pattern works across all components:
+
+<Demo data={DateInputDemos.controller} />
+
+`useDateInput` returns the dropdown actions together with the navigation actions of
+[useCalendar](/dates/calendar/#controlling-with-usecalendar):
+
+```tsx
+import { useState } from 'react';
+import { DateInput, useDateInput } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState<string | null>(null);
+  const controller = useDateInput({
+    defaultLevel: 'month', // -> level the dropdown opens on
+    defaultDate: '2024-06-15', // -> date the dropdown displays first
+    // dropdownOpened, defaultDropdownOpened, onDropdownOpenedChange -> dropdown state
+    // date, onDateChange, level, onLevelChange -> same as on useCalendar
+  });
+
+  // Dropdown actions
+  controller.openDropdown();
+  controller.closeDropdown();
+  controller.toggleDropdown();
+
+  // Navigation actions, same as useCalendar
+  controller.setLevel('year');
+  controller.setDate('2024-08-01');
+  controller.next();
+  controller.previous();
+
+  // Queries
+  controller.isDropdownOpened(); // -> true | false
+  controller.getDate(); // -> displayed date
+  controller.getLevel(); // -> 'month' | 'year' | 'decade'
+  controller.getDisplayedDate(); // -> the date the dropdown displays
+  controller.getDisplayedLevel(); // -> level clamped to minLevel/maxLevel
+
+  return <DateInput value={value} onChange={setValue} controller={controller} />;
+}
+```
+
+The controller does not own the selected value or the typed text – keep using `value`/`onChange`
+(or your form library) for it. When the `controller` prop is set, the `date`, `defaultDate`,
+`onDateChange`, `level`, `defaultLevel` and `onLevelChange` props are ignored – pass them to
+`useDateInput` instead.
+
+Every time the dropdown opens, the level is reset to `defaultLevel`, the same as without a controller.
+The displayed date is kept between opens: it follows the typed or controlled value and stays on the
+month the user navigated to. When the controller has no displayed date yet, the dropdown opens on the
+month of the value. To open on a different level or date, call `setLevel` or `setDate` right after
+`openDropdown`, as the demo above does. A controlled `level` is not reset.
+
+`openDropdown` does nothing while the input is `disabled` or `readOnly`. Do not combine the controller
+with `popoverProps.opened`, which overrides the dropdown state the controller owns.
+
+The controller is typed as `PickerInputController` and its options as `PickerInputControllerOptions`,
+both exported from `@mantine/dates`, the same types as the
+[DatePickerInput](/dates/date-picker-input/#controlling-with-usedatepickerinput) controller.
+
 ## Input props
 
 <InputFeatures component="DateInput" element="input" />

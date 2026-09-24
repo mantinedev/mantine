@@ -16,23 +16,31 @@ import {
   Popover,
   PopoverProps,
   StylesApiProps,
+  useController,
   useInputProps,
   useStyles,
 } from '@mantine/core';
 import { useClickOutside, useDidUpdate } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue, DateValue } from '../../types';
+import { toDateString } from '../../utils';
 import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
+import { clampLevel } from '../Calendar/clamp-level/clamp-level';
 import { DatePickerPreset } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { HiddenDatesInput } from '../HiddenDatesInput';
 import { isSameMonth } from '../Month';
 import { MonthLevelSettings } from '../MonthLevel';
+import type {
+  PickerInputController,
+  PickerInputControllerOptions,
+} from '../PickerInputBase/use-picker-input-controller/use-picker-input-controller';
 import { PresetsList } from '../PresetsList';
 import { YearLevelSettings } from '../YearLevel';
 import { dateStringParser } from './date-string-parser/date-string-parser';
 import { isDateValid } from './is-date-valid/is-date-valid';
+import { useDateInput } from './use-date-input/use-date-input';
 import classes from './DateInput.module.css';
 
 export type DateInputStylesNames =
@@ -102,6 +110,9 @@ export interface DateInputProps
 
   /** Predefined values to pick from @category appearance */
   presets?: DatePickerPreset<'default'>[];
+
+  /** Controller returned by the `useDateInput` hook. When provided, the dropdown opened state and the displayed date and level are owned by the controller and `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel` and `onLevelChange` props are ignored @category state */
+  controller?: PickerInputController;
 }
 
 export type DateInputFactory = Factory<{
@@ -156,6 +167,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     getYearControlProps,
     disabled,
     presets,
+    controller: controllerProp,
     ...rest
   } = props;
 
@@ -171,7 +183,6 @@ export const DateInput = factory<DateInputFactory>((_props) => {
 
   const _wrapperRef = useRef<HTMLDivElement>(null);
   const _dropdownRef = useRef<HTMLDivElement>(null);
-  const [dropdownOpened, setDropdownOpened] = useState(false);
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
   const defaultDateParser = (val: string): DateStringValue | null => {
@@ -206,18 +217,34 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     withTime,
   });
 
-  const [_date, setDate] = useUncontrolledDates({
-    type: 'default',
-    value: date,
-    defaultValue: defaultValue || defaultDate,
-    onChange: onDateChange as any,
+  const controller = useController(useDateInput, controllerProp, {
+    date,
+    defaultDate: defaultValue || defaultDate,
+    onDateChange,
+    level: calendarProps.level
+      ? clampLevel(calendarProps.level, calendarProps.minLevel, calendarProps.maxLevel)
+      : undefined,
+    defaultLevel: clampLevel(
+      calendarProps.defaultLevel,
+      calendarProps.minLevel,
+      calendarProps.maxLevel
+    ),
+    onLevelChange: calendarProps.onLevelChange,
+  });
+
+  const cannotOpen = !!(readOnly || disabled);
+
+  controller.registerPickerInput({
+    valueDate: (controllerProp && _value && toDateString(_value)) || null,
+    fallbackDate: null,
+    disabled: cannotOpen,
   });
 
   useEffect(() => {
-    if (controlled && value !== null) {
-      setDate(value);
+    if (controlled && value != null) {
+      controller.setDate(value);
     }
-  }, [controlled, value]);
+  }, [controlled, value, controller.setDate]);
 
   const [inputValue, setInputValue] = useState(formatValue(_value));
 
@@ -228,7 +255,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.currentTarget.value;
     setInputValue(val);
-    setDropdownOpened(true);
+    controller.openDropdown();
 
     if (val.trim() === '' && (allowDeselect || clearable)) {
       setValue(null);
@@ -236,30 +263,30 @@ export const DateInput = factory<DateInputFactory>((_props) => {
       const dateValue = _dateParser(val);
       if (dateValue && isDateValid({ date: dateValue, minDate, maxDate })) {
         setValue(dateValue);
-        setDate(dateValue);
+        controller.setDate(dateValue);
       }
     }
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     onBlur?.(event);
-    setDropdownOpened(false);
+    controller.closeDropdown();
     fixOnBlur && setInputValue(formatValue(_value));
   };
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     onFocus?.(event);
-    setDropdownOpened(true);
+    controller.openDropdown();
   };
 
   const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
     onClick?.(event);
-    setDropdownOpened(true);
+    controller.openDropdown();
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Escape') {
-      setDropdownOpened(false);
+      controller.closeDropdown();
     }
     onKeyDown?.(event);
   };
@@ -273,19 +300,19 @@ export const DateInput = factory<DateInputFactory>((_props) => {
       const val = _allowDeselect ? (dayjs(_value).isSame(day, 'day') ? null : day) : day;
       setValue(val);
       !controlled && val && setInputValue(formatValue(val));
-      setDropdownOpened(false);
+      controller.closeDropdown();
     },
   });
 
   const handlePresetSelect = (val: DateStringValue | null) => {
     setValue(val);
     if (val) {
-      setDate(val);
+      controller.setDate(val);
     }
     if (!controlled) {
       setInputValue(val ? formatValue(val) : '');
     }
-    setDropdownOpened(false);
+    controller.closeDropdown();
   };
 
   const clearButton = (
@@ -293,7 +320,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
       onClick={() => {
         setValue(null);
         !controlled && setInputValue('');
-        setDropdownOpened(false);
+        controller.closeDropdown();
       }}
       unstyled={unstyled}
       {...clearButtonProps}
@@ -303,10 +330,10 @@ export const DateInput = factory<DateInputFactory>((_props) => {
   const _clearable = clearable && !!_value && !readOnly && !disabled;
 
   useDidUpdate(() => {
-    _value !== undefined && !dropdownOpened && setInputValue(formatValue(_value));
+    _value !== undefined && !controller.dropdownOpened && setInputValue(formatValue(_value));
   }, [_value]);
 
-  useClickOutside(() => setDropdownOpened(false), undefined, [
+  useClickOutside(() => controller.closeDropdown(), undefined, [
     _wrapperRef.current,
     _dropdownRef.current,
   ]);
@@ -324,8 +351,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
       locale={locale}
       getDayProps={_getDayProps}
       size={inputProps.size as MantineSize}
-      date={_date}
-      onDateChange={setDate}
+      controller={controller}
       getMonthControlProps={(date) => ({
         selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
         ...getMonthControlProps?.(date),
@@ -342,10 +368,10 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     <>
       <Input.Wrapper {...wrapperProps} __staticSelector="DateInput" ref={_wrapperRef}>
         <Popover
-          opened={dropdownOpened}
+          opened={controller.dropdownOpened && !cannotOpen}
           trapFocus={false}
           position="bottom-start"
-          disabled={readOnly || disabled}
+          disabled={cannotOpen}
           withRoles={false}
           unstyled={unstyled}
           {...popoverProps}
@@ -411,4 +437,6 @@ export namespace DateInput {
   export type Props = DateInputProps;
   export type StylesNames = DateInputStylesNames;
   export type Factory = DateInputFactory;
+  export type Controller = PickerInputController;
+  export type ControllerOptions = PickerInputControllerOptions;
 }

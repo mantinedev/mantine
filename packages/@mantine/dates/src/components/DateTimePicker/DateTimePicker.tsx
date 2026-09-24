@@ -192,8 +192,7 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
     withTime: true,
   });
 
-  const { minLevel, maxLevel } = calendarProps;
-  const _minLevel = minLevel || 'month';
+  const minLevel = calendarProps.minLevel || 'month';
   const initialValue = value !== undefined ? value : defaultValue;
   const initialValueDate = Array.isArray(initialValue) ? initialValue[0] : initialValue;
 
@@ -208,8 +207,8 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
     date: calendarProps.date,
     defaultDate: toDateString(initialValueDate) || defaultDate,
     onDateChange: calendarProps.onDateChange,
-    level: level ? clampLevel(level, _minLevel, maxLevel) : undefined,
-    defaultLevel: clampLevel(defaultLevel, _minLevel, maxLevel),
+    level: level ? clampLevel(level, minLevel, calendarProps.maxLevel) : undefined,
+    defaultLevel: clampLevel(defaultLevel, minLevel, calendarProps.maxLevel),
     onLevelChange: calendarProps.onLevelChange,
     dropdownOpened: withPopoverState ? popoverOpened : undefined,
     onDropdownOpenedChange: withPopoverState ? onPopoverChange : undefined,

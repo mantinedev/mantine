@@ -41,7 +41,7 @@ export interface PickerInputController extends CalendarController {
   /** Opens the dropdown with `true`, closes it with `false`, same as `openDropdown`/`closeDropdown` */
   setDropdownOpened: (opened: boolean) => void;
 
-  /** Opens the dropdown, resets the displayed date to the value (or `defaultDate`) and the level to `defaultLevel` unless they are controlled. No-op when the dropdown is already opened or the associated picker input is disabled or read only. The same reset is applied whenever the calendar is mounted by any other way of opening the dropdown */
+  /** Opens the dropdown, resets the displayed date to the value (or `defaultDate`) and the level to `defaultLevel` unless they are controlled. `DateInput` keeps the displayed date and sets it to the value only when no date is displayed yet. No-op when the dropdown is already opened or the associated picker input is disabled or read only. The same reset is applied whenever the calendar is mounted by any other way of opening the dropdown */
   openDropdown: () => void;
 
   /** Closes the dropdown. The associated picker input clears a half-selected range, the same as when the user dismisses the dropdown */
@@ -60,9 +60,19 @@ const EMPTY_SETTINGS: PickerInputRegisteredSettings = {
   disabled: false,
 };
 
+export type PickerInputType = 'date' | 'month' | 'year' | 'week' | 'dateInput';
+
+const RESET_LEVEL: Record<PickerInputType, CalendarLevel> = {
+  date: 'month',
+  week: 'month',
+  dateInput: 'month',
+  month: 'year',
+  year: 'decade',
+};
+
 export function usePickerInputController(
   options: PickerInputControllerOptions,
-  defaultLevel: CalendarLevel
+  pickerType: PickerInputType
 ): PickerInputController {
   const {
     dropdownOpened: dropdownOpenedProp,
@@ -71,7 +81,7 @@ export function usePickerInputController(
     ...calendarOptions
   } = options;
 
-  const resetLevel = calendarOptions.defaultLevel ?? defaultLevel;
+  const resetLevel = calendarOptions.defaultLevel ?? RESET_LEVEL[pickerType];
   const calendar = useCalendar({ ...calendarOptions, defaultLevel: resetLevel });
 
   const [dropdownOpened, setDropdownOpenedState] = useUncontrolled<boolean>({
@@ -99,6 +109,14 @@ export function usePickerInputController(
       return;
     }
 
+    if (pickerType === 'dateInput') {
+      if (calendar.getDate() === null && settingsRef.current.valueDate) {
+        calendar.setDate(settingsRef.current.valueDate);
+      }
+
+      return;
+    }
+
     const nextDate =
       settingsRef.current.valueDate ??
       toDateString(calendarOptions.defaultDate) ??
@@ -112,7 +130,7 @@ export function usePickerInputController(
   const resetView = useCallbackRef(() => {
     resetDate();
 
-    if (calendarOptions.level === undefined) {
+    if (calendarOptions.level === undefined && calendar.getLevel() !== resetLevel) {
       calendar.setLevel(resetLevel);
     }
   });

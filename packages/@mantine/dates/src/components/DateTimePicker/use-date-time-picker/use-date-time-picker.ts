@@ -21,7 +21,7 @@ export function useDateTimePicker(
   const { time, onTimeChange, endTime, onEndTimeChange, defaultTimeValue, ...pickerOptions } =
     options;
 
-  const picker = usePickerInputController(pickerOptions, 'month');
+  const picker = usePickerInputController(pickerOptions, 'date');
   const timeEntry = useTimeEntry({
     time,
     onTimeChange,

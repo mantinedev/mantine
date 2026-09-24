@@ -270,4 +270,12 @@ describe('@mantine/dates/DatePickerInput/use-date-picker-input', () => {
 
     expect(hook.result.current.getLevel()).toBe('year');
   });
+
+  it('does not call onLevelChange on open when the level is already defaultLevel', () => {
+    const onLevelChange = jest.fn();
+    const hook = renderController({ onLevelChange });
+
+    act(() => hook.result.current.openDropdown());
+    expect(onLevelChange).not.toHaveBeenCalled();
+  });
 });

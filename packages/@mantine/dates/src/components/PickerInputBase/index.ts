@@ -6,9 +6,9 @@ export type {
   DateInputSharedProps,
 } from './PickerInputBase';
 export { createUsePickerInput } from './use-picker-input-controller/create-use-picker-input';
-export type { PickerInputType } from './use-picker-input-controller/create-use-picker-input';
 export type {
   PickerInputController,
   PickerInputControllerOptions,
   PickerInputRegisteredSettings,
+  PickerInputType,
 } from './use-picker-input-controller/use-picker-input-controller';

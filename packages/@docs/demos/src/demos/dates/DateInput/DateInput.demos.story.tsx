@@ -57,3 +57,8 @@ export const Demo_presets = {
   name: '⭐ Demo: presets',
   render: renderDemo(demos.presets),
 };
+
+export const Demo_controller = {
+  name: '⭐ Demo: controller',
+  render: renderDemo(demos.controller),
+};
