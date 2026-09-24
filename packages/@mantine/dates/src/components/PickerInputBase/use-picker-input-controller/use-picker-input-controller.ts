@@ -60,13 +60,14 @@ const EMPTY_SETTINGS: PickerInputRegisteredSettings = {
   disabled: false,
 };
 
-export type PickerInputType = 'date' | 'month' | 'year' | 'week' | 'dateInput';
+export type PickerInputType = 'date' | 'month' | 'year' | 'week' | 'quarter' | 'dateInput';
 
 const RESET_LEVEL: Record<PickerInputType, CalendarLevel> = {
   date: 'month',
   week: 'month',
   dateInput: 'month',
   month: 'year',
+  quarter: 'year',
   year: 'decade',
 };
 

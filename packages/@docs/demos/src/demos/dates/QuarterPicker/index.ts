@@ -15,3 +15,4 @@ export { presetsRange } from './QuarterPicker.demo.presetsRange';
 export { fullWidth } from './QuarterPicker.demo.fullWidth';
 export { locale } from './QuarterPicker.demo.locale';
 export { nativeLevelSelect } from './QuarterPicker.demo.nativeLevelSelect';
+export { controller } from './QuarterPicker.demo.controller';

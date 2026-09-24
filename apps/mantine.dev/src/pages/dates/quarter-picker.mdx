@@ -64,6 +64,18 @@ Only the year part of the value is used. Note that if you set the `date` prop, t
 
 <Demo data={QuarterPickerDemos.defaultDate} />
 
+## Controlling with useCalendar
+
+`QuarterPicker` accepts the same controller as [Calendar](/dates/calendar/#controlling-with-usecalendar):
+create it with the `useCalendar` hook and pass it with the `controller` prop to drive the displayed
+date and level from outside, for example from a toolbar. The controller does not own the selected
+value – keep using `value`/`onChange` for it:
+
+<Demo data={QuarterPickerDemos.controller} />
+
+When the `controller` prop is set, the `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel`
+and `onLevelChange` props are ignored – pass them to `useCalendar` instead.
+
 ## Min and max date
 
 Set the `minDate` and `maxDate` props to define minimum and maximum dates. Quarters that end before `minDate`

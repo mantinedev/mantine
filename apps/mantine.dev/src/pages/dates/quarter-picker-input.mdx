@@ -39,6 +39,38 @@ To use `presets` with `type="range"`, define the value as a tuple of two dates:
 
 <Demo data={QuarterPickerInputDemos.presetsRange} />
 
+## Controlling with useQuarterPickerInput
+
+`QuarterPickerInput` opens its dropdown when the input is clicked and closes it when a quarter is picked.
+To open it from somewhere else – a button, a keyboard shortcut – or to open it on a given level or year,
+create a controller with the `useQuarterPickerInput` hook and pass it with the `controller` prop.
+The input keeps opening and closing the dropdown on its own, and every open and close goes through the
+controller. The controller works the same way as [useDatePickerInput](/dates/date-picker-input/#controlling-with-usedatepickerinput),
+and the [Controllers](/guides/controllers) guide covers how the pattern works across all components:
+
+<Demo data={QuarterPickerInputDemos.controller} />
+
+Every time the dropdown opens, the displayed year is reset to the selected value (or to `defaultDate`
+when there is no value) and the level is reset to `defaultLevel` (`'year'` by default). To open on a
+different level or year, call `setLevel` or `setDate` right after `openDropdown`, as the demo above does.
+
+The controller does not own the selected value – keep using `value`/`onChange` (or your form
+library) for it. When the `controller` prop is set, the `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel`, `onLevelChange`, `popoverProps.opened` and
+`popoverProps.onChange` props are ignored – pass them to `useQuarterPickerInput` instead (`dropdownOpened` and
+`onDropdownOpenedChange` replace `popoverProps.opened` and `popoverProps.onChange`).
+
+`openDropdown` does nothing while the input is `disabled` or `readOnly`. With `type="range"`, closing
+the dropdown when only the first quarter of the range is picked clears the value, whether the dropdown is
+closed by the user or with `closeDropdown`.
+
+If you only need the dropdown state, `popoverProps={{ opened, onChange }}` controls it without a
+controller: `onChange` is called on every open and close, including the input click and the close
+after a pick, and the input keeps opening and closing the dropdown through it.
+
+The controller is typed as `PickerInputController` and its options as `PickerInputControllerOptions`,
+both exported from `@mantine/dates`. The same types are used by `DatePickerInput`, `MonthPickerInput`,
+`YearPickerInput`, `WeekPickerInput` and `QuarterPickerInput`.
+
 ## Open picker in modal
 
 By default, [QuarterPicker](/dates/quarter-picker/) is rendered inside [Popover](/core/popover/).

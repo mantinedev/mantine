@@ -12,3 +12,4 @@ export { presetsRange } from './QuarterPickerInput.demo.presetsRange';
 export { maxLevel } from './QuarterPickerInput.demo.maxLevel';
 export { clearSectionMode } from './QuarterPickerInput.demo.clearSectionMode';
 export { nativeLevelSelect } from './QuarterPickerInput.demo.nativeLevelSelect';
+export { controller } from './QuarterPickerInput.demo.controller';

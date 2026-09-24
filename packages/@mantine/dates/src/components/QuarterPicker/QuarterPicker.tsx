@@ -11,14 +11,21 @@ import {
   MantineComponentStaticProperties,
   MantineSize,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useMergedRef, useUncontrolled } from '@mantine/hooks';
-import { useDatesState, useFocusAfterLevelChange, useUncontrolledDates } from '../../hooks';
+import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
+import { useDatesState, useFocusAfterLevelChange } from '../../hooks';
 import { DatePickerType, DateStringValue, PickerBaseProps } from '../../types';
-import { getDefaultClampedDate, toDateString } from '../../utils';
+import { getDefaultClampedDate } from '../../utils';
+import { clampLevel } from '../Calendar/clamp-level/clamp-level';
+import {
+  useCalendar,
+  type CalendarController,
+  type CalendarControllerOptions,
+} from '../Calendar/use-calendar/use-calendar';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { PresetsList } from '../PresetsList';
@@ -165,6 +172,9 @@ export interface QuarterPickerProps<Type extends DatePickerType = 'default'>
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Called when quarter is selected @category behavior */
   onQuarterSelect?: (date: DateStringValue) => void;
+
+  /** Controller returned by the `useCalendar` hook. When provided, the displayed date and level are owned by the controller and `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel` and `onLevelChange` props are ignored @category state */
+  controller?: CalendarController;
 }
 
 export type QuarterPickerFactory = Factory<{
@@ -186,17 +196,6 @@ const defaultProps = {
   numberOfColumns: 1,
   __updateDateOnYearSelect: true,
 } satisfies Partial<QuarterPickerProps>;
-
-function clampQuarterLevel(
-  level: QuarterPickerLevel | undefined,
-  maxLevel: QuarterPickerLevel
-): QuarterPickerLevel {
-  if (maxLevel === 'year') {
-    return 'year';
-  }
-
-  return level || 'year';
-}
 
 type QuarterPickerComponent = (<Type extends DatePickerType = 'default'>(
   props: QuarterPickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
@@ -264,6 +263,7 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
     onPreviousYear,
     onNextDecade,
     onPreviousDecade,
+    controller: controllerProp,
     ref,
     ...others
   } = props;
@@ -289,19 +289,16 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
     props,
   });
 
-  const [_level, setLevel] = useUncontrolled<QuarterPickerLevel>({
-    value: level ? clampQuarterLevel(level, maxLevel) : undefined,
-    defaultValue: defaultLevel ? clampQuarterLevel(defaultLevel, maxLevel) : undefined,
-    finalValue: 'year',
-    onChange: onLevelChange,
+  const controller = useController(useCalendar, controllerProp, {
+    date,
+    defaultDate,
+    onDateChange,
+    level: level ? clampLevel(level, 'year', maxLevel) : undefined,
+    defaultLevel: clampLevel(defaultLevel ?? 'year', 'year', maxLevel),
+    onLevelChange: onLevelChange as CalendarControllerOptions['onLevelChange'],
   });
 
-  const [_date, setDate, dateControlled] = useUncontrolledDates({
-    type: 'default',
-    value: toDateString(date),
-    defaultValue: toDateString(defaultDate),
-    onChange: onDateChange as any,
-  });
+  const _level = clampLevel(controller.level, 'year', maxLevel) as QuarterPickerLevel;
 
   const calendarRef = useRef<HTMLDivElement>(null);
   const mergedRef = useMergedRef(calendarRef, ref);
@@ -313,17 +310,29 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
 
   const changeLevel = (nextLevel: QuarterPickerLevel) => {
     focusAfterLevelChange();
-    setLevel(nextLevel);
+    controller.setLevel(nextLevel);
   };
 
   const fallbackDateRef = useRef<DateStringValue | null>(null);
   if (fallbackDateRef.current === null) {
     fallbackDateRef.current = getDefaultClampedDate({ minDate, maxDate });
   }
-  const currentDate: DateStringValue = _date || fallbackDateRef.current;
-
-  const disableNativeLevelSelect = dateControlled && !onDateChange;
+  const fallbackDate = fallbackDateRef.current;
+  const currentDate: DateStringValue = controller.date || fallbackDate;
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
+  const instanceRef = useRef({});
+
+  useIsomorphicEffect(
+    () =>
+      controller.registerCalendar({
+        instance: instanceRef.current,
+        minLevel: 'year',
+        maxLevel,
+        columnsToScroll: _columnsToScroll,
+        fallbackDate,
+      }),
+    [controller.registerCalendar, maxLevel, _columnsToScroll, fallbackDate]
+  );
 
   const {
     onDateChange: onValueChange,
@@ -346,13 +355,13 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
   const handleNextYear = () => {
     const nextDate = dayjs(currentDate).add(_columnsToScroll, 'year').format('YYYY-MM-DD');
     onNextYear?.(nextDate);
-    setDate(nextDate);
+    controller.setDate(nextDate);
   };
 
   const handlePreviousYear = () => {
     const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'year').format('YYYY-MM-DD');
     onPreviousYear?.(nextDate);
-    setDate(nextDate);
+    controller.setDate(nextDate);
   };
 
   const handleNextDecade = () => {
@@ -360,7 +369,7 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
       .add(10 * _columnsToScroll, 'year')
       .format('YYYY-MM-DD');
     onNextDecade?.(nextDate);
-    setDate(nextDate);
+    controller.setDate(nextDate);
   };
 
   const handlePreviousDecade = () => {
@@ -368,7 +377,7 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
       .subtract(10 * _columnsToScroll, 'year')
       .format('YYYY-MM-DD');
     onPreviousDecade?.(nextDate);
-    setDate(nextDate);
+    controller.setDate(nextDate);
   };
 
   const stylesApiProps = {
@@ -419,8 +428,8 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
             onValueChange(payload);
             onQuarterSelect?.(payload);
           }}
-          __onDateChange={setDate}
-          __disableNativeLevelSelect={disableNativeLevelSelect}
+          __onDateChange={controller.setDate}
+          __disableNativeLevelSelect={controller.dateReadOnly}
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
@@ -453,7 +462,7 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
           decadeLabelFormat={decadeLabelFormat}
           __onControlMouseEnter={onYearMouseEnter}
           __onControlClick={(_event, payload) => {
-            __updateDateOnYearSelect && setDate(payload);
+            __updateDateOnYearSelect && controller.setDate(payload);
             changeLevel('year');
             onYearSelect?.(payload);
           }}
@@ -479,9 +488,9 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
     const _val = Array.isArray(normalized) ? normalized[0] : normalized;
     if (_val !== undefined) {
       if (_val) {
-        setDate(_val);
+        controller.setDate(_val);
       }
-      setLevel('year');
+      controller.setLevel('year');
       __onPresetSelect ? __onPresetSelect(normalized) : setValue(normalized);
     }
   };

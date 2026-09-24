@@ -9,12 +9,17 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
-import { useDatesInput } from '../../hooks';
 import { DatePickerType } from '../../types';
-import { getDefaultClampedDate } from '../../utils';
-import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
+import {
+  DateInputSharedProps,
+  PickerInputBase,
+  type PickerInputController,
+  type PickerInputControllerOptions,
+} from '../PickerInputBase';
+import { usePickerInput } from '../PickerInputBase/use-picker-input/use-picker-input';
 import { QuarterPicker, QuarterPickerBaseProps, QuarterPickerStylesNames } from '../QuarterPicker';
 import { pickQuarterPickerProps } from './pick-quarter-picker-props/pick-quarter-picker-props';
+import { useQuarterPickerInput } from './use-quarter-picker-input/use-quarter-picker-input';
 
 export type QuarterPickerInputStylesNames =
   | __InputStylesNames
@@ -29,6 +34,9 @@ export interface QuarterPickerInputProps<Type extends DatePickerType = 'default'
     StylesApiProps<QuarterPickerInputFactory> {
   /** `dayjs` format for input value @default "[Q]Q YYYY" @category appearance */
   valueFormat?: string;
+
+  /** Controller returned by the `useQuarterPickerInput` hook. When provided, the dropdown opened state and the displayed date and level are owned by the controller and `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel`, `onLevelChange`, `popoverProps.opened` and `popoverProps.onChange` props are ignored @category state */
+  controller?: PickerInputController;
 }
 
 export type QuarterPickerInputFactory = Factory<{
@@ -78,6 +86,7 @@ export const QuarterPickerInput: QuarterPickerInputComponent = factory<QuarterPi
       valueFormatter,
       presets,
       attributes,
+      controller: controllerProp,
       ...rest
     } = props;
 
@@ -89,15 +98,13 @@ export const QuarterPickerInput: QuarterPickerInputComponent = factory<QuarterPi
 
     const { pickerProps, others } = pickQuarterPickerProps(rest);
 
-    const {
-      _value,
-      setValue,
-      formattedValue,
-      dropdownHandlers,
-      dropdownOpened,
-      onClear,
-      shouldClear,
-    } = useDatesInput({
+    const pickerInput = usePickerInput({
+      useControllerHook: useQuarterPickerInput,
+      controller: controllerProp,
+      calendarProps: pickerProps,
+      minLevel: 'year',
+      maxLevel: pickerProps.maxLevel,
+      defaultDate: pickerProps.defaultDate,
       type: type as any,
       value,
       defaultValue,
@@ -108,24 +115,31 @@ export const QuarterPickerInput: QuarterPickerInputComponent = factory<QuarterPi
       closeOnChange,
       sortDates,
       valueFormatter,
+      minDate,
+      maxDate,
+      disabled: others.disabled,
+      readOnly: others.readOnly,
+      dropdownType,
+      popoverProps: others.popoverProps,
     });
 
     return (
       <PickerInputBase
-        formattedValue={formattedValue}
+        formattedValue={pickerInput.datesInput.formattedValue}
         withPresets={!!presets}
-        dropdownOpened={dropdownOpened}
-        dropdownHandlers={dropdownHandlers}
+        dropdownOpened={pickerInput.dropdownOpened}
+        dropdownHandlers={pickerInput.dropdownHandlers}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
-        onClear={onClear}
-        shouldClear={shouldClear}
-        value={_value}
+        onClear={pickerInput.datesInput.onClear}
+        shouldClear={pickerInput.datesInput.shouldClear}
+        value={pickerInput.datesInput._value}
         size={size}
         variant={variant}
         dropdownType={dropdownType}
         {...others}
+        popoverProps={pickerInput.popoverProps}
         attributes={attributes}
         type={type as any}
         __staticSelector="QuarterPickerInput"
@@ -135,14 +149,9 @@ export const QuarterPickerInput: QuarterPickerInputComponent = factory<QuarterPi
           size={size}
           variant={variant}
           type={type}
-          value={_value}
-          defaultDate={
-            pickerProps.defaultDate ||
-            (Array.isArray(_value)
-              ? _value[0] || getDefaultClampedDate({ maxDate, minDate })
-              : _value || getDefaultClampedDate({ maxDate, minDate }))
-          }
-          onChange={setValue}
+          value={pickerInput.datesInput._value}
+          controller={pickerInput.controller}
+          onChange={pickerInput.datesInput.setValue}
           locale={locale}
           classNames={resolvedClassNames}
           styles={resolvedStyles}
@@ -166,4 +175,6 @@ export namespace QuarterPickerInput {
   export type Props<Type extends DatePickerType = 'default'> = QuarterPickerInputProps<Type>;
   export type StylesNames = QuarterPickerInputStylesNames;
   export type Factory = QuarterPickerInputFactory;
+  export type Controller = PickerInputController;
+  export type ControllerOptions = PickerInputControllerOptions;
 }
