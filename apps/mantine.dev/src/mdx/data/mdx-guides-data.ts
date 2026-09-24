@@ -38,17 +38,10 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
-  Gatsby: {
-    title: 'Usage with Gatsby',
-    slug: '/guides/gatsby',
-    search: 'Get started with Gatsby',
-    hideHeader: true,
-  },
-
-  Redwood: {
-    title: 'Usage with Redwood',
-    slug: '/guides/redwood',
-    search: 'Get started with Redwood',
+  TanStackStart: {
+    title: 'Usage with TanStack Start',
+    slug: '/guides/tanstack-start',
+    search: 'Get started with TanStack Start',
     hideHeader: true,
   },
 

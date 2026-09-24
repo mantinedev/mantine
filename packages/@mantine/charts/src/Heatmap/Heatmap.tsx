@@ -87,7 +87,7 @@ export interface HeatmapProps
   /** Width of weekday labels column @default 30 @category appearance */
   weekdaysLabelsWidth?: number;
 
-  /** Height of month labels row @default 30 @category appearance */
+  /** Height of month labels row @default 14 @category appearance */
   monthsLabelsHeight?: number;
 
   /** Font size of month and weekday labels @default 12 @category appearance */

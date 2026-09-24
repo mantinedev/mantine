@@ -197,6 +197,29 @@ describe('@mantine/dates/MaskedDateInput/controller', () => {
     expect(screen.queryByLabelText('test-clear')).not.toBeInTheDocument();
   });
 
+  it('focuses the first field in fieldsOrder when controller clear is called', () => {
+    render(
+      <ControllerTest
+        options={{ defaultValue: '2024-03-15' }}
+        fieldsOrder={['month', 'day', 'year']}
+      />
+    );
+
+    act(() => currentController.clear());
+    expect(screen.getByLabelText('test-month')).toHaveFocus();
+  });
+
+  it('allows calendar navigation after a full date is set with the controller', async () => {
+    render(<ControllerTest ariaLabels={{ nextMonth: 'next-month' }} />);
+
+    act(() => currentController.setValue('2024-06-15'));
+    await userEvent.click(day());
+    expect(screen.getByText('June 2024')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByLabelText('next-month'));
+    expect(screen.getByText('July 2024')).toBeInTheDocument();
+  });
+
   it('writes the controller value to the hidden input', () => {
     const { container } = render(<ControllerTest name="test-date" />);
 

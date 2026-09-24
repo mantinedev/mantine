@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import {
   __BaseInputProps,
   __InputStylesNames,
@@ -22,7 +22,8 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useClickOutside, useId, useMergedRef } from '@mantine/hooks';
+import { useClickOutside, useDidUpdate, useId, useMergedRef } from '@mantine/hooks';
+import { useUncontrolledDates } from '../../hooks';
 import { DateStringValue, DateTimeStringValue } from '../../types';
 import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
 import { useDatesContext } from '../DatesProvider';
@@ -371,6 +372,11 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     pasteSplit,
   });
 
+  useEffect(
+    () => controller.registerFieldsOrder(fieldsOrder!),
+    [controller.registerFieldsOrder, fieldsOrder]
+  );
+
   const format = controller.format;
   const isClearable = clearable && !readOnly && !disabled && controller.hasValue();
 
@@ -453,6 +459,19 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     controller.day !== null && controller.month !== null && controller.year !== null
       ? `${String(controller.year).padStart(4, '0')}-${String(controller.month).padStart(2, '0')}-${String(controller.day).padStart(2, '0')}`
       : null;
+
+  const [calendarDate, setCalendarDate] = useUncontrolledDates({
+    type: 'default',
+    value: calendarProps.date,
+    defaultValue: currentDateValue || calendarProps.defaultDate,
+    onChange: calendarProps.onDateChange as any,
+  });
+
+  useDidUpdate(() => {
+    if (currentDateValue !== null) {
+      setCalendarDate(currentDateValue);
+    }
+  }, [currentDateValue]);
 
   const _getDayProps = (day: DateStringValue) => ({
     ...getDayProps?.(day),
@@ -788,7 +807,8 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
           locale={calendarProps.locale || ctx.getLocale(locale)}
           getDayProps={_getDayProps}
           size={size as MantineSize}
-          date={currentDateValue || undefined}
+          date={calendarDate || undefined}
+          onDateChange={setCalendarDate}
           getMonthControlProps={(date) => ({
             selected: currentDateValue !== null ? isSameMonth(date, currentDateValue) : false,
             ...getMonthControlProps?.(date),

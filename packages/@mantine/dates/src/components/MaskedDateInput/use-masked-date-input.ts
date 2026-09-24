@@ -159,7 +159,7 @@ export interface MaskedDateInputController {
   /** Sets am/pm field value, ignored when `format` is `24h` */
   setAmPm: (amPm: string | null) => void;
 
-  /** Clears all fields and moves focus to the day field */
+  /** Clears all fields and moves focus to the first date field */
   clear: () => void;
 
   /** Moves focus to the given field, no-op until the associated MaskedDateInput is mounted */
@@ -176,6 +176,9 @@ export interface MaskedDateInputController {
     amPm: React.RefObject<HTMLSelectElement | null>;
   };
 
+  /** Registers the order of date fields, used internally by `MaskedDateInput` to move focus to the first field on `clear` */
+  registerFieldsOrder: (fieldsOrder: ('day' | 'month' | 'year')[]) => () => void;
+
   /** Parses pasted date strings, used internally by the fields rendered by `MaskedDateInput` */
   onPaste: (event: React.ClipboardEvent<any>) => void;
 }
@@ -189,6 +192,8 @@ interface Fields {
   seconds: number | null;
   amPm: string | null;
 }
+
+const DEFAULT_FIELDS_ORDER: ('day' | 'month' | 'year')[] = ['day', 'month', 'year'];
 
 const DEFAULT_AM_PM_LABELS: MaskedDateInputAmPmLabels = { am: 'AM', pm: 'PM' };
 
@@ -317,6 +322,18 @@ export function useMaskedDateInput(
     [refs]
   );
 
+  const fieldsOrderRef = useRef(DEFAULT_FIELDS_ORDER);
+
+  const registerFieldsOrder = useCallback((fieldsOrder: ('day' | 'month' | 'year')[]) => {
+    fieldsOrderRef.current = fieldsOrder;
+
+    return () => {
+      if (fieldsOrderRef.current === fieldsOrder) {
+        fieldsOrderRef.current = DEFAULT_FIELDS_ORDER;
+      }
+    };
+  }, []);
+
   const fieldsRef = useRef<Fields>(initialFields);
 
   const setFields = (fields: Fields) => {
@@ -404,7 +421,7 @@ export function useMaskedDateInput(
     setFields(EMPTY_FIELDS);
     onChange?.(null);
     wasInvalidBefore.current = true;
-    focus('day');
+    focus(fieldsOrderRef.current[0] ?? 'day');
   });
 
   const setValue = useCallbackRef((nextValue: MaskedDateInputValue) => {
@@ -559,6 +576,7 @@ export function useMaskedDateInput(
       clear,
       focus,
       refs,
+      registerFieldsOrder,
       onPaste,
     }),
     [

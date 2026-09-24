@@ -40,7 +40,7 @@ export interface MarqueeProps
   /** Number of times children are repeated inline for seamless scrolling @default 4 @category appearance */
   repeat?: number;
 
-  /** Animation duration in ms @default 40000 @category appearance */
+  /** Animation duration in ms @default 100000 @category appearance */
   duration?: number;
 
   /** Gap between repeated children, key of `theme.spacing` or any valid CSS value @default 'md' @category appearance */

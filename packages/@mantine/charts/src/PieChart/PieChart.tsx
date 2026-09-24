@@ -48,7 +48,7 @@ export interface PieChartProps
   /** Data used to render chart @category appearance */
   data: PieChartCell[];
 
-  /** Determines whether the tooltip should be displayed when one of the section is hovered @default true @category appearance */
+  /** Determines whether the tooltip should be displayed when one of the section is hovered @default false @category appearance */
   withTooltip?: boolean;
 
   /** Determines whether the legend should be displayed @default false @category appearance */
@@ -81,7 +81,7 @@ export interface PieChartProps
   /** Determines whether segments labels should have lines that connect the segment with the label @default true @category appearance */
   withLabelsLine?: boolean;
 
-  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default 80 @category appearance */
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default 160 @category appearance */
   size?: number;
 
   /** Controls width of segments stroke @default 1 @category appearance */
