@@ -157,6 +157,65 @@ describe('@mantine/dates/MaskedDateInput', () => {
     expect(spy).toHaveBeenLastCalledWith(null);
   });
 
+  it('focuses the first field in fieldsOrder when clear button is clicked', async () => {
+    render(
+      <MaskedDateInput
+        {...defaultProps}
+        clearable
+        defaultValue="2024-06-15"
+        fieldsOrder={['year', 'month', 'day']}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-clear'));
+    expect(screen.getByLabelText('test-year')).toHaveFocus();
+  });
+
+  it('allows calendar navigation after a full date is entered', async () => {
+    render(
+      <MaskedDateInput
+        {...defaultProps}
+        defaultValue="2024-06-15"
+        ariaLabels={{ nextMonth: 'next-month', previousMonth: 'previous-month' }}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-day'));
+    expect(screen.getByText('June 2024')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByLabelText('next-month'));
+    expect(screen.getByText('July 2024')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByLabelText('previous-month'));
+    await userEvent.click(screen.getByLabelText('previous-month'));
+    expect(screen.getByText('May 2024')).toBeInTheDocument();
+  });
+
+  it('moves calendar to the entered date when value changes', async () => {
+    const { rerender } = render(
+      <MaskedDateInput
+        {...defaultProps}
+        value="2024-06-15"
+        ariaLabels={{ nextMonth: 'next-month' }}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-day'));
+    await userEvent.click(screen.getByLabelText('next-month'));
+    expect(screen.getByText('July 2024')).toBeInTheDocument();
+
+    rerender(
+      <>
+        <MaskedDateInput
+          {...defaultProps}
+          value="2023-02-10"
+          ariaLabels={{ nextMonth: 'next-month' }}
+        />
+      </>
+    );
+    expect(screen.getByText('February 2023')).toBeInTheDocument();
+  });
+
   it('disables all fields when disabled is set', () => {
     render(<MaskedDateInput {...defaultProps} disabled />);
 

@@ -245,7 +245,8 @@ function findPrevTokenIndex(slots: MaskSlot[], from: number): number {
 function processInput(
   inputValue: string,
   slots: MaskSlot[],
-  _slotCharOption: string | null | undefined
+  _slotCharOption: string | null | undefined,
+  transform?: (char: string) => string
 ): string {
   let result = '';
   let inputIndex = 0;
@@ -270,7 +271,7 @@ function processInput(
     }
 
     while (inputIndex < inputValue.length) {
-      const ch = inputValue[inputIndex];
+      const ch = transform ? transform(inputValue[inputIndex]) : inputValue[inputIndex];
       inputIndex++;
 
       if (slot.pattern!.test(ch)) {
@@ -458,12 +459,17 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       }
 
       const isOwnValue = node.value === displayValueRef.current;
+      const {
+        slots: initialSlots,
+        slotChar: initialSlotChar,
+        transform,
+      } = getResolvedOptions(opts, '');
+
       const parse = (slots: MaskSlot[], slotCharOption: string | null | undefined) =>
         isOwnValue
           ? applyMaskToRaw(rawValueRef.current, slots, slotCharOption)
-          : processInput(node.value, slots, slotCharOption);
+          : processInput(node.value, slots, slotCharOption, transform);
 
-      const { slots: initialSlots, slotChar: initialSlotChar } = getResolvedOptions(opts, '');
       const initialProcessed = parse(initialSlots, initialSlotChar);
       const initialRaw = extractRaw(initialProcessed, initialSlots);
       const { slots: resolvedSlots, slotChar } = getResolvedOptions(opts, initialRaw);

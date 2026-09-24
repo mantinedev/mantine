@@ -95,7 +95,7 @@
 .content {
   display: flex;
   gap: var(--marquee-gap, var(--mantine-spacing-md));
-  animation-duration: var(--marquee-duration, 40000ms);
+  animation-duration: var(--marquee-duration, 100000ms);
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 
