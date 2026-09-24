@@ -80,7 +80,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** If set, the tooltip is closed when the `Escape` key is pressed, applies only to click mode @default true */
   closeOnEscape?: boolean;
 
-  /** If set, the tooltip stays open while the pointer moves from the target to the tooltip and remains over it. Required by [WCAG 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html) if the tooltip contains interactive content. Note that an interactive tooltip intercepts pointer events of the content it overlaps @default false */
+  /** If set, the tooltip stays open while the pointer is over it @default false */
   interactive?: boolean;
 
   /** Must be set if the tooltip target is an inline element */

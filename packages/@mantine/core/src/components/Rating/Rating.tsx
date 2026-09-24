@@ -26,6 +26,9 @@ function roundValueTo(value: number, to: number) {
   return Number(rounded.toFixed(precision));
 }
 
+const TOUCH_MOVE_THRESHOLD = 10;
+const EMULATED_CLICK_TIMEOUT = 500;
+
 export type RatingStylesNames =
   | 'root'
   | 'starSymbol'
@@ -131,6 +134,8 @@ export const Rating = factory<RatingFactory>((_props) => {
     onHover,
     onMouseLeave,
     onTouchStart,
+    onTouchMove,
+    onTouchCancel,
     onTouchEnd,
     size,
     variant,
@@ -163,6 +168,8 @@ export const Rating = factory<RatingFactory>((_props) => {
   const _name = useId(name);
   const _id = useId(id);
   const rootRef = useRef<HTMLDivElement>(null);
+  const touchStartPosition = useRef<{ x: number; y: number } | null>(null);
+  const lastTouchTimestamp = useRef(0);
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -193,6 +200,15 @@ export const Rating = factory<RatingFactory>((_props) => {
     const hoverValue = hoverPosition / symbolWidth;
 
     return clamp(roundValueTo(hoverValue + decimalUnit / 2, decimalUnit), decimalUnit, _count);
+  };
+
+  const applyValue = (newValue: number) => {
+    // If allowClear is true and selecting the same value, reset to 0
+    if (allowClear && newValue === stableValueRounded) {
+      setValue(0);
+    } else {
+      setValue(newValue);
+    }
   };
 
   const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -227,20 +243,45 @@ export const Rating = factory<RatingFactory>((_props) => {
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
     const { touches } = event;
-    if (touches.length !== 1) {
-      return;
-    }
 
-    if (!readOnly) {
-      const touch = touches[0];
-      setValue(getRatingFromCoordinates(touch.clientX));
-    }
+    touchStartPosition.current =
+      touches.length === 1 ? { x: touches[0].clientX, y: touches[0].clientY } : null;
 
     onTouchStart?.(event);
   };
 
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    const startPosition = touchStartPosition.current;
+    const touch = event.touches[0];
+
+    if (
+      startPosition &&
+      touch &&
+      Math.hypot(touch.clientX - startPosition.x, touch.clientY - startPosition.y) >
+        TOUCH_MOVE_THRESHOLD
+    ) {
+      touchStartPosition.current = null;
+    }
+
+    onTouchMove?.(event);
+  };
+
+  const handleTouchCancel = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchStartPosition.current = null;
+
+    onTouchCancel?.(event);
+  };
+
   const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
-    event.preventDefault();
+    const startPosition = touchStartPosition.current;
+    const touch = event.changedTouches[0];
+    touchStartPosition.current = null;
+
+    if (startPosition && touch && !readOnly) {
+      event.preventDefault();
+      applyValue(getRatingFromCoordinates(touch.clientX));
+      lastTouchTimestamp.current = Date.now();
+    }
 
     onTouchEnd?.(event);
   };
@@ -258,16 +299,11 @@ export const Rating = factory<RatingFactory>((_props) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement> | number) => {
-    if (!readOnly) {
-      const newValue = typeof event === 'number' ? event : parseFloat(event.target.value);
-
-      // If allowClear is true and clicking the same value, reset to 0
-      if (allowClear && newValue === stableValueRounded) {
-        setValue(0);
-      } else {
-        setValue(newValue);
-      }
+    if (readOnly || Date.now() - lastTouchTimestamp.current < EMULATED_CLICK_TIMEOUT) {
+      return;
     }
+
+    applyValue(typeof event === 'number' ? event : parseFloat(event.target.value));
   };
 
   const items = Array(_count)
@@ -322,6 +358,8 @@ export const Rating = factory<RatingFactory>((_props) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchCancel={handleTouchCancel}
         onTouchEnd={handleTouchEnd}
         variant={variant}
         size={size}
