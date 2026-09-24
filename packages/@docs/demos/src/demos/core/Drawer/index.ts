@@ -19,3 +19,4 @@ export { footer } from './Drawer.demo.footer';
 export { stickySections } from './Drawer.demo.stickySections';
 export { swipe } from './Drawer.demo.swipe';
 export { snapPoints } from './Drawer.demo.snapPoints';
+export { handle } from './Drawer.demo.handle';

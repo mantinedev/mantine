@@ -9,3 +9,4 @@ export { styles } from './Switch.demo.styles';
 export { maxSelectedValues } from './Switch.demo.maxSelectedValues';
 export { states } from './Switch.demo.states';
 export { groupDisabled } from './SwitchGroup.demo.disabled';
+export { pressed } from './Switch.demo.pressed';

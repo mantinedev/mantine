@@ -57,3 +57,8 @@ export const Demo_maxSelectedValues = {
   name: '⭐ Demo: maxSelectedValues',
   render: renderDemo(demos.maxSelectedValues),
 };
+
+export const Demo_pressed = {
+  name: '⭐ Demo: pressed',
+  render: renderDemo(demos.pressed),
+};

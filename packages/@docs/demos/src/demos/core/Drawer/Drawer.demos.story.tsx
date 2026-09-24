@@ -107,3 +107,8 @@ export const Demo_overlayStack = {
   name: '⭐ Demo: overlayStack',
   render: renderDemo(demos.overlayStack),
 };
+
+export const Demo_handle = {
+  name: '⭐ Demo: handle',
+  render: renderDemo(demos.handle),
+};

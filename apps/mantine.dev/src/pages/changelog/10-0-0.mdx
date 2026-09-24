@@ -17,7 +17,6 @@ import {
   SwitchDemos,
   TabsDemos,
   ThemingDemos,
-  TimelineDemos,
 } from '@docs/demos';
 import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
@@ -37,7 +36,7 @@ All funds are used to improve Mantine and create new features and components.
 This changelog covers breaking changes and new features in Mantine 10.0.
 To migrate your application to Mantine 10.0, follow [9.x → 10.x migration guide](/guides/9x-to-10x).
 
-## New @mantine/data-grid package
+## @mantine/data-grid package
 
 New [@mantine/data-grid](/data-grid/getting-started) package provides a fully featured data grid
 component built on top of [TanStack Table v9](https://tanstack.com/table) and
@@ -55,7 +54,7 @@ support. Supported features:
 - Loading and empty states, list view for narrow screens
 - Semantic `table` or ARIA grid roles with keyboard navigation
 
-<Demo data={DataGridDemos.usage} />
+<Demo data={DataGridDemos.usage} demoProps={{ defaultExpanded: false }} />
 
 ## Component controllers and stores
 
@@ -116,22 +115,25 @@ Components with stores:
 `useImageCropper` are renamed to `<Component>Controller` and `<Component>ControllerOptions`, see the
 [migration guide](/guides/9x-to-10x).
 
-## Modal.Footer and Drawer.Footer
+## Modal and Drawer updates
+
+### Footer
 
 [Modal](/core/modal) and [Drawer](/core/drawer) now support `Modal.Footer`/`Drawer.Footer`
-compound components to render a footer with actions. By default the footer stays pinned to the
-bottom while the body scrolls:
+compound components to render a footer with actions:
 
 <Demo data={DrawerDemos.footer} />
 
-## Modal and Drawer sticky header and footer
+### Sticky header and footer
 
 [Modal](/core/modal) and [Drawer](/core/drawer) now support the `stickyHeader` and `stickyFooter`
 props (both default to `true`). When enabled, the header stays pinned to the top and the footer
 stays pinned to the bottom while the body scrolls between them. Set either to `false` to make that
-section scroll away with the body content.
+section scroll away with the body content:
 
-## Reworked Modal.Stack and Drawer.Stack
+<Demo data={ModalDemos.stickySections} />
+
+### Reworked Modal.Stack and Drawer.Stack
 
 [Modal.Stack](/core/modal/#modalstack) and [Drawer.Stack](/core/drawer/#drawerstack) have been
 reworked – all opened stacked items now stay mounted and visible with a stacked depth effect
@@ -140,13 +142,14 @@ stacked items are visible behind the top one at the same time.
 
 <Demo data={ModalDemos.stack} />
 
-## Shared Modal.Stack and Drawer.Stack
+## Automatic Modal and Drawer stacking
 
-New `theme.overlayStack` option makes all [Modal](/core/modal/#shared-stack) and
-[Drawer](/core/drawer/#shared-stack) components in the application a part of the shared
-`Modal.Stack` and `Drawer.Stack` – modals and drawers are stacked automatically without
-`Modal.Stack`/`Drawer.Stack` wrappers and `stackId` props. New `useModalStackContext` and
-`useDrawerStackContext` hooks provide access to the shared stacks:
+New `theme.overlayStack` option lets Mantine manage the stack for you: all
+[Modal](/core/modal/#shared-stack) and [Drawer](/core/drawer/#shared-stack) components in the
+application join a single shared stack maintained by the library. Modals and drawers opened on top
+of each other are stacked automatically – no `Modal.Stack`/`Drawer.Stack` wrappers or `stackId`
+props required. New `useModalStackContext` and `useDrawerStackContext` hooks provide access to
+the shared stacks:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -169,7 +172,9 @@ distance required to dismiss with `swipeThreshold`:
 ## Drawer drag handle
 
 [Drawer](/core/drawer) now supports the `withHandle` prop – an optional grab-bar drag affordance
-rendered on the overlay at the drawer's leading edge that hints the drawer can be dragged.
+rendered on the overlay at the drawer's leading edge that hints the drawer can be dragged:
+
+<Demo data={DrawerDemos.handle} />
 
 ## Drawer snap points
 
@@ -179,7 +184,7 @@ with `defaultActiveSnapPoint`:
 
 <Demo data={DrawerDemos.snapPoints} />
 
-## Modal and Drawer fullScreenBelow
+## Modal and Drawer fullScreenBelow prop
 
 [Modal](/core/modal) and [Drawer](/core/drawer) now support the `fullScreenBelow` prop to take
 the entire screen when the viewport is narrower than the given breakpoint. The prop accepts a key
@@ -190,64 +195,25 @@ the component is opened. [Drawer](/core/drawer) now also supports the `fullScree
 
 ## Alert redesign
 
-[Alert](/core/alert) has a new look. The `light` variant uses a softer tint with a hairline border in
-the same hue, the icon is rendered in the accent color, and the title and message use neutral text
-colors, so long content reads like regular body text. The title is set in medium weight with a
-tighter gap to the message, the icon is centered on the title line, and the close button has a larger
-hit area with a hover state. `default` and `white` variants now render the icon in the `color` prop
-color. Title and icon colors can be customized with the new `--alert-title-color` and
-`--alert-icon-color` CSS variables:
+[Alert](/core/alert) has a new look:
 
 <Demo data={AlertDemos.colors} />
 
-## Alert size prop
-
-[Alert](/core/alert) now supports the `size` prop. It scales padding, font size, icon size and
-close button size together, from `xs` for inline form messages to `xl` for standalone page-level
-messages:
-
-<Demo data={AlertDemos.sizes} />
-
 ## Notification redesign
 
-[Notification](/core/notification) has a new look. The icon is rendered in a smaller circle, the
-accent line displayed without an icon is now flush with the edge of the notification, padding is
-larger, the shadow is softer, and the close button has a hover state. The new `variant` prop
-controls how the icon is rendered: `filled` (default) renders a solid circle with a contrast icon,
-`light` renders a tinted circle with a colored icon, and `transparent` renders the icon without
-background, the same as Alert:
+[Notification](/core/notification) has a new look:
 
 <Demo data={NotificationDemos.variants} />
 
 ## Blockquote redesign
 
-[Blockquote](/core/blockquote) has a new look. The tinted background, rounded corners and the icon
-floating over the top left corner are gone. The quote is set in `lg` text next to a `3px` accent line,
-the icon is rendered above the quote in the accent color, and the citation is a dimmed line below
-the quote. The component no longer depends on the surface it is placed on and does not require
-extra margin above it. `iconSize` defaults to `24` and also sets the icon `font-size`, so icons
-without explicit size fill the slot. `radius` prop and `--bq-bg-light`, `--bq-bg-dark`,
-`--bq-radius` CSS variables were removed, `--bq-icon-color` variable was added. Blockquotes
-rendered inside [Typography](/core/typography) share the same styles:
+[Blockquote](/core/blockquote) has a new look:
 
 <Demo data={BlockquoteDemos.usage} />
 
-## ColorPicker radius and swatches density
-
-[ColorPicker](/core/color-picker) saturation picker, sliders, preview swatch and color swatches now
-follow `theme.defaultRadius` instead of a fixed `sm` radius for the picker and pill-shaped sliders.
-The new `radius` prop and `--cp-radius` CSS variable control it. `swatchesPerRow` now defaults to
-`10` instead of `7` in both `ColorPicker` and `ColorInput`. [ColorInput](/core/color-input) does not
-pass its `radius` prop to the picker, so existing inputs with custom `radius` are not affected:
-
-<Demo data={ColorPickerDemos.radiusConfigurator} />
-
 ## Slider thumb redesign
 
-[Slider](/core/slider) and [RangeSlider](/core/range-slider) thumb has been redesigned: it now has
-its own size per `size` prop instead of being twice the track height, a 2px border, the same white
-look in both color schemes, and a halo in the slider color when hovered or dragged. New `variant`
-prop supports `filled` and `white` thumb styles in addition to `default`:
+[Slider](/core/slider) and [RangeSlider](/core/range-slider) thumb has been redesigned:
 
 <Demo data={SliderDemos.variants} />
 
@@ -256,48 +222,13 @@ prop supports `filled` and `white` thumb styles in addition to `default`:
 [Switch](/core/switch) thumb now stretches towards the direction of travel while the input is
 pressed and snaps into place on release, the way native toggles behave:
 
-<Demo data={SwitchDemos.configurator} />
+<Demo data={SwitchDemos.pressed} />
 
 ## Stepper redesign
 
-[Stepper](/core/stepper) step states have been reworked so that they can be told apart at a glance.
-Steps that are not reached yet are hollow circles with a `border` ring and a dimmed number, the
-step in progress is filled with a 12% tint of the stepper color with the number in the color's text
-shade, completed steps are unchanged. Step icons are one notch smaller per `size` (36px instead of
-42px at `md`) to match the height of the label and description next to them, the connecting line
-uses the `border` color and fills towards the next step with a transition, and clickable steps that
-are not reached yet have a hover state:
+[Stepper](/core/stepper) has a new look:
 
 <Demo data={StepperDemos.usage} />
-
-## Wrapping Stepper.Step
-
-`Stepper.Step` can now be wrapped in another component. `Stepper` infers the index of each step from
-its position in `Stepper` children and could not reach a step through a wrapper, so wrapping
-silently produced a step with no state, no icon and no click. `Stepper.Step` now derives its own
-state from the parent `Stepper`, and the index reaches it either by forwarding the props the wrapper
-receives or by declaring it with the `step` prop:
-
-<Demo data={StepperDemos.wrappedStep} />
-
-The content of a wrapped step is passed as the wrapper's children, and a step that ends up without
-an index renders as inactive and is not focusable instead of looking clickable and doing nothing.
-`Stepper.Step` now also honours the `step`, `state`, `allowStepClick` and `onClick` props when they
-are set – see the [migration guide](/guides/9x-to-10x) if you set any of them today.
-
-## Wrapping Timeline.Item
-
-`Timeline.Item` can now be wrapped in another component, the same way as
-[Stepper.Step](/core/stepper/#wrapping-stepperstep). `Timeline` infers the index of each item from
-its position in `Timeline` children and could not reach an item through a wrapper, so a wrapped item
-was never active. `Timeline.Item` now derives its own state from the parent `Timeline`, and the
-index reaches it either by forwarding the props the wrapper receives or by declaring it with the new
-`index` prop:
-
-<Demo data={TimelineDemos.wrappedItem} />
-
-`Timeline.Item` also gains `active` and `lineActive` props that take over from the state derived
-from the `active` prop of `Timeline`, so an item can be active while the line after it is not.
 
 ## Tabs variants
 
@@ -646,3 +577,7 @@ formats (oklch, hex, rgb, hsl) along with the detected base color index.
 - [Avatar.Group](/core/avatar) now supports `max`, `total` and `renderOverflow` props – children that do not fit into `max` are replaced with a `+N` counter.
 - [Badge](/core/badge) no longer renders `leftSection` when `variant="dot"` is used – the dot indicator occupies the same slot and the two collided in the grid layout.
 - [Breadcrumbs](/core/breadcrumbs) root element is now a `nav` landmark with a default `aria-label="Breadcrumbs"`, and separators are rendered with `aria-hidden` so that they are not announced by screen readers.
+- [Alert](/core/alert) now supports the `size` prop
+- [ColorPicker](/core/color-picker) saturation picker, sliders, preview swatch and color swatches now follow `theme.defaultRadius`
+- [Stepper.Step](/core/stepper#wrapping-stepperstep) can now be wrapped in another component – the step index is passed by forwarding the props the wrapper receives or declared with the `step` prop.
+- [Timeline.Item](/core/timeline#wrapping-timelineitem) can now be wrapped in another component – the item index is passed by forwarding the props the wrapper receives or declared with the new `index` prop. New `active` and `lineActive` props allow an item to be active while the line after it is not.
