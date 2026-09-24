@@ -10,7 +10,6 @@ import {
   useController,
   useProps,
   useResolvedStylesApi,
-  useStyles,
 } from '@mantine/core';
 import { useDidUpdate } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
@@ -39,7 +38,6 @@ import {
   useDateTimePicker,
   type DateTimePickerController,
 } from './use-date-time-picker/use-date-time-picker';
-import classes from './DateTimePicker.module.css';
 
 export type DateTimePickerStylesNames =
   | InlineDateTimePickerStylesNames
@@ -156,17 +154,6 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
 
   const isRange = (type as string) === 'range';
 
-  useStyles<DateTimePickerFactory>({
-    name: 'DateTimePicker',
-    classes,
-    props: props as DateTimePickerProps,
-    classNames,
-    styles,
-    unstyled,
-    attributes,
-    vars,
-  });
-
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DateTimePickerFactory>({
     classNames,
     styles,
@@ -272,8 +259,6 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
 
   const formattedValue = getFormattedValue();
 
-  const __stopPropagation = dropdownType === 'popover';
-
   const clearIncompleteRange = () => {
     if (isRange && Array.isArray(_value) && _value[0] && !_value[1]) {
       setValue([null, null] as any);
@@ -313,10 +298,6 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
   };
 
   const shouldClear = isRange ? Array.isArray(_value) && !!_value[0] : !!_value;
-
-  const handlePresetSelect = (val: any) => {
-    setValue(val);
-  };
 
   return (
     <PickerInputBase
@@ -367,17 +348,13 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
         labelSeparator={labelSeparator}
         attributes={attributes}
         onSubmit={controller.closeDropdown}
-        __stopPropagation={__stopPropagation}
         __staticSelector="DateTimePicker"
-        __onEnter={controller.closeDropdown}
-        __onPresetSelect={handlePresetSelect}
       />
     </PickerInputBase>
   );
 });
 
 DateTimePicker.classes = {
-  ...classes,
   ...PickerInputBase.classes,
   ...InlineDateTimePicker.classes,
 };

@@ -1,5 +1,6 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
+import { DatesDropdownProvider } from '../PickerInputBase/DatesDropdown.context';
 import { CalendarHeader, CalendarHeaderProps, CalendarHeaderStylesNames } from './CalendarHeader';
 
 const defaultProps: CalendarHeaderProps = {
@@ -36,6 +37,57 @@ describe('@mantine/dates/CalendarHeader', () => {
     );
 
     expect(screen.getByText('test-label')).toHaveAttribute('aria-label', 'Change month');
+  });
+
+  it('handles focus as usual without dropdown context', async () => {
+    render(<CalendarHeader {...defaultProps} levelControlAriaLabel="test-level" />);
+    await userEvent.click(screen.getByLabelText('next'));
+    expect(screen.getByLabelText('next')).toHaveFocus();
+
+    await userEvent.click(screen.getByLabelText('test-level'));
+    expect(screen.getByLabelText('test-level')).toHaveFocus();
+
+    await userEvent.click(screen.getByLabelText('prev'));
+    expect(screen.getByLabelText('prev')).toHaveFocus();
+  });
+
+  it('does not focus controls on click when dropdown context has preventFocus', async () => {
+    render(
+      <DatesDropdownProvider value={{ preventFocus: true, stopPropagation: false }}>
+        <CalendarHeader {...defaultProps} levelControlAriaLabel="test-level" />
+      </DatesDropdownProvider>
+    );
+
+    await userEvent.click(screen.getByLabelText('next'));
+    expect(document.body).toHaveFocus();
+    expect(screen.getByLabelText('next')).toHaveAttribute('tabindex', '-1');
+
+    await userEvent.click(screen.getByLabelText('test-level'));
+    expect(document.body).toHaveFocus();
+
+    await userEvent.click(screen.getByLabelText('prev'));
+    expect(document.body).toHaveFocus();
+  });
+
+  it('adds data-mantine-stop-propagation to controls when dropdown context has stopPropagation', () => {
+    render(
+      <DatesDropdownProvider value={{ preventFocus: false, stopPropagation: true }}>
+        <CalendarHeader {...defaultProps} levelControlAriaLabel="test-level" />
+      </DatesDropdownProvider>
+    );
+
+    expect(screen.getByLabelText('next')).toHaveAttribute('data-mantine-stop-propagation');
+    expect(screen.getByLabelText('prev')).toHaveAttribute('data-mantine-stop-propagation');
+    expect(screen.getByLabelText('test-level')).toHaveAttribute('data-mantine-stop-propagation');
+  });
+
+  it('renders level button instead of native selects without Calendar ancestor', () => {
+    const { container } = render(
+      <CalendarHeader {...defaultProps} withNativeLevelSelect levelControlAriaLabel="test-level" />
+    );
+
+    expect(screen.getByRole('button', { name: 'test-level' })).toBeInTheDocument();
+    expect(container.querySelector('select')).not.toBeInTheDocument();
   });
 
   it('has correct default __staticSelector', () => {

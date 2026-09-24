@@ -381,26 +381,23 @@ describe('@mantine/dates/WeekPicker', () => {
     );
   });
 
-  it('applies week row and day classes for row-level highlight styles', () => {
+  it('marks the month table with data-week-mode for row-level highlight styles', () => {
     const { container } = render(<WeekPicker {...defaultProps} />);
-    expect(container.querySelector('tbody tr')).toHaveClass('weekRow');
-    expect(days(container)[0]).toHaveClass('weekDay');
+    expect(container.querySelector('table')).toHaveAttribute('data-week-mode');
   });
 
-  it('merges user classNames with week row and day classes', () => {
+  it('keeps user classNames on rows and days', () => {
     const { container } = render(
       <WeekPicker {...defaultProps} classNames={{ monthRow: 'custom-row', day: 'custom-day' }} />
     );
-    const row = container.querySelector('tbody tr');
-    expect(row).toHaveClass('weekRow');
-    expect(row).toHaveClass('custom-row');
+    expect(container.querySelector('tbody tr')).toHaveClass('custom-row');
     expect(days(container)[0]).toHaveClass('custom-day');
   });
 
-  it('does not apply week row and day classes when unstyled', () => {
-    const { container } = render(<WeekPicker {...defaultProps} unstyled />);
-    expect(container.querySelector('tbody tr')).not.toHaveClass('weekRow');
-    expect(days(container)[0]).not.toHaveClass('weekDay');
+  it('removes days from the tab order and keeps exactly one week control tabbable', () => {
+    const { container } = render(<WeekPicker {...defaultProps} />);
+    days(container).forEach((day) => expect(day).toHaveAttribute('tabindex', '-1'));
+    expect(container.querySelectorAll('[data-week-control][tabindex="0"]')).toHaveLength(1);
   });
 
   it('has correct default __staticSelector', () => {

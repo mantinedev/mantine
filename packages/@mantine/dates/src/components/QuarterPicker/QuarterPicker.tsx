@@ -1,14 +1,10 @@
-import dayjs from 'dayjs';
-import { useRef } from 'react';
 import {
-  Box,
   BoxProps,
   createVarsResolver,
   ElementProps,
-  factory,
   Factory,
+  genericFactory,
   getFontSize,
-  MantineComponentStaticProperties,
   MantineSize,
   StylesApiProps,
   useController,
@@ -16,34 +12,28 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
-import { useDatesState, useFocusAfterLevelChange } from '../../hooks';
-import { DatePickerType, DateStringValue, PickerBaseProps } from '../../types';
-import { getDefaultClampedDate } from '../../utils';
+import { DatePickerType, DateStringValue, PickerBaseProps, PickerPreset } from '../../types';
+import { DecadeLevelBaseSettings, QuarterLevelBaseSettings } from '../Calendar';
+import { Calendar } from '../Calendar/Calendar';
+import { CalendarOptionsProvider } from '../Calendar/Calendar.context';
 import { clampLevel } from '../Calendar/clamp-level/clamp-level';
+import {
+  QuartersListStylesNames,
+  YearsListStylesNames,
+} from '../Calendar/ControlsList/ControlsList';
+import { getPresetsClasses, Presets } from '../Calendar/Presets/Presets';
 import {
   useCalendar,
   type CalendarController,
   type CalendarControllerOptions,
 } from '../Calendar/use-calendar/use-calendar';
-import { DecadeLevelBaseSettings } from '../DecadeLevel';
-import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
-import { PresetsList } from '../PresetsList';
-import { QuarterLevelBaseSettings } from '../QuarterLevel';
-import { QuarterLevelGroup, QuarterLevelGroupStylesNames } from '../QuarterLevelGroup';
+import { usePickerSelection } from '../Calendar/use-picker-selection/use-picker-selection';
+import { CalendarHeaderStylesNames } from '../CalendarHeader';
 import { normalizeQuarterValue } from './normalize-quarter-value/normalize-quarter-value';
-import classes from './QuarterPicker.module.css';
 
 export type QuarterPickerLevel = 'year' | 'decade';
 
-export interface QuarterPickerPreset<Type extends DatePickerType> {
-  value: Type extends 'range'
-    ? [DateStringValue | null, DateStringValue | null]
-    : Type extends 'multiple'
-      ? DateStringValue[]
-      : DateStringValue | null;
-  label: React.ReactNode;
-}
+export type QuarterPickerPreset<Type extends DatePickerType> = PickerPreset<Type>;
 
 export interface QuarterPickerAriaLabels {
   yearLevelControl?: string;
@@ -58,8 +48,10 @@ export type QuarterPickerCssVariables = {
 };
 
 export type QuarterPickerStylesNames =
-  | DecadeLevelGroupStylesNames
-  | QuarterLevelGroupStylesNames
+  | 'levelsGroup'
+  | CalendarHeaderStylesNames
+  | YearsListStylesNames
+  | QuartersListStylesNames
   | 'presetsList'
   | 'presetButton'
   | 'quarterPickerRoot';
@@ -67,20 +59,6 @@ export type QuarterPickerStylesNames =
 export interface QuarterPickerBaseProps<Type extends DatePickerType = 'default'>
   extends PickerBaseProps<Type>, DecadeLevelBaseSettings, QuarterLevelBaseSettings {
   __staticSelector?: string;
-
-  /** Prevents focus shift when buttons are clicked */
-  __preventFocus?: boolean;
-
-  /** Determines whether propagation for `Escape` key should be stopped */
-  __stopPropagation?: boolean;
-
-  /** Determines whether date should be updated when year control is clicked @default true */
-  __updateDateOnYearSelect?: boolean;
-
-  /** If defined, called with preset value, suppresses `onChange` call */
-  __onPresetSelect?: (
-    preset: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
-  ) => void;
 
   /** Initial displayed date in uncontrolled mode @category state */
   defaultDate?: DateStringValue | Date;
@@ -182,6 +160,9 @@ export type QuarterPickerFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: QuarterPickerStylesNames;
   vars: QuarterPickerCssVariables;
+  signature: <Type extends DatePickerType = 'default'>(
+    props: QuarterPickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
+  ) => React.JSX.Element;
 }>;
 
 const varsResolver = createVarsResolver<QuarterPickerFactory>((_, { size }) => ({
@@ -194,16 +175,11 @@ const defaultProps = {
   type: 'default',
   maxLevel: 'decade',
   numberOfColumns: 1,
-  __updateDateOnYearSelect: true,
 } satisfies Partial<QuarterPickerProps>;
 
-type QuarterPickerComponent = (<Type extends DatePickerType = 'default'>(
-  props: QuarterPickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
-) => React.JSX.Element) & {
-  displayName?: string;
-} & MantineComponentStaticProperties<QuarterPickerFactory>;
+const classes = getPresetsClasses('quarterPickerRoot');
 
-export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactory>((_props) => {
+export const QuarterPicker = genericFactory<QuarterPickerFactory>((_props) => {
   const props = useProps('QuarterPicker', defaultProps, _props);
   const {
     classNames,
@@ -214,10 +190,6 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
     value,
     onChange,
     __staticSelector,
-    __preventFocus,
-    __stopPropagation,
-    __updateDateOnYearSelect,
-    __onPresetSelect,
     getQuarterControlProps,
     getYearControlProps,
     allowSingleDateInRange,
@@ -264,14 +236,13 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
     onNextDecade,
     onPreviousDecade,
     controller: controllerProp,
-    ref,
     ...others
   } = props;
 
   const getStyles = useStyles<QuarterPickerFactory>({
     name: __staticSelector || 'QuarterPicker',
     classes,
-    props,
+    props: props as QuarterPickerProps,
     className,
     style,
     classNames,
@@ -286,7 +257,7 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<QuarterPickerFactory>({
     classNames,
     styles,
-    props,
+    props: props as QuarterPickerProps,
   });
 
   const controller = useController(useCalendar, controllerProp, {
@@ -298,50 +269,7 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
     onLevelChange: onLevelChange as CalendarControllerOptions['onLevelChange'],
   });
 
-  const _level = clampLevel(controller.level, 'year', maxLevel) as QuarterPickerLevel;
-
-  const calendarRef = useRef<HTMLDivElement>(null);
-  const mergedRef = useMergedRef(calendarRef, ref);
-  const focusAfterLevelChange = useFocusAfterLevelChange({
-    rootRef: calendarRef,
-    level: _level,
-    disabled: __preventFocus,
-  });
-
-  const changeLevel = (nextLevel: QuarterPickerLevel) => {
-    focusAfterLevelChange();
-    controller.setLevel(nextLevel);
-  };
-
-  const fallbackDateRef = useRef<DateStringValue | null>(null);
-  if (fallbackDateRef.current === null) {
-    fallbackDateRef.current = getDefaultClampedDate({ minDate, maxDate });
-  }
-  const fallbackDate = fallbackDateRef.current;
-  const currentDate: DateStringValue = controller.date || fallbackDate;
-  const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
-  const instanceRef = useRef({});
-
-  useIsomorphicEffect(
-    () =>
-      controller.registerCalendar({
-        instance: instanceRef.current,
-        minLevel: 'year',
-        maxLevel,
-        columnsToScroll: _columnsToScroll,
-        fallbackDate,
-      }),
-    [controller.registerCalendar, maxLevel, _columnsToScroll, fallbackDate]
-  );
-
-  const {
-    onDateChange: onValueChange,
-    onRootMouseLeave,
-    onHoveredDateChange,
-    getControlProps,
-    _value,
-    setValue,
-  } = useDatesState({
+  const selection = usePickerSelection({
     type: type as any,
     level: 'quarter',
     allowDeselect,
@@ -352,164 +280,87 @@ export const QuarterPicker: QuarterPickerComponent = factory<QuarterPickerFactor
     onMouseLeave,
   });
 
-  const handleNextYear = () => {
-    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'year').format('YYYY-MM-DD');
-    onNextYear?.(nextDate);
-    controller.setDate(nextDate);
-  };
-
-  const handlePreviousYear = () => {
-    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'year').format('YYYY-MM-DD');
-    onPreviousYear?.(nextDate);
-    controller.setDate(nextDate);
-  };
-
-  const handleNextDecade = () => {
-    const nextDate = dayjs(currentDate)
-      .add(10 * _columnsToScroll, 'year')
-      .format('YYYY-MM-DD');
-    onNextDecade?.(nextDate);
-    controller.setDate(nextDate);
-  };
-
-  const handlePreviousDecade = () => {
-    const nextDate = dayjs(currentDate)
-      .subtract(10 * _columnsToScroll, 'year')
-      .format('YYYY-MM-DD');
-    onPreviousDecade?.(nextDate);
-    controller.setDate(nextDate);
-  };
-
-  const stylesApiProps = {
-    __staticSelector: __staticSelector || 'QuarterPicker',
-    styles: resolvedStyles,
-    classNames: resolvedClassNames,
-    unstyled,
-    size,
-    attributes,
-  };
-
-  const calendar = (
-    <Box
+  return (
+    <Presets
+      presets={presets}
+      onPresetSelect={selection.createPresetSelectHandler({
+        controller,
+        targetLevel: 'year',
+        normalize: normalizeQuarterValue as any,
+      })}
+      getStyles={getStyles}
+      rootSelector="quarterPickerRoot"
       size={size}
-      data-quarter-picker
-      data-full-width={fullWidth || undefined}
-      onMouseLeave={onRootMouseLeave}
-      {...(!presets ? { className, style, ...others } : {})}
-      ref={presets ? calendarRef : mergedRef}
+      rootProps={others}
     >
-      {_level === 'year' && (
-        <QuarterLevelGroup
-          year={currentDate}
-          numberOfColumns={numberOfColumns}
-          minDate={minDate}
-          maxDate={maxDate}
-          quartersListFormat={quartersListFormat}
-          locale={locale}
-          onNext={handleNextYear}
-          onPrevious={handlePreviousYear}
-          hasNextLevel={maxLevel !== 'year'}
-          onLevelClick={() => changeLevel('decade')}
-          levelControlAriaLabel={ariaLabels?.yearLevelControl}
-          nextLabel={ariaLabels?.nextYear ?? nextLabel}
-          nextIcon={nextIcon}
-          previousLabel={ariaLabels?.previousYear ?? previousLabel}
-          previousIcon={previousIcon}
-          yearLabelFormat={yearLabelFormat}
-          getQuarterControlProps={(quarter) => ({
-            ...getControlProps(quarter),
+      <CalendarOptionsProvider
+        value={{
+          yearBody: 'quarters',
+          quartersListFormat,
+          getQuarterControlProps: (quarter) => ({
+            ...selection.getControlProps(quarter),
             ...getQuarterControlProps?.(quarter),
-          })}
-          __onControlMouseEnter={(event, payload) => {
-            onHoveredDateChange(payload);
-            onQuarterMouseEnter?.(event, payload);
-          }}
-          __onControlClick={(_event, payload) => {
-            onValueChange(payload);
-            onQuarterSelect?.(payload);
-          }}
-          __onDateChange={controller.setDate}
-          __disableNativeLevelSelect={controller.dateReadOnly}
-          __preventFocus={__preventFocus}
-          __stopPropagation={__stopPropagation}
-          withCellSpacing={withCellSpacing}
+          }),
+          selection: {
+            onQuarterClick: (_event, quarter) => {
+              selection.onDateChange(quarter);
+              onQuarterSelect?.(quarter);
+            },
+            onQuarterMouseEnter: (event, quarter) => {
+              selection.onHoveredDateChange(quarter);
+              onQuarterMouseEnter?.(event, quarter);
+            },
+          },
+        }}
+      >
+        <Calendar
+          classNames={resolvedClassNames}
+          styles={resolvedStyles}
+          size={size}
+          {...(!presets ? others : {})}
+          {...(!presets ? { className, style } : {})}
+          __staticSelector={__staticSelector || 'QuarterPicker'}
+          controller={controller}
+          minLevel="year"
+          maxLevel={maxLevel}
+          enableKeyboardNavigation={false}
+          onMouseLeave={selection.onRootMouseLeave}
+          numberOfColumns={numberOfColumns}
+          columnsToScroll={columnsToScroll}
+          ariaLabels={ariaLabels}
+          nextLabel={nextLabel}
+          previousLabel={previousLabel}
+          nextIcon={nextIcon}
+          previousIcon={previousIcon}
+          headerControlsOrder={headerControlsOrder}
           withNativeLevelSelect={withNativeLevelSelect}
           yearsSelectRange={yearsSelectRange}
-          headerControlsOrder={headerControlsOrder}
           fullWidth={fullWidth}
-          {...stylesApiProps}
-        />
-      )}
-
-      {_level === 'decade' && (
-        <DecadeLevelGroup
-          decade={currentDate}
           minDate={minDate}
           maxDate={maxDate}
+          locale={locale}
+          yearLabelFormat={yearLabelFormat}
           yearsListFormat={yearsListFormat}
+          decadeLabelFormat={decadeLabelFormat}
+          withCellSpacing={withCellSpacing}
+          onNextYear={onNextYear}
+          onPreviousYear={onPreviousYear}
+          onNextDecade={onNextDecade}
+          onPreviousDecade={onPreviousDecade}
+          onYearSelect={onYearSelect}
+          onYearMouseEnter={onYearMouseEnter}
           getYearControlProps={(year) => ({
-            selected: typeof _value === 'string' ? dayjs(year).isSame(_value, 'year') : false,
+            ...selection.getSelectedYearProps(year),
             ...getYearControlProps?.(year),
           })}
-          locale={locale}
-          onNext={handleNextDecade}
-          onPrevious={handlePreviousDecade}
-          numberOfColumns={numberOfColumns}
-          nextLabel={ariaLabels?.nextDecade ?? nextLabel}
-          nextIcon={nextIcon}
-          previousLabel={ariaLabels?.previousDecade ?? previousLabel}
-          previousIcon={previousIcon}
-          decadeLabelFormat={decadeLabelFormat}
-          __onControlMouseEnter={onYearMouseEnter}
-          __onControlClick={(_event, payload) => {
-            __updateDateOnYearSelect && controller.setDate(payload);
-            changeLevel('year');
-            onYearSelect?.(payload);
-          }}
-          __preventFocus={__preventFocus}
-          __stopPropagation={__stopPropagation}
-          withCellSpacing={withCellSpacing}
-          headerControlsOrder={headerControlsOrder}
-          fullWidth={fullWidth}
-          {...stylesApiProps}
+          attributes={attributes}
         />
-      )}
-    </Box>
+      </CalendarOptionsProvider>
+    </Presets>
   );
+});
 
-  if (!presets) {
-    return calendar;
-  }
-
-  const handlePresetSelect = (
-    val: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
-  ) => {
-    const normalized = normalizeQuarterValue(val as any) as typeof val;
-    const _val = Array.isArray(normalized) ? normalized[0] : normalized;
-    if (_val !== undefined) {
-      if (_val) {
-        controller.setDate(_val);
-      }
-      controller.setLevel('year');
-      __onPresetSelect ? __onPresetSelect(normalized) : setValue(normalized);
-    }
-  };
-
-  return (
-    <Box {...getStyles('quarterPickerRoot')} size={size} {...others} ref={ref}>
-      <PresetsList
-        {...getStyles('presetsList')}
-        presets={presets}
-        onPresetSelect={handlePresetSelect}
-        buttonProps={getStyles('presetButton')}
-        stopPropagation={__stopPropagation}
-      />
-      {calendar}
-    </Box>
-  );
-}) as any;
-
-QuarterPicker.classes = { ...DecadeLevelGroup.classes, ...QuarterLevelGroup.classes, ...classes };
+QuarterPicker.classes = { ...Calendar.classes, ...classes };
 QuarterPicker.varsResolver = varsResolver;
 QuarterPicker.displayName = '@mantine/dates/QuarterPicker';
 

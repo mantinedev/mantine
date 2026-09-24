@@ -45,7 +45,10 @@ import {
 } from './use-time-picker';
 import { getParsedTime } from './utils/get-parsed-time/get-parsed-time';
 import { padTime } from './utils/pad-time/pad-time';
-import classes from './TimePicker.module.css';
+import timeFieldsClasses from './TimeFields.module.css';
+import moduleClasses from './TimePicker.module.css';
+
+const classes = { ...timeFieldsClasses, ...moduleClasses };
 
 export type TimePickerStylesNames =
   | 'fieldsRoot'

@@ -25,15 +25,21 @@ import {
 import { useClickOutside, useDidUpdate, useId, useMergedRef } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { DateStringValue, DateTimeStringValue } from '../../types';
-import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
+import {
+  Calendar,
+  CalendarBaseProps,
+  CalendarStylesNames,
+  DecadeLevelSettings,
+  MonthLevelSettings,
+  pickCalendarProps,
+  YearLevelSettings,
+} from '../Calendar';
 import { useDatesContext } from '../DatesProvider';
-import { DecadeLevelSettings } from '../DecadeLevel';
 import { isSameMonth } from '../Month';
-import { MonthLevelSettings } from '../MonthLevel';
+import { DatesDropdownProvider } from '../PickerInputBase/DatesDropdown.context';
 import { SpinInput } from '../SpinInput';
 import { AmPmInput } from '../TimePicker/AmPmInput/AmPmInput';
 import { TimePickerProvider } from '../TimePicker/TimePicker.context';
-import { YearLevelSettings } from '../YearLevel';
 import { getDaysInMonth } from './get-days-in-month/get-days-in-month';
 import {
   MaskedDateInputAmPmLabels,
@@ -43,7 +49,11 @@ import {
   MaskedDateInputPasteSplit,
   useMaskedDateInput,
 } from './use-masked-date-input';
-import classes from './MaskedDateInput.module.css';
+import timeFieldsClasses from '../TimePicker/TimeFields.module.css';
+import moduleClasses from './MaskedDateInput.module.css';
+
+const classes = { ...timeFieldsClasses, ...moduleClasses };
+const DROPDOWN_CONTEXT = { preventFocus: true, stopPropagation: false };
 
 export type MaskedDateInputStylesNames =
   | 'fieldsRoot'
@@ -795,31 +805,32 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
         onMouseDown={(event) => event.preventDefault()}
         ref={_dropdownRef}
       >
-        <Calendar
-          __staticSelector="MaskedDateInput"
-          __preventFocus
-          {...calendarProps}
-          classNames={classNames as any}
-          styles={styles as any}
-          unstyled={unstyled}
-          minDate={controller.minDate}
-          maxDate={controller.maxDate}
-          locale={calendarProps.locale || ctx.getLocale(locale)}
-          getDayProps={_getDayProps}
-          size={size as MantineSize}
-          date={calendarDate || undefined}
-          onDateChange={setCalendarDate}
-          getMonthControlProps={(date) => ({
-            selected: currentDateValue !== null ? isSameMonth(date, currentDateValue) : false,
-            ...getMonthControlProps?.(date),
-          })}
-          getYearControlProps={(date) => ({
-            selected:
-              currentDateValue !== null ? dayjs(date).isSame(currentDateValue, 'year') : false,
-            ...getYearControlProps?.(date),
-          })}
-          attributes={attributes}
-        />
+        <DatesDropdownProvider value={DROPDOWN_CONTEXT}>
+          <Calendar
+            __staticSelector="MaskedDateInput"
+            {...calendarProps}
+            classNames={classNames as any}
+            styles={styles as any}
+            unstyled={unstyled}
+            minDate={controller.minDate}
+            maxDate={controller.maxDate}
+            locale={calendarProps.locale || ctx.getLocale(locale)}
+            getDayProps={_getDayProps}
+            size={size as MantineSize}
+            date={calendarDate || undefined}
+            onDateChange={setCalendarDate}
+            getMonthControlProps={(date) => ({
+              selected: currentDateValue !== null ? isSameMonth(date, currentDateValue) : false,
+              ...getMonthControlProps?.(date),
+            })}
+            getYearControlProps={(date) => ({
+              selected:
+                currentDateValue !== null ? dayjs(date).isSame(currentDateValue, 'year') : false,
+              ...getYearControlProps?.(date),
+            })}
+            attributes={attributes}
+          />
+        </DatesDropdownProvider>
       </Popover.Dropdown>
     </Popover>
   );

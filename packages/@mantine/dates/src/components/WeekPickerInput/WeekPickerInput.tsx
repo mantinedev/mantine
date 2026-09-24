@@ -1,24 +1,12 @@
-import {
-  __InputStylesNames,
-  BoxProps,
-  factory,
-  Factory,
-  InputVariant,
-  MantineComponentStaticProperties,
-  StylesApiProps,
-  useProps,
-  useResolvedStylesApi,
-} from '@mantine/core';
+import { __InputStylesNames, BoxProps, Factory, InputVariant, StylesApiProps } from '@mantine/core';
 import { DatePickerType } from '../../types';
-import { pickCalendarProps } from '../Calendar';
-import { useDatesContext } from '../DatesProvider';
 import {
   DateInputSharedProps,
   PickerInputBase,
   type PickerInputController,
   type PickerInputControllerOptions,
 } from '../PickerInputBase';
-import { usePickerInput } from '../PickerInputBase/use-picker-input/use-picker-input';
+import { createPickerInput } from '../PickerInputBase/create-picker-input/create-picker-input';
 import { WeekPicker, WeekPickerBaseProps, WeekPickerStylesNames } from '../WeekPicker';
 import { getWeekFormatter } from './get-week-formatter/get-week-formatter';
 import { useWeekPickerInput } from './use-week-picker-input/use-week-picker-input';
@@ -43,6 +31,9 @@ export type WeekPickerInputFactory = Factory<{
   ref: HTMLButtonElement;
   stylesNames: WeekPickerInputStylesNames;
   variant: InputVariant;
+  signature: <Type extends DatePickerType = 'default'>(
+    props: WeekPickerInputProps<Type> & { ref?: React.Ref<HTMLButtonElement> }
+  ) => React.JSX.Element;
 }>;
 
 const defaultProps = {
@@ -54,124 +45,15 @@ const defaultProps = {
   dropdownType: 'popover',
 } satisfies Partial<WeekPickerInputProps>;
 
-type WeekPickerInputComponent = (<Type extends DatePickerType = 'default'>(
-  props: WeekPickerInputProps<Type> & { ref?: React.Ref<HTMLButtonElement> }
-) => React.JSX.Element) & {
-  displayName?: string;
-} & MantineComponentStaticProperties<WeekPickerInputFactory>;
-
-export const WeekPickerInput: WeekPickerInputComponent = factory<WeekPickerInputFactory>(
-  (_props) => {
-    const props = useProps(['Input', 'InputWrapper', 'WeekPickerInput'], defaultProps, _props);
-    const {
-      type,
-      value,
-      defaultValue,
-      onChange,
-      valueFormat,
-      labelSeparator,
-      locale,
-      classNames,
-      styles,
-      unstyled,
-      closeOnChange,
-      size,
-      variant,
-      dropdownType,
-      sortDates,
-      minDate,
-      maxDate,
-      vars,
-      defaultDate,
-      valueFormatter,
-      presets,
-      attributes,
-      controller: controllerProp,
-      ...rest
-    } = props;
-
-    const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<WeekPickerInputFactory>({
-      classNames,
-      styles,
-      props,
-    });
-
-    const { calendarProps, others } = pickCalendarProps(rest);
-    const ctx = useDatesContext();
-    const firstDayOfWeek = ctx.getFirstDayOfWeek(calendarProps.firstDayOfWeek);
-
-    const pickerInput = usePickerInput({
-      useControllerHook: useWeekPickerInput,
-      controller: controllerProp,
-      calendarProps,
-      minLevel: calendarProps.minLevel || 'month',
-      maxLevel: calendarProps.maxLevel,
-      defaultDate,
-      type: type as any,
-      value,
-      defaultValue,
-      onChange: onChange as any,
-      locale,
-      format: valueFormat,
-      labelSeparator,
-      closeOnChange,
-      sortDates,
-      valueFormatter: valueFormatter || getWeekFormatter(firstDayOfWeek),
-      minDate,
-      maxDate,
-      disabled: others.disabled,
-      readOnly: others.readOnly,
-      dropdownType,
-      popoverProps: others.popoverProps,
-    });
-
-    return (
-      <PickerInputBase
-        formattedValue={pickerInput.datesInput.formattedValue}
-        withPresets={!!presets}
-        dropdownOpened={pickerInput.dropdownOpened}
-        dropdownHandlers={pickerInput.dropdownHandlers}
-        classNames={resolvedClassNames}
-        styles={resolvedStyles}
-        unstyled={unstyled}
-        onClear={pickerInput.datesInput.onClear}
-        shouldClear={pickerInput.datesInput.shouldClear}
-        value={pickerInput.datesInput._value}
-        size={size}
-        variant={variant}
-        dropdownType={dropdownType}
-        {...others}
-        popoverProps={pickerInput.popoverProps}
-        type={type as any}
-        __staticSelector="WeekPickerInput"
-        attributes={attributes}
-      >
-        <WeekPicker
-          {...calendarProps}
-          size={size}
-          variant={variant}
-          type={type}
-          value={pickerInput.datesInput._value}
-          controller={pickerInput.controller}
-          onChange={pickerInput.datesInput.setValue}
-          locale={locale}
-          classNames={resolvedClassNames}
-          styles={resolvedStyles}
-          unstyled={unstyled}
-          __staticSelector="WeekPickerInput"
-          __stopPropagation={dropdownType === 'popover'}
-          minDate={minDate}
-          maxDate={maxDate}
-          presets={presets}
-          attributes={attributes}
-        />
-      </PickerInputBase>
-    );
-  }
-) as any;
-
-WeekPickerInput.classes = { ...PickerInputBase.classes, ...WeekPicker.classes };
-WeekPickerInput.displayName = '@mantine/dates/WeekPickerInput';
+export const WeekPickerInput = createPickerInput<WeekPickerInputFactory>({
+  name: 'WeekPickerInput',
+  Picker: WeekPicker,
+  useControllerHook: useWeekPickerInput,
+  defaultProps,
+  classes: { ...PickerInputBase.classes, ...WeekPicker.classes },
+  getValueFormatter: (calendarProps, ctx) =>
+    getWeekFormatter(ctx.getFirstDayOfWeek(calendarProps.firstDayOfWeek)),
+});
 
 export namespace WeekPickerInput {
   export type Props<Type extends DatePickerType = 'default'> = WeekPickerInputProps<Type>;

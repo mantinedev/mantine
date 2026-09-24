@@ -433,4 +433,16 @@ describe('@mantine/dates/DateInput', () => {
 
     expect(container.querySelector('table button')!).toHaveClass('mantine-DateInput-day');
   });
+
+  it('keeps days out of the tab order and does not steal focus from the input on click', async () => {
+    const { container } = render(<DateInput {...defaultProps} defaultValue="2022-04-11" />);
+    await userEvent.click(getInput(container));
+
+    const days = container.querySelectorAll('table button');
+    expect(days.length).toBeGreaterThan(0);
+    days.forEach((day) => expect(day).toHaveAttribute('tabindex', '-1'));
+
+    await userEvent.click(days[10]);
+    expect(getInput(container)).toHaveFocus();
+  });
 });

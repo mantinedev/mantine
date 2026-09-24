@@ -1,8 +1,6 @@
 import dayjs from 'dayjs';
-import { useRef } from 'react';
 import { act } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
-import { CalendarLevel, DateStringValue } from '../../types';
 import { Calendar, CalendarProps } from './Calendar';
 import {
   useCalendar,
@@ -161,12 +159,10 @@ describe('@mantine/dates/Calendar/controller', () => {
     expectHeaderLevel('month', dayjs().add(1, 'month').format('MMMM YYYY'));
   });
 
-  it('keeps __setDateRef and __setLevelRef working when a controller is provided', () => {
+  it('supports setDate and setLevel from outside the component when a controller is provided', () => {
     let controller: CalendarController = null as any;
 
-    function RefCalendar() {
-      const setDateRef = useRef<((date: DateStringValue) => void) | null>(null);
-      const setLevelRef = useRef<((level: CalendarLevel) => void) | null>(null);
+    function ExternalCalendar() {
       controller = useCalendar({ defaultDate: '2022-04-11' });
 
       return (
@@ -174,23 +170,18 @@ describe('@mantine/dates/Calendar/controller', () => {
           <button
             type="button"
             onClick={() => {
-              setDateRef.current?.('2023-08-11');
-              setLevelRef.current?.('year');
+              controller.setDate('2023-08-11');
+              controller.setLevel('year');
             }}
           >
             set
           </button>
-          <Calendar
-            {...controllerProps}
-            controller={controller}
-            __setDateRef={setDateRef}
-            __setLevelRef={setLevelRef}
-          />
+          <Calendar {...controllerProps} controller={controller} />
         </>
       );
     }
 
-    render(<RefCalendar />);
+    render(<ExternalCalendar />);
     act(() => screen.getByText('set').click());
 
     expect(controller.date).toBe('2023-08-11');

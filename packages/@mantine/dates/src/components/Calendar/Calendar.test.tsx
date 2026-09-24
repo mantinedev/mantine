@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
+import { DatesDropdownProvider } from '../PickerInputBase/DatesDropdown.context';
 import { Calendar, CalendarProps, CalendarStylesNames } from './Calendar';
 
 const defaultProps: CalendarProps = {
@@ -59,6 +60,14 @@ describe('@mantine/dates/Calendar', () => {
 
   datesTests.itSupportsMonthProps({ component: Calendar, props: defaultProps });
   datesTests.itSupportsNativeLevelSelect({ component: Calendar, props: defaultProps });
+  datesTests.itSupportsMonthsListProps({
+    component: Calendar,
+    props: { ...defaultProps, defaultLevel: 'year' },
+  });
+  datesTests.itSupportsYearsListProps({
+    component: Calendar,
+    props: { ...defaultProps, defaultLevel: 'decade' },
+  });
   datesTests.itHandlesMonthKeyboardEvents({
     component: Calendar,
     props: defaultProps,
@@ -393,8 +402,12 @@ describe('@mantine/dates/Calendar', () => {
     expect(document.activeElement!.closest('table')).not.toBeNull();
   });
 
-  it('does not move focus after level change with __preventFocus', async () => {
-    render(<Calendar {...defaultProps} __preventFocus />);
+  it('does not move focus after level change when dropdown context has preventFocus', async () => {
+    render(
+      <DatesDropdownProvider value={{ preventFocus: true, stopPropagation: false }}>
+        <Calendar {...defaultProps} />
+      </DatesDropdownProvider>
+    );
     const monthLevel = screen.getByRole('button', {
       name: defaultProps.ariaLabels!.monthLevelControl,
     });
@@ -628,6 +641,79 @@ describe('@mantine/dates/Calendar', () => {
     expectHeaderLevel('year', '2022');
 
     rerender(<Calendar {...defaultProps} defaultLevel="decade" maxLevel="decade" />);
+    expectHeaderLevel('year', '2022');
+  });
+
+  it('moves the date and descends when a year is clicked at decade level and minLevel allows it', async () => {
+    const onDateChange = jest.fn();
+    const onYearSelect = jest.fn();
+    const { container } = render(
+      <Calendar
+        {...defaultProps}
+        defaultLevel="decade"
+        onDateChange={onDateChange}
+        onYearSelect={onYearSelect}
+      />
+    );
+
+    await userEvent.click(container.querySelectorAll('table button')[3]);
+    expect(onDateChange).toHaveBeenCalledWith('2023-01-01');
+    expect(onYearSelect).toHaveBeenCalledWith('2023-01-01');
+    expectHeaderLevel('year', '2023');
+  });
+
+  it('does not move the date when a year is clicked and minLevel is decade', async () => {
+    const onDateChange = jest.fn();
+    const onYearSelect = jest.fn();
+    const { container } = render(
+      <Calendar
+        {...defaultProps}
+        minLevel="decade"
+        onDateChange={onDateChange}
+        onYearSelect={onYearSelect}
+      />
+    );
+
+    await userEvent.click(container.querySelectorAll('table button')[3]);
+    expect(onDateChange).not.toHaveBeenCalled();
+    expect(onYearSelect).toHaveBeenCalledWith('2023-01-01');
+    expectLevelsCount([0, 0]);
+    expect(container.querySelector('[data-decade-level]')).toBeInTheDocument();
+  });
+
+  it('moves the date and descends when a month is clicked at year level and minLevel allows it', async () => {
+    const onDateChange = jest.fn();
+    const onMonthSelect = jest.fn();
+    const { container } = render(
+      <Calendar
+        {...defaultProps}
+        defaultLevel="year"
+        onDateChange={onDateChange}
+        onMonthSelect={onMonthSelect}
+      />
+    );
+
+    await userEvent.click(container.querySelectorAll('table button')[4]);
+    expect(onDateChange).toHaveBeenCalledWith('2022-05-01');
+    expect(onMonthSelect).toHaveBeenCalledWith('2022-05-01');
+    expectHeaderLevel('month', 'May 2022');
+  });
+
+  it('does not move the date when a month is clicked and minLevel is year', async () => {
+    const onDateChange = jest.fn();
+    const onMonthSelect = jest.fn();
+    const { container } = render(
+      <Calendar
+        {...defaultProps}
+        minLevel="year"
+        onDateChange={onDateChange}
+        onMonthSelect={onMonthSelect}
+      />
+    );
+
+    await userEvent.click(container.querySelectorAll('table button')[4]);
+    expect(onDateChange).not.toHaveBeenCalled();
+    expect(onMonthSelect).toHaveBeenCalledWith('2022-05-01');
     expectHeaderLevel('year', '2022');
   });
 });

@@ -22,6 +22,7 @@ import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
 import { DatePickerType } from '../../types';
 import { DateFormatter } from '../../utils';
 import { HiddenDatesInput, HiddenDatesInputValue } from '../HiddenDatesInput';
+import { DatesDropdownProvider } from './DatesDropdown.context';
 import classes from './PickerInputBase.module.css';
 
 export type PickerInputBaseStylesNames = __InputStylesNames;
@@ -178,6 +179,14 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
     dropdownHandlers.close();
   };
 
+  const content = (
+    <DatesDropdownProvider
+      value={{ preventFocus: false, stopPropagation: dropdownType === 'popover' }}
+    >
+      {children}
+    </DatesDropdownProvider>
+  );
+
   return (
     <>
       {dropdownType === 'modal' && !readOnly && (
@@ -190,7 +199,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
           unstyled={unstyled}
           {...modalProps}
         >
-          {children}
+          {content}
         </Modal>
       )}
 
@@ -260,7 +269,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
               keyboardInteractionRef.current = false;
             }}
           >
-            {children}
+            {content}
           </Popover.Dropdown>
         </Popover>
       </Input.Wrapper>

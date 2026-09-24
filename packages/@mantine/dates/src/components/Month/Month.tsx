@@ -16,10 +16,12 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ControlKeydownPayload, DateLabelFormat, DateStringValue, DayOfWeek } from '../../types';
+import { DateLabelFormat, DateStringValue, DayOfWeek } from '../../types';
 import { toDateString } from '../../utils';
+import { useCalendarColumn, useOptionalCalendarContext } from '../Calendar/Calendar.context';
 import { useDatesContext } from '../DatesProvider';
 import { Day, DayProps, DayStylesNames, RenderDay } from '../Day';
+import { useDatesDropdownContext } from '../PickerInputBase/DatesDropdown.context';
 import { WeekdaysRow } from '../WeekdaysRow';
 import { getDateInTabOrder } from './get-date-in-tab-order/get-date-in-tab-order';
 import { getMonthDays } from './get-month-days/get-month-days';
@@ -53,42 +55,6 @@ export interface MonthWeekControlProps extends ElementProps<'button'>, DataAttri
 }
 
 export interface MonthSettings {
-  /** Renders week numbers as buttons and removes days from the tab order, used in WeekPicker */
-  __withWeekControls?: boolean;
-
-  /** Passes props down to week controls, receives the first date of the week */
-  __getWeekControlProps?: (weekStart: DateStringValue) => Partial<MonthWeekControlProps>;
-
-  /** Assigns ref of every week control based on its row index, used for arrows navigation */
-  __getWeekControlRef?: (rowIndex: number, node: HTMLButtonElement) => void;
-
-  /** Called when any keydown event is registered on week control, used for arrows navigation */
-  __onWeekControlKeyDown?: (
-    event: React.KeyboardEvent<HTMLButtonElement>,
-    payload: { rowIndex: number; date: DateStringValue }
-  ) => void;
-
-  /** Determines whether propagation for `Escape` key should be stopped */
-  __stopPropagation?: boolean;
-
-  /** Prevents focus shift when buttons are clicked */
-  __preventFocus?: boolean;
-
-  /** Called when day is clicked with click event and date */
-  __onDayClick?: (event: React.MouseEvent<HTMLButtonElement>, date: DateStringValue) => void;
-
-  /** Called when mouse enters day */
-  __onDayMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: DateStringValue) => void;
-
-  /** Called when any keydown event is registered on day, used for arrows navigation */
-  __onDayKeyDown?: (
-    event: React.KeyboardEvent<HTMLButtonElement>,
-    payload: ControlKeydownPayload
-  ) => void;
-
-  /** Assigns ref of every day based on its position in the table, used for arrows navigation */
-  __getDayRef?: (rowIndex: number, cellIndex: number, node: HTMLButtonElement) => void;
-
   /** `dayjs` locale, the default value is defined by `DatesProvider` @category appearance */
   locale?: string;
 
@@ -196,22 +162,12 @@ export const Month = factory<MonthFactory>((_props) => {
     hideWeekdays,
     getDayAriaLabel,
     static: isStatic,
-    __getDayRef,
-    __onDayKeyDown,
-    __onDayClick,
-    __onDayMouseEnter,
-    __preventFocus,
-    __stopPropagation,
     withCellSpacing,
     size,
     highlightToday,
     withWeekNumbers,
     fullWidth,
     attributes,
-    __withWeekControls,
-    __getWeekControlProps,
-    __getWeekControlRef,
-    __onWeekControlKeyDown,
     ...others
   } = props;
 
@@ -231,6 +187,13 @@ export const Month = factory<MonthFactory>((_props) => {
   });
 
   const ctx = useDatesContext();
+  const calendar = useOptionalCalendarContext();
+  const column = useCalendarColumn();
+  const dropdown = useDatesDropdownContext();
+  const levelIndex = column?.index ?? 0;
+  const withWeekControls = !!calendar?.weekControls.enabled;
+  const getWeekControlProps = calendar?.weekControls.getWeekControlProps;
+
   const dates = getMonthDays({
     month,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
@@ -258,8 +221,8 @@ export const Month = factory<MonthFactory>((_props) => {
     !isBeforeMaxDate(date, toDateString(maxDate)!) ||
     !isAfterMinDate(date, toDateString(minDate)!);
 
-  const weekInTabOrder = __withWeekControls
-    ? getWeekInTabOrder({ dates, isDayDisabled, getWeekControlProps: __getWeekControlProps })
+  const weekInTabOrder = withWeekControls
+    ? getWeekInTabOrder({ dates, isDayDisabled, getWeekControlProps })
     : -1;
 
   const rows = dates.map((row, rowIndex) => {
@@ -285,7 +248,6 @@ export const Month = factory<MonthFactory>((_props) => {
             styles={resolvedStyles}
             attributes={attributes}
             unstyled={unstyled}
-            data-mantine-stop-propagation={__stopPropagation || undefined}
             highlightToday={highlightToday}
             renderDay={renderDay}
             date={date}
@@ -299,36 +261,31 @@ export const Month = factory<MonthFactory>((_props) => {
             disabled={isDayDisabled(date)}
             ref={(node) => {
               if (node) {
-                __getDayRef?.(rowIndex, cellIndex, node!);
+                calendar?.navigation.getDayRef(levelIndex, rowIndex, cellIndex, node);
               }
             }}
             {...dayProps}
             onKeyDown={(event) => {
               dayProps?.onKeyDown?.(event);
-              __onDayKeyDown?.(event, { rowIndex, cellIndex, date });
+              calendar?.navigation.onDayKeyDown(event, { rowIndex, cellIndex, date });
             }}
             onMouseEnter={(event) => {
               dayProps?.onMouseEnter?.(event);
-              __onDayMouseEnter?.(event, date);
+              calendar?.onDayMouseEnter?.(event, date);
             }}
             onClick={(event) => {
               dayProps?.onClick?.(event);
-
-              __onDayClick?.(event, date);
+              calendar?.onDayClick?.(event, date);
             }}
-            onMouseDown={(event) => {
-              dayProps?.onMouseDown?.(event);
-              __preventFocus && event.preventDefault();
-            }}
-            tabIndex={__preventFocus || __withWeekControls || !isDateInTabOrder ? -1 : 0}
+            tabIndex={withWeekControls || !isDateInTabOrder ? -1 : 0}
           />
         </td>
       );
     });
 
     const weekStart = row[0];
-    const { selected: weekSelected, ...weekControlProps } = __withWeekControls
-      ? __getWeekControlProps?.(weekStart) || {}
+    const { selected: weekSelected, ...weekControlProps } = withWeekControls
+      ? getWeekControlProps?.(weekStart) || {}
       : {};
     const weekDisabled = row.every(isDayDisabled);
 
@@ -336,29 +293,29 @@ export const Month = factory<MonthFactory>((_props) => {
       <tr key={rowIndex} {...getStyles('monthRow')}>
         {withWeekNumbers && (
           <td {...getStyles('weekNumber')}>
-            {__withWeekControls ? (
+            {withWeekControls ? (
               <UnstyledButton
                 {...getStyles('weekControl')}
                 data-week-control
-                data-mantine-stop-propagation={__stopPropagation || undefined}
+                data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
                 disabled={weekDisabled}
                 data-disabled={weekDisabled || undefined}
                 data-selected={weekSelected || undefined}
                 ref={(node) => {
                   if (node) {
-                    __getWeekControlRef?.(rowIndex, node);
+                    calendar?.navigation.getWeekControlRef(levelIndex, rowIndex, node);
                   }
                 }}
                 {...weekControlProps}
                 onKeyDown={(event) => {
                   weekControlProps.onKeyDown?.(event);
-                  __onWeekControlKeyDown?.(event, { rowIndex, date: weekStart });
+                  calendar?.navigation.onWeekControlKeyDown(event, { rowIndex, date: weekStart });
                 }}
                 onMouseDown={(event) => {
                   weekControlProps.onMouseDown?.(event);
-                  __preventFocus && event.preventDefault();
+                  dropdown.preventFocus && event.preventDefault();
                 }}
-                tabIndex={__preventFocus || rowIndex !== weekInTabOrder ? -1 : 0}
+                tabIndex={dropdown.preventFocus || rowIndex !== weekInTabOrder ? -1 : 0}
               >
                 {getWeekNumber(row)}
               </UnstyledButton>
@@ -378,6 +335,7 @@ export const Month = factory<MonthFactory>((_props) => {
       {...getStyles('month')}
       size={size}
       data-full-width={fullWidth || undefined}
+      data-week-mode={withWeekControls || undefined}
       {...others}
     >
       {!hideWeekdays && (

@@ -3,16 +3,9 @@ import { itHandlesMonthKeyboardEvents } from './it-handles-month-keyboard-events
 import { itSupportsHeaderProps } from './it-support-header-props';
 import { itSupportsClearableProps } from './it-supports-clearable-props';
 import { itSupportsDateInputProps } from './it-supports-date-input-props';
-import { itSupportsGetControlRef } from './it-supports-get-control-ref';
-import { itSupportsGetDayRef } from './it-supports-get-day-ref';
 import { itSupportsMonthProps } from './it-supports-month-props';
 import { itSupportsMonthsListProps } from './it-supports-months-list-props';
 import { itSupportsNativeLevelSelect } from './it-supports-native-level-select';
-import { itSupportsOnControlClick } from './it-supports-on-control-click';
-import { itSupportsOnControlKeydown } from './it-supports-on-control-key-down';
-import { itSupportsOnControlMouseEnter } from './it-supports-on-control-mouse-enter';
-import { itSupportsOnDayClick } from './it-supports-on-day-click';
-import { itSupportsOnDayKeydown } from './it-supports-on-day-keydown';
 import { itSupportsQuartersListProps } from './it-supports-quarters-list-props';
 import { itSupportsWeekdaysProps } from './it-supports-weekdays-props';
 import { itSupportsWithNextPrevious } from './it-supports-with-next-previous';
@@ -22,19 +15,12 @@ export const datesTests = {
   itSupportsWeekdaysProps,
   itSupportsMonthProps,
   itSupportsHeaderProps,
-  itSupportsGetDayRef,
   itSupportsWithNextPrevious,
-  itSupportsOnDayKeydown,
-  itSupportsGetControlRef,
   itSupportsMonthsListProps,
   itSupportsQuartersListProps,
   itSupportsYearsListProps,
-  itSupportsOnControlKeydown,
-  itSupportsOnControlClick,
-  itSupportsOnDayClick,
   itHandlesMonthKeyboardEvents,
   itHandlesControlsKeyboardEvents,
-  itSupportsOnControlMouseEnter,
   itSupportsClearableProps,
   itSupportsDateInputProps,
   itSupportsNativeLevelSelect,

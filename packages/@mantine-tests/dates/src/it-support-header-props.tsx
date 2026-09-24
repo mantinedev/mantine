@@ -126,37 +126,4 @@ export function itSupportsHeaderProps(options: Options, name = 'supports header 
     await userEvent.click(screen.getByLabelText('test-level'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
-
-  it(`${name}: handles focus as usual when __preventFocus is set to false`, async () => {
-    render(
-      <options.component
-        {...options.props}
-        __preventFocus={false}
-        levelControlAriaLabel="test-level"
-      />
-    );
-    await userEvent.click(screen.getByLabelText('next'));
-    expect(screen.getByLabelText('next')).toHaveFocus();
-
-    await userEvent.click(screen.getByLabelText('test-level'));
-    expect(screen.getByLabelText('test-level')).toHaveFocus();
-
-    await userEvent.click(screen.getByLabelText('prev'));
-    expect(screen.getByLabelText('prev')).toHaveFocus();
-  });
-
-  it(`${name}: does not focus controls on click when __preventFocus is set to true`, async () => {
-    render(
-      <options.component {...options.props} __preventFocus levelControlAriaLabel="test-level" />
-    );
-
-    await userEvent.click(screen.getByLabelText('next'));
-    expect(document.body).toHaveFocus();
-
-    await userEvent.click(screen.getByLabelText('test-level'));
-    expect(document.body).toHaveFocus();
-
-    await userEvent.click(screen.getByLabelText('prev'));
-    expect(document.body).toHaveFocus();
-  });
 }

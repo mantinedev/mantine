@@ -47,3 +47,57 @@
     opacity: 0.5;
   }
 }
+
+.month[data-week-mode] .monthRow {
+  & > td:first-child {
+    border-start-start-radius: var(--mantine-radius-default);
+    border-end-start-radius: var(--mantine-radius-default);
+  }
+
+  & > td:last-child {
+    border-start-end-radius: var(--mantine-radius-default);
+    border-end-end-radius: var(--mantine-radius-default);
+  }
+
+  &:has([data-week-hovered]) > td {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+
+  &:has([data-in-range]) > td {
+    background-color: var(--mantine-primary-color-light);
+  }
+
+  &:has([data-selected]) > td {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+  }
+
+  &:has([data-selected]):hover > td {
+    background-color: var(--mantine-primary-color-filled-hover);
+  }
+
+  & > td:has(> [data-hidden]) {
+    background-color: transparent;
+  }
+
+  &:has([data-in-range]) + &:has([data-in-range]) > td {
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+  }
+
+  &:has([data-in-range]):has(+ .monthRow [data-in-range]) > td {
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+  }
+}
+
+.month[data-week-mode] .monthCell > * {
+  background-color: transparent;
+  border-radius: var(--mantine-radius-default);
+}

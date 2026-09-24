@@ -153,4 +153,16 @@ describe('@mantine/dates/DatePickerInput', () => {
     expectValue(container, 'April 11, 2022');
     expect(spy).toHaveBeenCalledWith('2022-04-01');
   });
+
+  it('marks dropdown controls with data-mantine-stop-propagation for popover dropdown', async () => {
+    const { container } = render(<DatePickerInput {...defaultProps} />);
+    await clickInput(container);
+
+    expect(container.querySelector('table button')).toHaveAttribute(
+      'data-mantine-stop-propagation'
+    );
+    expect(container.querySelector('[data-level-control]')).toHaveAttribute(
+      'data-mantine-stop-propagation'
+    );
+  });
 });

@@ -13,6 +13,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { DateStringValue } from '../../types';
+import { useDatesDropdownContext } from '../PickerInputBase/DatesDropdown.context';
 import classes from './Day.module.css';
 
 export type RenderDay = (date: DateStringValue) => React.ReactNode;
@@ -102,6 +103,8 @@ export const Day = factory<DayFactory>((_props) => {
     highlightToday,
     fullWidth,
     attributes,
+    tabIndex,
+    onMouseDown,
     ...others
   } = props;
 
@@ -120,6 +123,8 @@ export const Day = factory<DayFactory>((_props) => {
     rootSelector: 'day',
   });
 
+  const dropdown = useDatesDropdownContext();
+
   return (
     <UnstyledButton<any>
       {...getStyles('day', { style: hidden ? { display: 'none' } : undefined })}
@@ -137,8 +142,14 @@ export const Day = factory<DayFactory>((_props) => {
       data-last-in-range={(lastInRange && !disabled) || undefined}
       data-static={isStatic || undefined}
       data-full-width={fullWidth || undefined}
+      data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
       unstyled={unstyled}
       {...others}
+      tabIndex={dropdown.preventFocus ? -1 : tabIndex}
+      onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
+        onMouseDown?.(event);
+        dropdown.preventFocus && event.preventDefault();
+      }}
     >
       {renderDay?.(date) || dayjs(date).date()}
     </UnstyledButton>

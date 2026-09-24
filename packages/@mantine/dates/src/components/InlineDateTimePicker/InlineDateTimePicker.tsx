@@ -23,9 +23,11 @@ import { DatePickerType, DateStringValue, DateValue } from '../../types';
 import { assignTime, clampDate, getDefaultClampedDate } from '../../utils';
 import { pickCalendarProps } from '../Calendar';
 import { clampLevel } from '../Calendar/clamp-level/clamp-level';
+import { getPresetsClasses, Presets } from '../Calendar/Presets/Presets';
 import { DatePicker, DatePickerBaseProps, DatePickerStylesNames } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
 import { getMaxTime, getMinTime } from '../DateTimePicker/get-min-max-time/get-min-max-time';
+import { useDatesDropdownContext } from '../PickerInputBase/DatesDropdown.context';
 import { TimePicker, TimePickerProps } from '../TimePicker/TimePicker';
 import type { TimePickerField } from '../TimePicker/TimePicker.types';
 import {
@@ -33,7 +35,9 @@ import {
   type InlineDateTimePickerController,
 } from './use-inline-date-time-picker/use-inline-date-time-picker';
 import type { TimeEntryTarget } from './use-inline-date-time-picker/use-time-entry';
-import classes from './InlineDateTimePicker.module.css';
+import moduleClasses from './InlineDateTimePicker.module.css';
+
+const classes = { ...moduleClasses, ...getPresetsClasses('datePickerRoot') };
 
 export type InlineDateTimePickerStylesNames =
   | 'root'
@@ -87,17 +91,8 @@ export interface InlineDateTimePickerProps<Type extends DatePickerType = 'defaul
   /** Controller returned by the `useInlineDateTimePicker` hook. When provided, the displayed date and level and the time inputs are owned by the controller and `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel`, `onLevelChange` and `defaultTimeValue` props are ignored @category state */
   controller?: InlineDateTimePickerController;
 
-  /** @internal Adds data-mantine-stop-propagation to interactive elements */
-  __stopPropagation?: boolean;
-
   /** @internal Overrides the static selector used for class names */
   __staticSelector?: string;
-
-  /** @internal Called when Enter is pressed in a time input */
-  __onEnter?: () => void;
-
-  /** @internal Forwarded to DatePicker for preset handling */
-  __onPresetSelect?: (val: any) => void;
 }
 
 export type InlineDateTimePickerFactory = Factory<{
@@ -145,10 +140,7 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
     type,
     className,
     style,
-    __stopPropagation,
     __staticSelector,
-    __onEnter,
-    __onPresetSelect,
     fullWidth,
     controller: controllerProp,
     ...rest
@@ -174,6 +166,7 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
   });
 
   const ctx = useDatesContext();
+  const dropdown = useDatesDropdownContext();
   const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
   const _labelSeparator = ctx.getLabelSeparator(labelSeparator);
   const isRange = (type as string) === 'range';
@@ -309,10 +302,17 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
     controller.setEndTime(timeString);
   };
 
+  const handlePresetSelect = (val: any) => {
+    const first = Array.isArray(val) ? val[0] : val;
+    setValue(val);
+    first && controller.setDate(first);
+    controller.setLevel('month');
+  };
+
   const handleTimeInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      __onEnter?.();
+      onSubmit?.();
     }
   };
 
@@ -381,33 +381,38 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
 
   return (
     <Box {...getStyles('root', { className, style })} {...others} ref={props.ref as any}>
-      <DatePicker
-        fullWidth={fullWidth ?? true}
-        {...calendarProps}
-        maxDate={maxDate}
-        minDate={minDate}
-        size={size}
-        variant={variant}
-        type={type as any}
-        value={_value as any}
-        controller={controller}
-        getDayProps={
-          mountFocus
-            ? (date) => ({ ...calendarProps.getDayProps?.(date), 'data-autofocus': undefined })
-            : calendarProps.getDayProps
-        }
-        onChange={handleDateChange}
-        locale={locale}
-        classNames={resolvedClassNames}
-        styles={resolvedStyles}
-        unstyled={unstyled}
-        __staticSelector={_staticSelector}
-        __stopPropagation={__stopPropagation}
+      <Presets
         presets={presets}
-        allowSingleDateInRange={allowSingleDateInRange}
-        __onPresetSelect={__onPresetSelect}
-        attributes={attributes}
-      />
+        onPresetSelect={handlePresetSelect}
+        getStyles={getStyles}
+        rootSelector="datePickerRoot"
+        size={size}
+      >
+        <DatePicker
+          fullWidth={fullWidth ?? true}
+          {...calendarProps}
+          maxDate={maxDate}
+          minDate={minDate}
+          size={size}
+          variant={variant}
+          type={type as any}
+          value={_value as any}
+          controller={controller}
+          getDayProps={
+            mountFocus
+              ? (date) => ({ ...calendarProps.getDayProps?.(date), 'data-autofocus': undefined })
+              : calendarProps.getDayProps
+          }
+          onChange={handleDateChange}
+          locale={locale}
+          classNames={resolvedClassNames}
+          styles={resolvedStyles}
+          unstyled={unstyled}
+          __staticSelector={_staticSelector}
+          allowSingleDateInRange={allowSingleDateInRange}
+          attributes={attributes}
+        />
+      </Presets>
 
       {withTimeInputs && !isRange && (
         <div {...getStyles('timeWrapper')}>
@@ -426,7 +431,7 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
             onChange={handleStartTimeChange}
             onKeyDown={handleTimeInputKeyDown}
             size={size}
-            data-mantine-stop-propagation={__stopPropagation || undefined}
+            data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
             hoursRef={timeRefs.hours}
             minutesRef={timeRefs.minutes}
             secondsRef={timeRefs.seconds}
@@ -441,7 +446,7 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
               style: submitButtonProps?.style,
             })}
             unstyled={unstyled}
-            data-mantine-stop-propagation={__stopPropagation || undefined}
+            data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
             // eslint-disable-next-line react/no-children-prop
             children={<CheckIcon size="30%" />}
             {...submitButtonProps}
@@ -473,7 +478,7 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
               onChange={handleStartTimeChange}
               onKeyDown={handleTimeInputKeyDown}
               size={size}
-              data-mantine-stop-propagation={__stopPropagation || undefined}
+              data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
               hoursRef={timeRefs.hours}
               minutesRef={timeRefs.minutes}
               secondsRef={timeRefs.seconds}
@@ -495,7 +500,7 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
               onChange={handleEndTimeChange}
               onKeyDown={handleTimeInputKeyDown}
               size={size}
-              data-mantine-stop-propagation={__stopPropagation || undefined}
+              data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
               hoursRef={endTimeRefs.hours}
               minutesRef={endTimeRefs.minutes}
               secondsRef={endTimeRefs.seconds}
@@ -510,7 +515,7 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
                 style: submitButtonProps?.style,
               })}
               unstyled={unstyled}
-              data-mantine-stop-propagation={__stopPropagation || undefined}
+              data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
               // eslint-disable-next-line react/no-children-prop
               children={<CheckIcon size="30%" />}
               {...submitButtonProps}

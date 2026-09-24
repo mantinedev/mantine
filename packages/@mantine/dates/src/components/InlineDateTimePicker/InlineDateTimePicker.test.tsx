@@ -102,6 +102,29 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
     expect(getTimePicker()).toBeInTheDocument();
   });
 
+  it('sets preset value verbatim including its time', async () => {
+    const spy = jest.fn();
+    render(
+      <InlineDateTimePicker
+        {...defaultProps}
+        defaultValue="2022-04-11 10:00:00"
+        onChange={spy}
+        presets={[{ label: 'Custom preset', value: '2022-05-12 09:15:30' }]}
+      />
+    );
+
+    await userEvent.click(screen.getByText('Custom preset'));
+    expect(spy).toHaveBeenLastCalledWith('2022-05-12 09:15:30');
+    expect(screen.getByLabelText('level-control').textContent).toBe('May 2022');
+  });
+
+  it('calls onSubmit when Enter is pressed in the hours field', async () => {
+    const spy = jest.fn();
+    render(<InlineDateTimePicker {...defaultProps} defaultValue="2022-04-11" onSubmit={spy} />);
+    await userEvent.type(getTimePicker(), '{Enter}');
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
   it('allows navigating calendar levels', async () => {
     render(<InlineDateTimePicker {...defaultProps} defaultValue="2022-04-11" />);
     await userEvent.click(screen.getByLabelText('level-control'));

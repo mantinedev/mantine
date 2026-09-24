@@ -1,0 +1,33 @@
+.monthsList,
+.quartersList {
+  border-collapse: collapse;
+  border-width: 0;
+  cursor: pointer;
+
+  &[data-full-width] {
+    width: 100%;
+  }
+}
+
+.yearsList {
+  border-collapse: collapse;
+  border-width: 0;
+
+  &[data-full-width] {
+    width: 100%;
+  }
+}
+
+.monthsListCell,
+.quartersListCell,
+.yearsListCell {
+  padding: 0;
+
+  &:where([data-with-spacing]) {
+    padding: 0.5px;
+  }
+}
+
+.quartersListCell .quartersListControl:not([data-full-width]) {
+  width: calc((var(--dpc-size) * 7) / 4 + rem(1.125px));
+}

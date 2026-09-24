@@ -1,27 +1,17 @@
-import dayjs from 'dayjs';
-import { useRef } from 'react';
 import {
-  Box,
   BoxProps,
   createVarsResolver,
   ElementProps,
-  factory,
   Factory,
+  genericFactory,
   getFontSize,
-  MantineComponentStaticProperties,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useDatesState } from '../../hooks';
-import {
-  CalendarLevel,
-  DatePickerType,
-  DateStringValue,
-  DateValue,
-  PickerBaseProps,
-} from '../../types';
+import { CalendarLevel, DatePickerType, PickerBaseProps, PickerPreset } from '../../types';
 import {
   Calendar,
   CalendarBaseProps,
@@ -29,23 +19,18 @@ import {
   CalendarProps,
   CalendarSettings,
   CalendarStylesNames,
+  DecadeLevelBaseSettings,
+  MonthLevelBaseSettings,
   pickCalendarProps,
+  useCalendar,
+  YearLevelBaseSettings,
 } from '../Calendar';
-import { DecadeLevelBaseSettings } from '../DecadeLevel';
-import { isSameMonth } from '../Month';
-import { MonthLevelBaseSettings } from '../MonthLevel';
-import { PresetsList } from '../PresetsList';
-import { YearLevelBaseSettings } from '../YearLevel';
-import classes from './DatePicker.module.css';
+import { CalendarOptionsProvider } from '../Calendar/Calendar.context';
+import { clampLevel } from '../Calendar/clamp-level/clamp-level';
+import { getPresetsClasses, Presets } from '../Calendar/Presets/Presets';
+import { usePickerSelection } from '../Calendar/use-picker-selection/use-picker-selection';
 
-export interface DatePickerPreset<Type extends DatePickerType> {
-  value: Type extends 'range'
-    ? [DateStringValue | null, DateStringValue | null]
-    : Type extends 'multiple'
-      ? DateStringValue[]
-      : DateStringValue | null;
-  label: React.ReactNode;
-}
+export type DatePickerPreset<Type extends DatePickerType> = PickerPreset<Type>;
 
 export type DatePickerCssVariables = {
   datePickerRoot: '--preset-font-size';
@@ -80,11 +65,6 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
 
   /** Predefined values to pick from @category appearance */
   presets?: DatePickerPreset<Type>[];
-
-  /** If defined, called with preset value, suppresses `onChange` call */
-  __onPresetSelect?: (
-    preset: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
-  ) => void;
 }
 
 export interface DatePickerProps<Type extends DatePickerType = 'default'>
@@ -102,6 +82,9 @@ export type DatePickerFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: DatePickerStylesNames;
   vars: DatePickerCssVariables;
+  signature: <Type extends DatePickerType = 'default'>(
+    props: DatePickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
+  ) => React.JSX.Element;
 }>;
 
 const varsResolver = createVarsResolver<DatePickerFactory>((_, { size }) => ({
@@ -117,13 +100,9 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<DatePickerProps>;
 
-type DatePickerComponent = (<Type extends DatePickerType = 'default'>(
-  props: DatePickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
-) => React.JSX.Element) & {
-  displayName?: string;
-} & MantineComponentStaticProperties<DatePickerFactory>;
+const classes = getPresetsClasses('datePickerRoot');
 
-export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_props) => {
+export const DatePicker = genericFactory<DatePickerFactory>((_props) => {
   const props = useProps('DatePicker', defaultProps, _props);
   const {
     allowDeselect,
@@ -135,10 +114,6 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     classNames,
     styles,
     __staticSelector,
-    __onDayClick,
-    __onDayMouseEnter,
-    __onPresetSelect,
-    __stopPropagation,
     presets,
     className,
     style,
@@ -147,18 +122,16 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     vars,
     attributes,
     fullWidth,
-    controller,
+    controller: controllerProp,
     ...rest
   } = props;
 
   const { calendarProps, others } = pickCalendarProps(rest);
-  const setDateRef = useRef<((date: DateValue) => void) | null>(null);
-  const setLevelRef = useRef<((level: CalendarLevel) => void) | null>(null);
 
   const getStyles = useStyles<DatePickerFactory>({
     name: __staticSelector || 'DatePicker',
     classes,
-    props,
+    props: props as DatePickerProps,
     className,
     style,
     classNames,
@@ -170,93 +143,84 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     vars,
   });
 
-  const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps, _value, setValue } =
-    useDatesState({
-      type: others.type as any,
-      level: 'day',
-      allowDeselect,
-      allowSingleDateInRange,
-      value,
-      defaultValue,
-      onChange: onChange as any,
-      onMouseLeave,
-    });
+  const minLevel = calendarProps.minLevel || 'month';
+
+  const controller = useController(useCalendar, controllerProp, {
+    date: calendarProps.date,
+    defaultDate: calendarProps.defaultDate,
+    onDateChange: calendarProps.onDateChange,
+    level: calendarProps.level
+      ? clampLevel(calendarProps.level, minLevel, calendarProps.maxLevel)
+      : undefined,
+    defaultLevel: clampLevel(calendarProps.defaultLevel, minLevel, calendarProps.maxLevel),
+    onLevelChange: calendarProps.onLevelChange,
+  });
+
+  const selection = usePickerSelection({
+    type: others.type as any,
+    level: 'day',
+    allowDeselect,
+    allowSingleDateInRange,
+    value,
+    defaultValue,
+    onChange: onChange as any,
+    onMouseLeave,
+  });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DatePickerFactory>({
     classNames,
     styles,
-    props,
+    props: props as DatePickerProps,
   });
 
-  const calendar = (
-    <Calendar
-      classNames={resolvedClassNames}
-      styles={resolvedStyles}
-      __staticSelector={__staticSelector || 'DatePicker'}
-      onMouseLeave={onRootMouseLeave}
-      size={size}
-      fullWidth={fullWidth}
-      {...calendarProps}
-      {...(!presets ? others : {})}
-      __stopPropagation={__stopPropagation}
-      controller={controller}
-      __setDateRef={setDateRef}
-      __setLevelRef={setLevelRef}
-      minLevel={calendarProps.minLevel || 'month'}
-      __onDayMouseEnter={(_event, date) => {
-        onHoveredDateChange(date);
-        __onDayMouseEnter?.(_event, date);
-      }}
-      __onDayClick={(_event, date) => {
-        onDateChange(date);
-        __onDayClick?.(_event, date);
-      }}
-      getDayProps={(date) => ({
-        ...getControlProps(date),
-        ...calendarProps.getDayProps?.(date),
-      })}
-      getMonthControlProps={(date) => ({
-        selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
-        ...calendarProps.getMonthControlProps?.(date),
-      })}
-      getYearControlProps={(date) => ({
-        selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
-        ...calendarProps.getYearControlProps?.(date),
-      })}
-      hideOutsideDates={calendarProps.hideOutsideDates ?? calendarProps.numberOfColumns !== 1}
-      attributes={attributes}
-      {...(!presets ? { className, style } : {})}
-    />
-  );
-
-  if (!presets) {
-    return calendar;
-  }
-
-  const handlePresetSelect = (
-    val: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
-  ) => {
-    const _val = Array.isArray(val) ? val[0] : val;
-    if (_val !== undefined) {
-      setDateRef.current?.(_val);
-      setLevelRef.current?.('month');
-      __onPresetSelect ? __onPresetSelect(val) : setValue(val);
-    }
-  };
-
   return (
-    <Box {...getStyles('datePickerRoot')} size={size} {...others}>
-      <PresetsList
-        {...getStyles('presetsList')}
-        presets={presets}
-        onPresetSelect={handlePresetSelect}
-        buttonProps={getStyles('presetButton')}
-        stopPropagation={__stopPropagation}
-      />
-      {calendar}
-    </Box>
+    <Presets
+      presets={presets}
+      onPresetSelect={selection.createPresetSelectHandler({ controller, targetLevel: 'month' })}
+      getStyles={getStyles}
+      rootSelector="datePickerRoot"
+      size={size}
+      rootProps={others}
+    >
+      <CalendarOptionsProvider
+        value={{
+          selection: {
+            onDayClick: (_event, date) => selection.onDateChange(date),
+            onDayMouseEnter: (_event, date) => selection.onHoveredDateChange(date),
+          },
+        }}
+      >
+        <Calendar
+          classNames={resolvedClassNames}
+          styles={resolvedStyles}
+          __staticSelector={__staticSelector || 'DatePicker'}
+          onMouseLeave={selection.onRootMouseLeave}
+          size={size}
+          fullWidth={fullWidth}
+          {...calendarProps}
+          {...(!presets ? others : {})}
+          controller={controller}
+          minLevel={minLevel}
+          getDayProps={(date) => ({
+            ...selection.getControlProps(date),
+            ...calendarProps.getDayProps?.(date),
+          })}
+          getMonthControlProps={(date) => ({
+            ...selection.getSelectedMonthProps(date),
+            ...calendarProps.getMonthControlProps?.(date),
+          })}
+          getYearControlProps={(date) => ({
+            ...selection.getSelectedYearProps(date),
+            ...calendarProps.getYearControlProps?.(date),
+          })}
+          hideOutsideDates={calendarProps.hideOutsideDates ?? calendarProps.numberOfColumns !== 1}
+          attributes={attributes}
+          {...(!presets ? { className, style } : {})}
+        />
+      </CalendarOptionsProvider>
+    </Presets>
   );
-}) as any;
+});
 
 DatePicker.classes = Calendar.classes;
 DatePicker.varsResolver = varsResolver;

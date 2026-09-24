@@ -29,17 +29,11 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
     highlightToday,
     withNativeLevelSelect,
     yearsSelectRange,
-    __updateDateOnYearSelect,
-    __updateDateOnMonthSelect,
-    __setDateRef,
-    __setLevelRef,
     withWeekNumbers,
     headerControlsOrder,
-    __withWeekControls,
-    __getWeekControlProps,
     getWeekControlProps,
 
-    // MonthLevelGroup props
+    // Month props
     firstDayOfWeek,
     weekdayFormat,
     weekendDays,
@@ -51,12 +45,12 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
     getDayAriaLabel,
     monthLabelFormat,
 
-    // YearLevelGroup props
+    // Year level props
     monthsListFormat,
     getMonthControlProps,
     yearLabelFormat,
 
-    // DecadeLevelGroup props
+    // Decade level props
     yearsListFormat,
     getYearControlProps,
     decadeLabelFormat,
@@ -103,16 +97,11 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
       highlightToday,
       withNativeLevelSelect,
       yearsSelectRange,
-      __updateDateOnYearSelect,
-      __updateDateOnMonthSelect,
-      __setDateRef,
       withWeekNumbers,
       headerControlsOrder,
-      __withWeekControls,
-      __getWeekControlProps,
       getWeekControlProps,
 
-      // MonthLevelGroup props
+      // Month props
       firstDayOfWeek,
       weekdayFormat,
       weekendDays,
@@ -124,12 +113,12 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
       getDayAriaLabel,
       monthLabelFormat,
 
-      // YearLevelGroup props
+      // Year level props
       monthsListFormat,
       getMonthControlProps,
       yearLabelFormat,
 
-      // DecadeLevelGroup props
+      // Decade level props
       yearsListFormat,
       getYearControlProps,
       decadeLabelFormat,

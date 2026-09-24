@@ -345,20 +345,20 @@ describe('@mantine/dates/QuarterPicker', () => {
     expect(container.querySelector('[data-selected]')!.textContent).toBe('Q1');
   });
 
-  it('calls __onPresetSelect instead of onChange when provided', async () => {
-    const onChange = jest.fn();
-    const onPreset = jest.fn();
-    render(
+  it('does not change the displayed date when a quarter is clicked', async () => {
+    const onDateChange = jest.fn();
+    const onQuarterSelect = jest.fn();
+    const { container } = render(
       <QuarterPicker
         {...defaultProps}
-        onChange={onChange}
-        __onPresetSelect={onPreset}
-        presets={[{ label: 'This quarter', value: '2022-04-01' }]}
+        onDateChange={onDateChange}
+        onQuarterSelect={onQuarterSelect}
       />
     );
-    await userEvent.click(screen.getByText('This quarter'));
-    expect(onPreset).toHaveBeenCalledWith('2022-04-01');
-    expect(onChange).not.toHaveBeenCalled();
+
+    await userEvent.click(container.querySelectorAll('table button')[2]);
+    expect(onQuarterSelect).toHaveBeenCalledWith('2022-07-01');
+    expect(onDateChange).not.toHaveBeenCalled();
   });
 
   it('normalizes a preset value to the start of its quarter before calling onChange', async () => {

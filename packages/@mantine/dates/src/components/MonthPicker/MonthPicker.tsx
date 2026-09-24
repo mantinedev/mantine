@@ -1,50 +1,49 @@
-import { useRef } from 'react';
 import {
-  Box,
   BoxProps,
   createVarsResolver,
   ElementProps,
-  factory,
   Factory,
+  genericFactory,
   getFontSize,
-  MantineComponentStaticProperties,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useDatesState } from '../../hooks';
 import {
   CalendarLevel,
   DatePickerType,
   DateStringValue,
-  DateValue,
   PickerBaseProps,
+  PickerPreset,
 } from '../../types';
-import { Calendar, CalendarBaseProps, CalendarController, pickCalendarProps } from '../Calendar';
-import { DecadeLevelBaseSettings } from '../DecadeLevel';
-import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
-import { PresetsList } from '../PresetsList';
-import { YearLevelBaseSettings } from '../YearLevel';
-import { YearLevelGroupStylesNames } from '../YearLevelGroup';
-import classes from './MonthPicker.module.css';
+import {
+  Calendar,
+  CalendarBaseProps,
+  CalendarController,
+  DecadeLevelBaseSettings,
+  pickCalendarProps,
+  useCalendar,
+  YearLevelBaseSettings,
+} from '../Calendar';
+import { clampLevel } from '../Calendar/clamp-level/clamp-level';
+import { MonthsListStylesNames, YearsListStylesNames } from '../Calendar/ControlsList/ControlsList';
+import { getPresetsClasses, Presets } from '../Calendar/Presets/Presets';
+import { usePickerSelection } from '../Calendar/use-picker-selection/use-picker-selection';
+import { CalendarHeaderStylesNames } from '../CalendarHeader';
 
-export interface MonthPickerPreset<Type extends DatePickerType> {
-  value: Type extends 'range'
-    ? [DateStringValue | null, DateStringValue | null]
-    : Type extends 'multiple'
-      ? DateStringValue[]
-      : DateStringValue | null;
-  label: React.ReactNode;
-}
+export type MonthPickerPreset<Type extends DatePickerType> = PickerPreset<Type>;
 
 export type MonthPickerCssVariables = {
   monthPickerRoot: '--preset-font-size';
 };
 
 export type MonthPickerStylesNames =
-  | DecadeLevelGroupStylesNames
-  | YearLevelGroupStylesNames
+  | 'levelsGroup'
+  | CalendarHeaderStylesNames
+  | YearsListStylesNames
+  | MonthsListStylesNames
   | 'presetsList'
   | 'presetButton'
   | 'monthPickerRoot';
@@ -74,11 +73,6 @@ export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
 
   /** Predefined values to pick from @category appearance */
   presets?: MonthPickerPreset<Type>[];
-
-  /** If defined, called with preset value, suppresses `onChange` call */
-  __onPresetSelect?: (
-    preset: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
-  ) => void;
 }
 
 export interface MonthPickerProps<Type extends DatePickerType = 'default'>
@@ -99,6 +93,9 @@ export type MonthPickerFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: MonthPickerStylesNames;
   vars: MonthPickerCssVariables;
+  signature: <Type extends DatePickerType = 'default'>(
+    props: MonthPickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
+  ) => React.JSX.Element;
 }>;
 
 const varsResolver = createVarsResolver<MonthPickerFactory>((_, { size }) => ({
@@ -111,13 +108,9 @@ const defaultProps = {
   type: 'default',
 } satisfies Partial<MonthPickerProps>;
 
-type MonthPickerComponent = (<Type extends DatePickerType = 'default'>(
-  props: MonthPickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
-) => React.JSX.Element) & {
-  displayName?: string;
-} & MantineComponentStaticProperties<MonthPickerFactory>;
+const classes = getPresetsClasses('monthPickerRoot');
 
-export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_props) => {
+export const MonthPicker = genericFactory<MonthPickerFactory>((_props) => {
   const props = useProps('MonthPicker', defaultProps, _props);
   const {
     classNames,
@@ -133,28 +126,23 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     allowDeselect,
     onMouseLeave,
     onMonthSelect,
-    __updateDateOnMonthSelect,
-    __onPresetSelect,
-    __stopPropagation,
     presets,
     className,
     style,
     unstyled,
     size,
     attributes,
-    controller,
+    controller: controllerProp,
     onLevelChange,
     ...rest
   } = props;
 
   const { calendarProps, others } = pickCalendarProps(rest);
-  const setDateRef = useRef<((date: DateValue) => void) | null>(null);
-  const setLevelRef = useRef<((level: CalendarLevel) => void) | null>(null);
 
   const getStyles = useStyles<MonthPickerFactory>({
     name: __staticSelector || 'MonthPicker',
     classes,
-    props,
+    props: props as MonthPickerProps,
     className,
     style,
     classNames,
@@ -166,82 +154,76 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     vars,
   });
 
-  const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps, setValue } =
-    useDatesState({
-      type: type as any,
-      level: 'month',
-      allowDeselect,
-      allowSingleDateInRange,
-      value,
-      defaultValue,
-      onChange: onChange as any,
-      onMouseLeave,
-    });
+  const controller = useController(useCalendar, controllerProp, {
+    date: calendarProps.date,
+    defaultDate: calendarProps.defaultDate,
+    onDateChange: calendarProps.onDateChange,
+    level: calendarProps.level
+      ? clampLevel(calendarProps.level, 'year', calendarProps.maxLevel)
+      : undefined,
+    defaultLevel: clampLevel(calendarProps.defaultLevel, 'year', calendarProps.maxLevel),
+    onLevelChange: onLevelChange as any,
+  });
+
+  const selection = usePickerSelection({
+    type: type as any,
+    level: 'month',
+    allowDeselect,
+    allowSingleDateInRange,
+    value,
+    defaultValue,
+    onChange: onChange as any,
+    onMouseLeave,
+  });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<MonthPickerFactory>({
     classNames,
     styles,
-    props,
+    props: props as MonthPickerProps,
   });
 
-  const calendar = (
-    <Calendar
-      classNames={resolvedClassNames}
-      styles={resolvedStyles}
-      size={size}
-      {...calendarProps}
-      {...(!presets ? others : {})}
-      minLevel="year"
-      __updateDateOnMonthSelect={__updateDateOnMonthSelect ?? false}
-      __staticSelector={__staticSelector || 'MonthPicker'}
-      onMouseLeave={onRootMouseLeave}
-      onMonthMouseEnter={(_event, date) => onHoveredDateChange(date)}
-      onMonthSelect={(date) => {
-        onDateChange(date);
-        onMonthSelect?.(date);
-      }}
-      getMonthControlProps={(date) => ({
-        ...getControlProps(date),
-        ...getMonthControlProps?.(date),
-      })}
-      onLevelChange={onLevelChange as any}
-      controller={controller}
-      __setDateRef={setDateRef}
-      __setLevelRef={setLevelRef}
-      __stopPropagation={__stopPropagation}
-      attributes={attributes}
-      {...(!presets ? { className, style } : {})}
-    />
-  );
-
-  if (!presets) {
-    return calendar;
-  }
-
-  const handlePresetSelect = (
-    val: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
-  ) => {
-    const _val = Array.isArray(val) ? val[0] : val;
-    if (_val !== undefined) {
-      setDateRef.current?.(_val);
-      setLevelRef.current?.('year');
-      __onPresetSelect ? __onPresetSelect(val) : setValue(val);
-    }
-  };
-
   return (
-    <Box {...getStyles('monthPickerRoot')} size={size} {...others}>
-      <PresetsList
-        {...getStyles('presetsList')}
-        presets={presets}
-        onPresetSelect={handlePresetSelect}
-        buttonProps={getStyles('presetButton')}
-        stopPropagation={__stopPropagation}
+    <Presets
+      presets={presets}
+      onPresetSelect={selection.createPresetSelectHandler({ controller, targetLevel: 'year' })}
+      getStyles={getStyles}
+      rootSelector="monthPickerRoot"
+      size={size}
+      rootProps={others}
+    >
+      <Calendar
+        classNames={resolvedClassNames}
+        styles={resolvedStyles}
+        size={size}
+        {...calendarProps}
+        {...(!presets ? others : {})}
+        minLevel="year"
+        __staticSelector={__staticSelector || 'MonthPicker'}
+        onMouseLeave={selection.onRootMouseLeave}
+        onMonthMouseEnter={(event, date) => {
+          selection.onHoveredDateChange(date);
+          calendarProps.onMonthMouseEnter?.(event, date);
+        }}
+        onMonthSelect={(date) => {
+          selection.onDateChange(date);
+          onMonthSelect?.(date);
+        }}
+        getMonthControlProps={(date) => ({
+          ...selection.getControlProps(date),
+          ...getMonthControlProps?.(date),
+        })}
+        getYearControlProps={(date) => ({
+          ...selection.getSelectedYearProps(date),
+          ...calendarProps.getYearControlProps?.(date),
+        })}
+        onLevelChange={onLevelChange as any}
+        controller={controller}
+        attributes={attributes}
+        {...(!presets ? { className, style } : {})}
       />
-      {calendar}
-    </Box>
+    </Presets>
   );
-}) as any;
+});
 
 MonthPicker.classes = { ...Calendar.classes, ...classes };
 MonthPicker.varsResolver = varsResolver;

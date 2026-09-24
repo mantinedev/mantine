@@ -3,13 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 import {
   __BaseInputProps,
   __InputStylesNames,
-  Box,
   BoxProps,
   ClearSectionMode,
   ElementProps,
   factory,
   Factory,
-  getFontSize,
   Input,
   InputVariant,
   MantineSize,
@@ -24,24 +22,33 @@ import { useClickOutside, useDidUpdate } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue, DateValue } from '../../types';
 import { toDateString } from '../../utils';
-import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
+import {
+  Calendar,
+  CalendarBaseProps,
+  CalendarStylesNames,
+  DecadeLevelSettings,
+  MonthLevelSettings,
+  pickCalendarProps,
+  YearLevelSettings,
+} from '../Calendar';
 import { clampLevel } from '../Calendar/clamp-level/clamp-level';
+import { getPresetsClasses, Presets } from '../Calendar/Presets/Presets';
 import { DatePickerPreset } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
-import { DecadeLevelSettings } from '../DecadeLevel';
 import { HiddenDatesInput } from '../HiddenDatesInput';
 import { isSameMonth } from '../Month';
-import { MonthLevelSettings } from '../MonthLevel';
+import { DatesDropdownProvider } from '../PickerInputBase/DatesDropdown.context';
 import type {
   PickerInputController,
   PickerInputControllerOptions,
 } from '../PickerInputBase/use-picker-input-controller/use-picker-input-controller';
-import { PresetsList } from '../PresetsList';
-import { YearLevelSettings } from '../YearLevel';
 import { dateStringParser } from './date-string-parser/date-string-parser';
 import { isDateValid } from './is-date-valid/is-date-valid';
 import { useDateInput } from './use-date-input/use-date-input';
-import classes from './DateInput.module.css';
+import moduleClasses from './DateInput.module.css';
+
+const classes = { ...getPresetsClasses('presetsRoot'), dropdown: moduleClasses.dropdown };
+const DROPDOWN_CONTEXT = { preventFocus: true, stopPropagation: false };
 
 export type DateInputStylesNames =
   | __InputStylesNames
@@ -345,7 +352,6 @@ export const DateInput = factory<DateInputFactory>((_props) => {
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
-      __preventFocus
       minDate={minDate}
       maxDate={maxDate}
       locale={locale}
@@ -405,23 +411,17 @@ export const DateInput = factory<DateInputFactory>((_props) => {
             className={unstyled ? undefined : classes.dropdown}
             ref={_dropdownRef}
           >
-            {presets ? (
-              <Box
-                {...getStyles('presetsRoot', {
-                  style: { '--preset-font-size': getFontSize(inputProps.size) },
-                })}
+            <DatesDropdownProvider value={DROPDOWN_CONTEXT}>
+              <Presets
+                presets={presets}
+                onPresetSelect={handlePresetSelect}
+                getStyles={getStyles}
+                rootSelector="presetsRoot"
+                size={inputProps.size as MantineSize}
               >
-                <PresetsList
-                  {...getStyles('presetsList')}
-                  presets={presets}
-                  onPresetSelect={handlePresetSelect}
-                  buttonProps={getStyles('presetButton')}
-                />
                 {calendar}
-              </Box>
-            ) : (
-              calendar
-            )}
+              </Presets>
+            </DatesDropdownProvider>
           </Popover.Dropdown>
         </Popover>
       </Input.Wrapper>

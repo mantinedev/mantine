@@ -16,6 +16,8 @@ import {
   useStyles,
 } from '@mantine/core';
 import { DateStringValue } from '../../types';
+import { useCalendarColumn, useOptionalCalendarContext } from '../Calendar/Calendar.context';
+import { useDatesDropdownContext } from '../PickerInputBase/DatesDropdown.context';
 import classes from './CalendarHeader.module.css';
 
 export type CalendarHeaderStylesNames =
@@ -29,11 +31,6 @@ export type CalendarHeaderCssVariables = {
 };
 
 export interface CalendarHeaderSettings {
-  __preventFocus?: boolean;
-
-  /** Determines whether propagation for `Escape` key should be stopped */
-  __stopPropagation?: boolean;
-
   /** Change next icon @category appearance */
   nextIcon?: React.ReactNode;
 
@@ -99,27 +96,6 @@ export interface CalendarHeaderProps
 
   /** Level control `aria-label` @category accessibility */
   levelControlAriaLabel?: string;
-
-  /** Current calendar level, used for native level select rendering */
-  __calendarLevel?: 'month' | 'year' | 'decade';
-
-  /** Current date displayed by the calendar, used for native level select */
-  __date?: DateStringValue;
-
-  /** Locale for native level select labels */
-  __locale?: string;
-
-  /** Called when date is changed via native level select */
-  __onDateChange?: (date: DateStringValue) => void;
-
-  /** Min date constraint for native level select */
-  __minDate?: DateStringValue | Date;
-
-  /** Max date constraint for native level select */
-  __maxDate?: DateStringValue | Date;
-
-  /** Disables native level selects when date changes would not take effect (controlled `date` without `onDateChange`) */
-  __disableNativeLevelSelect?: boolean;
 }
 
 export type CalendarHeaderFactory = Factory<{
@@ -171,15 +147,6 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
     withNativeLevelSelect,
     yearsSelectRange,
     __staticSelector,
-    __preventFocus,
-    __stopPropagation,
-    __calendarLevel,
-    __date,
-    __locale,
-    __onDateChange,
-    __minDate,
-    __maxDate,
-    __disableNativeLevelSelect,
     attributes,
     ...others
   } = props;
@@ -199,7 +166,11 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
     rootSelector: 'calendarHeader',
   });
 
-  const preventFocus = __preventFocus
+  const dropdown = useDatesDropdownContext();
+  const calendar = useOptionalCalendarContext();
+  const column = useCalendarColumn();
+
+  const preventFocus = dropdown.preventFocus
     ? (event: React.MouseEvent<HTMLElement>) => event.preventDefault()
     : undefined;
 
@@ -214,8 +185,8 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
       onMouseDown={preventFocus}
       disabled={previousDisabled}
       data-disabled={previousDisabled || undefined}
-      tabIndex={__preventFocus || previousDisabled ? -1 : 0}
-      data-mantine-stop-propagation={__stopPropagation || undefined}
+      tabIndex={dropdown.preventFocus || previousDisabled ? -1 : 0}
+      data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
     >
       {previousIcon || (
         <AccordionChevron
@@ -227,79 +198,92 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
     </UnstyledButton>
   );
 
+  const nativeSelect =
+    withNativeLevelSelect && calendar && column && calendar.level !== 'decade'
+      ? {
+          level: calendar.level,
+          date: column.period,
+          locale: calendar.locale,
+          minDate: calendar.minDate,
+          maxDate: calendar.maxDate,
+          disabled: calendar.controller.dateReadOnly,
+          onDateChange: calendar.controller.setDate,
+        }
+      : null;
+
   const currentYear = new Date().getFullYear();
-  const displayedYear = __date ? dayjs(__date).year() : currentYear;
+  const displayedYear = nativeSelect ? dayjs(nativeSelect.date).year() : currentYear;
   const rawMinYear =
-    yearsSelectRange?.[0] ?? (__minDate ? dayjs(__minDate).year() : currentYear - 100);
+    yearsSelectRange?.[0] ??
+    (nativeSelect?.minDate ? dayjs(nativeSelect.minDate).year() : currentYear - 100);
   const rawMaxYear =
-    yearsSelectRange?.[1] ?? (__maxDate ? dayjs(__maxDate).year() : currentYear + 50);
-  // Guarantee a non-inverted range that always contains the currently displayed year, so the
-  // controlled <select> value always matches an <option> and the year list is never empty.
+    yearsSelectRange?.[1] ??
+    (nativeSelect?.maxDate ? dayjs(nativeSelect.maxDate).year() : currentYear + 50);
   const minYear = Math.min(rawMinYear, rawMaxYear, displayedYear);
   const maxYear = Math.max(rawMinYear, rawMaxYear, displayedYear);
 
   const clampNativeSelectDate = (date: dayjs.Dayjs): DateStringValue => {
     let result = date;
-    if (__minDate && result.isBefore(dayjs(__minDate), 'day')) {
-      result = dayjs(__minDate);
+    if (nativeSelect?.minDate && result.isBefore(dayjs(nativeSelect.minDate), 'day')) {
+      result = dayjs(nativeSelect.minDate);
     }
-    if (__maxDate && result.isAfter(dayjs(__maxDate), 'day')) {
-      result = dayjs(__maxDate);
+    if (nativeSelect?.maxDate && result.isAfter(dayjs(nativeSelect.maxDate), 'day')) {
+      result = dayjs(nativeSelect.maxDate);
     }
     return result.format('YYYY-MM-DD') as DateStringValue;
   };
 
-  const nativeLevelControl =
-    withNativeLevelSelect && __date && __onDateChange && __calendarLevel !== 'decade' ? (
-      <div {...getStyles('calendarHeaderLevel')} key="level" data-static data-native-level-select>
-        {__calendarLevel === 'month' && (
-          <select
-            {...getStyles('calendarHeaderSelect')}
-            data-select="month"
-            disabled={__disableNativeLevelSelect}
-            value={dayjs(__date).month()}
-            onChange={(event) => {
-              __onDateChange(
-                clampNativeSelectDate(dayjs(__date).month(parseInt(event.currentTarget.value, 10)))
-              );
-            }}
-            onMouseDown={preventFocus}
-            aria-label={levelControlAriaLabel}
-          >
-            {Array.from({ length: 12 }, (_, i) => (
-              <option key={i} value={i}>
-                {dayjs()
-                  .locale(__locale || 'en')
-                  .month(i)
-                  .format('MMMM')}
-              </option>
-            ))}
-          </select>
-        )}
+  const nativeLevelControl = nativeSelect ? (
+    <div {...getStyles('calendarHeaderLevel')} key="level" data-static data-native-level-select>
+      {nativeSelect.level === 'month' && (
         <select
           {...getStyles('calendarHeaderSelect')}
-          data-select="year"
-          disabled={__disableNativeLevelSelect}
-          value={dayjs(__date).year()}
+          data-select="month"
+          disabled={nativeSelect.disabled}
+          value={dayjs(nativeSelect.date).month()}
           onChange={(event) => {
-            __onDateChange(
-              clampNativeSelectDate(dayjs(__date).year(parseInt(event.currentTarget.value, 10)))
+            nativeSelect.onDateChange(
+              clampNativeSelectDate(
+                dayjs(nativeSelect.date).month(parseInt(event.currentTarget.value, 10))
+              )
             );
           }}
           onMouseDown={preventFocus}
           aria-label={levelControlAriaLabel}
         >
-          {Array.from({ length: maxYear - minYear + 1 }, (_, i) => {
-            const year = minYear + i;
-            return (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            );
-          })}
+          {Array.from({ length: 12 }, (_, i) => (
+            <option key={i} value={i}>
+              {dayjs().locale(nativeSelect.locale).month(i).format('MMMM')}
+            </option>
+          ))}
         </select>
-      </div>
-    ) : null;
+      )}
+      <select
+        {...getStyles('calendarHeaderSelect')}
+        data-select="year"
+        disabled={nativeSelect.disabled}
+        value={dayjs(nativeSelect.date).year()}
+        onChange={(event) => {
+          nativeSelect.onDateChange(
+            clampNativeSelectDate(
+              dayjs(nativeSelect.date).year(parseInt(event.currentTarget.value, 10))
+            )
+          );
+        }}
+        onMouseDown={preventFocus}
+        aria-label={levelControlAriaLabel}
+      >
+        {Array.from({ length: maxYear - minYear + 1 }, (_, i) => {
+          const year = minYear + i;
+          return (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          );
+        })}
+      </select>
+    </div>
+  ) : null;
 
   const levelControl = nativeLevelControl || (
     <UnstyledButton
@@ -313,8 +297,8 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
       disabled={!hasNextLevel}
       data-static={!hasNextLevel || undefined}
       aria-label={levelControlAriaLabel}
-      tabIndex={__preventFocus || !hasNextLevel ? -1 : 0}
-      data-mantine-stop-propagation={__stopPropagation || undefined}
+      tabIndex={dropdown.preventFocus || !hasNextLevel ? -1 : 0}
+      data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
     >
       {label}
     </UnstyledButton>
@@ -331,8 +315,8 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
       onMouseDown={preventFocus}
       disabled={nextDisabled}
       data-disabled={nextDisabled || undefined}
-      tabIndex={__preventFocus || nextDisabled ? -1 : 0}
-      data-mantine-stop-propagation={__stopPropagation || undefined}
+      tabIndex={dropdown.preventFocus || nextDisabled ? -1 : 0}
+      data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
     >
       {nextIcon || (
         <AccordionChevron

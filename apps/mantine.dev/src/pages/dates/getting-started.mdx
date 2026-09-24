@@ -76,16 +76,25 @@ instead of dayjs – this way you do not need to import `dayjs/locale/*` modules
 
 The following props accept a function:
 
-| Prop | Components |
-| --- | --- |
-| `valueFormatter` | `DatePickerInput`, `MonthPickerInput`, `YearPickerInput` |
-| `valueFormat` | `DateInput`, `DateTimePicker`, `InlineDateTimePicker` |
-| `monthLabelFormat` | `Calendar`, `DatePicker`, `DateInput`, `MiniCalendar`, `MonthLevel` and all components that use them |
-| `yearLabelFormat` | `Calendar`, `DatePicker`, `YearLevel` and all components that use them |
-| `decadeLabelFormat` | `Calendar`, `DatePicker`, `DecadeLevel` and all components that use them |
-| `weekdayFormat` | `Calendar`, `DatePicker`, `Month`, `WeekdaysRow` and all components that use them |
-| `monthsListFormat` | `Calendar`, `MonthPicker`, `MonthsList` and all components that use them |
-| `yearsListFormat` | `Calendar`, `YearPicker`, `YearsList` and all components that use them |
+<DataTable
+  head={['Prop', 'Components']}
+  data={[
+    ['`valueFormatter`', '`DatePickerInput`, `MonthPickerInput`, `YearPickerInput`'],
+    ['`valueFormat`', '`DateInput`, `DateTimePicker`, `InlineDateTimePicker`'],
+    [
+      '`monthLabelFormat`',
+      '`Calendar`, `DatePicker`, `DateInput`, `MiniCalendar` and all components that use them',
+    ],
+    ['`yearLabelFormat`', '`Calendar`, `DatePicker` and all components that use them'],
+    ['`decadeLabelFormat`', '`Calendar`, `DatePicker` and all components that use them'],
+    [
+      '`weekdayFormat`',
+      '`Calendar`, `DatePicker`, `Month`, `WeekdaysRow` and all components that use them',
+    ],
+    ['`monthsListFormat`', '`Calendar`, `MonthPicker` and all components that use them'],
+    ['`yearsListFormat`', '`Calendar`, `YearPicker` and all components that use them'],
+  ]}
+/>
 
 Note that `DateInput.valueFormat` is also used to parse user input. When it is set to a function,
 the component can no longer parse arbitrary formats – set the [dateParser](/dates/date-input/#date-parser)

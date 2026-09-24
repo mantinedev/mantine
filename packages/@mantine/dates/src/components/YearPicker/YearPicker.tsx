@@ -1,47 +1,41 @@
-import { useRef } from 'react';
 import {
-  Box,
   BoxProps,
   createVarsResolver,
   ElementProps,
-  factory,
   Factory,
+  genericFactory,
   getFontSize,
-  MantineComponentStaticProperties,
   StylesApiProps,
+  useController,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useDatesState } from '../../hooks';
+import { DatePickerType, DateStringValue, PickerBaseProps, PickerPreset } from '../../types';
 import {
-  CalendarLevel,
-  DatePickerType,
-  DateStringValue,
-  DateValue,
-  PickerBaseProps,
-} from '../../types';
-import { Calendar, CalendarBaseProps, CalendarController, pickCalendarProps } from '../Calendar';
-import { DecadeLevelBaseSettings } from '../DecadeLevel';
-import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
-import { PresetsList } from '../PresetsList';
-import classes from './YearPicker.module.css';
+  Calendar,
+  CalendarBaseProps,
+  CalendarController,
+  DecadeLevelBaseSettings,
+  pickCalendarProps,
+  useCalendar,
+} from '../Calendar';
+import { clampLevel } from '../Calendar/clamp-level/clamp-level';
+import { YearsListStylesNames } from '../Calendar/ControlsList/ControlsList';
+import { getPresetsClasses, Presets } from '../Calendar/Presets/Presets';
+import { usePickerSelection } from '../Calendar/use-picker-selection/use-picker-selection';
+import { CalendarHeaderStylesNames } from '../CalendarHeader';
 
-export interface YearPickerPreset<Type extends DatePickerType> {
-  value: Type extends 'range'
-    ? [DateStringValue | null, DateStringValue | null]
-    : Type extends 'multiple'
-      ? DateStringValue[]
-      : DateStringValue | null;
-  label: React.ReactNode;
-}
+export type YearPickerPreset<Type extends DatePickerType> = PickerPreset<Type>;
 
 export type YearPickerCssVariables = {
   yearPickerRoot: '--preset-font-size';
 };
 
 export type YearPickerStylesNames =
-  | DecadeLevelGroupStylesNames
+  | 'levelsGroup'
+  | CalendarHeaderStylesNames
+  | YearsListStylesNames
   | 'presetsList'
   | 'presetButton'
   | 'yearPickerRoot';
@@ -59,11 +53,6 @@ export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
 
   /** Predefined values to pick from @category appearance */
   presets?: YearPickerPreset<Type>[];
-
-  /** If defined, called with preset value, suppresses `onChange` call */
-  __onPresetSelect?: (
-    preset: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
-  ) => void;
 }
 
 export interface YearPickerProps<Type extends DatePickerType = 'default'>
@@ -84,6 +73,9 @@ export type YearPickerFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: YearPickerStylesNames;
   vars: YearPickerCssVariables;
+  signature: <Type extends DatePickerType = 'default'>(
+    props: YearPickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
+  ) => React.JSX.Element;
 }>;
 
 const varsResolver = createVarsResolver<YearPickerFactory>((_, { size }) => ({
@@ -96,13 +88,9 @@ const defaultProps = {
   type: 'default',
 } satisfies Partial<YearPickerProps>;
 
-type YearPickerComponent = (<Type extends DatePickerType = 'default'>(
-  props: YearPickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
-) => React.JSX.Element) & {
-  displayName?: string;
-} & MantineComponentStaticProperties<YearPickerFactory>;
+const classes = getPresetsClasses('yearPickerRoot');
 
-export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_props) => {
+export const YearPicker = genericFactory<YearPickerFactory>((_props) => {
   const props = useProps('YearPicker', defaultProps, _props);
   const {
     classNames,
@@ -118,27 +106,22 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
     allowDeselect,
     onMouseLeave,
     onYearSelect,
-    __updateDateOnYearSelect,
-    __onPresetSelect,
-    __stopPropagation,
     presets,
     className,
     style,
     unstyled,
     size,
     attributes,
-    controller,
+    controller: controllerProp,
     ...rest
   } = props;
 
   const { calendarProps, others } = pickCalendarProps(rest);
-  const setDateRef = useRef<((date: DateValue) => void) | null>(null);
-  const setLevelRef = useRef<((level: CalendarLevel) => void) | null>(null);
 
   const getStyles = useStyles<YearPickerFactory>({
     name: __staticSelector || 'YearPicker',
     classes,
-    props,
+    props: props as YearPickerProps,
     className,
     style,
     classNames,
@@ -150,81 +133,71 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
     vars,
   });
 
-  const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps, setValue } =
-    useDatesState({
-      type: type as any,
-      level: 'year',
-      allowDeselect,
-      allowSingleDateInRange,
-      value,
-      defaultValue,
-      onChange: onChange as any,
-      onMouseLeave,
-    });
+  const controller = useController(useCalendar, controllerProp, {
+    date: calendarProps.date,
+    defaultDate: calendarProps.defaultDate,
+    onDateChange: calendarProps.onDateChange,
+    level: calendarProps.level
+      ? clampLevel(calendarProps.level, 'decade', calendarProps.maxLevel)
+      : undefined,
+    defaultLevel: clampLevel(calendarProps.defaultLevel, 'decade', calendarProps.maxLevel),
+    onLevelChange: calendarProps.onLevelChange,
+  });
+
+  const selection = usePickerSelection({
+    type: type as any,
+    level: 'year',
+    allowDeselect,
+    allowSingleDateInRange,
+    value,
+    defaultValue,
+    onChange: onChange as any,
+    onMouseLeave,
+  });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<YearPickerFactory>({
     classNames,
     styles,
-    props,
+    props: props as YearPickerProps,
   });
 
-  const calendar = (
-    <Calendar
-      classNames={resolvedClassNames}
-      styles={resolvedStyles}
-      size={size}
-      {...calendarProps}
-      {...(!presets ? others : {})}
-      minLevel="decade"
-      __updateDateOnYearSelect={__updateDateOnYearSelect ?? false}
-      __staticSelector={__staticSelector || 'YearPicker'}
-      onMouseLeave={onRootMouseLeave}
-      onYearMouseEnter={(_event, date) => onHoveredDateChange(date)}
-      onYearSelect={(date) => {
-        onDateChange(date);
-        onYearSelect?.(date);
-      }}
-      getYearControlProps={(date) => ({
-        ...getControlProps(date),
-        ...getYearControlProps?.(date),
-      })}
-      controller={controller}
-      __setDateRef={setDateRef}
-      __setLevelRef={setLevelRef}
-      __stopPropagation={__stopPropagation}
-      attributes={attributes}
-      {...(!presets ? { className, style } : {})}
-    />
-  );
-
-  if (!presets) {
-    return calendar;
-  }
-
-  const handlePresetSelect = (
-    val: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
-  ) => {
-    const _val = Array.isArray(val) ? val[0] : val;
-    if (_val !== undefined) {
-      setDateRef.current?.(_val);
-      setLevelRef.current?.('decade');
-      __onPresetSelect ? __onPresetSelect(val) : setValue(val);
-    }
-  };
-
   return (
-    <Box {...getStyles('yearPickerRoot')} size={size} {...others}>
-      <PresetsList
-        {...getStyles('presetsList')}
-        presets={presets}
-        onPresetSelect={handlePresetSelect}
-        buttonProps={getStyles('presetButton')}
-        stopPropagation={__stopPropagation}
+    <Presets
+      presets={presets}
+      onPresetSelect={selection.createPresetSelectHandler({ controller, targetLevel: 'decade' })}
+      getStyles={getStyles}
+      rootSelector="yearPickerRoot"
+      size={size}
+      rootProps={others}
+    >
+      <Calendar
+        classNames={resolvedClassNames}
+        styles={resolvedStyles}
+        size={size}
+        {...calendarProps}
+        {...(!presets ? others : {})}
+        minLevel="decade"
+        __staticSelector={__staticSelector || 'YearPicker'}
+        onMouseLeave={selection.onRootMouseLeave}
+        onYearMouseEnter={(event, date) => {
+          selection.onHoveredDateChange(date);
+          calendarProps.onYearMouseEnter?.(event, date);
+        }}
+        onYearSelect={(date) => {
+          selection.onDateChange(date);
+          onYearSelect?.(date);
+        }}
+        getYearControlProps={(date) => ({
+          ...selection.getControlProps(date),
+          ...getYearControlProps?.(date),
+        })}
+        controller={controller}
+        attributes={attributes}
+        {...(!presets ? { className, style } : {})}
       />
-      {calendar}
-    </Box>
+    </Presets>
   );
-}) as any;
+});
 
 YearPicker.classes = { ...Calendar.classes, ...classes };
 YearPicker.varsResolver = varsResolver;

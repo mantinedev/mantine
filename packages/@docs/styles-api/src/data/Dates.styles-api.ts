@@ -5,19 +5,15 @@ import type {
   DatePickerFactory,
   DatePickerInputFactory,
   DateTimePickerFactory,
-  DecadeLevelGroupFactory,
   InlineDateTimePickerFactory,
   MonthFactory,
-  MonthLevelGroupFactory,
   MonthPickerFactory,
   MonthPickerInputFactory,
-  QuarterLevelGroupFactory,
   QuarterPickerFactory,
   QuarterPickerInputFactory,
   TimeInputFactory,
   WeekPickerFactory,
   WeekPickerInputFactory,
-  YearLevelGroupFactory,
   YearPickerFactory,
   YearPickerInputFactory,
 } from '@mantine/dates';
@@ -111,61 +107,34 @@ export const CalendarHeaderStylesApi: StylesApiData<CalendarHeaderFactory> = {
   ],
 };
 
-export const DecadeLevelGroupStylesApi: StylesApiData<DecadeLevelGroupFactory> = {
-  selectors: {
-    ...CalendarHeaderStylesApi.selectors,
-    levelsGroup: 'Group of decades levels',
-    yearsList: 'Years list table element',
-    yearsListRow: 'Years list row element',
-    yearsListCell: 'Years list cell element',
-    yearsListControl: 'Button used to pick months and years',
-  },
-
-  vars: {},
+const yearsListSelectors = {
+  yearsList: 'Years list table element',
+  yearsListRow: 'Years list row element',
+  yearsListCell: 'Years list cell element',
+  yearsListControl: 'Button used to pick months and years',
 };
 
-export const YearLevelGroupStylesApi: StylesApiData<YearLevelGroupFactory> = {
-  selectors: {
-    ...CalendarHeaderStylesApi.selectors,
-    levelsGroup: 'Group of years levels',
-    monthsList: 'Months list table element',
-    monthsListRow: 'Months list row element',
-    monthsListCell: 'Months list cell element',
-    monthsListControl: 'Button used to pick months and years',
-  },
-
-  vars: {},
+const monthsListSelectors = {
+  monthsList: 'Months list table element',
+  monthsListRow: 'Months list row element',
+  monthsListCell: 'Months list cell element',
+  monthsListControl: 'Button used to pick months and years',
 };
 
-export const QuarterLevelGroupStylesApi: StylesApiData<QuarterLevelGroupFactory> = {
-  selectors: {
-    ...CalendarHeaderStylesApi.selectors,
-    levelsGroup: 'Group of quarter levels',
-    quartersList: 'Quarters list table element',
-    quartersListRow: 'Quarters list row element',
-    quartersListCell: 'Quarters list cell element',
-    quartersListControl: 'Button used to pick quarters',
-  },
-
-  vars: {},
-};
-
-export const MonthLevelGroupStylesApi: StylesApiData<MonthLevelGroupFactory> = {
-  selectors: {
-    ...CalendarHeaderStylesApi.selectors,
-    levelsGroup: 'Group of months levels',
-    ...MonthStylesApi.selectors,
-  },
-
-  vars: {},
+const quartersListSelectors = {
+  quartersList: 'Quarters list table element',
+  quartersListRow: 'Quarters list row element',
+  quartersListCell: 'Quarters list cell element',
+  quartersListControl: 'Button used to pick quarters',
 };
 
 export const CalendarStylesApi: StylesApiData<CalendarFactory> = {
   selectors: {
     ...CalendarHeaderStylesApi.selectors,
-    ...DecadeLevelGroupStylesApi.selectors,
-    ...YearLevelGroupStylesApi.selectors,
-    ...MonthLevelGroupStylesApi.selectors,
+    levelsGroup: 'Group of levels',
+    ...yearsListSelectors,
+    ...monthsListSelectors,
+    ...MonthStylesApi.selectors,
   },
 
   vars: {},
@@ -176,7 +145,8 @@ export const CalendarStylesApi: StylesApiData<CalendarFactory> = {
 export const YearPickerStylesApi: StylesApiData<YearPickerFactory> = {
   selectors: {
     ...CalendarHeaderStylesApi.selectors,
-    ...DecadeLevelGroupStylesApi.selectors,
+    levelsGroup: 'Group of decades levels',
+    ...yearsListSelectors,
     yearPickerRoot: 'Year picker root element, contains calendar and presets',
     presetsList: 'Presets wrapper element',
     presetButton: 'Preset button',
@@ -194,8 +164,9 @@ export const YearPickerStylesApi: StylesApiData<YearPickerFactory> = {
 export const MonthPickerStylesApi: StylesApiData<MonthPickerFactory> = {
   selectors: {
     ...CalendarHeaderStylesApi.selectors,
-    ...DecadeLevelGroupStylesApi.selectors,
-    ...YearLevelGroupStylesApi.selectors,
+    levelsGroup: 'Group of levels',
+    ...yearsListSelectors,
+    ...monthsListSelectors,
     monthPickerRoot: 'Month picker root element, contains calendar and presets',
     presetsList: 'Presets wrapper element',
     presetButton: 'Preset button',
@@ -213,8 +184,9 @@ export const MonthPickerStylesApi: StylesApiData<MonthPickerFactory> = {
 export const QuarterPickerStylesApi: StylesApiData<QuarterPickerFactory> = {
   selectors: {
     ...CalendarHeaderStylesApi.selectors,
-    ...DecadeLevelGroupStylesApi.selectors,
-    ...QuarterLevelGroupStylesApi.selectors,
+    levelsGroup: 'Group of levels',
+    ...yearsListSelectors,
+    ...quartersListSelectors,
     quarterPickerRoot: 'Quarter picker root element, contains calendar and presets',
     presetsList: 'Presets wrapper element',
     presetButton: 'Preset button',
@@ -231,10 +203,7 @@ export const QuarterPickerStylesApi: StylesApiData<QuarterPickerFactory> = {
 
 export const DatePickerStylesApi: StylesApiData<DatePickerFactory> = {
   selectors: {
-    ...CalendarHeaderStylesApi.selectors,
-    ...DecadeLevelGroupStylesApi.selectors,
-    ...YearLevelGroupStylesApi.selectors,
-    ...MonthLevelGroupStylesApi.selectors,
+    ...CalendarStylesApi.selectors,
     datePickerRoot: 'Date picker root element, contains calendar and presets',
     presetsList: 'Presets wrapper element',
     presetButton: 'Preset button',
@@ -251,10 +220,7 @@ export const DatePickerStylesApi: StylesApiData<DatePickerFactory> = {
 
 export const WeekPickerStylesApi: StylesApiData<WeekPickerFactory> = {
   selectors: {
-    ...CalendarHeaderStylesApi.selectors,
-    ...DecadeLevelGroupStylesApi.selectors,
-    ...YearLevelGroupStylesApi.selectors,
-    ...MonthLevelGroupStylesApi.selectors,
+    ...CalendarStylesApi.selectors,
     weekPickerRoot: 'Week picker root element, contains calendar and presets',
     presetsList: 'Presets wrapper element',
     presetButton: 'Preset button',
@@ -346,10 +312,7 @@ export const WeekPickerInputStylesApi: StylesApiData<WeekPickerInputFactory> = {
 export const DateInputStylesApi: StylesApiData<DateInputFactory> = {
   selectors: {
     ...InputBaseStylesApi.selectors,
-    ...CalendarHeaderStylesApi.selectors,
-    ...DecadeLevelGroupStylesApi.selectors,
-    ...YearLevelGroupStylesApi.selectors,
-    ...MonthLevelGroupStylesApi.selectors,
+    ...CalendarStylesApi.selectors,
     presetsRoot: 'Root element, contains calendar and presets',
     presetsList: 'Presets wrapper element',
     presetButton: 'Preset button',

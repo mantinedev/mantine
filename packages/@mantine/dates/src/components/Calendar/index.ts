@@ -7,6 +7,19 @@ import type {
   CalendarStylesNames,
 } from './Calendar';
 import type {
+  DecadeLevelBaseSettings,
+  DecadeLevelSettings,
+  MonthLevelBaseSettings,
+  MonthLevelSettings,
+  MonthsListSettings,
+  QuarterLevelBaseSettings,
+  QuarterLevelSettings,
+  QuartersListSettings,
+  YearLevelBaseSettings,
+  YearLevelSettings,
+  YearsListSettings,
+} from './Calendar.types';
+import type {
   CalendarController,
   CalendarControllerOptions,
   CalendarRegisteredSettings,
@@ -26,4 +39,15 @@ export type {
   CalendarSettings,
   CalendarBaseProps,
   CalendarFactory,
+  DecadeLevelBaseSettings,
+  DecadeLevelSettings,
+  MonthLevelBaseSettings,
+  MonthLevelSettings,
+  MonthsListSettings,
+  QuarterLevelBaseSettings,
+  QuarterLevelSettings,
+  QuartersListSettings,
+  YearLevelBaseSettings,
+  YearLevelSettings,
+  YearsListSettings,
 };

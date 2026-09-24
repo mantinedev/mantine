@@ -12,6 +12,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { useDatesDropdownContext } from '../PickerInputBase/DatesDropdown.context';
 import classes from './PickerControl.module.css';
 
 export type PickerControlStylesNames = 'pickerControl';
@@ -79,6 +80,8 @@ export const PickerControl = factory<PickerControlFactory>((_props) => {
     disabled,
     fullWidth,
     attributes,
+    tabIndex,
+    onMouseDown,
     ...others
   } = props;
 
@@ -97,6 +100,8 @@ export const PickerControl = factory<PickerControlFactory>((_props) => {
     rootSelector: 'pickerControl',
   });
 
+  const dropdown = useDatesDropdownContext();
+
   return (
     <UnstyledButton
       {...getStyles('pickerControl')}
@@ -108,8 +113,14 @@ export const PickerControl = factory<PickerControlFactory>((_props) => {
       data-in-range={(inRange && !disabled && !selected) || undefined}
       data-first-in-range={(firstInRange && !disabled) || undefined}
       data-last-in-range={(lastInRange && !disabled) || undefined}
+      data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
       disabled={disabled}
       {...others}
+      tabIndex={dropdown.preventFocus ? -1 : tabIndex}
+      onMouseDown={(event) => {
+        onMouseDown?.(event);
+        dropdown.preventFocus && event.preventDefault();
+      }}
     />
   );
 });

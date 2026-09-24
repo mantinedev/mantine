@@ -1,4 +1,4 @@
-import { useEffect, useImperativeHandle, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -9,18 +9,40 @@ import {
   useController,
   useProps,
   useResolvedStylesApi,
+  useStyles,
 } from '@mantine/core';
 import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useFocusAfterLevelChange } from '../../hooks';
 import { CalendarLevel, DateStringValue } from '../../types';
-import { getDefaultClampedDate } from '../../utils';
-import { DecadeLevelSettings } from '../DecadeLevel';
-import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
-import { MonthLevelSettings } from '../MonthLevel';
-import { MonthLevelGroup, MonthLevelGroupStylesNames } from '../MonthLevelGroup';
-import { YearLevelSettings } from '../YearLevel';
-import { YearLevelGroup, YearLevelGroupStylesNames } from '../YearLevelGroup';
+import { getDefaultClampedDate, toDateString } from '../../utils';
+import { CalendarHeader, CalendarHeaderStylesNames } from '../CalendarHeader';
+import { useDatesContext } from '../DatesProvider';
+import { Month, MonthStylesNames } from '../Month';
+import { useDatesDropdownContext } from '../PickerInputBase/DatesDropdown.context';
+import {
+  CalendarContextValue,
+  CalendarControlHandler,
+  CalendarProvider,
+  CalendarStylesApiProps,
+  useCalendarOptions,
+} from './Calendar.context';
+import { DecadeLevelSettings, MonthLevelSettings, YearLevelSettings } from './Calendar.types';
+import {
+  CalendarLevelsGroup,
+  CalendarLevelsGroupStylesNames,
+} from './CalendarLevelsGroup/CalendarLevelsGroup';
 import { clampLevel } from './clamp-level/clamp-level';
+import {
+  ControlsList,
+  MonthsListStylesNames,
+  QuartersListStylesNames,
+  YearsListStylesNames,
+} from './ControlsList/ControlsList';
+import {
+  getPeriodBounds,
+  isNextDisabled,
+  isPreviousDisabled,
+} from './get-period-bounds/get-period-bounds';
 import {
   type CalendarShiftUnit,
   shiftCalendarDate,
@@ -30,11 +52,14 @@ import {
   type CalendarController,
   type CalendarControllerOptions,
 } from './use-calendar/use-calendar';
+import { useControlsNavigation } from './use-controls-navigation/use-controls-navigation';
 
 export type CalendarStylesNames =
-  | MonthLevelGroupStylesNames
-  | YearLevelGroupStylesNames
-  | DecadeLevelGroupStylesNames;
+  | CalendarLevelsGroupStylesNames
+  | CalendarHeaderStylesNames
+  | MonthStylesNames
+  | MonthsListStylesNames
+  | YearsListStylesNames;
 
 export interface CalendarAriaLabels {
   monthLevelControl?: string;
@@ -89,21 +114,6 @@ export interface CalendarSettings
 
 export interface CalendarBaseProps {
   __staticSelector?: string;
-
-  /** Prevents focus shift when buttons are clicked */
-  __preventFocus?: boolean;
-
-  /** Determines whether date should be updated when year control is clicked */
-  __updateDateOnYearSelect?: boolean;
-
-  /** Determines whether date should be updated when month control is clicked */
-  __updateDateOnMonthSelect?: boolean;
-
-  /** Assigns function to set date to the given ref */
-  __setDateRef?: React.RefObject<((date: DateStringValue) => void) | null>;
-
-  /** Assigns function to set level to the given ref */
-  __setLevelRef?: React.RefObject<((level: CalendarLevel) => void) | null>;
 
   /** Initial displayed date in uncontrolled mode @category state */
   defaultDate?: DateStringValue | Date;
@@ -180,18 +190,28 @@ export type CalendarFactory = Factory<{
   stylesNames: CalendarStylesNames;
 }>;
 
+export type CalendarEngineFactory = Factory<{
+  props: CalendarProps;
+  ref: HTMLDivElement;
+  stylesNames: CalendarStylesNames | QuartersListStylesNames;
+}>;
+
 const defaultProps = {
   maxLevel: 'decade',
   minLevel: 'month',
-  __updateDateOnYearSelect: true,
-  __updateDateOnMonthSelect: true,
   enableKeyboardNavigation: true,
 } satisfies Partial<CalendarProps>;
+
+const classes = {
+  ...CalendarLevelsGroup.classes,
+  ...CalendarHeader.classes,
+  ...Month.classes,
+  ...ControlsList.classes,
+};
 
 export const Calendar = factory<CalendarFactory>((_props) => {
   const props = useProps('Calendar', defaultProps, _props);
   const {
-    // CalendarLevel props
     vars,
     maxLevel,
     minLevel,
@@ -211,12 +231,6 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     onYearMouseEnter,
     onMonthMouseEnter,
     headerControlsOrder,
-    __updateDateOnYearSelect,
-    __updateDateOnMonthSelect,
-    __setDateRef,
-    __setLevelRef,
-
-    // MonthLevelGroup props
     firstDayOfWeek,
     weekdayFormat,
     weekendDays,
@@ -229,25 +243,15 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     monthLabelFormat,
     nextIcon,
     previousIcon,
-    __onDayClick,
-    __onDayMouseEnter,
     withCellSpacing,
     highlightToday,
     withWeekNumbers,
-    __withWeekControls,
-    __getWeekControlProps,
-
-    // YearLevelGroup props
     monthsListFormat,
     getMonthControlProps,
     yearLabelFormat,
-
-    // DecadeLevelGroup props
     yearsListFormat,
     getYearControlProps,
     decadeLabelFormat,
-
-    // Other props
     classNames,
     styles,
     unstyled,
@@ -256,8 +260,6 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     locale,
     __staticSelector,
     size,
-    __preventFocus,
-    __stopPropagation,
     onNextDecade,
     onPreviousDecade,
     onNextYear,
@@ -275,10 +277,25 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     ...others
   } = props;
 
+  const options = useCalendarOptions();
+  const dropdown = useDatesDropdownContext();
+  const datesCtx = useDatesContext();
+  const yearBody = options.yearBody ?? 'months';
+
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<CalendarFactory>({
     classNames,
     styles,
     props,
+  });
+
+  const getStyles = useStyles<CalendarEngineFactory>({
+    name: __staticSelector || 'Calendar',
+    classes,
+    props,
+    classNames,
+    styles,
+    unstyled,
+    attributes,
   });
 
   const calendar = useController(useCalendar, controller, {
@@ -291,12 +308,8 @@ export const Calendar = factory<CalendarFactory>((_props) => {
   });
 
   const _level = clampLevel(calendar.level, minLevel, maxLevel);
-  const disableNativeLevelSelect = calendar.dateReadOnly;
 
-  useImperativeHandle(__setDateRef, () => calendar.setDate);
-  useImperativeHandle(__setLevelRef, () => calendar.setLevel);
-
-  const stylesApiProps = {
+  const stylesApiProps: CalendarStylesApiProps = {
     __staticSelector: __staticSelector || 'Calendar',
     styles: resolvedStyles,
     classNames: resolvedClassNames,
@@ -305,6 +318,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     attributes,
   };
 
+  const _numberOfColumns = numberOfColumns ?? 1;
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
 
   const fallbackDateRef = useRef<DateStringValue | null>(null);
@@ -350,7 +364,7 @@ export const Calendar = factory<CalendarFactory>((_props) => {
   const focusAfterLevelChange = useFocusAfterLevelChange({
     rootRef: calendarRef,
     level: _level,
-    disabled: __preventFocus || isStatic,
+    disabled: dropdown.preventFocus || isStatic,
   });
 
   const changeLevel = (nextLevel: CalendarLevel) => {
@@ -417,137 +431,176 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     handlePreviousDecade,
   ]);
 
+  const _minDate = toDateString(minDate);
+  const _maxDate = toDateString(maxDate);
+  const _locale = datesCtx.getLocale(locale);
+
+  const bounds = getPeriodBounds({ level: _level, date: currentDate, columns: _numberOfColumns });
+  const previousDisabled = isPreviousDisabled(bounds, _minDate);
+  const nextDisabled = isNextDisabled(bounds, _maxDate);
+
+  const levelHandlers = {
+    month: {
+      onNext: handleNextMonth,
+      onPrevious: handlePreviousMonth,
+      onLevelClick: () => changeLevel('year'),
+      hasNextLevel: maxLevel !== 'month',
+      levelControlAriaLabel: ariaLabels?.monthLevelControl,
+      nextLabel: ariaLabels?.nextMonth ?? nextLabel,
+      previousLabel: ariaLabels?.previousMonth ?? previousLabel,
+    },
+    year: {
+      onNext: handleNextYear,
+      onPrevious: handlePreviousYear,
+      onLevelClick: () => changeLevel('decade'),
+      hasNextLevel: maxLevel !== 'month' && maxLevel !== 'year',
+      levelControlAriaLabel: ariaLabels?.yearLevelControl,
+      nextLabel: ariaLabels?.nextYear ?? nextLabel,
+      previousLabel: ariaLabels?.previousYear ?? previousLabel,
+    },
+    decade: {
+      onNext: handleNextDecade,
+      onPrevious: handlePreviousDecade,
+      onLevelClick: () => {},
+      hasNextLevel: false,
+      levelControlAriaLabel: undefined,
+      nextLabel: ariaLabels?.nextDecade ?? nextLabel,
+      previousLabel: ariaLabels?.previousDecade ?? previousLabel,
+    },
+  }[_level];
+
+  const navigation = useControlsNavigation({
+    level: _level,
+    yearBody,
+    date: currentDate,
+    numberOfColumns: _numberOfColumns,
+    firstDayOfWeek: datesCtx.getFirstDayOfWeek(firstDayOfWeek),
+    consistentWeeks: datesCtx.consistentWeeks,
+    minDate: _minDate,
+    maxDate: _maxDate,
+    previousDisabled,
+    nextDisabled,
+    onPrevious: levelHandlers.onPrevious,
+    onNext: levelHandlers.onNext,
+  });
+
+  const monthDescends = clampLevel('month', minLevel, maxLevel) === 'month';
+  const yearDescends = clampLevel('year', minLevel, maxLevel) === 'year';
+
+  const handleControlClick: CalendarControlHandler = (event, payload) => {
+    if (_level === 'decade') {
+      yearDescends && calendar.setDate(payload);
+      changeLevel(clampLevel('year', minLevel, maxLevel));
+      onYearSelect?.(payload);
+      return;
+    }
+
+    if (yearBody === 'quarters') {
+      options.selection?.onQuarterClick?.(event, payload);
+      return;
+    }
+
+    monthDescends && calendar.setDate(payload);
+    changeLevel(clampLevel('month', minLevel, maxLevel));
+    onMonthSelect?.(payload);
+  };
+
+  const handleControlMouseEnter: CalendarControlHandler = (event, payload) => {
+    if (_level === 'decade') {
+      onYearMouseEnter?.(event, payload);
+      return;
+    }
+
+    if (yearBody === 'quarters') {
+      options.selection?.onQuarterMouseEnter?.(event, payload);
+      return;
+    }
+
+    onMonthMouseEnter?.(event, payload);
+  };
+
+  const contextValue: CalendarContextValue = {
+    controller: calendar,
+    level: _level,
+    locale: _locale,
+    minDate: _minDate,
+    maxDate: _maxDate,
+    static: !!isStatic,
+    getStyles,
+    stylesApiProps,
+    navigation,
+    weekControls: {
+      enabled: !!options.weekControls,
+      getWeekControlProps: options.weekControls?.getWeekControlProps,
+    },
+    onDayClick: options.selection?.onDayClick,
+    onDayMouseEnter: options.selection?.onDayMouseEnter,
+    onControlClick: handleControlClick,
+    onControlMouseEnter: handleControlMouseEnter,
+  };
+
   return (
-    <Box
-      ref={useMergedRef(calendarRef, ref)}
-      size={size}
-      data-calendar
-      data-full-width={fullWidth || undefined}
-      {...others}
-    >
-      {_level === 'month' && (
-        <MonthLevelGroup
-          month={currentDate}
-          minDate={minDate}
-          maxDate={maxDate}
-          firstDayOfWeek={firstDayOfWeek}
-          weekdayFormat={weekdayFormat}
-          weekendDays={weekendDays}
-          getDayProps={getDayProps}
-          excludeDate={excludeDate}
-          renderDay={renderDay}
-          hideOutsideDates={hideOutsideDates}
-          hideWeekdays={hideWeekdays}
-          getDayAriaLabel={getDayAriaLabel}
-          onNext={handleNextMonth}
-          onPrevious={handlePreviousMonth}
-          hasNextLevel={maxLevel !== 'month'}
-          onLevelClick={() => changeLevel('year')}
-          numberOfColumns={numberOfColumns}
-          locale={locale}
-          levelControlAriaLabel={ariaLabels?.monthLevelControl}
-          nextLabel={ariaLabels?.nextMonth ?? nextLabel}
+    <CalendarProvider value={contextValue}>
+      <Box
+        ref={useMergedRef(calendarRef, ref)}
+        size={size}
+        data-calendar
+        data-quarter-picker={yearBody === 'quarters' || undefined}
+        data-full-width={fullWidth || undefined}
+        {...others}
+      >
+        <CalendarLevelsGroup
+          key={_level}
+          date={currentDate}
+          numberOfColumns={_numberOfColumns}
+          level={_level}
+          yearBody={yearBody}
+          nextDisabled={nextDisabled}
+          previousDisabled={previousDisabled}
+          onNext={levelHandlers.onNext}
+          onPrevious={levelHandlers.onPrevious}
+          onLevelClick={levelHandlers.onLevelClick}
+          hasNextLevel={levelHandlers.hasNextLevel}
+          levelControlAriaLabel={levelHandlers.levelControlAriaLabel}
+          nextLabel={levelHandlers.nextLabel}
+          previousLabel={levelHandlers.previousLabel}
           nextIcon={nextIcon}
-          previousLabel={ariaLabels?.previousMonth ?? previousLabel}
           previousIcon={previousIcon}
-          monthLabelFormat={monthLabelFormat}
-          __onDayClick={__onDayClick}
-          __onDayMouseEnter={__onDayMouseEnter}
-          __onDateChange={calendar.setDate}
-          __disableNativeLevelSelect={disableNativeLevelSelect}
-          __preventFocus={__preventFocus}
-          __stopPropagation={__stopPropagation}
-          static={isStatic}
-          withCellSpacing={withCellSpacing}
-          highlightToday={highlightToday}
-          withWeekNumbers={withWeekNumbers}
-          __withWeekControls={__withWeekControls}
-          __getWeekControlProps={__getWeekControlProps}
+          headerControlsOrder={headerControlsOrder}
           withNativeLevelSelect={withNativeLevelSelect}
           yearsSelectRange={yearsSelectRange}
-          headerControlsOrder={headerControlsOrder}
           fullWidth={fullWidth}
-          {...stylesApiProps}
-        />
-      )}
-
-      {_level === 'year' && (
-        <YearLevelGroup
-          year={currentDate}
-          numberOfColumns={numberOfColumns}
-          minDate={minDate}
-          maxDate={maxDate}
-          monthsListFormat={monthsListFormat}
+          withCellSpacing={withCellSpacing ?? true}
+          static={!!isStatic}
+          monthLabelFormat={monthLabelFormat ?? 'MMMM YYYY'}
+          yearLabelFormat={yearLabelFormat ?? 'YYYY'}
+          decadeLabelFormat={decadeLabelFormat ?? 'YYYY'}
+          monthsListFormat={monthsListFormat ?? 'MMM'}
+          quartersListFormat={options.quartersListFormat ?? '[Q]Q'}
+          yearsListFormat={yearsListFormat ?? 'YYYY'}
           getMonthControlProps={getMonthControlProps}
-          locale={locale}
-          onNext={handleNextYear}
-          onPrevious={handlePreviousYear}
-          hasNextLevel={maxLevel !== 'month' && maxLevel !== 'year'}
-          onLevelClick={() => changeLevel('decade')}
-          levelControlAriaLabel={ariaLabels?.yearLevelControl}
-          nextLabel={ariaLabels?.nextYear ?? nextLabel}
-          nextIcon={nextIcon}
-          previousLabel={ariaLabels?.previousYear ?? previousLabel}
-          previousIcon={previousIcon}
-          yearLabelFormat={yearLabelFormat}
-          __onControlMouseEnter={onMonthMouseEnter}
-          __onControlClick={(_event, payload) => {
-            __updateDateOnMonthSelect && calendar.setDate(payload);
-            changeLevel(clampLevel('month', minLevel, maxLevel));
-            onMonthSelect?.(payload);
-          }}
-          __onDateChange={calendar.setDate}
-          __disableNativeLevelSelect={disableNativeLevelSelect}
-          __preventFocus={__preventFocus}
-          __stopPropagation={__stopPropagation}
-          withCellSpacing={withCellSpacing}
-          withNativeLevelSelect={withNativeLevelSelect}
-          yearsSelectRange={yearsSelectRange}
-          headerControlsOrder={headerControlsOrder}
-          fullWidth={fullWidth}
-          {...stylesApiProps}
-        />
-      )}
-
-      {_level === 'decade' && (
-        <DecadeLevelGroup
-          decade={currentDate}
-          minDate={minDate}
-          maxDate={maxDate}
-          yearsListFormat={yearsListFormat}
+          getQuarterControlProps={options.getQuarterControlProps}
           getYearControlProps={getYearControlProps}
-          locale={locale}
-          onNext={handleNextDecade}
-          onPrevious={handlePreviousDecade}
-          numberOfColumns={numberOfColumns}
-          nextLabel={ariaLabels?.nextDecade ?? nextLabel}
-          nextIcon={nextIcon}
-          previousLabel={ariaLabels?.previousDecade ?? previousLabel}
-          previousIcon={previousIcon}
-          decadeLabelFormat={decadeLabelFormat}
-          __onControlMouseEnter={onYearMouseEnter}
-          __onControlClick={(_event, payload) => {
-            __updateDateOnYearSelect && calendar.setDate(payload);
-            changeLevel(clampLevel('year', minLevel, maxLevel));
-            onYearSelect?.(payload);
+          monthSettings={{
+            firstDayOfWeek,
+            weekdayFormat,
+            weekendDays,
+            getDayProps,
+            excludeDate,
+            renderDay,
+            hideOutsideDates,
+            hideWeekdays,
+            getDayAriaLabel,
+            highlightToday,
+            withWeekNumbers,
           }}
-          __preventFocus={__preventFocus}
-          __stopPropagation={__stopPropagation}
-          withCellSpacing={withCellSpacing}
-          headerControlsOrder={headerControlsOrder}
-          fullWidth={fullWidth}
-          {...stylesApiProps}
         />
-      )}
-    </Box>
+      </Box>
+    </CalendarProvider>
   );
 });
 
-Calendar.classes = {
-  ...DecadeLevelGroup.classes,
-  ...YearLevelGroup.classes,
-  ...MonthLevelGroup.classes,
-};
+Calendar.classes = classes;
 Calendar.displayName = '@mantine/dates/Calendar';
 
 export namespace Calendar {
