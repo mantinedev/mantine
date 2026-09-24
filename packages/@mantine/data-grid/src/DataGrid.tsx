@@ -22,7 +22,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { useMergedRef } from '@mantine/hooks';
+import { useLatestRef, useMergedRef } from '@mantine/hooks';
 import { DataGridProvider } from './DataGrid.context';
 import { DataGridColumnDef, DataGridEmptyStatePayload } from './DataGrid.types';
 import {
@@ -522,8 +522,7 @@ export const DataGrid = genericFactory<DataGridFactory>(((
   const floatingSelectionBar = selectionBarVisible && !!selectionBarChild.props.floating;
   const toolbarHidden = selectionBarVisible && !floatingSelectionBar;
 
-  const tableRef = useRef(store.table);
-  tableRef.current = store.table;
+  const tableRef = useLatestRef(store.table);
   const editingRowId = store.editingMode === 'row' ? store.editing?.rowId : undefined;
   useEffect(() => {
     if (!editingRowId) {

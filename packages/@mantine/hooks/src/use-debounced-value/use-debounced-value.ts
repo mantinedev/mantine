@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useLatestRef } from '../utils';
 
 export interface UseDebouncedValueOptions {
   leading?: boolean;
@@ -21,8 +22,7 @@ export function useDebouncedValue<T = any>(
   const timeoutRef = useRef<number | null>(null);
   const cooldownRef = useRef(false);
 
-  const latestValueRef = useRef(value);
-  latestValueRef.current = value;
+  const latestValueRef = useLatestRef(value);
 
   const clearTimer = useCallback(() => {
     window.clearTimeout(timeoutRef.current!);

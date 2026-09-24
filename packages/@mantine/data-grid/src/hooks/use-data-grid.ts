@@ -21,6 +21,7 @@ import {
   useTable,
 } from '@tanstack/react-table';
 import { type MantineSize, useDirection } from '@mantine/core';
+import { useLatestRef } from '@mantine/hooks';
 import {
   DATA_GRID_SIZES,
   type DataGridControlSize,
@@ -914,8 +915,7 @@ export function useDataGrid<TData extends RowData>(
     return column?.getFacetedMinMaxValues();
   };
 
-  const latestState = useRef({ state, size, controlSize });
-  latestState.current = { state, size, controlSize };
+  const latestState = useLatestRef({ state, size, controlSize });
 
   const getEditing = useCallback(() => latestState.current.state.editing, []);
   const getSize = useCallback(() => latestState.current.size, []);

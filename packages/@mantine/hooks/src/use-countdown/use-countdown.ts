@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDidUpdate } from '../use-did-update/use-did-update';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
-import { useCallbackRef } from '../utils';
+import { useCallbackRef, useLatestRef } from '../utils';
 
 export interface UseCountdownFormatted {
   /** Number of whole days remaining */
@@ -87,23 +87,14 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
   const [running, setRunning] = useState(false);
 
   const endRef = useRef(0);
-  const countRef = useRef(count);
+  const countRef = useLatestRef(count);
   const runningRef = useRef(false);
   const completedRef = useRef(false);
-
-  countRef.current = count;
 
   const handleComplete = useCallbackRef(onComplete);
   const handleTick = useCallbackRef(onTick);
 
-  const latest = useRef<{
-    isTargetMode: boolean;
-    targetDate: UseCountdownOptions['targetDate'];
-    clampedCountStart: number;
-    resolvedAutoStart: boolean;
-  }>(null!);
-
-  latest.current = { isTargetMode, targetDate, clampedCountStart, resolvedAutoStart };
+  const latest = useLatestRef({ isTargetMode, targetDate, clampedCountStart, resolvedAutoStart });
 
   const complete = useCallback(() => {
     runningRef.current = false;

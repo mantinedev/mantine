@@ -24,6 +24,7 @@ import {
 import {
   useFocusReturn,
   useFullscreenDocument,
+  useLatestRef,
   useReducedMotion,
   useUncontrolled,
 } from '@mantine/hooks';
@@ -278,8 +279,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
 
   const _labels = useMemo(() => ({ ...DEFAULT_LABELS, ...labels }), [labels]);
 
-  const getStylesRef = useRef(getStyles);
-  getStylesRef.current = getStyles;
+  const getStylesRef = useLatestRef(getStyles);
 
   const stableGetStyles = useCallback<typeof getStyles>(
     (...args) => getStylesRef.current(...args),

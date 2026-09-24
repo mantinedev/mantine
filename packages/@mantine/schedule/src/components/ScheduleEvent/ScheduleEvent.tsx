@@ -1,4 +1,4 @@
-import { use, useEffect, useRef } from 'react';
+import { use, useEffect } from 'react';
 import {
   Box,
   BoxProps,
@@ -13,6 +13,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { useLatestRef } from '@mantine/hooks';
 import { ScheduleEventData, ScheduleMode } from '../../types';
 import { DragContext } from '../DragContext/DragContext';
 import classes from './ScheduleEvent.module.css';
@@ -188,8 +189,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
   const isCurrentlyDragging = isDragging || ctx.draggedEventId === event.id;
   const isAnyEventDragging = ctx.isDragging || false;
 
-  const dragEndRef = useRef(ctx.onDragEnd);
-  dragEndRef.current = ctx.onDragEnd;
+  const dragEndRef = useLatestRef(ctx.onDragEnd);
 
   useEffect(() => {
     if (isCurrentlyDragging) {

@@ -1,6 +1,6 @@
 import { useCallback, useReducer, useRef } from 'react';
 import { getDefaultZIndex, Modal } from '@mantine/core';
-import { randomId } from '@mantine/hooks';
+import { randomId, useLatestRef } from '@mantine/hooks';
 import { ConfirmModal } from './ConfirmModal';
 import {
   ConfirmLabels,
@@ -69,8 +69,7 @@ function separateConfirmModalProps(props: OpenConfirmModal) {
 
 export function ModalsProvider({ children, modalProps, labels, modals }: ModalsProviderProps) {
   const [state, dispatch] = useReducer(modalsReducer, { modals: [], current: null });
-  const stateRef = useRef(state);
-  stateRef.current = state;
+  const stateRef = useLatestRef(state);
   const closingRef = useRef(false);
 
   const closeAll = useCallback(

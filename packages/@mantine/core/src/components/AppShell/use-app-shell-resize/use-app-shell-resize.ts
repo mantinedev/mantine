@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useCallbackRef } from '@mantine/hooks';
+import { useCallbackRef, useLatestRef } from '@mantine/hooks';
 import type {
   AppShellResizeController,
   AppShellResizeSection,
@@ -45,8 +45,7 @@ export function useAppShellResize(input: UseAppShellResizeInput = {}): AppShellR
     return result;
   }, [sizes, touched, initialSizes]);
 
-  const resolvedSizesRef = useRef(resolvedSizes);
-  resolvedSizesRef.current = resolvedSizes;
+  const resolvedSizesRef = useLatestRef(resolvedSizes);
 
   const commitSize = useCallback((section: AppShellResizeSection, size: number) => {
     setTouched((current) => ({ ...current, [section]: true }));

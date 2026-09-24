@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from 'react';
-import { useCallbackRef, useUncontrolled } from '@mantine/hooks';
+import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import type { AccordionValue } from '../Accordion.types';
 
 export interface AccordionControllerOptions<Multiple extends boolean = false> {
@@ -87,8 +87,7 @@ export function useAccordion<Multiple extends boolean = false>(
   });
 
   const itemsRef = useRef<string[]>([]);
-  const valueRef = useRef(value);
-  valueRef.current = value;
+  const valueRef = useLatestRef(value);
 
   const writeValue = useCallbackRef((next: AccordionValue<Multiple>) => {
     if (valueProp === undefined) {

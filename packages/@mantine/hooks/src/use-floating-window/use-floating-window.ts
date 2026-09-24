@@ -1,11 +1,6 @@
 // Required to disable for webkit-user-select, although deprecated, it is still required for Safari support
 import { RefCallback, useCallback, useEffect, useRef, useState } from 'react';
-
-function useRefValue<T>(value: T) {
-  const ref = useRef(value);
-  ref.current = value;
-  return ref;
-}
+import { useLatestRef } from '../utils';
 
 interface FloatingWindowPositionConfig {
   top?: number;
@@ -77,12 +72,12 @@ export function useFloatingWindow<T extends HTMLElement>(
   const [isDragging, setIsDragging] = useState(false);
   const isDraggingRef = useRef(false);
   const initialized = useRef(false);
-  const enabledRef = useRefValue(options.enabled);
-  const constrainToViewportRef = useRefValue(options.constrainToViewport);
-  const constrainOffsetRef = useRefValue(options.constrainOffset);
-  const onPositionChangeRef = useRefValue(options.onPositionChange);
-  const onDragStartRef = useRefValue(options.onDragStart);
-  const onDragEndRef = useRefValue(options.onDragEnd);
+  const enabledRef = useLatestRef(options.enabled);
+  const constrainToViewportRef = useLatestRef(options.constrainToViewport);
+  const constrainOffsetRef = useLatestRef(options.constrainOffset);
+  const onPositionChangeRef = useLatestRef(options.onPositionChange);
+  const onDragStartRef = useLatestRef(options.onDragStart);
+  const onDragEndRef = useLatestRef(options.onDragEnd);
 
   const setDragging = useCallback((value: boolean) => {
     setIsDragging(value);

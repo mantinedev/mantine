@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import { useLatestRef } from '../utils';
 
 export function readonlySetLikeToSet<T>(input: ReadonlySetLike<T>): Set<T> {
   if (input instanceof Set) {
@@ -16,8 +17,7 @@ export function readonlySetLikeToSet<T>(input: ReadonlySetLike<T>): Set<T> {
 
 export function useSet<T>(values?: T[]): Set<T> {
   const [set, setSet] = useState(() => new Set(values));
-  const setRef = useRef(set);
-  setRef.current = set;
+  const setRef = useLatestRef(set);
 
   set.add = (...args) => {
     const res = Set.prototype.add.apply(setRef.current, args);

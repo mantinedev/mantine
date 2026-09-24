@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useLatestRef, useUncontrolled } from '@mantine/hooks';
 
 export interface UseDrawerDragInput {
   position: 'top' | 'bottom' | 'left' | 'right';
@@ -235,19 +235,12 @@ export function useDrawerDrag({
     velocity: 0,
   });
 
-  const snapRef = useRef({
+  const snapRef = useLatestRef({
     hasSnapPoints,
     sortedSnapPoints,
     restOffset,
     setActiveSnapPoint,
   });
-
-  snapRef.current = {
-    hasSnapPoints,
-    sortedSnapPoints,
-    restOffset,
-    setActiveSnapPoint,
-  };
 
   const cleanupRef = useRef<(() => void) | null>(null);
 

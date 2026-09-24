@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useCallbackRef, useDidUpdate, useIsomorphicEffect } from '@mantine/hooks';
+import { useCallbackRef, useDidUpdate, useIsomorphicEffect, useLatestRef } from '@mantine/hooks';
 import { getDisplayMs, getTimerValue, TimerValue } from './get-timer-value';
 import { parseDuration } from './parse-duration';
 
@@ -105,15 +105,7 @@ export function useTimer(options: TimerControllerOptions = {}): TimerController 
   const handleTick = useCallbackRef(onTick);
   const handleComplete = useCallbackRef(onComplete);
 
-  const latest = useRef<{
-    countdown: boolean;
-    interval: number;
-    initialMs: number;
-    lowerBound: number;
-    upperBound: number | undefined;
-  }>(null!);
-
-  latest.current = { countdown, interval, initialMs, lowerBound, upperBound };
+  const latest = useLatestRef({ countdown, interval, initialMs, lowerBound, upperBound });
 
   const setDisplay = (raw: number) => {
     totalMsRef.current = raw;
@@ -291,8 +283,7 @@ export function useTimer(options: TimerControllerOptions = {}): TimerController 
     return Math.min(1, Math.max(0, traveled / span));
   }, [totalMs, countdown, initialMs, lowerBound, upperBound, isCompleteValue]);
 
-  const stateRef = useRef({ value, running, paused, progress });
-  stateRef.current = { value, running, paused, progress };
+  const stateRef = useLatestRef({ value, running, paused, progress });
 
   const getValue = useCallback(() => stateRef.current.value, []);
   const getProgress = useCallback(() => stateRef.current.progress, []);

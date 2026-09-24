@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from 'react';
-import { useCallbackRef, useUncontrolled } from '@mantine/hooks';
+import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
 
 export type EditableActivationMode = 'focus' | 'click' | 'dblclick' | 'none';
 export type EditableSubmitMode = 'both' | 'enter' | 'blur' | 'none';
@@ -117,10 +117,8 @@ export function useEditable(options: EditableControllerOptions = {}): EditableCo
     onChange: onEditingChange,
   });
 
-  const editingRef = useRef(editing);
-  editingRef.current = editing;
-  const valueRef = useRef(value);
-  valueRef.current = value;
+  const editingRef = useLatestRef(editing);
+  const valueRef = useLatestRef(value);
 
   const getValue = useCallback(() => valueRef.current, []);
   const isEditing = useCallback(() => editingRef.current, []);

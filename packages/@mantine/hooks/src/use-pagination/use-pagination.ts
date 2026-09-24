@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
-import { useCallbackRef } from '../utils';
+import { useCallbackRef, useLatestRef } from '../utils';
 
 function range(start: number, end: number) {
   const length = end - start + 1;
@@ -139,8 +139,7 @@ export function usePagination({
     ];
   }, [_total, siblings, activePage, _startValue, _endValue, boundaries]);
 
-  const latest = useRef({ active: activePage, range: paginationRange });
-  latest.current = { active: activePage, range: paginationRange };
+  const latest = useLatestRef({ active: activePage, range: paginationRange });
 
   const getActive = useCallback(() => latest.current.active, []);
   const getRange = useCallback(() => latest.current.range, []);

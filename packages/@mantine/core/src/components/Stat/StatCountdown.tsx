@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useCallbackRef, useIsomorphicEffect } from '@mantine/hooks';
+import { useCallbackRef, useIsomorphicEffect, useLatestRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -118,8 +118,7 @@ export const StatCountdown = factory<StatCountdownFactory>((_props) => {
   });
 
   const target = getTargetTimestamp(value);
-  const targetRef = useRef(target);
-  targetRef.current = target;
+  const targetRef = useLatestRef(target);
 
   const handleTick = useCallbackRef(onTick);
   const handleFinish = useCallbackRef(onFinish);

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from 'react';
-import { useCallbackRef, useUncontrolled } from '@mantine/hooks';
+import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../../hooks';
 import type { CalendarLevel, DateStringValue } from '../../../types';
 import { toDateString } from '../../../utils';
@@ -137,10 +137,8 @@ export function useCalendar(options: CalendarControllerOptions = {}): CalendarCo
   const dateReadOnly = Boolean(dateControlled) && !onDateChange;
 
   const settingsRef = useRef(EMPTY_SETTINGS);
-  const dateRef = useRef(date);
-  dateRef.current = date;
-  const levelRef = useRef(level);
-  levelRef.current = level;
+  const dateRef = useLatestRef(date);
+  const levelRef = useLatestRef(level);
 
   const setDate = useCallbackRef((next: DateStringValue | Date) => {
     const nextDate = toDateString(next);

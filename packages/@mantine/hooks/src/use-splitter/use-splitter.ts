@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-deprecated */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
+import { useLatestRef } from '../utils';
 
 /** Pane size expressed in CSS units. A bare `number` or `%` string is a flexible size (shares
  * the leftover space), `px`/`rem` strings are fixed sizes that keep their pixel size when the
@@ -653,8 +654,7 @@ export function useSplitter<T extends HTMLElement = any>(
   const [activeHandle, setActiveHandle] = useState(-1);
   const [containerSize, setContainerSize] = useState(0);
 
-  const optionsRef = useRef(options);
-  optionsRef.current = options;
+  const optionsRef = useLatestRef(options);
 
   const internalStateRef = useRef<SplitterInternalState>(createInitialInternalState());
   const containerRef = useRef<T | null>(null);
@@ -662,8 +662,7 @@ export function useSplitter<T extends HTMLElement = any>(
   const rootFontSizeRef = useRef(16);
   const documentControllerRef = useRef<AbortController | null>(null);
   const frameRef = useRef(0);
-  const currentSizesRef = useRef(currentSizes);
-  currentSizesRef.current = currentSizes;
+  const currentSizesRef = useLatestRef(currentSizes);
 
   const preCollapseSizesRef = useRef<SplitterPaneSize[]>(defaultSizes);
 

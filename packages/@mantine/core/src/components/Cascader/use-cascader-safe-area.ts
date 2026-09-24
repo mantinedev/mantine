@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { safePolygon, type HandleCloseContext } from '@floating-ui/react';
-import { useCallbackRef } from '@mantine/hooks';
+import { useCallbackRef, useLatestRef } from '@mantine/hooks';
 import { useDirection } from '../../core';
 import type { CascaderOption, CascaderSafeAreaPolygonOptions } from './Cascader';
 
@@ -21,11 +21,11 @@ export function useCascaderSafeArea({ safeAreaPolygon, onFlush }: UseCascaderSaf
   const { dir } = useDirection();
   const enabled = Boolean(safeAreaPolygon);
 
-  const optionsRef = useRef<CascaderSafeAreaPolygonOptions | undefined>(undefined);
-  optionsRef.current = typeof safeAreaPolygon === 'object' ? safeAreaPolygon : undefined;
+  const optionsRef = useLatestRef<CascaderSafeAreaPolygonOptions | undefined>(
+    typeof safeAreaPolygon === 'object' ? safeAreaPolygon : undefined
+  );
 
-  const dirRef = useRef(dir);
-  dirRef.current = dir;
+  const dirRef = useLatestRef(dir);
 
   const handleFlush = useCallbackRef(onFlush);
 

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useCallbackRef, useUncontrolled } from '@mantine/hooks';
+import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import {
   CheckedNodeStatus,
   getAllCheckedNodes,
@@ -286,20 +286,7 @@ export function useTree({
   const handleNodeExpand = useCallbackRef(onNodeExpand);
   const handleNodeCollapse = useCallbackRef(onNodeCollapse);
 
-  const latest = useRef<{
-    data: TreeNodeData[];
-    expandedState: TreeExpandedState;
-    selectedState: string[];
-    checkedState: string[];
-    anchorNode: string | null;
-    loadingNodes: string[];
-    loadErrors: Record<string, Error>;
-    multiple: boolean;
-    checkStrictly: boolean;
-    onLoadChildren: UseTreeInput['onLoadChildren'];
-  }>(null!);
-
-  latest.current = {
+  const latest = useLatestRef({
     data,
     expandedState: _expandedState,
     selectedState: _selectedState,
@@ -310,7 +297,7 @@ export function useTree({
     multiple,
     checkStrictly,
     onLoadChildren,
-  };
+  });
 
   const initialize = useCallback((_data: TreeNodeData[]) => {
     setExpandedState(

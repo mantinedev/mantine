@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useCallbackRef } from '../utils';
+import { useCallbackRef, useLatestRef } from '../utils';
 
 export interface UseIntervalOptions {
   /** If set, the interval will start automatically when the component is mounted, `false` by default */
@@ -28,8 +28,7 @@ export function useInterval(
   const [active, setActive] = useState(false);
   const intervalRef = useRef<number | null>(null);
   const handleCallback = useCallbackRef(fn);
-  const intervalValueRef = useRef(interval);
-  intervalValueRef.current = interval;
+  const intervalValueRef = useLatestRef(interval);
 
   const start = useCallback(() => {
     setActive((old) => {

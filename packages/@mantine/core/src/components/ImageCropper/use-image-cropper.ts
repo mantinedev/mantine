@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { clamp, useCallbackRef, useDidUpdate, useUncontrolled } from '@mantine/hooks';
+import { clamp, useCallbackRef, useDidUpdate, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import {
   computeCroppedArea,
   getContainedSize,
@@ -210,18 +210,10 @@ export function useImageCropper(
   const [crop, setCropState] = useState<ImageCropperPoint>(DEFAULT_CROP);
   const [cropSize, setCropSizeState] = useState<ImageCropperSize | null>(null);
 
-  const cropRef = useRef<ImageCropperPoint>(crop);
-  cropRef.current = crop;
-  const cropSizeRef = useRef(cropSize);
-  cropSizeRef.current = cropSize;
+  const cropRef = useLatestRef<ImageCropperPoint>(crop);
+  const cropSizeRef = useLatestRef(cropSize);
 
-  const latest = useRef<{
-    zoom: number;
-    rotation: number;
-    flip: ResolvedImageCropperFlip;
-  }>(null!);
-
-  latest.current = { zoom, rotation, flip };
+  const latest = useLatestRef({ zoom, rotation, flip });
 
   const initialRef = useRef({
     zoom: options.defaultZoom ?? 1,

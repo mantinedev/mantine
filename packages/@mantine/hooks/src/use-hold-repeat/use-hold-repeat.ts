@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { useCallbackRef } from '../utils';
+import { useCallbackRef, useLatestRef } from '../utils';
 
 export type UseHoldRepeatInterval = number | ((count: number) => number);
 
@@ -31,8 +31,7 @@ export function useHoldRepeat(
 ): UseHoldRepeatReturnValue {
   const handleTrigger = useCallbackRef(onTrigger);
 
-  const optionsRef = useRef(options);
-  optionsRef.current = options;
+  const optionsRef = useLatestRef(options);
 
   const timeoutRef = useRef<number | null>(null);
   const countRef = useRef(0);

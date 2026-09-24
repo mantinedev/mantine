@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from 'react';
-import { useCallbackRef, useUncontrolled } from '@mantine/hooks';
+import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
 
 export interface StepperControllerOptions {
   /** Controlled index of the active step */
@@ -66,8 +66,7 @@ export function useStepper(options: StepperControllerOptions = {}): StepperContr
   });
 
   const stepsRef = useRef(EMPTY_STEPS);
-  const activeRef = useRef(active);
-  activeRef.current = active;
+  const activeRef = useLatestRef(active);
 
   const setActive = useCallbackRef((next: number) => {
     if (activeProp === undefined) {

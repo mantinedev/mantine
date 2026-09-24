@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-deprecated */
 import { useEffect, useRef } from 'react';
-import { useMergedRef } from '@mantine/hooks';
+import { useLatestRef, useMergedRef } from '@mantine/hooks';
 import { Box, BoxProps, ElementProps, factory, Factory, useProps } from '../../core';
 import { useFloatingWindowContext } from './FloatingWindow.context';
 
@@ -54,8 +54,7 @@ export const FloatingWindowResizeHandle = factory<FloatingWindowResizeHandleFact
   const { children, ref, style, ...others } = props;
   const ctx = useFloatingWindowContext();
   const handleRef = useRef<HTMLDivElement>(null);
-  const ctxRef = useRef(ctx);
-  ctxRef.current = ctx;
+  const ctxRef = useLatestRef(ctx);
   const valueNowRef = useRef<number | null>(null);
 
   const hasWidth =

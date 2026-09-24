@@ -9,7 +9,7 @@ import {
   useHover,
   useInteractions,
 } from '@floating-ui/react';
-import { useCallbackRef, useId } from '@mantine/hooks';
+import { useCallbackRef, useId, useLatestRef } from '@mantine/hooks';
 import { HoverCardGroupContext } from './HoverCardGroup/HoverCardGroup';
 
 interface UseHoverCard {
@@ -34,8 +34,7 @@ export function useHoverCard(settings: UseHoverCard) {
   const withinGroup = use(HoverCardGroupContext).withinGroup;
   const uid = useId(settings.id);
 
-  const openedRef = useRef(opened);
-  openedRef.current = opened;
+  const openedRef = useLatestRef(opened);
 
   const openTimeout = useRef(-1);
   const closeTimeout = useRef(-1);

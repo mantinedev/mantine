@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useCallbackRef, useId, useUncontrolled } from '@mantine/hooks';
+import { useCallbackRef, useId, useLatestRef, useUncontrolled } from '@mantine/hooks';
 
 export type MenubarOpenSource = 'click' | 'hover';
 
@@ -116,11 +116,9 @@ export function useMenubar(options: MenubarControllerOptions = {}): MenubarContr
   const rootRef = useRef<HTMLDivElement | null>(null);
   const openSourceRef = useRef<MenubarOpenSource | null>(null);
 
-  const openIndexRef = useRef(openIndex);
-  openIndexRef.current = openIndex;
+  const openIndexRef = useLatestRef(openIndex);
 
-  const activeIndexRef = useRef(activeIndex);
-  activeIndexRef.current = activeIndex;
+  const activeIndexRef = useLatestRef(activeIndex);
 
   const registerRoot = useCallback((node: HTMLDivElement | null) => {
     rootRef.current = node;

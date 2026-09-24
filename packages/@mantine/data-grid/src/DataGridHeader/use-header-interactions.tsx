@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { Header } from '@tanstack/react-table';
 import { useDirection } from '@mantine/core';
-import { useIsomorphicEffect } from '@mantine/hooks';
+import { useIsomorphicEffect, useLatestRef } from '@mantine/hooks';
 import { autosizeColumns } from '../column-autosize/autosize-columns';
 import type { DataGridStore } from '../hooks/use-data-grid';
 import type { DataGridFeatures } from '../table-features';
@@ -95,10 +95,8 @@ export function useHeaderInteractions({
   const { dir } = useDirection();
   const table = store.table;
 
-  const tableRef = useRef(table);
-  tableRef.current = table;
-  const dirRef = useRef(dir);
-  dirRef.current = dir;
+  const tableRef = useLatestRef(table);
+  const dirRef = useLatestRef(dir);
   const scrollContainerRef = store.scrollContainerRef;
 
   const elementsRef = useRef(new Map<string, HTMLElement>());

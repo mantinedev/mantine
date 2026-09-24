@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useLongPress } from '@mantine/hooks';
+import { useLatestRef, useLongPress } from '@mantine/hooks';
 import { createEventHandler } from '../../core/utils/create-event-handler/create-event-handler';
 
 interface UseContextMenuHandlersOptions {
@@ -33,8 +33,7 @@ export function useContextMenuHandlers({
   const touchActiveRef = useRef(false);
   const gestureHandledRef = useRef(false);
   const touchTargetRef = useRef<object | null>(null);
-  const disabledRef = useRef(disabled);
-  disabledRef.current = disabled;
+  const disabledRef = useLatestRef(disabled);
 
   const openAtPoint = (clientX: number, clientY: number, contextElement: object | null) => {
     setReference({

@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import { useLatestRef } from '../utils';
 
 export function useMap<T, V>(initialState?: [T, V][]): Map<T, V> {
   const [map, setMap] = useState(() => new Map<T, V>(initialState));
-  const mapRef = useRef(map);
-  mapRef.current = map;
+  const mapRef = useLatestRef(map);
 
   map.set = (...args) => {
     Map.prototype.set.apply(mapRef.current, args);

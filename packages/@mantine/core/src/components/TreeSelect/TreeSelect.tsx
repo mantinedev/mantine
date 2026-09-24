@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useId, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -482,8 +482,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     [filteredData, expandedForRender]
   );
 
-  const flatNodesRef = useRef(flatNodes);
-  flatNodesRef.current = flatNodes;
+  const flatNodesRef = useLatestRef(flatNodes);
 
   const nodeLookup = useMemo(() => {
     const lookup: Record<string, TreeNodeData> = {};

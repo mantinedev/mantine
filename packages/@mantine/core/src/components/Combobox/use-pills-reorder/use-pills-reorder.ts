@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { useLatestRef } from '@mantine/hooks';
 import { movePill, PillReorderPosition } from './move-pill';
 
 export interface PillReorderProps {
@@ -66,8 +67,7 @@ export function usePillsReorder<T>({ value, onChange, enabled }: UsePillsReorder
   const dragStateRef = useRef<PillDragState>({ draggedIndex: null, currentDropTarget: null });
   const pendingFocusRef = useRef<PendingFocus<T> | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const valueRef = useRef(value);
-  valueRef.current = value;
+  const valueRef = useLatestRef(value);
 
   useEffect(() => {
     const pending = pendingFocusRef.current;

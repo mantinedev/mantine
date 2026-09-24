@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useLatestRef } from '../utils';
 
 const DEFAULT_TOKENS: Record<string, RegExp> = {
   '9': /[0-9]/,
@@ -351,8 +352,7 @@ export function generatePattern(mode: 'full' | 'full-inexact', options: UseMaskO
 }
 
 export function useMask(options: UseMaskOptions): UseMaskReturnValue {
-  const optionsRef = useRef(options);
-  optionsRef.current = options;
+  const optionsRef = useLatestRef(options);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [maskedValue, setMaskedValue] = useState('');

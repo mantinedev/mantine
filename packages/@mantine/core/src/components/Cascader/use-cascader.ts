@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useCallback, useMemo, useState } from 'react';
+import { useLatestRef, useUncontrolled } from '@mantine/hooks';
 import type { CascaderOption } from './Cascader';
 import { cascaderOptionHasChildren, getCascaderColumns } from './get-cascader-columns';
 import { getCascaderPathOptions } from './get-cascader-path-options';
@@ -52,8 +52,7 @@ export function useCascader({
   });
 
   const [activePath, setActivePath] = useState<string[]>(() => _value ?? []);
-  const activePathRef = useRef(activePath);
-  activePathRef.current = activePath;
+  const activePathRef = useLatestRef(activePath);
 
   const resetActivePath = useCallback(() => {
     setActivePath(_value ?? []);

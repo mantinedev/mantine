@@ -1,7 +1,7 @@
 // Required to disable for webkit-user-select, although deprecated, it is still required for Safari support
 /* eslint-disable @typescript-eslint/no-deprecated */
 import { useCallback, useRef, useState } from 'react';
-import { useCallbackRef } from '../utils';
+import { useCallbackRef, useLatestRef } from '../utils';
 
 type Vector2 = [number, number];
 
@@ -138,8 +138,7 @@ export function useDrag<T extends HTMLElement = any>(
 
   const handleDrag = useCallbackRef(handler);
 
-  const optionsRef = useRef(options);
-  optionsRef.current = options;
+  const optionsRef = useLatestRef(options);
 
   const stateRef = useRef<DragInternalState>(createInitialState());
   const documentControllerRef = useRef<AbortController | null>(null);
