@@ -115,16 +115,16 @@ type HotkeyItem = [string, (event: any) => void, HotkeyItemOptions?];
 export function getHotkeyHandler(hotkeys: HotkeyItem[]) {
   return (event: React.KeyboardEvent<HTMLElement> | KeyboardEvent) => {
     const _event = 'nativeEvent' in event ? event.nativeEvent : event;
-    hotkeys.forEach(
-      ([hotkey, handler, options = { preventDefault: true, usePhysicalKeys: false }]) => {
-        if (getHotkeyMatcher(hotkey, options.usePhysicalKeys)(_event)) {
-          if (options.preventDefault) {
-            event.preventDefault();
-          }
+    hotkeys.forEach(([hotkey, handler, options]) => {
+      const { preventDefault = true, usePhysicalKeys = false } = options || {};
 
-          handler(_event);
+      if (getHotkeyMatcher(hotkey, usePhysicalKeys)(_event)) {
+        if (preventDefault) {
+          event.preventDefault();
         }
+
+        handler(_event);
       }
-    );
+    });
   };
 }

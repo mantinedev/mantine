@@ -56,9 +56,8 @@
     height: 80px;
   }
 
-  &[data-logo='gatsby'],
-  &[data-logo='redwood'],
-  &[data-logo='react-router'] {
+  &[data-logo='react-router'],
+  &[data-logo='tanstack-start'] {
     justify-content: flex-start;
     width: 40px;
   }
@@ -76,12 +75,9 @@
     width: 200px;
   }
 
-  &[data-logo='gatsby'] {
-    width: 40px;
-  }
-
-  &[data-logo='redwood'] {
-    height: 40px;
+  &[data-logo='tanstack-start'] {
+    width: 32px;
+    height: 32px;
   }
 
   &[data-logo='react-router'] {

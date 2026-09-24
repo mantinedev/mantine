@@ -1,4 +1,4 @@
-import { Breadcrumbs, Code, STYlE_PROPS_DATA } from '@mantine/core';
+import { Breadcrumbs, Code, STYLE_PROPS_DATA } from '@mantine/core';
 import { MdxDataTable } from '@/components/MdxProvider';
 
 const THEME_KEYS: Record<string, string> = {
@@ -8,7 +8,7 @@ const THEME_KEYS: Record<string, string> = {
   lineHeight: 'theme.lineHeights',
 };
 
-export function StylePropsTable({ source = STYlE_PROPS_DATA }: { source: any }) {
+export function StylePropsTable({ source = STYLE_PROPS_DATA }: { source: any }) {
   const data = Object.keys(source).map((propName) => {
     const propData = source[propName];
     const themeKey = THEME_KEYS[propData.type];
