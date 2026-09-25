@@ -9,15 +9,17 @@ interface OverlayStackStateReturnType<T extends string> {
   register: (id: T) => { opened: boolean; onClose: () => void; stackId: T };
 }
 
-export function useOverlayStackState<const T extends string>(
-  overlays: T[]
-): OverlayStackStateReturnType<T> {
-  const initialState = overlays.reduce(
+function getClosedState<T extends string>(overlays: T[]) {
+  return overlays.reduce(
     (acc, overlay) => ({ ...acc, [overlay]: false }),
     {} as Record<T, boolean>
   );
+}
 
-  const [state, setState] = useState(initialState);
+export function useOverlayStackState<const T extends string>(
+  overlays: T[]
+): OverlayStackStateReturnType<T> {
+  const [state, setState] = useState(() => getClosedState(overlays));
 
   const open = useCallback((overlay: T) => {
     setState((current) => ({ ...current, [overlay]: true }));
@@ -33,7 +35,10 @@ export function useOverlayStackState<const T extends string>(
     []
   );
 
-  const closeAll = useCallback(() => setState(initialState), []);
+  const closeAll = useCallback(
+    () => setState((current) => getClosedState(Object.keys(current) as T[])),
+    []
+  );
 
   const register = useCallback(
     (overlay: T) => ({
