@@ -306,4 +306,18 @@ describe('@mantine/dates/TimePicker/use-time-picker', () => {
     expect(hook.result.current.minutes).toBe(null);
     expect(hook.result.current.value).toBe('');
   });
+
+  it('reports an empty value when a field is cleared after an external value was applied', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(({ value }) => useTimePicker({ value, onChange }), {
+      initialProps: { value: '' },
+    });
+
+    hook.rerender({ value: '10:30' });
+    expect(hook.result.current.hours).toBe(10);
+
+    act(() => hook.result.current.setMinutes(null));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith('');
+  });
 });

@@ -1,3 +1,4 @@
+import { PinInputDemos, TimePickerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -112,6 +113,102 @@ The `controller` prop description in the props table of each component lists the
 replaces. Styling and rendering props, for example `size`, `variant`, `classNames` and children,
 are never affected, and adding a controller never removes or renames a prop, so it is safe to adopt
 one in existing code. The same rules apply to the `store` prop.
+
+## Usage with forms
+
+`form.getInputProps('field')` from [@mantine/form](/form/use-form) returns `value`, `onChange`,
+`error`, `onFocus` and `onBlur` (`defaultValue` instead of `value` in
+[uncontrolled mode](/form/uncontrolled)), and other form libraries provide a similar set of props.
+These props bind to the state props of the component, so how they combine with a controller depends
+on whether the controller owns the value.
+
+Most controllers do not own the value. `useDateInput`, `useDatePickerInput`, `useCalendar` and the
+other `@mantine/dates` controllers own the displayed date, level and dropdown, while the selected
+value stays on the component. For these components, spread `form.getInputProps()` on the component
+and pass the controller next to it, the two do not overlap:
+
+```tsx
+import { DateInput, useDateInput } from '@mantine/dates';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ mode: 'uncontrolled', initialValues: { date: null } });
+  const controller = useDateInput();
+
+  return (
+    <DateInput
+      controller={controller}
+      key={form.key('date')}
+      {...form.getInputProps('date')}
+    />
+  );
+}
+```
+
+Three controllers own the value, because the component keeps entry state that `value` cannot
+express: `usePinInput` (one character per input), `useTimePicker` (hours, minutes, seconds and am/pm
+fields) and `useMaskedDateInput` (day, month, year and time fields). When one of them is passed, the
+`value`, `defaultValue` and `onChange` props of the component are ignored, so `form.getInputProps()`
+cannot be spread on the component next to the controller. Instead, create a component that accepts
+the same props, passes the props that the controller supersedes to the hook and forwards the rest to
+the component. The form binds to the props of that component, and the component owns the controller:
+
+<Demo data={PinInputDemos.form} />
+
+The pattern has three rules:
+
+- Pass every prop that the `controller` prop supersedes to the hook, not only `value`,
+  `defaultValue` and `onChange`. The `controller` prop description in the props table lists them.
+  An option left on the component, for example `length` on `PinInput` or `format` on `TimePicker`,
+  is ignored once a controller is set.
+- Keep `error`, `onFocus` and `onBlur` on the component. They are not state props, so validation
+  errors and touched/dirty tracking work the same way as without a controller.
+- Use `mode: 'uncontrolled'` and set `key={form.key('field')}` on the component that calls the hook.
+  In this mode `form.reset()` and `form.setFieldValue()` remount the field, and the controller with
+  it. In `mode: 'controlled'`, the form can only change the `value` prop, and a partially entered
+  time or date is reported as an empty value: it is the same before and after `form.reset()`, so
+  the controller receives no change and the partial entry stays on screen.
+
+Actions called on the controller inside the component, for example `clear()` or `setValue()`, report
+through `onChange` the same way as typing, so the form stays in sync. `getValue()` and the last
+`onChange` always agree: a value that the component cannot report, for example an incomplete time or
+a `MaskedDateInput` date outside of `minDate`/`maxDate`, is an empty string or `null` for both.
+
+The component that owns the controller is also the place to use queries that the form cannot see.
+The form knows only that an incomplete time is empty, while `controller.hasValue()` knows that the
+user has started typing:
+
+<Demo data={TimePickerDemos.form} />
+
+The same component works with other form libraries. With
+[react-hook-form](https://react-hook-form.com/), pass the `field` props of `Controller`:
+
+```tsx
+import { Controller, useForm } from 'react-hook-form';
+
+function Demo() {
+  const { control, handleSubmit } = useForm({ defaultValues: { code: '' } });
+
+  return (
+    <form onSubmit={handleSubmit((values) => console.log(values))}>
+      <Controller
+        name="code"
+        control={control}
+        rules={{ minLength: 6 }}
+        render={({ field, fieldState }) => (
+          <PinField
+            length={6}
+            value={field.value}
+            onChange={field.onChange}
+            onBlur={field.onBlur}
+            error={fieldState.error ? 'Enter all 6 digits' : null}
+          />
+        )}
+      />
+    </form>
+  );
+}
+```
 
 ## Reading state
 

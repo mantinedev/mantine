@@ -138,4 +138,67 @@ describe('@mantine/dates/MaskedDateInput/use-masked-date-input', () => {
     expect(hook.result.current.month).toBe(3);
     expect(hook.result.current.year).toBe(2024);
   });
+
+  it('reports null once when a complete date leaves the minDate/maxDate range', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() =>
+      useMaskedDateInput({ defaultValue: '2024-05-05', minDate: '2024-01-01', onChange })
+    );
+
+    act(() => hook.result.current.setYear(2023));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith(null);
+    expect(hook.result.current.value).toBe(null);
+    expect(hook.result.current.getYear()).toBe(2023);
+
+    act(() => hook.result.current.setMonth(6));
+    expect(onChange).toHaveBeenCalledTimes(1);
+
+    act(() => hook.result.current.setYear(2024));
+    expect(onChange).toHaveBeenCalledTimes(2);
+    expect(onChange).toHaveBeenLastCalledWith('2024-06-05');
+  });
+
+  it('reports null when setValue receives a date outside of minDate/maxDate', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() =>
+      useMaskedDateInput({ defaultValue: '2024-05-05', maxDate: '2024-12-31', onChange })
+    );
+
+    act(() => hook.result.current.setValue('2025-01-01'));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith(null);
+    expect(hook.result.current.getYear()).toBe(2025);
+
+    act(() => hook.result.current.setValue('2024-01-01'));
+    expect(onChange).toHaveBeenLastCalledWith('2024-01-01');
+  });
+
+  it('reports null when an externally applied date is changed outside of minDate/maxDate', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(
+      ({ value }) => useMaskedDateInput({ value, minDate: '2024-01-01', onChange }),
+      { initialProps: { value: null as string | null } }
+    );
+
+    hook.rerender({ value: '2024-05-05' });
+    expect(hook.result.current.year).toBe(2024);
+
+    act(() => hook.result.current.setYear(2023));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith(null);
+  });
+
+  it('does not report null for an edit that keeps an out-of-range initial value out of range', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() =>
+      useMaskedDateInput({ defaultValue: '2023-05-05', minDate: '2024-01-01', onChange })
+    );
+
+    act(() => hook.result.current.setMonth(6));
+    expect(onChange).not.toHaveBeenCalled();
+
+    act(() => hook.result.current.setYear(2024));
+    expect(onChange).toHaveBeenLastCalledWith('2024-06-05');
+  });
 });

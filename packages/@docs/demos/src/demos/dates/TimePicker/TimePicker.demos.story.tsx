@@ -122,3 +122,8 @@ export const Demo_controller = {
   name: '⭐ Demo: controller',
   render: renderDemo(demos.controller),
 };
+
+export const Demo_form = {
+  name: '⭐ Demo: form',
+  render: renderDemo(demos.form),
+};

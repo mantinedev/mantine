@@ -27,3 +27,8 @@ export const Demo_success = {
   name: '⭐ Demo: success',
   render: renderDemo(demos.success),
 };
+
+export const Demo_form = {
+  name: '⭐ Demo: form',
+  render: renderDemo(demos.form),
+};

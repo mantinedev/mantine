@@ -92,6 +92,32 @@ fields that component renders.
 The controller is typed as `TimePickerController` and its options as `TimePickerControllerOptions`,
 both exported from `@mantine/dates`.
 
+## Usage with forms
+
+`form.getInputProps()` returns `value`, `onChange`, `error`, `onFocus` and `onBlur`, which bind to
+the props of `TimePicker`. When the `controller` prop is set, the `value` and `onChange` props are
+ignored, so a controller and `form.getInputProps()` cannot be spread on the same component. Instead,
+create a component that accepts the same props as `TimePicker`, passes the props that the controller
+supersedes (`value`, `defaultValue`, `onChange`, `type`, `format`, `amPmLabels`, `withSeconds`,
+`min`, `max` and `pasteSplit`) to `useTimePicker` and forwards the rest to `TimePicker`. The form
+binds to the props of that component, and the component owns the controller. `error`, `onFocus` and
+`onBlur` reach `TimePicker` as usual, so validation errors and touched/dirty tracking work without
+extra code:
+
+<Demo data={TimePickerDemos.form} />
+
+The controller adds what the form cannot see on its own: a partially entered time is an empty string
+for the form, so validation reports it as missing, while `controller.hasValue()` lets the field
+replace that error with a more specific message.
+
+Use `mode: 'uncontrolled'` and set `key={form.key('time')}` on the component that calls
+`useTimePicker`. In this mode `form.reset()` and `form.setFieldValue()` remount the field, and the
+controller with it, so a partially entered time is cleared along with the value. In
+`mode: 'controlled'`, the form can only change the `value` prop: when the user has entered a part of
+a time, the form value is an empty string before and after `form.reset()`, so the controller receives
+no change and the partial entry stays on screen. See the
+[Controllers guide](/guides/controllers#usage-with-forms) for the details of the pattern.
+
 ## With seconds
 
 Set the `withSeconds` prop to enable seconds input. Note that if this prop is used,

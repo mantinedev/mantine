@@ -352,6 +352,7 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
 
     if (valueProp === '') {
       writeFields({ hours: null, minutes: null, seconds: null, amPm: null });
+      wasInvalidBefore.current = true;
       return;
     }
 
@@ -362,6 +363,8 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
       seconds: parsedTime.seconds,
       amPm: parsedTime.amPm,
     });
+    wasInvalidBefore.current = !getTimeString({ ...parsedTime, format, withSeconds, amPmLabels })
+      .valid;
   }, [valueProp]);
 
   const value = currentTimeString.value;

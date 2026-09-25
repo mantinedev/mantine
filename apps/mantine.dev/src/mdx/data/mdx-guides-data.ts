@@ -153,7 +153,7 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     slug: '/guides/controllers',
     search: 'Drive component state with a use<Component> hook and the controller or store prop',
     searchTags:
-      'controller, store, controller prop, store prop, useAccordion, useStepper, usePagination, usePinInput, useMenubar, useTimer, useEditable, useImageCropper, useCalendar, useTimePicker, useDatePickerInput, useDateTimePicker, useDateInput, useMaskedDateInput, useCombobox, useSelect, useMultiSelect, useTagsInput, useAutocomplete, useTree, useDataGrid',
+      'controller, store, controller prop, store prop, form, useForm, getInputProps, useAccordion, useStepper, usePagination, usePinInput, useMenubar, useTimer, useEditable, useImageCropper, useCalendar, useTimePicker, useDatePickerInput, useDateTimePicker, useDateInput, useMaskedDateInput, useCombobox, useSelect, useMultiSelect, useTagsInput, useAutocomplete, useTree, useDataGrid',
     hideHeader: true,
   },
 };

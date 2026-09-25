@@ -283,7 +283,12 @@ export function useMaskedDateInput(
     parseFields(valueProp ?? defaultValue, format, amPmLabels)
   );
 
-  const wasInvalidBefore = useRef(!build(initialFields).valid);
+  const wasInvalidBefore = useRef(
+    (() => {
+      const initial = build(initialFields);
+      return !initial.valid || isOutOfRange(initial.value);
+    })()
+  );
 
   const [day, setDayState] = useState<number | null>(initialFields.day);
   const [month, setMonthState] = useState<number | null>(initialFields.month);
@@ -357,20 +362,16 @@ export function useMaskedDateInput(
     }
 
     const dateString = build(next);
+    const reportable = dateString.valid && !isOutOfRange(dateString.value);
 
-    if (dateString.valid) {
+    setFields(dateString.valid ? next : { ...fieldsRef.current, [field]: val });
+
+    if (reportable) {
       wasInvalidBefore.current = false;
-      setFields(next);
-
-      if (!isOutOfRange(dateString.value)) {
-        onChange?.(dateString.value as MaskedDateInputValue);
-      }
-    } else {
-      setFields({ ...fieldsRef.current, [field]: val });
-      if (!wasInvalidBefore.current) {
-        onChange?.(null);
-        wasInvalidBefore.current = true;
-      }
+      onChange?.(dateString.value as MaskedDateInputValue);
+    } else if (!wasInvalidBefore.current) {
+      onChange?.(null);
+      wasInvalidBefore.current = true;
     }
   });
 
@@ -443,11 +444,15 @@ export function useMaskedDateInput(
     setFields(next);
 
     const dateString = build(next);
-    wasInvalidBefore.current = !dateString.valid;
+    const reportable = dateString.valid && !isOutOfRange(dateString.value);
 
-    if (dateString.valid && !isOutOfRange(dateString.value)) {
+    if (reportable) {
       onChange?.(dateString.value as MaskedDateInputValue);
+    } else if (!wasInvalidBefore.current) {
+      onChange?.(null);
     }
+
+    wasInvalidBefore.current = !reportable;
   });
 
   const onPaste = useCallbackRef((event: React.ClipboardEvent<any>) => {
@@ -501,11 +506,15 @@ export function useMaskedDateInput(
 
     if (incoming === null) {
       setFields(EMPTY_FIELDS);
+      wasInvalidBefore.current = true;
       return;
     }
 
     if (typeof incoming === 'string') {
-      setFields(parseFields(incoming, format, amPmLabels));
+      const parsed = parseFields(incoming, format, amPmLabels);
+      const dateString = build(parsed);
+      setFields(parsed);
+      wasInvalidBefore.current = !dateString.valid || isOutOfRange(dateString.value);
     }
   }, [valueProp]);
 

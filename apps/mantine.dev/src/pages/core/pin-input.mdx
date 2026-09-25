@@ -85,6 +85,27 @@ inputs of the one that rendered last.
 The controller is typed as `PinInputController` and its options as `PinInputControllerOptions`, both
 exported from `@mantine/core`.
 
+## Usage with forms
+
+`form.getInputProps()` returns `value`, `onChange`, `error`, `onFocus` and `onBlur`, which bind to
+the props of `PinInput`. When the `controller` prop is set, the `value` and `onChange` props are
+ignored, so a controller and `form.getInputProps()` cannot be spread on the same component. Instead,
+create a component that accepts the same props as `PinInput`, passes the props that the controller
+supersedes (`value`, `defaultValue`, `onChange`, `onComplete` and `length`) to `usePinInput` and
+forwards the rest to `PinInput`. The form binds to the props of that component, and the component
+owns the controller, so it can add actions that the form does not know about, for example clearing
+the code and moving focus back to the first input:
+
+<Demo data={PinInputDemos.form} />
+
+`PinInput` accepts `error` as a boolean and does not render the error text, so the component in the
+example renders the message from the form with `Input.Error`.
+
+Use `mode: 'uncontrolled'` and set `key={form.key('code')}` on the component that calls
+`usePinInput`, so that `form.reset()` and `form.setFieldValue()` remount the controller together
+with the inputs. See the [Controllers guide](/guides/controllers#usage-with-forms) for the details of
+the pattern.
+
 ## Uncontrolled
 
 `PinInput` can be used with uncontrolled forms the same way as a native input element.
