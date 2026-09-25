@@ -16,7 +16,10 @@ function Demo() {
       {
         accessorKey: 'salary',
         header: 'Salary',
-        meta: { align: 'end' },
+        meta: {
+          align: 'end',
+          formatAggregatedValue: (value) => \`$\${Math.round(Number(value)).toLocaleString()}\`,
+        },
         aggregationFn: 'mean',
         aggregatedCell: ({ getValue }) => \`Avg $\${Math.round(getValue<number>()).toLocaleString()}\`,
       },
@@ -42,7 +45,10 @@ function Demo() {
       {
         accessorKey: 'salary',
         header: 'Salary',
-        meta: { align: 'end' },
+        meta: {
+          align: 'end',
+          formatAggregatedValue: (value) => `$${Math.round(Number(value)).toLocaleString()}`,
+        },
         aggregationFn: 'mean',
         aggregatedCell: ({ getValue }) => `Avg $${Math.round(getValue<number>()).toLocaleString()}`,
       },

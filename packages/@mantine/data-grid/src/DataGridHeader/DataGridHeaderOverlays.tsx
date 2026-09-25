@@ -21,14 +21,16 @@ export function DataGridHeaderOverlays({ drag, dropTarget, guide }: DataGridHead
     <>
       {guide && (
         <div
-          {...ctx.getStyles('resizeGuide')}
-          style={{ left: guide.left, top: guide.top, height: guide.height }}
+          {...ctx.getStyles('resizeGuide', {
+            style: { left: guide.left, top: guide.top, height: guide.height },
+          })}
         />
       )}
       {dropTarget && (
         <div
-          {...ctx.getStyles('dropIndicator')}
-          style={{ left: dropTarget.left, top: dropTarget.top, height: dropTarget.height }}
+          {...ctx.getStyles('dropIndicator', {
+            style: { left: dropTarget.left, top: dropTarget.top, height: dropTarget.height },
+          })}
         />
       )}
       {drag && (

@@ -85,8 +85,7 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
                     data-utility={column.columnDef.meta?.utility}
                     data-pinned={pinned['data-pinned']}
                     data-pinned-edge={pinned['data-pinned-edge']}
-                    {...ctx.getStyles('td', { classNames, styles })}
-                    style={pinned.style}
+                    {...ctx.getStyles('td', { classNames, styles, style: pinned.style })}
                   />
                 );
               })}
@@ -120,8 +119,7 @@ export const DataGridBody = factory<DataGridBodyFactory>((props) => {
               data-align={meta?.align}
               data-pinned={pinned['data-pinned']}
               data-pinned-edge={pinned['data-pinned-edge']}
-              {...ctx.getStyles('td', { classNames, styles })}
-              style={pinned.style}
+              {...ctx.getStyles('td', { classNames, styles, style: pinned.style })}
             >
               {!meta?.utility && (
                 <SkeletonBar

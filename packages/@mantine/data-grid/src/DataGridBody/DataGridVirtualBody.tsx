@@ -389,8 +389,11 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
                   data-utility={column.columnDef.meta.utility}
                   data-pinned={pinned['data-pinned']}
                   data-pinned-edge={pinned['data-pinned-edge']}
-                  {...ctx.getStyles('virtualCell', { classNames, styles })}
-                  style={{ ...pinned.style, width: `var(--dg-col-${index})` }}
+                  {...ctx.getStyles('virtualCell', {
+                    classNames,
+                    styles,
+                    style: { ...pinned.style, width: `var(--dg-col-${index})` },
+                  })}
                 />
               );
             })}
@@ -453,14 +456,17 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         {...getHeaderCellAttributes(header, ctx)}
         data-pinned={pinned['data-pinned']}
         data-pinned-edge={pinned['data-pinned-edge']}
-        {...ctx.getStyles('virtualCell', { classNames, styles })}
-        style={{
-          ...pinned.style,
-          width:
-            header.colSpan > 1
-              ? header.getLeafHeaders().reduce((sum, leaf) => sum + leaf.getSize(), 0)
-              : `var(--dg-col-${headerIndex})`,
-        }}
+        {...ctx.getStyles('virtualCell', {
+          classNames,
+          styles,
+          style: {
+            ...pinned.style,
+            width:
+              header.colSpan > 1
+                ? header.getLeafHeaders().reduce((sum, leaf) => sum + leaf.getSize(), 0)
+                : `var(--dg-col-${headerIndex})`,
+          },
+        })}
         {...ctx.headerInteractions.getReorderHandlers(header)}
       >
         <DataGridHeaderCellContent
@@ -568,8 +574,11 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
               data-align={meta?.align}
               data-pinned={pinned['data-pinned']}
               data-pinned-edge={pinned['data-pinned-edge']}
-              {...ctx.getStyles('virtualCell', { classNames, styles })}
-              style={{ ...pinned.style, width: `var(--dg-col-${columnIndex})` }}
+              {...ctx.getStyles('virtualCell', {
+                classNames,
+                styles,
+                style: { ...pinned.style, width: `var(--dg-col-${columnIndex})` },
+              })}
             >
               {!meta?.utility && (
                 <SkeletonBar
@@ -622,8 +631,7 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
         aria-colcount={totalColumns}
         aria-busy={ctx.loading || undefined}
         onKeyDown={handleKeyDown}
-        {...ctx.getStyles('virtualGrid', { classNames, styles })}
-        style={columnWidthVars}
+        {...ctx.getStyles('virtualGrid', { classNames, styles, style: columnWidthVars })}
       >
         <div role="rowgroup" data-virtual-thead ref={ctx.theadRef}>
           {headerGroups.map((headerGroup) => (

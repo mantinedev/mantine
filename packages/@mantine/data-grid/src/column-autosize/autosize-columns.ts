@@ -31,15 +31,10 @@ export function autosizeColumns<TData extends RowData>(
     );
 
     const colIndex = table.getVisibleLeafColumns().indexOf(column);
-    let maxContentWidth = minWidth;
+    const measured: HTMLElement[] = [];
 
     if (cells.length > 0) {
-      cells.forEach((cell) => {
-        const width = (cell as HTMLElement).scrollWidth;
-        if (width > maxContentWidth) {
-          maxContentWidth = width;
-        }
-      });
+      cells.forEach((cell) => measured.push(cell as HTMLElement));
     } else if (colIndex >= 0) {
       const allRows = containerElement.querySelectorAll('tbody tr:not([data-group-row])');
       allRows.forEach((row) => {
@@ -47,10 +42,7 @@ export function autosizeColumns<TData extends RowData>(
         const extraOffset = tds.length - table.getVisibleLeafColumns().length;
         const td = tds[colIndex + Math.max(0, extraOffset)];
         if (td) {
-          const width = td.scrollWidth + 16;
-          if (width > maxContentWidth) {
-            maxContentWidth = width;
-          }
+          measured.push(td);
         }
       });
 
@@ -62,17 +54,51 @@ export function autosizeColumns<TData extends RowData>(
           const extraOffset = ths.length - table.getVisibleLeafColumns().length;
           const th = ths[colIndex + Math.max(0, extraOffset)];
           if (th) {
-            const width = th.scrollWidth + 16;
-            if (width > maxContentWidth) {
-              maxContentWidth = width;
-            }
+            measured.push(th);
           }
         }
       }
     }
 
+    const maxContentWidth = Math.max(minWidth, measureContentWidth(measured, containerElement));
     sizing[column.id] = Math.min(maxContentWidth, maxWidth);
   }
 
   table.setColumnSizing((prev) => ({ ...prev, ...sizing }));
+}
+
+function measureContentWidth(cells: HTMLElement[], containerElement: HTMLElement) {
+  if (cells.length === 0) {
+    return 0;
+  }
+
+  const host = cells[0].closest('table')?.parentElement ?? containerElement;
+  const measureTable = document.createElement('table');
+  measureTable.className = cells[0].closest('table')?.className ?? '';
+  measureTable.setAttribute('aria-hidden', 'true');
+  measureTable.style.cssText =
+    'position:absolute;visibility:hidden;pointer-events:none;top:0;left:0;width:max-content;table-layout:auto;';
+
+  const tbody = document.createElement('tbody');
+  const clones = cells.map((cell) => {
+    const row = document.createElement('tr');
+    row.className = cell.parentElement?.className ?? '';
+    const clone = cell.cloneNode(true) as HTMLElement;
+    clone.removeAttribute('id');
+    clone.removeAttribute('colspan');
+    clone.style.width = 'auto';
+    clone.style.minWidth = '0';
+    clone.style.maxWidth = 'none';
+    clone.style.position = 'static';
+    row.appendChild(clone);
+    tbody.appendChild(row);
+    return clone;
+  });
+
+  measureTable.appendChild(tbody);
+  host.appendChild(measureTable);
+  const width = Math.max(...clones.map((clone) => clone.getBoundingClientRect().width));
+  measureTable.remove();
+
+  return Math.ceil(width);
 }

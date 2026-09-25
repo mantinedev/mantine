@@ -59,6 +59,7 @@ function Demo() {
       virtualize="rows"
       height={400}
       loading={loading}
+      loadingVariant="bar"
       onScrollToBottom={handleScrollToBottom}
       columns={columns}
     />
@@ -119,6 +120,7 @@ function Demo() {
       virtualize="rows"
       height={400}
       loading={loading}
+      loadingVariant="bar"
       onScrollToBottom={handleScrollToBottom}
       columns={columns}
     />

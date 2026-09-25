@@ -95,4 +95,34 @@ describe('@mantine/data-grid/DataGridHeader header groups', () => {
     expect(container.querySelector('[role="columnheader"][data-placeholder]')).toBeInTheDocument();
     expect(screen.getAllByRole('button', { name: 'Column menu' })).toHaveLength(3);
   });
+
+  it('sizes columns from leaf column sizes instead of group header cells', () => {
+    const { container } = render(
+      <Grid
+        storeOptions={{
+          withColumnResizing: false,
+          columns: [
+            {
+              id: 'person',
+              header: 'Person',
+              columns: [
+                { accessorKey: 'name', header: 'Name', size: 120 },
+                { accessorKey: 'age', header: 'Age', size: 60 },
+              ],
+            },
+            { accessorKey: 'city', header: 'City', size: 200 },
+          ],
+        }}
+      />
+    );
+    const cols = Array.from(container.querySelectorAll('table > colgroup > col'));
+    expect(cols.map((col) => (col as HTMLElement).style.width)).toEqual(['120px', '60px', '200px']);
+  });
+
+  it('does not render a colgroup when there is a single header row', () => {
+    const { container } = render(
+      <Grid storeOptions={{ columns: [{ accessorKey: 'name', header: 'Name' }] }} />
+    );
+    expect(container.querySelector('colgroup')).not.toBeInTheDocument();
+  });
 });

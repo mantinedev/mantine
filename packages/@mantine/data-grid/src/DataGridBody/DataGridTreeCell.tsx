@@ -59,8 +59,11 @@ export function TreeCellContent({ row, children, classNames, styles }: TreeCellC
 
   return (
     <div
-      {...ctx.getStyles('treeIndent', { classNames, styles })}
-      style={{ '--dg-tree-depth': row.depth } as React.CSSProperties}
+      {...ctx.getStyles('treeIndent', {
+        classNames,
+        styles,
+        style: { '--dg-tree-depth': row.depth } as React.CSSProperties,
+      })}
     >
       {guides.map((line, level) => (
         <span

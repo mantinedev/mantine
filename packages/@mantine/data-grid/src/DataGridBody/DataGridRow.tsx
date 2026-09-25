@@ -104,8 +104,9 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
     }
   };
 
+  const visibleCells = row.getVisibleCells();
+
   const dataCells = useMemo(() => {
-    const visibleCells = row.getVisibleCells();
     const cells: React.ReactNode[] = [];
     const firstDataCellIndex = visibleCells.findIndex(
       (cell) => !cell.column.columnDef.meta?.utility
@@ -136,7 +137,7 @@ export const DataGridRow = factory<DataGridRowFactory>((props) => {
     }
 
     return cells;
-  }, [row, classNames, styles, ctx.withTreeData]);
+  }, [row, visibleCells, classNames, styles, ctx.withTreeData]);
 
   return (
     <Box

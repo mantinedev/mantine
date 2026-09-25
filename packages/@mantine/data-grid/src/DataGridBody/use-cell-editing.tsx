@@ -8,13 +8,6 @@ type GridCell = Cell<DataGridFeatures, any, unknown>;
 
 const FOCUSABLE_SELECTOR = 'input, textarea, select, button, [tabindex]:not([tabindex="-1"])';
 
-const editorVars = () => ({
-  wrapper: {
-    '--input-height': 'calc(var(--dg-row-height) - 1px)',
-    '--input-fz': 'var(--dg-font-size)',
-  },
-});
-
 const stopPropagation = (event: React.SyntheticEvent) => event.stopPropagation();
 
 function focusElement(element: HTMLElement | null | undefined) {
@@ -209,7 +202,6 @@ export function useCellEditing<T extends HTMLElement>(
             onChange={(event) => onChange(event.currentTarget.value)}
             disabled={isSaving}
             error={error !== undefined}
-            vars={editorVars}
           />
         </Tooltip>
       )}

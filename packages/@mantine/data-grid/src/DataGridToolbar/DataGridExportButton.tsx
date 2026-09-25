@@ -17,6 +17,7 @@ import type { ExportCsvOptions } from '../export/export-csv';
 import type { ExportExcelOptions } from '../export/export-excel';
 import type { ExportPrintOptions } from '../export/export-print';
 import type { ExportColumnScope, ExportRowScope } from '../export/export-utils';
+import { getSelectedCount } from '../get-selected-count';
 import { DownloadIcon } from '../icons';
 import classes from '../DataGrid.module.css';
 
@@ -123,6 +124,7 @@ export const DataGridExportButton = factory<DataGridExportButtonFactory>((props)
   };
 
   const label = children ?? labels.exportLabel;
+  const disabled = rows === 'selected' && getSelectedCount(store.rowSelection) === 0;
 
   return (
     <Box {...ctx.getStyles('exportButton', { className, classNames, style, styles })} {...others}>
@@ -131,6 +133,7 @@ export const DataGridExportButton = factory<DataGridExportButtonFactory>((props)
           variant="default"
           size={store.controlSize}
           leftSection={<DownloadIcon />}
+          disabled={disabled}
           onClick={() => handleExport(formats[0])}
         >
           {label}
@@ -138,7 +141,12 @@ export const DataGridExportButton = factory<DataGridExportButtonFactory>((props)
       ) : (
         <Menu withinPortal position="bottom-end" {...menuProps}>
           <Menu.Target>
-            <Button variant="default" size={store.controlSize} leftSection={<DownloadIcon />}>
+            <Button
+              variant="default"
+              size={store.controlSize}
+              leftSection={<DownloadIcon />}
+              disabled={disabled}
+            >
               {label}
             </Button>
           </Menu.Target>

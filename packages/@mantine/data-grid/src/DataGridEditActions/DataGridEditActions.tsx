@@ -1,10 +1,12 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Button, Paper } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 
 interface DataGridEditActionsProps {
   rootRef: React.RefObject<HTMLDivElement | null>;
 }
+
+const ACTIONS_OFFSET = 4;
 
 function findEditingRow(root: HTMLElement, rowId: string) {
   return Array.from(root.querySelectorAll<HTMLElement>('[data-editing][data-row-id]')).find(
@@ -18,6 +20,7 @@ export function DataGridEditActions({ rootRef }: DataGridEditActionsProps) {
   const editing = ctx.store.editing;
   const rowId = editing?.rowId;
   const [top, setTop] = useState<number | null>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     if (!rowId) {
@@ -33,7 +36,10 @@ export function DataGridEditActions({ rootRef }: DataGridEditActionsProps) {
 
       const rootRect = root.getBoundingClientRect();
       const rowRect = row.getBoundingClientRect();
-      setTop(rowRect.top - rootRect.top + rowRect.height / 2);
+      const actionsHeight = actionsRef.current?.offsetHeight ?? 0;
+      const below = rowRect.bottom - rootRect.top + ACTIONS_OFFSET;
+      const fitsBelow = rowRect.bottom + ACTIONS_OFFSET + actionsHeight <= rootRect.bottom;
+      setTop(fitsBelow ? below : rowRect.top - rootRect.top - ACTIONS_OFFSET - actionsHeight);
     };
 
     measure();
@@ -62,6 +68,7 @@ export function DataGridEditActions({ rootRef }: DataGridEditActionsProps) {
     <Paper
       shadow="md"
       radius="xl"
+      ref={actionsRef}
       data-edit-actions
       {...ctx.getStyles('editActions', { style: top === null ? undefined : { top } })}
     >

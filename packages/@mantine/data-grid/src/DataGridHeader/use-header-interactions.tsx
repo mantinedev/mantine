@@ -9,6 +9,17 @@ import { ColumnDropEdge, isReorderTarget, moveColumn } from './move-column';
 
 export type DataGridHeaderInstance = Header<DataGridFeatures, any, unknown>;
 
+function getClampedResizeDelta(header: DataGridHeaderInstance, delta: number) {
+  let minSize = 0;
+  let maxSize = 0;
+  for (const column of header.column.getLeafColumns()) {
+    minSize += column.columnDef.minSize ?? 20;
+    maxSize += column.columnDef.maxSize ?? Number.MAX_SAFE_INTEGER;
+  }
+  const size = header.getSize();
+  return Math.min(Math.max(delta, minSize - size), maxSize - size);
+}
+
 export interface DataGridDragState {
   columnId: string;
   header: DataGridHeaderInstance;
@@ -355,7 +366,8 @@ export function useHeaderInteractions({
 
     const rect = resizing.element.getBoundingClientRect();
     const edge = dir === 'rtl' ? rect.left : rect.right;
-    const pointerDelta = deltaOffset * (resizeDirection === 'rtl' ? -1 : 1);
+    const pointerDelta =
+      getClampedResizeDelta(resizing.header, deltaOffset) * (resizeDirection === 'rtl' ? -1 : 1);
     const x = resizeMode === 'onEnd' ? edge + pointerDelta : edge;
     const rootRect = rootElement.getBoundingClientRect();
     const bounds = getBoundsRect() ?? rootRect;

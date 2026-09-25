@@ -2,6 +2,7 @@ import React from 'react';
 import { Cell, flexRender, Row } from '@tanstack/react-table';
 import { useDataGridContext } from '../DataGrid.context';
 import { getColumnLabel } from '../get-column-label';
+import { getPinnedCellProps } from '../get-pinned-cell-props';
 import { ExpandChevron } from '../icons';
 import type { DataGridFeatures } from '../table-features';
 
@@ -13,6 +14,36 @@ export function getGroupLabelCellId(cells: GridCell[]): string | undefined {
   const groupedCell = cells.find((cell) => cell.getIsGrouped());
   const labelCell = groupedCell ?? cells.find((cell) => !cell.column.columnDef.meta?.utility);
   return labelCell?.id;
+}
+
+export function getGroupLabelWidth(
+  cells: GridCell[],
+  labelCellId: string | undefined,
+  withColumnPinning: boolean | undefined
+): number | undefined {
+  const labelIndex = cells.findIndex((cell) => cell.id === labelCellId);
+  if (labelIndex === -1) {
+    return undefined;
+  }
+
+  const isPinned = (cell: GridCell) =>
+    !!withColumnPinning && !!getPinnedCellProps(cell.column, withColumnPinning)['data-pinned'];
+
+  if (isPinned(cells[labelIndex])) {
+    return undefined;
+  }
+
+  let width = cells[labelIndex].column.getSize();
+  for (let index = labelIndex + 1; index < cells.length; index += 1) {
+    const cell = cells[index];
+    const hasValue = !cell.getIsPlaceholder() && cell.getValue() != null;
+    if (hasValue || cell.column.columnDef.meta?.utility || isPinned(cell)) {
+      break;
+    }
+    width += cell.column.getSize();
+  }
+
+  return width;
 }
 
 export function toggleGroupRowKey(event: React.KeyboardEvent, row: GridRow) {
@@ -45,7 +76,7 @@ export function GroupLabel({
     <span data-group-label>
       <span>{labelColumn ? getColumnLabel(labelColumn) : groupingColumnId}: </span>
       <span data-group-value>{value}</span>
-      <span> ({row.getLeafRows().length})</span>
+      <span> ({row.getLeafRows().filter((leaf) => !leaf.getIsGrouped()).length})</span>
     </span>
   );
 }

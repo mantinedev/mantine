@@ -4,7 +4,7 @@ import { useMergedRef } from '@mantine/hooks';
 import { useDataGridContext } from '../DataGrid.context';
 import { getPinnedCellProps } from '../get-pinned-cell-props';
 import type { DataGridFeatures } from '../table-features';
-import { GroupCellContent, toggleGroupRowKey } from './DataGridGroupCell';
+import { getGroupLabelWidth, GroupCellContent, toggleGroupRowKey } from './DataGridGroupCell';
 import { TreeCellContent } from './DataGridTreeCell';
 import { useCellEditing } from './use-cell-editing';
 import { useCellSelection } from './use-cell-selection';
@@ -38,6 +38,9 @@ export function DataGridVirtualCell({
   const isGroupRow = row.getIsGrouped();
   const isLabelCell = isGroupRow && cell.id === groupLabelCellId;
   const groupFocusTarget = isLabelCell && ctx.withCellSelection;
+  const labelWidth = isLabelCell
+    ? getGroupLabelWidth(row.getVisibleCells(), groupLabelCellId, ctx.withColumnPinning)
+    : undefined;
 
   const handleCellClick =
     ctx.onCellClick || editing.handlers.onClick
@@ -65,11 +68,18 @@ export function DataGridVirtualCell({
     'data-actions': meta?.type === 'actions' || undefined,
     'data-pinned': pinned['data-pinned'],
     'data-pinned-edge': pinned['data-pinned-edge'],
-    ...ctx.getStyles('virtualCell', { classNames, styles }),
-    style: {
-      ...pinned.style,
-      width: `var(--dg-col-${cellIndex})`,
-    },
+    'data-group-label-cell': (isLabelCell && labelWidth !== undefined) || undefined,
+    ...ctx.getStyles('virtualCell', {
+      classNames,
+      styles,
+      style: {
+        ...pinned.style,
+        width: `var(--dg-col-${cellIndex})`,
+        ...(isLabelCell && labelWidth !== undefined
+          ? { '--dg-group-label-width': `${labelWidth}px` }
+          : undefined),
+      } as React.CSSProperties,
+    }),
   };
 
   if (isGroupRow) {

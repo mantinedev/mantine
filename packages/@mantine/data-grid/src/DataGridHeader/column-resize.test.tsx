@@ -83,11 +83,52 @@ describe('@mantine/data-grid/DataGridHeader column resize', () => {
     expect(lastStore!.columnSizing.name).toBe(120);
   });
 
+  it('clamps the resize guide to the column minSize and maxSize', () => {
+    const { container } = render(
+      <Grid
+        storeOptions={{
+          columns: [
+            { accessorKey: 'name', header: 'Name', size: 100, minSize: 80, maxSize: 130 },
+            ...columns.slice(1),
+          ],
+        }}
+      />
+    );
+    fireEvent.pointerDown(container.querySelector(HANDLE)!, { clientX: 100, button: 0 });
+    fireEvent.mouseMove(document, { clientX: 200 });
+    expect((container.querySelector(GUIDE) as HTMLElement).style.left).toBe('30px');
+    fireEvent.mouseUp(document, { clientX: 200 });
+    expect(lastStore!.table.getColumn('name')!.getSize()).toBe(130);
+
+    fireEvent.pointerDown(container.querySelector(HANDLE)!, { clientX: 100, button: 0 });
+    fireEvent.mouseMove(document, { clientX: 1 });
+    expect((container.querySelector(GUIDE) as HTMLElement).style.left).toBe('-50px');
+    fireEvent.mouseUp(document, { clientX: 1 });
+    expect(lastStore!.table.getColumn('name')!.getSize()).toBe(80);
+  });
+
   it('autosizes the column on handle double-click', () => {
     const { container } = render(<Grid />);
     expect(lastStore!.columnSizing.name).toBeUndefined();
     fireEvent.doubleClick(container.querySelector(HANDLE)!);
     expect(lastStore!.columnSizing.name).toBeDefined();
+  });
+
+  it('autosizes to the measured content width instead of the current cell width', () => {
+    const spy = jest
+      .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+      .mockImplementation(function (this: HTMLElement) {
+        const width = this.style.width === 'auto' ? 80 : 400;
+        return { width, height: 20, top: 0, left: 0, right: width, bottom: 20 } as DOMRect;
+      });
+
+    const { container } = render(<Grid />);
+    fireEvent.doubleClick(container.querySelector(HANDLE)!);
+    expect(lastStore!.columnSizing.name).toBe(80);
+    fireEvent.doubleClick(container.querySelector(HANDLE)!);
+    expect(lastStore!.columnSizing.name).toBe(80);
+    expect(container.querySelectorAll('table')).toHaveLength(1);
+    spy.mockRestore();
   });
 
   it('defaults columnResizeDirection to the DirectionProvider direction', () => {

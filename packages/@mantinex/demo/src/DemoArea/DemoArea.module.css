@@ -1,5 +1,6 @@
 .demo {
   flex: 1;
+  min-width: 0;
   position: relative;
   z-index: 3;
   border-top-left-radius: calc(var(--mantine-radius-md) - 1px);

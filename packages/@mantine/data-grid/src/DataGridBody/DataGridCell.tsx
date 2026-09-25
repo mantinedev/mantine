@@ -104,8 +104,7 @@ export const DataGridCell = factory<DataGridCellFactory>((props) => {
       onClick={handleClick}
       onDoubleClick={editing.handlers.onDoubleClick}
       onKeyDown={handleKeyDown}
-      {...ctx.getStyles('td', { className, classNames, style, styles })}
-      style={pinned.style}
+      {...ctx.getStyles('td', { className, classNames, style: [pinned.style, style], styles })}
       {...others}
     >
       {editing.editor ??

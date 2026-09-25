@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CellSelectionState,
   ColumnFiltersState,
@@ -351,10 +351,10 @@ export interface UseDataGridOptions<TData extends RowData> {
   /** When false, removes the third "unsorted" click state from the sort cycle */
   enableSortingRemoval?: boolean;
 
-  /** When true, first click on a column header sorts descending instead of ascending */
+  /** When true, first click on any column header sorts descending. By default, text columns sort ascending and numeric columns descending first */
   sortDescFirst?: boolean;
 
-  /** When true, allows sorting by multiple columns simultaneously */
+  /** Allows sorting by multiple columns with `Shift` + click @default true */
   enableMultiSort?: boolean;
 
   /** Maximum number of columns that can be sorted simultaneously */
@@ -837,6 +837,15 @@ export function useDataGrid<TData extends RowData>(
   const table = useTable(tableConfig);
   tableRef.current = table;
   const state = table.store.state;
+
+  const pageCount = withPagination ? table.getPageCount() : 0;
+  const currentPageIndex = state.pagination?.pageIndex ?? 0;
+  const lastPageIndex = pageCount > 0 ? pageCount - 1 : options.manualPagination ? null : 0;
+  useEffect(() => {
+    if (lastPageIndex !== null && currentPageIndex > lastPageIndex) {
+      table.setPageIndex(lastPageIndex);
+    }
+  }, [lastPageIndex, currentPageIndex]);
 
   const aggregatedColumnIds = useMemo(() => collectAggregatedColumnIds(columns), [columns]);
 

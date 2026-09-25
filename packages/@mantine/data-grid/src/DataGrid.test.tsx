@@ -44,6 +44,17 @@ describe('@mantine/data-grid/DataGrid', () => {
     stylesApiSelectors: ['root', 'table'],
   });
 
+  it('applies styles api inline styles to th and td', () => {
+    const { container } = render(
+      <DataGrid {...defaultProps} styles={{ th: { fontWeight: 700 }, td: { color: 'red' } }} />
+    );
+    const th = container.querySelector('thead th') as HTMLElement;
+    const td = container.querySelector('tbody td') as HTMLElement;
+    expect(th.style.fontWeight).toBe('700');
+    expect(th.style.width).toBe('150px');
+    expect(td.style.color).toBe('red');
+  });
+
   it('renders column headers', () => {
     render(<DataGrid {...defaultProps} />);
     expect(screen.getByText('Name')).toBeInTheDocument();
@@ -223,6 +234,25 @@ describe('@mantine/data-grid/DataGrid', () => {
       const rows = container.querySelectorAll('tbody tr');
       expect(rows).toHaveLength(paginationData.length);
     });
+
+    it('moves to the last page when data shrinks below the current page', () => {
+      let store: DataGridStore<any> | null = null;
+      function Grid({ rows }: { rows: typeof paginationData }) {
+        store = useDataGrid({ data: rows, columns, pageSize: 5, autoResetPageIndex: false });
+        return <DataGrid store={store} />;
+      }
+
+      const { container, rerender } = render(<Grid rows={paginationData} />);
+      act(() => store!.table.setPageIndex(2));
+      expect(container.querySelector('tbody tr td')).toHaveTextContent('Person 11');
+
+      rerender(<Grid rows={paginationData.slice(0, 10)} />);
+      expect(store!.pagination.pageIndex).toBe(1);
+      expect(container.querySelector('tbody tr td')).toHaveTextContent('Person 6');
+
+      rerender(<Grid rows={[]} />);
+      expect(store!.pagination.pageIndex).toBe(0);
+    });
   });
 
   describe('row selection', () => {
@@ -249,6 +279,43 @@ describe('@mantine/data-grid/DataGrid', () => {
       );
       const theadCheckbox = container.querySelector('thead input[type="checkbox"]');
       expect(theadCheckbox).toBeInTheDocument();
+    });
+
+    it.each([undefined, 2])(
+      'shows a checked, not indeterminate, header checkbox when all rows are selected (pageSize: %s)',
+      async (pageSize) => {
+        const { container } = render(
+          <DataGridWithStore storeOptions={{ data, columns, withRowSelection: true, pageSize }} />
+        );
+        const header = container.querySelector<HTMLInputElement>('thead input[type="checkbox"]')!;
+        await userEvent.click(container.querySelector('tbody input[type="checkbox"]')!);
+        expect(header.indeterminate).toBe(true);
+
+        await userEvent.click(header);
+        expect(header.checked).toBe(true);
+        expect(header.indeterminate).toBe(false);
+      }
+    );
+
+    it('renders a disabled checkbox for rows that cannot be selected', () => {
+      const { container } = render(
+        <DataGridWithStore
+          storeOptions={{
+            data,
+            columns,
+            withRowSelection: true,
+            tableOptions: { enableRowSelection: (row: any) => row.original.age > 26 },
+          }}
+        />
+      );
+      const checkboxes = container.querySelectorAll<HTMLInputElement>(
+        'tbody input[type="checkbox"]'
+      );
+      expect(Array.from(checkboxes).map((checkbox) => checkbox.disabled)).toEqual([
+        false,
+        true,
+        false,
+      ]);
     });
   });
 
@@ -397,6 +464,27 @@ describe('@mantine/data-grid/DataGrid', () => {
       );
       expect(screen.getByText('Name')).toBeInTheDocument();
       expect(screen.queryByText('Age')).not.toBeInTheDocument();
+    });
+
+    it('updates body cells when column visibility and order change after mount', () => {
+      let store: DataGridStore<any> | null = null;
+      function Grid() {
+        store = useDataGrid({ data, columns, withColumnVisibility: true });
+        return <DataGrid store={store} />;
+      }
+
+      const { container } = render(<Grid />);
+      const firstRowCells = () =>
+        Array.from(container.querySelectorAll('tbody tr:first-child td')).map(
+          (cell) => cell.textContent
+        );
+      expect(firstRowCells()).toEqual(['Alice', '30']);
+
+      act(() => store!.table.setColumnOrder(['age', 'name']));
+      expect(firstRowCells()).toEqual(['30', 'Alice']);
+
+      act(() => store!.table.setColumnVisibility({ name: false }));
+      expect(firstRowCells()).toEqual(['30']);
     });
   });
 

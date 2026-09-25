@@ -12,7 +12,12 @@ import {
 import { useDataGridContext } from '../DataGrid.context';
 import { getPinnedCellProps } from '../get-pinned-cell-props';
 import type { DataGridFeatures } from '../table-features';
-import { getGroupLabelCellId, GroupCellContent, toggleGroupRowKey } from './DataGridGroupCell';
+import {
+  getGroupLabelCellId,
+  getGroupLabelWidth,
+  GroupCellContent,
+  toggleGroupRowKey,
+} from './DataGridGroupCell';
 import classes from '../DataGrid.module.css';
 
 export type DataGridGroupRowStylesNames = 'tr' | 'td' | 'groupHeader' | 'groupToggle';
@@ -43,6 +48,7 @@ export const DataGridGroupRow = factory<DataGridGroupRowFactory>((props) => {
   const ctx = useDataGridContext();
   const cells = row.getVisibleCells();
   const labelCellId = getGroupLabelCellId(cells);
+  const labelWidth = getGroupLabelWidth(cells, labelCellId, ctx.withColumnPinning);
 
   return (
     <Box
@@ -71,8 +77,17 @@ export const DataGridGroupRow = factory<DataGridGroupRowFactory>((props) => {
             data-pinned-edge={pinned['data-pinned-edge']}
             tabIndex={focusTarget ? -1 : undefined}
             onKeyDown={focusTarget ? (event) => toggleGroupRowKey(event, row) : undefined}
-            {...ctx.getStyles('td', { classNames, styles })}
-            style={pinned.style}
+            data-group-label-cell={(isLabelCell && labelWidth !== undefined) || undefined}
+            {...ctx.getStyles('td', {
+              classNames,
+              styles,
+              style: [
+                pinned.style,
+                isLabelCell && labelWidth !== undefined
+                  ? ({ '--dg-group-label-width': `${labelWidth}px` } as React.CSSProperties)
+                  : undefined,
+              ],
+            })}
           >
             <GroupCellContent
               cell={cell}

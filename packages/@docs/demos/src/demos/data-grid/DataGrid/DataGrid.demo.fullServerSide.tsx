@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
+import { Select, TextInput } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
+import { Select, TextInput } from '@mantine/core';
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
 
 interface ServerRow {
@@ -110,7 +112,10 @@ function Demo() {
     onSortingChange: setSorting,
     manualFiltering: true,
     columnFilters,
-    onColumnFiltersChange: setColumnFilters,
+    onColumnFiltersChange: (updater) => {
+      setColumnFilters(updater);
+      setPagination((current) => ({ ...current, pageIndex: 0 }));
+    },
     manualPagination: true,
     pagination,
     onPaginationChange: setPagination,
@@ -119,6 +124,22 @@ function Demo() {
 
   return (
     <DataGrid store={store} loading={loading} loadingVariant="bar">
+      <DataGrid.Toolbar>
+        <TextInput
+          size={store.getControlSize()}
+          placeholder="Filter by name"
+          value={(store.getColumnFilterValue('name') as string) ?? ''}
+          onChange={(event) => store.setColumnFilter('name', event.currentTarget.value)}
+        />
+        <Select
+          size={store.getControlSize()}
+          placeholder="Any department"
+          clearable
+          data={departments}
+          value={(store.getColumnFilterValue('department') as string) ?? null}
+          onChange={(value) => store.setColumnFilter('department', value)}
+        />
+      </DataGrid.Toolbar>
       <DataGrid.Footer />
     </DataGrid>
   );
@@ -250,7 +271,10 @@ function Demo() {
     onSortingChange: setSorting,
     manualFiltering: true,
     columnFilters,
-    onColumnFiltersChange: setColumnFilters,
+    onColumnFiltersChange: (updater) => {
+      setColumnFilters(updater);
+      setPagination((current) => ({ ...current, pageIndex: 0 }));
+    },
     manualPagination: true,
     pagination,
     onPaginationChange: setPagination,
@@ -259,6 +283,22 @@ function Demo() {
 
   return (
     <DataGrid store={store} loading={loading} loadingVariant="bar">
+      <DataGrid.Toolbar>
+        <TextInput
+          size={store.getControlSize()}
+          placeholder="Filter by name"
+          value={(store.getColumnFilterValue('name') as string) ?? ''}
+          onChange={(event) => store.setColumnFilter('name', event.currentTarget.value)}
+        />
+        <Select
+          size={store.getControlSize()}
+          placeholder="Any department"
+          clearable
+          data={departments}
+          value={(store.getColumnFilterValue('department') as string) ?? null}
+          onChange={(value) => store.setColumnFilter('department', value)}
+        />
+      </DataGrid.Toolbar>
       <DataGrid.Footer />
     </DataGrid>
   );

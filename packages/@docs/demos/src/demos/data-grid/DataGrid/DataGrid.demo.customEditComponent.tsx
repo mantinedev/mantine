@@ -35,7 +35,6 @@ function Demo() {
               }}
               onKeyDown={(event) => event.key === 'Escape' && onCancel()}
               variant="unstyled"
-              comboboxProps={{ withinPortal: false }}
               autoFocus
             />
           ),
@@ -85,7 +84,6 @@ function Demo() {
               }}
               onKeyDown={(event) => event.key === 'Escape' && onCancel()}
               variant="unstyled"
-              comboboxProps={{ withinPortal: false }}
               autoFocus
             />
           ),

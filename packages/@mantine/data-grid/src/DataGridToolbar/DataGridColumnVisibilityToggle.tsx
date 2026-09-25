@@ -2,7 +2,6 @@ import {
   Box,
   BoxProps,
   Button,
-  Checkbox,
   CompoundStylesApiProps,
   ElementProps,
   factory,
@@ -63,20 +62,13 @@ export const DataGridColumnVisibilityToggle = factory<DataGridColumnVisibilityTo
           </Menu.Target>
           <Menu.Dropdown>
             {allColumns.map((column) => (
-              <Menu.Item
+              <Menu.CheckboxItem
                 key={column.id}
-                closeMenuOnClick={false}
-                leftSection={
-                  <Checkbox
-                    size="xs"
-                    checked={column.getIsVisible()}
-                    onChange={column.getToggleVisibilityHandler()}
-                    aria-label={`Toggle ${column.id} visibility`}
-                  />
-                }
+                checked={column.getIsVisible()}
+                onChange={(checked) => column.toggleVisibility(checked)}
               >
                 {getColumnLabel(column)}
-              </Menu.Item>
+              </Menu.CheckboxItem>
             ))}
           </Menu.Dropdown>
         </Menu>

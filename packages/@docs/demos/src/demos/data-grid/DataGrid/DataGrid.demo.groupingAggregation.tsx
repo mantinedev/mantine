@@ -24,6 +24,9 @@ function Demo() {
       {
         accessorKey: 'salary',
         header: 'Salary',
+        meta: {
+          formatAggregatedValue: (value) => \`$\${Math.round(Number(value)).toLocaleString()}\`,
+        },
         aggregationFn: 'mean',
         aggregatedCell: ({ getValue }) =>
           \`Avg: $\${Math.round(getValue() as number).toLocaleString()}\`,
@@ -94,6 +97,9 @@ function Demo() {
       {
         accessorKey: 'salary',
         header: 'Salary',
+        meta: {
+          formatAggregatedValue: (value) => `$${Math.round(Number(value)).toLocaleString()}`,
+        },
         aggregationFn: 'mean',
         aggregatedCell: ({ getValue }) =>
           `Avg: $${Math.round(getValue() as number).toLocaleString()}`,

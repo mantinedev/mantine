@@ -41,50 +41,65 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
 
   const ctx = useDataGridContext();
   const theadRef = useMergedRef(ref, ctx.theadRef);
+  const headerGroups = ctx.table.getHeaderGroups();
+  const withLeafColumnWidths =
+    headerGroups.length > 1 && (ctx.withColumnResizing || ctx.tableLayout === 'fixed');
 
   return (
-    <Box
-      component="thead"
-      ref={theadRef}
-      {...ctx.getStyles('thead', { className, classNames, style, styles })}
-      {...others}
-    >
-      {ctx.table.getHeaderGroups().map((headerGroup) => (
-        <tr key={headerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
-          {headerGroup.headers.map((header, index) => {
-            const pinned = getPinnedHeaderProps(header, ctx.withColumnPinning);
-            const utility = header.column.columnDef.meta?.utility;
+    <>
+      {withLeafColumnWidths && (
+        <colgroup>
+          {headerGroups[headerGroups.length - 1].headers.map((header) => (
+            <col key={header.id} style={{ width: header.getSize() }} />
+          ))}
+        </colgroup>
+      )}
+      <Box
+        component="thead"
+        ref={theadRef}
+        {...ctx.getStyles('thead', { className, classNames, style, styles })}
+        {...others}
+      >
+        {headerGroups.map((headerGroup) => (
+          <tr key={headerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
+            {headerGroup.headers.map((header, index) => {
+              const pinned = getPinnedHeaderProps(header, ctx.withColumnPinning);
+              const utility = header.column.columnDef.meta?.utility;
 
-            return (
-              <th
-                key={header.id}
-                ref={ctx.headerInteractions.registerHeaderCell(header)}
-                colSpan={header.colSpan}
-                {...getHeaderCellAttributes(header, ctx)}
-                data-pinned={pinned['data-pinned']}
-                data-pinned-edge={pinned['data-pinned-edge']}
-                {...ctx.getStyles('th', { classNames, styles })}
-                style={{
-                  ...pinned.style,
-                  width:
-                    ctx.withColumnResizing || ctx.tableLayout === 'fixed' || utility
-                      ? header.getSize()
-                      : undefined,
-                }}
-                {...ctx.headerInteractions.getReorderHandlers(header)}
-              >
-                <DataGridHeaderCellContent
-                  header={header}
-                  isLast={index === headerGroup.headers.length - 1}
-                  classNames={classNames}
-                  styles={styles}
-                />
-              </th>
-            );
-          })}
-        </tr>
-      ))}
-    </Box>
+              return (
+                <th
+                  key={header.id}
+                  ref={ctx.headerInteractions.registerHeaderCell(header)}
+                  colSpan={header.colSpan}
+                  {...getHeaderCellAttributes(header, ctx)}
+                  data-pinned={pinned['data-pinned']}
+                  data-pinned-edge={pinned['data-pinned-edge']}
+                  {...ctx.getStyles('th', {
+                    classNames,
+                    styles,
+                    style: {
+                      ...pinned.style,
+                      width:
+                        ctx.withColumnResizing || ctx.tableLayout === 'fixed' || utility
+                          ? header.getSize()
+                          : undefined,
+                    },
+                  })}
+                  {...ctx.headerInteractions.getReorderHandlers(header)}
+                >
+                  <DataGridHeaderCellContent
+                    header={header}
+                    isLast={index === headerGroup.headers.length - 1}
+                    classNames={classNames}
+                    styles={styles}
+                  />
+                </th>
+              );
+            })}
+          </tr>
+        ))}
+      </Box>
+    </>
   );
 });
 

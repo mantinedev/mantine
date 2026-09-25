@@ -695,8 +695,9 @@ export const DataGrid = genericFactory<DataGridFactory>(((
             <div
               ref={viewportRef}
               onScroll={handleScroll}
-              {...getStyles('virtualScrollContainer')}
-              style={{ height: rem(height), overflow: 'auto' }}
+              {...getStyles('virtualScrollContainer', {
+                style: { height: rem(height), overflow: 'auto' },
+              })}
             >
               <table aria-busy={isLoading || undefined} {...getStyles('table')}>
                 <DataGridHeader />

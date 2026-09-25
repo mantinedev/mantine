@@ -75,6 +75,30 @@ describe('@mantine/data-grid/group-rows', () => {
     expect(groupRow).not.toHaveAttribute('data-selected');
   });
 
+  it('counts only data rows in multi-level group labels', () => {
+    const { container } = render(<Grid storeOptions={{ grouping: ['team', 'name'] }} />);
+    const groupRow = container.querySelector('tr[data-group-row]')!;
+    expect(groupRow).toHaveTextContent('Squad: Red (2)');
+  });
+
+  it('lets the group label extend over the empty cells up to the first aggregated cell', () => {
+    const { container } = render(
+      <Grid
+        storeOptions={{
+          columns: [
+            { accessorKey: 'team', header: 'Team', size: 100 },
+            { accessorKey: 'name', header: 'Name', size: 120 },
+            { accessorKey: 'score', header: 'Score', aggregationFn: 'sum' },
+          ],
+        }}
+      />
+    );
+    const labelCell = container.querySelector('tr[data-group-row] [data-group-label-cell]')!;
+    expect((labelCell as HTMLElement).style.getPropertyValue('--dg-group-label-width')).toBe(
+      '220px'
+    );
+  });
+
   it('keeps utility columns in front of the grouped column', () => {
     render(
       <Grid

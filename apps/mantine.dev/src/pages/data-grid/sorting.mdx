@@ -34,8 +34,8 @@ header.
 ## Multi-column sort
 
 Hold `Shift` and click additional column headers to sort by multiple columns simultaneously.
-Every sorted column shows its arrow; the grid renders no precedence numbers. Pass
-`enableMultiSort: true` to `useDataGrid` (or through `tableOptions`) to turn multi-sort on, and
+Every sorted column shows its arrow; the grid renders no precedence numbers. Multi-sort is enabled
+by default: pass `enableMultiSort: false` to `useDataGrid` to turn it off, and
 `maxMultiSortColCount` to cap the number of sorted columns.
 
 <Demo data={DataGridDemos.multiSort} />
@@ -119,8 +119,9 @@ const store = useDataGrid({
 
 ## Sort direction
 
-By default, the first click on a sortable column header sorts ascending. Pass `sortDescFirst: true`
-to `useDataGrid` to sort descending on the first click:
+By default, the first click on a sortable column header sorts text columns ascending and numeric
+columns descending. Pass `sortDescFirst: true` to `useDataGrid` to sort every column descending on
+the first click, or set `sortDescFirst` on a column definition to override a single column:
 
 ```tsx
 const store = useDataGrid({

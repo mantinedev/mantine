@@ -88,16 +88,17 @@ function SelectAllHeader() {
     return null;
   }
 
+  const checked = ctx.withPagination
+    ? ctx.table.getIsAllPageRowsSelected()
+    : ctx.table.getIsAllRowsSelected();
+  const someSelected = ctx.withPagination
+    ? ctx.table.getIsSomePageRowsSelected()
+    : ctx.table.getIsSomeRowsSelected();
+
   return (
     <Checkbox
-      checked={
-        ctx.withPagination ? ctx.table.getIsAllPageRowsSelected() : ctx.table.getIsAllRowsSelected()
-      }
-      indeterminate={
-        ctx.withPagination
-          ? ctx.table.getIsSomePageRowsSelected()
-          : ctx.table.getIsSomeRowsSelected()
-      }
+      checked={checked}
+      indeterminate={!checked && someSelected}
       onChange={
         ctx.withPagination
           ? ctx.table.getToggleAllPageRowsSelectedHandler()
@@ -113,11 +114,21 @@ function SelectAllHeader() {
 function SelectCell({ row }: { row: DataGridRow<any> }) {
   const ctx = useDataGridContext();
 
-  if (!row.getCanSelect()) {
-    return null;
-  }
-
   const stopPropagation = (event: React.MouseEvent) => event.stopPropagation();
+
+  if (!row.getCanSelect()) {
+    return row.getIsGrouped() ? null : (
+      <Checkbox
+        checked={false}
+        disabled
+        readOnly
+        onClick={stopPropagation}
+        aria-label={ctx.labels.selectRow}
+        vars={checkboxVars}
+        {...ctx.getStyles('selectionCheckbox')}
+      />
+    );
+  }
 
   if (ctx.table.options.enableMultiRowSelection === false) {
     return (

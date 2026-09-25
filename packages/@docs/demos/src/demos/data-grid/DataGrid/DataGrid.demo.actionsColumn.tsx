@@ -56,6 +56,7 @@ function Demo() {
     ],
     getRowId: (row) => row.id,
     pageSize: 6,
+    autoResetPageIndex: false,
   });
 
   return (
@@ -120,6 +121,7 @@ function Demo() {
     ],
     getRowId: (row) => row.id,
     pageSize: 6,
+    autoResetPageIndex: false,
   });
 
   return (

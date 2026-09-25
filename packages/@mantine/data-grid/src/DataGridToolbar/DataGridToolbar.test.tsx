@@ -147,6 +147,17 @@ describe('@mantine/data-grid/DataGridToolbar', () => {
     });
   });
 
+  it('uses the global filter placeholder as its accessible name', () => {
+    render(
+      <Grid storeOptions={{ withGlobalFilter: true }}>
+        <DataGrid.Toolbar>
+          <DataGrid.GlobalFilter placeholder="Search people" />
+        </DataGrid.Toolbar>
+      </Grid>
+    );
+    expect(screen.getByRole('textbox', { name: 'Search people' })).toBeInTheDocument();
+  });
+
   describe('ColumnVisibilityToggle', () => {
     it('renders a labeled default button at the control size', () => {
       render(
@@ -171,8 +182,28 @@ describe('@mantine/data-grid/DataGridToolbar', () => {
         </Grid>
       );
       await userEvent.click(screen.getByRole('button', { name: 'Show columns' }));
-      const items = screen.getAllByRole('menuitem').map((item) => item.textContent);
+      const items = screen.getAllByRole('menuitemcheckbox').map((item) => item.textContent);
       expect(items).toEqual(['Name']);
+    });
+
+    it('toggles column visibility from the menu item', async () => {
+      render(
+        <Grid storeOptions={{ withColumnVisibility: true }}>
+          <DataGrid.Toolbar>
+            <DataGrid.ColumnVisibilityToggle />
+          </DataGrid.Toolbar>
+        </Grid>
+      );
+      await userEvent.click(screen.getByRole('button', { name: 'Columns' }));
+      const item = screen.getByRole('menuitemcheckbox', { name: 'Name' });
+      expect(item).toHaveAttribute('aria-checked', 'true');
+
+      await userEvent.click(item);
+      expect(lastStore!.table.getColumn('name')!.getIsVisible()).toBe(false);
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Name' })).toHaveAttribute(
+        'aria-checked',
+        'false'
+      );
     });
   });
 
@@ -199,6 +230,22 @@ describe('@mantine/data-grid/DataGridToolbar', () => {
 
     afterEach(() => {
       jest.restoreAllMocks();
+    });
+
+    it('disables a selected-rows export until a row is selected', () => {
+      render(
+        <Grid storeOptions={{ withRowSelection: true }}>
+          <DataGrid.Toolbar>
+            <DataGrid.ExportButton formats={['csv']} rows="selected">
+              Download selected
+            </DataGrid.ExportButton>
+          </DataGrid.Toolbar>
+        </Grid>
+      );
+      const button = screen.getByRole('button', { name: 'Download selected' });
+      expect(button).toBeDisabled();
+      act(() => lastStore!.table.setRowSelection({ '0': true }));
+      expect(button).toBeEnabled();
     });
 
     it('renders a labeled button that opens a menu with the four formats in order', async () => {

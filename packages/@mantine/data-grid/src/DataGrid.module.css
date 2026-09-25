@@ -397,6 +397,10 @@
   :where(.th, .virtualCell)[data-utility] > & {
     justify-content: center;
   }
+
+  :where(.th, .virtualCell)[data-utility='rowNumber'] > & {
+    justify-content: flex-end;
+  }
 }
 
 .headerLabel {
@@ -505,7 +509,8 @@
 
 .expandIcon {
   all: unset;
-  display: inline-flex;
+  display: flex;
+  margin-inline: auto;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -774,6 +779,10 @@
   display: flex;
   flex-direction: column;
   gap: rem(8px);
+
+  :where(.root[data-list-view='cards']) & {
+    padding-block: rem(8px);
+  }
 
   :where(.root[data-list-view='flat']) & {
     gap: 0;
@@ -1297,6 +1306,15 @@
   }
 }
 
+[data-group-label-cell] {
+  overflow: visible;
+
+  & > .groupHeader {
+    width: max-content;
+    max-width: calc(var(--dg-group-label-width) - 2 * var(--dg-cell-padding-x));
+  }
+}
+
 [data-group-label] {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1490,9 +1508,17 @@
     min-width: 0;
   }
 
+  & :where(*) {
+    --input-height: calc(var(--dg-row-height) - rem(1px));
+    --input-size: var(--input-height);
+    --input-fz: var(--dg-font-size);
+  }
+
   & input[data-editor] {
     font: inherit;
     color: inherit;
+    border-color: transparent;
+    background-color: transparent;
   }
 
   :where(.td, .virtualCell)[data-align='center'] > & {
@@ -1568,19 +1594,19 @@
 
 .editActions {
   position: absolute;
-  top: 50%;
+  top: 0;
   inset-inline-end: rem(12px);
   z-index: 5;
   display: flex;
   align-items: center;
   gap: rem(4px);
   padding: rem(4px);
-  transform: translateY(-50%);
 }
 
 .selectionCheckbox,
 .selectAllCheckbox {
-  display: inline-flex;
+  display: flex;
+  justify-content: center;
 }
 
 .virtualCell {

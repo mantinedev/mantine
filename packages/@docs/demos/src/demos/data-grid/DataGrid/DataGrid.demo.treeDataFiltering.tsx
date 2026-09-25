@@ -126,7 +126,11 @@ function Demo() {
     filterFromLeafRows: true,
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <DataGrid store={store}>
+      <DataGrid.Toolbar />
+    </DataGrid>
+  );
 }
 `;
 
@@ -151,7 +155,11 @@ function Demo() {
     filterFromLeafRows: true,
   });
 
-  return <DataGrid store={store} />;
+  return (
+    <DataGrid store={store}>
+      <DataGrid.Toolbar />
+    </DataGrid>
+  );
 }
 
 export const treeDataFiltering: MantineDemo = {

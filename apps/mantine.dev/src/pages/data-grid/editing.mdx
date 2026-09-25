@@ -52,8 +52,9 @@ between Edit / Delete and Save / Cancel. The grid never sizes your buttons: pass
 
 ## Floating actions
 
-Set `withFloatingEditActions` on `DataGrid` to render a floating Save / Cancel pill next to the row
-being edited, vertically centered on it and following the row on scroll and resize. It is available
+Set `withFloatingEditActions` on `DataGrid` to render a floating Save / Cancel pill at the end edge
+of the row being edited, right under it (or above it when there is no room below inside the grid),
+so it never covers the row's editors, and following the row on scroll and resize. It is available
 in row mode only, works with or without an actions column, and its labels come from the `saveRow`
 and `cancelRow` labels. The Save button shows a loader while an async save is pending.
 
@@ -150,8 +151,8 @@ Define a custom `editComponent` in the column `meta` to replace the default text
 Mantine component. The callback receives `{ value, onChange, onSave, onCancel, error, cell }`
 (`DataGridEditComponentProps`): call `onChange` with every draft change, `onSave` / `onCancel` to
 commit or leave, and render `error` when it is set. In cell mode the editor commits when focus
-leaves it, so a dropdown rendered in a portal should either keep focus inside the cell
-(`comboboxProps={{ withinPortal: false }}`) or save on selection:
+leaves it; focus moving into a portal, such as a `Select` dropdown, does not count as leaving. Call
+`onSave` from `onChange` to commit as soon as an option is picked:
 
 <Demo data={DataGridDemos.customEditComponent} />
 
