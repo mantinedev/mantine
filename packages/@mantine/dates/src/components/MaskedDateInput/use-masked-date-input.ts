@@ -283,7 +283,6 @@ export function useMaskedDateInput(
     parseFields(valueProp ?? defaultValue, format, amPmLabels)
   );
 
-  const acceptChange = useRef(true);
   const wasInvalidBefore = useRef(!build(initialFields).valid);
 
   const [day, setDayState] = useState<number | null>(initialFields.day);
@@ -360,7 +359,6 @@ export function useMaskedDateInput(
     const dateString = build(next);
 
     if (dateString.valid) {
-      acceptChange.current = false;
       wasInvalidBefore.current = false;
       setFields(next);
 
@@ -368,7 +366,6 @@ export function useMaskedDateInput(
         onChange?.(dateString.value as MaskedDateInputValue);
       }
     } else {
-      acceptChange.current = false;
       setFields({ ...fieldsRef.current, [field]: val });
       if (!wasInvalidBefore.current) {
         onChange?.(null);
@@ -417,7 +414,6 @@ export function useMaskedDateInput(
   });
 
   const clear = useCallbackRef(() => {
-    acceptChange.current = false;
     setFields(EMPTY_FIELDS);
     onChange?.(null);
     wasInvalidBefore.current = true;
@@ -425,8 +421,6 @@ export function useMaskedDateInput(
   });
 
   const setValue = useCallbackRef((nextValue: MaskedDateInputValue) => {
-    acceptChange.current = false;
-
     if (!nextValue) {
       setFields(EMPTY_FIELDS);
       onChange?.(null);
@@ -488,30 +482,32 @@ export function useMaskedDateInput(
     const dateString = build(next);
 
     if (dateString.valid && !isOutOfRange(dateString.value)) {
-      acceptChange.current = false;
       setFields(next);
       onChange?.(dateString.value as MaskedDateInputValue);
     }
   });
 
-  useDidUpdate(() => {
-    if (valueProp === null || valueProp === '') {
-      acceptChange.current = false;
-      setFields(EMPTY_FIELDS);
-      acceptChange.current = true;
-      return;
-    }
-
-    if (acceptChange.current && typeof valueProp === 'string') {
-      setFields(parseFields(valueProp, format, amPmLabels));
-    }
-
-    acceptChange.current = true;
-  }, [valueProp]);
-
   const current = build({ day, month, year, hours, minutes, seconds, amPm });
   const value =
     current.valid && !isOutOfRange(current.value) ? (current.value as MaskedDateInputValue) : null;
+
+  useDidUpdate(() => {
+    const incoming = valueProp === '' ? null : valueProp;
+    const entered = current.valid ? current.value : null;
+
+    if (incoming === undefined || incoming === entered) {
+      return;
+    }
+
+    if (incoming === null) {
+      setFields(EMPTY_FIELDS);
+      return;
+    }
+
+    if (typeof incoming === 'string') {
+      setFields(parseFields(incoming, format, amPmLabels));
+    }
+  }, [valueProp]);
 
   const derive = useLatestRef({ build, isOutOfRange });
 

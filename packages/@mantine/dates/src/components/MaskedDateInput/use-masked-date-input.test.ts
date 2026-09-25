@@ -99,4 +99,43 @@ describe('@mantine/dates/MaskedDateInput/use-masked-date-input', () => {
     expect(read).toBe(null);
     expect(hook.result.current.getYear()).toBe(2023);
   });
+
+  it('syncs an external value that arrives after an incomplete entry', () => {
+    const hook = renderHook(({ value }) => useMaskedDateInput({ value }), {
+      initialProps: { value: null as string | null },
+    });
+
+    act(() => hook.result.current.setDay(5));
+    expect(hook.result.current.day).toBe(5);
+
+    hook.rerender({ value: '2024-03-15' });
+    expect(hook.result.current.day).toBe(15);
+    expect(hook.result.current.month).toBe(3);
+    expect(hook.result.current.year).toBe(2024);
+  });
+
+  it('syncs an external value that arrives after clear on an empty value', () => {
+    const hook = renderHook(({ value }) => useMaskedDateInput({ value }), {
+      initialProps: { value: null as string | null },
+    });
+
+    act(() => hook.result.current.clear());
+
+    hook.rerender({ value: '2024-03-15' });
+    expect(hook.result.current.day).toBe(15);
+    expect(hook.result.current.year).toBe(2024);
+  });
+
+  it('keeps the remaining fields when the value option becomes null after one field is cleared', () => {
+    const hook = renderHook(({ value }) => useMaskedDateInput({ value }), {
+      initialProps: { value: '2024-03-15' as string | null },
+    });
+
+    act(() => hook.result.current.setDay(null));
+    hook.rerender({ value: null });
+
+    expect(hook.result.current.day).toBe(null);
+    expect(hook.result.current.month).toBe(3);
+    expect(hook.result.current.year).toBe(2024);
+  });
 });

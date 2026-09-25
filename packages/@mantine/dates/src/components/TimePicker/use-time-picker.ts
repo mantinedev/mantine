@@ -159,7 +159,6 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
     amPmLabels,
   });
 
-  const acceptChange = useRef(true);
   const wasInvalidBefore = useRef(!initialTimeString.valid);
 
   const [hours, setHoursState] = useState<number | null>(parsedInitialTime.hours);
@@ -237,23 +236,17 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
     });
 
     if (timeString.valid) {
-      acceptChange.current = false;
       wasInvalidBefore.current = false;
       writeFields({ [field]: val });
 
       onChange?.(timeString.value);
-    } else {
-      acceptChange.current = false;
-      if (!wasInvalidBefore.current) {
-        onChange?.('');
-        wasInvalidBefore.current = true;
-      }
+    } else if (!wasInvalidBefore.current) {
+      onChange?.('');
+      wasInvalidBefore.current = true;
     }
   });
 
   const setValue = useCallbackRef((timeString: string) => {
-    acceptChange.current = false;
-
     const parsedTime = getParsedTime({ time: timeString, amPmLabels, format });
     writeFields({
       hours: parsedTime.hours,
@@ -301,7 +294,6 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
   });
 
   const clear = useCallbackRef(() => {
-    acceptChange.current = false;
     writeFields({ hours: null, minutes: null, seconds: null, amPm: null });
     onChange?.('');
     wasInvalidBefore.current = true;
@@ -314,7 +306,6 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
     const parsedTime = (pasteSplit || getParsedTime)({ time: pastedValue, format, amPmLabels });
     const timeString = getTimeString({ ...parsedTime, format, withSeconds, amPmLabels });
     if (timeString.valid) {
-      acceptChange.current = false;
       const defaultMax = type === 'duration' ? undefined : '23:59:59';
       const clamped = clampTime(
         timeString.value,
@@ -355,23 +346,22 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
   });
 
   useDidUpdate(() => {
-    if (valueProp === '') {
-      acceptChange.current = false;
-      writeFields({ hours: null, minutes: null, seconds: null, amPm: null });
-      acceptChange.current = true;
+    if (typeof valueProp !== 'string' || valueProp === currentTimeString.value) {
       return;
     }
 
-    if (acceptChange.current && typeof valueProp === 'string') {
-      const parsedTime = getParsedTime({ time: valueProp || '', amPmLabels, format });
-      writeFields({
-        hours: parsedTime.hours,
-        minutes: parsedTime.minutes,
-        seconds: parsedTime.seconds,
-        amPm: parsedTime.amPm,
-      });
+    if (valueProp === '') {
+      writeFields({ hours: null, minutes: null, seconds: null, amPm: null });
+      return;
     }
-    acceptChange.current = true;
+
+    const parsedTime = getParsedTime({ time: valueProp, amPmLabels, format });
+    writeFields({
+      hours: parsedTime.hours,
+      minutes: parsedTime.minutes,
+      seconds: parsedTime.seconds,
+      amPm: parsedTime.amPm,
+    });
   }, [valueProp]);
 
   const value = currentTimeString.value;

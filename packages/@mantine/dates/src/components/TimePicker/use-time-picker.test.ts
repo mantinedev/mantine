@@ -267,4 +267,43 @@ describe('@mantine/dates/TimePicker/use-time-picker', () => {
     act(() => hook.result.current.setMinutes(null));
     expect(onChange).toHaveBeenCalledTimes(1);
   });
+
+  it('syncs an external value that arrives after an incomplete entry', () => {
+    const hook = renderHook(({ value }) => useTimePicker({ value }), {
+      initialProps: { value: '' },
+    });
+
+    act(() => hook.result.current.setHours(1));
+    expect(hook.result.current.hours).toBe(1);
+
+    hook.rerender({ value: '10:30' });
+    expect(hook.result.current.hours).toBe(10);
+    expect(hook.result.current.minutes).toBe(30);
+    expect(hook.result.current.value).toBe('10:30');
+  });
+
+  it('syncs an external value that arrives after clear on an empty value', () => {
+    const hook = renderHook(({ value }) => useTimePicker({ value }), {
+      initialProps: { value: '' },
+    });
+
+    act(() => hook.result.current.clear());
+
+    hook.rerender({ value: '10:30' });
+    expect(hook.result.current.hours).toBe(10);
+    expect(hook.result.current.minutes).toBe(30);
+  });
+
+  it('keeps the remaining fields when the value option becomes empty after one field is cleared', () => {
+    const hook = renderHook(({ value }) => useTimePicker({ value }), {
+      initialProps: { value: '12:30' },
+    });
+
+    act(() => hook.result.current.setMinutes(null));
+    hook.rerender({ value: '' });
+
+    expect(hook.result.current.hours).toBe(12);
+    expect(hook.result.current.minutes).toBe(null);
+    expect(hook.result.current.value).toBe('');
+  });
 });
