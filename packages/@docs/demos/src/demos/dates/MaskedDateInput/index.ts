@@ -19,3 +19,4 @@ export { disabled } from './MaskedDateInput.demo.disabled';
 export { readOnly } from './MaskedDateInput.demo.readOnly';
 export { configurator } from './MaskedDateInput.demo.configurator';
 export { controller } from './MaskedDateInput.demo.controller';
+export { form } from './MaskedDateInput.demo.form';

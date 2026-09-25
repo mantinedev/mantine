@@ -169,6 +169,32 @@ reach a controller you create yourself – pass them to `useMaskedDateInput` as 
 `focus` is a no-op until a `MaskedDateInput` is mounted with the controller, because it works on the
 fields that component renders.
 
+## Usage with forms
+
+`form.getInputProps()` returns `value`, `onChange`, `error`, `onFocus` and `onBlur`, which bind to
+the props of `MaskedDateInput`. When the `controller` prop is set, the `value` and `onChange` props
+are ignored, so a controller and `form.getInputProps()` cannot be spread on the same component.
+Instead, create a component that accepts the same props as `MaskedDateInput`, passes the props that
+the controller supersedes (`value`, `defaultValue`, `onChange`, `withTime`, `withSeconds`, `format`,
+`amPmLabels`, `minDate`, `maxDate` and `pasteSplit`) to `useMaskedDateInput` and forwards the rest to
+`MaskedDateInput`. The form binds to the props of that component, and the component owns the
+controller. `error`, `onFocus` and `onBlur` reach `MaskedDateInput` as usual, so validation errors and
+touched/dirty tracking work without extra code:
+
+<Demo data={MaskedDateInputDemos.form} />
+
+The controller adds what the form cannot see on its own: a partially entered date is `null` for the
+form, so validation reports it as missing, while `controller.hasValue()` lets the field replace that
+error with a more specific message.
+
+Use `mode: 'uncontrolled'` and set `key={form.key('birthday')}` on the component that calls
+`useMaskedDateInput`. In this mode `form.reset()` and `form.setFieldValue()` remount the field, and
+the controller with it, so a partially entered date is cleared along with the value. In
+`mode: 'controlled'`, the form can only change the `value` prop: when the user has entered a part of
+a date, the form value is `null` before and after `form.reset()`, so the controller receives no
+change and the partial entry stays on screen. See the
+[Controllers guide](/guides/controllers#usage-with-forms) for the details of the pattern.
+
 ## Clearable
 
 Set the `clearable` prop to display a clear button in the right section of the input.
