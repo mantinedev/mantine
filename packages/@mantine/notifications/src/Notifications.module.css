@@ -38,7 +38,17 @@
 }
 
 .notification {
-  & + & {
+  &:where(& + &) {
     margin-top: var(--mantine-spacing-md);
+  }
+
+  :where([data-layout='stacked']) & {
+    margin-top: 0;
+  }
+}
+
+.root:where([data-layout='stacked']) {
+  & > * {
+    display: grid;
   }
 }

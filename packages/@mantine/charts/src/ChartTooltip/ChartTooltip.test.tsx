@@ -240,4 +240,20 @@ describe('@mantine/charts/ChartToolTip', () => {
       expect(container.querySelectorAll('.mantine-ChartTooltip-tooltipItem')).toHaveLength(3);
     });
   });
+
+  it('resolves a zero value when the display label contains a period', () => {
+    const { container } = render(
+      <ChartTooltip
+        label="Mar 1"
+        showColor={false}
+        series={[{ name: 'open', label: 'Ouv.' }]}
+        payload={[{ name: 'open', color: 'red', payload: { open: 0 } }]}
+      />
+    );
+
+    expect(container.querySelector('.mantine-ChartTooltip-tooltipItemName')!.textContent).toBe(
+      'Ouv.'
+    );
+    expect(container.querySelector('.mantine-ChartTooltip-tooltipItemData')!.textContent).toBe('0');
+  });
 });

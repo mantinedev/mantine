@@ -1,6 +1,6 @@
+import { act, waitFor } from '@testing-library/react';
 import { Editor, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { act, waitFor } from '@testing-library/react';
 import { render, screen } from '@mantine-tests/core';
 import { RichTextEditor } from '../RichTextEditor';
 

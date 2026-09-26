@@ -15,6 +15,10 @@ export const RichTextEditorStylesApi: StylesApiData<RichTextEditorFactory> = {
     linkEditorInput: 'Link editor url input',
     linkEditorExternalControl: 'Link editor external button',
     linkEditorDropdown: 'Link editor popover dropdown element',
+    tableInsertDropdown: 'RichTextEditor.TableInsert popover dropdown element',
+    tableInsertGrid: 'RichTextEditor.TableInsert size picker grid',
+    tableInsertCell: 'RichTextEditor.TableInsert size picker grid cell',
+    tableInsertLabel: 'RichTextEditor.TableInsert selected size label',
   },
 
   vars: {},

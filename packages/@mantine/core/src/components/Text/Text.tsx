@@ -136,10 +136,10 @@ export const Text = polymorphicFactory<TextFactory>((_props) => {
       variant={variant}
       mod={[
         {
-          'data-truncate': getTextTruncate(truncate),
-          'data-line-clamp': typeof lineClamp === 'number',
-          'data-inline': inline,
-          'data-inherit': inherit,
+          truncate: getTextTruncate(truncate),
+          lineClamp: typeof lineClamp === 'number',
+          inline,
+          inherit,
         },
         mod,
       ]}

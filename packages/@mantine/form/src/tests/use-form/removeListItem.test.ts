@@ -71,6 +71,31 @@ function tests(mode: FormMode) {
     });
   });
 
+  it('updates errors of a list of primitive values when list item is removed', () => {
+    const hook = renderHook(() =>
+      useForm({
+        mode,
+        initialValues: {
+          name: '',
+          a: ['x', 'y', 'z'],
+        },
+        initialErrors: {
+          name: 'name-error',
+          'a.0': 'error-1',
+          'a.1': 'error-2',
+          'a.2': 'error-3',
+        },
+      })
+    );
+
+    act(() => hook.result.current.removeListItem('a', 1));
+    expect(hook.result.current.errors).toStrictEqual({
+      name: 'name-error',
+      'a.0': 'error-1',
+      'a.1': 'error-3',
+    });
+  });
+
   it('calls onValuesChange when removeListItem is called', () => {
     const spy = jest.fn();
     const hook = renderHook(() =>

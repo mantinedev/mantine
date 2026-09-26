@@ -89,6 +89,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/action-icon.mdx',
     searchTags: 'icon button, clickable icon, square button, toolbar button',
   },
+  ActionBar: {
+    title: 'ActionBar',
+    package: '@mantine/core',
+    slug: '/core/action-bar',
+    description: 'A fixed-position bottom bar for bulk selection actions',
+    props: ['ActionBar'],
+    styles: ['ActionBar'],
+    source: '@mantine/core/src/components/ActionBar/ActionBar.tsx',
+    docs: 'core/action-bar.mdx',
+  },
   CloseButton: {
     title: 'CloseButton',
     package: '@mantine/core',

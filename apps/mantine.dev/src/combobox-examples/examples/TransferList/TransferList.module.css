@@ -2,7 +2,7 @@
   display: flex;
   gap: var(--mantine-spacing-md);
 
-  @mixin smaller-than em(755px) {
+  @mixin smaller-than 755px {
     flex-direction: column;
   }
 }

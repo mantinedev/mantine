@@ -1,0 +1,42 @@
+.root {
+  display: block;
+  width: fit-content;
+
+  @mixin where-light {
+    --matrix-level-1: rgba(81, 207, 102, 0.3);
+    --matrix-level-2: rgba(64, 192, 87, 0.45);
+    --matrix-level-3: rgba(55, 178, 77, 0.75);
+    --matrix-level-4: rgba(43, 138, 62, 1);
+    --matrix-empty-bg: var(--mantine-color-gray-2);
+  }
+
+  @mixin where-dark {
+    --matrix-level-1: rgba(43, 138, 62, 0.3);
+    --matrix-level-2: rgba(47, 158, 68, 0.45);
+    --matrix-level-3: rgba(55, 178, 77, 0.75);
+    --matrix-level-4: rgba(81, 207, 102, 1);
+    --matrix-empty-bg: var(--mantine-color-dark-5);
+  }
+}
+
+.cell {
+  stroke-width: 1px;
+
+  &:where([data-empty]) {
+    fill: var(--matrix-empty-bg);
+  }
+}
+
+.xLabel,
+.yLabel,
+.legendLabel {
+  cursor: default;
+  user-select: none;
+  fill: var(--mantine-color-dimmed);
+}
+
+.legendRect {
+  &:where([data-empty]) {
+    fill: var(--matrix-empty-bg);
+  }
+}

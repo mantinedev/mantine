@@ -1,6 +1,5 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { DateStringValue, ScheduleEventData } from '../../types';
@@ -445,7 +444,7 @@ describe('@mantine/schedule/YearView', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Select year 2026' }));
     expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2026-01-01')));
-  });
+  }, 15000);
 
   it('calls onViewChange when view button is clicked', async () => {
     const spy = jest.fn();

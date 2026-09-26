@@ -251,6 +251,29 @@ describe('@mantine/core/Slider', () => {
     expect(screen.getByText('Custom')).toBeInTheDocument();
   });
 
+  it('passes thumbProps to the thumb element', () => {
+    render(
+      <Slider
+        defaultValue={40}
+        thumbProps={{
+          'aria-labelledby': 'volume-label',
+          'aria-describedby': 'volume-help',
+          id: 'volume-thumb',
+          className: 'custom-thumb',
+          style: { color: 'red' },
+        }}
+      />
+    );
+
+    const thumb = screen.getByRole('slider');
+    expect(thumb).toHaveAttribute('aria-labelledby', 'volume-label');
+    expect(thumb).toHaveAttribute('aria-describedby', 'volume-help');
+    expect(thumb).toHaveAttribute('id', 'volume-thumb');
+    expect(thumb).toHaveClass('custom-thumb');
+    expect(thumb).toHaveClass('mantine-Slider-thumb');
+    expect(thumb).toHaveStyle({ color: 'rgb(255, 0, 0)' });
+  });
+
   it('supports Home and End keys', async () => {
     const spy = jest.fn();
     render(<Slider defaultValue={50} min={0} max={100} onChange={spy} />);

@@ -169,6 +169,8 @@ export const BubbleChart = factory<BubbleChartFactory>((_props) => {
     valueFormatter,
     attributes,
     accessibilityLayer,
+    gridColor,
+    textColor,
     ...others
   } = props;
 

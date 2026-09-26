@@ -94,6 +94,7 @@ export const Drawer = factory<DrawerFactory>((_props) => {
           closeOnEscape: ctx.currentId === stackId,
           trapFocus: ctx.currentId === stackId,
           zIndex: ctx.getZIndex(stackId),
+          __handledEscapeEvents: ctx.handledEscapeEvents,
         }
       : {};
 

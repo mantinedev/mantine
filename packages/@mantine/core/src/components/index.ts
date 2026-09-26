@@ -19,6 +19,7 @@ export * from '../utils/Floating';
 
 // Regular components
 export * from './Accordion';
+export * from './ActionBar';
 export * from './Affix';
 export * from './Alert';
 export * from './Anchor';

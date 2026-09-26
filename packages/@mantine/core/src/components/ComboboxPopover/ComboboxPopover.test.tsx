@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { act, waitFor } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Button } from '../Button';
 import { ComboboxPopover, ComboboxPopoverProps } from './ComboboxPopover';
@@ -278,6 +279,61 @@ describe('@mantine/core/ComboboxPopover', () => {
     );
     await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByPlaceholderText('Search...')).toHaveClass('test-search');
+  });
+
+  it('returns focus to the target when searchable dropdown is closed with Escape', async () => {
+    render(
+      <ComboboxPopover data={['React', 'Angular']} searchable>
+        {target}
+      </ComboboxPopover>
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    await waitFor(() => expect(screen.getByPlaceholderText('Search...')).toHaveFocus());
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('combobox')).toHaveFocus());
+  });
+
+  it('returns focus to the target after option is selected in searchable mode', async () => {
+    render(
+      <ComboboxPopover data={['React', 'Angular']} searchable>
+        {target}
+      </ComboboxPopover>
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    await waitFor(() => expect(screen.getByPlaceholderText('Search...')).toHaveFocus());
+    await userEvent.click(screen.getByRole('option', { name: 'React' }));
+    await waitFor(() => expect(screen.getByRole('combobox')).toHaveFocus());
+  });
+
+  it('does not steal focus from an element clicked outside of searchable dropdown', async () => {
+    render(
+      <>
+        <ComboboxPopover data={['React', 'Angular']} searchable>
+          {target}
+        </ComboboxPopover>
+        <input data-testid="outside" />
+      </>
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    await waitFor(() => expect(screen.getByPlaceholderText('Search...')).toHaveFocus());
+    await userEvent.click(screen.getByTestId('outside'));
+    await act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+    expect(screen.getByTestId('outside')).toHaveFocus();
+  });
+
+  it('does not move focus to the target on outside click when dropdownOpened is controlled', async () => {
+    render(
+      <>
+        <ComboboxPopover data={['React', 'Angular']} searchable dropdownOpened>
+          {target}
+        </ComboboxPopover>
+        <input data-testid="outside" />
+      </>
+    );
+    await userEvent.click(screen.getByTestId('outside'));
+    await act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+    expect(screen.getByTestId('outside')).toHaveFocus();
+    expect(screen.getByRole('listbox')).toBeVisible();
   });
 
   it('renders without errors with controlled component', () => {

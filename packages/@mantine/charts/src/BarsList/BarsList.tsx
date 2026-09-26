@@ -64,7 +64,7 @@ export interface BarsListProps
   /** Controls gap between bars @default 5 */
   barGap?: MantineSpacing;
 
-  /** Minimum bar width @default 100 */
+  /** Minimum bar width @default 0 */
   minBarSize?: number | string;
 
   /** Bar height @default 32 */

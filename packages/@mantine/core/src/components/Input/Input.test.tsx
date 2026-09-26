@@ -5,8 +5,8 @@ import { InputClearButton } from './InputClearButton/InputClearButton';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
-import { InputSuccess } from './InputSuccess/InputSuccess';
 import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
+import { InputSuccess } from './InputSuccess/InputSuccess';
 import { InputWrapper } from './InputWrapper/InputWrapper';
 
 const defaultProps: InputProps = {
@@ -103,6 +103,14 @@ describe('@mantine/core/Input', () => {
 
     rerender(<Input rightSection={null} />);
     expect(getInputWrapper(container)).not.toHaveAttribute('data-with-right-section');
+  });
+
+  it('sets data-with-bottom-section attribute based on __bottomSection prop', () => {
+    const { rerender, container } = render(<Input __bottomSection="test" />);
+    expect(getInputWrapper(container)).toHaveAttribute('data-with-bottom-section');
+
+    rerender(<Input __bottomSection={null} />);
+    expect(getInputWrapper(container)).not.toHaveAttribute('data-with-bottom-section');
   });
 
   it('sets data-pointer attribute based on pointer prop', () => {

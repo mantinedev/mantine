@@ -287,7 +287,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
         getStyles,
         describedBy,
         inputId,
-        labelId,
+        labelId: _label && inputWrapperOrder.includes('label') ? labelId : undefined,
         ...getInputOffsets(inputWrapperOrder, { hasDescription, hasError: hasError || hasSuccess }),
       }}
     >

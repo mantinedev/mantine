@@ -7,6 +7,8 @@ export { legend } from './ScatterChart.demo.legend';
 export { legendPosition } from './ScatterChart.demo.legendPosition';
 export { noTooltip } from './ScatterChart.demo.noTooltip';
 export { referenceLines } from './ScatterChart.demo.referenceLines';
+export { referenceAreas } from './ScatterChart.demo.referenceAreas';
+export { referenceDots } from './ScatterChart.demo.referenceDots';
 export { strokeDasharray } from './ScatterChart.demo.strokeDasharray';
 export { tooltipAnimation } from './ScatterChart.demo.tooltipAnimation';
 export { units } from './ScatterChart.demo.units';

@@ -352,6 +352,23 @@
   font-weight: var(--mantine-font-weight-medium);
   padding: 3px 4px;
   color: var(--bg-event-color);
+
+  &:where([data-interactive]) {
+    pointer-events: auto;
+    cursor: pointer;
+    user-select: none;
+
+    @mixin hover {
+      background-color: var(--bg-event-hover);
+    }
+  }
+
+  /* The resized edge repeatedly crosses the pointer, so hover feedback would flicker */
+  &:where([data-resizing]) {
+    @mixin hover {
+      background-color: var(--bg-event-bg);
+    }
+  }
 }
 
 .resourcesDayViewAllDayEvent {
@@ -415,6 +432,49 @@
   pointer-events: none;
 }
 
+/* The resizing background event is the one that set `data-event-interaction`, so it must
+   keep capturing pointer events. */
+.resourcesDayView:where([data-event-interaction], [data-slot-dragging])
+  .resourcesDayViewBackgroundEvent:not([data-resizing]) {
+  pointer-events: none;
+
+  & .resourcesDayViewResizeHandle {
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+.resourcesDayViewBackgroundEvent {
+  & .resourcesDayViewResizeHandle {
+    background-color: var(--bg-event-color);
+
+    &:where([data-edge='start']) {
+      left: 0;
+    }
+
+    &:where([data-edge='end']) {
+      right: 0;
+    }
+  }
+
+  &:hover .resourcesDayViewResizeHandle {
+    opacity: 0.5;
+  }
+
+  & .resourcesDayViewResizeHandle:hover {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourcesDayViewResizeHandle:where([data-active]) {
+    opacity: 0.8;
+  }
+
+  &:where([data-resizing]) .resourcesDayViewResizeHandle:not([data-active]) {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 .resourcesDayView:where([data-resizing]) {
   & * {
     cursor: ew-resize !important;
@@ -427,4 +487,13 @@
       opacity: 0;
     }
   }
+}
+
+.resourcesDayViewDragPreview {
+  pointer-events: none;
+  z-index: 3;
+  border-radius: var(--resources-day-view-radius);
+  border: 1px dashed var(--mantine-color-blue-filled);
+  background-color: var(--mantine-color-blue-light);
+  opacity: 0.6;
 }

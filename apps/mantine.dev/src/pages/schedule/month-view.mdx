@@ -144,11 +144,23 @@ See [Recurring events guide](/schedule/recurring-events) for full documentation.
 
 ## Background events
 
-Set `display="background"` on an event to render it as a full-width, semi-transparent,
-non-interactive block behind regular events. Background events span the full height of
-the day cell in the month view.
+Set `display="background"` on an event to render it as a full-width, semi-transparent block
+behind regular events. By default it cannot be clicked, dragged, or resized. Background events
+span the full height of the day cell in the month view.
 
 <Demo data={MonthViewDemos.backgroundEvents} />
+
+## Interactive background events
+
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
+background event calls `onEventClick` with the event object, the same as for regular events –
+use `event.display === 'background'` to tell them apart in the handler.
+
+Note that an interactive background event covers the day cells underneath it: clicks and
+drag-to-select in its range go to the event instead of the cells. Background events still
+cannot be dragged or resized.
+
+<Demo data={MonthViewDemos.interactiveBackgroundEvents} />
 
 ## Agenda view
 

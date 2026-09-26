@@ -4,9 +4,16 @@ import {
   DateStringValue,
   DayOfWeek,
   ScheduleEventData,
+  ScheduleEventOverlapMode,
   WeekPositionedEventData,
 } from '../../../types';
-import { getDayPosition, getWeekDays, isAllDayEvent, sortEvents } from '../../../utils';
+import {
+  applyCascadeLayout,
+  getDayPosition,
+  getWeekDays,
+  isAllDayEvent,
+  sortEvents,
+} from '../../../utils';
 import { assignEventRows } from './assign-event-rows';
 import { calculateAllDayEventOffset } from './calculate-all-day-event-offset';
 import { calculateAllDayEventWidth } from './calculate-all-day-event-width';
@@ -40,6 +47,9 @@ export interface GetWeekPositionedEventsInput {
 
   /** If set to false, weekend days are hidden @default true */
   withWeekendDays?: boolean;
+
+  /** Determines how events that overlap in time are laid out @default 'columns' */
+  eventOverlapMode?: ScheduleEventOverlapMode;
 }
 
 /** Events grouped by week day date (YYYY-MM-DD 00:00:00) and by columns */
@@ -58,6 +68,7 @@ export function getWeekPositionedEvents({
   firstDayOfWeek = 1,
   weekendDays = [0, 6],
   withWeekendDays = true,
+  eventOverlapMode = 'columns',
 }: GetWeekPositionedEventsInput): GroupedWeekEvents {
   const weekDays = getWeekDays({ week: date, firstDayOfWeek, withWeekendDays, weekendDays });
   const visibleDaysCount = weekDays.length;
@@ -211,7 +222,11 @@ export function getWeekPositionedEvents({
   }
 
   for (const day of weekDays) {
-    calculateRegularEventOverlaps(grouped.regularEvents[day]);
+    if (eventOverlapMode === 'cascade') {
+      applyCascadeLayout(grouped.regularEvents[day]);
+    } else {
+      calculateRegularEventOverlaps(grouped.regularEvents[day]);
+    }
   }
 
   if (grouped.allDayEvents.length > 0) {

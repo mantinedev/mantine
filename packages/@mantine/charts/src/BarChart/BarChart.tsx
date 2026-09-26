@@ -10,6 +10,8 @@ import {
   Legend,
   BarChart as ReChartsBarChart,
   Rectangle,
+  ReferenceArea,
+  ReferenceDot,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -200,6 +202,8 @@ export const BarChart = factory<BarChartFactory>((_props) => {
     gridProps,
     tooltipProps,
     referenceLines,
+    referenceAreas,
+    referenceDots,
     fillOpacity,
     barChartProps,
     type,
@@ -316,25 +320,75 @@ export const BarChart = factory<BarChartFactory>((_props) => {
     );
   });
 
-  const referenceLinesItems = referenceLines?.map((line, index) => {
-    const color = getThemeColor(line.color, theme);
-    return (
-      <ReferenceLine
-        key={index}
-        stroke={line.color ? color : 'var(--chart-grid-color)'}
-        strokeWidth={1}
-        yAxisId={line.yAxisId || undefined}
-        {...line}
-        label={{
-          fill: line.color ? color : 'currentColor',
-          fontSize: 12,
-          position: line.labelPosition ?? 'insideBottomLeft',
-          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
-        }}
-        {...getStyles('referenceLine')}
-      />
-    );
-  });
+  const referenceLinesItems = referenceLines?.map(
+    ({ color: lineColor, labelPosition, ...line }, index) => {
+      const color = getThemeColor(lineColor, theme);
+      return (
+        <ReferenceLine
+          key={index}
+          stroke={lineColor ? color : 'var(--chart-grid-color)'}
+          strokeWidth={1}
+          yAxisId={line.yAxisId || undefined}
+          {...line}
+          label={{
+            fill: lineColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'insideBottomLeft',
+            ...(typeof line.label === 'object' ? line.label : { value: line.label }),
+          }}
+          {...getStyles('referenceLine')}
+        />
+      );
+    }
+  );
+
+  const referenceAreasItems = referenceAreas?.map(
+    ({ color: areaColor, labelPosition, ...area }, index) => {
+      const color = getThemeColor(areaColor, theme);
+      return (
+        <ReferenceArea
+          key={index}
+          fill={areaColor ? color : 'var(--chart-grid-color)'}
+          fillOpacity={0.2}
+          stroke={areaColor ? color : 'var(--chart-grid-color)'}
+          strokeOpacity={0.6}
+          yAxisId={area.yAxisId || undefined}
+          {...area}
+          label={{
+            fill: areaColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'insideTop',
+            ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+          }}
+          {...getStyles('referenceArea')}
+        />
+      );
+    }
+  );
+
+  const referenceDotsItems = referenceDots?.map(
+    ({ color: dotColor, labelPosition, ...dot }, index) => {
+      const color = getThemeColor(dotColor, theme);
+      return (
+        <ReferenceDot
+          key={index}
+          r={5}
+          fill={dotColor ? color : 'var(--chart-grid-color)'}
+          stroke="var(--mantine-color-body)"
+          strokeWidth={2}
+          yAxisId={dot.yAxisId || undefined}
+          {...dot}
+          label={{
+            fill: dotColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'top',
+            ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+          }}
+          {...getStyles('referenceDot')}
+        />
+      );
+    }
+  );
 
   const sharedYAxisProps = {
     axisLine: false,
@@ -370,6 +424,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...barChartProps}
         >
+          {referenceAreasItems}
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -492,6 +547,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
 
           {bars}
           {referenceLinesItems}
+          {referenceDotsItems}
           {withBrush && (
             <ChartBrush
               dataKey={dataKey}

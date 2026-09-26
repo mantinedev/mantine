@@ -12,6 +12,8 @@ export { lineDasharray } from './CompositeChart.demo.lineDasharray';
 export { noTooltip } from './CompositeChart.demo.noTooltip';
 export { pointLabels } from './CompositeChart.demo.pointLabels';
 export { referenceLines } from './CompositeChart.demo.referenceLines';
+export { referenceAreas } from './CompositeChart.demo.referenceAreas';
+export { referenceDots } from './CompositeChart.demo.referenceDots';
 export { rightYAxis } from './CompositeChart.demo.rightYAxis';
 export { rotateLabels } from './CompositeChart.demo.rotateLabels';
 export { seriesLabels } from './CompositeChart.demo.seriesLabels';

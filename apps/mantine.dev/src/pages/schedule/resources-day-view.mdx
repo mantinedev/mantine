@@ -21,6 +21,37 @@ tint the whole row.
 
 <Demo data={ResourcesDayViewDemos.allDayEvents} />
 
+## Interactive background events
+
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
+background event calls `onEventClick` with the event object, the same as for regular events –
+use `event.display === 'background'` to tell them apart in the handler.
+
+Note that an interactive background event covers the time slots underneath it: clicks and
+drag-to-select in its range go to the event instead of the grid. Interactive background
+events still cannot be dragged.
+
+<Demo data={ResourcesDayViewDemos.interactiveBackgroundEvents} />
+
+## Resizable background events
+
+When `withEventResize` is set together with `withInteractiveBackgroundEvents`, background
+events render resize handles on their start and end edges. Dragging a handle calls
+`onEventResize` with the background event, the same way it does for regular events – use
+`event.display === 'background'` to tell them apart in the handler.
+
+All-day background events are never resizable. To keep background events fixed while
+regular events stay resizable, return `false` from `canResizeEvent`:
+
+```tsx
+<ResourcesDayView
+  withEventResize
+  withInteractiveBackgroundEvents
+  canResizeEvent={(event) => event.display !== 'background'}
+/>
+```
+
+
 ## Time range and intervals
 
 Use `startTime`, `endTime` and `intervalMinutes` props to control the visible time range
@@ -79,6 +110,14 @@ assignment.
 
 <Demo data={ResourcesDayViewDemos.dragDrop} />
 
+## Drag interval
+
+By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
+to use a different snap step for dragging – for example, a grid with 30-minute slots whose events
+can be moved in 15-minute increments. A ghost preview shows where the event will land:
+
+<Demo data={ResourcesDayViewDemos.eventDragInterval} />
+
 ## External drag and drop
 
 You can drag external items onto the schedule using `onExternalEventDrop` prop.
@@ -97,6 +136,14 @@ Enable event resizing with `withEventResize` prop. Events can be resized by drag
 their left or right edges.
 
 <Demo data={ResourcesDayViewDemos.eventResize} />
+
+## Resize interval
+
+By default events snap to `intervalMinutes` when resized. Set `eventResizeInterval` to use a
+different snap step for resizing – for example, a grid with 30-minute slots whose events can be
+resized in 15-minute increments:
+
+<Demo data={ResourcesDayViewDemos.eventResizeInterval} />
 
 ## Event form
 

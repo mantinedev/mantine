@@ -18,6 +18,8 @@ import {
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
 import { UnstyledButton } from '../UnstyledButton';
+import { getCaretPositionAfterPaste } from './get-caret-position-after-paste/get-caret-position-after-paste';
+import { normalizePastedValue } from './normalize-pasted-value/normalize-pasted-value';
 import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
 
@@ -294,29 +296,40 @@ const varsResolver = createVarsResolver<NumberInputFactory>((_, { size }) => ({
   },
 }));
 
-function clampAndSanitizeInput(sanitizedValue: string | number, max?: number, min?: number) {
-  const stringValue = sanitizedValue.toString();
-  const hasTrailingDecimalSeparator = trailingDecimalSeparatorPattern.test(stringValue);
+function withTrailingSeparator(value: number, hasTrailingDecimalSeparator: boolean) {
+  return hasTrailingDecimalSeparator ? `${value}.` : value;
+}
 
-  const replaced = stringValue.replace(/^0+(?=\d)/, '');
-  const parsedValue = parseFloat(replaced);
+interface SanitizeInputOnBlurOptions {
+  min: number | undefined;
+  max: number | undefined;
+  trim: boolean;
+  clamp: boolean;
+}
+
+function sanitizeInputOnBlur(value: string, options: SanitizeInputOnBlurOptions) {
+  const hasTrailingDecimalSeparator = trailingDecimalSeparatorPattern.test(value);
+  const trimmed = options.trim ? value.replace(/^0+(?=\d)/, '') : value;
+  const parsedValue = parseFloat(trimmed);
 
   if (Number.isNaN(parsedValue)) {
-    return replaced;
+    return trimmed;
   }
 
-  if (parsedValue > Number.MAX_SAFE_INTEGER) {
-    return max !== undefined ? max : replaced;
+  if (!options.clamp) {
+    return options.trim ? withTrailingSeparator(parsedValue, hasTrailingDecimalSeparator) : value;
   }
 
-  const clamped = clamp(parsedValue, min, max);
+  const clamped =
+    parsedValue > Number.MAX_SAFE_INTEGER && options.max !== undefined
+      ? options.max
+      : clamp(parsedValue, options.min, options.max);
 
-  if (hasTrailingDecimalSeparator) {
-    const clampedString = clamped.toString().replace(/^0+(?=\d)/, '');
-    return `${clampedString}.`;
+  if (!options.trim && clamped === parsedValue) {
+    return value;
   }
 
-  return clamped;
+  return withTrailingSeparator(clamped, hasTrailingDecimalSeparator);
 }
 
 function clampAndSanitizeBigIntInput(
@@ -645,16 +658,21 @@ export const NumberInput = genericFactory<NumberInputFactory>(
     const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
       const pastedText = event.clipboardData.getData('text');
       const _decimalSeparator = others.decimalSeparator || '.';
-      const separatorsToReplace = (allowedDecimalSeparators || ['.', ',']).filter(
-        (s) => s !== _decimalSeparator
-      );
+      const _thousandSeparator =
+        others.thousandSeparator === true
+          ? ','
+          : others.thousandSeparator === false
+            ? undefined
+            : others.thousandSeparator;
+      const modifiedText = normalizePastedValue(pastedText, {
+        decimalSeparator: _decimalSeparator,
+        thousandSeparator: _thousandSeparator,
+        allowedDecimalSeparators: allowedDecimalSeparators || ['.', ','],
+        thousandsGroupStyle: others.thousandsGroupStyle,
+      });
 
-      if (separatorsToReplace.some((s) => pastedText.includes(s))) {
+      if (modifiedText !== pastedText) {
         event.preventDefault();
-        let modifiedText = pastedText;
-        separatorsToReplace.forEach((s) => {
-          modifiedText = modifiedText.split(s).join(_decimalSeparator);
-        });
 
         const input = inputRef.current;
         if (input) {
@@ -671,8 +689,14 @@ export const NumberInput = genericFactory<NumberInputFactory>(
           nativeInputValueSetter?.call(input, newValue);
           input.dispatchEvent(new Event('change', { bubbles: true }));
 
-          const cursorPos = start + modifiedText.length;
-          setTimeout(() => adjustCursor(cursorPos), 0);
+          const rawCaret = start + modifiedText.length;
+          setTimeout(
+            () =>
+              adjustCursor(
+                getCaretPositionAfterPaste(newValue, rawCaret, input.value, _decimalSeparator)
+              ),
+            0
+          );
         }
       }
 
@@ -710,7 +734,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       if (selectAllOnFocus) {
-        setTimeout(() => event.currentTarget.select(), 0);
+        window.setTimeout(() => inputRef.current?.select(), 0);
       }
       onFocus?.(event);
     };
@@ -730,18 +754,17 @@ export const NumberInput = genericFactory<NumberInputFactory>(
             clampBehavior,
           });
         }
-      } else {
-        if (clampBehavior === 'blur' && typeof sanitizedValue === 'number') {
+      } else if (typeof sanitizedValue === 'number') {
+        if (clampBehavior === 'blur') {
           sanitizedValue = clamp(sanitizedValue, minNumber, maxNumber);
         }
-
-        if (
-          trimLeadingZeroesOnBlur &&
-          typeof sanitizedValue === 'string' &&
-          getDecimalPlaces(sanitizedValue) < 15
-        ) {
-          sanitizedValue = clampAndSanitizeInput(sanitizedValue, maxNumber, minNumber);
-        }
+      } else if (typeof sanitizedValue === 'string') {
+        sanitizedValue = sanitizeInputOnBlur(sanitizedValue, {
+          min: minNumber,
+          max: maxNumber,
+          trim: !!trimLeadingZeroesOnBlur && getDecimalPlaces(sanitizedValue) < 15,
+          clamp: clampBehavior === 'blur',
+        });
       }
 
       if (_value !== sanitizedValue) {

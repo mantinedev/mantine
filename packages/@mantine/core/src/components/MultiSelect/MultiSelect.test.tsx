@@ -279,6 +279,25 @@ describe('@mantine/core/MultiSelect', () => {
     expect(document.querySelector('input[name="test"]')).toHaveValue('test-1|test-2');
   });
 
+  it('does not change aria-selected of options when the highlighted option changes', async () => {
+    render(<MultiSelect data={['ID', 'Tax', 'Total']} defaultValue={['ID', 'Total']} />);
+    await userEvent.click(screen.getByRole('combobox'));
+
+    const getAriaSelected = () =>
+      screen.getAllByRole('option').map((option) => option.getAttribute('aria-selected'));
+
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getAriaSelected()).toStrictEqual(['true', 'false', 'true']);
+  });
+
   describe('withPillsReorder', () => {
     const reorderProps: MultiSelectProps = {
       ...defaultProps,

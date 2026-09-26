@@ -8,6 +8,7 @@ interface UseClickOutsideProps {
   events?: string[] | null;
   nodes?: (HTMLElement | null)[];
   enabled?: boolean;
+  capture?: boolean;
 }
 
 const Target: React.FunctionComponent<UseClickOutsideProps> = ({
@@ -15,8 +16,9 @@ const Target: React.FunctionComponent<UseClickOutsideProps> = ({
   events,
   nodes,
   enabled,
+  capture,
 }) => {
-  const ref = useClickOutside(handler, events, nodes, enabled);
+  const ref = useClickOutside(handler, events, nodes, enabled, capture);
   return <div data-testid="target" ref={ref} />;
 };
 
@@ -239,5 +241,50 @@ describe('@mantine/hooks/use-click-outside', () => {
     const event = handler.mock.calls[0][0];
     expect(event).toHaveProperty('type', 'mousedown');
     expect(event).toHaveProperty('target', outsideTarget);
+  });
+
+  it('does not call handler when outside element stops propagation in bubble phase', async () => {
+    const handler = jest.fn();
+
+    render(
+      <>
+        <Target handler={handler} />
+        <div
+          role="presentation"
+          data-testid="outside-target"
+          onMouseDown={(event) => event.stopPropagation()}
+        />
+      </>
+    );
+
+    await userEvent.click(screen.getByTestId('outside-target'));
+    expect(handler).not.toHaveBeenCalled();
+  });
+
+  it('calls handler when outside element stops propagation and capture is true', async () => {
+    const handler = jest.fn();
+
+    render(
+      <>
+        <Target handler={handler} capture />
+        <div data-testid="outside-target" onMouseDownCapture={(event) => event.stopPropagation()} />
+      </>
+    );
+
+    await userEvent.click(screen.getByTestId('outside-target'));
+    expect(handler).toHaveBeenCalledTimes(1);
+
+    await userEvent.click(screen.getByTestId('target'));
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
+
+  it('removes capture listeners on unmount', () => {
+    const spy = jest.spyOn(document, 'removeEventListener');
+    const { unmount } = render(<Target handler={jest.fn()} capture />);
+
+    unmount();
+    expect(spy).toHaveBeenCalledWith('mousedown', expect.any(Function), true);
+    expect(spy).toHaveBeenCalledWith('touchstart', expect.any(Function), true);
+    spy.mockRestore();
   });
 });

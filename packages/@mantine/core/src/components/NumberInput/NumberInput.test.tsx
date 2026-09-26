@@ -1,5 +1,5 @@
 import { createRef } from 'react';
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -317,10 +317,7 @@ describe('@mantine/core/NumberInput', () => {
     const input = getInput() as HTMLInputElement;
 
     focusInput();
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 10));
-    });
-    expect(input.selectionStart).toBe(0);
+    await waitFor(() => expect(input.selectionStart).toBe(0));
     expect(input.selectionEnd).toBe(3);
   });
 
@@ -650,5 +647,164 @@ describe('@mantine/core/NumberInput', () => {
 
     expect(spy).toHaveBeenLastCalledWith(25.5);
     expectValue('25,5');
+  });
+
+  // jsdom does not insert clipboard text on a native paste. When the paste is not
+  // intercepted, the native insertion is simulated with a change event.
+  const pasteText = (text: string) => {
+    focusInput();
+    const notIntercepted = fireEvent.paste(getInput(), {
+      clipboardData: { getData: () => text },
+    });
+
+    if (notIntercepted) {
+      fireEvent.change(getInput(), { target: { value: text } });
+    }
+
+    return notIntercepted;
+  };
+
+  it('strips grouping separators from pasted values when thousandSeparator is not set', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} />);
+
+    expect(pasteText('1,234,567')).toBe(false);
+    expect(spy).toHaveBeenLastCalledWith(1234567);
+    expectValue('1234567');
+  });
+
+  it('does not intercept pasted values grouped with the configured thousandSeparator', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator="," />);
+
+    expect(pasteText('1,234,567')).toBe(true);
+    expect(spy).toHaveBeenLastCalledWith(1234567);
+    expectValue('1,234,567');
+  });
+
+  it('does not intercept pasted values grouped with thousandSeparator={true}', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator />);
+
+    expect(pasteText('1,234,567')).toBe(true);
+    expect(spy).toHaveBeenLastCalledWith(1234567);
+    expectValue('1,234,567');
+  });
+
+  it('treats a single thousandSeparator not followed by a full group as decimal in pasted values', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator="," />);
+
+    expect(pasteText('12,5')).toBe(false);
+    expect(spy).toHaveBeenLastCalledWith(12.5);
+    expectValue('12.5');
+  });
+
+  it('handles european formatted pasted values', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator="." decimalSeparator="," />);
+
+    expect(pasteText('1.234.567,89')).toBe(true);
+    expect(spy).toHaveBeenLastCalledWith(1234567.89);
+    expectValue('1.234.567,89');
+  });
+
+  it('converts a single thousandSeparator to decimal in pasted european values', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator="." decimalSeparator="," />);
+
+    expect(pasteText('10.5')).toBe(false);
+    expect(spy).toHaveBeenLastCalledWith(10.5);
+    expectValue('10,5');
+  });
+
+  it('converts pasted decimal separator when thousandSeparator is a different character', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} thousandSeparator=" " allowedDecimalSeparators={[',']} />);
+
+    expect(pasteText('1 234,5')).toBe(false);
+    expect(spy).toHaveBeenLastCalledWith(1234.5);
+    expectValue('1 234.5');
+  });
+
+  it('places the caret after the pasted text once grouping separators are inserted', async () => {
+    render(<NumberInput thousandSeparator=" " />);
+
+    expect(pasteText('1234567,5')).toBe(false);
+    expectValue('1 234 567.5');
+    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    expect(getInput()).toHaveProperty('selectionStart', 11);
+  });
+  it('clamps string values on blur when trimLeadingZeroesOnBlur is false', async () => {
+    render(
+      <NumberInput
+        min={0}
+        max={20}
+        decimalScale={2}
+        fixedDecimalScale
+        trimLeadingZeroesOnBlur={false}
+      />
+    );
+
+    focusInput();
+    await enterText('100');
+    blurInput();
+    expectValue('20.00');
+  });
+
+  it('does not change in range string values on blur when trimLeadingZeroesOnBlur is false', async () => {
+    const spy = jest.fn();
+    render(
+      <NumberInput
+        min={0}
+        max={20}
+        decimalScale={2}
+        fixedDecimalScale
+        trimLeadingZeroesOnBlur={false}
+        onChange={spy}
+      />
+    );
+
+    focusInput();
+    await enterText('5');
+    blurInput();
+    expectValue('5.00');
+    expect(spy).toHaveBeenLastCalledWith('5.00');
+  });
+
+  it('does not clamp string values on blur when clampBehavior is none', async () => {
+    render(<NumberInput min={10} max={50} clampBehavior="none" />);
+
+    focusInput();
+    await enterText('007');
+    blurInput();
+    expectValue('7');
+  });
+
+  it('does not clamp values with trailing decimal separator when clampBehavior is none', async () => {
+    render(<NumberInput min={10} max={50} clampBehavior="none" />);
+
+    focusInput();
+    await enterText('100.');
+    blurInput();
+    expectValue('100.');
+  });
+
+  it('clamps values with more than 15 decimal places on blur', async () => {
+    render(<NumberInput min={10} max={50} />);
+
+    focusInput();
+    await enterText('100.1234567890123456');
+    blurInput();
+    expectValue('50');
+  });
+
+  it('preserves trailing decimal separator when value is clamped on blur', async () => {
+    render(<NumberInput min={10} max={50} />);
+
+    focusInput();
+    await enterText('100.');
+    blurInput();
+    expectValue('50.');
   });
 });

@@ -28,6 +28,18 @@ contribution of each series in terms of percentages.
 
 <Demo data={AreaChartDemos.percent} />
 
+## Streamgraph
+
+Set `type="stream"` to render a streamgraph (also known as ThemeRiver). A streamgraph is a
+stacked area chart whose baseline flows around a central axis instead of being fixed to zero,
+producing the characteristic organic "river" shape. It is useful for showing how the composition
+of a total shifts over time when the overall flow and proportions matter more than exact values.
+
+Since the baseline floats, the y-axis values are not meaningful to read off – the y-axis is
+hidden by default for `type="stream"`. You can set `withYAxis` back to `true` if you need it.
+
+<Demo data={AreaChartDemos.stream} />
+
 ## Split area chart
 
 Set `type="split"` to render a split area chart. In this type of area chart,
@@ -270,11 +282,24 @@ rendered behind the chart.
 
 <Demo data={AreaChartDemos.referenceLines} />
 
-## Reference area
+## Reference areas
 
-Use the `ReferenceArea` component from recharts to display a reference area:
+Use the `referenceAreas` prop to highlight a rectangular region of the chart. Each area is
+bounded by `x1`/`x2` (horizontal) and `y1`/`y2` (vertical) data values – omit one pair to span
+the full opposite axis, for example provide only `x1`/`x2` to highlight a time range across the
+entire height of the chart. Set `color` to any [theme color](/theming/colors/) or CSS color and
+`label` to display text inside the area. Reference areas are rendered behind the chart series.
 
-<Demo data={AreaChartDemos.referenceArea} />
+<Demo data={AreaChartDemos.referenceAreas} />
+
+## Reference dots
+
+Use the `referenceDots` prop to mark individual points on the chart – a peak, an event, a record
+value or an anomaly. Each dot is positioned by `x` and `y` data coordinates and supports `r` (radius),
+`color` (any [theme color](/theming/colors/) or CSS color) and `label`. Reference dots are rendered on
+top of the chart series.
+
+<Demo data={AreaChartDemos.referenceDots} />
 
 ## Brush
 

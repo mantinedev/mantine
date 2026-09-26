@@ -5,6 +5,7 @@ export { iconSizeConfigurator } from './Stepper.demo.iconSizeConfigurator';
 export { iconsOnly } from './Stepper.demo.iconsOnly';
 export { orientation } from './Stepper.demo.orientation';
 export { iconPosition } from './Stepper.demo.iconPosition';
+export { labelPosition } from './Stepper.demo.labelPosition';
 export { loading } from './Stepper.demo.loading';
 export { stepColor } from './Stepper.demo.stepColor';
 export { stylesApi3 } from './Stepper.demo.stylesApi3';

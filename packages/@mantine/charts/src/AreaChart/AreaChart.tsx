@@ -6,6 +6,8 @@ import {
   Label,
   Legend,
   AreaChart as ReChartsAreaChart,
+  ReferenceArea,
+  ReferenceDot,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -52,7 +54,7 @@ export interface AreaChartSeries extends ChartSeries {
   curveType?: AreaChartCurveType;
 }
 
-export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split';
+export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split' | 'stream';
 
 export type AreaChartCurveType =
   | 'bump'
@@ -74,11 +76,21 @@ export type AreaChartCSSVariables = {
 };
 
 export interface AreaChartProps
-  extends BoxProps, GridChartBaseProps, StylesApiProps<AreaChartFactory>, ElementProps<'div'> {
+  extends
+    BoxProps,
+    Omit<GridChartBaseProps, 'withXAxis' | 'withYAxis'>,
+    StylesApiProps<AreaChartFactory>,
+    ElementProps<'div'> {
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: AreaChartSeries[];
 
-  /** Controls how chart areas are positioned relative to each other @default 'default' */
+  /** Determines whether x-axis should be displayed. Defaults to `false` for `type="stream"` with `orientation="vertical"` – the floating baseline makes the values not meaningful to read off. @default true */
+  withXAxis?: boolean;
+
+  /** Determines whether y-axis should be displayed. Defaults to `false` for `type="stream"` with `orientation="horizontal"` – the floating baseline makes the values not meaningful to read off. @default true */
+  withYAxis?: boolean;
+
+  /** Controls how chart areas are positioned relative to each other. Set to `'stream'` to render a streamgraph. @default 'default' */
   type?: AreaChartType;
 
   /** Determines whether the chart area should be represented with a gradient instead of the solid color @default false */
@@ -134,8 +146,6 @@ export type AreaChartFactory = Factory<{
 }>;
 
 const defaultProps = {
-  withXAxis: true,
-  withYAxis: true,
   withDots: true,
   withTooltip: true,
   connectNulls: true,
@@ -172,8 +182,8 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     series,
     withGradient,
     dataKey,
-    withXAxis,
-    withYAxis,
+    withXAxis: withXAxisProp,
+    withYAxis: withYAxisProp,
     curveType,
     gridProps,
     withDots,
@@ -200,6 +210,8 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     onMouseLeave,
     orientation,
     referenceLines,
+    referenceAreas,
+    referenceDots,
     dir,
     valueFormatter,
     children,
@@ -226,7 +238,9 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
   const isAnimationActive = (tooltipAnimationDuration || 0) > 0;
   const _withGradient = typeof withGradient === 'boolean' ? withGradient : type === 'default';
-  const stacked = type === 'stacked' || type === 'percent';
+  const stacked = type === 'stacked' || type === 'percent' || type === 'stream';
+  const withXAxis = withXAxisProp ?? !(type === 'stream' && orientation === 'vertical');
+  const withYAxis = withYAxisProp ?? !(type === 'stream' && orientation === 'horizontal');
   const [highlightedArea, setHighlightedArea] = useState<string | number | null>(null);
   const shouldHighlight = highlightedArea !== null;
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -317,25 +331,75 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
     );
   });
 
-  const referenceLinesItems = referenceLines?.map((line, index) => {
-    const color = getThemeColor(line.color, theme);
-    return (
-      <ReferenceLine
-        key={index}
-        stroke={line.color ? color : 'var(--chart-grid-color)'}
-        strokeWidth={1}
-        yAxisId={line.yAxisId || undefined}
-        {...line}
-        label={{
-          fill: line.color ? color : 'currentColor',
-          fontSize: 12,
-          position: line.labelPosition ?? 'insideBottomLeft',
-          ...(typeof line.label === 'object' ? line.label : { value: line.label }),
-        }}
-        {...getStyles('referenceLine')}
-      />
-    );
-  });
+  const referenceLinesItems = referenceLines?.map(
+    ({ color: lineColor, labelPosition, ...line }, index) => {
+      const color = getThemeColor(lineColor, theme);
+      return (
+        <ReferenceLine
+          key={index}
+          stroke={lineColor ? color : 'var(--chart-grid-color)'}
+          strokeWidth={1}
+          yAxisId={line.yAxisId || undefined}
+          {...line}
+          label={{
+            fill: lineColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'insideBottomLeft',
+            ...(typeof line.label === 'object' ? line.label : { value: line.label }),
+          }}
+          {...getStyles('referenceLine')}
+        />
+      );
+    }
+  );
+
+  const referenceAreasItems = referenceAreas?.map(
+    ({ color: areaColor, labelPosition, ...area }, index) => {
+      const color = getThemeColor(areaColor, theme);
+      return (
+        <ReferenceArea
+          key={index}
+          fill={areaColor ? color : 'var(--chart-grid-color)'}
+          fillOpacity={0.2}
+          stroke={areaColor ? color : 'var(--chart-grid-color)'}
+          strokeOpacity={0.6}
+          yAxisId={area.yAxisId || undefined}
+          {...area}
+          label={{
+            fill: areaColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'insideTop',
+            ...(typeof area.label === 'object' ? area.label : { value: area.label }),
+          }}
+          {...getStyles('referenceArea')}
+        />
+      );
+    }
+  );
+
+  const referenceDotsItems = referenceDots?.map(
+    ({ color: dotColor, labelPosition, ...dot }, index) => {
+      const color = getThemeColor(dotColor, theme);
+      return (
+        <ReferenceDot
+          key={index}
+          r={5}
+          fill={dotColor ? color : 'var(--chart-grid-color)'}
+          stroke="var(--mantine-color-body)"
+          strokeWidth={2}
+          yAxisId={dot.yAxisId || undefined}
+          {...dot}
+          label={{
+            fill: dotColor ? color : 'currentColor',
+            fontSize: 12,
+            position: labelPosition ?? 'top',
+            ...(typeof dot.label === 'object' ? dot.label : { value: dot.label }),
+          }}
+          {...getStyles('referenceDot')}
+        />
+      );
+    }
+  );
 
   const tickFormatter = type === 'percent' ? valueToPercent : valueFormatter;
 
@@ -356,7 +420,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsAreaChart
           data={data}
-          stackOffset={type === 'percent' ? 'expand' : undefined}
+          stackOffset={type === 'percent' ? 'expand' : type === 'stream' ? 'wiggle' : undefined}
           layout={orientation}
           margin={{
             bottom: xAxisLabel ? 30 : undefined,
@@ -366,7 +430,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...areaChartProps}
         >
-          {referenceLinesItems}
+          {referenceAreasItems}
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -497,6 +561,8 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
 
           {areas}
           {withDots && dotsAreas}
+          {referenceLinesItems}
+          {referenceDotsItems}
           {withBrush && (
             <ChartBrush
               dataKey={dataKey}

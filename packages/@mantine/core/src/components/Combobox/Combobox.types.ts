@@ -97,7 +97,7 @@ export interface ComboboxLikeProps<Value extends Primitive = string> {
   /** Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default */
   withScrollArea?: boolean;
 
-  /** `max-height` of the dropdown, only applicable when `withScrollArea` prop is `true`, `250` by default */
+  /** `max-height` of the dropdown, only applicable when `withScrollArea` prop is `true`, `220` by default */
   maxDropdownHeight?: number | string;
 
   /** If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. */

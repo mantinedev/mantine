@@ -29,6 +29,7 @@ export interface UseHorizontalEventResizeInput {
   startTime: string;
   endTime: string;
   intervalMinutes: number;
+  resizeIntervalMinutes?: number;
   onEventResize?: (data: {
     eventId: string | number;
     newStart: DateTimeStringValue;
@@ -36,6 +37,7 @@ export interface UseHorizontalEventResizeInput {
     event: ScheduleEventData;
   }) => void;
   canResizeEvent?: (event: ScheduleEventData) => boolean;
+  withBackgroundEvents?: boolean;
 }
 
 export function useHorizontalEventResize({
@@ -44,8 +46,10 @@ export function useHorizontalEventResize({
   startTime,
   endTime,
   intervalMinutes,
+  resizeIntervalMinutes,
   onEventResize,
   canResizeEvent,
+  withBackgroundEvents = false,
 }: UseHorizontalEventResizeInput) {
   const [resizeState, setResizeState] = useState<ResizeState | null>(null);
   const resizeRef = useRef<ResizeState | null>(null);
@@ -57,16 +61,19 @@ export function useHorizontalEventResize({
   const startMinutes = parsedStartTime.hours * 60 + parsedStartTime.minutes;
   const endMinutes = parsedEndTime.hours * 60 + parsedEndTime.minutes;
   const clampedInterval = clampIntervalMinutes(intervalMinutes);
+  const clampedResizeInterval = clampIntervalMinutes(resizeIntervalMinutes ?? intervalMinutes);
   const literalRange = endMinutes - startMinutes;
   const totalMinutes = Math.ceil(literalRange / clampedInterval) * clampedInterval;
-  const minWidthPercent = (clampedInterval / totalMinutes) * 100;
 
+  // Snapped in absolute minutes from midnight so resized edges land on the same grid as
+  // dragged events – see the matching comment in `use-event-resize`.
   const clampAndSnap = useCallback(
     (minutes: number): number => {
-      const snapped = Math.round(minutes / clampedInterval) * clampedInterval;
-      return Math.max(0, Math.min(literalRange, snapped));
+      const snapped =
+        Math.round((startMinutes + minutes) / clampedResizeInterval) * clampedResizeInterval;
+      return Math.max(0, Math.min(literalRange, snapped - startMinutes));
     },
-    [literalRange, clampedInterval]
+    [literalRange, clampedResizeInterval, startMinutes]
   );
 
   const percentToDateTime = useCallback(
@@ -81,13 +88,26 @@ export function useHorizontalEventResize({
     [totalMinutes, startMinutes, clampAndSnap]
   );
 
-  const snapPercent = useCallback(
-    (percent: number): number => {
-      const minutes = (percent / 100) * totalMinutes;
-      const snappedMinutes = clampAndSnap(minutes);
-      return (snappedMinutes / totalMinutes) * 100;
+  const snapEdgeMinutes = useCallback(
+    (minutes: number, direction: 'up' | 'down'): number => {
+      const absolute = startMinutes + minutes;
+      const snapped =
+        direction === 'up'
+          ? Math.ceil(absolute / clampedResizeInterval) * clampedResizeInterval
+          : Math.floor(absolute / clampedResizeInterval) * clampedResizeInterval;
+      return Math.max(0, Math.min(literalRange, snapped - startMinutes));
     },
-    [totalMinutes, clampAndSnap]
+    [literalRange, clampedResizeInterval, startMinutes]
+  );
+
+  const percentToMinutes = useCallback(
+    (percent: number): number => (percent / 100) * totalMinutes,
+    [totalMinutes]
+  );
+
+  const minutesToPercent = useCallback(
+    (minutes: number): number => (minutes / totalMinutes) * 100,
+    [totalMinutes]
   );
 
   const handleResizeStart = useCallback(
@@ -167,17 +187,22 @@ export function useHorizontalEventResize({
         dayIndex: state.dayIndex,
         dayCount: state.dayCount,
       });
-      const snappedPercent = snapPercent(rawPercent);
+      const draggedMinutes = clampAndSnap(percentToMinutes(rawPercent));
 
       let newLeft = state.originalLeft;
       let newWidth = state.originalWidth;
 
       if (state.edge === 'end') {
-        newWidth = Math.max(minWidthPercent, snappedPercent - state.originalLeft);
+        const leftMinutes = percentToMinutes(state.originalLeft);
+        const minEndMinutes = snapEdgeMinutes(leftMinutes + clampedResizeInterval, 'up');
+        const endMinutes = Math.max(draggedMinutes, minEndMinutes);
+        newWidth = Math.max(0, minutesToPercent(endMinutes) - state.originalLeft);
       } else {
-        const originalRight = state.originalLeft + state.originalWidth;
-        newLeft = Math.min(snappedPercent, originalRight - minWidthPercent);
-        newWidth = originalRight - newLeft;
+        const rightMinutes = percentToMinutes(state.originalLeft + state.originalWidth);
+        const maxStartMinutes = snapEdgeMinutes(rightMinutes - clampedResizeInterval, 'down');
+        const startMinutesValue = Math.min(draggedMinutes, maxStartMinutes);
+        newLeft = minutesToPercent(startMinutesValue);
+        newWidth = Math.max(0, state.originalLeft + state.originalWidth - newLeft);
       }
 
       resizeRef.current = { ...state, currentLeft: newLeft, currentWidth: newWidth };
@@ -230,8 +255,11 @@ export function useHorizontalEventResize({
   }, [isResizing]);
 
   const getResizePosition = useCallback(
-    (eventId: string | number) => {
+    (eventId: string | number, eventDate?: string) => {
       if (!resizeState || resizeState.eventId !== eventId) {
+        return null;
+      }
+      if (eventDate !== undefined && resizeState.eventDate !== eventDate) {
         return null;
       }
       return { left: resizeState.currentLeft, width: resizeState.currentWidth };
@@ -241,12 +269,15 @@ export function useHorizontalEventResize({
 
   const isResizableEvent = useCallback(
     (event: ScheduleEventData) => {
-      if (!enabled || mode === 'static' || event.display === 'background') {
+      if (!enabled || mode === 'static') {
+        return false;
+      }
+      if (event.display === 'background' && !withBackgroundEvents) {
         return false;
       }
       return canResizeEvent ? canResizeEvent(event) : true;
     },
-    [enabled, mode, canResizeEvent]
+    [enabled, mode, canResizeEvent, withBackgroundEvents]
   );
 
   const wasResizing = useCallback(() => justResizedRef.current, []);

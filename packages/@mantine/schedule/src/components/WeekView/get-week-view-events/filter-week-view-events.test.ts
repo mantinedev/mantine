@@ -36,6 +36,21 @@ describe('@mantine/schedule/filter-week-view-events', () => {
     ).toStrictEqual([events[1]]);
   });
 
+  it('keeps same-day events that end at exclusive midnight', () => {
+    const events = [
+      testUtils.createEvent({ id: 1, start: '2024-01-10 17:15:00', end: '2024-01-11 00:00:00' }),
+    ];
+
+    expect(
+      filterWeekViewEvents({
+        date: '2024-01-08',
+        events,
+        startTime: '00:00:00',
+        endTime: '23:59:59',
+      })
+    ).toStrictEqual(events);
+  });
+
   it('throws error when duplicated event ids are found', () => {
     const events = [
       testUtils.createEvent({ id: 1, start: '2024-01-10 10:00:00', end: '2024-01-10 11:00:00' }),

@@ -210,6 +210,24 @@ rendered behind the chart.
 
 <Demo data={CompositeChartDemos.referenceLines} />
 
+## Reference areas
+
+Use the `referenceAreas` prop to highlight a rectangular region of the chart. Each area is
+bounded by `x1`/`x2` (horizontal) and `y1`/`y2` (vertical) data values – omit one pair to span
+the full opposite axis. Set `color` to any [theme color](/theming/colors/) or CSS color and
+`label` to display text inside the area. Reference areas are rendered behind the chart series.
+
+<Demo data={CompositeChartDemos.referenceAreas} />
+
+## Reference dots
+
+Use the `referenceDots` prop to mark individual points on the chart – a peak, an event, a record
+value or an anomaly. Each dot is positioned by `x` and `y` data coordinates and supports `r` (radius),
+`color` (any [theme color](/theming/colors/) or CSS color) and `label`. Reference dots are rendered on
+top of the chart series.
+
+<Demo data={CompositeChartDemos.referenceDots} />
+
 ## Brush
 
 Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the

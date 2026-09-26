@@ -1,4 +1,4 @@
-import { createRef } from 'react';
+import { createRef, useState } from 'react';
 import { act, fireEvent } from '@testing-library/react';
 import { useForm } from '@mantine/form';
 import {
@@ -62,6 +62,53 @@ describe('@mantine/core/MaskInput', () => {
     expect(screen.getByLabelText('Phone')).toHaveValue('(123) 456-7890');
     expect(onChangeRaw).not.toHaveBeenCalled();
     expect(onComplete).not.toHaveBeenCalled();
+  });
+
+  it('keeps mask literals that match a token out of the editable slots', async () => {
+    const onComplete = jest.fn();
+
+    render(<MaskInput mask="99.08.2026" label="Date" onComplete={onComplete} />);
+
+    const input = screen.getByLabelText('Date');
+    await userEvent.click(input);
+    expect(input).toHaveValue('__.08.2026');
+
+    await userEvent.keyboard('01');
+    expect(input).toHaveValue('01.08.2026');
+    expect(onComplete).toHaveBeenCalledWith('01.08.2026', '01');
+  });
+
+  it('reformats the current value when the mask prop changes', async () => {
+    function TestMask() {
+      const [mask, setMask] = useState('999-999');
+      return (
+        <>
+          <MaskInput mask={mask} label="Code" defaultValue="123456" />
+          <button type="button" onClick={() => setMask('99/99/99')}>
+            Swap
+          </button>
+        </>
+      );
+    }
+
+    render(<TestMask />);
+    expect(screen.getByLabelText('Code')).toHaveValue('123-456');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Swap' }));
+    expect(screen.getByLabelText('Code')).toHaveValue('12/34/56');
+  });
+
+  it('applies transform to defaultValue on mount', () => {
+    render(
+      <MaskInput
+        mask="AAA-999"
+        label="Code"
+        transform={(char) => char.toUpperCase()}
+        defaultValue="abc-123"
+      />
+    );
+
+    expect(screen.getByLabelText('Code')).toHaveValue('ABC-123');
   });
 
   it('clears the input value when resetRef is called', () => {

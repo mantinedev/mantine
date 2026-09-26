@@ -1,6 +1,5 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import React from 'react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
@@ -366,6 +365,19 @@ describe('@mantine/schedule/MobileMonthView', () => {
     render(<MobileMonthView {...defaultProps} selectedDate="2025-11-15" />);
 
     expect(screen.getByText('All day')).toBeInTheDocument();
+  });
+
+  it('supports allDay label override for all-day events', () => {
+    render(
+      <MobileMonthView
+        {...defaultProps}
+        selectedDate="2025-11-15"
+        labels={{ allDay: 'Ganztägig' }}
+      />
+    );
+
+    expect(screen.getByText('Ganztägig')).toBeInTheDocument();
+    expect(screen.queryByText('All day')).not.toBeInTheDocument();
   });
 
   it('hides outside days when withOutsideDays is false', () => {

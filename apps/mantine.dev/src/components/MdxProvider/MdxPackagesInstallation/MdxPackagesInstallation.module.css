@@ -13,7 +13,7 @@
 }
 
 .hiddenMobile {
-  @mixin smaller-than em(750px) {
+  @mixin smaller-than 750px {
     display: none;
   }
 }

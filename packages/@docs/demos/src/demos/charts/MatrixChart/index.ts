@@ -1,0 +1,9 @@
+export { usage } from './MatrixChart.demo.usage';
+export { labels } from './MatrixChart.demo.labels';
+export { tooltip } from './MatrixChart.demo.tooltip';
+export { colors } from './MatrixChart.demo.colors';
+export { cellSize } from './MatrixChart.demo.cellSize';
+export { getCellProps } from './MatrixChart.demo.getCellProps';
+export { legend } from './MatrixChart.demo.legend';
+export { domain } from './MatrixChart.demo.domain';
+export { xLabelsRotation } from './MatrixChart.demo.xLabelsRotation';

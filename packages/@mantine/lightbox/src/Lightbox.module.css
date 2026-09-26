@@ -1,0 +1,231 @@
+.root {
+  --lightbox-transition-duration: 200ms;
+  --lightbox-overlay-color: rgba(0, 0, 0, 0.9);
+  --lightbox-z-index: 400;
+  --lightbox-toolbar-height: 56px;
+  --lightbox-thumbnails-height: 100px;
+
+  display: contents;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--lightbox-z-index);
+  background-color: var(--lightbox-overlay-color);
+}
+
+.content {
+  position: fixed;
+  inset: 0;
+  z-index: var(--lightbox-z-index);
+  display: flex;
+  flex-direction: column;
+  color: var(--mantine-color-white);
+  outline: none;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--lightbox-toolbar-height);
+  padding: 0 var(--mantine-spacing-md);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.toolbarGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+}
+
+.toolbarButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--mantine-radius-sm);
+  color: var(--mantine-color-white);
+  opacity: 0.8;
+  transition:
+    opacity var(--lightbox-transition-duration) ease,
+    background-color var(--lightbox-transition-duration) ease;
+
+  @mixin hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.counter {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-white);
+  opacity: 0.8;
+  user-select: none;
+}
+
+.slides {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.slidesViewport {
+  height: 100%;
+  overflow: hidden;
+}
+
+.slidesContainer {
+  display: flex;
+  height: 100%;
+}
+
+.slide {
+  position: relative;
+  flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mantine-spacing-md);
+  min-width: 0;
+}
+
+.slideImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: transform var(--lightbox-transition-duration) ease;
+
+  &[data-zoom-enabled] {
+    touch-action: none;
+  }
+
+  &[data-zoomed] {
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &[data-dragging] {
+    transition: none;
+  }
+
+  &[data-zoom-enabled]:not([data-zoomed]) {
+    cursor: zoom-in;
+  }
+}
+
+.slideVideo {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.thumbnails {
+  display: block;
+  padding: 0 var(--mantine-spacing-md);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.thumbnailsViewport {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  height: var(--lightbox-thumbnails-height);
+  overflow: hidden;
+}
+
+.thumbnailsContainer {
+  display: flex;
+  gap: var(--mantine-spacing-xs);
+  height: 100%;
+  align-items: center;
+}
+
+.thumbnail {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--mantine-radius-sm);
+  overflow: hidden;
+  opacity: 0.5;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition:
+    opacity var(--lightbox-transition-duration) ease,
+    border-color var(--lightbox-transition-duration) ease;
+  padding: 0;
+  background: none;
+
+  @mixin hover {
+    opacity: 0.8;
+  }
+
+  &[data-active] {
+    opacity: 1;
+    border-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.thumbnailImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.navigation {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 var(--mantine-spacing-md);
+  pointer-events: none;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.navigationButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: var(--mantine-color-white);
+  pointer-events: all;
+  opacity: 0.7;
+  transition: opacity var(--lightbox-transition-duration) ease;
+
+  @mixin hover {
+    opacity: 1;
+  }
+
+  &[data-inactive] {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+.caption {
+  text-align: center;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-white);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.closeButton {
+  color: var(--mantine-color-white);
+}

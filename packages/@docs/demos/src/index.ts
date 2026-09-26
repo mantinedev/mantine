@@ -13,6 +13,7 @@ export * as EmotionDemos from './demos/emotion';
 
 // Core demos
 export * as AccordionDemos from './demos/core/Accordion';
+export * as ActionBarDemos from './demos/core/ActionBar';
 export * as ActionIconDemos from './demos/core/ActionIcon';
 export * as AffixDemos from './demos/core/Affix';
 export * as AlertDemos from './demos/core/Alert';
@@ -153,11 +154,15 @@ export * as RadarChartDemos from './demos/charts/RadarChart';
 export * as ScatterChartDemos from './demos/charts/ScatterChart';
 export * as BubbleChartDemos from './demos/charts/BubbleChart';
 export * as CompositeChartDemos from './demos/charts/CompositeChart';
+export * as CandlestickChartDemos from './demos/charts/CandlestickChart';
 export * as RadialBarChartDemos from './demos/charts/RadialBarChart';
 export * as FunnelChartDemos from './demos/charts/FunnelChart';
 export * as HeatmapDemos from './demos/charts/Heatmap';
 export * as BarsListDemos from './demos/charts/BarsList';
 export * as BulletChartDemos from './demos/charts/BulletChart';
+export * as GaugeChartDemos from './demos/charts/GaugeChart';
+export * as WaffleChartDemos from './demos/charts/WaffleChart';
+export * as MatrixChartDemos from './demos/charts/MatrixChart';
 export * as TreemapDemos from './demos/charts/Treemap';
 export * as SankeyChartDemos from './demos/charts/SankeyChart';
 export * as SunburstChartDemos from './demos/charts/SunburstChart';
@@ -178,6 +183,7 @@ export * as AgendaViewDemos from './demos/schedule/AgendaView';
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';
 export * as CarouselDemos from './demos/carousel';
+export * as LightboxDemos from './demos/lightbox';
 export * as SpotlightDemos from './demos/spotlight';
 export * as UseClickOutsideDemos from './demos/hooks/use-click-outside';
 export * as UseClipboardDemos from './demos/hooks/use-clipboard';

@@ -1,6 +1,5 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
@@ -957,6 +956,54 @@ describe('@mantine/schedule/MonthView', () => {
       const { container } = render(<MonthView {...defaultProps} withAgenda />);
       const agendaButtons = container.querySelectorAll('[data-type="agenda"]');
       expect(agendaButtons).toHaveLength(2);
+    });
+  });
+
+  describe('background events', () => {
+    const backgroundEventProps: MonthViewProps = {
+      date: '2025-11-05',
+      events: [
+        {
+          id: 'bg-1',
+          title: 'Unavailable',
+          start: '2025-11-05 00:00:00',
+          end: '2025-11-06 00:00:00',
+          color: 'gray',
+          display: 'background',
+        },
+      ],
+    };
+
+    it('renders background events as non-interactive divs by default', async () => {
+      const spy = jest.fn();
+      const { container } = render(<MonthView {...backgroundEventProps} onEventClick={spy} />);
+      const bgEvent = container.querySelector('.mantine-MonthView-monthViewBackgroundEvent')!;
+
+      expect(bgEvent.tagName).toBe('DIV');
+      await userEvent.click(bgEvent);
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('calls onEventClick when a background event is clicked with withInteractiveBackgroundEvents', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <MonthView {...backgroundEventProps} withInteractiveBackgroundEvents onEventClick={spy} />
+      );
+      const bgEvent = container.querySelector('.mantine-MonthView-monthViewBackgroundEvent')!;
+
+      expect(bgEvent.tagName).toBe('BUTTON');
+      await userEvent.click(bgEvent);
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls[0][0].id).toBe('bg-1');
+    });
+
+    it('does not make background events interactive in static mode', () => {
+      const { container } = render(
+        <MonthView {...backgroundEventProps} withInteractiveBackgroundEvents mode="static" />
+      );
+      expect(container.querySelector('.mantine-MonthView-monthViewBackgroundEvent')!.tagName).toBe(
+        'DIV'
+      );
     });
   });
 });

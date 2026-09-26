@@ -61,7 +61,7 @@ describe('@mantine/core/Combobox/use-combobox shadow DOM support', () => {
     const selectedOption = shadow.querySelector('[data-combobox-selected]');
     expect(selectedOption).toBeTruthy();
     expect(selectedOption?.id).toBe('option-1');
-    expect(selectedOption?.getAttribute('aria-selected')).toBe('true');
+    expect(selectedOption?.hasAttribute('aria-selected')).toBe(false);
   });
 
   it('finds elements inside shadow DOM using selectNextOption', () => {

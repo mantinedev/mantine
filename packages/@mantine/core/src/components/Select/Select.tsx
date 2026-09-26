@@ -23,6 +23,8 @@ import {
   OptionsFilter,
   useCombobox,
 } from '../Combobox';
+import { getOptionByLabel } from '../Combobox/get-options-lockup/get-option-by-label';
+import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
   __InputStylesNames,
@@ -30,8 +32,6 @@ import {
   InputClearButtonProps,
   InputVariant,
 } from '../Input';
-import { getOptionByLabel } from '../Combobox/get-options-lockup/get-option-by-label';
-import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import { InputBase } from '../InputBase';
 import { ScrollAreaProps } from '../ScrollArea';
 
@@ -382,7 +382,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
                 combobox.clickSelectedOption();
               }
 
-              !!searchable && combobox.closeDropdown();
+              combobox.closeDropdown();
               const optionLockup =
                 _value != null &&
                 (`${_value}` in optionsLockup

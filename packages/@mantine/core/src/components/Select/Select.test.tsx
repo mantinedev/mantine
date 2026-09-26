@@ -90,6 +90,30 @@ describe('@mantine/core/Select', () => {
     expect(screen.queryByRole('listbox')).toBe(null);
   });
 
+  it('closes dropdown when focus leaves non-searchable select', async () => {
+    render(
+      <>
+        <Select {...defaultProps} />
+        <button type="button">next</button>
+      </>
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.getByRole('listbox')).toBeVisible();
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: 'next' })).toHaveFocus();
+    expect(screen.queryByRole('listbox')).toBe(null);
+    expect(screen.getByRole('combobox')).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('keeps dropdown open when option is clicked with mouse in non-searchable select', async () => {
+    const spy = jest.fn();
+    render(<Select {...defaultProps} onChange={spy} />);
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(screen.getByRole('option', { name: 'test-2' }));
+    expect(spy).toHaveBeenCalledWith('test-2', expect.objectContaining({ value: 'test-2' }));
+    expect(screen.getByRole('combobox')).toHaveFocus();
+  });
+
   it('allows controlling dropdown state with dropdownOpened prop', async () => {
     const { rerender } = render(<Select {...defaultProps} dropdownOpened />);
     expect(screen.getByRole('listbox')).toBeVisible();

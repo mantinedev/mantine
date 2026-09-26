@@ -1,9 +1,16 @@
 import { useRef, useState } from 'react';
 import { useForm } from '@mantine/form';
 import { Button } from '../Button';
+import { CopyButton } from '../CopyButton';
 import { Group } from '../Group';
+import { Stack } from '../Stack';
 import { TextInput } from '../TextInput';
-import { NumberInput, NumberInputHandlers } from './NumberInput';
+import {
+  NumberInput,
+  NumberInputHandlers,
+  NumberInputProps,
+  NumberInputValue,
+} from './NumberInput';
 
 export default { title: 'NumberInput' };
 
@@ -280,6 +287,115 @@ export function ExternalOnChange() {
         <Button onClick={() => setValue(0)}>Set value to 0</Button>
         <Button onClick={() => setValue(1)}>Set value to 1</Button>
       </Group>
+    </div>
+  );
+}
+
+const pasteSamples = [
+  '1,234,567',
+  '1,234,567.89',
+  '1.234.567,89',
+  '1 234 567,89',
+  '12,5',
+  '10.5',
+  '10.500',
+];
+
+const pasteConfigs: { label: string; props: Partial<NumberInputProps> }[] = [
+  { label: 'Default', props: {} },
+  { label: 'thousandSeparator=","', props: { thousandSeparator: ',' } },
+  { label: 'thousandSeparator={true}', props: { thousandSeparator: true } },
+  {
+    label: 'thousandSeparator="." decimalSeparator=","',
+    props: { thousandSeparator: '.', decimalSeparator: ',' },
+  },
+  {
+    label: 'thousandSeparator=" " allowedDecimalSeparators={[","]}',
+    props: { thousandSeparator: ' ', allowedDecimalSeparators: [','] },
+  },
+  {
+    label: 'thousandSeparator="," prefix="$" decimalScale={2} fixedDecimalScale',
+    props: { thousandSeparator: ',', prefix: '$', decimalScale: 2, fixedDecimalScale: true },
+  },
+];
+
+function PasteInput({ label, props }: (typeof pasteConfigs)[number]) {
+  const [value, setValue] = useState<NumberInputValue>('');
+  return (
+    <NumberInput
+      label={label}
+      description={`Value: ${value === '' ? 'empty' : String(value)} (${typeof value})`}
+      placeholder="Paste here"
+      value={value}
+      onChange={setValue}
+      {...props}
+    />
+  );
+}
+
+export function Paste() {
+  return (
+    <div style={{ padding: 40, maxWidth: 560 }}>
+      <Group gap="xs" mb="xl">
+        {pasteSamples.map((sample) => (
+          <CopyButton key={sample} value={sample}>
+            {({ copied, copy }) => (
+              <Button variant={copied ? 'filled' : 'default'} size="xs" onClick={copy}>
+                {sample}
+              </Button>
+            )}
+          </CopyButton>
+        ))}
+      </Group>
+      <Stack>
+        {pasteConfigs.map((config) => (
+          <PasteInput key={config.label} {...config} />
+        ))}
+      </Stack>
+    </div>
+  );
+}
+
+const clampConfigs: { label: string; props: NumberInputProps }[] = [
+  {
+    label: 'Broken – fixedDecimalScale + trimLeadingZeroesOnBlur={false}',
+    props: { decimalScale: 2, fixedDecimalScale: true, trimLeadingZeroesOnBlur: false },
+  },
+  {
+    label: 'Works – same, but trimLeadingZeroesOnBlur is default',
+    props: { decimalScale: 2, fixedDecimalScale: true },
+  },
+  {
+    label: 'Works – trimLeadingZeroesOnBlur={false}, no fixedDecimalScale',
+    props: { decimalScale: 2, trimLeadingZeroesOnBlur: false },
+  },
+];
+
+function ClampInput({ label, props }: (typeof clampConfigs)[number]) {
+  const [value, setValue] = useState<NumberInputValue>('');
+  return (
+    <NumberInput
+      label={label}
+      description={`Value: ${value === '' ? 'empty' : String(value)} (${typeof value})`}
+      placeholder="Type 100, then blur"
+      min={0}
+      max={20}
+      hideControls
+      value={value}
+      onChange={setValue}
+      {...props}
+    />
+  );
+}
+
+export function ClampWithDecimalScale() {
+  return (
+    <div style={{ padding: 40, maxWidth: 560 }}>
+      <Stack>
+        {clampConfigs.map((config) => (
+          <ClampInput key={config.label} {...config} />
+        ))}
+      </Stack>
     </div>
   );
 }

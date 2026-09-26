@@ -465,3 +465,160 @@ export function IconBraces(props: IconProps) {
     </IconBase>
   );
 }
+
+export function IconTablePlus(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" />
+      <path d="M3 10h18" />
+      <path d="M10 3v18" />
+      <path d="M16 19h6" />
+      <path d="M19 16v6" />
+    </IconBase>
+  );
+}
+
+export function IconTableOff(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M7 3h12a2 2 0 0 1 2 2v12m-.585 3.413a1.994 1.994 0 0 1 -1.415 .587h-14a2 2 0 0 1 -2 -2v-14c0 -.55 .223 -1.05 .583 -1.412" />
+      <path d="M3 10h7m4 0h7" />
+      <path d="M10 3v3m0 4v11" />
+      <path d="M3 3l18 18" />
+    </IconBase>
+  );
+}
+
+export function IconColumnInsertLeft(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M14 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1z" />
+      <path d="M5 12l4 0" />
+      <path d="M7 10l0 4" />
+    </IconBase>
+  );
+}
+
+export function IconColumnInsertRight(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M6 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1z" />
+      <path d="M15 12l4 0" />
+      <path d="M17 10l0 4" />
+    </IconBase>
+  );
+}
+
+export function IconColumnRemove(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M6 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1z" />
+      <path d="M16 10l4 4" />
+      <path d="M16 14l4 -4" />
+    </IconBase>
+  );
+}
+
+export function IconRowInsertTop(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M4 18v-4a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z" />
+      <path d="M12 9v-4" />
+      <path d="M10 7l4 0" />
+    </IconBase>
+  );
+}
+
+export function IconRowInsertBottom(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M20 6v4a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1z" />
+      <path d="M12 15l0 4" />
+      <path d="M14 17l-4 0" />
+    </IconBase>
+  );
+}
+
+export function IconRowRemove(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M20 6v4a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1z" />
+      <path d="M10 16l4 4" />
+      <path d="M10 20l4 -4" />
+    </IconBase>
+  );
+}
+
+export function IconTableHeaderRow(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+      <path d="M4 9l16 0" />
+    </IconBase>
+  );
+}
+
+export function IconTableHeaderColumn(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+      <path d="M9 4l0 16" />
+    </IconBase>
+  );
+}
+
+export function IconTableMergeCells(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M18 10h-4v-4" />
+      <path d="M20 4l-6 6" />
+      <path d="M6 14h4v4" />
+      <path d="M10 14l-6 6" />
+    </IconBase>
+  );
+}
+
+export function IconTableSplitCell(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 4l0 16" />
+      <path d="M8 8l-4 4l4 4" />
+      <path d="M16 16l4 -4l-4 -4" />
+    </IconBase>
+  );
+}
+
+export function IconDetails(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M8 5l3 3l-3 3" />
+      <path d="M15 8l4 0" />
+      <path d="M5 15l14 0" />
+      <path d="M5 19l14 0" />
+    </IconBase>
+  );
+}
+
+export function IconPilcrow(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M13 4v16" />
+      <path d="M17 4v16" />
+      <path d="M19 4h-9.5a4.5 4.5 0 0 0 0 9h3.5" />
+    </IconBase>
+  );
+}
