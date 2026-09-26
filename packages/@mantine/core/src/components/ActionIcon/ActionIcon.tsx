@@ -19,19 +19,22 @@ import { Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
 import {
   ActionIconGroup,
-  type ActionIconGroupProps,
-  type ActionIconGroupStylesNames,
-  type ActionIconGroupCssVariables,
-  type ActionIconGroupFactory,
+  ActionIconGroupCssVariables,
+  ActionIconGroupFactory,
+  ActionIconGroupProps,
+  ActionIconGroupStylesNames,
 } from './ActionIconGroup/ActionIconGroup';
 import {
   ActionIconGroupSection,
-  type ActionIconGroupSectionProps,
-  type ActionIconGroupSectionStylesNames,
-  type ActionIconGroupSectionCssVariables,
-  type ActionIconGroupSectionFactory,
+  ActionIconGroupSectionCssVariables,
+  ActionIconGroupSectionFactory,
+  ActionIconGroupSectionProps,
+  ActionIconGroupSectionStylesNames,
 } from './ActionIconGroupSection/ActionIconGroupSection';
 import classes from './ActionIcon.module.css';
+
+export type ActionIconSize = MantineSize | `input-${MantineSize}` | (string & {}) | number;
+
 export type ActionIconVariant =
   | 'filled'
   | 'light'
@@ -43,6 +46,7 @@ export type ActionIconVariant =
   | 'gradient';
 
 export type ActionIconStylesNames = 'root' | 'loader' | 'icon';
+
 export type ActionIconCssVariables = {
   root:
     | '--ai-radius'
@@ -65,7 +69,7 @@ export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFact
   loaderProps?: LoaderProps;
 
   /** Controls width and height of the button. Numbers are converted to rem. @default 'md' */
-  size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
+  size?: ActionIconSize;
 
   /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor */
   color?: MantineColor;
@@ -167,12 +171,12 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props) => {
     <UnstyledButton
       {...getStyles('root', { active: !disabled && !loading && !dataDisabled })}
       aria-busy={loading || undefined}
-      {...others}
       unstyled={unstyled}
       variant={variant}
       size={size}
       disabled={disabled || loading}
       mod={[{ loading, disabled: disabled || dataDisabled }, mod]}
+      {...others}
     >
       {typeof loading === 'boolean' && (
         <Transition mounted={loading} transition="slide-down" duration={150}>
@@ -202,6 +206,8 @@ export namespace ActionIcon {
   export type StylesNames = ActionIconStylesNames;
   export type CssVariables = ActionIconCssVariables;
   export type Factory = ActionIconFactory;
+  export type Variant = ActionIconVariant;
+  export type Size = ActionIconSize;
 
   export namespace Group {
     export type Props = ActionIconGroupProps;

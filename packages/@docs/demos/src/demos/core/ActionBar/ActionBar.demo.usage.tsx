@@ -70,7 +70,12 @@ function Demo() {
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
 
-      <ActionBar opened={selection.length > 0} onClose={() => setSelection([])} shadow="md">
+      <ActionBar
+        opened={selection.length > 0}
+        onClose={() => setSelection([])}
+        shadow="md"
+        aria-label="Selected elements actions"
+      >
         <Text size="sm">{selection.length} selected</Text>
         <ActionBar.Divider />
         <Button variant="default" size="compact-sm">
@@ -82,7 +87,7 @@ function Demo() {
         <Button variant="default" size="compact-sm">
           Archive
         </Button>
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Clear selection" />
       </ActionBar>
     </>
   );
@@ -153,7 +158,12 @@ function Demo() {
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
 
-      <ActionBar opened={selection.length > 0} onClose={() => setSelection([])} shadow="md">
+      <ActionBar
+        opened={selection.length > 0}
+        onClose={() => setSelection([])}
+        shadow="md"
+        aria-label="Selected elements actions"
+      >
         <Text size="sm">{selection.length} selected</Text>
         <ActionBar.Divider />
         <Button variant="default" size="compact-sm">
@@ -165,7 +175,7 @@ function Demo() {
         <Button variant="default" size="compact-sm">
           Archive
         </Button>
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Clear selection" />
       </ActionBar>
     </>
   );

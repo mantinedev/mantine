@@ -45,7 +45,10 @@ export function Thumb({
   children = null,
   disabled,
   orientation = 'horizontal',
+  className,
+  style,
   ref,
+  ...others
 }: ThumbProps) {
   const { getStyles } = useSliderContext();
 
@@ -56,6 +59,7 @@ export function Thumb({
 
   return (
     <Box<'div'>
+      {...others}
       tabIndex={disabled ? -1 : 0}
       role="slider"
       aria-label={thumbLabel}
@@ -67,7 +71,7 @@ export function Thumb({
       aria-orientation={orientation}
       ref={ref}
       __vars={{ '--slider-thumb-offset': `${position}%` }}
-      {...getStyles('thumb', { focusable: true })}
+      {...getStyles('thumb', { focusable: true, className, style })}
       mod={{ dragging, disabled }}
       onFocus={(event) => {
         setFocused(true);

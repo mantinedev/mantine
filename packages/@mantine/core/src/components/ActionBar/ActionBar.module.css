@@ -4,10 +4,17 @@
   gap: var(--mantine-spacing-sm);
   width: fit-content;
   margin-inline: auto;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
 }
 
 .divider {
   width: 1px;
   align-self: stretch;
   background-color: var(--mantine-color-default-border);
+}
+
+.root .closeButton:where(:not([data-disabled], :disabled)) {
+  @mixin hover {
+    background-color: var(--mantine-color-hover-strong);
+  }
 }

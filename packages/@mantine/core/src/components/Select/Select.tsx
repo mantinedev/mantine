@@ -377,7 +377,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
                 store.clickSelectedOption();
               }
 
-              !!searchable && store.closeDropdown();
+              store.closeDropdown();
               const optionLockup = store.getValueOption();
               handleSearchChange(optionLockup ? optionLockup.label || '' : '');
               onBlur?.(event);

@@ -8,6 +8,7 @@ import {
   getFontSize,
   getRadius,
   getSize,
+  MantineColor,
   MantineGradient,
   MantineRadius,
   MantineSize,
@@ -31,7 +32,10 @@ export type ActionIconGroupSectionCssVariables = {
 };
 
 export interface ActionIconGroupSectionProps
-  extends BoxProps, StylesApiProps<ActionIconGroupSectionFactory>, ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ActionIconGroupSectionFactory>, ElementProps<'div', 'color'> {
+  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
+  color?: MantineColor;
+
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
@@ -89,6 +93,7 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
     variant,
     gradient,
     radius,
+    color,
     autoContrast,
     attributes,
     ...others

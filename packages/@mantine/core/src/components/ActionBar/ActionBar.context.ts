@@ -8,5 +8,5 @@ export interface ActionBarContextValue {
 }
 
 export const [ActionBarProvider, useActionBarContext] = createSafeContext<ActionBarContextValue>(
-  'ActionBar component was not found in tree'
+  'ActionBar component was not found in the tree'
 );

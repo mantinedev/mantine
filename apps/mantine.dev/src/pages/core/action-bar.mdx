@@ -7,8 +7,8 @@ export default Layout(MDX_DATA.ActionBar);
 ## Usage
 
 `ActionBar` is a fixed-position bottom bar that appears when items are selected,
-providing contextual bulk actions. It is built using [Affix](/core/affix), [Transition](/core/transition)
-and [Paper](/core/paper) components.
+providing contextual bulk actions. It is built using [Affix](/core/affix) and [Transition](/core/transition)
+components. The bar supports the same `shadow`, `radius` and `withBorder` props as [Surface](/core/surface).
 
 Content inside `ActionBar` is composed freely using existing Mantine components
 (`Button`, `ActionIcon`, `Group`, `Text`, etc.). Use `ActionBar.Divider` to
@@ -16,9 +16,6 @@ add a vertical divider and `ActionBar.CloseButton` to add a close button that
 triggers the `onClose` callback.
 
 <Demo data={ActionBarDemos.usage} />
-
-`ActionBar` root has `role="group"` and the divider has `role="separator"` so that assistive
-technologies announce the controls as one bar. Set `aria-label` to describe what the actions apply to.
 
 ## With ActionIcon buttons
 
@@ -32,10 +29,15 @@ the position with the `position` prop. When using non-centered positions, set
 
 <Demo data={ActionBarDemos.placement} />
 
+Use `affixProps` to pass props down to the underlying [Affix](/core/affix) element,
+for example `className`, `style` or data attributes.
+
 ## Close on Escape
 
 By default, `ActionBar` does not close when `Escape` key is pressed. Set `closeOnEscape`
-to enable this behavior:
+to enable this behavior. `Escape` is ignored when it is pressed inside a modal dialog
+(an element with `aria-modal="true"`, for example [Modal](/core/modal)) or on an element
+with `data-mantine-stop-propagation` attribute (for example, an opened [Select](/core/select) dropdown):
 
 <Demo data={ActionBarDemos.closeOnEscape} />
 
@@ -60,8 +62,9 @@ function Demo() {
 ## keepMounted
 
 By default, the action bar is removed from the DOM when it is closed. Set `keepMounted`
-to keep it mounted and hide it with `display: none` instead – for example, if the bar
-contains form state that must be preserved between openings:
+to keep it mounted instead – for example, if the bar contains form state that must be
+preserved between openings. The hidden bar is wrapped in React `Activity`, which preserves
+its state; to hide it with `display: none` instead, set `transitionProps={{ keepMountedMode: 'display-none' }}`:
 
 ```tsx
 import { ActionBar, Button } from '@mantine/core';
@@ -81,3 +84,34 @@ function Demo() {
 affected by `overflow` and `transform` styles of its parent elements. Set
 `withinPortal={false}` to render it in place, and use `portalProps` to pass props
 down to the `Portal` component.
+
+## Accessibility
+
+`ActionBar` root has `role="group"` and `ActionBar.Divider` has `role="separator"` so that
+assistive technologies announce the controls as one bar. `ActionBar` does not set any labels
+by default, because it cannot know the language of your application. Set:
+
+- `aria-label` on `ActionBar` to describe what the actions apply to, for example `aria-label="Selected rows actions"`
+- `aria-label` on `ActionBar.CloseButton` – it renders only an icon and has no accessible name otherwise
+
+The bar is rendered at the end of the document, so screen reader users are not notified
+when it appears. Set `announcement` to announce it – the content is rendered in a visually
+hidden polite live region and is announced every time the bar opens or the content changes
+while it is opened:
+
+```tsx
+import { ActionBar, Button } from '@mantine/core';
+
+function Demo({ selection }: { selection: string[] }) {
+  return (
+    <ActionBar
+      opened={selection.length > 0}
+      aria-label="Selected rows actions"
+      announcement={`${selection.length} rows selected, bulk actions available`}
+    >
+      <Button>Delete</Button>
+      <ActionBar.CloseButton aria-label="Clear selection" />
+    </ActionBar>
+  );
+}
+```

@@ -2,6 +2,7 @@ import type {
   ActionIconCssVariables,
   ActionIconFactory,
   ActionIconProps,
+  ActionIconSize,
   ActionIconStylesNames,
   ActionIconVariant,
 } from './ActionIcon';
@@ -28,6 +29,7 @@ export type {
   ActionIconFactory,
   ActionIconCssVariables,
   ActionIconVariant,
+  ActionIconSize,
   ActionIconGroupProps,
   ActionIconGroupCssVariables,
   ActionIconGroupStylesNames,

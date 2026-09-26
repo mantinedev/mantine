@@ -1,7 +1,9 @@
-import { useEffect, useEffectEvent } from 'react';
+import cx from 'clsx';
 import { RemoveScroll } from 'react-remove-scroll';
+import { useWindowEvent } from '@mantine/hooks';
 import {
   BoxProps,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -12,9 +14,10 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { Affix, AffixBaseProps } from '../Affix';
+import { Affix, AffixBaseProps, AffixPosition, AffixProps } from '../Affix';
 import { Paper, PaperBaseProps } from '../Paper';
 import { Transition, TransitionOverride } from '../Transition';
+import { VisuallyHidden } from '../VisuallyHidden';
 import { ActionBarProvider } from './ActionBar.context';
 import {
   ActionBarCloseButton,
@@ -31,7 +34,7 @@ export type ActionBarStylesNames =
 export interface ActionBarProps
   extends
     BoxProps,
-    AffixBaseProps,
+    Omit<AffixBaseProps, 'withSafeArea'>,
     PaperBaseProps,
     StylesApiProps<ActionBarFactory>,
     ElementProps<'div'> {
@@ -41,22 +44,31 @@ export interface ActionBarProps
   /** Called when close button is clicked or Escape is pressed @category state */
   onClose?: () => void;
 
-  /** Props passed down to the `Transition` component, `{ transition: 'pop', duration: 200 }` by default @category appearance */
+  /** Action bar position on screen @default { bottom: 30, left: 0, right: 0 } @category appearance */
+  position?: AffixPosition;
+
+  /** Props passed down to the `Affix` component */
+  affixProps?: AffixProps & DataAttributes;
+
+  /** Props passed down to the `Transition` component @default { transition: 'pop', duration: 200 } @category appearance */
   transitionProps?: TransitionOverride;
 
   /** Key of `theme.shadows` or any valid CSS `box-shadow` value @category appearance */
   shadow?: MantineShadow;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @category appearance */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Determines whether the action bar should be closed when `Escape` key is pressed, `false` by default @category behavior */
+  /** Determines whether the action bar should be closed when `Escape` key is pressed @default false @category behavior */
   closeOnEscape?: boolean;
 
-  /** `aria-label` of the actions group, `'Actions'` by default @category accessibility */
+  /** `aria-label` of the actions group, describes what the actions apply to @category accessibility */
   'aria-label'?: string;
 
-  /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node, `false` by default */
+  /** Content announced by screen readers when the action bar opens or when the content changes while it is opened, for example `'3 rows selected'` @category accessibility */
+  announcement?: React.ReactNode;
+
+  /** If set, the action bar is kept in the DOM when closed. React `Activity` is used to preserve its state while it is hidden @default false */
   keepMounted?: boolean;
 
   children: React.ReactNode;
@@ -73,14 +85,10 @@ export type ActionBarFactory = Factory<{
 }>;
 
 const defaultProps = {
-  withBorder: true,
-  py: 'xs',
-  px: 'sm',
   position: { bottom: 30, left: 0, right: 0 },
   transitionProps: { transition: 'pop', duration: 200 },
   closeOnEscape: false,
   withinPortal: true,
-  'aria-label': 'Actions',
   zIndex: getDefaultZIndex('modal'),
 } satisfies Partial<ActionBarProps>;
 
@@ -103,6 +111,8 @@ export const ActionBar = factory<ActionBarFactory>((_props) => {
     onClose,
     portalProps,
     closeOnEscape,
+    announcement,
+    affixProps,
     attributes,
     ...others
   } = props;
@@ -120,43 +130,42 @@ export const ActionBar = factory<ActionBarFactory>((_props) => {
     vars,
   });
 
-  const handleEscape = useEffectEvent((event: KeyboardEvent) => {
-    if (event.key === 'Escape' && !event.isComposing) {
+  useWindowEvent(
+    'keydown',
+    (event) => {
+      if (!closeOnEscape || !opened || event.key !== 'Escape' || event.isComposing) {
+        return;
+      }
+
+      const target = event.target as HTMLElement | null;
+      if (
+        target?.getAttribute?.('data-mantine-stop-propagation') === 'true' ||
+        target?.closest?.('[aria-modal="true"]')
+      ) {
+        return;
+      }
+
       onClose?.();
-    }
-  });
-
-  useEffect(() => {
-    if (!closeOnEscape || !opened) {
-      return undefined;
-    }
-
-    window.addEventListener('keydown', handleEscape, { passive: true });
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [closeOnEscape, opened]);
+    },
+    { capture: true }
+  );
 
   return (
     <Affix
+      {...affixProps}
       zIndex={zIndex}
       position={position}
       withinPortal={withinPortal}
       portalProps={portalProps}
       unstyled={unstyled}
-      // The default position is anchored to both edges, so the bar is a full width fixed
-      // element. Without this it shifts by the scrollbar width whenever a Modal or Drawer
-      // locks scrolling – which is exactly the flow ActionBar exists for (select rows, run a
-      // bulk action, confirm it in a modal).
-      className={RemoveScroll.classNames.fullWidth}
+      className={cx(RemoveScroll.classNames.fullWidth, affixProps?.className)}
     >
-      {/* `keepMountedMode` is pinned to `display-none`: the documented contract is that the
-          bar stays in the DOM and is merely hidden, and `Transition`'s default `activity`
-          mode tears down the effects of everything inside it instead. */}
-      <Transition
-        keepMounted={keepMounted}
-        keepMountedMode="display-none"
-        mounted={opened}
-        {...transitionProps}
-      >
+      {announcement !== undefined && (
+        <VisuallyHidden role="status" aria-live="polite">
+          {opened ? announcement : null}
+        </VisuallyHidden>
+      )}
+      <Transition keepMounted={keepMounted} mounted={opened} {...transitionProps}>
         {(transitionStyles) => (
           <ActionBarProvider value={{ onClose, getStyles, unstyled }}>
             <Paper

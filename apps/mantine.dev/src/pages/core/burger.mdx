@@ -38,3 +38,34 @@ function Demo() {
   );
 }
 ```
+
+`Burger` sets the `aria-expanded` attribute based on the `opened` prop, so screen readers announce
+whether the controlled navigation is expanded or collapsed. If the `opened` prop is not set,
+the attribute is not added. To override the value, pass the `aria-expanded` prop directly.
+
+Set `aria-controls` to the `id` of the element that `Burger` toggles, so that assistive
+technologies can associate the button with the navigation:
+
+```tsx
+import { useDisclosure } from '@mantine/hooks';
+import { Burger } from '@mantine/core';
+
+function Demo() {
+  const [opened, { toggle }] = useDisclosure();
+
+  return (
+    <>
+      <Burger
+        opened={opened}
+        onClick={toggle}
+        aria-label="Toggle navigation"
+        aria-controls="main-navigation"
+      />
+
+      <nav id="main-navigation" hidden={!opened}>
+        {/* Navigation links */}
+      </nav>
+    </>
+  );
+}
+```

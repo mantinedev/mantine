@@ -32,13 +32,13 @@ export interface BurgerProps
   /** Controls burger `width` and `height`, numbers are converted to rem @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
-  /** Controls height of lines, by default calculated based on `size` prop */
+  /** Controls height of lines, numbers are converted to rem @default `size / 12` */
   lineSize?: string | number;
 
-  /** Key of `theme.colors` of any valid CSS value, by default `theme.white` in dark color scheme and `theme.black` in light */
+  /** Key of `theme.colors` or any valid CSS value, by default `theme.white` in dark color scheme and `theme.black` in light */
   color?: MantineColor;
 
-  /** State of the burger, when `true` burger is transformed into X @default false */
+  /** State of the burger, when `true` burger is transformed into X. If set, its value is also used as `aria-expanded` attribute @default false */
   opened?: boolean;
 
   /** `transition-duration` property value in ms @default 300 */
@@ -101,7 +101,7 @@ export const Burger = factory<BurgerFactory>((_props) => {
   });
 
   return (
-    <UnstyledButton {...getStyles('root')} {...others}>
+    <UnstyledButton aria-expanded={opened} {...getStyles('root')} {...others}>
       <Box mod={['reduce-motion', { opened }]} {...getStyles('burger')} />
       {children}
     </UnstyledButton>

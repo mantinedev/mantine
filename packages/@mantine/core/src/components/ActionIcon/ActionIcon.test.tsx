@@ -1,4 +1,4 @@
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ActionIcon, ActionIconProps, ActionIconStylesNames } from './ActionIcon';
 import { ActionIconGroup } from './ActionIconGroup/ActionIconGroup';
 import { ActionIconGroupSection } from './ActionIconGroupSection/ActionIconGroupSection';
@@ -11,6 +11,12 @@ describe('@mantine/core/ActionIcon', () => {
     <ActionIcon.Group aria-label="test">
       <ActionIcon aria-label="test-1" />
       <ActionIcon aria-label="test-2" />
+    </ActionIcon.Group>,
+    <ActionIcon aria-label="test" loading />,
+    <ActionIcon.Group aria-label="test">
+      <ActionIcon aria-label="decrement" />
+      <ActionIcon.GroupSection>1</ActionIcon.GroupSection>
+      <ActionIcon aria-label="increment" />
     </ActionIcon.Group>,
   ]);
 
@@ -29,11 +35,13 @@ describe('@mantine/core/ActionIcon', () => {
     stylesApiSelectors: ['root'],
   });
 
-  it('sets data-loading attribute when loading prop is set to true', () => {
+  it('sets data-loading attribute on root and icon when loading prop is set to true', () => {
     const { container, rerender } = render(<ActionIcon loading />);
-    expect(container.querySelector('[data-loading]')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-ActionIcon-root')).toHaveAttribute('data-loading');
+    expect(container.querySelector('.mantine-ActionIcon-icon')).toHaveAttribute('data-loading');
     rerender(<ActionIcon loading={false} />);
-    expect(container.querySelector('[data-loading]')).not.toBeInTheDocument();
+    expect(container.querySelector('.mantine-ActionIcon-root')).not.toHaveAttribute('data-loading');
+    expect(container.querySelector('.mantine-ActionIcon-icon')).not.toHaveAttribute('data-loading');
   });
 
   it('sets data-disabled attribute when disabled prop is set to true', () => {
@@ -41,6 +49,16 @@ describe('@mantine/core/ActionIcon', () => {
     expect(container.querySelector('[data-disabled]')).toBeInTheDocument();
     rerender(<ActionIcon disabled={false} />);
     expect(container.querySelector('[data-disabled]')).not.toBeInTheDocument();
+  });
+
+  it('sets data-disabled attribute without disabling the button when data-disabled prop is set', async () => {
+    const spy = jest.fn();
+    render(<ActionIcon aria-label="test" data-disabled onClick={spy} />);
+    const button = screen.getByRole('button');
+    expect(button).toHaveAttribute('data-disabled');
+    expect(button).not.toHaveAttribute('disabled');
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('sets disabled attribute when disabled prop is set to true', () => {
