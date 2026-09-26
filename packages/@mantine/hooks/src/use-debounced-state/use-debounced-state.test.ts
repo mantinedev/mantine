@@ -73,4 +73,32 @@ describe('use-debounced-state', () => {
     act(() => hook.unmount());
     expect(clearTimeout).toHaveBeenCalledTimes(1);
   });
+
+  it('should treat a call made after wait as leading with leading=true', () => {
+    timeoutCallback = () => {};
+
+    const hook = renderHook(() => useDebouncedState('test1', 100, { leading: true }));
+
+    act(() => hook.result.current[1]('test2'));
+    expect(hook.result.current[0]).toEqual('test2');
+
+    act(() => timeoutCallback());
+    expect(hook.result.current[0]).toEqual('test2');
+
+    act(() => hook.result.current[1]('test3'));
+    expect(hook.result.current[0]).toEqual('test3');
+  });
+
+  it('should not reapply the leading value when wait elapses with leading=true', () => {
+    timeoutCallback = () => {};
+
+    const hook = renderHook(() => useDebouncedState('test', 100, { leading: true }));
+
+    act(() => hook.result.current[1]((prev) => `${prev}0`));
+    expect(hook.result.current[0]).toEqual('test0');
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 100);
+
+    act(() => timeoutCallback());
+    expect(hook.result.current[0]).toEqual('test0');
+  });
 });
