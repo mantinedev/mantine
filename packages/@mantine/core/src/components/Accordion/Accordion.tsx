@@ -24,6 +24,7 @@ import { AccordionItem, type AccordionItemProps } from './AccordionItem/Accordio
 import { AccordionPanel, type AccordionPanelProps } from './AccordionPanel/AccordionPanel';
 import { useAccordion, type AccordionController } from './use-accordion/use-accordion';
 import classes from './Accordion.module.css';
+
 export type AccordionStylesNames =
   | 'root'
   | 'content'
