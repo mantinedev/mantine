@@ -73,4 +73,22 @@ describe('@mantine/core/SwitchGroup', () => {
     expect(screen.getAllByRole('switch')[0]).not.toBeChecked();
     expect(screen.getAllByRole('switch')[2]).not.toBeDisabled();
   });
+
+  it('links group to the label with aria-labelledby only when label is rendered', () => {
+    const { rerender } = render(
+      <SwitchGroup label="Group label">
+        <Switch value="a" label="A" />
+      </SwitchGroup>
+    );
+    expect(screen.getByRole('group')).toHaveAccessibleName('Group label');
+
+    rerender(
+      <>
+        <SwitchGroup>
+          <Switch value="a" label="A" />
+        </SwitchGroup>
+      </>
+    );
+    expect(screen.getByRole('group')).not.toHaveAttribute('aria-labelledby');
+  });
 });
