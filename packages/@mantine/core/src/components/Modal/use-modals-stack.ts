@@ -1,4 +1,3 @@
-import { useOverlayStackState } from '../OverlayStack/use-overlay-stack-state';
+import { useOverlayStackState } from '../../core/OverlayStack';
 
 export const useModalsStack = useOverlayStackState;
-export const useDrawersStack = useOverlayStackState;

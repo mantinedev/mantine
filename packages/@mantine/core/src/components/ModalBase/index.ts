@@ -1,9 +1,8 @@
 export { ModalBaseProvider, useModalBaseContext } from './ModalBase.context';
 export { useOverlay } from './use-overlay';
-export { useLockScroll } from './use-lock-scroll';
-export { useOverlayTransition } from './use-modal-transition';
-export { useOverlayBodyId } from './use-modal-body-id';
-export { useOverlayTitleId } from './use-modal-title-id';
+export { useOverlayTransition } from './use-overlay-transition';
+export { useOverlayBodyId } from './use-overlay-body-id';
+export { useOverlayTitleId } from './use-overlay-title-id';
 
 export type { UseOverlayInput, UseOverlayReturn } from './use-overlay';
 export type { ModalBaseBreakpoint } from './use-below-breakpoint';

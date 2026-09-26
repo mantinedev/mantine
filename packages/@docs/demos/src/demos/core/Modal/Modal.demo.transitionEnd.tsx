@@ -24,6 +24,7 @@ function Demo() {
           firstHandlers.close();
           setModalData({ title: '', message: '' });
         }}
+        transitionProps={{ duration: 300, exitDuration: 1000, transition: 'fade-down' }}
         title={modalData.title}
       >
         {modalData.message}
@@ -31,6 +32,7 @@ function Demo() {
       <Modal
         opened={secondOpened}
         onClose={secondHandlers.close}
+        transitionProps={{ duration: 300, exitDuration: 1000, transition: 'fade-down' }}
         onExitTransitionEnd={() => setModalData({ title: '', message: '' })}
         title={modalData.title}
       >
@@ -43,6 +45,7 @@ function Demo() {
             firstHandlers.open();
             setModalData({ title: 'Edit your profile', message: 'Imagine a form here' });
           }}
+          variant="default"
         >
           Clear data in onClose
         </Button>
@@ -52,6 +55,7 @@ function Demo() {
             secondHandlers.open();
             setModalData({ title: 'Edit your profile', message: 'Imagine a form here' });
           }}
+          variant="default"
         >
           Clear data in onExitTransitionEnd
         </Button>

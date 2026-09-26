@@ -1,5 +1,5 @@
-import { use, useEffect, useId } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
+import { ModalStackContext, useOverlayStackEntry } from '../../core/OverlayStack';
 import { ModalBody, type ModalBodyProps } from './ModalBody';
 import { ModalCloseButton, type ModalCloseButtonProps } from './ModalCloseButton';
 import { ModalContent, type ModalContentProps } from './ModalContent';
@@ -12,7 +12,7 @@ import {
   ModalRootProps,
   ModalRootStylesNames,
 } from './ModalRoot';
-import { ModalStack, ModalStackContext, type ModalStackProps } from './ModalStack';
+import { ModalStack, type ModalStackProps } from './ModalStack';
 import { ModalTitle, type ModalTitleProps } from './ModalTitle';
 import classes from './Modal.module.css';
 export type ModalStylesNames = ModalRootStylesNames;
@@ -93,106 +93,37 @@ export const Modal = factory<ModalFactory>((_props) => {
     opened,
     onClose,
     closeOnEscape,
-    trapFocus,
     stackId,
     zIndex,
     onExitTransitionEnd,
     transitionProps,
     ...others
   } = useProps('Modal', defaultProps, _props);
-  const ctx = use(ModalStackContext);
-  const autoStackId = useId();
-  const resolvedStackId = stackId || autoStackId;
   const hasHeader = !!title || withCloseButton;
-  const isStackTop = !!ctx && ctx.currentId === resolvedStackId;
-  const isStackActive = !!ctx && ctx.activeId === resolvedStackId;
-  const hasOtherModals = !!ctx && ctx.stack.some((id) => id !== resolvedStackId);
-  const stackTransitionProps = hasOtherModals
+  const stackEntry = useOverlayStackEntry(ModalStackContext, {
+    stackId,
+    opened,
+    onClose,
+    zIndex,
+    closeOnEscape,
+    withOverlay,
+    onExitTransitionEnd,
+  });
+  const stackTransitionProps = stackEntry.hasSameKindSiblings
     ? { ...transitionProps, transition: STACK_TRANSITION }
     : transitionProps;
-  const stackProps = ctx
-    ? {
-        closeOnEscape: isStackActive && closeOnEscape,
-        trapFocus: isStackActive && trapFocus,
-        zIndex: ctx.getZIndex(resolvedStackId),
-        __handledEscapeEvents: ctx.handledEscapeEvents,
-      }
-    : {};
-
-  const overlayVisible = withOverlay === false ? false : hasOtherModals ? isStackTop : opened;
-
-  const depthProps = ctx
-    ? {
-        ...(ctx.withStackTransform
-          ? {
-              __depth: ctx.getDepth(resolvedStackId),
-              __visible: ctx.isVisible(resolvedStackId),
-              __dragProgress: ctx.dragProgress,
-              __topRect: ctx.topRect,
-              __reportTopRect: (rect: { width: number; height: number }) =>
-                ctx.reportTopRect(resolvedStackId, rect),
-            }
-          : { __visible: ctx.isVisible(resolvedStackId) }),
-        __instant: !opened && ctx.getDepth(resolvedStackId) > 0,
-      }
-    : {};
-
-  const addOverlay = ctx?.addOverlay;
-  const markClosing = ctx?.markClosing;
-  const removeOverlay = ctx?.removeOverlay;
-  const registerCloseHandler = ctx?.registerCloseHandler;
-
-  useEffect(() => {
-    if (opened) {
-      addOverlay?.(resolvedStackId, zIndex || getDefaultZIndex('modal'));
-    } else {
-      markClosing?.(resolvedStackId);
-    }
-  }, [opened, resolvedStackId, zIndex, addOverlay, markClosing]);
-
-  useEffect(() => {
-    if (!removeOverlay) {
-      return undefined;
-    }
-
-    return () => removeOverlay(resolvedStackId);
-  }, [removeOverlay, resolvedStackId]);
-
-  useEffect(() => {
-    if (!registerCloseHandler) {
-      return undefined;
-    }
-
-    return registerCloseHandler(resolvedStackId, onClose);
-  }, [registerCloseHandler, resolvedStackId, onClose]);
-
-  const handleExitTransitionEnd = () => {
-    removeOverlay?.(resolvedStackId);
-    onExitTransitionEnd?.();
-  };
 
   return (
     <ModalRoot
       radius={radius}
       opened={opened}
       onClose={onClose}
-      zIndex={ctx ? ctx.getZIndex(resolvedStackId) : zIndex}
-      onExitTransitionEnd={handleExitTransitionEnd}
       transitionProps={stackTransitionProps}
-      closeOnEscape={closeOnEscape}
-      trapFocus={trapFocus}
       {...others}
-      {...stackProps}
+      {...stackEntry.rootProps}
     >
-      {withOverlay && (
-        <ModalOverlay
-          visible={overlayVisible}
-          transitionProps={hasOtherModals ? { duration: 0 } : undefined}
-          {...(ctx ? { zIndex: ctx.maxZIndex } : null)}
-          {...overlayProps}
-        />
-      )}
-      <ModalContent radius={radius} {...depthProps}>
+      {withOverlay && <ModalOverlay {...stackEntry.overlayProps} {...overlayProps} />}
+      <ModalContent radius={radius} {...stackEntry.contentProps}>
         {hasHeader && (
           <ModalHeader>
             {title && <ModalTitle>{title}</ModalTitle>}

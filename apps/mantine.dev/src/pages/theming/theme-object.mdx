@@ -324,7 +324,9 @@ You can learn more about rem conversion in the [rem units guide](/styles/rem).
 `overlayStack` enables the shared [Modal.Stack](/core/modal/#shared-stack) and [Drawer.Stack](/core/drawer/#shared-stack)
 for all modals and drawers in the application – modals and drawers are stacked automatically
 without `Modal.Stack`/`Drawer.Stack` wrappers and `stackId` props. Modals and drawers are stacked
-separately. `overlayStack` accepts `true` or an object with `maxDepth` and `withStackTransform` options:
+visually in separate stacks, but z-index, focus trap and `Escape` key handling always follow the
+topmost opened modal or drawer. `overlayStack` is `false` by default and accepts `true` or an object
+with `maxDepth` and `withStackTransform` options:
 
 ```tsx
 import { createTheme } from '@mantine/core';

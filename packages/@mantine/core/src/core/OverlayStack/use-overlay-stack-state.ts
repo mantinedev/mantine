@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-interface OverlayStackStateReturnType<T extends string> {
+export interface OverlayStackStateReturnType<T extends string> {
   state: Record<T, boolean>;
   open: (id: T) => void;
   close: (id: T) => void;

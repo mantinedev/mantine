@@ -41,12 +41,14 @@ when the `fullScreen` prop is set:
 ## Fullscreen on small screens
 
 Set the `fullScreenBelow` prop to make the modal fullscreen only when the viewport is narrower
-than the given breakpoint. The prop accepts a key of `theme.breakpoints` (`xs`, `sm`, `md`, `lg`, `xl`),
-any CSS length (for example, `'50em'` or `'800px'`) or a number of pixels. The modal reacts to viewport
-changes while it is opened. The `size` prop is ignored while the modal is fullscreen, and `fullScreen`
-still forces fullscreen at any viewport width:
+than the given breakpoint:
 
 <Demo data={ModalDemos.fullScreenBelow} />
+
+`fullScreenBelow` accepts a key of `theme.breakpoints` (`xs`, `sm`, `md`, `lg`, `xl`), any CSS length
+(for example, `'50em'` or `'800px'`) or a number of pixels. The modal reacts to viewport changes while
+it is opened. The `size` prop is ignored while the modal is fullscreen. `fullScreen` takes precedence
+over `fullScreenBelow` – it forces fullscreen at any viewport width.
 
 ## Customize overlay
 
@@ -57,19 +59,22 @@ supports with `overlayProps`:
 
 ## Footer
 
-Use `Modal.Footer` component to render a footer with actions. By default, the footer stays pinned
-to the bottom of the modal while the body scrolls between the header and the footer. When the body
-content is short, the footer sits at the very bottom with free space above it:
+Use the `Modal.Footer` component to render a footer with actions:
 
 <Demo data={ModalDemos.footer} />
 
+By default, the footer stays pinned to the bottom of the modal while the body scrolls between the
+header and the footer. When the body content is short, the footer sits at the very bottom with free
+space above it.
+
 ## Sticky header and footer
 
-By default, both the header and the footer stay pinned in place while the body scrolls. This is
-controlled by the `stickyHeader` and `stickyFooter` props (both default to `true`). Set either to
-`false` to make that section scroll away with the body content:
+Header and footer stay visible while the body content scrolls. Set `stickyHeader={false}` or
+`stickyFooter={false}` to make them scroll away with the content:
 
 <Demo data={ModalDemos.stickySections} />
+
+Both props default to `true`.
 
 ## Modal with scroll
 
@@ -182,6 +187,11 @@ Differences from using multiple `Modal` components:
 
 <Demo data={ModalDemos.stack} />
 
+Modals behind the top one are dimmed by the single overlay and cannot be interacted with –
+only the top modal receives pointer events, focus and `Escape` key presses. Set
+`withStackTransform={false}` to disable the stacked depth effect – in this case only the top
+modal is visible, modals behind it are hidden until the top one is closed.
+
 Use the `maxDepth` prop (default `5`) to control how many stacked modals are visible behind the
 top one at the same time:
 
@@ -259,12 +269,8 @@ function Demo() {
 
 ## Shared stack
 
-Set `theme.overlayStack` to make all `Modal` components in your application a part of one
-shared `Modal.Stack` without wrapping them in `Modal.Stack` and passing `stackId`. Any modal
-that is opened while another modal is opened is rendered on top of it: z-index, focus trap,
-`Escape` key handling and the overlay are managed for the entire application.
-[Drawer](/core/drawer) components get their own shared `Drawer.Stack`, modals and drawers
-are never stacked together.
+Set `theme.overlayStack` to stack all `Modal` components in your application automatically,
+without `Modal.Stack` wrapper and `stackId` prop:
 
 ```tsx
 import { createTheme, MantineProvider } from '@mantine/core';
@@ -278,10 +284,13 @@ function App() {
 }
 ```
 
-Once `overlayStack` is enabled on the theme, modals do not require `Modal.Stack` wrapper and
-`stackId` prop – any modal that is opened on top of another modal is stacked automatically:
-
 <Demo data={ModalDemos.overlayStack} />
+
+With `overlayStack` enabled, all modals join one shared `Modal.Stack`. Any modal that is opened
+while another modal is opened is rendered on top of it: z-index, focus trap, `Escape` key handling
+and the overlay are managed for the entire application. [Drawer](/core/drawer) components join their
+own shared `Drawer.Stack` – modals and drawers are never stacked visually together, but z-index,
+focus trap and `Escape` key handling always follow the topmost opened modal or drawer.
 
 `overlayStack` accepts an object to configure the shared stacks:
 
@@ -293,7 +302,7 @@ const theme = createTheme({
     // Maximum number of stacked modals that remain visible behind the top one, 5 by default
     maxDepth: 3,
 
-    // Disables the stacked depth effect, true by default
+    // true by default, false disables the depth effect and shows only the top modal
     withStackTransform: false,
   },
 });
@@ -303,6 +312,12 @@ When `theme.overlayStack` is set, `Modal.Stack` does not create a separate stack
 rendered inside it become a part of the shared stack, `maxDepth` and `withStackTransform`
 props of `Modal.Stack` are ignored. `useModalsStack` hook can still be used to manage
 opened state of several modals.
+
+`stackId` values inside the shared stack are scoped per `Modal.Stack` instance – separate
+`Modal.Stack` components may reuse the same ids (for example, two components that both call
+`useModalsStack(['first', 'second'])`) without conflicts. `useModalStackContext` called inside such
+`Modal.Stack` returns only the modals of that `Modal.Stack`, and its `close` and `closeAll`
+handlers do not affect modals of other `Modal.Stack` instances.
 
 Use `useModalStackContext` hook to access the shared stack (or the closest `Modal.Stack`)
 from any component:

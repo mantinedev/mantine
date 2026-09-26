@@ -127,11 +127,13 @@ compound components to render a footer with actions:
 ### Sticky header and footer
 
 [Modal](/core/modal) and [Drawer](/core/drawer) now support the `stickyHeader` and `stickyFooter`
-props (both default to `true`). When enabled, the header stays pinned to the top and the footer
-stays pinned to the bottom while the body scrolls between them. Set either to `false` to make that
-section scroll away with the body content:
+props:
 
 <Demo data={ModalDemos.stickySections} />
+
+Both props default to `true` – the header stays pinned to the top and the footer stays pinned to the
+bottom while the body scrolls between them. Set either to `false` to make that section scroll away
+with the body content.
 
 ### Reworked Modal.Stack and Drawer.Stack
 
@@ -144,12 +146,9 @@ stacked items are visible behind the top one at the same time.
 
 ## Automatic Modal and Drawer stacking
 
-New `theme.overlayStack` option lets Mantine manage the stack for you: all
-[Modal](/core/modal/#shared-stack) and [Drawer](/core/drawer/#shared-stack) components in the
-application join a single shared stack maintained by the library. Modals and drawers opened on top
-of each other are stacked automatically – no `Modal.Stack`/`Drawer.Stack` wrappers or `stackId`
-props required. New `useModalStackContext` and `useDrawerStackContext` hooks provide access to
-the shared stacks:
+New `theme.overlayStack` option stacks all [Modal](/core/modal/#shared-stack) and
+[Drawer](/core/drawer/#shared-stack) components automatically – no `Modal.Stack`/`Drawer.Stack`
+wrappers or `stackId` props required:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -161,10 +160,16 @@ const theme = createTheme({
 
 <Demo data={ModalDemos.overlayStack} />
 
+All modals join one shared `Modal.Stack` and all drawers join one shared `Drawer.Stack`. Modals and
+drawers are stacked visually in separate stacks, but z-index, focus trap and `Escape` key handling
+always follow the topmost opened modal or drawer. New `useModalStackContext` and
+`useDrawerStackContext` hooks provide access to the shared stacks.
+
 ## Drawer swipe to dismiss
 
 [Drawer](/core/drawer) can now be dismissed with a swipe gesture. Swipe to dismiss is enabled by
-default for all four positions and is RTL-aware. Opt out with `withSwipe={false}` and adjust the
+default for all four positions and is RTL-aware. Opt out with `withSwipe={false}`, prevent the
+gesture from starting on specific elements with the `data-drawer-no-swipe` attribute and adjust the
 distance required to dismiss with `swipeThreshold`:
 
 <Demo data={DrawerDemos.swipe} />
@@ -187,11 +192,13 @@ with `defaultActiveSnapPoint`:
 ## Modal and Drawer fullScreenBelow prop
 
 [Modal](/core/modal) and [Drawer](/core/drawer) now support the `fullScreenBelow` prop to take
-the entire screen when the viewport is narrower than the given breakpoint. The prop accepts a key
-of `theme.breakpoints`, any CSS length or a number of pixels, and reacts to viewport changes while
-the component is opened. [Drawer](/core/drawer) now also supports the `fullScreen` prop:
+the entire screen when the viewport is narrower than the given breakpoint:
 
 <Demo data={ModalDemos.fullScreenBelow} />
+
+The prop accepts a key of `theme.breakpoints`, any CSS length or a number of pixels, and reacts to
+viewport changes while the component is opened. [Drawer](/core/drawer) now also supports the
+`fullScreen` prop.
 
 ## Alert redesign
 

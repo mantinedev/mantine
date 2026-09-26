@@ -49,17 +49,19 @@ function Demo() {
 
 ## Full screen
 
-Set the `fullScreen` prop to make the drawer take the entire viewport along its `position` axis:
-full width for `left` and `right` positions, full height for `top` and `bottom`.
-The `size`, `offset` and `radius` props are ignored when `fullScreen` is set. When `snapPoints`
-are set, the drawer is sized by the snap points and `fullScreen` has no effect.
-
-To make the drawer full screen only on small screens, set the `fullScreenBelow` prop to a key
-of `theme.breakpoints` (`xs`, `sm`, `md`, `lg`, `xl`), any CSS length (for example, `'50em'` or `'800px'`)
-or a number of pixels. The drawer reacts to viewport changes while it is opened, and `fullScreen`
-still forces full screen at any viewport width:
+Set the `fullScreen` prop to make the drawer take the entire viewport along its `position` axis,
+or `fullScreenBelow` to do that only when the viewport is narrower than the given breakpoint:
 
 <Demo data={DrawerDemos.fullScreenBelow} />
+
+A full screen drawer takes full width for `left` and `right` positions and full height for `top` and
+`bottom`. The `size`, `offset` and `radius` props are ignored while the drawer is full screen.
+
+`fullScreenBelow` accepts a key of `theme.breakpoints` (`xs`, `sm`, `md`, `lg`, `xl`), any CSS length
+(for example, `'50em'` or `'800px'`) or a number of pixels. The drawer reacts to viewport changes while
+it is opened. `fullScreen` takes precedence over `fullScreenBelow` – it forces full screen at any
+viewport width. When `snapPoints` are set, the drawer is sized by the snap points and neither
+`fullScreen` nor `fullScreenBelow` has an effect.
 
 ## Remove header
 
@@ -69,19 +71,22 @@ To remove the header, set `withCloseButton={false}`
 
 ## Footer
 
-Use `Drawer.Footer` component to render a footer with actions. By default, the footer stays pinned
-to the bottom of the drawer while the body scrolls between the header and the footer. When the body
-content is short, the footer sits at the very bottom with free space above it:
+Use the `Drawer.Footer` component to render a footer with actions:
 
 <Demo data={DrawerDemos.footer} />
 
+By default, the footer stays pinned to the bottom of the drawer while the body scrolls between the
+header and the footer. When the body content is short, the footer sits at the very bottom with free
+space above it.
+
 ## Sticky header and footer
 
-By default, both the header and the footer stay pinned in place while the body scrolls. This is
-controlled by the `stickyHeader` and `stickyFooter` props (both default to `true`). Set either to
-`false` to make that section scroll away with the body content:
+Header and footer stay visible while the body content scrolls. Set `stickyHeader={false}` or
+`stickyFooter={false}` to make them scroll away with the content:
 
 <Demo data={DrawerDemos.stickySections} />
+
+Both props default to `true`.
 
 ## Drawer with scroll
 
@@ -128,25 +133,36 @@ function Demo() {
 }
 ```
 
+## Disable swipe on specific elements
+
+Set the `data-drawer-no-swipe` attribute on elements that must not start the swipe gesture,
+for example, third-party drag and drop lists or other draggable widgets. The gesture is ignored
+when it starts on the element or any of its descendants:
+
+<Demo data={DrawerDemos.noSwipe} />
+
 ## Drag handle
 
-Set the `withHandle` prop to display a grab-bar drag affordance. The handle is rendered on the
-overlay at the drawer's leading edge (the edge that faces the viewport interior) and stays attached
-to the panel while it slides and during swipe/snap drags. It provides a visual hint that the drawer
-can be dragged:
+Set the `withHandle` prop to display a grab-bar that hints the drawer can be dragged:
 
 <Demo data={DrawerDemos.handle} />
 
+The handle is rendered on the overlay at the drawer's leading edge (the edge that faces the viewport
+interior) and stays attached to the panel while it slides and during swipe/snap drags.
+
 ## Snap points
 
-Set the `snapPoints` prop to enable snap points. Snap points are an array of numbers (fractions of
-the viewport, for example `0.4` for 40%) or strings (for example `300px`). When snap points are
-enabled, the drawer can be dragged between them:
+Set the `snapPoints` prop to let the drawer rest at several sizes and be dragged between them:
 
 <Demo data={DrawerDemos.snapPoints} />
 
+Each snap point is a fraction of the viewport (for example, `0.4` for 40%), a number of pixels greater
+than `1` (for example, `300`) or a string with a percentage or pixel value (for example, `'40%'` or
+`'300px'`).
+
 The active snap point can be controlled with `activeSnapPoint`/`onSnapPointChange` props
-or used in uncontrolled mode with `defaultActiveSnapPoint`:
+or used in uncontrolled mode with `defaultActiveSnapPoint` (the largest snap point by default).
+In uncontrolled mode, the drawer returns to `defaultActiveSnapPoint` every time it opens:
 
 ```tsx
 import { useState } from 'react';
@@ -269,6 +285,11 @@ Differences from using multiple `Drawer` components:
 
 <Demo data={DrawerDemos.stack} />
 
+Drawers behind the top one are dimmed by the single overlay and cannot be interacted with –
+only the top drawer receives pointer events, focus and `Escape` key presses. Set
+`withStackTransform={false}` to disable the stacked depth effect – in this case only the top
+drawer is visible, drawers behind it are hidden until the top one is closed.
+
 Use the `maxDepth` prop (default `5`) to control how many stacked drawers are visible behind the
 top one at the same time:
 
@@ -346,12 +367,8 @@ function Demo() {
 
 ## Shared stack
 
-Set `theme.overlayStack` to make all `Drawer` components in your application a part of one
-shared `Drawer.Stack` without wrapping them in `Drawer.Stack` and passing `stackId`. Any drawer
-that is opened while another drawer is opened is rendered on top of it: z-index, focus trap,
-`Escape` key handling and the overlay are managed for the entire application.
-[Modal](/core/modal) components get their own shared `Modal.Stack`, drawers and modals
-are never stacked together.
+Set `theme.overlayStack` to stack all `Drawer` components in your application automatically,
+without `Drawer.Stack` wrapper and `stackId` prop:
 
 ```tsx
 import { createTheme, MantineProvider } from '@mantine/core';
@@ -365,10 +382,13 @@ function App() {
 }
 ```
 
-Once `overlayStack` is enabled on the theme, drawers do not require `Drawer.Stack` wrapper and
-`stackId` prop – any drawer that is opened on top of another drawer is stacked automatically:
-
 <Demo data={DrawerDemos.overlayStack} />
+
+With `overlayStack` enabled, all drawers join one shared `Drawer.Stack`. Any drawer that is opened
+while another drawer is opened is rendered on top of it: z-index, focus trap, `Escape` key handling
+and the overlay are managed for the entire application. [Modal](/core/modal) components join their
+own shared `Modal.Stack` – drawers and modals are never stacked visually together, but z-index,
+focus trap and `Escape` key handling always follow the topmost opened drawer or modal.
 
 `overlayStack` accepts an object to configure the shared stacks:
 
@@ -380,7 +400,7 @@ const theme = createTheme({
     // Maximum number of stacked drawers that remain visible behind the top one, 5 by default
     maxDepth: 3,
 
-    // Disables the stacked depth effect, true by default
+    // true by default, false disables the depth effect and shows only the top drawer
     withStackTransform: false,
   },
 });
@@ -390,6 +410,12 @@ When `theme.overlayStack` is set, `Drawer.Stack` does not create a separate stac
 rendered inside it become a part of the shared stack, `maxDepth` and `withStackTransform`
 props of `Drawer.Stack` are ignored. `useDrawersStack` hook can still be used to manage
 opened state of several drawers.
+
+`stackId` values inside the shared stack are scoped per `Drawer.Stack` instance – separate
+`Drawer.Stack` components may reuse the same ids (for example, two components that both call
+`useDrawersStack(['first', 'second'])`) without conflicts. `useDrawerStackContext` called inside such
+`Drawer.Stack` returns only the drawers of that `Drawer.Stack`, and its `close` and `closeAll`
+handlers do not affect drawers of other `Drawer.Stack` instances.
 
 Use `useDrawerStackContext` hook to access the shared stack (or the closest `Drawer.Stack`)
 from any component:

@@ -1,5 +1,25 @@
+export type DrawerPosition = 'top' | 'bottom' | 'left' | 'right';
+
+export type DrawerAxis = 'x' | 'y';
+
+export function getAxis(position: DrawerPosition): DrawerAxis {
+  return position === 'top' || position === 'bottom' ? 'y' : 'x';
+}
+
+export function resolvePosition(position: DrawerPosition, dir: 'ltr' | 'rtl'): DrawerPosition {
+  if (dir === 'rtl' && position === 'left') {
+    return 'right';
+  }
+
+  if (dir === 'rtl' && position === 'right') {
+    return 'left';
+  }
+
+  return position;
+}
+
 export interface UseDrawerTransformInput {
-  position: 'top' | 'bottom' | 'left' | 'right';
+  position: DrawerPosition;
   dragging: boolean;
   dragOffset: number;
 }

@@ -10,7 +10,14 @@ export * from './CloseButton';
 export * from './Group';
 export * from './Loader';
 export * from './Overlay';
-export * from './ModalBase';
+export type {
+  ModalBaseBreakpoint,
+  ModalBaseContentProps,
+  ModalBaseOverlayProps,
+  ModalBaseProps,
+  ModalBaseStylesNames,
+  RemoveScrollProps,
+} from './ModalBase';
 export * from './Input';
 export * from './InputBase';
 export * from './Flex';

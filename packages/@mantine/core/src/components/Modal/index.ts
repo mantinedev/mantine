@@ -20,12 +20,9 @@ export { ModalHeader } from './ModalHeader';
 export { ModalOverlay } from './ModalOverlay';
 export { ModalTitle } from './ModalTitle';
 export { ModalStack, ModalStackContext } from './ModalStack';
-export { useModalsStack, useDrawersStack } from './use-modals-stack';
-export { useModalStackContext, useDrawerStackContext } from './use-modal-stack-context';
-export type {
-  UseModalStackContextReturnType,
-  UseDrawerStackContextReturnType,
-} from './use-modal-stack-context';
+export { useModalsStack } from './use-modals-stack';
+export { useModalStackContext } from './use-modal-stack-context';
+export type { UseModalStackContextReturnType } from './use-modal-stack-context';
 export { useModalContext } from './Modal.context';
 
 export type {

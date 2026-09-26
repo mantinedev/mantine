@@ -519,3 +519,69 @@ export function ThemeOverlayStackWithoutTransform() {
     </MantineThemeProvider>
   );
 }
+
+function ScopedStackInfo({ label }: { label: string }) {
+  const ctx = useModalStackContext();
+
+  return (
+    <Stack gap="xs">
+      <div data-testid={`scope-${label}`}>
+        Stack {label}: [{ctx.stack.join(', ')}]
+      </div>
+      <Button variant="default" onClick={ctx.closeAll}>
+        Close all in stack {label}
+      </Button>
+    </Stack>
+  );
+}
+
+function ScopedStacksContent() {
+  const a = useModalsStack(['first', 'second']);
+  const b = useModalsStack(['first', 'second']);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack align="flex-start">
+        <Button onClick={() => a.open('first')}>Open A first</Button>
+        <Button onClick={() => b.open('first')}>Open B first</Button>
+      </Stack>
+
+      <Modal.Stack>
+        <Modal {...a.register('first')} title="A: first">
+          <Stack>
+            <Button onClick={() => a.open('second')}>Open A second</Button>
+            <Button onClick={() => b.open('first')}>Open B first</Button>
+            <ScopedStackInfo label="A" />
+          </Stack>
+        </Modal>
+        <Modal {...a.register('second')} title="A: second">
+          <Stack>
+            <Button onClick={() => b.open('first')}>Open B first</Button>
+            <ScopedStackInfo label="A" />
+          </Stack>
+        </Modal>
+      </Modal.Stack>
+
+      <Modal.Stack>
+        <Modal {...b.register('first')} title="B: first">
+          <Stack>
+            <Button onClick={() => b.open('second')}>Open B second</Button>
+            <Button onClick={() => a.open('second')}>Open A second</Button>
+            <ScopedStackInfo label="B" />
+          </Stack>
+        </Modal>
+        <Modal {...b.register('second')} title="B: second">
+          <ScopedStackInfo label="B" />
+        </Modal>
+      </Modal.Stack>
+    </div>
+  );
+}
+
+export function ThemeOverlayStackScopedStacks() {
+  return (
+    <MantineThemeProvider theme={{ overlayStack: true }}>
+      <ScopedStacksContent />
+    </MantineThemeProvider>
+  );
+}

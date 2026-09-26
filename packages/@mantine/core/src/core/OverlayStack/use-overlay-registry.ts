@@ -25,7 +25,7 @@ export interface OverlayRegistry {
   handledEscapeEvents: WeakSet<KeyboardEvent>;
 }
 
-export function getOverlayKey(kind: OverlayStackKind, id: string) {
+function getOverlayKey(kind: OverlayStackKind, id: string) {
   return `${kind}:${id}`;
 }
 
@@ -171,7 +171,6 @@ export function useOverlayStackValue(
     () => entries.filter((entry) => entry.kind === kind),
     [entries, kind]
   );
-  const stack = useMemo(() => kindEntries.map((entry) => entry.id), [kindEntries]);
   const openStack = useMemo(
     () => kindEntries.filter((entry) => !entry.closing).map((entry) => entry.id),
     [kindEntries]
@@ -216,9 +215,9 @@ export function useOverlayStackValue(
   return useMemo(() => {
     const openEntries = entries.filter((entry) => !entry.closing);
     const topEntry = openEntries[openEntries.length - 1];
-    const activeId: string | undefined = topEntry?.kind === kind ? topEntry.id : undefined;
+    const kindIds = kindEntries.map((entry) => entry.id);
 
-    const maxZIndex = entries.reduce<number | string>(
+    const baseZIndex = entries.reduce<number | string>(
       (max, entry) =>
         typeof entry.zIndex === 'number' && typeof max === 'number'
           ? Math.max(max, entry.zIndex)
@@ -228,28 +227,32 @@ export function useOverlayStackValue(
 
     const getDepth = (id: string) => {
       const entry = kindEntries.find((item) => item.id === id);
-      const source = entry?.closing ? stack : openStack;
+      const source = entry?.closing ? kindIds : openStack;
       const index = source.indexOf(id);
       return index === -1 ? 0 : source.length - 1 - index;
     };
 
+    const getZIndex = (id: string) => {
+      const index = entries.findIndex((entry) => matches(entry, kind, id));
+      return `calc(${baseZIndex} + ${index === -1 ? entries.length : index} + 1)`;
+    };
+
     return {
-      stack,
       openStack,
-      maxDepth,
       addOverlay,
       markClosing,
       removeOverlay,
       registerCloseHandler,
       close,
       closeAll,
-      getZIndex: (id: string) =>
-        `calc(${maxZIndex} + ${entries.findIndex((entry) => matches(entry, kind, id))} + 1)`,
+      getZIndex,
       getDepth,
-      isVisible: (id: string) => getDepth(id) <= maxDepth,
-      maxZIndex,
+      isVisible: (id: string) =>
+        withStackTransform ? getDepth(id) <= maxDepth : getDepth(id) === 0,
+      isActive: (id: string) => !!topEntry && matches(topEntry, kind, id),
+      hasAnyOtherEntry: (id: string) => entries.some((entry) => !matches(entry, kind, id)),
+      hasSameKindSiblings: (id: string) => kindEntries.some((entry) => entry.id !== id),
       currentId,
-      activeId,
       shared,
       reportDrag,
       dragProgress,
@@ -261,7 +264,6 @@ export function useOverlayStackValue(
   }, [
     entries,
     kindEntries,
-    stack,
     openStack,
     currentId,
     rects,
@@ -269,6 +271,7 @@ export function useOverlayStackValue(
     maxDepth,
     withStackTransform,
     shared,
+    kind,
     addOverlay,
     markClosing,
     removeOverlay,
@@ -279,4 +282,64 @@ export function useOverlayStackValue(
     reportTopRect,
     handledEscapeEvents,
   ]);
+}
+
+export function useScopedOverlayStackValue(
+  parent: OverlayStackContextValue | null,
+  scope: string
+): OverlayStackContextValue | null {
+  const parentAddOverlay = parent?.addOverlay;
+  const parentMarkClosing = parent?.markClosing;
+  const parentRemoveOverlay = parent?.removeOverlay;
+  const parentRegisterCloseHandler = parent?.registerCloseHandler;
+  const parentReportTopRect = parent?.reportTopRect;
+
+  const toId = useCallback((id: string) => `${scope}/${id}`, [scope]);
+
+  const callbacks = useMemo(
+    () => ({
+      addOverlay: (id: string, zIndex: number | string) => parentAddOverlay?.(toId(id), zIndex),
+      markClosing: (id: string) => parentMarkClosing?.(toId(id)),
+      removeOverlay: (id: string) => parentRemoveOverlay?.(toId(id)),
+      registerCloseHandler: (id: string, handler: () => void) =>
+        parentRegisterCloseHandler?.(toId(id), handler) ?? (() => {}),
+      reportTopRect: (id: string, rect: OverlayStackRect) => parentReportTopRect?.(toId(id), rect),
+    }),
+    [
+      toId,
+      parentAddOverlay,
+      parentMarkClosing,
+      parentRemoveOverlay,
+      parentRegisterCloseHandler,
+      parentReportTopRect,
+    ]
+  );
+
+  return useMemo(() => {
+    if (!parent) {
+      return null;
+    }
+
+    const prefix = toId('');
+    const openStack = parent.openStack
+      .filter((id) => id.startsWith(prefix))
+      .map((id) => id.slice(prefix.length));
+    const close = (id: string) => parent.close(toId(id));
+
+    return {
+      ...parent,
+      ...callbacks,
+      openStack,
+      currentId: openStack[openStack.length - 1],
+      close,
+      closeAll: () => [...openStack].reverse().forEach(close),
+      getZIndex: (id) => parent.getZIndex(toId(id)),
+      getDepth: (id) => parent.getDepth(toId(id)),
+      isVisible: (id) => parent.isVisible(toId(id)),
+      isActive: (id) => parent.isActive(toId(id)),
+      hasAnyOtherEntry: (id) => parent.hasAnyOtherEntry(toId(id)),
+      hasSameKindSiblings: (id) => parent.hasSameKindSiblings(toId(id)),
+      reportDrag: (id, progress) => parent.reportDrag(toId(id), progress),
+    };
+  }, [parent, toId, callbacks]);
 }

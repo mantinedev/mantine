@@ -10,6 +10,14 @@
   &[data-type='container'] {
     container: carousel / inline-size;
   }
+
+  &:where([data-orientation='horizontal']) {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  &:where([data-orientation='vertical']) {
+    touch-action: pan-x pinch-zoom;
+  }
 }
 
 .container {

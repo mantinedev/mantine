@@ -98,6 +98,11 @@ export const Demo_swipe = {
   render: renderDemo(demos.swipe),
 };
 
+export const Demo_noSwipe = {
+  name: '⭐ Demo: noSwipe',
+  render: renderDemo(demos.noSwipe),
+};
+
 export const Demo_snapPoints = {
   name: '⭐ Demo: snapPoints',
   render: renderDemo(demos.snapPoints),

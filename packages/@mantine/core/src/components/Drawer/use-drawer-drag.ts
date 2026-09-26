@@ -1,10 +1,15 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { useLatestRef, useUncontrolled } from '@mantine/hooks';
+import { clamp, useLatestRef } from '@mantine/hooks';
+import { ownsGesture, isScrollAtEdge, resolveScrollContainer } from './get-drawer-gesture-target';
+import { resolveSnapFraction, SNAP_PROJECTION_MS } from './get-drawer-snap';
+import { getAxis, resolvePosition } from './use-drawer-transform';
 
 export interface UseDrawerDragInput {
   position: 'top' | 'bottom' | 'left' | 'right';
   dir: 'ltr' | 'rtl';
   enabled: boolean;
+  /** drawer opened state; the uncontrolled active snap point resets to its default every time it becomes `true` */
+  opened?: boolean;
   onClose: () => void;
   /** ref to the content root; used as the upper boundary when resolving the scrollable container under the pointer */
   scrollRef: React.RefObject<HTMLElement | null>;
@@ -34,31 +39,6 @@ export interface UseDrawerDragReturn {
   getHandleProps: () => { onPointerDown: (event: React.PointerEvent) => void };
 }
 
-type Axis = 'x' | 'y';
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, value));
-}
-
-function getAxis(position: UseDrawerDragInput['position']): Axis {
-  return position === 'top' || position === 'bottom' ? 'y' : 'x';
-}
-
-export function resolvePosition(
-  position: UseDrawerDragInput['position'],
-  dir: UseDrawerDragInput['dir']
-): UseDrawerDragInput['position'] {
-  if (dir === 'rtl' && position === 'left') {
-    return 'right';
-  }
-
-  if (dir === 'rtl' && position === 'right') {
-    return 'left';
-  }
-
-  return position;
-}
-
 function getDismissDelta(position: UseDrawerDragInput['position'], deltaX: number, deltaY: number) {
   switch (position) {
     case 'bottom':
@@ -75,113 +55,17 @@ function getDismissDelta(position: UseDrawerDragInput['position'], deltaX: numbe
 
 const COMMIT_THRESHOLD = 6;
 
-const INTERACTIVE_TAGS = ['input', 'textarea', 'select', 'button', 'a'];
+const VELOCITY_RELEASE_WINDOW = 100;
 
-function isInteractiveOrTextEntry(
-  target: HTMLElement | null,
-  boundary: HTMLElement | null
-): boolean {
-  let current: HTMLElement | null = target;
-
-  while (current) {
-    const tagName = current.tagName?.toLowerCase();
-
-    if (
-      INTERACTIVE_TAGS.includes(tagName) ||
-      current.isContentEditable ||
-      current.hasAttribute('contenteditable')
-    ) {
-      return true;
-    }
-
-    if (current === boundary) {
-      break;
-    }
-
-    current = current.parentElement;
-  }
-
-  return false;
-}
-
-function isScrollAtEdge(
-  element: HTMLElement | null,
-  position: UseDrawerDragInput['position']
-): boolean {
-  if (!element) {
-    return true;
-  }
-
-  switch (position) {
-    case 'bottom':
-      return element.scrollTop <= 0;
-    case 'top':
-      return element.scrollTop + element.clientHeight >= element.scrollHeight;
-    case 'left':
-      return element.scrollLeft + element.clientWidth >= element.scrollWidth;
-    case 'right':
-    default:
-      return element.scrollLeft <= 0;
-  }
-}
-
-function isScrollableAlongAxis(element: HTMLElement, axis: Axis): boolean {
-  const style = window.getComputedStyle(element);
-  const overflow = axis === 'y' ? style.overflowY : style.overflowX;
-
-  if (overflow !== 'auto' && overflow !== 'scroll') {
-    return false;
-  }
-
-  return axis === 'y'
-    ? element.scrollHeight > element.clientHeight
-    : element.scrollWidth > element.clientWidth;
-}
-
-function resolveScrollContainer(
-  target: HTMLElement | null,
-  boundary: HTMLElement | null,
-  axis: Axis
-): HTMLElement | null {
-  let current: HTMLElement | null = target;
-
-  while (current) {
-    if (isScrollableAlongAxis(current, axis)) {
-      return current;
-    }
-
-    if (current === boundary) {
-      break;
-    }
-
-    current = current.parentElement;
-  }
-
-  return null;
-}
-
-function resolveSnapFraction(point: number | string, size: number): number {
-  if (typeof point === 'number') {
-    return point > 1 ? clamp(size > 0 ? point / size : 0, 0, 1) : clamp(point, 0, 1);
-  }
-
-  const parsed = parseFloat(point);
-
-  if (Number.isNaN(parsed)) {
-    return 1;
-  }
-
-  if (point.trim().endsWith('%')) {
-    return clamp(parsed / 100, 0, 1);
-  }
-
-  return clamp(size > 0 ? parsed / size : 0, 0, 1);
+function isPrimaryPointer(event: React.PointerEvent) {
+  return event.button === 0 && event.isPrimary !== false;
 }
 
 export function useDrawerDrag({
   position,
   dir,
   enabled,
+  opened,
   onClose,
   scrollRef,
   threshold = 0.25,
@@ -208,11 +92,27 @@ export function useDrawerDrag({
     ? sortedSnapPoints[sortedSnapPoints.length - 1]
     : undefined;
 
-  const [resolvedActiveSnapPoint, setActiveSnapPoint] = useUncontrolled<number | string>({
-    value: activeSnapPoint,
-    defaultValue: defaultActiveSnapPoint,
-    onChange: onSnapPointChange,
-  });
+  const [uncontrolledSnapPoint, setUncontrolledSnapPoint] = useState(defaultActiveSnapPoint);
+  const [previousOpened, setPreviousOpened] = useState(opened);
+
+  if (opened !== previousOpened) {
+    setPreviousOpened(opened);
+
+    if (opened) {
+      setUncontrolledSnapPoint(defaultActiveSnapPoint);
+    }
+  }
+
+  const isSnapPointControlled = activeSnapPoint !== undefined;
+  const resolvedActiveSnapPoint = isSnapPointControlled ? activeSnapPoint : uncontrolledSnapPoint;
+
+  const setActiveSnapPoint = (point: number | string) => {
+    if (!isSnapPointControlled) {
+      setUncontrolledSnapPoint(point);
+    }
+
+    onSnapPointChange?.(point);
+  };
 
   const effectiveActiveSnapPoint = resolvedActiveSnapPoint ?? largestSnapPoint;
 
@@ -239,6 +139,7 @@ export function useDrawerDrag({
     hasSnapPoints,
     sortedSnapPoints,
     restOffset,
+    activeSnapPoint: effectiveActiveSnapPoint,
     setActiveSnapPoint,
   });
 
@@ -293,19 +194,29 @@ export function useDrawerDrag({
 
   const resolvedPosition = resolvePosition(position, dir);
 
-  useLayoutEffect(() => {
-    if (!hasSnapPoints) {
-      return;
-    }
-
-    const axis = getAxis(position);
+  const measure = useCallback(() => {
     const rect = scrollRef.current?.getBoundingClientRect();
-    const size = (axis === 'y' ? rect?.height : rect?.width) || 0;
+    const size = (getAxis(position) === 'y' ? rect?.height : rect?.width) || 0;
 
-    if (size > 0 && size !== measuredSize) {
+    if (size > 0) {
       setMeasuredSize(size);
     }
+  }, [position, scrollRef]);
+
+  useLayoutEffect(() => {
+    if (hasSnapPoints) {
+      measure();
+    }
   });
+
+  useEffect(() => {
+    if (!hasSnapPoints) {
+      return undefined;
+    }
+
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [hasSnapPoints, measure]);
 
   const detach = useCallback(() => {
     state.current.active = false;
@@ -314,68 +225,87 @@ export function useDrawerDrag({
     cleanupRef.current = null;
   }, []);
 
-  const finish = useCallback(() => {
-    const current = state.current;
-    const snap = snapRef.current;
-    const size = current.size;
+  const cancel = useCallback(() => {
+    const committed = state.current.committed;
+    const restOffset = state.current.restOffset;
+    detach();
 
-    if (!current.committed) {
-      detach();
-      return;
+    if (committed) {
+      setDragging(false);
+      setOffset(restOffset);
+      onProgress?.(0);
     }
+  }, [detach, onProgress]);
 
-    state.current.active = false;
-    state.current.committed = false;
-    cleanupRef.current?.();
-    cleanupRef.current = null;
+  const finish = useCallback(
+    (releaseTime: number) => {
+      const current = state.current;
+      const snap = snapRef.current;
+      const size = current.size;
 
-    setDragging(false);
-
-    if (snap.hasSnapPoints) {
-      const projected = current.offset + current.velocity * 100;
-      const restOffsets = snap.sortedSnapPoints.map(
-        (point) => (1 - resolveSnapFraction(point, size)) * size
-      );
-      const smallestRest = Math.max(...restOffsets);
-
-      const fastFlick = current.velocity >= velocityThreshold;
-      const pastSmallest = size > 0 && projected > smallestRest + threshold * size;
-
-      if (size > 0 && (pastSmallest || (fastFlick && projected > smallestRest))) {
-        onProgress?.(1);
-        onClose();
+      if (!current.committed) {
+        detach();
         return;
       }
 
-      let nearestIndex = 0;
-      let nearestDistance = Infinity;
-      restOffsets.forEach((rest, index) => {
-        const distance = Math.abs(projected - rest);
-        if (distance < nearestDistance) {
-          nearestDistance = distance;
-          nearestIndex = index;
+      detach();
+      setDragging(false);
+
+      if (releaseTime - current.lastTime > VELOCITY_RELEASE_WINDOW) {
+        current.velocity = 0;
+      }
+
+      if (snap.hasSnapPoints) {
+        const projected = current.offset + current.velocity * SNAP_PROJECTION_MS;
+        const restOffsets = snap.sortedSnapPoints.map(
+          (point) => (1 - resolveSnapFraction(point, size)) * size
+        );
+        const smallestRest = Math.max(...restOffsets);
+
+        const fastFlick = current.velocity >= velocityThreshold;
+        const pastSmallest = size > 0 && projected > smallestRest + threshold * size;
+
+        if (size > 0 && (pastSmallest || (fastFlick && projected > smallestRest))) {
+          onProgress?.(1);
+          onClose();
+          return;
         }
-      });
 
-      const nearestPoint = snap.sortedSnapPoints[nearestIndex];
-      const nearestRest = restOffsets[nearestIndex];
+        let nearestIndex = 0;
+        let nearestDistance = Infinity;
+        restOffsets.forEach((rest, index) => {
+          const distance = Math.abs(projected - rest);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
 
-      setOffset(nearestRest);
+        const nearestPoint = snap.sortedSnapPoints[nearestIndex];
+        const nearestRest = restOffsets[nearestIndex];
+
+        setOffset(nearestRest);
+        onProgress?.(0);
+
+        if (nearestPoint !== snap.activeSnapPoint) {
+          snap.setActiveSnapPoint(nearestPoint);
+        }
+
+        return;
+      }
+
+      const shouldClose =
+        size > 0 && (current.offset / size >= threshold || current.velocity >= velocityThreshold);
+
+      setOffset(0);
       onProgress?.(0);
-      snap.setActiveSnapPoint(nearestPoint);
-      return;
-    }
 
-    const shouldClose =
-      size > 0 && (current.offset / size >= threshold || current.velocity >= velocityThreshold);
-
-    setOffset(0);
-    onProgress?.(0);
-
-    if (shouldClose) {
-      onClose();
-    }
-  }, [onClose, onProgress, threshold, velocityThreshold]);
+      if (shouldClose) {
+        onClose();
+      }
+    },
+    [detach, onClose, onProgress, threshold, velocityThreshold]
+  );
 
   const begin = useCallback(
     (event: React.PointerEvent, immediate: boolean) => {
@@ -419,11 +349,11 @@ export function useDrawerDrag({
         const deltaX = moveEvent.clientX - state.current.startX;
         const deltaY = moveEvent.clientY - state.current.startY;
         const now = moveEvent.timeStamp || performance.now();
+        const dismissDelta = getDismissDelta(resolvedPosition, deltaX, deltaY);
 
         if (!state.current.committed) {
           const dismissAxisMovement = axis === 'y' ? deltaY : deltaX;
           const crossDelta = axis === 'y' ? deltaX : deltaY;
-          const dismissDelta = getDismissDelta(resolvedPosition, deltaX, deltaY);
 
           if (Math.abs(crossDelta) > COMMIT_THRESHOLD) {
             detach();
@@ -443,7 +373,6 @@ export function useDrawerDrag({
           }
         }
 
-        const dismissDelta = getDismissDelta(resolvedPosition, deltaX, deltaY);
         const nextOffset = Math.max(0, state.current.restOffset + dismissDelta);
 
         const elapsed = now - state.current.lastTime;
@@ -467,17 +396,23 @@ export function useDrawerDrag({
           return;
         }
 
-        finish();
+        finish(upEvent.timeStamp || performance.now());
+      };
+
+      const handleCancel = (cancelEvent: PointerEvent) => {
+        if (cancelEvent.pointerId === state.current.pointerId) {
+          cancel();
+        }
       };
 
       window.addEventListener('pointermove', handleMove);
       window.addEventListener('pointerup', handleUp);
-      window.addEventListener('pointercancel', handleUp);
+      window.addEventListener('pointercancel', handleCancel);
 
       cleanupRef.current = () => {
         window.removeEventListener('pointermove', handleMove);
         window.removeEventListener('pointerup', handleUp);
-        window.removeEventListener('pointercancel', handleUp);
+        window.removeEventListener('pointercancel', handleCancel);
         restoreSelection();
       };
     },
@@ -485,6 +420,7 @@ export function useDrawerDrag({
       position,
       resolvedPosition,
       finish,
+      cancel,
       detach,
       onProgress,
       scrollRef,
@@ -496,11 +432,15 @@ export function useDrawerDrag({
   const getRootProps = useCallback(
     () => ({
       onPointerDown: (event: React.PointerEvent) => {
-        if (!enabled || state.current.active) {
-          return;
-        }
+        const axis = getAxis(position);
 
-        if (isInteractiveOrTextEntry(event.target as HTMLElement, scrollRef.current)) {
+        if (
+          !enabled ||
+          state.current.active ||
+          !isPrimaryPointer(event) ||
+          event.defaultPrevented ||
+          ownsGesture(event.target as HTMLElement, scrollRef.current, axis)
+        ) {
           return;
         }
 
@@ -509,7 +449,6 @@ export function useDrawerDrag({
           return;
         }
 
-        const axis = getAxis(position);
         const scrollContainer = resolveScrollContainer(
           event.target as HTMLElement,
           scrollRef.current,
@@ -529,7 +468,7 @@ export function useDrawerDrag({
   const getHandleProps = useCallback(
     () => ({
       onPointerDown: (event: React.PointerEvent) => {
-        if (!enabled || state.current.active) {
+        if (!enabled || state.current.active || !isPrimaryPointer(event)) {
           return;
         }
 
@@ -551,7 +490,7 @@ export function useDrawerDrag({
     }
   }, [enabled, onProgress, hasSnapPoints, restOffset]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!state.current.active && !dragging) {
       setOffset(hasSnapPoints ? restOffset : 0);
     }

@@ -8,6 +8,10 @@
   justify-content: center;
   user-select: none;
 
+  &:where(:not([data-disabled], [data-read-only])) {
+    touch-action: none;
+  }
+
   &:focus-within {
     outline: 2px solid var(--mantine-color-focus-ring);
     outline-offset: 2px;
