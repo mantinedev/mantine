@@ -63,7 +63,9 @@ Use `barColor` and `barTextColor` props to set the default background and text c
 
 ## Auto contrast
 
-Set `autoContrast` prop to automatically adjust text color based on background color:
+`BarsList` automatically adjusts text color based on the bar background color. This behavior is
+controlled by [theme.autoContrast](/theming/theme-object/#autocontrast), which is `true` by default.
+Set `autoContrast={false}` to disable it.
 
 <Demo data={BarsListDemos.autoContrast} />
 

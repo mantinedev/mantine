@@ -7,8 +7,8 @@ import { Checkbox, Stack } from '@mantine/core';
 function Demo() {
   return (
     <Stack>
-      <Checkbox checked label="regular checkbox" size="lg" color="lime.4" />
-      <Checkbox autoContrast checked label="autoContrast checkbox" size="lg" color="lime.4" />
+      <Checkbox autoContrast={false} checked label="regular checkbox" size="lg" color="lime.4" />
+      <Checkbox checked label="autoContrast checkbox" size="lg" color="lime.4" />
     </Stack>
   );
 }
@@ -17,9 +17,15 @@ function Demo() {
 function Demo() {
   return (
     <Stack>
-      <Checkbox checked label="regular checkbox" size="lg" color="lime.4" onChange={() => {}} />
       <Checkbox
-        autoContrast
+        autoContrast={false}
+        checked
+        label="regular checkbox"
+        size="lg"
+        color="lime.4"
+        onChange={() => {}}
+      />
+      <Checkbox
         checked
         label="autoContrast checkbox"
         size="lg"

@@ -50,7 +50,8 @@ when the label is `0`:
 
 ## Auto contrast
 
-Set `autoContrast` prop to automatically adjust text color based on the background color to ensure
-readable contrast:
+`Indicator` automatically adjusts label text color based on the background color to ensure
+readable contrast. This behavior is controlled by [theme.autoContrast](/theming/theme-object/#autocontrast),
+which is `true` by default. Set `autoContrast={false}` to disable it for a single indicator:
 
 <Demo data={IndicatorDemos.autoContrast} />

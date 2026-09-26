@@ -9,10 +9,10 @@ import { ThemeIcon, Group } from '@mantine/core';
 function Demo() {
   return (
     <Group>
-      <ThemeIcon size="lg" color="lime.4">
+      <ThemeIcon size="lg" color="lime.4" autoContrast={false}>
         <FingerprintIcon size={20} />
       </ThemeIcon>
-      <ThemeIcon size="lg" color="lime.4" autoContrast>
+      <ThemeIcon size="lg" color="lime.4">
         <FingerprintIcon size={20} />
       </ThemeIcon>
     </Group>
@@ -23,10 +23,10 @@ function Demo() {
 function Demo() {
   return (
     <Group>
-      <ThemeIcon size="lg" color="lime.4">
+      <ThemeIcon size="lg" color="lime.4" autoContrast={false}>
         <FingerprintIcon size={20} />
       </ThemeIcon>
-      <ThemeIcon size="lg" color="lime.4" autoContrast>
+      <ThemeIcon size="lg" color="lime.4">
         <FingerprintIcon size={20} />
       </ThemeIcon>
     </Group>

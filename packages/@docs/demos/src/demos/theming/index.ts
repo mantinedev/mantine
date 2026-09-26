@@ -21,6 +21,7 @@ export { defaultGradient } from './Theming.demo.defaultGradient';
 export { cursorType } from './Theming.demo.cursorType';
 export { disabledOpacity } from './Theming.demo.disabledOpacity';
 export { autoContrast } from './Theming.demo.autoContrast';
+export { autoContrastDisabled } from './Theming.demo.autoContrastDisabled';
 export { luminanceThreshold } from './Theming.demo.luminanceThreshold';
 export { oklch } from './Theming.demo.oklch';
 export { virtualColors } from './Theming.demo.virtualColors';

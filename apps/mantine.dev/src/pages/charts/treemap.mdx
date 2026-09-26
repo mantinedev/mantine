@@ -28,8 +28,9 @@ color value is also accepted.
 
 ## autoContrast
 
-`Treemap` supports `autoContrast` prop that automatically adjusts text color
-based on the background color of each node to ensure readable labels:
+`Treemap` automatically adjusts text color based on the background color of each node
+to ensure readable labels. This behavior is controlled by [theme.autoContrast](/theming/theme-object/#autocontrast),
+which is `true` by default. Set `autoContrast={false}` to disable it.
 
 <Demo data={TreemapDemos.autoContrast} />
 

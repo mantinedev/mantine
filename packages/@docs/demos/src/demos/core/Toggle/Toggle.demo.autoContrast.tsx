@@ -9,10 +9,10 @@ import { Group, Toggle } from '@mantine/core';
 function Demo() {
   return (
     <Group>
-      <Toggle active variant="filled" color="lime.4" aria-label="Without autoContrast">
+      <Toggle autoContrast={false} active variant="filled" color="lime.4" aria-label="Without autoContrast">
         <TextBIcon weight="bold" size="100%" />
       </Toggle>
-      <Toggle autoContrast active variant="filled" color="lime.4" aria-label="With autoContrast">
+      <Toggle active variant="filled" color="lime.4" aria-label="With autoContrast">
         <TextBIcon weight="bold" size="100%" />
       </Toggle>
     </Group>
@@ -23,10 +23,16 @@ function Demo() {
 function Demo() {
   return (
     <Group>
-      <Toggle active variant="filled" color="lime.4" aria-label="Without autoContrast">
+      <Toggle
+        autoContrast={false}
+        active
+        variant="filled"
+        color="lime.4"
+        aria-label="Without autoContrast"
+      >
         <TextBIcon weight="bold" size="100%" />
       </Toggle>
-      <Toggle autoContrast active variant="filled" color="lime.4" aria-label="With autoContrast">
+      <Toggle active variant="filled" color="lime.4" aria-label="With autoContrast">
         <TextBIcon weight="bold" size="100%" />
       </Toggle>
     </Group>

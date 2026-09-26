@@ -20,7 +20,6 @@ function Demo() {
     <BarsList
       data={data}
       variant="filled"
-      autoContrast
       valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );
@@ -32,7 +31,6 @@ function Demo() {
     <BarsList
       data={data}
       variant="filled"
-      autoContrast
       valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );

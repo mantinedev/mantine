@@ -7,10 +7,10 @@ import { Badge, Group } from '@mantine/core';
 function Demo() {
   return (
     <Group>
-      <Badge size="lg" color="lime.4">
-        Default
+      <Badge autoContrast={false} size="lg" color="lime.4">
+        Without auto contrast
       </Badge>
-      <Badge autoContrast size="lg" color="lime.4">
+      <Badge size="lg" color="lime.4">
         Auto contrast
       </Badge>
     </Group>
@@ -21,10 +21,10 @@ function Demo() {
 function Demo() {
   return (
     <Group>
-      <Badge size="lg" color="lime.4">
-        Default
+      <Badge autoContrast={false} size="lg" color="lime.4">
+        Without auto contrast
       </Badge>
-      <Badge autoContrast size="lg" color="lime.4">
+      <Badge size="lg" color="lime.4">
         Auto contrast
       </Badge>
     </Group>

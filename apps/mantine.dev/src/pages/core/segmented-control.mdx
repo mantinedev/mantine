@@ -145,8 +145,9 @@ Set the `color` prop to change the indicator `background-color`:
 
 ## Auto contrast
 
-`SegmentedControl` supports `autoContrast` prop. If set to `true`, the label text color will automatically adjust
-to ensure optimal contrast against the indicator background color:
+`SegmentedControl` supports `autoContrast` prop and [theme.autoContrast](/theming/theme-object/#autocontrast).
+When enabled (default), the active label text color is automatically adjusted to ensure optimal contrast against
+the indicator background color. Set `autoContrast={false}` to disable it:
 
 <Demo data={SegmentedControlDemos.autoContrast} />
 

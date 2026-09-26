@@ -23,7 +23,7 @@ import { Stack, Toolbar } from '@mantine/core';
 function Demo() {
   return (
     <Stack>
-      <Toolbar variant="filled" color="lime.4">
+      <Toolbar autoContrast={false} variant="filled" color="lime.4">
         <Toolbar.ToggleGroup type="multiple" defaultValue={['bold']}>
           <Toolbar.ToggleItem value="bold" aria-label="Bold">
             <TextBIcon weight="bold" size="100%" />
@@ -51,7 +51,7 @@ function Demo() {
         </Toolbar.ToggleGroup>
       </Toolbar>
 
-      <Toolbar autoContrast variant="filled" color="lime.4">
+      <Toolbar variant="filled" color="lime.4">
         <Toolbar.ToggleGroup type="multiple" defaultValue={['bold']}>
           <Toolbar.ToggleItem value="bold" aria-label="Bold">
             <TextBIcon weight="bold" size="100%" />
@@ -86,7 +86,7 @@ function Demo() {
 function Demo() {
   return (
     <Stack>
-      <Toolbar variant="filled" color="lime.4">
+      <Toolbar autoContrast={false} variant="filled" color="lime.4">
         <Toolbar.ToggleGroup type="multiple" defaultValue={['bold']}>
           <Toolbar.ToggleItem value="bold" aria-label="Bold">
             <TextBIcon weight="bold" size="100%" />
@@ -114,7 +114,7 @@ function Demo() {
         </Toolbar.ToggleGroup>
       </Toolbar>
 
-      <Toolbar autoContrast variant="filled" color="lime.4">
+      <Toolbar variant="filled" color="lime.4">
         <Toolbar.ToggleGroup type="multiple" defaultValue={['bold']}>
           <Toolbar.ToggleItem value="bold" aria-label="Bold">
             <TextBIcon weight="bold" size="100%" />

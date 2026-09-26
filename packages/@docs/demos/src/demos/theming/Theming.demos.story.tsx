@@ -118,6 +118,11 @@ export const Demo_autoContrast = {
   render: renderDemo(demos.autoContrast),
 };
 
+export const Demo_autoContrastDisabled = {
+  name: '⭐ Demo: autoContrastDisabled',
+  render: renderDemo(demos.autoContrastDisabled),
+};
+
 export const Demo_luminanceThreshold = {
   name: '⭐ Demo: luminanceThreshold',
   render: renderDemo(demos.luminanceThreshold),

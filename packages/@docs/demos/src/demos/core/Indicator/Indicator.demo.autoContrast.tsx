@@ -7,7 +7,7 @@ import { Avatar, Group, Indicator } from '@mantine/core';
 function Demo() {
   return (
     <Group>
-      <Indicator inline label="99" color="lime.4">
+      <Indicator inline label="99" color="lime.4" autoContrast={false}>
         <Avatar
           size="lg"
           radius="xl"
@@ -15,7 +15,7 @@ function Demo() {
         />
       </Indicator>
 
-      <Indicator inline label="99" color="lime.4" autoContrast>
+      <Indicator inline label="99" color="lime.4">
         <Avatar
           size="lg"
           radius="xl"
@@ -23,7 +23,7 @@ function Demo() {
         />
       </Indicator>
 
-      <Indicator inline label="99" color="cyan.9">
+      <Indicator inline label="99" color="cyan.9" autoContrast={false}>
         <Avatar
           size="lg"
           radius="xl"
@@ -31,7 +31,7 @@ function Demo() {
         />
       </Indicator>
 
-      <Indicator inline label="99" color="cyan.9" autoContrast>
+      <Indicator inline label="99" color="cyan.9">
         <Avatar
           size="lg"
           radius="xl"
@@ -46,7 +46,7 @@ function Demo() {
 function Demo() {
   return (
     <Group>
-      <Indicator inline label="99" color="lime.4">
+      <Indicator inline label="99" color="lime.4" autoContrast={false}>
         <Avatar
           size="lg"
           radius="xl"
@@ -54,7 +54,7 @@ function Demo() {
         />
       </Indicator>
 
-      <Indicator inline label="99" color="lime.4" autoContrast>
+      <Indicator inline label="99" color="lime.4">
         <Avatar
           size="lg"
           radius="xl"
@@ -62,7 +62,7 @@ function Demo() {
         />
       </Indicator>
 
-      <Indicator inline label="99" color="cyan.9">
+      <Indicator inline label="99" color="cyan.9" autoContrast={false}>
         <Avatar
           size="lg"
           radius="xl"
@@ -70,7 +70,7 @@ function Demo() {
         />
       </Indicator>
 
-      <Indicator inline label="99" color="cyan.9" autoContrast>
+      <Indicator inline label="99" color="cyan.9">
         <Avatar
           size="lg"
           radius="xl"

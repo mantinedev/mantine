@@ -7,10 +7,10 @@ import { Button, Group } from '@mantine/core';
 function Demo() {
   return (
     <Group>
-      <Button color="lime.4">Default</Button>
-      <Button color="lime.4" autoContrast>
-        Auto contrast
+      <Button color="lime.4" autoContrast={false}>
+        Without auto contrast
       </Button>
+      <Button color="lime.4">Auto contrast</Button>
     </Group>
   );
 }
@@ -19,10 +19,10 @@ function Demo() {
 function Demo() {
   return (
     <Group>
-      <Button color="lime.4">Default</Button>
-      <Button color="lime.4" autoContrast>
-        Auto contrast
+      <Button color="lime.4" autoContrast={false}>
+        Without auto contrast
       </Button>
+      <Button color="lime.4">Auto contrast</Button>
     </Group>
   );
 }

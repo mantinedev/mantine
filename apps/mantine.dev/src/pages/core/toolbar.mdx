@@ -34,8 +34,10 @@ props control the appearance of active toggle buttons.
 
 ## Auto contrast
 
-Set `autoContrast` prop to automatically adjust icon color based on the active toggle
-background color. This is useful when using `variant="filled"` with light colors.
+`Toolbar` automatically adjusts icon color based on the active toggle background color.
+This is useful when using `variant="filled"` with light colors. This behavior is controlled by
+[theme.autoContrast](/theming/theme-object/#autocontrast), which is `true` by default.
+Set `autoContrast={false}` to disable it for a single toolbar:
 
 <Demo data={ToolbarDemos.autoContrast} />
 

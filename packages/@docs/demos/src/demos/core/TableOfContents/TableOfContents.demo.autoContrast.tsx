@@ -8,7 +8,6 @@ function Demo() {
   return (
     <TableOfContents
       variant="filled"
-      autoContrast
       color="yellow.4"
       scrollSpyOptions={{
         selector: 'h1, h2, h3, h4, h5, h6',
@@ -26,7 +25,6 @@ function Demo() {
   return (
     <TableOfContents
       variant="filled"
-      autoContrast
       color="yellow.4"
       scrollSpyOptions={{
         selector: 'h1, h2, h3, h4, h5, h6',

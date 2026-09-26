@@ -12,7 +12,7 @@ const data = [
 ];
 
 function Demo() {
-  return <Treemap data={data} autoContrast />;
+  return <Treemap data={data} />;
 }
 `;
 
@@ -24,7 +24,7 @@ const data = [
 ];
 
 function Demo() {
-  return <Treemap data={data} autoContrast />;
+  return <Treemap data={data} />;
 }
 
 export const autoContrast: MantineDemo = {
