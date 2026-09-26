@@ -6,7 +6,7 @@ import type { DataGridFeatures } from '../table-features';
 
 type GridRow = Row<DataGridFeatures, any>;
 
-export type TreeGuideLine = 'through' | 'branch' | 'end' | 'none';
+type TreeGuideLine = 'through' | 'branch' | 'end' | 'none';
 
 type GridRowModel = RowModel<DataGridFeatures, any>;
 
@@ -18,17 +18,28 @@ function resolveParent(row: GridRow, rowModel: GridRowModel): GridRow | undefine
   return rowModel.rowsById[row.parentId] ?? row.getParentRow();
 }
 
+const siblingIndexCache = new WeakMap<GridRow[], Map<string, number>>();
+
+function getSiblingIndex(siblings: GridRow[], rowId: string) {
+  let indexById = siblingIndexCache.get(siblings);
+  if (!indexById) {
+    indexById = new Map();
+    for (let index = siblings.length - 1; index >= 0; index -= 1) {
+      indexById.set(siblings[index].id, index);
+    }
+    siblingIndexCache.set(siblings, indexById);
+  }
+
+  return indexById.get(rowId) ?? -1;
+}
+
 function hasFollowingSibling(row: GridRow, rowModel: GridRowModel) {
   const siblings = resolveParent(row, rowModel)?.subRows ?? rowModel.rows;
-  const index = siblings.findIndex((sibling) => sibling.id === row.id);
+  const index = getSiblingIndex(siblings, row.id);
   return index !== -1 && index < siblings.length - 1;
 }
 
-/**
- * One guide per ancestor level of the row. Parents are resolved through the
- * current row model so filtered trees close at their last visible sibling.
- */
-export function getTreeGuides(row: GridRow, rowModel: GridRowModel): TreeGuideLine[] {
+function getTreeGuides(row: GridRow, rowModel: GridRowModel): TreeGuideLine[] {
   const chain: GridRow[] = [];
   let current: GridRow | undefined = row;
   while (current && current.depth > 0) {
@@ -48,11 +59,9 @@ export function getTreeGuides(row: GridRow, rowModel: GridRowModel): TreeGuideLi
 interface TreeCellContentProps {
   row: GridRow;
   children: React.ReactNode;
-  classNames: any;
-  styles: any;
 }
 
-export function TreeCellContent({ row, children, classNames, styles }: TreeCellContentProps) {
+export function TreeCellContent({ row, children }: TreeCellContentProps) {
   const ctx = useDataGridContext();
   const expanded = row.getIsExpanded();
   const guides = ctx.withTreeLines ? getTreeGuides(row, ctx.table.getRowModel()) : [];
@@ -60,8 +69,6 @@ export function TreeCellContent({ row, children, classNames, styles }: TreeCellC
   return (
     <div
       {...ctx.getStyles('treeIndent', {
-        classNames,
-        styles,
         style: { '--dg-tree-depth': row.depth } as React.CSSProperties,
       })}
     >
@@ -82,14 +89,14 @@ export function TreeCellContent({ row, children, classNames, styles }: TreeCellC
             event.stopPropagation();
             row.toggleExpanded();
           }}
-          {...ctx.getStyles('treeToggle', { classNames, styles })}
+          {...ctx.getStyles('treeToggle')}
         >
           <ExpandChevron expanded={expanded} />
         </button>
       ) : (
-        <span data-hidden aria-hidden {...ctx.getStyles('treeToggle', { classNames, styles })} />
+        <span data-hidden aria-hidden {...ctx.getStyles('treeToggle')} />
       )}
-      <span {...ctx.getStyles('treeLabel', { classNames, styles })}>{children}</span>
+      <span {...ctx.getStyles('treeLabel')}>{children}</span>
     </div>
   );
 }

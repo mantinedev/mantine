@@ -1,20 +1,18 @@
+import type React from 'react';
 import { flexRender } from '@tanstack/react-table';
 import { Portal } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
-import type {
-  DataGridDragState,
-  DataGridDropTarget,
-  DataGridResizeGuide,
-} from './use-header-interactions';
+import type { DataGridDragState, DataGridDropTarget } from './use-column-drag';
+import type { DataGridResizeGuide } from './use-resize-guide';
 
-export interface DataGridHeaderOverlaysProps {
+interface HeaderOverlaysProps {
   drag: DataGridDragState | null;
   dropTarget: DataGridDropTarget | null;
   guide: DataGridResizeGuide | null;
+  ghostRef: React.RefObject<HTMLDivElement | null>;
 }
 
-/** Resize guide, drop indicator and drag ghost rendered by the grid root while a header interaction is in progress */
-export function DataGridHeaderOverlays({ drag, dropTarget, guide }: DataGridHeaderOverlaysProps) {
+export function HeaderOverlays({ drag, dropTarget, guide, ghostRef }: HeaderOverlaysProps) {
   const ctx = useDataGridContext();
 
   return (
@@ -35,7 +33,12 @@ export function DataGridHeaderOverlays({ drag, dropTarget, guide }: DataGridHead
       )}
       {drag && (
         <Portal>
-          <div {...ctx.getStyles('dragGhost')} style={{ left: drag.x, top: drag.y, ...drag.vars }}>
+          <div
+            ref={ghostRef}
+            {...ctx.getStyles('dragGhost', {
+              style: { left: drag.x, top: drag.y, ...drag.vars } as React.CSSProperties,
+            })}
+          >
             {flexRender(drag.header.column.columnDef.header, drag.header.getContext())}
           </div>
         </Portal>

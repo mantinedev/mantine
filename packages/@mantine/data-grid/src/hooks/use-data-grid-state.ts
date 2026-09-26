@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { Table as ReactTable } from '@tanstack/react-table';
 import type { MantineSize } from '@mantine/core';
-import type { DataGridFeatures } from '../table-features';
+import { useLatestRef, useShallowEffect } from '@mantine/hooks';
+import type { DataGridStore } from './use-data-grid.types';
 
 export type DataGridPersistableState =
   | 'sorting'
@@ -25,14 +25,8 @@ export interface UseDataGridStateOptions {
   /** Which state keys to persist */
   persistedState?: DataGridPersistableState[];
 
-  /** TanStack Table instance */
-  table: ReactTable<DataGridFeatures, any>;
-
-  /** Current size value (not part of TanStack state) */
-  size?: MantineSize;
-
-  /** Callback to restore size */
-  onSizeRestore?: (size: MantineSize) => void;
+  /** Store returned by `useDataGrid` */
+  store: DataGridStore<any>;
 }
 
 function readPersistedState(key: string): Record<string, unknown> | null {
@@ -50,80 +44,130 @@ function readPersistedState(key: string): Record<string, unknown> | null {
 function writePersistedState(key: string, state: Record<string, unknown>) {
   try {
     localStorage.setItem(key, JSON.stringify(state));
-  } catch {
-    // silently ignore
-  }
+  } catch {}
 }
 
 export function useDataGridState(options: UseDataGridStateOptions) {
-  const { stateStorageKey, persistedState, table, size, onSizeRestore } = options;
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const restoredRef = useRef(false);
+  const { stateStorageKey, persistedState, store } = options;
+  const pendingWriteRef = useRef<{
+    timeout: ReturnType<typeof setTimeout>;
+    write: () => void;
+  } | null>(null);
+  const restoredRef = useRef<{
+    key: string;
+    tableStore: DataGridStore<any>['table']['store'];
+    fields: DataGridPersistableState[];
+  } | null>(null);
+  const preRestoreValuesRef = useRef<unknown[] | null>(null);
+  const storeRef = useLatestRef(store);
+  const tableStore = store.table.store;
+  const tableState = tableStore.state as unknown as Record<string, unknown>;
+  const persistedValues = (persistedState ?? []).map((key) =>
+    key === 'size' ? store.size : key === 'columnOrder' ? store.columnOrder : tableState[key]
+  );
+
+  const flushPendingWrite = useCallback(() => {
+    const pending = pendingWriteRef.current;
+    if (pending) {
+      pendingWriteRef.current = null;
+      clearTimeout(pending.timeout);
+      pending.write();
+    }
+  }, []);
+
+  const cancelPendingWrite = useCallback(() => {
+    const pending = pendingWriteRef.current;
+    if (pending) {
+      pendingWriteRef.current = null;
+      clearTimeout(pending.timeout);
+    }
+  }, []);
+
+  const persistenceEnabled = !!stateStorageKey && !!persistedState && persistedState.length > 0;
+  const persistenceEnabledRef = useLatestRef(persistenceEnabled);
+
+  useEffect(
+    () => () => {
+      if (persistenceEnabledRef.current) {
+        flushPendingWrite();
+      } else {
+        cancelPendingWrite();
+      }
+    },
+    [stateStorageKey, tableStore, persistenceEnabled, flushPendingWrite, cancelPendingWrite]
+  );
 
   useEffect(() => {
-    if (!stateStorageKey || !persistedState || persistedState.length === 0 || restoredRef.current) {
+    if (!persistenceEnabled) {
+      restoredRef.current = null;
       return;
     }
 
-    restoredRef.current = true;
+    const previous = restoredRef.current;
+    const fieldsToRestore =
+      previous?.key === stateStorageKey && previous.tableStore === tableStore
+        ? persistedState.filter((key) => !previous.fields.includes(key))
+        : persistedState;
+    restoredRef.current = { key: stateStorageKey, tableStore, fields: [...persistedState] };
+    if (fieldsToRestore.length === 0) {
+      return;
+    }
+
     const saved = readPersistedState(stateStorageKey);
     if (!saved) {
       return;
     }
 
-    for (const key of persistedState) {
+    preRestoreValuesRef.current = persistedValues;
+    for (const key of fieldsToRestore) {
       if (key === 'size') {
-        if (saved.size && onSizeRestore) {
-          onSizeRestore(saved.size as MantineSize);
+        if (saved.size) {
+          storeRef.current.setSize(saved.size as MantineSize);
         }
         continue;
       }
 
       if (saved[key] !== undefined) {
-        const setter = `set${key.charAt(0).toUpperCase()}${key.slice(1)}` as string;
-        const tableSetter = (table as any)[setter];
+        const setter = `set${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+        const tableSetter = (storeRef.current.table as any)[setter];
         if (typeof tableSetter === 'function') {
           tableSetter(saved[key]);
         }
       }
     }
-  }, [stateStorageKey, persistedState, table, onSizeRestore]);
+  }, [stateStorageKey, tableStore, persistedState]);
 
-  const persistState = useCallback(() => {
-    if (!stateStorageKey || !persistedState || persistedState.length === 0) {
+  useShallowEffect(() => {
+    if (!persistenceEnabled) {
       return;
     }
 
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
+    const preRestoreValues = preRestoreValuesRef.current;
+    if (preRestoreValues) {
+      if (
+        preRestoreValues.length === persistedValues.length &&
+        preRestoreValues.every((value, index) => value === persistedValues[index])
+      ) {
+        return;
+      }
+      preRestoreValuesRef.current = null;
     }
 
-    debounceRef.current = setTimeout(() => {
-      const tableState = table.store.state;
-      const toPersist: Record<string, unknown> = {};
+    cancelPendingWrite();
 
-      for (const key of persistedState) {
-        if (key === 'size') {
-          toPersist.size = size;
-        } else {
-          toPersist[key] = (tableState as any)[key];
-        }
-      }
+    const toPersist: Record<string, unknown> = {};
+    persistedState.forEach((key, index) => {
+      toPersist[key] = persistedValues[index];
+    });
 
-      writePersistedState(stateStorageKey, toPersist);
-    }, 300);
-  }, [stateStorageKey, persistedState, table, size]);
+    const write = () => writePersistedState(stateStorageKey, toPersist);
 
-  useEffect(() => {
-    persistState();
-  });
-
-  useEffect(
-    () => () => {
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
-    },
-    []
-  );
+    pendingWriteRef.current = {
+      write,
+      timeout: setTimeout(() => {
+        pendingWriteRef.current = null;
+        write();
+      }, 300),
+    };
+  }, [stateStorageKey, tableStore, persistedState, persistedValues, cancelPendingWrite]);
 }

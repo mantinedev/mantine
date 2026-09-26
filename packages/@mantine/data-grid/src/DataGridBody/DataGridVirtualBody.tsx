@@ -1,216 +1,177 @@
-import React, { useCallback, useMemo } from 'react';
-import { Cell, Header } from '@tanstack/react-table';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import {
-  BoxProps,
-  CompoundStylesApiProps,
-  ElementProps,
-  factory,
-  Factory,
-  rem,
-  useProps,
-} from '@mantine/core';
-import { useMergedRef } from '@mantine/hooks';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import type { Row } from '@tanstack/react-table';
+import { useVirtualizer, type VirtualItem } from '@tanstack/react-virtual';
+import { rem } from '@mantine/core';
+import { useDidUpdate } from '@mantine/hooks';
+import { getOrderedVisibleColumns } from '../column-cell-props';
 import { getRowHeightEstimate } from '../data-grid-sizes';
 import { useDataGridContext } from '../DataGrid.context';
-import {
-  DataGridHeaderCellContent,
-  getHeaderCellAttributes,
-} from '../DataGridHeader/DataGridHeaderCell';
-import { getPinnedCellProps, getPinnedHeaderProps } from '../get-pinned-cell-props';
+import { VirtualHeader } from '../DataGridHeader/virtual-header';
+import { useTfootModel } from '../DataGridTfoot/tfoot-model';
+import { VirtualTfoot } from '../DataGridTfoot/virtual-tfoot';
+import { registerRowScroller } from '../hooks/row-scroller';
 import type { DataGridFeatures } from '../table-features';
-import { getSkeletonRowCount, resolveEmptyState, SkeletonBar } from './body-states';
-import { getGroupLabelCellId } from './DataGridGroupCell';
-import { DataGridVirtualCell } from './DataGridVirtualCell';
-import {
-  handleRowClick,
-  handleRowKeyDown,
-  hasExpandedPanel,
-  hasRowClickBehavior,
-  isRowStriped,
-} from './row-interactions';
-import classes from '../DataGrid.module.css';
+import { resolveEmptyState, SkeletonRows } from './body-states';
+import { handleRowKeyDown, hasExpandedPanel } from './row-interactions';
+import { getCellSelectionEntryId } from './use-cell-selection';
+import { useVirtualColumns } from './use-virtual-columns';
+import { VirtualRow } from './virtual-row';
 
-export type DataGridVirtualBodyStylesNames =
-  | 'virtualScrollContainer'
-  | 'virtualGrid'
-  | 'virtualGridHeader'
-  | 'virtualRow'
-  | 'virtualCell'
-  | 'emptyState'
-  | 'expandedRow'
-  | 'sortIcon'
-  | 'headerCell'
-  | 'headerLabel'
-  | 'resizeHandle'
-  | 'treeIndent'
-  | 'treeToggle'
-  | 'treeLabel'
-  | 'skeleton';
-
-export interface DataGridVirtualBodyProps
-  extends BoxProps, CompoundStylesApiProps<DataGridVirtualBodyFactory>, ElementProps<'div'> {
+interface DataGridVirtualBodyProps {
   /** Fixed height for the scroll container */
   height?: number | string;
-
   /** Virtual scroll configuration */
   virtualScrollConfig?: {
     overscan?: number;
     estimateSize?: (index: number) => number;
   };
-
   /** Virtual column configuration */
   virtualColumnConfig?: {
     overscan?: number;
     estimateSize?: (index: number) => number;
   };
-
-  /** Ref for the scroll container element */
-  scrollContainerRef?: React.RefObject<HTMLDivElement | null>;
-
   /** Scroll event handler */
   onScroll?: React.UIEventHandler<HTMLDivElement>;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
-export type DataGridVirtualBodyFactory = Factory<{
-  props: DataGridVirtualBodyProps;
-  ref: HTMLDivElement;
-  stylesNames: DataGridVirtualBodyStylesNames;
-  compound: true;
-}>;
+type AnyRow = Row<DataGridFeatures, any>;
 
-export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) => {
-  const {
-    className,
-    style,
-    classNames,
-    styles,
-    height,
-    virtualScrollConfig,
-    virtualColumnConfig,
-    scrollContainerRef,
-    onScroll,
-    ref,
-    ...others
-  } = useProps('DataGridVirtualBody', null, props);
-  const containerRef = useMergedRef(ref, scrollContainerRef);
+function useHasAutoRowHeight(
+  getRowHeight: ((row: AnyRow) => number | 'auto') | undefined,
+  rows: AnyRow[],
+  virtualItems: VirtualItem[]
+) {
+  const latch = useRef({ getRowHeight, rows, found: false });
+  if (latch.current.getRowHeight !== getRowHeight || latch.current.rows !== rows) {
+    latch.current = { getRowHeight, rows, found: false };
+  }
+  if (!latch.current.found && getRowHeight != null) {
+    latch.current.found = virtualItems.some(
+      (item) => rows[item.index] && getRowHeight(rows[item.index]) === 'auto'
+    );
+  }
+  return latch.current.found;
+}
 
+export function DataGridVirtualBody({
+  height,
+  virtualScrollConfig,
+  virtualColumnConfig,
+  onScroll,
+  ref,
+}: DataGridVirtualBodyProps) {
   const ctx = useDataGridContext();
+  const scrollContainerRef = ctx.store.scrollContainerRef;
   const rows = ctx.table.getRowModel().rows;
-  const headerGroups = ctx.table.getHeaderGroups();
-  const visibleColumns = ctx.withColumnPinning
-    ? [
-        ...ctx.table.getPinnedVisibleLeafColumns('start'),
-        ...ctx.table.getPinnedVisibleLeafColumns('center'),
-        ...ctx.table.getPinnedVisibleLeafColumns('end'),
-      ]
-    : ctx.table.getVisibleLeafColumns();
-
-  const withColumnVirt = ctx.withColumnVirtualization;
-  const withRowVirt = ctx.withVirtualization;
+  const headerRowCount = ctx.table.getHeaderGroups().length;
+  const tfootModel = useTfootModel();
+  const startColumns = ctx.table.getPinnedVisibleLeafColumns('start');
+  const centerColumns = ctx.table.getPinnedVisibleLeafColumns('center');
+  const endColumns = ctx.table.getPinnedVisibleLeafColumns('end');
+  const visibleColumns = useMemo(
+    () => getOrderedVisibleColumns(ctx.table),
+    [startColumns, centerColumns, endColumns]
+  );
 
   const totalColumns = visibleColumns.length;
   const firstDataColumnIndex = visibleColumns.findIndex(
     (column) => !column.columnDef.meta?.utility
   );
 
-  const overscan = virtualScrollConfig?.overscan ?? 10;
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) =>
+    handleRowKeyDown(event, ctx, {
+      rowSelector: '[role="row"][data-row-id]',
+      containerSelector: 'div:not([role])',
+    });
 
-  const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) =>
-      handleRowKeyDown(event, ctx, {
-        scopeSelector: '[role="grid"]',
-        rowSelector: '[role="row"][data-row-id]',
-      }),
-    [ctx]
-  );
-
-  const hasAutoHeight = useMemo(
-    () => ctx.getRowHeight != null && rows.some((row) => ctx.getRowHeight!(row) === 'auto'),
-    [ctx.getRowHeight, rows]
-  );
-
-  const estimateSize = (index: number) =>
-    getRowHeightEstimate(
-      {
-        estimateSize: virtualScrollConfig?.estimateSize,
-        getRowHeight: ctx.getRowHeight,
-        estimateRowHeight: ctx.estimateRowHeight,
-        size: ctx.store.size,
-      },
-      rows[index],
-      index
-    );
+  const getItemKey = useCallback((index: number) => rows[index].id, [rows]);
 
   const rowVirtualizer = useVirtualizer({
-    count: withRowVirt ? rows.length : 0,
-    getScrollElement: () => scrollContainerRef?.current ?? null,
-    estimateSize,
-    overscan,
-    measureElement:
-      ctx.withRowExpansion || hasAutoHeight
-        ? (element) => element.getBoundingClientRect().height
-        : undefined,
+    count: ctx.withRowVirtualization ? rows.length : 0,
+    getItemKey,
+    getScrollElement: () => scrollContainerRef.current,
+    estimateSize: (index: number) =>
+      getRowHeightEstimate(
+        {
+          estimateSize: virtualScrollConfig?.estimateSize,
+          getRowHeight: ctx.getRowHeight,
+          estimateRowHeight: ctx.estimateRowHeight,
+          size: ctx.store.size,
+        },
+        rows[index],
+        index
+      ),
+    overscan: virtualScrollConfig?.overscan ?? 10,
+    measureElement: (element) => element.getBoundingClientRect().height,
   });
 
-  const columnVirtualizer = useVirtualizer({
-    count: withColumnVirt ? visibleColumns.length : 0,
-    getScrollElement: () => scrollContainerRef?.current ?? null,
-    estimateSize: virtualColumnConfig?.estimateSize ?? ((index) => visibleColumns[index].getSize()),
-    horizontal: true,
-    overscan: virtualColumnConfig?.overscan ?? 3,
-  });
+  const virtualItems = ctx.withRowVirtualization ? rowVirtualizer.getVirtualItems() : [];
+  const hasAutoRowHeight = useHasAutoRowHeight(ctx.getRowHeight, rows, virtualItems);
+  const measureRows =
+    ctx.withRowExpansion ||
+    virtualScrollConfig?.estimateSize != null ||
+    ctx.estimateRowHeight != null ||
+    hasAutoRowHeight;
 
-  const virtualRowItems = withRowVirt ? rowVirtualizer.getVirtualItems() : null;
-  const totalRowSize = withRowVirt ? rowVirtualizer.getTotalSize() : 0;
-  const virtualColumnItems = withColumnVirt ? columnVirtualizer.getVirtualItems() : null;
-  const totalColumnSize = withColumnVirt ? columnVirtualizer.getTotalSize() : 0;
-
-  const allCellsPinned = useMemo(() => {
-    if (!withColumnVirt || !ctx.withColumnPinning) {
-      return { left: [] as number[], right: [] as number[] };
+  useDidUpdate(() => {
+    rowVirtualizer.measure();
+    if (measureRows) {
+      rowVirtualizer.elementsCache.forEach((element) => {
+        if (element.isConnected) {
+          rowVirtualizer.measureElement(element);
+        }
+      });
     }
-    const left: number[] = [];
-    const right: number[] = [];
-    visibleColumns.forEach((col, index) => {
-      const pinned = col.getIsPinned();
-      if (pinned === 'start') {
-        left.push(index);
-      } else if (pinned === 'end') {
-        right.push(index);
+  }, [
+    ctx.store.size,
+    ctx.getRowHeight,
+    ctx.estimateRowHeight,
+    virtualScrollConfig?.estimateSize,
+    measureRows,
+  ]);
+
+  const tableStore = ctx.table.store;
+
+  useEffect(() => {
+    if (!ctx.withRowVirtualization) {
+      return undefined;
+    }
+
+    return registerRowScroller(tableStore, (index: number) =>
+      rowVirtualizer.scrollToIndex(index, { align: 'start' })
+    );
+  }, [ctx.withRowVirtualization, rowVirtualizer, tableStore]);
+
+  const expandedState = ctx.table.store.state.expanded;
+  const withExpandedPanels = ctx.renderExpandedRow != null;
+  const panelsBefore = useMemo(() => {
+    if (!ctx.withRowExpansion) {
+      return null;
+    }
+
+    const counts: number[] = [];
+    let total = 0;
+    rows.forEach((row) => {
+      counts.push(total);
+      if (hasExpandedPanel(ctx, row)) {
+        total += 1;
       }
     });
-    return { left, right };
-  }, [withColumnVirt, ctx.withColumnPinning, visibleColumns]);
+    counts.push(total);
+    return counts;
+  }, [rows, ctx.withRowExpansion, withExpandedPanels, ctx.withTreeData, expandedState]);
+  const totalPanels = panelsBefore?.[rows.length] ?? 0;
 
-  const pinnedColumnIndexSet = useMemo(() => {
-    const set = new Set<number>();
-    allCellsPinned.left.forEach((i) => set.add(i));
-    allCellsPinned.right.forEach((i) => set.add(i));
-    return set;
-  }, [allCellsPinned]);
-
-  const leftPinnedWidth = useMemo(() => {
-    if (!withColumnVirt || !ctx.withColumnPinning) {
-      return 0;
-    }
-    let width = 0;
-    allCellsPinned.left.forEach((idx) => {
-      width += visibleColumns[idx]?.getSize() ?? 0;
-    });
-    return width;
-  }, [withColumnVirt, ctx.withColumnPinning, allCellsPinned, visibleColumns]);
-
-  const pinnedColumnsWidth = useMemo(() => {
-    if (!withColumnVirt || !ctx.withColumnPinning) {
-      return 0;
-    }
-    let width = leftPinnedWidth;
-    allCellsPinned.right.forEach((idx) => {
-      width += visibleColumns[idx]?.getSize() ?? 0;
-    });
-    return width;
-  }, [withColumnVirt, ctx.withColumnPinning, leftPinnedWidth, allCellsPinned, visibleColumns]);
+  const columnSizing = ctx.table.store.state.columnSizing;
+  const columns = useVirtualColumns({
+    enabled: ctx.withColumnVirtualization,
+    withColumnPinning: ctx.withColumnPinning,
+    visibleColumns,
+    columnSizing,
+    scrollContainerRef,
+    config: virtualColumnConfig,
+  });
 
   const columnWidthVars = useMemo(() => {
     const vars: Record<string, string> = {};
@@ -218,450 +179,125 @@ export const DataGridVirtualBody = factory<DataGridVirtualBodyFactory>((props) =
       vars[`--dg-col-${i}`] = `${col.getSize()}px`;
     });
     return vars;
-  }, [visibleColumns]);
+  }, [visibleColumns, columnSizing]);
 
-  function renderCellContent(
-    cell: Cell<DataGridFeatures, any, unknown>,
-    cellIndex: number,
-    rowObj: (typeof rows)[number],
-    groupLabelCellId?: string
-  ) {
-    return (
-      <DataGridVirtualCell
-        key={cell.id}
-        cell={cell}
-        cellIndex={cellIndex}
-        row={rowObj}
-        isTreeFirstCell={ctx.withTreeData && cellIndex === firstDataColumnIndex}
-        groupLabelCellId={groupLabelCellId}
-        classNames={classNames}
-        styles={styles}
-      />
-    );
-  }
+  const visibleStartIndex = rowVirtualizer.range?.startIndex;
+  const tabStopIndex = virtualItems.some((item) => item.index === visibleStartIndex)
+    ? visibleStartIndex!
+    : (virtualItems[0]?.index ?? 0);
 
-  function renderVirtualizedCells(
-    row: (typeof rows)[number],
-    cells: ReturnType<typeof row.getVisibleCells>,
-    groupLabelCellId?: string
-  ) {
-    const leftPinned = allCellsPinned.left.map((idx) =>
-      renderCellContent(cells[idx], idx, row, groupLabelCellId)
-    );
-    const virtualCells = virtualColumnItems!.filter(
-      (item) => !pinnedColumnIndexSet.has(item.index)
-    );
-    const middle = (
-      <div
-        key="__virtual-col-spacer"
-        style={{
-          display: 'flex',
-          position: 'relative',
-          width: totalColumnSize - pinnedColumnsWidth,
-          flexShrink: 0,
-        }}
-      >
-        {virtualCells.map((virtualCol) => {
-          const cell = cells[virtualCol.index];
-          return (
-            <div
-              key={cell.id}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                height: '100%',
-                transform: `translateX(${virtualCol.start - leftPinnedWidth}px)`,
-              }}
-            >
-              {renderCellContent(cell, virtualCol.index, row, groupLabelCellId)}
-            </div>
-          );
-        })}
-      </div>
-    );
-    const rightPinned = allCellsPinned.right.map((idx) =>
-      renderCellContent(cells[idx], idx, row, groupLabelCellId)
-    );
-    return (
-      <>
-        {leftPinned}
-        {middle}
-        {rightPinned}
-      </>
-    );
-  }
+  const renderedRowList = ctx.withRowVirtualization
+    ? virtualItems.map((item) => rows[item.index]).filter(Boolean)
+    : rows;
+  const columnIndexById = useMemo(
+    () => new Map(visibleColumns.map((column, index) => [column.id, index])),
+    [visibleColumns]
+  );
+  const selectionEntryId = getCellSelectionEntryId(
+    ctx,
+    renderedRowList,
+    ctx.withRowVirtualization ? renderedRowList.indexOf(rows[tabStopIndex]) : 0,
+    (cell) => columns.isColumnRendered(columnIndexById.get(cell.column.id) ?? -1)
+  );
 
-  function renderAllCells(
-    row: (typeof rows)[number],
-    cells: ReturnType<typeof row.getVisibleCells>,
-    groupLabelCellId?: string
-  ) {
-    return cells.map((cell, cellIndex) =>
-      renderCellContent(cell, cellIndex, row, groupLabelCellId)
-    );
-  }
+  const renderRow = (rowIndex: number) => (
+    <VirtualRow
+      row={rows[rowIndex]}
+      rowIndex={rowIndex}
+      tabStop={rowIndex === tabStopIndex}
+      ariaRowIndex={headerRowCount + rowIndex + 1 + (panelsBefore?.[rowIndex] ?? 0)}
+      visibleColumns={visibleColumns}
+      firstDataColumnIndex={firstDataColumnIndex}
+      columns={columns}
+      selectionEntryId={selectionEntryId}
+    />
+  );
 
-  function renderGroupRowContent(row: (typeof rows)[number], rowIndex: number) {
-    const cells = row.getVisibleCells();
-    const labelCellId = getGroupLabelCellId(cells);
-
-    return (
-      <div
-        role="row"
-        aria-rowindex={rowIndex + 2}
-        aria-expanded={row.getIsExpanded()}
-        tabIndex={ctx.withCellSelection ? undefined : rowIndex === 0 ? 0 : -1}
-        data-group-row
-        data-row-index={rowIndex}
-        data-row-id={row.id}
-        onClick={() => row.toggleExpanded()}
-        {...ctx.getStyles('virtualRow', { classNames, styles })}
-      >
-        {withColumnVirt
-          ? renderVirtualizedCells(row, cells, labelCellId)
-          : renderAllCells(row, cells, labelCellId)}
-      </div>
-    );
-  }
-
-  function renderRowContent(row: (typeof rows)[number], rowIndex: number) {
-    if (ctx.withGrouping && row.getIsGrouped()) {
-      return renderGroupRowContent(row, rowIndex);
-    }
-
-    const isSelected = row.getIsSelected();
-    const isStriped = isRowStriped(ctx, row);
-    const isExpanded = hasExpandedPanel(ctx, row);
-    const isEditing = ctx.withEditing && row.getIsEditing();
-    const isSaving = isEditing && row.getIsSaving();
-
-    const handleRowDoubleClick = ctx.onRowDoubleClick
-      ? (event: React.MouseEvent) => {
-          ctx.onRowDoubleClick!(row, event);
-        }
-      : undefined;
-
-    const cells = row.getVisibleCells();
-
-    return (
-      <>
+  const renderedRows = ctx.withRowVirtualization
+    ? virtualItems.map((virtualItem) => (
         <div
-          role="row"
-          aria-rowindex={rowIndex + 2}
-          tabIndex={ctx.withCellSelection ? undefined : rowIndex === 0 ? 0 : -1}
-          data-row-index={rowIndex}
-          data-row-id={row.id}
-          data-selected={isSelected || undefined}
-          data-striped={isStriped || undefined}
-          data-expanded={isExpanded || undefined}
-          data-tree-row={ctx.withTreeData || undefined}
-          data-depth={ctx.withTreeData ? row.depth : undefined}
-          data-leaf={(ctx.withTreeData && !row.getCanExpand()) || undefined}
-          data-editing={isEditing || undefined}
-          data-saving={isSaving || undefined}
-          aria-busy={isSaving || undefined}
-          onClick={
-            hasRowClickBehavior(ctx) ? (event) => handleRowClick(ctx, row, event) : undefined
-          }
-          onDoubleClick={handleRowDoubleClick}
-          {...ctx.getStyles('virtualRow', { classNames, styles })}
-        >
-          {withColumnVirt ? renderVirtualizedCells(row, cells) : renderAllCells(row, cells)}
-        </div>
-        {isExpanded && (
-          <div
-            role="row"
-            aria-rowindex={rowIndex + 2}
-            data-expanded-row
-            {...ctx.getStyles('virtualRow', { classNames, styles })}
-          >
-            {visibleColumns.map((column, index) => {
-              if (!column.columnDef.meta?.utility) {
-                return null;
-              }
-              const pinned = getPinnedCellProps(column, ctx.withColumnPinning);
-              return (
-                <div
-                  key={column.id}
-                  role="gridcell"
-                  aria-colindex={index + 1}
-                  data-utility={column.columnDef.meta.utility}
-                  data-pinned={pinned['data-pinned']}
-                  data-pinned-edge={pinned['data-pinned-edge']}
-                  {...ctx.getStyles('virtualCell', {
-                    classNames,
-                    styles,
-                    style: { ...pinned.style, width: `var(--dg-col-${index})` },
-                  })}
-                />
-              );
-            })}
-            <div
-              role="gridcell"
-              aria-colindex={firstDataColumnIndex + 1}
-              {...ctx.getStyles('expandedRow', { classNames, styles })}
-            >
-              {ctx.renderExpandedRow!({ row })}
-            </div>
-          </div>
-        )}
-      </>
-    );
-  }
-
-  const renderedRows =
-    withRowVirt && virtualRowItems
-      ? virtualRowItems.map((virtualItem) => {
-          const row = rows[virtualItem.index];
-          return (
-            <div
-              key={row.id}
-              ref={
-                ctx.withRowExpansion || hasAutoHeight ? rowVirtualizer.measureElement : undefined
-              }
-              data-index={virtualItem.index}
-              data-last-row={virtualItem.index === rows.length - 1 || undefined}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                transform: `translateY(${virtualItem.start}px)`,
-              }}
-            >
-              {renderRowContent(row, virtualItem.index)}
-            </div>
-          );
-        })
-      : rows.map((row, rowIndex) => (
-          <div key={row.id} data-last-row={rowIndex === rows.length - 1 || undefined}>
-            {renderRowContent(row, rowIndex)}
-          </div>
-        ));
-
-  function renderHeaderCell(
-    header: Header<DataGridFeatures, any, unknown>,
-    headerIndex: number,
-    isLast: boolean
-  ) {
-    const pinned = getPinnedHeaderProps(header, ctx.withColumnPinning);
-
-    return (
-      <div
-        key={header.id}
-        ref={ctx.headerInteractions.registerHeaderCell(header)}
-        role="columnheader"
-        aria-colindex={headerIndex + 1}
-        {...getHeaderCellAttributes(header, ctx)}
-        data-pinned={pinned['data-pinned']}
-        data-pinned-edge={pinned['data-pinned-edge']}
-        {...ctx.getStyles('virtualCell', {
-          classNames,
-          styles,
-          style: {
-            ...pinned.style,
-            width:
-              header.colSpan > 1
-                ? header.getLeafHeaders().reduce((sum, leaf) => sum + leaf.getSize(), 0)
-                : `var(--dg-col-${headerIndex})`,
-          },
-        })}
-        {...ctx.headerInteractions.getReorderHandlers(header)}
-      >
-        <DataGridHeaderCellContent
-          header={header}
-          isLast={isLast}
-          classNames={classNames}
-          styles={styles}
-        />
-      </div>
-    );
-  }
-
-  function renderVirtualizedHeaders(
-    headers: Header<DataGridFeatures, any, unknown>[],
-    isLeafRow: boolean
-  ) {
-    const lastIndex = headers.length - 1;
-
-    if (isLeafRow) {
-      const leftPinned = allCellsPinned.left.map((idx) =>
-        renderHeaderCell(headers[idx], idx, idx === lastIndex)
-      );
-      const virtualHeaders = virtualColumnItems!.filter(
-        (item) => !pinnedColumnIndexSet.has(item.index)
-      );
-      const middle = (
-        <div
-          key="__virtual-header-spacer"
+          key={virtualItem.key}
+          ref={measureRows ? rowVirtualizer.measureElement : undefined}
+          data-index={virtualItem.index}
+          data-last-row={virtualItem.index === rows.length - 1 || undefined}
           style={{
-            display: 'flex',
-            position: 'relative',
-            width: totalColumnSize - pinnedColumnsWidth,
-            flexShrink: 0,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            transform: `translateY(${virtualItem.start}px)`,
           }}
         >
-          {virtualHeaders.map((virtualCol) => (
-            <div
-              key={headers[virtualCol.index].id}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                height: '100%',
-                transform: `translateX(${virtualCol.start - leftPinnedWidth}px)`,
-              }}
-            >
-              {renderHeaderCell(
-                headers[virtualCol.index],
-                virtualCol.index,
-                virtualCol.index === lastIndex
-              )}
-            </div>
-          ))}
+          {renderRow(virtualItem.index)}
         </div>
-      );
-      const rightPinned = allCellsPinned.right.map((idx) =>
-        renderHeaderCell(headers[idx], idx, idx === lastIndex)
-      );
-      return (
-        <>
-          {leftPinned}
-          {middle}
-          {rightPinned}
-        </>
-      );
-    }
-
-    const visibleLeafIndexSet = new Set(virtualColumnItems!.map((item) => item.index));
-    const visibleHeaders = headers.filter((header) => {
-      const leafColumns = header.getLeafHeaders();
-      return leafColumns.some((leaf) => {
-        const leafIndex = visibleColumns.findIndex((col) => col.id === leaf.column.id);
-        return leafIndex !== -1 && visibleLeafIndexSet.has(leafIndex);
-      });
-    });
-
-    return (
-      <>
-        {visibleHeaders.map((header, headerIndex) =>
-          renderHeaderCell(header, headerIndex, header === headers[lastIndex])
-        )}
-      </>
-    );
-  }
+      ))
+    : rows.map((row, rowIndex) => (
+        <div key={row.id} data-last-row={rowIndex === rows.length - 1 || undefined}>
+          {renderRow(rowIndex)}
+        </div>
+      ));
 
   const emptyStateContent = !ctx.loading && rows.length === 0 ? resolveEmptyState(ctx) : null;
-
-  const renderSkeletonRows = () =>
-    Array.from({ length: getSkeletonRowCount(ctx) }, (_, rowIndex) => (
-      <div
-        key={rowIndex}
-        role="row"
-        aria-hidden
-        data-skeleton-row
-        {...ctx.getStyles('virtualRow', { classNames, styles })}
-      >
-        {visibleColumns.map((column, columnIndex) => {
-          const meta = column.columnDef.meta;
-          const pinned = getPinnedCellProps(column, ctx.withColumnPinning);
-          return (
-            <div
-              key={column.id}
-              role="gridcell"
-              data-utility={meta?.utility}
-              data-align={meta?.align}
-              data-pinned={pinned['data-pinned']}
-              data-pinned-edge={pinned['data-pinned-edge']}
-              {...ctx.getStyles('virtualCell', {
-                classNames,
-                styles,
-                style: { ...pinned.style, width: `var(--dg-col-${columnIndex})` },
-              })}
-            >
-              {!meta?.utility && (
-                <SkeletonBar
-                  rowIndex={rowIndex}
-                  columnIndex={columnIndex}
-                  classNames={classNames}
-                  styles={styles}
-                />
-              )}
-            </div>
-          );
-        })}
-      </div>
-    ));
+  const emptyRowCount = !ctx.withSkeletonRows && emptyStateContent != null ? 1 : 0;
 
   const bodyContent = ctx.withSkeletonRows ? (
-    <div>{renderSkeletonRows()}</div>
-  ) : emptyStateContent !== null && emptyStateContent !== undefined ? (
-    <div role="row" data-empty-row {...ctx.getStyles('virtualRow', { classNames, styles })}>
+    <div>
+      <SkeletonRows virtual columns={visibleColumns} renderColumns={columns.renderColumns} />
+    </div>
+  ) : emptyStateContent != null ? (
+    <div
+      role="row"
+      aria-rowindex={headerRowCount + 1}
+      data-empty-row
+      {...ctx.getStyles('virtualRow')}
+    >
       <div
         role="gridcell"
         aria-colindex={1}
         aria-colspan={totalColumns}
-        {...ctx.getStyles('emptyState', { classNames, styles })}
+        {...ctx.getStyles('emptyState')}
       >
         {emptyStateContent}
       </div>
     </div>
-  ) : withRowVirt ? (
-    <div style={{ height: totalRowSize, position: 'relative' }}>{renderedRows}</div>
+  ) : ctx.withRowVirtualization ? (
+    <div style={{ height: rowVirtualizer.getTotalSize(), position: 'relative' }}>
+      {renderedRows}
+    </div>
   ) : (
     <div>{renderedRows}</div>
   );
 
   return (
     <div
-      ref={containerRef}
+      ref={ref}
       onScroll={onScroll}
+      data-dg-scroll
       {...ctx.getStyles('virtualScrollContainer', {
-        className,
-        classNames,
-        style: [{ height: height ? rem(height) : undefined, overflow: 'auto' }, style],
-        styles,
+        style: { height: height ? rem(height) : undefined, overflow: 'auto' },
       })}
-      {...others}
     >
       <div
         role="grid"
-        aria-rowcount={rows.length + 1}
+        aria-rowcount={
+          headerRowCount + rows.length + totalPanels + emptyRowCount + tfootModel.rowCount
+        }
         aria-colcount={totalColumns}
         aria-busy={ctx.loading || undefined}
         onKeyDown={handleKeyDown}
-        {...ctx.getStyles('virtualGrid', { classNames, styles, style: columnWidthVars })}
+        {...ctx.getStyles('virtualGrid', { style: columnWidthVars })}
       >
-        <div role="rowgroup" data-virtual-thead ref={ctx.theadRef}>
-          {headerGroups.map((headerGroup) => (
-            <div
-              key={headerGroup.id}
-              role="row"
-              aria-rowindex={1}
-              {...ctx.getStyles('virtualGridHeader', { classNames, styles })}
-            >
-              {withColumnVirt
-                ? renderVirtualizedHeaders(
-                    headerGroup.headers,
-                    headerGroups[headerGroups.length - 1].id === headerGroup.id
-                  )
-                : headerGroup.headers.map((header, headerIndex) =>
-                    renderHeaderCell(
-                      header,
-                      headerIndex,
-                      headerIndex === headerGroup.headers.length - 1
-                    )
-                  )}
-            </div>
-          ))}
-        </div>
+        <VirtualHeader columns={columns} />
 
         {bodyContent}
+
+        <VirtualTfoot
+          model={tfootModel}
+          visibleColumns={visibleColumns}
+          columns={columns}
+          ariaRowIndex={headerRowCount + rows.length + totalPanels + emptyRowCount + 1}
+        />
       </div>
     </div>
   );
-});
-
-DataGridVirtualBody.classes = classes;
-DataGridVirtualBody.displayName = '@mantine/data-grid/DataGridVirtualBody';
+}

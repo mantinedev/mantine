@@ -15,7 +15,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
-import { getReorderNeighbours, moveColumn } from '../DataGridHeader/move-column';
+import { canReorderColumn, getReorderNeighbours, moveColumn } from '../DataGridHeader/move-column';
 import {
   ArrowDownIcon,
   ArrowLeftIcon,
@@ -87,8 +87,10 @@ export const DataGridColumnMenu = factory<DataGridColumnMenuFactory>((props) => 
   const canGroup = ctx.withGrouping && column.getCanGroup();
   const isGrouped = column.getIsGrouped();
   const canResize = ctx.withColumnResizing && column.getCanResize();
-  const canMove = ctx.withColumnReorder && !column.columnDef.meta?.utility;
-  const neighbours = canMove ? getReorderNeighbours(column, table) : {};
+  const canMove = ctx.withColumnReorder && canReorderColumn(column, ctx.store.groupedColumnsFirst);
+  const neighbours = canMove
+    ? getReorderNeighbours(column, table, ctx.store.groupedColumnsFirst)
+    : {};
   const leftNeighbour = dir === 'rtl' ? neighbours.next : neighbours.previous;
   const rightNeighbour = dir === 'rtl' ? neighbours.previous : neighbours.next;
   const customItems = ctx.columnMenuItems?.(column);

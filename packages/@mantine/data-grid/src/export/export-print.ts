@@ -1,7 +1,6 @@
 import { Table, RowData } from '@tanstack/react-table';
 import type { DataGridFeatures } from '../table-features';
-import { formatCsv } from './export-csv';
-import type { ExportColumnScope, ExportRowScope } from './export-utils';
+import { ExportColumnScope, ExportRowScope, getExportMatrix } from './export-utils';
 
 export interface ExportPrintOptions {
   /** Document title of the print window */
@@ -17,36 +16,12 @@ export interface ExportPrintOptions {
   valueFormatter?: (value: unknown, columnId: string) => string;
 }
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
 function buildPrintTable<TData extends RowData>(
   doc: Document,
   table: Table<DataGridFeatures, TData>,
   options?: ExportPrintOptions
 ): HTMLTableElement {
-  const {
-    rows: rowsOption = 'all',
-    columns: columnsOption = 'visible',
-    valueFormatter,
-  } = options ?? {};
-
-  const csvString = formatCsv(table, {
-    rows: rowsOption,
-    columns: columnsOption,
-    valueFormatter,
-    includeHeaders: true,
-    delimiter: '\0',
-  });
-
-  const lines = csvString.split('\n');
-  const [headerLine, ...dataLines] = lines;
-  const headers = headerLine.split('\0');
+  const { headers, rows } = getExportMatrix(table, options);
 
   const tableEl = doc.createElement('table');
   tableEl.style.cssText = 'border-collapse:collapse;width:100%';
@@ -64,12 +39,12 @@ function buildPrintTable<TData extends RowData>(
   tableEl.appendChild(thead);
 
   const tbody = doc.createElement('tbody');
-  dataLines.forEach((line, i) => {
+  rows.forEach((values, i) => {
     const tr = doc.createElement('tr');
     if (i % 2 === 1) {
       tr.style.backgroundColor = '#fafafa';
     }
-    for (const v of line.split('\0')) {
+    for (const v of values) {
       const td = doc.createElement('td');
       td.textContent = v;
       td.style.cssText = 'border:1px solid #ddd;padding:8px;text-align:left;font-size:13px';
@@ -93,7 +68,7 @@ export function exportToPrint<TData extends RowData>(
   }
 
   const doc = printWindow.document;
-  doc.title = escapeHtml(title);
+  doc.title = title;
 
   const style = doc.createElement('style');
   style.textContent =

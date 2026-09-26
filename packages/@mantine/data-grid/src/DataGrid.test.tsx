@@ -1,5 +1,6 @@
-import { act } from 'react';
+import { act, createRef, type Ref } from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { dataGridFeatures } from './table-features';
 import { mockVirtualViewport } from './virtual-test-utils';
 import { DataGrid, DataGridProps, DataGridStore, DataGridStylesNames, useDataGrid } from './index';
 
@@ -35,6 +36,39 @@ function DataGridWithStore({
 }
 
 describe('@mantine/data-grid/DataGrid', () => {
+  it('does not build row models for the internal store when a store is passed', () => {
+    const rowModelKeys = [
+      'sortedRowModel',
+      'filteredRowModel',
+      'paginatedRowModel',
+      'expandedRowModel',
+      'groupedRowModel',
+    ] as const;
+    const builtFor = new Set<unknown>();
+    const spies = rowModelKeys.map((key) => {
+      const original = dataGridFeatures[key] as (table: any) => unknown;
+      return jest.spyOn(dataGridFeatures, key).mockImplementation(((table: any) => {
+        builtFor.add(table.store);
+        return original(table);
+      }) as any);
+    });
+
+    let store: DataGridStore | null = null;
+    function Grid() {
+      store = useDataGrid({ data, columns });
+      return <DataGrid store={store} />;
+    }
+
+    try {
+      const { rerender } = render(<Grid />);
+      rerender(<Grid />);
+      expect(screen.getByText('Alice')).toBeInTheDocument();
+      expect(Array.from(builtFor)).toEqual([store!.table.store]);
+    } finally {
+      spies.forEach((spy) => spy.mockRestore());
+    }
+  });
+
   tests.itSupportsSystemProps<DataGridProps, DataGridStylesNames>({
     component: DataGrid,
     props: defaultProps,
@@ -251,7 +285,7 @@ describe('@mantine/data-grid/DataGrid', () => {
       expect(container.querySelector('tbody tr td')).toHaveTextContent('Person 6');
 
       rerender(<Grid rows={[]} />);
-      expect(store!.pagination.pageIndex).toBe(0);
+      expect(store!.pagination.pageIndex).toBe(1);
     });
   });
 
@@ -447,6 +481,41 @@ describe('@mantine/data-grid/DataGrid', () => {
       expect(
         container.querySelector('tbody td[data-utility="rowNumber"] .mantine-DataGrid-rowNumber')
       ).toHaveTextContent('1');
+    });
+    it('continues row numbers on the next page', () => {
+      const { container } = render(
+        <DataGridWithStore
+          storeOptions={{
+            data,
+            columns,
+            withRowNumbers: true,
+            pagination: { pageIndex: 1, pageSize: 2 },
+            onPaginationChange: () => {},
+          }}
+        />
+      );
+      const cells = container.querySelectorAll('tbody td[data-utility="rowNumber"]');
+      expect(Array.from(cells).map((cell) => cell.textContent)).toEqual(['3']);
+    });
+
+    it('does not count pinned rows on earlier pages', () => {
+      const { container } = render(
+        <DataGridWithStore
+          storeOptions={{
+            data,
+            columns,
+            withRowNumbers: true,
+            rowPinning: { top: ['0'], bottom: [] },
+            onRowPinningChange: () => {},
+            pagination: { pageIndex: 1, pageSize: 2 },
+            onPaginationChange: () => {},
+          }}
+        />
+      );
+      const numbers = Array.from(
+        container.querySelectorAll('tbody:not([data-pinned]) td[data-utility="rowNumber"]')
+      ).map((cell) => cell.textContent);
+      expect(numbers).toEqual(['2']);
     });
   });
 
@@ -675,6 +744,127 @@ describe('@mantine/data-grid/DataGrid', () => {
   });
 
   describe('height', () => {
+    it('keeps the ScrollArea and its props for onScrollToBottom without virtualization', () => {
+      const onScrollToBottom = jest.fn();
+      const onViewportScroll = jest.fn();
+      const { container } = render(
+        <DataGrid
+          {...defaultProps}
+          height={300}
+          onScrollToBottom={onScrollToBottom}
+          scrollAreaProps={{
+            className: 'custom-area',
+            viewportProps: { onScroll: onViewportScroll },
+          }}
+        />
+      );
+      const scrollArea = container.querySelector(
+        '.mantine-DataGrid-scrollContainer'
+      ) as HTMLElement;
+      expect(scrollArea).toHaveClass('mantine-ScrollArea-root');
+      expect(scrollArea).toHaveClass('custom-area');
+      const scrollContainer = container.querySelector('[data-dg-scroll]') as HTMLElement;
+      expect(scrollContainer).toHaveClass('mantine-ScrollArea-viewport');
+      expect(scrollContainer.querySelector('table')).toBeInTheDocument();
+
+      Object.defineProperty(scrollContainer, 'scrollHeight', { configurable: true, value: 1000 });
+      Object.defineProperty(scrollContainer, 'clientHeight', { configurable: true, value: 300 });
+      scrollContainer.scrollTop = 100;
+      act(() => {
+        scrollContainer.dispatchEvent(new Event('scroll'));
+      });
+      expect(onScrollToBottom).not.toHaveBeenCalled();
+      expect(onViewportScroll).toHaveBeenCalledTimes(1);
+
+      scrollContainer.scrollTop = 700;
+      act(() => {
+        scrollContainer.dispatchEvent(new Event('scroll'));
+      });
+      expect(onScrollToBottom).toHaveBeenCalledTimes(1);
+      expect(onViewportScroll).toHaveBeenCalledTimes(2);
+    });
+
+    it('uses a plain scroll container for onScrollToBottom when withScrollArea is false', () => {
+      const onScrollToBottom = jest.fn();
+      const { container } = render(
+        <DataGrid
+          {...defaultProps}
+          height={300}
+          withScrollArea={false}
+          onScrollToBottom={onScrollToBottom}
+        />
+      );
+      const scrollContainer = container.querySelector('[data-dg-scroll]') as HTMLElement;
+      expect(scrollContainer).toHaveClass('mantine-DataGrid-scrollContainer');
+      expect(scrollContainer).not.toHaveClass('mantine-ScrollArea-viewport');
+      expect(scrollContainer.style.overflow).toBe('auto');
+
+      Object.defineProperty(scrollContainer, 'scrollHeight', { configurable: true, value: 1000 });
+      Object.defineProperty(scrollContainer, 'clientHeight', { configurable: true, value: 300 });
+      scrollContainer.scrollTop = 700;
+      act(() => {
+        scrollContainer.dispatchEvent(new Event('scroll'));
+      });
+      expect(onScrollToBottom).toHaveBeenCalledTimes(1);
+    });
+
+    it.each([true, false])(
+      'does not call onScrollToBottom on horizontal scroll without height (withScrollArea=%s)',
+      (withScrollArea) => {
+        const onScrollToBottom = jest.fn();
+        const { container } = render(
+          <DataGrid
+            {...defaultProps}
+            withScrollArea={withScrollArea}
+            onScrollToBottom={onScrollToBottom}
+          />
+        );
+        const scrollContainer = container.querySelector('[data-dg-scroll]') as HTMLElement;
+        Object.defineProperty(scrollContainer, 'scrollHeight', { configurable: true, value: 200 });
+        Object.defineProperty(scrollContainer, 'clientHeight', { configurable: true, value: 200 });
+        scrollContainer.scrollLeft = 120;
+        act(() => {
+          scrollContainer.dispatchEvent(new Event('scroll'));
+        });
+        expect(onScrollToBottom).not.toHaveBeenCalled();
+      }
+    );
+
+    it('ignores horizontal scroll events while already at the bottom', () => {
+      const onScrollToBottom = jest.fn();
+      const { container } = render(
+        <DataGrid {...defaultProps} height={300} onScrollToBottom={onScrollToBottom} />
+      );
+      const scrollContainer = container.querySelector('[data-dg-scroll]') as HTMLElement;
+      Object.defineProperty(scrollContainer, 'scrollHeight', { configurable: true, value: 1000 });
+      Object.defineProperty(scrollContainer, 'clientHeight', { configurable: true, value: 300 });
+      scrollContainer.scrollTop = 700;
+      act(() => {
+        scrollContainer.dispatchEvent(new Event('scroll'));
+      });
+      expect(onScrollToBottom).toHaveBeenCalledTimes(1);
+
+      scrollContainer.scrollLeft = 50;
+      act(() => {
+        scrollContainer.dispatchEvent(new Event('scroll'));
+      });
+      expect(onScrollToBottom).toHaveBeenCalledTimes(1);
+    });
+
+    it('applies the scrollContainer Styles API selector without ScrollArea', () => {
+      const { container } = render(
+        <DataGrid
+          {...defaultProps}
+          withScrollArea={false}
+          styles={{ scrollContainer: { outline: '1px solid red' } }}
+        />
+      );
+      const wrapper = container.querySelector('table')!.parentElement as HTMLElement;
+      expect(wrapper).toHaveClass('mantine-DataGrid-scrollContainer');
+      expect(wrapper.style.overflowX).toBe('auto');
+      expect(wrapper.style.outline).toBe('1px solid red');
+    });
+
     it('does not constrain the scroll container without height', () => {
       const { container } = render(<DataGrid {...defaultProps} />);
       const scrollArea = container.querySelector(
@@ -716,6 +906,100 @@ describe('@mantine/data-grid/DataGrid', () => {
       expect(scrollArea.style.height).toBe('calc(18.75rem * var(--mantine-scale))');
       expect(scrollArea.style.background).toBe('red');
       expect(scrollArea).toHaveClass('custom-scroll-area');
+    });
+
+    it('merges scrollAreaProps.viewportRef with the grid scroll container ref', () => {
+      const viewportRef = createRef<HTMLDivElement>();
+      let store: DataGridStore | null = null;
+      function Grid() {
+        store = useDataGrid({ data, columns });
+        return <DataGrid store={store} scrollAreaProps={{ viewportRef }} />;
+      }
+
+      const { container } = render(<Grid />);
+      const viewport = container.querySelector('.mantine-ScrollArea-viewport');
+      expect(viewport).toBeInstanceOf(HTMLDivElement);
+      expect(viewportRef.current).toBe(viewport);
+      expect(store!.scrollContainerRef.current).toBe(viewport);
+    });
+
+    it('re-attaches an inline scrollAreaProps.viewportRef without re-observing overflow', () => {
+      const calls: (HTMLDivElement | null)[] = [];
+      function Grid({ tick }: { tick: number }) {
+        const store = useDataGrid({ data, columns, withColumnPinning: true });
+        return (
+          <DataGrid
+            store={store}
+            data-tick={tick}
+            scrollAreaProps={{
+              viewportRef: (node: HTMLDivElement | null) => {
+                calls.push(node);
+              },
+            }}
+          />
+        );
+      }
+
+      const observe = jest.fn();
+      const originalResizeObserver = window.ResizeObserver;
+      window.ResizeObserver = class {
+        observe = observe;
+        unobserve() {}
+        disconnect() {}
+      } as any;
+
+      try {
+        const { rerender, container } = render(<Grid tick={0} />);
+        const observeCalls = observe.mock.calls.length;
+        rerender(<Grid tick={1} />);
+        rerender(<Grid tick={2} />);
+        const viewport = container.querySelector('.mantine-ScrollArea-viewport');
+        expect(calls).toEqual([viewport, null, viewport, null, viewport]);
+        expect(observe.mock.calls.length).toBe(observeCalls);
+      } finally {
+        window.ResizeObserver = originalResizeObserver;
+      }
+    });
+
+    it('moves the viewport node to a new scrollAreaProps.viewportRef object', () => {
+      const refA = createRef<HTMLDivElement>();
+      const refB = createRef<HTMLDivElement>();
+      function Grid({ viewportRef }: { viewportRef: Ref<HTMLDivElement> }) {
+        const store = useDataGrid({ data, columns });
+        return <DataGrid store={store} scrollAreaProps={{ viewportRef }} />;
+      }
+
+      const { rerender, container } = render(<Grid viewportRef={refA} />);
+      const viewport = container.querySelector('.mantine-ScrollArea-viewport');
+      expect(refA.current).toBe(viewport);
+      rerender(<Grid viewportRef={refB} />);
+      expect(refA.current).toBeNull();
+      expect(refB.current).toBe(viewport);
+    });
+
+    it('moves the viewport node to a new scrollAreaProps.viewportRef callback and runs the old cleanup', () => {
+      const events: string[] = [];
+      const makeRef = (name: string) => (node: HTMLDivElement | null) => {
+        events.push(`${name}:${node ? 'node' : 'null'}`);
+        return () => {
+          events.push(`${name}:cleanup`);
+        };
+      };
+      const refA = makeRef('a');
+      const refB = makeRef('b');
+      function Grid({ viewportRef }: { viewportRef: Ref<HTMLDivElement> }) {
+        const store = useDataGrid({ data, columns });
+        return <DataGrid store={store} scrollAreaProps={{ viewportRef }} />;
+      }
+
+      const { rerender, unmount } = render(<Grid viewportRef={refA} />);
+      expect(events).toEqual(['a:node']);
+      rerender(<Grid viewportRef={refB} />);
+      expect(events).toEqual(['a:node', 'a:cleanup', 'b:node']);
+      rerender(<Grid viewportRef={refB} />);
+      expect(events).toEqual(['a:node', 'a:cleanup', 'b:node']);
+      unmount();
+      expect(events).toEqual(['a:node', 'a:cleanup', 'b:node', 'b:cleanup']);
     });
 
     it('sizes the plain scroll container when height is set without ScrollArea', () => {

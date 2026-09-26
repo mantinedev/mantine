@@ -2,7 +2,7 @@ import type { Row, RowData } from '@tanstack/react-table';
 import type { MantineSize } from '@mantine/core';
 import type { DataGridFeatures } from './table-features';
 
-export interface DataGridSizeValues {
+interface DataGridSizeValues {
   fontSize: number;
   rowHeight: number;
   cellPaddingX: number;
@@ -14,7 +14,6 @@ export interface DataGridSizeValues {
   footerHeight: number;
 }
 
-/** Per-size geometry in px, mirrored by the static `--dg-*-{size}` tables in `DataGrid.module.css` */
 export const DATA_GRID_SIZES: Record<MantineSize, DataGridSizeValues> = {
   xs: {
     fontSize: 12,
@@ -83,22 +82,17 @@ const CONTROL_SIZE: Record<MantineSize, DataGridControlSize> = {
   xl: 'md',
 };
 
-/** Resolves the size of chrome controls (toolbar, selection bar, footer) from the grid size */
 export function getControlSize(size: MantineSize): DataGridControlSize {
   return CONTROL_SIZE[size];
 }
 
-export interface RowHeightEstimateOptions<TData extends RowData = any> {
+interface RowHeightEstimateOptions<TData extends RowData = any> {
   estimateSize?: (index: number) => number;
   getRowHeight?: (row: Row<DataGridFeatures, TData>) => number | 'auto';
   estimateRowHeight?: number;
   size: MantineSize;
 }
 
-/**
- * Row height estimate for the virtual body, first hit wins:
- * `virtualScrollConfig.estimateSize` → numeric `getRowHeight` → `estimateRowHeight` → size row height
- */
 export function getRowHeightEstimate<TData extends RowData = any>(
   options: RowHeightEstimateOptions<TData>,
   row: Row<DataGridFeatures, TData> | undefined,

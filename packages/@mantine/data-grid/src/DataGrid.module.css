@@ -109,6 +109,19 @@
     position: sticky;
     bottom: 0;
     z-index: 2;
+
+    :where(
+        [data-dg-scroll]:is([data-scrollbars='xy'], [data-scrollbars='x']):is(
+            [data-offset-scrollbars='xy'],
+            [data-offset-scrollbars='x'],
+            [data-offset-scrollbars='present']
+          ):not([data-horizontal-hidden])
+      )
+      > *
+      > .table
+      > & {
+      bottom: calc(var(--scrollarea-scrollbar-size, 0px) * -1);
+    }
   }
 }
 
@@ -182,13 +195,16 @@
   }
 }
 
-.td {
+.td,
+.virtualCell {
   --dg-td-shadow-edit: 0 0 0 0 transparent;
   --dg-td-shadow-focus: 0 0 0 0 transparent;
   --dg-td-shadow-edge: 0 0 0 0 transparent;
   --dg-td-shadow-divider: 0 0 0 0 transparent;
   --dg-td-shadow-rule: 0 0 0 0 transparent;
+}
 
+.td {
   position: relative;
   padding: var(--dg-cell-padding-y) var(--dg-cell-padding-x);
   height: var(--dg-row-height);
@@ -355,16 +371,6 @@
   border-inline-end: rem(1px) solid var(--dg-border-color);
 }
 
-:where(.root[data-text-overflow='wrap']) :where(.td, .virtualCell) {
-  overflow: visible;
-  text-overflow: unset;
-  white-space: normal;
-}
-
-:where(.root[data-text-overflow='clip']) :where(.td, .virtualCell) {
-  text-overflow: clip;
-}
-
 .headerCell {
   display: flex;
   align-items: center;
@@ -488,6 +494,33 @@
 
 .tfoot {
   border-top: rem(1px) solid var(--dg-border-color);
+
+  &:where([data-virtual-tfoot]) {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    background-color: var(--mantine-color-body);
+
+    & > .tr {
+      display: flex;
+    }
+
+    & .aggregationCell {
+      height: auto;
+      min-height: var(--dg-row-height);
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      &:where([data-align='center']) {
+        align-items: center;
+      }
+
+      &:where([data-align='end']) {
+        align-items: flex-end;
+      }
+    }
+  }
 }
 
 .columnVisibilityToggle {
@@ -520,6 +553,10 @@
   padding: rem(12px) var(--dg-cell-padding-x);
   font: inherit;
 
+  :where(.listItem) > & {
+    padding: rem(8px) 0 0;
+  }
+
   :where(.virtualRow) > & {
     flex: 1;
     min-width: 0;
@@ -549,6 +586,9 @@
   align-items: center;
   gap: rem(4px);
   min-width: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
 }
 
 .groupToggle {
@@ -606,6 +646,19 @@
     border-bottom: rem(1px) solid var(--dg-row-border-color);
   }
 
+  :where(.root[data-with-row-borders]) & > .virtualCell {
+    height: calc(var(--dg-row-height) - rem(1px));
+  }
+
+  &:where([data-auto-height]) > .virtualCell {
+    height: auto;
+    min-height: var(--dg-row-height);
+  }
+
+  :where(.root[data-with-row-borders]) &:where([data-auto-height]) > .virtualCell {
+    min-height: calc(var(--dg-row-height) - rem(1px));
+  }
+
   &:where([data-striped]) {
     background-color: var(--dg-striped-color);
   }
@@ -626,12 +679,6 @@
 }
 
 .virtualCell {
-  --dg-td-shadow-edit: 0 0 0 0 transparent;
-  --dg-td-shadow-focus: 0 0 0 0 transparent;
-  --dg-td-shadow-edge: 0 0 0 0 transparent;
-  --dg-td-shadow-divider: 0 0 0 0 transparent;
-  --dg-td-shadow-rule: 0 0 0 0 transparent;
-
   position: relative;
   padding: var(--dg-cell-padding-y) var(--dg-cell-padding-x);
   height: var(--dg-row-height);
@@ -663,6 +710,16 @@
   &:where([data-pinned-edge]) {
     overflow-clip-margin: rem(12px);
   }
+}
+
+:where(.root[data-text-overflow='wrap']) :is(.td, .virtualCell) {
+  overflow: visible;
+  text-overflow: unset;
+  white-space: normal;
+}
+
+:where(.root[data-text-overflow='clip']) :is(.td, .virtualCell) {
+  text-overflow: clip;
 }
 
 .treeIndent {
@@ -800,15 +857,21 @@
     border-top: 0;
     border-radius: 0;
     border-bottom-color: var(--dg-row-border-color);
+  }
 
-    &:last-child {
-      border-bottom: 0;
-    }
+  :where(.root[data-list-view='flat']) :where(.listView) > &:last-child,
+  :where(.root[data-list-view='flat']) :where([data-list-pinned='bottom']) > &:last-child,
+  :where(.root[data-list-view='flat']) :where([data-list-pinned='top']:last-child) > &:last-child {
+    border-bottom: 0;
   }
 
   &:focus-visible {
     outline: rem(2px) solid var(--mantine-color-focus-ring);
     outline-offset: rem(-2px);
+  }
+
+  &:where([data-striped]) {
+    background-color: var(--dg-striped-color);
   }
 
   &:where([data-selected]) {
@@ -828,6 +891,32 @@
     :where(.root[data-highlight-on-hover]) &:where([data-selected]):hover {
       background-color: var(--dg-selected-color);
     }
+  }
+}
+
+[data-list-pinned] {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+
+  :where([data-dg-scroll]) > :where(.listView) > & {
+    position: sticky;
+    z-index: 2;
+    background-color: var(--mantine-color-body);
+  }
+
+  :where([data-dg-scroll]) > :where(.listView) > &:where([data-list-pinned='top']) {
+    top: 0;
+  }
+
+  :where([data-dg-scroll]) > :where(.listView) > &:where([data-list-pinned='bottom']) {
+    bottom: 0;
+  }
+
+  :where(.root[data-list-view='flat'] [data-dg-scroll])
+    > :where(.listView)
+    > &:where([data-list-pinned='bottom']) {
+    box-shadow: 0 rem(-1px) 0 var(--dg-row-border-color);
   }
 }
 
@@ -1210,6 +1299,7 @@
 
 .virtualRow {
   position: relative;
+  isolation: isolate;
   outline: none;
 
   &:where([data-selected])::before {
@@ -1224,24 +1314,13 @@
     pointer-events: none;
   }
 
-  &:focus-visible > .virtualCell {
-    --dg-td-shadow-focus:
-      inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
-      inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
-  }
-
-  &:focus-visible > .virtualCell:first-child {
-    --dg-td-shadow-focus:
-      inset rem(2px) 0 0 0 var(--mantine-color-focus-ring),
-      inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
-      inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
-  }
-
-  &:focus-visible > .virtualCell:last-child {
-    --dg-td-shadow-focus:
-      inset rem(-2px) 0 0 0 var(--mantine-color-focus-ring),
-      inset 0 rem(2px) 0 0 var(--mantine-color-focus-ring),
-      inset 0 rem(-2px) 0 0 var(--mantine-color-focus-ring);
+  &:focus-visible::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 0 rem(2px) var(--mantine-color-focus-ring);
+    z-index: 3;
+    pointer-events: none;
   }
 }
 
@@ -1310,6 +1389,7 @@
   overflow: visible;
 
   & > .groupHeader {
+    flex-shrink: 0;
     width: max-content;
     max-width: calc(var(--dg-group-label-width) - 2 * var(--dg-cell-padding-x));
   }
@@ -1615,4 +1695,12 @@
 
 :where([data-last-row]) > .virtualRow:last-child {
   border-bottom: 0;
+}
+
+.tr[data-drop-edge='before'] > .td {
+  --dg-td-shadow-edge: inset 0 rem(2px) 0 0 var(--mantine-primary-color-filled);
+}
+
+.tr[data-drop-edge='after'] > .td {
+  --dg-td-shadow-edge: inset 0 rem(-2px) 0 0 var(--mantine-primary-color-filled);
 }

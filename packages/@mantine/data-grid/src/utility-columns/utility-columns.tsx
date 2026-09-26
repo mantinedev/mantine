@@ -1,8 +1,15 @@
+import { useEffect } from 'react';
 import type { ColumnOrderState, ColumnPinningState, RowData } from '@tanstack/react-table';
 import { Checkbox, MantineSize, Radio } from '@mantine/core';
 import { DATA_GRID_SIZES } from '../data-grid-sizes';
 import { useDataGridContext } from '../DataGrid.context';
 import type { DataGridColumnDef, DataGridRow } from '../DataGrid.types';
+import { endRowDrag, releaseRowDrag, startRowDrag } from '../DataGridBody/row-drag-source';
+import {
+  clearSelectionAnchor,
+  getGroupSelectableLeafRows,
+  handleSelectionControlChange,
+} from '../DataGridBody/row-selection';
 import { ExpandChevron, GripIcon } from '../icons';
 
 export type DataGridUtilityColumn = 'reorder' | 'select' | 'expand' | 'rowNumber';
@@ -40,6 +47,19 @@ export function getUtilityColumnIds(flags: UtilityColumnFlags): string[] {
   return getActiveUtilityColumns(flags).map((name) => UTILITY_COLUMN_IDS[name]);
 }
 
+const ALL_UTILITY_COLUMN_IDS: string[] = Object.values(UTILITY_COLUMN_IDS);
+
+export function stripUtilityColumnIds(ids: string[]): string[] {
+  const next = ids.filter((id) => !ALL_UTILITY_COLUMN_IDS.includes(id));
+  return next.length === ids.length ? ids : next;
+}
+
+export function stripUtilityPinning(pinning: ColumnPinningState): ColumnPinningState {
+  const start = stripUtilityColumnIds(pinning.start ?? []);
+  const end = stripUtilityColumnIds(pinning.end ?? []);
+  return start === pinning.start && end === pinning.end ? pinning : { start, end };
+}
+
 function sameIds(a: string[], b: string[]) {
   return a.length === b.length && a.every((id, index) => id === b[index]);
 }
@@ -73,8 +93,8 @@ export function normalizeColumnPinning(
   pinning: ColumnPinningState,
   utilityIds: string[]
 ): ColumnPinningState {
-  const start = [...utilityIds, ...pinning.start.filter((id) => !utilityIds.includes(id))];
-  const end = pinning.end.filter((id) => !utilityIds.includes(id));
+  const start = [...utilityIds, ...stripUtilityColumnIds(pinning.start)];
+  const end = stripUtilityColumnIds(pinning.end);
   return sameIds(start, pinning.start) && sameIds(end, pinning.end) ? pinning : { start, end };
 }
 
@@ -99,11 +119,13 @@ function SelectAllHeader() {
     <Checkbox
       checked={checked}
       indeterminate={!checked && someSelected}
-      onChange={
-        ctx.withPagination
+      onChange={(event) => {
+        const toggleAll = ctx.withPagination
           ? ctx.table.getToggleAllPageRowsSelectedHandler()
-          : ctx.table.getToggleAllRowsSelectedHandler()
-      }
+          : ctx.table.getToggleAllRowsSelectedHandler();
+        toggleAll(event);
+        clearSelectionAnchor(ctx.table.store);
+      }}
       aria-label={ctx.labels.selectAll}
       vars={checkboxVars}
       {...ctx.getStyles('selectAllCheckbox')}
@@ -116,25 +138,51 @@ function SelectCell({ row }: { row: DataGridRow<any> }) {
 
   const stopPropagation = (event: React.MouseEvent) => event.stopPropagation();
 
-  if (!row.getCanSelect()) {
-    return row.getIsGrouped() ? null : (
+  const singleSelection = ctx.table.options.enableMultiRowSelection === false;
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    handleSelectionControlChange(ctx, row, event);
+
+  if (row.getIsGrouped()) {
+    const leaves = getGroupSelectableLeafRows(row);
+    if (leaves.length === 0) {
+      return null;
+    }
+
+    const allSelected = leaves.every((leaf) => leaf.getIsSelected());
+
+    return (
       <Checkbox
-        checked={false}
-        disabled
-        readOnly
+        checked={allSelected}
+        indeterminate={!allSelected && row.getIsSomeSelected()}
+        onChange={onChange}
         onClick={stopPropagation}
-        aria-label={ctx.labels.selectRow}
+        aria-label={ctx.labels.selectGroup}
         vars={checkboxVars}
         {...ctx.getStyles('selectionCheckbox')}
       />
     );
   }
 
-  if (ctx.table.options.enableMultiRowSelection === false) {
+  if (!row.getCanSelect()) {
+    const Control = singleSelection ? Radio : Checkbox;
+    return (
+      <Control
+        checked={row.getIsSelected()}
+        disabled
+        readOnly
+        onClick={stopPropagation}
+        aria-label={ctx.labels.selectRow}
+        vars={singleSelection ? radioVars : checkboxVars}
+        {...ctx.getStyles('selectionCheckbox')}
+      />
+    );
+  }
+
+  if (singleSelection) {
     return (
       <Radio
         checked={row.getIsSelected()}
-        onChange={row.getToggleSelectedHandler()}
+        onChange={onChange}
         onClick={stopPropagation}
         aria-label={ctx.labels.selectRow}
         vars={radioVars}
@@ -143,13 +191,13 @@ function SelectCell({ row }: { row: DataGridRow<any> }) {
     );
   }
 
-  const checked = row.getIsGrouped() ? row.getIsAllSubRowsSelected() : row.getIsSelected();
+  const checked = row.getIsSelected();
 
   return (
     <Checkbox
       checked={checked}
       indeterminate={!checked && row.getIsSomeSelected()}
-      onChange={row.getToggleSelectedHandler()}
+      onChange={onChange}
       onClick={stopPropagation}
       aria-label={ctx.labels.selectRow}
       vars={checkboxVars}
@@ -200,21 +248,23 @@ function RowNumberCell({ row }: { row: DataGridRow<any> }) {
 
 function ReorderCell({ row }: { row: DataGridRow<any> }) {
   const ctx = useDataGridContext();
+  const tableStore = ctx.table.store;
 
-  if (!ctx.withRowReorder) {
+  useEffect(() => () => releaseRowDrag(tableStore, row.id), [tableStore, row.id]);
+
+  if (!ctx.withRowReorder || (ctx.withRowPinning && row.getIsPinned())) {
     return null;
   }
 
   return (
     <span
-      role="button"
-      tabIndex={-1}
+      aria-hidden
       draggable
-      aria-label={ctx.labels.dragToReorder}
-      onDragStart={(event: React.DragEvent) => {
-        event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setData('text/plain', row.id);
-      }}
+      title={ctx.labels.dragToReorder}
+      onDragStart={(event: React.DragEvent) =>
+        startRowDrag(ctx.table.store, row.id, event.dataTransfer)
+      }
+      onDragEnd={endRowDrag}
       {...ctx.getStyles('dragHandle')}
     >
       <GripIcon />

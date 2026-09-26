@@ -1,151 +1,32 @@
-import { useMemo } from 'react';
-import { flexRender } from '@tanstack/react-table';
-import {
-  Box,
-  BoxProps,
-  CompoundStylesApiProps,
-  ElementProps,
-  factory,
-  Factory,
-  useProps,
-} from '@mantine/core';
+import { getOrderedVisibleColumns } from '../column-cell-props';
 import { useDataGridContext } from '../DataGrid.context';
-import type { DataGridLabels } from '../labels';
-import classes from '../DataGrid.module.css';
+import { AggregationCell, FooterCell } from './footer-cells';
+import { useTfootModel } from './tfoot-model';
 
-const AGGREGATION_LABEL_KEYS: Record<string, keyof DataGridLabels> = {
-  sum: 'aggregationSum',
-  count: 'aggregationCount',
-  mean: 'aggregationMean',
-  min: 'aggregationMin',
-  max: 'aggregationMax',
-  median: 'aggregationMedian',
-  unique: 'aggregationUnique',
-  uniqueCount: 'aggregationUniqueCount',
-  extent: 'aggregationExtent',
-};
-
-export type DataGridTfootStylesNames =
-  | 'tfoot'
-  | 'tr'
-  | 'td'
-  | 'aggregationCell'
-  | 'aggregationLabel'
-  | 'aggregationValue';
-
-export interface DataGridTfootProps
-  extends BoxProps, CompoundStylesApiProps<DataGridTfootFactory>, ElementProps<'tfoot'> {}
-
-export type DataGridTfootFactory = Factory<{
-  props: DataGridTfootProps;
-  ref: HTMLTableSectionElement;
-  stylesNames: DataGridTfootStylesNames;
-  compound: true;
-}>;
-
-export const DataGridTfoot = factory<DataGridTfootFactory>((props) => {
-  const { className, style, classNames, styles, ...others } = useProps(
-    'DataGridTfoot',
-    null,
-    props
-  );
-
+export function DataGridTfoot() {
   const ctx = useDataGridContext();
+  const model = useTfootModel();
 
-  const aggregatedColumnIds = useMemo(
-    () => new Set(ctx.aggregatedColumnIds),
-    [ctx.aggregatedColumnIds]
-  );
-  const filteredRowModel = ctx.table.getFilteredRowModel();
-  const aggregationRows = useMemo(
-    () =>
-      filteredRowModel.flatRows.filter((row) => row.original !== undefined && !row.getIsGrouped()),
-    [filteredRowModel]
-  );
-
-  const footerGroups = ctx.table
-    .getFooterGroups()
-    .filter((group) =>
-      group.headers.some(
-        (header) => !header.isPlaceholder && header.column.columnDef.footer !== undefined
-      )
-    );
+  if (model.rowCount === 0) {
+    return null;
+  }
 
   return (
-    <Box
-      component="tfoot"
-      {...ctx.getStyles('tfoot', { className, classNames, style, styles })}
-      {...others}
-    >
-      {footerGroups.map((footerGroup) => (
-        <tr key={footerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
+    <tfoot {...ctx.getStyles('tfoot')}>
+      {model.footerGroups.map((footerGroup) => (
+        <tr key={footerGroup.id} {...ctx.getStyles('tr')}>
           {footerGroup.headers.map((header) => (
-            <td
-              key={header.id}
-              colSpan={header.colSpan}
-              data-utility={header.column.columnDef.meta?.utility}
-              data-align={header.column.columnDef.meta?.align}
-              {...ctx.getStyles('td', { classNames, styles })}
-            >
-              {header.isPlaceholder
-                ? null
-                : flexRender(header.column.columnDef.footer, header.getContext())}
-            </td>
+            <FooterCell key={header.id} component="td" header={header} colSpan={header.colSpan} />
           ))}
         </tr>
       ))}
-      {aggregatedColumnIds.size > 0 && (
-        <tr {...ctx.getStyles('tr', { classNames, styles })}>
-          {ctx.table.getVisibleLeafColumns().map((column) => {
-            const hasAggregation = aggregatedColumnIds.has(column.id);
-            const meta = column.columnDef.meta;
-            const rawValue = hasAggregation
-              ? column.getAggregationValue({ rows: aggregationRows })
-              : undefined;
-            const value = hasAggregation
-              ? meta?.formatAggregatedValue
-                ? meta.formatAggregatedValue(rawValue, aggregationRows)
-                : String(rawValue ?? '')
-              : null;
-            const aggregationFn = column.columnDef.aggregationFn;
-            const labelKey =
-              typeof aggregationFn === 'string' ? AGGREGATION_LABEL_KEYS[aggregationFn] : undefined;
-            const label = meta?.aggregationLabel ?? (labelKey ? ctx.labels[labelKey] : undefined);
-            const tdStyles = ctx.getStyles('td', { classNames, styles });
-
-            return (
-              <td
-                key={column.id}
-                data-utility={meta?.utility}
-                data-align={meta?.align}
-                data-actions={meta?.type === 'actions' || undefined}
-                {...ctx.getStyles('aggregationCell', {
-                  classNames,
-                  styles,
-                  className: tdStyles.className,
-                  style: tdStyles.style,
-                })}
-              >
-                {hasAggregation && (
-                  <>
-                    {label && (
-                      <div {...ctx.getStyles('aggregationLabel', { classNames, styles })}>
-                        {label}
-                      </div>
-                    )}
-                    <div {...ctx.getStyles('aggregationValue', { classNames, styles })}>
-                      {value}
-                    </div>
-                  </>
-                )}
-              </td>
-            );
-          })}
+      {model.withAggregation && (
+        <tr {...ctx.getStyles('tr')}>
+          {getOrderedVisibleColumns(ctx.table).map((column) => (
+            <AggregationCell key={column.id} component="td" column={column} model={model} />
+          ))}
         </tr>
       )}
-    </Box>
+    </tfoot>
   );
-});
-
-DataGridTfoot.classes = classes;
-DataGridTfoot.displayName = '@mantine/data-grid/DataGridTfoot';
+}

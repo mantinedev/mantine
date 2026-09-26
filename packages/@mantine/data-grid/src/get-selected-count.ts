@@ -1,6 +1,5 @@
 import type { RowSelectionState } from '@tanstack/react-table';
 
-/** Number of selected rows, entries with a `false` value are ignored */
 export function getSelectedCount(rowSelection: RowSelectionState | undefined): number {
   if (!rowSelection) {
     return 0;

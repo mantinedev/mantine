@@ -11,7 +11,7 @@ import {
   Text,
   TextInput,
 } from '@mantine/core';
-import { DataGrid, useDataGrid, DataGridColumnDef } from './index';
+import { DataGrid, useDataGrid, useDataGridState, DataGridColumnDef } from './index';
 
 export default { title: 'DataGrid' };
 
@@ -687,6 +687,58 @@ export function Virtualization() {
   );
 }
 
+export function VirtualizationRowHeight() {
+  const store = useDataGrid({ data: largeData, columns, getRowId: (row) => row.id });
+  const estimatedStore = useDataGrid({ data: largeData, columns, getRowId: (row) => row.id });
+  return (
+    <Stack p="md">
+      <Text fw={600}>getRowHeight={'{() => 60}'}</Text>
+      <DataGrid store={store} virtualize="rows" height={400} getRowHeight={() => 60} />
+      <Text fw={600}>estimateRowHeight={'{60}'} (rows keep their natural height)</Text>
+      <DataGrid store={estimatedStore} virtualize="rows" height={400} estimateRowHeight={60} />
+    </Stack>
+  );
+}
+
+interface NoteRow {
+  id: string;
+  title: string;
+  note: string;
+}
+
+const noteSentence = 'This note wraps across several lines to exercise auto row height. ';
+const noteRows: NoteRow[] = Array.from({ length: 500 }, (_, index) => ({
+  id: String(index),
+  title: `Note ${index + 1}`,
+  note: noteSentence.repeat((index % 4) + 1).trim(),
+}));
+
+const noteColumns: DataGridColumnDef<NoteRow>[] = [
+  { accessorKey: 'title', header: 'Title', size: 120 },
+  { accessorKey: 'note', header: 'Note', size: 320 },
+];
+
+const getAutoRowHeight = () => 'auto' as const;
+
+export function VirtualizationAutoRowHeight() {
+  const store = useDataGrid({
+    data: noteRows,
+    columns: noteColumns,
+    getRowId: (row) => row.id,
+  });
+  return (
+    <Box p="md">
+      <DataGrid
+        store={store}
+        virtualize="rows"
+        height={500}
+        textOverflow="wrap"
+        getRowHeight={getAutoRowHeight}
+      />
+    </Box>
+  );
+}
+
 export function Loading() {
   const store = useDataGrid({ data: employees, columns, getRowId: (row) => row.id });
   return (
@@ -1165,14 +1217,36 @@ export function PinnedRows() {
   );
 }
 
+export function ScrollToRowPinnedStickyOffset() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withRowPinning: true,
+    rowPinning: { top: [employees[0].id], bottom: [] },
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>
+        stickyHeaderOffset 24 + top-pinned row: scrollToRow(10) lands the row right below the pinned
+        row
+      </Text>
+      <Button w="fit-content" onClick={() => store.scrollToRow(10)}>
+        Scroll to row 10
+      </Button>
+      <DataGrid store={store} stickyHeader stickyHeaderOffset={24} height={300} />
+    </Stack>
+  );
+}
+
 export function PinnedColumnsOverflow() {
   const store = useDataGrid({
     data: employees,
     columns: [
       ...columns,
       { accessorKey: 'email', header: 'Email', size: 260 },
-      { accessorKey: 'department', header: 'Department 2', size: 200 },
-      { accessorKey: 'salary', header: 'Salary 2', size: 200 },
+      { id: 'department2', accessorKey: 'department', header: 'Department 2', size: 200 },
+      { id: 'salary2', accessorKey: 'salary', header: 'Salary 2', size: 200 },
     ],
     getRowId: (row) => row.id,
     withColumnPinning: true,
@@ -1321,6 +1395,163 @@ export function ListView() {
   );
 }
 
+const listViewEmployees = employees.slice(0, 6);
+
+export function ListViewExpansionPinning() {
+  const store = useDataGrid({
+    data: listViewEmployees,
+    columns,
+    getRowId: (row) => row.id,
+    withRowExpansion: true,
+    withRowPinning: true,
+    rowPinning: { top: [employees[0].id], bottom: [employees[1].id] },
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>click an item to expand it; first and second employees are pinned</Text>
+      <DataGrid
+        store={store}
+        listView
+        expandOnRowClick
+        renderExpandedRow={({ row }) => (
+          <Text size="sm" c="dimmed">
+            Details for {row.original.firstName} {row.original.lastName}
+          </Text>
+        )}
+      />
+    </Stack>
+  );
+}
+
+export function ListViewHeightPinning() {
+  const options = {
+    data: employees,
+    columns,
+    getRowId: (row: Employee) => row.id,
+    withRowPinning: true,
+    rowPinning: { top: [employees[0].id], bottom: [employees[1].id] },
+  };
+  const cardsStore = useDataGrid(options);
+  const flatStore = useDataGrid(options);
+  const groupedStore = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withGrouping: true,
+    grouping: ['department'],
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>
+        list scrolls inside height=360; first employee sticks to the top, second to the bottom
+      </Text>
+      <DataGrid store={cardsStore} listView height={360} />
+      <DataGrid store={flatStore} listView="flat" height={360} />
+      <Text fw={600}>grouped list: group items toggle through an aria-expanded button</Text>
+      <DataGrid store={groupedStore} listView="flat" height={360} />
+    </Stack>
+  );
+}
+
+function createScrollEmployees(start: number, count: number): Employee[] {
+  return Array.from({ length: count }, (_, index) => {
+    const source = employees[(start + index) % employees.length];
+    return { ...source, id: `scroll-${start + index}` };
+  });
+}
+
+export function ScrollToBottomScrollArea() {
+  const [data, setData] = useState(() => createScrollEmployees(0, 30));
+  const [loads, setLoads] = useState(0);
+  const store = useDataGrid({ data, columns, getRowId: (row) => row.id });
+  const plainStore = useDataGrid({ data, columns, getRowId: (row) => row.id });
+  return (
+    <Stack p="md">
+      <Text fw={600}>
+        onScrollToBottom keeps the ScrollArea and scrollAreaProps (10px scrollbars); loads: {loads},
+        rows: {data.length}
+      </Text>
+      <DataGrid
+        store={store}
+        height={360}
+        scrollAreaProps={{ type: 'always', scrollbarSize: 10 }}
+        onScrollToBottom={() => {
+          setLoads((current) => current + 1);
+          setData((current) => [...current, ...createScrollEmployees(current.length, 20)]);
+        }}
+      />
+      <Text fw={600}>withScrollArea=false uses a plain scroll container</Text>
+      <DataGrid store={plainStore} height={240} withScrollArea={false} />
+    </Stack>
+  );
+}
+
+function ColumnVirtualizationPinnedGrid({
+  virtualize,
+}: {
+  virtualize: 'columns' | 'rows,columns';
+}) {
+  const wideColumns: DataGridColumnDef<Employee>[] = Array.from({ length: 30 }, (_, index) => ({
+    id: `col${index}`,
+    header: `Column ${index + 1}`,
+    accessorFn: (row) => `${row.firstName} ${index + 1}`,
+    size: 140,
+  }));
+  const store = useDataGrid({
+    data: employees,
+    columns: [{ accessorKey: 'firstName', header: 'Name', size: 160 }, ...wideColumns],
+    getRowId: (row) => row.id,
+    withColumnPinning: true,
+    withColumnResizing: true,
+    columnPinning: { start: ['firstName'], end: ['col29'] },
+  });
+  return <DataGrid store={store} virtualize={virtualize} height={320} withColumnBorders />;
+}
+
+export function ColumnVirtualizationPinned() {
+  return (
+    <Stack p="md" style={{ maxWidth: 900 }}>
+      <Text fw={600}>virtualize="columns" with start and end pinned columns</Text>
+      <ColumnVirtualizationPinnedGrid virtualize="columns" />
+      <Text fw={600}>virtualize="rows,columns"</Text>
+      <ColumnVirtualizationPinnedGrid virtualize="rows,columns" />
+    </Stack>
+  );
+}
+
+const groupedSelectionColumns: DataGridColumnDef<Employee>[] = [
+  { accessorKey: 'firstName', header: 'First name' },
+  { accessorKey: 'department', header: 'Department' },
+  { accessorKey: 'salary', header: 'Salary', aggregationFn: 'sum', meta: { align: 'end' } },
+];
+
+function GroupingCellSelectionGrid({ virtual }: { virtual?: boolean }) {
+  const store = useDataGrid({
+    data: employees,
+    columns: groupedSelectionColumns,
+    getRowId: (row) => row.id,
+    withGrouping: true,
+    withCellSelection: true,
+    grouping: ['department'],
+  });
+  return virtual ? (
+    <DataGrid store={store} virtualize="rows" height={320} />
+  ) : (
+    <DataGrid store={store} />
+  );
+}
+
+export function GroupingCellSelection() {
+  return (
+    <Stack p="md" style={{ maxWidth: 720 }}>
+      <Text fw={600}>Tab to a group toggle, press Enter or Space to expand it</Text>
+      <GroupingCellSelectionGrid />
+      <Text fw={600}>virtual body</Text>
+      <GroupingCellSelectionGrid virtual />
+    </Stack>
+  );
+}
+
 interface TreeEmployee extends Employee {
   subRows?: TreeEmployee[];
 }
@@ -1357,7 +1588,7 @@ export function TreeData() {
     getSubRows: (row) => row.subRows,
     withRowSelection: true,
     withRowNumbers: true,
-    expanded: true,
+    tableOptions: { initialState: { expanded: true } },
   });
   return (
     <Stack p="md">
@@ -1455,11 +1686,15 @@ export function Totals() {
       </DataGrid>
       <Text fw={600}>virtual body</Text>
       <DataGrid store={store} virtualize="rows" height={200} />
+      <Text fw={600}>virtual body, horizontal scroll and column virtualization</Text>
+      <Box maw={480}>
+        <DataGrid store={store} virtualize="rows,columns" height={200} />
+      </Box>
     </Stack>
   );
 }
 
-export function CellStatus() {
+function CellStatusGrid({ virtual }: { virtual?: boolean }) {
   const [data, setData] = useState(employees.slice(0, 8));
   const [saved] = useState(() => new Map(employees.map((item) => [item.id, item])));
   const store = useDataGrid({
@@ -1496,15 +1731,23 @@ export function CellStatus() {
       setData((prev) => prev.map((item) => (item.id === newRow.id ? newRow : item)));
     },
   });
+  return virtual ? (
+    <DataGrid store={store} virtualize="rows" height={220} />
+  ) : (
+    <DataGrid store={store} striped highlightOnHover />
+  );
+}
+
+export function CellStatus() {
   return (
     <Stack p="md">
       <Text fw={600}>
         double-click to edit: changed cells are dirty, salaries above 100000 are invalid, an invalid
         draft blocks the save
       </Text>
-      <DataGrid store={store} striped highlightOnHover />
+      <CellStatusGrid />
       <Text fw={600}>virtual body</Text>
-      <DataGrid store={store} virtualize="rows" height={220} />
+      <CellStatusGrid virtual />
     </Stack>
   );
 }
@@ -1574,6 +1817,225 @@ export function VirtualizationParity() {
         <DataGrid.Toolbar />
         <DataGrid.Footer pagination="none" />
       </DataGrid>
+    </Stack>
+  );
+}
+
+export function RowReorder() {
+  const [rows, setRows] = useState(employees.slice(0, 6));
+  const store = useDataGrid({
+    data: rows,
+    columns,
+    getRowId: (row) => row.id,
+    withRowReorder: true,
+    onRowOrderChange: setRows,
+  });
+
+  return (
+    <Box p="md">
+      <DataGrid store={store} />
+    </Box>
+  );
+}
+
+const floatingTotalsColumns: DataGridColumnDef<Employee>[] = [
+  { accessorKey: 'firstName', header: 'First name' },
+  { accessorKey: 'lastName', header: 'Last name' },
+  { accessorKey: 'salary', header: 'Salary', aggregationFn: 'sum', meta: { align: 'end' } },
+];
+
+export function FloatingEditActionsVirtualTotals() {
+  const [data, setData] = useState(employees);
+  const store = useDataGrid({
+    data,
+    columns: floatingTotalsColumns,
+    getRowId: (row) => row.id,
+    editingMode: 'row',
+    onEditSave: ({ newRow }) => {
+      setData((prev) => prev.map((item) => (item.id === newRow.id ? newRow : item)));
+    },
+  });
+  return (
+    <Stack p="md" style={{ maxWidth: 720 }}>
+      <Text fw={600}>
+        edit a row near the bottom, then scroll it under the totals row: the pill stays above the
+        footer and hides when the row is covered
+      </Text>
+      <DataGrid store={store} virtualize="rows" height={250} withFloatingEditActions />
+    </Stack>
+  );
+}
+
+export function FloatingEditActionsVirtualExpansion() {
+  const [data, setData] = useState(employees.slice(0, 20));
+  const store = useDataGrid({
+    data,
+    columns,
+    getRowId: (row) => row.id,
+    withRowExpansion: true,
+    editingMode: 'row',
+    onEditSave: ({ newRow }) => {
+      setData((prev) => prev.map((item) => (item.id === newRow.id ? newRow : item)));
+    },
+  });
+  return (
+    <Stack p="md">
+      <Text fw={600}>
+        edit the 4th row, then expand the 1st row: the edited row moves down and the pill follows it
+      </Text>
+      <DataGrid
+        store={store}
+        virtualize="rows"
+        height={360}
+        withFloatingEditActions
+        renderExpandedRow={({ row }) => (
+          <Text size="sm" py="lg">
+            {row.original.firstName} {row.original.lastName} · {row.original.email}
+          </Text>
+        )}
+      />
+    </Stack>
+  );
+}
+
+export function FloatingEditActionsPinnedRows() {
+  const [data, setData] = useState(employees);
+  const store = useDataGrid({
+    data,
+    columns: floatingTotalsColumns,
+    getRowId: (row) => row.id,
+    editingMode: 'row',
+    withRowPinning: true,
+    rowPinning: { top: [employees[0].id], bottom: [employees[1].id] },
+    onEditSave: ({ newRow }) => {
+      setData((prev) => prev.map((item) => (item.id === newRow.id ? newRow : item)));
+    },
+  });
+  return (
+    <Stack p="md" style={{ maxWidth: 720 }}>
+      <Text fw={600}>
+        double click the top-pinned or bottom-pinned row: the Save / Cancel pill stays visible while
+        the body scrolls
+      </Text>
+      <DataGrid store={store} height={250} stickyHeader withFloatingEditActions />
+    </Stack>
+  );
+}
+
+export function VirtualizationMixedPinnedGroup() {
+  const extraGroups: DataGridColumnDef<Employee>[] = Array.from({ length: 8 }, (_, group) => ({
+    id: `group${group}`,
+    header: `Group ${group + 1}`,
+    columns: [0, 1].map((leaf) => ({
+      id: `col${group * 2 + leaf}`,
+      header: `Column ${group * 2 + leaf + 1}`,
+      accessorFn: (row: Employee) => `${row.firstName} ${group * 2 + leaf + 1}`,
+      size: 140,
+    })),
+  }));
+  const store = useDataGrid({
+    data: employees,
+    columns: [
+      { accessorKey: 'firstName', header: 'Name', size: 140 },
+      {
+        id: 'contact',
+        header: 'Contact',
+        columns: [
+          { accessorKey: 'email', header: 'Email', size: 220 },
+          { accessorKey: 'department', header: 'Department', size: 160 },
+        ],
+      },
+      ...extraGroups,
+    ],
+    getRowId: (row) => row.id,
+    withColumnPinning: true,
+    columnPinning: { start: ['firstName', 'email'], end: [] },
+  });
+  return (
+    <Stack p="md" style={{ maxWidth: 900 }}>
+      <Text fw={600}>
+        virtualize="columns": the Contact group spans a start-pinned (Email) and an unpinned
+        (Department) column
+      </Text>
+      <DataGrid store={store} virtualize="columns" height={320} withColumnBorders />
+    </Stack>
+  );
+}
+
+const STATE_PERSISTENCE_STORAGE_KEY = 'mantine-data-grid-story-state';
+
+export function StatePersistence() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withSorting: true,
+    withColumnReorder: true,
+    withGrouping: true,
+    withRowSelection: true,
+  });
+
+  useDataGridState({
+    store,
+    stateStorageKey: STATE_PERSISTENCE_STORAGE_KEY,
+    persistedState: ['sorting', 'columnOrder', 'grouping', 'rowSelection', 'size'],
+  });
+
+  return (
+    <Stack p="md">
+      <Text fw={600}>
+        Reorder columns, group by a column (column menu), select rows, then reload the page: the
+        state is restored from localStorage
+      </Text>
+      <Group>
+        <Button
+          size="xs"
+          variant="default"
+          onClick={() => {
+            localStorage.removeItem(STATE_PERSISTENCE_STORAGE_KEY);
+            window.location.reload();
+          }}
+        >
+          Clear saved state and reload
+        </Button>
+      </Group>
+      <DataGrid store={store} withColumnMenu />
+    </Stack>
+  );
+}
+
+const getGroupingRowHeight = () => 48;
+
+export function GroupingRowHeight() {
+  const store = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withGrouping: true,
+    grouping: ['department'],
+    tableOptions: { initialState: { expanded: true } },
+  });
+  const virtualStore = useDataGrid({
+    data: employees,
+    columns,
+    getRowId: (row) => row.id,
+    withGrouping: true,
+    grouping: ['department'],
+    tableOptions: { initialState: { expanded: true } },
+  });
+
+  return (
+    <Stack p="md">
+      <Text fw={600}>getRowHeight={'{() => 48}'}: group rows and data rows are 48px</Text>
+      <DataGrid store={store} getRowHeight={getGroupingRowHeight} striped />
+      <Text fw={600}>virtualize=&quot;rows&quot;</Text>
+      <DataGrid
+        store={virtualStore}
+        virtualize="rows"
+        height={300}
+        getRowHeight={getGroupingRowHeight}
+        striped
+      />
     </Stack>
   );
 }

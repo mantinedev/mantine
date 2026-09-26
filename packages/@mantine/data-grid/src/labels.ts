@@ -4,12 +4,10 @@ export interface DataGridLabels {
   rowNumber: string;
   selectAll: string;
   selectRow: string;
+  /** Accessible label of the group row checkbox that toggles the selection of the group's rows */
+  selectGroup: string;
   expandRow: string;
   collapseRow: string;
-  groupCollapse: string;
-  groupExpand: string;
-  editSave: string;
-  editCancel: string;
   columnMenuSortAsc: string;
   columnMenuSortDesc: string;
   columnMenuClearSort: string;
@@ -31,6 +29,7 @@ export interface DataGridLabels {
   footerRows: string;
   footerSelected: string;
   footerPage: string;
+  footerPageUnknownTotal: string;
   paginationPrevious: string;
   paginationNext: string;
   exportLabel: string;
@@ -61,12 +60,9 @@ export const DEFAULT_LABELS: DataGridLabels = {
   rowNumber: '#',
   selectAll: 'Select all rows',
   selectRow: 'Select row',
+  selectGroup: 'Select group',
   expandRow: 'Expand row',
   collapseRow: 'Collapse row',
-  groupCollapse: 'Collapse group',
-  groupExpand: 'Expand group',
-  editSave: 'Save',
-  editCancel: 'Cancel',
   columnMenuSortAsc: 'Sort ascending',
   columnMenuSortDesc: 'Sort descending',
   columnMenuClearSort: 'Clear sort',
@@ -88,6 +84,7 @@ export const DEFAULT_LABELS: DataGridLabels = {
   footerRows: '{count} rows',
   footerSelected: '{count} selected',
   footerPage: 'Page {page} of {total}',
+  footerPageUnknownTotal: 'Page {page}',
   paginationPrevious: 'Previous page',
   paginationNext: 'Next page',
   exportLabel: 'Export',

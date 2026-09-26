@@ -55,7 +55,7 @@ TanStack Table provides built-in aggregation functions: `sum`, `min`, `max`, `me
 
 ## Totals row
 
-Every column with an `aggregationFn` also gets a cell in the totals row of `DataGrid.Tfoot`, which
+Every column with an `aggregationFn` also gets a cell in the totals row of the table `<tfoot>`, which
 the grid renders automatically under the body (after any column `footer` row). The cell stacks a
 label above the value: the label is `meta.aggregationLabel`, or for a built-in aggregation name one
 of the `aggregationSum` (`Sum`), `aggregationCount`, `aggregationMean` (`Average`),
@@ -129,11 +129,15 @@ The `groupedColumnMode` option controls what happens to a column after it is use
 
 <Demo data={DataGridDemos.groupedColumnMode} />
 
+With `'reorder'`, grouped columns cannot be reordered while they are grouped, see [Column reorder](/data-grid/column-features#column-reorder).
+
 ## Group selection
 
 With `withRowSelection`, the checkbox of a group row selects or deselects every leaf row of the
 group and shows the indeterminate state while only some of them are selected. Group rows themselves
-never carry `data-selected`.
+are never selected: `rowSelection` and `onRowSelectionChange` only contain data row ids, and a
+function passed to `enableRowSelection` is called for data rows only. The group checkbox is hidden
+when none of its leaf rows can be selected and in single selection mode.
 
 ## Expand and collapse all groups
 

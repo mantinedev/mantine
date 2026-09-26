@@ -1,6 +1,6 @@
 import { render } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from './DataGrid';
-import { useDataGrid, UseDataGridOptions } from './hooks/use-data-grid';
+import { useDataGrid, UseDataGridOptions } from './hooks';
 import { mockVirtualViewport } from './virtual-test-utils';
 
 const columns = [

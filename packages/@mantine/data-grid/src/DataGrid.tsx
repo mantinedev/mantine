@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Cell, Column, Row, RowData } from '@tanstack/react-table';
 import {
   Box,
@@ -22,24 +22,21 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { useLatestRef, useMergedRef } from '@mantine/hooks';
+import { useMergedRef } from '@mantine/hooks';
 import { DataGridProvider } from './DataGrid.context';
 import { DataGridColumnDef, DataGridEmptyStatePayload } from './DataGrid.types';
-import {
-  DataGridBody,
-  DataGridBodyFactory,
-  DataGridListView,
-  DataGridVirtualBody,
-  DataGridVirtualBodyFactory,
-} from './DataGridBody';
+import { DataGridBody } from './DataGridBody/DataGridBody';
+import { DataGridVirtualBody } from './DataGridBody/DataGridVirtualBody';
+import { ListView } from './DataGridBody/list-view';
+import { getRowSections, getRowSectionsCount } from './DataGridBody/row-sections';
 import { DataGridColumnMenu, DataGridColumnMenuFactory } from './DataGridColumnMenu';
 import { DataGridEditActions } from './DataGridEditActions/DataGridEditActions';
 import { DataGridFooter, DataGridFooterFactory } from './DataGridFooter';
-import { DataGridHeader, DataGridHeaderFactory } from './DataGridHeader';
-import { DataGridHeaderOverlays } from './DataGridHeader/DataGridHeaderOverlays';
+import { DataGridHeader } from './DataGridHeader/DataGridHeader';
+import { HeaderOverlays } from './DataGridHeader/header-overlays';
 import { useHeaderInteractions } from './DataGridHeader/use-header-interactions';
 import { DataGridSelectionBar, DataGridSelectionBarFactory } from './DataGridSelectionBar';
-import { DataGridTfoot, DataGridTfootFactory } from './DataGridTfoot';
+import { DataGridTfoot } from './DataGridTfoot/DataGridTfoot';
 import {
   DataGridColumnVisibilityToggle,
   DataGridColumnVisibilityToggleFactory,
@@ -55,8 +52,12 @@ import {
 import { getSelectedCount } from './get-selected-count';
 import { DataGridStore, useDataGrid, UseDataGridOptions } from './hooks';
 import { useOverflowState } from './hooks/use-overflow-state';
+import { useRowEditOutsideClick } from './hooks/use-row-edit-outside-click';
+import { useRowNumbers } from './hooks/use-row-numbers';
+import { useScrollViewportRef } from './hooks/use-scroll-viewport-ref';
 import { useTheadHeight } from './hooks/use-thead-height';
 import { DEFAULT_LABELS, DataGridLabels } from './labels';
+import { partitionChildren } from './partition-children';
 import type { DataGridFeatures } from './table-features';
 import classes from './DataGrid.module.css';
 
@@ -260,7 +261,7 @@ export interface DataGridProps<TData extends RowData = any>
   /** Estimated row height in px for the virtual body before measurement, defaults to the row height of the current `size` */
   estimateRowHeight?: number;
 
-  /** Use ScrollArea component for horizontal scrolling, @default true */
+  /** Use ScrollArea component for horizontal scrolling, @default true @category appearance */
   withScrollArea?: boolean;
 
   /** Props passed to the ScrollArea component, applicable only when `withScrollArea` is true */
@@ -307,10 +308,6 @@ export type DataGridFactory = Factory<{
   vars: DataGridCssVariables;
   signature: <TData extends RowData = any>(props: DataGridProps<TData>) => React.JSX.Element;
   staticComponents: {
-    Header: typeof DataGridHeader;
-    Body: typeof DataGridBody;
-    VirtualBody: typeof DataGridVirtualBody;
-    Tfoot: typeof DataGridTfoot;
     Footer: typeof DataGridFooter;
     Toolbar: typeof DataGridToolbar;
     GlobalFilter: typeof DataGridGlobalFilter;
@@ -322,7 +319,19 @@ export type DataGridFactory = Factory<{
   };
 }>;
 
-const defaultProps = {} satisfies Partial<DataGridProps>;
+const defaultProps = {
+  withTableBorder: true,
+  withRowBorders: true,
+  sortIndicator: 'hover',
+  sortIndicatorPosition: 'trailing',
+  withColumnMenu: false,
+  withScrollArea: true,
+  tableLayout: 'fixed',
+  textOverflow: 'ellipsis',
+  withTreeLines: true,
+  loadingVariant: 'overlay',
+  skeletonRowCount: 10,
+} satisfies Partial<DataGridProps>;
 
 const EMPTY_STORE_OPTIONS: UseDataGridOptions<any> = { data: [], columns: [] };
 
@@ -355,6 +364,18 @@ const varsResolver = createVarsResolver<DataGridFactory>(
   }
 );
 
+function useDevWarning(condition: boolean | (() => boolean), message: string) {
+  const active =
+    process.env.NODE_ENV !== 'production' &&
+    (typeof condition === 'function' ? condition() : condition);
+  useEffect(() => {
+    if (active) {
+      // eslint-disable-next-line no-console
+      console.warn(`[@mantine/data-grid] ${message}`);
+    }
+  }, [active, message]);
+}
+
 export const DataGrid = genericFactory<DataGridFactory>(((
   _props: DataGridProps<any>,
   ref: React.ForwardedRef<HTMLDivElement>
@@ -370,9 +391,9 @@ export const DataGrid = genericFactory<DataGridFactory>(((
     store: storeProp,
     data,
     columns,
-    withTableBorder = true,
+    withTableBorder,
     radius,
-    withRowBorders = true,
+    withRowBorders,
     withColumnBorders,
     borderColor,
     stripedColor,
@@ -383,9 +404,9 @@ export const DataGrid = genericFactory<DataGridFactory>(((
     attributes,
     sortedIcon,
     unsortedIcon,
-    sortIndicator = 'hover',
-    sortIndicatorPosition = 'trailing',
-    withColumnMenu = false,
+    sortIndicator,
+    sortIndicatorPosition,
+    withColumnMenu,
     columnMenuItems,
     loading,
     striped,
@@ -407,17 +428,17 @@ export const DataGrid = genericFactory<DataGridFactory>(((
     labels: labelsProp,
     getRowHeight,
     estimateRowHeight,
-    withScrollArea = true,
+    withScrollArea,
     scrollAreaProps,
     listView,
     renderListItem,
-    tableLayout = 'fixed',
-    textOverflow = 'ellipsis',
+    tableLayout,
+    textOverflow,
     withTintedGroupRows,
-    withTreeLines = true,
+    withTreeLines,
     withTintedExpandedRows,
-    loadingVariant = 'overlay',
-    skeletonRowCount = 10,
+    loadingVariant,
+    skeletonRowCount,
     loadingOverlayProps,
     withFloatingEditActions,
     ...others
@@ -452,105 +473,87 @@ export const DataGrid = genericFactory<DataGridFactory>(((
   const rootRef = useRef<HTMLDivElement>(null);
   const mergedRef = useMergedRef(ref, rootRef);
   const theadRef = useTheadHeight(rootRef);
-  const headerInteractions = useHeaderInteractions({
-    store,
-    withColumnReorder: store.withColumnReorder,
-    withColumnResizing: store.withColumnResizing,
-    rootRef,
-  });
+  const headerInteractions = useHeaderInteractions({ store, rootRef });
   const listViewMode = listView === true ? 'cards' : listView || false;
-  const hasColumnFooter = store.table
-    .getFooterGroups()
-    .some((group) => group.headers.some((header) => header.column.columnDef.footer !== undefined));
-  const hasAggregation = store.aggregatedColumnIds.length > 0;
-  const hasTfoot = hasColumnFooter || hasAggregation;
   const overflow = useOverflowState(store.withColumnPinning);
   const scrollContainerRef = store.scrollContainerRef;
-  const viewportRef = useMergedRef(scrollContainerRef, overflow.ref);
-  const withRowVirtualization = virtualize === 'rows' || virtualize === 'rows,columns';
-  const withColumnVirtualization = virtualize === 'columns' || virtualize === 'rows,columns';
-
+  const viewportRef = useScrollViewportRef({
+    scrollContainerRef,
+    overflowRef: overflow.ref,
+    userViewportRef: scrollAreaProps?.viewportRef,
+  });
+  const effectiveVirtualize = listViewMode ? undefined : virtualize;
+  const withRowVirtualization =
+    effectiveVirtualize === 'rows' || effectiveVirtualize === 'rows,columns';
+  const withColumnVirtualization =
+    effectiveVirtualize === 'columns' || effectiveVirtualize === 'rows,columns';
   const withVirtualization = withRowVirtualization || withColumnVirtualization;
   const withRowPinning = withVirtualization ? false : store.withRowPinning;
+
+  useDevWarning(
+    withVirtualization && store.withRowPinning,
+    'row pinning is not supported with `virtualize`, remove `withRowPinning` or `rowPinning` from useDataGrid'
+  );
+  useDevWarning(
+    !!listViewMode && store.withRowReorder,
+    'row reorder is not available in list view: the reorder grip is not rendered and rows cannot be dragged while `listView` is set; `withRowReorder` / `onRowOrderChange` still disable sorting and add the `__reorder__` column to the table'
+  );
+  useDevWarning(
+    withVirtualization && store.withRowReorder,
+    'row reorder is not supported with `virtualize`, remove `onRowOrderChange` or `withRowReorder` from useDataGrid'
+  );
+  useDevWarning(
+    () =>
+      withVirtualization &&
+      store.table.options.enableCellSpanning !== false &&
+      store.table
+        .getAllLeafColumns()
+        .some(
+          (column) =>
+            column.columnDef.enableCellSpanning !== false &&
+            (!!column.columnDef.spanRows || !!column.columnDef.spanColumns)
+        ),
+    'cell spanning is not supported with `virtualize`, `spanRows` and `spanColumns` column options are ignored'
+  );
+
   const isLoading = !!loading;
-  const bodyEmpty = withRowPinning
-    ? store.table.getTopRows().length === 0 &&
-      store.table.getCenterRows().length === 0 &&
-      store.table.getBottomRows().length === 0
-    : store.table.getRowModel().rows.length === 0;
+  const rowSections = getRowSections(store.table, withRowPinning);
+  const bodyEmpty = getRowSectionsCount(rowSections) === 0;
   const withSkeletonRows =
     isLoading && !listViewMode && (bodyEmpty || loadingVariant === 'skeleton');
   const withLoadingOverlay = isLoading && !withSkeletonRows && loadingVariant !== 'bar';
   const withLoadingBar = isLoading && !withSkeletonRows && loadingVariant === 'bar';
-  if (process.env.NODE_ENV !== 'production' && withVirtualization && store.withRowPinning) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      '[@mantine/data-grid] row pinning is not supported with `virtualize`, remove `withRowPinning` or `rowPinning` from useDataGrid'
-    );
-  }
-  const indexRows = withRowPinning ? store.table.getCenterRows() : store.table.getRowModel().rows;
-  const pageIndex = store.pagination?.pageIndex ?? 0;
-  const pageSize = store.pagination?.pageSize ?? 0;
-  const rowNumbers = useMemo(() => {
-    const numbers = new Map<string, number>();
-    let current = store.withPagination ? pageIndex * pageSize : 0;
-    for (const row of indexRows) {
-      if (!row.getIsGrouped()) {
-        current += 1;
-        numbers.set(row.id, current);
-      }
-    }
-    return numbers;
-  }, [indexRows, store.withPagination, pageIndex, pageSize]);
-  const getRowNumber = useCallback(
-    (row: Row<DataGridFeatures, any>) => rowNumbers.get(row.id),
-    [rowNumbers]
-  );
 
-  const childArray = React.Children.toArray(children);
-  const isToolbar = (child: React.ReactNode) =>
-    React.isValidElement(child) && child.type === DataGridToolbar;
-  const isSelectionBar = (child: React.ReactNode) =>
-    React.isValidElement(child) && child.type === DataGridSelectionBar;
-  const toolbarChildren = childArray.filter(isToolbar);
-  const selectionBarChild = childArray.find(isSelectionBar) as
-    | React.ReactElement<{ floating?: boolean }>
-    | undefined;
-  const otherChildren = childArray.filter((child) => !isToolbar(child) && !isSelectionBar(child));
+  const withRowNumberGetter = store.withRowNumbers || !!striped;
+  const getRowNumber = useRowNumbers({
+    enabled: withRowNumberGetter,
+    rows: withRowNumberGetter ? rowSections.center : [],
+    prePaginationRows:
+      withRowNumberGetter && store.withPagination && !store.table.options.manualPagination
+        ? store.table.getPrePaginatedRowModel().rows
+        : null,
+    paginateExpandedRows: store.table.options.paginateExpandedRows !== false,
+    withPagination: store.withPagination,
+    withRowPinning,
+    withGrouping: store.withGrouping && store.grouping.length > 0,
+    pageIndex: store.pagination?.pageIndex ?? 0,
+    pageSize: store.pagination?.pageSize ?? 0,
+  });
+
+  const { toolbarChildren, selectionBarChild, otherChildren } = partitionChildren(children);
   const selectedCount = getSelectedCount(store.rowSelection);
   const selectionBarVisible = selectionBarChild !== undefined && selectedCount > 0;
   const floatingSelectionBar = selectionBarVisible && !!selectionBarChild.props.floating;
   const toolbarHidden = selectionBarVisible && !floatingSelectionBar;
 
-  const tableRef = useLatestRef(store.table);
-  const editingRowId = store.editingMode === 'row' ? store.editing?.rowId : undefined;
-  useEffect(() => {
-    if (!editingRowId) {
-      return undefined;
-    }
+  useRowEditOutsideClick({
+    table: store.table,
+    editingRowId: store.editingMode === 'row' ? store.editing?.rowId : undefined,
+    rootRef,
+    scrollContainerRef,
+  });
 
-    const handleMouseDown = (event: MouseEvent) => {
-      const target = event.target;
-      if (
-        target instanceof Element &&
-        target.closest('[data-editing][data-row-id], [data-edit-actions], [data-portal]')
-      ) {
-        return;
-      }
-      tableRef.current.saveEditing();
-    };
-
-    document.addEventListener('mousedown', handleMouseDown);
-    return () => document.removeEventListener('mousedown', handleMouseDown);
-  }, [editingRowId]);
-
-  if (process.env.NODE_ENV !== 'production' && withVirtualization && store.withRowReorder) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      '[@mantine/data-grid] row reorder is not supported with `virtualize`, remove `onRowOrderChange` or `withRowReorder` from useDataGrid'
-    );
-  }
-
+  const lastScrollTopRef = useRef(0);
   const handleScroll = useCallback(() => {
     if (!onScrollToBottom) {
       return;
@@ -561,12 +564,94 @@ export const DataGrid = genericFactory<DataGridFactory>(((
       return;
     }
 
-    const threshold = 50;
     const { scrollTop, scrollHeight, clientHeight } = container;
+    const previousScrollTop = lastScrollTopRef.current;
+    lastScrollTopRef.current = scrollTop;
+
+    if (scrollTop === previousScrollTop || scrollHeight <= clientHeight) {
+      return;
+    }
+
+    const threshold = 50;
     if (scrollHeight - scrollTop - clientHeight <= threshold) {
       onScrollToBottom();
     }
   }, [onScrollToBottom]);
+
+  const userViewportOnScroll = scrollAreaProps?.viewportProps?.onScroll;
+  const scrollViewportProps: React.ComponentProps<'div'> & { 'data-dg-scroll': true } = {
+    ...scrollAreaProps?.viewportProps,
+    onScroll: onScrollToBottom
+      ? (event) => {
+          userViewportOnScroll?.(event);
+          handleScroll();
+        }
+      : userViewportOnScroll,
+    'data-dg-scroll': true,
+  };
+
+  const tableMinWidth =
+    tableLayout === 'fixed'
+      ? store.table.getVisibleLeafColumns().reduce((sum, column) => sum + column.getSize(), 0)
+      : undefined;
+
+  const table = (
+    <table
+      aria-busy={isLoading || undefined}
+      {...getStyles('table', { style: tableMinWidth ? { minWidth: tableMinWidth } : undefined })}
+    >
+      <DataGridHeader />
+      <DataGridBody />
+      <DataGridTfoot />
+    </table>
+  );
+
+  const content = listViewMode ? <ListView /> : table;
+
+  let scrollContainer: React.ReactNode;
+  if (withVirtualization) {
+    scrollContainer = (
+      <DataGridVirtualBody
+        height={height}
+        virtualScrollConfig={virtualScrollConfig}
+        virtualColumnConfig={virtualColumnConfig}
+        ref={viewportRef}
+        onScroll={onScrollToBottom ? handleScroll : undefined}
+      />
+    );
+  } else if (!listViewMode && withScrollArea) {
+    scrollContainer = (
+      <ScrollArea
+        scrollbarSize={4}
+        offsetScrollbars={overflow.state.horizontal ? 'x' : false}
+        scrollbars={height ? 'xy' : 'x'}
+        {...scrollAreaProps}
+        viewportRef={viewportRef}
+        viewportProps={scrollViewportProps}
+        {...getStyles('scrollContainer', {
+          className: scrollAreaProps?.className,
+          style: [height ? { height: rem(height) } : undefined, scrollAreaProps?.style],
+        })}
+      >
+        {content}
+      </ScrollArea>
+    );
+  } else if (listViewMode && !height) {
+    scrollContainer = content;
+  } else {
+    scrollContainer = (
+      <div
+        ref={viewportRef}
+        onScroll={onScrollToBottom ? handleScroll : undefined}
+        data-dg-scroll
+        {...getStyles('scrollContainer', {
+          style: height ? { height: rem(height), overflow: 'auto' } : { overflowX: 'auto' },
+        })}
+      >
+        {content}
+      </div>
+    );
+  }
 
   return (
     <DataGridProvider
@@ -577,7 +662,6 @@ export const DataGrid = genericFactory<DataGridFactory>(((
         withSorting: store.withSorting,
         sortedIcon,
         unsortedIcon,
-        withFiltering: store.withFiltering,
         withGlobalFilter: store.withGlobalFilter,
         withPagination: store.withPagination,
         withColumnResizing: store.withColumnResizing,
@@ -587,23 +671,19 @@ export const DataGrid = genericFactory<DataGridFactory>(((
         withRowSelection: store.withRowSelection,
         withRowExpansion: store.withRowExpansion,
         striped: striped === true ? 'odd' : striped || false,
-        withRowNumbers: store.withRowNumbers,
         getRowNumber,
-        withVirtualization: withRowVirtualization,
+        withRowVirtualization,
         withColumnVirtualization,
         withGrouping: store.withGrouping,
         withRowPinning,
+        rowSections,
         withEditing: store.withEditing,
-        withFaceting: store.withFaceting,
         withTreeData: store.withTreeData,
-        withRowReorder:
-          withRowVirtualization || withColumnVirtualization ? false : store.withRowReorder,
+        withRowReorder: withVirtualization ? false : store.withRowReorder,
         withCellSelection: store.withCellSelection,
         aggregatedColumnIds: store.aggregatedColumnIds,
-        onRowOrderChange:
-          withRowVirtualization || withColumnVirtualization ? undefined : store.onRowOrderChange,
+        onRowOrderChange: withVirtualization ? undefined : store.onRowOrderChange,
         tableLayout,
-        stickyHeader: stickyHeader ?? false,
         expandOnRowClick: expandOnRowClick ?? false,
         editingMode: store.editingMode,
         labels,
@@ -618,18 +698,13 @@ export const DataGrid = genericFactory<DataGridFactory>(((
         renderListItem,
         getRowHeight,
         estimateRowHeight,
-        sortIndicator,
-        sortIndicatorPosition,
         withColumnMenu,
         columnMenuItems,
         headerInteractions: headerInteractions.interactions,
         toolbarHidden,
-        withTintedGroupRows: withTintedGroupRows ?? false,
         withTreeLines,
-        withTintedExpandedRows: withTintedExpandedRows ?? false,
         theadRef,
         loading: isLoading,
-        loadingVariant,
         skeletonRowCount,
         withSkeletonRows,
       }}
@@ -640,7 +715,7 @@ export const DataGrid = genericFactory<DataGridFactory>(((
         mod={[
           {
             loading,
-            virtualized: withRowVirtualization || withColumnVirtualization || undefined,
+            virtualized: withVirtualization || undefined,
             'with-table-border': withTableBorder,
             'with-row-borders': !!withRowBorders,
             'row-borders': withRowBorders === 'subtle' ? 'subtle' : undefined,
@@ -673,68 +748,7 @@ export const DataGrid = genericFactory<DataGridFactory>(((
         {selectionBarVisible && !floatingSelectionBar && selectionBarChild}
         {toolbarChildren}
         <div style={{ position: 'relative' }}>
-          {listViewMode ? (
-            <DataGridListView />
-          ) : withRowVirtualization || withColumnVirtualization ? (
-            <>
-              <DataGridVirtualBody
-                height={height}
-                virtualScrollConfig={virtualScrollConfig}
-                virtualColumnConfig={virtualColumnConfig}
-                ref={viewportRef}
-                scrollContainerRef={scrollContainerRef}
-                onScroll={onScrollToBottom ? handleScroll : undefined}
-              />
-              {hasTfoot && (
-                <table {...getStyles('table')}>
-                  <DataGridTfoot />
-                </table>
-              )}
-            </>
-          ) : onScrollToBottom && height ? (
-            <div
-              ref={viewportRef}
-              onScroll={handleScroll}
-              {...getStyles('virtualScrollContainer', {
-                style: { height: rem(height), overflow: 'auto' },
-              })}
-            >
-              <table aria-busy={isLoading || undefined} {...getStyles('table')}>
-                <DataGridHeader />
-                <DataGridBody />
-                {hasTfoot && <DataGridTfoot />}
-              </table>
-            </div>
-          ) : withScrollArea ? (
-            <ScrollArea
-              scrollbarSize={4}
-              viewportRef={viewportRef}
-              offsetScrollbars="x"
-              scrollbars={height ? 'xy' : 'x'}
-              {...scrollAreaProps}
-              {...getStyles('scrollContainer', {
-                className: scrollAreaProps?.className,
-                style: [height ? { height: rem(height) } : undefined, scrollAreaProps?.style],
-              })}
-            >
-              <table aria-busy={isLoading || undefined} {...getStyles('table')}>
-                <DataGridHeader />
-                <DataGridBody />
-                {hasTfoot && <DataGridTfoot />}
-              </table>
-            </ScrollArea>
-          ) : (
-            <div
-              ref={viewportRef}
-              style={height ? { overflow: 'auto', height: rem(height) } : { overflowX: 'auto' }}
-            >
-              <table aria-busy={isLoading || undefined} {...getStyles('table')}>
-                <DataGridHeader />
-                <DataGridBody />
-                {hasTfoot && <DataGridTfoot />}
-              </table>
-            </div>
-          )}
+          {scrollContainer}
           {withLoadingOverlay && (
             <LoadingOverlay
               visible
@@ -758,10 +772,11 @@ export const DataGrid = genericFactory<DataGridFactory>(((
         {withFloatingEditActions && store.editingMode === 'row' && !listViewMode && (
           <DataGridEditActions rootRef={rootRef} />
         )}
-        <DataGridHeaderOverlays
+        <HeaderOverlays
           drag={headerInteractions.drag}
           dropTarget={headerInteractions.dropTarget}
           guide={headerInteractions.guide}
+          ghostRef={headerInteractions.ghostRef}
         />
       </Box>
     </DataGridProvider>
@@ -771,10 +786,6 @@ export const DataGrid = genericFactory<DataGridFactory>(((
 DataGrid.classes = classes;
 DataGrid.varsResolver = varsResolver;
 DataGrid.displayName = '@mantine/data-grid/DataGrid';
-DataGrid.Header = DataGridHeader;
-DataGrid.Body = DataGridBody;
-DataGrid.VirtualBody = DataGridVirtualBody;
-DataGrid.Tfoot = DataGridTfoot;
 DataGrid.Footer = DataGridFooter;
 DataGrid.Toolbar = DataGridToolbar;
 DataGrid.GlobalFilter = DataGridGlobalFilter;
@@ -788,26 +799,6 @@ export namespace DataGrid {
   export type Props = DataGridProps;
   export type StylesNames = DataGridStylesNames;
   export type CssVariables = DataGridCssVariables;
-
-  export namespace Header {
-    export type Props = import('./DataGridHeader').DataGridHeaderProps;
-    export type Factory = DataGridHeaderFactory;
-  }
-
-  export namespace Body {
-    export type Props = import('./DataGridBody').DataGridBodyProps;
-    export type Factory = DataGridBodyFactory;
-  }
-
-  export namespace VirtualBody {
-    export type Props = import('./DataGridBody').DataGridVirtualBodyProps;
-    export type Factory = DataGridVirtualBodyFactory;
-  }
-
-  export namespace Tfoot {
-    export type Props = import('./DataGridTfoot').DataGridTfootProps;
-    export type Factory = DataGridTfootFactory;
-  }
 
   export namespace Footer {
     export type Props = import('./DataGridFooter').DataGridFooterProps;

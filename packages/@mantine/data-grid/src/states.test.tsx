@@ -1,7 +1,7 @@
 import { render, screen } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from './DataGrid';
 import { DataGridEmptyStatePayload } from './DataGrid.types';
-import { useDataGrid, UseDataGridOptions } from './hooks/use-data-grid';
+import { useDataGrid, UseDataGridOptions } from './hooks';
 import { DEFAULT_LABELS } from './labels';
 import { mockVirtualViewport } from './virtual-test-utils';
 
@@ -230,6 +230,18 @@ describe('@mantine/data-grid/states/loading', () => {
       expect(cell).toHaveAttribute('aria-colspan', '2');
       expect(cell).toHaveClass('mantine-DataGrid-emptyState');
       expect(cell).toHaveTextContent('Nothing here');
+    });
+
+    it('indexes the virtual empty row and counts it in aria-rowcount', () => {
+      const { container } = render(
+        <Grid rows={[]} virtualize="rows" height={200} emptyState={<div>Nothing here</div>} />
+      );
+      const grid = container.querySelector('[role="grid"]')!;
+      expect(grid).toHaveAttribute('aria-rowcount', '2');
+      expect(container.querySelector('[role="row"][data-empty-row]')).toHaveAttribute(
+        'aria-rowindex',
+        '2'
+      );
     });
 
     it('renders skeleton rows and aria-busy on the grid', () => {

@@ -1,6 +1,6 @@
 import { render, screen } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from '../DataGrid';
-import { useDataGrid, UseDataGridOptions } from '../hooks/use-data-grid';
+import { useDataGrid, UseDataGridOptions } from '../hooks';
 import { mockVirtualViewport } from '../virtual-test-utils';
 
 const columns = [
@@ -101,5 +101,49 @@ describe('@mantine/data-grid/expanded-rows', () => {
       'Details for Alice'
     );
     expect(screen.getAllByText(/Details for/)).toHaveLength(1);
+  });
+
+  it('spans the data columns of a virtual expansion panel with aria-colspan', () => {
+    const { container } = render(<Grid virtualize="rows" height={300} />);
+    const panel = container.querySelector('[role="row"][data-expanded-row]')!;
+    const content = panel.querySelector('.mantine-DataGrid-expandedRow')!;
+    expect(content).toHaveAttribute('role', 'gridcell');
+    expect(content).toHaveAttribute('aria-colindex', '4');
+    expect(content).toHaveAttribute('aria-colspan', '2');
+  });
+
+  it('gives virtual expansion panels their own aria-rowindex and counts them in aria-rowcount', () => {
+    const { container } = render(
+      <Grid virtualize="rows" height={300} storeOptions={{ expanded: { a: true, b: true } }} />
+    );
+    const grid = container.querySelector('[role="grid"]')!;
+    expect(grid).toHaveAttribute('aria-rowcount', '6');
+    const bodyRows = Array.from(
+      grid.querySelectorAll('[role="row"]:not([data-skeleton-row])')
+    ).filter((row) => !row.closest('[data-virtual-thead]'));
+    expect(bodyRows.map((row) => row.getAttribute('aria-rowindex'))).toEqual([
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+    ]);
+    expect(bodyRows[1]).toHaveAttribute('data-expanded-row');
+    expect(bodyRows[3]).toHaveAttribute('data-expanded-row');
+    expect(bodyRows[4]).toHaveAttribute('data-row-id', 'c');
+  });
+
+  it('updates virtual aria row indexes when the expanded state changes', () => {
+    const { container, rerender } = render(<Grid virtualize="rows" height={300} />);
+    const grid = container.querySelector('[role="grid"]')!;
+    expect(grid).toHaveAttribute('aria-rowcount', '5');
+    rerender(
+      <Grid virtualize="rows" height={300} storeOptions={{ expanded: { a: true, b: true } }} />
+    );
+    expect(grid).toHaveAttribute('aria-rowcount', '6');
+    expect(grid.querySelector('[data-row-id="c"]')).toHaveAttribute('aria-rowindex', '6');
+    rerender(<Grid virtualize="rows" height={300} storeOptions={{ expanded: {} }} />);
+    expect(grid).toHaveAttribute('aria-rowcount', '4');
+    expect(grid.querySelector('[data-row-id="c"]')).toHaveAttribute('aria-rowindex', '4');
   });
 });

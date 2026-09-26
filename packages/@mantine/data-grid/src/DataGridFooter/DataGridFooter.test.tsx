@@ -50,8 +50,7 @@ const status = (container: HTMLElement) =>
   container.querySelector('.mantine-DataGrid-footerStatus')?.textContent;
 
 describe('@mantine/data-grid/DataGridFooter', () => {
-  it('renames the tfoot compound to DataGrid.Tfoot and removes Pagination and StatusBar', () => {
-    expect(DataGrid.Tfoot).toBeDefined();
+  it('renders the tfoot inside the table and removes Pagination and StatusBar statics', () => {
     expect((DataGrid as any).Pagination).toBeUndefined();
     expect((DataGrid as any).StatusBar).toBeUndefined();
     const { container } = render(<Grid />);
@@ -154,6 +153,55 @@ describe('@mantine/data-grid/DataGridFooter', () => {
         />
       );
       expect(status(container)).toBe('Page 1 of 3');
+    });
+
+    it('renders an unknown-total mode under manualPagination without rowCount and pageCount', async () => {
+      const onPaginationChange = jest.fn();
+      const pageData = data.slice(0, 5);
+      const { container, rerender } = render(
+        <Grid
+          gridData={pageData}
+          storeOptions={{
+            manualPagination: true,
+            pagination: { pageIndex: 5, pageSize: 5 },
+            onPaginationChange,
+          }}
+        />
+      );
+      expect(status(container)).toBe('Page 6');
+      const footer = container.querySelector('.mantine-DataGrid-footer')!;
+      expect(footer).toHaveAttribute('data-pagination', 'arrows');
+      expect(
+        container.querySelector('.mantine-DataGrid-footerPagination > span')
+      ).toHaveTextContent('Page 6');
+      const next = screen.getByRole('button', { name: 'Next page' });
+      const previous = screen.getByRole('button', { name: 'Previous page' });
+      expect(next).not.toBeDisabled();
+      expect(previous).not.toBeDisabled();
+      await userEvent.click(next);
+      expect(onPaginationChange).toHaveBeenCalled();
+
+      rerender(
+        <Grid
+          gridData={pageData.slice(0, 3)}
+          storeOptions={{
+            manualPagination: true,
+            pagination: { pageIndex: 5, pageSize: 5 },
+            onPaginationChange,
+          }}
+        />
+      );
+      expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Previous page' })).not.toBeDisabled();
+    });
+
+    it('treats pageCount -1 as an unknown total', () => {
+      const { container } = render(
+        <Grid storeOptions={{ manualPagination: true, pageCount: -1, pageSize: 5 }} />
+      );
+      expect(status(container)).toBe('Page 1');
+      expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next page' })).not.toBeDisabled();
     });
 
     it('uses rowCount for the range under manualPagination', () => {

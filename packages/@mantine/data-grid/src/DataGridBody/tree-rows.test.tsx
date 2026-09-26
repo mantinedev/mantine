@@ -1,6 +1,8 @@
+import { act } from 'react';
+import { fireEvent } from '@testing-library/react';
 import { render, screen } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from '../DataGrid';
-import { useDataGrid, UseDataGridOptions } from '../hooks/use-data-grid';
+import { useDataGrid, UseDataGridOptions } from '../hooks';
 import { mockVirtualViewport } from '../virtual-test-utils';
 
 interface Node {
@@ -33,6 +35,8 @@ const data: Node[] = [
   { id: 'b', name: 'B' },
 ];
 
+let lastStore: ReturnType<typeof useDataGrid<Node>> | null = null;
+
 function Grid({
   storeOptions,
   ...props
@@ -47,6 +51,7 @@ function Grid({
     expanded: true,
     ...storeOptions,
   });
+  lastStore = store;
   return <DataGrid store={store} {...props} />;
 }
 
@@ -66,6 +71,37 @@ describe('@mantine/data-grid/tree-rows', () => {
 
   afterEach(() => {
     restoreViewport();
+  });
+
+  it('numbers expanded tree rows continuously across pages', () => {
+    let store: any;
+    function Paged({ paginateExpandedRows }: { paginateExpandedRows: boolean }) {
+      store = useDataGrid<Node>({
+        data,
+        columns,
+        getRowId: (row) => row.id,
+        getSubRows: (row) => row.children,
+        expanded: true,
+        withRowNumbers: true,
+        pageSize: 1,
+        paginateExpandedRows,
+      });
+      return <DataGrid store={store} />;
+    }
+    const numbers = (container: HTMLElement) =>
+      Array.from(container.querySelectorAll('tbody tr[data-row-id]')).map(
+        (row) => row.querySelector('td[data-utility="rowNumber"]')!.textContent
+      );
+
+    const unpaginated = render(<Paged paginateExpandedRows={false} />);
+    expect(numbers(unpaginated.container)).toEqual(['1', '2', '3', '4', '5']);
+    act(() => store.table.setPageIndex(1));
+    expect(numbers(unpaginated.container)).toEqual(['6']);
+    unpaginated.unmount();
+
+    const paginated = render(<Paged paginateExpandedRows />);
+    act(() => store.table.setPageIndex(3));
+    expect(numbers(paginated.container)).toEqual(['4']);
   });
 
   it('marks tree rows with depth and leaf attributes', () => {
@@ -129,5 +165,39 @@ describe('@mantine/data-grid/tree-rows', () => {
     expect(row).toHaveAttribute('data-depth', '2');
     expect(guidesOf(row)).toEqual(['none', 'branch']);
     expect(row.querySelector('.mantine-DataGrid-treeLabel')).toHaveTextContent('A2a');
+  });
+
+  it('cascades Shift+click range selection and deselection to sub-rows', () => {
+    const { container } = render(<Grid storeOptions={{ withRowSelection: true, expanded: {} }} />);
+    const checkbox = (id: string) =>
+      rowById(container, id).querySelector<HTMLInputElement>('input[type="checkbox"]')!;
+
+    fireEvent.click(checkbox('b'));
+    expect(lastStore!.rowSelection).toEqual({ b: true });
+
+    fireEvent.click(checkbox('a'), { shiftKey: true });
+    expect(lastStore!.rowSelection).toEqual({
+      a: true,
+      a1: true,
+      a2: true,
+      a2a: true,
+      a2b: true,
+      b: true,
+    });
+
+    fireEvent.click(checkbox('a'), { shiftKey: true });
+    expect(lastStore!.rowSelection).toEqual({});
+  });
+
+  it('respects enableSubRowSelection in Shift+click ranges', () => {
+    const { container } = render(
+      <Grid
+        storeOptions={{ withRowSelection: true, expanded: {}, enableSubRowSelection: false }}
+        selectOnRowClick
+      />
+    );
+    fireEvent.click(rowById(container, 'b'));
+    fireEvent.click(rowById(container, 'a'), { shiftKey: true });
+    expect(lastStore!.rowSelection).toEqual({ a: true, b: true });
   });
 });

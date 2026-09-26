@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import type { Cell } from '@tanstack/react-table';
 import { TextInput, Tooltip } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { getColumnLabel } from '../get-column-label';
 import type { DataGridFeatures } from '../table-features';
 
 type GridCell = Cell<DataGridFeatures, any, unknown>;
@@ -29,32 +30,22 @@ function getRowEditorFocusables(rowElement: HTMLElement) {
   );
 }
 
-export interface CellEditingAttributes {
+interface CellEditingAttributes {
   'data-editing': true | undefined;
   'data-dirty': true | undefined;
   'data-invalid': true | undefined;
   'aria-invalid': true | undefined;
 }
 
-export interface CellEditingHandlers {
+interface CellEditingHandlers {
   onClick: ((event: React.MouseEvent) => void) | undefined;
   onDoubleClick: ((event: React.MouseEvent) => void) | undefined;
   onKeyDown: ((event: React.KeyboardEvent) => void) | undefined;
 }
 
-interface UseCellEditingOptions {
-  classNames: any;
-  styles: any;
-}
-
-/**
- * Editing state, attributes, pointer / keyboard handlers and the editor element
- * of one body cell, shared by the table cell and the virtual cell.
- */
 export function useCellEditing<T extends HTMLElement>(
   cell: GridCell,
-  elementRef: React.RefObject<T | null>,
-  { classNames, styles }: UseCellEditingOptions
+  elementRef: React.RefObject<T | null>
 ) {
   const ctx = useDataGridContext();
   const { row, column } = cell;
@@ -79,6 +70,7 @@ export function useCellEditing<T extends HTMLElement>(
 
   const editCellRef = useRef<HTMLDivElement>(null);
   const wasEditingRef = useRef(false);
+  const focusMovedRef = useRef(false);
 
   useEffect(() => {
     if (isEditing && isFocusTarget) {
@@ -87,7 +79,7 @@ export function useCellEditing<T extends HTMLElement>(
   }, [isEditing, isFocusTarget]);
 
   useEffect(() => {
-    if (wasEditingRef.current && !isEditing) {
+    if (wasEditingRef.current && !isEditing && !focusMovedRef.current) {
       const element = elementRef.current;
       const active = document.activeElement;
       if (element && (!active || active === document.body || element.contains(active))) {
@@ -98,6 +90,7 @@ export function useCellEditing<T extends HTMLElement>(
       }
     }
     wasEditingRef.current = isEditing;
+    focusMovedRef.current = false;
   }, [isEditing]);
 
   const start = useCallback(
@@ -170,10 +163,14 @@ export function useCellEditing<T extends HTMLElement>(
           ) {
             return;
           }
+          focusMovedRef.current = next instanceof Element;
           onSave();
         }
       : undefined;
   const onCancel = () => row.cancelEditing();
+  const resetFocusMoved = () => {
+    focusMovedRef.current = false;
+  };
   const value = isEditing ? cell.getEditingValue() : undefined;
 
   const editor = isEditing ? (
@@ -181,10 +178,11 @@ export function useCellEditing<T extends HTMLElement>(
       ref={editCellRef}
       onKeyDown={handleEditorKeyDown}
       onBlur={handleEditorBlur}
+      onFocus={resetFocusMoved}
       onMouseDown={stopPropagation}
       onClick={stopPropagation}
       onDoubleClick={stopPropagation}
-      {...ctx.getStyles('editCell', { classNames, styles })}
+      {...ctx.getStyles('editCell')}
     >
       {meta?.editComponent ? (
         meta.editComponent({ value, onChange, onSave, onCancel, error, cell })
@@ -198,6 +196,7 @@ export function useCellEditing<T extends HTMLElement>(
           <TextInput
             variant="unstyled"
             data-editor
+            aria-label={getColumnLabel(column)}
             value={String(value ?? '')}
             onChange={(event) => onChange(event.currentTarget.value)}
             disabled={isSaving}
@@ -208,5 +207,5 @@ export function useCellEditing<T extends HTMLElement>(
     </div>
   ) : null;
 
-  return { isEditing, canEdit, attributes, handlers, editor };
+  return { attributes, handlers, editor };
 }

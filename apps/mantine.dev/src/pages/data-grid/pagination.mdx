@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.DataGridPagination);
 
 ## Basic pagination
 
-Pass `pageSize` (or `withPagination`) to `useDataGrid` to split data across pages; the default page
+Pass `pageSize` (or any other pagination option, such as `pagination` or `manualPagination`) to `useDataGrid` to split data across pages; the default page
 size is `10`. Add `DataGrid.Footer` as a child of `DataGrid` to render the chrome bar at the bottom
 of the frame: an empty `<DataGrid.Footer />` shows the status text, the page size select and the
 page buttons.
@@ -116,7 +116,10 @@ For server-side pagination, set `manualPagination` to `true` and provide `rowCou
 number of rows. The footer needs `rowCount` to render the `1–10 of 200` range and the page count;
 with `manualPagination` and no `rowCount` it falls back to `Page 1 of 2` in both status formats.
 Alternatively, use `pageCount` directly when you know the total number of pages rather than the
-total number of rows:
+total number of rows. When neither `rowCount` nor `pageCount` is set (or `pageCount` is `-1`), the
+total is treated as unknown: the footer renders `Page 3` without a total, page buttons are replaced
+with previous / next controls, and the next control is enabled only while the current page is full
+(`data.length` equals the page size):
 
 ```tsx
 const store = useDataGrid({
@@ -135,6 +138,7 @@ See the [Server-side](/data-grid/server-side) page for a complete example.
 
 The footer texts are translated through the `labels` prop: `footerRange` (`{from}–{to} of {total}`),
 `footerRangeLong` (`Showing {from}–{to} of {total}`), `footerRows` (`{count} rows`),
-`footerSelected` (`{count} selected`), `footerPage` (`Page {page} of {total}`), `pageSize`,
+`footerSelected` (`{count} selected`), `footerPage` (`Page {page} of {total}`),
+`footerPageUnknownTotal` (`Page {page}`), `pageSize`,
 `pageSizeLabel`, `paginationPrevious` and `paginationNext`. The `·` separator between the range and
 the selected count is fixed.

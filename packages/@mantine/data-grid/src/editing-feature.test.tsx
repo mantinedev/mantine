@@ -1,9 +1,10 @@
 import { act } from 'react';
+import { fireEvent } from '@testing-library/react';
 import { render } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from './DataGrid';
 import { DataGridColumnDef } from './DataGrid.types';
 import { DataGridEditingState } from './editing-feature';
-import { useDataGrid, UseDataGridOptions } from './hooks/use-data-grid';
+import { useDataGrid, UseDataGridOptions } from './hooks';
 
 interface Person {
   id: string;
@@ -126,6 +127,48 @@ describe('@mantine/data-grid/editing-feature', () => {
     expect(onEditSave).not.toHaveBeenCalled();
   });
 
+  describe('when the edited row is removed from data', () => {
+    const renderAndRemove = (storeOptions: Partial<UseDataGridOptions<Person>>) => {
+      const view = render(<Grid storeOptions={storeOptions} />);
+      act(() => lastStore!.table.startEditing('a', 'name'));
+      act(() => lastStore!.table.getRow('a').getAllCells()[1].setEditingValue('X'));
+      view.rerender(<Grid storeOptions={{ ...storeOptions, data: [data[1]] }} />);
+      return view;
+    };
+
+    it('clears editing without onEditSave on save', () => {
+      const onEditSave = jest.fn();
+      renderAndRemove({ onEditSave });
+      expect(() => act(() => lastStore!.table.saveEditing())).not.toThrow();
+      expect(lastStore!.editing).toBeNull();
+      expect(onEditSave).not.toHaveBeenCalled();
+    });
+
+    it('clears editing without onEditCancel on cancel', () => {
+      const onEditCancel = jest.fn();
+      renderAndRemove({ onEditCancel });
+      expect(() => act(() => lastStore!.table.cancelEditing())).not.toThrow();
+      expect(lastStore!.editing).toBeNull();
+      expect(onEditCancel).not.toHaveBeenCalled();
+    });
+
+    it('clears editing on outside click', () => {
+      const onEditSave = jest.fn();
+      renderAndRemove({ editingMode: 'row', onEditSave });
+      expect(() => fireEvent.mouseDown(document.body)).not.toThrow();
+      expect(lastStore!.editing).toBeNull();
+      expect(onEditSave).not.toHaveBeenCalled();
+    });
+
+    it('starts editing another row', () => {
+      const onEditSave = jest.fn();
+      renderAndRemove({ onEditSave });
+      act(() => lastStore!.table.startEditing('b', 'name'));
+      expect(lastStore!.editing).toEqual({ rowId: 'b', columnId: 'name', values: {} });
+      expect(onEditSave).not.toHaveBeenCalled();
+    });
+  });
+
   it('keeps the editor open with saving status while an async save is pending', async () => {
     let resolve!: () => void;
     const onEditSave = jest.fn(
@@ -144,6 +187,30 @@ describe('@mantine/data-grid/editing-feature', () => {
 
     act(() => lastStore!.table.saveEditing());
     expect(onEditSave).toHaveBeenCalledTimes(1);
+
+    resolve();
+    await flush();
+    expect(lastStore!.editing).toBeNull();
+  });
+
+  it('ignores draft updates while an async save is pending', async () => {
+    let resolve!: () => void;
+    const onEditSave = jest.fn(
+      () =>
+        new Promise<void>((r) => {
+          resolve = r;
+        })
+    );
+    render(<Grid storeOptions={{ onEditSave }} />);
+    act(() => lastStore!.table.startEditing('a', 'name'));
+    act(() => lastStore!.table.getRow('a').getAllCells()[1].setEditingValue('Saved'));
+    act(() => {
+      lastStore!.table.saveEditing();
+    });
+    const pending = lastStore!.editing;
+    act(() => lastStore!.table.getRow('a').getAllCells()[1].setEditingValue('Lost'));
+    expect(lastStore!.editing).toBe(pending);
+    expect(lastStore!.editing?.values).toEqual({ name: 'Saved' });
 
     resolve();
     await flush();

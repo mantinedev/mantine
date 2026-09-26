@@ -114,7 +114,9 @@ component page. Every look is keyed on data attributes on the root (`data-size`,
 
 DataGrid renders a default layout when no children are provided. For custom layouts, use the compound
 component API to compose the grid from individual parts. Children render inside the frame in a
-fixed order: the toolbar slot (toolbar or selection bar), the body, then everything else.
+fixed order: the toolbar slot (toolbar or selection bar), the body, then everything else. The table
+itself (header, body and `<tfoot>`) is always rendered by the grid, customize it with the Styles API
+selectors (`thead`, `tbody`, `tfoot`, `tr`, `th`, `td`, ...).
 
 <Demo data={DataGridDemos.compoundComponents} />
 
@@ -126,10 +128,6 @@ Available compound components:
 - `DataGrid.ExportButton` -- export menu (CSV, Excel, print, copy to clipboard)
 - `DataGrid.RowCount` -- total / filtered row count text
 - `DataGrid.SelectionBar` -- bulk actions bar shown in the toolbar slot while rows are selected
-- `DataGrid.Header` -- table header with column headers
-- `DataGrid.Body` -- table body with data rows
-- `DataGrid.VirtualBody` -- virtualized table body
-- `DataGrid.Tfoot` -- table footer (`<tfoot>` with column footers and the totals row)
 - `DataGrid.Footer` -- chrome bar below the table with status text, page size select and pagination
 - `DataGrid.ColumnMenu` -- column menu button for custom header cells
 
@@ -158,6 +156,12 @@ names the downloaded file, `rows` (`'all' | 'filtered' | 'selected' | 'page'`, d
 `onExport(format)` is called after an export runs, `children` replaces the button label and
 `menuProps` configures the menu. Utility columns, actions columns and columns with
 `meta.disableExport` are never exported.
+
+`all` exports every data row (ignoring filters) and `filtered` exports the rows that pass the
+current filters; both follow the current sort order and skip pagination, group rows and tree
+sub-rows. While rows are grouped, `filtered` lists the data rows in the grouped display order (rows
+of the first group, then the next group, sorted within each group), whereas `all` is a flat sort of
+every data row that ignores grouping. `page` exports the rows of the current page as displayed.
 
 <Demo data={DataGridDemos.exportButton} />
 
@@ -271,6 +275,7 @@ only override what you need. `{token}` placeholders are replaced with the matchi
     footerRows: '{count} lignes',
     footerSelected: '{count} sélectionnées',
     footerPage: 'Page {page} sur {total}',
+    footerPageUnknownTotal: 'Page {page}',
     paginationPrevious: 'Page précédente',
     paginationNext: 'Page suivante',
     aggregationSum: 'Somme',
@@ -320,6 +325,31 @@ function Demo() {
 }
 ```
 
+### useDataGridState
+
+`useDataGridState` persists the selected state keys of a store to `localStorage` (writes are debounced)
+and restores them on mount and whenever `stateStorageKey` changes. Pass the store returned by
+`useDataGrid`; `size` is read from and restored into the store as well:
+
+```tsx
+import { DataGrid, useDataGrid, useDataGridState } from '@mantine/data-grid';
+
+function Demo() {
+  const store = useDataGrid({ data, columns, withSorting: true, withColumnReorder: true });
+
+  useDataGridState({
+    store,
+    stateStorageKey: 'my-grid-state',
+    persistedState: ['sorting', 'columnOrder', 'columnVisibility', 'size'],
+  });
+
+  return <DataGrid store={store} />;
+}
+```
+
+`columnOrder` is saved as `store.columnOrder`, so the display-only position of grouped columns is
+never persisted.
+
 ## Custom storage
 
 For session storage, URL search params, or server-side persistence, implement the same pattern
@@ -356,7 +386,7 @@ DataGrid wraps the table in a `ScrollArea` by default (`scrollbarSize={4}`, hori
 inside the frame under the last row). Pass `scrollAreaProps` to configure it, or set
 `withScrollArea={false}` to handle overflow yourself. The grid attaches its own `viewportRef`, so
 `scrollAreaProps.viewportRef` overrides the ref the grid uses for scrolling and pinned-column
-shadows; `withScrollArea` is ignored under `virtualize`.
+shadows; `withScrollArea` is ignored under `virtualize` and in list view.
 
 ```tsx
 <DataGrid

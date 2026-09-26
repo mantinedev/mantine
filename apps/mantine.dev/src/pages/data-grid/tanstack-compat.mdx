@@ -22,7 +22,7 @@ The table below lists every TanStack Table feature and its current status in Dat
     ['Sorting', 'Built-in', '`enableSorting: true` on columns'],
     ['Column Filtering', 'Built-in', '`enableColumnFilter` / `filterFn` on columns, state through the store'],
     ['Global Filtering', 'Built-in', '`withGlobalFilter` or controlled state'],
-    ['Pagination', 'Built-in', '`pageSize`, `withPagination` or controlled state'],
+    ['Pagination', 'Built-in', '`pageSize`, `manualPagination` or controlled state'],
     ['Column Sizing', 'Built-in', '`withColumnResizing` or controlled state'],
     ['Column Resizing', 'Built-in', '`withColumnResizing`, `columnResizeMode`'],
     ['Column Pinning', 'Built-in', '`columnPinning` state (`start` / `end`)'],
@@ -80,12 +80,16 @@ The registered feature set itself is exported as `dataGridFeatures` (value) and 
 ## Features and row models
 
 In v9 features and row models are registered explicitly rather than passed as `getXRowModel`
-options. DataGrid does this for you: it registers the full feature set and enables only the row
-models the grid actually needs, based on the props you pass to `useDataGrid`.
+options. DataGrid does this for you: every table registers the full feature set, including every
+row model (filtered, grouped, sorted, expanded, paginated and faceted), because TanStack reads the
+feature set only once when the table is created.
 
-This matters because `table.getRowModel()` resolves to the paginated row model. DataGrid only
-registers the paginated row model when the grid is actually paginated, so an unpaginated grid keeps
-rendering all of its rows.
+Stages of features you do not use are bypassed with TanStack's `manual*` options
+(`manualFiltering`, `manualGrouping`, `manualSorting`, `manualExpanding`, `manualPagination`), so
+they pass rows through unchanged. For example, `table.getRowModel()` resolves to the paginated row
+model, but an unpaginated grid sets `manualPagination` and still renders all of its rows through
+`table.getRowModel()`. Features switched on or off after mount take effect on the next render
+without recreating the table.
 
 ## Editing feature
 
@@ -120,6 +124,10 @@ They are ordinary columns for TanStack: they appear in `table.getAllColumns()`,
 iterates the columns for its own purposes (a custom visibility menu, an export, a column picker)
 should skip columns with `meta.utility`. The store keeps them first in `columnOrder` and at the
 head of `columnPinning.start`, and `columnVisibility: { __select__: false }` hides one.
+This placement applies to `columnOrder` and `columnPinning` passed to `useDataGrid` or through
+`tableOptions.state`. External atoms (`tableOptions.atoms.columnOrder`,
+`tableOptions.atoms.columnPinning`) are read by TanStack as-is, so when you control these slices
+with atoms, include the utility column ids in the atom value yourself.
 
 ## Using tableOptions
 

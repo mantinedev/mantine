@@ -4,7 +4,7 @@ import { formatCsv } from './export-csv';
 import type { ExportColumnScope, ExportRowScope } from './export-utils';
 
 export interface ClipboardCopyOptions {
-  /** Rows to copy, @default 'all' */
+  /** Rows to copy, `'selected'` falls back to the current page when no rows are selected, @default 'all' */
   rows?: ExportRowScope;
 
   /** Columns to copy, @default 'visible' */
@@ -22,7 +22,7 @@ export function copyToClipboard<TData extends RowData>(
   options?: ClipboardCopyOptions
 ): Promise<void> {
   const {
-    rows: rowsOption = 'selected',
+    rows: rowsOption = 'all',
     columns: columnsOption = 'visible',
     includeHeaders = false,
     valueFormatter,

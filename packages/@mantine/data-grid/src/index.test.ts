@@ -2,61 +2,39 @@ import * as pkg from './index';
 import { DataGrid } from './index';
 
 const RUNTIME_EXPORTS = [
-  'DATA_GRID_SIZES',
   'DEFAULT_LABELS',
   'DataGrid',
-  'DataGridBody',
-  'DataGridCell',
   'DataGridColumnMenu',
   'DataGridColumnVisibilityToggle',
   'DataGridExportButton',
   'DataGridFooter',
   'DataGridGlobalFilter',
-  'DataGridGroupRow',
-  'DataGridHeader',
-  'DataGridListView',
-  'DataGridProvider',
-  'DataGridRow',
   'DataGridRowCount',
   'DataGridSelectionBar',
-  'DataGridTfoot',
   'DataGridToolbar',
-  'DataGridVirtualBody',
   'UTILITY_COLUMN_IDS',
   'autosizeColumns',
   'booleanOperators',
-  'buildCsvString',
-  'buildExcelXml',
   'copyToClipboard',
   'createDataGridColumnHelper',
   'createOperatorFilterFn',
   'dataGridFeatures',
   'editingFeature',
-  'escapeCsvValue',
   'exportToCsv',
   'exportToExcel',
   'exportToPrint',
   'flexRender',
   'formatCsv',
-  'formatLabel',
   'fuzzyFilter',
   'fuzzySort',
   'getColumnLabel',
-  'getControlSize',
-  'getRowHeightEstimate',
   'numberOperators',
-  'renderLabel',
   'stringOperators',
   'useDataGrid',
-  'useDataGridContext',
   'useDataGridState',
 ];
 
 const STATICS = [
-  'Header',
-  'Body',
-  'VirtualBody',
-  'Tfoot',
   'Footer',
   'Toolbar',
   'GlobalFilter',
@@ -67,7 +45,15 @@ const STATICS = [
   'ColumnMenu',
 ];
 
-const REMOVED_STATICS = ['DensityToggle', 'Pagination', 'StatusBar'];
+const REMOVED_STATICS = [
+  'DensityToggle',
+  'Pagination',
+  'StatusBar',
+  'Header',
+  'Body',
+  'VirtualBody',
+  'Tfoot',
+];
 
 describe('@mantine/data-grid/index', () => {
   it('exports exactly the documented runtime surface', () => {
@@ -93,7 +79,8 @@ describe('@mantine/data-grid/index', () => {
   });
 
   it('ships the final labels shape', () => {
-    expect(Object.keys(pkg.DEFAULT_LABELS)).toHaveLength(54);
+    expect(Object.keys(pkg.DEFAULT_LABELS)).toHaveLength(52);
+    expect(pkg.DEFAULT_LABELS.selectGroup).toBe('Select group');
     [
       'paginationRowsPerPage',
       'paginationOf',
@@ -108,6 +95,10 @@ describe('@mantine/data-grid/index', () => {
       'densityToggleLabel',
       'booleanFilterTrue',
       'booleanFilterFalse',
+      'groupCollapse',
+      'groupExpand',
+      'editSave',
+      'editCancel',
     ].forEach((key) => expect(pkg.DEFAULT_LABELS).not.toHaveProperty(key));
   });
 });

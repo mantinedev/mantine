@@ -3,9 +3,7 @@ import type { DataGridFeatures } from '../table-features';
 import {
   ExportColumnScope,
   ExportRowScope,
-  getExportColumns,
-  getExportHeaders,
-  getExportRows,
+  getExportMatrix,
   triggerDownload,
 } from './export-utils';
 
@@ -22,7 +20,7 @@ export interface ExportExcelOptions {
   /** Columns to export, @default 'visible' */
   columns?: ExportColumnScope;
 
-  /** Formats a cell value before it is written, `String(value)` by default */
+  /** Formats a cell value before it is written as a text cell. Without it, numbers are written as numeric cells, `null`/`undefined` as empty cells and other values as `String(value)` */
   valueFormatter?: (value: unknown, columnId: string) => string;
 
   /** Whether the first row holds the column labels, @default true */
@@ -39,7 +37,7 @@ function escapeXml(value: string): string {
 }
 
 function buildCell(value: unknown): string {
-  if (typeof value === 'number' && !Number.isNaN(value)) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
     return `<Cell><Data ss:Type="Number">${value}</Data></Cell>`;
   }
 
@@ -93,21 +91,14 @@ export function exportToExcel<TData extends RowData>(
     valueFormatter,
   } = options ?? {};
 
-  const cols = getExportColumns(table, columnsOption);
-  const tableRows = getExportRows(table, rowsOption);
-  const headers = includeHeaders ? getExportHeaders(cols) : null;
+  const matrix = getExportMatrix(table, {
+    rows: rowsOption,
+    columns: columnsOption,
+    valueFormatter,
+    raw: true,
+  });
 
-  const rows = tableRows.map((row) =>
-    cols.map((col) => {
-      const cellValue = row.getValue(col.id);
-      if (valueFormatter) {
-        return valueFormatter(cellValue, col.id);
-      }
-      return cellValue;
-    })
-  );
-
-  const xml = buildExcelXml(headers, rows, sheetName);
+  const xml = buildExcelXml(includeHeaders ? matrix.headers : null, matrix.rows, sheetName);
   const blob = new Blob([xml], { type: 'application/vnd.ms-excel' });
   triggerDownload(blob, `${fileName}.xls`);
 }

@@ -3,15 +3,18 @@ import { DirectionProvider } from '@mantine/core';
 import { render } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from '../DataGrid';
 import { DataGridColumnDef } from '../DataGrid.types';
-import { DataGridStore, useDataGrid, UseDataGridOptions } from '../hooks/use-data-grid';
+import { DataGridStore, useDataGrid, UseDataGridOptions } from '../hooks';
 
 if (typeof PointerEvent === 'undefined') {
   (global as any).PointerEvent = class PointerEvent extends MouseEvent {
     pointerId: number;
 
+    pointerType: string;
+
     constructor(type: string, init: PointerEventInit & { pointerId?: number } = {}) {
       super(type, init);
       this.pointerId = init.pointerId ?? 0;
+      this.pointerType = init.pointerType ?? '';
     }
   };
 }
@@ -83,6 +86,39 @@ describe('@mantine/data-grid/DataGridHeader column resize', () => {
     expect(lastStore!.columnSizing.name).toBe(120);
   });
 
+  it('starts exactly one resize session for a touch gesture', () => {
+    const { container } = render(<Grid />);
+    const handle = container.querySelector(HANDLE)!;
+    const addListener = jest.spyOn(document, 'addEventListener');
+
+    fireEvent.pointerDown(handle, { clientX: 100, pointerType: 'touch' });
+    fireEvent.touchStart(handle, { touches: [{ clientX: 100 }] });
+    const types = addListener.mock.calls.map(([type]) => type);
+    addListener.mockRestore();
+    expect(types.filter((type) => type === 'mousemove')).toHaveLength(0);
+    expect(types.filter((type) => type === 'touchmove')).toHaveLength(1);
+
+    fireEvent.touchMove(document, { touches: [{ clientX: 130 }] });
+    fireEvent.touchEnd(document, { touches: [] });
+    expect(lastStore!.columnSizing.name).toBe(130);
+    expect(container.querySelector(GUIDE)).not.toBeInTheDocument();
+  });
+
+  it('starts a mouse resize session from a mouse pointer', () => {
+    const { container } = render(<Grid />);
+    const addListener = jest.spyOn(document, 'addEventListener');
+    fireEvent.pointerDown(container.querySelector(HANDLE)!, {
+      clientX: 100,
+      button: 0,
+      pointerType: 'mouse',
+    });
+    const types = addListener.mock.calls.map(([type]) => type);
+    addListener.mockRestore();
+    expect(types.filter((type) => type === 'mousemove')).toHaveLength(1);
+    fireEvent.mouseUp(document, { clientX: 110 });
+    expect(lastStore!.columnSizing.name).toBe(110);
+  });
+
   it('clamps the resize guide to the column minSize and maxSize', () => {
     const { container } = render(
       <Grid
@@ -105,6 +141,77 @@ describe('@mantine/data-grid/DataGridHeader column resize', () => {
     expect((container.querySelector(GUIDE) as HTMLElement).style.left).toBe('-50px');
     fireEvent.mouseUp(document, { clientX: 1 });
     expect(lastStore!.table.getColumn('name')!.getSize()).toBe(80);
+  });
+
+  it('places the group resize guide where the proportionally distributed leaf sizes end', () => {
+    const { container } = render(
+      <Grid
+        storeOptions={{
+          columns: [
+            { accessorKey: 'name', header: 'Name', size: 100 },
+            {
+              id: 'location',
+              header: 'Location',
+              columns: [
+                { accessorKey: 'city', header: 'City', size: 100, minSize: 80, maxSize: 130 },
+                { accessorKey: 'country', header: 'Country', size: 200 },
+              ],
+            },
+            { accessorKey: 'age', header: 'Age' },
+          ],
+        }}
+      />
+    );
+    const group = container.querySelector('th[data-header-group]')!;
+    fireEvent.pointerDown(group.querySelector(HANDLE)!, { clientX: 100, button: 0 });
+    fireEvent.mouseMove(document, { clientX: 200 });
+    const left = parseFloat((container.querySelector(GUIDE) as HTMLElement).style.left);
+    fireEvent.mouseUp(document, { clientX: 200 });
+
+    const table = lastStore!.table;
+    expect(table.getColumn('city')!.getSize()).toBe(130);
+    expect(table.getColumn('country')!.getSize()).toBe(266.67);
+    expect(left).toBeCloseTo(130 + 266.67 - 300);
+  });
+
+  it('autosizes only the leaf columns of a group header on double-click', () => {
+    const { container } = render(
+      <Grid
+        storeOptions={{
+          columns: [
+            {
+              id: 'location',
+              header: 'Location',
+              columns: [
+                { accessorKey: 'city', header: 'City' },
+                { accessorKey: 'country', header: 'Country' },
+              ],
+            },
+            { accessorKey: 'age', header: 'Age' },
+          ],
+        }}
+      />
+    );
+    fireEvent.doubleClick(container.querySelector('th[data-header-group]')!.querySelector(HANDLE)!);
+    expect(Object.keys(lastStore!.columnSizing).sort()).toEqual(['city', 'country']);
+  });
+
+  it('autosizes from the grid of the handle when the toolbar contains a table', () => {
+    const { container } = render(
+      <Grid>
+        <DataGrid.Toolbar>
+          <table>
+            <tbody>
+              <tr>
+                <td>toolbar</td>
+              </tr>
+            </tbody>
+          </table>
+        </DataGrid.Toolbar>
+      </Grid>
+    );
+    fireEvent.doubleClick(container.querySelector(HANDLE)!);
+    expect(lastStore!.columnSizing.name).toBeDefined();
   });
 
   it('autosizes the column on handle double-click', () => {

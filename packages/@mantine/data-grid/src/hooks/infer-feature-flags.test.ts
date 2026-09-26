@@ -1,5 +1,5 @@
 import { inferFeatureFlags, DataGridFeatureFlags } from './infer-feature-flags';
-import type { UseDataGridOptions } from './use-data-grid';
+import type { UseDataGridOptions } from '.';
 
 const baseOptions: UseDataGridOptions<any> = {
   data: [],

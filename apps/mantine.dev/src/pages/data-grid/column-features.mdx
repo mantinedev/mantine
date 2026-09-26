@@ -20,6 +20,8 @@ the store, where utility columns are always kept first. With `withColumnMenu` th
 **Move left** and **Move right** items, which reorder from the keyboard with the same target rules
 (they follow the visual direction under RTL). There is no auto-scroll while dragging.
 
+While grouping with the default `groupedColumnMode: 'reorder'`, grouped columns are kept at the start of the data columns: they are neither drag sources nor drop targets and have no **Move left**/**Move right** menu items. The forced position is display-only: it is not written to `columnOrder` (neither by moving other columns nor in `store.columnOrder`, `getColumnOrder()` or persisted state), so when grouping is removed the grouped columns return to their own place in `columnOrder`. Set `groupedColumnMode: false` to leave grouped columns in place and keep them reorderable, see [groupedColumnMode](/data-grid/grouping#groupedcolumnmode).
+
 Use `columnOrder` and `onColumnOrderChange` for controlled state. Reset the column order
 with `store.table.setColumnOrder([])`; the store re-prepends any utility column id missing from
 the order, also when it restores persisted state.
@@ -97,6 +99,8 @@ const columns = [
 
 By default nullish values are not merged. Set `enableCellSpanning: false` on `tableOptions` to turn
 spanning off for the whole grid, or `enableCellSpanning: false` on a column to exclude it.
+
+Group rows are not spanned: they render one cell per column (the group label extends over the empty cells instead), and a group row always ends a `spanRows` run.
 
 Cell spanning is not applied when virtualization is enabled — the virtualized renderer positions every
 cell independently, so `spanRows` and `spanColumns` are ignored for grids that use `virtualize`.

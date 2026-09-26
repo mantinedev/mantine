@@ -13,8 +13,8 @@ function Demo() {
       { accessorKey: 'firstName', header: 'First Name', size: 150, minSize: 100, maxSize: 300 },
       { accessorKey: 'lastName', header: 'Last Name', size: 150, minSize: 100, maxSize: 300 },
       { accessorKey: 'email', header: 'Email', size: 250, minSize: 200 },
-      { accessorKey: 'department', header: 'Department', size: 150 },
-      { accessorKey: 'salary', header: 'Salary', size: 100, minSize: 80, maxSize: 150 },
+      { accessorKey: 'department', header: 'Department', size: 120, minSize: 80, maxSize: 150 },
+      { accessorKey: 'salary', header: 'Salary', size: 100 },
     ],
     withColumnResizing: true,
   });
@@ -30,8 +30,8 @@ function Demo() {
       { accessorKey: 'firstName', header: 'First Name', size: 150, minSize: 100, maxSize: 300 },
       { accessorKey: 'lastName', header: 'Last Name', size: 150, minSize: 100, maxSize: 300 },
       { accessorKey: 'email', header: 'Email', size: 250, minSize: 200 },
-      { accessorKey: 'department', header: 'Department', size: 150 },
-      { accessorKey: 'salary', header: 'Salary', size: 100, minSize: 80, maxSize: 150 },
+      { accessorKey: 'department', header: 'Department', size: 120, minSize: 80, maxSize: 150 },
+      { accessorKey: 'salary', header: 'Salary', size: 100 },
     ],
     withColumnResizing: true,
   });

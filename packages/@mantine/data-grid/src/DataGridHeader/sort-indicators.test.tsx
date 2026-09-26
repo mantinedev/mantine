@@ -1,7 +1,7 @@
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from '../DataGrid';
 import { DataGridColumnDef } from '../DataGrid.types';
-import { useDataGrid, UseDataGridOptions } from '../hooks/use-data-grid';
+import { useDataGrid, UseDataGridOptions } from '../hooks';
 
 interface Person {
   name: string;

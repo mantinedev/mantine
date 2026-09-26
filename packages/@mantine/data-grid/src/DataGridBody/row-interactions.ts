@@ -1,58 +1,17 @@
 import type React from 'react';
 import type { Row } from '@tanstack/react-table';
 import type { DataGridContextValue } from '../DataGrid.context';
+import { GRID_ELEMENT_SELECTOR } from '../hooks/grid-dom';
 import type { DataGridFeatures } from '../table-features';
+import { handleRowSelectionClick, toggleRowSelection } from './row-selection';
 
 type GridRow = Row<DataGridFeatures, any>;
-
-interface SelectionModifiers {
-  shiftKey: boolean;
-  metaKey: boolean;
-  ctrlKey: boolean;
-}
-
-export function selectRowRange(ctx: DataGridContextValue, row: GridRow) {
-  const rows = ctx.table.getRowModel().rows;
-  const selected = ctx.table.getSelectedRowModel().rows;
-  const lastSelected = selected.length > 0 ? selected[selected.length - 1] : null;
-
-  if (!lastSelected) {
-    row.toggleSelected(true);
-    return;
-  }
-
-  const startIdx = rows.findIndex((r) => r.id === lastSelected.id);
-  const endIdx = rows.findIndex((r) => r.id === row.id);
-  const [from, to] = startIdx < endIdx ? [startIdx, endIdx] : [endIdx, startIdx];
-  const updates: Record<string, true> = {};
-  for (let i = from; i <= to; i++) {
-    if (rows[i].getCanSelect()) {
-      updates[rows[i].id] = true;
-    }
-  }
-  ctx.table.setRowSelection((prev) => ({ ...prev, ...updates }));
-}
 
 function canSelectOnClick(ctx: DataGridContextValue, row: GridRow) {
   return ctx.selectOnRowClick && ctx.withRowSelection && row.getCanSelect();
 }
 
-export function handleRowSelectionClick(
-  ctx: DataGridContextValue,
-  row: GridRow,
-  event: SelectionModifiers
-) {
-  if (event.shiftKey) {
-    selectRowRange(ctx, row);
-  } else if (event.metaKey || event.ctrlKey) {
-    row.toggleSelected();
-  } else {
-    ctx.table.setRowSelection({ [row.id]: true });
-  }
-}
-
-/** Whether the row is striped, from the data-row index shared with row numbers */
-export function isRowStriped(ctx: DataGridContextValue, row: GridRow) {
+function isRowStriped(ctx: DataGridContextValue, row: GridRow) {
   if (!ctx.striped) {
     return false;
   }
@@ -61,7 +20,6 @@ export function isRowStriped(ctx: DataGridContextValue, row: GridRow) {
   return index !== undefined && index % 2 === (ctx.striped === 'odd' ? 1 : 0);
 }
 
-/** Whether the row renders an expansion panel below it */
 export function hasExpandedPanel(ctx: DataGridContextValue, row: GridRow) {
   return Boolean(
     ctx.withRowExpansion &&
@@ -70,6 +28,14 @@ export function hasExpandedPanel(ctx: DataGridContextValue, row: GridRow) {
     !row.getIsGrouped() &&
     row.getIsExpanded()
   );
+}
+
+export function getTableRowHeightStyle(
+  ctx: DataGridContextValue,
+  row: GridRow
+): React.CSSProperties | undefined {
+  const rowHeight = ctx.getRowHeight?.(row);
+  return typeof rowHeight === 'number' ? { height: `${rowHeight}px` } : undefined;
 }
 
 export function hasRowClickBehavior(ctx: DataGridContextValue) {
@@ -88,19 +54,78 @@ export function handleRowClick(ctx: DataGridContextValue, row: GridRow, event: R
   }
 }
 
-export interface RowKeyboardScope {
-  /** Selector of the element that contains every navigable row of this body */
-  scopeSelector: string;
-
-  /** Selector of the navigable rows inside the scope */
-  rowSelector: string;
+function getRowTabIndex(ctx: DataGridContextValue, tabStop: boolean) {
+  return ctx.withCellSelection ? undefined : tabStop ? 0 : -1;
 }
 
-/**
- * Keyboard handler of the row focus model, attached to a body container.
- * Only reacts to events dispatched on a row element itself (not on controls
- * inside it) and only within the body the handler belongs to.
- */
+export function getRowProps(
+  ctx: DataGridContextValue,
+  row: GridRow,
+  rowIndex: number,
+  tabStop = rowIndex === 0
+) {
+  const isEditing = ctx.withEditing && row.getIsEditing();
+  const isSaving = isEditing && row.getIsSaving();
+
+  return {
+    tabIndex: getRowTabIndex(ctx, tabStop),
+    'data-row-index': rowIndex,
+    'data-row-id': row.id,
+    'data-selected': row.getIsSelected() || undefined,
+    'data-striped': isRowStriped(ctx, row) || undefined,
+    'data-expanded': hasExpandedPanel(ctx, row) || undefined,
+    'data-tree-row': ctx.withTreeData || undefined,
+    'data-depth': ctx.withTreeData ? row.depth : undefined,
+    'data-leaf': (ctx.withTreeData && !row.getCanExpand()) || undefined,
+    'data-editing': isEditing || undefined,
+    'data-saving': isSaving || undefined,
+    'aria-busy': isSaving || undefined,
+    onClick: hasRowClickBehavior(ctx)
+      ? (event: React.MouseEvent) => handleRowClick(ctx, row, event)
+      : undefined,
+    onDoubleClick: ctx.onRowDoubleClick
+      ? (event: React.MouseEvent) => ctx.onRowDoubleClick!(row, event)
+      : undefined,
+  };
+}
+
+export function getGroupRowProps(
+  ctx: DataGridContextValue,
+  row: GridRow,
+  rowIndex: number,
+  tabStop = rowIndex === 0
+) {
+  return {
+    tabIndex: getRowTabIndex(ctx, tabStop),
+    'data-group-row': true,
+    'data-row-index': rowIndex,
+    'data-row-id': row.id,
+    'aria-expanded': row.getIsExpanded(),
+    onClick: () => row.toggleExpanded(),
+  };
+}
+
+const ROW_SCOPE_SELECTOR = `${GRID_ELEMENT_SELECTOR}, [data-list-view-scope]`;
+
+interface RowKeyboardScope {
+  /** Selector of the navigable rows */
+  rowSelector: string;
+
+  /** Selector of the wrapper elements between the scope element and its rows */
+  containerSelector: string;
+}
+
+function collectScopeRows(parent: Element, scope: RowKeyboardScope, rows: HTMLElement[]) {
+  for (const child of Array.from(parent.children)) {
+    if (child.matches(scope.rowSelector)) {
+      rows.push(child as HTMLElement);
+    } else if (child.matches(scope.containerSelector)) {
+      collectScopeRows(child, scope, rows);
+    }
+  }
+  return rows;
+}
+
 export function handleRowKeyDown(
   event: React.KeyboardEvent<HTMLElement>,
   ctx: DataGridContextValue,
@@ -112,9 +137,9 @@ export function handleRowKeyDown(
     return;
   }
 
-  const scopeElement = target.closest<HTMLElement>(scope.scopeSelector);
+  const scopeElement = target.closest<HTMLElement>(ROW_SCOPE_SELECTOR);
   const currentTarget = event.currentTarget;
-  if (!scopeElement || (scopeElement !== currentTarget && !scopeElement.contains(currentTarget))) {
+  if (!scopeElement || !scopeElement.contains(currentTarget)) {
     return;
   }
 
@@ -125,12 +150,12 @@ export function handleRowKeyDown(
     case 'ArrowUp':
     case 'Home':
     case 'End': {
-      if (ctx.withCellSelection) {
+      if (ctx.withCellSelection && !ctx.listView) {
         return;
       }
 
       event.preventDefault();
-      const rows = Array.from(scopeElement.querySelectorAll<HTMLElement>(scope.rowSelector));
+      const rows = collectScopeRows(scopeElement, scope, []);
       const currentIndex = rows.indexOf(target);
       const nextIndex =
         event.key === 'ArrowDown'
@@ -181,11 +206,7 @@ export function handleRowKeyDown(
 
       if (canSelectOnClick(ctx, row)) {
         event.preventDefault();
-        if (event.shiftKey) {
-          selectRowRange(ctx, row);
-        } else {
-          row.toggleSelected();
-        }
+        toggleRowSelection(ctx, row, event.shiftKey);
       }
       return;
     }

@@ -2,7 +2,7 @@ import { Menu } from '@mantine/core';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from '../DataGrid';
 import { createDataGridColumnHelper, DataGridColumnDef } from '../DataGrid.types';
-import { DataGridStore, useDataGrid, UseDataGridOptions } from '../hooks/use-data-grid';
+import { DataGridStore, useDataGrid, UseDataGridOptions } from '../hooks';
 
 interface Person {
   name: string;
@@ -135,6 +135,23 @@ describe('@mantine/data-grid/DataGridHeader column menu', () => {
     expect(moveRight).not.toHaveAttribute('data-disabled');
     await userEvent.click(moveRight);
     expect(lastStore!.columnOrder).toEqual(['age', 'name', 'actions']);
+  });
+
+  it('hides Move left / Move right for grouped columns kept first', async () => {
+    render(
+      <Grid
+        storeOptions={{
+          withColumnReorder: true,
+          withGrouping: true,
+          withRowSelection: true,
+          grouping: ['age'],
+        }}
+      />
+    );
+    await userEvent.click(getMenuButtons()[0]);
+    await screen.findByRole('menu');
+    expect(screen.queryByRole('menuitem', { name: 'Move left' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Move right' })).not.toBeInTheDocument();
   });
 
   it('uses the columnMenu label as the kebab aria-label', () => {

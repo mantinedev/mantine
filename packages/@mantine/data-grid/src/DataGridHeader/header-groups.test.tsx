@@ -2,7 +2,7 @@ import { fireEvent } from '@testing-library/react';
 import { render, screen } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from '../DataGrid';
 import { DataGridColumnDef } from '../DataGrid.types';
-import { useDataGrid, UseDataGridOptions } from '../hooks/use-data-grid';
+import { useDataGrid, UseDataGridOptions } from '../hooks';
 
 if (typeof PointerEvent === 'undefined') {
   (global as any).PointerEvent = class PointerEvent extends MouseEvent {
@@ -116,7 +116,7 @@ describe('@mantine/data-grid/DataGridHeader header groups', () => {
       />
     );
     const cols = Array.from(container.querySelectorAll('table > colgroup > col'));
-    expect(cols.map((col) => (col as HTMLElement).style.width)).toEqual(['120px', '60px', '200px']);
+    expect(cols.map((col) => (col as HTMLElement).style.width)).toEqual(['120px', '60px', '']);
   });
 
   it('does not render a colgroup when there is a single header row', () => {

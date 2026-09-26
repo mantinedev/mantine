@@ -1,8 +1,10 @@
+import { act } from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from '../DataGrid';
 import { DataGridColumnDef } from '../DataGrid.types';
-import { DataGridStore, useDataGrid, UseDataGridOptions } from '../hooks/use-data-grid';
+import { DataGridStore, useDataGrid, UseDataGridOptions } from '../hooks';
+import { mockVirtualViewport } from '../virtual-test-utils';
 
 if (typeof PointerEvent === 'undefined') {
   (global as any).PointerEvent = class PointerEvent extends MouseEvent {
@@ -94,6 +96,16 @@ describe('@mantine/data-grid/DataGridHeader column reorder', () => {
     expect(container.querySelector('th[draggable]')).not.toBeInTheDocument();
   });
 
+  it('applies Styles API styles to the drag ghost', () => {
+    mockRects({ Name: [0, 100], Age: [100, 200], City: [200, 300] });
+    render(<Grid styles={{ dragGhost: { opacity: 0.5 } }} />);
+    drag(getHeader('Name'), 50, 180);
+    const ghost = document.querySelector(GHOST) as HTMLElement;
+    expect(ghost.style.opacity).toBe('0.5');
+    expect(ghost.style.left).toBe('130px');
+    fireEvent.pointerUp(document, { clientX: 180, clientY: 10 });
+  });
+
   it('reorders columns with a pointer drag and shows the ghost and drop indicator', () => {
     mockRects({ Name: [0, 100], Age: [100, 200], City: [200, 300] });
     const { container } = render(<Grid />);
@@ -126,6 +138,62 @@ describe('@mantine/data-grid/DataGridHeader column reorder', () => {
     expect(lastStore!.columnOrder).toEqual(['name', 'city', 'age']);
   });
 
+  it('does not move the column when the pointer gesture is cancelled', () => {
+    mockRects({ Name: [0, 100], Age: [100, 200], City: [200, 300] });
+    const { container } = render(<Grid />);
+    drag(getHeader('Name'), 50, 180);
+    expect(container.querySelector(INDICATOR)).toBeInTheDocument();
+
+    fireEvent.pointerCancel(document, { clientX: 180, clientY: 10 });
+    expect(lastStore!.columnOrder).toEqual([]);
+    expect(container.querySelector('th[data-dragging]')).not.toBeInTheDocument();
+    expect(document.querySelector(GHOST)).not.toBeInTheDocument();
+    expect(container.querySelector(INDICATOR)).not.toBeInTheDocument();
+    expect(document.body.style.cursor).toBe('');
+
+    fireEvent.pointerMove(document, { clientX: 250, clientY: 10 });
+    expect(container.querySelector('th[data-dragging]')).not.toBeInTheDocument();
+  });
+
+  it('cancels an active drag with Escape', () => {
+    mockRects({ Name: [0, 100], Age: [100, 200], City: [200, 300] });
+    const onKeyDown = jest.fn();
+    const { container } = render(<Grid />);
+    document.addEventListener('keydown', onKeyDown);
+    drag(getHeader('Name'), 50, 180);
+    expect(document.querySelector(GHOST)).toBeInTheDocument();
+
+    fireEvent.keyDown(document.body, { key: 'Escape' });
+    expect(onKeyDown).not.toHaveBeenCalled();
+    expect(container.querySelector('th[data-dragging]')).not.toBeInTheDocument();
+    expect(document.querySelector(GHOST)).not.toBeInTheDocument();
+    expect(container.querySelector(INDICATOR)).not.toBeInTheDocument();
+    expect(document.body.style.cursor).toBe('');
+
+    fireEvent.pointerUp(document, { clientX: 180, clientY: 10 });
+    expect(lastStore!.columnOrder).toEqual([]);
+
+    fireEvent.keyDown(document.body, { key: 'Escape' });
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
+    document.removeEventListener('keydown', onKeyDown);
+  });
+
+  it('cancels an active drag when column reorder is disabled', () => {
+    mockRects({ Name: [0, 100], Age: [100, 200], City: [200, 300] });
+    const { container, rerender } = render(<Grid />);
+    drag(getHeader('Name'), 50, 180);
+    expect(document.querySelector(GHOST)).toBeInTheDocument();
+    expect(document.body.style.cursor).toBe('grabbing');
+
+    rerender(<Grid storeOptions={{ withColumnReorder: false }} />);
+    expect(document.querySelector(GHOST)).not.toBeInTheDocument();
+    expect(container.querySelector(INDICATOR)).not.toBeInTheDocument();
+    expect(document.body.style.cursor).toBe('');
+
+    fireEvent.pointerUp(document, { clientX: 180, clientY: 10 });
+    expect(lastStore!.columnOrder).toEqual([]);
+  });
+
   it('keeps plain clicks sorting and suppresses the click after a drag', async () => {
     mockRects({ Name: [0, 100], Age: [100, 200], City: [200, 300] });
     const { container } = render(<Grid />);
@@ -138,6 +206,23 @@ describe('@mantine/data-grid/DataGridHeader column reorder', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Name' }));
     expect(container.querySelector('th[data-sort-asc]')).toBeInTheDocument();
     expect(container.querySelector('th[data-sort-desc]')).not.toBeInTheDocument();
+  });
+
+  it('suppresses the click that follows a drag cancelled with Escape', async () => {
+    mockRects({ Name: [0, 100], Age: [100, 200], City: [200, 300] });
+    const { container } = render(<Grid />);
+    const th = getHeader('Name');
+    drag(th, 50, 180);
+    fireEvent.keyDown(document.body, { key: 'Escape' });
+    await act(() => new Promise((resolve) => setTimeout(resolve, 10)));
+
+    fireEvent.pointerUp(th, { clientX: 180, clientY: 10 });
+    fireEvent.click(screen.getByRole('button', { name: 'Name' }));
+    expect(container.querySelector('th[data-sort-asc]')).not.toBeInTheDocument();
+    await act(() => new Promise((resolve) => setTimeout(resolve, 10)));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Name' }));
+    expect(container.querySelector('th[data-sort-asc]')).toBeInTheDocument();
   });
 
   it('never targets utility columns', () => {
@@ -164,6 +249,19 @@ describe('@mantine/data-grid/DataGridHeader column reorder', () => {
     drag(getHeader('Age'), 150, 40);
     expect(container.querySelector(INDICATOR)).not.toBeInTheDocument();
     fireEvent.pointerUp(document, { clientX: 40, clientY: 10 });
+    expect(lastStore!.columnOrder).toEqual([]);
+  });
+
+  it('prefers a pinned header over a center header scrolled under it', () => {
+    mockRects({ Name: [0, 100], Age: [150, 250], City: [200, 300] });
+    const { container } = render(
+      <Grid
+        storeOptions={{ withColumnPinning: true, columnPinning: { start: [], end: ['city'] } }}
+      />
+    );
+    drag(getHeader('Name'), 50, 220);
+    expect(container.querySelector(INDICATOR)).not.toBeInTheDocument();
+    fireEvent.pointerUp(document, { clientX: 220, clientY: 10 });
     expect(lastStore!.columnOrder).toEqual([]);
   });
 
@@ -197,5 +295,31 @@ describe('@mantine/data-grid/DataGridHeader column reorder', () => {
     expect(container.querySelector(INDICATOR)).toBeInTheDocument();
     fireEvent.pointerUp(document, { clientX: 280, clientY: 10 });
     expect(lastStore!.columnOrder).toEqual(['age', 'city', 'name']);
+  });
+
+  it('keeps a column as a drop target after its virtual header cell remounts in another pin region', () => {
+    const restoreViewport = mockVirtualViewport(300, 800);
+    mockRects({ Name: [0, 100], Age: [100, 200], City: [200, 300] });
+    const { container } = render(
+      <Grid
+        virtualize="columns"
+        height={200}
+        storeOptions={{
+          withColumnPinning: true,
+          tableOptions: { initialState: { columnPinning: { start: ['name'], end: [] } } },
+        }}
+      />
+    );
+    const ageBefore = getHeader('Age', '[role="columnheader"]');
+    act(() => lastStore!.table.getColumn('age')!.pin('start'));
+    const ageAfter = getHeader('Age', '[role="columnheader"]');
+    expect(ageAfter).not.toBe(ageBefore);
+    expect(ageAfter).toHaveAttribute('data-pinned', 'start');
+
+    drag(getHeader('Name', '[role="columnheader"]'), 50, 180);
+    expect(container.querySelector(INDICATOR)).toBeInTheDocument();
+    fireEvent.pointerUp(document, { clientX: 180, clientY: 10 });
+    expect(lastStore!.columnPinning.start).toEqual(['age', 'name']);
+    restoreViewport();
   });
 });

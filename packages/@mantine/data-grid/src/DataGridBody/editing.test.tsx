@@ -3,7 +3,7 @@ import { fireEvent } from '@testing-library/react';
 import { render, screen } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from '../DataGrid';
 import { DataGridColumnDef } from '../DataGrid.types';
-import { useDataGrid, UseDataGridOptions } from '../hooks/use-data-grid';
+import { useDataGrid, UseDataGridOptions } from '../hooks';
 import { mockVirtualViewport } from '../virtual-test-utils';
 
 interface Person {
@@ -57,6 +57,8 @@ const virtualRowsOf = (container: HTMLElement) =>
 const editorsOf = (element: HTMLElement) =>
   Array.from(element.querySelectorAll<HTMLInputElement>('.mantine-DataGrid-editCell input'));
 const flush = () => act(async () => {});
+const flushFrame = () =>
+  act(() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())));
 
 describe('@mantine/data-grid/editing', () => {
   let restoreViewport: () => void;
@@ -268,6 +270,13 @@ describe('@mantine/data-grid/editing', () => {
       );
       expect(lastStore!.editing).toBeNull();
     });
+    it('ignores startEditing for a hidden editable column', () => {
+      render(
+        <Grid storeOptions={{ withColumnVisibility: true, columnVisibility: { name: false } }} />
+      );
+      act(() => lastStore!.table.startEditing('a', 'name'));
+      expect(lastStore!.editing).toBeNull();
+    });
   });
 
   describe('row editing in the table body', () => {
@@ -285,6 +294,21 @@ describe('@mantine/data-grid/editing', () => {
     it('focuses the first editable cell when started from the API', () => {
       const { container } = render(<Grid storeOptions={{ editingMode: 'row' }} />);
       act(() => lastStore!.table.startEditing('b'));
+      expect(editorsOf(cellsOf(container, 1)[0])[0]).toHaveFocus();
+    });
+
+    it('focuses the first visible editable cell when started at a hidden column', () => {
+      const { container } = render(
+        <Grid
+          storeOptions={{
+            editingMode: 'row',
+            withColumnVisibility: true,
+            columnVisibility: { name: false },
+          }}
+        />
+      );
+      act(() => lastStore!.table.startEditing('b', 'name'));
+      expect(lastStore!.editing).toEqual({ rowId: 'b', columnId: null, values: {} });
       expect(editorsOf(cellsOf(container, 1)[0])[0]).toHaveFocus();
     });
 
@@ -318,6 +342,31 @@ describe('@mantine/data-grid/editing', () => {
       fireEvent.mouseDown(cellsOf(container, 1)[0]);
       expect(onEditSave).toHaveBeenCalledTimes(1);
       expect(lastStore!.editing).toBeNull();
+    });
+
+    it('does not commit on mousedown on the grid scroll container or its scrollbars', () => {
+      const onEditSave = jest.fn();
+      const { container } = render(
+        <Grid
+          storeOptions={{ editingMode: 'row', onEditSave }}
+          scrollAreaProps={{ type: 'always' }}
+        />
+      );
+      act(() => lastStore!.table.startEditing('a'));
+      const root = container.querySelector<HTMLElement>('.mantine-DataGrid-root')!;
+      fireEvent.mouseDown(root.querySelector('[data-dg-scroll]')!);
+      const scrollbar = root.querySelector<HTMLElement>('[data-mantine-scrollbar]')!;
+      expect(scrollbar).not.toBeNull();
+      fireEvent.mouseDown(scrollbar);
+      fireEvent.mouseDown(scrollbar.firstElementChild ?? scrollbar);
+      expect(onEditSave).not.toHaveBeenCalled();
+
+      const foreign = document.createElement('div');
+      foreign.setAttribute('data-mantine-scrollbar', 'true');
+      document.body.appendChild(foreign);
+      fireEvent.mouseDown(foreign);
+      foreign.remove();
+      expect(onEditSave).toHaveBeenCalledTimes(1);
     });
 
     it('does not commit on blur of a single editor', () => {
@@ -410,6 +459,231 @@ describe('@mantine/data-grid/editing', () => {
       act(() => lastStore!.table.startEditing('a', 'name'));
       expect(container.querySelector('.mantine-DataGrid-editActions')).not.toBeInTheDocument();
     });
+    it('shows the floating edit actions again when the editing row mounts back', async () => {
+      const { container } = render(
+        <Grid
+          storeOptions={{ editingMode: 'row', withGlobalFilter: true }}
+          withFloatingEditActions
+        />
+      );
+      act(() => lastStore!.table.startEditing('a'));
+      const actions = () => container.querySelector('.mantine-DataGrid-editActions')!;
+      expect(actions()).not.toHaveAttribute('data-hidden');
+
+      act(() => lastStore!.table.setGlobalFilter('Bob'));
+      await flushFrame();
+      expect(lastStore!.editing?.rowId).toBe('a');
+      expect(actions()).toHaveAttribute('data-hidden');
+
+      act(() => lastStore!.table.setGlobalFilter(''));
+      await flushFrame();
+      expect(actions()).not.toHaveAttribute('data-hidden');
+    });
+
+    it('shows the floating edit actions again when the editing virtual row mounts back', async () => {
+      const { container } = render(
+        <Grid
+          storeOptions={{ editingMode: 'row', withGlobalFilter: true }}
+          withFloatingEditActions
+          virtualize="rows"
+          height={300}
+        />
+      );
+      act(() => lastStore!.table.startEditing('a'));
+      const actions = () => container.querySelector('.mantine-DataGrid-editActions')!;
+      expect(actions()).not.toHaveAttribute('data-hidden');
+
+      act(() => lastStore!.table.setGlobalFilter('zzz'));
+      await flushFrame();
+      expect(actions()).toHaveAttribute('data-hidden');
+
+      act(() => lastStore!.table.setGlobalFilter(''));
+      await flushFrame();
+      expect(actions()).not.toHaveAttribute('data-hidden');
+    });
+
+    it('coalesces floating edit actions measurements on scroll into one frame', async () => {
+      render(<Grid storeOptions={{ editingMode: 'row' }} withFloatingEditActions />);
+      act(() => lastStore!.table.startEditing('a'));
+      await flushFrame();
+      const rect = jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect');
+      try {
+        act(() => {
+          for (let index = 0; index < 5; index += 1) {
+            document.body.dispatchEvent(new Event('scroll'));
+          }
+        });
+        expect(rect).not.toHaveBeenCalled();
+        await flushFrame();
+        expect(rect.mock.calls.length).toBeGreaterThan(0);
+        expect(rect.mock.calls.length).toBeLessThanOrEqual(4);
+      } finally {
+        rect.mockRestore();
+      }
+    });
+
+    it('observes only the row containers and the editing row style for floating edit actions', () => {
+      const observe = jest.spyOn(MutationObserver.prototype, 'observe');
+      try {
+        const { container } = render(
+          <Grid storeOptions={{ editingMode: 'row' }} withFloatingEditActions />
+        );
+        observe.mockClear();
+        act(() => lastStore!.table.startEditing('a'));
+        const table = container.querySelector('table')!;
+        expect(observe.mock.calls.length).toBeGreaterThan(0);
+        const editingRow = container.querySelector('tr[data-row-id="a"]');
+        observe.mock.calls.forEach(([target, options]) => {
+          if (target === editingRow) {
+            expect(options).toEqual({ attributes: true, attributeFilter: ['style'] });
+            return;
+          }
+          expect(options).toEqual({ childList: true });
+          expect(target === table || target.parentElement === table).toBe(true);
+        });
+        expect(observe.mock.calls.map(([target]) => target)).toContain(
+          container.querySelector('tbody')
+        );
+      } finally {
+        observe.mockRestore();
+      }
+    });
+
+    it('re-observes the row containers when the scroll container changes while editing', async () => {
+      const observe = jest.spyOn(MutationObserver.prototype, 'observe');
+      try {
+        const { container, rerender } = render(
+          <Grid
+            storeOptions={{ editingMode: 'row', withGlobalFilter: true }}
+            withFloatingEditActions
+            withScrollArea
+          />
+        );
+        act(() => lastStore!.table.startEditing('a'));
+        const initialTable = container.querySelector('table')!;
+        observe.mockClear();
+
+        rerender(
+          <Grid
+            storeOptions={{ editingMode: 'row', withGlobalFilter: true }}
+            withFloatingEditActions
+            withScrollArea={false}
+          />
+        );
+        const table = container.querySelector('table')!;
+        expect(table).not.toBe(initialTable);
+        expect(lastStore!.editing?.rowId).toBe('a');
+        expect(observe.mock.calls.map(([target]) => target)).toContain(table);
+
+        const actions = () => container.querySelector('.mantine-DataGrid-editActions')!;
+        act(() => lastStore!.table.setGlobalFilter('Bob'));
+        await flushFrame();
+        expect(actions()).toHaveAttribute('data-hidden');
+      } finally {
+        observe.mockRestore();
+      }
+    });
+  });
+
+  describe('nested grid ownership', () => {
+    let outerStore: ReturnType<typeof useDataGrid<Person>> | null = null;
+    let innerStore: ReturnType<typeof useDataGrid<Person>> | null = null;
+
+    function InnerGrid({ onEditSave }: { onEditSave: jest.Mock }) {
+      innerStore = useDataGrid<Person>({
+        data,
+        columns,
+        getRowId: (row) => row.id,
+        editingMode: 'row',
+        onEditSave,
+      });
+      return <DataGrid store={innerStore} withFloatingEditActions />;
+    }
+
+    function NestedGrids({
+      onOuterSave,
+      onInnerSave,
+    }: {
+      onOuterSave: jest.Mock;
+      onInnerSave: jest.Mock;
+    }) {
+      outerStore = useDataGrid<Person>({
+        data,
+        columns,
+        getRowId: (row) => row.id,
+        editingMode: 'row',
+        onEditSave: onOuterSave,
+        withRowExpansion: true,
+        withGlobalFilter: true,
+        expanded: { c: true },
+      });
+      return (
+        <DataGrid
+          store={outerStore}
+          withFloatingEditActions
+          renderExpandedRow={() => <InnerGrid onEditSave={onInnerSave} />}
+        />
+      );
+    }
+
+    const outerRoot = (container: HTMLElement) =>
+      container.querySelector<HTMLElement>('.mantine-DataGrid-root')!;
+    const innerRoot = (container: HTMLElement) =>
+      outerRoot(container).querySelector<HTMLElement>(
+        '[data-expanded-row] .mantine-DataGrid-root'
+      )!;
+    const ownActions = (element: HTMLElement) =>
+      Array.from(element.children).find((child) => child.hasAttribute('data-edit-actions'))!;
+
+    it('hides the outer floating edit actions when only the nested grid renders the editing row id', async () => {
+      const { container } = render(<NestedGrids onOuterSave={jest.fn()} onInnerSave={jest.fn()} />);
+      act(() => {
+        outerStore!.table.startEditing('a');
+        innerStore!.table.startEditing('a');
+      });
+      await flushFrame();
+      expect(ownActions(outerRoot(container))).not.toHaveAttribute('data-hidden');
+
+      act(() => outerStore!.table.setGlobalFilter('Charlie'));
+      await flushFrame();
+      expect(outerStore!.editing?.rowId).toBe('a');
+      expect(innerRoot(container).querySelector('[data-editing][data-row-id="a"]')).not.toBeNull();
+      expect(ownActions(outerRoot(container))).toHaveAttribute('data-hidden');
+    });
+
+    it('commits the outer row on mousedown inside the nested editing row or nested actions', () => {
+      const onOuterSave = jest.fn();
+      const onInnerSave = jest.fn();
+      const { container } = render(
+        <NestedGrids onOuterSave={onOuterSave} onInnerSave={onInnerSave} />
+      );
+
+      act(() => {
+        outerStore!.table.startEditing('a');
+        innerStore!.table.startEditing('a');
+      });
+      const innerEditingRow = innerRoot(container).querySelector<HTMLElement>(
+        '[data-editing][data-row-id="a"] td'
+      )!;
+      fireEvent.mouseDown(innerEditingRow);
+      expect(onOuterSave).toHaveBeenCalledTimes(1);
+      expect(onInnerSave).not.toHaveBeenCalled();
+
+      act(() => outerStore!.table.startEditing('a'));
+      fireEvent.mouseDown(ownActions(innerRoot(container)).querySelector('button')!);
+      expect(onOuterSave).toHaveBeenCalledTimes(2);
+      expect(onInnerSave).not.toHaveBeenCalled();
+
+      act(() => outerStore!.table.startEditing('a'));
+      const outerEditingCell = outerRoot(container).querySelector<HTMLElement>(
+        ':scope [data-editing][data-row-id="a"] td'
+      )!;
+      expect(innerRoot(container).contains(outerEditingCell)).toBe(false);
+      fireEvent.mouseDown(outerEditingCell);
+      fireEvent.mouseDown(ownActions(outerRoot(container)).querySelector('button')!);
+      expect(onOuterSave).toHaveBeenCalledTimes(2);
+      expect(onInnerSave).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('keyboard', () => {
@@ -479,6 +753,75 @@ describe('@mantine/data-grid/editing', () => {
       expect(editorsOf(cellsOf(container, 0)[1])[0]).toHaveFocus();
       fireEvent.keyDown(editorsOf(cellsOf(container, 0)[1])[0], { key: 'Enter' });
       expect(cellsOf(container, 0)[1]).toHaveFocus();
+    });
+
+    it('does not pull focus back to the row when a blur to another element commits the cell edit', () => {
+      const onEditSave = jest.fn();
+      const { container } = render(
+        <>
+          <Grid storeOptions={{ onEditSave }} />
+          <input data-testid="outside" />
+        </>
+      );
+      fireEvent.doubleClick(cellsOf(container, 0)[0]);
+      const editor = editorsOf(cellsOf(container, 0)[0])[0];
+      expect(editor).toHaveFocus();
+      fireEvent.change(editor, { target: { value: 'Alicia' } });
+      fireEvent.blur(editor, { relatedTarget: screen.getByTestId('outside') });
+      expect(onEditSave).toHaveBeenCalledTimes(1);
+      expect(lastStore!.editing).toBeNull();
+      expect(rowsOf(container)[0]).not.toHaveFocus();
+
+      fireEvent.doubleClick(cellsOf(container, 0)[1]);
+      fireEvent.blur(editorsOf(cellsOf(container, 0)[1])[0], {
+        relatedTarget: rowsOf(container)[2],
+      });
+      expect(lastStore!.editing).toBeNull();
+      expect(rowsOf(container)[0]).not.toHaveFocus();
+
+      fireEvent.doubleClick(cellsOf(container, 1)[0]);
+      fireEvent.blur(editorsOf(cellsOf(container, 1)[0])[0]);
+      expect(lastStore!.editing).toBeNull();
+      expect(rowsOf(container)[1]).toHaveFocus();
+
+      fireEvent.doubleClick(cellsOf(container, 1)[0]);
+      fireEvent.keyDown(editorsOf(cellsOf(container, 1)[0])[0], { key: 'Enter' });
+      expect(rowsOf(container)[1]).toHaveFocus();
+    });
+
+    it('does not pull focus back to the edited cell when a click on another cell commits the edit under cell selection', () => {
+      const { container } = render(<Grid storeOptions={{ withCellSelection: true }} />);
+      fireEvent.doubleClick(cellsOf(container, 0)[0]);
+      expect(editorsOf(cellsOf(container, 0)[0])[0]).toHaveFocus();
+      fireEvent.blur(editorsOf(cellsOf(container, 0)[0])[0], {
+        relatedTarget: cellsOf(container, 2)[1],
+      });
+      expect(lastStore!.editing).toBeNull();
+      expect(cellsOf(container, 0)[0]).not.toHaveFocus();
+    });
+
+    it('restores focus to the row after an invalid blur commit when the editor is focused again', () => {
+      const { container } = render(
+        <>
+          <Grid />
+          <input data-testid="outside" />
+        </>
+      );
+      fireEvent.doubleClick(cellsOf(container, 0)[1]);
+      const editor = () => editorsOf(cellsOf(container, 0)[1])[0];
+      fireEvent.change(editor(), { target: { value: '-1' } });
+      fireEvent.blur(editor(), { relatedTarget: screen.getByTestId('outside') });
+      expect(lastStore!.editing).not.toBeNull();
+      fireEvent.focus(editor());
+      fireEvent.keyDown(editor(), { key: 'Escape' });
+      expect(lastStore!.editing).toBeNull();
+      expect(rowsOf(container)[0]).toHaveFocus();
+    });
+
+    it('labels the default editor with the column label', () => {
+      const { container } = render(<Grid />);
+      fireEvent.doubleClick(cellsOf(container, 0)[1]);
+      expect(editorsOf(cellsOf(container, 0)[1])[0]).toHaveAttribute('aria-label', 'Age');
     });
 
     it('never starts editing in the list view', () => {

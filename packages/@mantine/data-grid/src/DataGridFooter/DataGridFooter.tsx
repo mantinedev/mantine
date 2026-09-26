@@ -15,6 +15,7 @@ import {
 import { useDataGridContext } from '../DataGrid.context';
 import { formatLabel, renderLabel } from '../format-label';
 import { getSelectedCount } from '../get-selected-count';
+import { hasUnknownPageCount } from '../has-unknown-page-count';
 import classes from '../DataGrid.module.css';
 
 const PAGE_SIZE_SELECT_WIDTH = { xs: 110, sm: 122, md: 138 } as const;
@@ -81,19 +82,28 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
 
   const ctx = useDataGridContext();
   const { table, labels, store } = ctx;
-  const resolvedPagination = ctx.withPagination ? pagination : 'none';
-
   const total = table.getRowCount();
-  const pageCount = table.getPageCount();
-  const { pageIndex, pageSize } = table.store.state.pagination;
+  const { pageIndex, pageSize } = store.pagination;
   const page = pageIndex + 1;
-  const selectedCount = ctx.withRowSelection ? getSelectedCount(table.store.state.rowSelection) : 0;
-  const manualWithoutRowCount =
+  const selectedCount = ctx.withRowSelection ? getSelectedCount(store.rowSelection) : 0;
+  const withoutRowTotal =
     ctx.withPagination && !!table.options.manualPagination && table.options.rowCount === undefined;
+  const unknownPageCount = ctx.withPagination && hasUnknownPageCount(table);
+  const pageCount = unknownPageCount
+    ? page + (table.getCoreRowModel().rows.length >= pageSize ? 1 : 0)
+    : table.getPageCount();
+  const resolvedPagination = !ctx.withPagination
+    ? 'none'
+    : unknownPageCount && pagination === 'pages'
+      ? 'arrows'
+      : pagination;
+  const pageLabel = unknownPageCount
+    ? renderLabel(labels.footerPageUnknownTotal, { page })
+    : renderLabel(labels.footerPage, { page, total: pageCount });
 
   let statusText: ReactNode;
-  if (manualWithoutRowCount) {
-    statusText = renderLabel(labels.footerPage, { page, total: pageCount });
+  if (withoutRowTotal) {
+    statusText = pageLabel;
   } else if (total === 0 || !ctx.withPagination) {
     statusText = renderLabel(labels.footerRows, { count: total });
   } else {
@@ -153,9 +163,7 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
           )}
           {resolvedPagination !== 'none' && (
             <div {...ctx.getStyles('footerPagination', { classNames, styles })}>
-              {resolvedPagination === 'arrows' && (
-                <span>{renderLabel(labels.footerPage, { page, total: pageCount })}</span>
-              )}
+              {resolvedPagination === 'arrows' && <span>{pageLabel}</span>}
               <Pagination
                 size={store.controlSize}
                 withPages={resolvedPagination === 'pages'}

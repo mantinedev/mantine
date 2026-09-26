@@ -34,14 +34,17 @@ estimate is resolved in this order, first hit wins:
 3. `estimateRowHeight`
 4. the row height of the current grid `size` (`32px` at `sm`)
 
-Row height is a minimum in the table body and an estimate in the virtualized body: rows are
-measured after render, so wrapped content still displays correctly.
+A numeric `getRowHeight` sets the rendered height of each row. The virtualized body measures rows
+after render when `getRowHeight` returns `'auto'`, when `estimateRowHeight` or
+`virtualScrollConfig.estimateSize` is set, and when row expansion is enabled; otherwise every row
+renders at the resolved height, so use `'auto'` for rows with wrapped content (for example with
+`textOverflow="wrap"`): cells of `'auto'` rows grow to fit their content.
 
 ## Virtual scroll config
 
 Fine-tune virtual scroll behavior with the `virtualScrollConfig` prop:
 
-- `overscan` -- number of rows rendered above and below the visible area (default: `5`)
+- `overscan` -- number of rows rendered above and below the visible area (default: `10`)
 - `estimateSize` -- function returning the estimated row height in pixels
 
 ```tsx

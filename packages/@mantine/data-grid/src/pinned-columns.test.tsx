@@ -2,7 +2,7 @@ import { act } from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from './DataGrid';
-import { DataGridStore, useDataGrid, UseDataGridOptions } from './hooks/use-data-grid';
+import { DataGridStore, useDataGrid, UseDataGridOptions } from './hooks';
 import { mockVirtualViewport } from './virtual-test-utils';
 
 const columns = [

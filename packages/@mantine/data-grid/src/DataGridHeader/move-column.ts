@@ -1,4 +1,5 @@
 import type { Column, Table } from '@tanstack/react-table';
+import { getOrderedVisibleColumns } from '../column-cell-props';
 import type { DataGridFeatures } from '../table-features';
 
 type AnyColumn = Column<DataGridFeatures, any, unknown>;
@@ -6,13 +7,23 @@ type AnyTable = Table<DataGridFeatures, any>;
 
 export type ColumnDropEdge = 'start' | 'end';
 
-/** A column can receive a dragged column when both are leaf data columns in the same pin region and header group */
-export function isReorderTarget(source: AnyColumn, target: AnyColumn): boolean {
-  if (source.id === target.id) {
+export function canReorderColumn(column: AnyColumn, groupedColumnsFirst: boolean): boolean {
+  return !column.columnDef.meta?.utility && !(groupedColumnsFirst && column.getIsGrouped());
+}
+
+export function isReorderTarget(
+  source: AnyColumn,
+  target: AnyColumn,
+  groupedColumnsFirst: boolean
+): boolean {
+  if (source.id === target.id || target.columns.length > 0) {
     return false;
   }
 
-  if (target.columnDef.meta?.utility || target.columns.length > 0) {
+  if (
+    !canReorderColumn(source, groupedColumnsFirst) ||
+    !canReorderColumn(target, groupedColumnsFirst)
+  ) {
     return false;
   }
 
@@ -23,9 +34,16 @@ export function isReorderTarget(source: AnyColumn, target: AnyColumn): boolean {
   return source.parent?.id === target.parent?.id;
 }
 
-export function getBaseColumnOrder(table: AnyTable): string[] {
-  const order = table.store.state.columnOrder;
-  return order.length > 0 ? [...order] : table.getAllLeafColumns().map((column) => column.id);
+function getBaseColumnOrder(table: AnyTable, order: string[]): string[] {
+  const listed = new Set(order);
+  const missing = table
+    .getAllFlatColumns()
+    .filter(
+      (column) =>
+        column.columns.length === 0 && !column.columnDef.meta?.utility && !listed.has(column.id)
+    )
+    .map((column) => column.id);
+  return [...order, ...missing];
 }
 
 function moveId(ids: string[], sourceId: string, targetId: string, edge: ColumnDropEdge) {
@@ -45,19 +63,16 @@ function moveId(ids: string[], sourceId: string, targetId: string, edge: ColumnD
   return next;
 }
 
-/** Moves `sourceId` before (`start`) or after (`end`) `targetId` and writes the result through the store; pinned columns also reorder their `columnPinning` side, which decides their rendered order */
 export function moveColumn(
   table: AnyTable,
   sourceId: string,
   targetId: string,
   edge: ColumnDropEdge
 ): void {
-  const order = moveId(getBaseColumnOrder(table), sourceId, targetId, edge);
-  if (!order) {
-    return;
-  }
-
-  table.setColumnOrder(order);
+  table.setColumnOrder(
+    (current) =>
+      moveId(getBaseColumnOrder(table, current ?? []), sourceId, targetId, edge) ?? current
+  );
 
   const pinnedSide = table.getColumn(sourceId)?.getIsPinned();
   if (!pinnedSide) {
@@ -71,14 +86,17 @@ export function moveColumn(
   }
 }
 
-export interface ReorderNeighbours {
+interface ReorderNeighbours {
   previous?: AnyColumn;
   next?: AnyColumn;
 }
 
-/** Visible leaf columns directly before and after `column` that are valid reorder targets */
-export function getReorderNeighbours(column: AnyColumn, table: AnyTable): ReorderNeighbours {
-  const visible = table.getVisibleLeafColumns();
+export function getReorderNeighbours(
+  column: AnyColumn,
+  table: AnyTable,
+  groupedColumnsFirst: boolean
+): ReorderNeighbours {
+  const visible = getOrderedVisibleColumns(table);
   const index = visible.findIndex((item) => item.id === column.id);
   if (index === -1) {
     return {};
@@ -88,7 +106,8 @@ export function getReorderNeighbours(column: AnyColumn, table: AnyTable): Reorde
   const next = visible[index + 1];
 
   return {
-    previous: previous && isReorderTarget(column, previous) ? previous : undefined,
-    next: next && isReorderTarget(column, next) ? next : undefined,
+    previous:
+      previous && isReorderTarget(column, previous, groupedColumnsFirst) ? previous : undefined,
+    next: next && isReorderTarget(column, next, groupedColumnsFirst) ? next : undefined,
   };
 }

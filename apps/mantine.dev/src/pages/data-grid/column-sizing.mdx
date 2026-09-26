@@ -90,9 +90,12 @@ const store = useDataGrid({
 ## Table layout
 
 `tableLayout` (`'fixed'` by default) decides how column widths are applied. With `fixed` every
-column takes its `size` exactly; with `auto` the browser distributes the remaining width and
-`size` is a hint. `textOverflow` (`'ellipsis' | 'wrap' | 'clip'`) controls what happens to cell
-content wider than the column.
+column takes its `size` exactly, except the last non-utility column: when the sizes add up to less
+than the grid width, it grows to fill the remaining space, so resizing a column never changes the
+width of the other columns. When the sizes add up to more than the grid width, the grid scrolls
+horizontally. With `auto` the browser distributes the remaining width and `size` is a hint. The
+virtualized body always uses the exact sizes. `textOverflow` (`'ellipsis' | 'wrap' | 'clip'`)
+controls what happens to cell content wider than the column.
 
 ## Header groups
 

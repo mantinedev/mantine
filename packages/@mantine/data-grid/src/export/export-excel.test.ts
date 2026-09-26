@@ -1,4 +1,6 @@
-import { buildExcelXml } from './export-excel';
+import { renderHook } from '@testing-library/react';
+import { useDataGrid } from '../hooks';
+import { buildExcelXml, exportToExcel } from './export-excel';
 
 describe('buildExcelXml', () => {
   it('outputs valid XML structure with Workbook/Worksheet/Table elements', () => {
@@ -47,6 +49,13 @@ describe('buildExcelXml', () => {
     expect(xml).toContain('<Cell><Data ss:Type="String">NaN</Data></Cell>');
   });
 
+  it('uses String type for non-finite numbers', () => {
+    const xml = buildExcelXml(null, [[Infinity, -Infinity]], 'Sheet1');
+    expect(xml).toContain('<Cell><Data ss:Type="String">Infinity</Data></Cell>');
+    expect(xml).toContain('<Cell><Data ss:Type="String">-Infinity</Data></Cell>');
+    expect(xml).not.toContain('ss:Type="Number"');
+  });
+
   it('escapes XML special characters', () => {
     const xml = buildExcelXml(null, [['<b>bold</b>', 'A & B', '"quoted"', "it's"]], 'Sheet1');
     expect(xml).toContain('&lt;b&gt;bold&lt;/b&gt;');
@@ -88,5 +97,38 @@ describe('buildExcelXml', () => {
     );
     const matches = xml.match(/<Row>/g);
     expect(matches).toHaveLength(2);
+  });
+});
+
+describe('exportToExcel', () => {
+  it('writes number cells as numbers', () => {
+    const OriginalBlob = global.Blob;
+    const parts: string[] = [];
+    (global as any).Blob = jest.fn((content: string[]) => {
+      parts.push(...content);
+      return {};
+    });
+    const createObjectURL = jest.fn(() => 'blob:mock');
+    const revokeObjectURL = jest.fn();
+    Object.assign(URL, { createObjectURL, revokeObjectURL });
+    const click = jest.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
+
+    const hook = renderHook(() =>
+      useDataGrid({
+        data: [{ name: 'Alice', age: 30 }],
+        columns: [
+          { accessorKey: 'name', header: 'Name' },
+          { accessorKey: 'age', header: 'Age' },
+        ],
+      })
+    );
+    exportToExcel(hook.result.current.table);
+
+    expect(parts.join('')).toContain('<Cell><Data ss:Type="Number">30</Data></Cell>');
+    expect(parts.join('')).toContain('<Cell><Data ss:Type="String">Alice</Data></Cell>');
+    expect(click).toHaveBeenCalled();
+
+    click.mockRestore();
+    global.Blob = OriginalBlob;
   });
 });

@@ -1,4 +1,5 @@
 import { act } from 'react';
+import { fireEvent } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import {
   DataGrid,
@@ -106,6 +107,16 @@ describe('@mantine/data-grid/DataGridSelectionBar', () => {
     expect(lastStore!.rowSelection).toEqual({});
     expect(q(container, 'selectionBar')).not.toBeInTheDocument();
     expect(q(container, 'toolbar')).not.toHaveAttribute('data-hidden');
+  });
+
+  it('clears the Shift+click range anchor through the close button', async () => {
+    const { container } = render(<Grid />);
+    const checkboxOf = (id: string) =>
+      container.querySelector<HTMLInputElement>(`tr[data-row-id="${id}"] input`)!;
+    await userEvent.click(checkboxOf('0'));
+    await userEvent.click(screen.getByRole('button', { name: 'Clear selection' }));
+    fireEvent.click(checkboxOf('3'), { shiftKey: true });
+    expect(lastStore!.rowSelection).toEqual({ 3: true });
   });
 
   it('hides the close button with withCloseButton={false}', () => {

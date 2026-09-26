@@ -1,6 +1,6 @@
 import type { RowData } from '@tanstack/react-table';
 import type { DataGridColumnDef } from '../DataGrid.types';
-import type { UseDataGridOptions } from './use-data-grid';
+import type { UseDataGridOptions } from './use-data-grid.types';
 
 function isDefined(...values: unknown[]): boolean {
   return values.some((v) => v !== undefined);

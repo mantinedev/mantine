@@ -11,6 +11,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
+import { clearSelectionAnchor } from '../DataGridBody/row-selection';
 import { formatLabel } from '../format-label';
 import { getSelectedCount } from '../get-selected-count';
 import classes from '../DataGrid.module.css';
@@ -60,7 +61,7 @@ export const DataGridSelectionBar = factory<DataGridSelectionBarFactory>((props)
   } = useProps('DataGridSelectionBar', defaultProps, props);
 
   const ctx = useDataGridContext();
-  const count = getSelectedCount(ctx.table.store.state.rowSelection);
+  const count = getSelectedCount(ctx.store.rowSelection);
 
   return (
     <Box
@@ -80,6 +81,7 @@ export const DataGridSelectionBar = factory<DataGridSelectionBarFactory>((props)
           onClick={(event) => {
             closeButtonProps?.onClick?.(event);
             ctx.table.resetRowSelection(true);
+            clearSelectionAnchor(ctx.table.store);
           }}
           {...ctx.getStyles('selectionBarClose', {
             className: closeButtonProps?.className,

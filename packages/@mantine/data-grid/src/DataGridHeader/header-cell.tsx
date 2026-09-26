@@ -1,12 +1,13 @@
 import React from 'react';
 import { flexRender } from '@tanstack/react-table';
-import { ClassNames, Styles, UnstyledButton } from '@mantine/core';
+import { UnstyledButton } from '@mantine/core';
+import { getPinnedHeaderProps } from '../column-cell-props';
 import { DataGridContextValue, useDataGridContext } from '../DataGrid.context';
 import { DataGridColumnMenu } from '../DataGridColumnMenu/DataGridColumnMenu';
 import { DefaultUnsortedIcon, SortIcon } from '../icons';
 import type { DataGridHeaderInstance } from './use-header-interactions';
 
-export function isGroupHeader(header: DataGridHeaderInstance) {
+function isGroupHeader(header: DataGridHeaderInstance) {
   return !header.isPlaceholder && header.column.columns.length > 0;
 }
 
@@ -16,13 +17,13 @@ function getCanSort(header: DataGridHeaderInstance, ctx: DataGridContextValue) {
   );
 }
 
-/** Data and aria attributes shared by table and virtual header cells */
 export function getHeaderCellAttributes(header: DataGridHeaderInstance, ctx: DataGridContextValue) {
   const { column } = header;
   const group = isGroupHeader(header);
   const canSort = getCanSort(header, ctx);
   const sortDirection = canSort ? column.getIsSorted() : false;
   const meta = column.columnDef.meta;
+  const pinned = getPinnedHeaderProps(header, ctx.withColumnPinning);
   const ariaSort =
     sortDirection === 'asc'
       ? ('ascending' as const)
@@ -33,6 +34,7 @@ export function getHeaderCellAttributes(header: DataGridHeaderInstance, ctx: Dat
           : undefined;
 
   return {
+    'data-column-id': group || header.isPlaceholder ? undefined : column.id,
     'aria-sort': ariaSort,
     'data-sort-asc': sortDirection === 'asc' || undefined,
     'data-sort-desc': sortDirection === 'desc' || undefined,
@@ -46,23 +48,18 @@ export function getHeaderCellAttributes(header: DataGridHeaderInstance, ctx: Dat
     'data-utility': meta?.utility,
     'data-align': group ? undefined : meta?.align,
     'data-actions': meta?.type === 'actions' || undefined,
+    'data-pinned': pinned['data-pinned'],
+    'data-pinned-edge': pinned['data-pinned-edge'],
+    style: pinned.style,
   };
 }
 
-export interface DataGridHeaderCellContentProps {
+interface HeaderCellContentProps {
   header: DataGridHeaderInstance;
   isLast: boolean;
-  classNames?: ClassNames<any>;
-  styles?: Styles<any>;
 }
 
-/** Interactive part, column menu and resize handle of a header cell, shared by the table and virtual headers */
-export function DataGridHeaderCellContent({
-  header,
-  isLast,
-  classNames,
-  styles,
-}: DataGridHeaderCellContentProps) {
+export function HeaderCellContent({ header, isLast }: HeaderCellContentProps) {
   const ctx = useDataGridContext();
   const { column } = header;
   const meta = column.columnDef.meta;
@@ -87,26 +84,23 @@ export function DataGridHeaderCellContent({
   return (
     <>
       {header.isPlaceholder ? null : canSort ? (
-        <UnstyledButton
-          onClick={column.getToggleSortingHandler()}
-          {...ctx.getStyles('headerCell', { classNames, styles })}
-        >
-          <span {...ctx.getStyles('headerLabel', { classNames, styles })}>{label}</span>
-          <span {...ctx.getStyles('sortIcon', { classNames, styles })}>
+        <UnstyledButton onClick={column.getToggleSortingHandler()} {...ctx.getStyles('headerCell')}>
+          <span {...ctx.getStyles('headerLabel')}>{label}</span>
+          <span {...ctx.getStyles('sortIcon')}>
             {sortDirection
               ? (ctx.sortedIcon ?? <SortIcon />)
               : (ctx.unsortedIcon ?? <DefaultUnsortedIcon />)}
           </span>
         </UnstyledButton>
       ) : (
-        <div {...ctx.getStyles('headerCell', { classNames, styles })}>
-          <span {...ctx.getStyles('headerLabel', { classNames, styles })}>{label}</span>
+        <div {...ctx.getStyles('headerCell')}>
+          <span {...ctx.getStyles('headerLabel')}>{label}</span>
         </div>
       )}
       {withMenu && <DataGridColumnMenu column={column} />}
       {withHandle && (
         <div
-          {...ctx.getStyles('resizeHandle', { classNames, styles })}
+          {...ctx.getStyles('resizeHandle')}
           {...ctx.headerInteractions.getResizeHandleProps(header)}
           data-resizing={column.getIsResizing() || undefined}
         />

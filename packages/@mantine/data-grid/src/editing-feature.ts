@@ -121,7 +121,7 @@ export interface TableOptions_DataGridEditing<
 }
 
 export interface Table_DataGridEditing {
-  /** Starts editing the given row, in cell mode the column is required and defaults to the first editable one */
+  /** Starts editing the given row. In cell mode the column defaults to the first editable visible one and a column that is not editable or not visible is ignored (no-op); in row mode such a column falls back to focusing the first editable visible cell */
   startEditing: (rowId: string, columnId?: string) => void;
 
   /** Validates the drafts and commits them through `onEditSave`, returns the pending promise for async saves */
@@ -144,7 +144,7 @@ export interface Row_DataGridEditing {
   /** Whether an async save of this row is pending */
   getIsSaving: () => boolean;
 
-  /** Starts editing this row, optionally at the given column */
+  /** Starts editing this row, optionally at the given column, see `table.startEditing` */
   startEditing: (columnId?: string) => void;
 
   /** Commits the drafts of this row when it is the editing target */
@@ -169,7 +169,7 @@ export interface Cell_DataGridEditing {
   /** Draft value when the cell was changed, the cell value otherwise */
   getEditingValue: () => unknown;
 
-  /** Updates the draft value of the cell, clears a rejected save status */
+  /** Updates the draft value of the cell, clears a rejected save status; ignored while a save is pending */
   setEditingValue: (value: unknown) => void;
 
   /** Result of `meta.validate` for the current draft, `undefined` when valid or not editing */
@@ -283,16 +283,12 @@ function cell_getEditingValue(cell: AnyCell): unknown {
 
 function cell_setEditingValue(cell: AnyCell, value: unknown) {
   setEditing(cell.table, (old) => {
-    if (!old || old.rowId !== cell.row.id) {
+    if (!old || old.rowId !== cell.row.id || old.status === 'saving') {
       return old;
     }
 
-    const { status, ...rest } = old;
-    return {
-      ...rest,
-      ...(status === 'saving' && { status }),
-      values: { ...old.values, [cell.column.id]: value },
-    };
+    const { status: _status, ...rest } = old;
+    return { ...rest, values: { ...old.values, [cell.column.id]: value } };
   });
 }
 
@@ -339,20 +335,30 @@ function setAtPath(target: any, path: string[], value: unknown) {
   setAtPath(target[head], rest, value);
 }
 
+function findRow(table: AnyTable, rowId: string): AnyRow | undefined {
+  return table.getPrePaginatedRowModel().rowsById[rowId] ?? table.getCoreRowModel().rowsById[rowId];
+}
+
+function discardEditing(table: AnyTable) {
+  (table as EditingInstanceData)._editingSaveId += 1;
+  setEditing(table, null);
+}
+
 function table_startEditing(table: AnyTable, rowId: string, columnId?: string) {
   const mode = readOptions(table).editingMode;
   if (!mode) {
     return;
   }
 
-  const row: AnyRow = table.getRow(rowId, true);
-  if (!row.getCanEdit()) {
+  const row = findRow(table, rowId);
+  if (!row?.getCanEdit()) {
     return;
   }
 
-  const column = columnId ? table.getColumn(columnId) : undefined;
-  const requestedEditable = column?.getCanEdit() ?? false;
-  let targetColumnId: string | null = requestedEditable ? column!.id : null;
+  const requestedEditable =
+    !!columnId &&
+    row.getVisibleCells().some((cell) => cell.column.id === columnId && cell.getCanEdit());
+  let targetColumnId: string | null = requestedEditable ? columnId : null;
 
   if (mode === 'cell') {
     if (columnId && !requestedEditable) {
@@ -390,7 +396,11 @@ function commitEditing(table: AnyTable): CommitResult {
     return { closed: false };
   }
 
-  const row: AnyRow = table.getRow(editing.rowId, true);
+  const row = findRow(table, editing.rowId);
+  if (!row) {
+    discardEditing(table);
+    return { closed: true };
+  }
   if (getEditorCells(row).some((cell) => cell.getEditingError() !== undefined)) {
     return { closed: false };
   }
@@ -453,11 +463,11 @@ function table_cancelEditing(table: AnyTable) {
     return;
   }
 
-  const instance = table as EditingInstanceData;
-  instance._editingSaveId += 1;
-  const row: AnyRow = table.getRow(editing.rowId, true);
-  setEditing(table, null);
-  readOptions(table).onEditCancel?.({ row });
+  const row = findRow(table, editing.rowId);
+  discardEditing(table);
+  if (row) {
+    readOptions(table).onEditCancel?.({ row });
+  }
 }
 
 /**

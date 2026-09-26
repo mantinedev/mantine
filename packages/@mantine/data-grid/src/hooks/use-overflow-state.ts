@@ -1,28 +1,24 @@
 import { useCallback, useRef, useState } from 'react';
 
-export interface OverflowState {
+interface OverflowState {
   start: boolean;
   end: boolean;
+  horizontal: boolean;
 }
 
-const NO_OVERFLOW: OverflowState = { start: false, end: false };
+const NO_OVERFLOW: OverflowState = { start: false, end: false, horizontal: false };
 
-function measure(node: HTMLElement): OverflowState {
+function measure(node: HTMLElement, withEdges: boolean): OverflowState {
   const scrollLeft = Math.abs(node.scrollLeft);
   const maxScroll = node.scrollWidth - node.clientWidth;
   return {
-    start: scrollLeft > 0,
-    end: maxScroll > 0 && scrollLeft < maxScroll - 1,
+    start: withEdges && scrollLeft > 0,
+    end: withEdges && maxScroll > 0 && scrollLeft < maxScroll - 1,
+    horizontal: maxScroll > 0,
   };
 }
 
-/**
- * Tracks whether the horizontal scroll viewport is scrolled away from its
- * start or end edge. The returned callback ref attaches a passive scroll
- * listener and a ResizeObserver on the viewport and its content and only
- * updates state when a boolean flips.
- */
-export function useOverflowState(enabled: boolean) {
+export function useOverflowState(withEdges: boolean) {
   const [state, setState] = useState<OverflowState>(NO_OVERFLOW);
   const cleanupRef = useRef<(() => void) | null>(null);
 
@@ -31,27 +27,39 @@ export function useOverflowState(enabled: boolean) {
       cleanupRef.current?.();
       cleanupRef.current = null;
 
-      if (!node || !enabled) {
-        setState((current) => (current.start || current.end ? NO_OVERFLOW : current));
+      if (!node) {
+        setState((current) =>
+          current.start || current.end || current.horizontal ? NO_OVERFLOW : current
+        );
         return;
       }
 
       const update = () => {
-        const next = measure(node);
+        const next = measure(node, withEdges);
         setState((current) =>
-          current.start === next.start && current.end === next.end ? current : next
+          current.start === next.start &&
+          current.end === next.end &&
+          current.horizontal === next.horizontal
+            ? current
+            : next
         );
       };
 
       update();
-      node.addEventListener('scroll', update, { passive: true });
+      if (withEdges) {
+        node.addEventListener('scroll', update, { passive: true });
+      }
 
       let observer: ResizeObserver | null = null;
       if (typeof ResizeObserver !== 'undefined') {
         observer = new ResizeObserver(update);
         observer.observe(node);
-        if (node.firstElementChild) {
-          observer.observe(node.firstElementChild);
+        const content = node.firstElementChild;
+        if (content) {
+          observer.observe(content);
+          if (content.firstElementChild) {
+            observer.observe(content.firstElementChild);
+          }
         }
       }
 
@@ -60,7 +68,7 @@ export function useOverflowState(enabled: boolean) {
         observer?.disconnect();
       };
     },
-    [enabled]
+    [withEdges]
   );
 
   return { ref, state };

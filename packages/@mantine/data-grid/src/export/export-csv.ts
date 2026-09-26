@@ -3,9 +3,7 @@ import type { DataGridFeatures } from '../table-features';
 import {
   ExportColumnScope,
   ExportRowScope,
-  getExportColumns,
-  getExportHeaders,
-  getExportRows,
+  getExportMatrix,
   triggerDownload,
 } from './export-utils';
 
@@ -71,22 +69,13 @@ export function formatCsv<TData extends RowData>(
     valueFormatter,
   } = options ?? {};
 
-  const cols = getExportColumns(table, columnsOption);
-  const tableRows = getExportRows(table, rowsOption);
-  const headers = includeHeaders ? getExportHeaders(cols) : null;
+  const matrix = getExportMatrix(table, {
+    rows: rowsOption,
+    columns: columnsOption,
+    valueFormatter,
+  });
 
-  const rows = tableRows.map((row) =>
-    cols.map((col) => {
-      const cellValue = row.getValue(col.id);
-      return valueFormatter
-        ? valueFormatter(cellValue, col.id)
-        : cellValue == null
-          ? ''
-          : String(cellValue);
-    })
-  );
-
-  return buildCsvString(headers, rows, delimiter);
+  return buildCsvString(includeHeaders ? matrix.headers : null, matrix.rows, delimiter);
 }
 
 export function exportToCsv<TData extends RowData>(

@@ -1,69 +1,44 @@
-import {
-  Box,
-  BoxProps,
-  CompoundStylesApiProps,
-  ElementProps,
-  factory,
-  Factory,
-  useProps,
-} from '@mantine/core';
-import { useMergedRef } from '@mantine/hooks';
 import { useDataGridContext } from '../DataGrid.context';
-import { getPinnedHeaderProps } from '../get-pinned-cell-props';
-import { DataGridHeaderCellContent, getHeaderCellAttributes } from './DataGridHeaderCell';
-import classes from '../DataGrid.module.css';
+import { getLeafHeaders } from '../get-leaf-headers';
+import type { DataGridStore } from '../hooks';
+import { getHeaderCellAttributes, HeaderCellContent } from './header-cell';
 
-export type DataGridHeaderStylesNames =
-  | 'thead'
-  | 'tr'
-  | 'th'
-  | 'headerCell'
-  | 'headerLabel'
-  | 'sortIcon'
-  | 'resizeHandle';
+function getFillColumnId(table: DataGridStore['table']) {
+  const columns = table.getVisibleLeafColumns();
+  for (let index = columns.length - 1; index >= 0; index -= 1) {
+    if (!columns[index].columnDef.meta?.utility) {
+      return columns[index].id;
+    }
+  }
+  return null;
+}
 
-export interface DataGridHeaderProps
-  extends BoxProps, CompoundStylesApiProps<DataGridHeaderFactory>, ElementProps<'thead'> {}
-
-export type DataGridHeaderFactory = Factory<{
-  props: DataGridHeaderProps;
-  ref: HTMLTableSectionElement;
-  stylesNames: DataGridHeaderStylesNames;
-  compound: true;
-}>;
-
-export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
-  const { className, style, classNames, styles, ref, ...others } = useProps(
-    'DataGridHeader',
-    null,
-    props
-  );
-
+export function DataGridHeader() {
   const ctx = useDataGridContext();
-  const theadRef = useMergedRef(ref, ctx.theadRef);
   const headerGroups = ctx.table.getHeaderGroups();
-  const withLeafColumnWidths =
-    headerGroups.length > 1 && (ctx.withColumnResizing || ctx.tableLayout === 'fixed');
+  const withFixedWidths = ctx.withColumnResizing || ctx.tableLayout === 'fixed';
+  const withLeafColumnWidths = headerGroups.length > 1 && withFixedWidths;
+  const fillColumnId = ctx.tableLayout === 'fixed' ? getFillColumnId(ctx.table) : null;
+  const isFillHeader = (header: (typeof headerGroups)[number]['headers'][number]) =>
+    fillColumnId !== null && getLeafHeaders(header).some((leaf) => leaf.column.id === fillColumnId);
 
   return (
     <>
       {withLeafColumnWidths && (
         <colgroup>
           {headerGroups[headerGroups.length - 1].headers.map((header) => (
-            <col key={header.id} style={{ width: header.getSize() }} />
+            <col
+              key={header.id}
+              style={{ width: header.column.id === fillColumnId ? undefined : header.getSize() }}
+            />
           ))}
         </colgroup>
       )}
-      <Box
-        component="thead"
-        ref={theadRef}
-        {...ctx.getStyles('thead', { className, classNames, style, styles })}
-        {...others}
-      >
+      <thead ref={ctx.theadRef} {...ctx.getStyles('thead')}>
         {headerGroups.map((headerGroup) => (
-          <tr key={headerGroup.id} {...ctx.getStyles('tr', { classNames, styles })}>
+          <tr key={headerGroup.id} {...ctx.getStyles('tr')}>
             {headerGroup.headers.map((header, index) => {
-              const pinned = getPinnedHeaderProps(header, ctx.withColumnPinning);
+              const { style: pinnedStyle, ...attributes } = getHeaderCellAttributes(header, ctx);
               const utility = header.column.columnDef.meta?.utility;
 
               return (
@@ -71,37 +46,28 @@ export const DataGridHeader = factory<DataGridHeaderFactory>((props) => {
                   key={header.id}
                   ref={ctx.headerInteractions.registerHeaderCell(header)}
                   colSpan={header.colSpan}
-                  {...getHeaderCellAttributes(header, ctx)}
-                  data-pinned={pinned['data-pinned']}
-                  data-pinned-edge={pinned['data-pinned-edge']}
+                  {...attributes}
                   {...ctx.getStyles('th', {
-                    classNames,
-                    styles,
                     style: {
-                      ...pinned.style,
+                      ...pinnedStyle,
                       width:
-                        ctx.withColumnResizing || ctx.tableLayout === 'fixed' || utility
+                        (withFixedWidths || utility) && !isFillHeader(header)
                           ? header.getSize()
                           : undefined,
                     },
                   })}
                   {...ctx.headerInteractions.getReorderHandlers(header)}
                 >
-                  <DataGridHeaderCellContent
+                  <HeaderCellContent
                     header={header}
                     isLast={index === headerGroup.headers.length - 1}
-                    classNames={classNames}
-                    styles={styles}
                   />
                 </th>
               );
             })}
           </tr>
         ))}
-      </Box>
+      </thead>
     </>
   );
-});
-
-DataGridHeader.classes = classes;
-DataGridHeader.displayName = '@mantine/data-grid/DataGridHeader';
+}

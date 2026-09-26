@@ -161,7 +161,7 @@ Both callbacks receive the `row` object and the `event`; `onCellClick` receives 
 ## Cell selection
 
 Pass `withCellSelection` to `useDataGrid` to enable spreadsheet-style cell range selection. Cells
-become the focus targets (roving `tabindex`), the root carries `data-cell-selection` and text
+become the focus targets (roving `tabindex`, the first cell is the tab stop until a cell is focused), the root carries `data-cell-selection` and text
 selection inside cells is disabled. Selected cells take the `--mantine-primary-color-light` fill
 with 1px primary edges around each range; the focused cell is transparent with a 2px focus ring.
 Group rows are excluded from ranges.
@@ -224,9 +224,17 @@ focus ring and selection fill:
 />
 ```
 
-Items follow the row focus model (roving `tabindex`, arrow keys, `Enter`, `Space`), take the
+Items follow the row focus model (the first item is the tab stop, arrow keys, `Enter`, `Space`), take the
 selected fill without the bar, and hover under `highlightOnHover`. Group rows render as heading
 items that toggle on click, tree rows render flat, and no editor is rendered in list view.
+
+With `height` set, the list scrolls inside a container of that height (`onScrollToBottom` fires
+from it) and top / bottom pinned items stick to the top / bottom edge of that container; without
+`height`, pinned items are only moved to the start / end of the list. Row reorder is not available
+in list view: while `listView` is set, the reorder grip is not rendered and items cannot be
+dragged (a development warning is logged). `listView` is a `DataGrid` prop, so the store
+configuration is unchanged: `withRowReorder` / `onRowOrderChange` still disable sorting and add
+the `__reorder__` utility column to the table columns and column order.
 
 ## Row reorder
 
@@ -245,9 +253,16 @@ const store = useDataGrid({
 });
 ```
 
-A drag handle column (`__reorder__`) is added automatically as the first column; the grip is always
-visible so it works on touch devices. Users drag rows by the handle to reorder them.
+A drag handle column (`__reorder__`) is added automatically as the first column, and its grip is
+always visible. Users drag rows by the handle to reorder them.
+Reordering is pointer-only: the handle is hidden from assistive technology and has no keyboard
+alternative, so provide your own (for example, move up/down actions in a row menu) if keyboard
+users need to reorder rows.
 
 Sorting is automatically disabled when `withRowReorder` is active, because a manual row order and
 a sort-derived order cannot coexist. Row reorder is not available with tree data, grouping or
 `virtualize`.
+
+With row pinning, pinned rows are excluded from reorder: they have no drag handle and are not drop
+targets. Only rows in the center section can be moved, and pinned rows keep their positions in the
+data array passed to `onRowOrderChange`. Unpin a row to reorder it.
