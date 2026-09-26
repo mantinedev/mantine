@@ -44,6 +44,12 @@
   }
 }
 
+.required {
+  vertical-align: middle;
+  margin-inline-start: 2px;
+  font-size: 12px;
+}
+
 .groupCell {
   vertical-align: top;
   border-inline-end: 1px solid var(--mantine-color-border);

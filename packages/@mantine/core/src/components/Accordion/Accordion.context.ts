@@ -6,6 +6,7 @@ export interface AccordionContextValue {
   loop: boolean | undefined;
   transitionDuration: number | undefined;
   disableChevronRotation: boolean | undefined;
+  disableCollapse: boolean;
   chevronPosition: AccordionChevronPosition | undefined;
   order: AccordionHeadingOrder | undefined;
   chevron: React.ReactNode;

@@ -63,8 +63,8 @@
   align-items: center;
   justify-content: flex-start;
   transition: transform var(--accordion-transition-duration, 200ms) ease;
-  width: var(--accordion-chevron-size, rem(15px));
-  min-width: var(--accordion-chevron-size, rem(15px));
+  width: var(--accordion-chevron-size);
+  min-width: var(--accordion-chevron-size);
   transform: rotate(0deg);
 
   &:where([data-rotate]) {

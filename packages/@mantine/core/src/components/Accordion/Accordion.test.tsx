@@ -36,10 +36,19 @@ describe('@mantine/core/Accordion', () => {
   tests.axe([<Accordion {...defaultProps} />, <Accordion {...defaultProps} order={2} />]);
   tests.itSupportsSystemProps<AccordionProps, AccordionStylesNames>({
     component: Accordion,
-    props: defaultProps,
+    props: { ...defaultProps, order: 3 },
     varsResolver: true,
     displayName: '@mantine/core/Accordion',
-    stylesApiSelectors: ['root', 'chevron', 'content', 'control', 'icon', 'item', 'label'],
+    stylesApiSelectors: [
+      'root',
+      'chevron',
+      'content',
+      'control',
+      'icon',
+      'item',
+      'label',
+      'itemTitle',
+    ],
   });
 
   it('renders correct amount of items', () => {
@@ -253,7 +262,169 @@ describe('@mantine/core/Accordion', () => {
 
   it('removes the chevron when chevron is set to null', () => {
     const { container } = render(<Accordion {...defaultProps} chevron={null} />);
-    expect(container.querySelector('.mantine-Accordion-chevron')).toBeEmptyDOMElement();
+    expect(container.querySelector('.mantine-Accordion-chevron')).toBe(null);
+  });
+
+  it('removes the chevron when chevron is set to false', () => {
+    const { container } = render(<Accordion {...defaultProps} chevron={false} />);
+    expect(container.querySelector('.mantine-Accordion-chevron')).toBe(null);
+  });
+
+  it('overrides Accordion chevron with Accordion.Control chevron', () => {
+    render(
+      <Accordion transitionDuration={0} chevron={<span data-testid="root-chevron" />}>
+        <Accordion.Item value="item-1">
+          <Accordion.Control chevron={<span data-testid="control-chevron" />}>
+            Label 1
+          </Accordion.Control>
+        </Accordion.Item>
+        <Accordion.Item value="item-2">
+          <Accordion.Control>Label 2</Accordion.Control>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    expect(screen.getAllByTestId('control-chevron')).toHaveLength(1);
+    expect(screen.getAllByTestId('root-chevron')).toHaveLength(1);
+    expect(screen.getAllByRole('button')[0]).toContainElement(
+      screen.getByTestId('control-chevron')
+    );
+  });
+
+  it('removes the chevron of a single control when Accordion.Control chevron is set to null', () => {
+    const { container } = render(
+      <Accordion transitionDuration={0}>
+        <Accordion.Item value="item-1">
+          <Accordion.Control chevron={null}>Label 1</Accordion.Control>
+        </Accordion.Item>
+        <Accordion.Item value="item-2">
+          <Accordion.Control>Label 2</Accordion.Control>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    expect(container.querySelectorAll('.mantine-Accordion-chevron')).toHaveLength(1);
+    expect(screen.getAllByRole('button')[0].querySelector('.mantine-Accordion-chevron')).toBe(null);
+  });
+
+  it('hides the default chevron icon from assistive technologies', () => {
+    const { container } = render(<Accordion {...defaultProps} />);
+    expect(container.querySelector('.mantine-Accordion-chevron svg')).toHaveAttribute(
+      'aria-hidden',
+      'true'
+    );
+  });
+
+  it('renders icon only when Accordion.Control icon prop is set', () => {
+    const { container } = render(<Accordion {...defaultProps} chevronPosition="left" />);
+    const buttons = screen.getAllByRole('button');
+    const icon = buttons[0].querySelector('.mantine-Accordion-icon');
+
+    expect(container.querySelectorAll('.mantine-Accordion-icon')).toHaveLength(1);
+    expect(icon).toHaveTextContent('$$');
+    expect(icon).toHaveAttribute('data-chevron-position', 'left');
+    expect(buttons[1].querySelector('.mantine-Accordion-icon')).toBe(null);
+  });
+
+  it('sets data-active on the item and control of the opened item', async () => {
+    const { container } = render(<Accordion {...defaultProps} />);
+    const items = container.querySelectorAll('.mantine-Accordion-item');
+    const buttons = screen.getAllByRole('button');
+
+    expect(items[0]).toHaveAttribute('data-active');
+    expect(buttons[0]).toHaveAttribute('data-active');
+    expect(items[1]).not.toHaveAttribute('data-active');
+    expect(buttons[1]).not.toHaveAttribute('data-active');
+
+    await userEvent.click(buttons[1]);
+    expect(items[0]).not.toHaveAttribute('data-active');
+    expect(buttons[0]).not.toHaveAttribute('data-active');
+    expect(items[1]).toHaveAttribute('data-active');
+    expect(buttons[1]).toHaveAttribute('data-active');
+  });
+
+  it('connects controls and panels with aria attributes', async () => {
+    render(<Accordion {...defaultProps} />);
+    const control = screen.getAllByRole('button')[0];
+    const panel = screen.getByRole('region');
+
+    expect(control).toHaveAttribute('aria-expanded', 'true');
+    expect(control).toHaveAttribute('aria-controls', panel.id);
+    expect(panel).toHaveAttribute('aria-labelledby', control.id);
+
+    await userEvent.click(control);
+    expect(control).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getAllByRole('button')[1]).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('keeps generated ids when id is passed to Accordion.Control and Accordion.Panel', () => {
+    render(
+      <Accordion transitionDuration={0} defaultValue="item-1">
+        <Accordion.Item value="item-1">
+          <Accordion.Control id="custom-control">Label 1</Accordion.Control>
+          <Accordion.Panel id="custom-panel">test-item-1</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    const control = screen.getByRole('button');
+    const panel = screen.getByRole('region');
+    expect(control.id).not.toBe('custom-control');
+    expect(panel.id).not.toBe('custom-panel');
+    expect(control).toHaveAttribute('aria-controls', panel.id);
+    expect(panel).toHaveAttribute('aria-labelledby', control.id);
+  });
+
+  it('sets aria-disabled on the open control when disableCollapse is set', async () => {
+    render(<Accordion {...defaultProps} disableCollapse />);
+    const buttons = screen.getAllByRole('button');
+
+    expect(buttons[0]).toHaveAttribute('aria-disabled', 'true');
+    expect(buttons[1]).not.toHaveAttribute('aria-disabled');
+
+    await userEvent.click(buttons[1]);
+    expect(buttons[0]).not.toHaveAttribute('aria-disabled');
+    expect(buttons[1]).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('does not set aria-disabled when disableCollapse is set in multiple mode', () => {
+    render(<Accordion {...defaultProps} multiple defaultValue={['item-1']} disableCollapse />);
+    expect(screen.getAllByRole('button')[0]).not.toHaveAttribute('aria-disabled');
+  });
+
+  it('keeps collapsed panels mounted by default', () => {
+    render(<Accordion {...defaultProps} transitionDuration={200} />);
+    expect(screen.getByText('test-item-2')).toBeInTheDocument();
+    expect(screen.getByText('test-item-3')).toBeInTheDocument();
+  });
+
+  it('unmounts collapsed panels when keepMounted is false', () => {
+    render(<Accordion {...defaultProps} transitionDuration={200} keepMounted={false} />);
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+    expect(screen.queryByText('test-item-2')).toBe(null);
+    expect(screen.queryByText('test-item-3')).toBe(null);
+  });
+
+  it('supports keepMounted override on Accordion.Panel level', () => {
+    render(
+      <Accordion transitionDuration={200} keepMounted={false} defaultValue="item-1">
+        <Accordion.Item value="item-1">
+          <Accordion.Control>Label 1</Accordion.Control>
+          <Accordion.Panel>test-item-1</Accordion.Panel>
+        </Accordion.Item>
+        <Accordion.Item value="item-2">
+          <Accordion.Control>Label 2</Accordion.Control>
+          <Accordion.Panel keepMounted>test-item-2</Accordion.Panel>
+        </Accordion.Item>
+        <Accordion.Item value="item-3">
+          <Accordion.Control>Label 3</Accordion.Control>
+          <Accordion.Panel>test-item-3</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+
+    expect(screen.getByText('test-item-2')).toBeInTheDocument();
+    expect(screen.queryByText('test-item-3')).toBe(null);
   });
 
   it('supports controlled state (multiple: true)', async () => {

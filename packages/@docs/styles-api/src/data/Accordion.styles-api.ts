@@ -18,7 +18,7 @@ export const AccordionStylesApi: StylesApiData<AccordionFactory> = {
     root: {
       '--accordion-chevron-size': 'Controls chevron container element `width` and `min-width`',
       '--accordion-radius': 'Controls `border-radius` in various elements, depending on variant',
-      '--accordion-transition-duration': 'Controls all animations `transition-duration`',
+      '--accordion-transition-duration': 'Controls chevron rotation `transition-duration`',
     },
   },
 
@@ -30,7 +30,22 @@ export const AccordionStylesApi: StylesApiData<AccordionFactory> = {
     },
     {
       modifier: 'data-chevron-position',
+      selector: ['control', 'icon'],
+      value: 'Value of `chevronPosition` prop on `Accordion`',
+    },
+    {
+      modifier: 'data-disabled',
       selector: 'control',
+      condition: '`disabled` prop is set on `Accordion.Control`',
+    },
+    {
+      modifier: 'data-rotate',
+      selector: 'chevron',
+      condition: 'Item is active (opened) and `disableChevronRotation` is not set',
+    },
+    {
+      modifier: 'data-position',
+      selector: 'chevron',
       value: 'Value of `chevronPosition` prop on `Accordion`',
     },
   ],
