@@ -84,6 +84,14 @@ describe('@mantine/core/Modal', () => {
       expect(media.queries).toEqual(['(min-width: 48em)']);
     });
 
+    it('passes fullScreen resolved from the breakpoint to Styles API functions', () => {
+      media = mockMatchMedia(false, { filter: isMinWidthQuery });
+      const styles = jest.fn((_theme: unknown, _props: ModalProps) => ({}));
+      render(<Modal {...defaultProps} fullScreenBelow="sm" styles={styles} />);
+      expect(styles).toHaveBeenCalled();
+      styles.mock.calls.forEach(([, props]) => expect(props.fullScreen).toBe(true));
+    });
+
     it('keeps the modal regular when the viewport is at or above the breakpoint', () => {
       media = mockMatchMedia(true, { filter: isMinWidthQuery });
       const { container } = render(<Modal {...defaultProps} fullScreenBelow="sm" />);
@@ -448,6 +456,56 @@ describe('@mantine/core/ModalStack', () => {
       await waitFor(() => {
         const inner = screen.getByText('modal-a').closest<HTMLElement>('.mantine-Modal-inner')!;
         expect(inner.style.transform).toBe('translateY(-16px)');
+      });
+    } finally {
+      HTMLElement.prototype.getBoundingClientRect = originalGetBoundingClientRect;
+    }
+  });
+
+  it('narrows the card behind a stacked modal that opens from a closed state', async () => {
+    const originalGetBoundingClientRect = HTMLElement.prototype.getBoundingClientRect;
+    HTMLElement.prototype.getBoundingClientRect = function getBoundingClientRect() {
+      return {
+        width: 400,
+        height: 300,
+        top: 0,
+        left: 0,
+        right: 400,
+        bottom: 300,
+        x: 0,
+        y: 0,
+      } as any;
+    };
+
+    function OpenFromClosedDemo() {
+      const stack = useModalsStack(['a', 'b']);
+      return (
+        <Modal.Stack>
+          <Modal {...stack.register('a')} withinPortal={false}>
+            modal-a
+          </Modal>
+          <Modal {...stack.register('b')} withinPortal={false}>
+            modal-b
+          </Modal>
+          <button type="button" onClick={() => stack.open('a')}>
+            open-a
+          </button>
+          <button type="button" onClick={() => stack.open('b')}>
+            open-b
+          </button>
+        </Modal.Stack>
+      );
+    }
+
+    try {
+      render(<OpenFromClosedDemo />, undefined, { env: 'default' });
+      await userEvent.click(screen.getByText('open-a'));
+      await userEvent.click(screen.getByText('open-b'));
+
+      await waitFor(() => {
+        const behind = screen.getByText('modal-a').closest<HTMLElement>('[data-modal-content]')!;
+        expect(behind.style.maxWidth).toBe('386px');
+        expect(behind.style.maxHeight).toBe('286px');
       });
     } finally {
       HTMLElement.prototype.getBoundingClientRect = originalGetBoundingClientRect;
@@ -918,6 +976,83 @@ describe('@mantine/core/Modal theme.overlayStack', () => {
     expect(getOverlays(container)).toHaveLength(1);
   });
 
+  it('hides and disables non-top modals when theme.overlayStack withStackTransform is false', async () => {
+    const { container } = render(<SharedStackDemo />, {
+      overlayStack: { withStackTransform: false },
+    });
+    await userEvent.click(screen.getByText('open'));
+
+    const inners = getInners(container);
+    const getSection = (inner: HTMLElement) => inner.querySelector<HTMLElement>('section')!;
+    expect(inners[0]).toHaveAttribute('data-stack-hidden');
+    expect(getSection(inners[0]).style.pointerEvents).toBe('none');
+    expect(inners[1]).not.toHaveAttribute('data-stack-hidden');
+    expect(getSection(inners[1]).style.pointerEvents).toBe('');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.queryByText('modal-b')).not.toBeInTheDocument());
+    expect(getInners(container)[0]).not.toHaveAttribute('data-stack-hidden');
+    expect(getSection(getInners(container)[0]).style.pointerEvents).toBe('');
+  });
+
+  it('keeps ids of separate Modal.Stack instances apart in the shared stack', async () => {
+    const onCloseOuter = jest.fn();
+
+    function InnerStack() {
+      const stack = useModalsStack(['first']);
+      return (
+        <Modal.Stack>
+          <button type="button" onClick={() => stack.open('first')}>
+            open-inner
+          </button>
+          <Modal {...stack.register('first')} withinPortal={false} title="inner">
+            inner-content
+          </Modal>
+        </Modal.Stack>
+      );
+    }
+
+    function OuterStack() {
+      const stack = useModalsStack(['first']);
+      return (
+        <Modal.Stack>
+          <button type="button" onClick={() => stack.open('first')}>
+            open-outer
+          </button>
+          <Modal
+            {...stack.register('first')}
+            onClose={() => {
+              stack.close('first');
+              onCloseOuter();
+            }}
+            withinPortal={false}
+            title="outer"
+          >
+            outer-content
+            <InnerStack />
+          </Modal>
+        </Modal.Stack>
+      );
+    }
+
+    const { container } = render(<OuterStack />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open-outer'));
+    await userEvent.click(screen.getByText('open-inner'));
+
+    const zIndexes = Array.from(container.querySelectorAll<HTMLElement>('.mantine-Modal-root')).map(
+      (root) => root.style.getPropertyValue('--mb-z-index')
+    );
+    expect(zIndexes).toStrictEqual(['calc(200 + 0 + 1)', 'calc(200 + 1 + 1)']);
+
+    const closeButtons = container.querySelectorAll<HTMLButtonElement>('.mantine-Modal-close');
+    fireEvent.click(closeButtons[1]);
+    await waitFor(() => expect(screen.queryByText('inner-content')).not.toBeInTheDocument());
+
+    await userEvent.keyboard('{Escape}');
+    expect(onCloseOuter).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(screen.queryByText('outer-content')).not.toBeInTheDocument());
+  });
+
   it('applies theme.overlayStack options to the shared stack', async () => {
     const { container } = render(<SharedStackDemo />, {
       overlayStack: { withStackTransform: false },
@@ -928,5 +1063,126 @@ describe('@mantine/core/Modal theme.overlayStack', () => {
     expect(inners[0].style.transform).toBe('');
     expect(inners[1].style.transform).toBe('');
     expect(getOverlays(container)).toHaveLength(1);
+  });
+});
+
+describe('@mantine/core/Modal focus return', () => {
+  function ExplicitStackDemo() {
+    const stack = useModalsStack(['a', 'b', 'c']);
+    return (
+      <Modal.Stack>
+        <Modal {...stack.register('a')} withinPortal={false} title="modal-a">
+          <button type="button" onClick={() => stack.open('b')}>
+            open-b
+          </button>
+        </Modal>
+        <Modal {...stack.register('b')} withinPortal={false} title="modal-b">
+          <button type="button" onClick={() => stack.open('c')}>
+            open-c
+          </button>
+        </Modal>
+        <Modal {...stack.register('c')} withinPortal={false} title="modal-c">
+          <button type="button" onClick={stack.closeAll}>
+            close-all
+          </button>
+        </Modal>
+        <button type="button" onClick={() => stack.open('a')}>
+          open-a
+        </button>
+      </Modal.Stack>
+    );
+  }
+
+  function SharedStackDemo({ modalAProps }: { modalAProps?: Partial<ModalProps> }) {
+    const [a, setA] = useState(false);
+    const [b, setB] = useState(false);
+    return (
+      <>
+        <Modal
+          opened={a}
+          onClose={() => setA(false)}
+          withinPortal={false}
+          title="modal-a"
+          {...modalAProps}
+        >
+          <button type="button" onClick={() => setB(true)}>
+            open-b
+          </button>
+        </Modal>
+        <Modal opened={b} onClose={() => setB(false)} withinPortal={false} title="modal-b">
+          modal-b
+        </Modal>
+        <button type="button" onClick={() => setA(true)}>
+          open-a
+        </button>
+      </>
+    );
+  }
+
+  const waitForFocusIn = (title: string) =>
+    waitFor(() => {
+      expect(screen.getByRole('dialog', { name: title })).toContainElement(
+        document.activeElement as HTMLElement
+      );
+    });
+
+  const openAndFocus = async (label: string, title: string) => {
+    await userEvent.click(screen.getByRole('button', { name: label }));
+    await waitForFocusIn(title);
+  };
+
+  it('returns focus to the element that opened each modal when closing an explicit stack', async () => {
+    render(<ExplicitStackDemo />);
+    await openAndFocus('open-a', 'modal-a');
+    await openAndFocus('open-b', 'modal-b');
+    await openAndFocus('open-c', 'modal-c');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-c' })).toHaveFocus());
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-b' })).toHaveFocus());
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-a' })).toHaveFocus());
+  });
+
+  it('returns focus to the original trigger when the whole explicit stack closes at once', async () => {
+    render(<ExplicitStackDemo />);
+    await openAndFocus('open-a', 'modal-a');
+    await openAndFocus('open-b', 'modal-b');
+    await openAndFocus('open-c', 'modal-c');
+
+    await userEvent.click(screen.getByRole('button', { name: 'close-all' }));
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-a' })).toHaveFocus());
+  });
+
+  it('returns focus to the trigger of a single modal in the shared theme.overlayStack', async () => {
+    render(<SharedStackDemo />, { overlayStack: true });
+    await openAndFocus('open-a', 'modal-a');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-a' })).toHaveFocus());
+  });
+
+  it('returns focus through the shared theme.overlayStack', async () => {
+    render(<SharedStackDemo />, { overlayStack: true });
+    await openAndFocus('open-a', 'modal-a');
+    await openAndFocus('open-b', 'modal-b');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-b' })).toHaveFocus());
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-a' })).toHaveFocus());
+  });
+
+  it('does not return focus in the shared theme.overlayStack when returnFocus is false', async () => {
+    render(<SharedStackDemo modalAProps={{ returnFocus: false }} />, { overlayStack: true });
+    await openAndFocus('open-a', 'modal-a');
+
+    await userEvent.keyboard('{Escape}');
+    await act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+    expect(screen.getByRole('button', { name: 'open-a' })).not.toHaveFocus();
   });
 });

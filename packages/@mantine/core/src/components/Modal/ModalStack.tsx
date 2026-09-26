@@ -1,7 +1,6 @@
-import { use } from 'react';
-import { ModalStackContext, OverlayStackProvider } from '../OverlayStack';
+import { ModalStackContext, OverlayStackProvider } from '../../core/OverlayStack';
 
-export { ModalStackContext } from '../OverlayStack';
+export { ModalStackContext } from '../../core/OverlayStack';
 
 export interface ModalStackProps {
   children: React.ReactNode;
@@ -14,12 +13,6 @@ export interface ModalStackProps {
 }
 
 export function ModalStack({ children, maxDepth, withStackTransform }: ModalStackProps) {
-  const parentStack = use(ModalStackContext);
-
-  if (parentStack?.shared) {
-    return <>{children}</>;
-  }
-
   return (
     <OverlayStackProvider
       context={ModalStackContext}

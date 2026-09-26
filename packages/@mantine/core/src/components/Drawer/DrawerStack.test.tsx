@@ -1,7 +1,7 @@
 import { act, fireEvent, screen } from '@testing-library/react';
 import { render } from '@mantine-tests/core';
-import { useDrawersStack } from '../Modal/use-modals-stack';
 import { Drawer } from './Drawer';
+import { useDrawersStack } from './use-drawers-stack';
 
 function TestContainer() {
   const stack = useDrawersStack(['a', 'b']);

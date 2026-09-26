@@ -582,6 +582,109 @@ useEffect(() => {
 }, [running]);
 ```
 
+## ModalBase components removed
+
+`ModalBase`, `ModalBaseOverlay`, `ModalBaseContent`, `ModalBaseHeader`, `ModalBaseTitle`,
+`ModalBaseCloseButton`, `ModalBaseBody` and `NativeScrollArea` components are no longer exported from
+`@mantine/core`, along with the `ModalBaseHeaderProps`, `ModalBaseTitleProps`,
+`ModalBaseCloseButtonProps` and `ModalBaseBodyProps` types. If you built a custom dialog with them,
+use [Modal](/core/modal#compound-components) or [Drawer](/core/drawer#compound-components)
+compound components instead:
+
+<DataTable
+  head={['9.x', '10.x']}
+  data={[
+    ['`ModalBase`', '`Modal.Root` or `Drawer.Root`'],
+    ['`ModalBaseOverlay`', '`Modal.Overlay` or `Drawer.Overlay`'],
+    ['`ModalBaseContent`', '`Modal.Content` or `Drawer.Content`'],
+    ['`ModalBaseHeader`', '`Modal.Header` or `Drawer.Header`'],
+    ['`ModalBaseTitle`', '`Modal.Title` or `Drawer.Title`'],
+    ['`ModalBaseCloseButton`', '`Modal.CloseButton` or `Drawer.CloseButton`'],
+    ['`ModalBaseBody`', '`Modal.Body` or `Drawer.Body`'],
+    ['`scrollAreaComponent={NativeScrollArea}`', 'Remove the prop, content is rendered without a scroll wrapper by default'],
+  ]}
+/>
+
+```tsx
+// 9.x
+import {
+  ModalBase,
+  ModalBaseBody,
+  ModalBaseCloseButton,
+  ModalBaseContent,
+  ModalBaseHeader,
+  ModalBaseOverlay,
+  ModalBaseTitle,
+} from '@mantine/core';
+
+function Demo() {
+  return (
+    <ModalBase opened={opened} onClose={close}>
+      <ModalBaseOverlay />
+      <ModalBaseContent>
+        <ModalBaseHeader>
+          <ModalBaseTitle>Title</ModalBaseTitle>
+          <ModalBaseCloseButton />
+        </ModalBaseHeader>
+        <ModalBaseBody>Content</ModalBaseBody>
+      </ModalBaseContent>
+    </ModalBase>
+  );
+}
+
+// 10.x
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Modal.Root opened={opened} onClose={close}>
+      <Modal.Overlay />
+      <Modal.Content>
+        <Modal.Header>
+          <Modal.Title>Title</Modal.Title>
+          <Modal.CloseButton />
+        </Modal.Header>
+        <Modal.Body>Content</Modal.Body>
+      </Modal.Content>
+    </Modal.Root>
+  );
+}
+```
+
+## Drawer swipe to dismiss
+
+[Drawer](/core/drawer#swipe-to-dismiss) can now be dismissed with a swipe gesture, and swipe to
+dismiss is enabled by default. If swiping must not close your drawers, set `withSwipe={false}` on
+each `Drawer` or for all drawers in the theme:
+
+```tsx
+import { createTheme, Drawer } from '@mantine/core';
+
+const theme = createTheme({
+  components: {
+    Drawer: Drawer.extend({
+      defaultProps: { withSwipe: false },
+    }),
+  },
+});
+```
+
+If only some elements inside a drawer must not start the swipe gesture (for example, drag and drop
+lists or other draggable widgets), keep swipe enabled and set the `data-drawer-no-swipe` attribute
+on those elements instead:
+
+```tsx
+import { Drawer } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Drawer opened onClose={() => {}}>
+      <div data-drawer-no-swipe>{/* Draggable content */}</div>
+    </Drawer>
+  );
+}
+```
+
 ## v9 opt-out
 
 If your application cannot migrate immediately, you can restore the full v9 colors, variant

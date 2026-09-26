@@ -463,7 +463,12 @@ export const Carousel = factory<CarouselFactory>((_props) => {
           </div>
         )}
 
-        <div {...getStyles('viewport')} ref={emblaRefElement} data-type={type}>
+        <div
+          {...getStyles('viewport')}
+          ref={emblaRefElement}
+          data-type={type}
+          data-orientation={orientation}
+        >
           <div
             {...getStyles('container', { className: responsiveClassName })}
             data-orientation={orientation}

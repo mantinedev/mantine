@@ -2,29 +2,26 @@ import { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import { CompoundStylesApiProps, factory, Factory, useDirection, useProps } from '../../core';
+import type { OverlayStackEntryContentProps } from '../../core/OverlayStack';
 import { FocusTrap } from '../FocusTrap';
 import { ModalBaseContentProps, useModalBaseContext } from '../ModalBase';
-import { getDrawerStackStyle } from '../OverlayStack/get-drawer-stack-style';
 import { Paper } from '../Paper';
 import { Transition } from '../Transition';
 import { useDrawerContext } from './Drawer.context';
-import { resolvePosition, useDrawerDrag } from './use-drawer-drag';
-import { getDrawerInnerStyle } from './use-drawer-transform';
+import { getDrawerStackStyle } from './get-drawer-stack-style';
+import { useDrawerDrag } from './use-drawer-drag';
+import { getDrawerInnerStyle, resolvePosition } from './use-drawer-transform';
 import baseClasses from '../ModalBase/ModalBase.module.css';
 import classes from './Drawer.module.css';
 
 export type DrawerContentStylesNames = 'content' | 'inner' | 'panel' | 'handle';
 
 export interface DrawerContentProps
-  extends ModalBaseContentProps, CompoundStylesApiProps<DrawerContentFactory> {
-  __depth?: number;
-  __visible?: boolean;
-  __dragProgress?: number;
+  extends
+    ModalBaseContentProps,
+    OverlayStackEntryContentProps,
+    CompoundStylesApiProps<DrawerContentFactory> {
   __onDragProgress?: (progress: number) => void;
-  __active?: boolean;
-  __instant?: boolean;
-  __topRect?: { width: number; height: number } | null;
-  __reportTopRect?: (rect: { width: number; height: number }) => void;
 }
 
 export type DrawerContentFactory = Factory<{
@@ -48,7 +45,7 @@ export const DrawerContent = factory<DrawerContentFactory>((_props) => {
     __visible,
     __dragProgress,
     __onDragProgress,
-    __active,
+    __stackActive,
     __instant,
     __topRect,
     __reportTopRect,
@@ -68,14 +65,15 @@ export const DrawerContent = factory<DrawerContentFactory>((_props) => {
   const position = ctx.position || 'left';
   const resolvedPosition = resolvePosition(position, dir);
   const isHorizontal = resolvedPosition === 'left' || resolvedPosition === 'right';
-  const active = __active !== undefined ? __active : baseCtx.opened;
-  const stacked = __depth !== undefined;
-  const behind = stacked && __depth > 0;
+  const active = __stackActive !== undefined ? __stackActive : baseCtx.opened;
+  const withStackTransform = __depth !== undefined;
+  const behind = withStackTransform && __depth > 0;
 
   const drag = useDrawerDrag({
     position,
     dir,
     enabled: !!(ctx.withSwipe && active),
+    opened: baseCtx.opened,
     onClose: baseCtx.onClose,
     scrollRef,
     threshold: ctx.swipeThreshold,
@@ -90,7 +88,7 @@ export const DrawerContent = factory<DrawerContentFactory>((_props) => {
   const [panelSize, setPanelSize] = useState<{ width: number; height: number } | null>(null);
 
   useEffect(() => {
-    if (!stacked || !panelElement) {
+    if (!withStackTransform || !panelElement) {
       return undefined;
     }
 
@@ -112,9 +110,9 @@ export const DrawerContent = factory<DrawerContentFactory>((_props) => {
     observer.observe(panelElement);
 
     return () => observer.disconnect();
-  }, [stacked, __depth, __reportTopRect, panelElement]);
+  }, [withStackTransform, __depth, __reportTopRect, panelElement]);
 
-  const stackStyle = stacked
+  const stackStyle = withStackTransform
     ? getDrawerStackStyle({
         position: resolvedPosition,
         depth: __depth,
@@ -146,7 +144,7 @@ export const DrawerContent = factory<DrawerContentFactory>((_props) => {
   const gestureActive = drag.dragging || (__dragProgress ?? 0) > 0;
 
   const stackContentStyle: React.CSSProperties = {
-    ...(__active === false && { pointerEvents: 'none' }),
+    ...(__stackActive === false && { pointerEvents: 'none' }),
     ...(behind && { overflow: 'hidden' }),
   };
 
@@ -217,7 +215,7 @@ export const DrawerContent = factory<DrawerContentFactory>((_props) => {
               <FocusTrap active={baseCtx.focusTrapActive} innerRef={contentRef}>
                 <Paper
                   {...contentStyles}
-                  data-stacked={stacked || undefined}
+                  data-stacked={withStackTransform || undefined}
                   {...others}
                   component="section"
                   {...contentProps}

@@ -54,6 +54,20 @@ describe('@mantine/carousel/Carousel', () => {
     expect(onPreviousSlide).toHaveBeenCalledTimes(1);
   });
 
+  it('sets data-orientation on the viewport', () => {
+    const { container, rerender } = render(<Carousel {...defaultProps} />);
+    expect(container.querySelector('.mantine-Carousel-viewport')).toHaveAttribute(
+      'data-orientation',
+      'horizontal'
+    );
+
+    rerender(<Carousel {...defaultProps} orientation="vertical" height={200} />);
+    expect(container.querySelector('.mantine-Carousel-viewport')).toHaveAttribute(
+      'data-orientation',
+      'vertical'
+    );
+  });
+
   it('renders controls if withControls is true', () => {
     const { container } = render(<Carousel withControls />);
     expect(container.querySelector('.mantine-Carousel-controls')).toBeInTheDocument();

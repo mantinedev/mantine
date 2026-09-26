@@ -1,12 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineThemeProvider } from '../../core';
+import { AngleSlider } from '../AngleSlider';
 import { Button } from '../Button';
-import { Modal, useDrawerStackContext, useModalsStack } from '../Modal';
+import { ColorPicker } from '../ColorPicker';
+import { ColorWheel } from '../ColorWheel';
+import { CompareSlider } from '../CompareSlider';
+import { Modal, useModalsStack } from '../Modal';
 import { ScrollArea } from '../ScrollArea';
+import { RangeSlider, Slider } from '../Slider';
 import { Stack as MantineStack } from '../Stack';
 import { Tabs } from '../Tabs';
 import { Drawer } from './Drawer';
+import { useDrawerStackContext } from './use-drawer-stack-context';
 
 export default { title: 'Drawer' };
 
@@ -413,5 +419,52 @@ export function ThemeOverlayStack() {
     <MantineThemeProvider theme={{ overlayStack: true }}>
       <SharedStackDrawers />
     </MantineThemeProvider>
+  );
+}
+
+export function SwipeWithSlider() {
+  const [opened, { open, close }] = useDisclosure(true);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open drawer</Button>
+      <Drawer opened={opened} onClose={close} position="left" title="Swipe with sliders">
+        <MantineStack>
+          <p data-testid="plain-content" style={{ margin: 0 }}>
+            Swipe this text to the left to close the drawer. Dragging sliders below must not move
+            the drawer.
+          </p>
+          <Slider defaultValue={80} />
+          <RangeSlider defaultValue={[20, 80]} />
+          <ColorPicker />
+        </MantineStack>
+      </Drawer>
+    </div>
+  );
+}
+
+export function SwipeWithDragWidgets() {
+  const [opened, { open, close }] = useDisclosure(true);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open drawer</Button>
+      <Drawer opened={opened} onClose={close} position="left" title="Swipe with drag widgets">
+        <MantineStack>
+          <p data-testid="plain-content" style={{ margin: 0 }}>
+            Swipe this text to the left to close the drawer. Dragging the widgets below must not
+            move the drawer.
+          </p>
+          <AngleSlider defaultValue={90} size={120} data-testid="angle-slider" />
+          <ColorWheel defaultValue={120} data-testid="color-wheel" />
+          <CompareSlider
+            data-testid="compare-slider"
+            h={160}
+            before={<div style={{ height: '100%', background: 'var(--mantine-color-blue-3)' }} />}
+            after={<div style={{ height: '100%', background: 'var(--mantine-color-red-3)' }} />}
+          />
+        </MantineStack>
+      </Drawer>
+    </div>
   );
 }

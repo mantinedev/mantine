@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 import {
   createContextContainer,
   mockMatchMedia,
@@ -9,7 +9,6 @@ import {
   userEvent,
 } from '@mantine-tests/core';
 import { Modal } from '../Modal';
-import { useDrawersStack } from '../Modal/use-modals-stack';
 import { Drawer, DrawerProps, DrawerStylesNames } from './Drawer';
 import { DrawerBody, DrawerBodyProps } from './DrawerBody';
 import { DrawerCloseButton, DrawerCloseButtonProps } from './DrawerCloseButton';
@@ -19,6 +18,7 @@ import { DrawerHeader, DrawerHeaderProps } from './DrawerHeader';
 import { DrawerOverlay, DrawerOverlayProps } from './DrawerOverlay';
 import { DrawerRoot, DrawerRootProps } from './DrawerRoot';
 import { DrawerTitle, DrawerTitleProps } from './DrawerTitle';
+import { useDrawersStack } from './use-drawers-stack';
 
 const defaultProps: DrawerProps = {
   opened: true,
@@ -538,6 +538,84 @@ describe('@mantine/core/Drawer snap points', () => {
   });
 });
 
+describe('@mantine/core/Drawer uncontrolled snap point reset', () => {
+  const DRAWER_SIZE = 400;
+  const originalGetBoundingClientRect = HTMLElement.prototype.getBoundingClientRect;
+
+  beforeEach(() => {
+    HTMLElement.prototype.getBoundingClientRect = function getBoundingClientRect() {
+      return { width: DRAWER_SIZE, height: DRAWER_SIZE } as DOMRect;
+    };
+  });
+
+  afterEach(() => {
+    HTMLElement.prototype.getBoundingClientRect = originalGetBoundingClientRect;
+  });
+
+  function makePointerEvent(type: string, clientY: number, timeStamp: number) {
+    const event = new MouseEvent(type, { clientY, button: 0, bubbles: true });
+    Object.defineProperty(event, 'pointerId', { value: 1 });
+    Object.defineProperty(event, 'timeStamp', { value: timeStamp });
+    return event;
+  }
+
+  it.each([false, true])(
+    'restores defaultActiveSnapPoint when reopened after dragging to another snap point (keepMounted: %s)',
+    (keepMounted) => {
+      const onSnapPointChange = jest.fn();
+      const props = {
+        onClose: () => {},
+        withinPortal: false,
+        position: 'bottom' as const,
+        snapPoints: [0.5, 1],
+        defaultActiveSnapPoint: 0.5,
+        withHandle: true,
+        keepMounted,
+        onSnapPointChange,
+        transitionProps: { duration: 0 },
+      };
+
+      const { container, rerender } = render(
+        <Drawer {...props} opened>
+          content
+        </Drawer>
+      );
+
+      const inner = () => container.querySelector('.mantine-Drawer-inner') as HTMLElement;
+      expect(inner().style.transform).toContain('translateY(200px)');
+
+      const handle = container.querySelector('.mantine-Drawer-handle') as HTMLElement;
+      act(() => {
+        fireEvent(handle, makePointerEvent('pointerdown', 0, 0));
+      });
+      act(() => {
+        window.dispatchEvent(makePointerEvent('pointermove', -250, 1000));
+      });
+      act(() => {
+        window.dispatchEvent(makePointerEvent('pointerup', -250, 1000));
+      });
+
+      expect(onSnapPointChange).toHaveBeenCalledWith(1);
+      expect(inner().style.transform).toBe('');
+
+      rerender(
+        <Drawer {...props} opened={false}>
+          content
+        </Drawer>
+      );
+
+      rerender(
+        <Drawer {...props} opened>
+          content
+        </Drawer>
+      );
+
+      expect(inner().style.transform).toContain('translateY(200px)');
+      expect(onSnapPointChange).toHaveBeenCalledTimes(1);
+    }
+  );
+});
+
 describe('@mantine/core/Drawer theme.overlayStack', () => {
   function SharedStackDemo() {
     const [a, setA] = useState(false);
@@ -663,6 +741,159 @@ describe('@mantine/core/Drawer theme.overlayStack', () => {
   });
 });
 
+describe('@mantine/core/Drawer and Modal in theme.overlayStack', () => {
+  function MixedDemo({ order }: { order: 'modal-first' | 'drawer-first' }) {
+    const [modal, setModal] = useState(false);
+    const [drawer, setDrawer] = useState(false);
+    const [drawer2, setDrawer2] = useState(false);
+
+    return (
+      <>
+        <Modal opened={modal} onClose={() => setModal(false)} withinPortal={false} title="modal">
+          modal-content
+          <button type="button" onClick={() => setDrawer(true)}>
+            open-drawer-from-modal
+          </button>
+        </Modal>
+        <Drawer opened={drawer} onClose={() => setDrawer(false)} withinPortal={false} title="d1">
+          drawer-content
+          <button type="button" onClick={() => setDrawer2(true)}>
+            open-second-drawer
+          </button>
+          <button type="button" onClick={() => setModal(true)}>
+            open-modal-from-drawer
+          </button>
+        </Drawer>
+        <Drawer opened={drawer2} onClose={() => setDrawer2(false)} withinPortal={false} title="d2">
+          drawer-2-content
+          <button type="button" onClick={() => setModal(true)}>
+            open-modal-from-drawer-2
+          </button>
+        </Drawer>
+        <button
+          type="button"
+          onClick={() => (order === 'modal-first' ? setModal(true) : setDrawer(true))}
+        >
+          open-first
+        </button>
+      </>
+    );
+  }
+
+  const zIndex = (element: Element | null) =>
+    (element as HTMLElement).style.getPropertyValue('--mb-z-index');
+  const overlayZIndex = (element: Element | null) =>
+    (element as HTMLElement).style.getPropertyValue('--overlay-z-index');
+  const isInert = (element: Element | null) =>
+    (element as HTMLElement).style.pointerEvents === 'none';
+  const getOverlays = (container: HTMLElement) =>
+    Array.from(container.querySelectorAll('.mantine-Modal-overlay, .mantine-Drawer-overlay'));
+
+  it('dims and disables the modal below a drawer opened above it', async () => {
+    const { container } = render(<MixedDemo order="modal-first" />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open-first'));
+    await userEvent.click(screen.getByText('open-drawer-from-modal'));
+
+    const modalContent = container.querySelector('.mantine-Modal-content');
+    const drawerContent = container.querySelector('.mantine-Drawer-content');
+    expect(zIndex(container.querySelector('.mantine-Modal-root'))).toBe('calc(200 + 0 + 1)');
+    expect(zIndex(container.querySelector('.mantine-Drawer-root'))).toBe('calc(200 + 1 + 1)');
+
+    expect(isInert(modalContent)).toBe(true);
+    expect(isInert(drawerContent)).toBe(false);
+
+    const overlays = getOverlays(container);
+    expect(overlays).toHaveLength(1);
+    expect(overlays[0]).toHaveClass('mantine-Drawer-overlay');
+    expect(overlayZIndex(overlays[0])).toBe('calc(200 + 1 + 1)');
+  });
+
+  it('dims and disables drawers below a modal opened above them', async () => {
+    const { container } = render(<MixedDemo order="drawer-first" />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open-first'));
+    await userEvent.click(screen.getByText('open-second-drawer'));
+    await userEvent.click(screen.getByText('open-modal-from-drawer-2'));
+
+    const drawerContents = container.querySelectorAll('.mantine-Drawer-content');
+    expect(isInert(drawerContents[0])).toBe(true);
+    expect(isInert(drawerContents[1])).toBe(true);
+    expect(isInert(container.querySelector('.mantine-Modal-content'))).toBe(false);
+
+    const overlays = getOverlays(container);
+    expect(overlays).toHaveLength(1);
+    expect(overlays[0]).toHaveClass('mantine-Modal-overlay');
+    expect(overlayZIndex(overlays[0])).toBe('calc(200 + 2 + 1)');
+  });
+
+  it('keeps ids of separate Drawer.Stack instances apart in the shared stack', async () => {
+    const onCloseOuter = jest.fn();
+
+    function InnerStack() {
+      const stack = useDrawersStack(['first']);
+      return (
+        <Drawer.Stack>
+          <button type="button" onClick={() => stack.open('first')}>
+            open-inner
+          </button>
+          <Drawer {...stack.register('first')} withinPortal={false} title="inner">
+            inner-content
+          </Drawer>
+        </Drawer.Stack>
+      );
+    }
+
+    function OuterStack() {
+      const stack = useDrawersStack(['first']);
+      return (
+        <Drawer.Stack>
+          <button type="button" onClick={() => stack.open('first')}>
+            open-outer
+          </button>
+          <Drawer
+            {...stack.register('first')}
+            onClose={() => {
+              stack.close('first');
+              onCloseOuter();
+            }}
+            withinPortal={false}
+            title="outer"
+          >
+            outer-content
+            <InnerStack />
+          </Drawer>
+        </Drawer.Stack>
+      );
+    }
+
+    const { container } = render(<OuterStack />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open-outer'));
+    await userEvent.click(screen.getByText('open-inner'));
+
+    const zIndexes = Array.from(
+      container.querySelectorAll<HTMLElement>('.mantine-Drawer-root')
+    ).map((root) => zIndex(root));
+    expect(zIndexes).toStrictEqual(['calc(200 + 0 + 1)', 'calc(200 + 1 + 1)']);
+
+    const closeButtons = container.querySelectorAll<HTMLButtonElement>('.mantine-Drawer-close');
+    fireEvent.click(closeButtons[1]);
+    await waitFor(() => expect(screen.queryByText('inner-content')).not.toBeInTheDocument());
+
+    await userEvent.keyboard('{Escape}');
+    expect(onCloseOuter).toHaveBeenCalledTimes(1);
+  });
+
+  it('closes only the active overlay on overlay click in a mixed stack', async () => {
+    const { container } = render(<MixedDemo order="modal-first" />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open-first'));
+    await userEvent.click(screen.getByText('open-drawer-from-modal'));
+
+    await userEvent.click(getOverlays(container)[0]);
+    await waitFor(() => expect(screen.queryByText('drawer-content')).not.toBeInTheDocument());
+    expect(screen.getByText('modal-content')).toBeInTheDocument();
+    expect(isInert(container.querySelector('.mantine-Modal-content'))).toBe(false);
+  });
+});
+
 describe('@mantine/core/Drawer fullScreen', () => {
   const isMinWidthQuery = (query: string) => query.startsWith('(min-width');
   const getRoot = (container: HTMLElement) =>
@@ -736,5 +967,126 @@ describe('@mantine/core/Drawer fullScreen', () => {
 
     act(() => media!.setMatches(true));
     expect(getSize(container)).toBe('var(--drawer-size-sm)');
+  });
+});
+
+describe('@mantine/core/Drawer focus return', () => {
+  function ExplicitStackDemo() {
+    const stack = useDrawersStack(['a', 'b', 'c']);
+    return (
+      <Drawer.Stack>
+        <Drawer {...stack.register('a')} withinPortal={false} title="drawer-a">
+          <button type="button" onClick={() => stack.open('b')}>
+            open-b
+          </button>
+        </Drawer>
+        <Drawer {...stack.register('b')} withinPortal={false} title="drawer-b">
+          <button type="button" onClick={() => stack.open('c')}>
+            open-c
+          </button>
+        </Drawer>
+        <Drawer {...stack.register('c')} withinPortal={false} title="drawer-c">
+          <button type="button" onClick={stack.closeAll}>
+            close-all
+          </button>
+        </Drawer>
+        <button type="button" onClick={() => stack.open('a')}>
+          open-a
+        </button>
+      </Drawer.Stack>
+    );
+  }
+
+  function SharedStackDemo({ drawerAProps }: { drawerAProps?: Partial<DrawerProps> }) {
+    const [a, setA] = useState(false);
+    const [b, setB] = useState(false);
+    return (
+      <>
+        <Drawer
+          opened={a}
+          onClose={() => setA(false)}
+          withinPortal={false}
+          title="drawer-a"
+          {...drawerAProps}
+        >
+          <button type="button" onClick={() => setB(true)}>
+            open-b
+          </button>
+        </Drawer>
+        <Drawer opened={b} onClose={() => setB(false)} withinPortal={false} title="drawer-b">
+          drawer-b
+        </Drawer>
+        <button type="button" onClick={() => setA(true)}>
+          open-a
+        </button>
+      </>
+    );
+  }
+
+  const waitForFocusIn = (title: string) =>
+    waitFor(() => {
+      expect(screen.getByRole('dialog', { name: title })).toContainElement(
+        document.activeElement as HTMLElement
+      );
+    });
+
+  const openAndFocus = async (label: string, title: string) => {
+    await userEvent.click(screen.getByRole('button', { name: label }));
+    await waitForFocusIn(title);
+  };
+
+  it('returns focus to the element that opened each drawer when closing an explicit stack', async () => {
+    render(<ExplicitStackDemo />);
+    await openAndFocus('open-a', 'drawer-a');
+    await openAndFocus('open-b', 'drawer-b');
+    await openAndFocus('open-c', 'drawer-c');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-c' })).toHaveFocus());
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-b' })).toHaveFocus());
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-a' })).toHaveFocus());
+  });
+
+  it('returns focus to the original trigger when the whole explicit stack closes at once', async () => {
+    render(<ExplicitStackDemo />);
+    await openAndFocus('open-a', 'drawer-a');
+    await openAndFocus('open-b', 'drawer-b');
+    await openAndFocus('open-c', 'drawer-c');
+
+    await userEvent.click(screen.getByRole('button', { name: 'close-all' }));
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-a' })).toHaveFocus());
+  });
+
+  it('returns focus to the trigger of a single drawer in the shared theme.overlayStack', async () => {
+    render(<SharedStackDemo />, { overlayStack: true });
+    await openAndFocus('open-a', 'drawer-a');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-a' })).toHaveFocus());
+  });
+
+  it('returns focus through the shared theme.overlayStack', async () => {
+    render(<SharedStackDemo />, { overlayStack: true });
+    await openAndFocus('open-a', 'drawer-a');
+    await openAndFocus('open-b', 'drawer-b');
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-b' })).toHaveFocus());
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open-a' })).toHaveFocus());
+  });
+
+  it('does not return focus in the shared theme.overlayStack when returnFocus is false', async () => {
+    render(<SharedStackDemo drawerAProps={{ returnFocus: false }} />, { overlayStack: true });
+    await openAndFocus('open-a', 'drawer-a');
+
+    await userEvent.keyboard('{Escape}');
+    await act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+    expect(screen.getByRole('button', { name: 'open-a' })).not.toHaveFocus();
   });
 });

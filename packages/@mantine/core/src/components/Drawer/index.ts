@@ -21,6 +21,9 @@ export { DrawerOverlay } from './DrawerOverlay';
 export { DrawerTitle } from './DrawerTitle';
 export { DrawerStack, DrawerStackContext } from './DrawerStack';
 export { useDrawerContext } from './Drawer.context';
+export { useDrawersStack } from './use-drawers-stack';
+export { useDrawerStackContext } from './use-drawer-stack-context';
+export type { UseDrawerStackContextReturnType } from './use-drawer-stack-context';
 
 export type {
   DrawerProps,

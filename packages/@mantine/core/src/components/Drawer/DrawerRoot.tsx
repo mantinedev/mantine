@@ -101,7 +101,7 @@ export interface DrawerRootProps extends StylesApiProps<DrawerRootFactory>, Moda
   /** Controlled active snap point @category state */
   activeSnapPoint?: number | string;
 
-  /** Uncontrolled active snap point initial value @default largest snap point @category state */
+  /** Uncontrolled active snap point applied every time the drawer opens, `onSnapPointChange` is not called for this reset @default largest snap point @category state */
   defaultActiveSnapPoint?: number | string;
 
   /** Called when the active snap point changes @category state */
@@ -216,6 +216,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
     __vars,
     removeScrollProps,
     __handledEscapeEvents,
+    __stackActive,
     ...others
   } = props;
 
@@ -250,6 +251,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
     onClose,
     returnFocus,
     handledEscapeEvents: __handledEscapeEvents,
+    stackActive: __stackActive,
   });
 
   const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};

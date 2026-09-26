@@ -1,4 +1,4 @@
-export interface StackTransformInput {
+export interface ModalStackTransformInput {
   /** Position of the modal in the stack, 0 is the top modal */
   depth: number;
 
@@ -12,17 +12,17 @@ export interface StackTransformInput {
   offset?: number;
 }
 
-export interface StackTransform {
+export interface ModalStackTransform {
   transform: string;
 }
 
 /** Transform of a stacked modal: each card behind the top one is shifted up so that a constant strip peeks above the card in front of it */
-export function getStackTransform({
+export function getModalStackTransform({
   depth,
   dragProgress = 0,
   offsetStep = 9,
   offset = 0,
-}: StackTransformInput): StackTransform {
+}: ModalStackTransformInput): ModalStackTransform {
   const d = Math.max(0, depth - dragProgress);
   return { transform: `translateY(${-(d * offsetStep + offset)}px)` };
 }

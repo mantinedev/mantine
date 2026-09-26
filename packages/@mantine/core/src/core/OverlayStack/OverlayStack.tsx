@@ -1,9 +1,17 @@
+import { use, useId } from 'react';
 import {
   DrawerStackContext,
   ModalStackContext,
   OverlayStackContextType,
 } from './OverlayStack.context';
-import { OverlayStackKind, useOverlayRegistry, useOverlayStackValue } from './use-overlay-registry';
+import {
+  OverlayStackKind,
+  useOverlayRegistry,
+  useOverlayStackValue,
+  useScopedOverlayStackValue,
+} from './use-overlay-registry';
+
+export const DEFAULT_OVERLAY_STACK_MAX_DEPTH = 5;
 
 export interface OverlayStackOptions {
   /** Maximum number of stacked items that remain visible behind the top one, others are hidden @default 5 */
@@ -26,18 +34,21 @@ export interface OverlayStackProviderProps extends OverlayStackOptions {
 export function OverlayStackProvider({
   context: Context,
   kind,
-  maxDepth = 5,
+  maxDepth = DEFAULT_OVERLAY_STACK_MAX_DEPTH,
   withStackTransform = true,
   children,
 }: OverlayStackProviderProps) {
+  const parent = use(Context);
+  const scope = useId();
   const registry = useOverlayRegistry();
   const value = useOverlayStackValue(registry, kind, {
     maxDepth,
     withStackTransform,
     shared: false,
   });
+  const scopedValue = useScopedOverlayStackValue(parent?.shared ? parent : null, scope);
 
-  return <Context value={value}>{children}</Context>;
+  return <Context value={scopedValue || value}>{children}</Context>;
 }
 
 export interface SharedOverlayStacksProps extends OverlayStackOptions {
@@ -53,7 +64,7 @@ export interface SharedOverlayStacksProps extends OverlayStackOptions {
 export function SharedOverlayStacks({
   withModalStack,
   withDrawerStack,
-  maxDepth = 5,
+  maxDepth = DEFAULT_OVERLAY_STACK_MAX_DEPTH,
   withStackTransform = true,
   children,
 }: SharedOverlayStacksProps) {

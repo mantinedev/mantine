@@ -1,32 +1,34 @@
-import { getCenteredStackOffset, getStackTransform } from './get-stack-transform';
+import { getCenteredStackOffset, getModalStackTransform } from './get-modal-stack-transform';
 
-describe('@mantine/core/get-stack-transform', () => {
+describe('@mantine/core/get-modal-stack-transform', () => {
   it('returns identity for the top item', () => {
-    expect(getStackTransform({ depth: 0, dragProgress: 0 })).toEqual({
+    expect(getModalStackTransform({ depth: 0, dragProgress: 0 })).toEqual({
       transform: 'translateY(0px)',
     });
   });
 
   it('offsets stacked cards upward by 9px per depth without scaling', () => {
-    expect(getStackTransform({ depth: 1 }).transform).toBe('translateY(-9px)');
-    expect(getStackTransform({ depth: 2 }).transform).toBe('translateY(-18px)');
+    expect(getModalStackTransform({ depth: 1 }).transform).toBe('translateY(-9px)');
+    expect(getModalStackTransform({ depth: 2 }).transform).toBe('translateY(-18px)');
   });
 
   it('interpolates one step toward front based on dragProgress', () => {
-    expect(getStackTransform({ depth: 1, dragProgress: 0.5 }).transform).toBe('translateY(-4.5px)');
-    expect(getStackTransform({ depth: 1, dragProgress: 1 })).toEqual({
+    expect(getModalStackTransform({ depth: 1, dragProgress: 0.5 }).transform).toBe(
+      'translateY(-4.5px)'
+    );
+    expect(getModalStackTransform({ depth: 1, dragProgress: 1 })).toEqual({
       transform: 'translateY(0px)',
     });
   });
 
   it('clamps effective depth at zero', () => {
-    expect(getStackTransform({ depth: 0, dragProgress: 0.5 })).toEqual({
+    expect(getModalStackTransform({ depth: 0, dragProgress: 0.5 })).toEqual({
       transform: 'translateY(0px)',
     });
   });
 
   it('adds extra offset to the depth-based translate', () => {
-    expect(getStackTransform({ depth: 1, offset: 7 }).transform).toBe('translateY(-16px)');
+    expect(getModalStackTransform({ depth: 1, offset: 7 }).transform).toBe('translateY(-16px)');
   });
 });
 

@@ -24,6 +24,7 @@ function Demo() {
           firstHandlers.close();
           setDrawerData({ title: '', message: '' });
         }}
+        transitionProps={{ duration: 300, exitDuration: 1000 }}
         title={drawerData.title}
       >
         {drawerData.message}
@@ -31,6 +32,7 @@ function Demo() {
       <Drawer
         opened={secondOpened}
         onClose={secondHandlers.close}
+        transitionProps={{ duration: 300, exitDuration: 1000 }}
         onExitTransitionEnd={() => setDrawerData({ title: '', message: '' })}
         title={drawerData.title}
       >
@@ -43,6 +45,7 @@ function Demo() {
             firstHandlers.open();
             setDrawerData({ title: 'Edit your profile', message: 'Imagine a form here' });
           }}
+          variant="default"
         >
           Clear data in onClose
         </Button>
@@ -52,6 +55,7 @@ function Demo() {
             secondHandlers.open();
             setDrawerData({ title: 'Edit your profile', message: 'Imagine a form here' });
           }}
+          variant="default"
         >
           Clear data in onExitTransitionEnd
         </Button>

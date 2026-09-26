@@ -141,13 +141,17 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     __vars,
     removeScrollProps,
     __handledEscapeEvents,
+    __stackActive,
     ...others
   } = props;
+
+  const belowBreakpoint = useBelowBreakpoint(fullScreenBelow);
+  const resolvedFullScreen = fullScreen || belowBreakpoint;
 
   const getStyles = useStyles<ModalRootFactory>({
     name: __staticSelector,
     classes,
-    props,
+    props: { ...props, fullScreen: resolvedFullScreen },
     className,
     style,
     classNames,
@@ -167,10 +171,8 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     onClose,
     returnFocus,
     handledEscapeEvents: __handledEscapeEvents,
+    stackActive: __stackActive,
   });
-
-  const belowBreakpoint = useBelowBreakpoint(fullScreenBelow);
-  const resolvedFullScreen = fullScreen || belowBreakpoint;
 
   const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};
 

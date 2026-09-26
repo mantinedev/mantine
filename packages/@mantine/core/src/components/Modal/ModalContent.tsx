@@ -1,12 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import { CompoundStylesApiProps, factory, Factory, rem, useProps } from '../../core';
+import type { OverlayStackEntryContentProps } from '../../core/OverlayStack';
 import { FocusTrap } from '../FocusTrap';
 import { ModalBaseContentProps, useModalBaseContext } from '../ModalBase';
-import { getCenteredStackOffset, getStackTransform } from '../OverlayStack/get-stack-transform';
 import { Paper } from '../Paper';
 import { Transition } from '../Transition';
+import { getCenteredStackOffset, getModalStackTransform } from './get-modal-stack-transform';
 import { useModalContext } from './Modal.context';
 import baseClasses from '../ModalBase/ModalBase.module.css';
 import classes from './Modal.module.css';
@@ -14,14 +15,10 @@ import classes from './Modal.module.css';
 export type ModalContentStylesNames = 'content' | 'inner';
 
 export interface ModalContentProps
-  extends ModalBaseContentProps, CompoundStylesApiProps<ModalContentFactory> {
-  __depth?: number;
-  __visible?: boolean;
-  __dragProgress?: number;
-  __instant?: boolean;
-  __topRect?: { width: number; height: number } | null;
-  __reportTopRect?: (rect: { width: number; height: number }) => void;
-}
+  extends
+    ModalBaseContentProps,
+    OverlayStackEntryContentProps,
+    CompoundStylesApiProps<ModalContentFactory> {}
 
 export type ModalContentFactory = Factory<{
   props: ModalContentProps;
@@ -43,6 +40,7 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
     __visible,
     __dragProgress,
     __instant,
+    __stackActive,
     __topRect,
     __reportTopRect,
     ref,
@@ -50,8 +48,8 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
     ...others
   } = props;
 
-  const contentRef = useRef<HTMLElement>(null);
-  const mergedContentRef = useMergedRef(ref, contentRef);
+  const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
+  const mergedContentRef = useMergedRef(ref, setContentNode);
 
   const ctx = useModalContext();
   const baseCtx = useModalBaseContext();
@@ -85,7 +83,7 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
       return undefined;
     }
 
-    const node = contentRef.current;
+    const node = contentNode;
 
     if (!node) {
       return undefined;
@@ -117,7 +115,7 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [__reportTopRect, __depth, baseCtx.opened, frozen]);
+  }, [__reportTopRect, __depth, contentNode, frozen]);
 
   const stackOffset =
     __depth !== undefined && __depth > 0 && ctx.centered && !ctx.fullScreen && __topRect
@@ -130,7 +128,11 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
 
   const stackTransform =
     __depth !== undefined
-      ? getStackTransform({ depth: __depth, dragProgress: __dragProgress, offset: stackOffset })
+      ? getModalStackTransform({
+          depth: __depth,
+          dragProgress: __dragProgress,
+          offset: stackOffset,
+        })
       : null;
 
   const stackSizeStyle: React.CSSProperties =
@@ -182,9 +184,6 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
                   transitionTimingFunction: 'ease',
                 };
 
-        const stackPointerEvents: React.CSSProperties =
-          __depth !== undefined && __depth > 0 ? { pointerEvents: 'none' } : {};
-
         return (
           <div
             {...innerStyles}
@@ -210,7 +209,7 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
                   transitionStyles,
                   stackSizeStyle,
                   sizeTransition,
-                  stackPointerEvents,
+                  __stackActive === false ? { pointerEvents: 'none' } : undefined,
                 ]}
                 className={cx(
                   { [baseClasses.content]: !baseCtx.unstyled },

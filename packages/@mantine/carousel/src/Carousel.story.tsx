@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
-import { Box, Button } from '@mantine/core';
+import { Box, Button, Drawer } from '@mantine/core';
 import { Carousel } from './Carousel';
 
 export default { title: 'Carousel' };
@@ -133,6 +133,25 @@ export function PercentageHeight() {
         <Carousel.Slide style={{ background: 'red' }}>2</Carousel.Slide>
         <Carousel.Slide style={{ background: 'orange' }}>3</Carousel.Slide>
       </Carousel>
+    </div>
+  );
+}
+
+export function InsideSwipeDrawer() {
+  const [opened, setOpened] = useState(true);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => setOpened(true)}>Open drawer</Button>
+      <Drawer opened={opened} onClose={() => setOpened(false)} position="left" title="Carousel">
+        <p data-testid="plain-content" style={{ marginTop: 0 }}>
+          Swipe this text to the left to close the drawer. Swiping the carousel must scroll slides
+          without moving the drawer.
+        </p>
+        <Carousel slideSize="70%" slideGap="md" height={160} data-testid="carousel">
+          {slides}
+        </Carousel>
+      </Drawer>
     </div>
   );
 }

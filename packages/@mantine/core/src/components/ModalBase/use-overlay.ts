@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useFocusReturn, useId, useWindowEvent } from '@mantine/hooks';
 import { TransitionOverride } from '../Transition';
 import { useLockScroll } from './use-lock-scroll';
+import { useStackFocusRestore } from './use-stack-focus-restore';
 
 export interface UseOverlayInput {
   opened: boolean;
@@ -12,6 +13,7 @@ export interface UseOverlayInput {
   closeOnEscape?: boolean;
   returnFocus?: boolean;
   handledEscapeEvents?: WeakSet<KeyboardEvent>;
+  stackActive?: boolean;
 }
 
 export interface UseOverlayReturn {
@@ -42,6 +44,7 @@ export function useOverlay({
   onClose,
   returnFocus,
   handledEscapeEvents,
+  stackActive = true,
 }: UseOverlayInput): UseOverlayReturn {
   const _id = useId(id);
   const [titleMounted, setTitleMounted] = useState(false);
@@ -73,7 +76,10 @@ export function useOverlay({
     { capture: true }
   );
 
-  useFocusReturn({ opened, shouldReturnFocus: trapFocus && returnFocus });
+  const shouldReturnFocus = !!(trapFocus && returnFocus);
+  const focusTrapActive = !!(opened && trapFocus && stackActive);
+  useFocusReturn({ opened, shouldReturnFocus });
+  useStackFocusRestore({ id: _id, opened, stackActive, focusTrapActive, shouldReturnFocus });
 
   const getTitleId = () => `${_id}-title`;
   const getBodyId = () => `${_id}-body`;
@@ -95,7 +101,7 @@ export function useOverlay({
     setBodyMounted,
     getTitleId,
     getBodyId,
-    focusTrapActive: !!(opened && trapFocus),
+    focusTrapActive,
     getContentProps,
   };
 }

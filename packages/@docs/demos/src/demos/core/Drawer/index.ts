@@ -18,5 +18,6 @@ export { transitionEnd } from './Drawer.demo.transitionEnd';
 export { footer } from './Drawer.demo.footer';
 export { stickySections } from './Drawer.demo.stickySections';
 export { swipe } from './Drawer.demo.swipe';
+export { noSwipe } from './Drawer.demo.noSwipe';
 export { snapPoints } from './Drawer.demo.snapPoints';
 export { handle } from './Drawer.demo.handle';

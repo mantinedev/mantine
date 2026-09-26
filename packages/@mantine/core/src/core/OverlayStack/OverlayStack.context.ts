@@ -6,9 +6,7 @@ export interface OverlayStackRect {
 }
 
 export interface OverlayStackContextValue {
-  stack: string[];
   openStack: string[];
-  maxDepth: number;
   addOverlay: (id: string, zIndex: number | string) => void;
   markClosing: (id: string) => void;
   removeOverlay: (id: string) => void;
@@ -18,9 +16,10 @@ export interface OverlayStackContextValue {
   getZIndex: (id: string) => string;
   getDepth: (id: string) => number;
   isVisible: (id: string) => boolean;
-  maxZIndex: number | string;
+  isActive: (id: string) => boolean;
+  hasAnyOtherEntry: (id: string) => boolean;
+  hasSameKindSiblings: (id: string) => boolean;
   currentId: string | undefined;
-  activeId: string | undefined;
   shared: boolean;
   reportDrag: (id: string, progress: number) => void;
   dragProgress: number;
