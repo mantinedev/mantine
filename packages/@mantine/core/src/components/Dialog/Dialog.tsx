@@ -59,7 +59,6 @@ export type DialogFactory = Factory<{
 
 const defaultProps = {
   shadow: 'md',
-  p: 'md',
   withBorder: true,
   transitionProps: { transition: 'pop-top-right', duration: 200 },
   position: {

@@ -382,7 +382,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
                 combobox.clickSelectedOption();
               }
 
-              !!searchable && combobox.closeDropdown();
+              combobox.closeDropdown();
               const optionLockup =
                 _value != null &&
                 (`${_value}` in optionsLockup

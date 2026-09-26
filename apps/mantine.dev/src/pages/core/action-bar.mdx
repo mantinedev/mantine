@@ -60,8 +60,9 @@ function Demo() {
 ## keepMounted
 
 By default, the action bar is removed from the DOM when it is closed. Set `keepMounted`
-to keep it mounted and hide it with `display: none` instead – for example, if the bar
-contains form state that must be preserved between openings:
+to keep it mounted instead – for example, if the bar contains form state that must be
+preserved between openings. The hidden bar is wrapped in React `Activity`, which preserves
+its state; to hide it with `display: none` instead, set `transitionProps={{ keepMountedMode: 'display-none' }}`:
 
 ```tsx
 import { ActionBar, Button } from '@mantine/core';
