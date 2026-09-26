@@ -4,6 +4,7 @@
   gap: var(--mantine-spacing-sm);
   width: fit-content;
   margin-inline: auto;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
 }
 
 .divider {

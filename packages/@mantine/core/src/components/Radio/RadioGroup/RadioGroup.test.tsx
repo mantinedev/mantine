@@ -84,4 +84,31 @@ describe('@mantine/core/RadioGroup', () => {
 
     expect(spy).toHaveBeenCalledWith('test-value-2');
   });
+
+  it('links group to the label with aria-labelledby only when label is rendered', () => {
+    const { rerender } = render(
+      <RadioGroup label="Group label">
+        <Radio value="a" label="A" />
+      </RadioGroup>
+    );
+    expect(screen.getByRole('radiogroup')).toHaveAccessibleName('Group label');
+
+    rerender(
+      <>
+        <RadioGroup>
+          <Radio value="a" label="A" />
+        </RadioGroup>
+      </>
+    );
+    expect(screen.getByRole('radiogroup')).not.toHaveAttribute('aria-labelledby');
+  });
+
+  it('does not set aria-labelledby when label is excluded from inputWrapperOrder', () => {
+    render(
+      <RadioGroup label="Group label" inputWrapperOrder={['input']}>
+        <Radio value="a" label="A" />
+      </RadioGroup>
+    );
+    expect(screen.getByRole('radiogroup')).not.toHaveAttribute('aria-labelledby');
+  });
 });
