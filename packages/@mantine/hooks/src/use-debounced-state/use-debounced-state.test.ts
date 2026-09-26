@@ -75,7 +75,6 @@ describe('use-debounced-state', () => {
   });
 
   it('should treat a call made after wait as leading with leading=true', () => {
-    // discard the timeout captured by the previous test
     timeoutCallback = () => {};
 
     const hook = renderHook(() => useDebouncedState('test1', 100, { leading: true }));
