@@ -72,3 +72,7 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props) => {
 });
 
 PopoverTarget.displayName = '@mantine/core/PopoverTarget';
+
+export namespace PopoverTarget {
+  export type Props = PopoverTargetProps;
+}

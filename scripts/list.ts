@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'fs-extra';
-import ts from 'typescript';
+import ts from 'typescript-api';
 import { getPackagesList } from './packages/get-packages-list';
 import { createLogger } from './utils/signale';
 

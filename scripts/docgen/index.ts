@@ -1,6 +1,23 @@
-import { generateDeclarations } from 'mantine-docgen-script';
+import Module, { createRequire } from 'node:module';
 import { getPath } from '../utils/get-path';
 import { DOCGEN_PATHS } from './docgen-paths';
+
+// `react-docgen-typescript` (loaded through `mantine-docgen-script`) reads the classic compiler API
+// via `require('typescript')`, which TypeScript 7 no longer exposes from the package root. Redirect
+// that in-process resolution to the pinned classic compiler so docgen keeps working.
+const resolvableModule = Module as unknown as {
+  _resolveFilename: (request: string, ...args: unknown[]) => string;
+};
+const originalResolveFilename = resolvableModule._resolveFilename;
+resolvableModule._resolveFilename = function resolveFilename(request, ...args) {
+  return originalResolveFilename.call(
+    this,
+    request === 'typescript' ? 'typescript-api' : request,
+    ...args
+  );
+};
+
+const { generateDeclarations } = createRequire(import.meta.url)('mantine-docgen-script');
 
 generateDeclarations({
   tsConfigPath: getPath('tsconfig.json'),

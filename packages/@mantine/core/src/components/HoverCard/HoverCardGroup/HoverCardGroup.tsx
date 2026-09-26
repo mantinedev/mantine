@@ -44,3 +44,8 @@ export type HoverCardGroupFactory = Factory<{
 
 HoverCardGroup.displayName = '@mantine/core/HoverCardGroup';
 HoverCardGroup.extend = (c: ExtendComponent<HoverCardGroupFactory>): MantineThemeComponent => c;
+
+export namespace HoverCardGroup {
+  export type Props = HoverCardGroupProps;
+  export type ContextValue = HoverCardGroupContextValue;
+}
