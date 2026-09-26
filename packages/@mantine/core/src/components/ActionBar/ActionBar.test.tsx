@@ -18,6 +18,17 @@ describe('@mantine/core/ActionBar', () => {
     selector: '.mantine-ActionBar-root',
   });
 
+  tests.axe([
+    <ActionBar {...defaultProps} key="1" aria-label="Bulk actions">
+      <span>3 selected</span>
+      <ActionBar.Divider />
+      <ActionBar.CloseButton aria-label="Clear selection" />
+    </ActionBar>,
+    <ActionBar {...defaultProps} key="2" announcement="3 rows selected">
+      content
+    </ActionBar>,
+  ]);
+
   it('renders children when opened is true', () => {
     render(<ActionBar {...defaultProps}>test-content</ActionBar>);
     expect(screen.getByText('test-content')).toBeInTheDocument();
@@ -136,5 +147,75 @@ describe('@mantine/core/ActionBar', () => {
     );
 
     expect(screen.getByRole('button').className).not.toContain('mantine-focus-auto');
+  });
+
+  it('does not set aria-label by default', () => {
+    render(<ActionBar {...defaultProps} />);
+    expect(screen.getByRole('group')).not.toHaveAttribute('aria-label');
+  });
+
+  it('merges affixProps className with the scroll lock class', () => {
+    render(
+      <ActionBar {...defaultProps} affixProps={{ className: 'test-affix', 'data-test': 'affix' }} />
+    );
+
+    const affix = document.querySelector('.mantine-Affix-root')!;
+    expect(affix).toHaveClass('test-affix');
+    expect(affix).toHaveClass('width-before-scroll-bar');
+    expect(affix).toHaveAttribute('data-test', 'affix');
+  });
+
+  it('announces the announcement in a polite live region only when opened', () => {
+    const { rerender } = render(<ActionBar {...defaultProps} announcement="3 rows selected" />);
+    expect(screen.getByRole('status')).toHaveTextContent('3 rows selected');
+
+    rerender(<ActionBar {...defaultProps} opened={false} announcement="3 rows selected" />);
+    expect(screen.getByRole('status')).toBeEmptyDOMElement();
+  });
+
+  it('does not render a live region without announcement', () => {
+    render(<ActionBar {...defaultProps} />);
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+
+  it('ignores Escape from elements with data-mantine-stop-propagation', async () => {
+    const spy = jest.fn();
+    render(
+      <ActionBar {...defaultProps} onClose={spy} closeOnEscape>
+        <input data-mantine-stop-propagation="true" />
+      </ActionBar>
+    );
+
+    await userEvent.type(screen.getByRole('textbox'), '{Escape}');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('ignores Escape from inside a modal dialog', async () => {
+    const spy = jest.fn();
+    render(
+      <>
+        <div role="dialog" aria-modal="true">
+          <input />
+        </div>
+        <ActionBar {...defaultProps} onClose={spy} closeOnEscape>
+          content
+        </ActionBar>
+      </>
+    );
+
+    await userEvent.type(screen.getByRole('textbox'), '{Escape}');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('removes Escape listener when the bar is closed', async () => {
+    const spy = jest.fn();
+    render(
+      <ActionBar {...defaultProps} opened={false} onClose={spy} closeOnEscape>
+        content
+      </ActionBar>
+    );
+
+    await userEvent.keyboard('{Escape}');
+    expect(spy).not.toHaveBeenCalled();
   });
 });

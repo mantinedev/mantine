@@ -13,7 +13,7 @@ export function Usage() {
         <Button onClick={toggle}>Toggle action bar</Button>
       </Group>
 
-      <ActionBar opened={opened} onClose={close}>
+      <ActionBar opened={opened} onClose={close} shadow="md" aria-label="Actions">
         <Text size="sm">3 selected</Text>
         <ActionBar.Divider />
         <Button variant="subtle" size="compact-sm">
@@ -22,7 +22,7 @@ export function Usage() {
         <Button variant="subtle" size="compact-sm">
           Move
         </Button>
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Close" />
       </ActionBar>
     </>
   );
@@ -37,13 +37,13 @@ export function Unstyled() {
         <Button onClick={toggle}>Toggle action bar</Button>
       </Group>
 
-      <ActionBar opened={opened} onClose={close} unstyled>
+      <ActionBar opened={opened} onClose={close} unstyled aria-label="Actions">
         <Text size="sm">3 selected</Text>
         <ActionBar.Divider />
         <Button variant="subtle" size="compact-sm">
           Delete
         </Button>
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Close" />
       </ActionBar>
     </>
   );

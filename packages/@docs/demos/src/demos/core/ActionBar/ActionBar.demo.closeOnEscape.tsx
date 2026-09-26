@@ -15,7 +15,7 @@ function Demo() {
         <Button onClick={toggle}>Toggle action bar</Button>
       </Group>
 
-      <ActionBar opened={opened} onClose={close} closeOnEscape>
+      <ActionBar opened={opened} onClose={close} closeOnEscape shadow="md" aria-label="Actions">
         <Text size="sm">Press Escape to close this bar</Text>
         <ActionBar.Divider />
         <Button variant="default" size="compact-sm" onClick={close}>
@@ -36,7 +36,7 @@ function Demo() {
         <Button onClick={toggle}>Toggle action bar</Button>
       </Group>
 
-      <ActionBar opened={opened} onClose={close} closeOnEscape>
+      <ActionBar opened={opened} onClose={close} closeOnEscape shadow="md" aria-label="Actions">
         <Text size="sm">Press Escape to close this bar</Text>
         <ActionBar.Divider />
         <Button variant="default" size="compact-sm" onClick={close}>

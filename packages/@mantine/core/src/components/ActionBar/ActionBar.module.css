@@ -12,3 +12,9 @@
   align-self: stretch;
   background-color: var(--mantine-color-default-border);
 }
+
+.root .closeButton:where(:not([data-disabled], :disabled)) {
+  @mixin hover {
+    background-color: var(--mantine-color-hover-strong);
+  }
+}

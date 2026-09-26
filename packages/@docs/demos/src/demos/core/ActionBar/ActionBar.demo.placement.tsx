@@ -19,29 +19,33 @@ function Demo() {
         <Button onClick={rightHandlers.toggle}>Right</Button>
       </Group>
 
-      <ActionBar opened={center} onClose={centerHandlers.close}>
+      <ActionBar opened={center} onClose={centerHandlers.close} shadow="md" aria-label="Actions">
         <Text size="sm">Center position (default)</Text>
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Close" />
       </ActionBar>
 
       <ActionBar
         opened={left}
         onClose={leftHandlers.close}
+        shadow="md"
+        aria-label="Actions"
         position={{ bottom: 30, left: 30 }}
         styles={{ root: { marginInline: 0 } }}
       >
         <Text size="sm">Left position</Text>
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Close" />
       </ActionBar>
 
       <ActionBar
         opened={right}
         onClose={rightHandlers.close}
+        shadow="md"
+        aria-label="Actions"
         position={{ bottom: 30, right: 30 }}
         styles={{ root: { marginInline: 0 } }}
       >
         <Text size="sm">Right position</Text>
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Close" />
       </ActionBar>
     </>
   );
@@ -61,29 +65,33 @@ function Demo() {
         <Button onClick={rightHandlers.toggle}>Right</Button>
       </Group>
 
-      <ActionBar opened={center} onClose={centerHandlers.close}>
+      <ActionBar opened={center} onClose={centerHandlers.close} shadow="md" aria-label="Actions">
         <Text size="sm">Center position (default)</Text>
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Close" />
       </ActionBar>
 
       <ActionBar
         opened={left}
         onClose={leftHandlers.close}
+        shadow="md"
+        aria-label="Actions"
         position={{ bottom: 30, left: 30 }}
         styles={{ root: { marginInline: 0 } }}
       >
         <Text size="sm">Left position</Text>
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Close" />
       </ActionBar>
 
       <ActionBar
         opened={right}
         onClose={rightHandlers.close}
+        shadow="md"
+        aria-label="Actions"
         position={{ bottom: 30, right: 30 }}
         styles={{ root: { marginInline: 0 } }}
       >
         <Text size="sm">Right position</Text>
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Close" />
       </ActionBar>
     </>
   );

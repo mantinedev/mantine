@@ -72,7 +72,12 @@ function Demo() {
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
 
-      <ActionBar opened={selection.length > 0} onClose={() => setSelection([])}>
+      <ActionBar
+        opened={selection.length > 0}
+        onClose={() => setSelection([])}
+        shadow="md"
+        aria-label="Selected elements actions"
+      >
         <Text size="sm" fw={500}>{selection.length} rows selected</Text>
         <ActionBar.Divider />
         <Tooltip.Group openDelay={300} closeDelay={100}>
@@ -95,7 +100,7 @@ function Demo() {
           </Group>
         </Tooltip.Group>
         <ActionBar.Divider />
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Clear selection" />
       </ActionBar>
     </>
   );
@@ -166,7 +171,12 @@ function Demo() {
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
 
-      <ActionBar opened={selection.length > 0} onClose={() => setSelection([])}>
+      <ActionBar
+        opened={selection.length > 0}
+        onClose={() => setSelection([])}
+        shadow="md"
+        aria-label="Selected elements actions"
+      >
         <Text size="sm" fw={500}>
           {selection.length} rows selected
         </Text>
@@ -191,7 +201,7 @@ function Demo() {
           </Group>
         </Tooltip.Group>
         <ActionBar.Divider />
-        <ActionBar.CloseButton />
+        <ActionBar.CloseButton aria-label="Clear selection" />
       </ActionBar>
     </>
   );
