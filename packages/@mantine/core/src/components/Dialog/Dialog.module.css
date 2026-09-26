@@ -10,6 +10,7 @@
   width: var(--dialog-size);
   max-width: calc(100vw - var(--mantine-spacing-xl) * 2);
   min-height: 50px;
+  padding: var(--mantine-spacing-md);
 }
 
 .closeButton {

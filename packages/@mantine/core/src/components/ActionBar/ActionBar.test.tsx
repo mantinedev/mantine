@@ -127,7 +127,6 @@ describe('@mantine/core/ActionBar', () => {
       </ActionBar>
     );
 
-    // `unstyled` keeps the static `mantine-*` selectors and drops the CSS module classes
     expect(screen.getByRole('button').className).toContain('mantine-focus-auto');
 
     rerender(
