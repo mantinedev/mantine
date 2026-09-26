@@ -23,6 +23,9 @@ export interface AccordionController<Multiple extends boolean = false> {
   /** Resolved `multiple` option, also used to infer the controller type on the `controller` prop */
   multiple: Multiple;
 
+  /** Resolved `disableCollapse` option */
+  disableCollapse: boolean;
+
   /** Current value */
   value: AccordionValue<Multiple>;
 
@@ -174,6 +177,7 @@ export function useAccordion<Multiple extends boolean = false>(
   return useMemo(
     () => ({
       multiple,
+      disableCollapse,
       value,
       getValue,
       setValue,
@@ -187,6 +191,6 @@ export function useAccordion<Multiple extends boolean = false>(
       getItems,
       registerItem,
     }),
-    [multiple, value]
+    [multiple, disableCollapse, value]
   );
 }

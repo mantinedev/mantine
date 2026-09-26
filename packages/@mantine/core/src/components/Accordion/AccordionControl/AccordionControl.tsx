@@ -59,6 +59,8 @@ export const AccordionControl = factory<AccordionControlFactory>((props) => {
   const isActive = ctx.isItemActive(value);
   const shouldWrapWithHeading = typeof ctx.order === 'number';
   const Heading = `h${ctx.order!}` as const;
+  const resolvedChevron = chevron === undefined ? ctx.chevron : chevron;
+  const cannotCollapse = ctx.disableCollapse && isActive;
 
   const content = (
     <UnstyledButton
@@ -76,8 +78,8 @@ export const AccordionControl = factory<AccordionControlFactory>((props) => {
       type="button"
       disabled={disabled}
       aria-expanded={isActive}
+      aria-disabled={cannotCollapse || undefined}
       aria-controls={ctx.getRegionId(value)}
-      id={ctx.getControlId(value)}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[data-accordion-control]',
         parentSelector: '[data-accordion]',
@@ -87,18 +89,21 @@ export const AccordionControl = factory<AccordionControlFactory>((props) => {
         onKeyDown,
       })}
       {...others}
+      id={ctx.getControlId(value)}
     >
-      <Box
-        component="span"
-        mod={{
-          rotate: !ctx.disableChevronRotation && isActive,
-          position: ctx.chevronPosition,
-          'reduce-motion': true,
-        }}
-        {...ctx.getStyles('chevron', { classNames, styles })}
-      >
-        {chevron || ctx.chevron}
-      </Box>
+      {resolvedChevron != null && resolvedChevron !== false && (
+        <Box
+          component="span"
+          mod={{
+            rotate: !ctx.disableChevronRotation && isActive,
+            position: ctx.chevronPosition,
+            'reduce-motion': true,
+          }}
+          {...ctx.getStyles('chevron', { classNames, styles })}
+        >
+          {resolvedChevron}
+        </Box>
+      )}
       <span {...ctx.getStyles('label', { classNames, styles })}>{children}</span>
       {icon && (
         <Box

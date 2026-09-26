@@ -210,9 +210,10 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
           `${uid}-panel`,
           'Accordion.Item component was rendered with invalid value or without value'
         ),
-        chevron: chevron === null ? null : chevron || <AccordionChevron size={chevronIconSize} />,
+        chevron: chevron === undefined ? <AccordionChevron size={chevronIconSize} /> : chevron,
         transitionDuration,
         disableChevronRotation,
+        disableCollapse: !accordion.multiple && accordion.disableCollapse,
         chevronPosition,
         order,
         loop,

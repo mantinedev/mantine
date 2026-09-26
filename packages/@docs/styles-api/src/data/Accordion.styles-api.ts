@@ -30,7 +30,22 @@ export const AccordionStylesApi: StylesApiData<AccordionFactory> = {
     },
     {
       modifier: 'data-chevron-position',
+      selector: ['control', 'icon'],
+      value: 'Value of `chevronPosition` prop on `Accordion`',
+    },
+    {
+      modifier: 'data-disabled',
       selector: 'control',
+      condition: '`disabled` prop is set on `Accordion.Control`',
+    },
+    {
+      modifier: 'data-rotate',
+      selector: 'chevron',
+      condition: 'Item is active (opened) and `disableChevronRotation` is not set',
+    },
+    {
+      modifier: 'data-position',
+      selector: 'chevron',
       value: 'Value of `chevronPosition` prop on `Accordion`',
     },
   ],

@@ -197,6 +197,42 @@ open on mount. To guarantee that one item is open from the start, pair it with `
 The prop has no effect when `multiple` is set, as multiple mode already allows any combination
 of opened and closed items.
 
+The control of the open item gets `aria-disabled="true"`, so screen reader users know that it
+cannot be collapsed.
+
+## Keep panels mounted
+
+By default, collapsed panels stay mounted and their content is hidden with the React
+[Activity](https://react.dev/reference/react/Activity) component, so their state is preserved.
+Set `keepMountedMode="display-none"` to hide collapsed panels with `display: none` styles instead.
+
+To unmount collapsed panels, set `keepMounted={false}`. This is useful for heavy content,
+but components inside `Accordion.Panel` reset their state each time the item is opened.
+
+Both props can be set on `Accordion` for all items or on `Accordion.Panel` to override the
+value for a single item:
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Accordion keepMounted={false} defaultValue="settings" order={3}>
+      <Accordion.Item value="settings">
+        <Accordion.Control>Settings</Accordion.Control>
+        {/* Keeps its state while collapsed, other panels are unmounted */}
+        <Accordion.Panel keepMounted>Settings form</Accordion.Panel>
+      </Accordion.Item>
+
+      <Accordion.Item value="report">
+        <Accordion.Control>Report</Accordion.Control>
+        <Accordion.Panel>Heavy chart</Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+```
+
 ## Compose controls
 
 Putting a button or link inside `Accordion.Control` is a common mistake when

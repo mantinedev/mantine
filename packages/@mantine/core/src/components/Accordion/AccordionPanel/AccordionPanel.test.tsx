@@ -13,6 +13,7 @@ describe('@mantine/core/AccordionPanel', () => {
     component: ContextContainer,
     props: defaultProps,
     children: true,
+    id: false,
     displayName: '@mantine/core/AccordionPanel',
     stylesApiSelectors: ['panel', 'content'],
     stylesApiName: 'Accordion',

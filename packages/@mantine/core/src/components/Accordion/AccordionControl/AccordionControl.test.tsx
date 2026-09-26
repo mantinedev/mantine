@@ -14,15 +14,16 @@ const defaultProps: AccordionControlProps = {
 const _ContextContainer = createContextContainer(AccordionControl, AccordionItem, {
   value: 'test',
 });
-const ContextContainer = createContextContainer(_ContextContainer, Accordion, {});
+const ContextContainer = createContextContainer(_ContextContainer, Accordion, { order: 3 });
 
 describe('@mantine/core/AccordionControl', () => {
   tests.itSupportsSystemProps<AccordionControlProps, AccordionControlStylesNames>({
     component: ContextContainer,
     props: defaultProps,
     children: true,
+    id: false,
     displayName: '@mantine/core/AccordionControl',
-    stylesApiSelectors: ['control', 'chevron', 'label', 'icon'],
+    stylesApiSelectors: ['control', 'chevron', 'label', 'icon', 'itemTitle'],
     stylesApiName: 'Accordion',
     selector: '.mantine-Accordion-control',
     providerStylesApi: false,
