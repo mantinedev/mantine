@@ -50,6 +50,12 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     description: 'Next.js SaaS boilerplate with Mantine',
   },
   {
+    type: 'next',
+    name: 'shaadkit-template',
+    link: 'https://github.com/shaadcode/shaadkit',
+    description: 'Next.js + Mantine + next-intl + Storybook + Vitest + Playwright template',
+  },
+  {
     type: 'vite',
     name: 'nx-vite-monorepo-template',
     link: 'https://github.com/dipiash/nx-vite-react-ts-mantine-boilerplate',
