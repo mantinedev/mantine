@@ -27,4 +27,20 @@ describe('@mantine/core/Burger', () => {
     rerender(<Burger opened={false} />);
     expect(screen.getByRole('button').firstChild).not.toHaveAttribute('data-opened');
   });
+
+  it('sets aria-expanded attribute based on opened prop', () => {
+    const { rerender } = render(<Burger aria-label="test" />);
+    expect(screen.getByRole('button')).not.toHaveAttribute('aria-expanded');
+
+    rerender(<Burger aria-label="test" opened />);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'true');
+
+    rerender(<Burger aria-label="test" opened={false} />);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('allows overriding aria-expanded attribute', () => {
+    render(<Burger aria-label="test" opened aria-expanded={false} />);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'false');
+  });
 });
