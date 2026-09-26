@@ -14,7 +14,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { CloseButton } from '../CloseButton';
+import { __CloseButtonProps, CloseButton } from '../CloseButton';
 import { Loader, LoaderProps } from '../Loader';
 import classes from './Notification.module.css';
 
@@ -60,7 +60,7 @@ export interface NotificationProps
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
-  closeButtonProps?: ElementProps<'button'> & DataAttributes;
+  closeButtonProps?: __CloseButtonProps & ElementProps<'button'> & DataAttributes;
 
   /** Props passed down to the `Loader` component */
   loaderProps?: LoaderProps;
@@ -127,7 +127,7 @@ export const Notification = factory<NotificationFactory>((_props) => {
   return (
     <Box
       {...getStyles('root')}
-      mod={[{ 'data-with-icon': !!icon || loading, 'data-with-border': withBorder }, mod]}
+      mod={[{ withIcon: !!icon || loading, withBorder }, mod]}
       role={role || 'alert'}
       {...others}
     >
@@ -137,7 +137,7 @@ export const Notification = factory<NotificationFactory>((_props) => {
       <div {...getStyles('body')}>
         {title && <div {...getStyles('title')}>{title}</div>}
 
-        <Box {...getStyles('description')} mod={{ 'data-with-title': !!title }}>
+        <Box {...getStyles('description')} mod={{ withTitle: !!title }}>
           {children}
         </Box>
       </div>

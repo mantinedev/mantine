@@ -284,4 +284,19 @@ describe('@mantine/core/RangeSlider', () => {
     expect(sliders[0]).toHaveAttribute('aria-valuetext', '200%');
     expect(sliders[1]).toHaveAttribute('aria-valuetext', '800%');
   });
+
+  it('passes thumbProps to each thumb element', () => {
+    render(
+      <RangeSlider
+        defaultValue={[20, 80]}
+        thumbProps={(index) => ({ 'aria-describedby': `help-${index}`, id: `thumb-${index}` })}
+      />
+    );
+
+    const sliders = getSliders();
+    expect(sliders[0]).toHaveAttribute('aria-describedby', 'help-0');
+    expect(sliders[0]).toHaveAttribute('id', 'thumb-0');
+    expect(sliders[1]).toHaveAttribute('aria-describedby', 'help-1');
+    expect(sliders[1]).toHaveAttribute('id', 'thumb-1');
+  });
 });

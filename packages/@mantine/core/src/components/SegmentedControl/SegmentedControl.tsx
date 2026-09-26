@@ -194,8 +194,12 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
   const [parent, setParent] = useState<HTMLElement | null>(null);
   const [refs, setRefs] = useState<Record<string, HTMLElement | null>>({});
   const setElementRef = (element: HTMLElement | null, val: string) => {
+    if (element === null || refs[val] === element) {
+      return;
+    }
+
     refs[val] = element;
-    setRefs(refs);
+    setRefs({ ...refs });
   };
 
   const [_value, handleValueChange] = useUncontrolled({
@@ -208,6 +212,8 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
   });
 
   const uuid = useId(name);
+
+  const dataValues = _data.map((item) => `${item.value}`);
 
   const controls = _data.map((item) => (
     <Box
@@ -254,6 +260,19 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
   useShallowEffect(() => {
     setKey(randomId());
   }, [data.length]);
+
+  useShallowEffect(() => {
+    setRefs((current) => {
+      const next: Record<string, HTMLElement | null> = {};
+      dataValues.forEach((value) => {
+        if (value in current) {
+          next[value] = current[value];
+        }
+      });
+
+      return Object.keys(next).length === Object.keys(current).length ? current : next;
+    });
+  }, [dataValues]);
 
   if (data.length === 0) {
     return null;

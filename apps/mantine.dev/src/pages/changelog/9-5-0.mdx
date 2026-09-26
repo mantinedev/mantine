@@ -1,0 +1,159 @@
+import { AccordionDemos, BulletChartDemos, CascaderDemos, DatePickerDemos, FloatingWindowDemos, HeatmapDemos, ResourcesDayViewDemos, ScrollAreaDemos, SunburstChartDemos, TableDemos, TimelineDemos, TooltipDemos, AreaChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog950);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## Migration to oxc
+
+Mantine has migrated its linting and formatting toolchain from ESLint and Prettier
+to [oxc](https://oxc.rs) – [oxlint](https://www.npmjs.com/package/oxlint) is now used
+as the linter and [oxfmt](https://www.npmjs.com/package/oxfmt) as the formatter. Both
+tools are written in Rust and are significantly faster than their predecessors, which
+makes linting and formatting the entire codebase almost instant.
+
+The shared configuration is available as a new
+[oxc-config-mantine](/oxc-config-mantine) package (a replacement for the previous
+`eslint-config-mantine`). You can use it in your own projects to follow the same
+code style and conventions as Mantine.
+
+## Native level select in date pickers
+
+[DatePicker](/dates/date-picker) and all other date picker components ([DatePickerInput](/dates/date-picker-input),
+[MonthPicker](/dates/month-picker), [YearPicker](/dates/year-picker), [DateTimePicker](/dates/date-time-picker), etc.)
+now support the `withNativeLevelSelect` prop. When enabled, it replaces the calendar header level button
+with native `<select>` elements, making it easy to quickly navigate to a specific month and year.
+
+<Demo data={DatePickerDemos.nativeLevelSelect} />
+
+## Timeline opposite and alternate content
+
+[Timeline](/core/timeline) `Timeline.Item` component now supports the `opposite` prop that allows
+rendering content on the opposite side of the timeline. When any item has the `opposite` prop,
+the timeline switches to a centered layout with content on both sides of the line.
+
+<Demo data={TimelineDemos.opposite} />
+
+Set the `alternate` prop on individual `Timeline.Item` components to switch
+the position of content and opposite:
+
+<Demo data={TimelineDemos.alternate} />
+
+## FloatingWindow resize handle
+
+[FloatingWindow](/core/floating-window) now supports a `ResizeHandle` compound component
+that allows users to resize the floating window by dragging a handle element.
+Set the `dimensions` prop on `FloatingWindow` to control resize constraints for both
+width (`initialWidth`, `minWidth`, `maxWidth`) and height (`initialHeight`, `minHeight`, `maxHeight`).
+
+The resize handle is fully accessible – it supports keyboard interaction with
+`Arrow Left`/`Arrow Right` keys for width, `Arrow Up`/`Arrow Down` for height (10px steps),
+and `Home`/`End` keys (jump to min/max size).
+
+<Demo data={FloatingWindowDemos.resizeHandle} />
+
+## Cascader component
+
+New [Cascader](/core/cascader) component allows selecting a value from hierarchical data
+by drilling down through cascading columns. Picking an option in one column reveals its
+children in a new column to the right, and the value is an ordered path from the root option
+to the selected node. It supports `changeOnSelect`, `hover` expand trigger, search, a flat list
+layout for mobile, and full keyboard navigation.
+
+<Demo data={CascaderDemos.usage} />
+
+## SunburstChart component
+
+New [SunburstChart](/charts/sunburst-chart) component displays hierarchical data
+as concentric rings, similar to a treemap plotted in polar coordinates.
+
+<Demo data={SunburstChartDemos.usage} />
+
+## BulletChart component
+
+New [BulletChart](/charts/bullet-chart) component displays a single measure against
+a qualitative range, useful for comparing a primary value (such as revenue) against
+a target and qualitative thresholds like poor, average, and good.
+
+<Demo data={BulletChartDemos.usage} />
+
+## Charts keyboard navigation
+
+All [@mantine/charts](/charts/getting-started/#keyboard-navigation) components now expose the
+`accessibilityLayer` prop (`true` by default) that makes charts navigable with the keyboard.
+The chart surface is focusable and displays the Mantine focus ring; once focused, the arrow keys
+move the active tooltip point-by-point and <kbd>Enter</kbd> toggles the tooltip, so users who do not
+use a mouse can read the underlying values. The prop is supported by `AreaChart`, `BarChart`,
+`LineChart`, `CompositeChart`, `ScatterChart`, `BubbleChart`, `PieChart`, `DonutChart`, `RadarChart`,
+`RadialBarChart` and `FunnelChart` components.
+
+## Charts brush
+
+[AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart), [LineChart](/charts/line-chart)
+and [CompositeChart](/charts/composite-chart) now support the `withBrush` prop that displays a
+brush (range selector) under the chart. Drag the brush handles to zoom into a subset of the data.
+Use the `brushProps` prop to customize the underlying recharts `Brush`, or render the new
+themed `ChartBrush` component as a child of the chart for full control.
+
+<Demo data={AreaChartDemos.brush} />
+
+## Heatmap month labels position
+
+[Heatmap](/charts/heatmap) now supports `monthLabelsPosition` prop that allows
+displaying month labels at the bottom of the heatmap instead of the top (default).
+
+<Demo data={HeatmapDemos.monthLabelsPosition} />
+
+## Accordion disable collapse
+
+[Accordion](/core/accordion) now supports the `disableCollapse` prop. When enabled in single
+mode (`multiple={false}`), the open item cannot be collapsed by clicking it again, so one item
+always stays open. Pair it with `defaultValue` or `value` to guarantee that a section is open
+from the start – useful for settings panels, stepper-style flows and FAQ pages.
+
+<Demo data={AccordionDemos.disableCollapse} />
+
+## ScrollArea vertical scrollbar position
+
+[ScrollArea](/core/scroll-area) now supports the `verticalScrollbarPosition` prop that pins the
+vertical scrollbar to a physical side (`left` or `right`) regardless of direction. This is useful
+for RTL applications where users expect the vertical scrollbar to stay on the right, matching the
+behavior of most desktop software. The prop also realigns the offset padding, the corner and the
+horizontal scrollbar gap, so it works correctly with `offsetScrollbars` and `scrollbars="xy"`.
+
+<Demo data={ScrollAreaDemos.verticalScrollbarPosition} />
+
+## Schedule intervals larger than one hour
+
+[ResourcesDayView](/schedule/resources-day-view) and
+[ResourcesWeekView](/schedule/resources-week-view) now support `intervalMinutes` values
+larger than 60. Previously the interval was capped at one hour – you can now set it to any
+whole number of hours (for example `120` or `240`) to display multi-hour time slots. Values
+of 60 or less must still divide evenly into an hour; any value that does not keep the grid on
+hour boundaries falls back to `60`.
+
+<Demo data={ResourcesDayViewDemos.multiHourIntervals} />
+
+## New example: Table virtualization
+
+New [Table](/core/table) example demonstrates how to use `Table.ScrollContainer` with
+`@tanstack/react-virtual` to efficiently render large datasets with 5,000 rows.
+
+<Demo data={TableDemos.virtualized} />
+
+## Interactive tooltip
+
+[Tooltip](/core/tooltip) now supports the `interactive` prop that keeps the tooltip open while
+the pointer travels from the target element to the tooltip and rests over its content. Use it if
+the tooltip contains content that the user must be able to reach with a pointer, for example a link.
+It is also required by [WCAG 2.1 success criterion 1.4.13](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html),
+which states that content that appears on hover must remain visible while the pointer is over it.
+
+<Demo data={TooltipDemos.interactive} />

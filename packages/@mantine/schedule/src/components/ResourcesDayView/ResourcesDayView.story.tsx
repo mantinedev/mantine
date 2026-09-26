@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import tz from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { useState } from 'react';
-import { Button, Group, Select, Stack, Text } from '@mantine/core';
+import { Button, Group, NumberInput, Select, Stack, Text } from '@mantine/core';
 import { ScheduleEventData, ScheduleResourceData } from '../../types';
 import { toDateString } from '../../utils';
 import { ResourcesDayView } from './ResourcesDayView';
@@ -430,6 +430,7 @@ const shortEventIntervals = [1, 5, 10, 15, 30, 60, 120];
 
 export function ShortEvents() {
   const [zoomIndex, setZoomIndex] = useState(shortEventIntervals.indexOf(60));
+  const [minEventSize, setMinEventSize] = useState<number>(1);
   const intervalMinutes = shortEventIntervals[zoomIndex];
 
   return (
@@ -439,9 +440,10 @@ export function ShortEvents() {
           Short events (intervalMinutes = {intervalMinutes})
         </Text>
         <Text size="xs" c="dimmed">
-          Every row ends at 09:03. Even at coarse intervals where the 1-2 minute events are only a
-          few pixels wide, they stay visible and their right edges line up across every row and zoom
-          level.
+          These 1-2 minute events start at 09:00-09:02. With the default `minEventSize={1}` they
+          render at their true (near sub-pixel) width, so they appear as thin slivers. Increase
+          `minEventSize` to make brief events easier to see – the box always grows from the event's
+          start toward its end, so an event is never displayed before its real start time.
         </Text>
       </div>
 
@@ -451,12 +453,13 @@ export function ShortEvents() {
         events={shortEvents}
         rowHeight={26}
         intervalMinutes={intervalMinutes}
+        minEventSize={minEventSize}
         withHeader={false}
         withCurrentTimeIndicator={false}
         startScrollTime="08:30:00"
       />
 
-      <Group>
+      <Group align="flex-end">
         <Button
           onClick={() => setZoomIndex((index) => Math.max(index - 1, 0))}
           disabled={zoomIndex === 0}
@@ -471,6 +474,14 @@ export function ShortEvents() {
         >
           Zoom out
         </Button>
+        <NumberInput
+          label="minEventSize"
+          value={minEventSize}
+          onChange={(value) => setMinEventSize(Number(value) || 0)}
+          min={0}
+          max={40}
+          w={140}
+        />
       </Group>
     </Stack>
   );

@@ -73,14 +73,7 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props) => {
     rootSelector: 'group',
   });
 
-  return (
-    <Box
-      {...getStyles('group')}
-      mod={[{ 'data-orientation': orientation }, mod]}
-      role="group"
-      {...others}
-    />
-  );
+  return <Box {...getStyles('group')} mod={[{ orientation }, mod]} role="group" {...others} />;
 });
 
 ButtonGroup.classes = classes;

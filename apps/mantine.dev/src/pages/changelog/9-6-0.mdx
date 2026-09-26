@@ -1,0 +1,233 @@
+import { ActionBarDemos, AreaChartDemos, CandlestickChartDemos, CascaderDemos, DayViewDemos, GaugeChartDemos, LightboxDemos, MatrixChartDemos, NotificationsDemos, ResourcesMonthViewDemos, ScatterChartDemos, StepperDemos, TipTapDemos, WaffleChartDemos, YearViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog960);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## @mantine/lightbox package
+
+New [@mantine/lightbox](/x/lightbox) package – a full-screen media lightbox with carousel navigation,
+zoom, thumbnails, toolbar customization, and store-based API. Supports image, video, and custom slides:
+
+<Demo data={LightboxDemos.usage} />
+
+Key features:
+- **Zoom** – click to zoom on desktop, double-tap on mobile, scroll wheel and pinch gestures
+- **Thumbnails** – bottom thumbnail strip with active indicator
+- **Store API** – mount once, open from anywhere (same pattern as Spotlight and Notifications)
+- **Video slides** – native video player with auto-pause on navigation
+- **Custom slides** – render anything with custom thumbnails
+- **Transitions** – animated open and close with configurable `transitionProps` (same API as Modal)
+- **Keyboard shortcuts** – Escape, arrows, F/T/Z for fullscreen/thumbnails/zoom
+- **Localization** – every string is defined in the `labels` prop
+
+## Notifications custom rendering
+
+[Notifications](/x/notifications) now support `renderNotification` prop that allows you to completely
+replace the default notification with custom content. All animations (enter, exit, drag dismiss)
+are preserved for custom notifications:
+
+<Demo data={NotificationsDemos.renderNotification} />
+
+## Notifications stacked layout
+
+[Notifications](/x/notifications) now support `layout="stacked"` prop that displays notifications in a stacked
+layout where only the latest notification is fully visible, and older notifications peek out behind it:
+
+<Demo data={NotificationsDemos.stacked} />
+
+## ActionBar component
+
+New [ActionBar](/core/action-bar) component – a fixed-position bottom bar
+for bulk selection actions. Designed to be controlled by table or checkbox
+selections, it provides a set of actions that can be performed on selected items.
+
+<Demo data={ActionBarDemos.usage} />
+
+## RichTextEditor table controls
+
+[RichTextEditor](/x/tiptap) now includes a set of controls for editing tables. Install and register the
+[Tiptap table extension](https://tiptap.dev/docs/editor/extensions/nodes/table) (`TableKit`), then add
+the controls to the toolbar. `RichTextEditor.TableInsert` opens a grid to pick the table size, and the
+other controls add/remove rows and columns, toggle header row/column and merge/split cells. All table
+controls are automatically disabled when the cursor is not inside a table:
+
+<Demo data={TipTapDemos.table} />
+
+## RichTextEditor Details control
+
+[RichTextEditor](/x/tiptap) now supports collapsible sections. Install and register the
+[Tiptap details extension](https://tiptap.dev/docs/editor/extensions/nodes/details) (`Details`,
+`DetailsSummary` and `DetailsContent`), then add `RichTextEditor.Details` to the toolbar. The control
+wraps the current block in a collapsible details node, or removes it when the cursor is already inside
+one:
+
+<Demo data={TipTapDemos.details} />
+
+To support the control, [Typography](/core/typography) now styles `details` and `summary` elements –
+a border, padding and a custom disclosure triangle. This applies to all `details` elements inside
+`Typography`, not just those created by the editor. All of the new selectors have zero specificity
+(`:where()`), so they can be overridden without `!important`.
+
+## RichTextEditor InvisibleCharacters control
+
+[RichTextEditor](/x/tiptap) can now display formatting marks. Install and register the
+[Tiptap invisible characters extension](https://tiptap.dev/docs/editor/extensions/functionality/invisiblecharacters),
+then add `RichTextEditor.InvisibleCharacters` to the toolbar. The control toggles the visibility of
+spaces, paragraph breaks and hard breaks, and reflects the current visibility as its active state:
+
+<Demo data={TipTapDemos.invisibleCharacters} />
+
+## GaugeChart component
+
+New [GaugeChart](/charts/gauge-chart) component – a radial gauge chart for KPI and status display.
+Supports threshold sections, target marker, custom labels, and configurable arc angles.
+
+<Demo data={GaugeChartDemos.usage} />
+
+## WaffleChart component
+
+New [WaffleChart](/charts/waffle-chart) component – a part-to-whole grid chart with colored cells.
+Simpler and more compact alternative to pie/donut charts for displaying percentages and proportions.
+
+<Demo data={WaffleChartDemos.usage} />
+
+## MatrixChart component
+
+New [MatrixChart](/charts/matrix-chart) component – a generic x/y heatmap with categorical axes.
+Each cell is colored based on a value, useful for visualizing patterns in two-dimensional categorical data.
+
+<Demo data={MatrixChartDemos.usage} />
+
+## CandlestickChart component
+
+New [CandlestickChart](/charts/candlestick-chart) component – a financial OHLC chart that displays
+open, high, low and close values as candles. Candles are colored based on their direction, the wick
+shows the high–low range and the body shows the open–close range. Supports custom colors, data keys,
+reference lines, axis labels, tooltip labels and value formatting.
+
+<Demo data={CandlestickChartDemos.usage} />
+
+## Charts reference areas
+
+[AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart), [LineChart](/charts/line-chart),
+[CompositeChart](/charts/composite-chart) and [ScatterChart](/charts/scatter-chart) now support the
+`referenceAreas` prop that highlights a rectangular region of the plot – a weekend band, a target
+range, a threshold zone and similar annotations. Each area is bounded by `x1`/`x2` and/or `y1`/`y2`
+data values (omit one pair to span the full opposite axis) and supports a theme `color` and a `label`.
+
+<Demo data={AreaChartDemos.referenceAreas} />
+
+## Charts reference dots
+
+[AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart), [LineChart](/charts/line-chart),
+[CompositeChart](/charts/composite-chart) and [ScatterChart](/charts/scatter-chart) now support the
+`referenceDots` prop that marks individual points on the plot – a peak, an event, a record value or an
+anomaly. Each dot is positioned by `x`/`y` data coordinates and supports a radius, a theme `color` and a
+`label`. Reference dots are rendered on top of the chart series.
+
+<Demo data={AreaChartDemos.referenceDots} />
+
+Note that `referenceLines` in [AreaChart](/charts/area-chart) are now rendered on top of the areas
+instead of behind them, which makes them consistent with `BarChart`, `LineChart`, `CompositeChart`
+and `ScatterChart`, where reference lines were already painted over the series.
+
+## AreaChart streamgraph
+
+[AreaChart](/charts/area-chart) now supports `type="stream"` that renders a streamgraph (also known
+as ThemeRiver) – a stacked area chart whose baseline flows around a central axis instead of being
+fixed to zero, producing the characteristic organic "river" shape. The y-axis is hidden by default
+for this type since its floating baseline makes the values not meaningful to read off:
+
+<Demo data={AreaChartDemos.stream} />
+
+## ScatterChart right Y axis
+
+[ScatterChart](/charts/scatter-chart) now supports the `withRightYAxis` prop that displays an
+additional Y axis on the right side of the chart, configurable with `rightYAxisProps` and
+`rightYAxisLabel`. Bind data series to the right Y axis by setting `yAxisId: 'right'` in the `data`
+object – series without `yAxisId` are bound to the left Y axis. Both axes use the same `dataKey.y`
+value, but their scales are calculated independently from the series assigned to them:
+
+<Demo data={ScatterChartDemos.rightYAxis} />
+
+## Stepper labelPosition
+
+[Stepper](/core/stepper) component now supports the `labelPosition` prop. Set `labelPosition="bottom"`
+to display the step label and description below the step icon:
+
+<Demo data={StepperDemos.labelPosition} />
+
+## Cascader safe area polygon
+
+[Cascader](/core/cascader) with `expandTrigger="hover"` now keeps the open column in place while the
+cursor moves diagonally toward it – options that the cursor passes over on the way no longer replace
+it. Set `safeAreaPolygon={false}` to expand on every hover immediately, or pass an object to configure
+[Floating UI `safePolygon`](https://floating-ui.com/docs/useHover#safepolygon) options:
+
+<Demo data={CascaderDemos.safeAreaPolygon} />
+
+## YearView renderDay
+
+[YearView](/schedule/year-view) now supports the `renderDay` prop that replaces the entire content of
+a day cell. The function is called with the day date in `YYYY-MM-DD` format and the events grouped on
+that day – the same list that is used to render the default indicators, but without the three items
+limit. This makes it possible to display counts, badges or icons instead of the default dots:
+
+<Demo data={YearViewDemos.renderDay} />
+
+## ResourcesMonthView event resize
+
+[ResourcesMonthView](/schedule/resources-month-view) now supports the `withEventResize` prop. Events
+can be resized by dragging their start or end edges, and the `onEventResize` callback is called with
+the updated event start and end dates. Resizing snaps to whole days and preserves the event's original
+time of day. Use `canResizeEvent` to control which events can be resized:
+
+<Demo data={ResourcesMonthViewDemos.eventResize} />
+
+## Schedule drag and resize intervals
+
+Time-grid Schedule views (`DayView`, `WeekView`, `ResourcesDayView`, `ResourcesWeekView`) now support
+`eventDragInterval` and `eventResizeInterval` props that set the snap step used when events are moved
+and resized, independent of the `intervalMinutes` grid size. For example, a 30-minute grid can allow
+15-minute drag and resize increments. A ghost preview shows where the event will land while dragging:
+
+<Demo data={DayViewDemos.eventDragInterval} />
+
+<Demo data={DayViewDemos.eventResizeInterval} />
+
+## Dropzone react-dropzone 20
+
+[Dropzone](/x/dropzone) now depends on `react-dropzone` 20 (previously 15). The upgrade brings several
+behavior and type changes:
+
+- `maxFiles` no longer rejects the entire batch when more files are picked than the limit allows.
+Files up to the limit are now accepted and the rest are rejected. For example, picking 3 files with
+`maxFiles={2}` calls `onDrop` with the first 2 files and `onReject` with the third – previously all 3
+files were rejected and `onDrop` was called with an empty array.
+- `FileWithPath` type now has required `path` and `relativePath` properties, they were optional
+before. The default file aggregator always sets both values, so `onDrop` files can be read without
+optional chaining. If you provide a custom `getFilesFromEvent` that returns plain `File` objects,
+these properties are not set at runtime.
+- `getFilesFromEvent` prop now receives `DropEvent | FileSystemFileHandle[]` instead of `DropEvent` –
+the File System Access API path passes file handles to the aggregator. Update the parameter type of
+custom aggregators to accept both.
+- `react-dropzone` 20 requires Node.js 22 or later. Mantine now requires Node.js 22 as well –
+Node.js 20 reached end of life in April 2026. This affects your development environment only,
+browser support is not changed.
+
+## Other changes
+
+- [ColorInput](/core/color-input) now supports `fullWidth` prop: the dropdown matches the width of the input and the color picker inside it fills the available space.
+- [FloatingWindow](/core/floating-window) now supports `onSizeChange`, `onResizeStart` and `onResizeEnd` callbacks that mirror `onPositionChange`, `onDragStart` and `onDragEnd` used for dragging. Sizes passed to `onSizeChange` are measured after the new size has been applied, so they are already clamped by the `dimensions` and viewport constraints.
+- [PasswordInput](/core/password-input) now supports `visibilityToggleFocusable` prop that puts the visibility toggle in the tab order: the button receives `tabindex="0"` and can be activated with Enter or Space.
+- Schedule views (`DayView`, `WeekView`, `MonthView`, `ResourcesDayView`, `ResourcesWeekView`) now support `withInteractiveBackgroundEvents` prop – background events (`display: 'background'`) become clickable and trigger `onEventClick`, which makes it possible to open an edit modal for unavailability blocks and similar events.
+- [use-scroll-spy](/hooks/use-scroll-spy) hook `scrollHost` option now accepts a ref object in addition to a resolved `HTMLElement` – the hook reads `ref.current` internally once the element is mounted, so the scroll host does not need to exist on the first render.
+- [YearView](/schedule/year-view) now supports `withWeekendDays` prop. Set `withWeekendDays={false}` to hide weekend days – every month grid shrinks to the remaining columns and events that fall only on hidden days are not displayed.

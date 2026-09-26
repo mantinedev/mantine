@@ -30,15 +30,23 @@ import { getNotificationStateStyles } from './get-notification-state-styles';
 import { NotificationContainer } from './NotificationContainer';
 import {
   hideNotification,
+  NotificationData,
   NotificationPosition,
   notifications,
   NotificationsStore,
   notificationsStore,
+  SequencedNotificationData,
   useNotifications,
 } from './notifications.store';
 import classes from './Notifications.module.css';
 
 const Transition: any = _Transition;
+
+/** Vertical gap between notifications of an expanded stack, in px */
+const STACK_EXPANDED_GAP = 16;
+
+/** Offset step used for a notification that has not been measured yet, in px */
+const FALLBACK_NOTIFICATION_HEIGHT = 80;
 
 export type NotificationsStylesNames = 'root' | 'notification';
 export type NotificationsCssVariables = {
@@ -85,6 +93,12 @@ export interface NotificationsProps
 
   /** Determines which notifications should pause auto close on hover, `'all'` – pauses auto close for all notifications when any notification is hovered, `'notification'` – pauses auto close only for the hovered notification @default 'all' */
   pauseResetOnHover?: 'all' | 'notification';
+
+  /** Custom render function that replaces the default notification, can be overridden per notification */
+  renderNotification?: (notification: NotificationData) => React.ReactNode;
+
+  /** Controls how notifications are positioned in the stack, `'default'` – standard vertical list, `'stacked'` – only first notification is fully visible, rest are stacked behind @default 'default' */
+  layout?: 'default' | 'stacked';
 }
 
 export type NotificationsFactory = Factory<{
@@ -115,6 +129,7 @@ const defaultProps = {
   store: notificationsStore,
   withinPortal: true,
   pauseResetOnHover: 'all',
+  layout: 'default',
 } satisfies Partial<NotificationsProps>;
 
 const varsResolver = createVarsResolver<NotificationsFactory>((_, { zIndex, containerWidth }) => ({
@@ -147,6 +162,8 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     portalProps,
     withinPortal,
     pauseResetOnHover,
+    renderNotification,
+    layout,
     ...others
   } = props;
 
@@ -156,10 +173,209 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
   const shouldReduceMotion = useReducedMotion();
   const refs = useRef<Record<string, HTMLDivElement>>({});
   const previousLength = useRef<number>(0);
-  const [hoveredCount, setHoveredCount] = useState(0);
+  // Every position renders its own stack, so hover, expansion and pinning are tracked per
+  // position – a single shared flag made hovering one corner expand all six of them.
+  const [hoveredCounts, setHoveredCounts] = useState<Partial<Record<NotificationPosition, number>>>(
+    {}
+  );
+  const [expandedPositions, setExpandedPositions] = useState<
+    Partial<Record<NotificationPosition, boolean>>
+  >({});
+  const [hoveredGroups, setHoveredGroups] = useState<
+    Partial<Record<NotificationPosition, boolean>>
+  >({});
+  const [pinnedPosition, setPinnedPosition] = useState<NotificationPosition | null>(null);
+  const collapseTimeouts = useRef<Partial<Record<NotificationPosition, number>>>({});
 
-  const handleHoverStart = useCallback(() => setHoveredCount((c) => c + 1), []);
-  const handleHoverEnd = useCallback(() => setHoveredCount((c) => Math.max(0, c - 1)), []);
+  // `pauseResetOnHover="all"` is documented as pausing every notification when any one of
+  // them is hovered, so this stays global while the stack state above does not.
+  const hoveredCount =
+    Object.values(hoveredCounts).reduce((acc, count) => acc + (count ?? 0), 0) +
+    Object.values(hoveredGroups).filter(Boolean).length;
+
+  const handleHoverStart = useCallback(
+    (pos: NotificationPosition) =>
+      setHoveredCounts((current) => ({ ...current, [pos]: (current[pos] ?? 0) + 1 })),
+    []
+  );
+
+  const handleHoverEnd = useCallback(
+    (pos: NotificationPosition) =>
+      setHoveredCounts((current) => ({ ...current, [pos]: Math.max(0, (current[pos] ?? 0) - 1) })),
+    []
+  );
+
+  // Stacked hover is also tracked on the group element that wraps a stack, not only on the
+  // individual notifications. When the hovered notification unmounts, React does not deliver
+  // `onMouseEnter` to the one that slides under a stationary pointer: the browser dispatches
+  // only a `mouseover` for the new target (no `mouseout`, the old node is gone), and the
+  // enter/leave plugin drops it because its `relatedTarget` still resolves to a React
+  // instance. The group is hovered throughout, so its state needs no event to stay correct
+  // and the stack stays open until the pointer really leaves.
+  // Kept apart from the notification counter above so that it can be released on its own –
+  // the group has no unmount hook to fall back on the way a notification does.
+  const getGroupHoverProps = useCallback(
+    (pos: NotificationPosition) =>
+      layout === 'stacked'
+        ? {
+            onMouseEnter: () => setHoveredGroups((current) => ({ ...current, [pos]: true })),
+            onMouseLeave: () => setHoveredGroups((current) => ({ ...current, [pos]: false })),
+          }
+        : {},
+    [layout]
+  );
+
+  // Touch devices have no hover, so tapping the stack pins it open until the next tap
+  // outside of it. Without this the notifications behind the first one are unreachable.
+  const handleExpandRequest = useCallback(
+    (pos: NotificationPosition) => setPinnedPosition(pos),
+    []
+  );
+
+  useEffect(() => {
+    if (layout !== 'stacked') {
+      return undefined;
+    }
+
+    const timeouts = collapseTimeouts.current;
+
+    positions.forEach((pos) => {
+      if ((hoveredCounts[pos] ?? 0) > 0 || hoveredGroups[pos] || pinnedPosition === pos) {
+        window.clearTimeout(timeouts[pos]);
+        setExpandedPositions((current) => (current[pos] ? current : { ...current, [pos]: true }));
+      } else {
+        timeouts[pos] = window.setTimeout(() => {
+          setExpandedPositions((current) =>
+            current[pos] ? { ...current, [pos]: false } : current
+          );
+        }, 200);
+      }
+    });
+
+    return () => positions.forEach((pos) => window.clearTimeout(timeouts[pos]));
+  }, [hoveredCounts, hoveredGroups, pinnedPosition, layout]);
+
+  useEffect(() => {
+    if (!pinnedPosition) {
+      return undefined;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node | null;
+      const insideStack =
+        target !== null && Object.values(refs.current).some((element) => element?.contains(target));
+
+      if (!insideStack) {
+        setPinnedPosition(null);
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, [pinnedPosition]);
+
+  const grouped = getGroupedNotifications(data.notifications, position);
+  const pinnedCount = pinnedPosition ? grouped[pinnedPosition].length : 0;
+
+  useEffect(() => {
+    if (layout !== 'stacked' || (pinnedPosition !== null && pinnedCount === 0)) {
+      setPinnedPosition(null);
+    }
+  }, [pinnedCount, pinnedPosition, layout]);
+
+  // Leaving the stacked layout takes the handlers below out of the tree, so nothing can ever
+  // deliver the `mouseleave` that would release the group and a stale flag would keep auto
+  // close paused forever. Emptying a stack needs no such handling – the browser drops the
+  // hover on its own once the last notification is removed, and releasing it here instead
+  // would fire while the dismissed notification is still exiting under the pointer.
+  useEffect(() => {
+    if (layout !== 'stacked') {
+      setHoveredGroups((current) => (Object.values(current).some(Boolean) ? {} : current));
+    }
+  }, [layout]);
+
+  // Expanded stack offsets need the height of every notification. Measuring during render
+  // would force a layout pass on every hover, focus and store update, so heights are cached
+  // here and refreshed from the ResizeObserver – which also covers a notification that grows
+  // after mount (image loads, async content, viewport reflow) and would otherwise leave the
+  // ones after it overlapping or gapped until something else triggered a render.
+  const resizeObserver = useRef<ResizeObserver | null>(null);
+  const measuredHeights = useRef<Record<string, number>>({});
+  const observedIds = useRef(new WeakMap<Element, string>());
+
+  const measureNotification = useCallback((id: string, element: HTMLElement) => {
+    const height = element.offsetHeight;
+
+    if (measuredHeights.current[id] === height) {
+      return false;
+    }
+
+    measuredHeights.current[id] = height;
+    return true;
+  }, []);
+
+  useEffect(() => {
+    if (layout !== 'stacked' || typeof ResizeObserver === 'undefined') {
+      return undefined;
+    }
+
+    const observer = new ResizeObserver((entries) => {
+      let changed = false;
+
+      entries.forEach((entry) => {
+        const id = observedIds.current.get(entry.target);
+
+        if (id && measureNotification(id, entry.target as HTMLElement)) {
+          changed = true;
+        }
+      });
+
+      if (changed) {
+        forceUpdate();
+      }
+    });
+
+    resizeObserver.current = observer;
+    Object.values(refs.current).forEach((element) => element && observer.observe(element));
+
+    return () => {
+      observer.disconnect();
+      resizeObserver.current = null;
+    };
+  }, [layout, forceUpdate, measureNotification]);
+
+  const refCallbacks = useRef<Record<string, (node: HTMLDivElement | null) => void>>({});
+
+  const getNotificationRef = useCallback(
+    (id: string) => {
+      if (!refCallbacks.current[id]) {
+        refCallbacks.current[id] = (node: HTMLDivElement | null) => {
+          const previous = refs.current[id];
+
+          if (previous && previous !== node) {
+            resizeObserver.current?.unobserve(previous);
+            observedIds.current.delete(previous);
+          }
+
+          if (node) {
+            refs.current[id] = node;
+            observedIds.current.set(node, id);
+            // Measured here rather than during render – the commit phase is where a layout
+            // read is already paid for, and the ResizeObserver keeps the value fresh after.
+            measureNotification(id, node);
+            resizeObserver.current?.observe(node);
+          } else {
+            delete refs.current[id];
+            delete refCallbacks.current[id];
+            delete measuredHeights.current[id];
+          }
+        };
+      }
+
+      return refCallbacks.current[id];
+    },
+    [measureNotification]
+  );
 
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -193,49 +409,97 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     previousLength.current = data.notifications.length;
   }, [data.notifications]);
 
-  const grouped = getGroupedNotifications(data.notifications, position);
   const groupedComponents = positions.reduce(
     (acc, pos) => {
-      acc[pos] = grouped[pos].map(({ style: notificationStyle, ...notification }) => (
-        <Transition
-          key={notification.id}
-          timeout={duration}
-          onEnter={() => refs.current[notification.id!].offsetHeight}
-          nodeRef={{ current: refs.current[notification.id!] }}
-        >
-          {(state: TransitionStatus) => (
-            <NotificationContainer
-              ref={(node) => {
-                if (node) {
-                  refs.current[notification.id!] = node;
-                } else {
-                  delete refs.current[notification.id!];
+      const groupLength = grouped[pos].length;
+      const expandedOffsets: number[] = new Array(groupLength).fill(0);
+      const stackExpanded = layout === 'stacked' && !!expandedPositions[pos];
+
+      // `grouped[pos]` is sorted by priority descending, with equal priorities in insertion
+      // order. A stack is rendered front to back, so `stackOrder[0]` is the notification in
+      // front: the most urgent one, and the newest among equal priorities – only the
+      // tie-break is reversed here. Taking the front from the end of the priority-sorted
+      // array instead would put the *lowest* priority notification in front and leave an
+      // urgent one inert behind it.
+      // Rendering front first also keeps DOM order matching the visual stack – otherwise a
+      // forward Tab from the front notification (the only focusable one while collapsed)
+      // skips past the ones it just un-inerted and leaves the region. Placement is
+      // unaffected: stacked notifications share one grid cell and are positioned by
+      // transform and an explicit z-index.
+      const stackOrder =
+        layout === 'stacked'
+          ? [...(grouped[pos] as SequencedNotificationData[])].sort(
+              (a, b) =>
+                (b.priority ?? 0) - (a.priority ?? 0) || (b.__sequence ?? 0) - (a.__sequence ?? 0)
+            )
+          : grouped[pos];
+
+      if (stackExpanded && groupLength > 0) {
+        const direction = pos.startsWith('top') ? 1 : -1;
+        let cumOffset = 0;
+
+        for (let i = 0; i < groupLength; i += 1) {
+          expandedOffsets[i] = cumOffset * direction;
+          cumOffset +=
+            (measuredHeights.current[stackOrder[i].id!] || FALLBACK_NOTIFICATION_HEIGHT) +
+            STACK_EXPANDED_GAP;
+        }
+      }
+
+      acc[pos] = stackOrder.map((item, stackIndex) => {
+        const { style: notificationStyle, ...notification } = item;
+
+        return (
+          <Transition
+            key={notification.id}
+            timeout={duration}
+            onEnter={() => refs.current[notification.id!].offsetHeight}
+            nodeRef={{ current: refs.current[notification.id!] }}
+          >
+            {(state: TransitionStatus) => (
+              <NotificationContainer
+                ref={getNotificationRef(notification.id!)}
+                data={notification}
+                onHide={(id) => hideNotification(id, store)}
+                autoClose={autoClose}
+                transitionDuration={duration}
+                allowDragDismiss={allowDragDismiss}
+                allowScrollDismiss={allowScrollDismiss}
+                paused={
+                  (pauseResetOnHover === 'all' ? hoveredCount > 0 : false) ||
+                  (layout === 'stacked' && !stackExpanded && stackIndex > 0)
                 }
-              }}
-              data={notification}
-              onHide={(id) => hideNotification(id, store)}
-              autoClose={autoClose}
-              transitionDuration={duration}
-              allowDragDismiss={allowDragDismiss}
-              allowScrollDismiss={allowScrollDismiss}
-              paused={pauseResetOnHover === 'all' ? hoveredCount > 0 : false}
-              onHoverStart={handleHoverStart}
-              onHoverEnd={handleHoverEnd}
-              {...getStyles('notification', {
-                style: {
-                  ...getNotificationStateStyles({
-                    state,
-                    position: pos,
-                    transitionDuration: duration,
-                    maxHeight: notificationMaxHeight,
-                  }),
-                  ...notificationStyle,
-                },
-              })}
-            />
-          )}
-        </Transition>
-      ));
+                onHoverStart={() => handleHoverStart(pos)}
+                onHoverEnd={() => handleHoverEnd(pos)}
+                onExpandRequest={() => handleExpandRequest(pos)}
+                renderNotification={
+                  'renderNotification' in notification
+                    ? notification.renderNotification
+                    : renderNotification
+                }
+                layout={layout}
+                stackIndex={stackIndex}
+                stackSize={groupLength}
+                stackPosition={pos}
+                stackExpanded={stackExpanded}
+                stackExpandedOffset={expandedOffsets[stackIndex]}
+                transitionState={state}
+                {...getStyles('notification', {
+                  style: {
+                    ...getNotificationStateStyles({
+                      state,
+                      position: pos,
+                      transitionDuration: duration,
+                      maxHeight: notificationMaxHeight,
+                    }),
+                    ...notificationStyle,
+                  },
+                })}
+              />
+            )}
+          </Transition>
+        );
+      });
 
       return acc;
     },
@@ -244,36 +508,50 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
 
   return (
     <OptionalPortal withinPortal={withinPortal} {...portalProps}>
-      <Box {...getStyles('root')} data-position="top-center" {...others}>
-        <TransitionGroup>{groupedComponents['top-center']}</TransitionGroup>
+      <Box {...getStyles('root')} data-position="top-center" data-layout={layout} {...others}>
+        <TransitionGroup {...getGroupHoverProps('top-center')}>
+          {groupedComponents['top-center']}
+        </TransitionGroup>
       </Box>
 
-      <Box {...getStyles('root')} data-position="top-left" {...others}>
-        <TransitionGroup>{groupedComponents['top-left']}</TransitionGroup>
+      <Box {...getStyles('root')} data-position="top-left" data-layout={layout} {...others}>
+        <TransitionGroup {...getGroupHoverProps('top-left')}>
+          {groupedComponents['top-left']}
+        </TransitionGroup>
       </Box>
 
       <Box
         {...getStyles('root', { className: RemoveScroll.classNames.fullWidth })}
         data-position="top-right"
+        data-layout={layout}
         {...others}
       >
-        <TransitionGroup>{groupedComponents['top-right']}</TransitionGroup>
+        <TransitionGroup {...getGroupHoverProps('top-right')}>
+          {groupedComponents['top-right']}
+        </TransitionGroup>
       </Box>
 
       <Box
         {...getStyles('root', { className: RemoveScroll.classNames.fullWidth })}
         data-position="bottom-right"
+        data-layout={layout}
         {...others}
       >
-        <TransitionGroup>{groupedComponents['bottom-right']}</TransitionGroup>
+        <TransitionGroup {...getGroupHoverProps('bottom-right')}>
+          {groupedComponents['bottom-right']}
+        </TransitionGroup>
       </Box>
 
-      <Box {...getStyles('root')} data-position="bottom-left" {...others}>
-        <TransitionGroup>{groupedComponents['bottom-left']}</TransitionGroup>
+      <Box {...getStyles('root')} data-position="bottom-left" data-layout={layout} {...others}>
+        <TransitionGroup {...getGroupHoverProps('bottom-left')}>
+          {groupedComponents['bottom-left']}
+        </TransitionGroup>
       </Box>
 
-      <Box {...getStyles('root')} data-position="bottom-center" {...others}>
-        <TransitionGroup>{groupedComponents['bottom-center']}</TransitionGroup>
+      <Box {...getStyles('root')} data-position="bottom-center" data-layout={layout} {...others}>
+        <TransitionGroup {...getGroupHoverProps('bottom-center')}>
+          {groupedComponents['bottom-center']}
+        </TransitionGroup>
       </Box>
     </OptionalPortal>
   );

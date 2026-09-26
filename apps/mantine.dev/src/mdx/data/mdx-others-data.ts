@@ -105,6 +105,30 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
       'confirm dialog, alert dialog, dialog manager, prompt, confirmation, imperative modal',
   },
 
+  Lightbox: {
+    title: 'Lightbox',
+    package: '@mantine/lightbox',
+    slug: '/x/lightbox',
+    props: [
+      'Lightbox',
+      'LightboxRoot',
+      'LightboxToolbar',
+      'LightboxSlides',
+      'LightboxSlide',
+      'LightboxThumbnails',
+      'LightboxNavigation',
+      'LightboxCaption',
+      'LightboxCloseButton',
+      'LightboxProviderComponent',
+    ],
+    styles: ['Lightbox'],
+    description: 'Full-screen media lightbox with carousel navigation',
+    source: '@mantine/lightbox/src',
+    license: 'MIT',
+    docs: 'x/lightbox.mdx',
+    searchTags: 'gallery, image viewer, media viewer, photo gallery, carousel, zoom, fullscreen',
+  },
+
   TipTap: {
     title: 'Rich text editor',
     package: '@mantine/tiptap',

@@ -15,17 +15,11 @@ import { publishPackage } from './publish-package';
 const git = simpleGit();
 const logger = createLogger('publish');
 
-const { argv }: { argv: any } = yargs(hideBin(process.argv))
-  .option('stage', {
-    type: 'string',
-    choices: ['alpha', 'beta'],
-    description: "Prerelease stage: 'alpha', 'beta'",
-  })
-  .option('tag', {
-    type: 'string',
-    default: 'latest',
-    description: 'Tag',
-  });
+const { argv }: { argv: any } = yargs(hideBin(process.argv)).option('stage', {
+  type: 'string',
+  choices: ['alpha', 'beta'],
+  description: "Prerelease stage: 'alpha', 'beta'",
+});
 
 if (!['patch', 'minor', 'major'].includes(argv._[0])) {
   logger.error('Stage is missing, must be patch, minor or major');

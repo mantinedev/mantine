@@ -7,10 +7,10 @@ import { itSupportsInputContainer } from './inputs/it-supports-input-container';
 import { itSupportsInputProps } from './inputs/it-supports-input-props';
 // Inputs tests
 import { itSupportsInputSections } from './inputs/it-supports-input-sections';
-import { itSupportsSharedInputDefaults } from './inputs/it-supports-shared-input-defaults';
 import { itSupportsInputWrapperElements } from './inputs/it-supports-input-wrapper-elements';
 import { itSupportsInputWrapperOrder } from './inputs/it-supports-input-wrapper-order';
 import { itSupportsInputWrapperProps } from './inputs/it-supports-input-wrapper-props';
+import { itSupportsSharedInputDefaults } from './inputs/it-supports-shared-input-defaults';
 // High level tests
 import { itSupportsSystemProps } from './it-supports-system-props';
 import { itHasClasses } from './shared/it-has-classes';
@@ -92,6 +92,7 @@ export { wait } from './wait';
 export { patchConsoleError, patchConsoleWarn, autoPatchWarn } from './patch-console-error';
 export { createContextContainer } from './create-context-container';
 export { inputDefaultProps, inputStylesApiSelectors } from './inputs/inputs-test-props';
+export { externalInputFill } from './inputs/external-input-fill';
 export * from './queries';
 export { screen } from '@testing-library/react';
 export { userEvent };

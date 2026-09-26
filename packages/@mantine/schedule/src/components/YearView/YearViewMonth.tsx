@@ -2,7 +2,13 @@ import dayjs from 'dayjs';
 import { Box, GetStylesApi, getThemeColor, UnstyledButton, useMantineTheme } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { ScheduleLabelsOverride } from '../../labels';
-import { DateLabelFormat, DateStringValue, DayOfWeek, ScheduleMode } from '../../types';
+import {
+  DateLabelFormat,
+  DateStringValue,
+  DayOfWeek,
+  ScheduleEventData,
+  ScheduleMode,
+} from '../../types';
 import {
   formatDate,
   getMonthDays,
@@ -10,8 +16,14 @@ import {
   getWeekNumber,
   isSameMonth,
 } from '../../utils';
+import { getHiddenWeekendColumns, getVisibleWeekDays } from './get-visible-week-days';
 import { GroupedEvents } from './get-year-view-events/get-year-view-events';
 import type { YearViewFactory } from './YearView';
+
+export type YearViewRenderDay = (
+  date: DateStringValue,
+  events: ScheduleEventData[]
+) => React.ReactNode;
 
 export interface YearViewDayKeydownPayload {
   weekIndex: number;
@@ -41,6 +53,9 @@ export interface YearViewMonthSettings {
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
+  /** If set, weekend days are displayed. When `false`, weekend columns are hidden and the month grid shrinks. @default true */
+  withWeekendDays?: boolean;
+
   /** Props passed down to the week number button */
   getWeekNumberProps?: (weekStartDate: DateStringValue) => Record<string, any>;
 
@@ -67,6 +82,13 @@ export interface YearViewMonthSettings {
 
   /** If true, days from adjacent months are displayed @default true */
   withOutsideDays?: boolean;
+
+  /**
+   * A function to replace the entire content of a day cell, called with the day date
+   * and the events grouped on that day – the same list that is used to render the default
+   * indicators. When set, default event indicators are not rendered.
+   */
+  renderDay?: YearViewRenderDay;
 }
 
 export interface YearViewMonthProps extends YearViewMonthSettings {
@@ -102,6 +124,7 @@ export function YearViewMonth({
   firstDayOfWeek,
   weekdayFormat,
   weekendDays,
+  withWeekendDays,
   getDayProps,
   onDayClick,
   onWeekNumberClick,
@@ -111,6 +134,7 @@ export function YearViewMonth({
   groupedEvents,
   mode,
   withOutsideDays,
+  renderDay,
   __getDayRef,
   __onDayKeyDown,
   firstDayIndex,
@@ -119,31 +143,49 @@ export function YearViewMonth({
   const theme = useMantineTheme();
   const today = dayjs();
 
+  const resolvedFirstDayOfWeek = ctx.getFirstDayOfWeek(firstDayOfWeek);
+  const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
+  const hiddenColumns = new Set(
+    getHiddenWeekendColumns({
+      weekendDays: resolvedWeekendDays,
+      firstDayOfWeek: resolvedFirstDayOfWeek,
+      withWeekendDays,
+    })
+  );
+
   const weekdays = withWeekDays
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
         format: weekdayFormat,
-        firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-      }).map((day, index) => (
-        <div {...getStyles('yearViewWeekday')} key={index}>
-          {day}
-        </div>
-      ))
+        firstDayOfWeek: resolvedFirstDayOfWeek,
+      })
+        .filter((_, index) => !hiddenColumns.has(index))
+        .map((day, index) => (
+          <div {...getStyles('yearViewWeekday')} key={index}>
+            {day}
+          </div>
+        ))
     : null;
 
   const weeks = getMonthDays({
     month: dayjs(month).format('YYYY-MM-DD'),
-    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    firstDayOfWeek: resolvedFirstDayOfWeek,
     consistentWeeks: true,
   }).map((week, weekIndex) => {
-    const days = week.map((date, dayIndex) => {
+    const visibleDays = getVisibleWeekDays({
+      week,
+      weekendDays: resolvedWeekendDays,
+      withWeekendDays,
+    });
+
+    const days = visibleDays.map((date, dayIndex) => {
       const outside = !isSameMonth(date, month);
 
       if (outside && !withOutsideDays) {
         return <div {...getStyles('yearViewDay')} data-day-placeholder key={date} />;
       }
 
-      const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
+      const weekend = resolvedWeekendDays.includes(dayjs(date).day() as DayOfWeek);
       const ariaLabel = dayjs(date)
         .locale(locale || ctx.locale)
         .format('MMMM D, YYYY');
@@ -160,14 +202,25 @@ export function YearViewMonth({
         dayIndex === firstDayIndex.dayIndex;
       const isInTabOrder = mode !== 'static' && !outside && isFirstDayOfMonth;
 
-      const indicators = dayEvents.slice(0, 3).map((event) => (
-        <div
-          {...getStyles('yearViewDayIndicator', {
-            style: { backgroundColor: getThemeColor(event.color, theme) },
-          })}
-          key={event.id}
-        />
-      ));
+      const dayContent =
+        typeof renderDay === 'function' ? (
+          renderDay(dayjs(date).format('YYYY-MM-DD'), dayEvents)
+        ) : (
+          <>
+            {dayjs(date).format('D')}
+
+            <div {...getStyles('yearViewDayIndicators')}>
+              {dayEvents.slice(0, 3).map((event) => (
+                <div
+                  {...getStyles('yearViewDayIndicator', {
+                    style: { backgroundColor: getThemeColor(event.color, theme) },
+                  })}
+                  key={event.id}
+                />
+              ))}
+            </div>
+          </>
+        );
 
       return (
         <UnstyledButton
@@ -195,9 +248,7 @@ export function YearViewMonth({
                 }
           }
         >
-          {dayjs(date).format('D')}
-
-          <div {...getStyles('yearViewDayIndicators')}>{indicators}</div>
+          {dayContent}
         </UnstyledButton>
       );
     });

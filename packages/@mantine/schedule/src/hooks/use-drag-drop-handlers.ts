@@ -4,6 +4,12 @@ import { DragContextValue } from '../components/DragContext/DragContext';
 import { DateTimeStringValue, ScheduleEventData, ScheduleMode } from '../types';
 import { useDragState } from './use-drag-state';
 
+export interface DragPreview<T = any> {
+  start: DateTimeStringValue;
+  end: DateTimeStringValue;
+  target: T;
+}
+
 export interface UseDragDropHandlersOptions<T = any> {
   /** Whether drag and drop is enabled */
   enabled: boolean;
@@ -55,7 +61,7 @@ export interface DragDropHandlers<T = any> {
   handleDragOver: (e: React.DragEvent, target: T) => void;
 
   /** Handle drag leave event */
-  handleDragLeave: () => void;
+  handleDragLeave: (event?: React.DragEvent) => void;
 
   /** Handle drop event */
   handleDrop: (e: React.DragEvent, target: T) => void;
@@ -65,6 +71,12 @@ export interface DragDropHandlers<T = any> {
 
   /** Check if target is the current drop target */
   isDropTarget: (target: T) => boolean;
+
+  /** Snapped drop preview used to render the drag ghost, or `null` when not dragging */
+  dragPreview: DragPreview<T> | null;
+
+  /** Sets the current drag preview */
+  setDragPreview: (preview: DragPreview<T> | null) => void;
 }
 
 /**
@@ -94,10 +106,12 @@ export function useDragDropHandlers<T = any>(
 
   const dragState = useDragState();
   const [dropTarget, setDropTarget] = useState<T | null>(null);
+  const [dragPreview, setDragPreview] = useState<DragPreview<T> | null>(null);
 
   const handleDragEnd = useCallback(() => {
     dragState.endDrag();
     setDropTarget(null);
+    setDragPreview(null);
     stableOnEventDragEnd();
   }, [dragState]);
 
@@ -140,8 +154,21 @@ export function useDragDropHandlers<T = any>(
     [enabled, mode, dragState.state.isDragging, onExternalDrop, handleDragEnd]
   );
 
-  const handleDragLeave = useCallback(() => {
+  const handleDragLeave = useCallback((event?: React.DragEvent) => {
+    if (event?.currentTarget) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const isInside =
+        event.clientX >= rect.left &&
+        event.clientX < rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY < rect.bottom;
+      if (isInside) {
+        return;
+      }
+    }
+
     setDropTarget(null);
+    setDragPreview(null);
   }, []);
 
   const handleDrop = useCallback(
@@ -169,10 +196,12 @@ export function useDragDropHandlers<T = any>(
         }
         stableOnExternalDrop(event, target);
         setDropTarget(null);
+        setDragPreview(null);
         return;
       }
 
       setDropTarget(null);
+      setDragPreview(null);
     },
     [
       enabled,
@@ -229,5 +258,7 @@ export function useDragDropHandlers<T = any>(
     handleDrop,
     isDraggableEvent,
     isDropTarget,
+    dragPreview,
+    setDragPreview,
   };
 }

@@ -6,6 +6,8 @@ export default {
     '^.+\\.tsx?$': 'esbuild-jest',
   },
   testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
+  modulePathIgnorePatterns: ['<rootDir>/.claude/'],
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/.claude/'],
   setupFilesAfterEnv: ['./jsdom.mocks.ts', './jest.react.ts'],
   moduleNameMapper: {
     '@mantine/(.*)': '<rootDir>/packages/@mantine/$1/src',

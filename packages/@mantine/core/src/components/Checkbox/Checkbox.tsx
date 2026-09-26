@@ -262,7 +262,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
       {...styleProps}
       {...wrapperProps}
     >
-      <Box {...getStyles('inner')} mod={{ 'data-label-position': labelPosition }}>
+      <Box {...getStyles('inner')} mod={{ labelPosition }}>
         <Box
           component="input"
           id={uuid}

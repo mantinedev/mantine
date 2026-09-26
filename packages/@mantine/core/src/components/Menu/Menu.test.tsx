@@ -813,7 +813,7 @@ describe('@mantine/core/Menu', () => {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item>Banana</Menu.Item>
-            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+            <Menu.Sub transitionProps={{ duration: 0 }}>
               <Menu.Sub.Target>
                 <Menu.Sub.Item>More</Menu.Sub.Item>
               </Menu.Sub.Target>
@@ -836,6 +836,38 @@ describe('@mantine/core/Menu', () => {
       fireEvent.keyDown(subItem, { key: 'b' });
       expect(screen.getByText('Banana').closest('button')).not.toHaveFocus();
     });
+
+    it('keeps the sub-dropdown inside the parent dropdown even if withinPortal is passed', async () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item>Banana</Menu.Item>
+            {/* withinPortal is not part of the public Menu.Sub props: portaling the sub-dropdown
+                detaches it from the menu, which breaks hover tracking and outside clicks */}
+            <Menu.Sub transitionProps={{ duration: 0 }} opened {...({ withinPortal: true } as any)}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>More</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown>
+                <Menu.Item>Cherry</Menu.Item>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+          </Menu.Dropdown>
+        </Menu>,
+        undefined,
+        // portals are disabled in the test env, this assertion is meaningless without real ones
+        { env: 'default' }
+      );
+
+      const parentDropdown = screen.getByText('Banana').closest('[data-menu-dropdown]')!;
+      const subDropdown = (await screen.findByText('Cherry')).closest('[data-menu-dropdown]')!;
+
+      expect(subDropdown).not.toBe(parentDropdown);
+      expect(parentDropdown.contains(subDropdown)).toBe(true);
+    });
   });
 
   describe('Menu.Sub controlled opened', () => {
@@ -847,7 +879,7 @@ describe('@mantine/core/Menu', () => {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item>Banana</Menu.Item>
-            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false} {...subProps}>
+            <Menu.Sub transitionProps={{ duration: 0 }} {...subProps}>
               <Menu.Sub.Target>
                 <Menu.Sub.Item>More</Menu.Sub.Item>
               </Menu.Sub.Target>
@@ -933,11 +965,7 @@ describe('@mantine/core/Menu', () => {
             </Menu.Target>
             <Menu.Dropdown>
               {showFirst && (
-                <Menu.Sub
-                  transitionProps={{ duration: 0 }}
-                  withinPortal={false}
-                  onChange={onChange}
-                >
+                <Menu.Sub transitionProps={{ duration: 0 }} onChange={onChange}>
                   <Menu.Sub.Target>
                     <Menu.Sub.Item>First</Menu.Sub.Item>
                   </Menu.Sub.Target>
@@ -946,7 +974,7 @@ describe('@mantine/core/Menu', () => {
                   </Menu.Sub.Dropdown>
                 </Menu.Sub>
               )}
-              <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+              <Menu.Sub transitionProps={{ duration: 0 }}>
                 <Menu.Sub.Target>
                   <Menu.Sub.Item>Second</Menu.Sub.Item>
                 </Menu.Sub.Target>
@@ -984,7 +1012,7 @@ describe('@mantine/core/Menu', () => {
             <button type="button">test-target</button>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+            <Menu.Sub transitionProps={{ duration: 0 }}>
               <Menu.Sub.Target>
                 <Menu.Sub.Item>First</Menu.Sub.Item>
               </Menu.Sub.Target>
@@ -992,7 +1020,7 @@ describe('@mantine/core/Menu', () => {
                 <Menu.Item>First child</Menu.Item>
               </Menu.Sub.Dropdown>
             </Menu.Sub>
-            <Menu.Sub transitionProps={{ duration: 0 }} withinPortal={false}>
+            <Menu.Sub transitionProps={{ duration: 0 }}>
               <Menu.Sub.Target>
                 <Menu.Sub.Item>Second</Menu.Sub.Item>
               </Menu.Sub.Target>

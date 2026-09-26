@@ -56,6 +56,21 @@ describe('@mantine/schedule/get-day-view-events', () => {
     );
   });
 
+  it('keeps same-day events that end at exclusive midnight', () => {
+    const events = [
+      testUtils.createEvent({ id: 1, start: `${testDate} 17:15:00`, end: '2024-01-16 00:00:00' }),
+    ];
+
+    expect(
+      getDayViewEvents({ events, date: testDate, startTime: '00:00:00', endTime: '23:59:59' })
+    ).toStrictEqual({
+      allDayEvents: [],
+      regularEvents: [{ ...events[0], position: expect.any(Object) }],
+      backgroundTimedEvents: [],
+      backgroundAllDayEvents: [],
+    });
+  });
+
   it('filters events based on startTime and endTime', () => {
     const events = [
       testUtils.createEvent({ id: 1, start: `${testDate} 10:00:00`, end: `${testDate} 11:00:00` }),

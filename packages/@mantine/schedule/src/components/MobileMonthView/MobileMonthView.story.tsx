@@ -1,5 +1,4 @@
 import 'dayjs/locale/ru';
-
 import { useState } from 'react';
 import { Box, Stack, Text } from '@mantine/core';
 import { ScheduleEventData } from '../../types';

@@ -1,7 +1,3 @@
-import './baseline.css';
-import './global.css';
-import './default-css-variables.css';
-
 import { localStorageColorSchemeManager, MantineColorSchemeManager } from './color-scheme-managers';
 import { MantineContext, MantineStylesTransform } from './Mantine.context';
 import { MantineClasses } from './MantineClasses';
@@ -10,6 +6,9 @@ import { MantineThemeProvider } from './MantineThemeProvider';
 import type { MantineColorScheme, MantineThemeOverride } from './theme.types';
 import { useProviderColorScheme } from './use-mantine-color-scheme';
 import { useRespectReduceMotion } from './use-respect-reduce-motion';
+import './baseline.css';
+import './default-css-variables.css';
+import './global.css';
 
 export interface MantineProviderProps {
   /** Theme override object */

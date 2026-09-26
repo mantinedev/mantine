@@ -1,5 +1,4 @@
 import 'dayjs/locale/ru';
-
 import { useState } from 'react';
 import { MonthYearSelect } from './MonthYearSelect';
 

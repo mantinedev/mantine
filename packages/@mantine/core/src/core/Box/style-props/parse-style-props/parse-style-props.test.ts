@@ -1,12 +1,12 @@
 import { DEFAULT_THEME } from '../../../MantineProvider';
-import { STYlE_PROPS_DATA } from '../style-props-data';
+import { STYLE_PROPS_DATA } from '../style-props-data';
 import { parseStyleProps } from './parse-style-props';
 
 describe('@mantine/core/Box/parse-style-props', () => {
   it('parses non responsive style props correctly', () => {
     expect(
       parseStyleProps({
-        data: STYlE_PROPS_DATA,
+        data: STYLE_PROPS_DATA,
         styleProps: { p: '1.5rem', mx: 32, c: 'red.5', opacity: 0.65 },
         theme: DEFAULT_THEME,
       })
@@ -26,7 +26,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
   it('parses responsive style props correctly', () => {
     expect(
       parseStyleProps({
-        data: STYlE_PROPS_DATA,
+        data: STYLE_PROPS_DATA,
         styleProps: {
           p: { base: '1.5rem', xs: '2rem' },
           mx: { base: 32, xs: 64 },
@@ -61,7 +61,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
   it('parses combination of responsive and non responsive style props correctly', () => {
     expect(
       parseStyleProps({
-        data: STYlE_PROPS_DATA,
+        data: STYLE_PROPS_DATA,
         styleProps: {
           p: { base: 24, xs: 32 },
           mx: 64,
@@ -95,7 +95,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
   it('correctly parses values with multiple breakpoints', () => {
     expect(
       parseStyleProps({
-        data: STYlE_PROPS_DATA,
+        data: STYLE_PROPS_DATA,
         styleProps: {
           p: { base: '1.5rem', xs: '2rem', md: '3rem' },
           mx: { base: 32, xs: 64, md: 128 },
@@ -139,7 +139,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
   it('parses logical style props correctly', () => {
     expect(
       parseStyleProps({
-        data: STYlE_PROPS_DATA,
+        data: STYLE_PROPS_DATA,
         styleProps: { mis: 10, mie: 15, pis: 20, pie: 25 },
         theme: DEFAULT_THEME,
       })

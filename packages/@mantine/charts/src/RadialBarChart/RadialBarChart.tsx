@@ -77,6 +77,9 @@ export interface RadialBarChartProps
 
   /** Props passed down to `Tooltip` recharts component */
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
+
+  /** Determines whether the chart should be keyboard-navigable with the recharts accessibility layer, `true` by default */
+  accessibilityLayer?: boolean;
 }
 
 export type RadialBarChartFactory = Factory<{
@@ -92,6 +95,7 @@ const defaultProps = {
   endAngle: -270,
   withBackground: true,
   withTooltip: true,
+  accessibilityLayer: true,
 } satisfies Partial<RadialBarChartProps>;
 
 const varsResolver = createVarsResolver<RadialBarChartFactory>(
@@ -127,6 +131,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props) => {
     startAngle,
     endAngle,
     attributes,
+    accessibilityLayer,
     ...others
   } = props;
   const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
@@ -181,6 +186,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props) => {
           startAngle={startAngle}
           endAngle={endAngle}
           data={dataWithResolvedColor}
+          accessibilityLayer={accessibilityLayer}
           {...radialBarChartProps}
         >
           <RadialBar

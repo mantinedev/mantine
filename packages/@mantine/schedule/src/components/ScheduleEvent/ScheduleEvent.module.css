@@ -40,6 +40,27 @@
     cursor: default;
   }
 
+  &:where([data-cascade]) {
+    z-index: var(--event-z-index, 3);
+    transition: z-index 0s;
+
+    .eventInner {
+      box-shadow: 0 0 0 1px var(--mantine-color-body);
+    }
+
+    &:where(:not([data-resizing], [data-dragging])) {
+      @mixin hover {
+        z-index: var(--event-z-index-raised, 9);
+        transition-delay: var(--event-raise-delay, 600ms);
+      }
+
+      /* Keyboard focus reveals a covered event immediately, hover waits for the dwell delay */
+      &:where(:focus-visible) {
+        z-index: var(--event-z-index-raised, 9);
+      }
+    }
+  }
+
   &:where([data-resizing]) {
     z-index: 10;
 
@@ -48,6 +69,10 @@
         background-color: var(--event-bg);
       }
     }
+  }
+
+  &:where([data-cascade][data-resizing]) {
+    z-index: var(--event-cascade-interaction-z-index, 999);
   }
 
   &:where([data-hanging='start'], [data-hanging='both']) {
@@ -124,7 +149,7 @@
   background-color: var(--event-bg);
   color: var(--event-color);
   pointer-events: all;
-  border-radius: var(--event-radius);
+  border-radius: min(var(--event-radius), 50%);
   font-weight: var(--mantine-font-weight-medium);
   font-size: 12px;
   line-height: 1;
@@ -151,6 +176,15 @@
   }
 
   &:where([data-auto-size]) {
+    @container (max-width: 12px) {
+      padding-inline: 0;
+    }
+
+    @container (min-width: 16px) {
+      width: calc(100% - 2px);
+      margin-inline: auto;
+    }
+
     @container (max-height: 18px) {
       font-size: 9px;
       padding-block: 0px;

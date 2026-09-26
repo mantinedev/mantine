@@ -47,12 +47,14 @@ module.exports = {
 
 ## Setup
 
-Add styles imports, [MantineProvider](/theming/mantine-provider/) and [ColorSchemeScript](/theming/color-schemes) to `app/root.tsx`:
+Add styles imports, [MantineProvider](/theming/mantine-provider/) and [ColorSchemeScript](/theming/color-schemes) to `app/root.tsx`.
+Mantine styles must be imported before any other styles in your application (including `app/app.css` from the React Router template):
 
 ```tsx
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
+import './app.css';
 
 import {
   Links,
@@ -60,7 +62,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "react-router";
+} from 'react-router';
 import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
 
 export function Layout({ children }: { children: React.ReactNode }) {

@@ -24,8 +24,9 @@ export function useIntersection<T extends HTMLElement = any>(
         return;
       }
 
-      observer.current = new IntersectionObserver(([_entry]) => {
-        setEntry(_entry);
+      observer.current = new IntersectionObserver((entries) => {
+        const lastEntry = entries[entries.length - 1];
+        setEntry(lastEntry);
       }, options);
 
       observer.current.observe(element);

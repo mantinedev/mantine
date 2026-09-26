@@ -187,7 +187,7 @@ function SearchableDropdown({
   );
 }
 
-export type ComboboxPopoverStylesNames = ComboboxLikeStylesNames;
+export type ComboboxPopoverStylesNames = ComboboxLikeStylesNames | 'search';
 
 export interface ComboboxPopoverProps<
   Multiple extends boolean = false,
@@ -235,7 +235,7 @@ export interface ComboboxPopoverProps<
   /** Determines whether the options should be wrapped with ScrollArea.AutoSize @default true */
   withScrollArea?: boolean;
 
-  /** max-height of the dropdown @default 250 */
+  /** max-height of the dropdown @default 220 */
   maxDropdownHeight?: number | string;
 
   /** If set, the first option is selected when dropdown opens @default false */
@@ -384,9 +384,6 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
     onDropdownClose: () => {
       onDropdownClose?.();
       combobox.resetSelectedOption();
-      if (searchable) {
-        combobox.focusTarget();
-      }
     },
   });
 
@@ -434,6 +431,7 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
         unstyled={unstyled}
         attributes={attributes}
         onOptionSubmit={handleOptionSubmit}
+        returnFocus
         {...comboboxProps}
         {...others}
       >

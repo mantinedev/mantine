@@ -16,7 +16,7 @@ import { getDigitParts } from './get-digit-parts';
 import { getRenderSlots } from './get-render-slots';
 import classes from './RollingNumber.module.css';
 
-export type RollingNumberStylesNames = 'root' | 'digit' | 'digitColumn' | 'char';
+export type RollingNumberStylesNames = 'root' | 'copyValue' | 'digit' | 'digitColumn' | 'char';
 export type RollingNumberCssVariables = {
   root: '--rn-duration' | '--rn-timing-function';
 };
@@ -158,6 +158,9 @@ export const RollingNumber = factory<RollingNumberFactory>((_props) => {
       aria-label={accessibleValue}
       {...others}
     >
+      <span {...getStyles('copyValue')} aria-hidden="true">
+        {accessibleValue}
+      </span>
       {slots.map((slot) => {
         if (slot.type === 'digit') {
           return (

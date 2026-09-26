@@ -15,12 +15,14 @@ import {
   ScrollAreaProps,
   StylesApiProps,
   UnstyledButton,
+  useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
+import { useDayGridEventResize } from '../../hooks/use-day-grid-event-resize';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
@@ -66,6 +68,8 @@ export type ResourcesMonthViewStylesNames =
   | 'resourcesMonthViewResourceLabel'
   | 'resourcesMonthViewRowSlots'
   | 'resourcesMonthViewCell'
+  | 'resourcesMonthViewEventWrapper'
+  | 'resourcesMonthViewResizeHandle'
   | 'resourcesMonthViewInner'
   | 'resourcesMonthViewGroupColumn'
   | 'resourcesMonthViewGroupColumnEmpty'
@@ -190,6 +194,20 @@ export interface ResourcesMonthViewProps
   /** Called when any event drag ends */
   onEventDragEnd?: () => void;
 
+  /** If true, events can be resized by dragging their start and end edges, resizing snaps to whole days @default false */
+  withEventResize?: boolean;
+
+  /** Called when event is resized */
+  onEventResize?: (data: {
+    eventId: string | number;
+    newStart: DateTimeStringValue;
+    newEnd: DateTimeStringValue;
+    event: ScheduleEventData;
+  }) => void;
+
+  /** Function to determine if event can be resized */
+  canResizeEvent?: (event: ScheduleEventData) => boolean;
+
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
@@ -255,6 +273,7 @@ const defaultProps = {
   withWeekendDays: true,
   withEventsDragAndDrop: false,
   withDragSlotSelect: false,
+  withEventResize: false,
   mode: 'default',
 } satisfies Partial<ResourcesMonthViewProps>;
 
@@ -352,6 +371,9 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
+    withEventResize,
+    onEventResize,
+    canResizeEvent,
     onEventClick,
     withDragSlotSelect,
     onSlotDragEnd,
@@ -396,6 +418,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     radius,
   };
 
+  const theme = useMantineTheme();
   const ctx = useDatesContext();
   const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
   const { orderedResources, groupRanges, resourceGroupMap } = useMemo(
@@ -466,6 +489,27 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     [events, date, recurrenceExpansionLimit]
   );
 
+  const monthDaySet = useMemo(() => new Set(monthDays), [monthDays]);
+
+  const eventResize = useDayGridEventResize({
+    enabled: withEventResize,
+    mode,
+    onEventResize,
+    canResizeEvent,
+  });
+
+  const { resizingEventId, previewStart, previewEnd } = eventResize;
+
+  const layoutEvents = useMemo(() => {
+    if (resizingEventId === null || previewStart === null || previewEnd === null) {
+      return expandedEvents;
+    }
+
+    return expandedEvents.map((event) =>
+      event.id === resizingEventId ? { ...event, start: previewStart, end: previewEnd } : event
+    );
+  }, [expandedEvents, resizingEventId, previewStart, previewEnd]);
+
   const { eventsByResourceAndDay, eventLayoutByResource } = useMemo(() => {
     const eventsByResourceAndDay: Record<string | number, Record<string, ScheduleEventData[]>> = {};
     for (const resource of resources) {
@@ -475,8 +519,8 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       }
     }
 
-    if (expandedEvents) {
-      for (const event of expandedEvents) {
+    if (layoutEvents) {
+      for (const event of layoutEvents) {
         if (event.resourceId === undefined || !(event.resourceId in eventsByResourceAndDay)) {
           continue;
         }
@@ -616,7 +660,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     }
 
     return { eventsByResourceAndDay, eventLayoutByResource };
-  }, [resources, monthDays, expandedEvents, maxEventsPerTimeSlot]);
+  }, [resources, monthDays, layoutEvents, maxEventsPerTimeSlot]);
 
   type DropTargetCell = { day: string; resourceId: string | number };
 
@@ -729,10 +773,105 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
   const rowHeightPercent = 100 / maxEventsPerTimeSlot;
 
+  const renderEventNode = ({
+    key,
+    event,
+    resourceIndex,
+    style,
+    hanging,
+    eventMod,
+    withStartHandle,
+    withEndHandle,
+  }: {
+    key: string;
+    event: ScheduleEventData;
+    resourceIndex: number;
+    style: React.CSSProperties;
+    hanging?: ResourcesMonthViewSegment['hanging'];
+    eventMod?: Record<string, any>;
+    withStartHandle: boolean;
+    withEndHandle: boolean;
+  }) => {
+    const isResizable = eventResize.isResizableEvent(event);
+    const isThisEventResizing = eventResize.resizingEventId === event.id;
+
+    const eventEnd = dayjs(event.end);
+    const endsAtMidnight =
+      eventEnd.hour() === 0 && eventEnd.minute() === 0 && eventEnd.second() === 0;
+    const lastDay = (endsAtMidnight ? eventEnd.subtract(1, 'day') : eventEnd).format('YYYY-MM-DD');
+
+    const showStartHandle =
+      withStartHandle && monthDaySet.has(dayjs(event.start).format('YYYY-MM-DD'));
+    const showEndHandle = withEndHandle && monthDaySet.has(lastDay);
+
+    const eventColors = isResizable
+      ? theme.variantColorResolver({
+          color: event.color || theme.primaryColor,
+          theme,
+          variant: event.variant || 'light',
+          autoContrast: true,
+        })
+      : null;
+
+    const getHandleProps = (edge: 'start' | 'end') => ({
+      ...getStyles('resourcesMonthViewResizeHandle'),
+      'data-edge': edge,
+      'data-active': (isThisEventResizing && eventResize.resizingEdge === edge) || undefined,
+      onPointerDown: (e: React.PointerEvent) =>
+        eventResize.handleResizeStart({
+          event,
+          edge,
+          cells: cellsRef.current[resourceIndex] ?? [],
+          days: monthDays,
+          pointerEvent: e,
+        }),
+    });
+
+    return (
+      <Box
+        key={key}
+        {...getStyles('resourcesMonthViewEventWrapper', {
+          style: { position: 'absolute', zIndex: 3, ...style },
+        })}
+        __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
+        data-resizing={isThisEventResizing || undefined}
+      >
+        <ScheduleEvent
+          event={event}
+          nowrap
+          autoSize
+          size="sm"
+          hanging={hanging}
+          mod={eventMod}
+          draggable={dragDrop.isDraggableEvent(event)}
+          isResizing={isThisEventResizing}
+          renderEventBody={renderEventBody}
+          renderEvent={renderEvent}
+          radius={radius}
+          mode={mode}
+          onClick={
+            onEventClick
+              ? (e) => {
+                  if (!eventResize.wasResizing()) {
+                    onEventClick(event, e);
+                  }
+                }
+              : undefined
+          }
+          style={{ width: '100%', height: '100%' }}
+        />
+        {isResizable && showStartHandle && <div {...getHandleProps('start')} />}
+        {isResizable && showEndHandle && <div {...getHandleProps('end')} />}
+      </Box>
+    );
+  };
+
   const rows = orderedResources.map((resource, resourceIndex) => {
     if (!cellsRef.current[resourceIndex]) {
       cellsRef.current[resourceIndex] = [];
     }
+
+    cellsRef.current[resourceIndex].length = monthDays.length;
 
     const slotGroup = String(resource.id);
     const dropTarget = dragDrop.dropTarget;
@@ -766,7 +905,6 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
           return;
         }
 
-        const isDraggable = dragDrop.isDraggableEvent(event);
         const topValue = hasHiddenEvents
           ? `calc((100% - 18px) * ${row} / ${maxEventsPerTimeSlot} + 1px)`
           : `calc(${row * rowHeightPercent}% + 1px)`;
@@ -775,27 +913,19 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
           : `calc(${rowHeightPercent}% - 2px)`;
 
         eventNodes.push(
-          <ScheduleEvent
-            key={`${event.id}-${day}`}
-            event={event}
-            nowrap
-            autoSize
-            size="sm"
-            draggable={isDraggable}
-            renderEventBody={renderEventBody}
-            renderEvent={renderEvent}
-            radius={radius}
-            mode={mode}
-            onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
-            style={{
-              position: 'absolute',
+          renderEventNode({
+            key: `${event.id}-${day}`,
+            event,
+            resourceIndex,
+            withStartHandle: true,
+            withEndHandle: true,
+            style: {
               top: topValue,
               left: `calc(${dayLeftPercent}% + 1px)`,
               width: `calc(${dayWidthPercent}% - 2px)`,
               height: heightValue,
-              zIndex: 3,
-            }}
-          />
+            },
+          })
         );
       });
 
@@ -872,7 +1002,6 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     const resourceSegments = eventLayoutByResource[resource.id]?.segments ?? [];
 
     resourceSegments.forEach((segment) => {
-      const isDraggable = dragDrop.isDraggableEvent(segment.event);
       const segmentLeftPercent = (segment.startDayIndex / totalDays) * 100;
       const segmentWidthPercent =
         ((segment.endDayIndex - segment.startDayIndex + 1) / totalDays) * 100;
@@ -885,29 +1014,23 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         : `calc(${rowHeightPercent}% - 2px)`;
 
       eventNodes.push(
-        <ScheduleEvent
-          key={`${segment.event.id}-segment-${segment.startDayIndex}`}
-          event={segment.event}
-          nowrap
-          autoSize
-          size="sm"
-          hanging={segment.hanging}
-          draggable={isDraggable}
-          renderEventBody={renderEventBody}
-          renderEvent={renderEvent}
-          radius={radius}
-          mode={mode}
-          mod={{ 'clip-start': segment.clipStart, 'clip-end': segment.clipEnd }}
-          onClick={onEventClick ? (e) => onEventClick(segment.event, e) : undefined}
-          style={{
-            position: 'absolute',
+        renderEventNode({
+          key: `${segment.event.id}-segment-${segment.startDayIndex}`,
+          event: segment.event,
+          resourceIndex,
+          hanging: segment.hanging,
+          eventMod: { 'clip-start': segment.clipStart, 'clip-end': segment.clipEnd },
+          withStartHandle:
+            !segment.clipStart && segment.hanging !== 'start' && segment.hanging !== 'both',
+          withEndHandle:
+            !segment.clipEnd && segment.hanging !== 'end' && segment.hanging !== 'both',
+          style: {
             top: topValue,
             left: `calc(${segmentLeftPercent}% + 1px)`,
             width: `calc(${segmentWidthPercent}% - 2px)`,
             height: heightValue,
-            zIndex: 3,
-          }}
-        />
+          },
+        })
       );
     });
 
@@ -993,7 +1116,8 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         {
           static: mode === 'static',
           'slot-dragging': slotDragSelect.isDragging,
-          'event-interaction': dragDrop.dragContextValue.isDragging,
+          'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
+          resizing: eventResize.isResizing,
         },
         mod,
       ]}

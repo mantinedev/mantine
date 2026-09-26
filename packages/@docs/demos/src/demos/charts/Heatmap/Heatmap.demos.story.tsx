@@ -62,3 +62,8 @@ export const Demo_legend = {
   name: '⭐ Demo: legend',
   render: renderDemo(demos.legend),
 };
+
+export const Demo_monthLabelsPosition = {
+  name: '⭐ Demo: monthLabelsPosition',
+  render: renderDemo(demos.monthLabelsPosition),
+};

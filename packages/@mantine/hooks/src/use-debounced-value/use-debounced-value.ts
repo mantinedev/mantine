@@ -24,9 +24,13 @@ export function useDebouncedValue<T = any>(
   const latestValueRef = useRef(value);
   latestValueRef.current = value;
 
-  const cancel = useCallback(() => {
+  const clearTimer = useCallback(() => {
     window.clearTimeout(timeoutRef.current!);
     timeoutRef.current = null;
+  }, []);
+
+  const cancel = useCallback(() => {
+    clearTimer();
     cooldownRef.current = false;
   }, []);
 
@@ -40,6 +44,8 @@ export function useDebouncedValue<T = any>(
 
   useEffect(() => {
     if (mountedRef.current) {
+      clearTimer();
+
       if (!cooldownRef.current && options.leading) {
         cooldownRef.current = true;
         setValue(value);
@@ -47,7 +53,6 @@ export function useDebouncedValue<T = any>(
           cooldownRef.current = false;
         }, wait);
       } else {
-        cancel();
         timeoutRef.current = window.setTimeout(() => {
           cooldownRef.current = false;
           setValue(value);

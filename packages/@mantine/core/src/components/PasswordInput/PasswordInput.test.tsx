@@ -1,3 +1,4 @@
+import { use } from 'react';
 import userEvent from '@testing-library/user-event';
 import {
   inputDefaultProps,
@@ -6,7 +7,7 @@ import {
   screen,
   tests,
 } from '@mantine-tests/core';
-import { __InputStylesNames } from '../Input';
+import { __InputStylesNames, InputWrapperContext } from '../Input';
 import { PasswordInput, PasswordInputProps } from './PasswordInput';
 
 const defaultProps: PasswordInputProps = {
@@ -183,6 +184,56 @@ describe('@mantine/core/PasswordInput', () => {
     expect(toggleButton).toBeDisabled();
   });
 
+  it('excludes visibility toggle button from tab order by default', () => {
+    render(<PasswordInput label="Password" />);
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+    expect(toggleButton).toHaveAttribute('tabindex', '-1');
+  });
+
+  it('includes visibility toggle button in tab order with visibilityToggleFocusable prop', () => {
+    render(<PasswordInput label="Password" visibilityToggleFocusable />);
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+    expect(toggleButton).toHaveAttribute('tabindex', '0');
+  });
+
+  it('allows tabIndex to be overridden via visibilityToggleButtonProps', () => {
+    render(
+      <PasswordInput
+        label="Password"
+        visibilityToggleFocusable
+        visibilityToggleButtonProps={{ tabIndex: -1 }}
+      />
+    );
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+    expect(toggleButton).toHaveAttribute('tabindex', '-1');
+  });
+
+  it('toggles visibility when Space is pressed on focused visibility toggle button', async () => {
+    const user = userEvent.setup();
+    render(<PasswordInput label="Password" visibilityToggleFocusable />);
+    const input = screen.getByLabelText('Password') as HTMLInputElement;
+    screen.getByRole('button', { name: 'Toggle password visibility' }).focus();
+
+    await user.keyboard(' ');
+    expect(input.type).toBe('text');
+
+    await user.keyboard(' ');
+    expect(input.type).toBe('password');
+  });
+
+  it('toggles visibility when Enter is pressed on focused visibility toggle button', async () => {
+    const user = userEvent.setup();
+    render(<PasswordInput label="Password" visibilityToggleFocusable />);
+    const input = screen.getByLabelText('Password') as HTMLInputElement;
+    screen.getByRole('button', { name: 'Toggle password visibility' }).focus();
+
+    await user.keyboard('{Enter}');
+    expect(input.type).toBe('text');
+
+    await user.keyboard('{Enter}');
+    expect(input.type).toBe('password');
+  });
+
   it('forwards dir to the input wrapper when it overrides parent direction (#8905)', () => {
     const { container } = render(
       <div dir="rtl">
@@ -194,5 +245,37 @@ describe('@mantine/core/PasswordInput', () => {
     const wrapper = container.querySelector('.mantine-Input-wrapper')!;
     expect(wrapper).toHaveAttribute('dir', 'ltr');
     expect(input).toHaveAttribute('dir', 'ltr');
+  });
+
+  it('sets aria-describedby from description and error', () => {
+    render(<PasswordInput label="Password" description="Description" error="Error" />);
+    const input = screen.getByLabelText('Password');
+    const describedBy = input.getAttribute('aria-describedby')!.split(/\s+/);
+    expect(describedBy).toHaveLength(2);
+    expect(describedBy.map((id) => document.getElementById(id)?.textContent)).toEqual([
+      'Error',
+      'Description',
+    ]);
+  });
+
+  it('takes aria-describedby from InputWrapperContext', () => {
+    function DescribedBy({ children }: { children: React.ReactNode }) {
+      const ctx = use(InputWrapperContext);
+      return (
+        <InputWrapperContext value={{ ...ctx, describedBy: 'field-help' }}>
+          {children}
+        </InputWrapperContext>
+      );
+    }
+
+    render(
+      <PasswordInput
+        label="Password"
+        description="Description"
+        inputContainer={(children) => <DescribedBy>{children}</DescribedBy>}
+      />
+    );
+
+    expect(screen.getByLabelText('Password')).toHaveAttribute('aria-describedby', 'field-help');
   });
 });

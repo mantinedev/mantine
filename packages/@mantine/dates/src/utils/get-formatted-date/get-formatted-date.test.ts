@@ -1,5 +1,4 @@
 import 'dayjs/locale/ru';
-
 import { DateFormatter, getFormattedDate } from './get-formatted-date';
 
 const TEST_DATES = ['2021-09-13', '2021-10-08'];

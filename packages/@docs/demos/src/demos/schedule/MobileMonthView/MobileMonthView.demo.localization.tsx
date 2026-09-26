@@ -1,6 +1,5 @@
-import 'dayjs/locale/es';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import { useState } from 'react';
 import { MobileMonthView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';

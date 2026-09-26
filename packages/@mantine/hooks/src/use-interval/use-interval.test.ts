@@ -95,6 +95,64 @@ describe('@mantine/hooks/use-interval', () => {
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
+  it('should not restart the interval when fn identity changes between renders', () => {
+    const fn = jest.fn();
+    const { result, rerender } = renderHook(() => useInterval(() => fn(), defaultTimeout));
+
+    act(() => {
+      result.current.start();
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(defaultTimeout / 2);
+    });
+    rerender();
+    act(() => {
+      jest.advanceTimersByTime(defaultTimeout / 2);
+    });
+
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(result.current.active).toBe(true);
+  });
+
+  it('should keep ticking with autoInvoke when the component re-renders faster than the interval', () => {
+    const fn = jest.fn();
+    const { result, rerender } = renderHook(() =>
+      useInterval(() => fn(), defaultTimeout, { autoInvoke: true })
+    );
+
+    for (let i = 0; i < 6; i += 1) {
+      act(() => {
+        jest.advanceTimersByTime(defaultTimeout / 4);
+      });
+      rerender();
+    }
+
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(result.current.active).toBe(true);
+  });
+
+  it('should call the latest fn after a re-render', () => {
+    const first = jest.fn();
+    const second = jest.fn();
+    const { result, rerender } = renderHook(({ fn }) => useInterval(fn, defaultTimeout), {
+      initialProps: { fn: first },
+    });
+
+    act(() => {
+      result.current.start();
+    });
+
+    rerender({ fn: second });
+
+    act(() => {
+      jest.advanceTimersByTime(defaultTimeout);
+    });
+
+    expect(second).toHaveBeenCalledTimes(1);
+    expect(first).not.toHaveBeenCalled();
+  });
+
   it('should toggle between active states', () => {
     const { advanceTimerToNextTick } = setupTimer();
 

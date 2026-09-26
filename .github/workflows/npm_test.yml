@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -27,5 +27,7 @@ jobs:
         run: npm run setup
       - name: Build public packages
         run: npm run build all
+      - name: Validate esm entry points
+        run: npm run test:esm-entrypoints
       - name: Run tests
         run: npm test

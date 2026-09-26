@@ -5,12 +5,14 @@
   --tl-radius: 1000px;
   --tl-color: var(--mantine-primary-color-filled);
 
-  &:where([data-align='left']) {
-    padding-inline-start: var(--offset);
-  }
+  &:where(:not([data-opposite])) {
+    &:where([data-align='left']) {
+      padding-inline-start: var(--offset);
+    }
 
-  &:where([data-align='right']) {
-    padding-inline-end: var(--offset);
+    &:where([data-align='right']) {
+      padding-inline-end: var(--offset);
+    }
   }
 }
 
@@ -37,25 +39,35 @@
     border-inline-start: var(--item-border);
     display: var(--timeline-line-display, none);
 
-    .root[data-align='left'] & {
+    .root:where(:not([data-opposite]))[data-align='left'] & {
       --timeline-line-start: calc(var(--tl-line-width) * -1);
       --timeline-line-end: auto;
     }
 
-    .root[data-align='right'] & {
+    .root:where(:not([data-opposite]))[data-align='right'] & {
       --timeline-line-start: auto;
       --timeline-line-end: calc(var(--tl-line-width) * -1);
     }
+
+    .root:where([data-opposite]) & {
+      --timeline-line-start: calc(50% - var(--tl-line-width) / 2);
+      --timeline-line-end: auto;
+    }
   }
 
-  .root:where([data-align='left']) & {
+  .root:where(:not([data-opposite])):where([data-align='left']) & {
     padding-inline-start: var(--offset);
     text-align: start;
   }
 
-  .root:where([data-align='right']) & {
+  .root:where(:not([data-opposite])):where([data-align='right']) & {
     padding-inline-end: var(--offset);
     text-align: end;
+  }
+
+  .root:where([data-opposite]) & {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   }
 
   @mixin where-light {
@@ -102,14 +114,22 @@
     border-color: var(--mantine-color-dark-4);
   }
 
-  .root:where([data-align='left']) & {
+  .root:where(:not([data-opposite])):where([data-align='left']) & {
     inset-inline-start: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
     inset-inline-end: auto;
   }
 
-  .root:where([data-align='right']) & {
+  .root:where(:not([data-opposite])):where([data-align='right']) & {
     inset-inline-start: auto;
     inset-inline-end: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
+  }
+
+  .root:where([data-opposite]) & {
+    position: relative;
+    inset-inline-start: unset;
+    inset-inline-end: unset;
+    grid-column: 2;
+    grid-row: 1;
   }
 
   &:where([data-with-child]) {
@@ -137,12 +157,70 @@
 }
 
 .itemBody {
-  .root:where([data-align='left']) & {
+  .root:where(:not([data-opposite])):where([data-align='left']) & {
     padding-inline-start: var(--offset);
     text-align: start;
   }
 
+  .root:where(:not([data-opposite])):where([data-align='right']) & {
+    padding-inline-end: var(--offset);
+    text-align: end;
+  }
+
+  .root:where([data-opposite]):where([data-align='left']) & {
+    grid-column: 3;
+    grid-row: 1;
+    padding-inline-start: var(--offset);
+    text-align: start;
+  }
+
+  .root:where([data-opposite]):where([data-align='right']) & {
+    grid-column: 1;
+    grid-row: 1;
+    padding-inline-end: var(--offset);
+    text-align: end;
+  }
+
+  .root:where([data-opposite]):where([data-align='left']) .item:where([data-alternate]) & {
+    grid-column: 1;
+    padding-inline-start: 0;
+    padding-inline-end: var(--offset);
+    text-align: end;
+  }
+
+  .root:where([data-opposite]):where([data-align='right']) .item:where([data-alternate]) & {
+    grid-column: 3;
+    padding-inline-end: 0;
+    padding-inline-start: var(--offset);
+    text-align: start;
+  }
+}
+
+.itemOpposite {
+  .root:where([data-align='left']) & {
+    grid-column: 1;
+    grid-row: 1;
+    padding-inline-end: var(--offset);
+    text-align: end;
+  }
+
   .root:where([data-align='right']) & {
+    grid-column: 3;
+    grid-row: 1;
+    padding-inline-start: var(--offset);
+    text-align: start;
+  }
+
+  .root:where([data-align='left']) .item:where([data-alternate]) & {
+    grid-column: 3;
+    padding-inline-end: 0;
+    padding-inline-start: var(--offset);
+    text-align: start;
+  }
+
+  .root:where([data-align='right']) .item:where([data-alternate]) & {
+    grid-column: 1;
+    padding-inline-start: 0;
     padding-inline-end: var(--offset);
     text-align: end;
   }

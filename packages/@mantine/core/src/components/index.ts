@@ -19,6 +19,7 @@ export * from '../utils/Floating';
 
 // Regular components
 export * from './Accordion';
+export * from './ActionBar';
 export * from './Affix';
 export * from './Alert';
 export * from './Anchor';
@@ -34,6 +35,7 @@ export * from './Breadcrumbs';
 export * from './Burger';
 export * from './Button';
 export * from './Card';
+export * from './Cascader';
 export * from './Center';
 export * from './Checkbox';
 export * from './Chip';

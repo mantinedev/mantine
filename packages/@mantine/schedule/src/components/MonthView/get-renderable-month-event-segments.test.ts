@@ -1,5 +1,5 @@
-import { DateStringValue, MonthPositionedEventData } from '../../types';
 import { testUtils } from '../../test-utils';
+import { DateStringValue, MonthPositionedEventData } from '../../types';
 import { getRenderableMonthEventSegments } from './get-renderable-month-event-segments';
 
 const week: DateStringValue[] = [

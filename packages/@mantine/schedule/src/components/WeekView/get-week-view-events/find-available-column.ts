@@ -1,11 +1,16 @@
-import { DateStringValue, ScheduleEventData } from '../../../types';
-import { isAllDayEvent, isEventsOverlap } from '../../../utils';
+import { ScheduleEventData } from '../../../types';
+import { isEventsOverlap } from '../../../utils';
 
-interface FindAvailableColumnInput {
-  columns: Map<string, ScheduleEventData[]>;
+/** An event stored in a positioning column together with its precomputed all-day flag. */
+export interface ColumnEvent {
   event: ScheduleEventData;
   allDay: boolean;
-  allWeekDays: DateStringValue[];
+}
+
+interface FindAvailableColumnInput {
+  columns: Map<string, ColumnEvent[]>;
+  event: ScheduleEventData;
+  allDay: boolean;
 }
 
 function columnHasConflict({
@@ -13,7 +18,6 @@ function columnHasConflict({
   columnIndex,
   event,
   allDay,
-  allWeekDays,
 }: FindAvailableColumnInput & { columnIndex: number }): boolean {
   const columnKey = `col-${columnIndex}`;
   if (!columns.has(columnKey)) {
@@ -22,15 +26,14 @@ function columnHasConflict({
 
   const columnEvents = columns.get(columnKey)!;
 
-  return columnEvents.some((e) => {
-    const eAllDay = allWeekDays.some((day) => isAllDayEvent({ event: e, date: day }));
-    const hasTimeConflict = isEventsOverlap(e, event);
+  return columnEvents.some((columnEvent) => {
+    const hasTimeConflict = isEventsOverlap(columnEvent.event, event);
 
-    if (allDay && eAllDay) {
+    if (allDay && columnEvent.allDay) {
       return hasTimeConflict;
     }
 
-    if (allDay || eAllDay) {
+    if (allDay || columnEvent.allDay) {
       return false;
     }
 

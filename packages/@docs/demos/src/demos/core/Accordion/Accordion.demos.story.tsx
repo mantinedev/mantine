@@ -13,6 +13,11 @@ export const Demo_disabled = {
   render: renderDemo(demos.disabled),
 };
 
+export const Demo_disableCollapse = {
+  name: '⭐ Demo: disableCollapse',
+  render: renderDemo(demos.disableCollapse),
+};
+
 export const Demo_chevron = {
   name: '⭐ Demo: chevron',
   render: renderDemo(demos.chevron),

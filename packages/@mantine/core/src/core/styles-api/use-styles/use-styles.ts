@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useRef } from 'react';
 import type { MantineStyleProp } from '../../Box';
 import { FactoryPayload } from '../../factory';
 import {
@@ -7,6 +7,7 @@ import {
   useMantineTheme,
   useMantineWithStaticClasses,
 } from '../../MantineProvider';
+import { shallowEqual } from '../../utils/shallow-equal/shallow-equal';
 import { PartialVarsResolver, VarsResolver } from '../create-vars-resolver/create-vars-resolver';
 import {
   Attributes,
@@ -37,6 +38,7 @@ export interface UseStylesInput<Payload extends FactoryPayload> {
   vars?: PartialVarsResolver<Payload>;
   varsResolver?: VarsResolver<Payload>;
   attributes?: Attributes<Payload>;
+  stable?: boolean;
 }
 
 export type GetStylesApi<Payload extends FactoryPayload> = (
@@ -61,6 +63,7 @@ export function useStyles<Payload extends FactoryPayload>({
   vars,
   varsResolver,
   attributes,
+  stable,
 }: UseStylesInput<Payload>): GetStylesApi<Payload> {
   const theme = useMantineTheme();
   const classNamesPrefix = useMantineClassNamesPrefix();
@@ -108,7 +111,7 @@ export function useStyles<Payload extends FactoryPayload>({
 
   const resolvedRootStyle = resolveStyle({ style, theme });
 
-  return (selector, options) => ({
+  const getStyles: GetStylesApi<Payload> = (selector, options) => ({
     ...attributes?.[selector],
 
     className: getClassName({
@@ -144,4 +147,42 @@ export function useStyles<Payload extends FactoryPayload>({
       resolvedRootStyle,
     }),
   });
+
+  return useStableGetStyles(getStyles, !!stable, [
+    theme,
+    classNamesPrefix,
+    withStaticClasses,
+    headless,
+    withStylesTransform ? props : null,
+    classes,
+    unstyled,
+    className,
+    rootSelector,
+    attributes,
+    stylesCtx,
+    resolvedClassNames,
+    resolvedThemeClassNames,
+    resolvedComponentStyles,
+    resolvedThemeStyles,
+    resolvedVars,
+    resolvedRootStyle,
+  ]);
+}
+
+function useStableGetStyles<Payload extends FactoryPayload>(
+  getStyles: GetStylesApi<Payload>,
+  stable: boolean,
+  deps: unknown[]
+): GetStylesApi<Payload> {
+  const cache = useRef<{ deps: unknown[]; getStyles: GetStylesApi<Payload> }>(null);
+
+  if (!stable) {
+    return getStyles;
+  }
+
+  if (!cache.current || !shallowEqual(cache.current.deps, deps, 3)) {
+    cache.current = { deps, getStyles };
+  }
+
+  return cache.current.getStyles;
 }

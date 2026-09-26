@@ -11,6 +11,8 @@ TypeScript 7.0 is the native Go compiler rewrite ("Corsa" / `tsgo`), not an incr
 
 Environment: `typescript` 7.0.2 (latest stable). `typescript@next` is `7.1.0-dev.*`. Node 26.x.
 
+Status as of 2026-09-26: TypeScript 7.1 is still unreleased (`next` = `7.1.0-dev.20260925.1`), `react-docgen-typescript` is still at 2.4.0 (last published 2025-06-10), and styleguidist/react-docgen-typescript#538 is still open. Both shims are still required.
+
 ## Problem 1 — Compound-component types break for `export function` components
 
 **Symptom:** ~288 typecheck errors under TS7, e.g. `Property 'Target' does not exist on type '{ (props): Element; displayName: string; … }'` for `Popover.Target`, `Popover.Dropdown`, `HoverCard.Group`, etc.
@@ -74,7 +76,9 @@ This is the umbrella cause for problems 2a and 2b. Under TS7, `require('typescri
 
 **Fix applied (temporary shim):** pinned a private classic compiler under an alias and imported from it.
 
-- `package.json`: added `"typescript-api": "npm:typescript@6.0.3"`
+- `package.json`: added `"typescript-api": "npm:@typescript/typescript6@6.0.2"`
+
+**Do not alias `npm:typescript@6.x` here.** The `typescript` 6.x package also declares a `tsc` bin, so Yarn links `node_modules/.bin/tsc` to whichever package it links last — in practice the 6.0.3 alias. That made `npm run typecheck` silently run TS 6.0.3 instead of 7.0.2. The official `@typescript/typescript6` compat package exposes its binary as `tsc6`, so `tsc` stays on TS 7. Check with `npx tsc --version` after any install.
 - `scripts/list.ts`: `import ts from 'typescript'` → `import ts from 'typescript-api'`
 
 **Candidate to remove when:** TS 7.1 restores the API (could then import from `typescript` again, if the API shape matches), or we rewrite against `typescript/unstable/*`.
@@ -131,11 +135,11 @@ Options:
 - **TypeStrong/typedoc#3098** — parallel signal for ecosystem readiness.
 - Problem 1 is **not** on this list — it is intentional TS7 behavior and our fix is permanent regardless of the compiler version.
 
-## Verification snapshot (current branch, on TS 7.0.2)
+## Verification snapshot (2026-09-26, after merging master, on TS 7.0.2)
 
 - `npm run typecheck` (root + both docs apps): 0 errors
 - `npm run build` (full monorepo): pass
-- `npm run jest` (Popover + HoverCard): 86/86
+- `npm run jest` (Popover + HoverCard): 125/125
 - `npm run docs:docgen` + `docs:count`: pass (with the shim)
 - `npm run list @mantine/core`: works (with the alias)
 - oxlint + syncpack: clean

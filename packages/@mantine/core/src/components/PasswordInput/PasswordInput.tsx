@@ -1,3 +1,4 @@
+import { use } from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
@@ -14,7 +15,13 @@ import {
   useStyles,
 } from '../../core';
 import { ActionIcon } from '../ActionIcon';
-import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
+import {
+  __BaseInputProps,
+  __InputStylesNames,
+  Input,
+  InputVariant,
+  InputWrapperContext,
+} from '../Input';
 import { InputBase } from '../InputBase';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
 import classes from './PasswordInput.module.css';
@@ -40,6 +47,9 @@ export interface PasswordInputProps
   /** Props passed down to the visibility toggle button */
   visibilityToggleButtonProps?: Record<string, any>;
 
+  /** If set, the visibility toggle button is focusable with keyboard @default `false` */
+  visibilityToggleFocusable?: boolean;
+
   /** If set, the input value is visible */
   visible?: boolean;
 
@@ -60,6 +70,7 @@ export type PasswordInputFactory = Factory<{
 
 const defaultProps = {
   visibilityToggleIcon: PasswordToggleIcon,
+  visibilityToggleFocusable: false,
   size: 'sm',
 } satisfies Partial<PasswordInputProps>;
 
@@ -69,6 +80,11 @@ const varsResolver = createVarsResolver<PasswordInputFactory>((_, { size }) => (
     '--psi-button-size': getSize(size, 'psi-button-size'),
   },
 }));
+
+function PasswordInputField(props: React.ComponentProps<'input'>) {
+  const ctx = use(InputWrapperContext);
+  return <input {...props} aria-describedby={ctx?.describedBy} />;
+}
 
 export const PasswordInput = factory<PasswordInputFactory>((_props) => {
   const props = useProps(['Input', 'InputWrapper', 'PasswordInput'], defaultProps, _props);
@@ -107,6 +123,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
     onVisibilityChange,
     visibilityToggleIcon: VisibilityToggleIcon,
     visibilityToggleButtonProps,
+    visibilityToggleFocusable,
     rightSectionProps,
     leftSectionProps,
     leftSectionPointerEvents,
@@ -153,11 +170,6 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
   const errorId = errorProps?.id || `${uuid}-error`;
   const successId = successProps?.id || `${uuid}-success`;
   const descriptionId = descriptionProps?.id || `${uuid}-description`;
-  const hasError = !!error && typeof error !== 'boolean';
-  const hasSuccess = !!success && typeof success !== 'boolean';
-  const hasDescription = !!description;
-  const _describedBy = `${hasError ? errorId : ''} ${hasSuccess && !hasError ? successId : ''} ${hasDescription ? descriptionId : ''}`;
-  const describedBy = _describedBy.trim().length > 0 ? _describedBy.trim() : undefined;
 
   const visibilityToggleButton = (
     <ActionIcon<'button'>
@@ -165,7 +177,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
       disabled={disabled}
       radius={radius}
       aria-pressed={_visible}
-      tabIndex={-1}
+      tabIndex={visibilityToggleFocusable ? 0 : -1}
       aria-label="Toggle password visibility"
       {...visibilityToggleButtonProps}
       variant={visibilityToggleButtonProps?.variant ?? 'subtle'}
@@ -183,7 +195,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
       }}
       onKeyDown={(event) => {
         visibilityToggleButtonProps?.onKeyDown?.(event);
-        if (event.key === ' ') {
+        if (event.key === ' ' || event.key === 'Enter') {
           event.preventDefault();
           toggleVisibility();
         }
@@ -248,7 +260,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
         withSuccessStyles={withSuccessStyles}
         attributes={attributes}
       >
-        <input
+        <PasswordInputField
           required={required}
           data-invalid={!!error || undefined}
           data-with-left-section={!!leftSection || undefined}
@@ -257,7 +269,6 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
           id={uuid}
           dir={dir}
           {...rest}
-          aria-describedby={describedBy}
           autoComplete={rest.autoComplete || 'off'}
           type={_visible ? 'text' : 'password'}
         />

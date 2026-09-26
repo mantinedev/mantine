@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFormActions } from './actions';
 import { getInputOnChange } from './get-input-on-change';
 import { useFormErrors } from './hooks/use-form-errors/use-form-errors';
@@ -8,6 +8,7 @@ import { useFormValidating } from './hooks/use-form-validating/use-form-validati
 import { useFormValues } from './hooks/use-form-values/use-form-values';
 import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
 import { getDataPath, getPath } from './paths';
+import { LooseKeys } from './paths.types';
 import {
   FormErrors,
   FormRulesRecord,
@@ -86,14 +87,23 @@ export function useForm<
   const [fieldKeys, setFieldKeys] = useState<Record<string, number>>({});
   const [submitting, setSubmitting] = useState(false);
   const validateGeneration = useRef(0);
+  const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+
+  useEffect(() => {
+    return () => {
+      Object.values(timers.current).forEach(clearTimeout);
+    };
+  }, []);
 
   const reset: Reset = useCallback(() => {
+    const previousValues = $values.refValues.current;
     $values.resetValues();
     $errors.clearErrors();
     $status.resetDirty();
     $status.resetTouched();
     $validating.clearValidating();
     mode === 'uncontrolled' && setFormKey((key) => key + 1);
+    $watch.notifyWatchSubscribers(previousValues);
   }, []);
 
   const handleValuesChanges = useCallback(
@@ -115,8 +125,6 @@ export function useForm<
   );
 
   const debouncedValidateField = useMemo(() => {
-    const timers: Record<string, ReturnType<typeof setTimeout>> = {};
-
     const handleValidation = (path: string) => {
       const signal = $validating.getAbortSignal(path);
       const result = validateFieldValue(
@@ -153,9 +161,9 @@ export function useForm<
     };
 
     return (path: string) => {
-      clearTimeout(timers[path]);
+      clearTimeout(timers.current[path]);
       if (validateDebounce > 0) {
-        timers[path] = setTimeout(() => handleValidation(path), validateDebounce);
+        timers.current[path] = setTimeout(() => handleValidation(path), validateDebounce);
       } else {
         handleValidation(path);
       }
@@ -406,6 +414,7 @@ export function useForm<
   const resetField = useCallback(
     (path: PropertyKey) => {
       $values.resetField(path, [
+        ...$watch.getFieldSubscribers(path as LooseKeys<Values>),
         mode !== 'controlled'
           ? () =>
               setFieldKeys((keys) => ({
@@ -420,6 +429,7 @@ export function useForm<
 
   const form = {
     watch: $watch.watch,
+    useWatchValue: $watch.useWatchValue,
 
     initialized: $values.initialized.current,
     values: mode === 'uncontrolled' ? $values.refValues.current : $values.stateValues,

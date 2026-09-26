@@ -25,3 +25,11 @@ Control animation speed with `animationDuration` prop (in milliseconds, default 
 Use `timingFunction` prop to change the CSS timing function (default is `ease`):
 
 <Demo data={RollingNumberDemos.duration} />
+
+## Text selection and copying
+
+Each animated digit is rendered as a stack of all possible values which is clipped to
+display only the current digit. To keep the hidden digits out of the clipboard, the
+animated part is not selectable: text selection is handled by a transparent copy of the
+formatted value rendered on top of the digits. Selecting and copying `RollingNumber`
+always produces the value as it is displayed, for example `$ 1,234.56 USD`.

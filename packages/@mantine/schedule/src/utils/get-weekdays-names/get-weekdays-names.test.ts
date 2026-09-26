@@ -1,6 +1,5 @@
-import 'dayjs/locale/ru';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { getWeekdaysNames } from './get-weekdays-names';
 
 describe('@mantine/schedule/get-weekday-names', () => {

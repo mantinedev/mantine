@@ -22,6 +22,28 @@ Set `withWeekDays={false}` to hide the weekday names row in each month.
 
 <Demo data={YearViewDemos.withoutWeekDays} />
 
+## Render day
+
+Use `renderDay` to replace the entire content of a day cell. The function is called
+with the day date in `YYYY-MM-DD` format and the events grouped on that day – the same
+list that is used to render the default indicators, but without the three items limit.
+This makes it possible to display counts, badges or icons instead of the default dots.
+
+Note that when `renderDay` is set, the default event indicators are not rendered –
+the cell displays exactly what the function returns. The day cell has
+`position: relative`, so absolutely positioned content is placed relative to it.
+
+<Demo data={YearViewDemos.renderDay} />
+
+## Hide weekend days
+
+Set `withWeekendDays={false}` to hide weekend days. Every month grid shrinks to
+the remaining columns and events that fall only on hidden days are not displayed.
+The days that are considered weekend are controlled by the `weekendDays` prop
+(or [DatesProvider](/dates/getting-started/#datesprovider), `[0, 6]` by default).
+
+<Demo data={YearViewDemos.withoutWeekendDays} />
+
 ## Hide outside days
 
 Set `withOutsideDays={false}` to hide days from adjacent months.

@@ -10,12 +10,13 @@ export default Layout(MDX_DATA.useClickOutside);
 
 ## API
 
-The `use-click-outside` hook accepts 3 arguments:
+The `use-click-outside` hook accepts 5 arguments:
 
 - `handler` – function that is called when clicking outside
 - `events` – optional list of events that trigger outside click, `['mousedown', 'touchstart']` by default
 - `nodes` - optional list of nodes that should not trigger outside click event
 - `enabled` - optional boolean to dynamically enable/disable the listener, `true` by default
+- `capture` - optional boolean to register listeners in the capture phase, `false` by default
 
 The hook returns a `ref` object that must be passed to the element
 based on which outside clicks should be captured.
@@ -69,6 +70,29 @@ function Demo() {
 }
 ```
 
+## Capture phase
+
+By default, `use-click-outside` listens to events in the bubble phase. If an element
+calls `event.stopPropagation()`, the event never reaches the document and the handler
+is not called. Pass `true` as the fifth argument to listen in the capture phase instead,
+so the handler is called before any other element can stop the event:
+
+```tsx
+import { useClickOutside } from '@mantine/hooks';
+
+function Demo() {
+  const ref = useClickOutside(
+    () => console.log('Clicked outside'),
+    null,
+    undefined,
+    true,
+    true
+  );
+
+  return <div ref={ref} />;
+}
+```
+
 ## Set ref type
 
 ```tsx
@@ -86,6 +110,7 @@ function useClickOutside<T extends HTMLElement = any>(
   handler: (event: MouseEvent | TouchEvent) => void,
   events?: string[] | null,
   nodes?: (HTMLElement | null)[],
-  enabled?: boolean
+  enabled?: boolean,
+  capture?: boolean
 ): React.RefObject<T>;
 ```

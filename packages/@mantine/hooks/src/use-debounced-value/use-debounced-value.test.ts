@@ -106,6 +106,52 @@ describe('useDebouncedValue', () => {
       expect(result.current[0]).toBe('c'); // queued value applied after cooldown
     });
 
+    test('a burst of updates emits only the leading and the final value', () => {
+      const emitted: string[] = [];
+      const { result, rerender } = renderHook(
+        ({ value }) => {
+          const debounced = useDebouncedValue(value, 500, { leading: true });
+          if (emitted[emitted.length - 1] !== debounced[0]) {
+            emitted.push(debounced[0]);
+          }
+          return debounced;
+        },
+        { initialProps: { value: '' } }
+      );
+
+      rerender({ value: 'a' });
+      act(() => jest.advanceTimersByTime(100));
+      rerender({ value: 'ab' });
+      act(() => jest.advanceTimersByTime(100));
+      rerender({ value: 'abc' });
+
+      act(() => jest.advanceTimersByTime(1000));
+
+      expect(result.current[0]).toBe('abc');
+      expect(emitted).toStrictEqual(['', 'a', 'abc']);
+    });
+
+    test('does not emit a stale value after the burst has settled', () => {
+      const { result, rerender } = renderHook(
+        ({ value }) => useDebouncedValue(value, 500, { leading: true }),
+        {
+          initialProps: { value: '' },
+        }
+      );
+
+      rerender({ value: 'a' });
+      act(() => jest.advanceTimersByTime(100));
+      rerender({ value: 'ab' });
+      act(() => jest.advanceTimersByTime(100));
+      rerender({ value: 'abc' });
+
+      act(() => jest.advanceTimersByTime(500));
+      expect(result.current[0]).toBe('abc');
+
+      act(() => jest.advanceTimersByTime(1000));
+      expect(result.current[0]).toBe('abc');
+    });
+
     test('the cooldown is reset after `wait` milliseconds', () => {
       const { result, rerender } = renderHook(
         ({ value }) => useDebouncedValue(value, 200, { leading: true }),

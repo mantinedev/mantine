@@ -67,3 +67,8 @@ export const Demo_tabularNums = {
   name: '⭐ Demo: tabularNums',
   render: renderDemo(demos.tabularNums),
 };
+
+export const Demo_virtualized = {
+  name: '⭐ Demo: virtualized',
+  render: renderDemo(demos.virtualized),
+};

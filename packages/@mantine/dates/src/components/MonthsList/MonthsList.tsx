@@ -11,7 +11,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { ControlsGroupSettings, DateStringValue } from '../../types';
+import { ControlsGroupSettings, DateLabelFormat, DateStringValue } from '../../types';
 import { toDateString } from '../../utils';
 import { useDatesContext } from '../DatesProvider';
 import { PickerControl, PickerControlProps } from '../PickerControl';
@@ -27,8 +27,8 @@ export type MonthsListStylesNames =
   | 'monthsListControl';
 
 export interface MonthsListSettings extends ControlsGroupSettings {
-  /** `dayjs` format for months list */
-  monthsListFormat?: string;
+  /** `dayjs` format for months list or a function that returns month label based on the date value @default "MMM" */
+  monthsListFormat?: DateLabelFormat;
 
   /** Passes props down month picker control */
   getMonthControlProps?: (date: DateStringValue) => Partial<PickerControlProps> & DataAttributes;
@@ -170,7 +170,9 @@ export const MonthsList = factory<MonthsListFactory>((_props) => {
             tabIndex={__preventFocus || !isMonthInTabOrder ? -1 : 0}
           >
             {controlProps?.children ??
-              dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat)}
+              (typeof monthsListFormat === 'function'
+                ? monthsListFormat(month)
+                : dayjs(month).locale(ctx.getLocale(locale)).format(monthsListFormat))}
           </PickerControl>
         </td>
       );

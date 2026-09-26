@@ -1,5 +1,4 @@
 import 'dayjs/locale/es';
-
 import { DayView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, regularEvents } from './_data';
