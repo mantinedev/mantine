@@ -71,18 +71,6 @@ currently mounted, so they reflect what is on the screen rather than a static li
 The controller is typed as `AccordionController<Multiple>` and its options as
 `AccordionControllerOptions<Multiple>`, both exported from `@mantine/core`.
 
-## order prop
-
-The `order` prop (used in all demos on this page) sets the heading level for the `Accordion.Control` root element.
-According to [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/),
-it is required to use `h2`-`h6` heading levels to fit correctly within the outline of the page.
-
-All examples on this page use `order={3}`, which means that all `button` elements of
-`Accordion.Control` are wrapped with an `h3` tag (`h2` tags are used for the documentation sections).
-
-The `order` prop is not enforced by the library but is required if your application
-must meet accessibility standards.
-
 ## Change chevron
 
 Use the `chevron` prop to change the chevron icon. When `chevron` is set,
@@ -281,6 +269,43 @@ type DefaultAccordionProps = AccordionProps<false>;
 ## Accessibility
 
 The Accordion component implements the [WAI-ARIA accessibility pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
+Each `Accordion.Control` is a `button` with `aria-expanded` and `aria-controls` attributes,
+and each `Accordion.Panel` is a `region` labelled by its control.
+
+## order prop
+
+To make Accordion fully accessible, set the `order` prop. It sets the heading level
+of the element that wraps the `button` of each `Accordion.Control`.
+According to [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/),
+each accordion header must be wrapped with an `h2`-`h6` heading that fits correctly
+within the outline of the page.
+
+All examples on this page use `order={3}`, which means that all `button` elements of
+`Accordion.Control` are wrapped with an `h3` tag (`h2` tags are used for the documentation sections).
+
+The `order` prop is not enforced by the library, without it controls are rendered without
+a heading wrapper. Set it if your application must meet accessibility standards.
+
+## Reduced motion
+
+Accordion respects the `respectReducedMotion` [theme](/theming/theme-object/) setting.
+It is `false` by default. When it is set to `true` and the user has enabled reduced motion
+in the operating system settings (`prefers-reduced-motion: reduce` media query):
+
+- Panels are opened and closed instantly, `transitionDuration` prop is ignored
+- Chevron is rotated without transition
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  respectReducedMotion: true,
+});
+
+function Demo() {
+  return <MantineProvider theme={theme}>{/* Your app here */}</MantineProvider>;
+}
+```
 
 ## Keyboard interactions
 

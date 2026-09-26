@@ -11,7 +11,7 @@ function Demo() {
     <Accordion variant="filled" defaultValue="photos" order={3}>
       <Accordion.Item value="photos">
         <Accordion.Control
-          icon={<ImageIcon size={22} color="var(--mantine-color-dimmed)" />}
+          icon={<ImageIcon size={22} color="var(--mantine-color-red-7)" />}
         >
           Recent photos
         </Accordion.Control>
@@ -20,7 +20,7 @@ function Demo() {
 
       <Accordion.Item value="print">
         <Accordion.Control
-          icon={<PrinterIcon size={22} color="var(--mantine-color-dimmed)" />}
+          icon={<PrinterIcon size={22} color="var(--mantine-color-blue-6)" />}
         >
           Print photos
         </Accordion.Control>
@@ -29,9 +29,9 @@ function Demo() {
 
       <Accordion.Item value="camera">
         <Accordion.Control
-          icon={<CameraIcon size={22} color="var(--mantine-color-dimmed)" />}
+          icon={<CameraIcon size={22} color="var(--mantine-color-teal-7)" />}
         >
-          CameraIcon settings
+          Camera settings
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
@@ -59,7 +59,7 @@ function Demo() {
 
       <Accordion.Item value="camera">
         <Accordion.Control icon={<CameraIcon size={22} color="var(--mantine-color-teal-7)" />}>
-          CameraIcon settings
+          Camera settings
         </Accordion.Control>
         <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>

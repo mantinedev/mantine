@@ -18,7 +18,7 @@ export const AccordionStylesApi: StylesApiData<AccordionFactory> = {
     root: {
       '--accordion-chevron-size': 'Controls chevron container element `width` and `min-width`',
       '--accordion-radius': 'Controls `border-radius` in various elements, depending on variant',
-      '--accordion-transition-duration': 'Controls all animations `transition-duration`',
+      '--accordion-transition-duration': 'Controls chevron rotation `transition-duration`',
     },
   },
 

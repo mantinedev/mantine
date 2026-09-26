@@ -90,7 +90,11 @@ export const AccordionControl = factory<AccordionControlFactory>((props) => {
     >
       <Box
         component="span"
-        mod={{ rotate: !ctx.disableChevronRotation && isActive, position: ctx.chevronPosition }}
+        mod={{
+          rotate: !ctx.disableChevronRotation && isActive,
+          position: ctx.chevronPosition,
+          'reduce-motion': true,
+        }}
         {...ctx.getStyles('chevron', { classNames, styles })}
       >
         {chevron || ctx.chevron}
