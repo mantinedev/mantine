@@ -48,7 +48,6 @@
 
 .body {
   padding: var(--mb-padding, var(--mantine-spacing-md));
-  padding-top: var(--mb-padding, var(--mantine-spacing-md));
 
   &:where(:not(:only-child)) {
     padding-top: 0;

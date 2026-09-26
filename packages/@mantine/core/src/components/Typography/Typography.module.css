@@ -139,8 +139,9 @@
     padding: var(--kbd-padding);
     font-size: var(--kbd-fz);
     border-radius: var(--mantine-radius-sm);
-    border: 1px solid;
-    border-bottom-width: 3px;
+    border-width: 1px 1px 3px;
+    border-style: solid;
+    border-color: currentColor;
 
     @mixin where-light {
       border-color: var(--mantine-color-gray-3);
@@ -207,18 +208,21 @@
     }
 
     & :where(thead th) {
-      border-bottom: 1px solid;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
       border-color: var(--table-border-color);
     }
 
     & :where(tfoot th) {
-      border-top: 1px solid;
+      border-top-width: 1px;
+      border-top-style: solid;
       border-color: var(--table-border-color);
     }
 
     & :where(td) {
       padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
-      border-bottom: 1px solid;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
       border-color: var(--table-border-color);
       font-size: var(--mantine-font-size-sm);
     }
