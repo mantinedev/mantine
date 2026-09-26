@@ -1,6 +1,10 @@
 .root {
   margin-top: calc(var(--mantine-spacing-xl) * 1.5);
   margin-bottom: var(--mantine-spacing-lg);
+  padding: var(--mantine-spacing-xl) rem(38px);
+  border-start-end-radius: var(--mantine-radius-md);
+  border-end-end-radius: var(--mantine-radius-md);
+  background-color: light-dark(alpha(var(--bq-bd), 0.07), alpha(var(--bq-bd), 0.06));
 
   & > p {
     line-height: 1.65;
