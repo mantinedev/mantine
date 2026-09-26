@@ -32,6 +32,7 @@ import {
   type ActionIconGroupSectionFactory,
 } from './ActionIconGroupSection/ActionIconGroupSection';
 import classes from './ActionIcon.module.css';
+
 export type ActionIconVariant =
   | 'filled'
   | 'light'
@@ -43,6 +44,7 @@ export type ActionIconVariant =
   | 'gradient';
 
 export type ActionIconStylesNames = 'root' | 'loader' | 'icon';
+
 export type ActionIconCssVariables = {
   root:
     | '--ai-radius'

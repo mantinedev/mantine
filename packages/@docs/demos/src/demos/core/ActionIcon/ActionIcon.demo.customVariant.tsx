@@ -1,4 +1,4 @@
-import { HeartIcon } from '@phosphor-icons/react';
+import { FingerprintIcon, HeartIcon } from '@phosphor-icons/react';
 import { ActionIcon, createTheme, Group, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './ActionIcon.demo.customVariant.module.css';
@@ -21,10 +21,10 @@ function Demo() {
     <MantineProvider theme={theme}>
       <Group justify="center">
         <ActionIcon size="xl" variant="danger" aria-label="Danger variant">
-          <HeartIcon />
+          <HeartIcon size={22} />
         </ActionIcon>
         <ActionIcon size="xl" variant="primary" aria-label="Primary variant">
-          <HeartIcon />
+          <FingerprintIcon size={22} />
         </ActionIcon>
       </Group>
     </MantineProvider>
@@ -35,13 +35,14 @@ function Demo() {
 const cssCode = `
 .root {
   &[data-variant='danger'] {
-    background-color: var(--mantine-color-red-9);
+    background-color: var(--mantine-color-red-8);
     color: var(--mantine-color-red-0);
   }
 
   &[data-variant='primary'] {
     background: linear-gradient(45deg, #4b6cb7 10%, #253b67 90%);
     color: var(--mantine-color-white);
+    border-width: 0;
   }
 }
 `;
@@ -59,10 +60,10 @@ function Demo() {
     <MantineThemeProvider theme={theme}>
       <Group justify="center">
         <ActionIcon size="xl" variant="danger" aria-label="Danger variant">
-          <HeartIcon />
+          <HeartIcon size={22} />
         </ActionIcon>
         <ActionIcon size="xl" variant="primary" aria-label="Primary variant">
-          <HeartIcon />
+          <FingerprintIcon size={22} />
         </ActionIcon>
       </Group>
     </MantineThemeProvider>
