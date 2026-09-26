@@ -56,7 +56,7 @@ export interface ActionBarProps
   /** `aria-label` of the actions group, `'Actions'` by default */
   'aria-label'?: string;
 
-  /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node, `false` by default */
+  /** If set, the action bar is kept in the DOM when closed. React `Activity` is used to preserve its state while it is hidden, `false` by default */
   keepMounted?: boolean;
 
   children: React.ReactNode;
@@ -140,21 +140,9 @@ export const ActionBar = factory<ActionBarFactory>((_props) => {
       withinPortal={withinPortal}
       portalProps={portalProps}
       unstyled={unstyled}
-      // The default position is anchored to both edges, so the bar is a full width fixed
-      // element. Without this it shifts by the scrollbar width whenever a Modal or Drawer
-      // locks scrolling – which is exactly the flow ActionBar exists for (select rows, run a
-      // bulk action, confirm it in a modal).
       className={RemoveScroll.classNames.fullWidth}
     >
-      {/* `keepMountedMode` is pinned to `display-none`: the documented contract is that the
-          bar stays in the DOM and is merely hidden, and `Transition`'s default `activity`
-          mode tears down the effects of everything inside it instead. */}
-      <Transition
-        keepMounted={keepMounted}
-        keepMountedMode="display-none"
-        mounted={opened}
-        {...transitionProps}
-      >
+      <Transition keepMounted={keepMounted} mounted={opened} {...transitionProps}>
         {(transitionStyles) => (
           <ActionBarProvider value={{ onClose, getStyles, unstyled }}>
             <Paper
