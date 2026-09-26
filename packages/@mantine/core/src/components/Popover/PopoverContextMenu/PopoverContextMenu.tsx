@@ -43,3 +43,7 @@ export function PopoverContextMenu(props: PopoverContextMenuProps) {
 }
 
 PopoverContextMenu.displayName = '@mantine/core/PopoverContextMenu';
+
+export namespace PopoverContextMenu {
+  export type Props = PopoverContextMenuProps;
+}
