@@ -73,4 +73,22 @@ describe('@mantine/core/CheckboxGroup', () => {
     expect(screen.getAllByRole('checkbox')[0]).not.toBeChecked();
     expect(screen.getAllByRole('checkbox')[2]).not.toBeDisabled();
   });
+
+  it('links group to the label with aria-labelledby only when label is rendered', () => {
+    const { rerender } = render(
+      <CheckboxGroup label="Group label">
+        <Checkbox value="a" label="A" />
+      </CheckboxGroup>
+    );
+    expect(screen.getByRole('group')).toHaveAccessibleName('Group label');
+
+    rerender(
+      <>
+        <CheckboxGroup>
+          <Checkbox value="a" label="A" />
+        </CheckboxGroup>
+      </>
+    );
+    expect(screen.getByRole('group')).not.toHaveAttribute('aria-labelledby');
+  });
 });
