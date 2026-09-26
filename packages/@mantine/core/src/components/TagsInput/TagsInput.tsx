@@ -133,7 +133,7 @@ export interface TagsInputProps
   /** If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false @category behavior */
   withPillsReorder?: boolean;
 
-  /** Store returned by the `useTagsInput` hook. When provided, value, search and dropdown state and tag submission rules are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen`, `onDropdownClose`, `maxTags`, `onMaxTags`, `allowDuplicates`, `isDuplicate`, `onDuplicate` and `splitChars` props are ignored. The store is also passed to the underlying `Combobox`, `comboboxProps.store` is ignored @category state */
+  /** Store returned by the `useTagsInput` hook. When provided, value, search and dropdown state and tag submission rules are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen`, `onDropdownClose`, `maxTags`, `onMaxTags`, `allowDuplicates`, `isDuplicate`, `onDuplicate` and `splitChars` props are ignored. The store is also passed to the underlying `Combobox`. A `store` passed in `comboboxProps` is always ignored @category state */
   store?: TagsInputStore;
 }
 

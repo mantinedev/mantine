@@ -28,4 +28,10 @@ describe('@mantine/dates/getDaysInMonth', () => {
   it('returns 31 when both month and year are null', () => {
     expect(getDaysInMonth(null, null)).toBe(31);
   });
+
+  it('returns the longest length of the month when year is not complete', () => {
+    expect(getDaysInMonth(2, 2)).toBe(29);
+    expect(getDaysInMonth(2, 202)).toBe(29);
+    expect(getDaysInMonth(4, 20)).toBe(30);
+  });
 });

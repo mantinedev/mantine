@@ -68,31 +68,31 @@ export interface CalendarController {
   /** Sets the displayed level, clamped to `minLevel`/`maxLevel` of the associated `Calendar` */
   setLevel: (level: CalendarLevel) => void;
 
-  /** Moves the displayed date forward by one step of the current level, no-op until a `Calendar` is mounted */
+  /** Moves the displayed date forward by one step of the displayed level, no-op while no date is displayed. Before a `Calendar` is mounted it steps from `date` by one column and uses `level` without `minLevel`/`maxLevel` clamping */
   next: () => void;
 
-  /** Moves the displayed date back by one step of the current level, no-op until a `Calendar` is mounted */
+  /** Moves the displayed date back by one step of the displayed level, no-op while no date is displayed. Before a `Calendar` is mounted it steps from `date` by one column and uses `level` without `minLevel`/`maxLevel` clamping */
   previous: () => void;
 
-  /** Moves the displayed date forward by `columnsToScroll` months, no-op until a `Calendar` is mounted */
+  /** Moves the displayed date forward by `columnsToScroll` months, no-op while no date is displayed. Before a `Calendar` is mounted it steps from `date` by one column */
   nextMonth: () => void;
 
-  /** Moves the displayed date back by `columnsToScroll` months, no-op until a `Calendar` is mounted */
+  /** Moves the displayed date back by `columnsToScroll` months, no-op while no date is displayed. Before a `Calendar` is mounted it steps from `date` by one column */
   previousMonth: () => void;
 
-  /** Moves the displayed date forward by `columnsToScroll` years, no-op until a `Calendar` is mounted */
+  /** Moves the displayed date forward by `columnsToScroll` years, no-op while no date is displayed. Before a `Calendar` is mounted it steps from `date` by one column */
   nextYear: () => void;
 
-  /** Moves the displayed date back by `columnsToScroll` years, no-op until a `Calendar` is mounted */
+  /** Moves the displayed date back by `columnsToScroll` years, no-op while no date is displayed. Before a `Calendar` is mounted it steps from `date` by one column */
   previousYear: () => void;
 
-  /** Moves the displayed date forward by `columnsToScroll` decades, no-op until a `Calendar` is mounted */
+  /** Moves the displayed date forward by `columnsToScroll` decades, no-op while no date is displayed. Before a `Calendar` is mounted it steps from `date` by one column */
   nextDecade: () => void;
 
-  /** Moves the displayed date back by `columnsToScroll` decades, no-op until a `Calendar` is mounted */
+  /** Moves the displayed date back by `columnsToScroll` decades, no-op while no date is displayed. Before a `Calendar` is mounted it steps from `date` by one column */
   previousDecade: () => void;
 
-  /** Returns the date the associated `Calendar` displays, `null` until one is mounted */
+  /** Returns the date the associated `Calendar` displays. Before a `Calendar` is mounted returns `date`, `null` when it is not set */
   getDisplayedDate: () => DateStringValue | null;
 
   /** Returns `level` clamped to `minLevel`/`maxLevel` of the associated `Calendar`, which is the level it renders */

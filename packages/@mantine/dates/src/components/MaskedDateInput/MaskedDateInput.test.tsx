@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import {
   MaskedDateInput,
@@ -139,6 +140,30 @@ describe('@mantine/dates/MaskedDateInput', () => {
     expect(screen.getByLabelText('test-day')).toHaveValue('29');
   });
 
+  it('does not clamp day against a year that is still being typed', async () => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} onChange={spy} />);
+
+    await userEvent.type(screen.getByLabelText('test-day'), '29');
+    await userEvent.type(screen.getByLabelText('test-month'), '02');
+    await userEvent.type(screen.getByLabelText('test-year'), '2024');
+
+    expect(screen.getByLabelText('test-day')).toHaveValue('29');
+    expect(spy).toHaveBeenLastCalledWith('2024-02-29');
+  });
+
+  it('clamps day when a complete non-leap year is entered', async () => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} onChange={spy} />);
+
+    await userEvent.type(screen.getByLabelText('test-day'), '31');
+    await userEvent.type(screen.getByLabelText('test-month'), '02');
+    await userEvent.type(screen.getByLabelText('test-year'), '2023');
+
+    expect(screen.getByLabelText('test-day')).toHaveValue('28');
+    expect(spy).toHaveBeenLastCalledWith('2023-02-28');
+  });
+
   it('clears all fields when clear button is clicked', async () => {
     const spy = jest.fn();
     render(
@@ -247,5 +272,32 @@ describe('@mantine/dates/MaskedDateInput', () => {
     await userEvent.type(screen.getByLabelText('test-seconds'), '45');
 
     expect(spy).toHaveBeenCalledWith('2024-06-15 10:30:45');
+  });
+
+  it('keeps a controlled entry that leaves the minDate/maxDate range', async () => {
+    const spy = jest.fn();
+    function Controlled() {
+      const [value, setValue] = useState<string | null>('2024-06-15');
+      return (
+        <MaskedDateInput
+          {...defaultProps}
+          value={value}
+          onChange={(next) => {
+            spy(next);
+            setValue(next);
+          }}
+          minDate="1924-01-01"
+          maxDate="2024-12-31"
+        />
+      );
+    }
+
+    render(<Controlled />);
+    screen.getByLabelText('test-year').focus();
+    await userEvent.keyboard('{ArrowUp}');
+
+    expect(spy).toHaveBeenLastCalledWith(null);
+    expect(screen.getByLabelText('test-day')).toHaveValue('15');
+    expect(screen.getByLabelText('test-year')).toHaveValue('2025');
   });
 });

@@ -85,7 +85,7 @@ export interface ComboboxLikeProps<Value extends Primitive = string> {
   /** Called when option is submitted from dropdown with mouse click or `Enter` key */
   onOptionSubmit?: (value: Value) => void;
 
-  /** Props passed down to `Combobox` component */
+  /** Props passed down to `Combobox` component, `store` is ignored – use the `store` prop instead */
   comboboxProps?: ComboboxProps;
 
   /** Function based on which items are filtered and sorted */

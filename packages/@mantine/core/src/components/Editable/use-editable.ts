@@ -125,6 +125,9 @@ export function useEditable(options: EditableControllerOptions = {}): EditableCo
   const previousValueRef = useRef(value);
 
   const setValue = useCallbackRef((next: string) => {
+    if (valueProp === undefined) {
+      valueRef.current = next;
+    }
     setValueState(next);
   });
 
@@ -132,7 +135,7 @@ export function useEditable(options: EditableControllerOptions = {}): EditableCo
     if (disabled || readOnly || editingRef.current) {
       return;
     }
-    previousValueRef.current = value;
+    previousValueRef.current = valueRef.current;
     editingRef.current = true;
     setEditingState(true);
   });
@@ -143,8 +146,8 @@ export function useEditable(options: EditableControllerOptions = {}): EditableCo
     }
     editingRef.current = false;
     setEditingState(false);
-    previousValueRef.current = value;
-    onValueCommit?.(value);
+    previousValueRef.current = valueRef.current;
+    onValueCommit?.(valueRef.current);
   });
 
   const cancel = useCallbackRef(() => {
@@ -153,7 +156,7 @@ export function useEditable(options: EditableControllerOptions = {}): EditableCo
     }
     editingRef.current = false;
     setEditingState(false);
-    setValueState(previousValueRef.current);
+    setValue(previousValueRef.current);
     onValueRevert?.(previousValueRef.current);
   });
 

@@ -17,14 +17,7 @@ include any logic for date selection:
 
 ## Controlling with useCalendar
 
-`Calendar` manages the displayed date and level on its own, and the
-`date`/`defaultDate`/`onDateChange` and `level`/`defaultLevel`/`onLevelChange` props are enough for
-most cases. When you need to drive the calendar from outside – from a toolbar, a keyboard shortcut
-or another component – create a controller with the `useCalendar` hook and pass it to `Calendar`
-with the `controller` prop. The controller exposes actions that props cannot express, for example
-stepping the displayed period with the same `columnsToScroll` the component uses and setting the
-level with the component's own `minLevel`/`maxLevel` clamping. The
-[Controllers](/guides/controllers) guide covers how the pattern works across all components:
+`Calendar` component supports the [controller pattern](/guides/controllers). Use the `useCalendar` hook to manage `Calendar` state:
 
 <Demo data={CalendarDemos.controller} />
 
@@ -67,8 +60,11 @@ ignored – pass them to `useCalendar` instead. Every other prop, including `min
 
 The stepping actions and `getDisplayedDate` depend on values that only a mounted `Calendar` knows –
 the resolved `columnsToScroll`, the `minLevel`/`maxLevel` clamping and the date the calendar falls
-back to when `date` is `null`. They are no-ops and return `null` until a `Calendar` with the
-controller is rendered.
+back to when `date` is `null`. While no `Calendar` with the controller is rendered, `getDisplayedDate`
+returns `date` (`null` when it is not set) and the stepping actions step from `date`: they are no-ops
+while `date` is `null`, and once `date` is set (with `defaultDate`, `setDate` or by opening the
+dropdown of a picker input) they step by one column and `next`/`previous` use the level without
+`minLevel`/`maxLevel` clamping.
 
 The controller is typed as `CalendarController` and its options as `CalendarControllerOptions`, both
 exported from `@mantine/dates`.

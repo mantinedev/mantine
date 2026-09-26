@@ -187,13 +187,7 @@ checked state. The function must return a React node.
 
 ## Building on Select with useSelect
 
-`useSelect` creates a store for `Select` – a building block for your own component on top of `Select`
-that reuses its value, search, label and dropdown handling. Create the store in your component, pass
-your own `value`/`onChange` to the hook and the store to the `store` prop. When `store` is set, `value`,
-`defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`,
-`defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props of `Select` are ignored – pass
-them to `useSelect` instead. See the [Controllers](/guides/controllers#stores) guide for how stores differ from
-controllers.
+`Select` component supports the [store pattern](/guides/controllers#stores). Use the `useSelect` hook to build your own component on top of `Select`.
 
 The example below builds a `CreatableSelect` that offers to create an option from the search text:
 
@@ -204,12 +198,13 @@ The store exposes the following actions and queries:
 - `getValue()` – current value, `null` when nothing is selected
 - `setValue(value, option?)` – set the value; pass `option` to show its label before `data` contains it
 - `getSearch()` / `setSearch(search)` – current search text and its setter
+- `getDisplayedSearch()` – text displayed in the input: the search text, or the label of the selected option until the search is set
 - `getValueOption()` – the option of the current value, kept even after it is removed from `data`
 
 The Select store is also a [Combobox store](/core/combobox#usecombobox-hook): `Select` passes it to the
 underlying `Combobox`, so it includes every `useCombobox` action and query as well – for example,
 `openDropdown()`, `closeDropdown()`, `isDropdownOpened()`, `selectFirstOption()` and
-`clickSelectedOption()`. `comboboxProps.store` is ignored when `store` is set.
+`clickSelectedOption()`. A `store` passed in `comboboxProps` is always ignored, pass the store to the `store` prop instead.
 
 To use a value type other than `string`, pass it explicitly: `useSelect<number>()`.
 

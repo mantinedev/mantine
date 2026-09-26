@@ -104,12 +104,7 @@ to the last known valid date value.
 
 ## Controlling with useDateInput
 
-`DateInput` opens its dropdown when the input is focused, clicked or typed into, and closes it when
-the input loses focus, `Escape` is pressed or a date is picked. To open it from somewhere else – a button,
-a keyboard shortcut – or to open it on a given level or date, create a controller with the `useDateInput`
-hook and pass it with the `controller` prop. The input keeps opening and closing the dropdown on its own,
-and every open and close goes through the controller. The [Controllers](/guides/controllers) guide covers
-how the pattern works across all components:
+`DateInput` component supports the [controller pattern](/guides/controllers). Use the `useDateInput` hook to manage `DateInput` state:
 
 <Demo data={DateInputDemos.controller} />
 

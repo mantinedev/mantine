@@ -696,6 +696,39 @@ describe('@mantine/core/Tree/use-tree', () => {
       expect(result.current.getNodeLoadError('documents')).toBe(testError);
     });
 
+    it('returns the loading state and load error right after loadNode within one handler', async () => {
+      const testError = new Error('Network error');
+      let rejectLoad: (error: Error) => void;
+      const onLoadChildren = jest.fn(
+        () =>
+          new Promise<void>((_, reject) => {
+            rejectLoad = reject;
+          })
+      );
+
+      const { result } = renderHook(() => useTree({ onLoadChildren }));
+      act(() => result.current.initialize(asyncData));
+
+      let loading = false;
+      let error: Error | null = null;
+      let loadPromise: Promise<void>;
+
+      act(() => {
+        loadPromise = result.current.loadNode('documents');
+        loading = result.current.isNodeLoading('documents');
+      });
+
+      await act(async () => {
+        rejectLoad!(testError);
+        await loadPromise!;
+        error = result.current.getNodeLoadError('documents');
+        loading = result.current.isNodeLoading('documents');
+      });
+
+      expect(error).toBe(testError);
+      expect(loading).toBe(false);
+    });
+
     it('invalidateNode clears loaded cache and error, allowing re-fetch', async () => {
       let callCount = 0;
       const onLoadChildren = jest.fn(() => {
@@ -836,5 +869,150 @@ describe('@mantine/core/Tree/use-tree', () => {
 
     act(() => hook.result.current.checkNode('package.json'));
     expect(isNodeChecked('package.json')).toBe(true);
+  });
+
+  describe('consecutive calls within one batch', () => {
+    it('composes expand, collapse and toggleExpanded', () => {
+      const { result } = renderHook(() => useTree());
+      let read = {};
+
+      act(() => {
+        result.current.expand('a');
+        result.current.expand('b');
+        result.current.toggleExpanded('c');
+        result.current.collapse('a');
+        read = result.current.getExpandedState();
+      });
+
+      expect(read).toStrictEqual({ a: false, b: true, c: true });
+      expect(result.current.expandedState).toStrictEqual({ a: false, b: true, c: true });
+    });
+
+    it('composes expandAllNodes and collapse after initialize', () => {
+      const { result } = renderHook(() => useTree());
+
+      act(() => {
+        result.current.initialize(data);
+        result.current.expandAllNodes();
+        result.current.collapse('src/hooks');
+      });
+
+      expect(result.current.expandedState).toStrictEqual({
+        src: true,
+        'src/components': true,
+        'src/components/Button.tsx': true,
+        'src/components/Input.tsx': true,
+        'src/hooks': false,
+        'src/hooks/use-state.ts': true,
+        'package.json': true,
+      });
+    });
+
+    it('composes select, toggleSelected and deselect in multiple mode', () => {
+      const { result } = renderHook(() => useTree({ multiple: true }));
+      let read: string[] = [];
+      let anchor: string | null = null;
+
+      act(() => {
+        result.current.select('a');
+        result.current.select('b');
+        result.current.toggleSelected('c');
+        result.current.deselect('a');
+        read = result.current.getSelectedState();
+        anchor = result.current.getAnchorNode();
+      });
+
+      expect(read).toStrictEqual(['b', 'c']);
+      expect(anchor).toBe('c');
+      expect(result.current.selectedState).toStrictEqual(['b', 'c']);
+    });
+
+    it('clears the anchor when deselecting a node selected in the same handler', () => {
+      const { result } = renderHook(() => useTree({ multiple: true }));
+
+      act(() => {
+        result.current.select('a');
+        result.current.deselect('a');
+      });
+
+      expect(result.current.anchorNode).toBe(null);
+      expect(result.current.selectedState).toStrictEqual([]);
+    });
+
+    it('composes checkNode and uncheckNode', () => {
+      const { result } = renderHook(() => useTree());
+      act(() => result.current.initialize(data));
+      let read: string[] = [];
+      let checked = false;
+
+      act(() => {
+        result.current.checkNode('src/components');
+        result.current.checkNode('package.json');
+        result.current.uncheckNode('src/components/Input.tsx');
+        read = result.current.getCheckedState();
+        checked = result.current.isNodeChecked('package.json');
+      });
+
+      expect(read).toStrictEqual(['src/components/Button.tsx', 'package.json']);
+      expect(checked).toBe(true);
+      expect(result.current.checkedState).toStrictEqual([
+        'src/components/Button.tsx',
+        'package.json',
+      ]);
+    });
+
+    it('composes setters with actions', () => {
+      const { result } = renderHook(() => useTree({ multiple: true }));
+      act(() => result.current.initialize(data));
+
+      act(() => {
+        result.current.setSelectedState(['src']);
+        result.current.select('package.json');
+        result.current.setExpandedState({ src: true });
+        result.current.expand('src/hooks');
+        result.current.uncheckAllNodes();
+        result.current.checkNode('package.json');
+      });
+
+      expect(result.current.selectedState).toStrictEqual(['src', 'package.json']);
+      expect(result.current.expandedState).toStrictEqual({ src: true, 'src/hooks': true });
+      expect(result.current.checkedState).toStrictEqual(['package.json']);
+    });
+
+    it('does not write through state the parent controls', () => {
+      const onExpandedStateChange = jest.fn();
+      const onSelectedStateChange = jest.fn();
+      const onCheckedStateChange = jest.fn();
+      const { result } = renderHook(() =>
+        useTree({
+          multiple: true,
+          expandedState: {},
+          onExpandedStateChange,
+          selectedState: [],
+          onSelectedStateChange,
+          checkedState: [],
+          onCheckedStateChange,
+        })
+      );
+      act(() => result.current.initialize(data));
+      onExpandedStateChange.mockClear();
+      onCheckedStateChange.mockClear();
+
+      act(() => {
+        result.current.expand('a');
+        result.current.expand('b');
+        result.current.select('a');
+        result.current.select('b');
+        result.current.checkNode('package.json');
+        result.current.checkNode('src/hooks');
+      });
+
+      expect(onExpandedStateChange).toHaveBeenLastCalledWith({ b: true });
+      expect(onSelectedStateChange).toHaveBeenLastCalledWith(['b']);
+      expect(onCheckedStateChange).toHaveBeenLastCalledWith(['src/hooks/use-state.ts']);
+      expect(result.current.getExpandedState()).toStrictEqual({});
+      expect(result.current.getSelectedState()).toStrictEqual([]);
+      expect(result.current.getCheckedState()).toStrictEqual([]);
+    });
   });
 });

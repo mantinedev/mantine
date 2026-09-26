@@ -540,20 +540,21 @@ combobox.getSelectedOptionIndex();
 
 `useVirtualizedCombobox` still accepts the `selectedOptionIndex` option.
 
-## Select comboboxProps.store
+## comboboxProps.store in Select, MultiSelect, TagsInput and Autocomplete
 
-`Select` now always uses its own store for the underlying `Combobox`, and a `store` passed in
-`comboboxProps` is ignored. To control the dropdown from outside, create a store with `useSelect` and pass
+`Select`, `MultiSelect`, `TagsInput` and `Autocomplete` now always use their own store for the underlying
+`Combobox`, and a `store` passed in `comboboxProps` is ignored. To control the dropdown from outside, create
+a store with the component hook (`useSelect`, `useMultiSelect`, `useTagsInput` or `useAutocomplete`) and pass
 it to the `store` prop – it includes every `useCombobox` action:
 
 ```tsx
 // 9.x
 const combobox = useCombobox();
-<Select data={data} comboboxProps={{ store: combobox }} />;
+<MultiSelect data={data} comboboxProps={{ store: combobox }} />;
 
 // 10.x
-const store = useSelect();
-<Select data={data} store={store} />;
+const store = useMultiSelect();
+<MultiSelect data={data} store={store} />;
 ```
 
 ## Controller hooks return a memoized object

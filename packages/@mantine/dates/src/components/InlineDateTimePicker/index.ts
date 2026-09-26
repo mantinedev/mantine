@@ -11,7 +11,9 @@ import type {
 import type {
   TimeEntryController,
   TimeEntryControllerOptions,
+  TimeEntryFocusRequest,
   TimeEntryRegisteredSettings,
+  TimeEntryTarget,
 } from './use-inline-date-time-picker/use-time-entry';
 
 export { InlineDateTimePicker } from './InlineDateTimePicker';
@@ -26,6 +28,8 @@ export type {
   TimeEntryController,
   TimeEntryControllerOptions,
   TimeEntryRegisteredSettings,
+  TimeEntryTarget,
+  TimeEntryFocusRequest,
 };
 
 export namespace InlineDateTimePicker {

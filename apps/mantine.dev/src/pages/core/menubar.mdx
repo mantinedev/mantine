@@ -110,12 +110,7 @@ For uncontrolled usage with an initially open menu, use the `defaultOpenIndex` p
 
 ## Controlling with useMenubar
 
-`openIndex`/`defaultOpenIndex`/`onOpenChange` can set which menu is open, and that is all they can
-do. They cannot move focus: menus are identified by their DOM order index, so opening a menu from a
-keyboard shortcut and landing focus on its first item requires the list of rendered targets, which
-only `Menubar` has. Create a controller with the `useMenubar` hook and pass it to `Menubar` with the
-`controller` prop to get those actions. The [Controllers](/guides/controllers) guide covers how the
-pattern works across all components:
+`Menubar` component supports the [controller pattern](/guides/controllers). Use the `useMenubar` hook to manage `Menubar` state:
 
 <Demo data={MenubarDemos.controller} />
 

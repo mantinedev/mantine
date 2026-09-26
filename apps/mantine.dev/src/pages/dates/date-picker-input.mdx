@@ -43,11 +43,7 @@ focus is returned to the input.
 
 ## Controlling with useDatePickerInput
 
-`DatePickerInput` opens its dropdown when the input is clicked and closes it when a date is picked.
-To open it from somewhere else – a button, a keyboard shortcut – or to open it on a given level or
-date, create a controller with the `useDatePickerInput` hook and pass it with the `controller` prop.
-The input keeps opening and closing the dropdown on its own, and every open and close goes through the
-controller. The [Controllers](/guides/controllers) guide covers how the pattern works across all components:
+`DatePickerInput` component supports the [controller pattern](/guides/controllers). Use the `useDatePickerInput` hook to manage `DatePickerInput` state:
 
 <Demo data={DatePickerInputDemos.controller} />
 

@@ -30,12 +30,7 @@ function Demo() {
 
 ## Controlling with usePagination
 
-`Pagination` manages its own state by default, and `total`/`value`/`defaultValue`/`onChange` props
-are enough for most cases. When you need to drive the pagination from outside – from a button, a
-keyboard shortcut or another component – create a controller with the
-[use-pagination](/hooks/use-pagination/) hook and pass it to `Pagination` with the `controller`
-prop. The [Controllers](/guides/controllers) guide covers how the pattern works across all
-components:
+`Pagination` component supports the [controller pattern](/guides/controllers). Use the [usePagination](/hooks/use-pagination/) hook to manage `Pagination` state:
 
 <Demo data={PaginationDemos.controller} />
 

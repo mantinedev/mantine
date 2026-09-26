@@ -338,4 +338,26 @@ describe('@mantine/dates/DateInput/controller', () => {
     rerender(<Swap useSecond />);
     expect(second.getDate()).toBe('2024-06-15');
   });
+
+  it('does not call onDateChange again when the controlled value syncs to the displayed date', async () => {
+    const onDateChange = jest.fn();
+    function Controlled() {
+      const [value, setValue] = useState<string | null>(null);
+      return (
+        <DateInput
+          {...defaultProps}
+          label="date-input"
+          value={value}
+          onChange={setValue}
+          onDateChange={onDateChange}
+        />
+      );
+    }
+
+    render(<Controlled />);
+    await userEvent.click(screen.getByLabelText('date-input'));
+    await userEvent.paste('May 6, 2024');
+    expect(onDateChange).toHaveBeenCalledTimes(1);
+    expect(onDateChange).toHaveBeenLastCalledWith('2024-05-06');
+  });
 });

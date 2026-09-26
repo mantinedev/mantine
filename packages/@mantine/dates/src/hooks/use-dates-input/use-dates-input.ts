@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useDidUpdate, useDisclosure, type UseDisclosureHandlers } from '@mantine/hooks';
+import { useDidUpdate, type UseDisclosureHandlers } from '@mantine/hooks';
 import { useDatesContext } from '../../components/DatesProvider';
 import { DatePickerType, DatePickerValue } from '../../types';
 import { DateFormatter, getFormattedDate } from '../../utils';
@@ -16,7 +16,7 @@ interface UseDatesInput<Type extends DatePickerType = 'default'> {
   sortDates: boolean | undefined;
   labelSeparator: string | undefined;
   valueFormatter: DateFormatter | undefined;
-  dropdown?: { opened: boolean; handlers: UseDisclosureHandlers };
+  dropdown: { opened: boolean; handlers: UseDisclosureHandlers };
 }
 
 export function useDatesInput<Type extends DatePickerType = 'default'>({
@@ -33,10 +33,6 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   dropdown,
 }: UseDatesInput<Type>) {
   const ctx = useDatesContext();
-
-  const [ownDropdownOpened, ownDropdownHandlers] = useDisclosure(false);
-  const dropdownOpened = dropdown ? dropdown.opened : ownDropdownOpened;
-  const dropdownHandlers = dropdown ? dropdown.handlers : ownDropdownHandlers;
 
   const [_value, _setValue] = useUncontrolledDates({
     type,
@@ -57,11 +53,11 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   const setValue = (val: any) => {
     if (closeOnChange) {
       if (type === 'default') {
-        dropdownHandlers.close();
+        dropdown.handlers.close();
       }
 
       if (type === 'range' && val[0] && val[1]) {
-        dropdownHandlers.close();
+        dropdown.handlers.close();
       }
     }
 
@@ -77,10 +73,10 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
     type === 'range' ? !!_value[0] : type === 'multiple' ? _value.length > 0 : _value !== null;
 
   useDidUpdate(() => {
-    if (!dropdownOpened && type === 'range' && Array.isArray(_value) && _value[0] && !_value[1]) {
+    if (!dropdown.opened && type === 'range' && Array.isArray(_value) && _value[0] && !_value[1]) {
       onClear();
     }
-  }, [dropdownOpened]);
+  }, [dropdown.opened]);
 
   return {
     _value,
@@ -88,7 +84,5 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
     onClear,
     shouldClear,
     formattedValue,
-    dropdownOpened,
-    dropdownHandlers,
   };
 }

@@ -16,8 +16,8 @@ function Demo() {
       </Text>
 
       <Group>
-        <Button variant="default" onClick={() => controller.focus(0)}>
-          Focus first
+        <Button variant="default" onClick={controller.focusPrevious}>
+          Focus previous
         </Button>
         <Button variant="default" onClick={controller.focusNext}>
           Focus next
@@ -47,8 +47,8 @@ function Demo() {
       </Text>
 
       <Group>
-        <Button variant="default" onClick={() => controller.focus(0)}>
-          Focus first
+        <Button variant="default" onClick={controller.focusPrevious}>
+          Focus previous
         </Button>
         <Button variant="default" onClick={controller.focusNext}>
           Focus next

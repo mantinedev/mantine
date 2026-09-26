@@ -201,4 +201,45 @@ describe('@mantine/dates/MaskedDateInput/use-masked-date-input', () => {
     act(() => hook.result.current.setYear(2024));
     expect(onChange).toHaveBeenLastCalledWith('2024-06-05');
   });
+
+  function paste(text: string) {
+    return {
+      preventDefault: () => {},
+      clipboardData: { getData: () => text },
+    } as any;
+  }
+
+  it('updates the incomplete value latch on paste', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() => useMaskedDateInput({ onChange }));
+
+    act(() => hook.result.current.onPaste(paste('2024-05-06')));
+    expect(onChange).toHaveBeenLastCalledWith('2024-05-06');
+
+    act(() => hook.result.current.setDay(null));
+    expect(onChange).toHaveBeenLastCalledWith(null);
+    expect(hook.result.current.getValue()).toBe(null);
+  });
+
+  it('keeps an out-of-range entry when the controlled value receives the reported null', () => {
+    const hook = renderHook(
+      ({ value }) =>
+        useMaskedDateInput({
+          value,
+          minDate: '1924-01-01',
+          maxDate: '2024-12-31',
+          onChange: (next) => hook.rerender({ value: next }),
+        }),
+      { initialProps: { value: '2024-06-15' as string | null } }
+    );
+
+    act(() => hook.result.current.setYear(2025));
+    expect(hook.result.current.year).toBe(2025);
+    expect(hook.result.current.day).toBe(15);
+    expect(hook.result.current.getValue()).toBe(null);
+
+    act(() => hook.result.current.setValue('2026-01-01'));
+    expect(hook.result.current.year).toBe(2026);
+    expect(hook.result.current.day).toBe(1);
+  });
 });

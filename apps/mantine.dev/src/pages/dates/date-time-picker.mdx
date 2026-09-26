@@ -40,12 +40,7 @@ for the time picker:
 
 ## Controlling with useDateTimePicker
 
-`DateTimePicker` opens its dropdown when the input is clicked and closes it when the submit button
-is clicked or `Enter` is pressed in the time input. To open it from somewhere else – a button, a
-keyboard shortcut – or to open it on a given level or date, create a controller with the
-`useDateTimePicker` hook and pass it with the `controller` prop. The input keeps opening and closing
-the dropdown on its own, and every open and close goes through the controller. The
-[Controllers](/guides/controllers) guide covers how the pattern works across all components:
+`DateTimePicker` component supports the [controller pattern](/guides/controllers). Use the `useDateTimePicker` hook to manage `DateTimePicker` state:
 
 <Demo data={DateTimePickerDemos.controller} />
 

@@ -168,4 +168,66 @@ describe('@mantine/hooks/use-pagination', () => {
     act(() => previous());
     expect(result.current.active).toBe(2);
   });
+
+  it('supports consecutive calls within one batch', () => {
+    const { result } = renderHook(() => usePagination({ total: 10 }));
+
+    act(() => {
+      result.current.next();
+      result.current.next();
+      result.current.next();
+    });
+
+    expect(result.current.active).toBe(4);
+
+    act(() => {
+      result.current.last();
+      result.current.previous();
+    });
+
+    expect(result.current.active).toBe(9);
+  });
+
+  it('returns the latest page and range from getters within one batch', () => {
+    const { result } = renderHook(() => usePagination({ total: 20 }));
+    let active = 0;
+    let range: (number | 'dots')[] = [];
+
+    act(() => {
+      result.current.setPage(10);
+      active = result.current.getActive();
+      range = result.current.getRange();
+    });
+
+    expect(active).toBe(10);
+    expect(range).toStrictEqual([1, 'dots', 9, 10, 11, 'dots', 20]);
+    expect(result.current.getRange()).toStrictEqual(range);
+  });
+
+  it('clamps consecutive calls within one batch to the total', () => {
+    const { result } = renderHook(() => usePagination({ total: 3 }));
+
+    act(() => {
+      result.current.next();
+      result.current.next();
+      result.current.next();
+    });
+
+    expect(result.current.active).toBe(3);
+  });
+
+  it('does not write through the page in controlled mode', () => {
+    const onChange = jest.fn();
+    const { result } = renderHook(() => usePagination({ total: 10, page: 5, onChange }));
+    let active = 0;
+
+    act(() => {
+      result.current.next();
+      active = result.current.getActive();
+    });
+
+    expect(active).toBe(5);
+    expect(onChange).toHaveBeenCalledWith(6);
+    expect(result.current.active).toBe(5);
+  });
 });

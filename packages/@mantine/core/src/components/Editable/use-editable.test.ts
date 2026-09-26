@@ -154,6 +154,62 @@ describe('@mantine/core/useEditable', () => {
     expect(hook.result.current.editing).toBe(true);
   });
 
+  it('commits the value set in the same handler and returns it from getValue', () => {
+    const onValueCommit = jest.fn();
+    const hook = renderHook(() => useEditable({ defaultValue: 'a', onValueCommit }));
+    let read = '';
+
+    act(() => hook.result.current.edit());
+    act(() => {
+      hook.result.current.setValue('b');
+      read = hook.result.current.getValue();
+      hook.result.current.submit();
+    });
+
+    expect(read).toBe('b');
+    expect(onValueCommit).toHaveBeenCalledWith('b');
+    expect(hook.result.current.value).toBe('b');
+  });
+
+  it('reverts to the value committed earlier in the same handler', () => {
+    const onValueRevert = jest.fn();
+    const hook = renderHook(() => useEditable({ defaultValue: 'a', onValueRevert }));
+    let read = '';
+
+    act(() => {
+      hook.result.current.edit();
+      hook.result.current.setValue('b');
+      hook.result.current.submit();
+      hook.result.current.edit();
+      hook.result.current.setValue('c');
+      hook.result.current.cancel();
+      read = hook.result.current.getValue();
+    });
+
+    expect(read).toBe('b');
+    expect(onValueRevert).toHaveBeenCalledWith('b');
+    expect(hook.result.current.value).toBe('b');
+  });
+
+  it('does not write through the value in controlled mode', () => {
+    const onChange = jest.fn();
+    const onValueCommit = jest.fn();
+    const hook = renderHook(() => useEditable({ value: 'a', onChange, onValueCommit }));
+    let read = '';
+
+    act(() => hook.result.current.edit());
+    act(() => {
+      hook.result.current.setValue('b');
+      read = hook.result.current.getValue();
+      hook.result.current.submit();
+    });
+
+    expect(read).toBe('a');
+    expect(onChange).toHaveBeenCalledWith('b');
+    expect(onValueCommit).toHaveBeenCalledWith('a');
+    expect(hook.result.current.value).toBe('a');
+  });
+
   it('starts in edit mode with defaultEditing', () => {
     const hook = renderHook(() => useEditable({ defaultValue: 'a', defaultEditing: true }));
     expect(hook.result.current.editing).toBe(true);

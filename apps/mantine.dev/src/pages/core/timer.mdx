@@ -68,9 +68,7 @@ frequently than once per second:
 
 ## useTimer hook
 
-`Timer` is built on top of the `useTimer` hook. Use the hook directly to build a fully custom
-timer UI or to share one timer controller between several components. `useTimer` accepts the same
-options as `Timer` and returns the timer state and actions:
+`Timer` component supports the [controller pattern](/guides/controllers). Use the `useTimer` hook to manage `Timer` state:
 
 ```tsx
 import { useTimer } from '@mantine/core';

@@ -330,3 +330,18 @@ export function DarkColorSchemeDemo() {
     </SimpleGrid>
   );
 }
+
+export function OnDateChange() {
+  const [calls, setCalls] = useState<string[]>([]);
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePickerInput
+        label="Pick date"
+        defaultValue="2024-05-06"
+        onDateChange={(date) => setCalls((current) => [...current, date])}
+      />
+      <div>onDateChange calls: {calls.join(', ') || 'none'}</div>
+    </div>
+  );
+}

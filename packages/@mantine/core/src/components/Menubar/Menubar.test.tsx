@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { act, fireEvent, waitFor } from '@testing-library/react';
+import { flushSync } from 'react-dom';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Menu } from '../Menu';
 import { Modal } from '../Modal';
@@ -52,6 +53,21 @@ const getTarget = (name: string) => screen.getByRole('menuitem', { name });
 const focusElement = (element: HTMLElement) => act(() => element.focus());
 const expectMenuOpen = (itemText: string) => expect(screen.getByText(itemText)).toBeInTheDocument();
 const expectAllClosed = () => expect(screen.queryAllByRole('menu')).toHaveLength(0);
+
+function pressEscapeWithBrowserFlush(element: HTMLElement) {
+  const globalScope = globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean };
+  const actEnvironment = globalScope.IS_REACT_ACT_ENVIRONMENT;
+  const flush = () => flushSync(() => {});
+  globalScope.IS_REACT_ACT_ENVIRONMENT = false;
+  element.addEventListener('keydown', flush);
+
+  try {
+    element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  } finally {
+    element.removeEventListener('keydown', flush);
+    globalScope.IS_REACT_ACT_ENVIRONMENT = actEnvironment;
+  }
+}
 
 describe('@mantine/core/Menubar', () => {
   tests.itSupportsSystemProps<MenubarProps, MenubarStylesNames>({
@@ -238,6 +254,70 @@ describe('@mantine/core/Menubar', () => {
 
     focusElement(screen.getByText('New file').closest('button')!);
     await userEvent.keyboard('{Escape}');
+    expectAllClosed();
+  });
+
+  it('returns focus to the target on Escape without switching menus', async () => {
+    render(<TestContainer />);
+    focusElement(getTarget('File'));
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(screen.getByText('New file').closest('button')).toHaveFocus());
+
+    pressEscapeWithBrowserFlush(screen.getByText('New file').closest('button')!);
+    await waitFor(() => expect(getTarget('File')).toHaveFocus());
+    expectAllClosed();
+  });
+
+  it.each([
+    ['ArrowRight', 'Edit', 'Undo'],
+    ['ArrowLeft', 'View', 'Zoom in'],
+  ])(
+    'returns focus to the switched menu target on Escape after %s',
+    async (key, targetName, itemText) => {
+      render(<TestContainer />);
+      focusElement(getTarget('File'));
+      await userEvent.keyboard('{ArrowDown}');
+      await waitFor(() => expect(screen.getByText('New file').closest('button')).toHaveFocus());
+
+      await userEvent.keyboard(`{${key}}`);
+      await waitFor(() => expect(screen.getByText(itemText).closest('button')).toHaveFocus());
+
+      pressEscapeWithBrowserFlush(screen.getByText(itemText).closest('button')!);
+      await waitFor(() => expect(getTarget(targetName)).toHaveFocus());
+      expectAllClosed();
+    }
+  );
+
+  it('returns focus to the target on Escape inside a submenu', async () => {
+    render(
+      <Menubar>
+        <Menubar.Menu withinPortal={false} transitionProps={{ duration: 0 }}>
+          <Menubar.Target>File</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Item>New file</Menu.Item>
+            <Menu.Sub transitionProps={{ duration: 0 }}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>Share</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown>
+                <Menu.Item>Email</Menu.Item>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+      </Menubar>
+    );
+
+    focusElement(getTarget('File'));
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(screen.getByText('New file').closest('button')).toHaveFocus());
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(screen.getByText('Share').closest('button')).toHaveFocus());
+    await userEvent.keyboard('{ArrowRight}');
+    await waitFor(() => expect(screen.getByText('Email').closest('button')).toHaveFocus());
+
+    pressEscapeWithBrowserFlush(screen.getByText('Email').closest('button')!);
+    await waitFor(() => expect(getTarget('File')).toHaveFocus());
     expectAllClosed();
   });
 

@@ -50,6 +50,57 @@ describe('@mantine/core/useTimer', () => {
     expect(hook.result.current.isPaused()).toBe(true);
   });
 
+  it('returns the latest state from getters within one handler', () => {
+    const hook = renderHook(() => useTimer({ startMs: 5000, targetMs: 0, countdown: true }));
+    const reads: unknown[] = [];
+
+    act(() => {
+      hook.result.current.start();
+      reads.push(hook.result.current.isRunning(), hook.result.current.isPaused());
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    act(() => {
+      hook.result.current.pause();
+      reads.push(
+        hook.result.current.isRunning(),
+        hook.result.current.isPaused(),
+        hook.result.current.getValue().totalMs,
+        hook.result.current.getProgress()
+      );
+      hook.result.current.reset();
+      reads.push(
+        hook.result.current.isPaused(),
+        hook.result.current.getValue().totalMs,
+        hook.result.current.getProgress()
+      );
+    });
+
+    expect(reads).toStrictEqual([true, false, false, true, 3000, 0.4, false, 5000, 0]);
+    expect(hook.result.current.getValue()).toBe(hook.result.current.value);
+  });
+
+  it('returns the displayed value and progress from getters after interval changes', () => {
+    const hook = renderHook(
+      ({ interval }) => useTimer({ startMs: 5000, targetMs: 0, countdown: true, interval }),
+      { initialProps: { interval: 1000 } }
+    );
+
+    act(() => hook.result.current.start());
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(hook.result.current.value.totalMs).toBe(4000);
+
+    hook.rerender({ interval: 2000 });
+    expect(hook.result.current.value.totalMs).toBe(4000);
+    expect(hook.result.current.getValue()).toBe(hook.result.current.value);
+    expect(hook.result.current.getProgress()).toBe(hook.result.current.progress);
+  });
+
   it('returns the initial value without starting automatically', () => {
     const hook = renderHook(() => useTimer({ startMs: 5000 }));
     expect(hook.result.current.value.totalMs).toBe(5000);

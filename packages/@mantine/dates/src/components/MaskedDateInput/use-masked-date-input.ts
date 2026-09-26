@@ -351,6 +351,28 @@ export function useMaskedDateInput(
     setAmPmState(fields.amPm);
   };
 
+  const getEnteredValue = (fields: Fields) => {
+    const dateString = build(fields);
+    return dateString.valid && !isOutOfRange(dateString.value)
+      ? (dateString.value as MaskedDateInputValue)
+      : null;
+  };
+
+  const commit = useCallbackRef(
+    (next: Fields, report: 'dedupe-incomplete' | 'always' | 'never' = 'dedupe-incomplete') => {
+      setFields(next);
+      const entered = getEnteredValue(next);
+      const shouldReport =
+        report === 'always' ||
+        (report === 'dedupe-incomplete' && (entered !== null || !wasInvalidBefore.current));
+      wasInvalidBefore.current = entered === null;
+
+      if (shouldReport) {
+        onChange?.(entered);
+      }
+    }
+  );
+
   const handleFieldChange = useCallbackRef((field: MaskedDateInputField, val: any) => {
     const next: Fields = { ...fieldsRef.current, [field]: val };
 
@@ -361,18 +383,7 @@ export function useMaskedDateInput(
       }
     }
 
-    const dateString = build(next);
-    const reportable = dateString.valid && !isOutOfRange(dateString.value);
-
-    setFields(dateString.valid ? next : { ...fieldsRef.current, [field]: val });
-
-    if (reportable) {
-      wasInvalidBefore.current = false;
-      onChange?.(dateString.value as MaskedDateInputValue);
-    } else if (!wasInvalidBefore.current) {
-      onChange?.(null);
-      wasInvalidBefore.current = true;
-    }
+    commit(build(next).valid ? next : { ...fieldsRef.current, [field]: val });
   });
 
   const setDay = useCallbackRef((val: number | null) => {
@@ -415,17 +426,13 @@ export function useMaskedDateInput(
   });
 
   const clear = useCallbackRef(() => {
-    setFields(EMPTY_FIELDS);
-    onChange?.(null);
-    wasInvalidBefore.current = true;
+    commit(EMPTY_FIELDS, 'always');
     focus(fieldsOrderRef.current[0] ?? 'day');
   });
 
   const setValue = useCallbackRef((nextValue: MaskedDateInputValue) => {
     if (!nextValue) {
-      setFields(EMPTY_FIELDS);
-      onChange?.(null);
-      wasInvalidBefore.current = true;
+      commit(EMPTY_FIELDS, 'always');
       return;
     }
 
@@ -441,18 +448,7 @@ export function useMaskedDateInput(
           amPm: fieldsRef.current.amPm,
         };
 
-    setFields(next);
-
-    const dateString = build(next);
-    const reportable = dateString.valid && !isOutOfRange(dateString.value);
-
-    if (reportable) {
-      onChange?.(dateString.value as MaskedDateInputValue);
-    } else if (!wasInvalidBefore.current) {
-      onChange?.(null);
-    }
-
-    wasInvalidBefore.current = !reportable;
+    commit(next);
   });
 
   const onPaste = useCallbackRef((event: React.ClipboardEvent<any>) => {
@@ -484,48 +480,31 @@ export function useMaskedDateInput(
       amPm: resolvedAmPm,
     };
 
-    const dateString = build(next);
-
-    if (dateString.valid && !isOutOfRange(dateString.value)) {
-      setFields(next);
-      onChange?.(dateString.value as MaskedDateInputValue);
+    if (getEnteredValue(next) !== null) {
+      commit(next);
     }
   });
 
-  const current = build({ day, month, year, hours, minutes, seconds, amPm });
-  const value =
-    current.valid && !isOutOfRange(current.value) ? (current.value as MaskedDateInputValue) : null;
+  const value = getEnteredValue({ day, month, year, hours, minutes, seconds, amPm });
 
   useDidUpdate(() => {
     const incoming = valueProp === '' ? null : valueProp;
-    const entered = current.valid ? current.value : null;
+    const raw = build(fieldsRef.current);
+    const isEcho =
+      incoming === null
+        ? getEnteredValue(fieldsRef.current) === null
+        : raw.valid && incoming === raw.value;
 
-    if (incoming === undefined || incoming === entered) {
+    if (incoming === undefined || isEcho) {
       return;
     }
 
-    if (incoming === null) {
-      setFields(EMPTY_FIELDS);
-      wasInvalidBefore.current = true;
-      return;
-    }
-
-    if (typeof incoming === 'string') {
-      const parsed = parseFields(incoming, format, amPmLabels);
-      const dateString = build(parsed);
-      setFields(parsed);
-      wasInvalidBefore.current = !dateString.valid || isOutOfRange(dateString.value);
-    }
+    commit(incoming === null ? EMPTY_FIELDS : parseFields(incoming, format, amPmLabels), 'never');
   }, [valueProp]);
 
-  const derive = useLatestRef({ build, isOutOfRange });
+  const latestGetEnteredValue = useLatestRef(getEnteredValue);
 
-  const getValue = useCallback(() => {
-    const next = derive.current.build(fieldsRef.current);
-    return next.valid && !derive.current.isOutOfRange(next.value)
-      ? (next.value as MaskedDateInputValue)
-      : null;
-  }, []);
+  const getValue = useCallback(() => latestGetEnteredValue.current(fieldsRef.current), []);
   const getDay = useCallback(() => fieldsRef.current.day, []);
   const getMonth = useCallback(() => fieldsRef.current.month, []);
   const getYear = useCallback(() => fieldsRef.current.year, []);

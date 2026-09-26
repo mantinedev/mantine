@@ -11,7 +11,7 @@ function Demo() {
 
   return (
     <Stack>
-      <TimePicker controller={controller} withDropdown />
+      <TimePicker controller={controller} />
 
       <Text size="sm">
         Value: <Code>{controller.getValue() || 'empty'}</Code>, hours: <Code>{String(controller.getHours())}</Code>,
@@ -39,7 +39,7 @@ function Demo() {
 
   return (
     <Stack>
-      <TimePicker controller={controller} withDropdown />
+      <TimePicker controller={controller} />
 
       <Text size="sm">
         Value: <Code>{controller.getValue() || 'empty'}</Code>, hours:{' '}

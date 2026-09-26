@@ -21,7 +21,7 @@ export interface PickerInputControllerOptions extends CalendarControllerOptions 
 }
 
 export interface PickerInputRegisteredSettings {
-  /** Date the displayed date is reset to when the dropdown opens: the value of the associated picker input (its first date for `range` and `multiple` types), `null` when it has no value */
+  /** Picker inputs: date the displayed date is reset to when the dropdown opens – the value of the associated picker input (its first date for `range` and `multiple` types), or its `defaultDate` when it has no value and no `controller` prop, `null` otherwise. `DateInput`: the value, used only to seed the displayed date when no date is displayed yet, and only when the `controller` prop is set, `null` otherwise */
   valueDate: DateStringValue | null;
 
   /** Date displayed when the dropdown opens and neither the value nor `defaultDate` is set */
@@ -123,7 +123,7 @@ export function usePickerInputController(
       toDateString(calendarOptions.defaultDate) ??
       settingsRef.current.fallbackDate;
 
-    if (nextDate) {
+    if (nextDate && toDateString(nextDate) !== calendar.getDate()) {
       calendar.setDate(nextDate);
     }
   });

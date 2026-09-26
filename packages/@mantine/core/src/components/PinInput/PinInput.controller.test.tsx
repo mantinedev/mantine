@@ -122,6 +122,39 @@ describe('@mantine/core/PinInput/controller', () => {
     expect(inputs[2]).toHaveFocus();
   });
 
+  it('steps focus from the last focused input when called from an outside button', async () => {
+    let controller: PinInputController = null as any;
+
+    function Test() {
+      controller = usePinInput({ length: 6 });
+      return (
+        <>
+          <PinInput controller={controller} />
+          <button type="button" onClick={() => controller.focusNext()}>
+            next
+          </button>
+          <button type="button" onClick={() => controller.focusPrevious()}>
+            previous
+          </button>
+        </>
+      );
+    }
+
+    const { container, getByText } = render(<Test />);
+    const inputs = getInputs(container);
+
+    await userEvent.click(inputs[2]);
+    await userEvent.click(getByText('next'));
+    expect(inputs[3]).toHaveFocus();
+    expect(controller.getFocusedIndex()).toBe(3);
+
+    await userEvent.click(getByText('previous'));
+    expect(inputs[2]).toHaveFocus();
+
+    await userEvent.click(getByText('previous'));
+    expect(inputs[1]).toHaveFocus();
+  });
+
   it('tracks focusedIndex through the controller', async () => {
     let controller: PinInputController = null as any;
 

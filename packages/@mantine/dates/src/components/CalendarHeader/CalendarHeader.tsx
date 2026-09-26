@@ -234,7 +234,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
   };
 
   const nativeLevelControl = nativeSelect ? (
-    <div {...getStyles('calendarHeaderLevel')} key="level" data-static data-native-level-select>
+    <div key="level" {...getStyles('calendarHeaderLevel')} data-static data-native-level-select>
       {nativeSelect.level === 'month' && (
         <select
           {...getStyles('calendarHeaderSelect')}

@@ -52,8 +52,11 @@ export interface SelectStore<Value extends Primitive = string> extends ComboboxS
   /** Current search value */
   search: string;
 
-  /** Returns the text displayed in the input: the search value, or the label of the current value until the search is set */
+  /** Returns current search value, same as `search` */
   getSearch: () => string;
+
+  /** Returns the text displayed in the input: the search value, or the label of the current value until the search is set */
+  getDisplayedSearch: () => string;
 
   /** Sets the search value and calls `onSearchChange`. `Select` sets it back to the selected option label on blur */
   setSearch: (search: string) => void;
@@ -127,7 +130,8 @@ export function useSelect<Value extends Primitive = string>(
   }, []);
 
   const getValue = useCallback(() => latest.current.value, []);
-  const getSearch = useCallback(
+  const getSearch = useCallback(() => latest.current.search, []);
+  const getDisplayedSearch = useCallback(
     () =>
       searchSetRef.current
         ? latest.current.search
@@ -175,6 +179,7 @@ export function useSelect<Value extends Primitive = string>(
       setValue,
       search,
       getSearch,
+      getDisplayedSearch,
       setSearch,
       getValueOption,
       valueControlled,

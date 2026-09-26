@@ -10,6 +10,7 @@ import type {
   TimePickerFormat,
   TimePickerPasteSplit,
   TimePickerPresets,
+  TimePickerType,
 } from './TimePicker.types';
 import type { TimePickerController, TimePickerControllerOptions } from './use-time-picker';
 
@@ -27,6 +28,7 @@ export type {
   TimePickerPasteSplit,
   TimePickerPresets,
   TimePickerField,
+  TimePickerType,
   TimePickerController,
   TimePickerControllerOptions,
 };

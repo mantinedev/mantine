@@ -33,12 +33,7 @@ function Demo() {
 
 ## Controlling with useTimePicker
 
-`value`/`defaultValue`/`onChange` report only complete values: while the user is halfway through
-entering a time, `onChange` is called with an empty string, so from the outside every incomplete
-state looks the same. Create a controller with the `useTimePicker` hook and pass it to `TimePicker`
-with the `controller` prop to read the individual fields, move focus between them and set or clear
-the value from anywhere in your application. The [Controllers](/guides/controllers) guide covers how
-the pattern works across all components:
+`TimePicker` component supports the [controller pattern](/guides/controllers). Use the `useTimePicker` hook to manage `TimePicker` state:
 
 <Demo data={TimePickerDemos.controller} />
 

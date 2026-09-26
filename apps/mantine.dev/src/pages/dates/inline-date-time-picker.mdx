@@ -36,11 +36,7 @@ below the time inputs:
 
 ## Controlling with useInlineDateTimePicker
 
-To drive the displayed date, level and time inputs from outside, for example from a toolbar, create a
-controller with the `useInlineDateTimePicker` hook and pass it with the `controller` prop. It has
-the navigation actions of [useCalendar](/dates/calendar/#controlling-with-usecalendar) and actions
-for the time inputs. The time inputs are displayed while the calendar shows the month level,
-including when the level is set with the controller:
+`InlineDateTimePicker` component supports the [controller pattern](/guides/controllers). Use the `useInlineDateTimePicker` hook to manage `InlineDateTimePicker` state:
 
 <Demo data={InlineDateTimePickerDemos.controller} />
 

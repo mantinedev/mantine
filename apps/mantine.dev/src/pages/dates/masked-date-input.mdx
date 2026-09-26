@@ -100,19 +100,14 @@ for each time field when using arrow keys:
 
 ## Paste events
 
-By default, `MaskedDateInput` does not handle paste events. With the `pasteSplit` prop you can
-provide a custom paste parser that extracts day, month, and year values from a pasted string:
+By default, `MaskedDateInput` handles only dates in `YYYY-MM-DD` (or `YYYY-MM-DD HH:mm:ss`) format
+for paste events. With the `pasteSplit` prop you can provide a custom paste parser that extracts day, month, and year values from a pasted string:
 
 <Demo data={MaskedDateInputDemos.pasteSplit} />
 
 ## Controlling with useMaskedDateInput
 
-`value`/`defaultValue`/`onChange` report only complete dates: while the user is halfway through
-entering a date, `onChange` is called with `null`, so from the outside every incomplete state looks
-the same. Create a controller with the `useMaskedDateInput` hook and pass it to `MaskedDateInput`
-with the `controller` prop to read the individual fields, move focus between them and set or clear
-the value from anywhere in your application. The [Controllers](/guides/controllers) guide covers how
-the pattern works across all components:
+`MaskedDateInput` component supports the [controller pattern](/guides/controllers). Use the `useMaskedDateInput` hook to manage `MaskedDateInput` state:
 
 <Demo data={MaskedDateInputDemos.controller} />
 
@@ -183,9 +178,10 @@ touched/dirty tracking work without extra code:
 
 <Demo data={MaskedDateInputDemos.form} />
 
-The controller adds what the form cannot see on its own: a partially entered date is `null` for the
-form, so validation reports it as missing, while `controller.hasValue()` lets the field replace that
-error with a more specific message.
+The controller adds what the form cannot see on its own: a partially entered date and a complete date
+outside of `minDate`/`maxDate` are both `null` for the form, so validation reports them as missing,
+while `controller.hasValue()` and the individual field values (`getDay()`, `getMonth()`, `getYear()`)
+let the field replace that error with a more specific message.
 
 Use `mode: 'uncontrolled'` and set `key={form.key('birthday')}` on the component that calls
 `useMaskedDateInput`. In this mode `form.reset()` and `form.setFieldValue()` remount the field, and

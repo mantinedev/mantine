@@ -148,7 +148,7 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false @category behavior */
   withPillsReorder?: boolean;
 
-  /** Store returned by the `useMultiSelect` hook. When provided, value, search and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props are ignored. The store is also passed to the underlying `Combobox`, `comboboxProps.store` is ignored @category state */
+  /** Store returned by the `useMultiSelect` hook. When provided, value, search and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props are ignored. The store is also passed to the underlying `Combobox`. A `store` passed in `comboboxProps` is always ignored @category state */
   store?: MultiSelectStore<Value>;
 }
 

@@ -14,12 +14,7 @@ update it in `onStepClick`. To let `Stepper` manage the state, use `defaultActiv
 
 ## Controlling with useStepper
 
-`active`/`defaultActive`/`onActiveChange` cover most cases, but they cannot express step navigation:
-only `Stepper` knows how many `Stepper.Step` components are rendered and whether
-`Stepper.Completed` is present, so moving to the next step means clamping the index against a step
-count that you have to count yourself. Create a controller with the `useStepper` hook and pass it to
-`Stepper` with the `controller` prop to get those actions. The [Controllers](/guides/controllers)
-guide covers how the pattern works across all components:
+`Stepper` component supports the [controller pattern](/guides/controllers). Use the `useStepper` hook to manage `Stepper` state:
 
 <Demo data={StepperDemos.controller} />
 

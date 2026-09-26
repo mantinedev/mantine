@@ -64,5 +64,6 @@ export type {
   ComboboxStore,
   UseComboboxOptions,
 } from './use-combobox/use-combobox';
+export type { ComboboxDropdownCallbacks } from './use-combobox/use-combobox-with-callbacks';
 export type { UseVirtualizedComboboxOptions } from './use-combobox/use-virtualized-combobox';
 export type { PillReorderProps, UsePillsReorderInput } from './use-pills-reorder/use-pills-reorder';

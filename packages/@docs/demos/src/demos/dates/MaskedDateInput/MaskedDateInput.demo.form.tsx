@@ -36,12 +36,18 @@ function DateField({
     maxDate,
     pasteSplit,
   });
-  const incomplete = controller.hasValue() && controller.getValue() === null;
+  const dateFieldsFilled =
+    controller.getDay() !== null &&
+    controller.getMonth() !== null &&
+    (controller.getYear() ?? 0) >= 1000;
+  const entryError = dateFieldsFilled
+    ? 'Date is outside of the allowed range'
+    : 'Finish entering the date';
 
   return (
     <MaskedDateInput
       controller={controller}
-      error={error && incomplete ? 'Finish entering the date' : error}
+      error={error && controller.hasValue() ? entryError : error}
       {...others}
     />
   );
@@ -112,12 +118,18 @@ function DateField({
     maxDate,
     pasteSplit,
   });
-  const incomplete = controller.hasValue() && controller.getValue() === null;
+  const dateFieldsFilled =
+    controller.getDay() !== null &&
+    controller.getMonth() !== null &&
+    (controller.getYear() ?? 0) >= 1000;
+  const entryError = dateFieldsFilled
+    ? 'Date is outside of the allowed range'
+    : 'Finish entering the date';
 
   return (
     <MaskedDateInput
       controller={controller}
-      error={error && incomplete ? 'Finish entering the date' : error}
+      error={error && controller.hasValue() ? entryError : error}
       {...others}
     />
   );

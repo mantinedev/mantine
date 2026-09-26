@@ -1,5 +1,11 @@
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
+import { DatePickerInput } from '../DatePickerInput';
+import { DateTimePicker } from '../DateTimePicker';
+import { MonthPickerInput } from '../MonthPickerInput';
+import { QuarterPickerInput } from '../QuarterPickerInput';
+import { WeekPickerInput } from '../WeekPickerInput';
+import { YearPickerInput } from '../YearPickerInput';
 import { PickerInputBase, PickerInputBaseProps } from './PickerInputBase';
 
 const noop = () => {};
@@ -119,4 +125,45 @@ describe('@mantine/dates/PickerInputBase', () => {
     await userEvent.click(screen.getByLabelText('test-clear'));
     expect(spy).toHaveBeenCalled();
   });
+
+  it.each([
+    ['DatePickerInput', DatePickerInput],
+    ['MonthPickerInput', MonthPickerInput],
+    ['YearPickerInput', YearPickerInput],
+    ['WeekPickerInput', WeekPickerInput],
+    ['QuarterPickerInput', QuarterPickerInput],
+    ['DateTimePicker', DateTimePicker],
+  ] as [string, any][])(
+    '%s does not call onDateChange when the dropdown reopens on the displayed date',
+    async (_, Component) => {
+      const onDateChange = jest.fn();
+      const { unmount } = render(
+        <Component
+          label="picker"
+          defaultValue="2024-05-06"
+          onDateChange={onDateChange}
+          popoverProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+        />
+      );
+
+      await userEvent.click(screen.getByLabelText('picker'));
+      await userEvent.click(screen.getByLabelText('picker'));
+      await userEvent.click(screen.getByLabelText('picker'));
+      expect(onDateChange).not.toHaveBeenCalled();
+      unmount();
+
+      render(
+        <Component
+          label="picker"
+          onDateChange={onDateChange}
+          popoverProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+        />
+      );
+
+      await userEvent.click(screen.getByLabelText('picker'));
+      await userEvent.click(screen.getByLabelText('picker'));
+      await userEvent.click(screen.getByLabelText('picker'));
+      expect(onDateChange).toHaveBeenCalledTimes(1);
+    }
+  );
 });

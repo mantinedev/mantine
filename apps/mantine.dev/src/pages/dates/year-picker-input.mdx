@@ -37,12 +37,7 @@ To use `presets` with `type="range"`, define the value as a tuple of two dates:
 
 ## Controlling with useYearPickerInput
 
-`YearPickerInput` opens its dropdown when the input is clicked and closes it when a year is picked.
-To open it from somewhere else – a button, a keyboard shortcut – or to open it on a given decade,
-create a controller with the `useYearPickerInput` hook and pass it with the `controller` prop.
-The input keeps opening and closing the dropdown on its own, and every open and close goes through the
-controller. The controller works the same way as [useDatePickerInput](/dates/date-picker-input/#controlling-with-usedatepickerinput),
-and the [Controllers](/guides/controllers) guide covers how the pattern works across all components:
+`YearPickerInput` component supports the [controller pattern](/guides/controllers). Use the `useYearPickerInput` hook to manage `YearPickerInput` state:
 
 <Demo data={YearPickerInputDemos.controller} />
 

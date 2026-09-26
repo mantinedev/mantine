@@ -98,9 +98,7 @@ the field to fit its content and control its size with `minRows` and `maxRows`:
 
 ## useEditable hook
 
-`Editable` is built on top of the `useEditable` hook. Use the hook directly to share one controller
-between several components or to build a fully custom edit-in-place UI. `useEditable` accepts the
-same options as `Editable` and returns the editing state and actions:
+`Editable` component supports the [controller pattern](/guides/controllers). Use the `useEditable` hook to manage `Editable` state:
 
 ```tsx
 import { useEditable } from '@mantine/core';

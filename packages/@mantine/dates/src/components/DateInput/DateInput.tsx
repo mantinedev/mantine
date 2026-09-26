@@ -248,7 +248,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
   });
 
   useEffect(() => {
-    if (controlled && value != null) {
+    if (controlled && value != null && toDateString(value) !== controller.getDate()) {
       controller.setDate(value);
     }
   }, [controlled, value, controller.setDate]);

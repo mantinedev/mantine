@@ -123,4 +123,20 @@ describe('@mantine/core/Pagination/controller', () => {
 
     expect(container.querySelectorAll('*:not(style)')).toHaveLength(0);
   });
+
+  it('supports consecutive controller calls within one batch', () => {
+    let controller: UsePaginationReturnValue = null as any;
+    render(<ControllerTest onController={(value) => (controller = value)} />);
+
+    let active = 0;
+    act(() => {
+      controller.next();
+      controller.next();
+      controller.next();
+      active = controller.getActive();
+    });
+
+    expect(active).toBe(4);
+    expect(screen.getByRole('button', { name: '4' })).toHaveAttribute('data-active', 'true');
+  });
 });

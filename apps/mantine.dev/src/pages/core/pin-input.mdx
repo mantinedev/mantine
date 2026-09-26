@@ -22,12 +22,7 @@ function Demo() {
 
 ## Controlling with usePinInput
 
-`value`/`defaultValue`/`onChange` cover reading and writing the pin, but they cannot express
-anything that involves the inputs themselves. `PinInput` renders one input per character and its
-`ref` points at the **first** input only, so there is no way to focus input 3, clear the pin and put
-the caret back at the start, or ask which input the user is on. Create a controller with the
-`usePinInput` hook and pass it to `PinInput` with the `controller` prop to get those actions. The
-[Controllers](/guides/controllers) guide covers how the pattern works across all components:
+`PinInput` component supports the [controller pattern](/guides/controllers). Use the `usePinInput` hook to manage `PinInput` state:
 
 <Demo data={PinInputDemos.controller} />
 
@@ -49,8 +44,8 @@ function Demo() {
   controller.setFieldValue(0, '9'); // -> sets the value of a single input
   controller.clear(); // -> clears all inputs
   controller.focus(2); // -> focuses the third input
-  controller.focusNext();
-  controller.focusPrevious();
+  controller.focusNext(); // -> focuses the input after the focused (or last focused) one
+  controller.focusPrevious(); // -> focuses the input before the focused (or last focused) one
 
   // Queries
   controller.getValue(); // -> current value as a string, for example '12'
@@ -72,6 +67,10 @@ next value is.
 `value` is a string and `fieldValues` is an array of characters, because the two are not the same
 thing: `PinInput` allows a gap in the middle, so a pin with the third input cleared is
 `fieldValues: ['1', '2', '', '4']` and `value: '124'`. Use `fieldValues` when the position matters.
+
+`focusNext` and `focusPrevious` step from the last focused input, so they work from a button outside
+of `PinInput` that takes focus away from the inputs. Before any input has been focused, `focusNext`
+focuses the first input and `focusPrevious` the last one.
 
 `focus`, `focusNext`, `focusPrevious` and `getInputNode` need the input elements, which the
 associated `PinInput` registers after it renders. They are no-op (`getInputNode` returns `null`)

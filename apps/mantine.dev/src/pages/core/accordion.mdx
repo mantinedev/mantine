@@ -19,12 +19,7 @@ Accordion is commonly used for:
 
 ## Controlling with useAccordion
 
-`Accordion` manages its own state by default, and `value`/`defaultValue`/`onChange` props are
-enough for most cases. When you need to control the accordion from outside – from a button, a
-keyboard shortcut or another component – create a controller with the `useAccordion` hook and pass
-it to `Accordion` with the `controller` prop. The controller exposes actions that props cannot
-express, for example `expandAll` and `collapseAll`. The [Controllers](/guides/controllers) guide
-covers how the pattern works across all components:
+`Accordion` component supports the [controller pattern](/guides/controllers). Use the `useAccordion` hook to manage `Accordion` state:
 
 <Demo data={AccordionDemos.controller} />
 

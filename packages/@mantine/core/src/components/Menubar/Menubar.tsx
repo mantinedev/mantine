@@ -3,6 +3,7 @@ import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
+  createEventHandler,
   ElementProps,
   factory,
   Factory,
@@ -85,6 +86,7 @@ export const Menubar = factory<MenubarFactory>((_props) => {
     attributes,
     mod,
     ref,
+    onKeyDownCapture,
     ...others
   } = props;
 
@@ -147,6 +149,21 @@ export const Menubar = factory<MenubarFactory>((_props) => {
     }
   });
 
+  const handleKeyDownCapture = createEventHandler<any>(onKeyDownCapture, (event) => {
+    if (event.key !== 'Escape') {
+      return;
+    }
+
+    const dropdown = (event.target as HTMLElement).closest('[data-menubar-dropdown]');
+    const index = menubar.getOpenIndex();
+    if (dropdown?.getAttribute('data-menubar-dropdown') !== menubar.id || index === null) {
+      return;
+    }
+
+    menubar.setActiveIndex(index);
+    window.setTimeout(() => menubar.focusTarget(index), 0);
+  });
+
   const contextValue: MenubarContextValue = {
     getStyles,
     controller: menubar,
@@ -167,6 +184,7 @@ export const Menubar = factory<MenubarFactory>((_props) => {
         mod={mod}
         {...getStyles('root')}
         {...others}
+        onKeyDownCapture={handleKeyDownCapture}
         data-menubar
       >
         {children}

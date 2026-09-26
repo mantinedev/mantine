@@ -53,10 +53,10 @@ export interface PinInputController {
   /** Focuses the input at the given index, ignored when the index is out of range */
   focus: (index: number) => void;
 
-  /** Focuses the input after the focused one, focuses the first input when none is focused */
+  /** Focuses the input after the focused one, or after the last focused one when none of the inputs is focused. Focuses the first input when no input has been focused yet, ignored at the last input */
   focusNext: () => void;
 
-  /** Focuses the input before the focused one, focuses the last input when none is focused */
+  /** Focuses the input before the focused one, or before the last focused one when none of the inputs is focused. Focuses the last input when no input has been focused yet, ignored at the first input */
   focusPrevious: () => void;
 
   /** Returns `true` if all inputs have a value */
@@ -76,6 +76,7 @@ export function usePinInput(options: PinInputControllerOptions = {}): PinInputCo
   const { length = 4, value: valueProp, defaultValue, onChange, onComplete } = options;
 
   const completedRef = useRef(false);
+  const lastFocusedIndexRef = useRef(-1);
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
   const controlledValue = useMemo(
@@ -147,12 +148,12 @@ export function usePinInput(options: PinInputControllerOptions = {}): PinInputCo
   });
 
   const focusNext = useCallbackRef(() => {
-    focus(latest.current.focusedIndex + 1);
+    focus(lastFocusedIndexRef.current + 1);
   });
 
   const focusPrevious = useCallbackRef(() => {
-    const { focusedIndex: current, length: currentLength } = latest.current;
-    focus(current === -1 ? currentLength - 1 : current - 1);
+    const current = lastFocusedIndexRef.current;
+    focus(current === -1 ? latest.current.length - 1 : current - 1);
   });
 
   const getValue = useCallback(() => latest.current.fieldValues.join('').trim(), []);
@@ -170,6 +171,11 @@ export function usePinInput(options: PinInputControllerOptions = {}): PinInputCo
 
   const setFocusedIndex = useCallback((index: number) => {
     latest.current.focusedIndex = index;
+
+    if (index !== -1) {
+      lastFocusedIndexRef.current = index;
+    }
+
     setFocusedIndexState(index);
   }, []);
 

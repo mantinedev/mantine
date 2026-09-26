@@ -9,6 +9,55 @@ function range(start: number, end: number) {
 
 export const DOTS = 'dots';
 
+interface PaginationRangeOptions {
+  siblings: number;
+  boundaries: number;
+  startValue: number;
+  endValue: number;
+}
+
+function getPaginationRange(
+  activePage: number,
+  { siblings, boundaries, startValue, endValue }: PaginationRangeOptions
+): (number | 'dots')[] {
+  const totalPageNumbers = siblings * 2 + 3 + boundaries * 2;
+  if (totalPageNumbers >= endValue - startValue + 1) {
+    return range(startValue, endValue);
+  }
+
+  const leftSiblingIndex = Math.max(activePage - siblings, startValue + boundaries - 1);
+  const rightSiblingIndex = Math.min(activePage + siblings, endValue - boundaries);
+
+  const shouldShowLeftDots = leftSiblingIndex > startValue + boundaries + 1;
+  const shouldShowRightDots = rightSiblingIndex < endValue - boundaries;
+
+  if (!shouldShowLeftDots && shouldShowRightDots) {
+    const leftItemCount = siblings * 2 + boundaries + 2;
+    return [
+      ...range(startValue, startValue + leftItemCount - 1),
+      DOTS,
+      ...range(endValue - (boundaries - 1), endValue),
+    ];
+  }
+
+  if (shouldShowLeftDots && !shouldShowRightDots) {
+    const rightItemCount = boundaries + 1 + 2 * siblings;
+    return [
+      ...range(startValue, startValue + boundaries - 1),
+      DOTS,
+      ...range(endValue - rightItemCount, endValue),
+    ];
+  }
+
+  return [
+    ...range(startValue, startValue + boundaries - 1),
+    DOTS,
+    ...range(leftSiblingIndex, rightSiblingIndex),
+    DOTS,
+    ...range(endValue - boundaries + 1, endValue),
+  ];
+}
+
 export interface UsePaginationOptions {
   /** Page selected on initial render, defaults to 1 or startValue if provided */
   initialPage?: number;
@@ -75,7 +124,6 @@ export function usePagination({
 }: UsePaginationOptions): UsePaginationReturnValue {
   const _startValue = Math.max(Math.trunc(startValue), 1);
   const _endValue = Math.max(Math.trunc(total), _startValue);
-  const _total = _endValue - _startValue + 1;
   const _initialPage = initialPage ?? _startValue;
 
   const [activePage, setActivePage] = useUncontrolled({
@@ -85,64 +133,39 @@ export function usePagination({
     finalValue: _initialPage,
   });
 
+  const activeRef = useLatestRef(activePage);
+
   const setPage = useCallbackRef((pageNumber: number) => {
-    if (pageNumber < _startValue) {
-      setActivePage(_startValue);
-    } else if (pageNumber > _endValue) {
-      setActivePage(_endValue);
-    } else {
-      setActivePage(pageNumber);
+    const nextPage = Math.min(Math.max(pageNumber, _startValue), _endValue);
+
+    if (page === undefined) {
+      activeRef.current = nextPage;
     }
+
+    setActivePage(nextPage);
   });
 
-  const next = useCallbackRef(() => setPage(activePage + 1));
-  const previous = useCallbackRef(() => setPage(activePage - 1));
+  const next = useCallbackRef(() => setPage(activeRef.current + 1));
+  const previous = useCallbackRef(() => setPage(activeRef.current - 1));
   const first = useCallbackRef(() => setPage(_startValue));
   const last = useCallbackRef(() => setPage(_endValue));
 
-  const paginationRange = useMemo((): (number | 'dots')[] => {
-    const totalPageNumbers = siblings * 2 + 3 + boundaries * 2;
-    if (totalPageNumbers >= _total) {
-      return range(_startValue, _endValue);
-    }
+  const rangeOptions = { siblings, boundaries, startValue: _startValue, endValue: _endValue };
+  const paginationRange = useMemo(
+    () => getPaginationRange(activePage, rangeOptions),
+    [siblings, activePage, _startValue, _endValue, boundaries]
+  );
 
-    const leftSiblingIndex = Math.max(activePage - siblings, _startValue + boundaries - 1);
-    const rightSiblingIndex = Math.min(activePage + siblings, _endValue - boundaries);
+  const latest = useLatestRef({ range: paginationRange, active: activePage, rangeOptions });
 
-    const shouldShowLeftDots = leftSiblingIndex > _startValue + boundaries + 1;
-    const shouldShowRightDots = rightSiblingIndex < _endValue - boundaries;
-
-    if (!shouldShowLeftDots && shouldShowRightDots) {
-      const leftItemCount = siblings * 2 + boundaries + 2;
-      return [
-        ...range(_startValue, _startValue + leftItemCount - 1),
-        DOTS,
-        ...range(_endValue - (boundaries - 1), _endValue),
-      ];
-    }
-
-    if (shouldShowLeftDots && !shouldShowRightDots) {
-      const rightItemCount = boundaries + 1 + 2 * siblings;
-      return [
-        ...range(_startValue, _startValue + boundaries - 1),
-        DOTS,
-        ...range(_endValue - rightItemCount, _endValue),
-      ];
-    }
-
-    return [
-      ...range(_startValue, _startValue + boundaries - 1),
-      DOTS,
-      ...range(leftSiblingIndex, rightSiblingIndex),
-      DOTS,
-      ...range(_endValue - boundaries + 1, _endValue),
-    ];
-  }, [_total, siblings, activePage, _startValue, _endValue, boundaries]);
-
-  const latest = useLatestRef({ active: activePage, range: paginationRange });
-
-  const getActive = useCallback(() => latest.current.active, []);
-  const getRange = useCallback(() => latest.current.range, []);
+  const getActive = useCallback(() => activeRef.current, []);
+  const getRange = useCallback(
+    () =>
+      activeRef.current === latest.current.active
+        ? latest.current.range
+        : getPaginationRange(activeRef.current, latest.current.rangeOptions),
+    []
+  );
 
   return useMemo(
     () => ({

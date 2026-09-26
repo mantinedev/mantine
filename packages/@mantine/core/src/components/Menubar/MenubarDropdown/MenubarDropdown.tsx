@@ -55,10 +55,6 @@ export function MenubarDropdown(props: MenubarDropdownProps) {
     } else if (event.key === backKey) {
       event.preventDefault();
       switchToAdjacent(-1);
-    } else if (event.key === 'Escape') {
-      const index = menuCtx.index;
-      ctx.controller.setActiveIndex(index);
-      window.setTimeout(() => ctx.controller.focusTarget(index), 0);
     }
   });
 

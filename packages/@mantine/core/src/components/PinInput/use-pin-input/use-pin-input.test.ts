@@ -195,7 +195,24 @@ describe('@mantine/core/PinInput/use-pin-input', () => {
     expect(document.activeElement).toBe(nodes[2]);
   });
 
-  it('focusNext focuses the first input and focusPrevious the last when nothing is focused', () => {
+  it('focusNext and focusPrevious step from the last focused input after blur', () => {
+    const hook = renderHook(() => usePinInput());
+    const nodes = registerInputs(hook, 4);
+
+    act(() => hook.result.current.setFocusedIndex(2));
+    act(() => hook.result.current.setFocusedIndex(-1));
+    expect(hook.result.current.getFocusedIndex()).toBe(-1);
+
+    act(() => hook.result.current.focusNext());
+    expect(document.activeElement).toBe(nodes[3]);
+
+    act(() => hook.result.current.setFocusedIndex(1));
+    act(() => hook.result.current.setFocusedIndex(-1));
+    act(() => hook.result.current.focusPrevious());
+    expect(document.activeElement).toBe(nodes[0]);
+  });
+
+  it('focusNext focuses the first input and focusPrevious the last when no input has been focused', () => {
     const hook = renderHook(() => usePinInput());
     const nodes = registerInputs(hook, 4);
 

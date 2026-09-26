@@ -320,4 +320,55 @@ describe('@mantine/dates/TimePicker/use-time-picker', () => {
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenLastCalledWith('');
   });
+
+  function paste(text: string) {
+    return {
+      preventDefault: () => {},
+      clipboardData: { getData: () => text },
+    } as any;
+  }
+
+  it('updates the incomplete value latch on paste', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() => useTimePicker({ onChange }));
+
+    act(() => hook.result.current.onPaste(paste('12:30')));
+    expect(onChange).toHaveBeenLastCalledWith('12:30');
+
+    act(() => hook.result.current.setMinutes(null));
+    expect(onChange).toHaveBeenLastCalledWith('');
+    expect(hook.result.current.getValue()).toBe('');
+  });
+
+  it('writes the clamped value to the fields on paste', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() => useTimePicker({ onChange, max: '10:00:00' }));
+
+    act(() => hook.result.current.onPaste(paste('12:30')));
+    expect(onChange).toHaveBeenLastCalledWith('10:00');
+    expect(hook.result.current.getValue()).toBe('10:00');
+    expect(hook.result.current.hours).toBe(10);
+    expect(hook.result.current.minutes).toBe(0);
+
+    const minHook = renderHook(() => useTimePicker({ onChange, min: '10:00' }));
+    act(() => minHook.result.current.onPaste(paste('08:00')));
+    expect(onChange).toHaveBeenLastCalledWith('10:00');
+    expect(minHook.result.current.getValue()).toBe('10:00');
+  });
+
+  it('clamps the value set earlier in the same handler', () => {
+    const hook = renderHook(() => useTimePicker({ defaultValue: '10:00', max: '12:00' }));
+    act(() => {
+      hook.result.current.setValue('15:00');
+      hook.result.current.clamp();
+    });
+    expect(hook.result.current.getValue()).toBe('12:00');
+
+    const other = renderHook(() => useTimePicker({ defaultValue: '15:00', max: '12:00' }));
+    act(() => {
+      other.result.current.setValue('11:00');
+      other.result.current.clamp();
+    });
+    expect(other.result.current.getValue()).toBe('11:00');
+  });
 });

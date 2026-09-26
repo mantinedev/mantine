@@ -104,6 +104,23 @@ export function Controlled() {
   );
 }
 
+export function ControlledMinMaxDate() {
+  const [value, setValue] = useState<string | null>('2024-06-15');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <MaskedDateInput
+        label="Pick date"
+        value={value}
+        onChange={setValue}
+        minDate="1924-01-01"
+        maxDate="2024-12-31"
+      />
+      <div>Value: {String(value)}</div>
+    </div>
+  );
+}
+
 export function Clearable() {
   return (
     <div style={{ padding: 40 }}>

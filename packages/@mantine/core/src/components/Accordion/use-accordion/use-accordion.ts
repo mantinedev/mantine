@@ -44,7 +44,7 @@ export interface AccordionController<Multiple extends boolean = false> {
   /** Expands every mounted item, no-op when `multiple` is `false` */
   expandAll: () => void;
 
-  /** Collapses every item, ignored when `disableCollapse` is set */
+  /** Collapses every item, ignored when `disableCollapse` is set and `multiple` is not set */
   collapseAll: () => void;
 
   /** Returns `true` if the given item is expanded */

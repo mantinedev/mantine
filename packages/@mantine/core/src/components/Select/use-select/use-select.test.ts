@@ -6,6 +6,7 @@ const STORE_ACTIONS: (keyof SelectStore)[] = [
   'getValue',
   'setValue',
   'getSearch',
+  'getDisplayedSearch',
   'setSearch',
   'getValueOption',
   'registerOptions',
@@ -112,24 +113,35 @@ describe('@mantine/core/Select/use-select', () => {
     expect(hook.result.current.getValueOption()).toEqual(created);
   });
 
-  it('returns the value label from getSearch until the search is set', () => {
+  it('returns the raw search from getSearch, the same value as search', () => {
     const hook = renderHook(() => useSelect({ defaultValue: 'React' }));
-    expect(hook.result.current.getSearch()).toBe('');
-
     hook.result.current.registerOptions(options);
-    expect(hook.result.current.getSearch()).toBe('React.js');
-
-    act(() => hook.result.current.setSearch(''));
     expect(hook.result.current.getSearch()).toBe('');
+    expect(hook.result.current.getSearch()).toBe(hook.result.current.search);
 
     act(() => hook.result.current.setSearch('Vu'));
     expect(hook.result.current.getSearch()).toBe('Vu');
+    expect(hook.result.current.search).toBe('Vu');
   });
 
-  it('returns the search from getSearch when a search option is provided', () => {
+  it('returns the value label from getDisplayedSearch until the search is set', () => {
+    const hook = renderHook(() => useSelect({ defaultValue: 'React' }));
+    expect(hook.result.current.getDisplayedSearch()).toBe('');
+
+    hook.result.current.registerOptions(options);
+    expect(hook.result.current.getDisplayedSearch()).toBe('React.js');
+
+    act(() => hook.result.current.setSearch(''));
+    expect(hook.result.current.getDisplayedSearch()).toBe('');
+
+    act(() => hook.result.current.setSearch('Vu'));
+    expect(hook.result.current.getDisplayedSearch()).toBe('Vu');
+  });
+
+  it('returns the search from getDisplayedSearch when a search option is provided', () => {
     const hook = renderHook(() => useSelect({ defaultValue: 'React', defaultSearchValue: '' }));
     hook.result.current.registerOptions(options);
-    expect(hook.result.current.getSearch()).toBe('');
+    expect(hook.result.current.getDisplayedSearch()).toBe('');
   });
 
   it('calls onSearchChange from setSearch', () => {

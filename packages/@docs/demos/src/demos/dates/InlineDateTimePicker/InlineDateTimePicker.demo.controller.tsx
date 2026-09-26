@@ -33,7 +33,12 @@ function Demo() {
         </Button>
       </Group>
 
-      <InlineDateTimePicker value={value} onChange={setValue} controller={controller} />
+      <InlineDateTimePicker
+        value={value}
+        onChange={setValue}
+        controller={controller}
+        maw={280}
+      />
 
       <Text size="sm" c="dimmed">
         Time: {controller.getTime() || 'not set'}
@@ -68,7 +73,7 @@ function Demo() {
         </Button>
       </Group>
 
-      <InlineDateTimePicker value={value} onChange={setValue} controller={controller} />
+      <InlineDateTimePicker value={value} onChange={setValue} controller={controller} maw={280} />
 
       <Text size="sm" c="dimmed">
         Time: {controller.getTime() || 'not set'}
