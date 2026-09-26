@@ -9,10 +9,10 @@ import { ActionIcon, Group } from '@mantine/core';
 function Demo() {
   return (
     <Group>
-      <ActionIcon aria-label="default action icon" size="lg" color="lime.4">
+      <ActionIcon autoContrast={false} aria-label="default action icon" size="lg" color="lime.4">
         <FingerprintIcon size={20} />
       </ActionIcon>
-      <ActionIcon autoContrast aria-label="autoContrast action icon" size="lg" color="lime.4">
+      <ActionIcon aria-label="autoContrast action icon" size="lg" color="lime.4">
         <FingerprintIcon size={20} />
       </ActionIcon>
     </Group>
@@ -23,10 +23,10 @@ function Demo() {
 function Demo() {
   return (
     <Group>
-      <ActionIcon aria-label="default action icon" size="lg" color="lime.4">
+      <ActionIcon autoContrast={false} aria-label="default action icon" size="lg" color="lime.4">
         <FingerprintIcon size={20} />
       </ActionIcon>
-      <ActionIcon autoContrast aria-label="autoContrast action icon" size="lg" color="lime.4">
+      <ActionIcon aria-label="autoContrast action icon" size="lg" color="lime.4">
         <FingerprintIcon size={20} />
       </ActionIcon>
     </Group>

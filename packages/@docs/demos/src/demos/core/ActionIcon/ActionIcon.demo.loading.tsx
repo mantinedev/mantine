@@ -13,14 +13,14 @@ function Demo() {
   return (
     <>
       <Group>
-        <ActionIcon loading={loading} aria-label="Like">
-          <HeartIcon size={18} />
+        <ActionIcon loading={loading} aria-label="Like" size="lg">
+          <HeartIcon size={20} />
         </ActionIcon>
-        <ActionIcon variant="light" loading={loading} aria-label="Like">
-          <HeartIcon size={18} />
+        <ActionIcon variant="light" loading={loading} aria-label="Like" size="lg">
+          <HeartIcon size={20} />
         </ActionIcon>
-        <ActionIcon variant="outline" loading={loading} aria-label="Like">
-          <HeartIcon size={18} />
+        <ActionIcon variant="outline" loading={loading} aria-label="Like" size="lg">
+          <HeartIcon size={20} />
         </ActionIcon>
       </Group>
 
@@ -35,14 +35,14 @@ function Demo() {
   return (
     <>
       <Group>
-        <ActionIcon loading={loading} aria-label="Like">
-          <HeartIcon size={18} />
+        <ActionIcon loading={loading} aria-label="Like" size="lg">
+          <HeartIcon size={20} />
         </ActionIcon>
-        <ActionIcon variant="light" loading={loading} aria-label="Like">
-          <HeartIcon size={18} />
+        <ActionIcon variant="light" loading={loading} aria-label="Like" size="lg">
+          <HeartIcon size={20} />
         </ActionIcon>
-        <ActionIcon variant="outline" loading={loading} aria-label="Like">
-          <HeartIcon size={18} />
+        <ActionIcon variant="outline" loading={loading} aria-label="Like" size="lg">
+          <HeartIcon size={20} />
         </ActionIcon>
       </Group>
 
