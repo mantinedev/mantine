@@ -1,7 +1,7 @@
 import { createSafeContext, GetStylesApi, MantineSize } from '../../core';
 import type { ComboboxFactory } from './Combobox';
 import type { ComboboxOptionProps } from './ComboboxOption/ComboboxOption';
-import type { ComboboxStore } from './use-combobox/use-combobox';
+import { ComboboxStore } from './use-combobox/use-combobox';
 
 export interface ComboboxContextValue {
   getStyles: GetStylesApi<ComboboxFactory>;

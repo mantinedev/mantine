@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { safePolygon, type HandleCloseContext } from '@floating-ui/react';
+import { safePolygon, HandleCloseContext } from '@floating-ui/react';
 import { useCallbackRef, useLatestRef } from '@mantine/hooks';
 import { useDirection } from '../../core';
 import type { CascaderOption, CascaderSafeAreaPolygonOptions } from './Cascader';

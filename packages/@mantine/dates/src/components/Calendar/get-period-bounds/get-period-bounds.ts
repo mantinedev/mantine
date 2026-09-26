@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import type { CalendarLevel, DateStringValue } from '../../../types';
+import { CalendarLevel, DateStringValue } from '../../../types';
 import { getDecadeRange } from '../get-decade-range/get-decade-range';
 
 interface GetPeriodBoundsInput {

@@ -1,4 +1,4 @@
-import type { ScheduleEventData } from '../../types';
+import { ScheduleEventData } from '../../types';
 import { calculateMonthDropDate } from './calculate-month-drop-date';
 
 describe('calculateMonthDropDate', () => {

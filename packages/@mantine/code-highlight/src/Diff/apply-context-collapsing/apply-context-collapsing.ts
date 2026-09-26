@@ -1,5 +1,5 @@
-import type { HunkPair } from '../pair-hunks/pair-hunks';
-import type { LineEntry } from '../split-into-lines/split-into-lines';
+import { HunkPair } from '../pair-hunks/pair-hunks';
+import { LineEntry } from '../split-into-lines/split-into-lines';
 
 export interface ExpandMarker {
   kind: 'expand';

@@ -1,4 +1,4 @@
-import type { Column } from '@tanstack/react-table';
+import { Column } from '@tanstack/react-table';
 import { useDataGridContext } from '../DataGrid.context';
 import type { VirtualColumns } from '../DataGridBody/use-virtual-columns';
 import type { DataGridFeatures } from '../table-features';

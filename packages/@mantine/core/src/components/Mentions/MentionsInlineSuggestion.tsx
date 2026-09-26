@@ -1,4 +1,4 @@
-import type { GetStylesApi } from '../../core';
+import { GetStylesApi } from '../../core';
 import type { MentionsFactory } from './Mentions';
 
 export interface MentionsInlineSuggestionProps {

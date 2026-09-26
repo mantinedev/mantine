@@ -1,4 +1,4 @@
-import type { Sizes } from '../ScrollArea.types';
+import { Sizes } from '../ScrollArea.types';
 import { getThumbSize } from './get-thumb-size';
 import { linearScale } from './linear-scale';
 

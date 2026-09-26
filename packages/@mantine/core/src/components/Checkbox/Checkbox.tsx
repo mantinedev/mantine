@@ -25,25 +25,25 @@ import {
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../utils/InlineInput';
 import {
   CheckboxCard,
-  type CheckboxCardProps,
-  type CheckboxCardStylesNames,
-  type CheckboxCardCssVariables,
-  type CheckboxCardFactory,
+  CheckboxCardProps,
+  CheckboxCardStylesNames,
+  CheckboxCardCssVariables,
+  CheckboxCardFactory,
 } from './CheckboxCard/CheckboxCard';
 import {
   CheckboxGroup,
   CheckboxGroupContext,
-  type CheckboxGroupProps,
-  type CheckboxGroupStylesNames,
-  type CheckboxGroupFactory,
+  CheckboxGroupProps,
+  CheckboxGroupStylesNames,
+  CheckboxGroupFactory,
 } from './CheckboxGroup/CheckboxGroup';
 import {
   CheckboxIndicator,
-  type CheckboxIndicatorProps,
-  type CheckboxIndicatorStylesNames,
-  type CheckboxIndicatorCssVariables,
-  type CheckboxIndicatorFactory,
-  type CheckboxIndicatorVariant,
+  CheckboxIndicatorProps,
+  CheckboxIndicatorStylesNames,
+  CheckboxIndicatorCssVariables,
+  CheckboxIndicatorFactory,
+  CheckboxIndicatorVariant,
 } from './CheckboxIndicator/CheckboxIndicator';
 import { CheckboxIcon } from './CheckIcon';
 import classes from './Checkbox.module.css';

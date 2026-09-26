@@ -1,7 +1,7 @@
 import { createSafeContext, GetStylesApi } from '../../core';
-import type { FloatingPosition } from '../../utils/Floating';
+import { FloatingPosition } from '../../utils/Floating';
 import type { MenubarFactory } from './Menubar';
-import type { MenubarController } from './use-menubar/use-menubar';
+import { MenubarController } from './use-menubar/use-menubar';
 
 export interface MenubarContextValue {
   getStyles: GetStylesApi<MenubarFactory>;

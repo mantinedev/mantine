@@ -25,7 +25,7 @@ import { InputBase } from '../InputBase';
 import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
 import { ScrollArea, ScrollAreaProps } from '../ScrollArea';
-import type { TreeNodeData } from '../Tree';
+import { TreeNodeData } from '../Tree';
 import { filterTreeData } from '../Tree/filter-tree-data/filter-tree-data';
 import {
   findTreeNode,

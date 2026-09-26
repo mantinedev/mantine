@@ -1,4 +1,4 @@
-import type { CodeHighlightAdapter } from '../CodeHighlightProvider';
+import { CodeHighlightAdapter } from '../CodeHighlightProvider';
 
 export function createHighlightJsAdapter(hljs: any): CodeHighlightAdapter {
   return {

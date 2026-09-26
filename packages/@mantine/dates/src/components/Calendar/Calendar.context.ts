@@ -1,15 +1,15 @@
 import { createContext, use } from 'react';
-import type { DataAttributes, GetStylesApi, MantineSize } from '@mantine/core';
-import type {
+import { DataAttributes, GetStylesApi, MantineSize } from '@mantine/core';
+import {
   CalendarLevel,
   ControlKeydownPayload,
   DateLabelFormat,
   DateStringValue,
 } from '../../types';
 import type { MonthWeekControlProps } from '../Month';
-import type { PickerControlProps } from '../PickerControl';
+import { PickerControlProps } from '../PickerControl';
 import type { CalendarEngineFactory } from './Calendar';
-import type { CalendarController } from './use-calendar/use-calendar';
+import { CalendarController } from './use-calendar/use-calendar';
 
 export interface CalendarStylesApiProps {
   __staticSelector: string;

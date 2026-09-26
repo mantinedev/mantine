@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
-import type { Primitive } from '../../../core';
-import type { ComboboxItem, ComboboxStore } from '../../Combobox';
+import { Primitive } from '../../../core';
+import { ComboboxItem, ComboboxStore } from '../../Combobox';
 import {
   ComboboxDropdownCallbacks,
   useComboboxWithCallbacks,

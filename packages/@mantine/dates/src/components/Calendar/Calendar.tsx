@@ -43,14 +43,11 @@ import {
   isNextDisabled,
   isPreviousDisabled,
 } from './get-period-bounds/get-period-bounds';
-import {
-  type CalendarShiftUnit,
-  shiftCalendarDate,
-} from './shift-calendar-date/shift-calendar-date';
+import { CalendarShiftUnit, shiftCalendarDate } from './shift-calendar-date/shift-calendar-date';
 import {
   useCalendar,
-  type CalendarController,
-  type CalendarControllerOptions,
+  CalendarController,
+  CalendarControllerOptions,
 } from './use-calendar/use-calendar';
 import { useControlsNavigation } from './use-controls-navigation/use-controls-navigation';
 

@@ -22,14 +22,14 @@ import {
   AppShellResizeController,
   AppShellResponsiveSize,
 } from './AppShell.types';
-import { AppShellAside, type AppShellAsideProps } from './AppShellAside/AppShellAside';
-import { AppShellFooter, type AppShellFooterProps } from './AppShellFooter/AppShellFooter';
-import { AppShellHeader, type AppShellHeaderProps } from './AppShellHeader/AppShellHeader';
-import { AppShellMain, type AppShellMainProps } from './AppShellMain/AppShellMain';
+import { AppShellAside, AppShellAsideProps } from './AppShellAside/AppShellAside';
+import { AppShellFooter, AppShellFooterProps } from './AppShellFooter/AppShellFooter';
+import { AppShellHeader, AppShellHeaderProps } from './AppShellHeader/AppShellHeader';
+import { AppShellMain, AppShellMainProps } from './AppShellMain/AppShellMain';
 import { AppShellMediaStyles } from './AppShellMediaStyles/AppShellMediaStyles';
 import { escapeCssId } from './AppShellMediaStyles/escape-css-id/escape-css-id';
-import { AppShellNavbar, type AppShellNavbarProps } from './AppShellNavbar/AppShellNavbar';
-import { AppShellSection, type AppShellSectionProps } from './AppShellSection/AppShellSection';
+import { AppShellNavbar, AppShellNavbarProps } from './AppShellNavbar/AppShellNavbar';
+import { AppShellSection, AppShellSectionProps } from './AppShellSection/AppShellSection';
 import { RESIZE_SECTION_NAMES } from './use-app-shell-resize/resize-section-config';
 import { useResizing } from './use-resizing/use-resizing';
 import classes from './AppShell.module.css';

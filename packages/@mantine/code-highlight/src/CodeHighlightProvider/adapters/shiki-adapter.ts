@@ -1,5 +1,5 @@
 import { getEnv } from '@mantine/core';
-import type { CodeHighlightAdapter } from '../CodeHighlightProvider';
+import { CodeHighlightAdapter } from '../CodeHighlightProvider';
 import { dark, light } from './shiki-themes';
 
 function stripElement(openTag: string, data: string) {

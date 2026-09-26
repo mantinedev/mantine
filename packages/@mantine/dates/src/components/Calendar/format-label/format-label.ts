@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import type { DateLabelFormat, DateStringValue } from '../../../types';
+import { DateLabelFormat, DateStringValue } from '../../../types';
 
 export type DecadeLabelFormat =
   | string

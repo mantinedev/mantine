@@ -1,4 +1,4 @@
-import type { MantineColor } from '../../../core';
+import { MantineColor } from '../../../core';
 import type { StepFragmentComponent } from '../Stepper';
 import type { StepperContextValue } from '../Stepper.context';
 

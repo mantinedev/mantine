@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { act } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
-import { InlineDateTimePicker, type InlineDateTimePickerProps } from './InlineDateTimePicker';
+import { InlineDateTimePicker, InlineDateTimePickerProps } from './InlineDateTimePicker';
 import {
   useInlineDateTimePicker,
-  type InlineDateTimePickerController,
-  type InlineDateTimePickerControllerOptions,
+  InlineDateTimePickerController,
+  InlineDateTimePickerControllerOptions,
 } from './use-inline-date-time-picker/use-inline-date-time-picker';
 
 const defaultProps = {

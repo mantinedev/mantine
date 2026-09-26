@@ -1,12 +1,12 @@
 import { useMemo, useRef, useState } from 'react';
-import type {
+import {
   ColumnOrderState,
   ColumnPinningState,
   GroupingState,
   OnChangeFn,
   RowData,
 } from '@tanstack/react-table';
-import type { MantineSize } from '@mantine/core';
+import { MantineSize } from '@mantine/core';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import type { DataGridColumnDef, DataGridTable } from '../DataGrid.types';
 import {
@@ -16,7 +16,7 @@ import {
   getUtilityColumnIds,
   normalizeColumnOrder,
   normalizeColumnPinning,
-  type UtilityColumnFlags,
+  UtilityColumnFlags,
 } from '../utility-columns/utility-columns';
 import type { UseDataGridOptions } from './use-data-grid.types';
 

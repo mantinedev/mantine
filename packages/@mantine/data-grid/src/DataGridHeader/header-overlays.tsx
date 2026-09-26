@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { flexRender } from '@tanstack/react-table';
 import { Portal } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';

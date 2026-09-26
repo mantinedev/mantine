@@ -1,5 +1,5 @@
-import type React from 'react';
-import type { Row } from '@tanstack/react-table';
+import React from 'react';
+import { Row } from '@tanstack/react-table';
 import type { DataGridContextValue } from '../DataGrid.context';
 import type { DataGridFeatures } from '../table-features';
 import { flattenRowSections } from './row-sections';

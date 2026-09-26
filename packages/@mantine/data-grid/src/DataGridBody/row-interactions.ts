@@ -1,5 +1,5 @@
-import type React from 'react';
-import type { Row } from '@tanstack/react-table';
+import React from 'react';
+import { Row } from '@tanstack/react-table';
 import type { DataGridContextValue } from '../DataGrid.context';
 import { GRID_ELEMENT_SELECTOR } from '../hooks/grid-dom';
 import type { DataGridFeatures } from '../table-features';

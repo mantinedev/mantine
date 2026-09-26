@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { MentionDataFn, MentionItem, MentionResult } from './Mentions.types';
-import type { ResolvedMentionSource } from './resolve-sources';
+import { MentionDataFn, MentionItem, MentionResult } from './Mentions.types';
+import { ResolvedMentionSource } from './resolve-sources';
 
 export type MentionsFilter = (input: { query: string; items: MentionItem[] }) => MentionItem[];
 

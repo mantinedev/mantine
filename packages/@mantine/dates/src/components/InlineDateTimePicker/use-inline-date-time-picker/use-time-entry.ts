@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
-import type { TimePickerField } from '../../TimePicker/TimePicker.types';
+import { TimePickerField } from '../../TimePicker/TimePicker.types';
 
 export type TimeEntryTarget = 'time' | 'endTime';
 

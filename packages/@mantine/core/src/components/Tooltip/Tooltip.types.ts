@@ -1,4 +1,4 @@
-import type { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@floating-ui/react';
+import { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@floating-ui/react';
 import { BoxProps, ElementProps, MantineColor, MantineRadius, StylesApiProps } from '../../core';
 import { FloatingPosition } from '../../utils/Floating';
 import { BasePortalProps } from '../Portal';

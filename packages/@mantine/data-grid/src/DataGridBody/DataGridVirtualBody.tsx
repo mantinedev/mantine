@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import type { Row } from '@tanstack/react-table';
-import { useVirtualizer, type VirtualItem } from '@tanstack/react-virtual';
+import { Row } from '@tanstack/react-table';
+import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
 import { rem } from '@mantine/core';
 import { useDidUpdate } from '@mantine/hooks';
 import { getOrderedVisibleColumns } from '../column-cell-props';

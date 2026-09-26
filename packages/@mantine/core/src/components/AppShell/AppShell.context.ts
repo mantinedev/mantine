@@ -1,6 +1,6 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { AppShellFactory } from './AppShell';
-import type { AppShellResizeController, AppShellResizeSection } from './AppShell.types';
+import { AppShellResizeController, AppShellResizeSection } from './AppShell.types';
 
 export interface AppShellContextValue {
   getStyles: GetStylesApi<AppShellFactory>;

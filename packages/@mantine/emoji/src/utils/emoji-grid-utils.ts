@@ -1,4 +1,4 @@
-import type { EmojiPickerEmoji, FlattenedRowItem } from '../types';
+import { EmojiPickerEmoji, FlattenedRowItem } from '../types';
 
 export function getAllEmojis(items: FlattenedRowItem[]): EmojiPickerEmoji[] {
   const emojis: EmojiPickerEmoji[] = [];

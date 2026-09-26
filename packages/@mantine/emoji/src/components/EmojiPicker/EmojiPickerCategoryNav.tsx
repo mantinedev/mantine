@@ -1,5 +1,5 @@
 import { UnstyledButton } from '@mantine/core';
-import type { EmojiPickerCategory } from '../../types';
+import { EmojiPickerCategory } from '../../types';
 import { useEmojiPickerContext } from './EmojiPicker.context';
 
 interface EmojiPickerCategoryNavProps {

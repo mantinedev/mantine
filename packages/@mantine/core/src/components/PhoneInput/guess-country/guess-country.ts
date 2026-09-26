@@ -1,4 +1,4 @@
-import type { PhoneInputCountryData } from '../phone-data';
+import { PhoneInputCountryData } from '../phone-data';
 
 export function guessCountry(
   inputValue: string,

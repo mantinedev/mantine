@@ -1,4 +1,4 @@
-import type { ChartData } from '../types';
+import { ChartData } from '../types';
 import type { AreaChartSeries } from './AreaChart';
 
 interface GetSplitOffsetInput {

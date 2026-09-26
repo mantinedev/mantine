@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { factory, Factory, Popover, PopoverProps, useProps } from '@mantine/core';
-import type { EmojiPickerEmoji } from '../../types';
+import { EmojiPickerEmoji } from '../../types';
 import { EmojiPicker, EmojiPickerProps } from '../EmojiPicker';
 import classes from './EmojiPickerPopover.module.css';
 

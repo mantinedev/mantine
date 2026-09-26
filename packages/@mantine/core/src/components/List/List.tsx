@@ -15,12 +15,7 @@ import {
   useStyles,
 } from '../../core';
 import { ListProvider } from './List.context';
-import {
-  ListItem,
-  ListItemStylesNames,
-  type ListItemProps,
-  type ListItemFactory,
-} from './ListItem/ListItem';
+import { ListItem, ListItemStylesNames, ListItemProps, ListItemFactory } from './ListItem/ListItem';
 import classes from './List.module.css';
 export type ListStylesNames = 'root' | ListItemStylesNames;
 export type ListCssVariables = {

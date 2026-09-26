@@ -4,7 +4,7 @@ import {
   useFloating,
   useHover,
   useInteractions,
-  type SafePolygonOptions,
+  SafePolygonOptions,
 } from '@floating-ui/react';
 import { useCallbackRef, useId, useUncontrolled } from '@mantine/hooks';
 import { ExtendComponent, Factory, useDirection, useProps } from '../../../core';

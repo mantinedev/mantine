@@ -1,4 +1,4 @@
-import type { AppShellResizeSection } from '../AppShell.types';
+import { AppShellResizeSection } from '../AppShell.types';
 
 export interface ResizeSectionConfig {
   /** Axis the pointer moves along to resize the section */

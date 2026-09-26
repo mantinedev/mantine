@@ -1,6 +1,6 @@
 import { DEFAULT_THEME, px, rem } from '../../../../core';
 import { AppShellProps } from '../../AppShell';
-import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
+import { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { assignNavbarVariables } from './assign-navbar-variables';
 
 function getTestObject(navbar: AppShellProps['navbar'], mode: 'fixed' | 'static' = 'fixed') {

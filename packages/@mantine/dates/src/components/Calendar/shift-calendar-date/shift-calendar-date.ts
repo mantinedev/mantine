@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import type { DateStringValue } from '../../../types';
+import { DateStringValue } from '../../../types';
 
 export type CalendarShiftUnit = 'month' | 'year';
 

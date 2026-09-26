@@ -1,5 +1,5 @@
-import type { TreeNodeData } from '../Tree';
-import type { TreeExpandedState } from '../use-tree';
+import { TreeNodeData } from '../Tree';
+import { TreeExpandedState } from '../use-tree';
 
 export type FlatTreeLineState = 'continuing' | 'closing' | 'none';
 

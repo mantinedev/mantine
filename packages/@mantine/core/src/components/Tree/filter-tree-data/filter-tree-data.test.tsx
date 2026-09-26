@@ -1,4 +1,4 @@
-import type { TreeNodeData } from '../Tree';
+import { TreeNodeData } from '../Tree';
 import { defaultTreeNodeFilter, filterTreeData, TreeNodeFilter } from './filter-tree-data';
 
 const data: TreeNodeData[] = [

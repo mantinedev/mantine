@@ -1,4 +1,4 @@
-import type { LineEntry } from '../split-into-lines/split-into-lines';
+import { LineEntry } from '../split-into-lines/split-into-lines';
 import { computeSimilarity, pairHunks } from './pair-hunks';
 
 describe('computeSimilarity', () => {

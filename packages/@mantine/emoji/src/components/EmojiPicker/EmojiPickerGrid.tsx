@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { ScrollArea, ScrollAreaProps } from '@mantine/core';
-import type { FlattenedRowItem } from '../../types';
+import { FlattenedRowItem } from '../../types';
 import { getEmojiIdAtIndex, getItemEmojiOffsets } from '../../utils';
 import { EmojiButton } from './EmojiButton';
 import { useEmojiPickerContext } from './EmojiPicker.context';

@@ -2,7 +2,7 @@ import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render } from '@mantine-tests/core';
 import { PinInput } from './PinInput';
-import { usePinInput, type PinInputController } from './use-pin-input/use-pin-input';
+import { usePinInput, PinInputController } from './use-pin-input/use-pin-input';
 
 const getInputs = (container: HTMLElement) =>
   container.querySelectorAll<HTMLInputElement>('.mantine-PinInput-input');

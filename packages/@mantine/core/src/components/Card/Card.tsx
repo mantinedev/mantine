@@ -14,7 +14,7 @@ import {
 } from '../../core';
 import { Paper } from '../Paper';
 import { CardProvider } from './Card.context';
-import { CardSection, type CardSectionProps } from './CardSection/CardSection';
+import { CardSection, CardSectionProps } from './CardSection/CardSection';
 import classes from './Card.module.css';
 export type CardStylesNames = 'root' | 'section';
 export type CardCssVariables = {

@@ -11,9 +11,9 @@ import {
   filterFn_notEmpty,
   filterFn_startsWith,
   filterFn_weakEquals,
-  type FilterFn,
+  FilterFn,
 } from '@tanstack/react-table';
-import type { DataGridFeatures } from '../table-features';
+import { DataGridFeatures } from '../table-features';
 
 export interface FilterOperator {
   /** Human-readable operator name, rendered by user-land filter UI */

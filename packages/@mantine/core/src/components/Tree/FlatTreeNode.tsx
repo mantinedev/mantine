@@ -1,8 +1,8 @@
 import { memo, useRef } from 'react';
 import { findElementAncestor } from '../../core';
-import type { FlatTreeLineState } from './flatten-tree-data/flatten-tree-data';
-import type { RenderNode, TreeNodeData } from './Tree';
-import type { TreeStore } from './use-tree';
+import { FlatTreeLineState } from './flatten-tree-data/flatten-tree-data';
+import { RenderNode, TreeNodeData } from './Tree';
+import { TreeStore } from './use-tree';
 import classes from './Tree.module.css';
 
 export interface FlatTreeNodeProps {

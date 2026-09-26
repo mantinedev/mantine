@@ -9,7 +9,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useLightboxContext } from '../lightbox.context';
-import type { ToolbarItem, ToolbarItems } from '../lightbox.types';
+import { ToolbarItem, ToolbarItems } from '../lightbox.types';
 import {
   createCloseToolbarItem,
   createDownloadToolbarItem,

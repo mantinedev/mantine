@@ -1,4 +1,4 @@
-import type { MentionConfig, MentionMapDirection } from '../Mentions.types';
+import { MentionConfig, MentionMapDirection } from '../Mentions.types';
 import { findAllMentions, getMentionPlainText } from './iterate-mentions';
 
 /**

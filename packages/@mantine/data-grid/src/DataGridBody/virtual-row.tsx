@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { Column, Row } from '@tanstack/react-table';
 import { useDataGridContext } from '../DataGrid.context';
 import type { DataGridFeatures } from '../table-features';

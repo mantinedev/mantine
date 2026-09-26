@@ -1,4 +1,4 @@
-import type { ScheduleEventData } from '../../types';
+import { ScheduleEventData } from '../../types';
 import { calculateMonthResizeDates } from './calculate-month-resize-dates';
 
 function createEvent(start: string, end: string): ScheduleEventData {

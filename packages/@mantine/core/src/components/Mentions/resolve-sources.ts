@@ -1,6 +1,6 @@
 import { Children, isValidElement } from 'react';
 import { Mention, MentionProps } from './Mention';
-import type { MentionConfig, MentionDisplayTransform, MentionSerializer } from './Mentions.types';
+import { MentionConfig, MentionDisplayTransform, MentionSerializer } from './Mentions.types';
 import { createMarkupSerializer } from './utils/create-markup-serializer';
 import { makeTriggerRegex } from './utils/make-trigger-regex';
 

@@ -1,4 +1,4 @@
-import type { Column, RowData } from '@tanstack/react-table';
+import { Column, RowData } from '@tanstack/react-table';
 import type { DataGridFeatures } from './table-features';
 
 /** Human-readable column label: `meta.label`, then a string `header`, then the column id */

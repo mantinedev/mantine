@@ -1,5 +1,5 @@
-import type { StepperContextValue } from '../Stepper.context';
-import { getStepState, resolveStepProps, type ResolveStepPropsInput } from './resolve-step-props';
+import { StepperContextValue } from '../Stepper.context';
+import { getStepState, resolveStepProps, ResolveStepPropsInput } from './resolve-step-props';
 
 function getContext(overrides?: Partial<StepperContextValue>): StepperContextValue {
   return {

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { GroupingState, RowData, useTable } from '@tanstack/react-table';
-import { type MantineSize, useDirection } from '@mantine/core';
+import { MantineSize, useDirection } from '@mantine/core';
 import { useIsomorphicEffect, useLatestRef } from '@mantine/hooks';
 import { getOrderedVisibleColumns } from '../column-cell-props';
 import { DATA_GRID_SIZES, getControlSize as resolveControlSize } from '../data-grid-sizes';

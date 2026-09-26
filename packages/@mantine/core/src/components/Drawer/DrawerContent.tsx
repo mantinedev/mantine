@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import { CompoundStylesApiProps, factory, Factory, useDirection, useProps } from '../../core';
-import type { OverlayStackEntryContentProps } from '../../core/OverlayStack';
+import { OverlayStackEntryContentProps } from '../../core/OverlayStack';
 import { FocusTrap } from '../FocusTrap';
 import { ModalBaseContentProps, useModalBaseContext } from '../ModalBase';
 import { Paper } from '../Paper';

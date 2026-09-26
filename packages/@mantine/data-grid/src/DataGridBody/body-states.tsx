@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Column } from '@tanstack/react-table';
+import { Column } from '@tanstack/react-table';
 import { Skeleton } from '@mantine/core';
 import { getColumnCellProps } from '../column-cell-props';
 import { DataGridContextValue, useDataGridContext } from '../DataGrid.context';

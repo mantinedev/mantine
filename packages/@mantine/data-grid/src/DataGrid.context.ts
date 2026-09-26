@@ -6,7 +6,7 @@ import type { DataGridEmptyStatePayload } from './DataGrid.types';
 import type { RowSections } from './DataGridBody/row-sections';
 import type { DataGridHeaderInteractions } from './DataGridHeader/use-header-interactions';
 import type { DataGridStore } from './hooks';
-import type { DataGridLabels } from './labels';
+import { DataGridLabels } from './labels';
 import type { DataGridFeatures } from './table-features';
 
 export interface DataGridContextValue {

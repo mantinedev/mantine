@@ -1,6 +1,6 @@
 import { InlineStyles, useMantineContext, useMantineTheme } from '../../../core';
 import type { AppShellProps } from '../AppShell';
-import type { AppShellResizeSection, AppShellResizeSizes } from '../AppShell.types';
+import { AppShellResizeSection, AppShellResizeSizes } from '../AppShell.types';
 import { getVariables } from './get-variables/get-variables';
 
 interface AppShellMediaStylesProps {

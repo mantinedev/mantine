@@ -1,5 +1,5 @@
 import { rem } from '../../../../core';
-import type { AppShellProps } from '../../AppShell';
+import { AppShellProps } from '../../AppShell';
 import { assignPaddingVariables } from './assign-padding-variables';
 
 function getTestObject(padding: AppShellProps['padding']) {

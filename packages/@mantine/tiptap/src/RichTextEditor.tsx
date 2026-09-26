@@ -10,47 +10,47 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import type { ImageUploadResult } from './extensions/UploadImage';
+import { ImageUploadResult } from './extensions/UploadImage';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './labels';
 import { RichTextEditorProvider } from './RichTextEditor.context';
 import {
   RichTextEditorContent,
-  type RichTextEditorContentProps,
+  RichTextEditorContentProps,
 } from './RichTextEditorContent/RichTextEditorContent';
 import * as controls from './RichTextEditorControl';
 import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
 import {
   RichTextEditorControl,
-  type RichTextEditorControlProps,
+  RichTextEditorControlProps,
 } from './RichTextEditorControl/RichTextEditorControl';
 import {
   RichTextEditorDetailsControl,
-  type RichTextEditorDetailsControlProps,
+  RichTextEditorDetailsControlProps,
 } from './RichTextEditorControl/RichTextEditorDetailsControl';
 import {
   RichTextEditorImageUploadControl,
-  type RichTextEditorImageUploadControlProps,
+  RichTextEditorImageUploadControlProps,
 } from './RichTextEditorControl/RichTextEditorImageUploadControl';
 import {
   RichTextEditorInvisibleCharactersControl,
-  type RichTextEditorInvisibleCharactersControlProps,
+  RichTextEditorInvisibleCharactersControlProps,
 } from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl';
 import type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
 import {
   RichTextEditorSourceCodeControl,
-  type RichTextEditorSourceCodeControlProps,
+  RichTextEditorSourceCodeControlProps,
 } from './RichTextEditorControl/RichTextEditorSourceCodeControl';
 import {
   RichTextEditorTableInsertControl,
-  type RichTextEditorTableInsertControlProps,
+  RichTextEditorTableInsertControlProps,
 } from './RichTextEditorControl/RichTextEditorTableInsertControl';
 import {
   RichTextEditorControlsGroup,
-  type RichTextEditorControlsGroupProps,
+  RichTextEditorControlsGroupProps,
 } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
 import {
   RichTextEditorToolbar,
-  type RichTextEditorToolbarProps,
+  RichTextEditorToolbarProps,
 } from './RichTextEditorToolbar/RichTextEditorToolbar';
 import classes from './RichTextEditor.module.css';
 

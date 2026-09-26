@@ -4,8 +4,8 @@ import { render, screen, userEvent } from '@mantine-tests/core';
 import { Calendar, CalendarProps } from './Calendar';
 import {
   useCalendar,
-  type CalendarController,
-  type CalendarControllerOptions,
+  CalendarController,
+  CalendarControllerOptions,
 } from './use-calendar/use-calendar';
 
 const defaultProps: CalendarProps = {

@@ -1,5 +1,5 @@
-import type { TreeNodeData } from '../Tree';
-import type { TreeExpandedState } from '../Tree/use-tree';
+import { TreeNodeData } from '../Tree';
+import { TreeExpandedState } from '../Tree/use-tree';
 
 export interface TreeSelectFlatNode {
   node: TreeNodeData;

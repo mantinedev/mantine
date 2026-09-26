@@ -1,4 +1,4 @@
-import type { CascaderOption } from './Cascader';
+import { CascaderOption } from './Cascader';
 import { getCascaderPathOptions } from './get-cascader-path-options';
 
 const data: CascaderOption[] = [

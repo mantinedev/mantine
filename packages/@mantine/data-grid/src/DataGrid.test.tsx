@@ -1,4 +1,4 @@
-import { act, createRef, type Ref } from 'react';
+import { act, createRef, Ref } from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { dataGridFeatures } from './table-features';
 import { mockVirtualViewport } from './virtual-test-utils';

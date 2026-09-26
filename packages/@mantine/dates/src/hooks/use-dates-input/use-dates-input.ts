@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useDidUpdate, type UseDisclosureHandlers } from '@mantine/hooks';
+import { useDidUpdate, UseDisclosureHandlers } from '@mantine/hooks';
 import { useDatesContext } from '../../components/DatesProvider';
 import { DatePickerType, DatePickerValue } from '../../types';
 import { DateFormatter, getFormattedDate } from '../../utils';

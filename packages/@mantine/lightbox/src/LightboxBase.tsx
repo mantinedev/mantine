@@ -1,6 +1,6 @@
 import { factory, Factory, useProps } from '@mantine/core';
 import { lightbox } from './lightbox.store';
-import type { ToolbarItems } from './lightbox.types';
+import { ToolbarItems } from './lightbox.types';
 import { LightboxCaption } from './LightboxCaption/LightboxCaption';
 import { LightboxCloseButton } from './LightboxCloseButton/LightboxCloseButton';
 import { LightboxNavigation } from './LightboxNavigation/LightboxNavigation';

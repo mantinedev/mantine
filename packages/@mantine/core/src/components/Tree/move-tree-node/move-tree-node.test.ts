@@ -1,4 +1,4 @@
-import type { TreeNodeData } from '../Tree';
+import { TreeNodeData } from '../Tree';
 import { moveTreeNode } from './move-tree-node';
 
 const data: TreeNodeData[] = [

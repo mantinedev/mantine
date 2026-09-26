@@ -11,8 +11,8 @@ import {
   useDirection,
   useProps,
 } from '../../../core';
-import { getFloatingPosition, type FloatingPosition } from '../../../utils/Floating';
-import { Transition, type TransitionOverride } from '../../Transition';
+import { getFloatingPosition, FloatingPosition } from '../../../utils/Floating';
+import { Transition, TransitionOverride } from '../../Transition';
 import { useTourContext } from '../Tour.context';
 import { useTooltipAutoFocus } from '../use-tooltip-auto-focus';
 import classes from '../Tour.module.css';

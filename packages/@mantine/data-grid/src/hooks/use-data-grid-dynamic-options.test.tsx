@@ -1,6 +1,6 @@
-import type { SortingState } from '@tanstack/react-table';
+import { SortingState } from '@tanstack/react-table';
 import { act, renderHook } from '@testing-library/react';
-import type { UseDataGridOptions } from './use-data-grid.types';
+import { UseDataGridOptions } from './use-data-grid.types';
 import { useDataGrid } from '.';
 
 interface Person {

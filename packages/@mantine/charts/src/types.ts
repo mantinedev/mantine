@@ -1,4 +1,4 @@
-import type {
+import {
   BrushProps,
   CartesianGridProps,
   DotProps,
@@ -11,7 +11,7 @@ import type {
   XAxisProps,
   YAxisProps,
 } from 'recharts';
-import type { MantineColor } from '@mantine/core';
+import { MantineColor } from '@mantine/core';
 
 export interface ChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' | 'label'> {
   color?: MantineColor;

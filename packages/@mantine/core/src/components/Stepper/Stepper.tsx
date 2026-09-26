@@ -24,10 +24,10 @@ import {
   useStyles,
 } from '../../core';
 import { getStepColorText } from './get-step-color-text';
-import { StepperProvider, type StepperContextValue } from './Stepper.context';
+import { StepperProvider, StepperContextValue } from './Stepper.context';
 import { StepperCompleted, StepperCompletedProps } from './StepperCompleted/StepperCompleted';
 import { StepperStep, StepperStepProps } from './StepperStep/StepperStep';
-import { useStepper, type StepperController } from './use-stepper/use-stepper';
+import { useStepper, StepperController } from './use-stepper/use-stepper';
 import classes from './Stepper.module.css';
 export type StepFragmentComponent = React.FC<{ step: number }>;
 

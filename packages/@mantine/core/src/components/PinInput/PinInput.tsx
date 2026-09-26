@@ -20,7 +20,7 @@ import { Group } from '../Group';
 import { Input, InputProps } from '../Input';
 import { InputBase } from '../InputBase';
 import { createPinArray } from './create-pin-array/create-pin-array';
-import { usePinInput, type PinInputController } from './use-pin-input/use-pin-input';
+import { usePinInput, PinInputController } from './use-pin-input/use-pin-input';
 import classes from './PinInput.module.css';
 
 const regex = {

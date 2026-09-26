@@ -12,8 +12,8 @@ import {
   useRandomClassName,
   useStyles,
 } from '../../core';
-import { GridBreakpoints, GridProvider, type GridContextValue } from './Grid.context';
-import { GridCol, type GridColProps } from './GridCol/GridCol';
+import { GridBreakpoints, GridProvider, GridContextValue } from './Grid.context';
+import { GridCol, GridColProps } from './GridCol/GridCol';
 import { GridVariables } from './GridVariables';
 import classes from './Grid.module.css';
 export type GridStylesNames = 'root' | 'col' | 'inner' | 'container';

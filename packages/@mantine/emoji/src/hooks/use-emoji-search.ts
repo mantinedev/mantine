@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import type { EmojiPickerData, EmojiPickerEmoji } from '../types';
+import { EmojiPickerData, EmojiPickerEmoji } from '../types';
 import { searchEmojis } from '../utils';
 
 interface UseEmojiSearchInput {

@@ -24,7 +24,7 @@ import {
   useHighlight,
   useIsLanguageLoaded,
   useLoadLanguage,
-  type CodeHighlightAdapter,
+  CodeHighlightAdapter,
 } from '../CodeHighlightProvider/CodeHighlightProvider';
 import type {
   CodeHighlightDefaultLanguage,
@@ -34,13 +34,10 @@ import type {
   CodeHighlightTabsStylesNames,
 } from '../CodeHighlightTabs/CodeHighlightTabs';
 import { normalizeCode } from '../normalize-code';
-import {
-  CodeHighlightContextProvider,
-  type CodeHighlightContextValue,
-} from './CodeHighlight.context';
+import { CodeHighlightContextProvider, CodeHighlightContextValue } from './CodeHighlight.context';
 import {
   CodeHighlightControl,
-  type CodeHighlightControlProps,
+  CodeHighlightControlProps,
 } from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
 import { ExpandCodeButton } from './ExpandCodeButton/ExpandCodeButton';

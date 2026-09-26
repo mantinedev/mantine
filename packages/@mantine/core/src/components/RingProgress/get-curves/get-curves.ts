@@ -1,4 +1,4 @@
-import type { DataAttributes, MantineColor } from '../../../core';
+import { DataAttributes, MantineColor } from '../../../core';
 
 interface CurveData extends React.ComponentProps<'circle'>, DataAttributes {
   value: number;

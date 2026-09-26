@@ -1,4 +1,4 @@
-import type { MantineBreakpoint } from '../../core';
+import { MantineBreakpoint } from '../../core';
 
 // Shared props of for Navbar, Aside, Header and Footer components
 export interface AppShellCompoundProps {

@@ -18,7 +18,7 @@ import {
   __InputStylesNames,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import type { EmojiPickerEmoji } from '../../types';
+import { EmojiPickerEmoji } from '../../types';
 import { EmojiPicker, EmojiPickerProps } from '../EmojiPicker';
 import classes from './EmojiPickerInput.module.css';
 

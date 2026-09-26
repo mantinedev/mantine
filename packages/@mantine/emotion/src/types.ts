@@ -1,5 +1,5 @@
 import * as CSSType from 'csstype';
-import type { MantineTheme } from '@mantine/core';
+import { MantineTheme } from '@mantine/core';
 import type { EmotionHelpers } from './create-styles';
 
 export type EmotionSx = CSSObject | ((theme: MantineTheme, u: EmotionHelpers) => CSSObject);

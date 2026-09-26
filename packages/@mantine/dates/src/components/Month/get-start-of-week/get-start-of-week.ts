@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import type { DateStringValue, DayOfWeek } from '../../../types';
+import { DateStringValue, DayOfWeek } from '../../../types';
 
 export function getStartOfWeek(date: DateStringValue, firstDayOfWeek: DayOfWeek = 1) {
   let value = dayjs(date);

@@ -3,8 +3,8 @@ import { DatePickerType } from '../../types';
 import {
   DateInputSharedProps,
   PickerInputBase,
-  type PickerInputController,
-  type PickerInputControllerOptions,
+  PickerInputController,
+  PickerInputControllerOptions,
 } from '../PickerInputBase';
 import { createPickerInput } from '../PickerInputBase/create-picker-input/create-picker-input';
 import { YearPicker, YearPickerBaseProps, YearPickerStylesNames } from '../YearPicker';

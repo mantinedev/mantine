@@ -24,8 +24,8 @@ import {
 import { getPresetsClasses, Presets } from '../Calendar/Presets/Presets';
 import {
   useCalendar,
-  type CalendarController,
-  type CalendarControllerOptions,
+  CalendarController,
+  CalendarControllerOptions,
 } from '../Calendar/use-calendar/use-calendar';
 import { usePickerSelection } from '../Calendar/use-picker-selection/use-picker-selection';
 import { CalendarHeaderStylesNames } from '../CalendarHeader';

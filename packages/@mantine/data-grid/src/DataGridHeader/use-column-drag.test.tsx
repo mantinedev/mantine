@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { renderHook } from '@testing-library/react';
-import type { DataGridColumnDef } from '../DataGrid.types';
+import { DataGridColumnDef } from '../DataGrid.types';
 import { useDataGrid } from '../hooks';
 import { useColumnDrag } from './use-column-drag';
 

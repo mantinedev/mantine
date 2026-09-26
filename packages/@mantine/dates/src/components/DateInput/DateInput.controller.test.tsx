@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { act } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
-import type { PickerInputController, PickerInputControllerOptions } from '../PickerInputBase';
+import { PickerInputController, PickerInputControllerOptions } from '../PickerInputBase';
 import { DateInput, DateInputProps } from './DateInput';
 import { useDateInput } from './use-date-input/use-date-input';
 

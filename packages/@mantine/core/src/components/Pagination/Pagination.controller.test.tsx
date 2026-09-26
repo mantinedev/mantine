@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react';
-import { usePagination, type UsePaginationReturnValue } from '@mantine/hooks';
+import { usePagination, UsePaginationReturnValue } from '@mantine/hooks';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { Pagination } from './Pagination';
 

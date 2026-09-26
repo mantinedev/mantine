@@ -21,8 +21,8 @@ import { TimelineProvider } from './Timeline.context';
 import {
   TimelineItem,
   TimelineItemStylesNames,
-  type TimelineItemProps,
-  type TimelineItemFactory,
+  TimelineItemProps,
+  TimelineItemFactory,
 } from './TimelineItem/TimelineItem';
 import classes from './Timeline.module.css';
 export type TimelineStylesNames = 'root' | TimelineItemStylesNames;

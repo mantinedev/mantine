@@ -1,6 +1,6 @@
 /** @jest-environment node */
-import type { McpServer } from '@modelcontextprotocol/server';
-import type { MantineMcpDataClient } from './data-client';
+import { McpServer } from '@modelcontextprotocol/server';
+import { MantineMcpDataClient } from './data-client';
 import { registerTools } from './tools';
 
 type ToolHandler = (

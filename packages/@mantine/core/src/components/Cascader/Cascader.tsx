@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo } from 'react';
-import type { SafePolygonOptions } from '@floating-ui/react';
+import { SafePolygonOptions } from '@floating-ui/react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,

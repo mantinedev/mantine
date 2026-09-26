@@ -28,7 +28,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
-import type { BaseChartStylesNames, GridChartBaseProps } from '../types';
+import { BaseChartStylesNames, GridChartBaseProps } from '../types';
 import { getCandleGeometry } from './get-candle-geometry/get-candle-geometry';
 import {
   getCandlestickDomain,

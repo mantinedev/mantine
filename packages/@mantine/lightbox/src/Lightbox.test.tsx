@@ -2,7 +2,7 @@ import { act, fireEvent, waitFor } from '@testing-library/react';
 import { render, renderWithAct, screen, tests, userEvent } from '@mantine-tests/core';
 import { Lightbox, LightboxProps, LightboxStylesNames } from './Lightbox';
 import { createLightbox, lightbox, lightboxStore } from './lightbox.store';
-import type { LightboxSlideData } from './lightbox.types';
+import { LightboxSlideData } from './lightbox.types';
 import { LightboxCaption } from './LightboxCaption/LightboxCaption';
 import { LightboxCloseButton } from './LightboxCloseButton/LightboxCloseButton';
 import { LightboxNavigation } from './LightboxNavigation/LightboxNavigation';

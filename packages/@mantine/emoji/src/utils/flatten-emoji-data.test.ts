@@ -1,4 +1,4 @@
-import type { EmojiPickerData, FlattenedRowItem } from '../types';
+import { EmojiPickerData, FlattenedRowItem } from '../types';
 import { flattenEmojiData } from './flatten-emoji-data';
 
 const testData: EmojiPickerData = {

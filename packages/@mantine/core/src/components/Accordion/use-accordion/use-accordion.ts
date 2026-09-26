@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
-import type { AccordionValue } from '../Accordion.types';
+import { AccordionValue } from '../Accordion.types';
 
 export interface AccordionControllerOptions<Multiple extends boolean = false> {
   /** If set, multiple items can be expanded at the same time, `false` by default */

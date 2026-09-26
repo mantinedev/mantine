@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import type { MantineSize } from '@mantine/core';
+import { MantineSize } from '@mantine/core';
 import { useDataGridState } from './use-data-grid-state';
 import { useDataGrid } from '.';
 

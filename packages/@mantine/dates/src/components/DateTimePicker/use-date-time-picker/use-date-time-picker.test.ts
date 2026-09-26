@@ -1,9 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { tests } from '@mantine-tests/core';
-import type {
-  PickerInputControllerOptions,
-  PickerInputRegisteredSettings,
-} from '../../PickerInputBase';
+import { PickerInputControllerOptions, PickerInputRegisteredSettings } from '../../PickerInputBase';
 import { useDateTimePicker } from './use-date-time-picker';
 
 const defaultSettings: PickerInputRegisteredSettings = {

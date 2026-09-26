@@ -15,9 +15,9 @@ import {
 } from '@mantine/core';
 import {
   applyContextCollapsing,
-  type ProcessedRow,
+  ProcessedRow,
 } from './apply-context-collapsing/apply-context-collapsing';
-import { type DiffResult, diffLines } from './diff-algorithm';
+import { DiffResult, diffLines } from './diff-algorithm';
 import { pairHunks } from './pair-hunks/pair-hunks';
 import { splitIntoLines } from './split-into-lines/split-into-lines';
 import classes from './Diff.module.css';

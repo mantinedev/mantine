@@ -1,11 +1,6 @@
-import { compareItems, rankItem, type RankingInfo } from '@tanstack/match-sorter-utils';
-import {
-  constructFilterFn,
-  sortFn_alphanumeric,
-  type FilterFn,
-  type SortFn,
-} from '@tanstack/react-table';
-import type { DataGridFeatures } from '../table-features';
+import { compareItems, rankItem, RankingInfo } from '@tanstack/match-sorter-utils';
+import { constructFilterFn, sortFn_alphanumeric, FilterFn, SortFn } from '@tanstack/react-table';
+import { DataGridFeatures } from '../table-features';
 
 interface FuzzyFilterMeta {
   itemRank: RankingInfo;

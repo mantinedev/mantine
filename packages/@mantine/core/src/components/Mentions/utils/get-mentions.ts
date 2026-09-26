@@ -1,4 +1,4 @@
-import type { MentionConfig, MentionOccurrence } from '../Mentions.types';
+import { MentionConfig, MentionOccurrence } from '../Mentions.types';
 import { findAllMentions, getMentionPlainText, getTriggerText } from './iterate-mentions';
 
 /** Extracts all mentions from a markup value with their markup and plain-text indices */

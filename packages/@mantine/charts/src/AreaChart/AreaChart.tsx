@@ -33,7 +33,7 @@ import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
-import type {
+import {
   BaseChartStylesNames,
   ChartSeries,
   GridChartBaseProps,

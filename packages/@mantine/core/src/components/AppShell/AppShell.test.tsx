@@ -2,7 +2,7 @@ import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { rem } from '../../core';
 import { AppShell, AppShellProps, AppShellStylesNames } from './AppShell';
-import type { AppShellResizeController } from './AppShell.types';
+import { AppShellResizeController } from './AppShell.types';
 import { useAppShellResize } from './use-app-shell-resize/use-app-shell-resize';
 
 if (typeof PointerEvent === 'undefined') {

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useCallbackRef, useDidUpdate, useLatestRef } from '@mantine/hooks';
-import type { DateStringValue, DateTimeStringValue } from '../../types';
+import { DateStringValue, DateTimeStringValue } from '../../types';
 import { buildDateString } from './build-date-string/build-date-string';
 import { getDaysInMonth } from './get-days-in-month/get-days-in-month';
 import { parseDateString } from './parse-date-string/parse-date-string';

@@ -1,4 +1,4 @@
-import type { TreeNodeData } from '../Tree';
+import { TreeNodeData } from '../Tree';
 import { checkedToValue, expandToLeafChecked } from './get-checked-values-by-strategy';
 
 const data: TreeNodeData[] = [

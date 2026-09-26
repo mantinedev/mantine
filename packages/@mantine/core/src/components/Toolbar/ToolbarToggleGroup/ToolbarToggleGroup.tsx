@@ -11,7 +11,7 @@ import {
 import { useToolbarContext } from '../Toolbar.context';
 import {
   ToolbarToggleGroupProvider,
-  type ToolbarToggleGroupContextValue,
+  ToolbarToggleGroupContextValue,
 } from './ToolbarToggleGroup.context';
 import classes from '../Toolbar.module.css';
 

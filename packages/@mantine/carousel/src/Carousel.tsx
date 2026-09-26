@@ -1,5 +1,5 @@
 import { Children, useCallback, useEffect, useState } from 'react';
-import type { EmblaCarouselType, EmblaOptionsType, EmblaPluginType } from 'embla-carousel';
+import { EmblaCarouselType, EmblaOptionsType, EmblaPluginType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 import {
   AccordionChevron,
@@ -23,7 +23,7 @@ import {
   VisuallyHidden,
 } from '@mantine/core';
 import { clamp, useId } from '@mantine/hooks';
-import { CarouselProvider, type CarouselContextValue } from './Carousel.context';
+import { CarouselProvider, CarouselContextValue } from './Carousel.context';
 import { CarouselSlide } from './CarouselSlide/CarouselSlide';
 import {
   CarouselContainerVariables,

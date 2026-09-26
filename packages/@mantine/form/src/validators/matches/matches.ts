@@ -1,4 +1,4 @@
-import type { SyncReactNode } from '../types';
+import { SyncReactNode } from '../types';
 
 export function matches(regexp: RegExp, error?: SyncReactNode) {
   const _error = error || true;

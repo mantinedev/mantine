@@ -1,5 +1,5 @@
 import { Children, useEffect, useEffectEvent, useId, useRef, useState } from 'react';
-import { useFocusReturn, useHotkeys, useUncontrolled, type HotkeyItem } from '@mantine/hooks';
+import { useFocusReturn, useHotkeys, useUncontrolled, HotkeyItem } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -12,8 +12,8 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { OptionalPortal, type PortalProps } from '../../Portal';
-import type { TransitionOverride } from '../../Transition';
+import { OptionalPortal, PortalProps } from '../../Portal';
+import { TransitionOverride } from '../../Transition';
 import type { TourStylesNames, TourCssVariables } from '../Tour';
 import { defaultLabels, TourLabels, TourProvider } from '../Tour.context';
 import classes from '../Tour.module.css';

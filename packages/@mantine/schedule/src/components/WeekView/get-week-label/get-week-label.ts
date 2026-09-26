@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { DateLabelFormat, DateStringValue } from '../../../types';
 import { formatDate } from '../../../utils';
 

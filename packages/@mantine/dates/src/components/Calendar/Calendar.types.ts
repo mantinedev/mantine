@@ -1,9 +1,9 @@
-import type { DataAttributes, MantineSize } from '@mantine/core';
-import type { ControlsGroupSettings, DateLabelFormat, DateStringValue } from '../../types';
+import { DataAttributes, MantineSize } from '@mantine/core';
+import { ControlsGroupSettings, DateLabelFormat, DateStringValue } from '../../types';
 import type { CalendarHeaderSettings } from '../CalendarHeader';
 import type { MonthSettings } from '../Month';
-import type { PickerControlProps } from '../PickerControl';
-import type { DecadeLabelFormat } from './format-label/format-label';
+import { PickerControlProps } from '../PickerControl';
+import { DecadeLabelFormat } from './format-label/format-label';
 
 export interface MonthsListSettings extends ControlsGroupSettings {
   /** `dayjs` format for months list or a function that returns month label based on the date value @default "MMM" @category appearance */

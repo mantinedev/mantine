@@ -1,5 +1,5 @@
 import { createContext, use } from 'react';
-import type { GetStylesApi } from '../../core';
+import { GetStylesApi } from '../../core';
 import type { TourFactory } from './Tour';
 
 export interface TourLabels {

@@ -2,10 +2,10 @@ import { useCallback } from 'react';
 import { changeErrorIndices, reorderErrors } from '../../lists';
 import { insertPath, removePath, reorderPath, replacePath } from '../../paths';
 import { InsertListItem, RemoveListItem, ReorderListItem, ReplaceListItem } from '../../types';
-import type { $FormErrors } from '../use-form-errors/use-form-errors';
-import type { $FormStatus } from '../use-form-status/use-form-status';
-import type { $FormValues } from '../use-form-values/use-form-values';
-import type { $FormWatch } from '../use-form-watch/use-form-watch';
+import { $FormErrors } from '../use-form-errors/use-form-errors';
+import { $FormStatus } from '../use-form-status/use-form-status';
+import { $FormValues } from '../use-form-values/use-form-values';
+import { $FormWatch } from '../use-form-watch/use-form-watch';
 
 interface UseFormListInput<Values extends Record<string, any>> {
   $values: $FormValues<Values>;

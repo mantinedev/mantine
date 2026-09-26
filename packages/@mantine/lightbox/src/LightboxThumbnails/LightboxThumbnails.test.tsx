@@ -1,5 +1,5 @@
 import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
-import type { LightboxSlideData } from '../lightbox.types';
+import { LightboxSlideData } from '../lightbox.types';
 import { LightboxWrapper } from '../test-utils';
 import { LightboxThumbnails } from './LightboxThumbnails';
 

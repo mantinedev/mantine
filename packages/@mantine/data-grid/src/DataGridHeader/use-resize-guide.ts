@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import type { columnResizingState } from '@tanstack/react-table';
+import { columnResizingState } from '@tanstack/react-table';
 import { useDirection } from '@mantine/core';
 import { useIsomorphicEffect, useLatestRef } from '@mantine/hooks';
 import { autosizeColumns } from '../column-autosize/autosize-columns';

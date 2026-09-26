@@ -3,7 +3,7 @@ import { Cell, flexRender, Row } from '@tanstack/react-table';
 import { UnstyledButton } from '@mantine/core';
 import { getColumnCellProps } from '../column-cell-props';
 import { useDataGridContext } from '../DataGrid.context';
-import { collectLeafColumnDefIds, type ColumnDefIdSource } from '../get-column-def-id';
+import { collectLeafColumnDefIds, ColumnDefIdSource } from '../get-column-def-id';
 import { getColumnLabel } from '../get-column-label';
 import { ExpandChevron } from '../icons';
 import type { DataGridFeatures } from '../table-features';

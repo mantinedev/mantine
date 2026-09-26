@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import type { Column, ColumnSizingState, Header } from '@tanstack/react-table';
+import { Column, ColumnSizingState, Header } from '@tanstack/react-table';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useDirection } from '@mantine/core';
 import { useIsomorphicEffect } from '@mantine/hooks';

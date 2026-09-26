@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { autoUpdate, offset, useFloating } from '@floating-ui/react';
 import { useMergedRef } from '@mantine/hooks';
 import { UnstyledButton } from '../UnstyledButton';
-import { useTargetElement, type TourTarget } from './use-target-rect';
+import { useTargetElement, TourTarget } from './use-target-rect';
 
 interface TourBeaconPositionedProps {
   target: TourTarget;

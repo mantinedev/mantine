@@ -1,4 +1,4 @@
-import type { RowData } from '@tanstack/react-table';
+import { RowData } from '@tanstack/react-table';
 import type { DataGridColumnDef } from '../DataGrid.types';
 import type { UseDataGridOptions } from './use-data-grid.types';
 

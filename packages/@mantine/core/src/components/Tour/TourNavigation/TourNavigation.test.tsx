@@ -1,5 +1,5 @@
 import { render, screen, userEvent } from '@mantine-tests/core';
-import { TourProvider, type TourContextValue } from '../Tour.context';
+import { TourProvider, TourContextValue } from '../Tour.context';
 import { TourNavigation, TourNavigationProps } from './TourNavigation';
 
 function createMockContext(overrides: Partial<TourContextValue> = {}): TourContextValue {

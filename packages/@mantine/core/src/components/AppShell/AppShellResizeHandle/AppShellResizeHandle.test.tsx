@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { act, fireEvent } from '@testing-library/react';
-import { hydrateRoot, type Root } from 'react-dom/client';
+import { hydrateRoot, Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { render, screen } from '@mantine-tests/core';
 import { DirectionProvider, MantineProvider, rem } from '../../../core';
 import { AppShell } from '../AppShell';
-import type {
+import {
   AppShellResizeController,
   AppShellResizeSection,
   AppShellResizeSizes,

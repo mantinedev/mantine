@@ -1,4 +1,4 @@
-import type { ArrowPosition, FloatingPlacement, FloatingPosition, FloatingSide } from '../types';
+import { ArrowPosition, FloatingPlacement, FloatingPosition, FloatingSide } from '../types';
 
 function horizontalSide(
   placement: FloatingPlacement | 'center',

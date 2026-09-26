@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useCallbackRef, useDidUpdate, useLatestRef } from '@mantine/hooks';
-import type {
+import {
   TimePickerAmPmLabels,
   TimePickerField,
   TimePickerFormat,

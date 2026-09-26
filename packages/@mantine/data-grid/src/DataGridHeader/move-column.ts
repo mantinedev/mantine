@@ -1,4 +1,4 @@
-import type { Column, Table } from '@tanstack/react-table';
+import { Column, Table } from '@tanstack/react-table';
 import { getOrderedVisibleColumns } from '../column-cell-props';
 import type { DataGridFeatures } from '../table-features';
 

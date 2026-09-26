@@ -7,7 +7,7 @@ import {
   Factory,
   useProps,
 } from '../../core';
-import type { TimerValue } from './get-timer-value';
+import { TimerValue } from './get-timer-value';
 import { useTimerContext } from './Timer.context';
 import classes from './Timer.module.css';
 

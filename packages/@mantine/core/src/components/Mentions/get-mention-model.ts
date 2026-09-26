@@ -1,5 +1,5 @@
 import type { HighlightSegment, MentionSelectionState } from './MentionsHighlighter';
-import type { ResolvedMentionSource } from './resolve-sources';
+import { ResolvedMentionSource } from './resolve-sources';
 import { findAllMentions, getMentionPlainText, getTriggerText } from './utils/iterate-mentions';
 
 export interface MentionSpan {

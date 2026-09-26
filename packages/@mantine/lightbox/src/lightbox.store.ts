@@ -1,5 +1,5 @@
 import { createStore, MantineStore, useStore } from '@mantine/store';
-import type { LightboxSlideData } from './lightbox.types';
+import { LightboxSlideData } from './lightbox.types';
 
 export interface LightboxState {
   /** Controls whether the lightbox is opened */

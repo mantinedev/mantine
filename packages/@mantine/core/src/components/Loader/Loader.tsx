@@ -13,7 +13,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import type { MantineLoader, MantineLoadersRecord } from './Loader.types';
+import { MantineLoader, MantineLoadersRecord } from './Loader.types';
 import { Bars } from './loaders/Bars';
 import { Dots } from './loaders/Dots';
 import { Oval } from './loaders/Oval';

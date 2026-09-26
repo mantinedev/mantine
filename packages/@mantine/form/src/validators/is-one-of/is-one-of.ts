@@ -1,4 +1,4 @@
-import type { SyncReactNode } from '../types';
+import { SyncReactNode } from '../types';
 
 export function isOneOf<T>(values: readonly T[], error?: SyncReactNode) {
   const _error = error || true;

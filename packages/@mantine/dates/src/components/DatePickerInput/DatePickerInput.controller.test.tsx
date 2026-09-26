@@ -3,7 +3,7 @@ import { act } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { clickControl, clickInput, expectValue } from '@mantine-tests/dates';
 import { DatePickerType } from '../../types';
-import type { PickerInputController, PickerInputControllerOptions } from '../PickerInputBase';
+import { PickerInputController, PickerInputControllerOptions } from '../PickerInputBase';
 import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
 import { useDatePickerInput } from './use-date-picker-input/use-date-picker-input';
 

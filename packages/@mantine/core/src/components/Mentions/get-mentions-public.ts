@@ -1,4 +1,4 @@
-import type { MentionOccurrence } from './Mentions.types';
+import { MentionOccurrence } from './Mentions.types';
 import { MentionSourceConfig, toMentionConfig } from './resolve-sources';
 import { getMentions as getMentionsFromConfigs } from './utils/get-mentions';
 

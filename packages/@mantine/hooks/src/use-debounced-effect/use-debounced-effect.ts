@@ -1,7 +1,7 @@
 import { DependencyList, EffectCallback, useEffect, useRef } from 'react';
 import {
   useDebouncedCallback,
-  type UseDebouncedCallbackOptions,
+  UseDebouncedCallbackOptions,
 } from '../use-debounced-callback/use-debounced-callback';
 
 export type UseDebouncedEffectOptions = Omit<UseDebouncedCallbackOptions, 'flushOnUnmount'>;

@@ -23,8 +23,8 @@ import { CheckIcon } from '../Checkbox';
 import {
   ChipGroup,
   ChipGroupContext,
-  type ChipGroupProps,
-  type ChipGroupContextValue,
+  ChipGroupProps,
+  ChipGroupContextValue,
 } from './ChipGroup/ChipGroup';
 import classes from './Chip.module.css';
 

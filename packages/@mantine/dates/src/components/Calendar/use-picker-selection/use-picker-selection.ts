@@ -1,13 +1,8 @@
 import dayjs from 'dayjs';
 import { useDatesState } from '../../../hooks';
-import type {
-  CalendarLevel,
-  DatePickerType,
-  DateStringValue,
-  PickerBaseProps,
-} from '../../../types';
+import { CalendarLevel, DatePickerType, DateStringValue, PickerBaseProps } from '../../../types';
 import { isSameMonth } from '../../Month/is-same-month/is-same-month';
-import type { CalendarController } from '../use-calendar/use-calendar';
+import { CalendarController } from '../use-calendar/use-calendar';
 
 type PresetValue = DateStringValue | null | (DateStringValue | null)[];
 

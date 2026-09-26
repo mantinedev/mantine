@@ -1,4 +1,4 @@
-import type { RowData } from '@tanstack/react-table';
+import { RowData } from '@tanstack/react-table';
 import type { DataGridTable } from '../DataGrid.types';
 
 export type RowDropEdge = 'before' | 'after';

@@ -13,33 +13,29 @@ import { spotlight, spotlightStore } from './spotlight.store';
 import {
   SpotlightAction,
   SpotlightActionProps,
-  type SpotlightActionStylesNames,
+  SpotlightActionStylesNames,
 } from './SpotlightAction';
 import {
   SpotlightActionsGroup,
-  type SpotlightActionsGroupProps,
-  type SpotlightActionsGroupStylesNames,
+  SpotlightActionsGroupProps,
+  SpotlightActionsGroupStylesNames,
 } from './SpotlightActionsGroup';
 import {
   SpotlightActionsList,
-  type SpotlightActionsListProps,
-  type SpotlightActionsListStylesNames,
+  SpotlightActionsListProps,
+  SpotlightActionsListStylesNames,
 } from './SpotlightActionsList';
-import {
-  SpotlightEmpty,
-  type SpotlightEmptyProps,
-  type SpotlightEmptyStylesNames,
-} from './SpotlightEmpty';
+import { SpotlightEmpty, SpotlightEmptyProps, SpotlightEmptyStylesNames } from './SpotlightEmpty';
 import {
   SpotlightFooter,
-  type SpotlightFooterProps,
-  type SpotlightFooterStylesNames,
+  SpotlightFooterProps,
+  SpotlightFooterStylesNames,
 } from './SpotlightFooter';
 import { SpotlightRoot, SpotlightRootProps, SpotlightRootStylesNames } from './SpotlightRoot';
 import {
   SpotlightSearch,
   SpotlightSearchProps,
-  type SpotlightSearchStylesNames,
+  SpotlightSearchStylesNames,
 } from './SpotlightSearch';
 import classes from './Spotlight.module.css';
 

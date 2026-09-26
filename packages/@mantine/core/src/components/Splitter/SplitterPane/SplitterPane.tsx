@@ -1,4 +1,4 @@
-import type { SplitterPaneSize } from '@mantine/hooks';
+import { SplitterPaneSize } from '@mantine/hooks';
 import {
   Box,
   BoxProps,

@@ -1,4 +1,4 @@
-import type { MentionConfig } from '../Mentions.types';
+import { MentionConfig } from '../Mentions.types';
 import { getMentions } from './get-mentions';
 import { getPlainText } from './get-plain-text';
 import { mapPlainTextIndex } from './map-plain-text-index';

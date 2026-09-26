@@ -2,12 +2,12 @@ import { useRef } from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
-import { PillsInputContext, type PillsInputContextValue } from './PillsInput.context';
+import { PillsInputContext, PillsInputContextValue } from './PillsInput.context';
 import {
   PillsInputField,
-  type PillsInputFieldProps,
-  type PillsInputFieldFactory,
-  type PillsInputFieldStylesNames,
+  PillsInputFieldProps,
+  PillsInputFieldFactory,
+  PillsInputFieldStylesNames,
 } from './PillsInputField/PillsInputField';
 export interface PillsInputProps
   extends

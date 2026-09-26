@@ -8,7 +8,7 @@ import {
   tests,
   userEvent,
 } from '@mantine-tests/core';
-import type { TreeNodeData } from '../Tree';
+import { TreeNodeData } from '../Tree';
 import {
   TreeSelect,
   TreeSelectProps,

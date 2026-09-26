@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import type { Row } from '@tanstack/react-table';
+import { Row } from '@tanstack/react-table';
 import type { DataGridFeatures } from '../table-features';
 
 type AnyRow = Row<DataGridFeatures, any>;

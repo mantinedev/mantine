@@ -1,5 +1,5 @@
-import { type ClassNames, factory, Factory, type Styles, useProps } from '../../../core';
-import { CloseButton, type CloseButtonProps } from '../../CloseButton';
+import { ClassNames, factory, Factory, Styles, useProps } from '../../../core';
+import { CloseButton, CloseButtonProps } from '../../CloseButton';
 import { useActionBarContext } from '../ActionBar.context';
 import classes from '../ActionBar.module.css';
 

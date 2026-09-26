@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Group, Select, Stack } from '@mantine/core';
 import { Lightbox } from './Lightbox';
 import { lightbox } from './lightbox.store';
-import type { LightboxSlideData, ToolbarItem } from './lightbox.types';
+import { LightboxSlideData, ToolbarItem } from './lightbox.types';
 
 export default { title: 'Lightbox' };
 

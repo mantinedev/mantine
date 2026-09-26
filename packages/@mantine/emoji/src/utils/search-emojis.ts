@@ -1,4 +1,4 @@
-import type { EmojiPickerData, EmojiPickerEmoji } from '../types';
+import { EmojiPickerData, EmojiPickerEmoji } from '../types';
 
 export function searchEmojis(data: EmojiPickerData, query: string): EmojiPickerEmoji[] {
   const trimmed = query.trim().toLowerCase();

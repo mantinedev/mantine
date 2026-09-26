@@ -36,7 +36,7 @@ import {
 import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
-import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
+import { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
 
 function valueToPercent(value: number) {

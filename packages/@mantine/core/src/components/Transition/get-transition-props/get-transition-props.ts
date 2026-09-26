@@ -1,5 +1,5 @@
-import type { SetRequired } from 'type-fest';
-import type { TransitionOverride } from '../Transition';
+import { SetRequired } from 'type-fest';
+import { TransitionOverride } from '../Transition';
 
 type MinimalTransitionOverride = SetRequired<TransitionOverride, 'duration' | 'transition'>;
 

@@ -1,4 +1,4 @@
-import type { DrawerAxis, DrawerPosition } from './use-drawer-transform';
+import { DrawerAxis, DrawerPosition } from './use-drawer-transform';
 
 const INTERACTIVE_TAGS = ['input', 'textarea', 'select', 'button', 'a'];
 

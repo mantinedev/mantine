@@ -11,7 +11,7 @@ import {
   useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
-import type { AppShellCompoundProps } from '../AppShell.types';
+import { AppShellCompoundProps } from '../AppShell.types';
 import { AppShellResizeHandle } from '../AppShellResizeHandle/AppShellResizeHandle';
 import classes from '../AppShell.module.css';
 

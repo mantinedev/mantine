@@ -26,11 +26,11 @@ import {
 import { OptionalPortal } from '../Portal';
 import { getTransitionProps, Transition, TransitionOverride } from '../Transition';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from './Tooltip.types';
-import { TooltipFloating, type TooltipFloatingProps } from './TooltipFloating/TooltipFloating';
+import { TooltipFloating, TooltipFloatingProps } from './TooltipFloating/TooltipFloating';
 import {
   TooltipGroup,
-  type TooltipGroupProps,
-  type TooltipGroupContextValue,
+  TooltipGroupProps,
+  TooltipGroupContextValue,
 } from './TooltipGroup/TooltipGroup';
 import { useTooltip } from './use-tooltip';
 import classes from './Tooltip.module.css';

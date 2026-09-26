@@ -1,6 +1,6 @@
 import { em, getSortedBreakpoints, keys, MantineTheme } from '../../../../core';
 import type { AppShellProps } from '../../AppShell';
-import type { AppShellResizeSection, AppShellResizeSizes } from '../../AppShell.types';
+import { AppShellResizeSection, AppShellResizeSizes } from '../../AppShell.types';
 import { assignAsideVariables } from '../assign-aside-variables/assign-aside-variables';
 import { assignFooterVariables } from '../assign-footer-variables/assign-footer-variables';
 import { assignHeaderVariables } from '../assign-header-variables/assign-header-variables';

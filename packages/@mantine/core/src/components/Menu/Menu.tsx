@@ -11,25 +11,22 @@ import {
 } from '../../core';
 import { useDelayedHover } from '../../utils/Floating';
 import { __PopoverProps, Popover, PopoverStylesNames } from '../Popover';
-import { MenuContextProvider, type MenuContextValue } from './Menu.context';
-import {
-  MenuCheckboxGroup,
-  type MenuCheckboxGroupProps,
-} from './MenuCheckboxGroup/MenuCheckboxGroup';
-import { MenuCheckboxItem, type MenuCheckboxItemProps } from './MenuCheckboxItem/MenuCheckboxItem';
-import { MenuContextMenu, type MenuContextMenuProps } from './MenuContextMenu/MenuContextMenu';
-import { MenuDivider, type MenuDividerProps } from './MenuDivider/MenuDivider';
-import { MenuDropdown, type MenuDropdownProps } from './MenuDropdown/MenuDropdown';
-import { MenuItem, type MenuItemProps } from './MenuItem/MenuItem';
-import { MenuLabel, type MenuLabelProps } from './MenuLabel/MenuLabel';
-import { MenuRadioGroup, type MenuRadioGroupProps } from './MenuRadioGroup/MenuRadioGroup';
-import { MenuRadioItem, type MenuRadioItemProps } from './MenuRadioItem/MenuRadioItem';
-import { MenuSearch, type MenuSearchProps } from './MenuSearch/MenuSearch';
-import { MenuSub, type MenuSubProps } from './MenuSub/MenuSub';
+import { MenuContextProvider, MenuContextValue } from './Menu.context';
+import { MenuCheckboxGroup, MenuCheckboxGroupProps } from './MenuCheckboxGroup/MenuCheckboxGroup';
+import { MenuCheckboxItem, MenuCheckboxItemProps } from './MenuCheckboxItem/MenuCheckboxItem';
+import { MenuContextMenu, MenuContextMenuProps } from './MenuContextMenu/MenuContextMenu';
+import { MenuDivider, MenuDividerProps } from './MenuDivider/MenuDivider';
+import { MenuDropdown, MenuDropdownProps } from './MenuDropdown/MenuDropdown';
+import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
+import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
+import { MenuRadioGroup, MenuRadioGroupProps } from './MenuRadioGroup/MenuRadioGroup';
+import { MenuRadioItem, MenuRadioItemProps } from './MenuRadioItem/MenuRadioItem';
+import { MenuSearch, MenuSearchProps } from './MenuSearch/MenuSearch';
+import { MenuSub, MenuSubProps } from './MenuSub/MenuSub';
 import type { MenuSubDropdownProps } from './MenuSubDropdown/MenuSubDropdown';
 import type { MenuSubItemProps } from './MenuSubItem/MenuSubItem';
 import type { MenuSubTargetProps } from './MenuSubTarget/MenuSubTarget';
-import { MenuTarget, type MenuTargetProps } from './MenuTarget/MenuTarget';
+import { MenuTarget, MenuTargetProps } from './MenuTarget/MenuTarget';
 import classes from './Menu.module.css';
 
 export type MenuVariant = 'default' | 'filled';

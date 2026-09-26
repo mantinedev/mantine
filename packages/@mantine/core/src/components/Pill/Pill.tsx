@@ -19,10 +19,10 @@ import { PillsInputContext } from '../PillsInput/PillsInput.context';
 import {
   PillGroup,
   PillGroupContext,
-  type PillGroupProps,
-  type PillGroupStylesNames,
-  type PillGroupCssVariables,
-  type PillGroupFactory,
+  PillGroupProps,
+  PillGroupStylesNames,
+  PillGroupCssVariables,
+  PillGroupFactory,
 } from './PillGroup/PillGroup';
 import classes from './Pill.module.css';
 export type PillStylesNames = 'root' | 'label' | 'remove';

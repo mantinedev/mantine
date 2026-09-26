@@ -1,6 +1,6 @@
 import { Editor } from '@tiptap/react';
 import { createSafeContext, GetStylesApi } from '@mantine/core';
-import type { ImageUploadResult } from './extensions/UploadImage';
+import { ImageUploadResult } from './extensions/UploadImage';
 import { ResolvedRichTextEditorLabels } from './labels';
 import type { RichTextEditorFactory } from './RichTextEditor';
 

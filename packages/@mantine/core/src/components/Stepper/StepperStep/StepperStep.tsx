@@ -16,7 +16,7 @@ import { UnstyledButton } from '../../UnstyledButton';
 import { getStepColorText } from '../get-step-color-text';
 import type { StepFragmentComponent } from '../Stepper';
 import { useStepperContext } from '../Stepper.context';
-import { resolveStepProps, type StepperStepState } from './resolve-step-props';
+import { resolveStepProps, StepperStepState } from './resolve-step-props';
 import classes from '../Stepper.module.css';
 
 const getStepFragment = (

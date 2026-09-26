@@ -1,4 +1,4 @@
-import type { DatePickerType, DatePickerValue } from './DatePickerValue';
+import { DatePickerType, DatePickerValue } from './DatePickerValue';
 import { DateStringValue } from './GeneralTypes';
 
 export interface PickerBaseProps<Type extends DatePickerType = 'default'> {

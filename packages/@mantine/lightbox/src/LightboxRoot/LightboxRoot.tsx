@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { EmblaOptionsType } from 'embla-carousel';
+import { EmblaOptionsType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 import {
   Box,
@@ -33,7 +33,7 @@ import { useLightboxKeyboard } from '../hooks/use-lightbox-keyboard';
 import { useLightboxLockScroll } from '../hooks/use-lightbox-lock-scroll';
 import { useLightboxZoom } from '../hooks/use-lightbox-zoom';
 import { LightboxContextProvider } from '../lightbox.context';
-import type { LightboxLabels, LightboxSlideData } from '../lightbox.types';
+import { LightboxLabels, LightboxSlideData } from '../lightbox.types';
 import classes from '../Lightbox.module.css';
 
 export type LightboxRootStylesNames =

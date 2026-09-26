@@ -1,5 +1,5 @@
-import type { Row, RowData } from '@tanstack/react-table';
-import type { MantineSize } from '@mantine/core';
+import { Row, RowData } from '@tanstack/react-table';
+import { MantineSize } from '@mantine/core';
 import type { DataGridFeatures } from './table-features';
 
 interface DataGridSizeValues {

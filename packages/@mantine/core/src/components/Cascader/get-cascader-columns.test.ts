@@ -1,4 +1,4 @@
-import type { CascaderOption } from './Cascader';
+import { CascaderOption } from './Cascader';
 import { cascaderOptionHasChildren, getCascaderColumns } from './get-cascader-columns';
 
 const data: CascaderOption[] = [

@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { tests } from '@mantine-tests/core';
 import { useInlineDateTimePicker } from './use-inline-date-time-picker';
-import type { TimeEntryRegisteredSettings } from './use-time-entry';
+import { TimeEntryRegisteredSettings } from './use-time-entry';
 
 function createSettings(
   settings: Partial<TimeEntryRegisteredSettings> = {}

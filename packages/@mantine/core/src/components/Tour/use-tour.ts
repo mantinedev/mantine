@@ -1,10 +1,10 @@
 import { Children, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { autoUpdate, flip, offset, shift, size, useFloating } from '@floating-ui/react';
-import { useFocusReturn, useHotkeys, useUncontrolled, type HotkeyItem } from '@mantine/hooks';
+import { useFocusReturn, useHotkeys, useUncontrolled, HotkeyItem } from '@mantine/hooks';
 import { useDirection } from '../../core';
 import { getFloatingPosition } from '../../utils/Floating';
-import type { TourStepProps } from './TourStep/TourStep';
-import { useTargetRect, type TargetRect, type TourTarget } from './use-target-rect';
+import { TourStepProps } from './TourStep/TourStep';
+import { useTargetRect, TargetRect, TourTarget } from './use-target-rect';
 
 export interface UseTourInput {
   active?: boolean;

@@ -21,17 +21,17 @@ import { MantineTransition, Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
 import {
   ButtonGroup,
-  type ButtonGroupProps,
-  type ButtonGroupStylesNames,
-  type ButtonGroupCssVariables,
-  type ButtonGroupFactory,
+  ButtonGroupProps,
+  ButtonGroupStylesNames,
+  ButtonGroupCssVariables,
+  ButtonGroupFactory,
 } from './ButtonGroup/ButtonGroup';
 import {
   ButtonGroupSection,
-  type ButtonGroupSectionProps,
-  type ButtonGroupSectionStylesNames,
-  type ButtonGroupSectionCssVariables,
-  type ButtonGroupSectionFactory,
+  ButtonGroupSectionProps,
+  ButtonGroupSectionStylesNames,
+  ButtonGroupSectionCssVariables,
+  ButtonGroupSectionFactory,
 } from './ButtonGroupSection/ButtonGroupSection';
 import classes from './Button.module.css';
 export type ButtonSize = MantineSize | `compact-${MantineSize}` | (string & {});

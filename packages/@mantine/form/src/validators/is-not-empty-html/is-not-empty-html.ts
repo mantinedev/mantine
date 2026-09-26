@@ -1,4 +1,4 @@
-import type { SyncReactNode } from '../types';
+import { SyncReactNode } from '../types';
 
 function removeHtmlTags(input: string): string {
   return input.replace(/<\/?[^>]+(>|$)/g, '');

@@ -1,6 +1,6 @@
 import { act } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
-import { useCalendar, type CalendarController } from '../Calendar';
+import { useCalendar, CalendarController } from '../Calendar';
 import { MonthPicker, MonthPickerProps } from './MonthPicker';
 
 function ControllerMonthPicker({

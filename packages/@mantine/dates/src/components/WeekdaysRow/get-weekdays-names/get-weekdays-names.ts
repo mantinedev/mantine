@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import type { DateLabelFormat, DayOfWeek } from '../../../types';
+import { DateLabelFormat, DayOfWeek } from '../../../types';
 
 interface GetWeekdaysNamesInput {
   locale: string;

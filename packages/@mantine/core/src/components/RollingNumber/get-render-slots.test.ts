@@ -1,10 +1,5 @@
 import { getDigitParts } from './get-digit-parts';
-import {
-  getRenderSlots,
-  getRenderSlotsFromValues,
-  type CharSlot,
-  type DigitSlot,
-} from './get-render-slots';
+import { getRenderSlots, getRenderSlotsFromValues, CharSlot, DigitSlot } from './get-render-slots';
 
 function digitSlots(slots: ReturnType<typeof getRenderSlots>): DigitSlot[] {
   return slots.filter((s): s is DigitSlot => s.type === 'digit');

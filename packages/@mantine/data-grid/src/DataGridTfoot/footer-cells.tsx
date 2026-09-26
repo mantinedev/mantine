@@ -1,8 +1,8 @@
-import type React from 'react';
-import { flexRender, type Column, type Header } from '@tanstack/react-table';
+import React from 'react';
+import { flexRender, Column, Header } from '@tanstack/react-table';
 import { getColumnCellProps, getFooterCellProps } from '../column-cell-props';
 import { useDataGridContext } from '../DataGrid.context';
-import type { DataGridLabels } from '../labels';
+import { DataGridLabels } from '../labels';
 import type { DataGridFeatures } from '../table-features';
 import type { TfootModel } from './tfoot-model';
 

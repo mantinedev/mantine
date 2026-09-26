@@ -1,6 +1,6 @@
-import type { EmblaCarouselType } from 'embla-carousel';
+import { EmblaCarouselType } from 'embla-carousel';
 import { createSafeContext, GetStylesApi } from '@mantine/core';
-import type { LightboxLabels, LightboxSlideData } from './lightbox.types';
+import { LightboxLabels, LightboxSlideData } from './lightbox.types';
 import type { LightboxRootFactory } from './LightboxRoot/LightboxRoot';
 
 export interface LightboxContextValue {

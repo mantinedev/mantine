@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import type { MantineSize } from '@mantine/core';
+import { MantineSize } from '@mantine/core';
 import { useLatestRef, useShallowEffect } from '@mantine/hooks';
 import type { DataGridStore } from './use-data-grid.types';
 

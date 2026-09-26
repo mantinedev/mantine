@@ -1,17 +1,12 @@
 import { useController } from '@mantine/core';
-import type { UseDisclosureHandlers } from '@mantine/hooks';
+import { UseDisclosureHandlers } from '@mantine/hooks';
 import { useDatesInput } from '../../../hooks';
-import type {
-  CalendarLevel,
-  DatePickerType,
-  DatePickerValue,
-  DateStringValue,
-} from '../../../types';
+import { CalendarLevel, DatePickerType, DatePickerValue, DateStringValue } from '../../../types';
 import { DateFormatter, getDefaultClampedDate, toDateString } from '../../../utils';
 import { clampLevel } from '../../Calendar/clamp-level/clamp-level';
-import type { CalendarControllerOptions } from '../../Calendar/use-calendar/use-calendar';
-import type { DateInputSharedProps } from '../PickerInputBase';
-import type {
+import { CalendarControllerOptions } from '../../Calendar/use-calendar/use-calendar';
+import { DateInputSharedProps } from '../PickerInputBase';
+import {
   PickerInputController,
   PickerInputControllerOptions,
 } from '../use-picker-input-controller/use-picker-input-controller';

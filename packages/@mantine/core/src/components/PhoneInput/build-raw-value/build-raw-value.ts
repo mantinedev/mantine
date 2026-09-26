@@ -1,5 +1,5 @@
 import { getDigits } from '../get-digits/get-digits';
-import type { PhoneInputCountryData } from '../phone-data';
+import { PhoneInputCountryData } from '../phone-data';
 
 interface BuildRawValueOptions {
   canAutoDetect: boolean;

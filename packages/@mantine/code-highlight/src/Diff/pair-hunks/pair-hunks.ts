@@ -1,5 +1,5 @@
 import { diffChars, DiffResult, diffWords } from '../diff-algorithm';
-import type { LineEntry } from '../split-into-lines/split-into-lines';
+import { LineEntry } from '../split-into-lines/split-into-lines';
 
 export interface HunkPair {
   kind: 'hunkPair';

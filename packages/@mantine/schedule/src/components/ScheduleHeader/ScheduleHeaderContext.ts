@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import type { ScheduleLabelsOverride } from '../../labels';
+import { ScheduleLabelsOverride } from '../../labels';
 
 export const ScheduleHeaderLabelsContext = createContext<ScheduleLabelsOverride | undefined>(
   undefined

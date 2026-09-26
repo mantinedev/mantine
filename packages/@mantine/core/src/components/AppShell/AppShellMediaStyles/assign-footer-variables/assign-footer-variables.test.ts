@@ -1,6 +1,6 @@
 import { rem } from '../../../../core';
-import type { AppShellProps } from '../../AppShell';
-import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
+import { AppShellProps } from '../../AppShell';
+import { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { assignFooterVariables } from './assign-footer-variables';
 
 function getTestObject(footer: AppShellProps['footer']) {

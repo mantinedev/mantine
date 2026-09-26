@@ -18,7 +18,7 @@ import { ScrollArea } from '../ScrollArea';
 import { detectQuery } from './detect-query';
 import { buildHighlightSegments, getMentionModel, getSelectionStates } from './get-mention-model';
 import { Mention, MentionProps } from './Mention';
-import type {
+import {
   MentionOccurrence,
   MentionsChangePayload,
   MentionsChangeTriggerType,

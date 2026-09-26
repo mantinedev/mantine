@@ -23,17 +23,17 @@ import {
   TableTh,
   TableThead,
   TableTr,
-  type TableCaptionProps,
-  type TableTbodyProps,
-  type TableTdProps,
-  type TableThProps,
-  type TableTrProps,
-  type TableTheadProps,
-  type TableTfootProps,
+  TableCaptionProps,
+  TableTbodyProps,
+  TableTdProps,
+  TableThProps,
+  TableTrProps,
+  TableTheadProps,
+  TableTfootProps,
 } from './Table.components';
-import { TableProvider, type TableContextValue } from './Table.context';
+import { TableProvider, TableContextValue } from './Table.context';
 import { TableDataRenderer } from './TableDataRenderer';
-import { TableScrollContainer, type TableScrollContainerProps } from './TableScrollContainer';
+import { TableScrollContainer, TableScrollContainerProps } from './TableScrollContainer';
 import classes from './Table.module.css';
 
 export type TableVariant = 'default' | 'vertical';

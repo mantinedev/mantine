@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import type { Cell, Row } from '@tanstack/react-table';
-import { useDataGridContext, type DataGridContextValue } from '../DataGrid.context';
+import { Cell, Row } from '@tanstack/react-table';
+import { useDataGridContext, DataGridContextValue } from '../DataGrid.context';
 import { GRID_ELEMENT_SELECTOR } from '../hooks/grid-dom';
 import type { DataGridFeatures } from '../table-features';
 

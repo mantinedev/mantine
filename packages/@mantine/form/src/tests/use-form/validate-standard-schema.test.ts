@@ -1,4 +1,4 @@
-import type { StandardSchemaV1 } from '@standard-schema/spec';
+import { StandardSchemaV1 } from '@standard-schema/spec';
 import { act, renderHook } from '@testing-library/react';
 import { z } from 'zod';
 import { schemaResolver, useForm } from '../../index';

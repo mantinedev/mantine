@@ -1,4 +1,4 @@
-import type { Row, RowData, Table } from '@tanstack/react-table';
+import { Row, RowData, Table } from '@tanstack/react-table';
 import type { DataGridFeatures } from '../table-features';
 
 export interface RowSections<TData extends RowData> {

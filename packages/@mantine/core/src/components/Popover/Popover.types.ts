@@ -1,4 +1,4 @@
-import type { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@floating-ui/react';
+import { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@floating-ui/react';
 
 export type PopoverWidth = 'target' | React.CSSProperties['width'] | null;
 

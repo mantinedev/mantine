@@ -1,7 +1,7 @@
 import { Primitive } from '../../core';
-import type { ComboboxProps, ComboboxStylesNames } from './Combobox';
+import { ComboboxProps, ComboboxStylesNames } from './Combobox';
 import type { OptionsFilter } from './OptionsDropdown/OptionsDropdown';
-import type { PillReorderProps } from './use-pills-reorder/use-pills-reorder';
+import { PillReorderProps } from './use-pills-reorder/use-pills-reorder';
 
 export interface ComboboxGenericItem<Value extends Primitive = string> {
   value: Value;

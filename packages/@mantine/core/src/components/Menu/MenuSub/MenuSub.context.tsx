@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import type { ReferenceType } from '@floating-ui/react';
+import { ReferenceType } from '@floating-ui/react';
 
 export interface SubMenuContextValue {
   opened: boolean;

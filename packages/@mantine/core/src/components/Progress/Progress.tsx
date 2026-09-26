@@ -6,16 +6,16 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '../../core';
-import type { ProgressContextValue } from './Progress.context';
-import { ProgressLabel, type ProgressLabelProps } from './ProgressLabel/ProgressLabel';
+import { ProgressContextValue } from './Progress.context';
+import { ProgressLabel, ProgressLabelProps } from './ProgressLabel/ProgressLabel';
 import {
   __ProgressRootProps,
   ProgressRoot,
   ProgressRootCssVariables,
   ProgressRootStylesNames,
-  type ProgressRootProps,
+  ProgressRootProps,
 } from './ProgressRoot/ProgressRoot';
-import { ProgressSection, type ProgressSectionProps } from './ProgressSection/ProgressSection';
+import { ProgressSection, ProgressSectionProps } from './ProgressSection/ProgressSection';
 import classes from './Progress.module.css';
 export type ProgressStylesNames = ProgressRootStylesNames;
 

@@ -8,7 +8,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useLightboxContext } from '../lightbox.context';
-import type { LightboxSlideData } from '../lightbox.types';
+import { LightboxSlideData } from '../lightbox.types';
 import { ImageSlide } from './ImageSlide';
 import { VideoSlide } from './VideoSlide';
 import classes from '../Lightbox.module.css';

@@ -18,10 +18,10 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { TabsProvider, type TabsContextValue } from './Tabs.context';
-import { TabsList, TabsListStylesNames, type TabsListProps } from './TabsList/TabsList';
-import { TabsPanel, TabsPanelStylesNames, type TabsPanelProps } from './TabsPanel/TabsPanel';
-import { TabsTab, TabsTabStylesNames, type TabsTabProps } from './TabsTab/TabsTab';
+import { TabsProvider, TabsContextValue } from './Tabs.context';
+import { TabsList, TabsListStylesNames, TabsListProps } from './TabsList/TabsList';
+import { TabsPanel, TabsPanelStylesNames, TabsPanelProps } from './TabsPanel/TabsPanel';
+import { TabsTab, TabsTabStylesNames, TabsTabProps } from './TabsTab/TabsTab';
 import classes from './Tabs.module.css';
 export type TabsStylesNames =
   | 'root'

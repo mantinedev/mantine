@@ -1,4 +1,4 @@
-import type { McpServer } from '@modelcontextprotocol/server';
+import { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod';
 import { MantineMcpDataClient } from './data-client';
 

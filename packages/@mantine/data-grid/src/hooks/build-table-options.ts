@@ -1,7 +1,7 @@
-import type { RowData, Table, TableFeature, TableOptions, TableState } from '@tanstack/react-table';
+import { RowData, Table, TableFeature, TableOptions, TableState } from '@tanstack/react-table';
 import { filterProps } from '@mantine/core';
 import type { DataGridColumnDef, DataGridRow } from '../DataGrid.types';
-import { dataGridFeatures, type DataGridFeatures } from '../table-features';
+import { dataGridFeatures, DataGridFeatures } from '../table-features';
 import type { DataGridFeatureFlags } from './infer-feature-flags';
 import type { UseDataGridOptions } from './use-data-grid.types';
 import type { UtilityColumnState } from './use-utility-column-state';

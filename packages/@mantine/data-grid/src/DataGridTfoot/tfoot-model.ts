@@ -1,5 +1,5 @@
-import { useMemo, type ReactNode } from 'react';
-import type { Row } from '@tanstack/react-table';
+import { useMemo, ReactNode } from 'react';
+import { Row } from '@tanstack/react-table';
 import { useDataGridContext } from '../DataGrid.context';
 import type { DataGridFeatures } from '../table-features';
 

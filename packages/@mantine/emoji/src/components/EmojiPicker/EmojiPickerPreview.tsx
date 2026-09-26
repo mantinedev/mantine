@@ -1,4 +1,4 @@
-import type { EmojiPickerEmoji } from '../../types';
+import { EmojiPickerEmoji } from '../../types';
 import { useEmojiPickerContext } from './EmojiPicker.context';
 
 interface EmojiPickerPreviewProps {

@@ -1,6 +1,6 @@
-import type { RowData } from '@tanstack/react-table';
+import { RowData } from '@tanstack/react-table';
 import type { DataGridColumnDef } from '../DataGrid.types';
-import { collectLeafColumnDefIds, type ColumnDefIdSource } from '../get-column-def-id';
+import { collectLeafColumnDefIds, ColumnDefIdSource } from '../get-column-def-id';
 
 function defaultSortingDisabled<TData extends RowData>(
   columns: readonly DataGridColumnDef<TData>[]

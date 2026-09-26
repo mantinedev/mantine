@@ -13,11 +13,11 @@ import {
   useStyles,
 } from '../../core';
 import { FloatingPosition } from '../../utils/Floating';
-import { MenubarContextProvider, type MenubarContextValue } from './Menubar.context';
-import { MenubarDropdown, type MenubarDropdownProps } from './MenubarDropdown/MenubarDropdown';
-import { MenubarMenu, type MenubarMenuProps } from './MenubarMenu/MenubarMenu';
-import { MenubarTarget, type MenubarTargetProps } from './MenubarTarget/MenubarTarget';
-import { useMenubar, type MenubarController } from './use-menubar/use-menubar';
+import { MenubarContextProvider, MenubarContextValue } from './Menubar.context';
+import { MenubarDropdown, MenubarDropdownProps } from './MenubarDropdown/MenubarDropdown';
+import { MenubarMenu, MenubarMenuProps } from './MenubarMenu/MenubarMenu';
+import { MenubarTarget, MenubarTargetProps } from './MenubarTarget/MenubarTarget';
+import { useMenubar, MenubarController } from './use-menubar/use-menubar';
 import classes from './Menubar.module.css';
 
 export type MenubarStylesNames = 'root' | 'target';

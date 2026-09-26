@@ -1,4 +1,4 @@
-import type { Header } from '@tanstack/react-table';
+import { Header } from '@tanstack/react-table';
 import type { DataGridFeatures } from './table-features';
 
 export function getLeafHeaders(

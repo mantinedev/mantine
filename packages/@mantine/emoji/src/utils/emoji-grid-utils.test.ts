@@ -1,4 +1,4 @@
-import type { EmojiPickerEmoji, FlattenedRowItem } from '../types';
+import { EmojiPickerEmoji, FlattenedRowItem } from '../types';
 import {
   applySkinTone,
   emojiIndexToRowIndex,

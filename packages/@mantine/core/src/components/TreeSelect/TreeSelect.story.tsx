@@ -8,7 +8,7 @@ import { Group } from '../Group';
 import { InputBase } from '../InputBase';
 import { Pill } from '../Pill';
 import { ScrollArea } from '../ScrollArea';
-import type { TreeNodeData } from '../Tree';
+import { TreeNodeData } from '../Tree';
 import { getTreeExpandedState, TreeExpandedState } from '../Tree/use-tree';
 import { flattenTreeSelectData } from './flatten-tree-select-data';
 import { TreeSelect } from './TreeSelect';

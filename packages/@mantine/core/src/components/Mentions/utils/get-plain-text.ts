@@ -1,4 +1,4 @@
-import type { MentionConfig } from '../Mentions.types';
+import { MentionConfig } from '../Mentions.types';
 import { findAllMentions, getMentionPlainText } from './iterate-mentions';
 
 export interface GetPlainTextOptions {

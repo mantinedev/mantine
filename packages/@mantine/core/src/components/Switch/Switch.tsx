@@ -23,10 +23,10 @@ import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../u
 import {
   SwitchGroup,
   SwitchGroupContext,
-  type SwitchGroupProps,
-  type SwitchGroupStylesNames,
-  type SwitchGroupFactory,
-  type SwitchGroupContextValue,
+  SwitchGroupProps,
+  SwitchGroupStylesNames,
+  SwitchGroupFactory,
+  SwitchGroupContextValue,
 } from './SwitchGroup/SwitchGroup';
 import classes from './Switch.module.css';
 export type SwitchStylesNames =

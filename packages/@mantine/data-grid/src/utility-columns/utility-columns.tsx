@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { ColumnOrderState, ColumnPinningState, RowData } from '@tanstack/react-table';
+import { ColumnOrderState, ColumnPinningState, RowData } from '@tanstack/react-table';
 import { Checkbox, MantineSize, Radio } from '@mantine/core';
 import { DATA_GRID_SIZES } from '../data-grid-sizes';
 import { useDataGridContext } from '../DataGrid.context';

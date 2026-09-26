@@ -1,5 +1,5 @@
-import type React from 'react';
-import type {
+import React from 'react';
+import {
   CellSelectionState,
   ColumnFiltersState,
   ColumnOrderState,
@@ -19,7 +19,7 @@ import type {
   TableOptions,
   Updater,
 } from '@tanstack/react-table';
-import type { MantineSize } from '@mantine/core';
+import { MantineSize } from '@mantine/core';
 import type { DataGridControlSize } from '../data-grid-sizes';
 import type { DataGridColumnDef, DataGridRow, DataGridTable } from '../DataGrid.types';
 import type {

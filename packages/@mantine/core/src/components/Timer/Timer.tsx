@@ -11,7 +11,7 @@ import {
 } from '../../core';
 import { Button } from '../Button';
 import { formatTimerValue } from './format-timer-value';
-import type { TimerValue } from './get-timer-value';
+import { TimerValue } from './get-timer-value';
 import { parseDuration } from './parse-duration';
 import { TimerProvider } from './Timer.context';
 import { TimerControl, TimerControlStylesNames } from './TimerControl';

@@ -1,4 +1,4 @@
-import type { SplitterPaneSize } from '@mantine/hooks';
+import { SplitterPaneSize } from '@mantine/hooks';
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { SplitterFactory } from './Splitter';
 

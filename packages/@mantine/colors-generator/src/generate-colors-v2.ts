@@ -1,4 +1,4 @@
-import { clampChroma, formatCss, modeOklch, modeRgb, type Oklch, useMode } from 'culori/fn';
+import { clampChroma, formatCss, modeOklch, modeRgb, Oklch, useMode } from 'culori/fn';
 import { CHROMA_ENVELOPE, STANDARD_LIGHTNESS_RAMP, lightnessRampForHue } from './ramp';
 
 const oklch = useMode(modeOklch);

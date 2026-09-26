@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { type GetStylesApi, Tooltip, UnstyledButton } from '@mantine/core';
+import { GetStylesApi, Tooltip, UnstyledButton } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import {
   formatValue,
@@ -8,11 +8,7 @@ import {
   safeStringify,
   serializePath,
 } from './json-viewer-utils';
-import {
-  handleJsonViewerKeyDown,
-  type JsonViewerFactory,
-  type JsonViewerHighlightType,
-} from './JsonViewer';
+import { handleJsonViewerKeyDown, JsonViewerFactory, JsonViewerHighlightType } from './JsonViewer';
 
 export interface JsonViewerNodeProps {
   value: any;

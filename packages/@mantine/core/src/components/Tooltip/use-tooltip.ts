@@ -16,12 +16,12 @@ import {
   useHover,
   useInteractions,
   useRole,
-  type Middleware,
+  Middleware,
 } from '@floating-ui/react';
 import { useId, useIsomorphicEffect } from '@mantine/hooks';
 import { useMantineEnv } from '../../core';
 import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
-import { type TooltipMiddlewares } from './Tooltip.types';
+import type { TooltipMiddlewares } from './Tooltip.types';
 import { TooltipGroupContext } from './TooltipGroup/TooltipGroup';
 
 interface UseTooltip {

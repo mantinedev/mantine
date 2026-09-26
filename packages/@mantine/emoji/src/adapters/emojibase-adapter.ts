@@ -1,4 +1,4 @@
-import type { EmojiPickerCategory, EmojiPickerData, EmojiPickerEmoji } from '../types';
+import { EmojiPickerCategory, EmojiPickerData, EmojiPickerEmoji } from '../types';
 
 interface EmojibaseSkin {
   hexcode: string;

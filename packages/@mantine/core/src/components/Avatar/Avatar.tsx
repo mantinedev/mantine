@@ -17,15 +17,12 @@ import {
 } from '../../core';
 import {
   AvatarGroup,
-  type AvatarGroupCssVariables,
-  type AvatarGroupFactory,
-  type AvatarGroupProps,
-  type AvatarGroupStylesNames,
+  AvatarGroupCssVariables,
+  AvatarGroupFactory,
+  AvatarGroupProps,
+  AvatarGroupStylesNames,
 } from './AvatarGroup/AvatarGroup';
-import {
-  AvatarGroupContext,
-  type AvatarGroupContextValue,
-} from './AvatarGroup/AvatarGroup.context';
+import { AvatarGroupContext, AvatarGroupContextValue } from './AvatarGroup/AvatarGroup.context';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { getInitialsColor } from './get-initials-color/get-initials-color';
 import { getInitials } from './get-initials/get-initials';

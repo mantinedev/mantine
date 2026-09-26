@@ -1,4 +1,4 @@
-import type { EmojiPickerData, EmojiPickerEmoji, FlattenedRowItem } from '../types';
+import { EmojiPickerData, EmojiPickerEmoji, FlattenedRowItem } from '../types';
 
 function chunkArray<T>(array: T[], size: number): T[][] {
   const chunks: T[][] = [];

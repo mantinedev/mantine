@@ -1,5 +1,5 @@
-import type React from 'react';
-import type { Header } from '@tanstack/react-table';
+import React from 'react';
+import { Header } from '@tanstack/react-table';
 import type { DataGridStore } from '../hooks';
 import type { DataGridFeatures } from '../table-features';
 import { useColumnDrag } from './use-column-drag';

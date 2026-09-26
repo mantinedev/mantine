@@ -21,40 +21,40 @@ import { Loader } from '../Loader/Loader';
 import { InputContext } from './Input.context';
 import {
   InputClearButton,
-  type InputClearButtonProps,
-  type InputClearButtonFactory,
+  InputClearButtonProps,
+  InputClearButtonFactory,
 } from './InputClearButton/InputClearButton';
 import {
   ClearSectionMode,
   InputClearSection,
-  type InputClearSectionProps,
+  InputClearSectionProps,
 } from './InputClearSection/InputClearSection';
 import {
   InputDescription,
-  type InputDescriptionProps,
-  type InputDescriptionStylesNames,
-  type InputDescriptionCssVariables,
-  type InputDescriptionFactory,
+  InputDescriptionProps,
+  InputDescriptionStylesNames,
+  InputDescriptionCssVariables,
+  InputDescriptionFactory,
 } from './InputDescription/InputDescription';
 import {
   InputError,
-  type InputErrorProps,
-  type InputErrorStylesNames,
-  type InputErrorCssVariables,
-  type InputErrorFactory,
+  InputErrorProps,
+  InputErrorStylesNames,
+  InputErrorCssVariables,
+  InputErrorFactory,
 } from './InputError/InputError';
 import {
   InputLabel,
-  type InputLabelProps,
-  type InputLabelStylesNames,
-  type InputLabelCssVariables,
-  type InputLabelFactory,
+  InputLabelProps,
+  InputLabelStylesNames,
+  InputLabelCssVariables,
+  InputLabelFactory,
 } from './InputLabel/InputLabel';
 import {
   InputPlaceholder,
-  type InputPlaceholderProps,
-  type InputPlaceholderStylesNames,
-  type InputPlaceholderFactory,
+  InputPlaceholderProps,
+  InputPlaceholderStylesNames,
+  InputPlaceholderFactory,
 } from './InputPlaceholder/InputPlaceholder';
 import { InputSuccess } from './InputSuccess/InputSuccess';
 import { InputWrapperContext } from './InputWrapper.context';
@@ -62,8 +62,8 @@ import {
   __InputWrapperProps,
   InputWrapper,
   InputWrapperStylesNames,
-  type InputWrapperProps,
-  type InputWrapperFactory,
+  InputWrapperProps,
+  InputWrapperFactory,
 } from './InputWrapper/InputWrapper';
 import classes from './Input.module.css';
 // Required to be a separate type for docgen script

@@ -1,4 +1,4 @@
-import { usePagination, type UsePaginationReturnValue } from '@mantine/hooks';
+import { usePagination, UsePaginationReturnValue } from '@mantine/hooks';
 import {
   Box,
   BoxProps,

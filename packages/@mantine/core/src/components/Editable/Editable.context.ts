@@ -1,6 +1,6 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { EditableFactory } from './Editable';
-import type { EditableController } from './use-editable';
+import { EditableController } from './use-editable';
 
 export interface EditablePlaceholder {
   edit?: string;

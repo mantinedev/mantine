@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 export interface LightboxRenderThumbPayload {
   /** Whether the thumbnail belongs to the current slide */

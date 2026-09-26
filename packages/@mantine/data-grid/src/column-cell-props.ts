@@ -1,5 +1,5 @@
-import type React from 'react';
-import type { Column, Header, RowData, Table } from '@tanstack/react-table';
+import React from 'react';
+import { Column, Header, RowData, Table } from '@tanstack/react-table';
 import { getLeafHeaders } from './get-leaf-headers';
 import type { DataGridFeatures } from './table-features';
 

@@ -1,6 +1,6 @@
 import { act, render, renderHook, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { FormFieldSubscriber } from '../../types';
+import { FormFieldSubscriber } from '../../types';
 import { useForm } from '../../use-form';
 
 function TestComponent({ watch }: { watch: FormFieldSubscriber<any, any> }) {

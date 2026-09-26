@@ -1,4 +1,4 @@
-import type { TreeNodeData } from '../Tree';
+import { TreeNodeData } from '../Tree';
 
 export type TreeNodeFilter = (query: string, node: TreeNodeData) => boolean;
 

@@ -5,12 +5,12 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
-import type { CalendarLevel } from '../../../types';
-import type { DateFormatter } from '../../../utils';
+import { CalendarLevel } from '../../../types';
+import { DateFormatter } from '../../../utils';
 import { pickCalendarProps } from '../../Calendar';
 import { useDatesContext } from '../../DatesProvider';
 import { PickerInputBase } from '../PickerInputBase';
-import type {
+import {
   PickerInputController,
   PickerInputControllerOptions,
 } from '../use-picker-input-controller/use-picker-input-controller';

@@ -1,10 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import { tests } from '@mantine-tests/core';
 import { CalendarRegisteredSettings } from '../../Calendar/use-calendar/use-calendar';
-import type {
-  PickerInputControllerOptions,
-  PickerInputRegisteredSettings,
-} from '../../PickerInputBase';
+import { PickerInputControllerOptions, PickerInputRegisteredSettings } from '../../PickerInputBase';
 import { useDateInput } from './use-date-input';
 
 const defaultSettings: PickerInputRegisteredSettings = {

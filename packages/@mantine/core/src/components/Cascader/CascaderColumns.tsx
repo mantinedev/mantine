@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import type { GetStylesApi } from '../../core';
+import { GetStylesApi } from '../../core';
 import { AccordionChevron } from '../Accordion';
 import { CheckIcon } from '../Checkbox/CheckIcon';
 import { ScrollArea, ScrollAreaProps } from '../ScrollArea';

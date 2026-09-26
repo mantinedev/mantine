@@ -1,7 +1,7 @@
 import { act, waitFor } from '@testing-library/react';
 import { render, screen } from '@mantine-tests/core';
 import { CodeHighlight } from '../CodeHighlight/CodeHighlight';
-import { CodeHighlightAdapterProvider, type CodeHighlightAdapter } from './CodeHighlightProvider';
+import { CodeHighlightAdapterProvider, CodeHighlightAdapter } from './CodeHighlightProvider';
 
 function createLazyAdapter() {
   const loadedLanguages = new Set<string>();

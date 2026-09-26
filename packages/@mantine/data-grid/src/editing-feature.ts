@@ -1,17 +1,17 @@
-import type { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import {
   assignPrototypeAPIs,
   assignTableAPIs,
   makeStateUpdater,
   setStateSlice,
-  type Cell,
-  type Column,
-  type OnChangeFn,
-  type Row,
-  type RowData,
-  type TableFeature,
-  type TableFeatures,
-  type Updater,
+  Cell,
+  Column,
+  OnChangeFn,
+  Row,
+  RowData,
+  TableFeature,
+  TableFeatures,
+  Updater,
 } from '@tanstack/react-table';
 import type { DataGridColumnMeta } from './DataGrid.types';
 

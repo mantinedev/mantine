@@ -1,4 +1,4 @@
-import type { MentionConfig, MentionDisplayTransform } from '../Mentions.types';
+import { MentionConfig, MentionDisplayTransform } from '../Mentions.types';
 import { createMarkupSerializer } from './create-markup-serializer';
 
 export function createTestConfig(

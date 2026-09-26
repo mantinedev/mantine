@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { Stepper, StepperProps } from './Stepper';
-import { useStepper, type StepperController } from './use-stepper/use-stepper';
+import { useStepper, StepperController } from './use-stepper/use-stepper';
 
 const defaultProps: StepperProps = {
   active: 1,

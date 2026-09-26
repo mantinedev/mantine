@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import { ReferenceArea } from 'recharts';
 import { getThemeColor, MantineProvider, useMantineTheme } from '@mantine/core';
 import { BarChart } from './BarChart';

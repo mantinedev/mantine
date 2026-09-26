@@ -1,4 +1,4 @@
-import type { DiffResult } from '../diff-algorithm';
+import { DiffResult } from '../diff-algorithm';
 
 export interface LineEntry {
   type: 'add' | 'remove' | 'equal';

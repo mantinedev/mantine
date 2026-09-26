@@ -36,7 +36,7 @@ import {
 import { TimePickerProps } from '../TimePicker/TimePicker';
 import {
   useDateTimePicker,
-  type DateTimePickerController,
+  DateTimePickerController,
 } from './use-date-time-picker/use-date-time-picker';
 
 export type DateTimePickerStylesNames =

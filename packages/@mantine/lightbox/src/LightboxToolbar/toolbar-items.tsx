@@ -1,5 +1,5 @@
 import { DEFAULT_LABELS } from '../default-labels';
-import type { LightboxLabels, ToolbarItem } from '../lightbox.types';
+import { LightboxLabels, ToolbarItem } from '../lightbox.types';
 
 function IconEnterFullscreen() {
   return (

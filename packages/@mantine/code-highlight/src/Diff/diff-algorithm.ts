@@ -2,7 +2,7 @@ import {
   diffChars as jsDiffChars,
   diffWordsWithSpace as jsDiffWords,
   diffLines as jsDiffLines,
-  type Change,
+  Change,
 } from 'diff';
 
 export interface DiffResult {

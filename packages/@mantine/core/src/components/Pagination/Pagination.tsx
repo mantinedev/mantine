@@ -2,23 +2,20 @@ import { Box, factory, Factory, MantineSpacing, useProps } from '../../core';
 import { Group } from '../Group/Group';
 import { usePaginationContext } from './Pagination.context';
 import { PaginationIcon } from './Pagination.icons';
-import {
-  PaginationControl,
-  type PaginationControlProps,
-} from './PaginationControl/PaginationControl';
-import { PaginationDots, type PaginationDotsProps } from './PaginationDots/PaginationDots';
+import { PaginationControl, PaginationControlProps } from './PaginationControl/PaginationControl';
+import { PaginationDots, PaginationDotsProps } from './PaginationDots/PaginationDots';
 import {
   PaginationFirst,
   PaginationLast,
   PaginationNext,
   PaginationPrevious,
-  type PaginationEdgeProps,
+  PaginationEdgeProps,
 } from './PaginationEdges/PaginationEdges';
-import { PaginationItems, type PaginationItemsProps } from './PaginationItems/PaginationItems';
+import { PaginationItems, PaginationItemsProps } from './PaginationItems/PaginationItems';
 import {
   PaginationFormatLabel,
   PaginationLabel,
-  type PaginationLabelProps,
+  PaginationLabelProps,
 } from './PaginationLabel/PaginationLabel';
 import {
   PaginationRoot,

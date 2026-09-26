@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { tests } from '@mantine-tests/core';
-import type { TreeNodeData } from './Tree';
+import { TreeNodeData } from './Tree';
 import { getTreeExpandedState, useTree } from './use-tree';
 
 const data: TreeNodeData[] = [

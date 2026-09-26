@@ -4,8 +4,8 @@ import { DatePicker, DatePickerBaseProps, DatePickerStylesNames } from '../DateP
 import {
   DateInputSharedProps,
   PickerInputBase,
-  type PickerInputController,
-  type PickerInputControllerOptions,
+  PickerInputController,
+  PickerInputControllerOptions,
 } from '../PickerInputBase';
 import { createPickerInput } from '../PickerInputBase/create-picker-input/create-picker-input';
 import { useDatePickerInput } from './use-date-picker-input/use-date-picker-input';

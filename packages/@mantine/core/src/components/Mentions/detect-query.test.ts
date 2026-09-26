@@ -1,6 +1,6 @@
 import { detectQuery } from './detect-query';
-import type { MentionSpan } from './get-mention-model';
-import type { ResolvedMentionSource } from './resolve-sources';
+import { MentionSpan } from './get-mention-model';
+import { ResolvedMentionSource } from './resolve-sources';
 import { makeTriggerRegex } from './utils/make-trigger-regex';
 import { createTestConfig } from './utils/test-helpers';
 

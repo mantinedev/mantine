@@ -4,8 +4,8 @@ import { MonthPicker, MonthPickerBaseProps, MonthPickerStylesNames } from '../Mo
 import {
   DateInputSharedProps,
   PickerInputBase,
-  type PickerInputController,
-  type PickerInputControllerOptions,
+  PickerInputController,
+  PickerInputControllerOptions,
 } from '../PickerInputBase';
 import { createPickerInput } from '../PickerInputBase/create-picker-input/create-picker-input';
 import { useMonthPickerInput } from './use-month-picker-input/use-month-picker-input';

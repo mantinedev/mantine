@@ -1,6 +1,6 @@
 import { DEFAULT_THEME, px, rem } from '../../../../core';
 import { AppShellProps } from '../../AppShell';
-import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
+import { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { assignAsideVariables } from './assign-aside-variables';
 
 function getTestObject(aside: AppShellProps['aside'], mode: 'fixed' | 'static' = 'fixed') {

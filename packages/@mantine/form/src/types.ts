@@ -1,4 +1,4 @@
-import type { FormArrayElement, FormPathValue, LooseKeys } from './paths.types';
+import { FormArrayElement, FormPathValue, LooseKeys } from './paths.types';
 import type { formRootRule } from './validate/validate-values';
 
 export type GetInputPropsType = 'input' | 'checkbox' | 'radio';

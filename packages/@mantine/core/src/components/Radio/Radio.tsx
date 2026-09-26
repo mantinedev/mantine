@@ -25,28 +25,28 @@ import {
 import { InlineInput, InlineInputStylesNames } from '../../utils/InlineInput';
 import {
   RadioCard,
-  type RadioCardProps,
-  type RadioCardStylesNames,
-  type RadioCardFactory,
-  type RadioCardCssVariables,
-  type RadioCardContextValue,
+  RadioCardProps,
+  RadioCardStylesNames,
+  RadioCardFactory,
+  RadioCardCssVariables,
+  RadioCardContextValue,
 } from './RadioCard/RadioCard';
 import {
   RadioGroup,
   RadioGroupContext,
-  type RadioGroupProps,
-  type RadioGroupStylesNames,
-  type RadioGroupFactory,
-  type RadioGroupContextValue,
+  RadioGroupProps,
+  RadioGroupStylesNames,
+  RadioGroupFactory,
+  RadioGroupContextValue,
 } from './RadioGroup/RadioGroup';
 import { RadioIcon, RadioIconProps } from './RadioIcon';
 import {
   RadioIndicator,
-  type RadioIndicatorProps,
-  type RadioIndicatorStylesNames,
-  type RadioIndicatorFactory,
-  type RadioIndicatorCssVariables,
-  type RadioIndicatorVariant,
+  RadioIndicatorProps,
+  RadioIndicatorStylesNames,
+  RadioIndicatorFactory,
+  RadioIndicatorCssVariables,
+  RadioIndicatorVariant,
 } from './RadioIndicator/RadioIndicator';
 import classes from './Radio.module.css';
 

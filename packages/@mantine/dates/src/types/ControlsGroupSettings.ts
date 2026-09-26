@@ -1,4 +1,4 @@
-import type { DateStringValue } from './GeneralTypes';
+import { DateStringValue } from './GeneralTypes';
 
 export interface ControlsGroupSettings {
   /** Minimum possible date in `YYYY-MM-DD` format or Date object @category behavior */

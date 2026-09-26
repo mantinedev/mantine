@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { EmojiPickerEmoji, FlattenedRowItem } from '../types';
+import { EmojiPickerEmoji, FlattenedRowItem } from '../types';
 import { applySkinTone, emojiIndexToRowIndex, getAllEmojis } from '../utils';
 
 interface UseEmojiGridNavigationInput {

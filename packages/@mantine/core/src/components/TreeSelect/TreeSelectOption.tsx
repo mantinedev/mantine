@@ -2,7 +2,7 @@ import { AccordionChevron } from '../Accordion';
 import { CheckboxIndicator } from '../Checkbox/CheckboxIndicator/CheckboxIndicator';
 import { CheckIcon } from '../Checkbox/CheckIcon';
 import { Combobox } from '../Combobox';
-import type { TreeNodeData } from '../Tree';
+import { TreeNodeData } from '../Tree';
 import classes from './TreeSelect.module.css';
 
 const LEVEL_OFFSET = 20;

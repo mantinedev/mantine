@@ -1,19 +1,19 @@
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalStackContext, useOverlayStackEntry } from '../../core/OverlayStack';
-import { ModalBody, type ModalBodyProps } from './ModalBody';
-import { ModalCloseButton, type ModalCloseButtonProps } from './ModalCloseButton';
-import { ModalContent, type ModalContentProps } from './ModalContent';
-import { ModalFooter, type ModalFooterProps } from './ModalFooter';
-import { ModalHeader, type ModalHeaderProps } from './ModalHeader';
-import { ModalOverlay, type ModalOverlayProps } from './ModalOverlay';
+import { ModalBody, ModalBodyProps } from './ModalBody';
+import { ModalCloseButton, ModalCloseButtonProps } from './ModalCloseButton';
+import { ModalContent, ModalContentProps } from './ModalContent';
+import { ModalFooter, ModalFooterProps } from './ModalFooter';
+import { ModalHeader, ModalHeaderProps } from './ModalHeader';
+import { ModalOverlay, ModalOverlayProps } from './ModalOverlay';
 import {
   ModalRoot,
   ModalRootCssVariables,
   ModalRootProps,
   ModalRootStylesNames,
 } from './ModalRoot';
-import { ModalStack, type ModalStackProps } from './ModalStack';
-import { ModalTitle, type ModalTitleProps } from './ModalTitle';
+import { ModalStack, ModalStackProps } from './ModalStack';
+import { ModalTitle, ModalTitleProps } from './ModalTitle';
 import classes from './Modal.module.css';
 export type ModalStylesNames = ModalRootStylesNames;
 export type ModalCssVariables = ModalRootCssVariables;

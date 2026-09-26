@@ -1,4 +1,4 @@
-import type { MentionConfig } from '../Mentions.types';
+import { MentionConfig } from '../Mentions.types';
 
 export interface FoundMention {
   config: MentionConfig;

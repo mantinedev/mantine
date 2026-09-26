@@ -1,4 +1,4 @@
-import type { PartialDeep } from 'type-fest';
+import { PartialDeep } from 'type-fest';
 import type { VariantColorsResolver } from './color-functions';
 
 export interface MantineTheme {

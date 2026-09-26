@@ -1,6 +1,6 @@
 import { act, fireEvent } from '@testing-library/react';
 import { renderWithAct, screen, userEvent } from '@mantine-tests/core';
-import type { LightboxSlideData } from '../lightbox.types';
+import { LightboxSlideData } from '../lightbox.types';
 import { LightboxWrapper, testSlides } from '../test-utils';
 import { LightboxSlide } from './LightboxSlide';
 

@@ -17,7 +17,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import type { TimePickerAmPmLabels, TimePickerFormat } from '../TimePicker';
+import { TimePickerAmPmLabels, TimePickerFormat } from '../TimePicker';
 import { isSameTime } from '../TimePicker/utils/is-same-time/is-same-time';
 import { isTimeAfter, isTimeBefore } from './compare-time';
 import { TimeGridProvider } from './TimeGrid.context';

@@ -1,8 +1,8 @@
 import {
   usePickerInputController,
-  type PickerInputController,
-  type PickerInputControllerOptions,
-  type PickerInputType,
+  PickerInputController,
+  PickerInputControllerOptions,
+  PickerInputType,
 } from './use-picker-input-controller';
 
 export function createUsePickerInput(pickerType: PickerInputType) {

@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import {
   useTimeEntry,
-  type TimeEntryController,
-  type TimeEntryControllerOptions,
+  TimeEntryController,
+  TimeEntryControllerOptions,
 } from '../../InlineDateTimePicker/use-inline-date-time-picker/use-time-entry';
 import {
   usePickerInputController,
-  type PickerInputController,
-  type PickerInputControllerOptions,
+  PickerInputController,
+  PickerInputControllerOptions,
 } from '../../PickerInputBase/use-picker-input-controller/use-picker-input-controller';
 
 export interface DateTimePickerControllerOptions

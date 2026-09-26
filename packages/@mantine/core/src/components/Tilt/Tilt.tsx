@@ -14,12 +14,7 @@ import {
   useStyles,
 } from '../../core';
 import { TiltProvider } from './Tilt.context';
-import {
-  TiltLayer,
-  type TiltLayerFactory,
-  type TiltLayerProps,
-  type TiltLayerStylesNames,
-} from './TiltLayer';
+import { TiltLayer, TiltLayerFactory, TiltLayerProps, TiltLayerStylesNames } from './TiltLayer';
 import classes from './Tilt.module.css';
 
 export type TiltStylesNames = 'root' | 'content' | 'glare' | TiltLayerStylesNames;

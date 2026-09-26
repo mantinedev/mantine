@@ -3,7 +3,7 @@ import { fireEvent } from '@testing-library/react';
 import { DirectionProvider } from '@mantine/core';
 import { render } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from '../DataGrid';
-import type { DataGridColumnDef } from '../DataGrid.types';
+import { DataGridColumnDef } from '../DataGrid.types';
 import { getVirtualColumnOffset } from '../DataGridBody/virtual-columns-test-utils';
 import { useDataGrid, UseDataGridOptions } from '../hooks';
 import { mockVirtualViewport } from '../virtual-test-utils';

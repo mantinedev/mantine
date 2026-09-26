@@ -1,4 +1,4 @@
-import type { TimelineContextValue } from '../Timeline.context';
+import { TimelineContextValue } from '../Timeline.context';
 import { getItemActiveState, resolveItemProps } from './resolve-item-props';
 
 function getContext(overrides?: Partial<TimelineContextValue>): TimelineContextValue {

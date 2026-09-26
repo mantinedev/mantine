@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import { Box, rem, useDirection, useMantineTheme } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
-import type { AppShellResizeSection } from '../AppShell.types';
+import { AppShellResizeSection } from '../AppShell.types';
 import { clampResizeSize, getCollapseState } from '../use-app-shell-resize/clamp-resize-size';
 import { getResizeDelta, RESIZE_SECTIONS } from '../use-app-shell-resize/resize-section-config';
 import { getSafeAreaInset } from '../use-app-shell-resize/safe-area-inset';

@@ -1,4 +1,4 @@
-import type { LightboxLabels } from './lightbox.types';
+import { LightboxLabels } from './lightbox.types';
 
 export const DEFAULT_LABELS: LightboxLabels = {
   lightboxLabel: 'Gallery',

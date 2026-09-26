@@ -1,13 +1,10 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../../hooks';
-import type { CalendarLevel, DateStringValue } from '../../../types';
+import { CalendarLevel, DateStringValue } from '../../../types';
 import { toDateString } from '../../../utils';
 import { clampLevel } from '../clamp-level/clamp-level';
-import {
-  type CalendarShiftUnit,
-  shiftCalendarDate,
-} from '../shift-calendar-date/shift-calendar-date';
+import { CalendarShiftUnit, shiftCalendarDate } from '../shift-calendar-date/shift-calendar-date';
 
 export interface CalendarControllerOptions {
   /** Displayed date in controlled mode */

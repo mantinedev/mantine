@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import type { GetStylesApi } from '../../core';
+import { GetStylesApi } from '../../core';
 import type { MentionsFactory } from './Mentions';
 
 export type MentionSelectionState = 'inside' | 'boundary' | 'partial' | 'full';

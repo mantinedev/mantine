@@ -1,4 +1,4 @@
-import type { MentionSerializer } from '../Mentions.types';
+import { MentionSerializer } from '../Mentions.types';
 import { escapeRegex } from './escape-regex';
 
 export const DEFAULT_MENTION_MARKUP = '@[__display__](__id__)';

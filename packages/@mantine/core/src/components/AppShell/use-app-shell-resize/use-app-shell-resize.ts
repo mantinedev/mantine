@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useCallbackRef, useLatestRef } from '@mantine/hooks';
-import type {
+import {
   AppShellResizeController,
   AppShellResizeSection,
   AppShellResizeSectionController,

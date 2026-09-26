@@ -6,8 +6,8 @@ import { DatePickerType } from '../../types';
 import { DateTimePicker, DateTimePickerProps } from './DateTimePicker';
 import {
   useDateTimePicker,
-  type DateTimePickerController,
-  type DateTimePickerControllerOptions,
+  DateTimePickerController,
+  DateTimePickerControllerOptions,
 } from './use-date-time-picker/use-date-time-picker';
 
 const defaultProps = {

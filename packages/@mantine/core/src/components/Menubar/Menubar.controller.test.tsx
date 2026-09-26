@@ -2,11 +2,7 @@ import { act, fireEvent, waitFor } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { Menu } from '../Menu';
 import { Menubar, MenubarProps } from './Menubar';
-import {
-  useMenubar,
-  type MenubarController,
-  type MenubarControllerOptions,
-} from './use-menubar/use-menubar';
+import { useMenubar, MenubarController, MenubarControllerOptions } from './use-menubar/use-menubar';
 
 const getTarget = (name: string) => screen.getByRole('menuitem', { name });
 const focusElement = (element: HTMLElement) => act(() => element.focus());

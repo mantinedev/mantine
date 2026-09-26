@@ -1,4 +1,4 @@
-import type { LightboxSlideData } from './lightbox.types';
+import { LightboxSlideData } from './lightbox.types';
 import { LightboxRoot, LightboxRootProps } from './LightboxRoot/LightboxRoot';
 
 export const testSlides: LightboxSlideData[] = [

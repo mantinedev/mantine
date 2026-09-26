@@ -1,5 +1,5 @@
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
-import { InlineDateTimePicker, type InlineDateTimePickerProps } from './InlineDateTimePicker';
+import { InlineDateTimePicker, InlineDateTimePickerProps } from './InlineDateTimePicker';
 
 const defaultProps: InlineDateTimePickerProps = {
   timePickerProps: {

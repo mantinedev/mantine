@@ -38,7 +38,7 @@ import { useDatesContext } from '../DatesProvider';
 import { HiddenDatesInput } from '../HiddenDatesInput';
 import { isSameMonth } from '../Month';
 import { DatesDropdownProvider } from '../PickerInputBase/DatesDropdown.context';
-import type {
+import {
   PickerInputController,
   PickerInputControllerOptions,
 } from '../PickerInputBase/use-picker-input-controller/use-picker-input-controller';

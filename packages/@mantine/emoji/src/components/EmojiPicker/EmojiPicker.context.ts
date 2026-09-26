@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
-import type { GetStylesApi, MantineSize } from '@mantine/core';
-import type { EmojiPickerEmoji, EmojiPickerLabels, FlattenedRowItem } from '../../types';
+import { GetStylesApi, MantineSize } from '@mantine/core';
+import { EmojiPickerEmoji, EmojiPickerLabels, FlattenedRowItem } from '../../types';
 import type { EmojiPickerFactory } from './EmojiPicker';
 
 export interface EmojiPickerContextValue {

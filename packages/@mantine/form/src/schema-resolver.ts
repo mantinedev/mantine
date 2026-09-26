@@ -1,6 +1,6 @@
-import type { StandardSchemaV1 } from '@standard-schema/spec';
+import { StandardSchemaV1 } from '@standard-schema/spec';
 import { filterErrors } from './hooks/use-form-errors/filter-errors/filter-errors';
-import type { FormErrors } from './types';
+import { FormErrors } from './types';
 
 function issuesToFormErrors(issues: ReadonlyArray<StandardSchemaV1.Issue>): FormErrors {
   const errors: FormErrors = {};

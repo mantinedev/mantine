@@ -1,4 +1,4 @@
-import type { TreeNodeData } from '../Tree';
+import { TreeNodeData } from '../Tree';
 import { getAllCheckedNodes } from '../Tree/get-all-checked-nodes/get-all-checked-nodes';
 import { getChildrenNodesValues } from '../Tree/get-children-nodes-values/get-children-nodes-values';
 import { isNodeChecked } from '../Tree/is-node-checked/is-node-checked';

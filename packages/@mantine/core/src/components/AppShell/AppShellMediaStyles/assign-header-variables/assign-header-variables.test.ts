@@ -1,6 +1,6 @@
 import { rem } from '../../../../core';
-import type { AppShellProps } from '../../AppShell';
-import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
+import { AppShellProps } from '../../AppShell';
+import { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { assignHeaderVariables } from './assign-header-variables';
 
 function getTestObject(header: AppShellProps['header']) {

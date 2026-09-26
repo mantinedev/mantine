@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import type { Cell } from '@tanstack/react-table';
+import { Cell } from '@tanstack/react-table';
 import { TextInput, Tooltip } from '@mantine/core';
 import { useDataGridContext } from '../DataGrid.context';
 import { getColumnLabel } from '../get-column-label';

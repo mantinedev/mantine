@@ -1,4 +1,4 @@
-import { getDigitParts, type DigitParts } from './get-digit-parts';
+import { getDigitParts, DigitParts } from './get-digit-parts';
 
 export interface DigitSlot {
   type: 'digit';

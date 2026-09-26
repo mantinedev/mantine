@@ -1,4 +1,4 @@
-import type { MantineTheme } from '@mantine/core';
+import { MantineTheme } from '@mantine/core';
 import { EmotionHelpers } from './create-styles';
 import { CSSObject, EmotionSx } from './types';
 

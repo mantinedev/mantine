@@ -1,5 +1,5 @@
 import { useLightboxContext } from '../lightbox.context';
-import type { LightboxImageSlide } from '../lightbox.types';
+import { LightboxImageSlide } from '../lightbox.types';
 import type { LightboxSlideStylesApiProps } from './LightboxSlide';
 
 interface ImageSlideProps {

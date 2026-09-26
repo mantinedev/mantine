@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { usePendingControlFocus } from '../../../hooks';
-import type { CalendarLevel, DateStringValue, DayOfWeek } from '../../../types';
+import { CalendarLevel, DateStringValue, DayOfWeek } from '../../../types';
 import { ControlEdgeCrossPayload, handleControlKeyDown } from '../../../utils';
 import type { CalendarNavigation } from '../Calendar.context';
 import { useDaysNavigation } from '../use-days-navigation/use-days-navigation';

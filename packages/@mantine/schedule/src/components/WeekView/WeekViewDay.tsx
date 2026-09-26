@@ -9,7 +9,7 @@ import {
   DayTimeInterval,
   getBusinessHoursMod,
 } from '../../utils';
-import type { WeekViewControlsRef } from './handle-week-view-key-down';
+import { WeekViewControlsRef } from './handle-week-view-key-down';
 import type { WeekViewFactory } from './WeekView';
 
 export interface WeekViewDayProps {

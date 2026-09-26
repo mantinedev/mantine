@@ -1,5 +1,5 @@
 import type { MentionSpan } from './get-mention-model';
-import type { ResolvedMentionSource } from './resolve-sources';
+import { ResolvedMentionSource } from './resolve-sources';
 
 export interface ActiveMentionQuery {
   sourceIndex: number;

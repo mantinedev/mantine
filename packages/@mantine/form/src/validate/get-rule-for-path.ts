@@ -1,4 +1,4 @@
-import type { FormRulesRecord } from '../types';
+import { FormRulesRecord } from '../types';
 
 export function getRuleForPath<T>(
   path: string,

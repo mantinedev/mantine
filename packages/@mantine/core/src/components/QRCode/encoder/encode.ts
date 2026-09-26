@@ -6,8 +6,12 @@
  */
 
 import { EccMap, encodeSegments, makeBytes, makeSegments } from './qrcode';
-import type { QrCodeGenerateData, QrCodeGenerateOptions, QrCodeGenerateResult } from './types';
-import { QrCodeDataType } from './types';
+import {
+  QrCodeDataType,
+  QrCodeGenerateData,
+  QrCodeGenerateOptions,
+  QrCodeGenerateResult,
+} from './types';
 
 /**
  * Encodes the given data into a QR code format according to the given options.

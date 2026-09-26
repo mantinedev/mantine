@@ -1,4 +1,4 @@
-import type { PhoneInputCountryData } from '../phone-data';
+import { PhoneInputCountryData } from '../phone-data';
 import { buildRawValue } from './build-raw-value';
 
 const us: PhoneInputCountryData = {

@@ -29,12 +29,12 @@ import { useDatesContext } from '../DatesProvider';
 import { getMaxTime, getMinTime } from '../DateTimePicker/get-min-max-time/get-min-max-time';
 import { useDatesDropdownContext } from '../PickerInputBase/DatesDropdown.context';
 import { TimePicker, TimePickerProps } from '../TimePicker/TimePicker';
-import type { TimePickerField } from '../TimePicker/TimePicker.types';
+import { TimePickerField } from '../TimePicker/TimePicker.types';
 import {
   useInlineDateTimePicker,
-  type InlineDateTimePickerController,
+  InlineDateTimePickerController,
 } from './use-inline-date-time-picker/use-inline-date-time-picker';
-import type { TimeEntryTarget } from './use-inline-date-time-picker/use-time-entry';
+import { TimeEntryTarget } from './use-inline-date-time-picker/use-time-entry';
 import moduleClasses from './InlineDateTimePicker.module.css';
 
 const classes = { ...moduleClasses, ...getPresetsClasses('datePickerRoot') };

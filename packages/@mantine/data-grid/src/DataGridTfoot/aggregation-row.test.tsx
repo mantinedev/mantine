@@ -1,7 +1,7 @@
 import { constructAggregationFn } from '@tanstack/react-table';
 import { render } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from '../DataGrid';
-import type { DataGridColumnDef } from '../DataGrid.types';
+import { DataGridColumnDef } from '../DataGrid.types';
 import { useDataGrid, UseDataGridOptions } from '../hooks';
 import { mockVirtualViewport } from '../virtual-test-utils';
 

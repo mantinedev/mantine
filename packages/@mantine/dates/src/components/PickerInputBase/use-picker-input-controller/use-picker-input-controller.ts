@@ -1,12 +1,12 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
-import type { CalendarLevel, DateStringValue } from '../../../types';
+import { CalendarLevel, DateStringValue } from '../../../types';
 import { toDateString } from '../../../utils';
 import {
   useCalendar,
-  type CalendarController,
-  type CalendarControllerOptions,
-  type CalendarRegisteredSettings,
+  CalendarController,
+  CalendarControllerOptions,
+  CalendarRegisteredSettings,
 } from '../../Calendar/use-calendar/use-calendar';
 
 export interface PickerInputControllerOptions extends CalendarControllerOptions {

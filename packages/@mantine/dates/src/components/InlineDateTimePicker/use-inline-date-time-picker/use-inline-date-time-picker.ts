@@ -1,14 +1,10 @@
 import { useMemo } from 'react';
 import {
   useCalendar,
-  type CalendarController,
-  type CalendarControllerOptions,
+  CalendarController,
+  CalendarControllerOptions,
 } from '../../Calendar/use-calendar/use-calendar';
-import {
-  useTimeEntry,
-  type TimeEntryController,
-  type TimeEntryControllerOptions,
-} from './use-time-entry';
+import { useTimeEntry, TimeEntryController, TimeEntryControllerOptions } from './use-time-entry';
 
 export interface InlineDateTimePickerControllerOptions
   extends CalendarControllerOptions, TimeEntryControllerOptions {}

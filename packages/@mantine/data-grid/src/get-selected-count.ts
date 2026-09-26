@@ -1,4 +1,4 @@
-import type { RowSelectionState } from '@tanstack/react-table';
+import { RowSelectionState } from '@tanstack/react-table';
 
 export function getSelectedCount(rowSelection: RowSelectionState | undefined): number {
   if (!rowSelection) {

@@ -14,7 +14,7 @@ import {
   SetFieldDirty,
   SetFieldTouched,
 } from '../../types';
-import type { $FormValues } from '../use-form-values/use-form-values';
+import { $FormValues } from '../use-form-values/use-form-values';
 
 export interface $FormStatus<out Values extends Record<string, any>> {
   touchedState: FormStatus;

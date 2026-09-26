@@ -1,4 +1,4 @@
-import type { TreeNodeData } from '../Tree';
+import { TreeNodeData } from '../Tree';
 import { flattenTreeSelectData } from './flatten-tree-select-data';
 
 const data: TreeNodeData[] = [

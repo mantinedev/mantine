@@ -1,4 +1,4 @@
-import type { Sizes } from '../ScrollArea.types';
+import { Sizes } from '../ScrollArea.types';
 import { getThumbRatio } from './get-thumb-ratio';
 
 export function getThumbSize(sizes: Sizes) {
