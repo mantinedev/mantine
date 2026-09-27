@@ -134,6 +134,7 @@ export const MonthPicker = genericFactory<MonthPickerFactory>((_props) => {
     attributes,
     controller: controllerProp,
     onLevelChange,
+    fullWidth,
     ...rest
   } = props;
 
@@ -195,6 +196,7 @@ export const MonthPicker = genericFactory<MonthPickerFactory>((_props) => {
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         size={size}
+        fullWidth={fullWidth}
         {...calendarProps}
         {...(!presets ? others : {})}
         minLevel="year"

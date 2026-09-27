@@ -11,7 +11,11 @@ import { WeekPicker, WeekPickerBaseProps, WeekPickerStylesNames } from '../WeekP
 import { getWeekFormatter } from './get-week-formatter/get-week-formatter';
 import { useWeekPickerInput } from './use-week-picker-input/use-week-picker-input';
 
-export type WeekPickerInputStylesNames = __InputStylesNames | 'placeholder' | WeekPickerStylesNames;
+export type WeekPickerInputStylesNames =
+  | __InputStylesNames
+  | 'placeholder'
+  | WeekPickerStylesNames
+  | 'submitButton';
 
 export interface WeekPickerInputProps<Type extends DatePickerType = 'default'>
   extends
@@ -42,7 +46,7 @@ const defaultProps = {
   valueFormat: 'MMM D, YYYY',
   closeOnChange: true,
   sortDates: true,
-  dropdownType: 'popover',
+  dropdownType: { base: 'drawer', sm: 'popover' },
 } satisfies Partial<WeekPickerInputProps>;
 
 export const WeekPickerInput = createPickerInput<WeekPickerInputFactory>({

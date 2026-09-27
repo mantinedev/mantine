@@ -1,4 +1,5 @@
 import { Box, getFontSize, GetStylesApiOptions, MantineSize } from '@mantine/core';
+import { useDatesDropdownContext } from '../../PickerInputBase/DatesDropdown.context';
 import { PresetsList, PresetsListPreset } from './PresetsList';
 import classes from './Presets.module.css';
 
@@ -36,6 +37,8 @@ export function Presets({
   rootProps,
   children,
 }: PresetsProps) {
+  const dropdown = useDatesDropdownContext();
+
   if (!presets) {
     return <>{children}</>;
   }
@@ -47,6 +50,7 @@ export function Presets({
       {...rootStyles}
       style={{ '--preset-font-size': getFontSize(size), ...rootStyles.style }}
       size={size}
+      data-layout={dropdown.layout}
       {...rootProps}
     >
       <PresetsList

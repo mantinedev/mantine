@@ -1,6 +1,10 @@
 .presetsRoot {
   display: flex;
   font-size: var(--preset-font-size);
+
+  &:where([data-layout='sheet']) {
+    flex-direction: column;
+  }
 }
 
 .presetsList {
@@ -10,6 +14,21 @@
   padding-inline-end: 0.5em;
   margin-inline-end: 0.5em;
   border-color: var(--mantine-color-border-subtle);
+
+  &:where([data-layout='sheet']) {
+    flex-direction: row;
+    border-inline-end: 0;
+    padding-inline-end: 0;
+    margin-inline-end: 0;
+    padding-bottom: 0.6em;
+    margin-bottom: 0.6em;
+    border-bottom: 1px solid var(--mantine-color-border-subtle);
+  }
+}
+
+.presetsRow {
+  gap: rem(6px);
+  padding-inline: rem(2px);
 }
 
 .presetButton {
@@ -20,5 +39,11 @@
 
   @mixin hover {
     background-color: var(--mantine-color-default-hover);
+  }
+
+  &:where([data-layout='sheet']) {
+    padding: 0.4em 0.9em;
+    border: 1px solid var(--mantine-color-border-subtle);
+    border-radius: var(--mantine-radius-xl);
   }
 }

@@ -11,10 +11,19 @@ if (typeof window !== 'undefined') {
   window.HTMLMediaElement.prototype.pause = () => {};
   window.HTMLMediaElement.prototype.load = () => {};
 
+  const matchesWidthQuery = (query: string) => {
+    const match = query.match(/\((min|max)-width:\s*([\d.]+)(px|em|rem)\)/);
+    if (!match) {
+      return false;
+    }
+    const value = parseFloat(match[2]) * (match[3] === 'px' ? 1 : 16);
+    return match[1] === 'min' ? window.innerWidth >= value : window.innerWidth <= value;
+  };
+
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: jest.fn().mockImplementation((query) => ({
-      matches: false,
+      matches: matchesWidthQuery(query),
       media: query,
       onchange: null,
       addListener: jest.fn(),

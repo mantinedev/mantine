@@ -21,11 +21,17 @@ export function useDatesContext() {
     [ctx.labelSeparator]
   );
 
+  const getSubmitButtonLabel = useCallback(
+    (input?: string) => (typeof input === 'string' ? input : ctx.submitButtonLabel),
+    [ctx.submitButtonLabel]
+  );
+
   return {
     ...ctx,
     getLocale,
     getFirstDayOfWeek,
     getWeekendDays,
     getLabelSeparator,
+    getSubmitButtonLabel,
   };
 }

@@ -23,9 +23,14 @@ export const Demo_configurator = {
   render: renderDemo(demos.configurator),
 };
 
-export const Demo_modal = {
-  name: '⭐ Demo: modal',
-  render: renderDemo(demos.modal),
+export const Demo_dropdownType = {
+  name: '⭐ Demo: dropdownType',
+  render: renderDemo(demos.dropdownType),
+};
+
+export const Demo_applyOnSubmit = {
+  name: '⭐ Demo: applyOnSubmit',
+  render: renderDemo(demos.applyOnSubmit),
 };
 
 export const Demo_icon = {

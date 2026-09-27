@@ -95,7 +95,9 @@ describe('@mantine/dates/Month week controls', () => {
 
   it('does not put week control in tab order when dropdown context has preventFocus', () => {
     const { container } = renderInCalendar(
-      <DatesDropdownProvider value={{ preventFocus: true, stopPropagation: false }}>
+      <DatesDropdownProvider
+        value={{ preventFocus: true, stopPropagation: false, layout: 'default' }}
+      >
         <Month {...defaultProps} />
       </DatesDropdownProvider>,
       { weekControls: { enabled: true } }

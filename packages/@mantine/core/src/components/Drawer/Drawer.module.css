@@ -12,6 +12,19 @@
       border-radius: 0;
     }
   }
+
+  &[data-auto-size] {
+    .panel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      flex: 1 1 auto;
+      height: auto;
+      min-height: 0;
+    }
+  }
 }
 
 .header {

@@ -1,8 +1,17 @@
 import { YearPickerInput } from '@mantine/dates';
 import { getSharedPickerInputDemos } from '../_shared';
 
-export const { usage, multiple, range, configurator, modal, icon, clearable, valueFormatter } =
-  getSharedPickerInputDemos(YearPickerInput);
+export const {
+  usage,
+  multiple,
+  range,
+  configurator,
+  dropdownType,
+  applyOnSubmit,
+  icon,
+  clearable,
+  valueFormatter,
+} = getSharedPickerInputDemos(YearPickerInput);
 
 export { clearSectionMode } from './YearPickerInput.demo.clearSectionMode';
 export { valueFormat } from './YearPickerInput.demo.valueFormat';

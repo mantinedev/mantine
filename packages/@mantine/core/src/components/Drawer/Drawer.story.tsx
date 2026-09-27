@@ -6,6 +6,7 @@ import { Button } from '../Button';
 import { ColorPicker } from '../ColorPicker';
 import { ColorWheel } from '../ColorWheel';
 import { CompareSlider } from '../CompareSlider';
+import { Group } from '../Group';
 import { Modal, useModalsStack } from '../Modal';
 import { ScrollArea } from '../ScrollArea';
 import { RangeSlider, Slider } from '../Slider';
@@ -464,6 +465,39 @@ export function SwipeWithDragWidgets() {
             after={<div style={{ height: '100%', background: 'var(--mantine-color-red-3)' }} />}
           />
         </MantineStack>
+      </Drawer>
+    </div>
+  );
+}
+
+export function AutoSize() {
+  const [opened, setOpened] = useState(false);
+  const [position, setPosition] = useState<'bottom' | 'top' | 'left' | 'right'>('bottom');
+  return (
+    <div style={{ padding: 40 }}>
+      <Group>
+        {(['bottom', 'top', 'left', 'right'] as const).map((item) => (
+          <Button
+            key={item}
+            variant={position === item ? 'filled' : 'default'}
+            onClick={() => setPosition(item)}
+          >
+            {item}
+          </Button>
+        ))}
+        <Button onClick={() => setOpened(true)}>Open auto size drawer</Button>
+      </Group>
+      <Drawer
+        opened={opened}
+        onClose={() => setOpened(false)}
+        position={position}
+        size="auto"
+        withHandle
+        title="Auto size"
+      >
+        <div style={{ width: 240, height: 180, background: 'var(--mantine-color-default-hover)' }}>
+          Content sized 240x180
+        </div>
       </Drawer>
     </div>
   );

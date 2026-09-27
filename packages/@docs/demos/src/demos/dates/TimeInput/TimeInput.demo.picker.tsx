@@ -14,7 +14,12 @@ function Demo() {
   const ref = useRef<HTMLInputElement>(null);
 
   const pickerControl = (
-    <ActionIcon variant="subtle" color="gray" onClick={() => ref.current?.showPicker()}>
+    <ActionIcon
+      variant="subtle"
+      color="gray"
+      aria-label="Open time picker"
+      onClick={() => ref.current?.showPicker()}
+    >
       <ClockIcon size={16} />
     </ActionIcon>
   );
@@ -29,7 +34,12 @@ function Demo() {
   const ref = useRef<HTMLInputElement>(null);
 
   const pickerControl = (
-    <ActionIcon variant="subtle" color="gray" onClick={() => ref.current?.showPicker()}>
+    <ActionIcon
+      variant="subtle"
+      color="gray"
+      aria-label="Open time picker"
+      onClick={() => ref.current?.showPicker()}
+    >
       <ClockIcon size={16} />
     </ActionIcon>
   );

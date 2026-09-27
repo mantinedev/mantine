@@ -25,6 +25,26 @@ describe('@mantine/core/Scroller', () => {
     expect(container.querySelector('.mantine-Scroller-root')).toBeInTheDocument();
   });
 
+  it('resolves controlSize from theme sizes and numbers', () => {
+    const { container, rerender } = render(<Scroller controlSize="xl">test</Scroller>);
+    expect(container.querySelector('.mantine-Scroller-root')).toHaveStyle({
+      '--scroller-control-size': 'var(--scroller-control-size-xl)',
+    });
+    rerender(<Scroller controlSize={80}>test</Scroller>);
+    expect(container.querySelector('.mantine-Scroller-root')).toHaveStyle({
+      '--scroller-control-size': 'calc(5rem * var(--mantine-scale))',
+    });
+  });
+
+  it('does not render controls when withControls is false', () => {
+    const { container } = render(
+      <Scroller showStartControl showEndControl withControls={false}>
+        test-children
+      </Scroller>
+    );
+    expect(container.querySelectorAll('button')).toHaveLength(0);
+  });
+
   it('renders start control when showStartControl is true', () => {
     render(<Scroller {...defaultProps} showStartControl />);
     expect(screen.getByLabelText('Scroll left')).toBeInTheDocument();

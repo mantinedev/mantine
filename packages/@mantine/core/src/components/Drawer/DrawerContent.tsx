@@ -228,7 +228,13 @@ export const DrawerContent = factory<DrawerContentFactory>((_props) => {
                   unstyled={baseCtx.unstyled}
                   onPointerDown={handlePointerDown}
                 >
-                  <Scroll style={{ height: 'calc(100vh - var(--drawer-offset) * 2)' }}>
+                  <Scroll
+                    style={
+                      ctx.autoSize
+                        ? { maxHeight: 'calc(100dvh - var(--drawer-offset) * 2)' }
+                        : { height: 'calc(100vh - var(--drawer-offset) * 2)' }
+                    }
+                  >
                     {children}
                   </Scroll>
                 </Paper>

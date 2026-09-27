@@ -109,3 +109,24 @@ export function Sizes() {
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }
+
+export function ResponsiveDropdown() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <YearPickerInput label="Drawer below sm, popover above" placeholder="Pick value" />
+      <YearPickerInput
+        label="Always drawer"
+        placeholder="Pick value"
+        dropdownType="drawer"
+        mt="md"
+      />
+      <YearPickerInput
+        label="Drawer, apply on selection"
+        placeholder="Pick value"
+        dropdownType="drawer"
+        applyOnSubmit={false}
+        mt="md"
+      />
+    </div>
+  );
+}

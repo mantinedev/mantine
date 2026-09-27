@@ -115,7 +115,8 @@ date picked is cleared, the value is clamped to `minDate`/`maxDate` and `onDropd
 The time inputs are driven through the `DateTimePicker` controller, so `timePickerProps` does not
 accept a `controller`. When the `controller` prop is set, `popoverProps.opened` and
 `popoverProps.onChange` are ignored – pass `dropdownOpened` and `onDropdownOpenedChange` to
-`useDateTimePicker` instead.
+`useDateTimePicker` instead. Without a controller, `popoverProps={{ opened, onChange }}` controls the
+dropdown in every dropdown type (`popover`, `modal` and `drawer`).
 
 The controller is typed as `DateTimePickerController` and its options as
 `DateTimePickerControllerOptions`, both exported from `@mantine/dates`.
@@ -153,12 +154,39 @@ prop, the clear button will not be displayed.
 
 <Demo data={DateTimePickerDemos.clearSectionMode} />
 
-## Open picker in modal
+## Dropdown type
 
-By default, the picker is rendered inside [Popover](/core/popover/).
-You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
+The dropdown opens in a bottom [Drawer](/core/drawer/) below `theme.breakpoints.sm` and in a
+[Popover](/core/popover/) above. Set `dropdownType` to `'popover'`, `'modal'`, `'drawer'` or an object
+with breakpoints:
 
-<Demo data={DateTimePickerDemos.modal} />
+<Demo data={DateTimePickerDemos.dropdownType} />
+
+Object keys can be `theme.breakpoints` keys or custom values in px, for example,
+`{ base: 'drawer', 600: 'popover' }`. Use `popoverProps`, `modalProps` and `drawerProps` to pass props
+down to the underlying component. If the viewport crosses a breakpoint while the dropdown is open,
+the dropdown switches to the other type and a selection that was not applied yet is discarded.
+
+## Submit button
+
+In `drawer` and `modal` dropdowns, the value is applied only when the submit button is pressed, and
+closing the dropdown discards the selection. Set `applyOnSubmit={false}` to apply the value on selection:
+
+<Demo data={DateTimePickerDemos.applyOnSubmit} />
+
+- The submit button is rendered in every dropdown type
+- The label is `Save` by default – change it with the `submitButtonLabel` prop or the `submitButtonLabel`
+  setting of [DatesProvider](/dates/getting-started/#datesprovider)
+- `submitButtonProps` are passed down to the [Button](/core/button/)
+- With `type="range"`, the button is disabled until both dates are selected
+
+## Mobile time input
+
+In the `drawer` dropdown, time is entered with a native `<input type="time" />` ([TimeInput](/dates/time-input/))
+instead of [TimePicker](/dates/time-picker/). With `withSeconds` (as a prop or in `timePickerProps`),
+[TimePicker](/dates/time-picker/) is used in all dropdown types. `disabled`, `readOnly`, `aria-label`,
+`aria-describedby`, `id`, `name`, `className` and `style` from `timePickerProps` (and from
+`endTimePickerProps` for the end time input) are applied to the native input as well.
 
 ## Native level select
 

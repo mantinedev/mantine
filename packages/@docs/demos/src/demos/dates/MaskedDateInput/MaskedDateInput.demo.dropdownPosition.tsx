@@ -10,7 +10,7 @@ function Demo() {
       label="Date of birth"
       popoverProps={{
         position: 'top-start',
-        middlewares: { flip: false, shift: false },
+        middlewares: { flip: false, shift: false, size: false },
       }}
     />
   );
@@ -23,7 +23,7 @@ function Demo() {
       label="Date of birth"
       popoverProps={{
         position: 'top-start',
-        middlewares: { flip: false, shift: false },
+        middlewares: { flip: false, shift: false, size: false },
       }}
     />
   );

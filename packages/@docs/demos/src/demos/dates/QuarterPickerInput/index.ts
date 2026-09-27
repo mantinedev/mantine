@@ -1,8 +1,17 @@
 import { QuarterPickerInput } from '@mantine/dates';
 import { getSharedPickerInputDemos } from '../_shared';
 
-export const { usage, multiple, range, configurator, modal, icon, clearable, valueFormatter } =
-  getSharedPickerInputDemos(QuarterPickerInput);
+export const {
+  usage,
+  multiple,
+  range,
+  configurator,
+  dropdownType,
+  applyOnSubmit,
+  icon,
+  clearable,
+  valueFormatter,
+} = getSharedPickerInputDemos(QuarterPickerInput);
 
 export { valueFormat } from './QuarterPickerInput.demo.valueFormat';
 export { disabled } from './QuarterPickerInput.demo.disabled';

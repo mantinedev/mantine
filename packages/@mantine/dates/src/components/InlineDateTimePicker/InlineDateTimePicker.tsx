@@ -1,11 +1,10 @@
 import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
 import {
-  ActionIcon,
-  ActionIconProps,
+  Button,
+  ButtonProps,
   Box,
   BoxProps,
-  CheckIcon,
   ElementProps,
   Factory,
   genericFactory,
@@ -28,6 +27,8 @@ import { DatePicker, DatePickerBaseProps, DatePickerStylesNames } from '../DateP
 import { useDatesContext } from '../DatesProvider';
 import { getMaxTime, getMinTime } from '../DateTimePicker/get-min-max-time/get-min-max-time';
 import { useDatesDropdownContext } from '../PickerInputBase/DatesDropdown.context';
+import { isIncompleteRange } from '../PickerInputBase/use-dropdown-draft/use-dropdown-draft';
+import { TimeInput } from '../TimeInput';
 import { TimePicker, TimePickerProps } from '../TimePicker/TimePicker';
 import { TimePickerField } from '../TimePicker/TimePicker.types';
 import {
@@ -39,8 +40,16 @@ import moduleClasses from './InlineDateTimePicker.module.css';
 
 const classes = { ...moduleClasses, ...getPresetsClasses('datePickerRoot') };
 
+type TimePickerPassedProps = Omit<TimePickerProps, 'defaultValue' | 'value' | 'controller'>;
+
+const toNativeTime = (time: string | undefined) => (time ? time.slice(0, 5) : '');
+
+const getNativePlaceholder = (props: TimePickerPassedProps | undefined) =>
+  `${props?.hoursPlaceholder ?? '--'}:${props?.minutesPlaceholder ?? '--'}`;
+
 export type InlineDateTimePickerStylesNames =
   | 'root'
+  | 'content'
   | 'timeWrapper'
   | 'timeInput'
   | 'submitButton'
@@ -65,7 +74,10 @@ export interface InlineDateTimePickerProps<Type extends DatePickerType = 'defaul
   endTimePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value' | 'controller'>;
 
   /** Props passed down to the submit button */
-  submitButtonProps?: ActionIconProps & React.ComponentProps<'button'>;
+  submitButtonProps?: ButtonProps & ElementProps<'button'>;
+
+  /** Label of the submit button, overrides `submitButtonLabel` from `DatesProvider` settings @default 'Save' @category appearance */
+  submitButtonLabel?: string;
 
   /** Determines whether the seconds input should be displayed @default false @category appearance */
   withSeconds?: boolean;
@@ -123,6 +135,7 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
     timePickerProps,
     endTimePickerProps,
     submitButtonProps,
+    submitButtonLabel,
     withSeconds,
     level,
     defaultLevel,
@@ -167,7 +180,8 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
 
   const ctx = useDatesContext();
   const dropdown = useDatesDropdownContext();
-  const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
+  const _withSeconds = withSeconds || timePickerProps?.withSeconds;
+  const _valueFormat = valueFormat || (_withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
   const _labelSeparator = ctx.getLabelSeparator(labelSeparator);
   const isRange = (type as string) === 'range';
 
@@ -184,8 +198,10 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
     withTime: true,
   });
 
+  const submitDisabled = isIncompleteRange(type, _value);
+
   const formatTime = (dateValue: DateStringValue | null) =>
-    dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
+    dateValue ? dayjs(dateValue).format(_withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
 
   const _defaultDate = isRange
     ? (Array.isArray(_value) ? _value[0] : null) || defaultDate
@@ -234,11 +250,23 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
     amPm: useMergedRef(controller.timeFieldRefs.endTime.amPm, endTimePickerProps?.amPmRef),
   };
 
+  const nativeTimeRef = useMergedRef(timeRefs.hours, timeRefs.minutes, timeRefs.seconds);
+  const nativeEndTimeRef = useMergedRef(
+    endTimeRefs.hours,
+    endTimeRefs.minutes,
+    endTimeRefs.seconds
+  );
+
+  const isSheet = dropdown.layout === 'sheet';
+  const withNativeTimeInput = isSheet && !_withSeconds;
+
   const handleDefaultDateChange = (date: DateValue) => {
     if (date) {
       setValue(assignTime(clampDate(minDate, maxDate, date), fallbackTime));
     }
-    controller.focusTime('hours');
+    if (!isSheet) {
+      controller.focusTime('hours');
+    }
   };
 
   const handleRangeDateChange = (dates: any) => {
@@ -247,7 +275,7 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
     const newEnd = end ? assignTime(clampDate(minDate, maxDate, end), fallbackEndTime) : null;
     setValue([newStart, newEnd] as any);
 
-    if (start && end) {
+    if (start && end && !isSheet) {
       controller.focusTime('hours');
     }
   };
@@ -309,10 +337,16 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
     controller.setLevel('month');
   };
 
+  const handleSubmit = () => {
+    if (!submitDisabled) {
+      onSubmit?.();
+    }
+  };
+
   const handleTimeInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      onSubmit?.();
+      handleSubmit();
     }
   };
 
@@ -379,6 +413,67 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
     ? getMaxTime({ maxDate, value: Array.isArray(_value) ? _value[1] : null })
     : undefined;
 
+  const renderNativeTimeInput = ({
+    time,
+    pickerProps,
+    selector,
+    minTime,
+    maxTime,
+    onTimeChange,
+    inputRef,
+    target,
+  }: {
+    time: string;
+    pickerProps: TimePickerPassedProps | undefined;
+    selector: 'timeInput' | 'rangeTimeInput';
+    minTime: string | undefined;
+    maxTime: string | undefined;
+    onTimeChange: (timeString: string) => void;
+    inputRef: React.Ref<HTMLInputElement>;
+    target: TimeEntryTarget;
+  }) => (
+    <TimeInput
+      ref={inputRef}
+      data-autofocus={mountFocus?.target === target || undefined}
+      value={toNativeTime(time)}
+      placeholder={getNativePlaceholder(pickerProps)}
+      minTime={minTime}
+      maxTime={maxTime}
+      size={size}
+      unstyled={unstyled}
+      disabled={pickerProps?.disabled}
+      readOnly={pickerProps?.readOnly}
+      aria-label={pickerProps?.['aria-label']}
+      aria-describedby={pickerProps?.['aria-describedby']}
+      id={pickerProps?.id}
+      name={pickerProps?.name}
+      {...getStyles(selector, { className: pickerProps?.className, style: pickerProps?.style })}
+      onChange={(event) => onTimeChange(event.currentTarget.value)}
+      onKeyDown={handleTimeInputKeyDown}
+    />
+  );
+
+  const submitButton = (
+    <Button
+      size={size}
+      data-layout={dropdown.layout}
+      unstyled={unstyled}
+      data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
+      {...submitButtonProps}
+      disabled={submitDisabled || submitButtonProps?.disabled}
+      {...getStyles('submitButton', {
+        className: submitButtonProps?.className,
+        style: submitButtonProps?.style,
+      })}
+      onClick={(event) => {
+        submitButtonProps?.onClick?.(event);
+        handleSubmit();
+      }}
+    >
+      {ctx.getSubmitButtonLabel(submitButtonLabel)}
+    </Button>
+  );
+
   return (
     <Box {...getStyles('root', { className, style })} {...others} ref={props.ref as any}>
       <Presets
@@ -388,145 +483,155 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
         rootSelector="datePickerRoot"
         size={size}
       >
-        <DatePicker
-          fullWidth={fullWidth ?? true}
-          {...calendarProps}
-          maxDate={maxDate}
-          minDate={minDate}
-          size={size}
-          variant={variant}
-          type={type as any}
-          value={_value as any}
-          controller={controller}
-          getDayProps={
-            mountFocus
-              ? (date) => ({ ...calendarProps.getDayProps?.(date), 'data-autofocus': undefined })
-              : calendarProps.getDayProps
-          }
-          onChange={handleDateChange}
-          locale={locale}
-          classNames={resolvedClassNames}
-          styles={resolvedStyles}
-          unstyled={unstyled}
-          __staticSelector={_staticSelector}
-          allowSingleDateInRange={allowSingleDateInRange}
-          attributes={attributes}
-        />
-      </Presets>
-
-      {withTimeInputs && !isRange && (
-        <div {...getStyles('timeWrapper')}>
-          <TimePicker
-            value={controller.time}
-            withSeconds={withSeconds}
-            unstyled={unstyled}
-            min={startMinTime}
-            max={startMaxTime}
-            {...timePickerProps}
-            {...getStyles('timeInput', {
-              className: timePickerProps?.className,
-              style: timePickerProps?.style,
-            })}
-            {...getFieldProps('time', timePickerProps)}
-            onChange={handleStartTimeChange}
-            onKeyDown={handleTimeInputKeyDown}
+        <div {...getStyles('content')}>
+          <DatePicker
+            fullWidth={fullWidth ?? true}
+            {...calendarProps}
+            maxDate={maxDate}
+            minDate={minDate}
             size={size}
-            data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
-            hoursRef={timeRefs.hours}
-            minutesRef={timeRefs.minutes}
-            secondsRef={timeRefs.seconds}
-            amPmRef={timeRefs.amPm}
-          />
-
-          <ActionIcon
-            variant="default"
-            size={`input-${size || 'sm'}`}
-            {...getStyles('submitButton', {
-              className: submitButtonProps?.className,
-              style: submitButtonProps?.style,
-            })}
+            variant={variant}
+            type={type as any}
+            value={_value as any}
+            controller={controller}
+            getDayProps={
+              mountFocus
+                ? (date) => ({ ...calendarProps.getDayProps?.(date), 'data-autofocus': undefined })
+                : calendarProps.getDayProps
+            }
+            onChange={handleDateChange}
+            locale={locale}
+            classNames={resolvedClassNames}
+            styles={resolvedStyles}
             unstyled={unstyled}
-            data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
-            // eslint-disable-next-line react/no-children-prop
-            children={<CheckIcon size="30%" />}
-            {...submitButtonProps}
-            onClick={(event) => {
-              submitButtonProps?.onClick?.(event);
-              onSubmit?.();
-            }}
+            __staticSelector={_staticSelector}
+            allowSingleDateInRange={allowSingleDateInRange}
+            attributes={attributes}
           />
+
+          {withTimeInputs && !isRange && (
+            <div {...getStyles('timeWrapper')} data-layout={dropdown.layout}>
+              {withNativeTimeInput ? (
+                renderNativeTimeInput({
+                  time: controller.time,
+                  pickerProps: timePickerProps,
+                  selector: 'timeInput',
+                  inputRef: nativeTimeRef,
+                  target: 'time',
+                  minTime: startMinTime,
+                  maxTime: startMaxTime,
+                  onTimeChange: handleStartTimeChange,
+                })
+              ) : (
+                <TimePicker
+                  value={controller.time}
+                  withSeconds={_withSeconds}
+                  unstyled={unstyled}
+                  min={startMinTime}
+                  max={startMaxTime}
+                  {...timePickerProps}
+                  {...getStyles('timeInput', {
+                    className: timePickerProps?.className,
+                    style: timePickerProps?.style,
+                  })}
+                  {...getFieldProps('time', timePickerProps)}
+                  onChange={handleStartTimeChange}
+                  onKeyDown={handleTimeInputKeyDown}
+                  size={size}
+                  data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
+                  hoursRef={timeRefs.hours}
+                  minutesRef={timeRefs.minutes}
+                  secondsRef={timeRefs.seconds}
+                  amPmRef={timeRefs.amPm}
+                />
+              )}
+
+              {submitButton}
+            </div>
+          )}
+
+          {withTimeInputs && isRange && (
+            <>
+              <Text {...getStyles('rangeInfo')}>{getFormattedRange()}</Text>
+
+              <div {...getStyles('rangeTimeWrapper')} data-layout={dropdown.layout}>
+                {withNativeTimeInput ? (
+                  <>
+                    {renderNativeTimeInput({
+                      time: controller.time,
+                      pickerProps: timePickerProps,
+                      selector: 'rangeTimeInput',
+                      inputRef: nativeTimeRef,
+                      target: 'time',
+                      minTime: startMinTime,
+                      maxTime: startMaxTime,
+                      onTimeChange: handleStartTimeChange,
+                    })}
+                    {renderNativeTimeInput({
+                      time: controller.endTime,
+                      pickerProps: endTimePickerProps,
+                      selector: 'rangeTimeInput',
+                      inputRef: nativeEndTimeRef,
+                      target: 'endTime',
+                      minTime: endMinTime,
+                      maxTime: endMaxTime,
+                      onTimeChange: handleEndTimeChange,
+                    })}
+                  </>
+                ) : (
+                  <>
+                    <TimePicker
+                      value={controller.time}
+                      withSeconds={_withSeconds}
+                      unstyled={unstyled}
+                      min={startMinTime}
+                      max={startMaxTime}
+                      {...timePickerProps}
+                      {...getStyles('rangeTimeInput', {
+                        className: timePickerProps?.className,
+                        style: timePickerProps?.style,
+                      })}
+                      {...getFieldProps('time', timePickerProps)}
+                      onChange={handleStartTimeChange}
+                      onKeyDown={handleTimeInputKeyDown}
+                      size={size}
+                      data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
+                      hoursRef={timeRefs.hours}
+                      minutesRef={timeRefs.minutes}
+                      secondsRef={timeRefs.seconds}
+                      amPmRef={timeRefs.amPm}
+                    />
+
+                    <TimePicker
+                      value={controller.endTime}
+                      withSeconds={_withSeconds}
+                      unstyled={unstyled}
+                      min={endMinTime}
+                      max={endMaxTime}
+                      {...endTimePickerProps}
+                      {...getStyles('rangeTimeInput', {
+                        className: endTimePickerProps?.className,
+                        style: endTimePickerProps?.style,
+                      })}
+                      {...getFieldProps('endTime', endTimePickerProps)}
+                      onChange={handleEndTimeChange}
+                      onKeyDown={handleTimeInputKeyDown}
+                      size={size}
+                      data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
+                      hoursRef={endTimeRefs.hours}
+                      minutesRef={endTimeRefs.minutes}
+                      secondsRef={endTimeRefs.seconds}
+                      amPmRef={endTimeRefs.amPm}
+                    />
+                  </>
+                )}
+
+                {submitButton}
+              </div>
+            </>
+          )}
         </div>
-      )}
-
-      {withTimeInputs && isRange && (
-        <>
-          <Text {...getStyles('rangeInfo')}>{getFormattedRange()}</Text>
-
-          <div {...getStyles('rangeTimeWrapper')}>
-            <TimePicker
-              value={controller.time}
-              withSeconds={withSeconds}
-              unstyled={unstyled}
-              min={startMinTime}
-              max={startMaxTime}
-              {...timePickerProps}
-              {...getStyles('rangeTimeInput', {
-                className: timePickerProps?.className,
-                style: timePickerProps?.style,
-              })}
-              {...getFieldProps('time', timePickerProps)}
-              onChange={handleStartTimeChange}
-              onKeyDown={handleTimeInputKeyDown}
-              size={size}
-              data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
-              hoursRef={timeRefs.hours}
-              minutesRef={timeRefs.minutes}
-              secondsRef={timeRefs.seconds}
-              amPmRef={timeRefs.amPm}
-            />
-
-            <TimePicker
-              value={controller.endTime}
-              withSeconds={withSeconds}
-              unstyled={unstyled}
-              min={endMinTime}
-              max={endMaxTime}
-              {...endTimePickerProps}
-              {...getStyles('rangeTimeInput', {
-                className: endTimePickerProps?.className,
-                style: endTimePickerProps?.style,
-              })}
-              {...getFieldProps('endTime', endTimePickerProps)}
-              onChange={handleEndTimeChange}
-              onKeyDown={handleTimeInputKeyDown}
-              size={size}
-              data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
-              hoursRef={endTimeRefs.hours}
-              minutesRef={endTimeRefs.minutes}
-              secondsRef={endTimeRefs.seconds}
-              amPmRef={endTimeRefs.amPm}
-            />
-
-            <ActionIcon
-              variant="default"
-              size={`input-${size || 'sm'}`}
-              {...getStyles('submitButton', {
-                className: submitButtonProps?.className,
-                style: submitButtonProps?.style,
-              })}
-              unstyled={unstyled}
-              data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
-              // eslint-disable-next-line react/no-children-prop
-              children={<CheckIcon size="30%" />}
-              {...submitButtonProps}
-              onClick={(event) => {
-                submitButtonProps?.onClick?.(event);
-                onSubmit?.();
-              }}
-            />
-          </div>
-        </>
-      )}
+      </Presets>
     </Box>
   );
 });

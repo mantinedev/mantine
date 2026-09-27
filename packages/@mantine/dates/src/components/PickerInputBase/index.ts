@@ -10,3 +10,7 @@ export type {
   PickerInputControllerOptions,
   PickerInputRegisteredSettings,
 } from './use-picker-input-controller/use-picker-input-controller';
+export type {
+  PickerDropdownType,
+  ResponsivePickerDropdownType,
+} from './use-resolved-dropdown-type/use-resolved-dropdown-type';

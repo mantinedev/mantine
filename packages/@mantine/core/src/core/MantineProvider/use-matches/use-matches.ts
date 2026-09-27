@@ -1,44 +1,85 @@
-import { useMediaQuery, UseMediaQueryOptions } from '@mantine/hooks';
+import { useCallback, useMemo, useSyncExternalStore } from 'react';
+import { getBreakpointValue } from '../../utils/get-breakpoint-value/get-breakpoint-value';
+import { em } from '../../utils/units-converters';
 import { useMantineTheme } from '../MantineThemeProvider';
-import { MantineBreakpoint } from '../theme.types';
+import { MantineBreakpoint, MantineTheme } from '../theme.types';
 
-type UseMatchesInput<T> = Partial<Record<MantineBreakpoint, T>>;
+export type UseMatchesInput<T> = Partial<Record<'base' | MantineBreakpoint, T>> & {
+  [breakpoint: number]: T;
+};
 
-const BREAKPOINTS = ['xs', 'sm', 'md', 'lg', 'xl'];
-
-function getFirstMatchingValue<T>(
-  value: UseMatchesInput<T>,
-  biggestMatch: MantineBreakpoint | undefined
-): T {
-  if (!biggestMatch) {
-    return value.base!;
-  }
-
-  let index = BREAKPOINTS.indexOf(biggestMatch);
-
-  while (index >= 0) {
-    if (BREAKPOINTS[index] in value) {
-      return value[BREAKPOINTS[index]]!;
-    }
-    index -= 1;
-  }
-
-  return value.base!;
+interface MatchesEntry {
+  key: string;
+  value: number;
+  mediaQueryList: MediaQueryList | null;
 }
 
-function getFirstMatchingBreakpoint(matches: (boolean | undefined)[]) {
-  return matches.findLastIndex((v) => v);
+const BASE_KEY = 'base';
+const noop = () => {};
+const getServerSnapshot = () => BASE_KEY;
+
+function getMediaQueryList(query: string) {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return null;
+  }
+
+  try {
+    return window.matchMedia(query);
+  } catch {
+    return null;
+  }
 }
 
-export function useMatches<T>(payload: UseMatchesInput<T>, options?: UseMediaQueryOptions) {
+function getEntries(keys: string[], breakpoints: MantineTheme['breakpoints']): MatchesEntry[] {
+  return keys
+    .filter((key) => key !== BASE_KEY)
+    .map((key) => {
+      const value = getBreakpointValue(key, breakpoints);
+      const numericValue = typeof value === 'number' && !Number.isNaN(value) ? value : NaN;
+      const rawValue = key in breakpoints ? breakpoints[key as MantineBreakpoint] : key;
+      const query = `(min-width: ${Number.isNaN(numericValue) ? rawValue : em(numericValue)})`;
+      return { key, value: numericValue, mediaQueryList: getMediaQueryList(query) };
+    })
+    .sort((a, b) => {
+      if (Number.isNaN(a.value)) {
+        return 1;
+      }
+      if (Number.isNaN(b.value)) {
+        return -1;
+      }
+      return a.value - b.value;
+    });
+}
+
+export function useMatches<T>(payload: UseMatchesInput<T>): T {
   const theme = useMantineTheme();
-  const xsMatches = useMediaQuery(`(min-width: ${theme.breakpoints.xs})`, false, options);
-  const smMatches = useMediaQuery(`(min-width: ${theme.breakpoints.sm})`, false, options);
-  const mdMatches = useMediaQuery(`(min-width: ${theme.breakpoints.md})`, false, options);
-  const lgMatches = useMediaQuery(`(min-width: ${theme.breakpoints.lg})`, false, options);
-  const xlMatches = useMediaQuery(`(min-width: ${theme.breakpoints.xl})`, false, options);
+  const keys = Object.keys(payload).join('|');
+  const entries = useMemo(() => getEntries(keys.split('|'), theme.breakpoints), [keys, theme]);
 
-  const breakpoints = [xsMatches, smMatches, mdMatches, lgMatches, xlMatches];
-  const firstMatchingBreakpointIndex = getFirstMatchingBreakpoint(breakpoints);
-  return getFirstMatchingValue(payload, BREAKPOINTS[firstMatchingBreakpointIndex]);
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      const lists = entries.flatMap((entry) =>
+        entry.mediaQueryList ? [entry.mediaQueryList] : []
+      );
+      if (lists.length === 0) {
+        return noop;
+      }
+      lists.forEach((list) => list.addEventListener('change', onChange));
+      return () => lists.forEach((list) => list.removeEventListener('change', onChange));
+    },
+    [entries]
+  );
+
+  const getSnapshot = useCallback(() => {
+    let matched = BASE_KEY;
+    entries.forEach((entry) => {
+      if (entry.mediaQueryList?.matches) {
+        matched = entry.key;
+      }
+    });
+    return matched;
+  }, [entries]);
+
+  const matchedKey = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return (payload as Record<string, T>)[matchedKey] as T;
 }

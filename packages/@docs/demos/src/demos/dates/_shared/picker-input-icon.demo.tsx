@@ -9,7 +9,6 @@ import { ${name} } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<string | null>(null);
-  const icon = <CalendarBlankIcon size={18} />;
   return (
     <${name}
       leftSection={<CalendarBlankIcon size={18} />}

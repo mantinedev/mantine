@@ -519,6 +519,76 @@ function Demo() {
 When you pass the `controller` prop, `popoverProps.opened` and `popoverProps.onChange` are ignored. Pass
 `dropdownOpened` and `onDropdownOpenedChange` to the controller hook instead.
 
+## Picker inputs dropdown type and submit button
+
+`DatePickerInput`, `MonthPickerInput`, `YearPickerInput`, `WeekPickerInput`, `QuarterPickerInput` and
+`DateTimePicker` now open a bottom `Drawer` instead of a `Popover` when the viewport is narrower than
+`theme.breakpoints.sm`, and in `drawer` and `modal` dropdowns the value is applied only when the user
+presses the submit button. `onChange` is not called on selection in these dropdowns.
+
+If your application relies on the popover on all viewports, set `dropdownType="popover"`. If you want
+to keep the drawer or modal but apply the value on selection, set `applyOnSubmit={false}`. Both can be
+set for all components in the theme:
+
+```tsx
+import { createTheme } from '@mantine/core';
+import { DatePickerInput, DateTimePicker } from '@mantine/dates';
+
+const theme = createTheme({
+  components: {
+    DatePickerInput: DatePickerInput.extend({
+      defaultProps: { dropdownType: 'popover' },
+    }),
+    DateTimePicker: DateTimePicker.extend({
+      defaultProps: { applyOnSubmit: false },
+    }),
+  },
+});
+```
+
+The `dropdownType` prop still accepts `'popover'` and `'modal'`, and now also `'drawer'` and an
+object with breakpoints, for example, `{ base: 'drawer', sm: 'popover' }`.
+
+## DateTimePicker and InlineDateTimePicker submit button
+
+`DateTimePicker` and `InlineDateTimePicker` submit buttons are now a `Button` with a text label (`Save` by
+default) instead of an `ActionIcon` with a check icon. `submitButtonProps` of both components now accepts
+`Button` props – remove `ActionIcon` specific props, for example, `size="input-sm"`, and use
+`submitButtonLabel` prop or the `submitButtonLabel` setting of `DatesProvider` to change the label:
+
+```tsx
+import { DatesProvider, DateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatesProvider settings={{ submitButtonLabel: 'Apply' }}>
+      <DateTimePicker submitButtonProps={{ variant: 'light' }} />
+    </DatesProvider>
+  );
+}
+```
+
+## useMatches options argument
+
+`useMatches` no longer accepts the second `options` argument (`getInitialValueInEffect`). The hook now
+resolves all breakpoints with `useSyncExternalStore` and returns the `base` value on the server and
+during hydration. Remove the second argument:
+
+```tsx
+import { useMatches } from '@mantine/core';
+
+// Before
+const value = useMatches({ base: 'a', sm: 'b' }, { getInitialValueInEffect: false });
+
+// After
+const value = useMatches({ base: 'a', sm: 'b' });
+```
+
+## TimeInput data-empty attribute
+
+`TimeInput` now sets the `data-empty` attribute on the input element while it has no value. If you
+use `data-empty` on `TimeInput` for your own purposes, rename your attribute.
+
 ## Combobox store listId and selectedOptionIndex
 
 The `listId` and `selectedOptionIndex` fields are removed from the store returned by `useCombobox` and

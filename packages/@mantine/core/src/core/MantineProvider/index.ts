@@ -47,5 +47,6 @@ export { V10_DEFAULT_COLORS } from './default-colors.v10';
 export { darkColors, darkColdColors, darkWarmColors, darkTintedColors } from './dark-colors';
 export { v9Theme } from './v9-theme';
 export { useMatches } from './use-matches/use-matches';
+export type { UseMatchesInput } from './use-matches/use-matches';
 export type { MantineStylesTransform } from './Mantine.context';
 export { mantineHtmlProps } from './mantine-html-props';

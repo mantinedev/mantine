@@ -12,6 +12,8 @@ function Demo() {
   return (
     <DatePickerInput
       type="range"
+      label="With presets"
+      placeholder="Select date"
       presets={[
         {
           value: [today.subtract(2, 'day').format('YYYY-MM-DD'), today.format('YYYY-MM-DD')],

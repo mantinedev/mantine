@@ -4,6 +4,8 @@ import {
   BlockquoteDemos,
   ColorPickerDemos,
   DataGridDemos,
+  DatePickerInputDemos,
+  DateTimePickerDemos,
   DrawerDemos,
   MenuDemos,
   NavLinkDemos,
@@ -11,9 +13,11 @@ import {
   ModalDemos,
   NotificationDemos,
   PillsInputDemos,
+  ScrollerDemos,
   SelectDemos,
   SliderDemos,
   StepperDemos,
+  StylesDemos,
   SwitchDemos,
   TabsDemos,
   ThemingDemos,
@@ -575,6 +579,59 @@ const theme = createTheme({
 
 A new `generateColorFormats` function is also available when you need the full palette in multiple
 formats (oklch, hex, rgb, hsl) along with the detected base color index.
+
+## Mobile-friendly dates dropdowns
+
+[DatePickerInput](/dates/date-picker-input), [MonthPickerInput](/dates/month-picker-input),
+[YearPickerInput](/dates/year-picker-input), [QuarterPickerInput](/dates/quarter-picker-input),
+[WeekPickerInput](/dates/week-picker-input) and [DateTimePicker](/dates/date-time-picker) now adapt
+to the viewport. The `dropdownType` prop accepts `'popover'`, `'modal'`, `'drawer'` or an object with
+breakpoints, and its default value is `{ base: 'drawer', sm: 'popover' }`: on viewports narrower than
+`theme.breakpoints.sm` the picker opens in a bottom [Drawer](/core/drawer) with a full width calendar,
+presets displayed as a row of chips and larger touch targets. Object keys can be `theme.breakpoints`
+keys or custom values in px, for example, `{ base: 'drawer', 600: 'popover' }`:
+
+<Demo data={DatePickerInputDemos.dropdownType} />
+
+In `drawer` and `modal` dropdowns, the value is applied only when the new submit button is pressed,
+and closing the dropdown discards the selection. Set `applyOnSubmit={false}` to apply the value on
+selection. The button label is `Save` by default and can be changed with the `submitButtonLabel` prop
+or with the `submitButtonLabel` setting of [DatesProvider](/dates/getting-started/#datesprovider):
+
+<Demo data={DatePickerInputDemos.applyOnSubmit} />
+
+[DateTimePicker](/dates/date-time-picker#mobile-time-input) captures time in the drawer with a native
+`<input type="time" />`, so mobile users get the platform time picker without the on-screen keyboard,
+and its submit button is now a text button in every dropdown type. The submit button of
+[InlineDateTimePicker](/dates/inline-date-time-picker) is a text button as well:
+
+<Demo data={DateTimePickerDemos.dropdownType} />
+
+Popover dropdowns of all `@mantine/dates` components are now limited to the available viewport space
+and scroll when the calendar does not fit, for example, when the input is rendered in the middle of a
+short viewport.
+
+## useMatches custom breakpoints
+
+[useMatches](/styles/responsive/#use-matches-hook) hook now accepts custom breakpoints as keys – numbers
+(px) or any CSS length – in addition to `theme.breakpoints` keys. All queries are resolved with a single
+`useSyncExternalStore` subscription, and the `base` value is returned on the server and during hydration:
+
+<Demo data={StylesDemos.useMatchesHook} />
+
+## Drawer auto size
+
+[Drawer](/core/drawer#auto-size) now supports `size="auto"` – the drawer is as large as its content
+along the `position` axis and scrolls when the content is larger than the viewport:
+
+<Demo data={DrawerDemos.autoSize} />
+
+## Scroller withControls
+
+[Scroller](/core/scroller#without-controls) now supports `withControls` prop – set it to `false` to
+remove the navigation buttons and edge gradients while keeping native and drag scrolling:
+
+<Demo data={ScrollerDemos.withoutControls} />
 
 ## Other changes
 

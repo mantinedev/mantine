@@ -8,7 +8,7 @@ function Demo() {
   const color = useMatches({
     base: 'blue.9',
     sm: 'orange.9',
-    lg: 'red.9',
+    1200: 'red.9',
   });
 
   return (
@@ -23,7 +23,7 @@ function Demo() {
   const color = useMatches({
     base: 'blue.9',
     sm: 'orange.9',
-    lg: 'red.9',
+    1200: 'red.9',
   });
 
   return (

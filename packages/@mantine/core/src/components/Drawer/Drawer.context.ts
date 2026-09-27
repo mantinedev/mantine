@@ -5,6 +5,7 @@ export type ScrollAreaComponent = React.FC<any>;
 
 export interface DrawerContextValue {
   scrollAreaComponent: ScrollAreaComponent | undefined;
+  autoSize: boolean;
   getStyles: GetStylesApi<DrawerRootFactory>;
   radius: MantineRadius | undefined;
   stickyHeader: boolean | undefined;

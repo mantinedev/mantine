@@ -10,7 +10,11 @@ import { createPickerInput } from '../PickerInputBase/create-picker-input/create
 import { YearPicker, YearPickerBaseProps, YearPickerStylesNames } from '../YearPicker';
 import { useYearPickerInput } from './use-year-picker-input/use-year-picker-input';
 
-export type YearPickerInputStylesNames = __InputStylesNames | 'placeholder' | YearPickerStylesNames;
+export type YearPickerInputStylesNames =
+  | __InputStylesNames
+  | 'placeholder'
+  | YearPickerStylesNames
+  | 'submitButton';
 
 export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
   extends
@@ -41,7 +45,7 @@ const defaultProps = {
   valueFormat: 'YYYY',
   closeOnChange: true,
   sortDates: true,
-  dropdownType: 'popover',
+  dropdownType: { base: 'drawer', sm: 'popover' },
 } satisfies Partial<YearPickerInputProps>;
 
 export const YearPickerInput = createPickerInput<YearPickerInputFactory>({

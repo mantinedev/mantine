@@ -254,6 +254,7 @@ export const YearPickerInputStylesApi: StylesApiData<YearPickerInputFactory> = {
     ...InputBaseStylesApi.selectors,
     ...YearPickerStylesApi.selectors,
     placeholder: 'Placeholder element',
+    submitButton: 'Submit button, displayed in modal and drawer dropdown types',
   },
 
   vars: {},
@@ -266,6 +267,7 @@ export const MonthPickerInputStylesApi: StylesApiData<MonthPickerInputFactory> =
     ...InputBaseStylesApi.selectors,
     ...MonthPickerStylesApi.selectors,
     placeholder: 'Placeholder element',
+    submitButton: 'Submit button, displayed in modal and drawer dropdown types',
   },
 
   vars: {},
@@ -278,6 +280,7 @@ export const QuarterPickerInputStylesApi: StylesApiData<QuarterPickerInputFactor
     ...InputBaseStylesApi.selectors,
     ...QuarterPickerStylesApi.selectors,
     placeholder: 'Placeholder element',
+    submitButton: 'Submit button, displayed in modal and drawer dropdown types',
   },
 
   vars: {},
@@ -290,6 +293,7 @@ export const DatePickerInputStylesApi: StylesApiData<DatePickerInputFactory> = {
     ...InputBaseStylesApi.selectors,
     ...DatePickerStylesApi.selectors,
     placeholder: 'Placeholder element',
+    submitButton: 'Submit button, displayed in modal and drawer dropdown types',
   },
 
   vars: {},
@@ -302,6 +306,7 @@ export const WeekPickerInputStylesApi: StylesApiData<WeekPickerInputFactory> = {
     ...InputBaseStylesApi.selectors,
     ...WeekPickerStylesApi.selectors,
     placeholder: 'Placeholder element',
+    submitButton: 'Submit button, displayed in modal and drawer dropdown types',
   },
 
   vars: {},
@@ -328,6 +333,7 @@ export const DateTimePickerStylesApi: StylesApiData<DateTimePickerFactory> = {
     ...InputBaseStylesApi.selectors,
     ...DatePickerStylesApi.selectors,
     placeholder: 'Placeholder element',
+    content: 'Wrapper around the calendar and time inputs, placed next to the presets list',
     timeWrapper: 'Wrapper around time input and submit button',
     timeInput: 'TimeInput',
     submitButton: 'Submit button',
@@ -345,6 +351,7 @@ export const InlineDateTimePickerStylesApi: StylesApiData<InlineDateTimePickerFa
   selectors: {
     root: 'Root element',
     ...DatePickerStylesApi.selectors,
+    content: 'Wrapper around the calendar and time inputs, placed next to the presets list',
     timeWrapper: 'Wrapper around time input and submit button',
     timeInput: 'TimeInput',
     submitButton: 'Submit button',

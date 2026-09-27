@@ -4,7 +4,11 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
+  Button,
+  ButtonProps,
   ClearSectionMode,
+  Drawer,
+  DrawerProps,
   ElementProps,
   factory,
   Factory,
@@ -17,31 +21,51 @@ import {
   PopoverProps,
   StylesApiProps,
   useInputProps,
+  useStyles,
 } from '@mantine/core';
 import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
 import { DatePickerType } from '../../types';
 import { DateFormatter } from '../../utils';
+import { useDatesContext } from '../DatesProvider';
 import { HiddenDatesInput, HiddenDatesInputValue } from '../HiddenDatesInput';
 import { DatesDropdownProvider } from './DatesDropdown.context';
+import { getDatesPopoverMiddlewares } from './get-dates-popover-middlewares/get-dates-popover-middlewares';
+import { getSheetPickerProps } from './get-sheet-picker-props/get-sheet-picker-props';
+import {
+  PickerDropdownType,
+  ResponsivePickerDropdownType,
+} from './use-resolved-dropdown-type/use-resolved-dropdown-type';
 import classes from './PickerInputBase.module.css';
 
-export type PickerInputBaseStylesNames = __InputStylesNames;
+export type PickerInputBaseStylesNames = __InputStylesNames | 'submitButton';
 
 export interface DateInputSharedProps
   extends
     Omit<__BaseInputProps, 'size'>,
     ElementProps<'button', 'defaultValue' | 'value' | 'onChange' | 'type'> {
-  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"` @default true @category behavior */
+  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"`. Ignored in `modal` and `drawer` dropdown types while `applyOnSubmit` is enabled @default true @category behavior */
   closeOnChange?: boolean;
 
-  /** Type of the dropdown @default 'popover' @category appearance */
-  dropdownType?: 'popover' | 'modal';
+  /** Type of the dropdown: `'popover'`, `'modal'`, `'drawer'` or an object with breakpoints, for example `{ base: 'drawer', sm: 'popover' }`. Object keys can be `theme.breakpoints` keys or custom values in px, for example `{ base: 'drawer', 600: 'popover' }` @default { base: 'drawer', sm: 'popover' } @category appearance */
+  dropdownType?: ResponsivePickerDropdownType;
 
-  /** Props passed down to `Popover` component */
+  /** Props passed down to `Popover` component. `opened` and `onChange` control the dropdown opened state with every `dropdownType` */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
 
   /** Props passed down to `Modal` component */
   modalProps?: Partial<Omit<ModalProps, 'children'>>;
+
+  /** Props passed down to `Drawer` component */
+  drawerProps?: Partial<Omit<DrawerProps, 'children'>>;
+
+  /** Determines whether the selected value is applied only when the submit button is pressed when the dropdown is rendered in `modal` or `drawer`. If set to `false`, the value is applied on selection, same as with `dropdownType="popover"` @default true @category behavior */
+  applyOnSubmit?: boolean;
+
+  /** Label of the submit button, overrides `submitButtonLabel` from `DatesProvider` settings @default 'Save' @category appearance */
+  submitButtonLabel?: string;
+
+  /** Props passed down to the submit button */
+  submitButtonProps?: ButtonProps & ElementProps<'button'>;
 
   /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default false @category behavior */
   clearable?: boolean;
@@ -74,11 +98,13 @@ export interface DateInputSharedProps
 export interface PickerInputBaseProps
   extends
     BoxProps,
-    DateInputSharedProps,
+    Omit<DateInputSharedProps, 'dropdownType' | 'applyOnSubmit'>,
     Omit<StylesApiProps<PickerInputBaseFactory>, 'classNames' | 'styles'> {
   classNames?: Partial<Record<string, string>>;
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
+  /** Resolved dropdown type @category appearance */
+  dropdownType: PickerDropdownType;
   /** @category appearance */
   children: React.ReactNode;
   /** @category state */
@@ -102,6 +128,15 @@ export interface PickerInputBaseProps
 
   /** Set when the dropdown content includes presets, reduces dropdown start padding @category appearance */
   withPresets?: boolean;
+
+  /** Called when the submit button is pressed, the button is rendered in `modal` and `drawer` dropdown types only when this handler is set @category behavior */
+  onDropdownSubmit?: () => void;
+
+  /** Disables the submit button @category behavior */
+  submitDisabled?: boolean;
+
+  /** Determines whether the drawer sheet container receives initial focus, set to `false` when the dropdown content requests focus itself @default true @category behavior */
+  sheetAutofocus?: boolean;
 }
 
 export type PickerInputBaseFactory = Factory<{
@@ -121,7 +156,13 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
     unstyled,
     popoverProps,
     modalProps,
+    drawerProps,
     dropdownType,
+    submitButtonLabel,
+    submitButtonProps,
+    onDropdownSubmit,
+    submitDisabled,
+    sheetAutofocus,
     children,
     formattedValue,
     dropdownHandlers,
@@ -150,25 +191,35 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const keyboardInteractionRef = useRef(false);
 
+  const getStyles = useStyles<PickerInputBaseFactory>({
+    name: inputProps.__staticSelector ?? 'PickerInputBase',
+    classes,
+    props: _props,
+    classNames,
+    styles,
+    unstyled,
+    attributes: inputProps.attributes,
+  });
+
   useDidUpdate(() => {
     if (dropdownOpened) {
       keyboardInteractionRef.current = false;
       return;
     }
 
-    if (!keyboardInteractionRef.current) {
-      return;
+    if (keyboardInteractionRef.current) {
+      const activeElement = document.activeElement;
+      const focusLost =
+        !activeElement ||
+        activeElement === document.body ||
+        !!dropdownRef.current?.contains(activeElement);
+
+      if (focusLost) {
+        inputRef.current?.focus({ preventScroll: true });
+      }
     }
 
-    const activeElement = document.activeElement;
-    const focusLost =
-      !activeElement ||
-      activeElement === document.body ||
-      !!dropdownRef.current?.contains(activeElement);
-
-    if (focusLost) {
-      inputRef.current?.focus({ preventScroll: true });
-    }
+    onDropdownClose?.();
   }, [dropdownOpened]);
 
   const clearButton = (
@@ -179,28 +230,89 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
     dropdownHandlers.close();
   };
 
+  const isPopover = dropdownType === 'popover';
+  const isModal = dropdownType === 'modal';
+  const isSheet = dropdownType === 'drawer';
+  const ctx = useDatesContext();
+
+  const submitButton =
+    !isPopover && onDropdownSubmit ? (
+      <Button
+        size={isSheet ? getSheetPickerProps(inputProps.size).size : inputProps.size}
+        fullWidth
+        unstyled={unstyled}
+        {...submitButtonProps}
+        disabled={submitDisabled || submitButtonProps?.disabled}
+        {...getStyles('submitButton', {
+          className: submitButtonProps?.className,
+          style: submitButtonProps?.style,
+        })}
+        onClick={(event) => {
+          submitButtonProps?.onClick?.(event);
+          onDropdownSubmit();
+        }}
+      >
+        {ctx.getSubmitButtonLabel(submitButtonLabel)}
+      </Button>
+    ) : null;
+
   const content = (
     <DatesDropdownProvider
-      value={{ preventFocus: false, stopPropagation: dropdownType === 'popover' }}
+      value={{
+        preventFocus: false,
+        stopPropagation: isPopover,
+        layout: isSheet ? 'sheet' : 'default',
+      }}
     >
       {children}
+      {submitButton}
     </DatesDropdownProvider>
   );
 
   return (
     <>
-      {dropdownType === 'modal' && !readOnly && (
+      {isModal && !readOnly && (
         <Modal
           opened={dropdownOpened}
-          onClose={handleClose}
           withCloseButton={false}
           size="auto"
           data-dates-modal
           unstyled={unstyled}
           {...modalProps}
+          onClose={() => {
+            modalProps?.onClose?.();
+            handleClose();
+          }}
         >
           {content}
         </Modal>
+      )}
+
+      {isSheet && !readOnly && (
+        <Drawer
+          opened={dropdownOpened}
+          position="bottom"
+          size="auto"
+          offset={5}
+          radius="lg"
+          withCloseButton={false}
+          withHandle
+          data-dates-drawer
+          unstyled={unstyled}
+          {...drawerProps}
+          onClose={() => {
+            drawerProps?.onClose?.();
+            handleClose();
+          }}
+        >
+          <div
+            className={unstyled ? undefined : classes.sheet}
+            tabIndex={-1}
+            data-autofocus={sheetAutofocus !== false || undefined}
+          >
+            {content}
+          </div>
+        </Drawer>
       )}
 
       <Input.Wrapper {...wrapperProps}>
@@ -211,11 +323,8 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
           returnFocus={false}
           unstyled={unstyled}
           {...popoverProps}
-          disabled={popoverProps?.disabled || dropdownType === 'modal' || readOnly}
-          onClose={() => {
-            onDropdownClose?.();
-            popoverProps?.onClose?.();
-          }}
+          middlewares={getDatesPopoverMiddlewares(popoverProps?.middlewares)}
+          disabled={popoverProps?.disabled || !isPopover || readOnly}
           onChange={(_opened) => {
             if (!_opened) {
               handleClose();
@@ -269,7 +378,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
               keyboardInteractionRef.current = false;
             }}
           >
-            {content}
+            <div className={unstyled ? undefined : classes.dropdownContent}>{content}</div>
           </Popover.Dropdown>
         </Popover>
       </Input.Wrapper>

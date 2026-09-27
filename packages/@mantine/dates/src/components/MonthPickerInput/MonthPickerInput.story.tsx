@@ -107,3 +107,24 @@ export function FocusReturn() {
     </Group>
   );
 }
+
+export function ResponsiveDropdown() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MonthPickerInput label="Drawer below sm, popover above" placeholder="Pick value" />
+      <MonthPickerInput
+        label="Always drawer"
+        placeholder="Pick value"
+        dropdownType="drawer"
+        mt="md"
+      />
+      <MonthPickerInput
+        label="Drawer, apply on selection"
+        placeholder="Pick value"
+        dropdownType="drawer"
+        applyOnSubmit={false}
+        mt="md"
+      />
+    </div>
+  );
+}

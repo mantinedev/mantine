@@ -47,6 +47,14 @@ function Demo() {
 
 <Demo data={DrawerDemos.sizes} />
 
+## Auto size
+
+Set `size="auto"` to make the drawer as large as its content along the `position` axis. The size is
+capped at the viewport size – when the content is taller (or wider for `left` and `right` positions),
+it scrolls inside the drawer:
+
+<Demo data={DrawerDemos.autoSize} />
+
 ## Full screen
 
 Set the `fullScreen` prop to make the drawer take the entire viewport along its `position` axis,

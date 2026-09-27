@@ -9,12 +9,14 @@ import { CalendarLevel } from '../../../types';
 import { DateFormatter } from '../../../utils';
 import { pickCalendarProps } from '../../Calendar';
 import { useDatesContext } from '../../DatesProvider';
+import { getSheetPickerProps } from '../get-sheet-picker-props/get-sheet-picker-props';
 import { PickerInputBase } from '../PickerInputBase';
 import {
   PickerInputController,
   PickerInputControllerOptions,
 } from '../use-picker-input-controller/use-picker-input-controller';
 import { usePickerInput } from '../use-picker-input/use-picker-input';
+import { useResolvedDropdownType } from '../use-resolved-dropdown-type/use-resolved-dropdown-type';
 
 type PickedProps = ReturnType<typeof pickCalendarProps>;
 
@@ -69,6 +71,7 @@ export function createPickerInput<Payload extends FactoryPayload>({
       valueFormatter,
       presets,
       attributes,
+      applyOnSubmit,
       controller: controllerProp,
       ...rest
     } = props;
@@ -81,6 +84,8 @@ export function createPickerInput<Payload extends FactoryPayload>({
 
     const { calendarProps, others } = pickPickerProps(rest);
     const ctx = useDatesContext();
+    const resolvedDropdownType = useResolvedDropdownType(dropdownType);
+    const isSheet = resolvedDropdownType === 'drawer';
 
     const pickerInput = usePickerInput({
       useControllerHook,
@@ -103,8 +108,9 @@ export function createPickerInput<Payload extends FactoryPayload>({
       maxDate,
       disabled: others.disabled,
       readOnly: others.readOnly,
-      dropdownType,
+      dropdownType: resolvedDropdownType,
       popoverProps: others.popoverProps,
+      applyOnSubmit,
     });
 
     return (
@@ -121,9 +127,11 @@ export function createPickerInput<Payload extends FactoryPayload>({
         value={pickerInput.datesInput._value}
         size={size}
         variant={variant}
-        dropdownType={dropdownType}
         {...others}
+        dropdownType={resolvedDropdownType}
         popoverProps={pickerInput.popoverProps}
+        onDropdownSubmit={pickerInput.onDropdownSubmit}
+        submitDisabled={pickerInput.submitDisabled}
         type={type}
         __staticSelector={name}
         attributes={attributes}
@@ -131,11 +139,12 @@ export function createPickerInput<Payload extends FactoryPayload>({
         <Picker
           {...calendarProps}
           size={size}
+          {...(isSheet ? getSheetPickerProps(size) : null)}
           variant={variant}
           type={type}
-          value={pickerInput.datesInput._value}
+          value={pickerInput.pickerValue}
           controller={pickerInput.controller}
-          onChange={pickerInput.datesInput.setValue}
+          onChange={pickerInput.onPickerChange}
           locale={locale}
           classNames={resolvedClassNames}
           styles={resolvedStyles}

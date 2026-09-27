@@ -11,6 +11,17 @@
     display: none;
   }
 
+  &::-webkit-date-and-time-value {
+    text-align: start;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    &:where([data-empty])::before {
+      content: attr(placeholder);
+      color: var(--input-placeholder-color);
+    }
+  }
+
   &::-webkit-datetime-edit-hour-field,
   &::-webkit-datetime-edit-minute-field,
   &::-webkit-datetime-edit-second-field,

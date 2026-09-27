@@ -1,8 +1,17 @@
 import { MonthPickerInput } from '@mantine/dates';
 import { getSharedPickerInputDemos } from '../_shared';
 
-export const { usage, multiple, range, configurator, modal, icon, clearable, valueFormatter } =
-  getSharedPickerInputDemos(MonthPickerInput);
+export const {
+  usage,
+  multiple,
+  range,
+  configurator,
+  dropdownType,
+  applyOnSubmit,
+  icon,
+  clearable,
+  valueFormatter,
+} = getSharedPickerInputDemos(MonthPickerInput);
 
 export { clearSectionMode } from './MonthPickerInput.demo.clearSectionMode';
 export { valueFormat } from './MonthPickerInput.demo.valueFormat';

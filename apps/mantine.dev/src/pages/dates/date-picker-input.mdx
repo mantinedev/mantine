@@ -103,19 +103,38 @@ closed by the user or with `closeDropdown`. `popoverProps.opened` and `popoverPr
 ignored when the `controller` prop is set.
 
 If you only need the dropdown state, `popoverProps={{ opened, onChange }}` controls it without a
-controller: `onChange` is called on every open and close, including the input click and the close
-after a pick, and the input keeps opening and closing the dropdown through it.
+controller in every dropdown type (`popover`, `modal` and `drawer`): `onChange` is called on every
+open and close, including the input click and the close after a pick, and the input keeps opening
+and closing the dropdown through it.
 
 The controller is typed as `PickerInputController` and its options as `PickerInputControllerOptions`,
 both exported from `@mantine/dates`. The same types are used by `DatePickerInput`, `MonthPickerInput`,
 `YearPickerInput`, `WeekPickerInput` and `QuarterPickerInput`.
 
-## Open picker in modal
+## Dropdown type
 
-By default, [DatePicker](/dates/date-picker/) is rendered inside [Popover](/core/popover/).
-You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
+The dropdown opens in a bottom [Drawer](/core/drawer/) below `theme.breakpoints.sm` and in a
+[Popover](/core/popover/) above. Set `dropdownType` to `'popover'`, `'modal'`, `'drawer'` or an object
+with breakpoints:
 
-<Demo data={DatePickerInputDemos.modal} />
+<Demo data={DatePickerInputDemos.dropdownType} />
+
+Object keys can be `theme.breakpoints` keys or custom values in px, for example,
+`{ base: 'drawer', 600: 'popover' }`. Use `popoverProps`, `modalProps` and `drawerProps` to pass props
+down to the underlying component. If the viewport crosses a breakpoint while the dropdown is open,
+the dropdown switches to the other type and a selection that was not applied yet is discarded.
+
+## Submit button
+
+In `drawer` and `modal` dropdowns, the value is applied only when the submit button is pressed, and
+closing the dropdown discards the selection. Set `applyOnSubmit={false}` to apply the value on selection:
+
+<Demo data={DatePickerInputDemos.applyOnSubmit} />
+
+- The label is `Save` by default – change it with the `submitButtonLabel` prop or the `submitButtonLabel`
+  setting of [DatesProvider](/dates/getting-started/#datesprovider)
+- `submitButtonProps` are passed down to the [Button](/core/button/)
+- With `type="range"`, the button is disabled until both dates are selected
 
 ## Value format
 

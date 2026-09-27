@@ -13,7 +13,8 @@ import { useMonthPickerInput } from './use-month-picker-input/use-month-picker-i
 export type MonthPickerInputStylesNames =
   | __InputStylesNames
   | 'placeholder'
-  | MonthPickerStylesNames;
+  | MonthPickerStylesNames
+  | 'submitButton';
 
 export interface MonthPickerInputProps<Type extends DatePickerType = 'default'>
   extends
@@ -44,7 +45,7 @@ const defaultProps = {
   valueFormat: 'MMMM YYYY',
   closeOnChange: true,
   sortDates: true,
-  dropdownType: 'popover',
+  dropdownType: { base: 'drawer', sm: 'popover' },
 } satisfies Partial<MonthPickerInputProps>;
 
 export const MonthPickerInput = createPickerInput<MonthPickerInputFactory>({

@@ -206,6 +206,20 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
       expect(spy).toHaveBeenCalled();
     });
 
+    it('does not call onSubmit when Enter is pressed with an incomplete range', async () => {
+      const spy = jest.fn();
+      render(
+        <InlineDateTimePicker
+          {...rangeProps}
+          defaultValue={['2022-04-11 10:00:00', null]}
+          onSubmit={spy}
+        />
+      );
+
+      await userEvent.type(screen.getByLabelText('test-time-picker-hours'), '{Enter}');
+      expect(spy).not.toHaveBeenCalled();
+    });
+
     it('handles start time change in range mode', async () => {
       const spy = jest.fn();
       render(

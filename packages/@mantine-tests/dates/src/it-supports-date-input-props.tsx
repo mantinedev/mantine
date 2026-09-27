@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { screen } from '@testing-library/react';
-import { render } from '@mantine-tests/core';
+import { mockMatchMedia, render, userEvent } from '@mantine-tests/core';
 import {
   clickControl,
   clickInput,
@@ -19,7 +20,18 @@ interface Options {
 }
 
 export function itSupportsDateInputProps(options: Options, name = 'supports date input props') {
+  const componentName = ((options.component as any).displayName as string).split('/').pop();
+  const drawerProps = { withinPortal: false, transitionProps: { duration: 0 } };
+  const isMinWidthQuery = (query: string) => query.includes('min-width');
+
   describe(name, () => {
+    let media: ReturnType<typeof mockMatchMedia> | undefined;
+
+    afterEach(() => {
+      media?.restore();
+      media = undefined;
+    });
+
     it('supports uncontrolled state (type="default")', async () => {
       const { container } = render(
         <options.component {...options.props} placeholder="test-placeholder" />
@@ -78,6 +90,104 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
 
       await clickInput(container);
       expectNoPopover(container);
+    });
+
+    it('renders drawer below sm breakpoint by default and applies value on submit', async () => {
+      media = mockMatchMedia(false, { filter: isMinWidthQuery });
+      const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const onChange = jest.fn();
+      const { container } = render(
+        <options.component
+          {...options.props}
+          drawerProps={drawerProps}
+          placeholder="test-placeholder"
+          presets={[{ value: null, label: 'test-preset' }]}
+          onChange={onChange}
+        />
+      );
+
+      await clickInput(container);
+      expect(container.querySelector('.mantine-Drawer-content')).toBeInTheDocument();
+      expectNoPopover(container);
+      expect(container.querySelector('[data-preset]')).toHaveAttribute('data-layout', 'sheet');
+      expect(
+        container.querySelector('.mantine-Drawer-content [data-full-width]')
+      ).toBeInTheDocument();
+      expect(errorSpy).not.toHaveBeenCalled();
+      errorSpy.mockRestore();
+
+      await clickControl(container, 0);
+      expect(onChange).not.toHaveBeenCalled();
+      expectValue(container, 'test-placeholder');
+
+      await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(container.querySelector('.mantine-Drawer-content')).not.toBeInTheDocument();
+      expect(getInputValue(container)).not.toBe('test-placeholder');
+    });
+
+    it('does not open the drawer when popoverProps.opened is false', async () => {
+      media = mockMatchMedia(false, { filter: isMinWidthQuery });
+      const onOpenedChange = jest.fn();
+      const { container } = render(
+        <options.component
+          {...options.props}
+          drawerProps={drawerProps}
+          popoverProps={{ ...options.props.popoverProps, opened: false, onChange: onOpenedChange }}
+        />
+      );
+
+      await clickInput(container);
+      expect(onOpenedChange).toHaveBeenCalledWith(true);
+      expect(container.querySelector('.mantine-Drawer-content')).not.toBeInTheDocument();
+    });
+
+    it('calls controlled popoverProps.onChange once per open and close in drawer mode', async () => {
+      media = mockMatchMedia(false, { filter: isMinWidthQuery });
+      const onOpenedChange = jest.fn();
+
+      function Controlled() {
+        const [opened, setOpened] = useState(false);
+        return (
+          <options.component
+            {...options.props}
+            drawerProps={drawerProps}
+            popoverProps={{
+              ...options.props.popoverProps,
+              opened,
+              onChange: (value: boolean) => {
+                onOpenedChange(value);
+                setOpened(value);
+              },
+            }}
+          />
+        );
+      }
+
+      const { container } = render(<Controlled />);
+
+      await clickInput(container);
+      await clickControl(container, 0);
+      await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+      expect(onOpenedChange.mock.calls).toEqual([[true], [false]]);
+      expect(container.querySelector('.mantine-Drawer-content')).not.toBeInTheDocument();
+    });
+
+    it('applies static class and theme classNames to the submit button', async () => {
+      const { container } = render(
+        <options.component
+          {...options.props}
+          dropdownType="modal"
+          submitButtonProps={{ className: 'props-submit' }}
+        />,
+        { components: { [componentName!]: { classNames: { submitButton: 'theme-submit' } } } }
+      );
+
+      await clickInput(container);
+      const submit = screen.getByRole('button', { name: 'Save' });
+      expect(submit).toHaveClass(`mantine-${componentName}-submitButton`);
+      expect(submit).toHaveClass('theme-submit');
+      expect(submit).toHaveClass('props-submit');
     });
 
     it('toggles modal when input is clicked (dropdownType="modal")', async () => {

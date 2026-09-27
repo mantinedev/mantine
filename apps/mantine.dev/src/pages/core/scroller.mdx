@@ -39,6 +39,13 @@ with custom icons:
 
 <Demo data={ScrollerDemos.customIcons} />
 
+## Without controls
+
+Set `withControls={false}` to remove the navigation buttons and the edge gradients, for example,
+on touch devices where users scroll with gestures. Native scrolling and mouse drag scrolling keep working:
+
+<Demo data={ScrollerDemos.withoutControls} />
+
 ## Usage with Tabs
 
 Use `Scroller` inside [Tabs.List](/core/tabs) to make the tabs list scrollable when there are too many tabs to fit in the available space:

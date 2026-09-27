@@ -50,6 +50,14 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
     formatter: valueFormatter,
   });
 
+  const applyValue = (val: any) => {
+    if (sortDates && type === 'multiple') {
+      _setValue([...val].sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? 1 : -1)));
+    } else {
+      _setValue(val);
+    }
+  };
+
   const setValue = (val: any) => {
     if (closeOnChange) {
       if (type === 'default') {
@@ -61,11 +69,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
       }
     }
 
-    if (sortDates && type === 'multiple') {
-      _setValue([...val].sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? 1 : -1)));
-    } else {
-      _setValue(val);
-    }
+    applyValue(val);
   };
 
   const onClear = () => setValue(type === 'range' ? [null, null] : type === 'multiple' ? [] : null);
@@ -81,6 +85,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
   return {
     _value,
     setValue,
+    applyValue,
     onClear,
     shouldClear,
     formattedValue,

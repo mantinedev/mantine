@@ -1,6 +1,7 @@
 export { usage } from './DateTimePicker.demo.usage';
 export { withSeconds } from './DateTimePicker.demo.withSeconds';
-export { modal } from './DateTimePicker.demo.modal';
+export { dropdownType } from './DateTimePicker.demo.dropdownType';
+export { applyOnSubmit } from './DateTimePicker.demo.applyOnSubmit';
 export { configurator } from './DateTimePicker.demo.configurator';
 export { clearable } from './DateTimePicker.demo.clearable';
 export { clearSectionMode } from './DateTimePicker.demo.clearSectionMode';

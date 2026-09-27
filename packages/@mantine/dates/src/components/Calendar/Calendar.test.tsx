@@ -404,7 +404,9 @@ describe('@mantine/dates/Calendar', () => {
 
   it('does not move focus after level change when dropdown context has preventFocus', async () => {
     render(
-      <DatesDropdownProvider value={{ preventFocus: true, stopPropagation: false }}>
+      <DatesDropdownProvider
+        value={{ preventFocus: true, stopPropagation: false, layout: 'default' }}
+      >
         <Calendar {...defaultProps} />
       </DatesDropdownProvider>
     );

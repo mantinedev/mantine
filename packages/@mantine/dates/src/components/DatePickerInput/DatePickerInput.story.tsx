@@ -345,3 +345,97 @@ export function OnDateChange() {
     </div>
   );
 }
+
+const mobilePresets = [
+  { value: null, label: 'Clear' },
+  { value: dayjs().subtract(1, 'day').format('YYYY-MM-DD'), label: 'Yesterday' },
+  { value: dayjs().format('YYYY-MM-DD'), label: 'Today' },
+  { value: dayjs().add(1, 'day').format('YYYY-MM-DD'), label: 'Tomorrow' },
+  { value: dayjs().add(1, 'month').format('YYYY-MM-DD'), label: 'Next month' },
+  { value: dayjs().add(1, 'year').format('YYYY-MM-DD'), label: 'Next year' },
+  { value: dayjs().subtract(1, 'month').format('YYYY-MM-DD'), label: 'Last month' },
+  { value: dayjs().subtract(1, 'year').format('YYYY-MM-DD'), label: 'Last year' },
+];
+
+export function ResponsiveDropdown() {
+  return (
+    <Stack p={40} maw={400}>
+      <DatePickerInput
+        label="Default: drawer below sm, popover above"
+        placeholder="Pick date"
+        presets={mobilePresets}
+      />
+      <DatePickerInput
+        label="Range with two columns"
+        placeholder="Pick dates range"
+        type="range"
+        numberOfColumns={2}
+        presets={[
+          {
+            value: [dayjs().format('YYYY-MM-DD'), dayjs().add(6, 'day').format('YYYY-MM-DD')],
+            label: 'Next week',
+          },
+          {
+            value: [dayjs().format('YYYY-MM-DD'), dayjs().add(1, 'month').format('YYYY-MM-DD')],
+            label: 'Next month',
+          },
+        ]}
+      />
+      <DatePickerInput
+        label="Custom breakpoint: drawer below 1000px"
+        placeholder="Pick date"
+        dropdownType={{ base: 'drawer', 1000: 'popover' }}
+      />
+      <DatePickerInput
+        label="Always drawer"
+        placeholder="Pick date"
+        dropdownType="drawer"
+        presets={mobilePresets}
+      />
+      <DatePickerInput
+        label="Always modal"
+        placeholder="Pick date"
+        dropdownType="modal"
+        presets={mobilePresets}
+      />
+      <DatePickerInput
+        label="Always popover"
+        placeholder="Pick date"
+        dropdownType="popover"
+        presets={mobilePresets}
+      />
+    </Stack>
+  );
+}
+
+export function MiddleOfViewport() {
+  return (
+    <div
+      style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+    >
+      <DatePickerInput
+        label="Input in the middle of a short viewport"
+        placeholder="Pick date"
+        presets={mobilePresets}
+        numberOfColumns={2}
+        style={{ width: 300 }}
+      />
+    </div>
+  );
+}
+
+export function WithArrow() {
+  return (
+    <div
+      style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+    >
+      <DatePickerInput
+        label="Popover with arrow"
+        placeholder="Pick date"
+        dropdownType="popover"
+        popoverProps={{ withArrow: true }}
+        style={{ width: 300 }}
+      />
+    </div>
+  );
+}

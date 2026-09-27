@@ -3,3 +3,15 @@
     padding-inline-start: rem(4px);
   }
 }
+
+.dropdownContent {
+  --dates-dropdown-inset: rem(4px);
+
+  max-height: calc(
+    var(--dates-dropdown-max-height, 100vh) - var(--mantine-spacing-sm) * 2 - rem(2px) +
+      var(--dates-dropdown-inset) * 2
+  );
+  margin: calc(var(--dates-dropdown-inset) * -1);
+  padding: var(--dates-dropdown-inset);
+  overflow: auto;
+}

@@ -71,6 +71,9 @@ export interface DrawerRootProps extends StylesApiProps<DrawerRootFactory>, Moda
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 0 @category appearance */
   radius?: MantineRadius;
 
+  /** Drawer size along its position axis: `xs`, `sm`, `md`, `lg`, `xl`, any valid CSS value, a number (converted to rem) or `'auto'` to fit the content @default 'md' @category appearance */
+  size?: ModalBaseProps['size'];
+
   /** Drawer container offset from the viewport end @default 0 @category appearance */
   offset?: number | string;
 
@@ -154,7 +157,11 @@ const varsResolver = createVarsResolver<DrawerRootFactory>(
 
     return {
       root: {
-        '--drawer-size': fullScreen ? '100%' : getSize(size, 'drawer-size'),
+        '--drawer-size': fullScreen
+          ? '100%'
+          : size === 'auto'
+            ? 'auto'
+            : getSize(size, 'drawer-size'),
         '--drawer-flex':
           hasSnapPoints && isHorizontal ? `0 0 ${fillAxis}` : getDrawerFlex(position),
         '--drawer-height': isHorizontal
@@ -194,6 +201,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
     onSnapPointChange,
     transitionProps,
     radius,
+    offset,
     attributes,
     keepMounted,
     keepMountedMode,
@@ -260,6 +268,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
     <DrawerProvider
       value={{
         scrollAreaComponent,
+        autoSize: props.size === 'auto',
         getStyles,
         radius,
         stickyHeader,
@@ -298,6 +307,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
             <Box
               {...getStyles('root')}
               data-full-screen={resolvedFullScreen || undefined}
+              data-auto-size={props.size === 'auto' || undefined}
               data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
               {...others}
               id={overlay._id}

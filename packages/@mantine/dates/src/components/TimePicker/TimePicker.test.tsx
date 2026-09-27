@@ -887,6 +887,32 @@ describe('@mantine/dates/TimePicker', () => {
     expect(spy).toHaveBeenLastCalledWith('');
   });
 
+  it('closes the dropdown with Escape while a field is focused', async () => {
+    render(<TimePicker {...defaultProps} withDropdown presets={['12:30', '15:45']} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    expect(screen.getByText('12:30')).toBeInTheDocument();
+
+    await userEvent.keyboard('{Escape}');
+    expect(screen.queryByText('12:30')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('test-hours')).toHaveFocus();
+  });
+
+  it('keeps the dropdown open on Escape when popoverProps.closeOnEscape is false', async () => {
+    render(
+      <TimePicker
+        {...defaultProps}
+        withDropdown
+        presets={['12:30', '15:45']}
+        popoverProps={{ closeOnEscape: false }}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.keyboard('{Escape}');
+    expect(screen.getByText('12:30')).toBeInTheDocument();
+  });
+
   it('keeps the dropdown open after selecting a preset by default', async () => {
     render(<TimePicker {...defaultProps} withDropdown presets={['12:30', '15:45']} />);
 

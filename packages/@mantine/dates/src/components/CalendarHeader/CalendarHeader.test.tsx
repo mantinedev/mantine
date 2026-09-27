@@ -53,7 +53,9 @@ describe('@mantine/dates/CalendarHeader', () => {
 
   it('does not focus controls on click when dropdown context has preventFocus', async () => {
     render(
-      <DatesDropdownProvider value={{ preventFocus: true, stopPropagation: false }}>
+      <DatesDropdownProvider
+        value={{ preventFocus: true, stopPropagation: false, layout: 'default' }}
+      >
         <CalendarHeader {...defaultProps} levelControlAriaLabel="test-level" />
       </DatesDropdownProvider>
     );
@@ -71,7 +73,9 @@ describe('@mantine/dates/CalendarHeader', () => {
 
   it('adds data-mantine-stop-propagation to controls when dropdown context has stopPropagation', () => {
     render(
-      <DatesDropdownProvider value={{ preventFocus: false, stopPropagation: true }}>
+      <DatesDropdownProvider
+        value={{ preventFocus: false, stopPropagation: true, layout: 'default' }}
+      >
         <CalendarHeader {...defaultProps} levelControlAriaLabel="test-level" />
       </DatesDropdownProvider>
     );

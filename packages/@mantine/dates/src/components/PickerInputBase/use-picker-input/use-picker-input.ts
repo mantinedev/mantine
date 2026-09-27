@@ -6,10 +6,12 @@ import { DateFormatter, getDefaultClampedDate, toDateString } from '../../../uti
 import { clampLevel } from '../../Calendar/clamp-level/clamp-level';
 import { CalendarControllerOptions } from '../../Calendar/use-calendar/use-calendar';
 import { DateInputSharedProps } from '../PickerInputBase';
+import { useDropdownDraft } from '../use-dropdown-draft/use-dropdown-draft';
 import {
   PickerInputController,
   PickerInputControllerOptions,
 } from '../use-picker-input-controller/use-picker-input-controller';
+import { PickerDropdownType } from '../use-resolved-dropdown-type/use-resolved-dropdown-type';
 
 interface UsePickerInputInput<
   Type extends DatePickerType,
@@ -37,8 +39,9 @@ interface UsePickerInputInput<
   maxDate: DateStringValue | Date | undefined;
   disabled: boolean | undefined;
   readOnly: boolean | undefined;
-  dropdownType: DateInputSharedProps['dropdownType'];
+  dropdownType: PickerDropdownType;
   popoverProps: DateInputSharedProps['popoverProps'];
+  applyOnSubmit: boolean | undefined;
 }
 
 interface UsePickerInputReturnValue<
@@ -50,6 +53,10 @@ interface UsePickerInputReturnValue<
   dropdownHandlers: UseDisclosureHandlers;
   dropdownOpened: boolean;
   popoverProps: DateInputSharedProps['popoverProps'];
+  pickerValue: DatePickerValue<Type>;
+  onPickerChange: (value: DatePickerValue<Type>) => void;
+  onDropdownSubmit: (() => void) | undefined;
+  submitDisabled: boolean;
 }
 
 export function usePickerInput<
@@ -61,7 +68,6 @@ export function usePickerInput<
     onChange: onPopoverChange,
     ...popoverRest
   } = input.popoverProps || {};
-  const withPopoverState = input.dropdownType !== 'modal';
 
   const initialValue = input.value !== undefined ? input.value : input.defaultValue;
   const initialValueDate = Array.isArray(initialValue) ? initialValue[0] : initialValue;
@@ -75,8 +81,8 @@ export function usePickerInput<
       : undefined,
     defaultLevel: clampLevel(input.calendarProps.defaultLevel, input.minLevel, input.maxLevel),
     onLevelChange: input.calendarProps.onLevelChange,
-    dropdownOpened: withPopoverState ? popoverOpened : undefined,
-    onDropdownOpenedChange: withPopoverState ? onPopoverChange : undefined,
+    dropdownOpened: popoverOpened,
+    onDropdownOpenedChange: onPopoverChange,
   });
 
   const dropdownHandlers = {
@@ -113,11 +119,27 @@ export function usePickerInput<
     disabled: cannotOpen,
   });
 
+  const dropdownOpened = controller.dropdownOpened && !cannotOpen;
+  const draft = useDropdownDraft({
+    dropdownType: input.dropdownType,
+    applyOnSubmit: input.applyOnSubmit,
+    opened: dropdownOpened,
+    type: input.type,
+    value: datesInput._value,
+    setValue: datesInput.setValue,
+    commitValue: datesInput.applyValue,
+    closeDropdown: controller.closeDropdown,
+  });
+
   return {
     controller,
     datesInput,
     dropdownHandlers,
-    dropdownOpened: controller.dropdownOpened && !cannotOpen,
-    popoverProps: withPopoverState ? popoverRest : input.popoverProps,
+    dropdownOpened,
+    popoverProps: popoverRest,
+    pickerValue: draft.pickerValue,
+    onPickerChange: draft.onPickerChange,
+    onDropdownSubmit: draft.draftMode ? draft.submit : undefined,
+    submitDisabled: draft.submitDisabled,
   };
 }

@@ -9,7 +9,7 @@ function Demo() {
     <Scroller>
       <Group gap="xs" wrap="nowrap">
         {Array.from({ length: 20 }).map((_, index) => (
-          <Badge key={index} variant="light" size="lg">
+          <Badge key={index} variant="light" size="lg" miw="fit-content">
             Badge {index + 1}
           </Badge>
         ))}

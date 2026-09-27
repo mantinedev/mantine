@@ -1,14 +1,17 @@
 import { useState } from 'react';
+import { act, fireEvent } from '@testing-library/react';
 import { __InputStylesNames } from '@mantine/core';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
+  mockMatchMedia,
   render,
   screen,
   tests,
   userEvent,
 } from '@mantine-tests/core';
 import {
+  clickControl,
   clickInput,
   datesTests,
   expectNoModal,
@@ -19,6 +22,7 @@ import {
 } from '@mantine-tests/dates';
 import { DatesProvider } from '../DatesProvider';
 import { DateTimePicker, DateTimePickerProps } from './DateTimePicker';
+import { useDateTimePicker } from './use-date-time-picker/use-date-time-picker';
 
 const defaultProps: DateTimePickerProps = {
   popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },
@@ -594,4 +598,226 @@ describe('@mantine/dates/DateTimePicker', () => {
       expect(input).toHaveAttribute('form', 'hidden-form');
     });
   });
+});
+
+describe('@mantine/dates/DateTimePicker responsive dropdownType', () => {
+  let media: ReturnType<typeof mockMatchMedia>;
+
+  afterEach(() => {
+    media?.restore();
+  });
+
+  it('renders drawer below sm breakpoint by default and closes it with the submit button', async () => {
+    media = mockMatchMedia(false, { filter: (query) => query.includes('min-width') });
+    const onDropdownClose = jest.fn();
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+        defaultValue="2022-04-11"
+        presets={[{ value: '2022-04-12', label: 'Test preset' }]}
+        onDropdownClose={onDropdownClose}
+      />
+    );
+
+    await clickInput(container);
+    expect(container.querySelector('.mantine-Drawer-content')).toBeInTheDocument();
+    expectNoPopover(container);
+    expect(container.querySelector('[data-preset]')).toHaveAttribute('data-layout', 'sheet');
+    expect(container.querySelector('[data-full-width]')).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-Drawer-content input[type="time"]')
+    ).toBeInTheDocument();
+    expect(screen.queryByLabelText('test-time-picker-hours')).not.toBeInTheDocument();
+
+    await userEvent.click(getSubmitButton());
+    expect(container.querySelector('.mantine-Drawer-content')).not.toBeInTheDocument();
+    expect(onDropdownClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps TimePicker in drawer mode when withSeconds is set', async () => {
+    media = mockMatchMedia(false, { filter: (query) => query.includes('min-width') });
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        withSeconds
+        drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+      />
+    );
+    await clickInput(container);
+    expect(container.querySelector('input[type="time"]')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('test-time-picker-hours')).toBeInTheDocument();
+  });
+
+  it('applies time entered in the native time input in drawer mode', async () => {
+    media = mockMatchMedia(false, { filter: (query) => query.includes('min-width') });
+    const onChange = jest.fn();
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        defaultValue="2022-04-11 10:00:00"
+        onChange={onChange}
+        drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+      />
+    );
+    await clickInput(container);
+    const input = container.querySelector('input[type="time"]') as HTMLInputElement;
+    expect(input.value).toBe('10:00');
+    fireEvent.change(input, { target: { value: '14:30' } });
+    await userEvent.click(getSubmitButton());
+    expect(onChange).toHaveBeenLastCalledWith('2022-04-11 14:30:00');
+  });
+
+  it('focuses the native time input with controller.focusTime in drawer mode', async () => {
+    media = mockMatchMedia(false, { filter: (query) => query.includes('min-width') });
+    let controller: any = null;
+    function Wrapper() {
+      controller = useDateTimePicker();
+      return (
+        <DateTimePicker
+          {...defaultProps}
+          controller={controller}
+          drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+        />
+      );
+    }
+    const { container } = render(<Wrapper />);
+    act(() => {
+      controller.openDropdown();
+      controller.focusTime('hours');
+    });
+    expect(container.querySelector('input[type="time"]')).toHaveFocus();
+    await act(() => new Promise((resolve) => setTimeout(resolve, 20)));
+    expect(container.querySelector('input[type="time"]')).toHaveFocus();
+  });
+
+  it('renders popover above sm breakpoint by default', async () => {
+    media = mockMatchMedia(true, { filter: (query) => query.includes('min-width') });
+    const { container } = render(<DateTimePicker {...defaultProps} />);
+    await clickInput(container);
+    expectOpenedPopover(container);
+    expect(container.querySelector('.mantine-Drawer-content')).not.toBeInTheDocument();
+  });
+
+  it('keeps TimePicker in drawer mode when withSeconds is set with timePickerProps', async () => {
+    media = mockMatchMedia(false, { filter: (query) => query.includes('min-width') });
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        timePickerProps={{ ...defaultProps.timePickerProps, withSeconds: true }}
+        drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+      />
+    );
+    await clickInput(container);
+    expect(container.querySelector('input[type="time"]')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('test-time-picker-hours')).toBeInTheDocument();
+  });
+
+  it('passes timePickerProps and endTimePickerProps to native time inputs in drawer mode', async () => {
+    media = mockMatchMedia(false, { filter: (query) => query.includes('min-width') });
+    const { container } = render(
+      <DateTimePicker
+        {...(defaultProps as any)}
+        type="range"
+        timePickerProps={{ 'aria-label': 'start-time', disabled: true, className: 'start-class' }}
+        endTimePickerProps={{ 'aria-label': 'end-time', readOnly: true, id: 'end-id' }}
+        drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+      />
+    );
+    await clickInput(container);
+    expect(screen.getByLabelText('start-time')).toBeDisabled();
+    expect(container.querySelector('.start-class input[type="time"]')).toBe(
+      screen.getByLabelText('start-time')
+    );
+    expect(screen.getByLabelText('end-time')).toHaveAttribute('readonly');
+    expect(screen.getByLabelText('end-time')).toHaveAttribute('id', 'end-id');
+  });
+
+  it.each(['drawer', 'modal'] as const)(
+    'does not commit an incomplete range when Enter is pressed in the time input (%s)',
+    async (dropdownType) => {
+      media = mockMatchMedia(false, { filter: (query) => query.includes('min-width') });
+      const onChange = jest.fn();
+      const { container } = render(
+        <DateTimePicker
+          {...(defaultProps as any)}
+          type="range"
+          dropdownType={dropdownType}
+          defaultValue={['2022-04-05 10:00:00', '2022-04-08 12:00:00']}
+          onChange={onChange}
+          drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+        />
+      );
+      await clickInput(container);
+      await clickControl(container, 15);
+
+      const timeInput =
+        dropdownType === 'drawer'
+          ? (container.querySelector('input[type="time"]') as HTMLElement)
+          : getTimePicker();
+      fireEvent.keyDown(timeInput, { key: 'Enter' });
+
+      expect(onChange).not.toHaveBeenCalled();
+      expect(
+        container.querySelector(
+          dropdownType === 'drawer' ? '.mantine-Drawer-content' : '.mantine-Modal-content'
+        )
+      ).toBeInTheDocument();
+    }
+  );
+
+  it('does not call onChange when the unchanged draft is submitted', async () => {
+    media = mockMatchMedia(false, { filter: (query) => query.includes('min-width') });
+    const onChange = jest.fn();
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        defaultValue="2022-04-11 10:00:00"
+        onChange={onChange}
+        drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+      />
+    );
+    await clickInput(container);
+    await userEvent.click(getSubmitButton());
+    expect(onChange).not.toHaveBeenCalled();
+    expect(container.querySelector('.mantine-Drawer-content')).not.toBeInTheDocument();
+  });
+
+  it.each(['drawer', 'modal'] as const)(
+    'controls the %s dropdown with popoverProps.opened and popoverProps.onChange',
+    async (dropdownType) => {
+      media = mockMatchMedia(false, { filter: (query) => query.includes('min-width') });
+      const onOpenedChange = jest.fn();
+
+      function Controlled() {
+        const [opened, setOpened] = useState(false);
+        return (
+          <DateTimePicker
+            {...defaultProps}
+            dropdownType={dropdownType}
+            drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+            popoverProps={{
+              opened,
+              onChange: (value) => {
+                onOpenedChange(value);
+                setOpened(value);
+              },
+            }}
+          />
+        );
+      }
+
+      const { container } = render(<Controlled />);
+      const selector =
+        dropdownType === 'drawer' ? '.mantine-Drawer-content' : '.mantine-Modal-content';
+
+      await clickInput(container);
+      expect(onOpenedChange).toHaveBeenLastCalledWith(true);
+      expect(container.querySelector(selector)).toBeInTheDocument();
+
+      await userEvent.click(getSubmitButton());
+      expect(onOpenedChange).toHaveBeenLastCalledWith(false);
+      expect(container.querySelector(selector)).not.toBeInTheDocument();
+    }
+  );
 });

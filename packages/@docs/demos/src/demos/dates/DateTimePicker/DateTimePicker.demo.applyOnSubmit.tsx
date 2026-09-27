@@ -7,8 +7,9 @@ import { DateTimePicker } from '@mantine/dates';
 function Demo() {
   return (
     <DateTimePicker
-      dropdownType="modal"
-      label="Pick date and time"
+      dropdownType="drawer"
+      applyOnSubmit={false}
+      label="Applied on selection"
       placeholder="Pick date and time"
     />
   );
@@ -18,14 +19,15 @@ function Demo() {
 function Demo() {
   return (
     <DateTimePicker
-      dropdownType="modal"
-      label="Pick date and time"
+      dropdownType="drawer"
+      applyOnSubmit={false}
+      label="Applied on selection"
       placeholder="Pick date and time"
     />
   );
 }
 
-export const modal: MantineDemo = {
+export const applyOnSubmit: MantineDemo = {
   type: 'code',
   centered: true,
   maxWidth: 400,

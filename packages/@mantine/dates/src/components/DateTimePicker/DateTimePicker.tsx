@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import {
-  ActionIconProps,
   BoxProps,
   Factory,
   genericFactory,
@@ -33,6 +32,12 @@ import {
   PickerInputBase,
   PickerInputBaseStylesNames,
 } from '../PickerInputBase';
+import { getSheetPickerProps } from '../PickerInputBase/get-sheet-picker-props/get-sheet-picker-props';
+import {
+  isIncompleteRange,
+  useDropdownDraft,
+} from '../PickerInputBase/use-dropdown-draft/use-dropdown-draft';
+import { useResolvedDropdownType } from '../PickerInputBase/use-resolved-dropdown-type/use-resolved-dropdown-type';
 import { TimePickerProps } from '../TimePicker/TimePicker';
 import {
   useDateTimePicker,
@@ -79,9 +84,6 @@ export interface DateTimePickerProps<Type extends DatePickerType = 'default'>
   /** Props passed down to the end time `TimePicker` component in range mode */
   endTimePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value' | 'controller'>;
 
-  /** Props passed down to the submit button */
-  submitButtonProps?: ActionIconProps & React.ComponentProps<'button'>;
-
   /** Determines whether the seconds input should be displayed @default false @category appearance */
   withSeconds?: boolean;
 
@@ -113,7 +115,7 @@ export type DateTimePickerFactory = Factory<{
 
 const defaultProps = {
   type: 'default',
-  dropdownType: 'popover',
+  dropdownType: { base: 'drawer', sm: 'popover' },
   size: 'sm',
 } satisfies Partial<DateTimePickerProps>;
 
@@ -131,6 +133,8 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
     timePickerProps,
     endTimePickerProps,
     submitButtonProps,
+    submitButtonLabel,
+    applyOnSubmit,
     withSeconds,
     level,
     defaultLevel,
@@ -188,7 +192,8 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
     onChange: onPopoverChange,
     ...popoverRest
   } = others.popoverProps || {};
-  const withPopoverState = dropdownType !== 'modal';
+  const resolvedDropdownType = useResolvedDropdownType(dropdownType);
+  const isSheet = resolvedDropdownType === 'drawer';
 
   const controller = useController(useDateTimePicker, controllerProp, {
     date: calendarProps.date,
@@ -197,8 +202,8 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
     level: level ? clampLevel(level, minLevel, calendarProps.maxLevel) : undefined,
     defaultLevel: clampLevel(defaultLevel, minLevel, calendarProps.maxLevel),
     onLevelChange: calendarProps.onLevelChange,
-    dropdownOpened: withPopoverState ? popoverOpened : undefined,
-    onDropdownOpenedChange: withPopoverState ? onPopoverChange : undefined,
+    dropdownOpened: popoverOpened,
+    onDropdownOpenedChange: onPopoverChange,
     defaultTimeValue,
   });
 
@@ -222,14 +227,29 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
   });
 
   const dropdownOpened = controller.dropdownOpened && !cannotOpen;
-  const [openSession, setOpenSession] = useState({ opened: dropdownOpened, key: 0 });
+  const [openSession, setOpenSession] = useState({
+    opened: dropdownOpened,
+    key: 0,
+    timeFocusRequested: false,
+  });
 
   if (openSession.opened !== dropdownOpened) {
     setOpenSession({
       opened: dropdownOpened,
       key: dropdownOpened ? openSession.key + 1 : openSession.key,
+      timeFocusRequested: dropdownOpened && !!controller.getPendingTimeFocus(),
     });
   }
+
+  const draft = useDropdownDraft({
+    dropdownType: resolvedDropdownType,
+    applyOnSubmit,
+    opened: dropdownOpened,
+    type,
+    value: _value,
+    setValue,
+    closeDropdown: controller.closeDropdown,
+  });
 
   const formatDate = (v: DateStringValue | null) => {
     if (!v) {
@@ -260,7 +280,7 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
   const formattedValue = getFormattedValue();
 
   const clearIncompleteRange = () => {
-    if (isRange && Array.isArray(_value) && _value[0] && !_value[1]) {
+    if (isIncompleteRange(type, _value)) {
       setValue([null, null] as any);
     }
   };
@@ -313,9 +333,10 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
       value={_value}
       size={size}
       variant={variant}
-      dropdownType={dropdownType}
       {...others}
-      popoverProps={withPopoverState ? popoverRest : others.popoverProps}
+      dropdownType={resolvedDropdownType}
+      sheetAutofocus={!openSession.timeFocusRequested}
+      popoverProps={popoverRest}
       type={type as any}
       __staticSelector="DateTimePicker"
       withTime
@@ -326,12 +347,13 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
         {...calendarProps}
         controller={controller}
         fullWidth={false}
+        size={size}
+        {...(isSheet ? getSheetPickerProps(size) : null)}
         type={type as any}
-        value={_value as any}
-        onChange={setValue as any}
+        value={draft.pickerValue as any}
+        onChange={draft.onPickerChange}
         maxDate={maxDate}
         minDate={minDate}
-        size={size}
         variant={variant}
         locale={locale}
         classNames={resolvedClassNames as any}
@@ -343,11 +365,12 @@ export const DateTimePicker = genericFactory<DateTimePickerFactory>((_props) => 
         timePickerProps={timePickerProps}
         endTimePickerProps={endTimePickerProps}
         submitButtonProps={submitButtonProps}
+        submitButtonLabel={submitButtonLabel}
         withSeconds={withSeconds}
         valueFormat={valueFormat}
         labelSeparator={labelSeparator}
         attributes={attributes}
-        onSubmit={controller.closeDropdown}
+        onSubmit={draft.submit}
         __staticSelector="DateTimePicker"
       />
     </PickerInputBase>

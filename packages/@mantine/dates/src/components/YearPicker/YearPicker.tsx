@@ -113,6 +113,7 @@ export const YearPicker = genericFactory<YearPickerFactory>((_props) => {
     size,
     attributes,
     controller: controllerProp,
+    fullWidth,
     ...rest
   } = props;
 
@@ -174,6 +175,7 @@ export const YearPicker = genericFactory<YearPickerFactory>((_props) => {
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         size={size}
+        fullWidth={fullWidth}
         {...calendarProps}
         {...(!presets ? others : {})}
         minLevel="decade"

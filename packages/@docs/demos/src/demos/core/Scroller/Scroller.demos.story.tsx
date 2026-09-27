@@ -27,3 +27,8 @@ export const Demo_draggable = {
   name: '⭐ Demo: draggable',
   render: renderDemo(demos.draggable),
 };
+
+export const Demo_withoutControls = {
+  name: '⭐ Demo: withoutControls',
+  render: renderDemo(demos.withoutControls),
+};

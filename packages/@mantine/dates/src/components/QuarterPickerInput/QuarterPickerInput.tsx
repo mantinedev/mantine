@@ -14,7 +14,8 @@ import { useQuarterPickerInput } from './use-quarter-picker-input/use-quarter-pi
 export type QuarterPickerInputStylesNames =
   | __InputStylesNames
   | 'placeholder'
-  | QuarterPickerStylesNames;
+  | QuarterPickerStylesNames
+  | 'submitButton';
 
 export interface QuarterPickerInputProps<Type extends DatePickerType = 'default'>
   extends
@@ -45,7 +46,7 @@ const defaultProps = {
   valueFormat: '[Q]Q YYYY',
   closeOnChange: true,
   sortDates: true,
-  dropdownType: 'popover',
+  dropdownType: { base: 'drawer', sm: 'popover' },
 } satisfies Partial<QuarterPickerInputProps>;
 
 export const QuarterPickerInput = createPickerInput<QuarterPickerInputFactory>({

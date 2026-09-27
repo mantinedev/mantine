@@ -183,7 +183,10 @@ export function SpinInput({
       }}
       onClick={(event) => {
         event.stopPropagation();
-        event.currentTarget.select();
+        const { selectionStart, selectionEnd, value: inputValue } = event.currentTarget;
+        if (selectionStart !== 0 || selectionEnd !== inputValue.length) {
+          event.currentTarget.select();
+        }
       }}
       onMouseDown={(event) => event.stopPropagation()}
       {...others}

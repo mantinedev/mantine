@@ -1,5 +1,10 @@
 .root {
-  --scroller-control-size: 50px;
+  --scroller-control-size-xs: 30px;
+  --scroller-control-size-sm: 40px;
+  --scroller-control-size-md: 50px;
+  --scroller-control-size-lg: 60px;
+  --scroller-control-size-xl: 70px;
+  --scroller-control-size: var(--scroller-control-size-md);
   --scroller-background-color: var(--mantine-color-body);
 
   display: flex;

@@ -4,17 +4,27 @@ import { DatesDropdownProvider, useDatesDropdownContext } from './DatesDropdown.
 describe('@mantine/dates/DatesDropdown.context', () => {
   it('returns default value without a provider', () => {
     const { result } = renderHook(() => useDatesDropdownContext());
-    expect(result.current).toStrictEqual({ preventFocus: false, stopPropagation: false });
+    expect(result.current).toStrictEqual({
+      preventFocus: false,
+      stopPropagation: false,
+      layout: 'default',
+    });
   });
 
   it('returns provided value', () => {
     const { result } = renderHook(() => useDatesDropdownContext(), {
       wrapper: ({ children }) => (
-        <DatesDropdownProvider value={{ preventFocus: true, stopPropagation: true }}>
+        <DatesDropdownProvider
+          value={{ preventFocus: true, stopPropagation: true, layout: 'sheet' }}
+        >
           {children}
         </DatesDropdownProvider>
       ),
     });
-    expect(result.current).toStrictEqual({ preventFocus: true, stopPropagation: true });
+    expect(result.current).toStrictEqual({
+      preventFocus: true,
+      stopPropagation: true,
+      layout: 'sheet',
+    });
   });
 });

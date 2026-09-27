@@ -66,8 +66,8 @@ The default order is `['day', 'month', 'year']`.
 
 ## Min and max dates
 
-Set the `minDate` and `maxDate` props to restrict the selectable date range. If a value outside
-the allowed range is entered, it will be clamped to the nearest valid date on blur.
+Set the `minDate` and `maxDate` props to restrict the selectable date range. While the entered
+date is outside the allowed range, the component value is `null`.
 
 <Demo data={MaskedDateInputDemos.minMax} />
 
@@ -87,7 +87,9 @@ Set `withDropdown={false}` to disable the calendar dropdown:
 ## Dropdown position
 
 Use `popoverProps` to pass props down to the underlying [Popover](/core/popover) component.
-For example, to always display the dropdown above the input:
+By default, the dropdown is limited to the space available in the viewport and scrolls when the
+calendar does not fit; pass `middlewares: { size: false }` to disable this behavior. For example,
+to always display the dropdown above the input:
 
 <Demo data={MaskedDateInputDemos.dropdownPosition} />
 

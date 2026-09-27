@@ -37,7 +37,11 @@ import { DatePickerPreset } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
 import { HiddenDatesInput } from '../HiddenDatesInput';
 import { isSameMonth } from '../Month';
-import { DatesDropdownProvider } from '../PickerInputBase/DatesDropdown.context';
+import {
+  DatesDropdownContextValue,
+  DatesDropdownProvider,
+} from '../PickerInputBase/DatesDropdown.context';
+import { getDatesPopoverMiddlewares } from '../PickerInputBase/get-dates-popover-middlewares/get-dates-popover-middlewares';
 import {
   PickerInputController,
   PickerInputControllerOptions,
@@ -47,8 +51,16 @@ import { isDateValid } from './is-date-valid/is-date-valid';
 import { useDateInput } from './use-date-input/use-date-input';
 import moduleClasses from './DateInput.module.css';
 
-const classes = { ...getPresetsClasses('presetsRoot'), dropdown: moduleClasses.dropdown };
-const DROPDOWN_CONTEXT = { preventFocus: true, stopPropagation: false };
+const classes = {
+  ...getPresetsClasses('presetsRoot'),
+  dropdown: moduleClasses.dropdown,
+  dropdownContent: moduleClasses.dropdownContent,
+};
+const DROPDOWN_CONTEXT: DatesDropdownContextValue = {
+  preventFocus: true,
+  stopPropagation: false,
+  layout: 'default',
+};
 
 export type DateInputStylesNames =
   | __InputStylesNames
@@ -381,6 +393,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
           withRoles={false}
           unstyled={unstyled}
           {...popoverProps}
+          middlewares={getDatesPopoverMiddlewares(popoverProps?.middlewares)}
         >
           <Popover.Target>
             <Input
@@ -411,17 +424,19 @@ export const DateInput = factory<DateInputFactory>((_props) => {
             className={unstyled ? undefined : classes.dropdown}
             ref={_dropdownRef}
           >
-            <DatesDropdownProvider value={DROPDOWN_CONTEXT}>
-              <Presets
-                presets={presets}
-                onPresetSelect={handlePresetSelect}
-                getStyles={getStyles}
-                rootSelector="presetsRoot"
-                size={inputProps.size as MantineSize}
-              >
-                {calendar}
-              </Presets>
-            </DatesDropdownProvider>
+            <div className={unstyled ? undefined : classes.dropdownContent}>
+              <DatesDropdownProvider value={DROPDOWN_CONTEXT}>
+                <Presets
+                  presets={presets}
+                  onPresetSelect={handlePresetSelect}
+                  getStyles={getStyles}
+                  rootSelector="presetsRoot"
+                  size={inputProps.size as MantineSize}
+                >
+                  {calendar}
+                </Presets>
+              </DatesDropdownProvider>
+            </div>
           </Popover.Dropdown>
         </Popover>
       </Input.Wrapper>

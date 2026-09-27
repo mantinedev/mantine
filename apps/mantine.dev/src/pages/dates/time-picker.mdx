@@ -132,8 +132,8 @@ and the dropdown is disabled.
 
 ## Min hours digits
 
-Use the `minHoursDigits` prop to set the minimum number of digits displayed in the hours input.
-This prop is only applicable when `type="duration"` is set. By default, the minimum is `2`.
+Use the `minHoursDigits` prop to set the minimum number of digits the hours input is sized for: it defines
+the placeholder length and the field width. This prop is only applicable when `type="duration"` is set. By default, the minimum is `2`.
 
 <Demo data={TimePickerDemos.minHoursDigits} />
 
@@ -207,8 +207,9 @@ Set `closeDropdownOnPresetSelect` prop to close the dropdown once a value is sel
 ## Dropdown position
 
 By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
+It is also limited to the space available in the viewport and scrolls when the content does not fit.
 You can change this behavior by setting `position` and `middlewares` props, which are passed down to the
-underlying [Popover](/core/popover) component.
+underlying [Popover](/core/popover) component, for example, `middlewares: { size: false }` disables the viewport limit.
 
 Example of dropdown that is always displayed above the input:
 

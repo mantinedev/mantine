@@ -1,6 +1,7 @@
 export { usage } from './Drawer.demo.usage';
 export { positions } from './Drawer.demo.positions';
 export { sizes } from './Drawer.demo.sizes';
+export { autoSize } from './Drawer.demo.autoSize';
 export { fullScreenBelow } from './Drawer.demo.fullScreenBelow';
 export { transitions } from './Drawer.demo.transitions';
 export { overlay } from './Drawer.demo.overlay';

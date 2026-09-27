@@ -10,7 +10,11 @@ import {
 import { createPickerInput } from '../PickerInputBase/create-picker-input/create-picker-input';
 import { useDatePickerInput } from './use-date-picker-input/use-date-picker-input';
 
-export type DatePickerInputStylesNames = __InputStylesNames | 'placeholder' | DatePickerStylesNames;
+export type DatePickerInputStylesNames =
+  | __InputStylesNames
+  | 'placeholder'
+  | DatePickerStylesNames
+  | 'submitButton';
 
 export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
   extends
@@ -41,7 +45,7 @@ const defaultProps = {
   valueFormat: 'MMMM D, YYYY',
   closeOnChange: true,
   sortDates: true,
-  dropdownType: 'popover',
+  dropdownType: { base: 'drawer', sm: 'popover' },
 } satisfies Partial<DatePickerInputProps>;
 
 export const DatePickerInput = createPickerInput<DatePickerInputFactory>({

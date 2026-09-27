@@ -12,6 +12,18 @@
   padding: 4px;
 }
 
+.dropdownContent {
+  --dates-dropdown-inset: rem(4px);
+
+  max-height: calc(
+    var(--dates-dropdown-max-height, 100vh) - rem(4px) * 2 - rem(2px) +
+      var(--dates-dropdown-inset) * 2
+  );
+  margin: calc(var(--dates-dropdown-inset) * -1);
+  padding: var(--dates-dropdown-inset);
+  overflow: auto;
+}
+
 .control {
   text-align: center;
   min-width: 2.5em;

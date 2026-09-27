@@ -18,6 +18,11 @@ export const Demo_sizes = {
   render: renderDemo(demos.sizes),
 };
 
+export const Demo_autoSize = {
+  name: '⭐ Demo: autoSize',
+  render: renderDemo(demos.autoSize),
+};
+
 export const Demo_fullScreenBelow = {
   name: '⭐ Demo: fullScreenBelow',
   render: renderDemo(demos.fullScreenBelow),

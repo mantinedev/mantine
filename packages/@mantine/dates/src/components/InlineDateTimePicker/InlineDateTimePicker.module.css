@@ -1,12 +1,34 @@
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
 .timeWrapper {
   display: flex;
   align-items: stretch;
   margin-top: var(--mantine-spacing-md);
+
+  &:where([data-layout='sheet']) {
+    flex-wrap: wrap;
+    gap: var(--mantine-spacing-sm);
+  }
 }
 
 .timeInput {
   flex: 1;
   margin-inline-end: var(--mantine-spacing-md);
+
+  :where([data-layout='sheet']) > & {
+    flex: 1 1 100%;
+    margin-inline-end: 0;
+  }
+}
+
+.submitButton {
+  &:where([data-layout='sheet']) {
+    width: 100%;
+    flex: 1 1 100%;
+  }
 }
 
 .rangeInfo {
@@ -25,6 +47,11 @@
   align-items: stretch;
   gap: var(--mantine-spacing-md);
   margin-top: var(--mantine-spacing-md);
+
+  &:where([data-layout='sheet']) {
+    flex-wrap: wrap;
+    gap: var(--mantine-spacing-sm);
+  }
 }
 
 .rangeTimeInput {

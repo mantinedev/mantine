@@ -24,6 +24,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useId, useMergedRef } from '@mantine/hooks';
+import { getDatesPopoverMiddlewares } from '../PickerInputBase/get-dates-popover-middlewares/get-dates-popover-middlewares';
 import { SpinInput } from '../SpinInput';
 import { AmPmInput } from './AmPmInput/AmPmInput';
 import { AmPmControlsList } from './TimeControlsList/AmPmControlsList';
@@ -275,6 +276,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
     clearable,
     clearSectionMode,
     onMouseDown,
+    onKeyDown,
     onFocusCapture,
     onBlurCapture,
     min,
@@ -369,12 +371,16 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
     }
   };
 
+  const closeDropdown = () => {
+    setDropdownOpened(false);
+    popoverProps?.onChange?.(false);
+  };
+
   const handlePresetSelect = (timeString: string) => {
     controller.setValue(timeString);
 
     if (closeDropdownOnPresetSelect) {
-      setDropdownOpened(false);
-      popoverProps?.onChange?.(false);
+      closeDropdown();
     }
   };
 
@@ -395,6 +401,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
         withRoles={false}
         disabled={disabled || readOnly || !withDropdown || isDuration}
         {...popoverProps}
+        middlewares={getDatesPopoverMiddlewares(popoverProps?.middlewares)}
       >
         <Popover.Target>
           <InputBase
@@ -411,6 +418,16 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
             onMouseDown={(event) => {
               event.preventDefault();
               onMouseDown?.(event);
+            }}
+            onKeyDown={(event) => {
+              onKeyDown?.(event);
+              if (
+                event.key === 'Escape' &&
+                dropdownOpened &&
+                popoverProps?.closeOnEscape !== false
+              ) {
+                closeDropdown();
+              }
             }}
             onFocusCapture={(event) => {
               setDropdownOpened(true);
@@ -591,52 +608,54 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
           {...getStyles('dropdown')}
           onMouseDown={(event) => event.preventDefault()}
         >
-          {presets ? (
-            <TimePresets
-              value={controller.value}
-              onChange={handlePresetSelect}
-              format={controller.format}
-              presets={presets}
-              amPmLabels={controller.amPmLabels}
-              withSeconds={controller.withSeconds || false}
-            />
-          ) : (
-            <div {...getStyles('controlsListGroup')}>
-              <TimeControlsList
-                min={controller.format === '12h' ? 1 : 0}
-                max={controller.format === '12h' ? 12 : 23}
-                step={hoursStep}
-                value={controller.hours}
-                onSelect={controller.setHours}
-                reversed={reverseTimeControlsList}
+          <div className={unstyled ? undefined : classes.dropdownContent}>
+            {presets ? (
+              <TimePresets
+                value={controller.value}
+                onChange={handlePresetSelect}
+                format={controller.format}
+                presets={presets}
+                amPmLabels={controller.amPmLabels}
+                withSeconds={controller.withSeconds || false}
               />
-              <TimeControlsList
-                min={0}
-                max={59}
-                step={minutesStep}
-                value={controller.minutes}
-                onSelect={controller.setMinutes}
-                reversed={reverseTimeControlsList}
-              />
-              {controller.withSeconds && (
+            ) : (
+              <div {...getStyles('controlsListGroup')}>
+                <TimeControlsList
+                  min={controller.format === '12h' ? 1 : 0}
+                  max={controller.format === '12h' ? 12 : 23}
+                  step={hoursStep}
+                  value={controller.hours}
+                  onSelect={controller.setHours}
+                  reversed={reverseTimeControlsList}
+                />
                 <TimeControlsList
                   min={0}
                   max={59}
-                  step={secondsStep}
-                  value={controller.seconds}
-                  onSelect={controller.setSeconds}
+                  step={minutesStep}
+                  value={controller.minutes}
+                  onSelect={controller.setMinutes}
                   reversed={reverseTimeControlsList}
                 />
-              )}
-              {controller.format === '12h' && (
-                <AmPmControlsList
-                  labels={controller.amPmLabels}
-                  value={controller.amPm}
-                  onSelect={controller.setAmPm}
-                />
-              )}
-            </div>
-          )}
+                {controller.withSeconds && (
+                  <TimeControlsList
+                    min={0}
+                    max={59}
+                    step={secondsStep}
+                    value={controller.seconds}
+                    onSelect={controller.setSeconds}
+                    reversed={reverseTimeControlsList}
+                  />
+                )}
+                {controller.format === '12h' && (
+                  <AmPmControlsList
+                    labels={controller.amPmLabels}
+                    value={controller.amPm}
+                    onSelect={controller.setAmPm}
+                  />
+                )}
+              </div>
+            )}
+          </div>
         </Popover.Dropdown>
       </Popover>
     </TimePickerProvider>

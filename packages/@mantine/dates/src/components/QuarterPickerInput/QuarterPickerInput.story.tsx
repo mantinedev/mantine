@@ -86,3 +86,24 @@ export function NativeLevelSelect() {
     </div>
   );
 }
+
+export function ResponsiveDropdown() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <QuarterPickerInput label="Drawer below sm, popover above" placeholder="Pick value" />
+      <QuarterPickerInput
+        label="Always drawer"
+        placeholder="Pick value"
+        dropdownType="drawer"
+        mt="md"
+      />
+      <QuarterPickerInput
+        label="Drawer, apply on selection"
+        placeholder="Pick value"
+        dropdownType="drawer"
+        applyOnSubmit={false}
+        mt="md"
+      />
+    </div>
+  );
+}

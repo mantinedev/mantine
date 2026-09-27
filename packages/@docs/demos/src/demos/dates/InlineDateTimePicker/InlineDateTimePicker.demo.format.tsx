@@ -16,7 +16,7 @@ function Demo() {
 export const format: MantineDemo = {
   type: 'code',
   centered: true,
-  maxWidth: 280,
+  maxWidth: 340,
   component: Demo,
   code,
 };

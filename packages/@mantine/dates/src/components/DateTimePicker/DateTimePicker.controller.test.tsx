@@ -351,6 +351,31 @@ describe('@mantine/dates/DateTimePicker/controller', () => {
 
     act(() => controller.openDropdown());
     await userEvent.click(screen.getByRole('button', { name: '10 June 2024' }));
+    expect(spy).not.toHaveBeenCalled();
+
+    act(() => controller.closeDropdown());
+    expect(spy).not.toHaveBeenCalled();
+    expect(onDropdownClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('runs the close handling on closeDropdown with dropdownType="modal" and applyOnSubmit={false}', async () => {
+    let controller: DateTimePickerController = null as any;
+    const spy = jest.fn();
+    const onDropdownClose = jest.fn();
+    render(
+      <ControllerPicker
+        type="range"
+        dropdownType="modal"
+        applyOnSubmit={false}
+        options={{ defaultDate: '2024-06-01' }}
+        onChange={spy}
+        onDropdownClose={onDropdownClose}
+        capture={(c) => (controller = c)}
+      />
+    );
+
+    act(() => controller.openDropdown());
+    await userEvent.click(screen.getByRole('button', { name: '10 June 2024' }));
     expect(spy).toHaveBeenLastCalledWith(['2024-06-10 00:00:00', null]);
 
     act(() => controller.closeDropdown());

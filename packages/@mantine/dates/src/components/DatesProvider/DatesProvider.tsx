@@ -7,6 +7,7 @@ export interface DatesProviderValue {
   weekendDays: DayOfWeek[];
   labelSeparator: string;
   consistentWeeks: boolean;
+  submitButtonLabel: string;
 }
 
 export type DatesProviderSettings = Partial<DatesProviderValue>;
@@ -17,6 +18,7 @@ export const DATES_PROVIDER_DEFAULT_SETTINGS: DatesProviderValue = {
   weekendDays: [0, 6],
   labelSeparator: '–',
   consistentWeeks: false,
+  submitButtonLabel: 'Save',
 };
 
 export const DatesProviderContext = createContext(DATES_PROVIDER_DEFAULT_SETTINGS);

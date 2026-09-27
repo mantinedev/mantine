@@ -1,8 +1,17 @@
 import { WeekPickerInput } from '@mantine/dates';
 import { getSharedPickerInputDemos } from '../_shared';
 
-export const { usage, multiple, range, configurator, modal, icon, clearable, valueFormatter } =
-  getSharedPickerInputDemos(WeekPickerInput);
+export const {
+  usage,
+  multiple,
+  range,
+  configurator,
+  dropdownType,
+  applyOnSubmit,
+  icon,
+  clearable,
+  valueFormatter,
+} = getSharedPickerInputDemos(WeekPickerInput);
 
 export { valueFormat } from './WeekPickerInput.demo.valueFormat';
 export { weekNumberFormatter } from './WeekPickerInput.demo.weekNumberFormatter';

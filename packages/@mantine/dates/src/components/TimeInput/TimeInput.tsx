@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import cx from 'clsx';
 import {
   __BaseInputProps,
@@ -119,6 +120,14 @@ export const TimeInput = factory<TimeInputFactory>((_props) => {
     }
   };
 
+  const [uncontrolledEmpty, setUncontrolledEmpty] = useState(!others.defaultValue);
+  const isEmpty = value !== undefined ? !value : uncontrolledEmpty;
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUncontrolledEmpty(!event.currentTarget.value);
+    onChange?.(event);
+  };
+
   return (
     <InputBase
       classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
@@ -126,8 +135,9 @@ export const TimeInput = factory<TimeInputFactory>((_props) => {
       unstyled={unstyled}
       value={value}
       step={step ?? (withSeconds ? 1 : 60)}
+      data-empty={isEmpty || undefined}
       {...others}
-      onChange={onChange}
+      onChange={handleChange}
       onBlur={onTimeBlur}
       type="time"
       __staticSelector="TimeInput"
