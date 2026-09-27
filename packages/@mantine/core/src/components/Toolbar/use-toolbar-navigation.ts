@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 interface UseToolbarNavigationOptions {
   orientation: 'horizontal' | 'vertical';
@@ -8,7 +8,7 @@ interface UseToolbarNavigationOptions {
 
 export function useToolbarNavigation({ orientation, loop, dir }: UseToolbarNavigationOptions) {
   const toolbarRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const activeItemRef = useRef<HTMLElement | null>(null);
 
   const getFocusableItems = useCallback((): HTMLElement[] => {
     if (!toolbarRef.current) {
@@ -19,23 +19,19 @@ export function useToolbarNavigation({ orientation, loop, dir }: UseToolbarNavig
     );
   }, []);
 
+  const syncTabIndex = useCallback(() => {
+    const items = getFocusableItems();
+    const tabStop =
+      activeItemRef.current && items.includes(activeItemRef.current)
+        ? activeItemRef.current
+        : items[0];
+
+    items.forEach((item) => {
+      item.setAttribute('tabindex', item === tabStop ? '0' : '-1');
+    });
+  }, [getFocusableItems]);
+
   useEffect(() => {
-    const syncTabIndex = () => {
-      const items = getFocusableItems();
-      if (items.length === 0) {
-        return;
-      }
-
-      const clampedIndex = activeIndex >= items.length ? 0 : activeIndex;
-      if (clampedIndex !== activeIndex) {
-        setActiveIndex(clampedIndex);
-      }
-
-      items.forEach((item, index) => {
-        item.setAttribute('tabindex', index === clampedIndex ? '0' : '-1');
-      });
-    };
-
     syncTabIndex();
 
     const node = toolbarRef.current;
@@ -47,7 +43,7 @@ export function useToolbarNavigation({ orientation, loop, dir }: UseToolbarNavig
     observer.observe(node, { childList: true, subtree: true, attributeFilter: ['data-disabled'] });
 
     return () => observer.disconnect();
-  });
+  }, [syncTabIndex]);
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -97,7 +93,6 @@ export function useToolbarNavigation({ orientation, loop, dir }: UseToolbarNavig
       }
 
       if (nextIndex !== null) {
-        setActiveIndex(nextIndex);
         items[nextIndex].focus();
       }
     },
@@ -106,13 +101,13 @@ export function useToolbarNavigation({ orientation, loop, dir }: UseToolbarNavig
 
   const handleItemFocus = useCallback(
     (event: React.FocusEvent<HTMLDivElement>) => {
-      const items = getFocusableItems();
-      const index = items.indexOf(event.target as HTMLElement);
-      if (index !== -1) {
-        setActiveIndex(index);
+      const target = event.target as HTMLElement;
+      if (getFocusableItems().includes(target)) {
+        activeItemRef.current = target;
+        syncTabIndex();
       }
     },
-    [getFocusableItems]
+    [getFocusableItems, syncTabIndex]
   );
 
   return { toolbarRef, handleKeyDown, handleItemFocus };

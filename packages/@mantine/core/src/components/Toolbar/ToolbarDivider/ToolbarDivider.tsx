@@ -45,7 +45,7 @@ export const ToolbarDivider = factory<ToolbarDividerFactory>((_props) => {
         ariaOrientation ?? (ctx.orientation === 'horizontal' ? 'vertical' : 'horizontal')
       }
       {...ctx.getStyles('divider', { className, classNames, style, styles })}
-      data-orientation={ctx.orientation === 'horizontal' ? 'horizontal' : 'vertical'}
+      data-orientation={ctx.orientation}
     />
   );
 });

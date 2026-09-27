@@ -46,7 +46,7 @@ export const ToolbarStylesApi: StylesApiData<ToolbarFactory> = {
     {
       modifier: 'data-disabled',
       selector: 'toggle',
-      condition: '`disabled` prop is set on toggle',
+      condition: '`disabled` prop is set on toggle or on the parent `Toolbar.ToggleGroup`',
     },
     {
       modifier: 'data-auto-width',

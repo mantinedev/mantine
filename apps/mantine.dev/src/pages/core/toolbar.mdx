@@ -11,6 +11,10 @@ keyboard navigation. It contains toggle buttons, toggle groups, dividers, and vi
 `Toolbar.Toggle` is a polymorphic component – it can be rendered as any element, for example
 as `a` tag for links.
 
+`Toolbar.Toggle` is stateless: pass `active` and update it in `onClick`, or use `Toolbar.ToggleGroup`
+to manage state of a set of toggles. For a toggle that manages its own state, use the standalone
+[Toggle](/core/toggle/) component.
+
 <Demo data={ToolbarDemos.usage} />
 
 ## Toggle groups
@@ -41,8 +45,8 @@ background color. This is useful when using `variant="filled"` with light colors
 
 ## Auto width
 
-By default, `Toolbar.Toggle` renders as a square button. Set `autoWidth` prop to allow
-the toggle width to adjust to its content — useful for text labels.
+By default, `Toolbar.Toggle` and `Toolbar.ToggleItem` render as square buttons. Set `autoWidth`
+prop on either of them to allow the toggle width to adjust to its content — useful for text labels.
 
 <Demo data={ToolbarDemos.autoWidth} />
 
@@ -71,12 +75,12 @@ Arrow keys, `Home` and `End` move focus only between `Toolbar.Toggle` and `Toolb
     },
     {
       key: 'ArrowRight',
-      description: 'Moves focus to the next item',
+      description: 'Moves focus to the next item (previous item when dir="rtl")',
       condition: 'orientation="horizontal"',
     },
     {
       key: 'ArrowLeft',
-      description: 'Moves focus to the previous item',
+      description: 'Moves focus to the previous item (next item when dir="rtl")',
       condition: 'orientation="horizontal"',
     },
     {

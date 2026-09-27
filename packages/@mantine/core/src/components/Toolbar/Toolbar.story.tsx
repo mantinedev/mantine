@@ -43,6 +43,7 @@ export function Usage() {
           href="https://mantine.dev"
           target="_blank"
           aria-label="Mantine website"
+          autoWidth
         >
           Link
         </Toolbar.Toggle>
@@ -83,6 +84,49 @@ export function Sizes() {
           </Toolbar.Toggle>
         </Toolbar>
       ))}
+    </div>
+  );
+}
+
+export function DisabledActive() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Toolbar>
+        <Toolbar.Toggle active>A</Toolbar.Toggle>
+        <Toolbar.Toggle active disabled>
+          A
+        </Toolbar.Toggle>
+        <Toolbar.Toggle disabled>A</Toolbar.Toggle>
+        <Toolbar.Divider />
+        <Toolbar.ToggleGroup type="single" defaultValue="left" disabled>
+          <Toolbar.ToggleItem value="left" autoWidth>
+            Left
+          </Toolbar.ToggleItem>
+          <Toolbar.ToggleItem value="center" autoWidth>
+            Center
+          </Toolbar.ToggleItem>
+        </Toolbar.ToggleGroup>
+      </Toolbar>
+    </div>
+  );
+}
+
+export function DynamicDisabled() {
+  const [history, setHistory] = useState(0);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Toolbar>
+        <Toolbar.Toggle disabled={history === 0} onClick={() => setHistory((h) => h - 1)} autoWidth>
+          Undo
+        </Toolbar.Toggle>
+        <Toolbar.Toggle onClick={() => setHistory((h) => h + 1)} autoWidth>
+          Edit
+        </Toolbar.Toggle>
+        <Toolbar.Toggle aria-label="Bold">B</Toolbar.Toggle>
+        <Toolbar.Toggle aria-label="Italic">I</Toolbar.Toggle>
+      </Toolbar>
+      <p>History: {history}</p>
     </div>
   );
 }

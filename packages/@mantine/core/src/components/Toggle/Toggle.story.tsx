@@ -37,3 +37,15 @@ export function Sizes() {
     </div>
   );
 }
+
+export function DisabledActive() {
+  return (
+    <div style={{ padding: 40, display: 'flex', gap: 8 }}>
+      <Toggle active>A</Toggle>
+      <Toggle active disabled>
+        A
+      </Toggle>
+      <Toggle disabled>A</Toggle>
+    </div>
+  );
+}
