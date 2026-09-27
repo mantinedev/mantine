@@ -234,7 +234,26 @@ export function useOverlayStackValue(
 
     const getZIndex = (id: string) => {
       const index = entries.findIndex((entry) => matches(entry, kind, id));
-      return `calc(${baseZIndex} + ${index === -1 ? entries.length : index} + 1)`;
+      return `calc(${baseZIndex} + ${(index === -1 ? entries.length : index) * 2} + 2)`;
+    };
+
+    const getOverlayZIndex = () => {
+      const topIndex = topEntry ? entries.indexOf(topEntry) : -1;
+      let owner = topIndex;
+
+      for (let index = topIndex - 1; index >= 0; index -= 1) {
+        if (entries[index].closing) {
+          continue;
+        }
+
+        if (entries[index].kind !== topEntry.kind) {
+          break;
+        }
+
+        owner = index;
+      }
+
+      return `calc(${baseZIndex} + ${Math.max(owner, 0) * 2} + 1)`;
     };
 
     return {
@@ -246,6 +265,7 @@ export function useOverlayStackValue(
       close,
       closeAll,
       getZIndex,
+      getOverlayZIndex,
       getDepth,
       isVisible: (id: string) =>
         withStackTransform ? getDepth(id) <= maxDepth : getDepth(id) === 0,
@@ -334,6 +354,7 @@ export function useScopedOverlayStackValue(
       close,
       closeAll: () => [...openStack].reverse().forEach(close),
       getZIndex: (id) => parent.getZIndex(toId(id)),
+      getOverlayZIndex: parent.getOverlayZIndex,
       getDepth: (id) => parent.getDepth(toId(id)),
       isVisible: (id) => parent.isVisible(toId(id)),
       isActive: (id) => parent.isActive(toId(id)),

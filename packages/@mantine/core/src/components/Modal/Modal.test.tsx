@@ -908,10 +908,10 @@ describe('@mantine/core/Modal theme.overlayStack', () => {
         root.style.getPropertyValue('--mb-z-index')
       );
 
-    expect(getRootZIndex()).toStrictEqual(['calc(1000 + 0 + 1)', 'calc(1000 + 1 + 1)']);
+    expect(getRootZIndex()).toStrictEqual(['calc(1000 + 0 + 2)', 'calc(1000 + 2 + 2)']);
 
     await userEvent.click(screen.getByText('unmount-a'));
-    expect(getRootZIndex()).toStrictEqual(['calc(200 + 0 + 1)']);
+    expect(getRootZIndex()).toStrictEqual(['calc(200 + 0 + 2)']);
   });
 
   it('keeps the default overlay transition for a single modal in the shared stack', async () => {
@@ -1042,7 +1042,7 @@ describe('@mantine/core/Modal theme.overlayStack', () => {
     const zIndexes = Array.from(container.querySelectorAll<HTMLElement>('.mantine-Modal-root')).map(
       (root) => root.style.getPropertyValue('--mb-z-index')
     );
-    expect(zIndexes).toStrictEqual(['calc(200 + 0 + 1)', 'calc(200 + 1 + 1)']);
+    expect(zIndexes).toStrictEqual(['calc(200 + 0 + 2)', 'calc(200 + 2 + 2)']);
 
     const closeButtons = container.querySelectorAll<HTMLButtonElement>('.mantine-Modal-close');
     fireEvent.click(closeButtons[1]);

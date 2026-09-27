@@ -33,6 +33,7 @@ export interface UseOverlayStackEntryReturn {
   };
   overlayProps: {
     visible: boolean;
+    zIndex?: string;
     transitionProps?: { duration: number };
   };
   contentProps: OverlayStackEntryContentProps;
@@ -126,6 +127,7 @@ export function useOverlayStackEntry(
     },
     overlayProps: {
       visible: withOverlay !== false && (hasAnyOtherEntry ? active : opened),
+      ...(hasAnyOtherEntry && { zIndex: ctx.getOverlayZIndex() }),
       transitionProps: hasAnyOtherEntry ? { duration: 0 } : undefined,
     },
     contentProps: {

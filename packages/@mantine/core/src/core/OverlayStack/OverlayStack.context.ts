@@ -14,6 +14,7 @@ export interface OverlayStackContextValue {
   close: (id: string) => void;
   closeAll: () => void;
   getZIndex: (id: string) => string;
+  getOverlayZIndex: () => string;
   getDepth: (id: string) => number;
   isVisible: (id: string) => boolean;
   isActive: (id: string) => boolean;

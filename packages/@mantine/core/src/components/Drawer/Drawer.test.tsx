@@ -728,8 +728,8 @@ describe('@mantine/core/Drawer theme.overlayStack', () => {
 
     const zIndex = (selector: string) =>
       container.querySelector<HTMLElement>(selector)!.style.getPropertyValue('--mb-z-index');
-    expect(zIndex('.mantine-Drawer-root')).toBe('calc(200 + 0 + 1)');
-    expect(zIndex('.mantine-Modal-root')).toBe('calc(200 + 1 + 1)');
+    expect(zIndex('.mantine-Drawer-root')).toBe('calc(200 + 0 + 2)');
+    expect(zIndex('.mantine-Modal-root')).toBe('calc(200 + 2 + 2)');
 
     await userEvent.keyboard('{Escape}');
     expect(onCloseModal).toHaveBeenCalledTimes(1);
@@ -796,8 +796,8 @@ describe('@mantine/core/Drawer and Modal in theme.overlayStack', () => {
 
     const modalContent = container.querySelector('.mantine-Modal-content');
     const drawerContent = container.querySelector('.mantine-Drawer-content');
-    expect(zIndex(container.querySelector('.mantine-Modal-root'))).toBe('calc(200 + 0 + 1)');
-    expect(zIndex(container.querySelector('.mantine-Drawer-root'))).toBe('calc(200 + 1 + 1)');
+    expect(zIndex(container.querySelector('.mantine-Modal-root'))).toBe('calc(200 + 0 + 2)');
+    expect(zIndex(container.querySelector('.mantine-Drawer-root'))).toBe('calc(200 + 2 + 2)');
 
     expect(isInert(modalContent)).toBe(true);
     expect(isInert(drawerContent)).toBe(false);
@@ -805,7 +805,7 @@ describe('@mantine/core/Drawer and Modal in theme.overlayStack', () => {
     const overlays = getOverlays(container);
     expect(overlays).toHaveLength(1);
     expect(overlays[0]).toHaveClass('mantine-Drawer-overlay');
-    expect(overlayZIndex(overlays[0])).toBe('calc(200 + 1 + 1)');
+    expect(overlayZIndex(overlays[0])).toBe('calc(200 + 2 + 1)');
   });
 
   it('dims and disables drawers below a modal opened above them', async () => {
@@ -822,6 +822,26 @@ describe('@mantine/core/Drawer and Modal in theme.overlayStack', () => {
     const overlays = getOverlays(container);
     expect(overlays).toHaveLength(1);
     expect(overlays[0]).toHaveClass('mantine-Modal-overlay');
+    expect(overlayZIndex(overlays[0])).toBe('calc(200 + 4 + 1)');
+  });
+
+  it('places the overlay below the run of same-kind entries at the top of the stack', async () => {
+    const { container } = render(<MixedDemo order="modal-first" />, { overlayStack: true });
+    await userEvent.click(screen.getByText('open-first'));
+    await userEvent.click(screen.getByText('open-drawer-from-modal'));
+    await userEvent.click(screen.getByText('open-second-drawer'));
+
+    const roots = container.querySelectorAll('.mantine-Drawer-root');
+    expect(zIndex(container.querySelector('.mantine-Modal-root'))).toBe('calc(200 + 0 + 2)');
+    expect(zIndex(roots[0])).toBe('calc(200 + 2 + 2)');
+    expect(zIndex(roots[1])).toBe('calc(200 + 4 + 2)');
+
+    const drawerContents = container.querySelectorAll('.mantine-Drawer-content');
+    expect(isInert(drawerContents[0])).toBe(true);
+    expect(isInert(drawerContents[1])).toBe(false);
+
+    const overlays = getOverlays(container);
+    expect(overlays).toHaveLength(1);
     expect(overlayZIndex(overlays[0])).toBe('calc(200 + 2 + 1)');
   });
 
@@ -872,7 +892,7 @@ describe('@mantine/core/Drawer and Modal in theme.overlayStack', () => {
     const zIndexes = Array.from(
       container.querySelectorAll<HTMLElement>('.mantine-Drawer-root')
     ).map((root) => zIndex(root));
-    expect(zIndexes).toStrictEqual(['calc(200 + 0 + 1)', 'calc(200 + 1 + 1)']);
+    expect(zIndexes).toStrictEqual(['calc(200 + 0 + 2)', 'calc(200 + 2 + 2)']);
 
     const closeButtons = container.querySelectorAll<HTMLButtonElement>('.mantine-Drawer-close');
     fireEvent.click(closeButtons[1]);

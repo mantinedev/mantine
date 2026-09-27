@@ -285,7 +285,7 @@ Differences from using multiple `Drawer` components:
 
 <Demo data={DrawerDemos.stack} />
 
-Drawers behind the top one are dimmed by the single overlay and cannot be interacted with –
+Drawers behind the top one stay above the overlay but cannot be interacted with –
 only the top drawer receives pointer events, focus and `Escape` key presses. Set
 `withStackTransform={false}` to disable the stacked depth effect – in this case only the top
 drawer is visible, drawers behind it are hidden until the top one is closed.
@@ -388,7 +388,8 @@ With `overlayStack` enabled, all drawers join one shared `Drawer.Stack`. Any dra
 while another drawer is opened is rendered on top of it: z-index, focus trap, `Escape` key handling
 and the overlay are managed for the entire application. [Modal](/core/modal) components join their
 own shared `Modal.Stack` – drawers and modals are never stacked visually together, but z-index,
-focus trap and `Escape` key handling always follow the topmost opened drawer or modal.
+focus trap and `Escape` key handling always follow the topmost opened drawer or modal. When a
+modal is opened above drawers, the drawers are dimmed by the overlay together with the page.
 
 `overlayStack` accepts an object to configure the shared stacks:
 

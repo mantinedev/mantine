@@ -1,5 +1,9 @@
 import { Box } from '@mantine/core';
-import { CalendarLevel as CalendarLevelType, DateLabelFormat, DateStringValue } from '../../../types';
+import {
+  CalendarLevel as CalendarLevelType,
+  DateLabelFormat,
+  DateStringValue,
+} from '../../../types';
 import { CalendarHeader, CalendarHeaderSettings } from '../../CalendarHeader';
 import { Month, MonthSettings } from '../../Month';
 import { CalendarColumnProvider, useCalendarContext } from '../Calendar.context';
@@ -171,7 +175,9 @@ export function CalendarLevel({
             kind={yearBody}
             period={period}
             format={yearBody === 'quarters' ? quartersListFormat : monthsListFormat}
-            getControlProps={yearBody === 'quarters' ? getQuarterControlProps : getMonthControlProps}
+            getControlProps={
+              yearBody === 'quarters' ? getQuarterControlProps : getMonthControlProps
+            }
             withCellSpacing={withCellSpacing}
             fullWidth={fullWidth}
           />

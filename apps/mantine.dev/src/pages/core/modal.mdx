@@ -187,7 +187,7 @@ Differences from using multiple `Modal` components:
 
 <Demo data={ModalDemos.stack} />
 
-Modals behind the top one are dimmed by the single overlay and cannot be interacted with –
+Modals behind the top one stay above the overlay but cannot be interacted with –
 only the top modal receives pointer events, focus and `Escape` key presses. Set
 `withStackTransform={false}` to disable the stacked depth effect – in this case only the top
 modal is visible, modals behind it are hidden until the top one is closed.
@@ -290,7 +290,8 @@ With `overlayStack` enabled, all modals join one shared `Modal.Stack`. Any modal
 while another modal is opened is rendered on top of it: z-index, focus trap, `Escape` key handling
 and the overlay are managed for the entire application. [Drawer](/core/drawer) components join their
 own shared `Drawer.Stack` – modals and drawers are never stacked visually together, but z-index,
-focus trap and `Escape` key handling always follow the topmost opened modal or drawer.
+focus trap and `Escape` key handling always follow the topmost opened modal or drawer. When a
+drawer is opened above modals, the modals are dimmed by the overlay together with the page.
 
 `overlayStack` accepts an object to configure the shared stacks:
 
