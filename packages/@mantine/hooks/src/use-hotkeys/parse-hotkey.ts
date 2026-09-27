@@ -110,7 +110,8 @@ export interface HotkeyItemOptions {
   usePhysicalKeys?: boolean;
 }
 
-type HotkeyItem = [string, (event: any) => void, HotkeyItemOptions?];
+// Handlers always receive the native event: React events are unwrapped via `nativeEvent` below.
+type HotkeyItem = [string, (event: KeyboardEvent) => void, HotkeyItemOptions?];
 
 export function getHotkeyHandler(hotkeys: HotkeyItem[]) {
   return (event: React.KeyboardEvent<HTMLElement> | KeyboardEvent) => {
