@@ -55,7 +55,7 @@ function Demo() {
         </Button>
       </Group>
 
-      <Button mt="md" onClick={() => setActive(true)}>
+      <Button mt="md" onClick={() => { setStep(0); setActive(true); }}>
         Start tour
       </Button>
 
@@ -102,7 +102,13 @@ function Demo() {
         </Button>
       </Group>
 
-      <Button mt="md" onClick={() => setActive(true)}>
+      <Button
+        mt="md"
+        onClick={() => {
+          setStep(0);
+          setActive(true);
+        }}
+      >
         Start tour
       </Button>
 

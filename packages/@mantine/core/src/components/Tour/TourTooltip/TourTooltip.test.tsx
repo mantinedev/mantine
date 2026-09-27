@@ -3,7 +3,10 @@ import { createContextContainer, renderWithAct, screen } from '@mantine-tests/co
 import { Tour } from '../Tour';
 import { TourTooltip, TourTooltipProps } from './TourTooltip';
 
-const TestContainer = createContextContainer(TourTooltip, Tour.Root, { active: true });
+const TestContainer = createContextContainer(TourTooltip, Tour.Root, {
+  active: true,
+  stepsCount: 1,
+});
 
 const defaultProps: TourTooltipProps = {
   mounted: true,
@@ -18,7 +21,7 @@ describe('@mantine/core/TourTooltip', () => {
   it('forwards ref to the rendered element', async () => {
     const ref = createRef<HTMLDivElement>();
     await renderWithAct(
-      <Tour.Root active>
+      <Tour.Root active stepsCount={1}>
         <TourTooltip {...defaultProps} ref={ref} />
       </Tour.Root>
     );

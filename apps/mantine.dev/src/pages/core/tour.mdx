@@ -25,7 +25,8 @@ and `spotlightPadding` overrides.
 ## Beacon mode
 
 Set `mode="beacon"` to display pulsing indicators near target elements instead of a sequential walkthrough.
-Users can click beacons in any order to reveal tooltips.
+Users can click beacons in any order to reveal tooltips. `onClose` is called when a beacon tooltip is closed –
+beacons stay on the page as long as `active` is `true`, so end the beacon tour by setting `active` to `false` from your own control.
 
 <Demo data={TourDemos.beacon} />
 
@@ -40,10 +41,10 @@ Control the active step externally with `step` and `onStepChange` props:
 Configure the overlay behavior with `withOverlay`, `withOverlayInteraction`, and `closeOnOverlayClick` props:
 
 - `withOverlay` - show or hide the backdrop overlay (default: `true`)
-- `withOverlayInteraction` - allow clicking through the overlay (default: `false`)
+- `withOverlayInteraction` - allow interacting with the target element through the spotlight cutout (default: `false`)
 - `closeOnOverlayClick` - close the tour when clicking the overlay (default: `false`)
 
-`withOverlayInteraction` and `closeOnOverlayClick` are mutually exclusive: with `withOverlayInteraction` the overlay does not receive pointer events (clicks pass through to the page), so `closeOnOverlayClick` has no effect.
+With `withOverlayInteraction` only the spotlight cutout lets pointer events through to the target element, the rest of the overlay keeps blocking clicks on the page. The two props can be combined: clicks inside the cutout reach the target, clicks outside of it close the tour when `closeOnOverlayClick` is set. The focus trap is disabled with `withOverlayInteraction` so that the target element can be reached with `Tab`. Dropdowns of components rendered in a portal (`Select`, `Menu`, etc.) are outside of the cutout and below the tour – set their `zIndex` above the tour `zIndex` (for example, `comboboxProps={{ zIndex: 10001 }}`) to make them interactive.
 
 <Demo data={TourDemos.overlay} />
 
@@ -75,10 +76,20 @@ For full control over the tooltip layout, use compound components (`Tour.Root`, 
 
 <Demo data={TourDemos.compound} />
 
+`Tour.Root` does not know your steps, pass the total number of steps with the `stepsCount` prop –
+`Tour.Navigation` uses it for the step counter and to display the close button on the last step,
+`ArrowRight` closes the tour on the last step. `Tour.Root` handles the current step (`step`, `defaultStep`, `onStepChange`),
+keyboard navigation, `Escape` and focus return. You are responsible for resolving target elements and
+passing them to `Tour.Overlay` (`targetRect`) and `Tour.Tooltip` (`targetElement`).
+`withOverlay` and `withCloseButton` props of `Tour.Root` hide `Tour.Overlay` and `Tour.CloseButton`,
+`transitionProps` is the default transition of `Tour.Tooltip`.
+
 ## Tooltip position
 
 Set the `position` prop on individual `Tour.Step` components to control tooltip placement.
 Supported values: `top`, `right`, `bottom`, `left`, and their `-start`/`-end` variants.
+If there is not enough space on the preferred side, the tooltip flips to the opposite side.
+`left` and `right` positions fall back to `bottom` or `top` when neither side has room for the full `maxWidth` of the tooltip (for example, on mobile screens).
 
 <Demo data={TourDemos.position} />
 
@@ -103,7 +114,7 @@ When `withKeyboardNavigation` is enabled (default), arrow key navigation is avai
 Arrow key navigation is not available in beacon mode. `Escape` closes the tour in both modes
 when `closeOnEscape` is `true` (default). Set `withKeyboardNavigation={false}` to disable arrow keys entirely.
 
-Arrow keys are swapped in RTL direction (`ArrowLeft` goes to the next step). Arrow hotkeys are ignored while the keyboard event originates inside the current step target element, so targets that use arrow keys themselves (sliders, tabs, inputs with `withOverlayInteraction`) keep working.
+Arrow keys are swapped in RTL direction (`ArrowLeft` goes to the next step). Arrow hotkeys are ignored while the keyboard event originates inside the current step target element or inside an `input`, `textarea` or `select`, so targets that use arrow keys themselves (sliders, tabs, inputs with `withOverlayInteraction`) keep working. `Escape` closes the tour from any element, including inputs, except when it closes an open dropdown of another Mantine component (`Select`, `Autocomplete`, `Menu`, etc.) – the same rule `Modal` uses.
 
 <KeyboardEventsTable
   data={[

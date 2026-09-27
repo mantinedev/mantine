@@ -19,11 +19,11 @@ function Demo() {
         </Button>
       </Group>
 
-      <Button mt="md" onClick={() => setActive(true)}>
-        Start beacon tour
+      <Button mt="md" onClick={() => setActive((current) => !current)}>
+        {active ? 'End beacon tour' : 'Start beacon tour'}
       </Button>
 
-      <Tour active={active} mode="beacon" defaultStep={-1} onClose={() => setActive(false)}>
+      <Tour active={active} mode="beacon" defaultStep={-1}>
         <Tour.Step target="#beacon-target-1" title="Beacon 1">
           Click the beacon to see this tooltip.
         </Tour.Step>
@@ -52,11 +52,11 @@ function Demo() {
         </Button>
       </Group>
 
-      <Button mt="md" onClick={() => setActive(true)}>
-        Start beacon tour
+      <Button mt="md" onClick={() => setActive((current) => !current)}>
+        {active ? 'End beacon tour' : 'Start beacon tour'}
       </Button>
 
-      <Tour active={active} mode="beacon" defaultStep={-1} onClose={() => setActive(false)}>
+      <Tour active={active} mode="beacon" defaultStep={-1}>
         <Tour.Step target="#beacon-target-1" title="Beacon 1">
           Click the beacon to see this tooltip.
         </Tour.Step>

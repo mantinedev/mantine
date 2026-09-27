@@ -2,7 +2,7 @@ import { createContextContainer, render, screen, tests } from '@mantine-tests/co
 import { Tour } from '../Tour';
 import { TourTitle, TourTitleProps, TourTitleStylesNames } from './TourTitle';
 
-const TestContainer = createContextContainer(TourTitle, Tour.Root, { active: true });
+const TestContainer = createContextContainer(TourTitle, Tour.Root, { active: true, stepsCount: 1 });
 
 const defaultProps: TourTitleProps = {};
 

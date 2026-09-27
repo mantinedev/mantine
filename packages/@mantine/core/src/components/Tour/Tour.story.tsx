@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button } from '../Button';
+import { Select } from '../Select';
 import { Slider } from '../Slider';
 import { TextInput } from '../TextInput';
 import { Tour } from './Tour';
@@ -213,6 +214,13 @@ export function InteractiveTarget() {
         <Slider defaultValue={40} />
       </div>
       <TextInput id="interactive-input" placeholder="Arrow keys move the caret" mt="md" />
+      <Select
+        id="interactive-select"
+        placeholder="Escape closes the dropdown, not the tour"
+        data={['React', 'Vue', 'Svelte']}
+        mt="md"
+        maw={400}
+      />
 
       <Tour
         active={active}
@@ -232,6 +240,47 @@ export function InteractiveTarget() {
         </Tour.Step>
         <Tour.Step target="#interactive-input" title="Input">
           Arrow keys inside the input move the caret only.
+        </Tour.Step>
+        <Tour.Step target="#interactive-select" title="Select">
+          Escape closes the open dropdown first, the second Escape closes the tour.
+        </Tour.Step>
+      </Tour>
+    </div>
+  );
+}
+
+export function CssVariables() {
+  const [mode, setMode] = useState<'guided' | 'beacon' | null>(null);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button id="css-vars-guided" onClick={() => setMode('guided')}>
+        Start guided tour
+      </Button>
+      <Button id="css-vars-beacon" ml="md" onClick={() => setMode('beacon')}>
+        Start beacon tour
+      </Button>
+
+      <Tour
+        active={mode !== null}
+        mode={mode ?? 'guided'}
+        defaultStep={mode === 'beacon' ? -1 : 0}
+        onClose={() => setMode(null)}
+        tooltipShadow="xl"
+        vars={() => ({
+          root: {
+            '--tour-overlay-color': 'rgba(255, 0, 0, 0.3)',
+            '--tour-tooltip-radius': '20px',
+            '--tour-beacon-size': '24px',
+            '--tour-beacon-color': 'var(--mantine-color-red-6)',
+          },
+        })}
+      >
+        <Tour.Step target="#css-vars-guided" title="Guided">
+          Overlay color, tooltip radius and shadow are set with CSS variables.
+        </Tour.Step>
+        <Tour.Step target="#css-vars-beacon" title="Beacon">
+          Beacon size and color are set with CSS variables.
         </Tour.Step>
       </Tour>
     </div>

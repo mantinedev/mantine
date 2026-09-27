@@ -12,7 +12,7 @@ function Demo() {
 
   return (
     <>
-      <Button id="centered-target" onClick={() => setActive(true)}>
+      <Button id="centered-target" onClick={() => { setStep(0); setActive(true); }}>
         Start tour
       </Button>
 
@@ -38,7 +38,13 @@ function Demo() {
 
   return (
     <>
-      <Button id="centered-target" onClick={() => setActive(true)}>
+      <Button
+        id="centered-target"
+        onClick={() => {
+          setStep(0);
+          setActive(true);
+        }}
+      >
         Start tour
       </Button>
 

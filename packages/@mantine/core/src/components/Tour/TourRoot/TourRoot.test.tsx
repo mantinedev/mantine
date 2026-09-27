@@ -18,6 +18,7 @@ function CompoundTour({ step: stepProp, onStepChange, ...props }: Partial<TourRo
   return (
     <Tour.Root
       active
+      stepsCount={STEPS.length}
       step={step}
       onStepChange={(value) => {
         setUncontrolledStep(value);
@@ -80,7 +81,42 @@ describe('@mantine/core/TourRoot', () => {
     expect(screen.getByText('Step 1 Title')).toBeInTheDocument();
   });
 
+  it('uses stepsCount for the step counter and the last step', async () => {
+    const onClose = jest.fn();
+    await renderWithAct(
+      <Tour.Root active stepsCount={3} defaultStep={0} onClose={onClose}>
+        <Tour.Overlay targetRect={null} />
+        <Tour.Tooltip mounted>
+          <Tour.Navigation />
+        </Tour.Tooltip>
+      </Tour.Root>
+    );
+
+    expect(screen.getByText('1 of 3')).toBeInTheDocument();
+    await userEvent.click(screen.getByText('Next'));
+    expect(screen.getByText('2 of 3')).toBeInTheDocument();
+    expect(screen.getByText('Next')).toBeInTheDocument();
+
+    await userEvent.keyboard('{ArrowRight}');
+    expect(screen.getByText('3 of 3')).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
+
+    await userEvent.keyboard('{ArrowRight}');
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
   describe('keyboard navigation', () => {
+    it('closes with Escape from an input', async () => {
+      const onClose = jest.fn();
+      const input = document.createElement('input');
+      container.appendChild(input);
+      await renderWithAct(<CompoundTour onClose={onClose} />);
+
+      input.focus();
+      fireEvent.keyDown(input, { key: 'Escape' });
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
     it('navigates to next step with ArrowRight', async () => {
       const onStepChange = jest.fn();
       await renderWithAct(<CompoundTour step={0} onStepChange={onStepChange} />);
@@ -256,5 +292,23 @@ describe('@mantine/core/TourRoot', () => {
       });
       expect(document.activeElement).toBe(screen.getByRole('dialog'));
     });
+
+    it('moves focus to Tour.Tooltip when the focused Back button unmounts', async () => {
+      await renderWithAct(<CompoundTour />);
+      await userEvent.click(screen.getByText('Next'));
+      await userEvent.click(screen.getByText('Back'));
+      await act(async () => {
+        await wait(20);
+      });
+      expect(document.activeElement).toBe(screen.getByRole('dialog', { name: 'Step 1 Title' }));
+    });
+  });
+
+  it('hides Tour.Overlay and Tour.CloseButton with withOverlay and withCloseButton', async () => {
+    const { container: renderContainer } = await renderWithAct(
+      <CompoundTour withOverlay={false} withCloseButton={false} />
+    );
+    expect(renderContainer.querySelector('svg[role="presentation"]')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Close')).not.toBeInTheDocument();
   });
 });

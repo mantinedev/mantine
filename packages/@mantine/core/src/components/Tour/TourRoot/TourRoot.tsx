@@ -1,5 +1,4 @@
-import { Children, useEffect, useEffectEvent, useId, useRef, useState } from 'react';
-import { useFocusReturn, useHotkeys, useUncontrolled, type HotkeyItem } from '@mantine/hooks';
+import { useCallback, useId, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -7,8 +6,8 @@ import {
   ElementProps,
   factory,
   Factory,
+  getShadow,
   StylesApiProps,
-  useDirection,
   useProps,
   useStyles,
 } from '../../../core';
@@ -16,12 +15,16 @@ import { OptionalPortal, type PortalProps } from '../../Portal';
 import type { TransitionOverride } from '../../Transition';
 import type { TourStylesNames, TourCssVariables } from '../Tour';
 import { defaultLabels, TourLabels, TourProvider } from '../Tour.context';
+import { useTourState } from '../use-tour-state';
 import classes from '../Tour.module.css';
 
 export interface TourRootProps
   extends BoxProps, StylesApiProps<TourRootFactory>, ElementProps<'div'> {
   /** Whether the tour is active @default false */
   active?: boolean;
+
+  /** Total number of steps, used by `Tour.Navigation` and keyboard navigation to detect the last step */
+  stepsCount: number;
 
   /** Called when the tour is closed */
   onClose?: () => void;
@@ -41,26 +44,17 @@ export interface TourRootProps
   /** Called when a step closes */
   onStepClose?: (step: number) => void;
 
-  /** Tour mode @default "guided" */
-  mode?: 'guided' | 'beacon';
-
-  /** Whether to display the overlay @default true */
+  /** Whether `Tour.Overlay` is rendered @default true */
   withOverlay?: boolean;
 
-  /** Whether target elements can be interacted with through the overlay, disables `closeOnOverlayClick` @default false */
+  /** Whether pointer events pass through the spotlight cutout to the target element, the rest of the overlay keeps blocking clicks @default false */
   withOverlayInteraction?: boolean;
 
-  /** Whether to display the close button @default true */
+  /** Whether `Tour.CloseButton` is rendered @default true */
   withCloseButton?: boolean;
 
-  /** Whether keyboard navigation is enabled in guided mode @default true */
+  /** Whether arrow keys navigate between steps @default true */
   withKeyboardNavigation?: boolean;
-
-  /** Whether to scroll target elements into view @default true */
-  withScrollIntoView?: boolean;
-
-  /** Custom scroll handler */
-  scrollToHandler?: (element: HTMLElement) => void;
 
   /** Padding around the spotlight cutout in px @default 8 */
   spotlightPadding?: number;
@@ -71,7 +65,7 @@ export interface TourRootProps
   /** Whether pressing Escape closes the tour @default true */
   closeOnEscape?: boolean;
 
-  /** Whether clicking the overlay closes the tour, has no effect when `withOverlayInteraction` is set (the overlay does not receive clicks) @default false */
+  /** Whether clicking the overlay closes the tour, with `withOverlayInteraction` only clicks outside the spotlight cutout close it @default false */
   closeOnOverlayClick?: boolean;
 
   /** Labels for tour UI elements */
@@ -86,16 +80,16 @@ export interface TourRootProps
   /** z-index of the tour @default 10000 */
   zIndex?: string | number;
 
-  /** Transition props for the tooltip */
+  /** Default transition props of `Tour.Tooltip` @default { duration: 200, transition: 'fade' } */
   transitionProps?: TransitionOverride;
 
   /** Tour step overlay color @default "rgba(0, 0, 0, 0.5)" */
   overlayColor?: string;
 
-  /** Shadow for the tooltip */
+  /** Key of `theme.shadows` or any valid CSS box-shadow value, controls the tooltip shadow @default 'md' */
   tooltipShadow?: string;
 
-  /** Tour steps */
+  /** Tour content: `Tour.Overlay`, `Tour.Tooltip`, `Tour.Beacon` and other compound components */
   children?: React.ReactNode;
 }
 
@@ -108,12 +102,10 @@ export type TourRootFactory = Factory<{
 
 const defaultProps = {
   active: false,
-  mode: 'guided',
   withOverlay: true,
   withOverlayInteraction: false,
   withCloseButton: true,
   withKeyboardNavigation: true,
-  withScrollIntoView: true,
   spotlightPadding: 8,
   closeOnEscape: true,
   closeOnOverlayClick: false,
@@ -124,17 +116,14 @@ const defaultProps = {
 } satisfies Partial<TourRootProps>;
 
 const varsResolver = createVarsResolver<TourRootFactory>(
-  (_, { zIndex, overlayColor, spotlightRadius, spotlightPadding, tooltipShadow }) => ({
+  (_, { zIndex, overlayColor, tooltipShadow }) => ({
     root: {
       '--tour-z-index': zIndex?.toString(),
       '--tour-overlay-color': overlayColor,
-      '--tour-tooltip-radius': spotlightRadius !== undefined ? `${spotlightRadius}px` : undefined,
+      '--tour-tooltip-radius': undefined,
+      '--tour-tooltip-shadow': getShadow(tooltipShadow),
       '--tour-beacon-size': undefined,
       '--tour-beacon-color': undefined,
-      '--tour-spotlight-padding':
-        spotlightPadding !== undefined ? `${spotlightPadding}px` : undefined,
-      '--tour-spotlight-radius': spotlightRadius !== undefined ? `${spotlightRadius}px` : undefined,
-      '--tour-tooltip-shadow': tooltipShadow,
     },
   })
 );
@@ -149,19 +138,17 @@ export const TourRoot = factory<TourRootFactory>((_props) => {
     unstyled,
     vars,
     active,
+    stepsCount,
     onClose,
     step: stepProp,
     defaultStep,
     onStepChange,
     onStepOpen,
     onStepClose,
-    mode,
     withOverlay,
     withOverlayInteraction,
     withCloseButton,
     withKeyboardNavigation,
-    withScrollIntoView,
-    scrollToHandler,
     spotlightPadding,
     spotlightRadius,
     closeOnEscape,
@@ -179,114 +166,32 @@ export const TourRoot = factory<TourRootFactory>((_props) => {
   } = props;
 
   const labels: TourLabels = { ...defaultLabels, ...labelsProp };
-  const spotlightPaddingValue = spotlightPadding!;
-  const { dir } = useDirection();
   const id = useId();
   const titleId = `${id}-title`;
   const bodyId = `${id}-body`;
   const [titleMounted, setTitleMounted] = useState(false);
   const [bodyMounted, setBodyMounted] = useState(false);
-  const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
 
-  const resolvedSpotlightRadius = spotlightRadius ?? 4;
-
-  const [currentStep, setCurrentStep] = useUncontrolled({
-    value: stepProp,
-    defaultValue: defaultStep,
-    finalValue: 0,
-    onChange: onStepChange,
+  const { currentStep, setStep, close, targetRef } = useTourState({
+    active,
+    onClose,
+    step: stepProp,
+    defaultStep,
+    onStepChange,
+    onStepOpen: (index) => onStepOpen?.(index),
+    onStepClose: (index) => onStepClose?.(index),
+    mode: 'guided',
+    stepsCount,
+    closeOnEscape,
+    withKeyboardNavigation,
   });
 
-  const [_beaconOpenStep, setBeaconOpenStep] = useState<number | null>(null);
-
-  const openStep = active && currentStep >= 0 ? currentStep : null;
-  const reportedStepRef = useRef<number | null>(null);
-
-  const emitStepClose = useEffectEvent((step: number) => onStepClose?.(step));
-  const emitStepOpen = useEffectEvent((step: number) => onStepOpen?.(step));
-
-  useEffect(() => {
-    const previousStep = reportedStepRef.current;
-
-    if (previousStep === openStep) {
-      return;
-    }
-
-    reportedStepRef.current = openStep;
-
-    if (previousStep !== null) {
-      emitStepClose(previousStep);
-    }
-
-    if (openStep !== null) {
-      emitStepOpen(openStep);
-    }
-  }, [openStep]);
-
-  const close = () => {
-    const openedStep = reportedStepRef.current;
-
-    if (openedStep !== null) {
-      reportedStepRef.current = null;
-      onStepClose?.(openedStep);
-    }
-
-    setBeaconOpenStep(null);
-    onClose?.();
-  };
-
-  useFocusReturn({ opened: !!active, shouldReturnFocus: true });
-
-  const isInsideTarget = (event: KeyboardEvent) =>
-    !!targetElement && event.target instanceof Node && targetElement.contains(event.target);
-
-  const goToNextStep = (event: KeyboardEvent) => {
-    if (isInsideTarget(event)) {
-      return;
-    }
-
-    event.preventDefault();
-
-    const stepsCount = Children.count(children);
-    if (currentStep < stepsCount - 1) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      close();
-    }
-  };
-
-  const goToPreviousStep = (event: KeyboardEvent) => {
-    if (isInsideTarget(event)) {
-      return;
-    }
-
-    event.preventDefault();
-
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const hotkeyHandlers: HotkeyItem[] = [];
-
-  if (active && closeOnEscape) {
-    hotkeyHandlers.push(['Escape', close]);
-  }
-
-  if (active && mode === 'guided' && withKeyboardNavigation) {
-    hotkeyHandlers.push([
-      dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight',
-      goToNextStep,
-      { preventDefault: false },
-    ]);
-    hotkeyHandlers.push([
-      dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft',
-      goToPreviousStep,
-      { preventDefault: false },
-    ]);
-  }
-
-  useHotkeys(hotkeyHandlers);
+  const setTargetElement = useCallback(
+    (element: HTMLElement | null) => {
+      targetRef.current = element;
+    },
+    [targetRef]
+  );
 
   const getStyles = useStyles<TourRootFactory>({
     name: 'Tour',
@@ -311,25 +216,16 @@ export const TourRoot = factory<TourRootFactory>((_props) => {
       value={{
         getStyles,
         step: currentStep,
-        setStep: (s) => {
-          if (mode === 'beacon' && _beaconOpenStep !== null) {
-            setBeaconOpenStep(s);
-          }
-          setCurrentStep(s);
-        },
-        stepsCount: Children.count(children),
+        setStep,
+        stepsCount,
         close,
-        mode: mode!,
         withOverlay: withOverlay!,
         withOverlayInteraction: withOverlayInteraction!,
         withCloseButton: withCloseButton!,
-        withKeyboardNavigation: withKeyboardNavigation!,
-        withScrollIntoView: withScrollIntoView!,
-        scrollToHandler,
-        spotlightPadding: spotlightPaddingValue,
-        spotlightRadius: resolvedSpotlightRadius,
-        closeOnEscape: closeOnEscape!,
+        spotlightPadding: spotlightPadding!,
+        spotlightRadius: spotlightRadius ?? 4,
         closeOnOverlayClick: closeOnOverlayClick!,
+        transitionProps,
         labels,
         titleId,
         bodyId,

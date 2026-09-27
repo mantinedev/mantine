@@ -2,7 +2,10 @@ import { createContextContainer, render, screen, userEvent } from '@mantine-test
 import { Tour } from '../Tour';
 import { TourCloseButton, TourCloseButtonProps } from './TourCloseButton';
 
-const TestContainer = createContextContainer(TourCloseButton, Tour.Root, { active: true });
+const TestContainer = createContextContainer(TourCloseButton, Tour.Root, {
+  active: true,
+  stepsCount: 1,
+});
 
 const defaultProps: TourCloseButtonProps = {};
 
@@ -20,6 +23,7 @@ describe('@mantine/core/TourCloseButton', () => {
     const onClose = jest.fn();
     const Container = createContextContainer(TourCloseButton, Tour.Root, {
       active: true,
+      stepsCount: 1,
       onClose,
     });
     render(<Container {...defaultProps} />);

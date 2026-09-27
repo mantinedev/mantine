@@ -1,6 +1,8 @@
 import { createContext, use } from 'react';
 import type { GetStylesApi } from '../../core';
+import type { TransitionOverride } from '../Transition';
 import type { TourFactory } from './Tour';
+import type { TourRootFactory } from './TourRoot/TourRoot';
 
 export interface TourLabels {
   /** Label for the skip button @default "Skip" */
@@ -33,7 +35,7 @@ export const defaultLabels: TourLabels = {
 
 export interface TourContextValue {
   /** Returns styles for the given selector */
-  getStyles: GetStylesApi<TourFactory>;
+  getStyles: GetStylesApi<TourFactory & TourRootFactory>;
 
   /** Current active step index */
   step: number;
@@ -47,26 +49,14 @@ export interface TourContextValue {
   /** Closes the tour */
   close: () => void;
 
-  /** Tour mode: guided (sequential) or beacon (click-to-open) */
-  mode: 'guided' | 'beacon';
-
-  /** Whether the overlay is displayed */
+  /** Whether `Tour.Overlay` is rendered */
   withOverlay: boolean;
 
-  /** Whether target elements can be interacted with through the overlay */
+  /** Whether pointer events pass through the spotlight cutout to the target element */
   withOverlayInteraction: boolean;
 
-  /** Whether the close button is displayed */
+  /** Whether `Tour.CloseButton` is rendered */
   withCloseButton: boolean;
-
-  /** Whether keyboard navigation is enabled */
-  withKeyboardNavigation: boolean;
-
-  /** Whether the target element is scrolled into view */
-  withScrollIntoView: boolean;
-
-  /** Custom scroll handler */
-  scrollToHandler: ((element: HTMLElement) => void) | undefined;
 
   /** Padding around the spotlight cutout in px */
   spotlightPadding: number;
@@ -74,11 +64,11 @@ export interface TourContextValue {
   /** Border radius of the spotlight cutout in px */
   spotlightRadius: number;
 
-  /** Whether pressing Escape closes the tour */
-  closeOnEscape: boolean;
-
   /** Whether clicking the overlay closes the tour */
   closeOnOverlayClick: boolean;
+
+  /** Default transition props of `Tour.Tooltip` */
+  transitionProps: TransitionOverride | undefined;
 
   /** Labels for tour UI elements */
   labels: TourLabels;

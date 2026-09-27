@@ -12,8 +12,8 @@ function Demo() {
 
   return (
     <>
-      <Center>
-        <Button id="position-target" onClick={() => setActive(true)}>
+      <Center mih={360}>
+        <Button id="position-target" onClick={() => { setStep(0); setActive(true); }}>
           Start tour
         </Button>
       </Center>
@@ -43,8 +43,14 @@ function Demo() {
 
   return (
     <>
-      <Center>
-        <Button id="position-target" onClick={() => setActive(true)}>
+      <Center mih={360}>
+        <Button
+          id="position-target"
+          onClick={() => {
+            setStep(0);
+            setActive(true);
+          }}
+        >
           Start tour
         </Button>
       </Center>
