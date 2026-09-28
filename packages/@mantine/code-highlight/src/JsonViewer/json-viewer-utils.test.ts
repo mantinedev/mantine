@@ -1,7 +1,8 @@
 import {
   formatValue,
-  getAllExpandablePaths,
-  getDefaultExpandedPaths,
+  getArrayChunks,
+  getChunkSegment,
+  getExpandablePaths,
   getTypeLabel,
   getValueType,
   PATH_SEPARATOR,
@@ -126,6 +127,21 @@ describe('formatValue', () => {
     expect(result.collapsed).toBe(false);
   });
 
+  it('escapes quoted strings', () => {
+    expect(formatValue('a"b\nc', true, false).display).toBe('"a\\"b\\nc"');
+    expect(formatValue('a"b\nc', false, false).display).toBe('a"b\nc');
+  });
+
+  it('does not split a surrogate pair when truncating', () => {
+    expect(formatValue('ab😀cd', true, 3).display).toBe('"ab..."');
+    expect(formatValue('ab😀cd', false, 3).display).toBe('ab...');
+    expect(formatValue('\ud800abc', true, 1).display).toBe('"\\ud800..."');
+  });
+
+  it('escapes truncated strings and keeps the ellipsis inside the quotes', () => {
+    expect(formatValue('a"bcdef', true, 3).display).toBe('"a\\"b..."');
+  });
+
   it('truncates without quotes', () => {
     const result = formatValue('abcdefghij', false, 5);
     expect(result.display).toBe('abcde...');
@@ -163,95 +179,124 @@ describe('safeStringify', () => {
   });
 });
 
-describe('getAllExpandablePaths', () => {
+describe('getArrayChunks', () => {
+  it('returns null when grouping is disabled or not needed', () => {
+    expect(getArrayChunks(10, false)).toBeNull();
+    expect(getArrayChunks(3, 3)).toBeNull();
+    expect(getArrayChunks(0, 1)).toBeNull();
+  });
+
+  it('returns null for sizes below 1 instead of looping forever', () => {
+    expect(getArrayChunks(2, 0)).toBeNull();
+    expect(getArrayChunks(2, -1)).toBeNull();
+    expect(getArrayChunks(2, 0.5)).toBeNull();
+    expect(getArrayChunks(2, NaN)).toBeNull();
+  });
+
+  it('splits into inclusive ranges with a shorter last chunk', () => {
+    expect(getArrayChunks(7, 3)).toEqual([
+      { start: 0, end: 2 },
+      { start: 3, end: 5 },
+      { start: 6, end: 6 },
+    ]);
+    expect(getArrayChunks(4, 1)).toHaveLength(4);
+  });
+
+  it('formats chunk segments', () => {
+    expect(getChunkSegment({ start: 3, end: 5 })).toBe('[3...5]');
+  });
+});
+
+describe('getExpandablePaths', () => {
   it('returns empty array for primitives', () => {
-    expect(getAllExpandablePaths('hello')).toEqual([]);
-    expect(getAllExpandablePaths(42)).toEqual([]);
-    expect(getAllExpandablePaths(null)).toEqual([]);
+    expect(getExpandablePaths('hello')).toEqual([]);
+    expect(getExpandablePaths(42)).toEqual([]);
+    expect(getExpandablePaths(null)).toEqual([]);
   });
 
-  it('returns root path for empty object', () => {
-    expect(getAllExpandablePaths({})).toEqual(['']);
+  it('never includes the root path', () => {
+    expect(getExpandablePaths({})).toEqual([]);
+    expect(getExpandablePaths({ a: 1 })).toEqual([]);
+    expect(getExpandablePaths({ a: { b: 1 } })).toEqual([serializePath(['a'])]);
   });
 
-  it('returns paths for nested objects', () => {
-    const paths = getAllExpandablePaths({ a: { b: 1 } });
-    expect(paths).toContain('');
-    expect(paths).toContain(serializePath(['a']));
+  it('gives an empty-string key its own path', () => {
+    expect(getExpandablePaths({ '': { a: 1 } })).toEqual([serializePath([''])]);
   });
 
-  it('returns paths for arrays', () => {
-    const paths = getAllExpandablePaths([{ x: 1 }]);
-    expect(paths).toContain('');
-    expect(paths).toContain(serializePath(['0']));
+  it('skips empty objects and arrays', () => {
+    expect(getExpandablePaths({ a: {}, b: [], c: { d: 1 } })).toEqual([serializePath(['c'])]);
+  });
+
+  it('skips values that serialize to primitives with toJSON', () => {
+    expect(getExpandablePaths({ date: new Date(0), map: new Map([['a', { b: 1 }]]) })).toEqual([]);
+  });
+
+  it('returns paths for nested objects and arrays', () => {
+    const paths = getExpandablePaths({ a: { b: { c: 1 } }, list: [{ x: 1 }] });
+    expect(paths).toEqual([
+      serializePath(['a']),
+      serializePath(['a', 'b']),
+      serializePath(['list']),
+      serializePath(['list', '0']),
+    ]);
   });
 
   it('includes chunk paths when groupArraysAfterLength is set', () => {
     const arr = Array.from({ length: 10 }, (_, i) => i);
-    const paths = getAllExpandablePaths(arr, [], 3);
-    expect(paths).toContain(serializePath(['[0...2]']));
-    expect(paths).toContain(serializePath(['[3...5]']));
-    expect(paths).toContain(serializePath(['[6...8]']));
-    expect(paths).toContain(serializePath(['[9...9]']));
+    expect(getExpandablePaths(arr, { groupArraysAfterLength: 3 })).toEqual([
+      serializePath(['[0...2]']),
+      serializePath(['[3...5]']),
+      serializePath(['[6...8]']),
+      serializePath(['[9...9]']),
+    ]);
   });
 
-  it('recurses into nested expandable values', () => {
-    const paths = getAllExpandablePaths({ a: { b: { c: 1 } } });
-    expect(paths).toContain(serializePath(['a', 'b']));
+  it('groups arrays nested inside chunks', () => {
+    const inner = [1, 2, 3];
+    const paths = getExpandablePaths([inner, inner, inner], { groupArraysAfterLength: 2 });
+    expect(paths).toContain(serializePath(['0', '[0...1]']));
+    expect(paths).toContain(serializePath(['2', '[2...2]']));
+  });
+
+  it('terminates for groupArraysAfterLength below 1', () => {
+    expect(getExpandablePaths([[1], [2]], { groupArraysAfterLength: 0 })).toEqual([
+      serializePath(['0']),
+      serializePath(['1']),
+    ]);
+  });
+
+  it('limits paths by depth, root counting as level 1', () => {
+    const value = { a: { b: { c: 1 } } };
+    expect(getExpandablePaths(value, { depth: 0 })).toEqual([]);
+    expect(getExpandablePaths(value, { depth: 1 })).toEqual([]);
+    expect(getExpandablePaths(value, { depth: 2 })).toEqual([serializePath(['a'])]);
+    expect(getExpandablePaths(value, { depth: 10 })).toContain(serializePath(['a', 'b']));
+  });
+
+  it('counts chunk rows as one depth level', () => {
+    const arr = [[1], [2], [3]];
+    expect(getExpandablePaths(arr, { depth: 1, groupArraysAfterLength: 2 })).toEqual([]);
+    expect(getExpandablePaths(arr, { depth: 2, groupArraysAfterLength: 2 })).toEqual([
+      serializePath(['[0...1]']),
+      serializePath(['[2...2]']),
+    ]);
+    expect(getExpandablePaths(arr, { depth: 3, groupArraysAfterLength: 2 })).toContain(
+      serializePath(['0'])
+    );
   });
 
   it('terminates on circular references', () => {
     const cyclic: any = { a: { b: 1 } };
     cyclic.self = cyclic;
     cyclic.a.parent = cyclic;
-    expect(() => getAllExpandablePaths(cyclic)).not.toThrow();
-    expect(getAllExpandablePaths(cyclic)).toEqual(['', serializePath(['a'])]);
+    expect(getExpandablePaths(cyclic)).toEqual([serializePath(['a'])]);
   });
 
   it('expands shared (non-circular) references at every path', () => {
     const shared = { x: { y: 1 } };
-    const paths = getAllExpandablePaths({ a: shared, b: shared });
+    const paths = getExpandablePaths({ a: shared, b: shared });
     expect(paths).toContain(serializePath(['a', 'x']));
     expect(paths).toContain(serializePath(['b', 'x']));
-  });
-});
-
-describe('getDefaultExpandedPaths', () => {
-  it('returns empty for primitives', () => {
-    expect(getDefaultExpandedPaths('hello', 1)).toEqual([]);
-  });
-
-  it('returns root for depth 1', () => {
-    const paths = getDefaultExpandedPaths({ a: 1 }, 1);
-    expect(paths).toEqual(['']);
-  });
-
-  it('returns nothing for depth 0', () => {
-    expect(getDefaultExpandedPaths({ a: 1 }, 0)).toEqual([]);
-  });
-
-  it('expands multiple levels', () => {
-    const paths = getDefaultExpandedPaths({ a: { b: { c: 1 } } }, 2);
-    expect(paths).toContain('');
-    expect(paths).toContain(serializePath(['a']));
-    expect(paths).not.toContain(serializePath(['a', 'b']));
-  });
-
-  it('expands deeply for large depth', () => {
-    const paths = getDefaultExpandedPaths({ a: { b: { c: 1 } } }, 10);
-    expect(paths).toContain(serializePath(['a', 'b']));
-  });
-
-  it('includes chunk paths when groupArraysAfterLength is set', () => {
-    const arr = Array.from({ length: 10 }, (_, i) => i);
-    const paths = getDefaultExpandedPaths(arr, 1, [], 0, 3);
-    expect(paths).toContain(serializePath(['[0...2]']));
-  });
-
-  it('terminates on circular references', () => {
-    const cyclic: any = { a: { b: 1 } };
-    cyclic.self = cyclic;
-    expect(() => getDefaultExpandedPaths(cyclic, 50)).not.toThrow();
-    expect(getDefaultExpandedPaths(cyclic, 50)).toEqual(['', serializePath(['a'])]);
   });
 });

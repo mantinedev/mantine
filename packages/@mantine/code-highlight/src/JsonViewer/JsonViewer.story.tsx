@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { DirectionProvider } from '@mantine/core';
 import { JsonViewer, serializePath } from './JsonViewer';
 
@@ -73,7 +74,7 @@ export function WithRootName() {
 export function WithControls() {
   return (
     <div style={{ padding: 40, maxWidth: 700 }}>
-      <JsonViewer value={nestedData} withControls defaultExpandDepth={0} />
+      <JsonViewer value={nestedData} withControls />
     </div>
   );
 }
@@ -184,14 +185,19 @@ export function CustomFontSize() {
 }
 
 export function OnValueSelect() {
+  const [selected, setSelected] = useState<{ path: string; value: string } | null>(null);
+
   return (
     <div style={{ padding: 40, maxWidth: 700 }}>
       <JsonViewer
         value={simpleData}
         onValueSelect={(path, value) => {
-          console.log('Selected:', path, value);
+          setSelected({ path: serializePath(path), value: JSON.stringify(value) });
         }}
       />
+      <div data-testid="selected-readout" style={{ marginTop: 16, fontFamily: 'monospace' }}>
+        {selected ? `Selected: ${selected.path} = ${selected.value}` : 'Nothing selected'}
+      </div>
     </div>
   );
 }
@@ -199,7 +205,7 @@ export function OnValueSelect() {
 export function Collapsed() {
   return (
     <div style={{ padding: 40, maxWidth: 700 }}>
-      <JsonViewer value={nestedData} defaultExpandDepth={0} />
+      <JsonViewer value={nestedData} defaultExpandDepth={1} />
     </div>
   );
 }
@@ -237,6 +243,26 @@ export function Highlight() {
           [serializePath(['author', 'url'])]: 'added',
         }}
         defaultExpandDepth={3}
+      />
+    </div>
+  );
+}
+
+export function HighlightWithChevrons() {
+  return (
+    <div style={{ padding: 40, maxWidth: 700 }}>
+      <JsonViewer
+        value={{
+          author: { name: 'Vitaly', url: 'https://github.com/rtivital' },
+          repository: { type: 'git', url: 'https://github.com/mantinedev/mantine' },
+          license: 'MIT',
+        }}
+        highlightItems={{
+          [serializePath(['author'])]: 'added',
+          [serializePath(['license'])]: 'removed',
+        }}
+        withChevrons
+        defaultExpandDepth={2}
       />
     </div>
   );
@@ -287,6 +313,7 @@ export function AllFeatures() {
         withTypes
         withSize
         withCopy
+        withCopyButton
         withBorder
         withKeyQuotes
         withControls
@@ -330,5 +357,31 @@ export function WithinRtl() {
         />
       </div>
     </DirectionProvider>
+  );
+}
+
+const edgeCaseData = {
+  emptyObject: {},
+  emptyArray: [],
+  date: new Date('2026-01-15T10:30:00.000Z'),
+  quoted: 'She said "hello"\nand left',
+  'key "with" quotes': true,
+  grouped: [...Array.from({ length: 6 }, (_, i) => i), [1, [2, 3]], { nested: [] }],
+};
+
+export function EdgeCases() {
+  return (
+    <div style={{ padding: 40, maxWidth: 700 }}>
+      <JsonViewer
+        value={edgeCaseData}
+        groupArraysAfterLength={4}
+        withKeyQuotes
+        withTypes
+        withSize
+        withLineNumbers
+        withChevrons
+        defaultExpandDepth={3}
+      />
+    </div>
   );
 }

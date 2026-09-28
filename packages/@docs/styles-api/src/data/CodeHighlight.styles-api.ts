@@ -74,6 +74,8 @@ export const JsonViewerStylesApi: StylesApiData<JsonViewerFactory> = {
     lineNumbers: 'Line numbers column',
     wrapper: 'Flex wrapper around line numbers and content',
     copyAllButton: 'Copy all JSON button positioned at top-right corner',
+    controls: 'Expand all / collapse all controls container',
+    control: 'Expand all / collapse all button',
   },
 
   vars: {

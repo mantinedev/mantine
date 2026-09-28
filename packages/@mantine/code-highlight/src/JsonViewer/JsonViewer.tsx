@@ -6,7 +6,6 @@ import {
   ElementProps,
   factory,
   Factory,
-  findElementAncestor,
   getFontSize,
   getRadius,
   MantineRadius,
@@ -20,12 +19,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useClipboard, useUncontrolled } from '@mantine/hooks';
-import {
-  getAllExpandablePaths,
-  getDefaultExpandedPaths,
-  safeStringify,
-  serializePath,
-} from './json-viewer-utils';
+import { getExpandablePaths, safeStringify } from './json-viewer-utils';
 import { JsonViewerNode } from './JsonViewerNode';
 import classes from './JsonViewer.module.css';
 
@@ -47,7 +41,9 @@ export type JsonViewerStylesNames =
   | 'scrollarea'
   | 'lineNumbers'
   | 'wrapper'
-  | 'copyAllButton';
+  | 'copyAllButton'
+  | 'controls'
+  | 'control';
 
 export type JsonViewerCssVariables = {
   root: '--jv-radius' | '--jv-fz' | '--jv-indent';
@@ -189,94 +185,6 @@ const varsResolver = createVarsResolver<JsonViewerFactory>(
 
 const EMPTY_ANCESTORS: object[] = [];
 
-export function handleJsonViewerKeyDown(
-  event: React.KeyboardEvent,
-  togglePath?: (path: string) => void,
-  pathStr?: string,
-  isExpanded?: boolean
-) {
-  const { code } = event.nativeEvent;
-  const current = event.currentTarget as HTMLElement;
-
-  if (code === 'KeyC' && (event.ctrlKey || event.metaKey) && !event.shiftKey && !event.altKey) {
-    const copyControl = current.querySelector<HTMLElement>('[data-jv-copy]');
-    if (copyControl && !window.getSelection()?.toString()) {
-      event.stopPropagation();
-      event.preventDefault();
-      copyControl.click();
-    }
-    return;
-  }
-
-  if (
-    (code === 'Enter' || code === 'Space') &&
-    togglePath &&
-    pathStr &&
-    event.target === event.currentTarget
-  ) {
-    event.stopPropagation();
-    event.preventDefault();
-    togglePath(pathStr);
-    return;
-  }
-
-  if (code === 'ArrowDown' || code === 'ArrowUp') {
-    const root = findElementAncestor(current, '[data-jv-root]');
-    if (!root) {
-      return;
-    }
-    event.stopPropagation();
-    event.preventDefault();
-    const nodes = Array.from(root.querySelectorAll<HTMLElement>('[data-jv-node]')).filter(
-      (n) => n.style.display !== 'none'
-    );
-    const index = nodes.indexOf(current);
-    if (index === -1) {
-      return;
-    }
-    const nextIndex = code === 'ArrowDown' ? index + 1 : index - 1;
-    nodes[nextIndex]?.focus();
-  }
-
-  if (code === 'ArrowRight' && togglePath && pathStr) {
-    event.stopPropagation();
-    event.preventDefault();
-    if (isExpanded) {
-      const wrapper = current.closest<HTMLElement>('[data-jv-node-wrapper]');
-      const group = wrapper
-        ? Array.from(wrapper.children).find((child) => child.getAttribute('role') === 'group')
-        : undefined;
-      group?.querySelector<HTMLElement>('[data-jv-node]')?.focus();
-    } else {
-      togglePath(pathStr);
-    }
-  }
-
-  if (code === 'ArrowLeft' && togglePath && pathStr) {
-    event.stopPropagation();
-    event.preventDefault();
-    if (isExpanded) {
-      togglePath(pathStr);
-    } else {
-      const parentWrapper = findElementAncestor(current, '[data-jv-node-wrapper]');
-      const grandparent = parentWrapper
-        ? findElementAncestor(parentWrapper, '[data-jv-node-wrapper]')
-        : null;
-      grandparent?.querySelector<HTMLElement>('[data-jv-node]')?.focus();
-    }
-  }
-
-  if (code === 'ArrowLeft' && !togglePath) {
-    event.stopPropagation();
-    event.preventDefault();
-    const parentWrapper = findElementAncestor(current, '[data-jv-node-wrapper]');
-    const grandparent = parentWrapper
-      ? findElementAncestor(parentWrapper, '[data-jv-node-wrapper]')
-      : null;
-    grandparent?.querySelector<HTMLElement>('[data-jv-node]')?.focus();
-  }
-}
-
 export const JsonViewer = factory<JsonViewerFactory>((_props) => {
   const props = useProps('JsonViewer', defaultProps, _props);
   const {
@@ -334,12 +242,13 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
     rootSelector: 'root',
   });
 
+  const [defaultExpandedPaths] = useState(() =>
+    getExpandablePaths(value, { depth: defaultExpandDepth, groupArraysAfterLength })
+  );
+
   const [_expandedPaths, setExpandedPaths] = useUncontrolled({
     value: expandedPaths,
-    defaultValue: [
-      serializePath([]),
-      ...getDefaultExpandedPaths(value, defaultExpandDepth!, [], 0, groupArraysAfterLength!),
-    ],
+    defaultValue: defaultExpandedPaths,
     finalValue: [],
     onChange: onExpandedPathsChange,
   });
@@ -359,7 +268,7 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
   );
 
   const expandAll = () => {
-    setExpandedPaths(getAllExpandablePaths(value, [], groupArraysAfterLength!));
+    setExpandedPaths(getExpandablePaths(value, { groupArraysAfterLength }));
   };
 
   const collapseAll = () => {
@@ -367,7 +276,6 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
   };
 
   const contentRef = useRef<HTMLDivElement>(null);
-  const lineNumbersRef = useRef<HTMLDivElement>(null);
   const [lineHeights, setLineHeights] = useState<number[]>([]);
 
   useEffect(() => {
@@ -379,7 +287,7 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
       const rows = contentRef.current!.querySelectorAll<HTMLElement>(':scope [data-jv-row]');
       const heights: number[] = [];
       rows.forEach((row) => {
-        heights.push(row.offsetHeight);
+        heights.push(row.getBoundingClientRect().height);
       });
       setLineHeights(heights);
     };
@@ -430,11 +338,11 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
         </Tooltip>
       )}
       {withControls && !allExpanded && (
-        <div {...getStyles('content')} data-controls>
-          <UnstyledButton onClick={expandAll} data-control>
+        <div {...getStyles('controls')}>
+          <UnstyledButton onClick={expandAll} {...getStyles('control')}>
             {expandAllLabel}
           </UnstyledButton>
-          <UnstyledButton onClick={collapseAll} data-control>
+          <UnstyledButton onClick={collapseAll} {...getStyles('control')}>
             {collapseAllLabel}
           </UnstyledButton>
         </div>
@@ -442,7 +350,7 @@ export const JsonViewer = factory<JsonViewerFactory>((_props) => {
       <ScrollArea type="hover" scrollbarSize={4} {...getStyles('scrollarea')}>
         <div {...getStyles('wrapper')}>
           {withLineNumbers && (
-            <div {...getStyles('lineNumbers')} ref={lineNumbersRef} aria-hidden>
+            <div {...getStyles('lineNumbers')} aria-hidden>
               {lineHeights.map((height, i) => (
                 <div key={i} style={{ height }}>
                   {i + 1}

@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { type GetStylesApi, Tooltip, UnstyledButton } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
+import { handleJsonViewerKeyDown } from './json-viewer-keyboard';
 import {
   formatValue,
+  getArrayChunks,
+  getChunkSegment,
+  getEntries,
   getTypeLabel,
   getValueType,
+  isExpandableValue,
+  type JsonViewerArrayChunk,
+  resolveDisplayValue,
   safeStringify,
   serializePath,
 } from './json-viewer-utils';
-import {
-  handleJsonViewerKeyDown,
-  type JsonViewerFactory,
-  type JsonViewerHighlightType,
-} from './JsonViewer';
+import type { JsonViewerFactory, JsonViewerHighlightType } from './JsonViewer';
 
 export interface JsonViewerNodeProps {
   value: any;
@@ -92,11 +95,34 @@ function CopyValueButton({
   );
 }
 
+const WRAP_AFTER_LENGTH = 20;
+
 const CHEVRON_SVG = (
   <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor">
     <path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z" />
   </svg>
 );
+
+function NodeKey({
+  nodeKey,
+  withKeyQuotes,
+  getStyles,
+}: {
+  nodeKey: string | undefined;
+  withKeyQuotes: boolean;
+  getStyles: GetStylesApi<JsonViewerFactory>;
+}) {
+  if (nodeKey === undefined) {
+    return null;
+  }
+
+  return (
+    <span {...getStyles('key')} data-key>
+      {withKeyQuotes ? JSON.stringify(nodeKey) : nodeKey}
+      {': '}
+    </span>
+  );
+}
 
 function CollapsibleNode({
   nodeKey,
@@ -125,18 +151,13 @@ function CollapsibleNode({
   isRoot,
 }: JsonViewerNodeProps) {
   const pathStr = serializePath(path);
-  const isExpanded = allExpanded || expandedPaths.includes(pathStr);
   const isArray = Array.isArray(value);
   const openBracket = isArray ? '[' : '{';
   const closeBracket = isArray ? ']' : '}';
-  const highlightType = highlightItems?.[serializePath(path)];
-  const canCollapse = !isRoot && !allExpanded;
-  const showChevron = canCollapse && withChevrons;
+  const highlightType = highlightItems?.[pathStr];
   const childAncestors = [...ancestors, value];
 
-  let entries: [string, any][] = isArray
-    ? value.map((v: any, i: number) => [String(i), v])
-    : Object.entries(value);
+  let entries = getEntries(value);
 
   if (!isArray && sortKeys) {
     const comparator = typeof sortKeys === 'function' ? sortKeys : undefined;
@@ -146,24 +167,20 @@ function CollapsibleNode({
   }
 
   const totalLength = entries.length;
-  const shouldGroup =
-    isArray && groupArraysAfterLength !== false && totalLength > groupArraysAfterLength;
+  const isEmpty = totalLength === 0;
+  const isExpanded = !isEmpty && (isRoot || allExpanded || expandedPaths.includes(pathStr));
+  const canCollapse = !isEmpty && !isRoot && !allExpanded;
+  const showChevron = canCollapse && withChevrons;
+  const chunks = isArray ? getArrayChunks(totalLength, groupArraysAfterLength) : null;
 
   let displayEntries = entries;
-  const isTruncated = !shouldGroup && totalLength > maxDisplayLength;
+  const isTruncated = !chunks && totalLength > maxDisplayLength;
   if (isTruncated) {
     displayEntries = entries.slice(0, maxDisplayLength);
   }
 
-  const keyDisplay =
-    nodeKey !== undefined ? (
-      <span {...getStyles('key')} data-key>
-        {withKeyQuotes ? `"${nodeKey}"` : nodeKey}
-        {': '}
-      </span>
-    ) : null;
-
   const sizeLabel = isArray ? `${totalLength} items` : `${totalLength} keys`;
+  const toggle = canCollapse ? () => togglePath(pathStr) : undefined;
 
   const sharedNodeProps: SharedNodeProps = {
     expandedPaths,
@@ -193,10 +210,19 @@ function CollapsibleNode({
           {CHEVRON_SVG}
         </span>
       )}
-      {keyDisplay}
-      <span {...getStyles('bracket')}>{openBracket}</span>
-      {!isExpanded && <span {...getStyles('ellipsis')}>...</span>}
-      {!isExpanded && <span {...getStyles('bracket')}>{closeBracket}</span>}
+      <NodeKey nodeKey={nodeKey} withKeyQuotes={withKeyQuotes} getStyles={getStyles} />
+      {isEmpty ? (
+        <span {...getStyles('bracket')}>
+          {openBracket}
+          {closeBracket}
+        </span>
+      ) : (
+        <>
+          <span {...getStyles('bracket')}>{openBracket}</span>
+          {!isExpanded && <span {...getStyles('ellipsis')}>...</span>}
+          {!isExpanded && <span {...getStyles('bracket')}>{closeBracket}</span>}
+        </>
+      )}
       {withTypes && (
         <span {...getStyles('type')} data-value-type={isArray ? 'array' : 'object'}>
           {isArray ? 'array' : 'object'}
@@ -217,8 +243,18 @@ function CollapsibleNode({
   const childContent = isExpanded ? (
     <>
       <div role="group" style={{ paddingLeft: 'var(--jv-indent)' }}>
-        {shouldGroup
-          ? renderGroupedArray(displayEntries, path, level, childAncestors, sharedNodeProps)
+        {chunks
+          ? chunks.map((chunk) => (
+              <ArrayChunkNode
+                key={chunk.start}
+                chunk={chunk}
+                entries={entries.slice(chunk.start, chunk.end + 1)}
+                parentPath={path}
+                level={level + 1}
+                ancestors={childAncestors}
+                nodeProps={sharedNodeProps}
+              />
+            ))
           : displayEntries.map(([key, val]) => (
               <JsonViewerNode
                 key={key}
@@ -232,7 +268,9 @@ function CollapsibleNode({
             ))}
         {isTruncated && (
           <div {...getStyles('row')} data-jv-row>
-            <span {...getStyles('size')}>... {totalLength - maxDisplayLength} more items</span>
+            <span {...getStyles('size')}>
+              ... {totalLength - maxDisplayLength} more {isArray ? 'items' : 'keys'}
+            </span>
           </div>
         )}
       </div>
@@ -252,7 +290,7 @@ function CollapsibleNode({
       <div
         {...getStyles('row')}
         role="treeitem"
-        aria-expanded={isExpanded}
+        aria-expanded={isEmpty ? undefined : isExpanded}
         aria-level={level}
         data-hoverable
         data-jv-node
@@ -260,21 +298,19 @@ function CollapsibleNode({
         data-root={isRoot || undefined}
         tabIndex={isRoot ? 0 : -1}
         onClick={
-          canCollapse
+          toggle
             ? (e: React.MouseEvent) => {
                 e.stopPropagation();
-                togglePath(pathStr);
+                toggle();
               }
             : undefined
         }
-        onKeyDown={(e) => {
-          handleJsonViewerKeyDown(
-            e,
-            canCollapse ? togglePath : undefined,
-            canCollapse ? pathStr : undefined,
-            isExpanded
-          );
-        }}
+        onKeyDown={(e) =>
+          handleJsonViewerKeyDown(e, {
+            expanded: isEmpty ? undefined : isExpanded,
+            onToggle: toggle,
+          })
+        }
       >
         {rowContent}
       </div>
@@ -284,26 +320,24 @@ function CollapsibleNode({
 }
 
 function ArrayChunkNode({
+  chunk,
   entries,
-  startIndex,
-  endIndex,
   parentPath,
   level,
   ancestors,
   nodeProps,
 }: {
+  chunk: JsonViewerArrayChunk;
   entries: [string, any][];
-  startIndex: number;
-  endIndex: number;
   parentPath: string[];
   level: number;
   ancestors: object[];
   nodeProps: SharedNodeProps;
 }) {
-  const chunkPathStr = serializePath([...parentPath, `[${startIndex}...${endIndex}]`]);
+  const label = getChunkSegment(chunk);
+  const chunkPathStr = serializePath([...parentPath, label]);
   const isExpanded = nodeProps.allExpanded || nodeProps.expandedPaths.includes(chunkPathStr);
-  const label = `[${startIndex}...${endIndex}]`;
-  const canCollapse = !nodeProps.allExpanded;
+  const toggle = nodeProps.allExpanded ? undefined : () => nodeProps.togglePath(chunkPathStr);
 
   return (
     <div {...nodeProps.getStyles('node')} data-type="array" data-jv-node-wrapper>
@@ -317,23 +351,18 @@ function ArrayChunkNode({
         data-jv-row
         tabIndex={-1}
         onClick={
-          canCollapse
+          toggle
             ? (e: React.MouseEvent) => {
                 e.stopPropagation();
-                nodeProps.togglePath(chunkPathStr);
+                toggle();
               }
             : undefined
         }
-        onKeyDown={(e: React.KeyboardEvent) => {
-          handleJsonViewerKeyDown(
-            e,
-            canCollapse ? nodeProps.togglePath : undefined,
-            canCollapse ? chunkPathStr : undefined,
-            isExpanded
-          );
-        }}
+        onKeyDown={(e: React.KeyboardEvent<HTMLElement>) =>
+          handleJsonViewerKeyDown(e, { expanded: isExpanded, onToggle: toggle })
+        }
       >
-        {canCollapse && nodeProps.withChevrons && (
+        {toggle && nodeProps.withChevrons && (
           <span {...nodeProps.getStyles('toggle')} data-expanded={isExpanded || undefined}>
             {CHEVRON_SVG}
           </span>
@@ -357,7 +386,6 @@ function ArrayChunkNode({
                 level={level + 1}
                 ancestors={ancestors}
                 {...nodeProps}
-                groupArraysAfterLength={false}
               />
             ))}
           </div>
@@ -368,37 +396,6 @@ function ArrayChunkNode({
       )}
     </div>
   );
-}
-
-function renderGroupedArray(
-  entries: [string, any][],
-  path: string[],
-  level: number,
-  ancestors: object[],
-  nodeProps: SharedNodeProps
-) {
-  const chunkSize = nodeProps.groupArraysAfterLength as number;
-  const chunks: [string, any][][] = [];
-  for (let i = 0; i < entries.length; i += chunkSize) {
-    chunks.push(entries.slice(i, i + chunkSize));
-  }
-
-  return chunks.map((chunk, chunkIndex) => {
-    const startIndex = chunkIndex * chunkSize;
-    const endIndex = startIndex + chunk.length - 1;
-    return (
-      <ArrayChunkNode
-        key={`chunk-${startIndex}`}
-        entries={chunk}
-        startIndex={startIndex}
-        endIndex={endIndex}
-        parentPath={path}
-        level={level + 1}
-        ancestors={ancestors}
-        nodeProps={nodeProps}
-      />
-    );
-  });
 }
 
 function PrimitiveNode({
@@ -416,11 +413,13 @@ function PrimitiveNode({
   copiedLabel,
   onValueSelect,
   highlightItems,
+  isRoot,
   circular,
 }: JsonViewerNodeProps) {
   const [isStringExpanded, setIsStringExpanded] = useState(false);
   const type = circular ? 'circular' : getValueType(value);
   const highlightType = highlightItems?.[serializePath(path)];
+  const select = onValueSelect ? () => onValueSelect(path, value) : undefined;
 
   const shouldCollapseString =
     typeof value === 'string' &&
@@ -435,14 +434,6 @@ function PrimitiveNode({
   } else {
     formatted = formatValue(value, withQuotes, false);
   }
-
-  const keyDisplay =
-    nodeKey !== undefined ? (
-      <span {...getStyles('key')} data-key>
-        {withKeyQuotes ? `"${nodeKey}"` : nodeKey}
-        {': '}
-      </span>
-    ) : null;
 
   return (
     <div
@@ -459,30 +450,26 @@ function PrimitiveNode({
         data-hoverable
         data-jv-node
         data-jv-row
-        tabIndex={-1}
+        data-root={isRoot || undefined}
+        tabIndex={isRoot ? 0 : -1}
         onClick={
-          onValueSelect
+          select
             ? (e: React.MouseEvent) => {
                 e.stopPropagation();
-                onValueSelect(path, value);
+                select();
               }
             : undefined
         }
-        onKeyDown={(e) => {
-          if (
-            onValueSelect &&
-            (e.key === 'Enter' || e.key === ' ') &&
-            e.target === e.currentTarget
-          ) {
-            e.preventDefault();
-            e.stopPropagation();
-            onValueSelect(path, value);
-          }
-          handleJsonViewerKeyDown(e);
-        }}
+        onKeyDown={(e) => handleJsonViewerKeyDown(e, { onSelect: select })}
       >
-        {keyDisplay}
-        <span {...getStyles('value')} data-value-type={type}>
+        <NodeKey nodeKey={nodeKey} withKeyQuotes={withKeyQuotes} getStyles={getStyles} />
+        <span
+          {...getStyles('value')}
+          data-value-type={type}
+          data-wrap={
+            (type === 'string' && formatted.display.length > WRAP_AFTER_LENGTH) || undefined
+          }
+        >
           {formatted.display}
         </span>
         {shouldCollapseString && (
@@ -491,6 +478,7 @@ function PrimitiveNode({
               e.stopPropagation();
               setIsStringExpanded(!isStringExpanded);
             }}
+            aria-expanded={isStringExpanded}
             {...getStyles('ellipsis')}
             data-clickable
           >
@@ -516,16 +504,15 @@ function PrimitiveNode({
 }
 
 export function JsonViewerNode(props: JsonViewerNodeProps) {
-  const { value, ancestors } = props;
-  const isExpandable = value !== null && typeof value === 'object';
+  const value = resolveDisplayValue(props.value);
 
-  if (isExpandable && ancestors.includes(value)) {
-    return <PrimitiveNode {...props} circular />;
+  if (isExpandableValue(value) && props.ancestors.includes(value)) {
+    return <PrimitiveNode {...props} value={value} circular />;
   }
 
-  if (isExpandable) {
-    return <CollapsibleNode {...props} />;
+  if (isExpandableValue(value)) {
+    return <CollapsibleNode {...props} value={value} />;
   }
 
-  return <PrimitiveNode {...props} />;
+  return <PrimitiveNode {...props} value={value} />;
 }

@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { JsonViewer, JsonViewerProps, JsonViewerStylesNames, serializePath } from './JsonViewer';
 
@@ -33,6 +34,7 @@ const defaultProps: JsonViewerProps = {
   withLineNumbers: true,
   withChevrons: true,
   withCopyButton: true,
+  withControls: true,
 };
 
 describe('@mantine/code-highlight/JsonViewer', () => {
@@ -59,6 +61,8 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       'lineNumbers',
       'wrapper',
       'copyAllButton',
+      'controls',
+      'control',
     ],
   });
 
@@ -339,7 +343,7 @@ describe('@mantine/code-highlight/JsonViewer', () => {
         <JsonViewer
           value={Array.from({ length: 6 }, (_, i) => i)}
           groupArraysAfterLength={3}
-          defaultExpandDepth={1}
+          defaultExpandDepth={2}
         />
       );
 
@@ -497,7 +501,7 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       const { rerender } = render(
         <JsonViewer
           value={value}
-          expandedPaths={['']}
+          expandedPaths={[]}
           onExpandedPathsChange={onExpandedPathsChange}
         />
       );
@@ -505,14 +509,14 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       expect(screen.queryByText(/"revealed"/)).not.toBeInTheDocument();
       await userEvent.click(getRow(/nested/));
 
-      expect(onExpandedPathsChange).toHaveBeenCalledWith(['', serializePath(['nested'])]);
+      expect(onExpandedPathsChange).toHaveBeenCalledWith([serializePath(['nested'])]);
       expect(screen.queryByText(/"revealed"/)).not.toBeInTheDocument();
 
       rerender(
         <>
           <JsonViewer
             value={value}
-            expandedPaths={['', serializePath(['nested'])]}
+            expandedPaths={[serializePath(['nested'])]}
             onExpandedPathsChange={onExpandedPathsChange}
           />
         </>
@@ -662,7 +666,7 @@ describe('@mantine/code-highlight/JsonViewer', () => {
         <JsonViewer
           value={Array.from({ length: 7 }, (_, i) => i)}
           groupArraysAfterLength={3}
-          defaultExpandDepth={1}
+          defaultExpandDepth={2}
         />
       );
 
@@ -706,6 +710,288 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       expect(screen.getByText('Open')).toBeInTheDocument();
       expect(screen.getByText('Close')).toBeInTheDocument();
       expect(screen.getAllByLabelText('Grab').length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('root expansion', () => {
+    it('keeps the root expanded after collapse all', async () => {
+      render(<JsonViewer value={{ a: { b: 'x' } }} defaultExpandDepth={2} withControls />);
+
+      await userEvent.click(screen.getByText('Collapse all'));
+
+      const root = document.querySelector('[data-root]')!;
+      expect(root).toHaveAttribute('aria-expanded', 'true');
+      expect(getRow(/^a/)).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('treats an empty-string key as its own path, separate from the root', async () => {
+      render(<JsonViewer value={{ '': { inner: 'x' }, other: 1 }} />);
+
+      expect(screen.queryByText(/"x"/)).not.toBeInTheDocument();
+      const emptyKeyRow = document
+        .querySelector('[data-key]')!
+        .closest<HTMLElement>('[data-jv-node]')!;
+      await userEvent.click(emptyKeyRow);
+
+      expect(screen.getByText(/"x"/)).toBeInTheDocument();
+      expect(screen.getByText(/other/)).toBeInTheDocument();
+    });
+
+    it('keeps the root expanded with controlled expandedPaths regardless of the empty path', () => {
+      const { rerender } = render(<JsonViewer value={{ a: 1 }} expandedPaths={[]} />);
+      expect(document.querySelector('[data-root]')).toHaveAttribute('aria-expanded', 'true');
+      expect(screen.getByText('1')).toBeInTheDocument();
+
+      rerender(
+        <>
+          <JsonViewer value={{ a: 1 }} expandedPaths={['']} />
+        </>
+      );
+      expect(document.querySelector('[data-root]')).toHaveAttribute('aria-expanded', 'true');
+    });
+  });
+
+  describe('array grouping', () => {
+    it('does not group when groupArraysAfterLength is below 1', () => {
+      render(<JsonViewer value={[1, 2]} groupArraysAfterLength={0} />);
+      expect(screen.getByText('1')).toBeInTheDocument();
+      expect(screen.queryByText(/\.\.\./)).not.toBeInTheDocument();
+    });
+
+    it('groups arrays nested inside a chunk', () => {
+      const inner = [0, 1, 2, 3, 4];
+      render(
+        <JsonViewer
+          value={{ outer: [inner, inner, inner] }}
+          groupArraysAfterLength={2}
+          maxDisplayLength={3}
+          allExpanded
+        />
+      );
+
+      expect(screen.queryByText(/more items/)).not.toBeInTheDocument();
+      expect(screen.getAllByText('[4...4]')).toHaveLength(3);
+      expect(screen.getAllByText('4')).toHaveLength(3);
+    });
+
+    it('counts chunk rows as one depth level', () => {
+      render(
+        <JsonViewer
+          value={Array.from({ length: 6 }, (_, i) => i)}
+          groupArraysAfterLength={3}
+          defaultExpandDepth={1}
+        />
+      );
+
+      expect(getRow('[0...2]')).toHaveAttribute('aria-expanded', 'false');
+      expect(screen.queryByText('4')).not.toBeInTheDocument();
+    });
+
+    it('expands every rendered row on expand all with grouped arrays', async () => {
+      const inner = [0, 1, 2, 3, 4];
+      render(
+        <JsonViewer
+          value={{ outer: [inner, { deep: inner }, inner], empty: [] }}
+          groupArraysAfterLength={2}
+          defaultExpandDepth={0}
+          withControls
+        />
+      );
+
+      await userEvent.click(screen.getByText('Expand all'));
+
+      const expandable = document.querySelectorAll('[aria-expanded]');
+      expect(expandable.length).toBeGreaterThan(10);
+      expandable.forEach((row) => expect(row).toHaveAttribute('aria-expanded', 'true'));
+    });
+  });
+
+  describe('value display', () => {
+    it('escapes quoted strings and keys', () => {
+      render(<JsonViewer value={{ 'k"ey': 'a"b\nc' }} withKeyQuotes />);
+
+      expect(document.querySelector('[data-value-type="string"]')!.textContent).toBe('"a\\"b\\nc"');
+      expect(document.querySelector('[data-key]')!.textContent).toBe('"k\\"ey": ');
+    });
+
+    it('allows wrapping only for long values', () => {
+      render(
+        <JsonViewer
+          value={{
+            short: 'short value',
+            long: 'a'.repeat(40),
+            flag: true,
+            big: BigInt('1'.repeat(30)),
+          }}
+        />
+      );
+      const values = document.querySelectorAll('.mantine-JsonViewer-value');
+
+      expect(values[0]).not.toHaveAttribute('data-wrap');
+      expect(values[1]).toHaveAttribute('data-wrap');
+      expect(values[2]).not.toHaveAttribute('data-wrap');
+      expect(values[3]).not.toHaveAttribute('data-wrap');
+    });
+
+    it('shows raw strings when withQuotes is false', () => {
+      render(<JsonViewer value={{ s: 'a"b' }} withQuotes={false} />);
+      expect(document.querySelector('[data-value-type="string"]')!.textContent).toBe('a"b');
+    });
+
+    it('renders values with toJSON as their serialized result', () => {
+      render(
+        <JsonViewer
+          value={{ created: new Date('2024-01-01T00:00:00Z'), map: new Map([['a', 1]]) }}
+          withTypes
+          withSize
+        />
+      );
+
+      expect(screen.getByText('"2024-01-01T00:00:00.000Z"')).toBeInTheDocument();
+      expect(getRow(/^created/)).not.toHaveAttribute('aria-expanded');
+      expect(screen.getByText('0 keys')).toBeInTheDocument();
+      expect(getRow(/^map/).textContent).toContain('{}');
+    });
+
+    it('says "more keys" when an object is truncated', () => {
+      render(<JsonViewer value={{ a: 1, b: 2, c: 3 }} maxDisplayLength={1} />);
+      expect(screen.getByText(/2 more keys/)).toBeInTheDocument();
+    });
+
+    it('sets aria-expanded on the show more button', async () => {
+      render(<JsonViewer value={{ s: 'abcdefghij' }} collapseStringsAfterLength={3} />);
+
+      const button = screen.getByRole('button', { name: 'show more' });
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+      await userEvent.click(button);
+      expect(screen.getByRole('button', { name: 'show less' })).toHaveAttribute(
+        'aria-expanded',
+        'true'
+      );
+    });
+  });
+
+  describe('empty values', () => {
+    it('renders empty objects and arrays as a single non-expandable row', () => {
+      const { container } = render(
+        <JsonViewer
+          value={{ emptyObject: {}, emptyArray: [] }}
+          withSize
+          withTypes
+          withLineNumbers
+        />
+      );
+
+      const obj = getRow(/^emptyObject/);
+      const arr = getRow(/^emptyArray/);
+      expect(obj).not.toHaveAttribute('aria-expanded');
+      expect(arr).not.toHaveAttribute('aria-expanded');
+      expect(obj.textContent).toContain('{}');
+      expect(arr.textContent).toContain('[]');
+      expect(screen.getByText('0 keys')).toBeInTheDocument();
+      expect(screen.getByText('0 items')).toBeInTheDocument();
+      expect(container.querySelectorAll('[role="group"]')).toHaveLength(1);
+      expect(container.querySelectorAll('[data-jv-row]')).toHaveLength(4);
+    });
+
+    it('renders an empty root as a single focusable row', () => {
+      const { container } = render(<JsonViewer value={[]} />);
+      const root = container.querySelector('[data-root]')!;
+      expect(root).not.toHaveAttribute('aria-expanded');
+      expect(root).toHaveAttribute('tabindex', '0');
+      expect(root.textContent).toBe('[]');
+      expect(container.querySelector('[role="group"]')).toBeNull();
+    });
+  });
+
+  describe('keyboard navigation regardless of collapsibility', () => {
+    it('moves from the root to its first child with ArrowRight', async () => {
+      render(<JsonViewer value={{ a: 1, b: 2 }} />);
+
+      document.querySelector<HTMLElement>('[data-root]')!.focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(document.activeElement).toBe(getRow(/^a/));
+    });
+
+    it('moves into and out of children with allExpanded', async () => {
+      render(<JsonViewer value={{ a: { x: 1 }, b: 2 }} allExpanded />);
+
+      getRow(/^a/).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(document.activeElement).toBe(getRow(/^x/));
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(document.activeElement).toBe(getRow(/^a/));
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(document.activeElement).toBe(document.querySelector('[data-root]'));
+    });
+
+    it('moves from an allExpanded chunk row to its first item', async () => {
+      render(<JsonViewer value={[1, 2, 3, 4]} groupArraysAfterLength={2} allExpanded />);
+
+      getRow('[2...3]').focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(document.activeElement).toBe(getRow('3'));
+    });
+
+    it('does not move focus with ArrowRight on leaf and empty rows', async () => {
+      render(<JsonViewer value={{ a: 1, e: {} }} />);
+
+      getRow(/^a/).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(document.activeElement).toBe(getRow(/^a/));
+
+      getRow(/^e/).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(document.activeElement).toBe(getRow(/^e/));
+    });
+
+    it('prevents page scroll on Space and Enter for every row', () => {
+      render(<JsonViewer value={{ a: { x: 1 }, b: 2 }} allExpanded />);
+
+      const rows = [
+        document.querySelector<HTMLElement>('[data-root]')!,
+        getRow(/^a/),
+        getRow(/^b/),
+      ];
+      rows.forEach((row) => {
+        expect(fireEvent.keyDown(row, { key: ' ', code: 'Space' })).toBe(false);
+        expect(fireEvent.keyDown(row, { key: 'Enter', code: 'Enter' })).toBe(false);
+      });
+    });
+
+    it('makes a primitive root value focusable', () => {
+      const { container } = render(<JsonViewer value="text" />);
+      const row = container.querySelector('[data-jv-node]')!;
+      expect(row).toHaveAttribute('tabindex', '0');
+    });
+
+    it('selects a primitive value with Space when onValueSelect is set', async () => {
+      const onValueSelect = jest.fn();
+      render(<JsonViewer value={{ name: 'test' }} onValueSelect={onValueSelect} />);
+
+      getRow(/"test"/).focus();
+      await userEvent.keyboard(' ');
+      expect(onValueSelect).toHaveBeenCalledWith(['name'], 'test');
+    });
+  });
+
+  describe('styles api', () => {
+    it('applies controls and control selectors to the expand/collapse bar', () => {
+      render(
+        <JsonViewer
+          value={{ a: 1 }}
+          withControls
+          classNames={{ controls: 'c-bar', control: 'c-btn', content: 'c-content' }}
+        />
+      );
+
+      const bar = document.querySelector('.c-bar')!;
+      expect(bar).toBeInTheDocument();
+      expect(bar).not.toHaveClass('c-content');
+      expect(bar.querySelectorAll('.c-btn')).toHaveLength(2);
+      expect(document.querySelectorAll('.c-content')).toHaveLength(1);
     });
   });
 });

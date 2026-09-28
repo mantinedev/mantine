@@ -23,17 +23,13 @@ import { data } from './data';
 
 function Demo() {
   return (
-    <JsonViewer
-      value={data}
-      withControls
-      defaultExpandDepth={0}
-    />
+    <JsonViewer value={data} withControls />
   );
 }
 `;
 
 function Demo() {
-  return <JsonViewer value={jsonData} withControls defaultExpandDepth={0} />;
+  return <JsonViewer value={jsonData} withControls />;
 }
 
 export const controls: MantineDemo = {
