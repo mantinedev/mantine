@@ -173,8 +173,9 @@ describe('@mantine/core/ColorWheel', () => {
     expect(onChange).toHaveBeenLastCalledWith(350);
   });
 
-  it('focuses the slider element on mousedown', () => {
+  it('focuses the slider element on mousedown without scrolling', () => {
     const onMouseDownCapture = jest.fn();
+    const focus = jest.spyOn(HTMLElement.prototype, 'focus');
     const { container } = render(
       <ColorWheel {...defaultProps} onMouseDownCapture={onMouseDownCapture} />
     );
@@ -184,6 +185,8 @@ describe('@mantine/core/ColorWheel', () => {
     fireEvent.mouseUp(document, pointAt(90));
     expect(screen.getByRole('slider')).toHaveFocus();
     expect(onMouseDownCapture).toHaveBeenCalledTimes(1);
+    expect(focus).toHaveBeenCalledWith(expect.objectContaining({ preventScroll: true }));
+    focus.mockRestore();
   });
 
   it('does not focus the slider element on mousedown when disabled', () => {

@@ -180,7 +180,7 @@ export const ColorWheel = factory<ColorWheelFactory>((_props) => {
 
   const focusThumb = () => {
     if (!disabled) {
-      thumbRef.current?.focus({ focusVisible: false });
+      thumbRef.current?.focus({ preventScroll: true, focusVisible: false });
     }
   };
 
