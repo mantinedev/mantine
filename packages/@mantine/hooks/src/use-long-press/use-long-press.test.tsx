@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, renderHook, screen } from '@testing-library/react';
 import { useLongPress, UseLongPressOptions } from './use-long-press';
 
 // Test component that uses the hook
@@ -84,29 +84,6 @@ describe('useLongPress', () => {
     fireEvent.mouseUp(element);
   });
 
-  it('should not call onLongPress if released before threshold', () => {
-    const onLongPress = jest.fn();
-    render(<TestComponent onLongPress={onLongPress} />);
-
-    const element = screen.getByTestId('test-element');
-    fireEvent.mouseDown(element);
-
-    // Fast-forward time but not enough to trigger
-    act(() => {
-      jest.advanceTimersByTime(300);
-    });
-
-    // Release before threshold is met
-    fireEvent.mouseUp(element);
-
-    // Complete the threshold time
-    act(() => {
-      jest.advanceTimersByTime(100);
-    });
-
-    expect(onLongPress).not.toHaveBeenCalled();
-  });
-
   it('should call onStart callback on press start', () => {
     const onLongPress = jest.fn();
     const onStart = jest.fn();
@@ -152,8 +129,15 @@ describe('useLongPress', () => {
     const element = screen.getByTestId('test-element');
     fireEvent.mouseDown(element);
 
-    // Release before threshold
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+
     fireEvent.mouseUp(element);
+
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
 
     expect(onLongPress).not.toHaveBeenCalled();
     expect(onCancel).toHaveBeenCalledTimes(1);
@@ -221,12 +205,8 @@ describe('useLongPress', () => {
   });
 
   it('should return empty object if onLongPress is not a function', () => {
-    // We need to suppress the TypeScript error for this test
-    // @ts-ignore - Intentionally passing invalid prop for testing
-    render(<TestComponent onLongPress="not a function" />);
-
-    // Just checking that it renders without crashing
-    expect(screen.getByTestId('test-element')).toBeInTheDocument();
+    const { result } = renderHook(() => useLongPress('not a function' as any));
+    expect(result.current).toEqual({});
   });
 
   it('should clean up timeout on unmount', () => {
@@ -246,8 +226,6 @@ describe('useLongPress', () => {
     });
 
     expect(onLongPress).not.toHaveBeenCalled();
-    // Note: With Jest's fake timers, timers are cleared automatically on unmount
-    // so we can't easily test if clearTimeout was called correctly
   });
 
   it('should handle multiple presses correctly', () => {

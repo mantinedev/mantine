@@ -6,12 +6,12 @@ const defaultProps: RadialBarChartProps = {
   dataKey: 'value',
 };
 
-describe('@mantine/core/RadialBarChart', () => {
+describe('@mantine/charts/RadialBarChart', () => {
   tests.itSupportsSystemProps<RadialBarChartProps, RadialBarChartStylesNames>({
     component: RadialBarChart,
     props: defaultProps,
     varsResolver: true,
-    displayName: '@mantine/core/RadialBarChart',
+    displayName: '@mantine/charts/RadialBarChart',
     stylesApiSelectors: ['root'],
   });
 });

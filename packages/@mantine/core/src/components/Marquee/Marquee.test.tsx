@@ -16,12 +16,15 @@ describe('@mantine/core/Marquee', () => {
   });
 
   it('renders children in all group elements', () => {
-    const { container } = render(<Marquee repeat={4}>test-children</Marquee>);
+    const { container, rerender } = render(<Marquee repeat={4}>test-children</Marquee>);
     const groups = container.querySelectorAll('.mantine-Marquee-group');
     expect(groups).toHaveLength(4);
     groups.forEach((group) => {
       expect(group.textContent).toBe('test-children');
     });
+
+    rerender(<Marquee repeat={2}>test-children</Marquee>);
+    expect(container.querySelectorAll('.mantine-Marquee-group')).toHaveLength(2);
   });
 
   it('sets data-orientation attribute based on orientation prop', () => {
@@ -54,14 +57,6 @@ describe('@mantine/core/Marquee', () => {
 
     rerender(<Marquee {...defaultProps} pauseOnHover />);
     expect(container.querySelector('.mantine-Marquee-root')).toHaveAttribute('data-pause-on-hover');
-  });
-
-  it('renders correct number of groups based on repeat prop', () => {
-    const { container, rerender } = render(<Marquee {...defaultProps} repeat={4} />);
-    expect(container.querySelectorAll('.mantine-Marquee-group')).toHaveLength(4);
-
-    rerender(<Marquee {...defaultProps} repeat={2} />);
-    expect(container.querySelectorAll('.mantine-Marquee-group')).toHaveLength(2);
   });
 
   it('supports duration prop', () => {

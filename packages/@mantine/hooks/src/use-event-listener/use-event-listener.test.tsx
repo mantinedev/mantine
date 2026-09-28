@@ -22,9 +22,9 @@ describe('@mantine/hooks/use-event-listener', () => {
   it('removes the listener on unmount', async () => {
     const spy = jest.fn();
     const { unmount } = render(<Test spy={spy} />);
+    const button = screen.getByRole('button');
     unmount();
-    // Firing after unmount — listener should be gone
-    document.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -52,9 +52,12 @@ describe('@mantine/hooks/use-event-listener', () => {
     }
 
     const { rerender } = render(<Swappable useFirst />);
+    const btn1 = screen.getByTestId('btn1');
     rerender(<Swappable useFirst={false} />);
 
-    // Old node is gone from DOM, new node should fire
+    fireEvent.click(btn1);
+    expect(spy).not.toHaveBeenCalled();
+
     fireEvent.click(screen.getByTestId('btn2'));
     expect(spy).toHaveBeenCalledTimes(1);
   });

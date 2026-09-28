@@ -84,13 +84,4 @@ describe('Phase 4 – autoContrast pipeline handles oklch colors (luminance Phas
       getContrastColor({ color: 'darkOklchColor.6', theme: themeWithOklch, autoContrast: true })
     ).toBe('var(--mantine-color-white)');
   });
-
-  it('always returns white for oklch colors when autoContrast is false', () => {
-    expect(
-      getContrastColor({ color: 'lightOklchColor.6', theme: themeWithOklch, autoContrast: false })
-    ).toBe('var(--mantine-color-white)');
-    expect(
-      getContrastColor({ color: 'darkOklchColor.6', theme: themeWithOklch, autoContrast: false })
-    ).toBe('var(--mantine-color-white)');
-  });
 });

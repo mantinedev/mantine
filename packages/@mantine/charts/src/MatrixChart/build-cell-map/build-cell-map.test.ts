@@ -7,8 +7,8 @@ describe('getCellKey', () => {
     expect(key1).not.toBe(key2);
   });
 
-  it('produces consistent keys', () => {
-    expect(getCellKey('x', 'y')).toBe(getCellKey('x', 'y'));
+  it('distinguishes swapped coordinates', () => {
+    expect(getCellKey('x', 'y')).not.toBe(getCellKey('y', 'x'));
   });
 });
 

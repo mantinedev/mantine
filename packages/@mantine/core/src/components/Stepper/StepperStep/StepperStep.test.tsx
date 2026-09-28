@@ -40,13 +40,15 @@ describe('@mantine/core/StepperStep', () => {
   });
 
   it('renders step body if Step has label or description', () => {
-    const { rerender } = render(<TestContainer />);
-    expect(screen.queryAllByTestId('step-body')).toHaveLength(0);
+    const { rerender, container } = render(<TestContainer />);
+    expect(container.querySelectorAll('.mantine-Stepper-stepBody')).toHaveLength(0);
 
     rerender(<TestContainer label="test-label" />);
+    expect(container.querySelectorAll('.mantine-Stepper-stepBody')).toHaveLength(1);
     expect(screen.getByText('test-label')).toBeInTheDocument();
 
     rerender(<TestContainer description="test-description" />);
+    expect(container.querySelectorAll('.mantine-Stepper-stepBody')).toHaveLength(1);
     expect(screen.getByText('test-description')).toBeInTheDocument();
   });
 });

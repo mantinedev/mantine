@@ -231,92 +231,7 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
     });
   });
 
-  describe('overlapping events', () => {
-    it('assigns different columns to overlapping events', () => {
-      const events = [
-        testUtils.createEvent({ id: 1, start: '2025-01-15 10:00:00', end: '2025-01-15 12:00:00' }),
-        testUtils.createEvent({ id: 2, start: '2025-01-15 11:00:00', end: '2025-01-15 13:00:00' }),
-      ];
-
-      const result = getDayPositionedEvents({
-        date: testDate,
-        events,
-      });
-
-      expect(result).toHaveLength(2);
-      expect(result[0].position.column).toBe(0);
-      expect(result[1].position.column).toBe(1);
-    });
-
-    it('handles three overlapping events', () => {
-      const events = [
-        testUtils.createEvent({ id: 1, start: '2025-01-15 10:00:00', end: '2025-01-15 13:00:00' }),
-        testUtils.createEvent({ id: 2, start: '2025-01-15 11:00:00', end: '2025-01-15 14:00:00' }),
-        testUtils.createEvent({ id: 3, start: '2025-01-15 12:00:00', end: '2025-01-15 15:00:00' }),
-      ];
-
-      const result = getDayPositionedEvents({
-        date: testDate,
-        events,
-      });
-
-      expect(result).toHaveLength(3);
-      expect(result[0].position.column).toBe(0);
-      expect(result[1].position.column).toBe(1);
-      expect(result[2].position.column).toBe(2);
-    });
-
-    it('reuses columns when events do not overlap', () => {
-      const events = [
-        testUtils.createEvent({ id: 1, start: '2025-01-15 09:00:00', end: '2025-01-15 10:00:00' }),
-        testUtils.createEvent({ id: 2, start: '2025-01-15 09:30:00', end: '2025-01-15 10:30:00' }),
-        testUtils.createEvent({ id: 3, start: '2025-01-15 11:00:00', end: '2025-01-15 12:00:00' }),
-      ];
-
-      const result = getDayPositionedEvents({
-        date: testDate,
-        events,
-      });
-
-      expect(result).toHaveLength(3);
-      expect(result[0].position.column).toBe(0);
-      expect(result[1].position.column).toBe(1);
-      expect(result[2].position.column).toBe(0);
-    });
-
-    it('handles events that touch but do not overlap', () => {
-      const events = [
-        testUtils.createEvent({ id: 1, start: '2025-01-15 10:00:00', end: '2025-01-15 11:00:00' }),
-        testUtils.createEvent({ id: 2, start: '2025-01-15 11:00:00', end: '2025-01-15 12:00:00' }),
-      ];
-
-      const result = getDayPositionedEvents({
-        date: testDate,
-        events,
-      });
-
-      expect(result).toHaveLength(2);
-      expect(result[0].position.column).toBe(0);
-      expect(result[1].position.column).toBe(0);
-    });
-  });
-
   describe('width and offset calculations', () => {
-    it('calculates width correctly for single event', () => {
-      const events = [
-        testUtils.createEvent({ id: 1, start: '2025-01-15 10:00:00', end: '2025-01-15 12:00:00' }),
-      ];
-
-      const result = getDayPositionedEvents({
-        date: testDate,
-        events,
-      });
-
-      expect(result[0].position.overlaps).toBe(1);
-      expect(result[0].position.width).toBe(100);
-      expect(result[0].position.offset).toBe(0);
-    });
-
     it('calculates width and offset for two overlapping events', () => {
       const events = [
         testUtils.createEvent({ id: 1, start: '2025-01-15 10:00:00', end: '2025-01-15 12:00:00' }),
@@ -328,10 +243,12 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
         events,
       });
 
+      expect(result[0].position.column).toBe(0);
       expect(result[0].position.overlaps).toBe(2);
       expect(result[0].position.width).toBe(50);
       expect(result[0].position.offset).toBe(0);
 
+      expect(result[1].position.column).toBe(1);
       expect(result[1].position.overlaps).toBe(2);
       expect(result[1].position.width).toBe(50);
       expect(result[1].position.offset).toBe(50);
@@ -349,14 +266,17 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
         events,
       });
 
+      expect(result[0].position.column).toBe(0);
       expect(result[0].position.overlaps).toBe(3);
       expect(result[0].position.width).toBeCloseTo(100 / 3, 2);
       expect(result[0].position.offset).toBe(0);
 
+      expect(result[1].position.column).toBe(1);
       expect(result[1].position.overlaps).toBe(3);
       expect(result[1].position.width).toBeCloseTo(100 / 3, 2);
       expect(result[1].position.offset).toBeCloseTo(100 / 3, 2);
 
+      expect(result[2].position.column).toBe(2);
       expect(result[2].position.overlaps).toBe(3);
       expect(result[2].position.width).toBeCloseTo(100 / 3, 2);
       expect(result[2].position.offset).toBeCloseTo((100 / 3) * 2, 2);
@@ -374,10 +294,13 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
         events,
       });
 
+      expect(result[0].position.column).toBe(0);
       expect(result[0].position.overlaps).toBe(2);
       expect(result[0].position.width).toBe(50);
+      expect(result[1].position.column).toBe(1);
       expect(result[1].position.overlaps).toBe(2);
       expect(result[1].position.width).toBe(50);
+      expect(result[2].position.column).toBe(0);
       expect(result[2].position.overlaps).toBe(1);
       expect(result[2].position.width).toBe(100);
     });
@@ -569,9 +492,8 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
         events,
       });
 
-      expect(result[0].position.top).toBeGreaterThanOrEqual(0);
-      expect(result[0].position.height).toBeGreaterThan(0);
-      expect(result[0].position.top + result[0].position.height).toBeLessThanOrEqual(100);
+      expect(result[0].position.top).toBeCloseTo((10 / 24) * 100, 2);
+      expect(result[0].position.height).toBeCloseTo((2 / 24) * 100, 2);
     });
 
     it('respects startTime and endTime for vertical positioning', () => {
@@ -586,8 +508,8 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
         endTime: '17:00',
       });
 
-      expect(result[0].position.top).toBeGreaterThan(0);
-      expect(result[0].position.height).toBeGreaterThan(0);
+      expect(result[0].position.top).toBe(12.5);
+      expect(result[0].position.height).toBe(25);
     });
 
     it('sets top and height to defaults for all-day events', () => {
@@ -641,7 +563,7 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
       expect(result[2].id).toBe(3);
     });
 
-    it('handles events with same start time', () => {
+    it('assigns separate columns to events with the same start time', () => {
       const events = [
         testUtils.createEvent({ id: 1, start: '2025-01-15 10:00:00', end: '2025-01-15 11:00:00' }),
         testUtils.createEvent({ id: 2, start: '2025-01-15 10:00:00', end: '2025-01-15 12:00:00' }),
@@ -752,7 +674,8 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
       });
 
       expect(result).toHaveLength(1);
-      expect(result[0].position.height).toBeGreaterThanOrEqual(0);
+      expect(result[0].position.top).toBeCloseTo((10 / 24) * 100, 2);
+      expect(result[0].position.height).toBe(0);
     });
 
     it('handles events at day boundaries', () => {
@@ -858,7 +781,8 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
         startTime: '10:00',
       });
 
-      expect(result[0].position.top).toBeGreaterThanOrEqual(0);
+      expect(result[0].position.top).toBe(0);
+      expect(result[0].position.height).toBeCloseTo((2 / 14) * 100, 2);
     });
 
     it('respects custom endTime', () => {
@@ -872,24 +796,8 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
         endTime: '15:00',
       });
 
-      expect(result[0].position.top).toBeGreaterThanOrEqual(0);
-      expect(result[0].position.height).toBeGreaterThan(0);
-    });
-
-    it('respects both startTime and endTime', () => {
-      const events = [
-        testUtils.createEvent({ id: 1, start: '2025-01-15 10:00:00', end: '2025-01-15 12:00:00' }),
-      ];
-
-      const result = getDayPositionedEvents({
-        date: testDate,
-        events,
-        startTime: '09:00',
-        endTime: '17:00',
-      });
-
-      expect(result[0].position.top).toBeGreaterThan(0);
-      expect(result[0].position.height).toBeGreaterThan(0);
+      expect(result[0].position.top).toBeCloseTo((10 / 15) * 100, 2);
+      expect(result[0].position.height).toBeCloseTo((2 / 15) * 100, 2);
     });
   });
 });

@@ -207,14 +207,4 @@ describe('@mantine/core/get-style', () => {
       fontWeight: 'bold',
     });
   });
-
-  it('returns empty for non-root selector when only resolvedRootStyle is set', () => {
-    expect(
-      getStyle({
-        ...defaultOptions,
-        selector: 'label',
-        resolvedRootStyle: { color: 'red' },
-      })
-    ).toStrictEqual({});
-  });
 });

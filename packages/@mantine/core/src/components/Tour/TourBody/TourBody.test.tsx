@@ -1,4 +1,4 @@
-import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
+import { createContextContainer, tests } from '@mantine-tests/core';
 import { Tour } from '../Tour';
 import { TourBody, TourBodyProps, TourBodyStylesNames } from './TourBody';
 
@@ -17,10 +17,5 @@ describe('@mantine/core/TourBody', () => {
     compound: true,
     providerStylesApi: false,
     selector: '.mantine-Tour-body',
-  });
-
-  it('renders children', () => {
-    render(<TestContainer>Test body content</TestContainer>);
-    expect(screen.getByText('Test body content')).toBeInTheDocument();
   });
 });

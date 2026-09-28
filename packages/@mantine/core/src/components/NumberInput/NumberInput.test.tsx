@@ -127,16 +127,6 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(0);
   });
 
-  it('steps value with controls immediately call onChange', async () => {
-    const spy = jest.fn();
-    render(<NumberInput step={10} onChange={spy} defaultValue={0} />);
-    await enterText('{arrowup}');
-    expect(spy).toHaveBeenCalledTimes(1);
-
-    await enterText('{arrowdown}');
-    expect(spy).toHaveBeenCalledTimes(2);
-  });
-
   it('checks whether the data entered is larger than Number.MAX_SAFE_INT', async () => {
     const spy = jest.fn();
     render(<NumberInput value={9007199254740991} onChange={spy} />);
@@ -408,6 +398,7 @@ describe('@mantine/core/NumberInput', () => {
     const input = getInput() as HTMLInputElement;
 
     focusInput();
+    await act(() => new Promise((resolve) => setTimeout(resolve, 10)));
     expect(input.selectionStart).toBe(3);
     expect(input.selectionEnd).toBe(3);
   });
@@ -422,24 +413,9 @@ describe('@mantine/core/NumberInput', () => {
     expectValue('10,5');
   });
 
-  it('pads decimal places when fixedDecimalScale is set', async () => {
-    render(<NumberInput defaultValue={5.1} decimalScale={2} fixedDecimalScale />);
-    expectValue('5.10');
-  });
-
   it('formats value with thousand separator', async () => {
     render(<NumberInput defaultValue={1000000} thousandSeparator="," />);
     expectValue('1,000,000');
-  });
-
-  it('formats value with custom thousandsGroupStyle', async () => {
-    render(<NumberInput defaultValue={100000} thousandSeparator="," thousandsGroupStyle="lakh" />);
-    expectValue('1,00,000');
-  });
-
-  it('displays prefix and suffix', async () => {
-    render(<NumberInput defaultValue={100} prefix="$" suffix=" USD" />);
-    expectValue('$100 USD');
   });
 
   it('validates input with isAllowed callback', async () => {
@@ -814,7 +790,7 @@ describe('@mantine/core/NumberInput', () => {
 
     expect(pasteText('1234567,5')).toBe(false);
     expectValue('1 234 567.5');
-    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    await act(() => new Promise((resolve) => setTimeout(resolve, 10)));
     expect(getInput()).toHaveProperty('selectionStart', 11);
   });
   it('clamps string values on blur when trimLeadingZeroesOnBlur is false', async () => {

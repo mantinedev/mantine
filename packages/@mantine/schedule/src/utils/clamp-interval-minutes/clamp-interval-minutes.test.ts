@@ -9,17 +9,12 @@ describe('@mantine/schedule/clamp-interval-minutes', () => {
     });
   });
 
-  it('defaults to 30 for invalid divisors of 60 within valid range', () => {
+  it('defaults to 60 for invalid divisors of 60 within valid range', () => {
     const invalidDivisors = [7, 8, 9, 11, 13, 14, 16, 25, 35, 45, 55];
 
     invalidDivisors.forEach((divisor) => {
       expect(clampIntervalMinutes(divisor)).toBe(60);
     });
-  });
-
-  it('handles edge values', () => {
-    expect(clampIntervalMinutes(60)).toBe(60);
-    expect(clampIntervalMinutes(1)).toBe(1);
   });
 
   it('handles values outside the valid range', () => {

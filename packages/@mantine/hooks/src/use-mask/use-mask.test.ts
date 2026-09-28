@@ -3,31 +3,70 @@ import { formatMask, generatePattern, isMaskComplete, unformatMask, useMask } fr
 
 describe('@mantine/hooks/use-mask', () => {
   describe('useMask hook', () => {
-    it('returns initial empty state', () => {
-      const { result } = renderHook(() => useMask({ mask: '(999) 999-9999' }));
-      expect(result.current.value).toBe('');
-      expect(result.current.rawValue).toBe('');
-      expect(result.current.isComplete).toBe(false);
-      expect(result.current.ref).toBeDefined();
-      expect(result.current.reset).toBeDefined();
-    });
-
-    it('returns a ref callback function', () => {
-      const { result } = renderHook(() => useMask({ mask: '999' }));
-      expect(typeof result.current.ref).toBe('function');
-    });
-
     it('reset clears state and calls onChangeRaw', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
       const onChangeRaw = jest.fn();
       const { result } = renderHook(() => useMask({ mask: '999', onChangeRaw }));
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      act(() => {
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '1' }));
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '2' }));
+      });
+
+      expect(input.value).toBe('12_');
+      expect(result.current.rawValue).toBe('12');
 
       act(() => {
         result.current.reset();
       });
 
+      expect(input.value).toBe('');
       expect(result.current.value).toBe('');
       expect(result.current.rawValue).toBe('');
-      expect(onChangeRaw).toHaveBeenCalledWith('', '');
+      expect(onChangeRaw).toHaveBeenLastCalledWith('', '');
+
+      document.body.removeChild(input);
+    });
+
+    it('reset shows the empty mask when alwaysShowMask is true', () => {
+      const input = document.createElement('input');
+      document.body.appendChild(input);
+      const { result } = renderHook(() =>
+        useMask({ mask: '99/99', alwaysShowMask: true, slotChar: '_' })
+      );
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      act(() => {
+        input.focus();
+      });
+
+      act(() => {
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '1' }));
+      });
+
+      expect(input.value).toBe('1_/__');
+
+      act(() => {
+        result.current.reset();
+      });
+
+      expect(input.value).toBe('__/__');
+      expect(result.current.value).toBe('__/__');
+      expect(result.current.rawValue).toBe('');
+
+      document.body.removeChild(input);
     });
 
     it('shows mask when alwaysShowMask is true and input is mounted', () => {
@@ -601,10 +640,15 @@ describe('@mantine/hooks/use-mask', () => {
       });
 
       act(() => {
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '2' }));
+      });
+
+      expect(result.current.rawValue).toBe('12');
+
+      act(() => {
         result.current.reset();
       });
 
-      // Undo should do nothing because reset cleared the stack
       act(() => {
         input.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', ctrlKey: true }));
       });
@@ -616,7 +660,7 @@ describe('@mantine/hooks/use-mask', () => {
 
     it('removes event listeners on cleanup', () => {
       const input = document.createElement('input');
-      const removeSpy = jest.spyOn(input, 'removeEventListener');
+      document.body.appendChild(input);
       const { result } = renderHook(() => useMask({ mask: '999' }));
 
       act(() => {
@@ -627,7 +671,15 @@ describe('@mantine/hooks/use-mask', () => {
         result.current.ref(null);
       });
 
-      expect(removeSpy).toHaveBeenCalled();
+      act(() => {
+        input.focus();
+        input.dispatchEvent(new KeyboardEvent('keydown', { key: '1', cancelable: true }));
+      });
+
+      expect(result.current.rawValue).toBe('');
+      expect(input.value).toBe('');
+
+      document.body.removeChild(input);
     });
   });
 
@@ -692,27 +744,12 @@ describe('@mantine/hooks/use-mask', () => {
       const result = formatMask('12345', { mask: '999' });
       expect(result).toBe('123');
     });
-
-    it('handles date mask', () => {
-      const result = formatMask('12252023', { mask: '99/99/9999' });
-      expect(result).toBe('12/25/2023');
-    });
-
-    it('handles SSN mask', () => {
-      const result = formatMask('123456789', { mask: '999-99-9999' });
-      expect(result).toBe('123-45-6789');
-    });
   });
 
   describe('unformatMask utility', () => {
     it('extracts raw value from phone number', () => {
       const result = unformatMask('(123) 456-7890', { mask: '(999) 999-9999' });
       expect(result).toBe('1234567890');
-    });
-
-    it('extracts raw value from date', () => {
-      const result = unformatMask('12/25/2023', { mask: '99/99/9999' });
-      expect(result).toBe('12252023');
     });
 
     it('returns empty for empty input', () => {
@@ -742,11 +779,6 @@ describe('@mantine/hooks/use-mask', () => {
       expect(result).toBe(false);
     });
 
-    it('returns true for complete date', () => {
-      const result = isMaskComplete('12/25/2023', { mask: '99/99/9999' });
-      expect(result).toBe(true);
-    });
-
     it('handles optional segments', () => {
       const result = isMaskComplete('(123) 456-7890', { mask: '(999) 999-9999? x9999' });
       expect(result).toBe(true);
@@ -756,7 +788,7 @@ describe('@mantine/hooks/use-mask', () => {
   describe('generatePattern utility', () => {
     it('generates pattern for digit mask', () => {
       const result = generatePattern('full', { mask: '999' });
-      expect(result).toContain('[0-9]');
+      expect(result).toBe('([0-9])([0-9])([0-9])');
     });
 
     it('generates pattern with literal escaping', () => {

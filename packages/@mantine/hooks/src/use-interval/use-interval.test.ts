@@ -29,16 +29,6 @@ describe('@mantine/hooks/use-interval', () => {
     jest.useRealTimers();
   });
 
-  it('initialize', () => {
-    const { result } = setupHook();
-    const { start, stop, toggle, active } = result.current;
-
-    expect(typeof active).toBe('boolean');
-    expect(typeof start).toBe('function');
-    expect(typeof stop).toBe('function');
-    expect(typeof toggle).toBe('function');
-  });
-
   it('should run after timeout exceeded', () => {
     const { advanceTimerToNextTick } = setupTimer();
     const { result } = setupHook();

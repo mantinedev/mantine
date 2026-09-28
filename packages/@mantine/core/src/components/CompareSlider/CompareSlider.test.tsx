@@ -18,12 +18,6 @@ describe('@mantine/core/CompareSlider', () => {
     stylesApiSelectors: ['root', 'before', 'after', 'divider', 'handle'],
   });
 
-  it('renders before and after content', () => {
-    render(<CompareSlider {...defaultProps} />);
-    expect(screen.getByText('Before')).toBeInTheDocument();
-    expect(screen.getByText('After')).toBeInTheDocument();
-  });
-
   it('sets slider aria attributes based on the position', () => {
     render(<CompareSlider {...defaultProps} position={40} />);
     const handle = screen.getByRole('slider');

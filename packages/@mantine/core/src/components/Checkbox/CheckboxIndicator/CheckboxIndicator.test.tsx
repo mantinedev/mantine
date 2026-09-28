@@ -43,7 +43,6 @@ describe('@mantine/core/CheckboxIndicator', () => {
     const { container } = render(<CheckboxIndicator variant="light" color="grape.7" />);
     const root = container.querySelector('.mantine-CheckboxIndicator-indicator') as HTMLElement;
     const background = root.style.getPropertyValue('--checkbox-bg');
-    expect(background).not.toBe('grape');
     expect(background).toBe(DEFAULT_THEME.colors.grape[7]);
     expect(root.style.getPropertyValue('--checkbox-icon-color')).toBe(
       'var(--mantine-color-grape-light-color)'

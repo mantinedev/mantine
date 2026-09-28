@@ -9,7 +9,7 @@ describe('getLegendWidth', () => {
       cellSize: 20,
       gap: 1,
     });
-    expect(width).toBeGreaterThan(0);
+    expect(width).toBeCloseTo(173.6);
   });
 
   it('increases with longer labels', () => {

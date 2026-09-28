@@ -131,7 +131,7 @@ describe('@mantine/lightbox/LightboxSlide', () => {
     expect(screen.getByRole('img')).not.toHaveAttribute('data-zoom-enabled');
   });
 
-  it('toggles zoom on double-click', async () => {
+  it('toggles zoom once per mouse double-click', async () => {
     const slide: LightboxSlideData = { src: 'photo.jpg', alt: 'Photo' };
     await renderWithAct(
       <LightboxWrapper slides={[slide]} currentIndex={0} withZoom>

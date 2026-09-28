@@ -71,11 +71,6 @@ describe('@mantine/core/Drawer', () => {
     expect(container.querySelector('.mantine-Drawer-header')).not.toBeInTheDocument();
   });
 
-  it('renders given title', () => {
-    const { container } = render(<Drawer {...defaultProps} title="test-title" />);
-    expect(container.querySelector('.mantine-Drawer-title')).toHaveTextContent('test-title');
-  });
-
   it('renders Drawer.Footer content', () => {
     render(
       <Drawer opened onClose={() => {}} withinPortal={false}>

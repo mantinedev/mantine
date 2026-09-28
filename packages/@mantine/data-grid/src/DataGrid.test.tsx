@@ -89,36 +89,20 @@ describe('@mantine/data-grid/DataGrid', () => {
     expect(td.style.color).toBe('red');
   });
 
-  it('renders column headers', () => {
-    render(<DataGrid {...defaultProps} />);
+  it('renders column headers and data rows', () => {
+    const { container } = render(<DataGrid {...defaultProps} />);
     expect(screen.getByText('Name')).toBeInTheDocument();
     expect(screen.getByText('Age')).toBeInTheDocument();
-  });
-
-  it('renders data rows', () => {
-    render(<DataGrid {...defaultProps} />);
     expect(screen.getByText('Alice')).toBeInTheDocument();
     expect(screen.getByText('Bob')).toBeInTheDocument();
     expect(screen.getByText('Charlie')).toBeInTheDocument();
-  });
-
-  it('renders correct number of rows', () => {
-    const { container } = render(<DataGrid {...defaultProps} />);
-    const rows = container.querySelectorAll('tbody tr');
-    expect(rows).toHaveLength(3);
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(3);
   });
 
   it('renders empty table when data is empty', () => {
     const { container } = render(<DataGrid data={[]} columns={columns} />);
     const rows = container.querySelectorAll('tbody tr');
     expect(rows).toHaveLength(0);
-  });
-
-  it('renders semantic table elements', () => {
-    const { container } = render(<DataGrid {...defaultProps} />);
-    expect(container.querySelector('table')).toBeInTheDocument();
-    expect(container.querySelector('thead')).toBeInTheDocument();
-    expect(container.querySelector('tbody')).toBeInTheDocument();
   });
 
   describe('sorting', () => {
@@ -290,12 +274,6 @@ describe('@mantine/data-grid/DataGrid', () => {
   });
 
   describe('row selection', () => {
-    it('renders checkboxes when withRowSelection is true', () => {
-      render(<DataGridWithStore storeOptions={{ data, columns, withRowSelection: true }} />);
-      const checkboxes = screen.getAllByRole('checkbox');
-      expect(checkboxes.length).toBeGreaterThanOrEqual(4);
-    });
-
     it('selects row on checkbox click', async () => {
       const { container } = render(
         <DataGridWithStore storeOptions={{ data, columns, withRowSelection: true }} />
@@ -305,14 +283,6 @@ describe('@mantine/data-grid/DataGrid', () => {
 
       const selectedRow = container.querySelector('tr[data-selected]');
       expect(selectedRow).toBeInTheDocument();
-    });
-
-    it('renders select-all checkbox in header', () => {
-      const { container } = render(
-        <DataGridWithStore storeOptions={{ data, columns, withRowSelection: true }} />
-      );
-      const theadCheckbox = container.querySelector('thead input[type="checkbox"]');
-      expect(theadCheckbox).toBeInTheDocument();
     });
 
     it.each([undefined, 2])(
@@ -354,17 +324,6 @@ describe('@mantine/data-grid/DataGrid', () => {
   });
 
   describe('row expansion', () => {
-    it('renders expand icon when withRowExpansion is true', () => {
-      render(
-        <DataGridWithStore
-          storeOptions={{ data, columns, withRowExpansion: true }}
-          renderExpandedRow={({ row }) => <div>Details for {row.original.name}</div>}
-        />
-      );
-      const expandButtons = screen.getAllByRole('button');
-      expect(expandButtons.length).toBeGreaterThanOrEqual(3);
-    });
-
     it('renders expanded content on expand click', async () => {
       render(
         <DataGridWithStore
@@ -437,12 +396,6 @@ describe('@mantine/data-grid/DataGrid', () => {
   });
 
   describe('striped and hover', () => {
-    it('adds data-striped attribute when striped is true', () => {
-      const { container } = render(<DataGrid {...defaultProps} striped />);
-      const stripedRows = container.querySelectorAll('tbody tr[data-striped]');
-      expect(stripedRows.length).toBeGreaterThan(0);
-    });
-
     it('skips expansion panels in the stripe index', async () => {
       const { container } = render(
         <DataGridWithStore
@@ -463,14 +416,6 @@ describe('@mantine/data-grid/DataGrid', () => {
   });
 
   describe('row numbers', () => {
-    it('renders row numbers when withRowNumbers is set on the store', () => {
-      render(<DataGridWithStore storeOptions={{ data, columns, withRowNumbers: true }} />);
-      expect(screen.getByText('#')).toBeInTheDocument();
-      expect(screen.getByText('1')).toBeInTheDocument();
-      expect(screen.getByText('2')).toBeInTheDocument();
-      expect(screen.getByText('3')).toBeInTheDocument();
-    });
-
     it('renders row numbers in an injected utility column that is not on DataGrid props', () => {
       const { container } = render(
         <DataGridWithStore storeOptions={{ data, columns, withRowNumbers: true }} />
@@ -558,23 +503,6 @@ describe('@mantine/data-grid/DataGrid', () => {
   });
 
   describe('TanStack Table v9 regressions', () => {
-    it('renders every row when the grid is not paginated', () => {
-      const manyRows = Array.from({ length: 25 }, (_, i) => ({ name: `Row ${i}`, age: i }));
-      const { container } = render(<DataGrid data={manyRows} columns={columns} />);
-      expect(container.querySelectorAll('tbody tr')).toHaveLength(manyRows.length);
-    });
-
-    it('expands a row without subRows via renderExpandedRow', async () => {
-      render(
-        <DataGridWithStore
-          storeOptions={{ data, columns, withRowExpansion: true }}
-          renderExpandedRow={({ row }) => <div>Details for {row.original.name}</div>}
-        />
-      );
-      await userEvent.click(screen.getAllByRole('button')[0]);
-      expect(screen.getByText('Details for Alice')).toBeInTheDocument();
-    });
-
     it('does not render a footer aggregation row unless a column declares aggregationFn', () => {
       const { container } = render(<DataGrid data={data} columns={columns} />);
       expect(container.querySelector('tfoot')).not.toBeInTheDocument();
@@ -638,11 +566,6 @@ describe('@mantine/data-grid/DataGrid', () => {
       const root = container.querySelector('.mantine-DataGrid-root') as HTMLElement;
       expect(root).toHaveAttribute('data-size', 'lg');
       expect(root.style.getPropertyValue('--dg-row-height')).toBe('var(--dg-row-height-lg)');
-    });
-
-    it('does not emit data-density', () => {
-      const { container } = render(<DataGrid {...defaultProps} />);
-      expect(container.querySelector('[data-density]')).not.toBeInTheDocument();
     });
   });
 

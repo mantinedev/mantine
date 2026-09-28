@@ -71,7 +71,6 @@ describe('@mantine/core/ChipGroup', () => {
   it('supports controlled state when multiple prop is true', async () => {
     const spy = jest.fn();
     render(<ChipGroup {...defaultProps} multiple onChange={spy} value={['test-2']} />);
-    userEvent.click(screen.getAllByRole('checkbox')[1]);
     await clickChip(1, 'checkbox');
     expect(spy).toHaveBeenLastCalledWith([]);
     await clickChip(2, 'checkbox');

@@ -5,6 +5,7 @@ const defaultProps: InlineDateTimePickerProps = {
   timePickerProps: {
     'aria-label': 'test-time-picker',
     hoursInputLabel: 'test-time-picker-hours',
+    secondsInputLabel: 'test-time-picker-seconds',
   },
   submitButtonProps: { 'aria-label': 'test-submit' },
   ariaLabels: {
@@ -21,6 +22,8 @@ const defaultProps: InlineDateTimePickerProps = {
 
 const getTimePicker = () => screen.getByLabelText('test-time-picker-hours');
 const getSubmitButton = () => screen.getByLabelText('test-submit');
+const getDay = (day: string) =>
+  screen.getAllByRole('button').find((btn) => btn.textContent === day)!;
 
 describe('@mantine/dates/InlineDateTimePicker', () => {
   tests.axe([
@@ -47,28 +50,27 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
     size: false,
   });
 
-  it('renders TimePicker and submit button', () => {
-    render(<InlineDateTimePicker {...defaultProps} defaultValue="2022-04-11" />);
-    expect(getTimePicker()).toBeInTheDocument();
-    expect(getSubmitButton()).toBeInTheDocument();
-  });
-
   it('supports uncontrolled state (default type)', async () => {
     const spy = jest.fn();
     render(<InlineDateTimePicker {...defaultProps} defaultValue="2022-04-11" onChange={spy} />);
+    expect(getDay('11')).toHaveAttribute('data-selected');
 
-    await userEvent.click(screen.getAllByRole('button').find((btn) => btn.textContent === '3')!);
+    await userEvent.click(getDay('3'));
 
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('2022-04-03'));
+    expect(spy).toHaveBeenLastCalledWith('2022-04-03 00:00:00');
+    expect(getDay('3')).toHaveAttribute('data-selected');
+    expect(getDay('11')).not.toHaveAttribute('data-selected');
   });
 
   it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<InlineDateTimePicker {...defaultProps} value="2022-04-11" onChange={spy} />);
 
-    await userEvent.click(screen.getAllByRole('button').find((btn) => btn.textContent === '3')!);
+    await userEvent.click(getDay('3'));
 
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('2022-04-03'));
+    expect(spy).toHaveBeenLastCalledWith('2022-04-03 00:00:00');
+    expect(getDay('11')).toHaveAttribute('data-selected');
+    expect(getDay('3')).not.toHaveAttribute('data-selected');
   });
 
   it('focuses TimePicker after date selection', async () => {
@@ -92,14 +94,19 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
     await userEvent.clear(getTimePicker());
     await userEvent.type(getTimePicker(), '14');
 
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('14'));
+    expect(spy).toHaveBeenLastCalledWith('2022-04-11 14:00:00');
   });
 
   it('supports withSeconds prop', () => {
-    render(
-      <InlineDateTimePicker {...defaultProps} defaultValue="2022-04-11T14:45:54" withSeconds />
+    const { rerender } = render(
+      <InlineDateTimePicker {...defaultProps} defaultValue="2022-04-11 14:45:54" />
     );
-    expect(getTimePicker()).toBeInTheDocument();
+    expect(screen.queryByLabelText('test-time-picker-seconds')).not.toBeInTheDocument();
+
+    rerender(
+      <InlineDateTimePicker {...defaultProps} defaultValue="2022-04-11 14:45:54" withSeconds />
+    );
+    expect(screen.getByLabelText('test-time-picker-seconds')).toHaveValue('54');
   });
 
   it('sets preset value verbatim including its time', async () => {
@@ -125,12 +132,6 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('allows navigating calendar levels', async () => {
-    render(<InlineDateTimePicker {...defaultProps} defaultValue="2022-04-11" />);
-    await userEvent.click(screen.getByLabelText('level-control'));
-    expect(screen.queryByLabelText('test-time-picker-hours')).not.toBeInTheDocument();
-  });
-
   describe('range type', () => {
     const rangeProps: any = {
       ...defaultProps,
@@ -149,7 +150,7 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
 
     it('supports uncontrolled range state', async () => {
       const spy = jest.fn();
-      render(<InlineDateTimePicker {...rangeProps} onChange={spy} />);
+      render(<InlineDateTimePicker {...rangeProps} defaultDate="2022-04-01" onChange={spy} />);
 
       const dayButtons = screen
         .getAllByRole('button')
@@ -158,14 +159,12 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
       const lastDay = dayButtons.find((btn) => btn.textContent === '15');
 
       await userEvent.click(firstDay!);
-      expect(spy).toHaveBeenCalled();
-      const firstCall = spy.mock.calls[spy.mock.calls.length - 1][0];
-      expect(firstCall[0]).toContain('01');
+      expect(spy).toHaveBeenLastCalledWith(['2022-04-01 00:00:00', null]);
 
       await userEvent.click(lastDay!);
-      const secondCall = spy.mock.calls[spy.mock.calls.length - 1][0];
-      expect(secondCall[0]).toBeTruthy();
-      expect(secondCall[1]).toBeTruthy();
+      expect(spy).toHaveBeenLastCalledWith(['2022-04-01 00:00:00', '2022-04-15 00:00:00']);
+      expect(firstDay).toHaveAttribute('data-first-in-range');
+      expect(lastDay).toHaveAttribute('data-last-in-range');
     });
 
     it('supports controlled range state', async () => {
@@ -174,8 +173,12 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
         <InlineDateTimePicker {...rangeProps} value={['2022-04-11', '2022-04-15']} onChange={spy} />
       );
 
-      expect(screen.getByLabelText('test-time-picker-hours')).toBeInTheDocument();
-      expect(screen.getByLabelText('test-end-time-picker-hours')).toBeInTheDocument();
+      await userEvent.click(getDay('20'));
+
+      expect(spy).toHaveBeenLastCalledWith(['2022-04-20 00:00:00', null]);
+      expect(getDay('11')).toHaveAttribute('data-first-in-range');
+      expect(getDay('15')).toHaveAttribute('data-last-in-range');
+      expect(getDay('20')).not.toHaveAttribute('data-selected');
     });
 
     it('displays range info text', () => {
@@ -233,9 +236,7 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
       await userEvent.clear(screen.getByLabelText('test-time-picker-hours'));
       await userEvent.type(screen.getByLabelText('test-time-picker-hours'), '14');
 
-      expect(spy).toHaveBeenCalled();
-      const lastCall = spy.mock.calls[spy.mock.calls.length - 1][0];
-      expect(lastCall[0]).toContain('14');
+      expect(spy).toHaveBeenLastCalledWith(['2022-04-11 14:00:00', '2022-04-15 00:00:00']);
     });
 
     it('handles end time change in range mode', async () => {
@@ -251,9 +252,7 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
       await userEvent.clear(screen.getByLabelText('test-end-time-picker-hours'));
       await userEvent.type(screen.getByLabelText('test-end-time-picker-hours'), '16');
 
-      expect(spy).toHaveBeenCalled();
-      const lastCall = spy.mock.calls[spy.mock.calls.length - 1][0];
-      expect(lastCall[1]).toContain('16');
+      expect(spy).toHaveBeenLastCalledWith(['2022-04-11 00:00:00', '2022-04-15 16:00:00']);
     });
   });
 });

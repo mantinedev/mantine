@@ -51,4 +51,4 @@ export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((prop
 });
 
 SpotlightActionsGroup.classes = classes;
-SpotlightActionsGroup.displayName = '@mantine/core/SpotlightActionsGroup';
+SpotlightActionsGroup.displayName = '@mantine/spotlight/SpotlightActionsGroup';

@@ -362,7 +362,7 @@ describe('@mantine/data-grid/DataGridToolbar', () => {
         </Grid>
       );
       act(() => lastStore!.table.setRowSelection({ '0': true }));
-      expect(container.querySelector('.mantine-DataGrid-rowCount')).toHaveTextContent('15 rows');
+      expect(container.querySelector('.mantine-DataGrid-rowCount')!.textContent).toBe('15 rows');
     });
   });
 });

@@ -1,4 +1,3 @@
-import { getSpacing } from '../../../../core';
 import { getPaddingValue } from './get-padding-value';
 
 describe('@mantine/core/AppShellMediaStyles/get-padding-value', () => {
@@ -8,12 +7,12 @@ describe('@mantine/core/AppShellMediaStyles/get-padding-value', () => {
   });
 
   it('returns spacing value for number', () => {
-    expect(getPaddingValue(1)).toBe(getSpacing(1));
-    expect(getPaddingValue('1')).toBe(getSpacing(1));
+    expect(getPaddingValue(1)).toBe('calc(0.0625rem * var(--mantine-scale))');
+    expect(getPaddingValue('1')).toBe('calc(0.0625rem * var(--mantine-scale))');
   });
 
   it('returns spacing value for string', () => {
-    expect(getPaddingValue('xs')).toBe(getSpacing('xs'));
-    expect(getPaddingValue('0rem')).toBe(getSpacing('0rem'));
+    expect(getPaddingValue('xs')).toBe('var(--mantine-spacing-xs)');
+    expect(getPaddingValue('0rem')).toBe('0rem');
   });
 });

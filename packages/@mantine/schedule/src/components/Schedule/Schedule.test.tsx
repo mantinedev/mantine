@@ -101,13 +101,13 @@ describe('@mantine/schedule/Schedule', () => {
     render(<Schedule {...defaultProps} defaultView="week" onDateChange={spy} />);
 
     await userEvent.click(screen.getByRole('button', { name: 'Previous' }));
-    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenLastCalledWith('2024-01-08 00:00:00');
 
     await userEvent.click(screen.getByRole('button', { name: 'Next' }));
-    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenLastCalledWith('2024-01-22 00:00:00');
 
     await userEvent.click(screen.getByRole('button', { name: 'Today' }));
-    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledTimes(3);
   });
 
   it('supports controlled date prop', () => {
@@ -124,17 +124,28 @@ describe('@mantine/schedule/Schedule', () => {
   });
 
   it('passes common props to all views', () => {
+    const getRadiusVar = (selector: string, variable: string) =>
+      (container.querySelector(selector) as HTMLElement).style.getPropertyValue(variable);
+
     const { container, rerender } = render(<Schedule {...defaultProps} view="day" radius="lg" />);
-    expect(container.querySelector('.mantine-DayView-dayView')).toBeInTheDocument();
+    expect(getRadiusVar('.mantine-DayView-dayView', '--day-view-radius')).toBe(
+      'var(--mantine-radius-lg)'
+    );
 
     rerender(<Schedule {...defaultProps} view="week" radius="lg" />);
-    expect(container.querySelector('.mantine-WeekView-weekView')).toBeInTheDocument();
+    expect(getRadiusVar('.mantine-WeekView-weekView', '--week-view-radius')).toBe(
+      'var(--mantine-radius-lg)'
+    );
 
     rerender(<Schedule {...defaultProps} view="month" radius="lg" />);
-    expect(container.querySelector('.mantine-MonthView-monthView')).toBeInTheDocument();
+    expect(getRadiusVar('.mantine-MonthView-monthView', '--month-view-radius')).toBe(
+      'var(--mantine-radius-lg)'
+    );
 
     rerender(<Schedule {...defaultProps} view="year" radius="lg" />);
-    expect(container.querySelector('.mantine-YearView-yearView')).toBeInTheDocument();
+    expect(getRadiusVar('.mantine-YearView-yearView', '--year-view-radius')).toBe(
+      'var(--mantine-radius-lg)'
+    );
   });
 
   it('passes dayViewProps only to day view', () => {
@@ -187,17 +198,17 @@ describe('@mantine/schedule/Schedule', () => {
   });
 
   it('passes yearViewProps only to year view', () => {
-    render(
+    const { container } = render(
       <Schedule
         {...defaultProps}
         view="year"
         yearViewProps={{
-          withWeekNumbers: false,
+          withWeekNumbers: true,
         }}
       />
     );
 
-    expect(screen.getByText('2024')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-YearView-yearViewWeekNumber')).toBeInTheDocument();
   });
 
   it('supports locale prop', () => {
@@ -214,7 +225,7 @@ describe('@mantine/schedule/Schedule', () => {
     expect(screen.getByText('январь 15, 2024')).toBeInTheDocument();
   });
 
-  it('renders events in all views', () => {
+  it('renders events in day view', () => {
     render(<Schedule {...defaultProps} view="day" />);
     expect(screen.getByText('Team Meeting')).toBeInTheDocument();
   });
@@ -302,35 +313,6 @@ describe('@mantine/schedule/Schedule', () => {
     expect(onViewChangeSpy).toHaveBeenCalledWith('week');
     expect(onDateChangeSpy).toHaveBeenCalled();
     expect(container.querySelector('.mantine-WeekView-weekView')).toBeInTheDocument();
-  });
-
-  it('handles both controlled and uncontrolled state simultaneously', async () => {
-    const onViewChangeSpy = jest.fn();
-    const onDateChangeSpy = jest.fn();
-
-    const { rerender } = render(
-      <Schedule
-        {...defaultProps}
-        view="week"
-        onViewChange={onViewChangeSpy}
-        onDateChange={onDateChangeSpy}
-      />
-    );
-
-    await userEvent.click(screen.getByRole('tab', { name: 'Switch to day view' }));
-    expect(onViewChangeSpy).toHaveBeenCalledWith('day');
-
-    // In controlled mode, parent needs to update the prop
-    rerender(
-      <Schedule
-        {...defaultProps}
-        view="day"
-        onViewChange={onViewChangeSpy}
-        onDateChange={onDateChangeSpy}
-      />
-    );
-
-    expect(screen.getByText('January 15, 2024')).toBeInTheDocument();
   });
 
   describe('withAgenda prop', () => {

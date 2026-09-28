@@ -269,7 +269,10 @@ describe('@mantine/data-grid/virtual-body', () => {
       const { container } = render(<Grid virtualize="rows" />);
       const rows = renderedRows(container);
       expect(rows.length).toBeGreaterThan(0);
-      rows.forEach((row) => expect(row.style.getPropertyValue('--dg-row-height')).toBe('60px'));
+      rows.forEach((row) => {
+        expect(row.style.getPropertyValue('--dg-row-height')).toBe('60px');
+        expect(row).not.toHaveAttribute('data-auto-height');
+      });
       expect(container.querySelector<HTMLElement>('[data-index="1"]')!.style.transform).toBe(
         'translateY(60px)'
       );
@@ -288,11 +291,6 @@ describe('@mantine/data-grid/virtual-body', () => {
         expect(row.style.getPropertyValue('--dg-row-height')).toBe('');
         expect(row).toHaveAttribute('data-auto-height');
       });
-    });
-
-    it('does not mark numeric-height rows as auto height', () => {
-      const { container } = render(<Grid virtualize="rows" />);
-      renderedRows(container).forEach((row) => expect(row).not.toHaveAttribute('data-auto-height'));
     });
 
     it('measures rendered rows when estimateRowHeight is set', () => {

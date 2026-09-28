@@ -2,11 +2,6 @@ import { renderHook } from '@testing-library/react';
 import { useLatestRef } from './use-latest-ref';
 
 describe('@mantine/hooks/use-latest-ref', () => {
-  it('holds the value passed on the initial render', () => {
-    const hook = renderHook(() => useLatestRef(1));
-    expect(hook.result.current.current).toBe(1);
-  });
-
   it('keeps the same ref and updates its value on rerender', () => {
     const hook = renderHook(({ value }) => useLatestRef(value), { initialProps: { value: 1 } });
     const ref = hook.result.current;
@@ -29,15 +24,5 @@ describe('@mantine/hooks/use-latest-ref', () => {
 
     hook.rerender({ value: 2 });
     expect(reads).toEqual([1, 2]);
-  });
-
-  it('allows writing through the ref until the next render overwrites it', () => {
-    const hook = renderHook(({ value }) => useLatestRef({ value }), { initialProps: { value: 1 } });
-
-    hook.result.current.current.value = 5;
-    expect(hook.result.current.current.value).toBe(5);
-
-    hook.rerender({ value: 3 });
-    expect(hook.result.current.current.value).toBe(3);
   });
 });

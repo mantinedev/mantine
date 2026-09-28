@@ -86,9 +86,4 @@ describe('@mantine/data-grid/DataGridHeader sort indicators', () => {
     expect(plain.querySelector('button')).not.toBeInTheDocument();
     expect(plain.querySelector('.mantine-DataGrid-headerLabel')).toHaveTextContent('Age');
   });
-
-  it('does not render the column menu unless withColumnMenu is set', () => {
-    render(<Grid />);
-    expect(screen.queryByRole('button', { name: 'Column menu' })).not.toBeInTheDocument();
-  });
 });

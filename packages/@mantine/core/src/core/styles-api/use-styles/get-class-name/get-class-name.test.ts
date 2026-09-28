@@ -356,32 +356,6 @@ describe('@mantine/core/get-class-name', () => {
     expect(output.includes('test-root-filled')).toBe(false);
   });
 
-  it('headless + unstyled combined strips all Mantine classes', () => {
-    const output = getClassName({
-      ...defaultOptions,
-      headless: true,
-      unstyled: true,
-      classes: { root: 'test-root', 'root--filled': 'test-root-filled' },
-      options: { focusable: true, variant: 'filled' },
-    });
-
-    expect(output.includes('test-root')).toBe(false);
-    expect(output.includes('test-root-filled')).toBe(false);
-    expect(output.includes(FOCUS_CLASS_NAMES[DEFAULT_THEME.focusRing])).toBe(false);
-    expect(output.includes('mantine-Test-root')).toBe(false);
-  });
-
-  it('options.classNames overrides resolvedClassNames for same selector', () => {
-    const output = getClassName({
-      ...defaultOptions,
-      resolvedClassNames: { root: '__component-class' },
-      options: { classNames: { root: '__options-class' } },
-    });
-
-    expect(output.includes('__component-class')).toBe(true);
-    expect(output.includes('__options-class')).toBe(true);
-  });
-
   it('resolvedThemeClassNames, resolvedClassNames, and options.classNames all compose', () => {
     const output = getClassName({
       ...defaultOptions,

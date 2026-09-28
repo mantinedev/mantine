@@ -33,13 +33,6 @@ describe('@mantine/form/use-field/get-input-props', () => {
     expect(hook.result.current.getValue()).toBe('new value');
   });
 
-  it('updates touched with onFocus handler returned from getInputProps', () => {
-    const hook = renderHook(() => useField({ initialValue: 'test' }));
-    expect(hook.result.current.isTouched()).toBe(false);
-    act(() => hook.result.current.getInputProps().onFocus?.());
-    expect(hook.result.current.isTouched()).toBe(true);
-  });
-
   it('returns correct props for type="radio" (controlled, matching value)', () => {
     const hook = renderHook(() =>
       useField({ initialValue: 'red', type: 'radio', initialError: 'test-error' })

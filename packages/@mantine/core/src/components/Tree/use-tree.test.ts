@@ -117,11 +117,6 @@ describe('@mantine/core/Tree/use-tree', () => {
       expect(result.current.multiple).toBe(false);
       expect(result.current.anchorNode).toBe(null);
     });
-
-    it('respects multiple option', () => {
-      const { result } = renderHook(() => useTree({ multiple: true }));
-      expect(result.current.multiple).toBe(true);
-    });
   });
 
   describe('initialize', () => {

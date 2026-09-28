@@ -57,16 +57,6 @@ describe('@mantine/core/utils/find-element-in-shadow-dom', () => {
       expect(element?.className).toBe('test-class');
     });
 
-    it('finds element by attribute selector in shadow DOM', () => {
-      const host = document.createElement('div');
-      const shadow = host.attachShadow({ mode: 'open' });
-      shadow.innerHTML = '<div data-test="value">Test</div>';
-      document.body.appendChild(host);
-
-      const element = findElementBySelector('[data-test="value"]');
-      expect(element?.getAttribute('data-test')).toBe('value');
-    });
-
     it('searches from provided root element', () => {
       const host = document.createElement('div');
       const shadow = host.attachShadow({ mode: 'open' });
@@ -261,24 +251,6 @@ describe('@mantine/core/utils/find-element-in-shadow-dom', () => {
         'Shadow 2-1',
         'Shadow 3-1',
       ]);
-    });
-
-    it('can find and manipulate elements in shadow DOM', () => {
-      const host = document.createElement('div');
-      const shadow = host.attachShadow({ mode: 'open' });
-      shadow.innerHTML = '<div id="target">Original</div>';
-      document.body.appendChild(host);
-
-      const element = findElementBySelector('#target');
-      expect(element?.textContent).toBe('Original');
-
-      // Manipulate the element
-      if (element) {
-        element.textContent = 'Modified';
-      }
-
-      const modifiedElement = findElementBySelector('#target');
-      expect(modifiedElement?.textContent).toBe('Modified');
     });
   });
 });

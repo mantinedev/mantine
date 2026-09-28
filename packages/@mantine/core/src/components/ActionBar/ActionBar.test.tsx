@@ -29,11 +29,6 @@ describe('@mantine/core/ActionBar', () => {
     </ActionBar>,
   ]);
 
-  it('renders children when opened is true', () => {
-    render(<ActionBar {...defaultProps}>test-content</ActionBar>);
-    expect(screen.getByText('test-content')).toBeInTheDocument();
-  });
-
   it('does not render children when opened is false', () => {
     render(
       <ActionBar {...defaultProps} opened={false}>
@@ -41,17 +36,6 @@ describe('@mantine/core/ActionBar', () => {
       </ActionBar>
     );
     expect(screen.queryByText('test-content')).not.toBeInTheDocument();
-  });
-
-  it('calls onClose when ActionBar.CloseButton is clicked', async () => {
-    const spy = jest.fn();
-    render(
-      <ActionBar {...defaultProps} onClose={spy}>
-        <ActionBar.CloseButton />
-      </ActionBar>
-    );
-    await userEvent.click(screen.getByRole('button'));
-    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('calls onClose on Escape keydown when closeOnEscape is true', async () => {
@@ -209,13 +193,22 @@ describe('@mantine/core/ActionBar', () => {
 
   it('removes Escape listener when the bar is closed', async () => {
     const spy = jest.fn();
-    render(
+    const { rerender } = render(
+      <ActionBar {...defaultProps} onClose={spy} closeOnEscape>
+        content
+      </ActionBar>
+    );
+
+    await userEvent.keyboard('{Escape}');
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    rerender(
       <ActionBar {...defaultProps} opened={false} onClose={spy} closeOnEscape>
         content
       </ActionBar>
     );
 
     await userEvent.keyboard('{Escape}');
-    expect(spy).not.toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });

@@ -89,11 +89,6 @@ describe('@mantine/core/InputWrapper', () => {
     expect(inputWrapperQueries.getSuccess(successContainer).tagName).toBe('DIV');
   });
 
-  it('renders success message when success prop is set', () => {
-    const { container } = render(<InputWrapper {...successProps} />);
-    expect(inputWrapperQueries.getSuccess(container).textContent).toBe('test-success');
-  });
-
   it('does not render success if success prop is boolean', () => {
     const { container } = render(<InputWrapper {...successProps} success />);
     expect(inputWrapperQueries.getSuccess(container)).toBe(null);

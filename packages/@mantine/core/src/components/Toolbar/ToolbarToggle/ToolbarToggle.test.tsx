@@ -3,15 +3,6 @@ import { render, screen, userEvent } from '@mantine-tests/core';
 import { Toolbar } from '../Toolbar';
 
 describe('@mantine/core/ToolbarToggle', () => {
-  it('renders as a button', () => {
-    render(
-      <Toolbar>
-        <Toolbar.Toggle>Bold</Toolbar.Toggle>
-      </Toolbar>
-    );
-    expect(screen.getByRole('button', { name: 'Bold' })).toBeInTheDocument();
-  });
-
   it('calls onClick when clicked', async () => {
     const spy = jest.fn();
     render(

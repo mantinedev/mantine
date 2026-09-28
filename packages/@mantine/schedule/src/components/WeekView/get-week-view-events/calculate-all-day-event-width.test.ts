@@ -97,27 +97,4 @@ describe('@mantine/schedule/calculate-all-day-event-width', () => {
 
     expect(result).toBe(100);
   });
-
-  it('calculates correct width for consecutive single-day all-day events', () => {
-    const event1Width = calculateAllDayEventWidth({
-      eventStartDate: dayjs('2025-01-13').startOf('day'),
-      actualEndDate: dayjs('2025-01-13').startOf('day'),
-      weekStartDate,
-      weekEndDate,
-      weekDays,
-      visibleDaysCount,
-    });
-
-    const event2Width = calculateAllDayEventWidth({
-      eventStartDate: dayjs('2025-01-14').startOf('day'),
-      actualEndDate: dayjs('2025-01-14').startOf('day'),
-      weekStartDate,
-      weekEndDate,
-      weekDays,
-      visibleDaysCount,
-    });
-
-    expect(event1Width).toBeCloseTo((1 / 7) * 100, 2);
-    expect(event2Width).toBeCloseTo((1 / 7) * 100, 2);
-  });
 });

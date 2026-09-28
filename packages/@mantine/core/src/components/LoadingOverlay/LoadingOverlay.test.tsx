@@ -14,13 +14,11 @@ describe('@mantine/core/LoadingOverlay', () => {
     stylesApiSelectors: ['root', 'loader', 'overlay'],
   });
 
-  it('renders when visible prop is true', () => {
-    const { container } = render(<LoadingOverlay visible />);
+  it('renders only when visible prop is true', () => {
+    const { container, rerender } = render(<LoadingOverlay visible />);
     expect(container.querySelector('.mantine-LoadingOverlay-root')).toBeInTheDocument();
-  });
 
-  it('does not render when visible prop is false', () => {
-    const { container } = render(<LoadingOverlay visible={false} />);
+    rerender(<LoadingOverlay visible={false} />);
     expect(container.querySelector('.mantine-LoadingOverlay-root')).not.toBeInTheDocument();
   });
 

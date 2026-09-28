@@ -32,15 +32,6 @@ describe('@mantine/lightbox/LightboxToolbar', () => {
     expect(screen.getByLabelText('Close')).toBeInTheDocument();
   });
 
-  it('renders thumbnails toggle when withThumbnails is enabled', async () => {
-    await renderWithAct(
-      <LightboxWrapper withThumbnails>
-        <LightboxToolbar />
-      </LightboxWrapper>
-    );
-    expect(screen.getByLabelText('Hide thumbnails')).toBeInTheDocument();
-  });
-
   it('toggles thumbnails visibility with toolbar button and T shortcut', async () => {
     await renderWithAct(
       <LightboxWrapper withThumbnails>

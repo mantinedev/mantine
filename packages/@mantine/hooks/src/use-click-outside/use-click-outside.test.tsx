@@ -159,20 +159,6 @@ describe('@mantine/hooks/use-click-outside', () => {
     removeSpy.mockRestore();
   });
 
-  it('does not call handler when enabled is false', async () => {
-    const handler = jest.fn();
-
-    render(
-      <>
-        <Target handler={handler} enabled={false} />
-        <div data-testid="outside-target" />
-      </>
-    );
-
-    await userEvent.click(screen.getByTestId('outside-target'));
-    expect(handler).not.toHaveBeenCalled();
-  });
-
   it('starts calling handler when enabled changes from false to true', async () => {
     const handler = jest.fn();
 

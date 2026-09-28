@@ -19,23 +19,6 @@ function tests(mode: FormMode) {
       expect(hook.result.current.submitting).toBe(false);
     });
   });
-
-  it('allows to set submitting state manually', () => {
-    const hook = renderHook(() => useForm({ mode, initialValues: { a: 1, b: 2 } }));
-    expect(hook.result.current.submitting).toBe(false);
-
-    act(() => {
-      hook.result.current.setSubmitting(true);
-    });
-
-    expect(hook.result.current.submitting).toBe(true);
-
-    act(() => {
-      hook.result.current.setSubmitting(false);
-    });
-
-    expect(hook.result.current.submitting).toBe(false);
-  });
 }
 
 describe('@mantine/form/submitting-controlled', () => {

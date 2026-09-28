@@ -66,6 +66,7 @@ describe('@mantine/core/TabsTab', () => {
     expect(screen.getByRole('tab')).toHaveAttribute('data-active', 'true');
 
     rerender(<InactiveContainer {...defaultProps} value="test" />);
+    expect(screen.getByRole('tab')).not.toHaveAttribute('data-active');
   });
 
   it('sets data-disabled attribute to true if tab is disabled', () => {

@@ -40,21 +40,6 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
     expect(screen.getByText('Resources')).toBeInTheDocument();
   });
 
-  it('renders with mode="static"', () => {
-    const { container } = render(<ResourcesWeekView {...defaultProps} mode="static" />);
-    const slots = container.querySelectorAll('.mantine-ResourcesWeekView-resourcesWeekViewRowSlot');
-    slots.forEach((slot) => {
-      expect(slot).toHaveAttribute('tabIndex', '-1');
-    });
-  });
-
-  it('renders header with week navigation', () => {
-    render(<ResourcesWeekView {...defaultProps} />);
-    expect(screen.getByRole('button', { name: 'Previous' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Today' })).toBeInTheDocument();
-  });
-
   it('renders events in correct resource row and day column', () => {
     const events = [
       {
@@ -78,8 +63,23 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
     ];
 
     render(<ResourcesWeekView {...defaultProps} events={events} />);
-    expect(screen.getByText('Event in Room A Wed')).toBeInTheDocument();
-    expect(screen.getByText('Event in Room B Thu')).toBeInTheDocument();
+
+    const getEventWrapper = (title: string) =>
+      screen
+        .getByText(title)
+        .closest('.mantine-ResourcesWeekView-resourcesWeekViewEventWrapper') as HTMLElement;
+    const getRowLabel = (element: HTMLElement) =>
+      element
+        .closest('.mantine-ResourcesWeekView-resourcesWeekViewRow')!
+        .querySelector('.mantine-ResourcesWeekView-resourcesWeekViewResourceLabel');
+
+    const eventA = getEventWrapper('Event in Room A Wed');
+    const eventB = getEventWrapper('Event in Room B Thu');
+
+    expect(getRowLabel(eventA)).toHaveTextContent('Room A');
+    expect(getRowLabel(eventB)).toHaveTextContent('Room B');
+    expect(parseFloat(eventA.style.left)).toBeCloseTo((2 / 7) * 100 + (1 / 4) * (100 / 7), 2);
+    expect(parseFloat(eventB.style.left)).toBeCloseTo((3 / 7) * 100 + (2 / 4) * (100 / 7), 2);
   });
 
   it('renders all-day events as full-width bars', () => {
@@ -97,9 +97,13 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
 
     const { container } = render(<ResourcesWeekView {...defaultProps} events={events} />);
     expect(screen.getByText('All Day in Room A')).toBeInTheDocument();
-    expect(
-      container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewAllDayEvent')
-    ).not.toBe(null);
+
+    const bar = container.querySelector(
+      '.mantine-ResourcesWeekView-resourcesWeekViewAllDayEvent'
+    ) as HTMLElement;
+    expect(bar).toBeInTheDocument();
+    expect(parseFloat(bar.style.left.replace('calc(', ''))).toBeCloseTo((2 / 7) * 100, 2);
+    expect(parseFloat(bar.style.width.replace('calc(', ''))).toBeCloseTo(100 / 7, 2);
   });
 
   it('calls onTimeSlotClick with slotStart, slotEnd, and resourceId', async () => {
@@ -430,8 +434,8 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
     const nonBusinessSlots = container.querySelectorAll(
       '.mantine-ResourcesWeekView-resourcesWeekViewRowSlot[data-non-business-hours]'
     );
-    expect(businessSlots.length).toBeGreaterThan(0);
-    expect(nonBusinessSlots.length).toBeGreaterThan(0);
+    expect(businessSlots).toHaveLength(2 * 7 * 2);
+    expect(nonBusinessSlots).toHaveLength(2 * 7 * 2);
   });
 
   it('supports renderResourceLabel to replace resource labels', () => {
@@ -781,6 +785,7 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
       const slots = container.querySelectorAll(
         '.mantine-ResourcesWeekView-resourcesWeekViewRowSlot'
       );
+      expect(slots).toHaveLength(4 * 7 * 2);
       slots.forEach((slot) => {
         expect(slot).toHaveAttribute('tabIndex', '-1');
       });
@@ -902,17 +907,6 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
       expect(screen.getByText('Event 2')).toBeInTheDocument();
       expect(screen.queryByText('Event 3')).not.toBeInTheDocument();
       expect(screen.getByRole('button', { name: /\+1 more/ })).toBeInTheDocument();
-    });
-
-    it('limits visible events and shows "+more" button', () => {
-      render(
-        <ResourcesWeekView {...defaultProps} events={overlappingEvents} maxEventsPerTimeSlot={2} />
-      );
-
-      expect(screen.getByText('Event 1')).toBeInTheDocument();
-      expect(screen.getByText('Event 2')).toBeInTheDocument();
-      expect(screen.queryByText('Event 3')).not.toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /more/ })).toBeInTheDocument();
     });
 
     it('shows correct hidden events count', () => {

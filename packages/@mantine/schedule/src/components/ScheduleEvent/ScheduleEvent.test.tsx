@@ -67,11 +67,6 @@ describe('@mantine/schedule/ScheduleEvent', () => {
     );
   });
 
-  it('sets correct title attribute', () => {
-    render(<ScheduleEvent {...defaultProps} />);
-    expect(screen.getByRole('button')).toHaveAttribute('title', 'Test event');
-  });
-
   it('sets data-event-id attribute', () => {
     render(<ScheduleEvent {...defaultProps} />);
     expect(screen.getByRole('button')).toHaveAttribute('data-event-id', '1');

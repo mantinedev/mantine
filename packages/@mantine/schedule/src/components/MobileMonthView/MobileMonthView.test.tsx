@@ -98,10 +98,19 @@ describe('@mantine/schedule/MobileMonthView', () => {
   });
 
   it('supports changing weekendDays', () => {
-    const { container } = render(<MobileMonthView {...defaultProps} weekendDays={[1, 2]} />);
-    const days = container.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewDay');
-    const mondayDays = Array.from(days).filter((day) => day.hasAttribute('data-weekend'));
-    expect(mondayDays.length).toBeGreaterThan(0);
+    render(<MobileMonthView {...defaultProps} weekendDays={[1, 2]} />);
+    expect(screen.getByRole('button', { name: 'November 3, 2025' })).toHaveAttribute(
+      'data-weekend'
+    );
+    expect(screen.getByRole('button', { name: 'November 4, 2025' })).toHaveAttribute(
+      'data-weekend'
+    );
+    expect(screen.getByRole('button', { name: 'November 2, 2025' })).not.toHaveAttribute(
+      'data-weekend'
+    );
+    expect(screen.getByRole('button', { name: 'November 8, 2025' })).not.toHaveAttribute(
+      'data-weekend'
+    );
   });
 
   it('displays week numbers when withWeekNumbers is set', () => {
@@ -489,13 +498,6 @@ describe('@mantine/schedule/MobileMonthView', () => {
 
     expect(screen.getByTestId('custom-header')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '+' })).toBeInTheDocument();
-  });
-
-  it('renders default header when renderHeader is not provided', () => {
-    const { container } = render(<MobileMonthView {...defaultProps} />);
-    expect(
-      container.querySelector('.mantine-MobileMonthView-mobileMonthViewHeader')
-    ).toBeInTheDocument();
   });
 
   it('passes mode and date to renderHeader function', () => {

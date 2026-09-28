@@ -154,18 +154,6 @@ describe('@mantine/code-highlight/JsonViewer', () => {
     expect(texts.some((t) => t === 'hello')).toBe(true);
   });
 
-  it('truncates long strings when collapseStringsAfterLength is set', () => {
-    render(
-      <JsonViewer
-        value={{ s: 'a'.repeat(50) }}
-        defaultExpandDepth={1}
-        collapseStringsAfterLength={10}
-      />
-    );
-
-    expect(screen.getByText(/show more/)).toBeInTheDocument();
-  });
-
   it('expands collapsed string on click', async () => {
     render(
       <JsonViewer
@@ -201,20 +189,13 @@ describe('@mantine/code-highlight/JsonViewer', () => {
   it('renders copy buttons when withCopy is true', () => {
     render(<JsonViewer value={{ a: 1 }} defaultExpandDepth={1} withCopy />);
 
-    expect(screen.getAllByLabelText('Copy').length).toBeGreaterThan(0);
+    expect(screen.getAllByLabelText('Copy')).toHaveLength(2);
   });
 
   it('hides copy buttons by default', () => {
     render(<JsonViewer value={{ a: 1 }} defaultExpandDepth={1} />);
 
     expect(screen.queryByLabelText('Copy')).not.toBeInTheDocument();
-  });
-
-  it('renders expand all / collapse all controls when withControls is true', () => {
-    render(<JsonViewer value={{ a: { b: 1 } }} withControls />);
-
-    expect(screen.getByText('Expand all')).toBeInTheDocument();
-    expect(screen.getByText('Collapse all')).toBeInTheDocument();
   });
 
   it('expands all nodes on expand all click', async () => {

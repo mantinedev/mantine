@@ -42,7 +42,7 @@ describe('@mantine/core/SemiCircleProgress', () => {
   it('clamps value between 0 and 100', () => {
     const { container, rerender } = render(<SemiCircleProgress {...defaultProps} value={-10} />);
     let circles = container.querySelectorAll('circle');
-    expect(circles[1]).toHaveAttribute('style', expect.stringContaining('0'));
+    expect((circles[1] as SVGCircleElement).style.strokeDashoffset).toBe('0');
 
     rerender(<SemiCircleProgress {...defaultProps} value={150} />);
     circles = container.querySelectorAll('circle');

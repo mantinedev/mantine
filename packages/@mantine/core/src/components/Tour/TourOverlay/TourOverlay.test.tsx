@@ -21,17 +21,6 @@ describe('@mantine/core/TourOverlay', () => {
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
-  it('renders spotlight rect when targetRect is provided', () => {
-    const { container } = render(
-      <TestContainer
-        {...defaultProps}
-        targetRect={{ top: 100, left: 200, width: 50, height: 30 }}
-      />
-    );
-    const maskRects = container.querySelectorAll('mask rect');
-    expect(maskRects.length).toBe(2);
-  });
-
   it('derives spotlight geometry from targetRect, spotlightPadding and spotlightRadius', () => {
     const { container } = render(
       <PaddedContainer

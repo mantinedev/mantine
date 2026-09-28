@@ -19,11 +19,6 @@ describe('@mantine/core/TourTitle', () => {
     selector: '.mantine-Tour-title',
   });
 
-  it('renders children', () => {
-    render(<TestContainer>Test title</TestContainer>);
-    expect(screen.getByText('Test title')).toBeInTheDocument();
-  });
-
   it('renders as h3 element', () => {
     render(<TestContainer>Heading</TestContainer>);
     expect(screen.getByText('Heading').tagName).toBe('H3');

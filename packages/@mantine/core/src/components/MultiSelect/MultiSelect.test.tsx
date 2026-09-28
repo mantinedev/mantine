@@ -224,15 +224,17 @@ describe('@mantine/core/MultiSelect', () => {
   });
 
   it('opens dropdown on focus when openOnFocus is true', async () => {
-    render(<MultiSelect {...defaultProps} openOnFocus />);
+    render(<MultiSelect {...defaultProps} searchable openOnFocus />);
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
-    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.tab();
+    expect(screen.getByRole('combobox')).toHaveFocus();
     expect(screen.getByRole('listbox')).toBeVisible();
   });
 
   it('does not open dropdown on focus when openOnFocus is false', async () => {
-    render(<MultiSelect {...defaultProps} openOnFocus={false} />);
-    screen.getByRole('combobox').focus();
+    render(<MultiSelect {...defaultProps} searchable openOnFocus={false} />);
+    await userEvent.tab();
+    expect(screen.getByRole('combobox')).toHaveFocus();
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
 

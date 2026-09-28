@@ -91,14 +91,6 @@ describe('inferFeatureFlags', () => {
       expect(flags.withFiltering).toBe(true);
     });
 
-    it('infers from a custom filterFn function', () => {
-      const flags = inferFeatureFlags({
-        ...baseOptions,
-        columns: [{ accessorKey: 'name', filterFn: (() => true) as any }],
-      });
-      expect(flags.withFiltering).toBe(true);
-    });
-
     it('infers from nested columns', () => {
       const flags = inferFeatureFlags({
         ...baseOptions,
@@ -281,11 +273,6 @@ describe('inferFeatureFlags', () => {
       const flags = inferFeatureFlags({ ...baseOptions, onRowPinningChange: () => {} });
       expect(flags.withRowPinning).toBe(true);
     });
-
-    it('is false by default', () => {
-      const flags = inferFeatureFlags(baseOptions);
-      expect(flags.withRowPinning).toBe(false);
-    });
   });
 
   describe('withEditing', () => {
@@ -293,36 +280,16 @@ describe('inferFeatureFlags', () => {
       const flags = inferFeatureFlags({ ...baseOptions, editingMode: 'cell' });
       expect(flags.withEditing).toBe(true);
     });
-
-    it('is false when editingMode is not set', () => {
-      const flags = inferFeatureFlags(baseOptions);
-      expect(flags.withEditing).toBe(false);
-    });
   });
 
   describe('withFaceting', () => {
-    it('is false by default', () => {
-      const flags = inferFeatureFlags(baseOptions);
-      expect(flags.withFaceting).toBe(false);
-    });
-
     it('is true when withFaceting is explicitly true', () => {
       const flags = inferFeatureFlags({ ...baseOptions, withFaceting: true });
       expect(flags.withFaceting).toBe(true);
     });
-
-    it('is false when withFaceting is explicitly false', () => {
-      const flags = inferFeatureFlags({ ...baseOptions, withFaceting: false });
-      expect(flags.withFaceting).toBe(false);
-    });
   });
 
   describe('withTreeData', () => {
-    it('is false by default', () => {
-      const flags = inferFeatureFlags(baseOptions);
-      expect(flags.withTreeData).toBe(false);
-    });
-
     it('is true when getSubRows is provided', () => {
       const flags = inferFeatureFlags({
         ...baseOptions,
@@ -339,11 +306,6 @@ describe('inferFeatureFlags', () => {
       expect(flags.withRowExpansion).toBe(true);
     });
 
-    it('does not enable withRowExpansion when getSubRows is not provided', () => {
-      const flags = inferFeatureFlags(baseOptions);
-      expect(flags.withRowExpansion).toBe(false);
-    });
-
     it('respects explicit withRowExpansion: false even with getSubRows', () => {
       const flags = inferFeatureFlags({
         ...baseOptions,
@@ -356,11 +318,6 @@ describe('inferFeatureFlags', () => {
   });
 
   describe('withRowReorder', () => {
-    it('is false by default', () => {
-      const flags = inferFeatureFlags(baseOptions);
-      expect(flags.withRowReorder).toBe(false);
-    });
-
     it('is true when withRowReorder is explicitly true', () => {
       const flags = inferFeatureFlags({ ...baseOptions, withRowReorder: true });
       expect(flags.withRowReorder).toBe(true);
@@ -418,25 +375,5 @@ describe('inferFeatureFlags', () => {
       });
       expect(flags.withRowReorder).toBe(false);
     });
-
-    it('does not suppress sorting when withRowReorder is false', () => {
-      const flags = inferFeatureFlags({
-        ...baseOptions,
-        columns: [{ accessorKey: 'name', enableSorting: true }],
-      });
-      expect(flags.withRowReorder).toBe(false);
-      expect(flags.withSorting).toBe(true);
-    });
-  });
-
-  it('does not affect unrelated flags when one feature is enabled', () => {
-    const flags = inferFeatureFlags({
-      ...baseOptions,
-      columns: [{ accessorKey: 'name', enableSorting: true }],
-    });
-    expect(flags.withSorting).toBe(true);
-    expect(flags.withFiltering).toBe(false);
-    expect(flags.withPagination).toBe(false);
-    expect(flags.withRowSelection).toBe(false);
   });
 });

@@ -17,13 +17,6 @@ describe('use-debounced-state', () => {
   }) as any);
   const clearTimeout = jest.spyOn(window, 'clearTimeout').mockReturnValue();
 
-  it('should run without errors', () => {
-    expect(clearTimeout).toHaveBeenCalledTimes(0);
-    renderHook(() => useDebouncedState('asdf1', 100));
-    renderHook(() => useDebouncedState('asdf1', 100, { leading: false }));
-    renderHook(() => useDebouncedState('asdf1', 100, { leading: true }));
-  });
-
   it('should debounce value with leading=false', () => {
     expect(setTimeout).toHaveBeenCalledTimes(0);
     expect(clearTimeout).toHaveBeenCalledTimes(0);

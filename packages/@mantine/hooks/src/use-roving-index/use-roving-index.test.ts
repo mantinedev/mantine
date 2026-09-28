@@ -62,16 +62,6 @@ describe('@mantine/hooks/use-roving-index', () => {
     expect(getItemTabIndices(result, 5)).toEqual([-1, -1, -1, -1, 0]);
   });
 
-  it('programmatically sets focused index via setFocusedIndex', () => {
-    const { result } = renderHook(() => useRovingIndex({ total: 5 }));
-
-    act(() => {
-      result.current.setFocusedIndex(3);
-    });
-
-    expect(result.current.focusedIndex).toBe(3);
-  });
-
   it('adjusts focused index when total decreases below current index', () => {
     const { result, rerender } = renderHook(({ total }) => useRovingIndex({ total }), {
       initialProps: { total: 5 },
@@ -82,7 +72,7 @@ describe('@mantine/hooks/use-roving-index', () => {
     });
 
     rerender({ total: 3 });
-    expect(result.current.focusedIndex).toBeLessThan(3);
+    expect(result.current.focusedIndex).toBe(2);
   });
 
   it('falls back when current focused item becomes disabled', () => {
@@ -102,11 +92,6 @@ describe('@mantine/hooks/use-roving-index', () => {
   describe('horizontal list navigation', () => {
     it('navigates forward with ArrowRight', () => {
       const { result } = renderHook(() => useRovingIndex({ total: 5, orientation: 'horizontal' }));
-
-      const el = document.createElement('button');
-      act(() => {
-        result.current.getItemProps({ index: 0 }).ref(el);
-      });
 
       act(() => {
         result.current
@@ -648,17 +633,84 @@ describe('@mantine/hooks/use-roving-index', () => {
   });
 
   describe('ref management', () => {
-    it('registers and unregisters element refs', () => {
-      const { result } = renderHook(() => useRovingIndex({ total: 3 }));
-
-      const el = document.createElement('button');
-      act(() => {
-        result.current.getItemProps({ index: 0 }).ref(el);
+    function renderWithButtons(options: Parameters<typeof useRovingIndex>[0]) {
+      const hook = renderHook(() => useRovingIndex(options));
+      const buttons = Array.from({ length: options.total }, () => {
+        const button = document.createElement('button');
+        document.body.appendChild(button);
+        return button;
       });
 
       act(() => {
-        result.current.getItemProps({ index: 0 }).ref(null);
+        buttons.forEach((button, index) => hook.result.current.getItemProps({ index }).ref(button));
       });
+
+      return { ...hook, buttons };
+    }
+
+    function pressArrowRight(
+      result: { current: ReturnType<typeof useRovingIndex> },
+      index: number
+    ) {
+      act(() => {
+        result.current
+          .getItemProps({ index })
+          .onKeyDown(
+            new KeyboardEvent('keydown', { key: 'ArrowRight' }) as unknown as React.KeyboardEvent
+          );
+      });
+    }
+
+    afterEach(() => {
+      document.body.innerHTML = '';
+    });
+
+    it('moves DOM focus to the registered element of the next item', () => {
+      const { result, buttons } = renderWithButtons({ total: 3, orientation: 'horizontal' });
+
+      pressArrowRight(result, 0);
+
+      expect(result.current.focusedIndex).toBe(1);
+      expect(document.activeElement).toBe(buttons[1]);
+    });
+
+    it('does not focus an element after its ref is unregistered', () => {
+      const { result, buttons } = renderWithButtons({ total: 3, orientation: 'horizontal' });
+
+      act(() => {
+        buttons[1].focus();
+        result.current.getItemProps({ index: 2 }).ref(null);
+      });
+
+      pressArrowRight(result, 1);
+
+      expect(result.current.focusedIndex).toBe(2);
+      expect(document.activeElement).toBe(buttons[1]);
+    });
+
+    it('clicks the focused element when activateOnFocus is set', () => {
+      const { result, buttons } = renderWithButtons({
+        total: 3,
+        orientation: 'horizontal',
+        activateOnFocus: true,
+      });
+      const onClick = jest.fn();
+      buttons[1].addEventListener('click', onClick);
+
+      pressArrowRight(result, 0);
+
+      expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not click the focused element when activateOnFocus is not set', () => {
+      const { result, buttons } = renderWithButtons({ total: 3, orientation: 'horizontal' });
+      const onClick = jest.fn();
+      buttons[1].addEventListener('click', onClick);
+
+      pressArrowRight(result, 0);
+
+      expect(document.activeElement).toBe(buttons[1]);
+      expect(onClick).not.toHaveBeenCalled();
     });
   });
 });

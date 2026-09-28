@@ -9,10 +9,6 @@ describe('getBoundaries', () => {
     expect(getBoundaries({ data: { a: 1, b: 2, c: 3 } })).toEqual([1, 3]);
   });
 
-  it('returns the min and max values from the data if domain is undefined', () => {
-    expect(getBoundaries({ data: { a: 1, b: 2, c: 3 }, domain: undefined })).toEqual([1, 3]);
-  });
-
   it('handles negative values in the data', () => {
     expect(getBoundaries({ data: { a: -1, b: -2, c: -3 } })).toEqual([-3, -1]);
   });

@@ -41,8 +41,12 @@ describe('@mantine/dropzone/Dropzone', () => {
 
   it('assigns open function to given openRef', () => {
     const ref = createRef<any>();
-    render(<Dropzone {...defaultProps} openRef={ref} />);
-    expect(ref.current).toBeInstanceOf(Function);
+    const { container } = render(<Dropzone {...defaultProps} openRef={ref} />);
+    const click = jest.spyOn(container.querySelector('input')!, 'click');
+
+    ref.current();
+
+    expect(click).toHaveBeenCalledTimes(1);
   });
 
   it('exposes static components', () => {

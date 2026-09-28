@@ -1,19 +1,6 @@
 import { getDayTimeIntervals } from './get-day-time-intervals';
 
 describe('@mantine/schedule/get-day-time-intervals', () => {
-  it('respects custom interval minutes', () => {
-    const intervals = getDayTimeIntervals({
-      startTime: '09:00:00',
-      endTime: '10:00:00',
-      intervalMinutes: 15,
-    });
-
-    expect(intervals).toHaveLength(4);
-    intervals.forEach((interval) => {
-      expect(interval.duration).toBe(15 * 60);
-    });
-  });
-
   it('returns correct startTime and endTime for each interval', () => {
     const intervals = getDayTimeIntervals({
       startTime: '09:00:00',

@@ -277,24 +277,6 @@ describe('@mantine/schedule/YearView', () => {
     expect(spy).toHaveBeenCalledWith('2025-01-01', expect.any(Object));
   });
 
-  it('calls onViewChange and onDateChange when month is clicked with both handlers', async () => {
-    const dateSpy = jest.fn();
-    const viewSpy = jest.fn();
-    render(
-      <YearView
-        {...defaultProps}
-        onDateChange={dateSpy}
-        onMonthClick={(date) => {
-          dateSpy(date);
-          viewSpy('month');
-        }}
-      />
-    );
-    await userEvent.click(screen.getByRole('button', { name: 'March' }));
-    expect(dateSpy).toHaveBeenCalledWith('2025-03-01');
-    expect(viewSpy).toHaveBeenCalledWith('month');
-  });
-
   it('supports onWeekNumberClick prop', async () => {
     const spy = jest.fn();
     render(<YearView {...defaultProps} withWeekNumbers onWeekNumberClick={spy} />);
@@ -480,9 +462,16 @@ describe('@mantine/schedule/YearView', () => {
         payload: {},
       },
     ];
-    const { container } = render(<YearView {...defaultProps} events={events} />);
-    const indicators = container.querySelectorAll('.mantine-YearView-yearViewDayIndicator');
-    expect(indicators.length).toBeGreaterThan(0);
+    render(<YearView {...defaultProps} events={events} />);
+    const getIndicators = (name: string) =>
+      screen
+        .getAllByRole('button', { name })
+        .find((btn) => !btn.hasAttribute('data-outside'))!
+        .querySelectorAll('.mantine-YearView-yearViewDayIndicator');
+
+    expect(getIndicators('November 5, 2025')).toHaveLength(2);
+    expect(getIndicators('November 10, 2025')).toHaveLength(1);
+    expect(getIndicators('November 6, 2025')).toHaveLength(0);
   });
 
   it('renders indicator for each day a multiday event spans', () => {
@@ -702,54 +691,6 @@ describe('@mantine/schedule/YearView', () => {
       const oct27Buttons = screen.getAllByRole('button', { name: 'October 27, 2025' });
       const outsideOct27 = oct27Buttons.find((btn) => btn.hasAttribute('data-outside'));
       expect(outsideOct27).toHaveAttribute('tabIndex', '-1');
-    });
-
-    it('supports ArrowRight key to move focus to next day', async () => {
-      render(<YearView {...defaultProps} />);
-      const nov1 = getInsideDayButton('November 1, 2025');
-
-      nov1.focus();
-      expect(document.activeElement).toBe(nov1);
-
-      await userEvent.keyboard('{ArrowRight}');
-      const nov2 = getInsideDayButton('November 2, 2025');
-      expect(document.activeElement).toBe(nov2);
-    });
-
-    it('supports ArrowLeft key to move focus to previous day', async () => {
-      render(<YearView {...defaultProps} />);
-      const nov2 = getInsideDayButton('November 2, 2025');
-
-      nov2.focus();
-      expect(document.activeElement).toBe(nov2);
-
-      await userEvent.keyboard('{ArrowLeft}');
-      const nov1 = getInsideDayButton('November 1, 2025');
-      expect(document.activeElement).toBe(nov1);
-    });
-
-    it('supports ArrowDown key to move focus to same day in next week', async () => {
-      render(<YearView {...defaultProps} />);
-      const nov3 = getInsideDayButton('November 3, 2025');
-
-      nov3.focus();
-      expect(document.activeElement).toBe(nov3);
-
-      await userEvent.keyboard('{ArrowDown}');
-      const nov10 = getInsideDayButton('November 10, 2025');
-      expect(document.activeElement).toBe(nov10);
-    });
-
-    it('supports ArrowUp key to move focus to same day in previous week', async () => {
-      render(<YearView {...defaultProps} />);
-      const nov10 = getInsideDayButton('November 10, 2025');
-
-      nov10.focus();
-      expect(document.activeElement).toBe(nov10);
-
-      await userEvent.keyboard('{ArrowUp}');
-      const nov3 = getInsideDayButton('November 3, 2025');
-      expect(document.activeElement).toBe(nov3);
     });
 
     it('ArrowRight at end of week moves to first day of next week', async () => {

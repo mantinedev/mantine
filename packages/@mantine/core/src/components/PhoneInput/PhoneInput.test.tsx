@@ -286,10 +286,7 @@ describe('@mantine/core/PhoneInput', () => {
     const input = screen.getByRole('textbox');
     await userEvent.type(input, '20255512349999');
 
-    const lastCall = onChange.mock.calls[onChange.mock.calls.length - 1];
-    const rawValue: string = lastCall[0];
-    const digits = rawValue.replace(/\D/g, '');
-    expect(digits.length).toBeLessThanOrEqual(11);
+    expect(onChange).toHaveBeenLastCalledWith('+12025551234', expect.anything());
   });
 
   it('renders listbox immediately when dropdownOpened is set', () => {

@@ -53,11 +53,6 @@ describe('@mantine/dates/PickerControl', () => {
     expect(screen.getByRole('button')).not.toHaveAttribute('data-selected');
   });
 
-  it('has correct default __staticSelector', () => {
-    render(<PickerControl {...defaultProps} />);
-    expect(screen.getByRole('button')).toHaveClass('mantine-PickerControl-pickerControl');
-  });
-
   it('supports custom __staticSelector', () => {
     render(<PickerControl {...defaultProps} __staticSelector="Calendar" />);
     expect(screen.getByRole('button')).toHaveClass('mantine-Calendar-pickerControl');

@@ -16,19 +16,8 @@ describe('@mantine/core/Box', () => {
     providerName: null,
   });
 
-  it('sets data-variant attribute based on variant prop', () => {
-    render(<Box variant="test">test</Box>);
-    expect(screen.getByText('test')).toHaveAttribute('data-variant', 'test');
-  });
-
-  it('sets data-size based on size prop', () => {
-    const { rerender } = render(<Box size="xs">test</Box>);
-    expect(screen.getByText('test')).toHaveAttribute('data-size', 'xs');
-
-    rerender(<Box size="5rem">test</Box>);
-    expect(screen.getByText('test')).not.toHaveAttribute('data-size');
-
-    rerender(<Box size={5}>test</Box>);
+  it('does not set data-size for numeric size', () => {
+    render(<Box size={5}>test</Box>);
     expect(screen.getByText('test')).not.toHaveAttribute('data-size');
   });
 

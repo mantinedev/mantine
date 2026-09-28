@@ -17,8 +17,14 @@ describe('@mantine/core/getArrowPositionStyles', () => {
       arrowPosition: 'merge',
     });
 
-    expect(styles.width).toBe(7);
-    expect(styles.clipPath).toBeDefined();
+    expect(styles).toStrictEqual({
+      width: 7,
+      height: 7,
+      position: 'absolute',
+      top: -7,
+      left: 0,
+      clipPath: 'polygon(0% 0%, 0% 100%, 100% 100%)',
+    });
   });
 
   it('falls back to a regular centered arrow when merge has no aligned placement', () => {

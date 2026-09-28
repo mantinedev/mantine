@@ -69,11 +69,6 @@ describe('@mantine/core/Tour', () => {
     expect(addEventListener.mock.calls.filter(([type]) => type === 'scroll')).toHaveLength(0);
   });
 
-  it('renders tooltip when active is true', async () => {
-    await renderWithAct(<DefaultTour />);
-    expect(screen.getByText('Step 1 Title')).toBeInTheDocument();
-  });
-
   it('does not trigger React warnings while positioning the tooltip', async () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const { rerender } = await renderWithAct(<DefaultTour step={0} />);
@@ -213,12 +208,6 @@ describe('@mantine/core/Tour', () => {
         </Tour>
       );
     }
-
-    it('renders centered tooltip when step has no target', async () => {
-      await renderWithAct(<CenteredTour step={0} />);
-      expect(screen.getByText('No Target Step')).toBeInTheDocument();
-      expect(screen.getByText('No target content')).toBeInTheDocument();
-    });
 
     it('centers the tooltip with CSS instead of measured inline coordinates on first open', async () => {
       const { rerender, container: renderContainer } = await renderWithAct(

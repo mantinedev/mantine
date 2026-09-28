@@ -2,10 +2,19 @@ import { act, renderHook } from '@testing-library/react';
 import { useViewportSize } from './use-viewport-size';
 
 describe('@mantine/hooks/use-viewport-size', () => {
-  it('returns width and height reflecting window dimensions', () => {
+  it('returns width and height reflecting window dimensions after mount', () => {
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 1100,
+    });
+    Object.defineProperty(window, 'innerHeight', {
+      writable: true,
+      configurable: true,
+      value: 700,
+    });
     const { result } = renderHook(() => useViewportSize());
-    expect(typeof result.current.width).toBe('number');
-    expect(typeof result.current.height).toBe('number');
+    expect(result.current).toEqual({ width: 1100, height: 700 });
   });
 
   it('updates after a resize event', () => {

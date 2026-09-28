@@ -1,20 +1,37 @@
 import { getCaretCoordinates } from './get-caret-coordinates';
 
+function mockSpanOffsets(spanText: string, offsets: { top: number; left: number }) {
+  const top = jest
+    .spyOn(HTMLElement.prototype, 'offsetTop', 'get')
+    .mockImplementation(function getOffsetTop(this: HTMLElement) {
+      return this.textContent === spanText ? offsets.top : 0;
+    });
+  const left = jest
+    .spyOn(HTMLElement.prototype, 'offsetLeft', 'get')
+    .mockImplementation(function getOffsetLeft(this: HTMLElement) {
+      return this.textContent === spanText ? offsets.left : 0;
+    });
+
+  return () => {
+    top.mockRestore();
+    left.mockRestore();
+  };
+}
+
 describe('@mantine/core/Mentions/get-caret-coordinates', () => {
-  it('returns a plausible caret rect for a textarea', () => {
+  it('returns the caret rect of a textarea from the mirror span and element borders', () => {
     const textarea = document.createElement('textarea');
     textarea.value = 'Hello world';
+    textarea.style.borderTopWidth = '2px';
+    textarea.style.borderLeftWidth = '3px';
+    textarea.style.lineHeight = '24px';
+    textarea.style.fontSize = '16px';
     document.body.appendChild(textarea);
+    const restore = mockSpanOffsets(' world', { top: 40, left: 50 });
 
-    const coordinates = getCaretCoordinates(textarea, 5);
+    expect(getCaretCoordinates(textarea, 5)).toStrictEqual({ top: 42, left: 53, height: 24 });
 
-    // jsdom does not perform layout, so only assert the shape and numeric types
-    expect(typeof coordinates.top).toBe('number');
-    expect(typeof coordinates.left).toBe('number');
-    expect(typeof coordinates.height).toBe('number');
-    expect(Number.isNaN(coordinates.top)).toBe(false);
-    expect(Number.isNaN(coordinates.left)).toBe(false);
-
+    restore();
     document.body.removeChild(textarea);
   });
 
@@ -30,14 +47,17 @@ describe('@mantine/core/Mentions/get-caret-coordinates', () => {
     document.body.removeChild(textarea);
   });
 
-  it('works with input elements', () => {
+  it('falls back to font size for height with input elements', () => {
     const input = document.createElement('input');
     input.value = 'test value';
+    input.style.borderWidth = '0px';
+    input.style.fontSize = '16px';
     document.body.appendChild(input);
+    const restore = mockSpanOffsets(' value', { top: 0, left: 30 });
 
-    const coordinates = getCaretCoordinates(input, 4);
-    expect(Number.isNaN(coordinates.left)).toBe(false);
+    expect(getCaretCoordinates(input, 4)).toStrictEqual({ top: 0, left: 30, height: 16 });
 
+    restore();
     document.body.removeChild(input);
   });
 });

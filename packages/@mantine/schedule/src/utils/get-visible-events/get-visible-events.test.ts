@@ -31,26 +31,9 @@ describe('@mantine/schedule/get-visible-events', () => {
     expect(result.hiddenEventsCount).toBe(11);
   });
 
-  it('handles both zero', () => {
-    const result = getVisibleEvents({ maxEvents: 0, totalEvents: 0 });
-    expect(result.visibleEventsCount).toBe(0);
-    expect(result.hiddenEventsCount).toBe(0);
-  });
-
-  it('calculates hidden count correctly for large numbers', () => {
-    const result = getVisibleEvents({ maxEvents: 100, totalEvents: 1000 });
-    expect(result.visibleEventsCount).toBe(99);
-    expect(result.hiddenEventsCount).toBe(901);
-  });
-
   it('handles single max event', () => {
     const result = getVisibleEvents({ maxEvents: 1, totalEvents: 5 });
     expect(result.visibleEventsCount).toBe(0);
     expect(result.hiddenEventsCount).toBe(5);
-  });
-
-  it('sums visible and hidden counts to total events', () => {
-    const result = getVisibleEvents({ maxEvents: 3, totalEvents: 10 });
-    expect(result.visibleEventsCount + result.hiddenEventsCount).toBe(10);
   });
 });

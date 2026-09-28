@@ -16,11 +16,6 @@ describe('@mantine/core/Toggle', () => {
     selector: '.mantine-Toggle-root',
   });
 
-  it('renders as button by default', () => {
-    render(<Toggle>Click</Toggle>);
-    expect(screen.getByRole('button', { name: 'Click' })).toBeInTheDocument();
-  });
-
   it('applies data-active when active is true', () => {
     render(<Toggle active>Click</Toggle>);
     expect(screen.getByRole('button')).toHaveAttribute('data-active');

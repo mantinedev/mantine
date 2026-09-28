@@ -12,10 +12,9 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         events: [],
       });
 
-      expect(result.groupedByWeek).toBeDefined();
-      expect(result.groupedByDay).toBeDefined();
-      expect(Object.keys(result.groupedByWeek).length).toBeGreaterThan(0);
-      expect(Object.keys(result.groupedByDay).length).toBeGreaterThan(0);
+      expect(result.groupedByWeek).toStrictEqual({ 0: [], 1: [], 2: [], 3: [], 4: [] });
+      expect(Object.keys(result.groupedByDay)).toHaveLength(35);
+      expect(Object.values(result.groupedByDay).flat()).toHaveLength(0);
     });
 
     it('positions single-day events correctly', () => {
@@ -37,16 +36,16 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       expect(dayEvents[0]).toMatchObject({
         id: 1,
         position: {
-          startOffset: expect.any(Number),
-          width: expect.any(Number),
-          weekIndex: expect.any(Number),
+          startOffset: expect.closeTo((2 / 7) * 100, 2),
+          width: expect.closeTo((1 / 7) * 100, 2),
+          weekIndex: 2,
           row: 0,
           hanging: 'none',
         },
       });
     });
 
-    it('filters out events that do not belong to the month', () => {
+    it('keeps events that fall on the padding days of the month grid', () => {
       const events = [
         testUtils.createEvent({ id: 1, start: '2024-12-31 10:00:00', end: '2024-12-31 12:00:00' }),
         testUtils.createEvent({ id: 2, start: '2025-01-15 10:00:00', end: '2025-01-15 12:00:00' }),
@@ -58,9 +57,9 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         events,
       });
 
-      const dayEvents = result.groupedByDay['2025-01-15 00:00:00'];
-      expect(dayEvents).toHaveLength(1);
-      expect(dayEvents[0].id).toBe(2);
+      expect(result.groupedByDay['2024-12-31 00:00:00'].map((e) => e.id)).toStrictEqual([1]);
+      expect(result.groupedByDay['2025-01-15 00:00:00'].map((e) => e.id)).toStrictEqual([2]);
+      expect(result.groupedByDay['2025-02-01 00:00:00'].map((e) => e.id)).toStrictEqual([3]);
     });
 
     it('positions multiple events on the same day', () => {
@@ -77,6 +76,7 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       const dayEvents = result.groupedByDay['2025-01-15 00:00:00'];
       expect(dayEvents).toHaveLength(2);
       expect(dayEvents[0].position.row).toBe(0);
+      expect(dayEvents[1].position.row).toBe(1);
     });
   });
 
@@ -116,12 +116,9 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       });
 
       const weekEvents = result.groupedByWeek['2'];
-      expect(weekEvents).toBeDefined();
-      expect(weekEvents.length).toBeGreaterThan(0);
-
-      const event = weekEvents[0];
-      expect(event.position?.width).toBeGreaterThan(0);
-      expect(event.position?.width).toBeLessThanOrEqual(100);
+      expect(weekEvents).toHaveLength(1);
+      expect(weekEvents[0].position?.startOffset).toBe(0);
+      expect(weekEvents[0].position?.width).toBeCloseTo((4 / 7) * 100, 2);
     });
 
     it('treats an end time at midnight as exclusive (does not extend into the next day)', () => {
@@ -213,12 +210,9 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       });
 
       const weekEvents = result.groupedByWeek['2'];
-      expect(weekEvents).toBeDefined();
-      expect(weekEvents.length).toBeGreaterThan(0);
-
-      const event = weekEvents[0];
-      expect(event.position?.startOffset).toBeGreaterThanOrEqual(0);
-      expect(event.position?.startOffset).toBeLessThan(100);
+      expect(weekEvents).toHaveLength(1);
+      expect(weekEvents[0].position?.startOffset).toBeCloseTo((2 / 7) * 100, 2);
+      expect(weekEvents[0].position?.width).toBeCloseTo((3 / 7) * 100, 2);
     });
   });
 
@@ -417,13 +411,11 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         firstDayOfWeek: 1,
       });
 
-      const weekIndices = Object.keys(result.groupedByWeek);
-      expect(weekIndices.length).toBeGreaterThan(0);
-
-      weekIndices.forEach((weekIndex) => {
-        const weekEvents = result.groupedByWeek[weekIndex];
-        expect(Array.isArray(weekEvents)).toBe(true);
-      });
+      expect(result.groupedByWeek['0'].map((e) => e.id)).toStrictEqual([1]);
+      expect(result.groupedByWeek['1']).toHaveLength(0);
+      expect(result.groupedByWeek['2'].map((e) => e.id)).toStrictEqual([2]);
+      expect(result.groupedByWeek['3']).toHaveLength(0);
+      expect(result.groupedByWeek['4'].map((e) => e.id)).toStrictEqual([3]);
     });
 
     it('groups events by day correctly', () => {
@@ -480,9 +472,9 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         firstDayOfWeek: 1,
       });
 
-      const allDayEvents = Object.values(result.groupedByDay).flat();
-      const uniqueEventIds = new Set(allDayEvents.map((e) => `${e.id}-instance`));
-      expect(allDayEvents.length).toBeGreaterThan(uniqueEventIds.size - 1);
+      const daysWithEvents = Object.values(result.groupedByDay).filter((day) => day.length > 0);
+      expect(daysWithEvents).toHaveLength(11);
+      daysWithEvents.forEach((day) => expect(day).toHaveLength(1));
     });
   });
 
@@ -498,7 +490,8 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         firstDayOfWeek: 0,
       });
 
-      expect(result.groupedByDay['2025-01-12 00:00:00']).toBeDefined();
+      expect(Object.keys(result.groupedByDay)[0]).toBe('2024-12-29 00:00:00');
+      expect(result.groupedByDay['2025-01-12 00:00:00'].map((e) => e.id)).toStrictEqual([1]);
     });
 
     it('handles Monday as first day of week', () => {
@@ -512,7 +505,8 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         firstDayOfWeek: 1,
       });
 
-      expect(result.groupedByDay['2025-01-13 00:00:00']).toBeDefined();
+      expect(Object.keys(result.groupedByDay)[0]).toBe('2024-12-30 00:00:00');
+      expect(result.groupedByDay['2025-01-13 00:00:00'].map((e) => e.id)).toStrictEqual([1]);
     });
 
     it('groups events into different weeks based on firstDayOfWeek', () => {
@@ -532,11 +526,13 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         firstDayOfWeek: 1,
       });
 
-      const sundayWeekIndices = Object.keys(resultSunday.groupedByWeek);
-      const mondayWeekIndices = Object.keys(resultMonday.groupedByWeek);
-
-      expect(sundayWeekIndices.length).toBeGreaterThan(0);
-      expect(mondayWeekIndices.length).toBeGreaterThan(0);
+      expect(resultSunday.groupedByWeek['2'].map((e) => e.id)).toStrictEqual([1]);
+      expect(resultSunday.groupedByWeek['2'][0].position?.startOffset).toBe(0);
+      expect(resultMonday.groupedByWeek['1'].map((e) => e.id)).toStrictEqual([1]);
+      expect(resultMonday.groupedByWeek['1'][0].position?.startOffset).toBeCloseTo(
+        (6 / 7) * 100,
+        2
+      );
     });
   });
 
@@ -556,7 +552,8 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         },
       });
 
-      expect(result.groupedByDay['2025-01-15 00:00:00']).toBeDefined();
+      expect(result.groupedByDay['2025-01-15 00:00:00'].map((e) => e.id)).toStrictEqual([1]);
+      expect(result.groupedByDay['2025-01-25 00:00:00'].map((e) => e.id)).toStrictEqual([2]);
     });
 
     it('positions events within custom range including padding days', () => {
@@ -573,9 +570,11 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         },
       });
 
-      expect(result.groupedByDay['2025-01-15 00:00:00']).toBeDefined();
       const allDayKeys = Object.keys(result.groupedByDay);
-      expect(allDayKeys.length).toBeGreaterThan(0);
+      expect(allDayKeys).toHaveLength(21);
+      expect(allDayKeys[0]).toBe('2025-01-06 00:00:00');
+      expect(allDayKeys[allDayKeys.length - 1]).toBe('2025-01-26 00:00:00');
+      expect(result.groupedByDay['2025-01-15 00:00:00'].map((e) => e.id)).toStrictEqual([1]);
     });
   });
 
@@ -596,9 +595,9 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         events,
       });
 
-      expect(result.groupedByDay['2025-01-15 00:00:00'].length).toBeGreaterThan(0);
-      expect(result.groupedByDay['2025-01-16 00:00:00'].length).toBeGreaterThan(0);
-      expect(result.groupedByDay['2025-01-17 00:00:00'].length).toBeGreaterThan(0);
+      expect(result.groupedByDay['2025-01-15 00:00:00'].map((e) => e.id)).toStrictEqual([1, 2]);
+      expect(result.groupedByDay['2025-01-16 00:00:00'].map((e) => e.id)).toStrictEqual([2, 3]);
+      expect(result.groupedByDay['2025-01-17 00:00:00'].map((e) => e.id)).toStrictEqual([2]);
     });
 
     it('handles multiple overlapping multi-day events', () => {
@@ -699,7 +698,7 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         events,
       });
 
-      expect(result.groupedByDay['2025-01-15 00:00:00']).toBeDefined();
+      expect(result.groupedByDay['2025-01-15 00:00:00'].map((e) => e.id)).toStrictEqual([1]);
     });
 
     it('handles events at month boundaries', () => {
@@ -713,8 +712,9 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         events,
       });
 
-      expect(result.groupedByDay['2025-01-01 00:00:00']).toBeDefined();
-      expect(result.groupedByDay['2025-01-31 00:00:00']).toBeDefined();
+      expect(result.groupedByDay['2025-01-01 00:00:00'].map((e) => e.id)).toStrictEqual([1]);
+      expect(result.groupedByDay['2025-01-31 00:00:00'].map((e) => e.id)).toStrictEqual([2]);
+      expect(result.groupedByDay['2025-02-01 00:00:00']).toHaveLength(0);
     });
 
     it('handles Date objects as start and end times', () => {
@@ -731,7 +731,7 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         events,
       });
 
-      expect(result.groupedByDay['2025-01-15 00:00:00']).toBeDefined();
+      expect(result.groupedByDay['2025-01-15 00:00:00'].map((e) => e.id)).toStrictEqual([1]);
     });
 
     it('handles events starting before and ending after month', () => {
@@ -749,33 +749,12 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
         firstDayOfWeek: 1,
       });
 
-      const weekIndices = Object.keys(result.groupedByWeek);
-      expect(weekIndices.length).toBeGreaterThan(0);
-
-      const eventsInAllWeeks = weekIndices.flatMap((weekIndex) => result.groupedByWeek[weekIndex]);
-      const eventsWithId1 = eventsInAllWeeks.filter((e) => e.id === 1);
-
-      expect(eventsWithId1.length).toBeGreaterThan(0);
-      eventsWithId1.forEach((event) => {
-        expect(event.position?.hanging).toBeDefined();
-      });
-    });
-
-    it('handles empty weeks correctly', () => {
-      const events = [
-        testUtils.createEvent({ id: 1, start: '2025-01-01 10:00:00', end: '2025-01-01 12:00:00' }),
-      ];
-
-      const result = getMonthPositionedEvents({
-        date: testMonth,
-        events,
-        firstDayOfWeek: 1,
-      });
-
-      const weekIndices = Object.keys(result.groupedByWeek);
-      weekIndices.forEach((weekIndex) => {
-        const weekEvents = result.groupedByWeek[weekIndex];
-        expect(Array.isArray(weekEvents)).toBe(true);
+      const eventsInAllWeeks = Object.values(result.groupedByWeek).flat();
+      expect(eventsInAllWeeks).toHaveLength(5);
+      eventsInAllWeeks.forEach((event) => {
+        expect(event.id).toBe(1);
+        expect(event.position?.hanging).toBe('both');
+        expect(event.position?.width).toBe(100);
       });
     });
   });
@@ -793,9 +772,8 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       });
 
       const weekEvents = result.groupedByWeek['2'];
-      expect(weekEvents).toBeDefined();
-      expect(weekEvents[0].position?.startOffset).toBeGreaterThan(0);
-      expect(weekEvents[0].position?.startOffset).toBeLessThan(100);
+      expect(weekEvents).toHaveLength(1);
+      expect(weekEvents[0].position?.startOffset).toBeCloseTo((2 / 7) * 100, 2);
     });
 
     it('calculates correct width for single-day events', () => {
@@ -811,21 +789,6 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       const dayEvents = result.groupedByDay['2025-01-15 00:00:00'];
       const expectedWidth = (1 / 7) * 100;
       expect(dayEvents[0].position?.width).toBeCloseTo(expectedWidth, 1);
-    });
-
-    it('sets weekIndex for each positioned event', () => {
-      const events = [
-        testUtils.createEvent({ id: 1, start: '2025-01-15 10:00:00', end: '2025-01-15 12:00:00' }),
-      ];
-
-      const result = getMonthPositionedEvents({
-        date: testMonth,
-        events,
-      });
-
-      const dayEvents = result.groupedByDay['2025-01-15 00:00:00'];
-      expect(dayEvents[0].position?.weekIndex).toBeDefined();
-      expect(typeof dayEvents[0].position?.weekIndex).toBe('number');
     });
   });
 });

@@ -118,14 +118,6 @@ describe('@mantine/charts/WaffleChart', () => {
     });
   });
 
-  it('handles empty data without crashing', () => {
-    const { container } = render(<WaffleChart data={[]} />);
-    const { width, height } = getSvgSize(container);
-
-    expect(width).toBeGreaterThanOrEqual(0);
-    expect(height).toBeGreaterThanOrEqual(0);
-  });
-
   it('labels the grid with every segment name and value', () => {
     const { container } = render(<WaffleChart {...defaultProps} withLegend={false} />);
     const grid = container.querySelector('svg')!;

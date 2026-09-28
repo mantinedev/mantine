@@ -98,14 +98,12 @@ describe('@mantine/core/FloatingWindow', () => {
   });
 
   it('supports height dimensions', () => {
+    const rect = mockRootSize(200, 150);
+
     render(
       <FloatingWindow
-        dimensions={{
-          initialWidth: 200,
-          initialHeight: 150,
-          minHeight: 80,
-          maxHeight: 300,
-        }}
+        dimensions={{ initialHeight: 400, minHeight: 80, maxHeight: 300 }}
+        withinPortal={false}
       >
         <FloatingWindow.ResizeHandle>
           <div>handle</div>
@@ -113,8 +111,21 @@ describe('@mantine/core/FloatingWindow', () => {
       </FloatingWindow>
     );
 
+    const root = document.querySelector<HTMLElement>('.mantine-FloatingWindow-root')!;
+    expect(root.style.getPropertyValue('--floating-window-height')).toBe('300px');
+
     const handle = screen.getByRole('separator');
-    expect(handle).toBeInTheDocument();
+
+    fireEvent.keyDown(handle, { key: 'Home' });
+    expect(root.style.height).toBe('80px');
+
+    fireEvent.keyDown(handle, { key: 'ArrowDown' });
+    expect(root.style.height).toBe('90px');
+
+    fireEvent.keyDown(handle, { key: 'End' });
+    expect(root.style.height).toBe('300px');
+
+    rect.mockRestore();
   });
 
   it('calls onResizeStart and onResizeEnd when the handle is dragged', () => {

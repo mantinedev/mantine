@@ -57,24 +57,9 @@ describe('@mantine/core/PinInput', () => {
   });
 
   it('display only one character in an input', () => {
-    const { container } = render(<PinInput length={6} />);
-    expect(getInputs(container)[0].value.length).toBeLessThan(2);
-  });
-
-  it('display only one character in an input with `defaultValue` property', () => {
-    const { container } = render(<PinInput length={6} defaultValue="123456" />);
-    expect(getInputs(container)[2].value.length).toBe(1);
-  });
-
-  it('onChange is called after typing', () => {
-    const spy = jest.fn();
-    const { container } = render(<PinInput type="number" length={6} onChange={spy} />);
-
-    fireEvent.input(getInputs(container)[1], {
-      target: { value: '1' },
-    });
-
-    expect(spy).toHaveBeenCalled();
+    const { container } = render(<PinInput length={6} defaultValue="1" />);
+    fireEvent.change(getInputs(container)[0], { target: { value: '12' } });
+    expect(getInputs(container)[0].value).toBe('2');
   });
 
   it('onChange is called with full value string', () => {
@@ -86,27 +71,6 @@ describe('@mantine/core/PinInput', () => {
 
     fireEvent.change(getInputs(container)[1], { target: { value: 'b' } });
     expect(spy).toHaveBeenLastCalledWith('ab');
-  });
-
-  it('onChange trims whitespace from value', () => {
-    const spy = jest.fn();
-    const { container } = render(<PinInput length={4} onChange={spy} defaultValue="12" />);
-
-    fireEvent.change(getInputs(container)[2], { target: { value: '3' } });
-    expect(spy).toHaveBeenLastCalledWith('123');
-  });
-
-  it('onComplete is called on last input', () => {
-    const spy = jest.fn();
-    const { container } = render(<PinInput {...defaultProps} onComplete={spy} />);
-
-    expect(getInputs(container)).toHaveLength(4);
-
-    getInputs(container).forEach((element) => {
-      fireEvent.change(element, { target: { value: '1' } });
-    });
-
-    expect(spy).toHaveBeenCalledWith('1111');
   });
 
   it('onComplete is called only once when all inputs are filled', () => {

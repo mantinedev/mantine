@@ -143,17 +143,4 @@ describe('@mantine/core/Autocomplete/use-autocomplete', () => {
     expect(first).not.toHaveBeenCalled();
     expect(second).toHaveBeenCalledTimes(1);
   });
-
-  it('reads list id and selected option index through getters', () => {
-    const hook = renderHook(() => useAutocomplete());
-    const store = hook.result.current;
-    expect(store.getListId()).toBeNull();
-    expect(store.getSelectedOptionIndex()).toBe(-1);
-
-    store.setListId('list-id');
-    store.updateSelectedOptionIndex(2);
-
-    expect(store.getListId()).toBe('list-id');
-    expect(store.getSelectedOptionIndex()).toBe(2);
-  });
 });

@@ -28,6 +28,11 @@ describe('@mantine/core/useEditable', () => {
   });
 
   it('exposes resolved configuration', () => {
+    const defaults = renderHook(() => useEditable());
+    expect(defaults.result.current.activationMode).toBe('focus');
+    expect(defaults.result.current.submitMode).toBe('both');
+    expect(defaults.result.current.selectOnFocus).toBe(true);
+
     const hook = renderHook(() =>
       useEditable({ activationMode: 'click', submitMode: 'enter', selectOnFocus: false })
     );

@@ -386,23 +386,10 @@ describe('@mantine/dates/WeekPicker', () => {
     expect(container.querySelector('table')).toHaveAttribute('data-week-mode');
   });
 
-  it('keeps user classNames on rows and days', () => {
-    const { container } = render(
-      <WeekPicker {...defaultProps} classNames={{ monthRow: 'custom-row', day: 'custom-day' }} />
-    );
-    expect(container.querySelector('tbody tr')).toHaveClass('custom-row');
-    expect(days(container)[0]).toHaveClass('custom-day');
-  });
-
   it('removes days from the tab order and keeps exactly one week control tabbable', () => {
     const { container } = render(<WeekPicker {...defaultProps} />);
     days(container).forEach((day) => expect(day).toHaveAttribute('tabindex', '-1'));
     expect(container.querySelectorAll('[data-week-control][tabindex="0"]')).toHaveLength(1);
-  });
-
-  it('has correct default __staticSelector', () => {
-    const { container } = render(<WeekPicker {...defaultProps} />);
-    expect(container.querySelector('.mantine-WeekPicker-month')).toBeInTheDocument();
   });
 
   it('supports custom __staticSelector', () => {

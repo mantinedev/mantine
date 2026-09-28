@@ -101,7 +101,7 @@ describe('@mantine/schedule/add-event-to-day-groups', () => {
     const groupedByDay: { [date: string]: any[] } = {
       '2025-01-15 00:00:00': [],
     };
-    const eventsAddedToDay = new Set<string>();
+    const eventsAddedToDay = new Set<string>(['1']);
 
     const positionedEvent = {
       ...testUtils.createEvent({ id: 1, start: '2025-01-15 10:00:00', end: '2025-01-15 12:00:00' }),

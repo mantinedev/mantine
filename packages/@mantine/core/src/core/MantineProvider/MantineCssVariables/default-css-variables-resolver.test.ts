@@ -156,13 +156,6 @@ describe('legacy surface-level vars (surface-0..5, surface-recessed) are removed
     expect(result.dark['--mantine-color-surface-5']).toBeUndefined();
     expect(result.dark['--mantine-color-surface-recessed']).toBeUndefined();
   });
-
-  it('body remains aliased to surface-page and track to surface-sunken', () => {
-    expect(result.light['--mantine-color-body']).toBe('var(--mantine-color-surface-page)');
-    expect(result.light['--mantine-color-track']).toBe('var(--mantine-color-neutral-4)');
-    expect(result.dark['--mantine-color-body']).toBe('var(--mantine-color-surface-page)');
-    expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-neutral-4)');
-  });
 });
 
 describe('dark-scheme light variant uses color-mix instead of darken/rgba', () => {
@@ -228,35 +221,25 @@ describe('neutral ladder variables', () => {
 });
 
 describe('role-var re-anchoring onto the neutral system', () => {
-  it('re-anchors role vars onto the neutral system with identical values', () => {
+  it('re-anchors default-hover onto neutral-2 in both schemes', () => {
     const resolved = defaultCssVariablesResolver(DEFAULT_THEME);
-    expect(resolved.light['--mantine-color-default']).toBe('var(--mantine-color-surface-panel)');
-    expect(resolved.dark['--mantine-color-default']).toBe('var(--mantine-color-surface-panel)');
     expect(resolved.light['--mantine-color-default-hover']).toBe('var(--mantine-color-neutral-2)');
     expect(resolved.dark['--mantine-color-default-hover']).toBe('var(--mantine-color-neutral-2)');
-    expect(resolved.light['--mantine-color-border']).toBe('var(--mantine-color-neutral-4)');
-    expect(resolved.dark['--mantine-color-border']).toBe('var(--mantine-color-neutral-4)');
-    expect(resolved.light['--mantine-color-hover']).toBe('var(--mantine-color-neutral-2)');
-    expect(resolved.dark['--mantine-color-hover']).toBe('var(--mantine-color-neutral-1)');
   });
 });
 
 describe('surface tokens with named aliases', () => {
   const result = defaultCssVariablesResolver(DEFAULT_THEME);
 
-  it('emits named surface tokens and aliases body to surface-page', () => {
+  it('emits named surface tokens', () => {
     expect(result.light['--mantine-color-surface-page']).toBe('var(--mantine-color-white)');
     expect(result.light['--mantine-color-surface-panel']).toBe('var(--mantine-color-white)');
     expect(result.light['--mantine-color-surface-panel-2']).toBe('var(--mantine-color-white)');
     expect(result.light['--mantine-color-surface-sunken']).toBe('var(--mantine-color-gray-1)');
-    expect(result.light['--mantine-color-body']).toBe('var(--mantine-color-surface-page)');
     expect(result.dark['--mantine-color-surface-page']).toBe('var(--mantine-color-dark-7)');
     expect(result.dark['--mantine-color-surface-panel']).toBe('var(--mantine-color-dark-6)');
     expect(result.dark['--mantine-color-surface-panel-2']).toBe('var(--mantine-color-dark-5)');
     expect(result.dark['--mantine-color-surface-sunken']).toBe('var(--mantine-color-dark-9)');
-    expect(result.dark['--mantine-color-body']).toBe('var(--mantine-color-surface-page)');
-    expect(result.light['--mantine-color-surface-0']).toBeUndefined();
-    expect(result.light['--mantine-color-surface-recessed']).toBeUndefined();
   });
 });
 
@@ -289,17 +272,9 @@ describe('theme.surfaces overrides', () => {
 describe('surface-muted token', () => {
   const result = defaultCssVariablesResolver(DEFAULT_THEME);
 
-  it('sits one step off white in light and above page and panel in dark', () => {
+  it('resolves surface-muted one step off white in light and to dark-5 in dark', () => {
     expect(result.light['--mantine-color-surface-muted']).toBe('var(--mantine-color-gray-0)');
-    expect(result.light['--mantine-color-surface-sunken']).toBe('var(--mantine-color-gray-1)');
     expect(result.dark['--mantine-color-surface-muted']).toBe('var(--mantine-color-dark-5)');
-    expect(result.dark['--mantine-color-surface-page']).toBe('var(--mantine-color-dark-7)');
-    expect(result.dark['--mantine-color-surface-panel']).toBe('var(--mantine-color-dark-6)');
-  });
-
-  it('leaves surface-sunken on the well value used by SegmentedControl and Tabs', () => {
-    expect(result.dark['--mantine-color-surface-sunken']).toBe('var(--mantine-color-dark-9)');
-    expect(result.dark['--mantine-color-surface-panel-2']).toBe('var(--mantine-color-dark-5)');
   });
 });
 

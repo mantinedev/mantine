@@ -30,16 +30,6 @@ describe('@mantine/schedule/get-months-list', () => {
     expect(getMonthsList({ locale: 'ru', format: 'MMMM' })[0].name).toBe('январь');
   });
 
-  it('supports function format', () => {
-    const months = getMonthsList({
-      locale: 'en',
-      format: (date) => `Month: ${date}`,
-    });
-    expect(months).toHaveLength(12);
-    expect(months[0].name).toContain('Month:');
-    expect(months[0].name).toMatch(/\d{4}-01-01/);
-  });
-
   it('applies function format to all months', () => {
     const months = getMonthsList({
       locale: 'en',

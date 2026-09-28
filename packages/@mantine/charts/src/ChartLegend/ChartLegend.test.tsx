@@ -142,20 +142,6 @@ describe('@mantine/charts/ChartLegend', () => {
     expect(names[1]).toHaveTextContent('Other');
   });
 
-  it('does not call onHighlight(null) when moving between legend items', () => {
-    const onHighlight = jest.fn();
-    const { container } = render(<ChartLegend {...defaultProps} onHighlight={onHighlight} />);
-    const items = container.querySelectorAll('.mantine-ChartLegend-legendItem');
-
-    fireEvent.mouseOver(items[0]);
-    fireEvent.mouseOut(items[0], { relatedTarget: items[1] });
-    fireEvent.mouseOver(items[1], { relatedTarget: items[0] });
-
-    expect(onHighlight).not.toHaveBeenCalledWith(null);
-    expect(onHighlight).toHaveBeenNthCalledWith(1, 'Apples');
-    expect(onHighlight).toHaveBeenNthCalledWith(2, 'Oranges');
-  });
-
   it('calls onHighlight(null) when the cursor leaves the legend container', () => {
     const onHighlight = jest.fn();
     const { container } = render(

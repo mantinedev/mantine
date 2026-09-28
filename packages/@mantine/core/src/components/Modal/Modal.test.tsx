@@ -92,12 +92,6 @@ describe('@mantine/core/Modal', () => {
       styles.mock.calls.forEach(([, props]) => expect(props.fullScreen).toBe(true));
     });
 
-    it('keeps the modal regular when the viewport is at or above the breakpoint', () => {
-      media = mockMatchMedia(true, { filter: isMinWidthQuery });
-      const { container } = render(<Modal {...defaultProps} fullScreenBelow="sm" />);
-      expect(getRoot(container)).not.toHaveAttribute('data-full-screen');
-    });
-
     it('keeps the modal full screen when fullScreen is set and the viewport is above the breakpoint', () => {
       media = mockMatchMedia(true, { filter: isMinWidthQuery });
       const { container } = render(<Modal {...defaultProps} fullScreen fullScreenBelow="sm" />);
@@ -526,39 +520,11 @@ describe('@mantine/core/ModalStack', () => {
     const { container } = render(<StackDemo />);
     await userEvent.click(screen.getByText('open'));
     const inners = Array.from(container.querySelectorAll<HTMLElement>('.mantine-Modal-inner'));
-    const transformed = inners.filter((el) => el.style.transform && el.style.transform !== 'none');
-    expect(transformed.length).toBeGreaterThan(0);
-  });
-
-  it('does not apply a stack transform when withStackTransform is false', async () => {
-    function NoTransformStackDemo() {
-      const stack = useModalsStack(['a', 'b']);
-      return (
-        <Modal.Stack withStackTransform={false}>
-          <Modal {...stack.register('a')} withinPortal={false}>
-            modal-a
-          </Modal>
-          <Modal {...stack.register('b')} withinPortal={false}>
-            modal-b
-          </Modal>
-          <button
-            type="button"
-            onClick={() => {
-              stack.open('a');
-              stack.open('b');
-            }}
-          >
-            open
-          </button>
-        </Modal.Stack>
-      );
-    }
-
-    const { container } = render(<NoTransformStackDemo />);
-    await userEvent.click(screen.getByText('open'));
-    const inners = Array.from(container.querySelectorAll<HTMLElement>('.mantine-Modal-inner'));
-    const transformed = inners.filter((el) => el.style.transform && el.style.transform !== 'none');
-    expect(transformed.length).toBe(0);
+    expect(inners.map((el) => el.style.transform)).toEqual([
+      'translateY(-18px)',
+      'translateY(-9px)',
+      'translateY(0px)',
+    ]);
   });
 
   it('unmounts all stacked modals on closeAll and supports reopening', async () => {
@@ -582,47 +548,6 @@ describe('@mantine/core/ModalStack', () => {
       expect(screen.getByText('modal-b')).toBeInTheDocument();
       expect(screen.getByText('modal-c')).toBeInTheDocument();
     });
-  });
-
-  it('sizes background cards to the top modal measured size via reportTopRect', async () => {
-    const originalGetBoundingClientRect = HTMLElement.prototype.getBoundingClientRect;
-    HTMLElement.prototype.getBoundingClientRect = function getBoundingClientRect() {
-      return {
-        width: 400,
-        height: 300,
-        top: 0,
-        left: 0,
-        right: 400,
-        bottom: 300,
-        x: 0,
-        y: 0,
-      } as any;
-    };
-
-    try {
-      const { container } = render(<StackDemo />);
-      await userEvent.click(screen.getByText('open'));
-
-      await waitFor(() => {
-        const contents = Array.from(
-          container.querySelectorAll<HTMLElement>('[data-modal-content]')
-        );
-        const sized = contents.filter(
-          (el) => el.style.maxWidth !== '' && el.style.overflow === 'hidden'
-        );
-        expect(sized.length).toBeGreaterThan(0);
-      });
-
-      const contents = Array.from(container.querySelectorAll<HTMLElement>('[data-modal-content]'));
-      const sized = contents.filter((el) => el.style.overflow === 'hidden');
-      sized.forEach((el) => {
-        expect(el.style.maxWidth).not.toBe('');
-        expect(el.style.maxHeight).not.toBe('');
-        expect(el.style.overflow).toBe('hidden');
-      });
-    } finally {
-      HTMLElement.prototype.getBoundingClientRect = originalGetBoundingClientRect;
-    }
   });
 
   it('does not apply transform or inline size when withStackTransform is false', async () => {
@@ -662,8 +587,22 @@ describe('@mantine/core/ModalStack', () => {
   });
 
   it('does not clamp the size of a fullScreen modal while stacked', async () => {
+    const originalGetBoundingClientRect = HTMLElement.prototype.getBoundingClientRect;
+    HTMLElement.prototype.getBoundingClientRect = function getBoundingClientRect() {
+      return {
+        width: 400,
+        height: 300,
+        top: 0,
+        left: 0,
+        right: 400,
+        bottom: 300,
+        x: 0,
+        y: 0,
+      } as any;
+    };
+
     function FullScreenStackDemo() {
-      const stack = useModalsStack(['a', 'b']);
+      const stack = useModalsStack(['a', 'b', 'c']);
       return (
         <Modal.Stack>
           <Modal {...stack.register('a')} fullScreen withinPortal={false}>
@@ -672,11 +611,15 @@ describe('@mantine/core/ModalStack', () => {
           <Modal {...stack.register('b')} withinPortal={false}>
             modal-b
           </Modal>
+          <Modal {...stack.register('c')} withinPortal={false}>
+            modal-c
+          </Modal>
           <button
             type="button"
             onClick={() => {
               stack.open('a');
               stack.open('b');
+              stack.open('c');
             }}
           >
             open
@@ -685,9 +628,23 @@ describe('@mantine/core/ModalStack', () => {
       );
     }
 
-    const { container } = render(<FullScreenStackDemo />);
-    await userEvent.click(screen.getByText('open'));
-    expect(container.querySelector('[data-modal-content][data-full-screen]')).not.toBeNull();
+    try {
+      render(<FullScreenStackDemo />);
+      await userEvent.click(screen.getByText('open'));
+
+      await waitFor(() => {
+        const regular = screen.getByText('modal-b').closest<HTMLElement>('[data-modal-content]')!;
+        expect(regular.style.maxWidth).toBe('386px');
+      });
+
+      const fullScreen = screen.getByText('modal-a').closest<HTMLElement>('[data-modal-content]')!;
+      expect(fullScreen).toHaveAttribute('data-full-screen');
+      expect(fullScreen.style.maxWidth).toBe('');
+      expect(fullScreen.style.maxHeight).toBe('');
+      expect(fullScreen.style.overflow).not.toBe('hidden');
+    } finally {
+      HTMLElement.prototype.getBoundingClientRect = originalGetBoundingClientRect;
+    }
   });
 });
 

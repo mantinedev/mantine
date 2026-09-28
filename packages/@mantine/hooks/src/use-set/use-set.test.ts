@@ -40,6 +40,10 @@ describe('@mantine/hooks/use-set', () => {
     expect(unionResult.has(3)).toBe(true);
     expect(unionResult.has(4)).toBe(true);
     expect(unionResult.size).toBe(4);
+
+    expect(hook.result.current.has(3)).toBe(false);
+    expect(hook.result.current.has(4)).toBe(false);
+    expect(hook.result.current.size).toBe(2);
   });
 
   it('intersects with another set and does not mutate the original set', () => {

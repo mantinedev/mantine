@@ -1,12 +1,12 @@
 import { PropsWithChildren, useEffect } from 'react';
-import { render, renderHook, screen } from '@testing-library/react';
+import { act, render, renderHook, screen } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
 import { ContextModalProps } from '../context';
 import { ModalsProvider } from '../ModalsProvider';
 import { useModals } from './use-modals';
 
 describe('@mantine/modals/use-modals', () => {
-  it('returns context value of ModalsProvider', () => {
+  it('returns modals state and actions of ModalsProvider', () => {
     const wrapper = ({ children }: PropsWithChildren<unknown>) => (
       <MantineProvider>
         <ModalsProvider>{children}</ModalsProvider>
@@ -14,15 +14,20 @@ describe('@mantine/modals/use-modals', () => {
     );
 
     const hook = renderHook(() => useModals(), { wrapper });
-    const { current } = hook.result;
+    expect(hook.result.current.modals).toEqual([]);
 
-    expect(current.closeAll).toBeDefined();
-    expect(current.closeModal).toBeDefined();
-    expect(current.closeContextModal).toBeDefined();
-    expect(current.modals).toBeDefined();
-    expect(current.openConfirmModal).toBeDefined();
-    expect(current.openContextModal).toBeDefined();
-    expect(current.openModal).toBeDefined();
+    act(() => {
+      hook.result.current.openModal({ modalId: 'test-modal', children: 'Modal content' });
+    });
+
+    expect(hook.result.current.modals).toHaveLength(1);
+    expect(hook.result.current.modals[0].id).toBe('test-modal');
+
+    act(() => {
+      hook.result.current.closeAll();
+    });
+
+    expect(hook.result.current.modals).toEqual([]);
   });
 
   it('correctly passes innerProps to a context modal', () => {
@@ -118,8 +123,8 @@ describe('@mantine/modals/use-modals', () => {
       useEffect(() => {
         modals.openConfirmModal({
           labels: {
-            confirm: <span>Confirm</span>,
-            cancel: <span>Cancel</span>,
+            confirm: <span data-testid="confirm-label">Confirm</span>,
+            cancel: <span data-testid="cancel-label">Cancel</span>,
           },
           transitionProps: { duration: 0 },
         });
@@ -130,8 +135,12 @@ describe('@mantine/modals/use-modals', () => {
 
     render(<Component />, { wrapper });
 
-    expect(screen.getByText('Confirm')).toContainHTML('span');
-    expect(screen.getByText('Cancel')).toContainHTML('span');
+    expect(screen.getByRole('button', { name: 'Confirm' })).toContainElement(
+      screen.getByTestId('confirm-label')
+    );
+    expect(screen.getByRole('button', { name: 'Cancel' })).toContainElement(
+      screen.getByTestId('cancel-label')
+    );
   });
 
   it('does not open a duplicate modal when the same modalId is used twice', () => {

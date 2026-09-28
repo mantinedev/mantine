@@ -34,11 +34,6 @@ describe('@mantine/dates/WeekdaysRow', () => {
     expect(screen.queryAllByRole('columnheader')).toHaveLength(0);
   });
 
-  it('has correct default __staticSelector', () => {
-    render(<Wrapper />);
-    expect(screen.getByRole('row')).toHaveClass('mantine-WeekdaysRow-weekdaysRow ');
-  });
-
   it('supports __staticSelector', () => {
     render(<Wrapper __staticSelector="Month" />);
     expect(screen.getByRole('row')).toHaveClass('mantine-Month-weekdaysRow ');

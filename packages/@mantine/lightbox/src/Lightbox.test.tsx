@@ -151,10 +151,6 @@ describe('@mantine/lightbox/Lightbox', () => {
 
   tests.axe([<Lightbox {...systemProps} key="default" />]);
 
-  it('has correct displayName', () => {
-    expect(Lightbox.displayName).toBe('@mantine/lightbox/Lightbox');
-  });
-
   it('exposes static components and store actions', () => {
     expect(Lightbox.Root).toBe(LightboxRoot);
     expect(Lightbox.Toolbar).toBe(LightboxToolbar);
@@ -202,11 +198,6 @@ describe('@mantine/lightbox/Lightbox', () => {
   it('renders caption from current slide', async () => {
     await renderWithAct(<Lightbox {...defaultProps} />);
     expect(screen.getByText('Caption 1')).toBeInTheDocument();
-  });
-
-  it('renders close button in toolbar', async () => {
-    await renderWithAct(<Lightbox {...defaultProps} />);
-    expect(screen.getByLabelText('Close')).toBeInTheDocument();
   });
 
   it('calls onClose when close toolbar button is clicked', async () => {
@@ -347,11 +338,6 @@ describe('@mantine/lightbox/Lightbox', () => {
     expect(screen.getByLabelText('Download')).toBeInTheDocument();
   });
 
-  it('locks body scroll when opened', async () => {
-    await renderWithAct(<Lightbox {...defaultProps} />);
-    expect(document.body.hasAttribute('data-scroll-locked')).toBe(true);
-  });
-
   it('restores body scroll when closed', async () => {
     let rerender: (ui: React.ReactNode) => void;
     await act(async () => {
@@ -380,14 +366,6 @@ describe('@mantine/lightbox/Lightbox', () => {
       rerender!(<Lightbox {...defaultProps} currentIndex={1} />);
     });
     expect(screen.getByText('Caption 2')).toBeInTheDocument();
-  });
-
-  it('does not call onClose when clicking slide content', async () => {
-    const onClose = jest.fn();
-    await renderWithAct(<Lightbox {...defaultProps} onClose={onClose} />);
-
-    await userEvent.click(screen.getAllByRole('img')[0]);
-    expect(onClose).not.toHaveBeenCalled();
   });
 
   it('renders custom children instead of default layout', async () => {

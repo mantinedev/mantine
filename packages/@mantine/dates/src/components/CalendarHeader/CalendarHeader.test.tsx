@@ -94,13 +94,6 @@ describe('@mantine/dates/CalendarHeader', () => {
     expect(container.querySelector('select')).not.toBeInTheDocument();
   });
 
-  it('has correct default __staticSelector', () => {
-    render(<CalendarHeader {...defaultProps} />);
-    expect(screen.getByLabelText('next')).toHaveClass(
-      'mantine-CalendarHeader-calendarHeaderControl'
-    );
-  });
-
   it('supports custom __staticSelector', () => {
     render(<CalendarHeader {...defaultProps} __staticSelector="Calendar" />);
     expect(screen.getByLabelText('next')).toHaveClass('mantine-Calendar-calendarHeaderControl');

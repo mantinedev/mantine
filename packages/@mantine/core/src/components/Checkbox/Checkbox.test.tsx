@@ -29,21 +29,6 @@ describe('@mantine/core/Checkbox', () => {
     ],
   });
 
-  it('renders given label', () => {
-    render(<Checkbox label="test-label" />);
-    expect(screen.getByText('test-label')).toBeInTheDocument();
-  });
-
-  it('renders given description', () => {
-    render(<Checkbox description="test-description" />);
-    expect(screen.getByText('test-description')).toBeInTheDocument();
-  });
-
-  it('renders given error', () => {
-    render(<Checkbox error="test-error" />);
-    expect(screen.getByText('test-error')).toBeInTheDocument();
-  });
-
   it('sets data-checked attribute on the root element if checked prop is true', () => {
     const { container, rerender } = render(<Checkbox checked onChange={() => {}} />);
     expect(container.querySelector('.mantine-Checkbox-root')).toHaveAttribute('data-checked');
@@ -280,7 +265,6 @@ describe('@mantine/core/Checkbox', () => {
     const { container } = render(<Checkbox variant="light" color="grape.7" />);
     const root = container.querySelector('.mantine-Checkbox-root') as HTMLElement;
     const background = root.style.getPropertyValue('--checkbox-bg');
-    expect(background).not.toBe('grape');
     expect(background).toBe(DEFAULT_THEME.colors.grape[7]);
     expect(root.style.getPropertyValue('--checkbox-icon-color')).toBe(
       'var(--mantine-color-grape-light-color)'

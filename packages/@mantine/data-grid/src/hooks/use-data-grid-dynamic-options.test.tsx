@@ -71,10 +71,8 @@ describe('@mantine/data-grid/use-data-grid features enabled after mount', () => 
     expect(names(hook)).toEqual(['Bob']);
   });
 
-  it('does not paginate, sort or group when the features are off', () => {
+  it('does not paginate by default', () => {
     const hook = renderGrid({
-      withSorting: false,
-      sorting: [{ id: 'age', desc: true }],
       data: Array.from({ length: 25 }, (_, index) => ({
         name: `n${index}`,
         age: index,
@@ -82,7 +80,6 @@ describe('@mantine/data-grid/use-data-grid features enabled after mount', () => 
       })),
     });
     expect(names(hook)).toHaveLength(25);
-    expect(names(hook)[0]).toBe('n0');
   });
 });
 

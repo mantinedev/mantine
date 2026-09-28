@@ -285,14 +285,6 @@ describe('@mantine/core/Rating', () => {
     expect(result).toBe('4');
   });
 
-  it('does not change value when readOnly and clicked', async () => {
-    const spy = jest.fn();
-    render(<Rating readOnly value={3} onChange={spy} />);
-
-    const labels = screen.queryAllByRole('radio', { hidden: true });
-    expect(labels).toHaveLength(0);
-  });
-
   it('does not render inputs when readOnly', () => {
     render(<Rating readOnly value={3} />);
     const inputs = screen.queryAllByRole('radio');
@@ -306,9 +298,17 @@ describe('@mantine/core/Rating', () => {
 
   it('renders custom fullSymbol as ReactNode', () => {
     const { container } = render(
-      <Rating fullSymbol={<span data-testid="full">F</span>} value={3} />
+      <Rating
+        fullSymbol={<span data-testid="full">F</span>}
+        emptySymbol={<span data-testid="empty">E</span>}
+        value={3}
+      />
     );
-    expect(container.querySelectorAll('[data-testid="full"]').length).toBeGreaterThanOrEqual(3);
+    const groups = container.querySelectorAll('.mantine-Rating-symbolGroup');
+    expect(groups[2].querySelector('[data-testid="full"]')).toBeInTheDocument();
+    expect(groups[2].querySelector('[data-testid="empty"]')).not.toBeInTheDocument();
+    expect(groups[3].querySelector('[data-testid="empty"]')).toBeInTheDocument();
+    expect(groups[3].querySelector('[data-testid="full"]')).not.toBeInTheDocument();
   });
 
   it('calls symbol function with correct value', () => {
@@ -317,18 +317,32 @@ describe('@mantine/core/Rating', () => {
 
     render(<Rating emptySymbol={emptySymbolFn} fullSymbol={fullSymbolFn} value={2} />);
 
-    expect(emptySymbolFn).toHaveBeenCalled();
-    expect(fullSymbolFn).toHaveBeenCalled();
+    [1, 2, 3, 4, 5].forEach((value) => {
+      expect(fullSymbolFn).toHaveBeenCalledWith(value);
+      expect(emptySymbolFn).toHaveBeenCalledWith(value);
+    });
+
+    expect(screen.getByText('Full-1')).toBeInTheDocument();
+    expect(screen.getByText('Full-2')).toBeInTheDocument();
+    expect(screen.getByText('Empty-3')).toBeInTheDocument();
+    expect(screen.getByText('Empty-4')).toBeInTheDocument();
+    expect(screen.getByText('Empty-5')).toBeInTheDocument();
   });
 
-  it('calls onHover with correct value on mouse enter', async () => {
+  it('calls onHover with hovered value on mouse move', () => {
     const spy = jest.fn();
     const { container } = render(<Rating onHover={spy} />);
 
-    const root = container.querySelector('[class*="root"]')!;
-    await userEvent.hover(root);
+    const root = container.querySelector<HTMLElement>('[class*="root"]')!;
+    jest
+      .spyOn(root, 'getBoundingClientRect')
+      .mockReturnValue({ left: 0, right: 100, width: 100 } as DOMRect);
 
-    expect(spy).toHaveBeenCalled();
+    fireEvent.mouseMove(root, { clientX: 50 });
+    expect(spy).toHaveBeenLastCalledWith(3);
+
+    fireEvent.mouseMove(root, { clientX: 5 });
+    expect(spy).toHaveBeenLastCalledWith(1);
   });
 
   it('calls onHover with -1 on mouse leave', async () => {

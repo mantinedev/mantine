@@ -24,13 +24,6 @@ describe('@mantine/core/Cascader/getCascaderColumns', () => {
     expect(columns[1].map((option) => option.value)).toStrictEqual(['jp']);
   });
 
-  it('does not expand the deepest highlighted option', () => {
-    // 'asia' is the deepest highlight – its children column is not shown until it is expanded
-    const columns = getCascaderColumns(data, ['asia']);
-    expect(columns).toHaveLength(1);
-    expect(columns[0].map((option) => option.value)).toStrictEqual(['asia', 'europe']);
-  });
-
   it('detects whether an option has children', () => {
     expect(cascaderOptionHasChildren({ value: 'x' })).toBe(false);
     expect(cascaderOptionHasChildren({ value: 'x', children: [] })).toBe(false);

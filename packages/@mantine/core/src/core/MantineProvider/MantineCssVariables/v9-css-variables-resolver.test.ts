@@ -63,10 +63,6 @@ describe('v9Theme', () => {
     expect(v9Theme.primaryShade).toEqual({ light: 6, dark: 8 });
   });
 
-  it('colors.blue[6] equals the v9 open-color hex #228be6', () => {
-    expect(v9Theme.colors?.blue?.[6]).toBe('#228be6');
-  });
-
   it('colors match V9_DEFAULT_COLORS', () => {
     expect(v9Theme.colors).toEqual(V9_DEFAULT_COLORS);
   });

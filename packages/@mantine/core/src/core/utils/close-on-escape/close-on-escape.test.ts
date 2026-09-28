@@ -18,13 +18,13 @@ describe('@mantine/core/close-on-escape', () => {
 
   it('does not call callback if button that is pressed is not escape', () => {
     const spy = jest.fn();
-    closeOnEscape(spy, { active: false })({ key: 'ArrowRight', code: 'ArrowRight' } as any);
+    closeOnEscape(spy, { active: true })({ key: 'ArrowRight', code: 'ArrowRight' } as any);
     expect(spy).toHaveBeenCalledTimes(0);
   });
 
   it('does not throw if callback is not a function', () => {
-    expect(() => closeOnEscape(undefined, { active: false })(mockEvent)).not.toThrow();
-    expect(() => closeOnEscape(null!, { active: false })(mockEvent)).not.toThrow();
+    expect(() => closeOnEscape(undefined, { active: true })(mockEvent)).not.toThrow();
+    expect(() => closeOnEscape(null!, { active: true })(mockEvent)).not.toThrow();
   });
 
   it('calls given trigger when callback triggers', () => {

@@ -86,12 +86,6 @@ describe('@mantine/data-grid/row-focus-model', () => {
       expect(container.querySelector('tr[data-group-row][data-selected]')).not.toBeInTheDocument();
       expect(container.querySelectorAll('tr[data-selected]').length).toBeGreaterThan(0);
     });
-
-    it('defaults the selected fill to the theme selected color', () => {
-      const { container } = render(<Grid />);
-      const root = container.querySelector('.mantine-DataGrid-root') as HTMLElement;
-      expect(root.style.getPropertyValue('--dg-selected-color')).toBe('');
-    });
   });
 
   describe('row focus model', () => {

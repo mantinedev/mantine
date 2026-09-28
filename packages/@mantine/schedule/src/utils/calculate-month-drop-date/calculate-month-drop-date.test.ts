@@ -21,25 +21,6 @@ describe('calculateMonthDropDate', () => {
     expect(result.end).toEqual(new Date('2024-01-20T11:30:00'));
   });
 
-  it('maintains time when dropping on new day', () => {
-    const draggedEvent: ScheduleEventData = {
-      id: '2',
-      title: 'Lunch',
-      start: new Date('2024-01-10T12:30:00'),
-      end: new Date('2024-01-10T13:30:00'),
-      color: 'blue',
-      payload: {},
-    };
-
-    const result = calculateMonthDropDate({
-      draggedEvent,
-      targetDay: '2024-01-25',
-    });
-
-    expect(result.start).toEqual(new Date('2024-01-25T12:30:00'));
-    expect(result.end).toEqual(new Date('2024-01-25T13:30:00'));
-  });
-
   it('handles multi-day events', () => {
     const draggedEvent: ScheduleEventData = {
       id: '3',

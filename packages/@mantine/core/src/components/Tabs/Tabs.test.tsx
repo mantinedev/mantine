@@ -208,11 +208,6 @@ describe('@mantine/core/Tabs', () => {
     expectActiveTab(null);
   });
 
-  it('allows to set root element id', () => {
-    const view = render(<Tabs {...defaultProps} defaultValue="tab-1" id="test-id" />);
-    expect(view.container.querySelector('#test-id')).toBeInTheDocument();
-  });
-
   it('handles tab key correctly (with selected tab)', async () => {
     render(<Tabs {...defaultProps} defaultValue="tab-2" />);
     expect(document.body).toHaveFocus();

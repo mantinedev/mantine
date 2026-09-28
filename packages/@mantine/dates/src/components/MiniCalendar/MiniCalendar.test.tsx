@@ -91,16 +91,6 @@ describe('@mantine/dates/MiniCalendar', () => {
     expect(screen.getByLabelText('previous')).toBeDisabled();
   });
 
-  it('supports numberOfDays', () => {
-    const { container, rerender } = render(
-      <MiniCalendar {...defaultProps} date="2025-01-01" numberOfDays={7} />
-    );
-    expect(container.querySelectorAll('.mantine-MiniCalendar-day')).toHaveLength(7);
-
-    rerender(<MiniCalendar {...defaultProps} date="2025-01-01" numberOfDays={3} />);
-    expect(container.querySelectorAll('.mantine-MiniCalendar-day')).toHaveLength(3);
-  });
-
   it('supports monthLabelFormat', () => {
     const { rerender } = render(
       <MiniCalendar {...defaultProps} date="2025-01-01" monthLabelFormat="MMM" numberOfDays={1} />

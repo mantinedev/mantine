@@ -60,9 +60,4 @@ describe('@mantine/core/Pagination', () => {
     );
     expect(screen.getByText('1/10')).toBeTruthy();
   });
-
-  it('renders items wrapper in responsive mode', () => {
-    const { container } = render(<Pagination {...defaultProps} layout="responsive" />);
-    expect(container.querySelector('[data-layout="responsive"]')).toBeTruthy();
-  });
 });

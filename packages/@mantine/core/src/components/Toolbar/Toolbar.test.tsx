@@ -45,11 +45,6 @@ describe('@mantine/core/Toolbar', () => {
     selector: '.mantine-Toolbar-root',
   });
 
-  it('renders with role="toolbar"', () => {
-    render(<Toolbar {...defaultProps} />);
-    expect(screen.getByRole('toolbar')).toBeInTheDocument();
-  });
-
   it('sets aria-orientation to horizontal by default', () => {
     render(<Toolbar {...defaultProps} />);
     expect(screen.getByRole('toolbar')).toHaveAttribute('aria-orientation', 'horizontal');

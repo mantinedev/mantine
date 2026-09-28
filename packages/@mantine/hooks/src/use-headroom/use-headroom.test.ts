@@ -160,9 +160,9 @@ describe('@mantine/hooks/use-headroom', () => {
 
     it('clamps scrollProgress to 1 when scrolled far up', () => {
       const { result } = renderHook(() => useHeadroom({ fixedAt: 0, scrollDistance: 100 }));
-      simulateScroll(200);
-      simulateScroll(100);
-      simulateScroll(0);
+      simulateScroll(500);
+      simulateScroll(450);
+      simulateScroll(50);
       expect(result.current.scrollProgress).toBe(1);
     });
 

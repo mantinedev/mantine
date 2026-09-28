@@ -168,13 +168,6 @@ describe('@mantine/core/RollingNumber', () => {
     expect(charTexts).toContain('-');
   });
 
-  it('right-aligns integer digits for stable transitions', () => {
-    const { container } = render(<RollingNumber value={99} />);
-    const digitsBefore = container.querySelectorAll('.mantine-RollingNumber-digit');
-    expect(digitsBefore).toHaveLength(2);
-    expect(Array.from(digitsBefore).every((d) => !d.hasAttribute('data-empty'))).toBe(true);
-  });
-
   it('marks leading digit as empty on the first render after shrinking (1000 → 999)', () => {
     const { container, rerender } = render(<RollingNumber value={999} />);
     rerender(<RollingNumber value={1000} />);

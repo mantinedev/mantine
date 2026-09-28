@@ -27,18 +27,6 @@ describe('@mantine/core/RingProgress', () => {
     });
   });
 
-  it('handles sections summing to > 100', () => {
-    const { container } = render(
-      <RingProgress
-        sections={[
-          { value: 60, color: 'blue' },
-          { value: 60, color: 'red' },
-        ]}
-      />
-    );
-    expect(container.querySelectorAll('circle').length).toBeGreaterThanOrEqual(3);
-  });
-
   it('forwards section event handlers', async () => {
     const handleClick = jest.fn();
     const { container } = render(

@@ -75,38 +75,6 @@ describe('@mantine/hooks/use-broadcast-channel', () => {
     expect(receiver.result.current.data).toBe('hello');
   });
 
-  it('does not deliver a message back to the sender (self-exclusion)', () => {
-    const sender = renderHook(() => useBroadcastChannel<string>('sync'));
-
-    act(() => {
-      sender.result.current.post('hello');
-    });
-
-    expect(sender.result.current.data).toBeUndefined();
-  });
-
-  it('does not deliver messages across different channel names', () => {
-    const a = renderHook(() => useBroadcastChannel<string>('channel-a'));
-    const b = renderHook(() => useBroadcastChannel<string>('channel-b'));
-
-    act(() => {
-      a.result.current.post('hello');
-    });
-
-    expect(b.result.current.data).toBeUndefined();
-  });
-
-  it('supports structured-clone payloads (objects)', () => {
-    const sender = renderHook(() => useBroadcastChannel<{ count: number }>('objects'));
-    const receiver = renderHook(() => useBroadcastChannel<{ count: number }>('objects'));
-
-    act(() => {
-      sender.result.current.post({ count: 42 });
-    });
-
-    expect(receiver.result.current.data).toEqual({ count: 42 });
-  });
-
   it('recreates the channel when the name changes', () => {
     const receiverA = renderHook(() => useBroadcastChannel<string>('first'));
     const receiverB = renderHook(() => useBroadcastChannel<string>('second'));

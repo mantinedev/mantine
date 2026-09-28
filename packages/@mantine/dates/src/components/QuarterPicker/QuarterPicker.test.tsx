@@ -312,11 +312,6 @@ describe('@mantine/dates/QuarterPicker', () => {
     expect(container.querySelector('[data-selected]')!.textContent).toBe('2024');
   });
 
-  it('has correct default __staticSelector', () => {
-    const { container } = render(<QuarterPicker {...defaultProps} />);
-    expect(container.querySelector('.mantine-QuarterPicker-quartersList')).toBeInTheDocument();
-  });
-
   it('supports custom __staticSelector', () => {
     const { container } = render(
       <QuarterPicker {...defaultProps} __staticSelector="QuarterPickerInput" />

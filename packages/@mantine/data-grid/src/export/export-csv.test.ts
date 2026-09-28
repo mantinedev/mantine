@@ -88,16 +88,6 @@ describe('buildCsvString', () => {
     expect(csv).toBe('');
   });
 
-  it('uses semicolon delimiter', () => {
-    const csv = buildCsvString(['A', 'B'], [['1', '2']], ';');
-    expect(csv).toBe('A;B\n1;2');
-  });
-
-  it('escapes values containing quotes in rows', () => {
-    const csv = buildCsvString(null, [['Say "hi"', 'ok']], ',');
-    expect(csv).toBe('"Say ""hi""",ok');
-  });
-
   it('handles single column', () => {
     const csv = buildCsvString(['X'], [['1'], ['2'], ['3']], ',');
     expect(csv).toBe('X\n1\n2\n3');

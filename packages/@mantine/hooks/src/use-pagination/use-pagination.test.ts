@@ -33,12 +33,13 @@ describe('@mantine/hooks/use-pagination', () => {
 
   it('returns active page and range from getters', () => {
     const hook = renderHook(() => usePagination({ total: 10, initialPage: 3 }));
-    expect(hook.result.current.getActive()).toBe(3);
-    expect(hook.result.current.getRange()).toEqual(hook.result.current.range);
+    const { getActive, getRange } = hook.result.current;
+    expect(getActive()).toBe(3);
+    expect(getRange()).toEqual([1, 2, 3, 4, 5, 'dots', 10]);
 
     act(() => hook.result.current.setPage(7));
-    expect(hook.result.current.getActive()).toBe(7);
-    expect(hook.result.current.getRange()).toEqual(hook.result.current.range);
+    expect(getActive()).toBe(7);
+    expect(getRange()).toEqual([1, 'dots', 6, 7, 8, 'dots', 10]);
   });
 
   it('setPage function sets active page', () => {
@@ -148,11 +149,6 @@ describe('@mantine/hooks/use-pagination', () => {
 
     act(() => result.current.setPage(20));
     expect(result.current.active).toBe(15);
-  });
-
-  it('returns total', () => {
-    const { result } = renderHook(() => usePagination({ total: 10 }));
-    expect(result.current.total).toBe(10);
   });
 
   it('next and previous use the current page after the state changes', () => {

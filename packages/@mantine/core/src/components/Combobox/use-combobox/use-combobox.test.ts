@@ -50,16 +50,10 @@ describe('@mantine/core/Combobox/use-combobox', () => {
 
   it('returns current state from getters', () => {
     const hook = renderHook(() => useCombobox());
-    const initial = hook.result.current;
-    expect(initial.isDropdownOpened()).toBe(false);
-    expect(initial.getListId()).toBe(null);
+    expect(hook.result.current.isDropdownOpened()).toBe(false);
 
     act(() => hook.result.current.openDropdown());
-    act(() => hook.result.current.setListId('test-list'));
     expect(hook.result.current.isDropdownOpened()).toBe(true);
-    expect(hook.result.current.getListId()).toBe('test-list');
-    expect(hook.result.current.isDropdownOpened).toBe(initial.isDropdownOpened);
-    expect(hook.result.current.getListId).toBe(initial.getListId);
   });
 
   it('supports uncontrolled opened state', () => {

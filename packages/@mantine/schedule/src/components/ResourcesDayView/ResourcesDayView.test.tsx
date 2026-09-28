@@ -62,8 +62,23 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     ];
 
     render(<ResourcesDayView {...defaultProps} events={events} />);
-    expect(screen.getByText('Event in Room A')).toBeInTheDocument();
-    expect(screen.getByText('Event in Room B')).toBeInTheDocument();
+
+    const getEventWrapper = (title: string) =>
+      screen
+        .getByText(title)
+        .closest('.mantine-ResourcesDayView-resourcesDayViewEventWrapper') as HTMLElement;
+    const getRowLabel = (element: HTMLElement) =>
+      element
+        .closest('.mantine-ResourcesDayView-resourcesDayViewRow')!
+        .querySelector('.mantine-ResourcesDayView-resourcesDayViewResourceLabel');
+
+    const eventA = getEventWrapper('Event in Room A');
+    const eventB = getEventWrapper('Event in Room B');
+
+    expect(getRowLabel(eventA)).toHaveTextContent('Room A');
+    expect(getRowLabel(eventB)).toHaveTextContent('Room B');
+    expect(parseFloat(eventA.style.left)).toBeCloseTo(25, 2);
+    expect(parseFloat(eventB.style.left)).toBeCloseTo(50, 2);
   });
 
   it('renders all-day events as full-width bars', () => {
@@ -84,14 +99,6 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     expect(
       container.querySelector('.mantine-ResourcesDayView-resourcesDayViewAllDayEvent')
     ).not.toBe(null);
-  });
-
-  it('renders with mode="static" (slots not interactive)', () => {
-    const { container } = render(<ResourcesDayView {...defaultProps} mode="static" />);
-    const slots = container.querySelectorAll('.mantine-ResourcesDayView-resourcesDayViewRowSlot');
-    slots.forEach((slot) => {
-      expect(slot).toHaveAttribute('tabIndex', '-1');
-    });
   });
 
   it('renders header with date navigation', () => {
@@ -232,7 +239,7 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     expect(screen.getByText('январь 15, 2025')).toBeInTheDocument();
   });
 
-  it('withCurrentTimeIndicator=true on a non-today date shows indicator', () => {
+  it('withCurrentTimeIndicator=true on today shows indicator', () => {
     jest.useFakeTimers().setSystemTime(new Date('2025-01-15T10:30:00'));
 
     const { container } = render(<ResourcesDayView {...defaultProps} withCurrentTimeIndicator />);
@@ -676,6 +683,7 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     const allSlots = container.querySelectorAll(
       '.mantine-ResourcesDayView-resourcesDayViewRowSlot'
     );
+    expect(allSlots).toHaveLength(4 * 2);
     allSlots.forEach((s) => {
       expect(s).toHaveAttribute('tabIndex', '-1');
     });
@@ -729,17 +737,6 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       expect(screen.getByText('Event 2')).toBeInTheDocument();
       expect(screen.queryByText('Event 3')).not.toBeInTheDocument();
       expect(screen.getByRole('button', { name: /\+1 more/ })).toBeInTheDocument();
-    });
-
-    it('limits visible events and shows "+more" button', () => {
-      render(
-        <ResourcesDayView {...defaultProps} events={overlappingEvents} maxEventsPerTimeSlot={2} />
-      );
-
-      expect(screen.getByText('Event 1')).toBeInTheDocument();
-      expect(screen.getByText('Event 2')).toBeInTheDocument();
-      expect(screen.queryByText('Event 3')).not.toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /more/ })).toBeInTheDocument();
     });
 
     it('shows correct hidden events count in "+more" button', () => {
@@ -967,8 +964,8 @@ describe('@mantine/schedule/ResourcesDayView', () => {
 
   it('reorders resources to match group definition order', () => {
     const reorderedResources = [
-      { id: 'room-b', label: 'Room B' },
       { id: 'room-a', label: 'Room A' },
+      { id: 'room-b', label: 'Room B' },
     ];
     const groups = [
       { label: 'Group B', resourceIds: ['room-b'] },

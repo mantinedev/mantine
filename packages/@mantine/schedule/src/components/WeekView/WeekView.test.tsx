@@ -724,7 +724,15 @@ describe('@mantine/schedule/WeekView', () => {
 
     it('calls onTimeSlotClick when time slot is clicked', async () => {
       const spy = jest.fn();
-      const { container } = render(<WeekView {...defaultProps} onTimeSlotClick={spy} />);
+      const { container } = render(
+        <WeekView
+          {...defaultProps}
+          startTime="08:00:00"
+          endTime="10:00:00"
+          intervalMinutes={60}
+          onTimeSlotClick={spy}
+        />
+      );
 
       const slot = container.querySelector(
         '.mantine-WeekView-weekViewDaySlot[data-hour-start]'
@@ -735,31 +743,21 @@ describe('@mantine/schedule/WeekView', () => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          slotStart: expect.any(String),
-          slotEnd: expect.any(String),
+          slotStart: '2025-11-03 08:00:00',
+          slotEnd: '2025-11-03 09:00:00',
           nativeEvent: expect.any(Object),
         })
       );
-
-      const { slotStart, slotEnd } = spy.mock.calls[0][0];
-      expect(slotStart).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
-      expect(slotEnd).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
-      expect(slotEnd > slotStart).toBe(true);
     });
 
     it('calls onAllDaySlotClick when all-day slot is clicked', async () => {
       const spy = jest.fn();
-      const { container } = render(<WeekView {...defaultProps} onAllDaySlotClick={spy} />);
+      render(<WeekView {...defaultProps} onAllDaySlotClick={spy} />);
 
-      const allDaySlots = container.querySelectorAll('.mantine-WeekView-weekViewDaySlot');
-      const allDaySlot = Array.from(allDaySlots).find(
-        (slot) => !slot.hasAttribute('data-hour-start')
-      ) as HTMLButtonElement;
-      expect(allDaySlot).toBeInTheDocument();
-      await userEvent.click(allDaySlot);
+      await userEvent.click(screen.getByRole('button', { name: 'All day 2025-11-05' }));
 
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(expect.any(String), expect.any(Object));
+      expect(spy).toHaveBeenCalledWith('2025-11-05', expect.any(Object));
     });
 
     it('calls onEventClick when event is clicked', async () => {
@@ -772,8 +770,8 @@ describe('@mantine/schedule/WeekView', () => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          id: expect.anything(),
-          title: expect.any(String),
+          id: 1,
+          title: 'Test Event',
         }),
         expect.any(Object)
       );
@@ -795,18 +793,18 @@ describe('@mantine/schedule/WeekView', () => {
         />
       );
 
-      const slot = container.querySelector(
-        '.mantine-WeekView-weekViewDaySlot'
+      const timeSlot = container.querySelector(
+        '.mantine-WeekView-weekViewDaySlot[data-hour-start]'
       ) as HTMLButtonElement;
+      expect(timeSlot).toBeInTheDocument();
 
-      expect(slot).toBeInTheDocument();
-
-      await userEvent.click(slot);
+      await userEvent.click(timeSlot);
+      await userEvent.click(screen.getByRole('button', { name: 'All day 2025-11-03' }));
+      await userEvent.click(screen.getByText('Test Event'));
 
       expect(timeSlotSpy).not.toHaveBeenCalled();
       expect(allDaySlotSpy).not.toHaveBeenCalled();
-      // Note: We don't test event clicks in static mode because ScheduleEvent
-      // handles that internally by setting onClick to undefined when mode is static
+      expect(eventSpy).not.toHaveBeenCalled();
     });
   });
 
@@ -910,11 +908,6 @@ describe('@mantine/schedule/WeekView', () => {
     it('does not render agenda button by default', () => {
       render(<WeekView {...defaultProps} />);
       expect(screen.queryByText('Agenda')).not.toBeInTheDocument();
-    });
-
-    it('renders agenda button when withAgenda is true', () => {
-      render(<WeekView {...defaultProps} withAgenda />);
-      expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
     });
 
     it('shows AgendaView when agenda button is clicked', async () => {

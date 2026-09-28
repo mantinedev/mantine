@@ -1,8 +1,52 @@
 import { useRef } from 'react';
-import { render, renderHook, screen } from '@testing-library/react';
+import { act, render, renderHook, screen } from '@testing-library/react';
 import { useScrollSpy } from './use-scroll-spy';
 
+function createHeadings(positions: number[]) {
+  const container = document.createElement('div');
+  const headings = positions.map((_, index) => {
+    const heading = document.createElement('h2');
+    heading.textContent = `Heading ${index}`;
+    heading.getBoundingClientRect = () => ({ y: positions[index] }) as DOMRect;
+    container.appendChild(heading);
+    return heading;
+  });
+  document.body.appendChild(container);
+  return { container, headings };
+}
+
 describe('@mantine/hooks/use-scroll-spy', () => {
+  it('sets the heading closest to the top as active and updates it on scroll', () => {
+    const positions = [0, 400, 800];
+    const { container } = createHeadings(positions);
+
+    const { result } = renderHook(() => useScrollSpy({ selector: 'h2' }));
+    expect(result.current.active).toBe(0);
+
+    positions.splice(0, 3, -400, 20, 420);
+    act(() => {
+      window.dispatchEvent(new Event('scroll'));
+    });
+    expect(result.current.active).toBe(1);
+
+    positions.splice(0, 3, -800, -380, 10);
+    act(() => {
+      window.dispatchEvent(new Event('scroll'));
+    });
+    expect(result.current.active).toBe(2);
+
+    document.body.removeChild(container);
+  });
+
+  it('uses offset to determine the active heading', () => {
+    const { container } = createHeadings([0, 400, 800]);
+
+    const { result } = renderHook(() => useScrollSpy({ selector: 'h2', offset: 380 }));
+    expect(result.current.active).toBe(1);
+
+    document.body.removeChild(container);
+  });
+
   it('attaches the scroll listener to window by default', () => {
     const addSpy = jest.spyOn(window, 'addEventListener');
     const { unmount } = renderHook(() => useScrollSpy());

@@ -214,13 +214,6 @@ describe('@mantine/data-grid/DataGridHeader column resize', () => {
     expect(lastStore!.columnSizing.name).toBeDefined();
   });
 
-  it('autosizes the column on handle double-click', () => {
-    const { container } = render(<Grid />);
-    expect(lastStore!.columnSizing.name).toBeUndefined();
-    fireEvent.doubleClick(container.querySelector(HANDLE)!);
-    expect(lastStore!.columnSizing.name).toBeDefined();
-  });
-
   it('autosizes to the measured content width instead of the current cell width', () => {
     const spy = jest
       .spyOn(HTMLElement.prototype, 'getBoundingClientRect')

@@ -26,14 +26,6 @@ describe('@mantine/hooks/use-timeout', () => {
     jest.useRealTimers();
   });
 
-  it('initialize', () => {
-    const hook = renderHook(() => useTimeout(callback, defaultTimeout, { autoInvoke: false }));
-    const { start, clear } = hook.result.current;
-
-    expect(typeof start).toBe('function');
-    expect(typeof clear).toBe('function');
-  });
-
   it('callback should NOT fire before calling start function, if autoInvoke is false', () => {
     const { timeout, advanceTimerToNextTick } = setupTimer();
     renderHook(() => useTimeout(callback, timeout, { autoInvoke: false }));
@@ -115,5 +107,24 @@ describe('@mantine/hooks/use-timeout', () => {
 
     expect(setTimeout).toHaveBeenCalled();
     expect(callback).toHaveBeenCalledWith(MOCK_CALLBACK_VALUE);
+  });
+
+  it('calls the latest callback when it changes after start', () => {
+    const { timeout, advanceTimerToNextTick } = setupTimer(10);
+    const first = jest.fn();
+    const second = jest.fn();
+    const hook = renderHook(({ cb }) => useTimeout(cb, timeout), {
+      initialProps: { cb: first },
+    });
+
+    act(() => {
+      hook.result.current.start();
+    });
+
+    hook.rerender({ cb: second });
+    advanceTimerToNextTick();
+
+    expect(first).not.toHaveBeenCalled();
+    expect(second).toHaveBeenCalledTimes(1);
   });
 });

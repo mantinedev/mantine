@@ -50,13 +50,6 @@ const status = (container: HTMLElement) =>
   container.querySelector('.mantine-DataGrid-footerStatus')?.textContent;
 
 describe('@mantine/data-grid/DataGridFooter', () => {
-  it('renders the tfoot inside the table and removes Pagination and StatusBar statics', () => {
-    expect((DataGrid as any).Pagination).toBeUndefined();
-    expect((DataGrid as any).StatusBar).toBeUndefined();
-    const { container } = render(<Grid />);
-    expect(container.querySelector('tfoot')).toBeInTheDocument();
-  });
-
   it('renders as a direct child of the root after the table with data attributes', () => {
     const { container } = render(<Grid storeOptions={{ pageSize: 5 }} />);
     const root = container.querySelector('.mantine-DataGrid-root')!;
@@ -130,14 +123,6 @@ describe('@mantine/data-grid/DataGridFooter', () => {
       expect(status(container)).toBe('15 rows · 1 selected');
       act(() => lastStore!.table.setRowSelection({ '1': false } as any));
       expect(status(container)).toBe('15 rows');
-    });
-
-    it('renders the row count with the selected count in the long format without pagination', () => {
-      const { container } = render(
-        <Grid storeOptions={{ withRowSelection: true }} footerProps={{ statusFormat: 'long' }} />
-      );
-      act(() => lastStore!.table.setRowSelection({ '1': true }));
-      expect(status(container)).toBe('15 rows · 1 selected');
     });
 
     it('falls back to the page label under manualPagination without rowCount', () => {

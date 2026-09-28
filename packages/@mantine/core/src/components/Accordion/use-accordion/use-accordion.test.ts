@@ -194,17 +194,6 @@ describe('@mantine/core/Accordion/use-accordion', () => {
     expect(hook.result.current.getItems()).toStrictEqual(['item-2']);
   });
 
-  it('keeps action identity stable across state changes', () => {
-    const hook = renderHook(() => useAccordion({ multiple: true }));
-    const { toggle, expandAll, isExpanded } = hook.result.current;
-
-    act(() => hook.result.current.toggle('item-1'));
-
-    expect(hook.result.current.toggle).toBe(toggle);
-    expect(hook.result.current.expandAll).toBe(expandAll);
-    expect(hook.result.current.isExpanded).toBe(isExpanded);
-  });
-
   it('composes multiple actions called synchronously in one event', () => {
     const hook = renderHook(() => useAccordion({ multiple: true }));
 

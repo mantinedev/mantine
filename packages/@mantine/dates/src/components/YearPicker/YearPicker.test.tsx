@@ -127,11 +127,6 @@ describe('@mantine/dates/YearPicker', () => {
     expect(spy).toHaveBeenCalledWith([null, null]);
   });
 
-  it('has correct default __staticSelector', () => {
-    const { container } = render(<YearPicker />);
-    expect(container.querySelector('.mantine-YearPicker-yearsList')).toBeInTheDocument();
-  });
-
   it('supports custom __staticSelector', () => {
     const { container } = render(<YearPicker __staticSelector="Calendar" />);
     expect(container.querySelector('.mantine-Calendar-yearsList')).toBeInTheDocument();
@@ -180,9 +175,9 @@ describe('@mantine/dates/YearPicker', () => {
     expect(document.body).toHaveFocus();
   });
 
-  it('correctly handles presets', () => {
+  it('correctly handles presets', async () => {
     const spy = jest.fn();
-    render(
+    const { container } = render(
       <YearPicker
         onChange={spy}
         presets={[
@@ -193,7 +188,9 @@ describe('@mantine/dates/YearPicker', () => {
     );
 
     expect(screen.getByText('This year')).toBeInTheDocument();
-    expect(screen.getByText('Next year')).toBeInTheDocument();
+    await userEvent.click(screen.getByText('Next year'));
+    expect(spy).toHaveBeenCalledWith('2023-01-01');
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('2023');
   });
 
   it('only adds first non-disabled year of decade to tab order', async () => {

@@ -12,9 +12,11 @@ describe('@mantine/schedule/get-weeks-in-range', () => {
       firstDayOfWeek: 1,
     });
 
-    expect(result.weeks.length).toBeGreaterThan(0);
-    expect(result.weeks[0].length).toBe(7);
-    expect(Object.keys(result.groupedByDay).length).toBeGreaterThan(0);
+    expect(result.weeks).toHaveLength(5);
+    expect(result.weeks[0]).toHaveLength(7);
+    expect(result.weeks[0][0]).toBe('2024-12-30 00:00:00');
+    expect(result.weeks[4][6]).toBe('2025-02-02 00:00:00');
+    expect(Object.keys(result.groupedByDay)).toHaveLength(35);
   });
 
   it('returns weeks for a given range with Sunday as first day', () => {
@@ -27,8 +29,10 @@ describe('@mantine/schedule/get-weeks-in-range', () => {
       firstDayOfWeek: 0,
     });
 
-    expect(result.weeks.length).toBeGreaterThan(0);
-    expect(result.weeks[0].length).toBe(7);
+    expect(result.weeks).toHaveLength(5);
+    expect(result.weeks[0]).toHaveLength(7);
+    expect(result.weeks[0][0]).toBe('2024-12-29 00:00:00');
+    expect(result.weeks[4][6]).toBe('2025-02-01 00:00:00');
   });
 
   it('initializes groupedByDay with empty arrays for all dates', () => {
@@ -41,6 +45,7 @@ describe('@mantine/schedule/get-weeks-in-range', () => {
       firstDayOfWeek: 1,
     });
 
+    expect(Object.keys(result.groupedByDay)).toHaveLength(14);
     Object.values(result.groupedByDay).forEach((dayEvents) => {
       expect(Array.isArray(dayEvents)).toBe(true);
       expect(dayEvents.length).toBe(0);
@@ -57,8 +62,7 @@ describe('@mantine/schedule/get-weeks-in-range', () => {
       firstDayOfWeek: 1,
     });
 
-    const firstWeekStart = dayjs(result.weeks[0][0]);
-    expect(firstWeekStart.isBefore(rangeStart) || firstWeekStart.isSame(rangeStart)).toBe(true);
+    expect(result.weeks[0][0]).toBe('2025-01-13 00:00:00');
   });
 
   it('includes padding days after range end', () => {
@@ -71,9 +75,7 @@ describe('@mantine/schedule/get-weeks-in-range', () => {
       firstDayOfWeek: 1,
     });
 
-    const lastWeek = result.weeks[result.weeks.length - 1];
-    const lastWeekEnd = dayjs(lastWeek[6]);
-    expect(lastWeekEnd.isAfter(rangeEnd) || lastWeekEnd.isSame(rangeEnd)).toBe(true);
+    expect(result.weeks[result.weeks.length - 1][6]).toBe('2025-01-26 00:00:00');
   });
 
   it('formats dates as YYYY-MM-DD 00:00:00', () => {

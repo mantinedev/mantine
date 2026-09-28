@@ -216,13 +216,13 @@ describe('@mantine/core/ScrollArea', () => {
     const restoreResizeObserver = mockResizeObserver(observe, unobserve);
 
     try {
-      render(
-        <ScrollArea h={100} offsetScrollbars="present">
+      const { container } = render(
+        <ScrollArea h={100} type="always" offsetScrollbars="present">
           <div style={{ height: 500 }}>Content</div>
         </ScrollArea>
       );
 
-      expect(observe).toHaveBeenCalled();
+      expect(observe).toHaveBeenCalledWith(container.querySelector('[data-scrollarea-viewport]'));
     } finally {
       restoreResizeObserver();
     }
@@ -493,13 +493,13 @@ describe('@mantine/core/ScrollAreaAutosize', () => {
     const restoreResizeObserver = mockResizeObserver(observe, unobserve);
 
     try {
-      render(
-        <ScrollArea.Autosize h={100} onOverflowChange={jest.fn()}>
+      const { container } = render(
+        <ScrollArea.Autosize h={100} type="always" onOverflowChange={jest.fn()}>
           <div style={{ height: 500 }}>Content</div>
         </ScrollArea.Autosize>
       );
 
-      expect(observe).toHaveBeenCalled();
+      expect(observe).toHaveBeenCalledWith(container.querySelector('[data-scrollarea-viewport]'));
     } finally {
       restoreResizeObserver();
     }

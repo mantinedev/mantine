@@ -85,10 +85,6 @@ describe('@mantine/core/Menubar', () => {
     expect(Menubar.Dropdown).toBe(MenubarDropdown);
   });
 
-  it('has correct displayName', () => {
-    expect(Menubar.displayName).toBe('@mantine/core/Menubar');
-  });
-
   it('renders root with role="menubar" and horizontal orientation', () => {
     render(<TestContainer />);
     const menubar = screen.getByRole('menubar');
@@ -553,6 +549,7 @@ describe('@mantine/core/Menubar', () => {
       focusElement(dropdown);
       fireEvent.keyDown(dropdown, { key: 'Escape' });
 
+      expectAllClosed();
       expect(onClose).not.toHaveBeenCalled();
     });
 

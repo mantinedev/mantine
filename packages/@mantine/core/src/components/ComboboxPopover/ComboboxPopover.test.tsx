@@ -65,6 +65,13 @@ describe('@mantine/core/ComboboxPopover', () => {
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.click(screen.getByRole('option', { name: 'test-2' }));
     expect(spy).toHaveBeenCalledWith('test-2');
+
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.getByRole('option', { name: 'test-1' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('option', { name: 'test-2' })).toHaveAttribute(
+      'aria-selected',
+      'false'
+    );
   });
 
   it('allows deselecting the selected option in single mode', async () => {
@@ -120,6 +127,11 @@ describe('@mantine/core/ComboboxPopover', () => {
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.click(screen.getByRole('option', { name: 'test-2' }));
     expect(spy).toHaveBeenCalledWith(['test-1', 'test-2']);
+    expect(screen.getByRole('option', { name: 'test-1' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('option', { name: 'test-2' })).toHaveAttribute(
+      'aria-selected',
+      'false'
+    );
   });
 
   it('allows deselecting in multiple mode', async () => {
@@ -336,7 +348,7 @@ describe('@mantine/core/ComboboxPopover', () => {
     expect(screen.getByRole('listbox')).toBeVisible();
   });
 
-  it('renders without errors with controlled component', () => {
+  it('updates target content with controlled value', async () => {
     const Wrapper = () => {
       const [value, setValue] = useState<string | null>(null);
       return (
@@ -349,6 +361,9 @@ describe('@mantine/core/ComboboxPopover', () => {
     };
 
     render(<Wrapper />);
-    expect(screen.getByRole('combobox')).toBeInTheDocument();
+    expect(screen.getByRole('combobox')).toHaveTextContent('Select');
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(screen.getByRole('option', { name: 'test-2' }));
+    expect(screen.getByRole('combobox')).toHaveTextContent('test-2');
   });
 });

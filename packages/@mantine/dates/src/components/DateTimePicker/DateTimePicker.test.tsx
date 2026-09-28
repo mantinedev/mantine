@@ -492,15 +492,14 @@ describe('@mantine/dates/DateTimePicker', () => {
 
     it('supports range uncontrolled state', async () => {
       const spy = jest.fn();
-      const { container } = render(<DateTimePicker {...rangeProps} onChange={spy} />);
+      const { container } = render(
+        <DateTimePicker {...rangeProps} defaultDate="2022-04-01" onChange={spy} />
+      );
 
       await clickInput(container);
       await userEvent.click(container.querySelectorAll('table button')[0]);
-
-      expect(spy).toHaveBeenCalled();
-      const lastCall = spy.mock.calls[spy.mock.calls.length - 1][0];
-      expect(Array.isArray(lastCall)).toBe(true);
-      expect(lastCall[0]).toBeTruthy();
+      expect(spy).toHaveBeenLastCalledWith(['2022-03-28 00:00:00', null]);
+      expectValue(container, '28/03/2022 00:00 – ...');
     });
 
     it('supports range controlled state', async () => {
@@ -511,10 +510,8 @@ describe('@mantine/dates/DateTimePicker', () => {
 
       await clickInput(container);
       await userEvent.click(container.querySelectorAll('table button')[0]);
-
-      expect(spy).toHaveBeenCalled();
-      const lastCall = spy.mock.calls[spy.mock.calls.length - 1][0];
-      expect(Array.isArray(lastCall)).toBe(true);
+      expect(spy).toHaveBeenLastCalledWith(['2022-03-28 00:00:00', null]);
+      expectValue(container, '11/04/2022 00:00 – 15/04/2022 00:00');
     });
 
     it('clears range value when clear button is clicked', async () => {

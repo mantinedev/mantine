@@ -13,9 +13,10 @@ afterEach(() => {
 });
 
 describe('@mantine/hooks/use-document-visibility', () => {
-  it('returns visible as the initial state', () => {
+  it('reads the initial visibility state on mount', () => {
+    setVisibilityState('hidden');
     const { result } = renderHook(() => useDocumentVisibility());
-    expect(result.current).toBe('visible');
+    expect(result.current).toBe('hidden');
   });
 
   it('updates to hidden when visibilitychange fires', () => {

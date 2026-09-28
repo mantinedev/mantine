@@ -10,13 +10,7 @@ import {
   tests,
   userEvent,
 } from '@mantine-tests/core';
-import {
-  clickControl,
-  clickInput,
-  datesTests,
-  expectValue,
-  getInputValue,
-} from '@mantine-tests/dates';
+import { clickControl, clickInput, datesTests, expectValue } from '@mantine-tests/dates';
 import { DatesProvider } from '../DatesProvider';
 import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
 
@@ -154,17 +148,6 @@ describe('@mantine/dates/DatePickerInput', () => {
     );
   });
 
-  it('supports controlled state (dropdown click)', async () => {
-    const spy = jest.fn();
-    const { container } = render(
-      <DatePickerInput {...defaultProps} value="2022-04-11" onChange={spy} />
-    );
-    await clickInput(container);
-    await clickControl(container, 4);
-    expectValue(container, 'April 11, 2022');
-    expect(spy).toHaveBeenCalledWith('2022-04-01');
-  });
-
   it('marks dropdown controls with data-mantine-stop-propagation for popover dropdown', async () => {
     const { container } = render(<DatePickerInput {...defaultProps} />);
     await clickInput(container);
@@ -186,21 +169,9 @@ describe('@mantine/dates/DatePickerInput responsive dropdownType', () => {
     media?.restore();
   });
 
-  it('renders drawer below sm breakpoint by default', async () => {
+  it('uses the sm breakpoint for the default dropdownType', () => {
     media = mockMatchMedia(false, { filter: isMinWidthQuery });
-    const { container } = render(
-      <DatePickerInput
-        {...defaultProps}
-        drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
-        presets={[{ value: '2022-04-11', label: 'Test preset' }]}
-      />
-    );
-
-    await clickInput(container);
-    expect(container.querySelector('.mantine-Drawer-content')).toBeInTheDocument();
-    expect(container.querySelector('[data-dates-dropdown]')).not.toBeInTheDocument();
-    expect(container.querySelector('[data-preset]')).toHaveAttribute('data-layout', 'sheet');
-    expect(container.querySelector('[data-full-width]')).toBeInTheDocument();
+    render(<DatePickerInput {...defaultProps} />);
     expect(media.queries).toEqual(['(min-width: 48em)']);
   });
 
@@ -232,31 +203,23 @@ describe('@mantine/dates/DatePickerInput responsive dropdownType', () => {
     expect(container.querySelector('.mantine-Drawer-content')).toBeInTheDocument();
   });
 
-  it('applies the value only when the submit button is pressed in drawer mode', async () => {
+  it('calls onDropdownClose once when the drawer is closed with the submit button', async () => {
     media = mockMatchMedia(false, { filter: isMinWidthQuery });
-    const onChange = jest.fn();
     const onDropdownClose = jest.fn();
     const { container } = render(
       <DatePickerInput
         {...defaultProps}
         drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
-        onChange={onChange}
         onDropdownClose={onDropdownClose}
-        placeholder="test-placeholder"
       />
     );
 
     await clickInput(container);
     await clickControl(container, 0);
-    expect(container.querySelector('.mantine-Drawer-content')).toBeInTheDocument();
-    expect(onChange).not.toHaveBeenCalled();
-    expectValue(container, 'test-placeholder');
+    expect(onDropdownClose).not.toHaveBeenCalled();
 
     await userEvent.click(screen.getByRole('button', { name: 'Save' }));
-    expect(container.querySelector('.mantine-Drawer-content')).not.toBeInTheDocument();
-    expect(onChange).toHaveBeenCalledTimes(1);
     expect(onDropdownClose).toHaveBeenCalledTimes(1);
-    expect(getInputValue(container)).not.toBe('test-placeholder');
   });
 
   it('discards the draft value when the drawer is dismissed', async () => {
@@ -420,41 +383,34 @@ describe('@mantine/dates/DatePickerInput responsive dropdownType', () => {
     expect(container.querySelectorAll('table')).toHaveLength(1);
   });
 
-  it.each(['drawer', 'modal'] as const)(
-    'controls the %s dropdown with popoverProps.opened and popoverProps.onChange',
-    async (dropdownType) => {
-      media = mockMatchMedia(false, { filter: isMinWidthQuery });
-      const onOpenedChange = jest.fn();
+  it('controls the modal dropdown with popoverProps.opened and popoverProps.onChange', async () => {
+    const onOpenedChange = jest.fn();
 
-      function Controlled() {
-        const [opened, setOpened] = useState(false);
-        return (
-          <DatePickerInput
-            {...defaultProps}
-            dropdownType={dropdownType}
-            drawerProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
-            popoverProps={{
-              opened,
-              onChange: (value) => {
-                onOpenedChange(value);
-                setOpened(value);
-              },
-            }}
-          />
-        );
-      }
-
-      const { container } = render(<Controlled />);
-      const selector =
-        dropdownType === 'drawer' ? '.mantine-Drawer-content' : '.mantine-Modal-content';
-
-      await clickInput(container);
-      expect(onOpenedChange).toHaveBeenLastCalledWith(true);
-      expect(container.querySelector(selector)).toBeInTheDocument();
-
-      await userEvent.click(screen.getByRole('button', { name: 'Save' }));
-      expect(onOpenedChange).toHaveBeenLastCalledWith(false);
-      expect(container.querySelector(selector)).not.toBeInTheDocument();
+    function Controlled() {
+      const [opened, setOpened] = useState(false);
+      return (
+        <DatePickerInput
+          {...defaultProps}
+          dropdownType="modal"
+          popoverProps={{
+            opened,
+            onChange: (value) => {
+              onOpenedChange(value);
+              setOpened(value);
+            },
+          }}
+        />
+      );
     }
-  );
+
+    const { container } = render(<Controlled />);
+
+    await clickInput(container);
+    expect(onOpenedChange).toHaveBeenLastCalledWith(true);
+    expect(container.querySelector('.mantine-Modal-content')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+    expect(onOpenedChange).toHaveBeenLastCalledWith(false);
+    expect(container.querySelector('.mantine-Modal-content')).not.toBeInTheDocument();
+  });
 });

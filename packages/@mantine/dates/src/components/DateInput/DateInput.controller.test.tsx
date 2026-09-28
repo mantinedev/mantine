@@ -129,6 +129,7 @@ describe('@mantine/dates/DateInput/controller', () => {
     );
 
     expect(getDropdown(container)).toBe(null);
+    expect(controller.getDate()).toBe(null);
     act(() => controller.openDropdown());
     expect(getDropdown(container)).toBeInTheDocument();
     expectHeader('month', 'June 2024');
@@ -208,15 +209,6 @@ describe('@mantine/dates/DateInput/controller', () => {
     expect(onChange).toHaveBeenLastCalledWith('2022-03-10');
     expect(controller.getDate()).toBe('2022-03-10');
     expectHeader('month', 'March 2022');
-  });
-
-  it('opens at the month of the value when the controller has no displayed date', () => {
-    let controller: PickerInputController = null as any;
-    render(<ControllerInput defaultValue="2024-06-15" expose={(c) => (controller = c)} />);
-
-    expect(controller.getDate()).toBe(null);
-    act(() => controller.openDropdown());
-    expectHeader('month', 'June 2024');
   });
 
   it('prefers the defaultDate of the controller over the value', () => {

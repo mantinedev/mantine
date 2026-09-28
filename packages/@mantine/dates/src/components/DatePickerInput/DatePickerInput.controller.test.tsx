@@ -367,18 +367,6 @@ describe('@mantine/dates/DatePickerInput/controller', () => {
     expectHeader('month', 'June 2024');
   });
 
-  it('keeps level set right after openDropdown', () => {
-    let controller: PickerInputController = null as any;
-    render(<ControllerInput defaultValue="2024-06-15" capture={(c) => (controller = c)} />);
-
-    act(() => {
-      controller.openDropdown();
-      controller.setLevel('year');
-    });
-
-    expectHeader('year', '2024');
-  });
-
   it('ignores date and level props when a controller is provided', () => {
     let controller: PickerInputController = null as any;
     render(

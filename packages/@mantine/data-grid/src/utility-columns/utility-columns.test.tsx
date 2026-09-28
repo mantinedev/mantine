@@ -551,15 +551,6 @@ describe('@mantine/data-grid/utility-columns', () => {
     expect(rows[rows.length - 1].querySelector('td[data-utility="select"]')).toBeInTheDocument();
   });
 
-  it('renders utility cells on group rows', () => {
-    const { container } = render(
-      <Grid storeOptions={{ withRowSelection: true, grouping: ['age'] }} />
-    );
-    const groupRow = container.querySelector('tr[data-group-row]')!;
-    expect(groupRow.querySelectorAll('td')).toHaveLength(3);
-    expect(groupRow.querySelector('td[data-utility="select"] input')).toBeInTheDocument();
-  });
-
   it('renders utility header cells in the virtual header', () => {
     const { container } = render(
       <Grid storeOptions={{ withRowSelection: true }} virtualize="rows" height={200} />

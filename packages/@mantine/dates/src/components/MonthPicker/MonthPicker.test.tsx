@@ -154,19 +154,14 @@ describe('@mantine/dates/MonthPicker', () => {
     expect(spy).toHaveBeenCalledWith([null, null]);
   });
 
-  it('has correct default __staticSelector', () => {
-    const { container } = render(<MonthPicker {...defaultProps} />);
-    expect(container.querySelector('.mantine-MonthPicker-monthsList')).toBeInTheDocument();
-  });
-
   it('supports custom __staticSelector', () => {
     const { container } = render(<MonthPicker {...defaultProps} __staticSelector="Calendar" />);
     expect(container.querySelector('.mantine-Calendar-monthsList')).toBeInTheDocument();
   });
 
-  it('correctly handles presets', () => {
+  it('correctly handles presets', async () => {
     const spy = jest.fn();
-    render(
+    const { container } = render(
       <MonthPicker
         {...defaultProps}
         onChange={spy}
@@ -178,6 +173,8 @@ describe('@mantine/dates/MonthPicker', () => {
     );
 
     expect(screen.getByText('This month')).toBeInTheDocument();
-    expect(screen.getByText('Next month')).toBeInTheDocument();
+    await userEvent.click(screen.getByText('Next month'));
+    expect(spy).toHaveBeenCalledWith('2022-05-01');
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('May');
   });
 });

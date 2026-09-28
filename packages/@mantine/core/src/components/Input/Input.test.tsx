@@ -194,14 +194,6 @@ describe('@mantine/core/Input', () => {
     expect(screen.queryByText('clear')).not.toBeInTheDocument();
   });
 
-  it('displays __clearSection next to rightSection', () => {
-    render(
-      <Input __clearable __clearSection={<span>clear</span>} rightSection={<span>right</span>} />
-    );
-    expect(screen.getByText('clear')).toBeInTheDocument();
-    expect(screen.getByText('right')).toBeInTheDocument();
-  });
-
   it('displays __defaultRightSection if __clearable is false and __clearSection is set', () => {
     const { rerender } = render(
       <Input

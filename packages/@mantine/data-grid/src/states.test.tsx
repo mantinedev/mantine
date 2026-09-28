@@ -2,7 +2,6 @@ import { render, screen } from '@mantine-tests/core';
 import { DataGrid, DataGridProps } from './DataGrid';
 import { DataGridEmptyStatePayload } from './DataGrid.types';
 import { useDataGrid, UseDataGridOptions } from './hooks';
-import { DEFAULT_LABELS } from './labels';
 import { mockVirtualViewport } from './virtual-test-utils';
 
 const columns = [
@@ -36,10 +35,9 @@ function Grid({
 const rootOf = (container: HTMLElement) => container.querySelector('[data-size]') as HTMLElement;
 
 describe('@mantine/data-grid/states/empty-state', () => {
-  it('renders nothing for an empty grid without emptyState and has no label', () => {
+  it('renders nothing for an empty grid without emptyState', () => {
     const { container } = render(<Grid rows={[]} />);
     expect(container.querySelector('tbody tr')).not.toBeInTheDocument();
-    expect('emptyStateText' in DEFAULT_LABELS).toBe(false);
   });
 
   it('renders the node form in one bare full-width cell', () => {
@@ -175,9 +173,7 @@ describe('@mantine/data-grid/states/loading', () => {
 
     const bar = cells[1].querySelector('.mantine-DataGrid-skeleton') as HTMLElement;
     expect(bar).toHaveClass('mantine-Skeleton-root');
-    expect(bar.style.getPropertyValue('--skeleton-width')).toBe(
-      `${40 + ((1 * 37 + 1 * 53) % 50)}%`
-    );
+    expect(bar.style.getPropertyValue('--skeleton-width')).toBe('80%');
     expect(bar.style.getPropertyValue('--skeleton-height')).toBe('calc(var(--dg-font-size) - 1px)');
   });
 

@@ -218,7 +218,7 @@ describe('@mantine/core/JsonInput', () => {
     await user.tab();
 
     expect(screen.queryByText('Invalid JSON')).not.toBeInTheDocument();
-    expect(container.querySelector('[data-invalid]')).not.toBeInTheDocument();
+    expect(input).not.toHaveAttribute('aria-invalid', 'true');
   });
 
   it('handles whitespace-only string as valid JSON', async () => {
@@ -231,7 +231,7 @@ describe('@mantine/core/JsonInput', () => {
     await user.tab();
 
     expect(screen.queryByText('Invalid JSON')).not.toBeInTheDocument();
-    expect(container.querySelector('[data-invalid]')).not.toBeInTheDocument();
+    expect(input).not.toHaveAttribute('aria-invalid', 'true');
   });
 
   it('shows validation error on mount with initial invalid value', () => {
@@ -281,7 +281,13 @@ describe('@mantine/core/JsonInput', () => {
 
     function Controlled() {
       const [value, setValue] = useState('');
-      return <JsonInput label="test" value={value} onChange={setValue} />;
+      return (
+        <JsonInput
+          label="test"
+          value={value}
+          onChange={(nextValue) => setValue(nextValue.toUpperCase())}
+        />
+      );
     }
 
     render(<Controlled />);
@@ -290,7 +296,7 @@ describe('@mantine/core/JsonInput', () => {
     await user.click(input);
     await user.paste('{"test":true}');
 
-    expect(input).toHaveValue('{"test":true}');
+    expect(input).toHaveValue('{"TEST":TRUE}');
   });
 
   it('applies data-monospace attribute', () => {

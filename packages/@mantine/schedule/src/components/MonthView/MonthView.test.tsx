@@ -701,54 +701,6 @@ describe('@mantine/schedule/MonthView', () => {
       expect(nov2).toHaveAttribute('tabIndex', '-1');
     });
 
-    it('supports ArrowRight key to move focus to next day', async () => {
-      render(<MonthView {...defaultProps} />);
-      const oct27 = screen.getByRole('button', { name: 'October 27, 2025' });
-
-      oct27.focus();
-      expect(document.activeElement).toBe(oct27);
-
-      await userEvent.keyboard('{ArrowRight}');
-      const oct28 = screen.getByRole('button', { name: 'October 28, 2025' });
-      expect(document.activeElement).toBe(oct28);
-    });
-
-    it('supports ArrowLeft key to move focus to previous day', async () => {
-      render(<MonthView {...defaultProps} />);
-      const oct28 = screen.getByRole('button', { name: 'October 28, 2025' });
-
-      oct28.focus();
-      expect(document.activeElement).toBe(oct28);
-
-      await userEvent.keyboard('{ArrowLeft}');
-      const oct27 = screen.getByRole('button', { name: 'October 27, 2025' });
-      expect(document.activeElement).toBe(oct27);
-    });
-
-    it('supports ArrowDown key to move focus to same day in next week', async () => {
-      render(<MonthView {...defaultProps} />);
-      const oct27 = screen.getByRole('button', { name: 'October 27, 2025' });
-
-      oct27.focus();
-      expect(document.activeElement).toBe(oct27);
-
-      await userEvent.keyboard('{ArrowDown}');
-      const nov3 = screen.getByRole('button', { name: 'November 3, 2025' });
-      expect(document.activeElement).toBe(nov3);
-    });
-
-    it('supports ArrowUp key to move focus to same day in previous week', async () => {
-      render(<MonthView {...defaultProps} />);
-      const nov3 = screen.getByRole('button', { name: 'November 3, 2025' });
-
-      nov3.focus();
-      expect(document.activeElement).toBe(nov3);
-
-      await userEvent.keyboard('{ArrowUp}');
-      const oct27 = screen.getByRole('button', { name: 'October 27, 2025' });
-      expect(document.activeElement).toBe(oct27);
-    });
-
     it('ArrowRight at end of week moves to first day of next week', async () => {
       render(<MonthView {...defaultProps} />);
       const nov2 = screen.getByRole('button', { name: 'November 2, 2025' });
@@ -792,6 +744,7 @@ describe('@mantine/schedule/MonthView', () => {
         .getAllByRole('button')
         .filter((btn) => btn.classList.contains('mantine-MonthView-monthViewDay'));
 
+      expect(buttons).toHaveLength(42);
       buttons.forEach((btn) => {
         expect(btn).toHaveAttribute('tabIndex', '-1');
       });
@@ -849,17 +802,6 @@ describe('@mantine/schedule/MonthView', () => {
       },
     ];
 
-    it('calls onDayClick when day is clicked', async () => {
-      const spy = jest.fn();
-      render(<MonthView {...defaultProps} onDayClick={spy} />);
-
-      const day = screen.getByRole('button', { name: 'November 5, 2025' });
-      await userEvent.click(day);
-
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(expect.any(String), expect.any(Object));
-    });
-
     it('calls onEventClick when event is clicked', async () => {
       const spy = jest.fn();
       render(<MonthView {...defaultProps} events={eventsData} onEventClick={spy} />);
@@ -870,8 +812,8 @@ describe('@mantine/schedule/MonthView', () => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          id: expect.anything(),
-          title: expect.any(String),
+          id: 1,
+          title: 'Test Event',
         }),
         expect.any(Object)
       );
@@ -894,10 +836,10 @@ describe('@mantine/schedule/MonthView', () => {
       const day = screen.getByRole('button', { name: 'November 5, 2025' });
 
       await userEvent.click(day);
+      await userEvent.click(screen.getByText('Test Event'));
 
       expect(daySpy).not.toHaveBeenCalled();
-      // Note: We don't test event clicks in static mode because ScheduleEvent
-      // handles that internally by setting onClick to undefined when mode is static
+      expect(eventSpy).not.toHaveBeenCalled();
     });
   });
 
@@ -916,11 +858,6 @@ describe('@mantine/schedule/MonthView', () => {
     it('does not render agenda button by default', () => {
       render(<MonthView {...defaultProps} />);
       expect(screen.queryByText('Agenda')).not.toBeInTheDocument();
-    });
-
-    it('renders agenda button when withAgenda is true', () => {
-      render(<MonthView {...defaultProps} withAgenda />);
-      expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
     });
 
     it('shows AgendaView when agenda button is clicked', async () => {

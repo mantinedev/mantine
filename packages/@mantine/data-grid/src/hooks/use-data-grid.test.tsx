@@ -39,12 +39,6 @@ describe('@mantine/data-grid/use-data-grid size', () => {
       expect(hook.result.current.controlSize).toBe(controlSize);
     }
   });
-
-  it('does not expose density', () => {
-    const hook = renderHook(() => useDataGrid({ data, columns }));
-    expect((hook.result.current as any).density).toBeUndefined();
-    expect((hook.result.current as any).setDensity).toBeUndefined();
-  });
 });
 
 describe('@mantine/data-grid/use-data-grid getters', () => {

@@ -14,8 +14,10 @@ describe('@mantine/schedule/ScheduleHeader', () => {
   });
 
   it('supports __staticSelector prop', () => {
-    const { container } = render(<ScheduleHeader {...defaultProps} __staticSelector="Test" />);
-    expect(container.querySelector('.mantine-Test-header')).toBeInTheDocument();
+    const { container } = render(
+      <ScheduleHeader {...defaultProps} __staticSelector="Test" className="test-class" />
+    );
+    expect(container.querySelector('.mantine-Test-header')).toHaveClass('test-class');
   });
 
   it('exposes static components', () => {

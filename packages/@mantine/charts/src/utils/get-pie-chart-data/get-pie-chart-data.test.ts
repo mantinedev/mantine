@@ -61,10 +61,10 @@ describe('@mantine/charts/utils/get-pie-chart-data', () => {
       data,
       theme: DEFAULT_THEME,
       strokeWidth: 1,
-      highlightedIndex: 2,
+      highlightedIndex: null,
       cellProps: (item) => ({ fillOpacity: item.name === 'A' ? 0.5 : 0.9 }),
     });
 
-    expect(result.map((item) => item.fillOpacity)).toEqual([0.2, 0.2, 1]);
+    expect(result.map((item) => item.fillOpacity)).toEqual([0.5, 0.9, 0.9]);
   });
 });

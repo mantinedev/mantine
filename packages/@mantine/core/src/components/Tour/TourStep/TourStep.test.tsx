@@ -8,7 +8,6 @@ describe('@mantine/core/TourStep', () => {
 
   it('renders nothing (data-only component)', () => {
     const { container } = render(<TourStep title="Test" />);
-    expect(container.querySelector('[data-testid]')).toBeNull();
-    expect(container.textContent).not.toContain('Test');
+    expect(container.querySelectorAll('*:not(style)')).toHaveLength(0);
   });
 });

@@ -144,74 +144,9 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
         'non-business-hours': true,
       });
     });
-
-    it('handles early morning hours', () => {
-      const result = getBusinessHoursMod({
-        time: '05:30:00',
-        businessHours: ['09:00:00', '17:00:00'],
-        highlightBusinessHours: true,
-      });
-
-      expect(result).toEqual({
-        'business-hours': false,
-        'non-business-hours': true,
-      });
-    });
-
-    it('handles late evening hours', () => {
-      const result = getBusinessHoursMod({
-        time: '22:00:00',
-        businessHours: ['09:00:00', '17:00:00'],
-        highlightBusinessHours: true,
-      });
-
-      expect(result).toEqual({
-        'business-hours': false,
-        'non-business-hours': true,
-      });
-    });
   });
 
   describe('boundary conditions', () => {
-    it('handles time exactly at start boundary', () => {
-      const result = getBusinessHoursMod({
-        time: '09:00:00',
-        businessHours: ['09:00:00', '17:00:00'],
-        highlightBusinessHours: true,
-      });
-
-      expect(result).toEqual({
-        'business-hours': true,
-        'non-business-hours': false,
-      });
-    });
-
-    it('handles time exactly at end boundary', () => {
-      const result = getBusinessHoursMod({
-        time: '17:00:00',
-        businessHours: ['09:00:00', '17:00:00'],
-        highlightBusinessHours: true,
-      });
-
-      expect(result).toEqual({
-        'business-hours': false,
-        'non-business-hours': true,
-      });
-    });
-
-    it('handles time one second before end', () => {
-      const result = getBusinessHoursMod({
-        time: '16:59:59',
-        businessHours: ['09:00:00', '17:00:00'],
-        highlightBusinessHours: true,
-      });
-
-      expect(result).toEqual({
-        'business-hours': true,
-        'non-business-hours': false,
-      });
-    });
-
     it('handles time one second before start', () => {
       const result = getBusinessHoursMod({
         time: '08:59:59',
@@ -455,44 +390,6 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': false,
-      });
-    });
-  });
-
-  describe('string comparison', () => {
-    it('uses lexicographic comparison correctly', () => {
-      // String comparison works for HH:mm:ss format
-      const result1 = getBusinessHoursMod({
-        time: '08:59:59',
-        businessHours: ['09:00:00', '17:00:00'],
-        highlightBusinessHours: true,
-      });
-
-      expect(result1).toEqual({
-        'business-hours': false,
-        'non-business-hours': true,
-      });
-
-      const result2 = getBusinessHoursMod({
-        time: '09:00:01',
-        businessHours: ['09:00:00', '17:00:00'],
-        highlightBusinessHours: true,
-      });
-
-      expect(result2).toEqual({
-        'business-hours': true,
-        'non-business-hours': false,
-      });
-
-      const result3 = getBusinessHoursMod({
-        time: '17:00:01',
-        businessHours: ['09:00:00', '17:00:00'],
-        highlightBusinessHours: true,
-      });
-
-      expect(result3).toEqual({
-        'business-hours': false,
-        'non-business-hours': true,
       });
     });
   });

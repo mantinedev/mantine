@@ -1,19 +1,6 @@
-import { getResizeDelta, RESIZE_SECTION_NAMES, RESIZE_SECTIONS } from './resize-section-config';
+import { getResizeDelta, RESIZE_SECTIONS } from './resize-section-config';
 
 describe('@mantine/core/AppShell/resize-section-config', () => {
-  it('exposes all four sections', () => {
-    expect(RESIZE_SECTION_NAMES).toStrictEqual(['navbar', 'aside', 'header', 'footer']);
-  });
-
-  it('maps sections to css variables', () => {
-    expect(RESIZE_SECTIONS.navbar.sizeVariable).toBe('--app-shell-navbar-width');
-    expect(RESIZE_SECTIONS.navbar.offsetVariable).toBe('--app-shell-navbar-offset');
-    expect(RESIZE_SECTIONS.header.sizeVariable).toBe('--app-shell-header-height');
-    expect(RESIZE_SECTIONS.footer.handleDisplayVariable).toBe(
-      '--app-shell-footer-resize-handle-display'
-    );
-  });
-
   it('only exposes a safe-area variable for the footer', () => {
     expect(RESIZE_SECTIONS.footer.safeAreaVariable).toBe('--app-shell-footer-safe-area');
     expect(RESIZE_SECTIONS.navbar.safeAreaVariable).toBeUndefined();

@@ -26,9 +26,22 @@ function TestComponent({ handler, options }: TestComponentProps) {
   );
 }
 
+function withTimeStamp(event: Event, timeStamp: number | undefined) {
+  if (timeStamp !== undefined) {
+    Object.defineProperty(event, 'timeStamp', { value: timeStamp });
+  }
+  return event;
+}
+
 function pointerDown(
   el: Element,
-  init: { clientX?: number; clientY?: number; pointerId?: number; button?: number } = {}
+  init: {
+    clientX?: number;
+    clientY?: number;
+    pointerId?: number;
+    button?: number;
+    timeStamp?: number;
+  } = {}
 ) {
   const event = new PointerEvent('pointerdown', {
     bubbles: true,
@@ -37,27 +50,31 @@ function pointerDown(
     pointerId: init.pointerId ?? 1,
     button: init.button ?? 0,
   });
-  el.dispatchEvent(event);
+  el.dispatchEvent(withTimeStamp(event, init.timeStamp));
 }
 
-function pointerMove(init: { clientX?: number; clientY?: number; pointerId?: number } = {}) {
+function pointerMove(
+  init: { clientX?: number; clientY?: number; pointerId?: number; timeStamp?: number } = {}
+) {
   const event = new PointerEvent('pointermove', {
     bubbles: true,
     clientX: init.clientX ?? 0,
     clientY: init.clientY ?? 0,
     pointerId: init.pointerId ?? 1,
   });
-  document.dispatchEvent(event);
+  document.dispatchEvent(withTimeStamp(event, init.timeStamp));
 }
 
-function pointerUp(init: { clientX?: number; clientY?: number; pointerId?: number } = {}) {
+function pointerUp(
+  init: { clientX?: number; clientY?: number; pointerId?: number; timeStamp?: number } = {}
+) {
   const event = new PointerEvent('pointerup', {
     bubbles: true,
     clientX: init.clientX ?? 0,
     clientY: init.clientY ?? 0,
     pointerId: init.pointerId ?? 1,
   });
-  document.dispatchEvent(event);
+  document.dispatchEvent(withTimeStamp(event, init.timeStamp));
 }
 
 function pointerCancel(init: { pointerId?: number } = {}) {
@@ -490,12 +507,26 @@ describe('useDrag', () => {
       render(<TestComponent handler={handler} />);
       const el = screen.getByTestId('target');
 
-      act(() => pointerDown(el, { clientX: 0, clientY: 0 }));
-      act(() => pointerMove({ clientX: 50, clientY: 0 }));
+      act(() => pointerDown(el, { clientX: 0, clientY: 0, timeStamp: 1000 }));
+      act(() => pointerMove({ clientX: -50, clientY: 20, timeStamp: 1025 }));
 
-      const moveCall = handler.mock.calls[1][0];
-      expect(moveCall.velocity[0]).toBeGreaterThanOrEqual(0);
-      expect(moveCall.velocity[1]).toBe(0);
+      expect(handler.mock.calls[1][0].velocity).toEqual([2, 0.8]);
+
+      act(() => pointerUp({ clientX: -50, clientY: 20, timeStamp: 1050 }));
+
+      expect(handler.mock.calls[2][0].velocity).toEqual([2, 0.8]);
+    });
+
+    it('resets velocity on release after a pause longer than the decay window', () => {
+      const handler = jest.fn();
+      render(<TestComponent handler={handler} />);
+      const el = screen.getByTestId('target');
+
+      act(() => pointerDown(el, { clientX: 0, clientY: 0, timeStamp: 1000 }));
+      act(() => pointerMove({ clientX: 50, clientY: 0, timeStamp: 1025 }));
+      act(() => pointerUp({ clientX: 50, clientY: 0, timeStamp: 1200 }));
+
+      expect(handler.mock.calls[2][0].velocity).toEqual([0, 0]);
     });
   });
 

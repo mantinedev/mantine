@@ -176,7 +176,7 @@ describe('@mantine/core/useImageCropper', () => {
     expect(result.current.zoom).toBe(6);
   });
 
-  it('getCroppedImage keeps its identity and reads the current crop shape', () => {
+  it('keeps getCroppedImage identity when options change', () => {
     const { result, rerender } = renderHook<
       ReturnType<typeof useImageCropper>,
       { cropShape: 'rectangle' | 'circle' }
@@ -188,6 +188,5 @@ describe('@mantine/core/useImageCropper', () => {
     rerender({ cropShape: 'circle' });
 
     expect(result.current.getCroppedImage).toBe(getCroppedImage);
-    expect(result.current.cropShape).toBe('circle');
   });
 });

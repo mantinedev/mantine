@@ -91,11 +91,6 @@ describe('@mantine/data-grid/DataGridHeader column reorder', () => {
     jest.restoreAllMocks();
   });
 
-  it('does not use HTML5 drag and drop', () => {
-    const { container } = render(<Grid />);
-    expect(container.querySelector('th[draggable]')).not.toBeInTheDocument();
-  });
-
   it('applies Styles API styles to the drag ghost', () => {
     mockRects({ Name: [0, 100], Age: [100, 200], City: [200, 300] });
     render(<Grid styles={{ dragGhost: { opacity: 0.5 } }} />);

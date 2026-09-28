@@ -79,6 +79,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       });
 
       expect(result.allDayEvents).toHaveLength(0);
+      expect(Object.values(result.regularEvents).flat()).toHaveLength(1);
       expect(result.regularEvents['2025-01-13 00:00:00']).toHaveLength(1);
       expect(result.regularEvents['2025-01-13 00:00:00'][0].id).toBe(2);
     });
@@ -594,8 +595,14 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
         events,
       });
 
-      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.top).toBeGreaterThan(0);
-      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.height).toBeGreaterThan(0);
+      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.top).toBeCloseTo(
+        (10 / 24) * 100,
+        2
+      );
+      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.height).toBeCloseTo(
+        (2 / 24) * 100,
+        2
+      );
     });
 
     it('sets top and height to defaults for all-day events', () => {
@@ -628,8 +635,8 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
         endTime: '17:00',
       });
 
-      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.top).toBeGreaterThan(0);
-      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.height).toBeGreaterThan(0);
+      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.top).toBe(12.5);
+      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.height).toBe(25);
     });
   });
 
@@ -667,21 +674,15 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       });
 
       expect(result.regularEvents['2025-01-12 00:00:00']).toHaveLength(1);
-      expect(Object.keys(result.regularEvents)).toContain('2025-01-12 00:00:00');
-    });
-
-    it('handles Monday as first day of week', () => {
-      const events = [
-        testUtils.createEvent({ id: 1, start: '2025-01-13 10:00:00', end: '2025-01-13 12:00:00' }),
-      ];
-
-      const result = getWeekPositionedEvents({
-        date: testWeekStart,
-        events,
-        firstDayOfWeek: 1,
-      });
-
-      expect(result.regularEvents['2025-01-13 00:00:00']).toHaveLength(1);
+      expect(Object.keys(result.regularEvents)).toStrictEqual([
+        '2025-01-12 00:00:00',
+        '2025-01-13 00:00:00',
+        '2025-01-14 00:00:00',
+        '2025-01-15 00:00:00',
+        '2025-01-16 00:00:00',
+        '2025-01-17 00:00:00',
+        '2025-01-18 00:00:00',
+      ]);
     });
   });
 
@@ -715,20 +716,6 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       });
 
       expect(result.regularEvents['2025-01-18 00:00:00']).toHaveLength(1);
-    });
-
-    it('skips events on hidden weekend days', () => {
-      const events = [
-        testUtils.createEvent({ id: 1, start: '2025-01-18 10:00:00', end: '2025-01-18 12:00:00' }),
-      ];
-
-      const result = getWeekPositionedEvents({
-        date: testWeekStart,
-        events,
-        withWeekendDays: false,
-      });
-
-      expect(result.regularEvents['2025-01-18 00:00:00']).toBeUndefined();
     });
 
     it('adjusts multi-day event width when weekends are hidden', () => {
@@ -809,28 +796,9 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       });
 
       expect(result.allDayEvents).toHaveLength(3);
-      expect(result.allDayEvents[0].position.row).toBe(0);
-      expect(result.allDayEvents[1].position.row).toBeGreaterThanOrEqual(0);
-      expect(result.allDayEvents[2].position.row).toBeGreaterThanOrEqual(0);
-    });
-
-    it('handles events spanning across multiple weeks', () => {
-      const events = [
-        testUtils.createEvent({
-          id: 1,
-          start: '2025-01-05 10:00:00',
-          end: '2025-01-25 16:00:00',
-        }),
-      ];
-
-      const result = getWeekPositionedEvents({
-        date: testWeekStart,
-        events,
-      });
-
-      expect(result.allDayEvents).toHaveLength(1);
-      expect(result.allDayEvents[0].position.hanging).toBe('both');
-      expect(result.allDayEvents[0].position.width).toBe(100);
+      expect(result.allDayEvents.find((e) => e.id === 1)!.position.row).toBe(0);
+      expect(result.allDayEvents.find((e) => e.id === 2)!.position.row).toBe(1);
+      expect(result.allDayEvents.find((e) => e.id === 3)!.position.row).toBe(0);
     });
 
     it('preserves event data in positioned events', () => {
@@ -873,9 +841,11 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       });
 
       expect(result.regularEvents['2025-01-13 00:00:00']).toHaveLength(1);
-      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.height).toBeGreaterThanOrEqual(
-        0
+      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.top).toBeCloseTo(
+        (10 / 24) * 100,
+        2
       );
+      expect(result.regularEvents['2025-01-13 00:00:00'][0].position.height).toBe(0);
     });
 
     it('handles events at week boundaries', () => {

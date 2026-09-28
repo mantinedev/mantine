@@ -38,24 +38,8 @@ describe('@mantine/core/Highlight', () => {
       expect(marks).toHaveLength(2);
       expect(marks[0].textContent).toBe('error');
       expect(marks[1].textContent).toBe('warning');
-    });
-
-    it('highlights multiple terms with custom colors', () => {
-      const { container } = render(
-        <Highlight
-          highlight={[
-            { text: 'foo', color: 'red' },
-            { text: 'bar', color: 'blue' },
-          ]}
-        >
-          foo and bar
-        </Highlight>
-      );
-
-      const marks = container.querySelectorAll('mark');
-      expect(marks).toHaveLength(2);
-      expect(marks[0].textContent).toBe('foo');
-      expect(marks[1].textContent).toBe('bar');
+      expect(marks[0].getAttribute('style')).toContain('--mantine-color-red');
+      expect(marks[1].getAttribute('style')).toContain('--mantine-color-yellow');
     });
 
     it('handles terms without custom color using default', () => {
@@ -68,6 +52,7 @@ describe('@mantine/core/Highlight', () => {
       const mark = container.querySelector('mark');
       expect(mark).toBeInTheDocument();
       expect(mark?.textContent).toBe('test');
+      expect(mark?.getAttribute('style')).toContain('--mantine-color-blue');
     });
 
     it('handles case-insensitive color matching', () => {
@@ -80,6 +65,9 @@ describe('@mantine/core/Highlight', () => {
       expect(marks[0].textContent).toBe('Hello');
       expect(marks[1].textContent).toBe('HELLO');
       expect(marks[2].textContent).toBe('hello');
+      marks.forEach((mark) => {
+        expect(mark.getAttribute('style')).toContain('--mantine-color-red');
+      });
     });
 
     it('applies custom color to accented matches when accentInsensitive is true', () => {
@@ -99,7 +87,7 @@ describe('@mantine/core/Highlight', () => {
 
     it('mixes terms with and without colors', () => {
       const { container } = render(
-        <Highlight highlight={[{ text: 'red', color: 'red' }, { text: 'default' }]} color="yellow">
+        <Highlight highlight={[{ text: 'red', color: 'red' }, { text: 'default' }]} color="grape">
           red and default colors
         </Highlight>
       );
@@ -108,6 +96,8 @@ describe('@mantine/core/Highlight', () => {
       expect(marks).toHaveLength(2);
       expect(marks[0].textContent).toBe('red');
       expect(marks[1].textContent).toBe('default');
+      expect(marks[0].getAttribute('style')).toContain('--mantine-color-red');
+      expect(marks[1].getAttribute('style')).toContain('--mantine-color-grape');
     });
   });
 

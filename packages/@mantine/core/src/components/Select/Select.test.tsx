@@ -221,7 +221,7 @@ describe('@mantine/core/Select', () => {
   it('opens dropdown on focus when openOnFocus is true and searchable', async () => {
     render(<Select {...defaultProps} searchable openOnFocus />);
     expect(screen.queryByRole('listbox')).toBe(null);
-    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.tab();
     expect(screen.getByRole('listbox')).toBeVisible();
   });
 

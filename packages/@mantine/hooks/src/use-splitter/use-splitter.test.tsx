@@ -64,20 +64,6 @@ describe('useSplitter', () => {
     expect(props['data-orientation']).toBe('vertical');
   });
 
-  it('programmatically sets sizes', () => {
-    const { result } = renderHook(() =>
-      useSplitter({
-        panels: defaultPanels,
-      })
-    );
-
-    act(() => {
-      result.current.setSizes([30, 70]);
-    });
-
-    expect(result.current.sizes).toEqual([30, 70]);
-  });
-
   it('collapses a collapsible panel', () => {
     const onCollapseChange = jest.fn();
     const { result } = renderHook(() =>
@@ -215,8 +201,13 @@ describe('useSplitter', () => {
       fireEvent.keyDown(handle, { key: 'ArrowRight' });
     }
 
-    expect(Number(handle.getAttribute('aria-valuenow'))).toBeLessThanOrEqual(80);
-    expect(Number(handle.getAttribute('aria-valuenow'))).toBeGreaterThanOrEqual(20);
+    expect(handle.getAttribute('aria-valuenow')).toBe('80');
+
+    for (let i = 0; i < 100; i++) {
+      fireEvent.keyDown(handle, { key: 'ArrowLeft' });
+    }
+
+    expect(handle.getAttribute('aria-valuenow')).toBe('20');
   });
 
   it('handles RTL keyboard direction', () => {
@@ -282,16 +273,6 @@ describe('useSplitter', () => {
     expect(handle.getAttribute('aria-valuenow')).toBe('50');
   });
 
-  it('handles 3 panels correctly', () => {
-    const { result } = renderHook(() =>
-      useSplitter({
-        panels: [{ defaultSize: 33 }, { defaultSize: 34 }, { defaultSize: 33 }],
-      })
-    );
-
-    expect(result.current.sizes).toEqual([33, 34, 33]);
-  });
-
   it('calls onSizeChange in controlled mode', () => {
     const onSizeChange = jest.fn();
     render(
@@ -309,10 +290,25 @@ describe('useSplitter', () => {
   });
 
   it('data-active is set on active handle only', () => {
-    render(<TestComponent panels={[{ defaultSize: 50 }, { defaultSize: 50 }]} />);
+    render(
+      <TestComponent panels={[{ defaultSize: 33 }, { defaultSize: 34 }, { defaultSize: 33 }]} />
+    );
 
-    const handle = screen.getByTestId('handle-0');
-    expect(handle.getAttribute('data-active')).toBeNull();
+    const handle0 = screen.getByTestId('handle-0');
+    const handle1 = screen.getByTestId('handle-1');
+    expect(handle0.getAttribute('data-active')).toBeNull();
+
+    fireEvent(
+      handle0,
+      new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 100, clientY: 100 })
+    );
+
+    expect(handle0.getAttribute('data-active')).toBe('true');
+    expect(handle1.getAttribute('data-active')).toBeNull();
+
+    fireEvent(document, new MouseEvent('pointerup', { bubbles: true }));
+
+    expect(handle0.getAttribute('data-active')).toBeNull();
   });
 
   it('custom step size works', () => {
@@ -342,9 +338,8 @@ describe('useSplitter', () => {
       fireEvent.keyDown(handle, { key: 'ArrowRight' });
     }
 
-    const valuenow = Number(handle.getAttribute('aria-valuenow'));
-    expect(valuenow).toBeLessThanOrEqual(80);
-    expect(valuenow + 20).toBeLessThanOrEqual(100);
+    expect(handle.getAttribute('aria-valuenow')).toBe('80');
+    expect(screen.getByTestId('panel-1').style.width).toBe('20%');
   });
 
   it('keyboard collapse fires onCollapseChange', () => {
@@ -591,7 +586,6 @@ describe('useSplitter', () => {
     });
 
     expect(result.current.sizes).toEqual([0, 100]);
-    expect(result.current.sizes[0]).toBeGreaterThanOrEqual(0);
     expect(onCollapseChange).not.toHaveBeenCalled();
   });
 

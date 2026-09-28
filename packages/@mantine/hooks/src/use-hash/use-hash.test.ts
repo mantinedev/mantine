@@ -6,10 +6,16 @@ beforeEach(() => {
 });
 
 describe('@mantine/hooks/use-hash', () => {
-  it('returns empty string initially when hash is not set (getInitialValueInEffect: true)', () => {
-    const { result } = renderHook(() => useHash());
-    // Before effects settle the value is ''
-    expect(typeof result.current[0]).toBe('string');
+  it('reads window.location.hash in effect when getInitialValueInEffect is true', () => {
+    window.location.hash = '#initial';
+    const values: string[] = [];
+    const { result } = renderHook(() => {
+      const hook = useHash();
+      values.push(hook[0]);
+      return hook;
+    });
+    expect(values[0]).toBe('');
+    expect(result.current[0]).toBe('#initial');
   });
 
   it('reads window.location.hash synchronously when getInitialValueInEffect is false', () => {
@@ -25,14 +31,6 @@ describe('@mantine/hooks/use-hash', () => {
     });
     expect(result.current[0]).toBe('#world');
     expect(window.location.hash).toBe('#world');
-  });
-
-  it('setter prepends # when not already present', () => {
-    const { result } = renderHook(() => useHash({ getInitialValueInEffect: false }));
-    act(() => {
-      result.current[1]('section');
-    });
-    expect(result.current[0]).toBe('#section');
   });
 
   it('setter does not double-prepend # when already present', () => {

@@ -1,4 +1,4 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { render, tests } from '@mantine-tests/core';
 import { Fieldset, FieldsetProps, FieldsetStylesNames } from './Fieldset';
 
 const defaultProps: FieldsetProps = {
@@ -15,8 +15,11 @@ describe('@mantine/core/Fieldset', () => {
     stylesApiSelectors: ['root', 'legend'],
   });
 
-  it('renders given label', () => {
-    render(<Fieldset {...defaultProps} legend="test-legend" />);
-    expect(screen.getByText('test-legend')).toBeInTheDocument();
+  it('renders legend as the first child of the fieldset element', () => {
+    const { container } = render(<Fieldset {...defaultProps}>test-content</Fieldset>);
+    const root = container.querySelector('.mantine-Fieldset-root')!;
+    expect(root.tagName).toBe('FIELDSET');
+    expect(root.firstElementChild!.tagName).toBe('LEGEND');
+    expect(root.firstElementChild).toHaveTextContent('test-legend');
   });
 });

@@ -2,19 +2,6 @@ import { render, screen, userEvent } from '@mantine-tests/core';
 import { Toolbar } from '../Toolbar';
 
 describe('@mantine/core/ToolbarToggleGroup', () => {
-  it('renders toggle items', () => {
-    render(
-      <Toolbar>
-        <Toolbar.ToggleGroup type="single">
-          <Toolbar.ToggleItem value="bold">Bold</Toolbar.ToggleItem>
-          <Toolbar.ToggleItem value="italic">Italic</Toolbar.ToggleItem>
-        </Toolbar.ToggleGroup>
-      </Toolbar>
-    );
-    expect(screen.getByRole('button', { name: 'Bold' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Italic' })).toBeInTheDocument();
-  });
-
   it('supports single selection mode', async () => {
     const onChange = jest.fn();
     render(

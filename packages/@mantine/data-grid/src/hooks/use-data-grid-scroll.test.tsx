@@ -85,15 +85,28 @@ describe('@mantine/data-grid/use-data-grid scroll', () => {
 
   it('scrolls to a column in the table body', () => {
     render(<Grid />);
+    const container = store!.scrollContainerRef.current!;
+    const headers = container.querySelectorAll('thead > tr:last-child > th');
+    jest.spyOn(container, 'getBoundingClientRect').mockReturnValue({ left: 30 } as DOMRect);
+    Object.defineProperty(container, 'scrollLeft', { value: 40, configurable: true });
+    jest.spyOn(headers[0], 'getBoundingClientRect').mockReturnValue({ left: 50 } as DOMRect);
+    jest.spyOn(headers[1], 'getBoundingClientRect').mockReturnValue({ left: 230 } as DOMRect);
     store!.scrollToColumn(1);
-    expect(scrollTo).toHaveBeenCalledWith({ left: 0, behavior: 'smooth' });
+    expect(scrollTo).toHaveBeenCalledWith({ left: 240, behavior: 'smooth' });
   });
 
   it('scrolls to a column in the virtualized body', () => {
     render(<Grid virtualize="rows" />);
-    expect(store!.scrollContainerRef.current?.querySelector('thead')).toBeNull();
+    const container = store!.scrollContainerRef.current!;
+    expect(container.querySelector('thead')).toBeNull();
+    const headers = container.querySelectorAll('[role="columnheader"]');
+    expect(headers).toHaveLength(2);
+    jest.spyOn(container, 'getBoundingClientRect').mockReturnValue({ left: 30 } as DOMRect);
+    Object.defineProperty(container, 'scrollLeft', { value: 40, configurable: true });
+    jest.spyOn(headers[0], 'getBoundingClientRect').mockReturnValue({ left: 50 } as DOMRect);
+    jest.spyOn(headers[1], 'getBoundingClientRect').mockReturnValue({ left: 230 } as DOMRect);
     store!.scrollToColumn(1);
-    expect(scrollTo).toHaveBeenCalledWith({ left: 0, behavior: 'smooth' });
+    expect(scrollTo).toHaveBeenCalledWith({ left: 240, behavior: 'smooth' });
   });
 
   it('keeps the target column clear of start-pinned columns', () => {

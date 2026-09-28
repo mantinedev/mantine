@@ -34,18 +34,6 @@ describe('@mantine/schedule/ResourcesSchedule', () => {
     ).toBeInTheDocument();
   });
 
-  it('switches to month view when view button clicked', async () => {
-    const { container } = render(<ResourcesSchedule {...defaultProps} defaultView="day" />);
-    expect(
-      container.querySelector('.mantine-ResourcesDayView-resourcesDayView')
-    ).toBeInTheDocument();
-
-    await userEvent.click(screen.getByRole('tab', { name: 'Switch to month view' }));
-    expect(
-      container.querySelector('.mantine-ResourcesMonthView-resourcesMonthView')
-    ).toBeInTheDocument();
-  });
-
   it('renders with controlled view prop', () => {
     const { container, rerender } = render(<ResourcesSchedule {...defaultProps} view="day" />);
     expect(
@@ -141,7 +129,7 @@ describe('@mantine/schedule/ResourcesSchedule', () => {
     render(<ResourcesSchedule {...defaultProps} defaultView="day" onDateChange={spy} />);
 
     await userEvent.click(screen.getByRole('button', { name: 'Previous' }));
-    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith('2025-01-14 00:00:00');
   });
 
   it('controlled date updates view when prop changes', () => {
@@ -321,6 +309,7 @@ describe('@mantine/schedule/ResourcesSchedule', () => {
       <ResourcesSchedule {...defaultProps} defaultView="day" mode="static" />
     );
     const slots = container.querySelectorAll('.mantine-ResourcesDayView-resourcesDayViewRowSlot');
+    expect(slots).toHaveLength(24 * 2);
     slots.forEach((slot) => {
       expect(slot).toHaveAttribute('tabIndex', '-1');
     });
@@ -331,6 +320,7 @@ describe('@mantine/schedule/ResourcesSchedule', () => {
       <ResourcesSchedule {...defaultProps} defaultView="week" mode="static" />
     );
     const slots = container.querySelectorAll('.mantine-ResourcesWeekView-resourcesWeekViewRowSlot');
+    expect(slots).toHaveLength(24 * 7 * 2);
     slots.forEach((slot) => {
       expect(slot).toHaveAttribute('tabIndex', '-1');
     });

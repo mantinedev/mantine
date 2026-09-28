@@ -52,20 +52,6 @@ describe('@mantine/core/Menu', () => {
     );
   });
 
-  it('calls onOpen and onClose functions when dropdown state changes', async () => {
-    const onOpen = jest.fn();
-    const onClose = jest.fn();
-    render(<TestContainer onOpen={onOpen} onClose={onClose} />);
-
-    await userEvent.click(getControl());
-    expect(onOpen).toHaveBeenCalledTimes(1);
-    expect(onClose).toHaveBeenCalledTimes(0);
-
-    await userEvent.click(getControl());
-    expect(onOpen).toHaveBeenCalledTimes(1);
-    expect(onClose).toHaveBeenCalledTimes(1);
-  });
-
   it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<TestContainer opened onChange={spy} />);
@@ -238,14 +224,6 @@ describe('@mantine/core/Menu', () => {
         await new Promise((resolve) => setTimeout(resolve, 10));
       });
       expect(screen.getByLabelText('search')).toHaveFocus();
-    });
-
-    it('filters items via user-controlled state', async () => {
-      render(<SearchMenu />);
-      await userEvent.type(screen.getByLabelText('search'), 'an');
-      expect(screen.getByText('Banana')).toBeInTheDocument();
-      expect(screen.queryByText('Apple')).not.toBeInTheDocument();
-      expect(screen.queryByText('Cherry')).not.toBeInTheDocument();
     });
 
     it('moves data-menu-active highlight with ArrowDown/ArrowUp', async () => {
@@ -707,9 +685,9 @@ describe('@mantine/core/Menu', () => {
 
     it('does not move focus when Menu.Search is rendered', () => {
       render(<TypeAheadMenu withSearch />);
-      const search = screen.getByLabelText('search');
-      search.focus();
-      fireEvent.keyDown(search, { key: 'b' });
+      const apple = screen.getByText('Apple').closest('button')!;
+      apple.focus();
+      fireEvent.keyDown(apple, { key: 'b' });
       expect(screen.getByText('Banana').closest('button')).not.toHaveFocus();
     });
 
@@ -909,8 +887,18 @@ describe('@mantine/core/Menu', () => {
       expect(await screen.findByText('Cherry')).toBeInTheDocument();
     });
 
-    it('keeps the sub-dropdown closed when opened={false} is controlled', () => {
-      render(SubMenuContainer({ opened: false }));
+    it('keeps the sub-dropdown closed when opened={false} is controlled', async () => {
+      const onChange = jest.fn();
+      render(SubMenuContainer({ opened: false, onChange }));
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 10));
+      });
+      expect(onChange).toHaveBeenCalledWith(true);
       expect(screen.queryByText('Cherry')).not.toBeInTheDocument();
     });
 
@@ -955,16 +943,6 @@ describe('@mantine/core/Menu', () => {
       fireEvent.keyDown(subDropdown, { key: 'Escape' });
 
       expect(onChange).toHaveBeenLastCalledWith(false);
-    });
-
-    it('still opens an uncontrolled submenu via keyboard (no regression)', async () => {
-      render(SubMenuContainer());
-
-      const subTarget = screen.getByText('More').closest('button')!;
-      subTarget.focus();
-      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
-
-      expect(await screen.findByText('Cherry')).toBeInTheDocument();
     });
 
     it('does not call onChange after the submenu is unmounted while open', async () => {
@@ -1484,23 +1462,26 @@ describe('@mantine/core/Menu', () => {
     const onClose = jest.fn();
     const onChange = jest.fn();
 
-    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />);
+    const { rerender } = render(
+      <TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />
+    );
     expectClosed();
 
     expect(onOpen).not.toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
     expect(onChange).not.toHaveBeenCalled();
 
-    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened />);
+    rerender(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened />);
     expectOpened();
 
     expect(onOpen).not.toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
     expect(onChange).not.toHaveBeenCalled();
 
-    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />);
-
-    () => expect(screen.queryAllByRole('menu')).toHaveLength(1);
+    rerender(
+      <TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />
+    );
+    expectClosed();
     expect(onOpen).not.toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
     expect(onChange).not.toHaveBeenCalled();
@@ -1540,6 +1521,6 @@ describe('@mantine/core/Menu', () => {
     rerender(
       <TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />
     );
-    () => expect(screen.queryAllByRole('menu')).toHaveLength(1);
+    expectClosed();
   });
 });

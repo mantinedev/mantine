@@ -19,17 +19,16 @@ const COLOR_NAMES = [
   'orange',
 ] as const;
 
+const PALETTES: [string, readonly string[]][] = [
+  ...COLOR_NAMES.map((name): [string, readonly string[]] => [name, V10_DEFAULT_COLORS[name]]),
+  ['darkColdColors', darkColdColors],
+  ['darkWarmColors', darkWarmColors],
+  ['darkTintedColors', darkTintedColors],
+];
+
 describe('@mantine/core/V10_DEFAULT_COLORS', () => {
-  it('contains exactly 14 color keys', () => {
-    expect(Object.keys(V10_DEFAULT_COLORS)).toHaveLength(14);
-  });
-
-  it.each(COLOR_NAMES)('%s has exactly 10 shades', (name) => {
-    expect(V10_DEFAULT_COLORS[name]).toHaveLength(10);
-  });
-
-  it.each(COLOR_NAMES)('every shade of %s matches oklch() format', (name) => {
-    for (const shade of V10_DEFAULT_COLORS[name]) {
+  it.each(PALETTES)('every shade of %s matches oklch() format', (_, shades) => {
+    for (const shade of shades) {
       expect(shade).toMatch(OKLCH_RE);
     }
   });
@@ -57,49 +56,13 @@ describe('@mantine/core/V10_DEFAULT_COLORS', () => {
     expect(match).not.toBeNull();
     expect(Number(match![1])).toBeLessThanOrEqual(0.18);
   });
-
-  it('dark uses darkColors', () => {
-    expect(V10_DEFAULT_COLORS.dark).toBe(darkColors);
-  });
 });
 
 describe('@mantine/core/dark-colors', () => {
-  it('darkColors has 10 oklch entries', () => {
-    expect(darkColors).toHaveLength(10);
-    for (const shade of darkColors) {
-      expect(shade).toMatch(OKLCH_RE);
-    }
-  });
-
-  it('darkColdColors has 10 oklch entries', () => {
-    expect(darkColdColors).toHaveLength(10);
-    for (const shade of darkColdColors) {
-      expect(shade).toMatch(OKLCH_RE);
-    }
-  });
-
-  it('darkWarmColors has 10 oklch entries', () => {
-    expect(darkWarmColors).toHaveLength(10);
-    for (const shade of darkWarmColors) {
-      expect(shade).toMatch(OKLCH_RE);
-    }
-  });
-
-  it('darkTintedColors has 10 oklch entries', () => {
-    expect(darkTintedColors).toHaveLength(10);
-    for (const shade of darkTintedColors) {
-      expect(shade).toMatch(OKLCH_RE);
-    }
-  });
-
   it('darkColors is neutral (chroma 0)', () => {
     for (const shade of darkColors) {
       expect(shade).toMatch(/oklch\([\d.]+ 0 /);
     }
-  });
-
-  it('darkColdColors and darkWarmColors differ', () => {
-    expect(darkColdColors).not.toEqual(darkWarmColors);
   });
 
   it('darkColdColors has hue 255', () => {

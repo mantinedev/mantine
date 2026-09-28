@@ -188,12 +188,4 @@ describe('@mantine/core/AngleSlider', () => {
     expect(getValue()).toBe('10');
     expect(onChange).not.toHaveBeenCalled();
   });
-
-  it('forwards onMouseDown and onTouchStart to the root element', () => {
-    const onMouseDown = jest.fn();
-    const { container } = render(<AngleSlider onMouseDown={onMouseDown} aria-label="angle" />);
-
-    fireEvent.mouseDown(container.querySelector('.mantine-AngleSlider-root')!);
-    expect(onMouseDown).toHaveBeenCalled();
-  });
 });

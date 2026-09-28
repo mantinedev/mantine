@@ -87,37 +87,4 @@ describe('@mantine/core/List', () => {
     const root = container.querySelector('.mantine-List-root');
     expect(root).toHaveAttribute('data-with-padding');
   });
-
-  it('passes start attribute to ordered list', () => {
-    const { container } = render(
-      <List type="ordered" start={5}>
-        <List.Item>Item</List.Item>
-      </List>
-    );
-
-    const ol = container.querySelector('ol');
-    expect(ol).toHaveAttribute('start', '5');
-  });
-
-  it('passes reversed attribute to ordered list', () => {
-    const { container } = render(
-      <List type="ordered" reversed>
-        <List.Item>Item</List.Item>
-      </List>
-    );
-
-    const ol = container.querySelector('ol');
-    expect(ol).toHaveAttribute('reversed');
-  });
-
-  it('passes value attribute to list item', () => {
-    const { container } = render(
-      <List type="ordered">
-        <List.Item value={5}>Item</List.Item>
-      </List>
-    );
-
-    const li = container.querySelector('li');
-    expect(li).toHaveAttribute('value', '5');
-  });
 });

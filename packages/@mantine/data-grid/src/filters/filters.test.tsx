@@ -1,7 +1,6 @@
 import { act } from 'react';
-import { render, screen } from '@mantine-tests/core';
+import { render } from '@mantine-tests/core';
 import {
-  booleanOperators,
   createOperatorFilterFn,
   DataGrid,
   DataGridColumnDef,
@@ -53,19 +52,6 @@ function bodyNames(container: HTMLElement) {
 }
 
 describe('@mantine/data-grid/filters', () => {
-  it('renders no filter inputs in the header for filterable columns', () => {
-    const { container } = render(<Grid />);
-    expect(lastStore!.withFiltering).toBe(true);
-    expect(container.querySelector('thead input')).not.toBeInTheDocument();
-    expect(container.querySelectorAll('thead tr')).toHaveLength(1);
-    expect(screen.queryByPlaceholderText(/filter/i)).not.toBeInTheDocument();
-  });
-
-  it('does not render filter inputs in the virtual header', () => {
-    const { container } = render(<Grid virtualize="rows" height={200} />);
-    expect(container.querySelector('[role="columnheader"] input')).not.toBeInTheDocument();
-  });
-
   it('setColumnFilter writes, replaces and removes entries', () => {
     const { container } = render(<Grid />);
 
@@ -151,7 +137,7 @@ describe('@mantine/data-grid/filters', () => {
   });
 
   describe('operator utilities', () => {
-    it('are exported from the package root', () => {
+    it('lists the string operators in order', () => {
       expect(stringOperators.map((op) => op.value)).toEqual([
         'contains',
         'equals',
@@ -160,9 +146,6 @@ describe('@mantine/data-grid/filters', () => {
         'isEmpty',
         'isNotEmpty',
       ]);
-      expect(numberOperators).toHaveLength(6);
-      expect(booleanOperators).toHaveLength(2);
-      expect(typeof createOperatorFilterFn).toBe('function');
     });
 
     it('filter through filterFn: createOperatorFilterFn(...) with an { operator, value } state', () => {

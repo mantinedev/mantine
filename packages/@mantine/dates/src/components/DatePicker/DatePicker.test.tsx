@@ -127,15 +127,6 @@ describe('@mantine/dates/DatePicker', () => {
     expect(spy).toHaveBeenLastCalledWith(['2022-03-28', null]);
   });
 
-  it('supports onClick handler from getDayProps', async () => {
-    const spy = jest.fn();
-    const { container } = render(
-      <DatePicker {...defaultProps} getDayProps={() => ({ onClick: spy })} />
-    );
-    await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalled();
-  });
-
   it('handles allowSingleDateInRange={true} correctly', async () => {
     const spy = jest.fn();
     const { container } = render(
@@ -158,9 +149,9 @@ describe('@mantine/dates/DatePicker', () => {
     expect(spy).toHaveBeenCalledWith([null, null]);
   });
 
-  it('correctly handles presets', () => {
+  it('correctly handles presets', async () => {
     const spy = jest.fn();
-    render(
+    const { container } = render(
       <DatePicker
         {...defaultProps}
         onChange={spy}
@@ -172,12 +163,9 @@ describe('@mantine/dates/DatePicker', () => {
     );
 
     expect(screen.getByText('Today')).toBeInTheDocument();
-    expect(screen.getByText('Tomorrow')).toBeInTheDocument();
-  });
-
-  it('has correct default __staticSelector', () => {
-    const { container } = render(<DatePicker {...defaultProps} />);
-    expect(container.querySelector('.mantine-DatePicker-month')).toBeInTheDocument();
+    await userEvent.click(screen.getByText('Tomorrow'));
+    expect(spy).toHaveBeenCalledWith('2022-04-12');
+    expect(container.querySelector('[data-selected]')!.textContent).toBe('12');
   });
 
   it('supports custom __staticSelector', () => {

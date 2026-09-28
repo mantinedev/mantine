@@ -188,8 +188,12 @@ function tests(mode: FormMode) {
       })
     );
 
-    expect(hook.result.current.isValid('a')).toBe(false);
-    expect(hook.result.current.isValid('b')).toBe(true);
+    const resultA = hook.result.current.isValid('a');
+    const resultB = hook.result.current.isValid('b');
+    expect(resultA).not.toBeInstanceOf(Promise);
+    expect(resultB).not.toBeInstanceOf(Promise);
+    expect(resultA).toBe(false);
+    expect(resultB).toBe(true);
   });
 
   it('validating state is NOT set during sync validation', () => {

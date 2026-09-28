@@ -25,9 +25,9 @@ describe('@mantine/core/DataList', () => {
     stylesApiSelectors: ['root', 'item', 'itemLabel', 'itemValue'],
   });
 
-  it('renders dl element', () => {
+  it('renders root as dl element', () => {
     const { container } = render(<DataList {...defaultProps} />);
-    expect(container.querySelector('dl')).not.toBe(null);
+    expect(container.querySelector('.mantine-DataList-root')!.tagName).toBe('DL');
   });
 
   it('renders dt and dd elements', () => {

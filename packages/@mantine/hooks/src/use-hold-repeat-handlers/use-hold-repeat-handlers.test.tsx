@@ -29,25 +29,15 @@ describe('@mantine/hooks/use-hold-repeat-handlers', () => {
   });
 
   it('only produces handlers for the requested events', () => {
-    const { result } = renderHook(() => useHoldRepeatHandlers(() => {}, { events: ['pointer'] }));
+    const pointer = renderHook(() => useHoldRepeatHandlers(() => {}, { events: ['pointer'] }));
+    expect(pointer.result.current.onMouseDown).toBeUndefined();
+    expect(pointer.result.current.onTouchStart).toBeUndefined();
+    expect(pointer.result.current.onKeyDown).toBeUndefined();
 
-    expect(result.current.onPointerDown).toBeDefined();
-    expect(result.current.onPointerUp).toBeDefined();
-    expect(result.current.onPointerLeave).toBeDefined();
-    expect(result.current.onMouseDown).toBeUndefined();
-    expect(result.current.onTouchStart).toBeUndefined();
-    expect(result.current.onKeyDown).toBeUndefined();
-
-    expect(typeof result.current.start).toBe('function');
-    expect(typeof result.current.stop).toBe('function');
-  });
-
-  it('produces keyboard handlers only when requested', () => {
-    const { result } = renderHook(() => useHoldRepeatHandlers(() => {}, { events: ['keyboard'] }));
-
-    expect(result.current.onKeyDown).toBeDefined();
-    expect(result.current.onKeyUp).toBeDefined();
-    expect(result.current.onPointerDown).toBeUndefined();
+    const keyboard = renderHook(() => useHoldRepeatHandlers(() => {}, { events: ['keyboard'] }));
+    expect(keyboard.result.current.onPointerDown).toBeUndefined();
+    expect(keyboard.result.current.onMouseDown).toBeUndefined();
+    expect(keyboard.result.current.onTouchStart).toBeUndefined();
   });
 
   it('starts repeating on pointer down and stops on pointer up', () => {

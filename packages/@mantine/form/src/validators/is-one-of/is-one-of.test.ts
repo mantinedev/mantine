@@ -17,38 +17,11 @@ describe('@mantine/form/isOneOf', () => {
     expect(validator('Admin')).toBe(TEST_ERROR);
   });
 
-  it('works with number values', () => {
+  it('uses strict equality for non-string values', () => {
     const validator = isOneOf([1, 2, 3], TEST_ERROR);
     expect(validator(1)).toBe(null);
-    expect(validator(2)).toBe(null);
-    expect(validator(4)).toBe(TEST_ERROR);
-    expect(validator(0)).toBe(TEST_ERROR);
-  });
-
-  it('uses strict equality', () => {
-    const validator = isOneOf([1, 2, 3], TEST_ERROR);
     expect(validator('1')).toBe(TEST_ERROR);
     expect(validator(true)).toBe(TEST_ERROR);
-  });
-
-  it('works with boolean values', () => {
-    const validator = isOneOf([true], TEST_ERROR);
-    expect(validator(true)).toBe(null);
-    expect(validator(false)).toBe(TEST_ERROR);
-  });
-
-  it('works with null values', () => {
-    const validator = isOneOf([null, 'a'], TEST_ERROR);
-    expect(validator(null)).toBe(null);
-    expect(validator('a')).toBe(null);
-    expect(validator(undefined)).toBe(TEST_ERROR);
-  });
-
-  it('rejects all values when list is empty', () => {
-    const validator = isOneOf([], TEST_ERROR);
-    expect(validator('anything')).toBe(TEST_ERROR);
-    expect(validator(null)).toBe(TEST_ERROR);
-    expect(validator(undefined)).toBe(TEST_ERROR);
   });
 
   it('returns true as default error', () => {

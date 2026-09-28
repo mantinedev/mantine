@@ -1,5 +1,5 @@
 import { createRef } from 'react';
-import { createContextContainer, renderWithAct, screen, userEvent } from '@mantine-tests/core';
+import { createContextContainer, renderWithAct, screen } from '@mantine-tests/core';
 import { Tour } from '../Tour';
 import { TourBeacon, TourBeaconProps } from './TourBeacon';
 
@@ -49,12 +49,5 @@ describe('@mantine/core/TourBeacon', () => {
       </Tour.Root>
     );
     expect(ref.current).toBe(screen.getByRole('button'));
-  });
-
-  it('calls onClick when clicked', async () => {
-    const onClick = jest.fn();
-    await renderWithAct(<TestContainer {...defaultProps} onClick={onClick} />);
-    await userEvent.click(screen.getByRole('button'));
-    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

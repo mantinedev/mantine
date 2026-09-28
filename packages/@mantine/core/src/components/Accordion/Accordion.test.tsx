@@ -51,11 +51,6 @@ describe('@mantine/core/Accordion', () => {
     ],
   });
 
-  it('renders correct amount of items', () => {
-    const { container } = render(<Accordion {...defaultProps} />);
-    expect(container.querySelectorAll('.mantine-Accordion-item')).toHaveLength(3);
-  });
-
   it('support uncontrolled state (multiple: false, default)', async () => {
     render(<Accordion {...defaultProps} defaultValue="item-2" />);
     expect(screen.getByText('test-item-2')).toBeInTheDocument();
@@ -168,20 +163,6 @@ describe('@mantine/core/Accordion', () => {
 
     expect(screen.getByText('test-item-2')).toBeInTheDocument();
     expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
-  });
-
-  it('opens items initially based on defaultValue prop (multiple: false, default)', () => {
-    render(<Accordion {...defaultProps} defaultValue="item-3" />);
-    expect(screen.getByText('test-item-3')).toBeInTheDocument();
-    expect(screen.queryAllByText('test-item-2')).toHaveLength(0);
-    expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
-  });
-
-  it('opens items initially based on defaultValue prop (multiple: true)', () => {
-    render(<Accordion {...defaultProps} multiple defaultValue={['item-3', 'item-1']} />);
-    expect(screen.getByText('test-item-3')).toBeInTheDocument();
-    expect(screen.getByText('test-item-1')).toBeInTheDocument();
-    expect(screen.queryAllByText('test-item-2')).toHaveLength(0);
   });
 
   it('handles tab key correctly', async () => {

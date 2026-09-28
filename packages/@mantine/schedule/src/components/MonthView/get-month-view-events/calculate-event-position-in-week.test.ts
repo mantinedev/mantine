@@ -57,6 +57,7 @@ describe('@mantine/schedule/calculate-event-position-in-week', () => {
 
     expect(result.hanging).toBe('start');
     expect(result.startDayIndex).toBe(0);
+    expect(result.startOffset).toBe(0);
   });
 
   it('marks event as hanging from end when it ends after week', () => {
@@ -91,22 +92,6 @@ describe('@mantine/schedule/calculate-event-position-in-week', () => {
     expect(result.width).toBe(100);
   });
 
-  it('clamps event to week boundaries when hanging from start', () => {
-    const eventStart = dayjs('2025-01-10 10:00:00');
-    const eventEnd = dayjs('2025-01-15 12:00:00');
-
-    const result = calculateEventPositionInWeek({
-      eventStart,
-      eventEnd,
-      weekStart,
-      weekEnd,
-      isMultiday: true,
-    });
-
-    expect(result.startDayIndex).toBe(0);
-    expect(result.startOffset).toBe(0);
-  });
-
   it('clamps event to week boundaries when hanging from end', () => {
     const eventStart = dayjs('2025-01-15 10:00:00');
     const eventEnd = dayjs('2025-01-22 12:00:00');
@@ -119,7 +104,8 @@ describe('@mantine/schedule/calculate-event-position-in-week', () => {
       isMultiday: true,
     });
 
-    expect(result.daysSpanned).toBeLessThanOrEqual(7);
+    expect(result.daysSpanned).toBe(5);
+    expect(result.width).toBeCloseTo((5 / 7) * 100, 2);
   });
 
   it('handles event starting on first day of week', () => {
@@ -152,21 +138,5 @@ describe('@mantine/schedule/calculate-event-position-in-week', () => {
     });
 
     expect(result.hanging).toBe('none');
-  });
-
-  it('calculates width as at least 1 day for single-day events', () => {
-    const eventStart = dayjs('2025-01-15 10:00:00');
-    const eventEnd = dayjs('2025-01-15 12:00:00');
-
-    const result = calculateEventPositionInWeek({
-      eventStart,
-      eventEnd,
-      weekStart,
-      weekEnd,
-      isMultiday: false,
-    });
-
-    expect(result.daysSpanned).toBe(1);
-    expect(result.width).toBeGreaterThan(0);
   });
 });

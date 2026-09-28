@@ -1,4 +1,4 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Scroller, ScrollerProps, ScrollerStylesNames } from './Scroller';
 
 const defaultProps: ScrollerProps = {
@@ -15,14 +15,18 @@ describe('@mantine/core/Scroller', () => {
     stylesApiSelectors: ['root', 'container', 'content'],
   });
 
-  it('renders children inside content element', () => {
-    render(<Scroller>test-children</Scroller>);
-    expect(screen.getByText('test-children')).toBeInTheDocument();
-  });
+  it('supports custom scrollAmount prop', async () => {
+    const scrollBy = jest.fn();
+    const originalScrollBy = HTMLElement.prototype.scrollBy;
+    HTMLElement.prototype.scrollBy = scrollBy;
 
-  it('supports custom scrollAmount prop', () => {
-    const { container } = render(<Scroller {...defaultProps} scrollAmount={500} />);
-    expect(container.querySelector('.mantine-Scroller-root')).toBeInTheDocument();
+    try {
+      render(<Scroller {...defaultProps} scrollAmount={500} showEndControl />);
+      await userEvent.click(screen.getByLabelText('Scroll right'));
+      expect(scrollBy).toHaveBeenCalledWith(expect.objectContaining({ left: 500 }));
+    } finally {
+      HTMLElement.prototype.scrollBy = originalScrollBy;
+    }
   });
 
   it('resolves controlSize from theme sizes and numbers', () => {

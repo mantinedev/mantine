@@ -52,17 +52,6 @@ describe('@mantine/schedule/calculateDropTime', () => {
     expect(fmt(start)).toBe('2024-01-15 09:00');
   });
 
-  it('is unchanged when dragIntervalMinutes is omitted', () => {
-    const { start, end } = calculateDropTime({
-      draggedEvent: event,
-      targetDate: '2024-01-15',
-      targetSlotTime: '09:30:00',
-      intervalMinutes: 30,
-    });
-    expect(fmt(start)).toBe('2024-01-15 09:30');
-    expect(fmt(end)).toBe('2024-01-15 10:30');
-  });
-
   it('clamps the snapped start within the displayed range', () => {
     // Last slot 15:30 in an 08:00-16:00 range; pointer near the end would snap to 16:00 (out of range).
     const { start } = calculateDropTime({

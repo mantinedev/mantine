@@ -194,7 +194,10 @@ describe('@mantine/charts/MatrixChart', () => {
   });
 
   it('exposes a labelled chart as a single image', () => {
-    const { container } = render(<MatrixChart data={testData} aria-label="Activity" />);
+    const { container, rerender } = render(<MatrixChart data={[]} />);
+    expect(container.querySelector('svg')).not.toHaveAttribute('role');
+
+    rerender(<MatrixChart data={[]} aria-label="Activity" />);
     expect(container.querySelector('svg')).toHaveAttribute('role', 'img');
   });
 

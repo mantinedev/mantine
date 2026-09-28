@@ -174,13 +174,18 @@ function tests(mode: FormMode) {
     expect(result.value).toBe('blue');
   });
 
-  it('updates form value with returned onChange handler for type="radio"', () => {
+  it('does not return onFocus for type="radio" unless withFocus is set', () => {
     const hook = renderHook(() => useForm({ mode, initialValues: { color: 'red' } }));
-
-    act(() =>
-      hook.result.current.getInputProps('color', { type: 'radio', value: 'blue' }).onChange('blue')
-    );
-    expect(hook.result.current.getValues()).toStrictEqual({ color: 'blue' });
+    expect(
+      hook.result.current.getInputProps('color', { type: 'radio', value: 'blue' }).onFocus
+    ).toBeUndefined();
+    expect(
+      typeof hook.result.current.getInputProps('color', {
+        type: 'radio',
+        value: 'blue',
+        withFocus: true,
+      }).onFocus
+    ).toBe('function');
   });
 
   it('returns onFocus if withFocus is true', () => {
