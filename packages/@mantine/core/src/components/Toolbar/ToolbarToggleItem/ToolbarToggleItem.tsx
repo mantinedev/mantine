@@ -20,6 +20,9 @@ export interface ToolbarToggleItemProps
 
   /** If set, the toggle item is disabled */
   disabled?: boolean;
+
+  /** If set, the toggle item width adjusts to content instead of being square, `false` by default */
+  autoWidth?: boolean;
 }
 
 export type ToolbarToggleItemFactory = Factory<{
@@ -41,6 +44,7 @@ export const ToolbarToggleItem = factory<ToolbarToggleItemFactory>((_props) => {
     vars,
     value,
     disabled,
+    autoWidth,
     children,
     onClick,
     ...others
@@ -64,14 +68,17 @@ export const ToolbarToggleItem = factory<ToolbarToggleItemFactory>((_props) => {
       data-toolbar-toggle
       data-active={isActive || undefined}
       data-disabled={isDisabled || undefined}
+      data-auto-width={autoWidth || undefined}
       disabled={isDisabled}
-      tabIndex={0}
+      tabIndex={isDisabled ? -1 : 0}
       aria-pressed={isActive}
       onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-        if (!isDisabled) {
-          groupCtx.onChange(value);
-          onClick?.(event);
+        if (isDisabled) {
+          event.preventDefault();
+          return;
         }
+        groupCtx.onChange(value);
+        onClick?.(event);
       }}
     >
       {children}

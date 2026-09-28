@@ -13,18 +13,15 @@ import { emojiMartAdapter, EmojiPickerPopover } from '@mantine/emoji';
 const emojiData = emojiMartAdapter(data);
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
   const [emoji, setEmoji] = useState<string | null>(null);
 
   return (
     <EmojiPickerPopover
       data={emojiData}
-      opened={opened}
-      onOpenedChange={setOpened}
       onEmojiSelect={(e) => setEmoji(e.emoji)}
       closeOnSelect={false}
     >
-      <ActionIcon variant="default" size="lg" onClick={() => setOpened((o) => !o)}>
+      <ActionIcon variant="default" size="lg">
         {emoji || '☺'}
       </ActionIcon>
     </EmojiPickerPopover>
@@ -33,18 +30,15 @@ function Demo() {
 `;
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
   const [emoji, setEmoji] = useState<string | null>(null);
 
   return (
     <EmojiPickerPopover
       data={demoEmojiData}
-      opened={opened}
-      onOpenedChange={setOpened}
       onEmojiSelect={(e) => setEmoji(e.emoji)}
       closeOnSelect={false}
     >
-      <ActionIcon variant="default" size="lg" onClick={() => setOpened((o) => !o)}>
+      <ActionIcon variant="default" size="lg">
         {emoji || '☺'}
       </ActionIcon>
     </EmojiPickerPopover>

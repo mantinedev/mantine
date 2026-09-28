@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import { useProps } from '../../../core';
+import { getOverlayHitPath } from '../get-overlay-hit-path';
 import { useTourContext } from '../Tour.context';
 
 export interface TourOverlayProps {
@@ -9,7 +10,7 @@ export interface TourOverlayProps {
   /** Overlay fill color */
   color?: string;
 
-  /** Whether target elements can be interacted with through the overlay */
+  /** Whether pointer events pass through the spotlight cutout to the target element, the rest of the overlay keeps blocking clicks */
   withInteraction?: boolean;
 
   /** Called when the overlay is clicked */
@@ -26,7 +27,12 @@ export function TourOverlay(_props: TourOverlayProps) {
   const maskId = useId();
   const resolvedColor = color || 'var(--tour-overlay-color, rgba(0, 0, 0, 0.5))';
   const padding = ctx.spotlightPadding;
-  const radius = ctx.spotlightRadius || 4;
+  const radius = ctx.spotlightRadius ?? 4;
+  const interactive = withInteraction || ctx.withOverlayInteraction;
+
+  if (!ctx.withOverlay) {
+    return null;
+  }
 
   return (
     <svg
@@ -34,7 +40,8 @@ export function TourOverlay(_props: TourOverlayProps) {
       role="presentation"
       width="100%"
       height="100%"
-      data-with-overlay-interaction={withInteraction || ctx.withOverlayInteraction || undefined}
+      data-with-overlay-interaction={interactive || undefined}
+      onMouseDown={(event) => event.preventDefault()}
       onClick={(event) => {
         if (ctx.closeOnOverlayClick) {
           ctx.close();
@@ -59,7 +66,22 @@ export function TourOverlay(_props: TourOverlayProps) {
           )}
         </mask>
       </defs>
-      <rect x="0" y="0" width="100%" height="100%" fill={resolvedColor} mask={`url(#${maskId})`} />
+      <rect
+        x="0"
+        y="0"
+        width="100%"
+        height="100%"
+        style={{ fill: resolvedColor }}
+        mask={`url(#${maskId})`}
+      />
+      {interactive && (
+        <path
+          d={getOverlayHitPath(targetRect, padding, radius)}
+          fillRule="evenodd"
+          fill="transparent"
+          style={{ pointerEvents: 'auto' }}
+        />
+      )}
     </svg>
   );
 }

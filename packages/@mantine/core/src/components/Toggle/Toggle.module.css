@@ -59,7 +59,9 @@
     border-color: transparent;
 
     @mixin hover {
-      background-color: var(--toggle-active-hover, var(--mantine-primary-color-light-hover));
+      &:where(:not([data-disabled])) {
+        background-color: var(--toggle-active-hover, var(--mantine-primary-color-light-hover));
+      }
     }
   }
 
@@ -68,5 +70,17 @@
     color: var(--mantine-color-disabled-color);
     background-color: var(--mantine-color-disabled);
     border-color: transparent;
+  }
+
+  &:where([data-disabled][data-active]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-4);
+      color: var(--mantine-color-gray-6);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-4);
+      color: var(--mantine-color-dark-2);
+    }
   }
 }

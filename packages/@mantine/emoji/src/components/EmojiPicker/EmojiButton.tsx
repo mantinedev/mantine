@@ -1,23 +1,25 @@
+import { memo } from 'react';
 import { UnstyledButton } from '@mantine/core';
 import type { EmojiPickerEmoji } from '../../types';
+import { applySkinTone } from '../../utils';
 import { useEmojiPickerContext } from './EmojiPicker.context';
 
 interface EmojiButtonProps {
   emoji: EmojiPickerEmoji;
-  isFocused: boolean;
+  skinTone: number;
   emojiIndex: number;
+  focused: boolean;
+  id: string;
 }
 
-export function EmojiButton({ emoji, isFocused, emojiIndex }: EmojiButtonProps) {
+export const EmojiButton = memo(function EmojiButton({
+  emoji,
+  skinTone,
+  emojiIndex,
+  focused,
+  id,
+}: EmojiButtonProps) {
   const ctx = useEmojiPickerContext();
-  const { skinTone } = ctx;
-
-  const displayEmoji =
-    skinTone > 0 && emoji.skins && emoji.skins[skinTone - 1]
-      ? emoji.skins[skinTone - 1]
-      : emoji.emoji;
-
-  const showFocused = isFocused && ctx.keyboardActive;
 
   return (
     <UnstyledButton
@@ -25,18 +27,12 @@ export function EmojiButton({ emoji, isFocused, emojiIndex }: EmojiButtonProps) 
       role="gridcell"
       aria-label={emoji.name}
       title={emoji.name}
-      id={`emoji-${emoji.id}`}
+      id={id}
       tabIndex={-1}
-      data-focused={showFocused || undefined}
+      data-focused={focused || undefined}
       data-emoji-index={emojiIndex}
-      onClick={() => ctx.onEmojiSelect({ ...emoji, emoji: displayEmoji })}
-      onMouseEnter={() => {
-        ctx.deactivateKeyboard();
-        ctx.setHoveredEmoji(emoji);
-      }}
-      onMouseLeave={() => ctx.setHoveredEmoji(null)}
     >
-      {displayEmoji}
+      {applySkinTone(emoji, skinTone).emoji}
     </UnstyledButton>
   );
-}
+});

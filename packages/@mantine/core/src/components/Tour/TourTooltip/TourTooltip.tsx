@@ -30,7 +30,7 @@ export interface TourTooltipProps
   /** Whether the tooltip is visible */
   mounted?: boolean;
 
-  /** Transition props for the tooltip */
+  /** Transition props for the tooltip, merged with `transitionProps` of `Tour.Root` */
   transitionProps?: TransitionOverride;
 }
 
@@ -83,15 +83,20 @@ export const TourTooltip = factory<TourTooltipFactory>((_props) => {
     middleware: [offset(12), flip(), shift({ padding: 8 })],
   });
 
-  const autoFocusRef = useTooltipAutoFocus(true);
+  const autoFocusRef = useTooltipAutoFocus({
+    autoFocus: !!mounted,
+    opened: !!mounted,
+    step: ctx.step,
+  });
+  const transition = { ...ctx.transitionProps, ...transitionProps };
   const mergedRef = useMergedRef(refs.setFloating, autoFocusRef, ref);
 
   return (
     <Transition
       mounted={!!mounted}
-      duration={transitionProps?.duration ?? 200}
-      transition={transitionProps?.transition ?? 'fade'}
-      timingFunction={transitionProps?.timingFunction}
+      duration={transition.duration ?? 200}
+      transition={transition.transition ?? 'fade'}
+      timingFunction={transition.timingFunction}
     >
       {(transitionStyles) => (
         <Box

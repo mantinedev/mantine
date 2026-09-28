@@ -6,7 +6,8 @@ export type {
   FlattenedRowItem,
 } from './types';
 
-export { CANONICAL_CATEGORY_IDS, DEFAULT_LABELS } from './types';
+export { DEFAULT_LABELS } from './types';
+export { CANONICAL_CATEGORY_IDS } from './categories';
 
 export { searchEmojis, flattenEmojiData } from './utils';
 export { isEmojiSupported, filterSupportedEmojis } from './utils';

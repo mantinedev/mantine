@@ -24,20 +24,36 @@ interface ToolbarToggleGroupBaseProps
     Omit<ElementProps<'div'>, 'onChange' | 'value' | 'defaultValue'> {
   /** Disables all toggle items within this group */
   disabled?: boolean;
+
+  /** `Toolbar.ToggleItem` components */
   children: React.ReactNode;
 }
 
 export interface ToolbarToggleGroupSingleProps extends ToolbarToggleGroupBaseProps {
+  /** Selection mode: `'single'` allows at most one active item, `'multiple'` allows any number of active items */
   type: 'single';
+
+  /** Controlled value, `null` when no item is active */
   value?: string | null;
+
+  /** Uncontrolled default value */
   defaultValue?: string | null;
+
+  /** Called with the new value when an item is toggled, `null` when the active item is deselected */
   onChange?: (value: string | null) => void;
 }
 
 export interface ToolbarToggleGroupMultipleProps extends ToolbarToggleGroupBaseProps {
+  /** Selection mode: `'single'` allows at most one active item, `'multiple'` allows any number of active items */
   type: 'multiple';
+
+  /** Controlled value, array of active item values */
   value?: string[];
+
+  /** Uncontrolled default value */
   defaultValue?: string[];
+
+  /** Called with the array of active item values when an item is toggled */
   onChange?: (value: string[]) => void;
 }
 
@@ -127,10 +143,10 @@ export const ToolbarToggleGroup = factory<ToolbarToggleGroupFactory>((_props) =>
   return (
     <ToolbarToggleGroupProvider value={contextValue}>
       <Box
+        {...others}
         role="group"
         {...ctx.getStyles('group', { className, classNames, style, styles })}
         data-orientation={ctx.orientation}
-        {...others}
       >
         {children}
       </Box>

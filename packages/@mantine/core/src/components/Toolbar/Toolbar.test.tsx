@@ -35,6 +35,23 @@ function DynamicItems({ ref }: { ref: React.Ref<DynamicItemsHandle> }) {
   );
 }
 
+function HistoryToolbar({
+  redoDisabled,
+  withUndo = true,
+}: {
+  redoDisabled: boolean;
+  withUndo?: boolean;
+}) {
+  return (
+    <Toolbar>
+      {withUndo && <Toolbar.Toggle>Undo</Toolbar.Toggle>}
+      <Toolbar.Toggle disabled={redoDisabled}>Redo</Toolbar.Toggle>
+      <Toolbar.Toggle>Bold</Toolbar.Toggle>
+      <Toolbar.Toggle>Italic</Toolbar.Toggle>
+    </Toolbar>
+  );
+}
+
 describe('@mantine/core/Toolbar', () => {
   tests.itSupportsSystemProps<ToolbarProps, ToolbarStylesNames>({
     component: Toolbar,
@@ -262,6 +279,76 @@ describe('@mantine/core/Toolbar', () => {
     });
 
     expect(getTabIndexes()).toStrictEqual([0]);
+  });
+
+  it('keeps the tab stop on the focused item when an earlier item becomes enabled', async () => {
+    const { rerender } = render(<HistoryToolbar redoDisabled />);
+    const bold = screen.getByRole('button', { name: 'Bold' });
+    await userEvent.click(bold);
+    expect(getTabIndexes()).toStrictEqual([-1, -1, 0, -1]);
+
+    await act(async () => {
+      rerender(
+        <>
+          <HistoryToolbar redoDisabled={false} />
+        </>
+      );
+    });
+
+    expect(bold).toHaveFocus();
+    expect(getTabIndexes()).toStrictEqual([-1, -1, 0, -1]);
+  });
+
+  it('keeps the tab stop on the focused item when an earlier item becomes disabled', async () => {
+    const { rerender } = render(<HistoryToolbar redoDisabled={false} />);
+    const italic = screen.getByRole('button', { name: 'Italic' });
+    await userEvent.click(italic);
+    expect(getTabIndexes()).toStrictEqual([-1, -1, -1, 0]);
+
+    await act(async () => {
+      rerender(
+        <>
+          <HistoryToolbar redoDisabled />
+        </>
+      );
+    });
+
+    expect(italic).toHaveFocus();
+    expect(getTabIndexes()).toStrictEqual([-1, -1, -1, 0]);
+  });
+
+  it('keeps the tab stop on the focused item when an item is inserted before it', async () => {
+    const { rerender } = render(<HistoryToolbar redoDisabled={false} withUndo={false} />);
+    const bold = screen.getByRole('button', { name: 'Bold' });
+    await userEvent.click(bold);
+    expect(getTabIndexes()).toStrictEqual([-1, 0, -1]);
+
+    await act(async () => {
+      rerender(
+        <>
+          <HistoryToolbar redoDisabled={false} />
+        </>
+      );
+    });
+
+    expect(bold).toHaveFocus();
+    expect(getTabIndexes()).toStrictEqual([-1, -1, 0, -1]);
+  });
+
+  it('moves the tab stop to the first enabled item when the active item becomes disabled', async () => {
+    const { rerender } = render(<HistoryToolbar redoDisabled={false} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Redo' }));
+    expect(getTabIndexes()).toStrictEqual([-1, 0, -1, -1]);
+
+    await act(async () => {
+      rerender(
+        <>
+          <HistoryToolbar redoDisabled />
+        </>
+      );
+    });
+
+    expect(getTabIndexes()).toStrictEqual([0, -1, -1, -1]);
   });
 
   it('applies vars and styles for the toggle selector to Toolbar.Toggle', () => {

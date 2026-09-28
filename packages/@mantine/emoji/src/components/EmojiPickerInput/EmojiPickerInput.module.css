@@ -15,3 +15,10 @@
   border: none;
   background: none;
 }
+
+.inputValue {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  overflow: hidden;
+}

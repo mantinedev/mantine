@@ -73,3 +73,13 @@ describe('emojiMartAdapter', () => {
     expect(result.emojis.thumbsup.skins).toEqual(['👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿']);
   });
 });
+
+describe('emojiMartAdapter category labels', () => {
+  it('uses the same canonical labels as emojibaseAdapter', () => {
+    const result = emojiMartAdapter({
+      categories: [{ id: 'activity', emojis: [] }],
+      emojis: {},
+    });
+    expect(result.categories[0].label).toBe('Activity');
+  });
+});

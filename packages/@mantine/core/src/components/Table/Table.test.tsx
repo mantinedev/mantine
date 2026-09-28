@@ -1,4 +1,5 @@
 import { memo, Profiler, startTransition, Suspense, use, useState } from 'react';
+import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Table, TableProps, TableStylesNames } from './Table';
 import {
@@ -229,8 +230,12 @@ describe('@mantine/core/Table', () => {
     }
 
     render(<Demo />);
-    await userEvent.click(screen.getByRole('button', { name: 'switch' }));
-    await userEvent.click(screen.getByRole('cell'));
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'switch' }));
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByRole('cell'));
+    });
 
     expect(screen.getByRole('cell')).toHaveTextContent('clicks 1');
     expect(screen.getByRole('cell')).toHaveClass('td-a');

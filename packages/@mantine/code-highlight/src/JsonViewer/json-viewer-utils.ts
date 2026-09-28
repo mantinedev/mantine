@@ -4,82 +4,108 @@ export function serializePath(segments: string[]): string {
   return segments.join(PATH_SEPARATOR);
 }
 
-export function getAllExpandablePaths(
-  value: any,
-  prefix: string[] = [],
-  groupArraysAfterLength: number | false = false,
-  ancestors = new WeakSet<object>()
-): string[] {
-  const paths: string[] = [];
-  if (value !== null && typeof value === 'object' && !ancestors.has(value)) {
-    ancestors.add(value);
-    paths.push(serializePath(prefix));
-    const isArray = Array.isArray(value);
-    const entries: [string, any][] = isArray
-      ? value.map((v: any, i: number) => [String(i), v])
-      : Object.entries(value);
-
-    if (isArray && groupArraysAfterLength !== false && entries.length > groupArraysAfterLength) {
-      for (let i = 0; i < entries.length; i += groupArraysAfterLength) {
-        const end = Math.min(i + groupArraysAfterLength - 1, entries.length - 1);
-        paths.push(serializePath([...prefix, `[${i}...${end}]`]));
-      }
-    }
-
-    for (const [key, val] of entries) {
-      paths.push(
-        ...getAllExpandablePaths(val, [...prefix, key], groupArraysAfterLength, ancestors)
-      );
-    }
-    ancestors.delete(value);
-  }
-  return paths;
+export interface JsonViewerArrayChunk {
+  start: number;
+  end: number;
 }
 
-export function getDefaultExpandedPaths(
-  value: any,
-  depth: number,
-  prefix: string[] = [],
-  currentDepth = 0,
-  groupArraysAfterLength: number | false = false,
-  ancestors = new WeakSet<object>()
-): string[] {
-  if (
-    currentDepth >= depth ||
-    value === null ||
-    typeof value !== 'object' ||
-    ancestors.has(value)
-  ) {
-    return [];
+export function getArrayChunks(
+  length: number,
+  groupArraysAfterLength: number | false
+): JsonViewerArrayChunk[] | null {
+  if (groupArraysAfterLength === false) {
+    return null;
   }
 
-  ancestors.add(value);
-  const paths: string[] = [serializePath(prefix)];
-  const isArray = Array.isArray(value);
-  const entries: [string, any][] = isArray
-    ? value.map((v: any, i: number) => [String(i), v])
-    : Object.entries(value);
+  const size = Math.floor(groupArraysAfterLength);
+  if (!(size >= 1) || length <= groupArraysAfterLength) {
+    return null;
+  }
 
-  if (isArray && groupArraysAfterLength !== false && entries.length > groupArraysAfterLength) {
-    for (let i = 0; i < entries.length; i += groupArraysAfterLength) {
-      const end = Math.min(i + groupArraysAfterLength - 1, entries.length - 1);
-      paths.push(serializePath([...prefix, `[${i}...${end}]`]));
+  const chunks: JsonViewerArrayChunk[] = [];
+  for (let start = 0; start < length; start += size) {
+    chunks.push({ start, end: Math.min(start + size, length) - 1 });
+  }
+  return chunks;
+}
+
+export function getChunkSegment(chunk: JsonViewerArrayChunk): string {
+  return `[${chunk.start}...${chunk.end}]`;
+}
+
+export function resolveDisplayValue(value: any): any {
+  if (value !== null && typeof value === 'object' && typeof value.toJSON === 'function') {
+    try {
+      return value.toJSON();
+    } catch {
+      return value;
     }
   }
+  return value;
+}
 
-  for (const [key, val] of entries) {
-    paths.push(
-      ...getDefaultExpandedPaths(
-        val,
-        depth,
-        [...prefix, key],
-        currentDepth + 1,
-        groupArraysAfterLength,
-        ancestors
-      )
-    );
-  }
-  ancestors.delete(value);
+export function isExpandableValue(value: any): value is object {
+  return value !== null && typeof value === 'object';
+}
+
+export function getEntries(value: object): [string, any][] {
+  return Array.isArray(value)
+    ? value.map((item, index) => [String(index), item])
+    : Object.entries(value);
+}
+
+export interface GetExpandablePathsOptions {
+  depth?: number;
+  groupArraysAfterLength?: number | false;
+}
+
+export function getExpandablePaths(
+  value: any,
+  { depth = Infinity, groupArraysAfterLength = false }: GetExpandablePathsOptions = {}
+): string[] {
+  const paths: string[] = [];
+  const ancestors = new WeakSet<object>();
+
+  const visitChildren = (entries: [string, any][], path: string[], childLevel: number) => {
+    for (const [key, child] of entries) {
+      visit(child, [...path, key], childLevel);
+    }
+  };
+
+  const visit = (node: any, path: string[], level: number) => {
+    const resolved = resolveDisplayValue(node);
+    if (!isExpandableValue(resolved) || ancestors.has(resolved) || level > depth) {
+      return;
+    }
+
+    const entries = getEntries(resolved);
+    if (entries.length === 0) {
+      return;
+    }
+
+    if (path.length > 0) {
+      paths.push(serializePath(path));
+    }
+
+    ancestors.add(resolved);
+    const chunks = Array.isArray(resolved)
+      ? getArrayChunks(entries.length, groupArraysAfterLength)
+      : null;
+
+    if (chunks) {
+      if (level + 1 <= depth) {
+        for (const chunk of chunks) {
+          paths.push(serializePath([...path, getChunkSegment(chunk)]));
+          visitChildren(entries.slice(chunk.start, chunk.end + 1), path, level + 2);
+        }
+      }
+    } else {
+      visitChildren(entries, path, level + 1);
+    }
+    ancestors.delete(resolved);
+  };
+
+  visit(value, [], 1);
   return paths;
 }
 
@@ -134,13 +160,16 @@ export function formatValue(
   }
   if (typeof value === 'string') {
     if (collapseStringsAfterLength !== false && value.length > collapseStringsAfterLength) {
-      const truncated = value.slice(0, collapseStringsAfterLength);
+      const splitsPair = /^[\uD800-\uDBFF][\uDC00-\uDFFF]/.test(
+        value.slice(collapseStringsAfterLength - 1)
+      );
+      const truncated = value.slice(0, collapseStringsAfterLength - (splitsPair ? 1 : 0));
       return {
-        display: withQuotes ? `"${truncated}..."` : `${truncated}...`,
+        display: withQuotes ? `${JSON.stringify(truncated).slice(0, -1)}..."` : `${truncated}...`,
         collapsed: true,
       };
     }
-    return { display: withQuotes ? `"${value}"` : value, collapsed: false };
+    return { display: withQuotes ? JSON.stringify(value) : value, collapsed: false };
   }
   return { display: String(value), collapsed: false };
 }

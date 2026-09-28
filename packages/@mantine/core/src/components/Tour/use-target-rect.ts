@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useIsomorphicEffect } from '@mantine/hooks';
 
 export type TourTarget = string | React.RefObject<HTMLElement | null> | undefined;
 
@@ -22,7 +23,7 @@ function resolveTarget(target: TourTarget): HTMLElement | null {
 export function useTargetElement(target: TourTarget) {
   const [element, setElement] = useState<HTMLElement | null>(null);
 
-  useEffect(() => {
+  useIsomorphicEffect(() => {
     const el = resolveTarget(target);
     setElement(el);
 

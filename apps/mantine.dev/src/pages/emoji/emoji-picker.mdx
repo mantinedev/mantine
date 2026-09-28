@@ -39,8 +39,8 @@ adjusts automatically based on the number of columns and emoji size.
 
 ## Emoji size
 
-Use the `emojiSize` prop to change the size of emoji buttons. This value is also used
-for virtualizer row height calculations.
+Use the `emojiSize` prop to change the size of emoji buttons. Emoji font size is derived from
+this value, and it is also used for virtualizer row height calculations.
 
 <Demo data={EmojiPickerDemos.emojiSize} />
 
@@ -54,7 +54,8 @@ with all skin tone options. Use `skinTone` and `onSkinToneChange` props to contr
 ## Scroll area
 
 Customize the internal `ScrollArea` with the `scrollAreaProps` prop. You can change the height,
-scrollbar type, and any other `ScrollArea` prop. The default height is 300px.
+scrollbar type, and any other `ScrollArea` prop. The default height is 300px. Empty search
+content is displayed inside the same scroll area, so it has the same height.
 
 <Demo data={EmojiPickerDemos.scrollArea} />
 
@@ -109,7 +110,9 @@ function Demo() {
 ## Unsupported emoji detection
 
 Set `withUnsupportedDetection` to filter out emojis not supported by the current browser/OS.
-Detection runs eagerly on data load using a canvas-based approach and results are cached.
+Detection runs eagerly on data load: each emoji is drawn on a canvas and is considered supported
+when it renders as a single color glyph (monochrome fallback glyphs and sequences that fall apart
+into several glyphs, for example unknown flags, are filtered out). Results are cached.
 
 ```tsx
 <EmojiPicker data={emojiData} withUnsupportedDetection />
@@ -119,9 +122,13 @@ This feature is disabled by default because canvas-based detection has edge case
 
 ## Keyboard navigation
 
-The emoji grid supports full keyboard navigation. Arrow keys work both when the grid
-or the search input is focused. The keyboard focus indicator only appears during
-keyboard navigation and automatically hides when using the mouse.
+The emoji grid is a single tab stop. When the grid is focused, arrow keys move the active emoji
+row by row, keeping the column across category boundaries. Keyboard navigation continues from the
+last hovered or clicked emoji, or from the first emoji of the category selected in the category
+navigation. When the search input is focused, `ArrowDown`, `ArrowUp` and `Enter` are forwarded
+to the grid (`ArrowLeft` and `ArrowRight` move the text caret), and `Enter` selects the first
+search result after the query changes. The keyboard focus indicator only appears during keyboard
+navigation.
 
 <KeyboardEventsTable
   data={[
@@ -130,8 +137,8 @@ keyboard navigation and automatically hides when using the mouse.
     { key: 'ArrowDown', description: 'Moves focus one row down' },
     { key: 'ArrowUp', description: 'Moves focus one row up' },
     { key: 'Enter', description: 'Selects focused emoji' },
-    { key: 'Space', description: 'Selects focused emoji' },
-    { key: 'Escape', description: 'Moves focus back to search input' },
+    { key: 'Space', description: 'Selects focused emoji (grid only)' },
+    { key: 'Escape', description: 'Moves focus from the grid back to the search input (only when the search input is displayed)' },
     { key: 'Tab', description: 'Moves focus between sections (search, category nav, grid, skin tone)' },
   ]}
 />
