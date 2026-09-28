@@ -111,7 +111,7 @@ function Demo() {
 }
 ```
 
-Keyboard interactions when the thumb is focused:
+Keyboard interactions when the thumb is focused. Arrow keys wrap around: decreasing from 0 moves to the last step before 360, increasing from the last step moves to 0.
 
 <KeyboardEventsTable
   data={[
@@ -120,7 +120,7 @@ Keyboard interactions when the thumb is focused:
     { key: 'ArrowUp', description: 'Increases value by step' },
     { key: 'ArrowRight', description: 'Increases value by step' },
     { key: 'Home', description: 'Sets value to 0' },
-    { key: 'End', description: 'Sets value to 359' },
+    { key: 'End', description: 'Sets value to the last step before 360 (359 with the default step)' },
   ]}
 />
 
