@@ -1,33 +1,13 @@
 import { Diff } from '@mantine/code-highlight';
 import { MantineDemo } from '@mantinex/demo';
-
-const previousCode = `import { useState } from 'react';
-
-function Counter() {
-  const [count, setCount] = useState(0);
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  );
-}`;
-
-const currentCode = `import { useReducer } from 'react';
-
-function Counter() {
-  const [count, dispatch] = useReducer(reducer, 0);
-  return (
-    <button onClick={() => dispatch({ type: 'increment' })}>
-      Count: {count}
-    </button>
-  );
-}`;
+import { currentCode, dataCode, previousCode } from './data';
 
 const code = `
 import { Diff } from '@mantine/code-highlight';
+import { currentCode, previousCode } from './data';
 
 function Demo() {
-  return <Diff previousValue={previousValue} currentValue={currentValue}{{props}} />;
+  return <Diff previousValue={previousCode} currentValue={currentCode}{{props}} />;
 }
 `;
 
@@ -38,7 +18,10 @@ function Wrapper(props: any) {
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
-  code,
+  code: [
+    { fileName: 'Demo.tsx', code, language: 'tsx' },
+    { fileName: 'data.ts', code: dataCode, language: 'tsx' },
+  ],
   controls: [
     {
       prop: 'mode',

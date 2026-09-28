@@ -20,6 +20,12 @@
   border-spacing: 0;
 }
 
+.row {
+  &:focus {
+    outline-offset: -2px;
+  }
+}
+
 .lineNumber {
   width: 1%;
   min-width: 40px;
@@ -41,7 +47,31 @@
 .content {
   padding: 0 8px;
   white-space: pre-wrap;
-  word-break: break-all;
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+
+.root:where([data-split]) {
+  .lineNumber {
+    width: auto;
+  }
+
+  .content {
+    width: 50%;
+  }
+}
+
+.changeMarker {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+  user-select: none;
 }
 
 .addedLine {
@@ -111,10 +141,15 @@
   &:hover {
     color: var(--mantine-color-text);
   }
+
+  &:focus {
+    outline-offset: -2px;
+  }
 }
 
 .splitDivider {
   width: 1px;
+  min-width: 1px;
   padding: 0;
 
   @mixin where-light {
