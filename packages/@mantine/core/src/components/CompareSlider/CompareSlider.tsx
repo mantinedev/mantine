@@ -1,4 +1,5 @@
-import { useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
+import { useRef } from 'react';
+import { clamp, useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -9,9 +10,13 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { CompareSliderHandleIcon } from './CompareSliderHandleIcon';
 import classes from './CompareSlider.module.css';
 
 export type CompareSliderStylesNames = 'root' | 'before' | 'after' | 'divider' | 'handle';
+export type CompareSliderCssVariables = {
+  root: '--compare-divider-width' | '--compare-divider-color' | '--compare-handle-size';
+};
 
 export interface CompareSliderProps
   extends BoxProps, StylesApiProps<CompareSliderFactory>, ElementProps<'div', 'onChange'> {
@@ -45,7 +50,7 @@ export interface CompareSliderProps
   /** Arrow keys position increment/decrement in % @default 5 */
   keyboardStep?: number;
 
-  /** Enables position change animation, number is used as animation duration in ms (`150` when set to `true`) @default false */
+  /** Enables position change animation, number is used as animation duration in ms (`150` when set to `true`). The animation is disabled while the divider is dragged and when `changePositionOnHover` is set. @default false */
   transition?: boolean | number;
 
   /** Sets `data-disabled` attribute, disables interactions */
@@ -56,6 +61,7 @@ export type CompareSliderFactory = Factory<{
   props: CompareSliderProps;
   ref: HTMLDivElement;
   stylesNames: CompareSliderStylesNames;
+  vars: CompareSliderCssVariables;
 }>;
 
 const defaultProps = {
@@ -66,30 +72,6 @@ const defaultProps = {
   keyboardStep: 5,
   transition: false,
 } satisfies Partial<CompareSliderProps>;
-
-function clampPosition(value: number) {
-  return Math.min(Math.max(value, 0), 100);
-}
-
-function CompareSliderHandleIcon() {
-  return (
-    <svg
-      data-compare-handle-icon
-      viewBox="0 0 24 24"
-      width="60%"
-      height="60%"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <polyline points="9 6 3 12 9 18" />
-      <polyline points="15 6 21 12 15 18" />
-    </svg>
-  );
-}
 
 export const CompareSlider = factory<CompareSliderFactory>((_props) => {
   const props = useProps('CompareSlider', defaultProps, _props);
@@ -114,13 +96,18 @@ export const CompareSlider = factory<CompareSliderFactory>((_props) => {
     disabled,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledby,
+    'aria-describedby': ariaDescribedby,
     tabIndex,
     onMouseMove,
+    onMouseDownCapture,
+    onTouchStartCapture,
     mod,
     attributes,
     ref,
     ...others
   } = props;
+
+  const handleRef = useRef<HTMLDivElement>(null);
 
   const [_position, setPosition] = useUncontrolled({
     value: position,
@@ -131,7 +118,7 @@ export const CompareSlider = factory<CompareSliderFactory>((_props) => {
 
   const { ref: moveRef, active } = useMove(({ x, y }) => {
     if (!disabled) {
-      setPosition(clampPosition((orientation === 'vertical' ? y : x) * 100));
+      setPosition((orientation === 'vertical' ? y : x) * 100);
     }
   });
 
@@ -151,6 +138,12 @@ export const CompareSlider = factory<CompareSliderFactory>((_props) => {
   const transitionDuration = typeof transition === 'number' ? transition : transition ? 150 : 0;
   const applyTransition = !active && !changePositionOnHover;
 
+  const focusHandle = () => {
+    if (!disabled) {
+      handleRef.current?.focus({ preventScroll: true, focusVisible: false });
+    }
+  };
+
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseMove?.(event);
 
@@ -164,7 +157,7 @@ export const CompareSlider = factory<CompareSliderFactory>((_props) => {
         ? (event.clientY - rect.top) / rect.height
         : (event.clientX - rect.left) / rect.width;
 
-    setPosition(clampPosition(value * 100));
+    setPosition(clamp(value * 100, 0, 100));
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -180,9 +173,9 @@ export const CompareSlider = factory<CompareSliderFactory>((_props) => {
     let newPosition = _position;
 
     if (decreaseKeys.includes(event.key)) {
-      newPosition = clampPosition(_position - keyboardStep!);
+      newPosition = clamp(_position - keyboardStep!, 0, 100);
     } else if (increaseKeys.includes(event.key)) {
-      newPosition = clampPosition(_position + keyboardStep!);
+      newPosition = clamp(_position + keyboardStep!, 0, 100);
     } else if (event.key === 'Home') {
       newPosition = 0;
     } else if (event.key === 'End') {
@@ -207,17 +200,27 @@ export const CompareSlider = factory<CompareSliderFactory>((_props) => {
       mod={[{ orientation, disabled }, mod]}
       {...others}
       onMouseMove={handleMouseMove}
+      onMouseDownCapture={(event) => {
+        onMouseDownCapture?.(event);
+        focusHandle();
+      }}
+      onTouchStartCapture={(event) => {
+        onTouchStartCapture?.(event);
+        focusHandle();
+      }}
     >
       <div {...getStyles('after')}>{after}</div>
       <div {...getStyles('before')}>{before}</div>
 
       <div {...getStyles('divider')}>
         <div
+          ref={handleRef}
           {...getStyles('handle', { focusable: true })}
           role="slider"
           tabIndex={disabled ? -1 : (tabIndex ?? 0)}
           aria-label={ariaLabel}
           aria-labelledby={ariaLabelledby}
+          aria-describedby={ariaDescribedby}
           aria-orientation={orientation}
           aria-valuemin={0}
           aria-valuemax={100}
@@ -242,4 +245,5 @@ export namespace CompareSlider {
   export type Props = CompareSliderProps;
   export type StylesNames = CompareSliderStylesNames;
   export type Factory = CompareSliderFactory;
+  export type CssVariables = CompareSliderCssVariables;
 }

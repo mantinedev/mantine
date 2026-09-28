@@ -7,6 +7,7 @@ export const EmojiPickerInputStylesApi: StylesApiData<EmojiPickerInputFactory> =
     ...InputStylesApi.selectors,
     ...InputWrapperStylesApi.selectors,
     dropdown: 'Popover dropdown',
+    inputValue: 'Wrapper of the selected emoji and its name',
     inputEmoji: 'Selected emoji character displayed in the input',
     inputEmojiName: 'Selected emoji name displayed next to the emoji',
   },

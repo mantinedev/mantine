@@ -1,5 +1,26 @@
 import { ALL_COUNTRIES } from '../phone-data';
-import { guessCountry } from './guess-country';
+import { guessCountry, matchesAreaCode } from './guess-country';
+
+describe('matchesAreaCode', () => {
+  const canada = ALL_COUNTRIES.find((c) => c.iso2 === 'ca')!;
+  const uk = ALL_COUNTRIES.find((c) => c.iso2 === 'gb')!;
+
+  it('matches when national digits start with one of the area codes', () => {
+    expect(matchesAreaCode(canada, '+1204555')).toBe(true);
+  });
+
+  it('does not match when national digits use a different area code', () => {
+    expect(matchesAreaCode(canada, '+1202555')).toBe(false);
+  });
+
+  it('does not match when dial code differs', () => {
+    expect(matchesAreaCode(canada, '+44204')).toBe(false);
+  });
+
+  it('returns false for countries without area codes', () => {
+    expect(matchesAreaCode(uk, '+44207')).toBe(false);
+  });
+});
 
 describe('guessCountry', () => {
   it('detects US from +1202', () => {

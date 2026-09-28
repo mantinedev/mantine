@@ -158,4 +158,42 @@ describe('@mantine/core/CompareSlider', () => {
     expect(handle).toHaveAttribute('data-hidden');
     expect(handle).toHaveAttribute('tabindex', '0');
   });
+
+  it('forwards aria-describedby to the slider handle', () => {
+    render(<CompareSlider {...defaultProps} aria-describedby="description-id" />);
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-describedby', 'description-id');
+  });
+
+  it('focuses the slider handle on mousedown on the root without scrolling', () => {
+    const onMouseDownCapture = jest.fn();
+    const focus = jest.spyOn(HTMLElement.prototype, 'focus');
+    render(<CompareSlider {...defaultProps} onMouseDownCapture={onMouseDownCapture} />);
+    fireEvent.mouseDown(screen.getByText('Before'));
+    expect(screen.getByRole('slider')).toHaveFocus();
+    expect(onMouseDownCapture).toHaveBeenCalledTimes(1);
+    expect(focus).toHaveBeenCalledWith(expect.objectContaining({ preventScroll: true }));
+    focus.mockRestore();
+  });
+
+  it('focuses the slider handle on touchstart on the root', () => {
+    const onTouchStartCapture = jest.fn();
+    render(<CompareSlider {...defaultProps} onTouchStartCapture={onTouchStartCapture} />);
+    fireEvent.touchStart(screen.getByText('After'), {
+      changedTouches: [{ clientX: 0, clientY: 0 }],
+    });
+    expect(screen.getByRole('slider')).toHaveFocus();
+    expect(onTouchStartCapture).toHaveBeenCalledTimes(1);
+  });
+
+  it('focuses the hidden slider handle on mousedown when withHandle is false', () => {
+    render(<CompareSlider {...defaultProps} withHandle={false} />);
+    fireEvent.mouseDown(screen.getByText('Before'));
+    expect(screen.getByRole('slider')).toHaveFocus();
+  });
+
+  it('does not focus the slider handle on mousedown when disabled', () => {
+    render(<CompareSlider {...defaultProps} disabled />);
+    fireEvent.mouseDown(screen.getByText('Before'));
+    expect(screen.getByRole('slider')).not.toHaveFocus();
+  });
 });

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDidUpdate } from '../use-did-update/use-did-update';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { useCallbackRef } from '../utils';
 
 export interface UseCountdownFormatted {
   /** Number of whole days remaining */
@@ -20,10 +21,13 @@ export interface UseCountdownFormatted {
 }
 
 export interface UseCountdownOptions {
-  /** Target date to count down to. Mutually exclusive with `countStart`, clearing it stops the countdown */
+  /** Target date to count down to. Mutually exclusive with `countStart`, clearing it stops the countdown
+   * and resets `count` to `countStart`. An invalid date results in `count` of `0`, the countdown does not run
+   * and `onComplete` is not called */
   targetDate?: Date | number | string;
 
-  /** Duration in milliseconds to count down from, used in controllable mode */
+  /** Duration in milliseconds to count down from in `countStart` mode,
+   * changing it while the countdown is not running resets `count` */
   countStart?: number;
 
   /** Tick interval in milliseconds, `1000` by default */
@@ -57,7 +61,7 @@ export interface UseCountdownReturnValue {
   /** Stops the countdown, keeps the current `count` value */
   stop: () => void;
 
-  /** Stops the countdown and resets `count` to the initial value */
+  /** Stops the countdown and resets `count` to `countStart`, or to the time remaining until `targetDate` */
   reset: () => void;
 }
 
@@ -89,28 +93,45 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
   const countRef = useRef(count);
   const runningRef = useRef(false);
   const completedRef = useRef(false);
+  const initializedRef = useRef(false);
+  const optionsRef = useRef({ targetDate, clampedCountStart });
+  optionsRef.current = { targetDate, clampedCountStart };
 
-  const isTargetModeRef = useRef(isTargetMode);
-  const targetDateRef = useRef(targetDate);
-  const clampedCountStartRef = useRef(clampedCountStart);
-  const resolvedAutoStartRef = useRef(resolvedAutoStart);
-  const onCompleteRef = useRef(onComplete);
-  const onTickRef = useRef(onTick);
+  const handleComplete = useCallbackRef(onComplete);
+  const handleTick = useCallbackRef(onTick);
 
-  countRef.current = count;
-  isTargetModeRef.current = isTargetMode;
-  targetDateRef.current = targetDate;
-  clampedCountStartRef.current = clampedCountStart;
-  resolvedAutoStartRef.current = resolvedAutoStart;
-  onCompleteRef.current = onComplete;
-  onTickRef.current = onTick;
+  const setRunningState = useCallback((value: boolean) => {
+    runningRef.current = value;
+    setRunning(value);
+  }, []);
+
+  const setCountState = useCallback((value: number) => {
+    countRef.current = value;
+    setCount(value);
+  }, []);
+
+  const syncToEnd = useCallback((end: number) => {
+    const remaining = Number.isNaN(end) ? 0 : Math.max(0, end - Date.now());
+    endRef.current = end;
+    setCountState(remaining);
+    return remaining;
+  }, []);
+
+  const getEnd = useCallback((resume: boolean) => {
+    const current = optionsRef.current;
+    if (current.targetDate !== undefined && current.targetDate !== null) {
+      return getTargetTime(current.targetDate);
+    }
+
+    const base = resume && countRef.current > 0 ? countRef.current : current.clampedCountStart;
+    return Date.now() + base;
+  }, []);
 
   const complete = useCallback(() => {
-    runningRef.current = false;
-    setRunning(false);
-    if (!completedRef.current) {
+    setRunningState(false);
+    if (!completedRef.current && !Number.isNaN(endRef.current)) {
       completedRef.current = true;
-      onCompleteRef.current?.();
+      handleComplete();
     }
   }, []);
 
@@ -119,55 +140,24 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
       return;
     }
 
-    let end: number;
-    if (isTargetModeRef.current) {
-      end = getTargetTime(targetDateRef.current!);
+    if (syncToEnd(getEnd(true)) > 0) {
+      completedRef.current = false;
+      setRunningState(true);
     } else {
-      const base = countRef.current > 0 ? countRef.current : clampedCountStartRef.current;
-      end = Date.now() + base;
-    }
-
-    endRef.current = end;
-    completedRef.current = false;
-
-    const remaining = Math.max(0, end - Date.now());
-    setCount(remaining);
-
-    if (remaining <= 0) {
       complete();
-      return;
     }
-
-    runningRef.current = true;
-    setRunning(true);
-  }, [complete]);
+  }, []);
 
   const stop = useCallback(() => {
     if (runningRef.current) {
-      const remaining = Math.max(0, endRef.current - Date.now());
-      countRef.current = remaining;
-      setCount(remaining);
+      syncToEnd(endRef.current);
     }
-    runningRef.current = false;
-    setRunning(false);
+    setRunningState(false);
   }, []);
 
   const reset = useCallback(() => {
-    runningRef.current = false;
-    setRunning(false);
-    completedRef.current = false;
-
-    if (isTargetModeRef.current) {
-      const end = getTargetTime(targetDateRef.current!);
-      endRef.current = end;
-      const remaining = Math.max(0, end - Date.now());
-      countRef.current = remaining;
-      setCount(remaining);
-    } else {
-      endRef.current = 0;
-      countRef.current = clampedCountStartRef.current;
-      setCount(clampedCountStartRef.current);
-    }
+    setRunningState(false);
+    syncToEnd(getEnd(false));
   }, []);
 
   useEffect(() => {
@@ -177,8 +167,8 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
 
     const id = window.setInterval(() => {
       const remaining = Math.max(0, endRef.current - Date.now());
-      setCount(remaining);
-      onTickRef.current?.(remaining);
+      setCountState(remaining);
+      handleTick(remaining);
 
       if (remaining <= 0) {
         window.clearInterval(id);
@@ -187,50 +177,41 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
     }, interval);
 
     return () => window.clearInterval(id);
-  }, [running, interval, complete]);
+  }, [running, interval]);
 
   useIsomorphicEffect(() => {
+    if (initializedRef.current) {
+      return;
+    }
+
+    initializedRef.current = true;
     if (resolvedAutoStart) {
       start();
-    } else if (isTargetModeRef.current) {
-      const end = getTargetTime(targetDateRef.current!);
-      endRef.current = end;
-      const remaining = Math.max(0, end - Date.now());
-      countRef.current = remaining;
-      setCount(remaining);
+    } else {
+      reset();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const targetTime = isTargetMode ? getTargetTime(targetDate!) : null;
+  const targetTime = isTargetMode ? getTargetTime(targetDate) : null;
 
   useDidUpdate(() => {
     if (targetTime === null) {
-      runningRef.current = false;
-      setRunning(false);
-      completedRef.current = false;
-      endRef.current = 0;
-      countRef.current = clampedCountStartRef.current;
-      setCount(clampedCountStartRef.current);
+      reset();
       return;
     }
 
-    const wasRunning = runningRef.current;
-    endRef.current = targetTime;
-    completedRef.current = false;
-
-    const remaining = Math.max(0, targetTime - Date.now());
-    setCount(remaining);
-
-    if (remaining <= 0) {
+    if (syncToEnd(targetTime) <= 0) {
       complete();
-      return;
-    }
-
-    if (!wasRunning && resolvedAutoStartRef.current) {
+    } else if (!runningRef.current && resolvedAutoStart) {
       start();
     }
   }, [targetTime]);
+
+  useDidUpdate(() => {
+    if (!isTargetMode && !runningRef.current) {
+      syncToEnd(getEnd(false));
+    }
+  }, [clampedCountStart]);
 
   const formatted = useMemo(() => formatCountdown(count), [count]);
 

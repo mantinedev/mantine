@@ -11,10 +11,11 @@ It supports expand/collapse, type indicators, copy to clipboard, and many other 
 
 <Demo data={JsonViewerDemos.usage} />
 
+`JsonViewer` displays values the way `JSON.stringify` serializes them: values that implement `toJSON()` (for example, `Date`) are displayed as the result of `toJSON()`, and `Map` / `Set` are displayed as empty objects.
+
 ## Default expand depth
 
-Use `defaultExpandDepth` prop to control how many levels are expanded by default.
-Set it to `0` to collapse all nodes, or to a higher number to expand more levels:
+Use `defaultExpandDepth` prop to control how many levels are expanded by default. The root node is always expanded. With `1` (default) the root's direct children are visible and their nested objects and arrays are collapsed, with `2` those are expanded as well, and so on. Group rows created by `groupArraysAfterLength` count as one level. Empty objects and arrays are displayed inline as `{}` and `[]`:
 
 <Demo data={JsonViewerDemos.expandDepth} />
 
@@ -36,7 +37,7 @@ Use `rootName` prop to display a label for the root node. Set it to `false` (def
 
 ## Expand all / collapse all controls
 
-Set `withControls` prop to display expand all and collapse all buttons:
+Set `withControls` prop to display expand all and collapse all buttons. Collapse all collapses every nested node; the root node always stays expanded. The controls are not rendered when `allExpanded` is set:
 
 <Demo data={JsonViewerDemos.controls} />
 
@@ -100,10 +101,12 @@ Set `withChevrons` prop to display expand/collapse chevrons next to collapsible 
 `JsonViewer` supports keyboard navigation similar to the [Tree](/core/tree) component:
 
 - `↑` / `↓` – move focus between visible nodes
-- `→` – expand a collapsed node, or move focus to the first child if already expanded
-- `←` – collapse an expanded node, or move focus to the parent node if already collapsed
+- `→` – expand a collapsed node, or move focus to its first child
+- `←` – collapse an expanded node, or move focus to its parent
 - `Enter` / `Space` – toggle expand/collapse on collapsible nodes, trigger `onValueSelect` on primitive nodes
 - `Ctrl + C` / `⌘ + C` – copy the focused node value when `withCopy` prop is set
+
+The root node, and every node when `allExpanded` is set, cannot be collapsed.
 
 ## Accessibility
 

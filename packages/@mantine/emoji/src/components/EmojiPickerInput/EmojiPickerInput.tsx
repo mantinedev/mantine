@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import {
   BoxProps,
   createVarsResolver,
@@ -14,10 +14,11 @@ import {
   useResolvedStylesApi,
   useStyles,
   InputBase,
+  InputClearButtonProps,
   __BaseInputProps,
   __InputStylesNames,
 } from '@mantine/core';
-import { useUncontrolled } from '@mantine/hooks';
+import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import type { EmojiPickerEmoji } from '../../types';
 import { EmojiPicker, EmojiPickerProps } from '../EmojiPicker';
 import classes from './EmojiPickerInput.module.css';
@@ -26,6 +27,7 @@ export type EmojiPickerInputStylesNames =
   | 'dropdown'
   | 'inputEmoji'
   | 'inputEmojiName'
+  | 'inputValue'
   | __InputStylesNames;
 
 export type EmojiPickerInputCssVariables = {
@@ -53,8 +55,11 @@ export interface EmojiPickerInputProps
   /** Determines whether the clear button is displayed @default false */
   clearable?: boolean;
 
-  /** Props passed to the `Popover` component */
-  popoverProps?: Omit<PopoverProps, 'children'>;
+  /** Props passed down to the clear button */
+  clearButtonProps?: InputClearButtonProps;
+
+  /** Props passed to the `Popover` component, use `opened`, `defaultOpened` and `onOpenedChange` props to control opened state */
+  popoverProps?: Omit<PopoverProps, 'children' | 'opened' | 'defaultOpened' | 'onChange'>;
 
   /** Controlled popover opened state */
   opened?: boolean;
@@ -114,6 +119,7 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
     onChange,
     placeholder,
     clearable,
+    clearButtonProps,
     popoverProps,
     opened: openedProp,
     defaultOpened,
@@ -145,8 +151,12 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
     mod,
     attributes,
     rightSection,
+    ref,
     ...others
   } = props;
+
+  const inputRef = useRef<HTMLButtonElement>(null);
+  const mergedRef = useMergedRef(inputRef, ref);
 
   const getStyles = useStyles<EmojiPickerInputFactory>({
     name: 'EmojiPickerInput',
@@ -171,24 +181,36 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
     onChange,
   });
 
-  const [dropdownOpened, setDropdownOpened] = useState(defaultOpened ?? false);
+  const [opened, setOpened] = useUncontrolled({
+    value: openedProp,
+    defaultValue: defaultOpened,
+    finalValue: false,
+    onChange: onOpenedChange,
+  });
 
-  const opened = openedProp ?? dropdownOpened;
-  const setOpened = useCallback(
-    (val: boolean) => {
-      setDropdownOpened(val);
-      onOpenedChange?.(val);
-    },
-    [onOpenedChange]
-  );
+  const [skinTone, setSkinTone] = useUncontrolled({
+    value: pickerProps?.skinTone,
+    defaultValue: pickerProps?.defaultSkinTone,
+    finalValue: 0,
+    onChange: pickerProps?.onSkinToneChange,
+  });
 
   const selectedEmoji = value ? data.emojis[value] : null;
-  const [displayedEmoji, setDisplayedEmoji] = useState<string | null>(null);
+  const [tonedEmoji, setTonedEmoji] = useState<{ id: string; emoji: string } | null>(null);
+  const [prevValue, setPrevValue] = useState(value);
+  if (prevValue !== value) {
+    setPrevValue(value);
+    if (tonedEmoji && tonedEmoji.id !== value) {
+      setTonedEmoji(null);
+    }
+  }
+  const displayedEmoji =
+    tonedEmoji && tonedEmoji.id === value ? tonedEmoji.emoji : selectedEmoji?.emoji;
 
   const handleEmojiSelect = useCallback(
     (emoji: EmojiPickerEmoji) => {
       setValue(emoji.id);
-      setDisplayedEmoji(emoji.emoji);
+      setTonedEmoji({ id: emoji.id, emoji: emoji.emoji });
       onEmojiSelect?.(emoji);
       if (closeOnSelect) {
         setOpened(false);
@@ -197,10 +219,11 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
     [setValue, onEmojiSelect, closeOnSelect, setOpened]
   );
 
-  const handleClear = useCallback(() => {
+  const handleClear = () => {
     setValue(null);
-    setDisplayedEmoji(null);
-  }, [setValue]);
+    setTonedEmoji(null);
+    inputRef.current?.focus();
+  };
 
   const handleInputClick = () => {
     if (!readOnly && !disabled) {
@@ -209,15 +232,8 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
   };
 
   const inputContent = selectedEmoji ? (
-    <span
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--mantine-spacing-xs)',
-        overflow: 'hidden',
-      }}
-    >
-      <span {...getStyles('inputEmoji')}>{displayedEmoji || selectedEmoji.emoji}</span>
+    <span {...getStyles('inputValue')}>
+      <span {...getStyles('inputEmoji')}>{displayedEmoji}</span>
       <span {...getStyles('inputEmojiName')}>{selectedEmoji.name}</span>
     </span>
   ) : null;
@@ -225,13 +241,18 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
   const clearButton =
     clearable && selectedEmoji && !readOnly && !disabled ? (
       <Input.ClearButton
+        aria-label="Clear emoji"
+        {...clearButtonProps}
         data-clear
-        onClick={(event: React.MouseEvent) => {
+        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
           event.stopPropagation();
           handleClear();
+          clearButtonProps?.onClick?.(event);
         }}
       />
     ) : undefined;
+
+  const _id = useId(id);
 
   const wrapperProps = {
     label,
@@ -255,23 +276,24 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
     inputWrapperOrder,
     withAsterisk,
     variant,
-    id,
     mod,
     attributes,
     ..._wrapperProps,
+    id: _id,
   };
 
   return (
     <Input.Wrapper {...wrapperProps}>
       <Popover
-        opened={opened}
-        onChange={setOpened}
         __staticSelector="EmojiPickerInput"
         position="bottom-start"
         offset={5}
         trapFocus
         returnFocus
         {...popoverProps}
+        id={_id}
+        opened={opened}
+        onChange={setOpened}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
@@ -283,7 +305,7 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
             type="button"
             pointer
             {...others}
-            {...getStyles('input')}
+            ref={mergedRef}
             classNames={resolvedClassNames}
             styles={resolvedStyles}
             __staticSelector="EmojiPickerInput"
@@ -295,7 +317,7 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
             size={size}
             variant={variant}
             unstyled={unstyled}
-            id={id}
+            id={_id}
             attributes={attributes}
             aria-expanded={opened}
           >
@@ -304,7 +326,14 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
         </Popover.Target>
 
         <Popover.Dropdown {...getStyles('dropdown')}>
-          <EmojiPicker {...pickerProps} data={data} onEmojiSelect={handleEmojiSelect} autoFocus />
+          <EmojiPicker
+            {...pickerProps}
+            skinTone={skinTone}
+            onSkinToneChange={setSkinTone}
+            data={data}
+            onEmojiSelect={handleEmojiSelect}
+            autoFocus
+          />
         </Popover.Dropdown>
       </Popover>
     </Input.Wrapper>

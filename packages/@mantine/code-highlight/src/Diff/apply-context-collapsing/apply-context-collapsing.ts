@@ -1,5 +1,4 @@
-import type { HunkPair } from '../pair-hunks/pair-hunks';
-import type { LineEntry } from '../split-into-lines/split-into-lines';
+import type { DiffRow, LineRow } from '../group-change-blocks/group-change-blocks';
 
 export interface ExpandMarker {
   kind: 'expand';
@@ -7,10 +6,14 @@ export interface ExpandMarker {
   hiddenCount: number;
 }
 
-export type ProcessedRow = (LineEntry & { kind: 'line' }) | HunkPair | ExpandMarker;
+export interface RevealedLineRow extends LineRow {
+  revealedSectionIndex: number;
+}
+
+export type ProcessedRow = DiffRow | RevealedLineRow | ExpandMarker;
 
 export function applyContextCollapsing(
-  items: ((LineEntry & { kind: 'line' }) | HunkPair)[],
+  items: DiffRow[],
   contextLines: number,
   expandedSections: Set<number>
 ): ProcessedRow[] {
@@ -18,12 +21,9 @@ export function applyContextCollapsing(
     return items;
   }
 
-  const isChange = (item: (typeof items)[number]) =>
-    item.kind === 'hunkPair' || item.type !== 'equal';
-
   const changeIndices: number[] = [];
   for (let i = 0; i < items.length; i++) {
-    if (isChange(items[i])) {
+    if (items[i].kind === 'block') {
       changeIndices.push(i);
     }
   }
@@ -62,7 +62,8 @@ export function applyContextCollapsing(
       }
 
       if (expandedSections.has(currentSection)) {
-        for (let j = sectionStart; j < i; j++) {
+        result.push({ ...(items[sectionStart] as LineRow), revealedSectionIndex: currentSection });
+        for (let j = sectionStart + 1; j < i; j++) {
           result.push(items[j]);
         }
       } else {

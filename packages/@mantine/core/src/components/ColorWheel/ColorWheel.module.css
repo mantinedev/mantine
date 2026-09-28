@@ -11,7 +11,7 @@
   user-select: none;
   touch-action: none;
 
-  &:focus-within {
+  &:has(:focus-visible) {
     outline: 2px solid var(--mantine-primary-color-filled);
     outline-offset: 2px;
   }
@@ -68,10 +68,5 @@
 
   &[data-hidden] {
     opacity: 0;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--mantine-primary-color-filled);
-    outline-offset: 2px;
   }
 }

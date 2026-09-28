@@ -18,7 +18,7 @@ function Demo() {
         h={{ base: 192, sm: 320 }}
         w={{ base: 300, sm: 500 }}
         position={position}
-        onPositionChange={setPosition}
+        onPositionChange={(value) => setPosition(Math.round(value))}
         before={<Image src="/before.png" alt="Before" h="100%" w="100%" fit="cover" />}
         after={
           <Image
@@ -32,8 +32,13 @@ function Demo() {
         }
       />
 
-      <Text size="sm">Divider position: {Math.round(position)}%</Text>
-      <Slider value={position} onChange={setPosition} label={(value) => \`\${value}%\`} />
+      <Text size="sm">Divider position: {position}%</Text>
+      <Slider
+        thumbLabel="Divider position"
+        value={position}
+        onChange={setPosition}
+        label={(value) => \`\${value}%\`}
+      />
     </Stack>
   );
 }
@@ -49,7 +54,7 @@ function Demo() {
         h={{ base: 192, sm: 320 }}
         w={{ base: 300, sm: 500 }}
         position={position}
-        onPositionChange={setPosition}
+        onPositionChange={(value) => setPosition(Math.round(value))}
         before={<Image src={image} alt="Before" h="100%" w="100%" fit="cover" />}
         after={
           <Image
@@ -63,8 +68,13 @@ function Demo() {
         }
       />
 
-      <Text size="sm">Divider position: {Math.round(position)}%</Text>
-      <Slider value={position} onChange={setPosition} label={(value) => `${value}%`} />
+      <Text size="sm">Divider position: {position}%</Text>
+      <Slider
+        thumbLabel="Divider position"
+        value={position}
+        onChange={setPosition}
+        label={(value) => `${value}%`}
+      />
     </Stack>
   );
 }

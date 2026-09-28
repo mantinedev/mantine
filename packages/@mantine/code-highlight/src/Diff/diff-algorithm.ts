@@ -5,6 +5,8 @@ import {
   type Change,
 } from 'diff';
 
+export type DiffMethod = 'chars' | 'words' | 'lines';
+
 export interface DiffResult {
   type: 'add' | 'remove' | 'equal';
   value: string;

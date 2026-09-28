@@ -29,51 +29,53 @@
       border-color: var(--mantine-color-dark-4);
     }
   }
+}
 
-  [data-controls] {
-    display: flex;
-    gap: var(--mantine-spacing-xs);
-    padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
-    border-bottom: 1px solid;
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  border-bottom: 1px solid;
 
-    @mixin where-light {
-      border-color: var(--mantine-color-gray-3);
-    }
+  .copyAllButton ~ & {
+    padding-right: calc(44px + var(--mantine-spacing-xs));
+  }
 
-    @mixin where-dark {
-      border-color: var(--mantine-color-dark-4);
-    }
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-3);
+  }
 
-    [data-control] {
-      font-size: var(--mantine-font-size-xs);
-      padding: 2px 8px;
-      border-radius: var(--mantine-radius-sm);
-
-      @mixin where-light {
-        background-color: var(--mantine-color-gray-1);
-        color: var(--mantine-color-gray-7);
-      }
-
-      @mixin where-dark {
-        background-color: var(--mantine-color-dark-6);
-        color: var(--mantine-color-dark-1);
-      }
-
-      @mixin hover {
-        @mixin where-light {
-          background-color: var(--mantine-color-gray-2);
-        }
-
-        @mixin where-dark {
-          background-color: var(--mantine-color-dark-5);
-        }
-      }
-    }
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
   }
 }
 
-.scrollarea {
-  /* empty for styling override target */
+.control {
+  font-size: var(--mantine-font-size-xs);
+  white-space: nowrap;
+  padding: 2px 8px;
+  border-radius: var(--mantine-radius-sm);
+
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-1);
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
+    color: var(--mantine-color-dark-1);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-2);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
 }
 
 .content {
@@ -82,7 +84,7 @@
 
   .wrapper > & {
     flex: 1;
-    min-width: 0;
+    min-width: min-content;
   }
 }
 
@@ -91,11 +93,12 @@
   flex-direction: column;
   user-select: none;
   text-align: right;
-  padding: var(--mantine-spacing-xs) 0;
-  padding-right: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs);
+  padding-left: var(--mantine-spacing-sm);
   margin-right: var(--mantine-spacing-xs);
   border-right: 1px solid;
-  min-width: 2em;
+  box-sizing: content-box;
+  min-width: 2ch;
 
   @mixin where-light {
     color: var(--mantine-color-gray-7);
@@ -103,7 +106,7 @@
   }
 
   @mixin where-dark {
-    color: var(--mantine-color-dark-4);
+    color: var(--mantine-color-dark-2);
     border-color: var(--mantine-color-dark-4);
   }
 
@@ -129,8 +132,11 @@
     position: relative;
 
     & > * {
-      position: relative;
       z-index: 1;
+    }
+
+    & > :not(.toggle) {
+      position: relative;
     }
 
     &::before {
@@ -193,6 +199,14 @@
     opacity: 1;
   }
 
+  &[data-hoverable] {
+    @mixin hover {
+      .copyButton {
+        opacity: 1;
+      }
+    }
+  }
+
   &[data-hoverable]:not([data-root]) {
     cursor: default;
 
@@ -203,10 +217,6 @@
 
       @mixin where-dark {
         background-color: var(--mantine-color-dark-6);
-      }
-
-      .copyButton {
-        opacity: 1;
       }
     }
   }
@@ -250,9 +260,14 @@
 }
 
 .value {
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
+  white-space: pre;
   line-height: 1.55;
+
+  &[data-wrap] {
+    min-width: 20ch;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
 
   &[data-value-type='string'] {
     @mixin where-light {
@@ -294,6 +309,28 @@
       color: var(--mantine-color-red-4);
     }
   }
+
+  &[data-value-type='bigint'] {
+    @mixin where-light {
+      color: var(--mantine-color-blue-7);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-blue-4);
+    }
+  }
+
+  &[data-value-type='circular'] {
+    font-style: italic;
+
+    @mixin where-light {
+      color: var(--mantine-color-gray-7);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-dark-2);
+    }
+  }
 }
 
 .bracket {
@@ -327,8 +364,7 @@
   }
 
   &[data-value-type='number'],
-  &[data-value-type='int'],
-  &[data-value-type='float'] {
+  &[data-value-type='bigint'] {
     @mixin where-light {
       background-color: var(--mantine-color-blue-0);
       color: var(--mantine-color-blue-7);
@@ -340,8 +376,7 @@
     }
   }
 
-  &[data-value-type='boolean'],
-  &[data-value-type='bool'] {
+  &[data-value-type='boolean'] {
     @mixin where-light {
       background-color: var(--mantine-color-orange-0);
       color: var(--mantine-color-orange-7);
@@ -363,6 +398,18 @@
     @mixin where-dark {
       background-color: rgba(250, 82, 82, 0.15);
       color: var(--mantine-color-red-4);
+    }
+  }
+
+  &[data-value-type='circular'] {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+      color: var(--mantine-color-gray-7);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+      color: var(--mantine-color-dark-2);
     }
   }
 

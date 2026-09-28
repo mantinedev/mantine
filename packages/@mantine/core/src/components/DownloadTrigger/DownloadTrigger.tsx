@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useProps } from '../../core';
 
+/** Content that `DownloadTrigger` downloads: a string, `Blob`, `File` or a function that returns/resolves to a `Blob` or string */
 export type DownloadTriggerData =
   | string
   | Blob
@@ -22,31 +23,31 @@ export interface DownloadTriggerProps {
   /** Content to download: a string, `Blob`, `File` or a function that returns/resolves to a `Blob` or string. The function is called when the download is triggered, which is useful for data that must be fetched or generated lazily. */
   data: DownloadTriggerData;
 
-  /** Suggested name of the downloaded file, set as the `download` attribute of the underlying anchor */
+  /** Suggested name of the downloaded file, set as the `download` attribute of the underlying anchor. Defaults to `file.name` when `data` is (or resolves to) a `File` */
   fileName?: string;
 
   /** MIME type used to create a `Blob` when `data` is a string, for example, `'text/csv'` or `'application/json'` */
   mimeType?: string;
 
-  /** Called after the download has been dispatched */
+  /** Called when the download is dispatched to the browser, not when the browser finishes saving the file */
   onDownloadComplete?: () => void;
 
-  /** Called when `data` is a function and it throws or rejects */
+  /** Called when resolving `data` or dispatching the download fails. If not set, the error is rethrown */
   onError?: (error: unknown) => void;
 }
 
-function dispatchDownload(payload: Blob | string, fileName?: string, mimeType?: string) {
-  const blob = typeof payload === 'string' ? new Blob([payload], { type: mimeType }) : payload;
+function dispatchDownload(content: Blob | string, fileName?: string, mimeType?: string) {
+  const blob = typeof content === 'string' ? new Blob([content], { type: mimeType }) : content;
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;
-  anchor.download = fileName ?? '';
+  anchor.download = fileName ?? (blob instanceof File ? blob.name : '');
   anchor.rel = 'noopener';
   anchor.style.display = 'none';
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 0);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 export function DownloadTrigger(props: DownloadTriggerProps) {
@@ -59,35 +60,44 @@ export function DownloadTrigger(props: DownloadTriggerProps) {
   const [loading, setLoading] = useState(false);
   const isResolving = useRef(false);
 
+  const reportError = (error: unknown) => {
+    if (!onError) {
+      throw error;
+    }
+
+    onError(error);
+  };
+
+  const downloadContent = (content: Blob | string) => {
+    try {
+      dispatchDownload(content, fileName, mimeType);
+    } catch (error) {
+      reportError(error);
+      return;
+    }
+
+    onDownloadComplete?.();
+  };
+
   const download = () => {
     if (isResolving.current) {
       return;
     }
 
-    if (typeof data === 'function') {
-      isResolving.current = true;
-      setLoading(true);
-      Promise.resolve()
-        .then(() => data())
-        .then((resolved) => {
-          dispatchDownload(resolved, fileName, mimeType);
-          onDownloadComplete?.();
-        })
-        .catch((error) => {
-          onError?.(error);
-        })
-        .finally(() => {
-          isResolving.current = false;
-          setLoading(false);
-        });
-    } else {
-      try {
-        dispatchDownload(data, fileName, mimeType);
-        onDownloadComplete?.();
-      } catch (error) {
-        onError?.(error);
-      }
+    if (typeof data !== 'function') {
+      downloadContent(data);
+      return;
     }
+
+    isResolving.current = true;
+    setLoading(true);
+    Promise.resolve()
+      .then(() => data())
+      .then(downloadContent, reportError)
+      .finally(() => {
+        isResolving.current = false;
+        setLoading(false);
+      });
   };
 
   return <>{children({ download, loading })}</>;

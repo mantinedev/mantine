@@ -1,5 +1,19 @@
 import type { PhoneInputCountryData } from '../phone-data';
 
+export function matchesAreaCode(country: PhoneInputCountryData, inputValue: string): boolean {
+  if (!country.areaCodes) {
+    return false;
+  }
+
+  const digits = inputValue.replace(/\D/g, '');
+  if (!digits.startsWith(country.dialCode)) {
+    return false;
+  }
+
+  const nationalDigits = digits.slice(country.dialCode.length);
+  return country.areaCodes.some((areaCode) => nationalDigits.startsWith(areaCode));
+}
+
 export function guessCountry(
   inputValue: string,
   countries: PhoneInputCountryData[],
@@ -23,11 +37,7 @@ export function guessCountry(
       continue;
     }
 
-    const remainingDigits = digits.slice(len);
-
-    const areaMatch = matching.find(
-      (c) => c.areaCodes && c.areaCodes.some((ac) => remainingDigits.startsWith(ac))
-    );
+    const areaMatch = matching.find((c) => matchesAreaCode(c, digits));
 
     if (areaMatch) {
       return areaMatch;

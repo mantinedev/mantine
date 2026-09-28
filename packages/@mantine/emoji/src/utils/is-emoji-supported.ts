@@ -1,20 +1,68 @@
+const CANVAS_SIZE = 24;
+const FONT_SIZE = 18;
+const REFERENCE_EMOJI = '😀';
+const VARIATION_SELECTOR = '️';
+
 const cache = new Map<string, boolean>();
-let canvas: HTMLCanvasElement | null = null;
-let ctx: CanvasRenderingContext2D | null = null;
+let context: CanvasRenderingContext2D | null | undefined;
 
 function getContext(): CanvasRenderingContext2D | null {
+  if (context !== undefined) {
+    return context;
+  }
+
   if (typeof document === 'undefined') {
     return null;
   }
 
-  if (!canvas) {
-    canvas = document.createElement('canvas');
-    canvas.width = 20;
-    canvas.height = 20;
-    ctx = canvas.getContext('2d', { willReadFrequently: true });
+  try {
+    const canvas = document.createElement('canvas');
+    canvas.width = CANVAS_SIZE;
+    canvas.height = CANVAS_SIZE;
+    context = canvas.getContext('2d', { willReadFrequently: true }) ?? null;
+    if (context) {
+      context.font = `${FONT_SIZE}px sans-serif`;
+      context.textBaseline = 'top';
+    }
+  } catch {
+    context = null;
   }
 
-  return ctx;
+  return context ?? null;
+}
+
+function renderPixels(ctx: CanvasRenderingContext2D, emoji: string, color: string) {
+  ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+  ctx.fillStyle = color;
+  ctx.fillText(emoji, 0, 0);
+  return ctx.getImageData(0, 0, CANVAS_SIZE, CANVAS_SIZE).data;
+}
+
+function rendersAsColorGlyph(ctx: CanvasRenderingContext2D, emoji: string) {
+  const first = renderPixels(ctx, emoji, '#f00');
+  const second = renderPixels(ctx, emoji, '#00f');
+
+  let hasPixels = false;
+  for (let i = 0; i < first.length; i += 1) {
+    if (first[i] !== second[i]) {
+      return false;
+    }
+
+    if (!hasPixels && i % 4 === 3 && first[i] > 0) {
+      hasPixels = true;
+    }
+  }
+
+  return hasPixels;
+}
+
+function rendersAsSingleGlyph(ctx: CanvasRenderingContext2D, emoji: string) {
+  const codePoints = Array.from(emoji).filter((char) => char !== VARIATION_SELECTOR);
+  if (codePoints.length < 2) {
+    return true;
+  }
+
+  return ctx.measureText(emoji).width < ctx.measureText(REFERENCE_EMOJI).width * 1.5;
 }
 
 export function isEmojiSupported(emoji: string): boolean {
@@ -23,29 +71,14 @@ export function isEmojiSupported(emoji: string): boolean {
     return cached;
   }
 
-  const context = getContext();
-  if (!context) {
+  const ctx = getContext();
+  if (!ctx) {
     return true;
   }
 
-  context.clearRect(0, 0, 20, 20);
-  context.fillStyle = '#000';
-  context.font = '16px serif';
-  context.fillText(emoji, 0, 16);
-
-  const imageData = context.getImageData(0, 0, 20, 20);
-  const { data } = imageData;
-
-  let hasColor = false;
-  for (let i = 0; i < data.length; i += 4) {
-    if (data[i + 3] > 0) {
-      hasColor = true;
-      break;
-    }
-  }
-
-  cache.set(emoji, hasColor);
-  return hasColor;
+  const supported = rendersAsSingleGlyph(ctx, emoji) && rendersAsColorGlyph(ctx, emoji);
+  cache.set(emoji, supported);
+  return supported;
 }
 
 export function filterSupportedEmojis(

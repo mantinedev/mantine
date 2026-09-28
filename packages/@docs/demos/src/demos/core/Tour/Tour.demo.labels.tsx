@@ -17,7 +17,7 @@ function Demo() {
         <TextInput id="labels-target-2" placeholder="Segundo objetivo" />
       </Group>
 
-      <Button mt="md" onClick={() => setActive(true)}>
+      <Button mt="md" onClick={() => { setStep(0); setActive(true); }}>
         Iniciar recorrido
       </Button>
 
@@ -57,7 +57,13 @@ function Demo() {
         <TextInput id="labels-target-2" placeholder="Segundo objetivo" />
       </Group>
 
-      <Button mt="md" onClick={() => setActive(true)}>
+      <Button
+        mt="md"
+        onClick={() => {
+          setStep(0);
+          setActive(true);
+        }}
+      >
         Iniciar recorrido
       </Button>
 

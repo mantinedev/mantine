@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { normalizeRadialValue, useMergedRef, useRadialMove, useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useRadialMove, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -12,6 +12,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { getLastRadialStep, stepRadialValue } from '../AngleSlider/step-radial-value';
 import classes from './ColorWheel.module.css';
 
 export type ColorWheelStylesNames = 'root' | 'thumb';
@@ -129,7 +130,11 @@ export const ColorWheel = factory<ColorWheelFactory>((_props) => {
     name,
     hiddenInputProps,
     'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledby,
+    'aria-describedby': ariaDescribedby,
     tabIndex,
+    onMouseDownCapture,
+    onTouchStartCapture,
     mod,
     attributes,
     ref,
@@ -137,6 +142,7 @@ export const ColorWheel = factory<ColorWheelFactory>((_props) => {
   } = props;
 
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const thumbRef = useRef<HTMLDivElement | null>(null);
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -147,13 +153,13 @@ export const ColorWheel = factory<ColorWheelFactory>((_props) => {
 
   const update = (val: number) => {
     if (rootRef.current && !disabled) {
-      setValue(val % 360);
+      setValue(val);
     }
   };
 
   const { ref: radialMoveRef } = useRadialMove(update, {
     step,
-    onChangeEnd: disabled ? undefined : (val) => onChangeEnd?.(val % 360),
+    onChangeEnd: disabled ? undefined : onChangeEnd,
     onScrubStart,
     onScrubEnd,
   });
@@ -172,6 +178,12 @@ export const ColorWheel = factory<ColorWheelFactory>((_props) => {
     varsResolver,
   });
 
+  const focusThumb = () => {
+    if (!disabled) {
+      thumbRef.current?.focus({ preventScroll: true, focusVisible: false });
+    }
+  };
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (disabled) {
       return;
@@ -188,11 +200,11 @@ export const ColorWheel = factory<ColorWheelFactory>((_props) => {
     let newValue = _value;
 
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-      newValue = normalizeRadialValue((_value + 360 - step!) % 360, step!);
+      newValue = stepRadialValue(_value, step!, -1);
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-      newValue = normalizeRadialValue((_value + step!) % 360, step!);
+      newValue = stepRadialValue(_value, step!, 1);
     }
 
     if (event.key === 'Home') {
@@ -200,12 +212,11 @@ export const ColorWheel = factory<ColorWheelFactory>((_props) => {
     }
 
     if (event.key === 'End') {
-      newValue = normalizeRadialValue(360 - step!, step!);
+      newValue = getLastRadialStep(step!);
     }
 
-    const wrappedValue = newValue % 360;
-    setValue(wrappedValue);
-    onChangeEnd?.(wrappedValue);
+    setValue(newValue);
+    onChangeEnd?.(newValue);
   };
 
   return (
@@ -213,9 +224,21 @@ export const ColorWheel = factory<ColorWheelFactory>((_props) => {
       ref={useMergedRef(ref, rootRef, radialMoveRef)}
       {...getStyles('root', { focusable: true })}
       mod={[{ disabled }, mod]}
+      onMouseDownCapture={(event) => {
+        onMouseDownCapture?.(event);
+        if (!disabled) {
+          event.preventDefault();
+        }
+        focusThumb();
+      }}
+      onTouchStartCapture={(event) => {
+        onTouchStartCapture?.(event);
+        focusThumb();
+      }}
       {...others}
     >
       <div
+        ref={thumbRef}
         tabIndex={tabIndex ?? (disabled ? -1 : 0)}
         role="slider"
         aria-valuemax={360}
@@ -223,6 +246,8 @@ export const ColorWheel = factory<ColorWheelFactory>((_props) => {
         aria-valuenow={_value}
         aria-valuetext={`${_value}°`}
         aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledby}
+        aria-describedby={ariaDescribedby}
         aria-disabled={disabled}
         data-hidden={!withThumbIndicator || undefined}
         onKeyDown={handleKeyDown}

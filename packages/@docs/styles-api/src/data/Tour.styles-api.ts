@@ -20,13 +20,11 @@ export const TourStylesApi: StylesApiData<TourFactory> = {
   vars: {
     root: {
       '--tour-z-index': 'Controls `z-index` of all tour elements',
-      '--tour-overlay-color': 'Controls `background-color` of the overlay',
+      '--tour-overlay-color': 'Controls `fill` color of the overlay',
       '--tour-tooltip-radius': 'Controls `border-radius` of the tooltip',
       '--tour-tooltip-shadow': 'Controls `box-shadow` of the tooltip',
       '--tour-beacon-size': 'Controls `width` and `height` of the beacon',
       '--tour-beacon-color': 'Controls `background-color` of the beacon',
-      '--tour-spotlight-padding': 'Controls padding around the spotlight cutout',
-      '--tour-spotlight-radius': 'Controls `border-radius` of the spotlight cutout',
     },
   },
 

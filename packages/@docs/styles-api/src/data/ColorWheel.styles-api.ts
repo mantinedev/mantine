@@ -16,5 +16,12 @@ export const ColorWheelStylesApi: StylesApiData<ColorWheelFactory> = {
     },
   },
 
-  modifiers: [{ modifier: 'data-disabled', selector: 'root', condition: '`disabled` prop is set' }],
+  modifiers: [
+    { modifier: 'data-disabled', selector: 'root', condition: '`disabled` prop is set' },
+    {
+      modifier: 'data-hidden',
+      selector: 'thumb',
+      condition: '`withThumbIndicator` prop is `false`',
+    },
+  ],
 };

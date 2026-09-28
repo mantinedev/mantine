@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -8,6 +8,7 @@ import {
   Factory,
   alpha,
   getThemeColor,
+  type GetStylesApi,
   MantineColor,
   StylesApiProps,
   useProps,
@@ -15,11 +16,17 @@ import {
 } from '@mantine/core';
 import {
   applyContextCollapsing,
+  type ExpandMarker,
   type ProcessedRow,
+  type RevealedLineRow,
 } from './apply-context-collapsing/apply-context-collapsing';
 import { type DiffResult, diffLines } from './diff-algorithm';
-import { pairHunks } from './pair-hunks/pair-hunks';
-import { splitIntoLines } from './split-into-lines/split-into-lines';
+import {
+  type DiffRow,
+  type LineRow,
+  groupChangeBlocks,
+} from './group-change-blocks/group-change-blocks';
+import { type LineEntry, splitIntoLines } from './split-into-lines/split-into-lines';
 import classes from './Diff.module.css';
 
 export type DiffStylesNames =
@@ -34,7 +41,8 @@ export type DiffStylesNames =
   | 'addedHighlight'
   | 'removedHighlight'
   | 'expandControl'
-  | 'splitDivider';
+  | 'splitDivider'
+  | 'changeMarker';
 
 export type DiffCssVariables = {
   root:
@@ -69,7 +77,7 @@ export interface DiffProps extends BoxProps, StylesApiProps<DiffFactory>, Elemen
   /** Key of `theme.colors` or any valid CSS color for removed content, default is `'red'` */
   removeColor?: MantineColor;
 
-  /** Function to generate expand button label, default is `(hiddenCount) => \`Show ${hiddenCount} hidden lines\`` */
+  /** Function to generate expand button label, default is `(hiddenCount) => \`Show ${hiddenCount} hidden lines\`` (`line` when `hiddenCount` is 1) */
   expandLabel?: (hiddenCount: number) => string;
 }
 
@@ -87,7 +95,8 @@ const defaultProps = {
   withLineNumbers: true,
   addColor: 'teal',
   removeColor: 'red',
-  expandLabel: (hiddenCount: number) => `Show ${hiddenCount} hidden lines`,
+  expandLabel: (hiddenCount: number) =>
+    `Show ${hiddenCount} hidden ${hiddenCount === 1 ? 'line' : 'lines'}`,
 } satisfies Partial<DiffProps>;
 
 const varsResolver = createVarsResolver<DiffFactory>((theme, { addColor, removeColor }) => ({
@@ -103,24 +112,50 @@ const varsResolver = createVarsResolver<DiffFactory>((theme, { addColor, removeC
   },
 }));
 
-function getLineStyleName(type: 'add' | 'remove' | 'equal') {
-  if (type === 'add') {
-    return 'addedLine';
-  }
-  if (type === 'remove') {
-    return 'removedLine';
-  }
-  return 'unchangedLine';
+type DiffGetStyles = GetStylesApi<DiffFactory>;
+
+interface ExpandState {
+  rows: DiffRow[];
+  contextLines: number;
+  expanded: Set<number>;
 }
 
-function formatLineValue(value: string) {
-  return value.replace(/\r?\n$/, '');
+const NO_EXPANDED_SECTIONS = new Set<number>();
+
+function getExpandedSections(state: ExpandState, rows: DiffRow[], contextLines: number) {
+  return state.rows === rows && state.contextLines === contextLines
+    ? state.expanded
+    : NO_EXPANDED_SECTIONS;
+}
+
+const LINE_STYLES_NAMES = {
+  add: 'addedLine',
+  remove: 'removedLine',
+  equal: 'unchangedLine',
+} as const;
+
+const CHANGE_MARKERS = {
+  add: '+ ',
+  remove: '- ',
+};
+
+function getLineCellStyles(
+  getStyles: DiffGetStyles,
+  selector: 'lineNumber' | 'content',
+  type: DiffResult['type'] | undefined
+) {
+  if (!type) {
+    return getStyles(selector);
+  }
+
+  const { className, style, ...attributes } = getStyles(LINE_STYLES_NAMES[type]);
+  return { ...getStyles(selector, { className, style }), ...attributes };
 }
 
 interface InlineContentProps {
   inlineDiff: DiffResult[];
   side: 'add' | 'remove';
-  getStyles: ReturnType<typeof useStyles<DiffFactory>>;
+  getStyles: DiffGetStyles;
 }
 
 function InlineContent({ inlineDiff, side, getStyles }: InlineContentProps) {
@@ -130,13 +165,9 @@ function InlineContent({ inlineDiff, side, getStyles }: InlineContentProps) {
         if (part.type === 'equal') {
           return <span key={i}>{part.value}</span>;
         }
-        if (
-          (side === 'remove' && part.type === 'remove') ||
-          (side === 'add' && part.type === 'add')
-        ) {
-          const highlightStyle = side === 'add' ? 'addedHighlight' : 'removedHighlight';
+        if (part.type === side) {
           return (
-            <mark key={i} {...getStyles(highlightStyle)}>
+            <mark key={i} {...getStyles(side === 'add' ? 'addedHighlight' : 'removedHighlight')}>
               {part.value}
             </mark>
           );
@@ -147,12 +178,96 @@ function InlineContent({ inlineDiff, side, getStyles }: InlineContentProps) {
   );
 }
 
+interface DiffLineCellsProps {
+  entry: LineEntry | undefined;
+  gutters: 'both' | 'old' | 'new';
+  inlineDiff?: DiffResult[];
+  withLineNumbers: boolean;
+  getStyles: DiffGetStyles;
+}
+
+function DiffLineCells({
+  entry,
+  gutters,
+  inlineDiff,
+  withLineNumbers,
+  getStyles,
+}: DiffLineCellsProps) {
+  const lineType = entry?.type;
+  const changeType = entry && entry.type !== 'equal' ? entry.type : undefined;
+  const numbers =
+    gutters === 'both'
+      ? [entry?.oldLineNumber, entry?.newLineNumber]
+      : [gutters === 'old' ? entry?.oldLineNumber : entry?.newLineNumber];
+
+  return (
+    <>
+      {withLineNumbers &&
+        numbers.map((lineNumber, index) => (
+          <td key={index} {...getLineCellStyles(getStyles, 'lineNumber', lineType)}>
+            {lineNumber}
+          </td>
+        ))}
+      <td {...getLineCellStyles(getStyles, 'content', lineType)}>
+        {changeType && <span {...getStyles('changeMarker')}>{CHANGE_MARKERS[changeType]}</span>}
+        {changeType && inlineDiff ? (
+          <InlineContent inlineDiff={inlineDiff} side={changeType} getStyles={getStyles} />
+        ) : (
+          entry && (entry.value || '\n')
+        )}
+      </td>
+    </>
+  );
+}
+
+interface DiffExpandRowProps {
+  row: ExpandMarker;
+  colSpan: number;
+  getStyles: DiffGetStyles;
+  onExpand: (sectionIndex: number) => void;
+  expandLabel: (hiddenCount: number) => string;
+}
+
+function DiffExpandRow({ row, colSpan, getStyles, onExpand, expandLabel }: DiffExpandRowProps) {
+  return (
+    <tr {...getStyles('row')}>
+      <td colSpan={colSpan}>
+        <button
+          type="button"
+          {...getStyles('expandControl', { focusable: true })}
+          onClick={() => onExpand(row.sectionIndex)}
+        >
+          {expandLabel(row.hiddenCount)}
+        </button>
+      </td>
+    </tr>
+  );
+}
+
 interface DiffViewProps {
   processedRows: ProcessedRow[];
   withLineNumbers: boolean;
-  getStyles: ReturnType<typeof useStyles<DiffFactory>>;
+  getStyles: DiffGetStyles;
   onExpand: (sectionIndex: number) => void;
   expandLabel: (hiddenCount: number) => string;
+  revealedRowRef: (node: HTMLTableRowElement | null) => void;
+}
+
+function getLineRowProps(
+  row: LineRow | RevealedLineRow,
+  getStyles: DiffGetStyles,
+  revealedRowRef: DiffViewProps['revealedRowRef']
+) {
+  if ('revealedSectionIndex' in row) {
+    return {
+      ...getStyles('row', { focusable: true }),
+      tabIndex: -1,
+      'data-section': row.revealedSectionIndex,
+      ref: revealedRowRef,
+    };
+  }
+
+  return getStyles('row');
 }
 
 function DiffUnifiedView({
@@ -161,6 +276,7 @@ function DiffUnifiedView({
   getStyles,
   onExpand,
   expandLabel,
+  revealedRowRef,
 }: DiffViewProps) {
   const colSpan = withLineNumbers ? 3 : 1;
 
@@ -170,92 +286,52 @@ function DiffUnifiedView({
         {processedRows.map((row, index) => {
           if (row.kind === 'expand') {
             return (
-              <tr key={`expand-${row.sectionIndex}`} {...getStyles('row')}>
-                <td colSpan={colSpan}>
-                  <button
-                    type="button"
-                    {...getStyles('expandControl')}
-                    onClick={() => onExpand(row.sectionIndex)}
-                  >
-                    {expandLabel(row.hiddenCount)}
-                  </button>
-                </td>
-              </tr>
+              <DiffExpandRow
+                key={`expand-${row.sectionIndex}`}
+                row={row}
+                colSpan={colSpan}
+                getStyles={getStyles}
+                onExpand={onExpand}
+                expandLabel={expandLabel}
+              />
             );
           }
 
-          if (row.kind === 'hunkPair') {
+          if (row.kind === 'block') {
             return [
-              <tr key={`${index}-remove`} {...getStyles('row')}>
-                {withLineNumbers && (
-                  <td
-                    {...getStyles('lineNumber', {
-                      className: classes[getLineStyleName('remove')],
-                    })}
-                  >
-                    {row.removedLine.oldLineNumber}
-                  </td>
-                )}
-                {withLineNumbers && (
-                  <td
-                    {...getStyles('lineNumber', {
-                      className: classes[getLineStyleName('remove')],
-                    })}
+              ...row.removed.map((entry, lineIndex) => (
+                <tr key={`${index}-remove-${lineIndex}`} {...getStyles('row')}>
+                  <DiffLineCells
+                    entry={entry}
+                    gutters="both"
+                    inlineDiff={row.inlineDiffs[lineIndex]}
+                    withLineNumbers={withLineNumbers}
+                    getStyles={getStyles}
                   />
-                )}
-                <td
-                  {...getStyles('content', {
-                    className: classes[getLineStyleName('remove')],
-                  })}
-                >
-                  <InlineContent inlineDiff={row.inlineDiff} side="remove" getStyles={getStyles} />
-                </td>
-              </tr>,
-              <tr key={`${index}-add`} {...getStyles('row')}>
-                {withLineNumbers && (
-                  <td
-                    {...getStyles('lineNumber', {
-                      className: classes[getLineStyleName('add')],
-                    })}
+                </tr>
+              )),
+              ...row.added.map((entry, lineIndex) => (
+                <tr key={`${index}-add-${lineIndex}`} {...getStyles('row')}>
+                  <DiffLineCells
+                    entry={entry}
+                    gutters="both"
+                    inlineDiff={row.inlineDiffs[lineIndex]}
+                    withLineNumbers={withLineNumbers}
+                    getStyles={getStyles}
                   />
-                )}
-                {withLineNumbers && (
-                  <td
-                    {...getStyles('lineNumber', {
-                      className: classes[getLineStyleName('add')],
-                    })}
-                  >
-                    {row.addedLine.newLineNumber}
-                  </td>
-                )}
-                <td
-                  {...getStyles('content', {
-                    className: classes[getLineStyleName('add')],
-                  })}
-                >
-                  <InlineContent inlineDiff={row.inlineDiff} side="add" getStyles={getStyles} />
-                </td>
-              </tr>,
+                </tr>
+              )),
             ];
           }
 
-          const lineStyleName = getLineStyleName(row.type);
-
           return (
-            <tr key={index} {...getStyles('row')}>
-              {withLineNumbers && (
-                <td {...getStyles('lineNumber', { className: classes[lineStyleName] })}>
-                  {row.oldLineNumber}
-                </td>
-              )}
-              {withLineNumbers && (
-                <td {...getStyles('lineNumber', { className: classes[lineStyleName] })}>
-                  {row.newLineNumber}
-                </td>
-              )}
-              <td {...getStyles('content', { className: classes[lineStyleName] })}>
-                {formatLineValue(row.value)}
-              </td>
+            <tr key={index} {...getLineRowProps(row, getStyles, revealedRowRef)}>
+              <DiffLineCells
+                entry={row}
+                gutters="both"
+                withLineNumbers={withLineNumbers}
+                getStyles={getStyles}
+              />
             </tr>
           );
         })}
@@ -270,6 +346,7 @@ function DiffSplitView({
   getStyles,
   onExpand,
   expandLabel,
+  revealedRowRef,
 }: DiffViewProps) {
   const colSpan = withLineNumbers ? 5 : 3;
 
@@ -279,117 +356,57 @@ function DiffSplitView({
         {processedRows.map((row, index) => {
           if (row.kind === 'expand') {
             return (
-              <tr key={`expand-${row.sectionIndex}`} {...getStyles('row')}>
-                <td colSpan={colSpan}>
-                  <button
-                    type="button"
-                    {...getStyles('expandControl')}
-                    onClick={() => onExpand(row.sectionIndex)}
-                  >
-                    {expandLabel(row.hiddenCount)}
-                  </button>
-                </td>
-              </tr>
+              <DiffExpandRow
+                key={`expand-${row.sectionIndex}`}
+                row={row}
+                colSpan={colSpan}
+                getStyles={getStyles}
+                onExpand={onExpand}
+                expandLabel={expandLabel}
+              />
             );
           }
 
-          if (row.kind === 'hunkPair') {
-            return (
-              <tr key={index} {...getStyles('row')}>
-                {withLineNumbers && (
-                  <td
-                    {...getStyles('lineNumber', {
-                      className: classes[getLineStyleName('remove')],
-                    })}
-                  >
-                    {row.removedLine.oldLineNumber}
-                  </td>
-                )}
-                <td
-                  {...getStyles('content', {
-                    className: classes[getLineStyleName('remove')],
-                  })}
-                >
-                  <InlineContent inlineDiff={row.inlineDiff} side="remove" getStyles={getStyles} />
-                </td>
-                <td {...getStyles('splitDivider')} />
-                {withLineNumbers && (
-                  <td
-                    {...getStyles('lineNumber', {
-                      className: classes[getLineStyleName('add')],
-                    })}
-                  >
-                    {row.addedLine.newLineNumber}
-                  </td>
-                )}
-                <td
-                  {...getStyles('content', {
-                    className: classes[getLineStyleName('add')],
-                  })}
-                >
-                  <InlineContent inlineDiff={row.inlineDiff} side="add" getStyles={getStyles} />
-                </td>
-              </tr>
-            );
-          }
-
-          const lineStyleName = getLineStyleName(row.type);
-
-          if (row.type === 'equal') {
-            return (
-              <tr key={index} {...getStyles('row')}>
-                {withLineNumbers && (
-                  <td {...getStyles('lineNumber', { className: classes[lineStyleName] })}>
-                    {row.oldLineNumber}
-                  </td>
-                )}
-                <td {...getStyles('content', { className: classes[lineStyleName] })}>
-                  {formatLineValue(row.value)}
-                </td>
-                <td {...getStyles('splitDivider')} />
-                {withLineNumbers && (
-                  <td {...getStyles('lineNumber', { className: classes[lineStyleName] })}>
-                    {row.newLineNumber}
-                  </td>
-                )}
-                <td {...getStyles('content', { className: classes[lineStyleName] })}>
-                  {formatLineValue(row.value)}
-                </td>
-              </tr>
-            );
-          }
-
-          if (row.type === 'remove') {
-            return (
-              <tr key={index} {...getStyles('row')}>
-                {withLineNumbers && (
-                  <td {...getStyles('lineNumber', { className: classes[lineStyleName] })}>
-                    {row.oldLineNumber}
-                  </td>
-                )}
-                <td {...getStyles('content', { className: classes[lineStyleName] })}>
-                  {formatLineValue(row.value)}
-                </td>
-                <td {...getStyles('splitDivider')} />
-                {withLineNumbers && <td {...getStyles('lineNumber')} />}
-                <td {...getStyles('content')} />
-              </tr>
+          if (row.kind === 'block') {
+            return Array.from(
+              { length: Math.max(row.removed.length, row.added.length) },
+              (_, lineIndex) => (
+                <tr key={`${index}-${lineIndex}`} {...getStyles('row')}>
+                  <DiffLineCells
+                    entry={row.removed[lineIndex]}
+                    gutters="old"
+                    inlineDiff={row.inlineDiffs[lineIndex]}
+                    withLineNumbers={withLineNumbers}
+                    getStyles={getStyles}
+                  />
+                  <td {...getStyles('splitDivider')} />
+                  <DiffLineCells
+                    entry={row.added[lineIndex]}
+                    gutters="new"
+                    inlineDiff={row.inlineDiffs[lineIndex]}
+                    withLineNumbers={withLineNumbers}
+                    getStyles={getStyles}
+                  />
+                </tr>
+              )
             );
           }
 
           return (
-            <tr key={index} {...getStyles('row')}>
-              {withLineNumbers && <td {...getStyles('lineNumber')} />}
-              <td {...getStyles('content')} />
+            <tr key={index} {...getLineRowProps(row, getStyles, revealedRowRef)}>
+              <DiffLineCells
+                entry={row}
+                gutters="old"
+                withLineNumbers={withLineNumbers}
+                getStyles={getStyles}
+              />
               <td {...getStyles('splitDivider')} />
-              {withLineNumbers && (
-                <td {...getStyles('lineNumber', { className: classes[lineStyleName] })}>
-                  {row.newLineNumber}
-                </td>
-              )}
-              <td {...getStyles('content', { className: classes[lineStyleName] })}>
-                {formatLineValue(row.value)}
-              </td>
+              <DiffLineCells
+                entry={row}
+                gutters="new"
+                withLineNumbers={withLineNumbers}
+                getStyles={getStyles}
+              />
             </tr>
           );
         })}
@@ -435,50 +452,54 @@ export const Diff = factory<DiffFactory>((_props) => {
     varsResolver,
   });
 
-  const [expandedSections, setExpandedSections] = useState<Set<number>>(new Set());
-
-  useEffect(() => {
-    setExpandedSections(new Set());
-  }, [previousValue, currentValue, diffMethod, contextLines]);
-
-  const pairedRows = useMemo(() => {
+  const diffRows = useMemo(() => {
     const lineDiffs = diffLines(previousValue, currentValue);
     const lines = splitIntoLines(lineDiffs);
-    return pairHunks(lines, diffMethod!);
+    return groupChangeBlocks(lines, diffMethod);
   }, [previousValue, currentValue, diffMethod]);
 
+  const [expandState, setExpandState] = useState<ExpandState>(() => ({
+    rows: diffRows,
+    contextLines: contextLines!,
+    expanded: NO_EXPANDED_SECTIONS,
+  }));
+
+  const expandedSections = getExpandedSections(expandState, diffRows, contextLines!);
+  const pendingFocusSection = useRef<number | null>(null);
+
   const processedRows = useMemo(
-    () => applyContextCollapsing(pairedRows, contextLines!, expandedSections),
-    [pairedRows, contextLines, expandedSections]
+    () => applyContextCollapsing(diffRows, contextLines!, expandedSections),
+    [diffRows, contextLines, expandedSections]
   );
 
   const handleExpand = (sectionIndex: number) => {
-    setExpandedSections((prev) => {
-      const next = new Set(prev);
-      next.add(sectionIndex);
-      return next;
-    });
+    pendingFocusSection.current = sectionIndex;
+    setExpandState((prev) => ({
+      rows: diffRows,
+      contextLines: contextLines!,
+      expanded: new Set(getExpandedSections(prev, diffRows, contextLines!)).add(sectionIndex),
+    }));
+  };
+
+  const revealedRowRef = useCallback((node: HTMLTableRowElement | null) => {
+    if (node && Number(node.dataset.section) === pendingFocusSection.current) {
+      pendingFocusSection.current = null;
+      node.focus();
+    }
+  }, []);
+
+  const viewProps: DiffViewProps = {
+    processedRows,
+    withLineNumbers: withLineNumbers!,
+    getStyles,
+    onExpand: handleExpand,
+    expandLabel: expandLabel!,
+    revealedRowRef,
   };
 
   return (
     <Box {...getStyles('root')} mod={[{ split: mode === 'split' }, mod]} {...others}>
-      {mode === 'split' ? (
-        <DiffSplitView
-          processedRows={processedRows}
-          withLineNumbers={withLineNumbers!}
-          getStyles={getStyles}
-          onExpand={handleExpand}
-          expandLabel={expandLabel!}
-        />
-      ) : (
-        <DiffUnifiedView
-          processedRows={processedRows}
-          withLineNumbers={withLineNumbers!}
-          getStyles={getStyles}
-          onExpand={handleExpand}
-          expandLabel={expandLabel!}
-        />
-      )}
+      {mode === 'split' ? <DiffSplitView {...viewProps} /> : <DiffUnifiedView {...viewProps} />}
     </Box>
   );
 });

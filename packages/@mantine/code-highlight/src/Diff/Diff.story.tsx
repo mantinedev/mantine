@@ -125,7 +125,7 @@ export function EmptyStrings() {
   );
 }
 
-export function MultiLineHunk() {
+export function MultiLineChangeBlock() {
   const prev = `line 1
 old a
 old b
@@ -139,24 +139,7 @@ line 5`;
   return (
     <div style={{ padding: 40 }}>
       <Diff previousValue={prev} currentValue={next} />
-    </div>
-  );
-}
-
-export function SplitMultiLineHunk() {
-  const prev = `line 1
-old a
-old b
-old c
-line 5`;
-
-  const next = `line 1
-new x
-line 5`;
-
-  return (
-    <div style={{ padding: 40 }}>
-      <Diff previousValue={prev} currentValue={next} mode="split" />
+      <Diff previousValue={prev} currentValue={next} mode="split" mt="md" />
     </div>
   );
 }
@@ -165,6 +148,50 @@ export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>
       <Diff previousValue={previousCode} currentValue={currentCode} unstyled />
+    </div>
+  );
+}
+
+const manyLinesPrevious = Array.from({ length: 120 }, (_, index) => `line ${index + 1}`);
+const manyLinesCurrent = [...manyLinesPrevious];
+manyLinesCurrent[104] = `line 105 ${'with a very long replacement value '.repeat(12)}`;
+manyLinesCurrent.splice(110, 0, 'inserted line');
+
+export function SplitLongLines() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Diff
+        previousValue={manyLinesPrevious.join('\n')}
+        currentValue={manyLinesCurrent.join('\n')}
+        mode="split"
+        contextLines={3}
+      />
+    </div>
+  );
+}
+
+export function BlankLines() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Diff
+        previousValue={'first\n\nsecond\nthird'}
+        currentValue={'first\n\nsecond\n\nthird'}
+        withLineNumbers={false}
+      />
+      <Diff
+        previousValue={'first\n\nsecond\nthird'}
+        currentValue={'first\n\nsecond\n\nthird'}
+        mode="split"
+        mt="md"
+      />
+      <Diff previousValue={'a\n  \nb'} currentValue={'a\n\nb'} withLineNumbers={false} mt="md" />
+      <Diff
+        previousValue={'before\n\nafter'}
+        currentValue={'before\n \nafter'}
+        mode="split"
+        withLineNumbers={false}
+        mt="md"
+      />
     </div>
   );
 }

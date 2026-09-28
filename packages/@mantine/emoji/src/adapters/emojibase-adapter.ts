@@ -1,8 +1,13 @@
+import {
+  CANONICAL_CATEGORY_IDS,
+  CANONICAL_CATEGORY_LABELS,
+  type CanonicalCategoryId,
+} from '../categories';
 import type { EmojiPickerCategory, EmojiPickerData, EmojiPickerEmoji } from '../types';
 
 interface EmojibaseSkin {
-  hexcode: string;
   emoji: string;
+  tone?: number | number[];
 }
 
 interface EmojibaseEmoji {
@@ -10,8 +15,8 @@ interface EmojibaseEmoji {
   hexcode: string;
   emoji: string;
   tags?: string[];
-  group: number;
-  order: number;
+  group?: number;
+  order?: number;
   version: number;
   skins?: EmojibaseSkin[];
 }
@@ -26,36 +31,57 @@ interface EmojibaseMessages {
   groups: EmojibaseGroupMessage[];
 }
 
-const GROUP_TO_CANONICAL: Record<number, string> = {
+const GROUP_TO_CANONICAL: Record<number, Exclude<CanonicalCategoryId, 'frequent'>> = {
   0: 'people',
   1: 'people',
-  2: 'people',
   3: 'nature',
   4: 'foods',
-  5: 'activity',
-  6: 'places',
+  5: 'places',
+  6: 'activity',
   7: 'objects',
   8: 'symbols',
   9: 'flags',
 };
 
-const CANONICAL_LABELS: Record<string, string> = {
-  people: 'Smileys & People',
-  nature: 'Animals & Nature',
-  foods: 'Food & Drink',
-  activity: 'Activities',
-  places: 'Travel & Places',
-  objects: 'Objects',
-  symbols: 'Symbols',
-  flags: 'Flags',
-};
+const CATEGORY_ORDER = CANONICAL_CATEGORY_IDS.filter(
+  (id): id is Exclude<CanonicalCategoryId, 'frequent'> => id !== 'frequent'
+);
+
+function getUniformTone(tone: EmojibaseSkin['tone']) {
+  if (typeof tone === 'number') {
+    return tone;
+  }
+
+  if (Array.isArray(tone) && tone.length > 0 && tone.every((t) => t === tone[0])) {
+    return tone[0];
+  }
+
+  return null;
+}
+
+function getSkinVariants(skins: EmojibaseSkin[] | undefined) {
+  if (!skins || skins.length === 0) {
+    return undefined;
+  }
+
+  const byTone = new Map<number, string>();
+  for (const skin of skins) {
+    const tone = getUniformTone(skin.tone);
+    if (tone !== null && !byTone.has(tone)) {
+      byTone.set(tone, skin.emoji);
+    }
+  }
+
+  const variants = [1, 2, 3, 4, 5].map((tone) => byTone.get(tone));
+  return variants.every((variant) => variant !== undefined) ? (variants as string[]) : undefined;
+}
 
 export function emojibaseAdapter(
   data: EmojibaseEmoji[],
   messages: EmojibaseMessages
 ): EmojiPickerData {
   const emojis: Record<string, EmojiPickerEmoji> = {};
-  const categoryMap = new Map<string, { label: string; emojis: string[] }>();
+  const categoryEmojis = new Map<string, EmojibaseEmoji[]>();
 
   const groupLabels = new Map<number, string>();
   for (const group of messages.groups) {
@@ -63,38 +89,48 @@ export function emojibaseAdapter(
   }
 
   for (const emojibaseEmoji of data) {
-    const id = emojibaseEmoji.hexcode;
-    const skinVariants =
-      emojibaseEmoji.skins && emojibaseEmoji.skins.length > 0
-        ? emojibaseEmoji.skins.map((s) => s.emoji)
-        : undefined;
+    if (emojibaseEmoji.group === undefined) {
+      continue;
+    }
 
+    const canonicalId = GROUP_TO_CANONICAL[emojibaseEmoji.group];
+    if (!canonicalId) {
+      continue;
+    }
+
+    const id = emojibaseEmoji.hexcode;
     emojis[id] = {
       id,
       name: emojibaseEmoji.label,
       keywords: emojibaseEmoji.tags || [],
       emoji: emojibaseEmoji.emoji,
-      skins: skinVariants,
+      skins: getSkinVariants(emojibaseEmoji.skins),
       version: emojibaseEmoji.version,
     };
 
-    const canonicalId = GROUP_TO_CANONICAL[emojibaseEmoji.group] || 'objects';
-
-    if (!categoryMap.has(canonicalId)) {
-      const label =
-        CANONICAL_LABELS[canonicalId] || groupLabels.get(emojibaseEmoji.group) || canonicalId;
-      categoryMap.set(canonicalId, { label, emojis: [] });
+    if (!categoryEmojis.has(canonicalId)) {
+      categoryEmojis.set(canonicalId, []);
     }
-    categoryMap.get(canonicalId)!.emojis.push(id);
+    categoryEmojis.get(canonicalId)!.push(emojibaseEmoji);
   }
 
-  const categories: EmojiPickerCategory[] = Array.from(categoryMap.entries()).map(
-    ([id, { label, emojis: emojiIds }]) => ({
-      id,
-      label,
-      emojis: emojiIds,
-    })
-  );
+  const categories: EmojiPickerCategory[] = [];
+  for (const canonicalId of CATEGORY_ORDER) {
+    const items = categoryEmojis.get(canonicalId);
+    if (!items) {
+      continue;
+    }
+
+    items.sort(
+      (a, b) => (a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)
+    );
+    categories.push({
+      id: canonicalId,
+      label:
+        CANONICAL_CATEGORY_LABELS[canonicalId] || groupLabels.get(items[0].group!) || canonicalId,
+      emojis: items.map((item) => item.hexcode),
+    });
+  }
 
   return { categories, emojis };
 }

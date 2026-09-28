@@ -1,10 +1,10 @@
 import { Children, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { autoUpdate, flip, offset, shift, size, useFloating } from '@floating-ui/react';
-import { useFocusReturn, useHotkeys, useUncontrolled, type HotkeyItem } from '@mantine/hooks';
 import { useDirection } from '../../core';
 import { getFloatingPosition } from '../../utils/Floating';
 import type { TourStepProps } from './TourStep/TourStep';
 import { useTargetRect, type TargetRect, type TourTarget } from './use-target-rect';
+import { useTourState } from './use-tour-state';
 
 export interface UseTourInput {
   active?: boolean;
@@ -27,10 +27,9 @@ export interface UseTourInput {
 
 export interface UseTourReturn {
   steps: TourStepProps[];
-  currentStep: number;
-  setCurrentStep: (step: number) => void;
+  setStep: (step: number) => void;
   beaconOpenStep: number | null;
-  setBeaconOpenStep: (step: number | null) => void;
+  openBeaconStep: (step: number) => void;
   close: () => void;
   displayStep: TourStepProps | null;
   displayStepIndex: number;
@@ -40,9 +39,9 @@ export interface UseTourReturn {
   floatingRefs: ReturnType<typeof useFloating>['refs'];
   isCentered: boolean;
   constrainedWidth: number;
-  hasPositioned: boolean;
+  stepMoving: boolean;
   showTooltip: boolean;
-  lastActiveTargetRef: React.MutableRefObject<TourTarget>;
+  clearExitedTarget: () => void;
 }
 
 export function useTour({
@@ -59,7 +58,7 @@ export function useTour({
   scrollToHandler,
   closeOnEscape,
   maxWidth,
-  stepTransitionDuration: _stepTransitionDuration,
+  stepTransitionDuration,
   children,
   stepComponent,
 }: UseTourInput): UseTourReturn {
@@ -72,76 +71,54 @@ export function useTour({
 
   const { dir } = useDirection();
 
-  const [currentStep, setCurrentStep] = useUncontrolled({
-    value: stepProp,
-    defaultValue: defaultStep,
-    finalValue: 0,
-    onChange: onStepChange,
+  const {
+    setStep,
+    beaconOpenStep,
+    openBeaconStep,
+    showTooltip,
+    displayStepIndex,
+    close,
+    targetRef,
+  } = useTourState({
+    active,
+    onClose,
+    step: stepProp,
+    defaultStep,
+    onStepChange,
+    onStepOpen: (index) => {
+      onStepOpen?.(index);
+      steps[index]?.onStepOpen?.();
+    },
+    onStepClose: (index) => {
+      onStepClose?.(index);
+      steps[index]?.onStepClose?.();
+    },
+    mode: mode!,
+    stepsCount: steps.length,
+    closeOnEscape,
+    withKeyboardNavigation,
   });
 
-  const [beaconOpenStep, setBeaconOpenStep] = useState<number | null>(null);
-
-  const showTooltip =
-    !!active && (mode === 'guided' || (mode === 'beacon' && beaconOpenStep !== null));
-  const displayStepIndex =
-    mode === 'beacon' && beaconOpenStep !== null ? beaconOpenStep : currentStep;
   const displayStep = steps[displayStepIndex] || null;
-  const openStep = showTooltip && displayStepIndex >= 0 ? displayStepIndex : null;
-
-  const reportedStepRef = useRef<number | null>(null);
-
-  const emitStepClose = useEffectEvent((step: number) => {
-    onStepClose?.(step);
-    steps[step]?.onStepClose?.();
-  });
-
-  const emitStepOpen = useEffectEvent((step: number) => {
-    onStepOpen?.(step);
-    steps[step]?.onStepOpen?.();
-  });
-
-  useEffect(() => {
-    const previousStep = reportedStepRef.current;
-
-    if (previousStep === openStep) {
-      return;
-    }
-
-    reportedStepRef.current = openStep;
-
-    if (previousStep !== null) {
-      emitStepClose(previousStep);
-    }
-
-    if (openStep !== null) {
-      emitStepOpen(openStep);
-    }
-  }, [openStep]);
-
-  const close = () => {
-    const openedStep = reportedStepRef.current;
-
-    if (openedStep !== null) {
-      reportedStepRef.current = null;
-      onStepClose?.(openedStep);
-      steps[openedStep]?.onStepClose?.();
-    }
-
-    setBeaconOpenStep(null);
-    onClose?.();
-  };
-
-  useFocusReturn({ opened: !!active, shouldReturnFocus: true });
-
   const activeTarget = showTooltip ? displayStep?.target : undefined;
 
   const lastActiveTargetRef = useRef<TourTarget>(undefined);
-  if (active) {
+  if (showTooltip) {
     lastActiveTargetRef.current = activeTarget;
   }
 
-  const resolvedTarget = active ? activeTarget : lastActiveTargetRef.current;
+  const [, setExitedCount] = useState(0);
+  const clearExitedTarget = () => {
+    lastActiveTargetRef.current = undefined;
+    setExitedCount((count) => count + 1);
+  };
+
+  const resolvedTarget = showTooltip ? activeTarget : lastActiveTargetRef.current;
   const { rect: targetRect, element: targetElement } = useTargetRect(resolvedTarget);
+
+  useEffect(() => {
+    targetRef.current = targetElement;
+  }, [targetElement]);
 
   const scrollTargetIntoView = useEffectEvent((element: HTMLElement) => {
     if (scrollToHandler) {
@@ -157,57 +134,8 @@ export function useTour({
     }
   }, [active, targetElement, withScrollIntoView]);
 
-  const isInsideTarget = (event: KeyboardEvent) =>
-    !!targetElement && event.target instanceof Node && targetElement.contains(event.target);
-
-  const goToNextStep = (event: KeyboardEvent) => {
-    if (isInsideTarget(event)) {
-      return;
-    }
-
-    event.preventDefault();
-
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      close();
-    }
-  };
-
-  const goToPreviousStep = (event: KeyboardEvent) => {
-    if (isInsideTarget(event)) {
-      return;
-    }
-
-    event.preventDefault();
-
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const hotkeyHandlers: HotkeyItem[] = [];
-
-  if (active && closeOnEscape) {
-    hotkeyHandlers.push(['Escape', close]);
-  }
-
-  if (active && mode === 'guided' && withKeyboardNavigation) {
-    hotkeyHandlers.push([
-      dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight',
-      goToNextStep,
-      { preventDefault: false },
-    ]);
-    hotkeyHandlers.push([
-      dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft',
-      goToPreviousStep,
-      { preventDefault: false },
-    ]);
-  }
-
-  useHotkeys(hotkeyHandlers);
-
   const stepPosition = getFloatingPosition(dir, displayStep?.position || 'bottom');
+  const isSidePlacement = stepPosition.startsWith('left') || stepPosition.startsWith('right');
 
   const [constrainedWidth, setConstrainedWidth] = useState(maxWidth!);
 
@@ -218,12 +146,15 @@ export function useTour({
     whileElementsMounted: autoUpdate,
     middleware: [
       offset(12),
-      flip(),
+      flip(isSidePlacement ? { fallbackAxisSideDirection: 'end' } : undefined),
       shift({ padding: 8 }),
       size({
         padding: 8,
-        apply({ availableWidth }) {
-          setConstrainedWidth(Math.min(maxWidth!, availableWidth));
+        apply({ availableWidth, placement }) {
+          const side = placement.split('-')[0];
+          setConstrainedWidth(
+            side === 'left' || side === 'right' ? maxWidth! : Math.min(maxWidth!, availableWidth)
+          );
         },
       }),
     ],
@@ -231,6 +162,7 @@ export function useTour({
 
   const isCentered = !targetElement;
   const [hasPositioned, setHasPositioned] = useState(false);
+  const [stepMoving, setStepMoving] = useState(false);
 
   useEffect(() => {
     if (!active) {
@@ -245,12 +177,31 @@ export function useTour({
     return () => cancelAnimationFrame(timer);
   }, [active]);
 
+  const previousStepRef = useRef({ index: displayStepIndex, shown: showTooltip });
+
+  useEffect(() => {
+    const previous = previousStepRef.current;
+    previousStepRef.current = { index: displayStepIndex, shown: showTooltip };
+
+    if (!showTooltip) {
+      setStepMoving(false);
+      return undefined;
+    }
+
+    if (!hasPositioned || !previous.shown || previous.index === displayStepIndex) {
+      return undefined;
+    }
+
+    setStepMoving(true);
+    const timer = window.setTimeout(() => setStepMoving(false), stepTransitionDuration);
+    return () => window.clearTimeout(timer);
+  }, [displayStepIndex, showTooltip]);
+
   return {
     steps,
-    currentStep,
-    setCurrentStep,
+    setStep,
     beaconOpenStep,
-    setBeaconOpenStep,
+    openBeaconStep,
     close,
     displayStep,
     displayStepIndex,
@@ -260,8 +211,8 @@ export function useTour({
     floatingRefs,
     isCentered,
     constrainedWidth,
-    hasPositioned,
+    stepMoving: hasPositioned && stepMoving,
     showTooltip,
-    lastActiveTargetRef,
+    clearExitedTarget,
   };
 }

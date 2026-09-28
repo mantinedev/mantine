@@ -12,7 +12,7 @@ export function buildRawValue(inputValue: string, options: BuildRawValueOptions)
   const raw = getDigits(inputValue);
   const digitsOnly = raw.replace(/^\+/, '');
 
-  if (!international && selectedCountry) {
+  if (!international && selectedCountry && !(canAutoDetect && raw.startsWith('+'))) {
     return `+${selectedCountry.dialCode}${digitsOnly}`;
   }
 

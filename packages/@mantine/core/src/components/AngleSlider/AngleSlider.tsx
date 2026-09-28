@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { normalizeRadialValue, useMergedRef, useRadialMove, useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useRadialMove, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -13,6 +13,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { stepRadialValue } from './step-radial-value';
 import classes from './AngleSlider.module.css';
 
 export type AngleSliderStylesNames = 'root' | 'thumb' | 'label' | 'marks' | 'mark';
@@ -177,20 +178,12 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
 
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
       event.preventDefault();
-      if (_value === 0) {
-        newValue = 359;
-      } else {
-        newValue = normalizeRadialValue(_value - step, step);
-      }
+      newValue = stepRadialValue(_value, step, -1);
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
       event.preventDefault();
-      if (_value === 359) {
-        newValue = 0;
-      } else {
-        newValue = normalizeRadialValue(_value + step, step);
-      }
+      newValue = stepRadialValue(_value, step, 1);
     }
 
     if (event.key === 'Home') {

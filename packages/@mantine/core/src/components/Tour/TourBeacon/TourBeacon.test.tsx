@@ -3,7 +3,10 @@ import { createContextContainer, renderWithAct, screen, userEvent } from '@manti
 import { Tour } from '../Tour';
 import { TourBeacon, TourBeaconProps } from './TourBeacon';
 
-const TestContainer = createContextContainer(TourBeacon, Tour.Root, { active: true });
+const TestContainer = createContextContainer(TourBeacon, Tour.Root, {
+  active: true,
+  stepsCount: 1,
+});
 
 const defaultProps: TourBeaconProps = {
   target: '#beacon-target',
@@ -44,7 +47,7 @@ describe('@mantine/core/TourBeacon', () => {
   it('forwards ref to the rendered button', async () => {
     const ref = createRef<HTMLButtonElement>();
     await renderWithAct(
-      <Tour.Root active>
+      <Tour.Root active stepsCount={1}>
         <TourBeacon {...defaultProps} ref={ref} />
       </Tour.Root>
     );
