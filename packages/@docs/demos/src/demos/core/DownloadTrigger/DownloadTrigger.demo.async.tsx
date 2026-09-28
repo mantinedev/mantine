@@ -4,10 +4,10 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { Button, DownloadTrigger } from '@mantine/core';
 
-// Data is generated (or fetched) on trigger, the render function exposes the
-// loading state while the async function is resolving
 async function generateReport(): Promise<string> {
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+  await new Promise((resolve) => {
+    setTimeout(resolve, 1500);
+  });
   return JSON.stringify({ value: 42, items: [1, 2, 3] }, null, 2);
 }
 
