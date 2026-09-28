@@ -1,6 +1,9 @@
-import { act, fireEvent } from '@testing-library/react';
-import { renderWithAct, screen, userEvent, wait } from '@mantine-tests/core';
+import { useState } from 'react';
+import { act, createEvent, fireEvent } from '@testing-library/react';
+import { flushSync } from 'react-dom';
+import { render, renderWithAct, screen, userEvent, wait } from '@mantine-tests/core';
 import { DirectionProvider } from '../../core';
+import { Select } from '../Select';
 import { Tour } from './Tour';
 
 function DefaultTour(props: Partial<Tour.Props>) {
@@ -213,7 +216,78 @@ describe('@mantine/core/Tour', () => {
     expect(Tour.displayName).toBe('@mantine/core/Tour');
   });
 
+  it('resolves tooltipShadow and does not map spotlightRadius to the tooltip radius', async () => {
+    const { container: renderContainer } = await renderWithAct(
+      <DefaultTour tooltipShadow="lg" spotlightRadius={20} withOverlay />
+    );
+    const root = renderContainer.querySelector<HTMLElement>('.mantine-Tour-root')!;
+    expect(root.style.getPropertyValue('--tour-tooltip-shadow')).toBe('var(--mantine-shadow-lg)');
+    expect(root.style.getPropertyValue('--tour-tooltip-radius')).toBe('');
+    expect(root.style.getPropertyValue('--tour-spotlight-radius')).toBe('');
+    expect(
+      renderContainer.querySelector<SVGRectElement>('svg[role="presentation"] > rect')!.style.fill
+    ).toBe('var(--tour-overlay-color)');
+  });
+
+  it('animates the tooltip position only while moving to another step target', async () => {
+    const { rerender } = await renderWithAct(
+      <DefaultTour step={0} stepTransitionDuration={50} withOverlay />
+    );
+    await act(async () => {
+      await wait(20);
+    });
+    expect(screen.getByRole('dialog').style.transition).not.toContain('top');
+
+    await act(async () => {
+      rerender(
+        <>
+          <DefaultTour step={1} stepTransitionDuration={50} withOverlay />
+        </>
+      );
+    });
+    expect(screen.getByRole('dialog').style.transition).toContain('top 50ms');
+
+    await act(async () => {
+      await wait(80);
+    });
+    expect(screen.getByRole('dialog').style.transition).not.toContain('top');
+  });
+
   describe('centered steps', () => {
+    it('uses maxWidth for a centered step after a targeted step was constrained', async () => {
+      stubRect(document.getElementById('target-1')!, {
+        width: 20,
+        height: 20,
+        right: 20,
+        bottom: 20,
+      });
+      jest.spyOn(document.documentElement, 'clientWidth', 'get').mockReturnValue(200);
+      jest.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(800);
+      const { rerender } = await renderWithAct(
+        <Tour active step={0} withOverlay={false}>
+          <Tour.Step target="#target-1">Targeted</Tour.Step>
+          <Tour.Step>Centered</Tour.Step>
+        </Tour>
+      );
+      await act(async () => {
+        await wait(20);
+      });
+      expect(screen.getByRole('dialog').style.width).toBe('184px');
+
+      await act(async () => {
+        rerender(
+          <>
+            <Tour active step={1} withOverlay={false}>
+              <Tour.Step target="#target-1">Targeted</Tour.Step>
+              <Tour.Step>Centered</Tour.Step>
+            </Tour>
+          </>
+        );
+      });
+      expect(screen.getByRole('dialog')).toHaveAttribute('data-centered');
+      expect(screen.getByRole('dialog').style.width).toBe('360px');
+    });
+
     function CenteredTour(props: Partial<Tour.Props>) {
       return (
         <Tour active withOverlay={false} {...props}>
@@ -358,6 +432,46 @@ describe('@mantine/core/Tour', () => {
 
       fireEvent.keyDown(document.body, { key: 'ArrowRight' });
       expect(onStepChange).toHaveBeenCalledWith(1);
+    });
+
+    it('closes with Escape from an input and ignores arrow keys there', async () => {
+      const onClose = jest.fn();
+      const onStepChange = jest.fn();
+      const input = document.createElement('input');
+      container.appendChild(input);
+
+      await renderWithAct(
+        <DefaultTour withOverlayInteraction onClose={onClose} onStepChange={onStepChange} />
+      );
+
+      input.focus();
+      fireEvent.keyDown(input, { key: 'ArrowRight' });
+      expect(onStepChange).not.toHaveBeenCalled();
+
+      fireEvent.keyDown(input, { key: 'Escape' });
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not close with Escape that closes an open dropdown', async () => {
+      const onClose = jest.fn();
+      await renderWithAct(
+        <>
+          <Select label="Country" data={['A', 'B']} comboboxProps={{ withinPortal: false }} />
+          <DefaultTour withOverlayInteraction onClose={onClose} />
+        </>
+      );
+
+      await userEvent.click(screen.getAllByLabelText('Country')[0]);
+      expect(screen.getByRole('listbox')).toBeInTheDocument();
+
+      const flushBetweenListeners = () => flushSync(() => {});
+      document.body.addEventListener('keydown', flushBetweenListeners);
+      await userEvent.keyboard('{Escape}');
+      document.body.removeEventListener('keydown', flushBetweenListeners);
+      expect(onClose).not.toHaveBeenCalled();
+
+      await userEvent.keyboard('{Escape}');
+      expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -550,6 +664,55 @@ describe('@mantine/core/Tour', () => {
       expect(overlay).toHaveAttribute('data-with-overlay-interaction');
     });
 
+    it('renders an even-odd hit path with a hole at the spotlight when withOverlayInteraction is set', async () => {
+      stubRect(document.getElementById('target-1')!, {
+        top: 100,
+        left: 200,
+        width: 50,
+        height: 30,
+      });
+
+      const { container: renderContainer } = await renderWithAct(
+        <DefaultTour withOverlay withOverlayInteraction spotlightPadding={10} spotlightRadius={6} />
+      );
+
+      const hitPath = renderContainer.querySelector('svg[role="presentation"] > path')!;
+      expect(hitPath).toHaveAttribute('fill-rule', 'evenodd');
+      expect(hitPath).toHaveStyle({ pointerEvents: 'auto' });
+      expect(hitPath.getAttribute('d')).toBe(
+        'M-100000 -100000H100000V100000H-100000Z' +
+          'M196 90H254A6 6 0 0 1 260 96V134A6 6 0 0 1 254 140H196A6 6 0 0 1 190 134V96A6 6 0 0 1 196 90Z'
+      );
+    });
+
+    it('does not render the hit path without withOverlayInteraction', async () => {
+      const { container: renderContainer } = await renderWithAct(<DefaultTour withOverlay />);
+      expect(
+        renderContainer.querySelector('svg[role="presentation"] > path')
+      ).not.toBeInTheDocument();
+    });
+
+    it('blocks the whole overlay when the step has no target rect', async () => {
+      const { container: renderContainer } = await renderWithAct(
+        <Tour active withOverlay withOverlayInteraction>
+          <Tour.Step title="Centered">Centered</Tour.Step>
+        </Tour>
+      );
+      expect(
+        renderContainer.querySelector('svg[role="presentation"] > path')!.getAttribute('d')
+      ).toBe('M-100000 -100000H100000V100000H-100000Z');
+    });
+
+    it('closes on overlay click with closeOnOverlayClick and withOverlayInteraction', async () => {
+      const onClose = jest.fn();
+      const { container: renderContainer } = await renderWithAct(
+        <DefaultTour withOverlay withOverlayInteraction closeOnOverlayClick onClose={onClose} />
+      );
+
+      await userEvent.click(renderContainer.querySelector('svg[role="presentation"] > path')!);
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
     it('closes the tour on overlay click when closeOnOverlayClick is set', async () => {
       const onClose = jest.fn();
       const { container: renderContainer } = await renderWithAct(
@@ -610,6 +773,86 @@ describe('@mantine/core/Tour', () => {
         rerender(<>{ui(1)}</>);
       });
       expect(renderContainer.querySelector('.mantine-Tour-spotlight')).not.toBeInTheDocument();
+    });
+
+    it('keeps focus in place when the overlay is pressed', async () => {
+      const { container: renderContainer } = await renderWithAct(<DefaultTour withOverlay />);
+      const overlay = renderContainer.querySelector('svg[role="presentation"]')!;
+      const event = createEvent.mouseDown(overlay);
+      fireEvent(overlay, event);
+      expect(event.defaultPrevented).toBe(true);
+    });
+  });
+
+  describe('focus management', () => {
+    function TourWithTrigger(props: Partial<Tour.Props>) {
+      const [active, setActive] = useState(false);
+      return (
+        <>
+          <button type="button" onClick={() => setActive(true)}>
+            Open tour
+          </button>
+          <DefaultTour withOverlay {...props} active={active} onClose={() => setActive(false)} />
+        </>
+      );
+    }
+
+    async function renderWithTransitions(ui: React.ReactNode) {
+      let result: ReturnType<typeof render> | null = null;
+      await act(async () => {
+        result = render(ui, undefined, { env: 'default' });
+      });
+      return result!;
+    }
+
+    async function flush(ms: number) {
+      await act(async () => {
+        await wait(ms);
+      });
+    }
+
+    it.each([
+      ['Escape', () => userEvent.keyboard('{Escape}')],
+      ['close button', () => userEvent.click(screen.getByLabelText('Close'))],
+      ['skip button', () => userEvent.click(screen.getByText('Skip'))],
+    ])('returns focus to the opener when closed with %s right after opening', async (_, action) => {
+      await renderWithTransitions(<TourWithTrigger />);
+      const trigger = screen.getByRole('button', { name: 'Open tour' });
+      await userEvent.click(trigger);
+      await flush(50);
+      expect(screen.getByRole('dialog')).toContainElement(document.activeElement as HTMLElement);
+
+      await action();
+      await flush(400);
+
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(document.activeElement).toBe(trigger);
+    });
+
+    it('returns focus to the opener when closed with ArrowRight on the last step', async () => {
+      await renderWithTransitions(<TourWithTrigger defaultStep={2} />);
+      const trigger = screen.getByRole('button', { name: 'Open tour' });
+      await userEvent.click(trigger);
+      await flush(50);
+
+      await userEvent.keyboard('{ArrowRight}');
+      await flush(400);
+
+      expect(document.activeElement).toBe(trigger);
+    });
+
+    it('keeps focus inside the tooltip when the focused Back button unmounts', async () => {
+      await renderWithAct(<DefaultTour withOverlay defaultStep={1} />);
+      await flush(20);
+
+      await userEvent.click(screen.getByText('Back'));
+      await flush(20);
+
+      const dialog = screen.getByRole('dialog', { name: 'Step 1 Title' });
+      expect(dialog).toContainElement(document.activeElement as HTMLElement);
+
+      await userEvent.tab();
+      expect(dialog).toContainElement(document.activeElement as HTMLElement);
     });
   });
 
@@ -766,6 +1009,37 @@ describe('@mantine/core/Tour', () => {
 
       expect(getBeacons()).toHaveLength(3);
       expect(document.activeElement).toBe(getBeacons()[1]);
+    });
+
+    it('scrolls to the target again when the same beacon is reopened', async () => {
+      const scrollToHandler = jest.fn();
+      await renderWithAct(
+        <BeaconTour scrollToHandler={scrollToHandler} transitionProps={{ duration: 20 }} />
+      );
+
+      await userEvent.click(getBeacons()[1]);
+      await userEvent.click(screen.getByText('Skip'));
+      await act(async () => {
+        await wait(100);
+      });
+      await userEvent.click(getBeacons()[1]);
+
+      expect(scrollToHandler).toHaveBeenCalledTimes(2);
+      expect(scrollToHandler).toHaveBeenLastCalledWith(document.getElementById('target-2'));
+    });
+
+    it('does not animate the tooltip position when a beacon opens', async () => {
+      await renderWithAct(<BeaconTour stepTransitionDuration={50} />);
+      await act(async () => {
+        await wait(20);
+      });
+
+      await userEvent.click(getBeacons()[1]);
+      expect(screen.getByRole('dialog').style.transition).not.toContain('top');
+
+      await userEvent.click(screen.getByText('Skip'));
+      await userEvent.click(getBeacons()[2]);
+      expect(screen.getByRole('dialog').style.transition).not.toContain('top');
     });
   });
 });

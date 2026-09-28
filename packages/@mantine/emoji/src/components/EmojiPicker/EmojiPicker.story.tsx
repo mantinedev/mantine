@@ -5,7 +5,7 @@ import { EmojiPicker } from './EmojiPicker';
 
 export default { title: 'EmojiPicker' };
 
-const emojiData = emojiMartAdapter(data as any);
+const emojiData = emojiMartAdapter(data);
 
 export function Usage() {
   const [selected, setSelected] = useState<string | null>(null);

@@ -15,20 +15,30 @@ function Demo() {
   const [active, setActive] = useState(false);
   const [step, setStep] = useState(0);
   const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
+  const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
 
   const currentStep = steps[step];
 
   useEffect(() => {
-    if (!active || !currentStep?.target) {
-      setTargetElement(null);
-      return;
+    const el = active ? document.querySelector<HTMLElement>(currentStep.target) : null;
+    setTargetElement(el);
+
+    if (!el) {
+      setTargetRect(null);
+      return undefined;
     }
 
-    const el = document.querySelector<HTMLElement>(currentStep.target);
-    setTargetElement(el);
-  }, [active, step]);
+    const updateRect = () => setTargetRect(el.getBoundingClientRect());
+    updateRect();
 
-  const targetRect = targetElement?.getBoundingClientRect();
+    window.addEventListener('scroll', updateRect, true);
+    window.addEventListener('resize', updateRect);
+
+    return () => {
+      window.removeEventListener('scroll', updateRect, true);
+      window.removeEventListener('resize', updateRect);
+    };
+  }, [active, step]);
 
   return (
     <>
@@ -44,17 +54,11 @@ function Demo() {
       <Tour.Root
         active={active}
         step={step}
+        stepsCount={steps.length}
         onStepChange={setStep}
         onClose={() => setActive(false)}
       >
-        <Tour.Overlay
-          targetRect={targetRect ? {
-            top: targetRect.top,
-            left: targetRect.left,
-            width: targetRect.width,
-            height: targetRect.height,
-          } : null}
-        />
+        <Tour.Overlay targetRect={targetRect} />
         <Tour.Tooltip
           targetElement={targetElement}
           position={currentStep?.position}
@@ -90,20 +94,30 @@ function Demo() {
   const [active, setActive] = useState(false);
   const [step, setStep] = useState(0);
   const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
+  const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
 
   const currentStep = steps[step];
 
   useEffect(() => {
-    if (!active || !currentStep?.target) {
-      setTargetElement(null);
-      return;
+    const el = active ? document.querySelector<HTMLElement>(currentStep.target) : null;
+    setTargetElement(el);
+
+    if (!el) {
+      setTargetRect(null);
+      return undefined;
     }
 
-    const el = document.querySelector<HTMLElement>(currentStep.target);
-    setTargetElement(el);
-  }, [active, step]);
+    const updateRect = () => setTargetRect(el.getBoundingClientRect());
+    updateRect();
 
-  const targetRect = targetElement?.getBoundingClientRect();
+    window.addEventListener('scroll', updateRect, true);
+    window.addEventListener('resize', updateRect);
+
+    return () => {
+      window.removeEventListener('scroll', updateRect, true);
+      window.removeEventListener('resize', updateRect);
+    };
+  }, [active, step]);
 
   return (
     <>
@@ -125,21 +139,11 @@ function Demo() {
       <Tour.Root
         active={active}
         step={step}
+        stepsCount={steps.length}
         onStepChange={setStep}
         onClose={() => setActive(false)}
       >
-        <Tour.Overlay
-          targetRect={
-            targetRect
-              ? {
-                  top: targetRect.top,
-                  left: targetRect.left,
-                  width: targetRect.width,
-                  height: targetRect.height,
-                }
-              : null
-          }
-        />
+        <Tour.Overlay targetRect={targetRect} />
         <Tour.Tooltip
           targetElement={targetElement}
           position={currentStep?.position}

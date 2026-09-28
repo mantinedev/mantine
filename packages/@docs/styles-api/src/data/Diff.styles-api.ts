@@ -15,6 +15,7 @@ export const DiffStylesApi: StylesApiData<DiffFactory> = {
     removedHighlight: 'Inline highlight for removed text',
     expandControl: 'Expand control for collapsed context sections',
     splitDivider: 'Divider between left and right panels in split mode',
+    changeMarker: 'Visually hidden `+`/`-` marker at the start of added and removed lines',
   },
 
   vars: {

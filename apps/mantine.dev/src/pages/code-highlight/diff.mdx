@@ -31,6 +31,17 @@ Lines beyond this range are collapsed and can be expanded by clicking the expand
 
 <Demo data={DiffDemos.contextLines} />
 
+Use `expandLabel` prop to change the expand button label:
+
+```tsx
+<Diff
+  previousValue={previousValue}
+  currentValue={currentValue}
+  contextLines={2}
+  expandLabel={(hiddenCount) => `${hiddenCount} more`}
+/>
+```
+
 ## Custom colors
 
 Use `addColor` and `removeColor` props to customize the highlight colors.

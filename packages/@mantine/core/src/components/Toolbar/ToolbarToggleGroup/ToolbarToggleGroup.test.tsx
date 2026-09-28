@@ -222,4 +222,38 @@ describe('@mantine/core/ToolbarToggleGroup', () => {
     expect(screen.getByRole('button', { name: 'Bold' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Italic' })).not.toBeDisabled();
   });
+
+  it('sets data-auto-width on toggle items with autoWidth', () => {
+    render(
+      <Toolbar>
+        <Toolbar.ToggleGroup type="single">
+          <Toolbar.ToggleItem value="save" autoWidth>
+            Save
+          </Toolbar.ToggleItem>
+          <Toolbar.ToggleItem value="bold">Bold</Toolbar.ToggleItem>
+        </Toolbar.ToggleGroup>
+      </Toolbar>
+    );
+    expect(screen.getByRole('button', { name: 'Save' })).toHaveAttribute('data-auto-width');
+    expect(screen.getByRole('button', { name: 'Bold' })).not.toHaveAttribute('data-auto-width');
+  });
+
+  it('sets tabindex=-1 on disabled toggle items', () => {
+    render(
+      <Toolbar>
+        <Toolbar.ToggleGroup type="single" disabled>
+          <Toolbar.ToggleItem value="left">Left</Toolbar.ToggleItem>
+        </Toolbar.ToggleGroup>
+        <Toolbar.ToggleGroup type="single">
+          <Toolbar.ToggleItem value="bold" disabled>
+            Bold
+          </Toolbar.ToggleItem>
+          <Toolbar.ToggleItem value="italic">Italic</Toolbar.ToggleItem>
+        </Toolbar.ToggleGroup>
+      </Toolbar>
+    );
+    expect(screen.getByRole('button', { name: 'Left' })).toHaveAttribute('tabindex', '-1');
+    expect(screen.getByRole('button', { name: 'Bold' })).toHaveAttribute('tabindex', '-1');
+    expect(screen.getByRole('button', { name: 'Italic' })).toHaveAttribute('tabindex', '0');
+  });
 });

@@ -167,9 +167,7 @@ export const Toolbar = factory<ToolbarFactory>((_props) => {
   const mergedRef = useMergedRef(toolbarRef, ref);
 
   return (
-    <ToolbarProvider
-      value={{ getStyles, orientation: orientation!, size, radius, variant, color, autoContrast }}
-    >
+    <ToolbarProvider value={{ getStyles, orientation: orientation! }}>
       <Box
         ref={mergedRef}
         role="toolbar"

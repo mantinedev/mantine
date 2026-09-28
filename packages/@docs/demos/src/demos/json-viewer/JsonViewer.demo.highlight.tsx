@@ -1,4 +1,8 @@
-import { JsonViewer, serializeJsonViewerPath } from '@mantine/code-highlight';
+import {
+  JsonViewer,
+  JsonViewerHighlightType,
+  serializeJsonViewerPath,
+} from '@mantine/code-highlight';
 import { MantineDemo } from '@mantinex/demo';
 
 const jsonData = {
@@ -17,10 +21,10 @@ const jsonData = {
   },
 };
 
-const highlightItems = {
-  [serializeJsonViewerPath(['version'])]: 'added' as const,
-  [serializeJsonViewerPath(['deprecated'])]: 'removed' as const,
-  [serializeJsonViewerPath(['author', 'url'])]: 'added' as const,
+const highlightItems: Record<string, JsonViewerHighlightType> = {
+  [serializeJsonViewerPath(['version'])]: 'added',
+  [serializeJsonViewerPath(['deprecated'])]: 'removed',
+  [serializeJsonViewerPath(['author', 'url'])]: 'added',
 };
 
 const dataCode = `
@@ -28,10 +32,14 @@ export const data = ${JSON.stringify(jsonData, null, 2)};
 `;
 
 const code = `
-import { JsonViewer, serializeJsonViewerPath } from '@mantine/code-highlight';
+import {
+  JsonViewer,
+  JsonViewerHighlightType,
+  serializeJsonViewerPath,
+} from '@mantine/code-highlight';
 import { data } from './data';
 
-const highlightItems = {
+const highlightItems: Record<string, JsonViewerHighlightType> = {
   [serializeJsonViewerPath(['version'])]: 'added',
   [serializeJsonViewerPath(['deprecated'])]: 'removed',
   [serializeJsonViewerPath(['author', 'url'])]: 'added',

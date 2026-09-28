@@ -57,3 +57,8 @@ export const Demo_size = {
   name: '⭐ Demo: size',
   render: renderDemo(demos.size),
 };
+
+export const Demo_toggleSections = {
+  name: '⭐ Demo: toggleSections',
+  render: renderDemo(demos.toggleSections),
+};

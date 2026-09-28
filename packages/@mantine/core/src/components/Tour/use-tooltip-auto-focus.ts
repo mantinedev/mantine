@@ -1,25 +1,51 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { useIsomorphicEffect } from '@mantine/hooks';
 
-export function useTooltipAutoFocus(enabled: boolean) {
-  const enabledRef = useRef(enabled);
+interface UseTooltipAutoFocusInput {
+  autoFocus: boolean;
+  opened: boolean;
+  step: number;
+}
 
-  useEffect(() => {
-    enabledRef.current = enabled;
+function isFocusLost() {
+  return document.activeElement === null || document.activeElement === document.body;
+}
+
+export function useTooltipAutoFocus({ autoFocus, opened, step }: UseTooltipAutoFocusInput) {
+  const autoFocusRef = useRef(autoFocus);
+  const nodeRef = useRef<HTMLElement | null>(null);
+
+  useIsomorphicEffect(() => {
+    autoFocusRef.current = autoFocus;
   });
 
+  useEffect(() => {
+    const node = nodeRef.current;
+    if (opened && node?.isConnected && isFocusLost()) {
+      node.focus({ preventScroll: true });
+    }
+  }, [step]);
+
   return useCallback((node: HTMLElement | null) => {
+    nodeRef.current = node;
+
     if (!node) {
       return undefined;
     }
 
     const timeout = window.setTimeout(() => {
-      if (!enabledRef.current || !node.isConnected || node.contains(document.activeElement)) {
+      if (!autoFocusRef.current || !node.isConnected || node.contains(document.activeElement)) {
         return;
       }
 
       node.focus({ preventScroll: true });
     });
 
-    return () => window.clearTimeout(timeout);
+    return () => {
+      window.clearTimeout(timeout);
+      if (nodeRef.current === node) {
+        nodeRef.current = null;
+      }
+    };
   }, []);
 }

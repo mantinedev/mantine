@@ -7,8 +7,7 @@ export default Layout(MDX_DATA.EmojiPickerPopover);
 ## Usage
 
 `EmojiPickerPopover` combines `EmojiPicker` with Mantine `Popover`.
-The child element is used as the popover target. Use `opened` and `onOpenedChange`
-to control the popover state, and add an `onClick` handler to the target element to toggle it.
+The child element is used as the popover target – the popover is toggled when it is clicked.
 
 <Demo data={EmojiPickerPopoverDemos.usage} />
 
@@ -21,7 +20,7 @@ By default, the popover closes when an emoji is selected. Set `closeOnSelect={fa
 ## EmojiPicker props
 
 All `EmojiPicker` props are supported directly on `EmojiPickerPopover`.
-For example, you can hide the search or change columns:
+For example, you can change the number of columns and hide the preview and category navigation:
 
 <Demo data={EmojiPickerPopoverDemos.pickerProps} />
 
@@ -37,17 +36,11 @@ import { EmojiPickerPopover } from '@mantine/emoji';
 import { emojiData } from './emoji-data';
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
   const [emoji, setEmoji] = useState<string | null>(null);
 
   return (
-    <EmojiPickerPopover
-      data={emojiData}
-      opened={opened}
-      onOpenedChange={setOpened}
-      onEmojiSelect={(e) => setEmoji(e.emoji)}
-    >
-      <ActionIcon variant="default" size="lg" onClick={() => setOpened((o) => !o)}>
+    <EmojiPickerPopover data={emojiData} onEmojiSelect={(e) => setEmoji(e.emoji)}>
+      <ActionIcon variant="default" size="lg">
         {emoji || '☺'}
       </ActionIcon>
     </EmojiPickerPopover>
@@ -57,8 +50,9 @@ function Demo() {
 
 ## Controlled state
 
-Use `opened` and `onOpenedChange` to fully control the popover state.
-You can also use `defaultOpened` for the initial open state in uncontrolled mode:
+Use `opened` and `onOpenedChange` to fully control the popover state. In controlled mode,
+the target element is not toggled automatically – add an `onClick` handler to it.
+Use `defaultOpened` to set the initial open state in uncontrolled mode:
 
 ```tsx
 import { useState } from 'react';

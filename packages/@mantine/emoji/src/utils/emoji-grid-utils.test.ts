@@ -1,10 +1,9 @@
 import type { EmojiPickerEmoji, FlattenedRowItem } from '../types';
 import {
   applySkinTone,
-  emojiIndexToRowIndex,
-  getAllEmojis,
-  getEmojiIdAtIndex,
-  getItemEmojiOffsets,
+  createEmojiGridModel,
+  getEmojiItemIndex,
+  getNextEmojiIndex,
 } from './emoji-grid-utils';
 
 const emojiA: EmojiPickerEmoji = { id: 'a', name: 'A', keywords: [], emoji: '😀' };
@@ -26,45 +25,81 @@ const items: FlattenedRowItem[] = [
   { type: 'row', emojis: [emojiD] },
 ];
 
-describe('getAllEmojis', () => {
-  it('extracts all emojis from flattened items', () => {
-    expect(getAllEmojis(items)).toEqual([emojiA, emojiB, emojiC, emojiD]);
+const e = (id: string): EmojiPickerEmoji => ({ id, name: id, keywords: [], emoji: '😀' });
+
+const boundaryItems: FlattenedRowItem[] = [
+  { type: 'header', categoryId: 'a', label: 'A' },
+  { type: 'row', emojis: [e('a0'), e('a1'), e('a2')] },
+  { type: 'row', emojis: [e('a3')] },
+  { type: 'header', categoryId: 'b', label: 'B' },
+  { type: 'row', emojis: [e('b0'), e('b1'), e('b2')] },
+  { type: 'row', emojis: [e('b3'), e('b4'), e('b5')] },
+];
+
+describe('createEmojiGridModel', () => {
+  it('collects emojis, rows and item offsets', () => {
+    const model = createEmojiGridModel(items);
+    expect(model.emojis).toEqual([emojiA, emojiB, emojiC, emojiD]);
+    expect(model.rows).toEqual([
+      { itemIndex: 1, start: 0, length: 2 },
+      { itemIndex: 2, start: 2, length: 1 },
+      { itemIndex: 4, start: 3, length: 1 },
+    ]);
+    expect(model.emojiRows).toEqual([0, 0, 1, 2]);
+    expect(model.itemOffsets).toEqual([0, 0, 2, 3, 3]);
   });
 
-  it('returns empty array for header-only items', () => {
-    expect(getAllEmojis([{ type: 'header', categoryId: 'x', label: 'X' }])).toEqual([]);
+  it('maps emoji index to virtualizer item index', () => {
+    const model = createEmojiGridModel(items);
+    expect(getEmojiItemIndex(model, 0)).toBe(1);
+    expect(getEmojiItemIndex(model, 2)).toBe(2);
+    expect(getEmojiItemIndex(model, 3)).toBe(4);
+    expect(getEmojiItemIndex(model, 10)).toBe(-1);
   });
 });
 
-describe('getEmojiIdAtIndex', () => {
-  it('returns emoji id at given flat index', () => {
-    expect(getEmojiIdAtIndex(items, 0)).toBe('a');
-    expect(getEmojiIdAtIndex(items, 1)).toBe('b');
-    expect(getEmojiIdAtIndex(items, 2)).toBe('c');
-    expect(getEmojiIdAtIndex(items, 3)).toBe('d');
+describe('getNextEmojiIndex', () => {
+  const model = createEmojiGridModel(boundaryItems);
+  const id = (index: number) => model.emojis[index].id;
+
+  it('keeps the column when moving down across a category boundary', () => {
+    expect(id(getNextEmojiIndex(model, 3, 'down'))).toBe('b0');
   });
 
-  it('returns undefined for out-of-range index', () => {
-    expect(getEmojiIdAtIndex(items, 10)).toBeUndefined();
-  });
-});
-
-describe('getItemEmojiOffsets', () => {
-  it('returns emoji offset for each item', () => {
-    expect(getItemEmojiOffsets(items)).toEqual([0, 0, 2, 3, 3]);
-  });
-});
-
-describe('emojiIndexToRowIndex', () => {
-  it('maps flat emoji index to virtualizer row index', () => {
-    expect(emojiIndexToRowIndex(items, 0)).toBe(1);
-    expect(emojiIndexToRowIndex(items, 1)).toBe(1);
-    expect(emojiIndexToRowIndex(items, 2)).toBe(2);
-    expect(emojiIndexToRowIndex(items, 3)).toBe(4);
+  it('clamps the column to a shorter target row', () => {
+    expect(id(getNextEmojiIndex(model, 2, 'down'))).toBe('a3');
+    expect(id(getNextEmojiIndex(model, 6, 'up'))).toBe('a3');
   });
 
-  it('returns 0 for out-of-range index', () => {
-    expect(emojiIndexToRowIndex(items, 100)).toBe(0);
+  it('moves up across a category boundary keeping the column', () => {
+    expect(id(getNextEmojiIndex(model, 5, 'up'))).toBe('a3');
+    expect(id(getNextEmojiIndex(model, 3, 'up'))).toBe('a0');
+  });
+
+  it('stays in place at the first and last rows', () => {
+    expect(getNextEmojiIndex(model, 1, 'up')).toBe(1);
+    expect(getNextEmojiIndex(model, 9, 'down')).toBe(9);
+  });
+
+  it('moves left and right through the flat list, clamped at the ends', () => {
+    expect(id(getNextEmojiIndex(model, 3, 'right'))).toBe('b0');
+    expect(id(getNextEmojiIndex(model, 4, 'left'))).toBe('a3');
+    expect(getNextEmojiIndex(model, 0, 'left')).toBe(0);
+    expect(getNextEmojiIndex(model, 9, 'right')).toBe(9);
+  });
+
+  it('handles a single column grid', () => {
+    const single = createEmojiGridModel([
+      { type: 'header', categoryId: 'a', label: 'A' },
+      { type: 'row', emojis: [e('x')] },
+      { type: 'row', emojis: [e('y')] },
+    ]);
+    expect(getNextEmojiIndex(single, 0, 'down')).toBe(1);
+    expect(getNextEmojiIndex(single, 1, 'up')).toBe(0);
+  });
+
+  it('returns -1 for an empty grid', () => {
+    expect(getNextEmojiIndex(createEmojiGridModel([]), 0, 'down')).toBe(-1);
   });
 });
 

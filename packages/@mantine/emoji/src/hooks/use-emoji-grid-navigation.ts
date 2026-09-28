@@ -1,127 +1,98 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { EmojiPickerEmoji, FlattenedRowItem } from '../types';
-import { applySkinTone, emojiIndexToRowIndex, getAllEmojis } from '../utils';
+import {
+  applySkinTone,
+  createEmojiGridModel,
+  EmojiGridDirection,
+  getEmojiItemIndex,
+  getNextEmojiIndex,
+} from '../utils';
 
-interface UseEmojiGridNavigationInput {
-  flattenedItems: FlattenedRowItem[];
-  columns: number;
-  skinTone: number;
-  onEmojiSelect: (emoji: EmojiPickerEmoji) => void;
-  onEscape?: () => void;
-  scrollToIndex?: (index: number) => void;
+type ActiveEmojiSource = 'anchor' | 'pointer' | 'keyboard';
+
+interface ActiveEmojiState {
+  index: number;
+  source: ActiveEmojiSource;
 }
 
+interface UseEmojiGridNavigationInput {
+  items: FlattenedRowItem[];
+  resetKey: string;
+  skinTone: number;
+  onEmojiSelect: (emoji: EmojiPickerEmoji) => void;
+  scrollToItem?: (itemIndex: number) => void;
+}
+
+const INITIAL_STATE: ActiveEmojiState = { index: 0, source: 'anchor' };
+
+const KEY_DIRECTIONS: Record<string, EmojiGridDirection> = {
+  ArrowLeft: 'left',
+  ArrowRight: 'right',
+  ArrowUp: 'up',
+  ArrowDown: 'down',
+};
+
 export function useEmojiGridNavigation({
-  flattenedItems,
-  columns,
+  items,
+  resetKey,
   skinTone,
   onEmojiSelect,
-  onEscape,
-  scrollToIndex,
+  scrollToItem,
 }: UseEmojiGridNavigationInput) {
-  const [focusedIndex, setFocusedIndex] = useState(0);
-  const [keyboardActive, setKeyboardActive] = useState(false);
-  const allEmojis = getAllEmojis(flattenedItems);
+  const model = useMemo(() => createEmojiGridModel(items), [items]);
+  const [state, setState] = useState<ActiveEmojiState>(INITIAL_STATE);
+  const [prevResetKey, setPrevResetKey] = useState(resetKey);
 
-  useEffect(() => {
-    if (allEmojis.length > 0 && focusedIndex >= allEmojis.length) {
-      setFocusedIndex(allEmojis.length - 1);
-    }
-  }, [allEmojis.length, focusedIndex]);
+  if (prevResetKey !== resetKey) {
+    setPrevResetKey(resetKey);
+    setState(INITIAL_STATE);
+  }
+
+  const isCurrent = state.index < model.emojis.length;
+  const source: ActiveEmojiSource = isCurrent ? state.source : 'anchor';
+  const activeIndex = model.emojis.length === 0 ? -1 : isCurrent ? state.index : 0;
+  const keyboardActive = source === 'keyboard' && activeIndex !== -1;
+
+  const setActive = useCallback((index: number, nextSource: ActiveEmojiSource) => {
+    setState((prev) =>
+      prev.index === index && prev.source === nextSource ? prev : { index, source: nextSource }
+    );
+  }, []);
+
+  const setPointerIndex = useCallback((index: number) => setActive(index, 'pointer'), [setActive]);
+  const setAnchorIndex = useCallback((index: number) => setActive(index, 'anchor'), [setActive]);
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
-      if (allEmojis.length === 0) {
+      if (activeIndex === -1) {
         return;
       }
 
-      let nextIndex = focusedIndex;
-
-      switch (event.key) {
-        case 'ArrowRight':
-        case 'ArrowLeft':
-        case 'ArrowDown':
-        case 'ArrowUp':
-          if (!keyboardActive) {
-            setKeyboardActive(true);
-            setFocusedIndex(0);
-            const rowIndex = emojiIndexToRowIndex(flattenedItems, 0);
-            scrollToIndex?.(rowIndex);
-            event.preventDefault();
-            return;
-          }
-          break;
-        default:
-          break;
+      const direction = KEY_DIRECTIONS[event.key];
+      if (direction) {
+        event.preventDefault();
+        const nextIndex =
+          source === 'anchor' ? activeIndex : getNextEmojiIndex(model, activeIndex, direction);
+        setActive(nextIndex, 'keyboard');
+        scrollToItem?.(getEmojiItemIndex(model, nextIndex));
+        return;
       }
 
-      switch (event.key) {
-        case 'ArrowRight':
-          nextIndex = Math.min(focusedIndex + 1, allEmojis.length - 1);
-          event.preventDefault();
-          break;
-        case 'ArrowLeft':
-          nextIndex = Math.max(focusedIndex - 1, 0);
-          event.preventDefault();
-          break;
-        case 'ArrowDown':
-          nextIndex = Math.min(focusedIndex + columns, allEmojis.length - 1);
-          event.preventDefault();
-          break;
-        case 'ArrowUp':
-          nextIndex = Math.max(focusedIndex - columns, 0);
-          event.preventDefault();
-          break;
-        case 'Enter':
-        case ' ':
-          if (allEmojis[focusedIndex]) {
-            onEmojiSelect(applySkinTone(allEmojis[focusedIndex], skinTone));
-          }
-          event.preventDefault();
-          break;
-        case 'Escape':
-          onEscape?.();
-          event.preventDefault();
-          break;
-        default:
-          return;
-      }
-
-      if (nextIndex !== focusedIndex) {
-        setKeyboardActive(true);
-        setFocusedIndex(nextIndex);
-        const rowIndex = emojiIndexToRowIndex(flattenedItems, nextIndex);
-        scrollToIndex?.(rowIndex);
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        onEmojiSelect(applySkinTone(model.emojis[activeIndex], skinTone));
       }
     },
-    [
-      focusedIndex,
-      allEmojis,
-      columns,
-      skinTone,
-      keyboardActive,
-      onEmojiSelect,
-      onEscape,
-      scrollToIndex,
-      flattenedItems,
-    ]
+    [activeIndex, source, model, setActive, scrollToItem, onEmojiSelect, skinTone]
   );
 
-  const deactivateKeyboard = useCallback(() => {
-    setKeyboardActive(false);
-  }, []);
-
-  const focusedEmoji = allEmojis[focusedIndex]
-    ? applySkinTone(allEmojis[focusedIndex], skinTone)
-    : null;
-
   return {
-    focusedIndex,
-    setFocusedIndex,
-    focusedEmoji,
-    handleKeyDown,
+    model,
+    activeIndex,
+    activeEmoji: activeIndex === -1 ? null : model.emojis[activeIndex],
     keyboardActive,
-    deactivateKeyboard,
-    allEmojis,
+    handleKeyDown,
+    setPointerIndex,
+    setAnchorIndex,
   };
 }
