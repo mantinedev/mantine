@@ -18,7 +18,7 @@ export interface PersonaTextProps
   /** Text importance level. `1` is the primary line (person name), `2`–`4` are secondary lines @default 1 */
   level?: PersonaTextLevel;
 
-  /** Text content */
+  /** Text content. String content is also set as `title` so the full text is available when the line is truncated */
   children?: React.ReactNode;
 }
 
@@ -35,15 +35,18 @@ const defaultProps = {
 
 export const PersonaText = factory<PersonaTextFactory>((_props) => {
   const props = useProps('PersonaText', defaultProps, _props);
-  const { className, style, classNames, styles, vars, level, mod, ...others } = props;
+  const { className, style, classNames, styles, vars, level, mod, children, ...others } = props;
   const ctx = usePersonaContext();
 
   return (
     <Box
       mod={[{ level }, mod]}
+      title={typeof children === 'string' ? children : undefined}
       {...ctx.getStyles('text', { className, style, classNames, styles })}
       {...others}
-    />
+    >
+      {children}
+    </Box>
   );
 });
 

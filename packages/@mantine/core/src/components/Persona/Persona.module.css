@@ -35,16 +35,25 @@
   --persona-secondary-fz-lg: var(--mantine-font-size-md);
   --persona-secondary-fz-xl: var(--mantine-font-size-lg);
 
+  --persona-line-height: 1.35;
+  --persona-presence-offset: 14.6%;
+
   display: flex;
   align-items: center;
   gap: var(--persona-gap, var(--persona-gap-md));
 
-  &:where([data-text-position='after']) {
-    flex-direction: row;
-  }
-
-  &:where([data-text-position='before']) {
-    flex-direction: row-reverse;
+  &:where(a, button) {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    text-align: start;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   &:where([data-text-position='below']) {
@@ -58,6 +67,15 @@
   &:where([data-text-position='below'][data-text-alignment='center']) {
     align-items: center;
   }
+
+  &:where([data-presence-only]:not([data-text-position='below'])) {
+    align-items: flex-start;
+  }
+}
+
+.root:where([data-text-position='after'], [data-text-position='below'])
+  > :where(.avatarWrapper, .presence) {
+  order: -1;
 }
 
 .avatarWrapper {
@@ -81,6 +99,10 @@
     align-items: center;
     text-align: center;
   }
+
+  [data-text-position='below'] > & {
+    max-width: 100%;
+  }
 }
 
 .presence {
@@ -94,9 +116,29 @@
   width: var(--persona-presence-size, var(--persona-presence-size-md));
   height: var(--persona-presence-size, var(--persona-presence-size-md));
   border-radius: 1000px;
-  background-color: var(--persona-presence-color, var(--mantine-color-gray-5));
+  background-color: var(--persona-presence-color);
   color: var(--mantine-color-white);
   line-height: 1;
+
+  &:where([data-status='available']) {
+    --persona-presence-color: var(--mantine-color-green-filled);
+  }
+
+  &:where([data-status='away']) {
+    --persona-presence-color: var(--mantine-color-yellow-filled);
+  }
+
+  &:where([data-status='busy'], [data-status='do-not-disturb'], [data-status='blocked']) {
+    --persona-presence-color: var(--mantine-color-red-filled);
+  }
+
+  &:where([data-status='offline'], [data-status='unknown']) {
+    --persona-presence-color: var(--mantine-color-gray-5);
+  }
+
+  &:where([data-status='out-of-office']) {
+    --persona-presence-color: var(--mantine-color-grape-filled);
+  }
 
   & > svg {
     width: 75%;
@@ -104,7 +146,7 @@
   }
 
   &:where([data-variant='outline']) {
-    background-color: var(--mantine-color-body);
+    background-color: var(--persona-presence-ring-color, var(--mantine-color-body));
     color: var(--persona-presence-color);
     box-shadow: inset 0 0 0 2px var(--persona-presence-color);
   }
@@ -115,21 +157,40 @@
     inset: 0;
     z-index: -1;
     border-radius: inherit;
-    background-color: var(--persona-presence-color, var(--mantine-color-gray-5));
+    background-color: var(--persona-presence-color);
     animation: persona-presence-pulse 1000ms linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+      opacity: 0;
+    }
   }
+}
+
+.root:where([data-presence-only]:not([data-text-position='below'])) > .presence {
+  margin-top: calc(
+    (var(--persona-primary-fz, var(--persona-primary-fz-md)) * var(--persona-line-height) -
+        var(--persona-presence-size, var(--persona-presence-size-md))) /
+      2
+  );
 }
 
 .avatarWrapper > .presence {
   position: absolute;
-  bottom: 0;
-  inset-inline-end: 0;
-  box-shadow: 0 0 0 2px var(--mantine-color-body);
+  bottom: calc(
+    var(--persona-presence-offset) - var(--persona-presence-size, var(--persona-presence-size-md)) /
+      2
+  );
+  inset-inline-end: calc(
+    var(--persona-presence-offset) - var(--persona-presence-size, var(--persona-presence-size-md)) /
+      2
+  );
+  box-shadow: 0 0 0 2px var(--persona-presence-ring-color, var(--mantine-color-body));
 
   &:where([data-variant='outline']) {
     box-shadow:
       inset 0 0 0 2px var(--persona-presence-color),
-      0 0 0 2px var(--mantine-color-body);
+      0 0 0 2px var(--persona-presence-ring-color, var(--mantine-color-body));
   }
 }
 
@@ -138,7 +199,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 1.35;
+  line-height: var(--persona-line-height);
   font-size: var(--persona-secondary-fz, var(--persona-secondary-fz-md));
   color: var(--mantine-color-dimmed);
 

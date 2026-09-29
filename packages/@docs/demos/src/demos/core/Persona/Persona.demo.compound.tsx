@@ -2,7 +2,7 @@ import { Persona } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const IMAGE =
-  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png';
+  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png';
 
 function Demo() {
   return (

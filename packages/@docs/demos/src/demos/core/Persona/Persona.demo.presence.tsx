@@ -16,7 +16,13 @@ function Demo() {
   return (
     <SimpleGrid cols={{ base: 1, xs: 2 }}>
       {statuses.map((status) => (
-        <Persona key={status} name="Jane Doe" secondaryText={status} presence={status} />
+        <Persona
+          key={status}
+          name="Jane Doe"
+          secondaryText={status}
+          presence={status}
+          labels={{ [status]: '' }}
+        />
       ))}
     </SimpleGrid>
   );
@@ -40,7 +46,13 @@ function Demo() {
   return (
     <SimpleGrid cols={{ base: 1, xs: 2 }}>
       {statuses.map((status) => (
-        <Persona key={status} name="Jane Doe" secondaryText={status} presence={status} />
+        <Persona
+          key={status}
+          name="Jane Doe"
+          secondaryText={status}
+          presence={status}
+          labels={{ [status]: '' }}
+        />
       ))}
     </SimpleGrid>
   );

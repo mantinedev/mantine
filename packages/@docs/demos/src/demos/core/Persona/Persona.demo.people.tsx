@@ -5,7 +5,7 @@ const members: { name: string; role: string; image: string; presence: PersonaPre
   {
     name: 'Emily Johnson',
     role: 'Product manager',
-    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
+    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-4.png',
     presence: 'available',
   },
   {
@@ -17,13 +17,13 @@ const members: { name: string; role: string; image: string; presence: PersonaPre
   {
     name: 'Mary Smith',
     role: 'UX researcher',
-    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png',
+    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
     presence: { status: 'busy', outOfOffice: true },
   },
   {
     name: 'Robert Wolf',
     role: 'Backend developer',
-    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-4.png',
+    image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png',
     presence: 'offline',
   },
 ];
@@ -47,9 +47,9 @@ function Demo() {
 }
 
 const code = `
-import { Paper, Persona, Stack } from '@mantine/core';
+import { Paper, Persona, PersonaPresenceValue, Stack } from '@mantine/core';
 
-const people = [
+const members: { name: string; role: string; image: string; presence: PersonaPresenceValue }[] = [
   { name: 'Emily Johnson', role: 'Product manager', image: image1, presence: 'available' },
   { name: 'Kevin Gilbert', role: 'Frontend developer', image: image2, presence: 'do-not-disturb' },
   { name: 'Mary Smith', role: 'UX researcher', image: image3, presence: { status: 'busy', outOfOffice: true } },
@@ -60,7 +60,7 @@ function Demo() {
   return (
     <Paper withBorder p="md" radius="md">
       <Stack gap="lg">
-        {people.map((person) => (
+        {members.map((person) => (
           <Persona
             key={person.name}
             name={person.name}
