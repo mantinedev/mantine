@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Stack } from '../Stack';
@@ -10,16 +11,52 @@ export default { title: 'Timer' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Timer countdown startMs={90_000} withControls autoStart />
+      <Timer countdown startMs={90_000} autoStart />
     </div>
   );
 }
 
 export function Stopwatch() {
+  const timer = useTimer({ interval: 10 });
+
   return (
-    <div style={{ padding: 40 }}>
-      <Timer withControls format="mm:ss" interval={100} />
-    </div>
+    <Stack p={40} align="flex-start">
+      <Timer controller={timer} format="mm:ss:SS" />
+      <Group>
+        <Button onClick={timer.running ? timer.pause : timer.paused ? timer.resume : timer.start}>
+          {timer.running ? 'Pause' : timer.paused ? 'Resume' : 'Start'}
+        </Button>
+        <Button variant="default" onClick={timer.reset}>
+          Reset
+        </Button>
+      </Group>
+    </Stack>
+  );
+}
+
+export function Target() {
+  const [done, setDone] = useState(false);
+  const [ticks, setTicks] = useState(0);
+  const timer = useTimer({
+    targetMs: 5000,
+    autoStart: true,
+    onTick: () => setTicks((count) => count + 1),
+    onComplete: () => setDone(true),
+  });
+
+  const replay = () => {
+    setDone(false);
+    setTicks(0);
+    timer.restart();
+  };
+
+  return (
+    <Stack p={40} align="flex-start">
+      <Timer controller={timer} />
+      <Text>{done ? 'Done' : 'Running…'}</Text>
+      <Text>ticks: {ticks}</Text>
+      <Button onClick={replay}>Restart</Button>
+    </Stack>
   );
 }
 
@@ -37,9 +74,11 @@ export function CustomLayout() {
   return (
     <div style={{ padding: 40 }}>
       <Timer countdown startMs={125_000} autoStart style={{ fontSize: 32 }}>
-        <Timer.Segment type="minutes" />
-        <Timer.Separator>:</Timer.Separator>
-        <Timer.Segment type="seconds" />
+        <Group gap={4}>
+          <Timer.Segment type="minutes" />
+          <Timer.Separator>:</Timer.Separator>
+          <Timer.Segment type="seconds" />
+        </Group>
         <Group ml="md">
           <Timer.Control action="pause">
             <Button component="span" size="xs">
@@ -81,7 +120,7 @@ export function ExternalController() {
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>
-      <Timer unstyled countdown startMs={90_000} withControls autoStart />
+      <Timer unstyled countdown startMs={90_000} autoStart />
     </div>
   );
 }

@@ -5,12 +5,12 @@ const code = `
 import { Timer } from '@mantine/core';
 
 function Demo() {
-  return <Timer countdown startMs={90 * 1000} withControls />;
+  return <Timer countdown startMs={90 * 1000} autoStart />;
 }
 `;
 
 function Demo() {
-  return <Timer countdown startMs={90 * 1000} withControls />;
+  return <Timer countdown startMs={90 * 1000} autoStart />;
 }
 
 export const usage: MantineDemo = {

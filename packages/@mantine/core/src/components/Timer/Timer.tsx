@@ -8,7 +8,6 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { Button } from '../Button';
 import { formatTimerValue } from './format-timer-value';
 import type { TimerValue } from './get-timer-value';
 import { parseDuration } from './parse-duration';
@@ -22,7 +21,6 @@ import classes from './Timer.module.css';
 export type TimerStylesNames =
   | 'root'
   | 'value'
-  | 'controls'
   | TimerSegmentStylesNames
   | TimerSeparatorStylesNames
   | TimerControlStylesNames;
@@ -32,16 +30,19 @@ export interface TimerProps
   /** Controller returned by the `useTimer` hook. When provided, the timer is controlled externally and the option props below are ignored */
   controller?: UseTimerReturnValue;
 
-  /** Initial elapsed (stopwatch) or remaining (countdown) time in milliseconds, `0` by default */
+  /** Initial elapsed (stopwatch) or remaining (countdown) time in milliseconds, `0` by default.
+   * Changing `startMs` or `countdown` stops the timer and resets it to the new `startMs` */
   startMs?: number;
 
-  /** Boundary the timer counts up to (stopwatch) or down to (countdown) */
+  /** Boundary the timer counts up to (stopwatch) or down to (countdown).
+   * Defaults to `0` in countdown mode, open-ended in stopwatch mode. If `startMs` is already at or past the boundary,
+   * the timer completes immediately when started */
   targetMs?: number;
 
   /** If set, the timer counts down instead of up, `false` by default */
   countdown?: boolean;
 
-  /** Tick interval in milliseconds, `1000` by default */
+  /** Tick interval in milliseconds, `1000` by default, values below `1` are clamped to `1` */
   interval?: number;
 
   /** If set, the timer starts automatically on mount, `false` by default */
@@ -53,11 +54,11 @@ export interface TimerProps
   /** Called once when the timer reaches its target boundary */
   onComplete?: () => void;
 
-  /** Format of the default readout, `'HH:mm:ss'` by default. Supported tokens: `DD`, `HH`, `mm`, `ss`, `SSS` */
+  /** Format of the default readout, `'HH:mm:ss'` by default.
+   * Supported tokens: `DD`/`D` – days, `HH`/`H` – hours, `mm`/`m` – minutes, `ss`/`s` – seconds (two-letter tokens are zero-padded),
+   * `SSS` – milliseconds padded to 3 digits, `SS` – hundredths of a second, `S` – milliseconds unpadded.
+   * Literal text is not escaped: the letters `D`, `H`, `m`, `s` and `S` are always replaced */
   format?: string;
-
-  /** If set, default start/pause/reset controls are rendered under the readout, `false` by default */
-  withControls?: boolean;
 
   /** Custom layout built with `Timer.Segment`, `Timer.Separator` and `Timer.Control` compound components */
   children?: React.ReactNode;
@@ -98,7 +99,6 @@ export const Timer = factory<TimerFactory>((_props) => {
     onTick,
     onComplete,
     format,
-    withControls,
     children,
     attributes,
     ref,
@@ -126,37 +126,11 @@ export const Timer = factory<TimerFactory>((_props) => {
     vars,
   });
 
-  const ariaLive = timer.interval < 1000 ? 'off' : 'polite';
-
   return (
     <TimerProvider value={{ getStyles, controller: timer }}>
-      <Box
-        ref={ref}
-        role="timer"
-        aria-live={ariaLive}
-        aria-atomic
-        {...getStyles('root')}
-        {...others}
-      >
+      <Box ref={ref} role="timer" aria-live="off" {...getStyles('root')} {...others}>
         {children ?? (
-          <>
-            <span {...getStyles('value')}>{formatTimerValue(timer.value.totalMs, format!)}</span>
-
-            {withControls && (
-              <div {...getStyles('controls')}>
-                <Button
-                  variant="default"
-                  size="compact-sm"
-                  onClick={timer.running ? timer.pause : timer.start}
-                >
-                  {timer.running ? 'Pause' : timer.paused ? 'Resume' : 'Start'}
-                </Button>
-                <Button variant="default" size="compact-sm" onClick={timer.reset}>
-                  Reset
-                </Button>
-              </div>
-            )}
-          </>
+          <span {...getStyles('value')}>{formatTimerValue(timer.value.totalMs, format!)}</span>
         )}
       </Box>
     </TimerProvider>

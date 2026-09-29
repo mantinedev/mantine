@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react';
+import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Timer, TimerProps, TimerStylesNames } from './Timer';
 import { useTimer } from './use-timer';
@@ -25,21 +25,42 @@ describe('@mantine/core/Timer', () => {
     expect(screen.getByText('00:00:00')).toBeInTheDocument();
   });
 
-  it('sets role="timer" and aria-live=polite for second resolution', () => {
+  it('sets role="timer" with aria-live="off" by default', () => {
     render(<Timer />);
     const root = screen.getByRole('timer');
-    expect(root).toHaveAttribute('aria-live', 'polite');
+    expect(root).toHaveAttribute('aria-live', 'off');
+    expect(root).not.toHaveAttribute('aria-atomic');
   });
 
-  it('sets aria-live=off for fast intervals', () => {
-    render(<Timer interval={100} />);
-    expect(screen.getByRole('timer')).toHaveAttribute('aria-live', 'off');
+  it('allows overriding aria-live', () => {
+    render(<Timer aria-live="polite" />);
+    expect(screen.getByRole('timer')).toHaveAttribute('aria-live', 'polite');
   });
 
-  it('renders default controls with withControls and toggles start/pause', () => {
-    render(<Timer withControls />);
-    fireEvent.click(screen.getByRole('button', { name: 'Start' }));
-    expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
+  it('Timer.Control drives the internal timer when no controller is provided', () => {
+    jest.useFakeTimers();
+
+    try {
+      render(
+        <Timer countdown startMs={5000}>
+          <Timer.Segment type="seconds" />
+          <Timer.Control action="start">start</Timer.Control>
+          <Timer.Control action="pause">pause</Timer.Control>
+        </Timer>
+      );
+
+      expect(screen.getByText('05')).toBeInTheDocument();
+
+      fireEvent.click(screen.getByText('start'));
+      act(() => jest.advanceTimersByTime(1000));
+      expect(screen.getByText('04')).toBeInTheDocument();
+
+      fireEvent.click(screen.getByText('pause'));
+      act(() => jest.advanceTimersByTime(2000));
+      expect(screen.getByText('04')).toBeInTheDocument();
+    } finally {
+      jest.useRealTimers();
+    }
   });
 
   it('renders compound segments and separator', () => {
@@ -106,16 +127,6 @@ describe('@mantine/core/Timer', () => {
 
     render(<Wrapper />);
     expect(screen.getByText('00:05')).toBeInTheDocument();
-  });
-
-  it('derives aria-live from the controller interval when controlled', () => {
-    function Wrapper() {
-      const timer = useTimer({ interval: 50 });
-      return <Timer controller={timer} />;
-    }
-
-    render(<Wrapper />);
-    expect(screen.getByRole('timer')).toHaveAttribute('aria-live', 'off');
   });
 
   it('does not run the internal timer when a controller is provided', () => {

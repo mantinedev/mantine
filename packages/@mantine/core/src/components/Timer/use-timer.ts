@@ -1,20 +1,22 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useDidUpdate, useIsomorphicEffect } from '@mantine/hooks';
+import { clamp, useCallbackRef, useDidUpdate, useIsomorphicEffect } from '@mantine/hooks';
 import { getDisplayMs, getTimerValue, TimerValue } from './get-timer-value';
 import { parseDuration } from './parse-duration';
 
 export interface UseTimerOptions {
-  /** Initial elapsed (stopwatch) or remaining (countdown) time in milliseconds, `0` by default */
+  /** Initial elapsed (stopwatch) or remaining (countdown) time in milliseconds, `0` by default.
+   * Changing `startMs` or `countdown` stops the timer and resets it to the new `startMs` */
   startMs?: number;
 
   /** Boundary the timer counts up to (stopwatch) or down to (countdown).
-   * Defaults to `0` in countdown mode, open-ended in stopwatch mode */
+   * Defaults to `0` in countdown mode, open-ended in stopwatch mode. If `startMs` is already at or past the boundary,
+   * the timer completes immediately when started */
   targetMs?: number;
 
   /** If set, the timer counts down instead of up, `false` by default */
   countdown?: boolean;
 
-  /** Tick interval in milliseconds, `1000` by default */
+  /** Tick interval in milliseconds, `1000` by default, values below `1` are clamped to `1` */
   interval?: number;
 
   /** If set, the timer starts automatically on mount, `false` by default */
@@ -31,9 +33,6 @@ export interface UseTimerReturnValue {
   /** Current timer value split into `totalMs` and time segments */
   value: TimerValue;
 
-  /** Alias of `value` */
-  formatted: TimerValue;
-
   /** `true` while the timer is actively counting */
   running: boolean;
 
@@ -43,16 +42,13 @@ export interface UseTimerReturnValue {
   /** Progress from `0` to `1` between `startMs` and `targetMs`, `0` when the boundary is not set */
   progress: number;
 
-  /** Resolved tick interval in milliseconds */
-  interval: number;
-
-  /** Starts the timer from its current value */
+  /** Starts the timer from its current value, or restarts it from `startMs` after it has completed */
   start: () => void;
 
   /** Pauses the timer, keeping the current value */
   pause: () => void;
 
-  /** Resumes the timer from the current value */
+  /** Alias of `start`, resumes a paused timer from its current value */
   resume: () => void;
 
   /** Stops the timer and resets the value to `startMs` */
@@ -62,148 +58,144 @@ export interface UseTimerReturnValue {
   restart: () => void;
 }
 
+interface TimerBounds {
+  countdown: boolean;
+  lowerBound: number;
+  upperBound: number | undefined;
+}
+
+function getDistanceToBoundary(value: number, bounds: TimerBounds) {
+  return bounds.countdown ? value - bounds.lowerBound : (bounds.upperBound ?? Infinity) - value;
+}
+
 export function useTimer(options: UseTimerOptions = {}): UseTimerReturnValue {
   const {
     startMs = 0,
     targetMs,
     countdown = false,
-    interval = 1000,
+    interval: intervalOption = 1000,
     autoStart,
     onTick,
     onComplete,
   } = options;
 
-  const initialMs = Math.max(0, startMs);
-  const lowerBound = countdown ? (targetMs ?? 0) : initialMs;
-  const upperBound = countdown ? initialMs : targetMs;
+  const interval = Math.max(1, intervalOption);
+  const clampedStartMs = Math.max(0, startMs);
+  const lowerBound = countdown ? (targetMs ?? 0) : clampedStartMs;
+  const upperBound = countdown ? clampedStartMs : targetMs;
 
   const [totalMs, setTotalMs] = useState(() =>
-    getDisplayMs(initialMs, interval, countdown, initialMs, lowerBound)
+    getDisplayMs(clampedStartMs, interval, countdown, clampedStartMs, lowerBound)
   );
   const [running, setRunning] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [runToken, setRunToken] = useState(0);
+  const [runId, setRunId] = useState(0);
 
-  const totalMsRef = useRef(initialMs);
-  const baseValueRef = useRef(initialMs);
+  const rawMsRef = useRef(clampedStartMs);
+  const runBaseMsRef = useRef(clampedStartMs);
   const startedAtRef = useRef(0);
   const runningRef = useRef(false);
   const completedRef = useRef(false);
+  const initializedRef = useRef(false);
+  const optionsRef = useRef({ countdown, interval, clampedStartMs, lowerBound, upperBound });
+  optionsRef.current = { countdown, interval, clampedStartMs, lowerBound, upperBound };
 
-  const countdownRef = useRef(countdown);
-  const intervalRef = useRef(interval);
-  const initialMsRef = useRef(initialMs);
-  const lowerBoundRef = useRef(lowerBound);
-  const upperBoundRef = useRef(upperBound);
-  const onTickRef = useRef(onTick);
-  const onCompleteRef = useRef(onComplete);
+  const handleTick = useCallbackRef(onTick);
+  const handleComplete = useCallbackRef(onComplete);
 
-  countdownRef.current = countdown;
-  intervalRef.current = interval;
-  initialMsRef.current = initialMs;
-  lowerBoundRef.current = lowerBound;
-  upperBoundRef.current = upperBound;
-  onTickRef.current = onTick;
-  onCompleteRef.current = onComplete;
+  const isComplete = useCallback(
+    (rawMs: number) => getDistanceToBoundary(rawMs, optionsRef.current) <= 0,
+    []
+  );
 
-  const setDisplay = (raw: number) => {
-    totalMsRef.current = raw;
-    setTotalMs(
-      getDisplayMs(
-        raw,
-        intervalRef.current,
-        countdownRef.current,
-        initialMsRef.current,
-        lowerBoundRef.current
-      )
-    );
-  };
-
-  const clampValue = useCallback((raw: number) => {
-    if (countdownRef.current) {
-      return Math.max(lowerBoundRef.current, raw);
-    }
-    return upperBoundRef.current !== undefined
-      ? Math.min(raw, upperBoundRef.current)
-      : Math.max(0, raw);
+  const setStatus = useCallback((nextRunning: boolean, nextPaused: boolean) => {
+    runningRef.current = nextRunning;
+    setRunning(nextRunning);
+    setPaused(nextPaused);
   }, []);
 
-  const isCompleteValue = useCallback((value: number) => {
-    if (countdownRef.current) {
-      return value <= lowerBoundRef.current;
-    }
-    return upperBoundRef.current !== undefined && value >= upperBoundRef.current;
+  const setDisplay = useCallback((rawMs: number) => {
+    const options = optionsRef.current;
+    const displayMs = getDisplayMs(
+      rawMs,
+      options.interval,
+      options.countdown,
+      options.clampedStartMs,
+      options.lowerBound
+    );
+    rawMsRef.current = rawMs;
+    setTotalMs(displayMs);
+    return displayMs;
   }, []);
 
   const computeCurrent = useCallback(() => {
+    const options = optionsRef.current;
     const elapsed = Date.now() - startedAtRef.current;
-    const raw = countdownRef.current
-      ? baseValueRef.current - elapsed
-      : baseValueRef.current + elapsed;
-    return clampValue(raw);
-  }, [clampValue]);
+    const rawMs = options.countdown
+      ? runBaseMsRef.current - elapsed
+      : runBaseMsRef.current + elapsed;
+    return clamp(rawMs, options.lowerBound, options.upperBound ?? Infinity);
+  }, []);
 
   const complete = useCallback(() => {
-    runningRef.current = false;
-    setRunning(false);
-    setPaused(false);
+    setStatus(false, false);
     if (!completedRef.current) {
       completedRef.current = true;
-      onCompleteRef.current?.();
+      handleComplete();
     }
   }, []);
 
-  const runFrom = useCallback(
-    (value: number) => {
-      if (isCompleteValue(value)) {
-        setDisplay(value);
-        complete();
-        return;
-      }
+  const runFrom = useCallback((rawMs: number) => {
+    setDisplay(rawMs);
 
-      completedRef.current = false;
-      baseValueRef.current = value;
-      startedAtRef.current = Date.now();
-      setDisplay(value);
-      runningRef.current = true;
-      setRunning(true);
-      setPaused(false);
-      setRunToken((token) => token + 1);
-    },
-    [complete, isCompleteValue]
-  );
+    if (isComplete(rawMs)) {
+      complete();
+      return;
+    }
+
+    completedRef.current = false;
+    runBaseMsRef.current = rawMs;
+    startedAtRef.current = Date.now();
+    setStatus(true, false);
+    setRunId((id) => id + 1);
+  }, []);
 
   const start = useCallback(() => {
     if (runningRef.current) {
       return;
     }
-    runFrom(totalMsRef.current);
-  }, [runFrom]);
+
+    const finished = completedRef.current || isComplete(rawMsRef.current);
+    runFrom(finished ? optionsRef.current.clampedStartMs : rawMsRef.current);
+  }, []);
 
   const pause = useCallback(() => {
     if (!runningRef.current) {
       return;
     }
+
     const current = computeCurrent();
-    baseValueRef.current = current;
+    runBaseMsRef.current = current;
     setDisplay(current);
-    runningRef.current = false;
-    setRunning(false);
-    setPaused(true);
-  }, [computeCurrent]);
+
+    if (isComplete(current)) {
+      complete();
+      return;
+    }
+
+    setStatus(false, true);
+  }, []);
 
   const reset = useCallback(() => {
-    runningRef.current = false;
     completedRef.current = false;
-    baseValueRef.current = initialMsRef.current;
-    setDisplay(initialMsRef.current);
-    setRunning(false);
-    setPaused(false);
+    runBaseMsRef.current = optionsRef.current.clampedStartMs;
+    setDisplay(optionsRef.current.clampedStartMs);
+    setStatus(false, false);
   }, []);
 
   const restart = useCallback(() => {
-    runFrom(initialMsRef.current);
-  }, [runFrom]);
+    runFrom(optionsRef.current.clampedStartMs);
+  }, []);
 
   useEffect(() => {
     if (!running) {
@@ -212,19 +204,18 @@ export function useTimer(options: UseTimerOptions = {}): UseTimerReturnValue {
 
     let timeoutId: number;
 
-    const distanceToBoundary = (current: number) =>
-      countdownRef.current
-        ? current - lowerBoundRef.current
-        : upperBoundRef.current === undefined
-          ? Infinity
-          : upperBoundRef.current - current;
-
-    const scheduleNext = () => {
-      const elapsed = Date.now() - startedAtRef.current;
-      const aligned = interval - (elapsed % interval);
-      const delay = Math.max(0, Math.min(aligned, distanceToBoundary(computeCurrent())));
-      timeoutId = window.setTimeout(tick, delay);
-    };
+    function scheduleNext() {
+      const current = computeCurrent();
+      const options = optionsRef.current;
+      const msTraveled = options.countdown
+        ? options.clampedStartMs - current
+        : current - options.clampedStartMs;
+      const msIntoInterval =
+        ((msTraveled % options.interval) + options.interval) % options.interval;
+      const msToNextGridLine = options.interval - msIntoInterval;
+      const delay = Math.min(msToNextGridLine, getDistanceToBoundary(current, options));
+      timeoutId = window.setTimeout(tick, Math.max(0, delay));
+    }
 
     function tick() {
       if (!runningRef.current) {
@@ -232,20 +223,9 @@ export function useTimer(options: UseTimerOptions = {}): UseTimerReturnValue {
       }
 
       const current = computeCurrent();
-      setDisplay(current);
-      onTickRef.current?.(
-        getTimerValue(
-          getDisplayMs(
-            current,
-            intervalRef.current,
-            countdownRef.current,
-            initialMsRef.current,
-            lowerBoundRef.current
-          )
-        )
-      );
+      handleTick(getTimerValue(setDisplay(current)));
 
-      if (isCompleteValue(current)) {
+      if (isComplete(current)) {
         complete();
         return;
       }
@@ -256,19 +236,22 @@ export function useTimer(options: UseTimerOptions = {}): UseTimerReturnValue {
     scheduleNext();
 
     return () => window.clearTimeout(timeoutId);
-  }, [running, runToken, interval, computeCurrent, isCompleteValue, complete]);
+  }, [running, runId, interval, lowerBound, upperBound]);
 
   useIsomorphicEffect(() => {
-    if (autoStart) {
-      runFrom(initialMsRef.current);
+    if (initializedRef.current) {
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    initializedRef.current = true;
+    if (autoStart) {
+      runFrom(clampedStartMs);
+    }
   }, []);
 
   useDidUpdate(() => {
     reset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialMs, countdown]);
+  }, [clampedStartMs, countdown]);
 
   const value = useMemo(() => getTimerValue(totalMs), [totalMs]);
 
@@ -276,21 +259,22 @@ export function useTimer(options: UseTimerOptions = {}): UseTimerReturnValue {
     if (upperBound === undefined) {
       return 0;
     }
-    const span = countdown ? initialMs - lowerBound : upperBound - initialMs;
+
+    const bounds = { countdown, lowerBound, upperBound };
+    const span = upperBound - lowerBound;
     if (span <= 0) {
-      return isCompleteValue(totalMs) ? 1 : 0;
+      return getDistanceToBoundary(totalMs, bounds) <= 0 ? 1 : 0;
     }
-    const traveled = countdown ? initialMs - totalMs : totalMs - initialMs;
+
+    const traveled = countdown ? clampedStartMs - totalMs : totalMs - clampedStartMs;
     return Math.min(1, Math.max(0, traveled / span));
-  }, [totalMs, countdown, initialMs, lowerBound, upperBound, isCompleteValue]);
+  }, [totalMs, countdown, clampedStartMs, lowerBound, upperBound]);
 
   return {
     value,
-    formatted: value,
     running,
     paused,
     progress,
-    interval,
     start,
     pause,
     resume: start,

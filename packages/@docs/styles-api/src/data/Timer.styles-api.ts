@@ -5,8 +5,6 @@ export const TimerStylesApi: StylesApiData<TimerFactory> = {
   selectors: {
     root: 'Root element',
     value: 'Default readout element, rendered when Timer has no children',
-    controls:
-      'Wrapper of the default start/pause/reset buttons, rendered only with withControls prop',
     segment: 'Timer.Segment element, displays a single time segment',
     separator: 'Timer.Separator element, displays a separator between segments',
     control: 'Timer.Control element, a button that calls a controller action',

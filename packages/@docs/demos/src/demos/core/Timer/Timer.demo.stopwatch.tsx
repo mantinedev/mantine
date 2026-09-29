@@ -5,13 +5,12 @@ const code = `
 import { Timer } from '@mantine/core';
 
 function Demo() {
-  // interval={10} updates the readout every 10ms, format token SS shows centiseconds
-  return <Timer withControls format="mm:ss:SS" interval={10} />;
+  return <Timer format="mm:ss:SS" interval={10} autoStart />;
 }
 `;
 
 function Demo() {
-  return <Timer withControls format="mm:ss:SS" interval={10} />;
+  return <Timer format="mm:ss:SS" interval={10} autoStart />;
 }
 
 export const stopwatch: MantineDemo = {

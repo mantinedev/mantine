@@ -20,13 +20,9 @@ All funds are used to improve Mantine and create new features and components.
 
 ## Timer component
 
-New [Timer](/core/timer) component – a controllable countdown and stopwatch. It counts up or down,
-has running/paused state, exposes start/pause/resume/reset/restart controls and `onTick`/`onComplete`
-callbacks. `Timer` is built on top of the new `useTimer` hook, which can be used on its own to build
-fully custom timer UIs, and it supports custom layouts with `Timer.Segment`, `Timer.Separator` and
-`Timer.Control` compound components:
+New [Timer](/core/timer) component – a controllable countdown and stopwatch with running/paused state, start/pause/resume/reset/restart actions, `onTick`/`onComplete` callbacks and custom layouts built with `Timer.Segment`, `Timer.Separator` and `Timer.Control` compound components, powered by the new `useTimer` hook that can also be used on its own:
 
-<Demo data={TimerDemos.usage} />
+<Demo data={TimerDemos.segments} />
 
 ## Editable component
 

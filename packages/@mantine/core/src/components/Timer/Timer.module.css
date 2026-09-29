@@ -2,12 +2,12 @@
   display: inline-flex;
   align-items: center;
   gap: var(--mantine-spacing-sm);
+  font-size: var(--mantine-font-size-xl);
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum';
 }
 
 .value {
-  font-size: var(--mantine-font-size-xl);
   font-weight: 700;
   line-height: 1;
 }
@@ -19,11 +19,6 @@
 .separator {
   display: inline-block;
   opacity: 0.65;
-}
-
-.controls {
-  display: flex;
-  gap: var(--mantine-spacing-xs);
 }
 
 .control {
