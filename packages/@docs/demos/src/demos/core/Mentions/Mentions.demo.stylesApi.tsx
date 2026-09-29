@@ -18,6 +18,7 @@ function Demo() {
       description="Description"
       defaultValue="Ping @[Walter White](walter)"
       placeholder="Type @ to mention someone"
+      minRows={3}
     >
       <Mentions.Mention trigger="@" data={users} />
     </Mentions>

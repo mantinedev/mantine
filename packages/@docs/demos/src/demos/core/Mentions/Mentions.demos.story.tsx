@@ -28,6 +28,11 @@ export const Demo_renderMention = {
   render: renderDemo(demos.renderMention),
 };
 
+export const Demo_renderSuggestion = {
+  name: '⭐ Demo: renderSuggestion',
+  render: renderDemo(demos.renderSuggestion),
+};
+
 export const Demo_inline = {
   name: '⭐ Demo: inline',
   render: renderDemo(demos.inline),

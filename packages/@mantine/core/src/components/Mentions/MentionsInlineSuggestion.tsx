@@ -5,20 +5,17 @@ export interface MentionsInlineSuggestionProps {
   getStyles: GetStylesApi<MentionsFactory>;
   prefix: string;
   completion: string;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
-/**
- * Ghost-text inline suggestion rendered when `suggestionsDisplay="inline"`. It is a full overlay that
- * mirrors the highlighter box (same font, padding and wrapping) so the transparent prefix positions
- * the muted completion exactly at the caret without any pixel measurement.
- */
 export function MentionsInlineSuggestion({
   getStyles,
   prefix,
   completion,
+  ref,
 }: MentionsInlineSuggestionProps) {
   return (
-    <div {...getStyles('inlineSuggestion')} aria-hidden>
+    <div ref={ref} {...getStyles('inlineSuggestion')} aria-hidden>
       <span {...getStyles('inlineSuggestionPrefix')}>{prefix}</span>
       <span {...getStyles('inlineSuggestionText')}>{completion}</span>
     </div>

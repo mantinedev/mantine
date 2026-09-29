@@ -1,3 +1,16 @@
+/*
+ * Derived from textarea-caret 3.1.0 (https://github.com/component/textarea-caret-position)
+ * — MIT, Copyright (c) 2015 Jonathan Ong. See ../LICENSE for the full license text.
+ *
+ * Local changes compared to textarea-caret 3.1.0:
+ * - The mirror of an input uses white-space: nowrap (no wrapping, like the input's single
+ *   horizontally scrolling line) instead of pre-wrap, whitespace is kept with non-breaking spaces
+ * - height falls back to the font size when the computed line-height is not a number
+ *   (line-height: normal)
+ * - No Firefox overflow special case and no debug mode, returns a zero rect on the server
+ * - TypeScript types adjusted for the Mantine build, formatted with oxfmt
+ */
+
 export interface CaretCoordinates {
   top: number;
   left: number;
@@ -36,11 +49,6 @@ const MIRROR_PROPERTIES = [
   'tabSize',
 ] as const;
 
-/**
- * Returns the pixel position of the caret inside a `textarea` or `input` element using a hidden
- * mirror element that clones the element's text styles. Used to anchor the dropdown and inline
- * suggestions to the caret.
- */
 export function getCaretCoordinates(
   element: HTMLTextAreaElement | HTMLInputElement,
   position: number
@@ -55,8 +63,10 @@ export function getCaretCoordinates(
   const mirror = document.createElement('div');
   const style = mirror.style;
 
-  style.whiteSpace = 'pre-wrap';
-  if (!isInput) {
+  if (isInput) {
+    style.whiteSpace = 'nowrap';
+  } else {
+    style.whiteSpace = 'pre-wrap';
     style.wordWrap = 'break-word';
   }
   style.position = 'absolute';
@@ -70,7 +80,7 @@ export function getCaretCoordinates(
 
   mirror.textContent = element.value.substring(0, position);
   if (isInput) {
-    mirror.textContent = mirror.textContent.replace(/\s/g, ' ');
+    mirror.textContent = mirror.textContent.replace(/\s/g, '\u00a0');
   }
 
   const span = document.createElement('span');

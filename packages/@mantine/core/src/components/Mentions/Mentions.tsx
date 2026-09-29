@@ -1,8 +1,10 @@
-import { use, useEffect, useMemo, useRef, useState } from 'react';
-import { useId, useIsomorphicEffect, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { useMemo, useRef, useState } from 'react';
+import { useId, useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
+  createVarsResolver,
   ElementProps,
+  extractStyleProps,
   factory,
   Factory,
   StylesApiProps,
@@ -13,30 +15,40 @@ import {
 import { Combobox, ComboboxProps, useCombobox } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
-import { InputWrapperContext } from '../Input/InputWrapper.context';
-import { ScrollArea } from '../ScrollArea';
-import { detectQuery } from './detect-query';
-import { buildHighlightSegments, getMentionModel, getSelectionStates } from './get-mention-model';
+import { detectQuery, type ActiveMentionQuery } from './detect-query';
+import { buildHighlightSegments } from './highlight-segments';
 import { Mention, MentionProps } from './Mention';
-import { MentionsHighlighter, MentionsRenderMentionInput } from './MentionsHighlighter';
-import { MentionsInlineSuggestion } from './MentionsInlineSuggestion';
 import type {
   MentionOccurrence,
   MentionsChangePayload,
-  MentionsChangeTriggerType,
+  MentionsChangeReason,
+  MentionsFilter,
+  MentionsRenderMentionInput,
 } from './Mentions.types';
-import { getSourceConfigs, resolveSources } from './resolve-sources';
-import { MentionsFilter, useMentionsQuery } from './use-mentions-query';
+import { MentionsControl } from './MentionsControl';
+import { MentionsDropdown } from './MentionsDropdown';
+import { MentionsHighlighter } from './MentionsHighlighter';
+import { MentionsInlineSuggestion } from './MentionsInlineSuggestion';
+import { resolveSources } from './resolve-sources';
+import { splitWrapperProps } from './split-wrapper-props';
+import { useMentionsClipboard } from './use-mentions-clipboard';
+import { useMentionsDropdown } from './use-mentions-dropdown';
+import { useMentionsInlineSuggestion } from './use-mentions-inline-suggestion';
+import { useMentionsOverlayPosition } from './use-mentions-overlay-position';
+import { useMentionsQuery } from './use-mentions-query';
+import { useMentionsSelection } from './use-mentions-selection';
+import { useMentionsValue } from './use-mentions-value';
 import { applyChangeToValue } from './utils/apply-change-to-value';
-import { getCaretCoordinates } from './utils/get-caret-coordinates';
-import { getMentions } from './utils/get-mentions';
-import { getPlainText } from './utils/get-plain-text';
-import { getMentionPlainText } from './utils/iterate-mentions';
-import { mapPlainTextIndex } from './utils/map-plain-text-index';
+import { getInputChangeType } from './utils/get-input-change-type';
+import { insertMention } from './utils/insert-mention';
+import { normalizeNewlines } from './utils/normalize-newlines';
+import { getSelectionStates } from './utils/selection';
+import type { MentionWalk } from './utils/walk-mentions';
 import classes from './Mentions.module.css';
 
 export type MentionsStylesNames =
   | __InputStylesNames
+  | 'field'
   | 'highlighter'
   | 'highlight'
   | 'dropdown'
@@ -45,8 +57,11 @@ export type MentionsStylesNames =
   | 'nothingFound'
   | 'inlineSuggestion'
   | 'inlineSuggestionPrefix'
-  | 'inlineSuggestionText'
-  | 'inlineSuggestionSuffix';
+  | 'inlineSuggestionText';
+
+export type MentionsCssVariables = {
+  highlight: '--mentions-highlight-color' | '--mentions-highlight-bg';
+};
 
 export interface MentionsProps
   extends
@@ -54,10 +69,10 @@ export interface MentionsProps
     __BaseInputProps,
     StylesApiProps<MentionsFactory>,
     ElementProps<'textarea', 'onChange' | 'value' | 'defaultValue' | 'size'> {
-  /** Controlled markup value */
+  /** Controlled markup value, `\r\n` line breaks are normalized to `\n` */
   value?: string;
 
-  /** Uncontrolled markup value initial state */
+  /** Uncontrolled markup value initial state, `\r\n` line breaks are normalized to `\n` */
   defaultValue?: string;
 
   /** Called on every value change with a rich payload */
@@ -84,7 +99,7 @@ export interface MentionsProps
   /** Displays suggestions as a dropdown list or as inline ghost text @default 'overlay' */
   suggestionsDisplay?: 'overlay' | 'inline';
 
-  /** Called when the caret/selection overlaps one or more mentions */
+  /** Called whenever the caret or selection changes (including after edits), with the mentions it overlaps (empty array when none) */
   onSelectionChange?: (
     selection: { start: number; end: number },
     mentions: MentionOccurrence[]
@@ -96,6 +111,12 @@ export interface MentionsProps
   /** Message shown when a query returns no matches */
   nothingFoundMessage?: React.ReactNode;
 
+  /** Message shown while an async `data` function is pending @default 'Loading…' */
+  loadingMessage?: React.ReactNode;
+
+  /** Message shown when an async `data` function rejects, `renderError` of `Mentions.Mention` takes precedence @default 'Failed to load suggestions' */
+  errorMessage?: React.ReactNode;
+
   /** Function to customize how mentions are rendered in the overlay, for example to add a tooltip or a `HoverCard`. The returned content must keep the same text metrics as `display` to stay aligned. */
   renderMention?: (input: MentionsRenderMentionInput) => React.ReactNode;
 
@@ -105,11 +126,8 @@ export interface MentionsProps
   /** Props passed down to the underlying `Combobox` */
   comboboxProps?: ComboboxProps;
 
-  /** Screen-reader label for the suggestions list */
+  /** Screen-reader label for the suggestions list @default 'Suggestions' */
   a11ySuggestionsListLabel?: string;
-
-  /** Ref forwarded to the underlying control */
-  inputRef?: React.Ref<HTMLTextAreaElement | HTMLInputElement>;
 
   /** `static` disables all interactions @default 'interactive' */
   mode?: 'interactive' | 'static';
@@ -117,8 +135,9 @@ export interface MentionsProps
 
 export type MentionsFactory = Factory<{
   props: MentionsProps;
-  ref: HTMLTextAreaElement;
+  ref: HTMLTextAreaElement | HTMLInputElement;
   stylesNames: MentionsStylesNames;
+  vars: MentionsCssVariables;
   staticComponents: {
     Mention: typeof Mention;
   };
@@ -132,27 +151,20 @@ const defaultProps = {
   spellCheck: false,
   mode: 'interactive',
   size: 'sm',
+  loadingMessage: 'Loading…',
+  errorMessage: 'Failed to load suggestions',
+  a11ySuggestionsListLabel: 'Suggestions',
 } satisfies Partial<MentionsProps>;
 
-interface MentionsControlProps extends React.ComponentPropsWithoutRef<'textarea'> {
-  singleLine: boolean;
-  inputRef: React.Ref<HTMLTextAreaElement | HTMLInputElement>;
-}
+const varsResolver = createVarsResolver<MentionsFactory>(() => ({
+  highlight: {
+    '--mentions-highlight-color': undefined,
+    '--mentions-highlight-bg': undefined,
+  },
+}));
 
-function MentionsControl({ singleLine, inputRef, ...rest }: MentionsControlProps) {
-  const ctx = use(InputWrapperContext);
-  const sharedProps = {
-    ref: inputRef as any,
-    id: ctx.inputId,
-    'aria-describedby': ctx.describedBy,
-    ...rest,
-  };
-
-  return singleLine ? (
-    <input {...(sharedProps as React.ComponentPropsWithoutRef<'input'>)} />
-  ) : (
-    <textarea {...sharedProps} />
-  );
+function isComposingEvent(event: React.KeyboardEvent) {
+  return event.nativeEvent.isComposing || event.keyCode === 229;
 }
 
 export const Mentions = factory<MentionsFactory>((_props) => {
@@ -161,6 +173,9 @@ export const Mentions = factory<MentionsFactory>((_props) => {
     classNames,
     styles,
     unstyled,
+    className,
+    style,
+    vars,
     value,
     defaultValue,
     onChange,
@@ -174,119 +189,75 @@ export const Mentions = factory<MentionsFactory>((_props) => {
     onSelectionChange,
     filter,
     nothingFoundMessage,
+    loadingMessage,
+    errorMessage,
     renderMention,
     maxDropdownHeight,
     comboboxProps,
     a11ySuggestionsListLabel,
-    inputRef,
     mode,
     size,
     id,
     disabled,
     readOnly,
     required,
-    spellCheck,
+    attributes,
+    ref,
+    name,
+    form,
     onKeyDown,
-    onFocus,
     onBlur,
     onClick,
     onSelect,
     onScroll,
-    placeholder,
-    attributes,
-    ref,
-    'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledby,
-    name,
-    form,
-    autoComplete,
-    autoFocus,
-    maxLength,
-    minLength,
-    wrap,
-    inputMode,
-    autoCapitalize,
-    autoCorrect,
-    enterKeyHint,
-    onPaste,
     onCopy,
     onCut,
-    onInput,
-    onKeyUp,
-    onDrop,
+    onPaste,
     onCompositionStart,
-    onCompositionUpdate,
     onCompositionEnd,
     ...others
   } = props;
 
-  const nativeControlProps = {
-    name,
-    form,
-    required,
-    autoComplete,
-    autoFocus,
-    maxLength,
-    minLength,
-    wrap,
-    inputMode,
-    autoCapitalize,
-    autoCorrect,
-    enterKeyHint,
-    onPaste,
-    onCopy,
-    onCut,
-    onInput,
-    onKeyUp,
-    onDrop,
-    onCompositionStart,
-    onCompositionUpdate,
-    onCompositionEnd,
-  };
+  const { styleProps, rest } = extractStyleProps(others);
+  const { wrapperProps, controlProps } = splitWrapperProps(rest);
 
   const _id = useId(id);
+  const optionIdPrefix = useId();
   const interactive = mode === 'interactive' && !disabled && !readOnly;
 
   const sources = useMemo(() => resolveSources(children), [children]);
-  const configs = useMemo(() => getSourceConfigs(sources), [sources]);
+  const configs = useMemo(() => sources.map((source) => source.config), [sources]);
 
-  const [_value, setValueState] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: '',
-  });
-
-  const textareaRef = useRef<HTMLTextAreaElement | HTMLInputElement>(null);
+  const controlRef = useRef<HTMLTextAreaElement | HTMLInputElement>(null);
   const highlighterRef = useRef<HTMLDivElement>(null);
-  const selectionRef = useRef({ start: 0, end: 0 });
-  const pendingCaretRef = useRef<number | null>(null);
-  const initialValue = value ?? defaultValue ?? '';
-  const historyRef = useRef<{
-    entries: { value: string; caret: number }[];
-    index: number;
-    lastType: string | null;
-    lastTime: number;
-  }>({
-    entries: [{ value: initialValue, caret: getPlainText(initialValue, configs).length }],
-    index: 0,
-    lastType: null,
-    lastTime: 0,
-  });
-  const mergedRef = useMergedRef(textareaRef, ref, inputRef);
+  const inlineSuggestionRef = useRef<HTMLDivElement>(null);
+  const mergedRef = useMergedRef(controlRef, ref);
 
-  const [query, setQuery] = useState<ReturnType<typeof detectQuery>>(null);
-  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [caretStyle, setCaretStyle] = useState<React.CSSProperties | null>(null);
-  const [selection, setSelection] = useState({ start: 0, end: 0 });
+  const [query, setQuery] = useState<ActiveMentionQuery | null>(null);
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
 
-  const { plainText, spans } = getMentionModel(_value, sources);
-  const selectionStates = getSelectionStates(spans, selection.start, selection.end);
-  const segments = buildHighlightSegments(plainText, spans, sources, selectionStates);
+  const selectionApi = useMentionsSelection({
+    controlRef,
+    onSelectionChange,
+    onCompositionStart,
+    onCompositionEnd,
+  });
+  const { selection, selectionRef, setCaret, readLiveSelection } = selectionApi;
+
+  const { walk, applyEdit, undo, redo } = useMentionsValue({
+    value,
+    defaultValue,
+    onChange,
+    singleLine,
+    configs,
+    setCaret,
+  });
+  const { plainText } = walk;
+  const selectionStates = getSelectionStates(walk.spans, selection.start, selection.end);
+  const segments = buildHighlightSegments(plainText, walk.spans, sources, selectionStates);
 
   const activeSource = query ? sources[query.sourceIndex] : null;
   const queryState = useMentionsQuery({
@@ -297,6 +268,24 @@ export const Mentions = factory<MentionsFactory>((_props) => {
   });
   const suggestions = queryState.items;
 
+  const hasOptions = suggestions.length > 0;
+  const shouldOpenDropdown =
+    interactive &&
+    suggestionsDisplay === 'overlay' &&
+    query != null &&
+    (queryState.loading ||
+      !!queryState.error ||
+      hasOptions ||
+      !!nothingFoundMessage ||
+      !!activeSource?.props.renderEmpty);
+
+  const { selectedOptionId, selectNext, selectPrevious, activeDescendant } = useMentionsDropdown({
+    combobox,
+    shouldOpen: shouldOpenDropdown,
+    hasOptions,
+    optionsKey: `${query?.sourceIndex}\u0000${query?.query}\u0000${queryState.generation}\u0000${suggestions.map((item) => item.id).join('\u0000')}`,
+  });
+
   const getStyles = useStyles<MentionsFactory>({
     name: 'Mentions',
     classes,
@@ -305,6 +294,8 @@ export const Mentions = factory<MentionsFactory>((_props) => {
     styles,
     unstyled,
     attributes,
+    vars,
+    varsResolver,
   });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<MentionsFactory>({
@@ -313,99 +304,36 @@ export const Mentions = factory<MentionsFactory>((_props) => {
     classNames,
   });
 
-  const buildPayload = (
-    newValue: string,
-    trigger: { type: MentionsChangeTriggerType; nativeEvent?: Event },
-    mentionId?: string
-  ): MentionsChangePayload => ({
-    value: newValue,
-    plainTextValue: getPlainText(newValue, configs),
-    idValue: getPlainText(newValue, configs, { idOnly: true }),
-    mentions: getMentions(newValue, configs),
-    mentionId,
-    previousValue: _value,
-    trigger,
-  });
+  const updateActiveQuery = (nextWalk: MentionWalk, caret: number) => {
+    setQuery(interactive ? detectQuery(nextWalk.plainText, caret, sources, nextWalk.spans) : null);
+  };
 
-  const commitValue = (
-    newValue: string,
-    trigger: { type: MentionsChangeTriggerType; nativeEvent?: Event },
-    mentionId?: string
+  const commitEdit = (
+    nextValue: string,
+    caret: number,
+    caretBefore: number,
+    reason: MentionsChangeReason
   ) => {
-    const payload = buildPayload(newValue, trigger, mentionId);
-    setValueState(newValue);
-    onChange?.(payload);
+    updateActiveQuery(applyEdit(nextValue, caret, caretBefore, reason), caret);
   };
 
-  // React overwrites the transformed value on the textarea, which discards the browser's native undo
-  // history. A small internal history stack restores it for Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z (Ctrl+Y).
-  const pushHistory = (newValue: string, caret: number, changeType: string) => {
-    const history = historyRef.current;
-    const now = Date.now();
-    const shouldCoalesce =
-      changeType === 'input' && history.lastType === 'input' && now - history.lastTime < 400;
-
-    if (shouldCoalesce) {
-      history.entries[history.index] = { value: newValue, caret };
+  const syncSelectionAndQuery = (target: HTMLTextAreaElement | HTMLInputElement) => {
+    const { start, end } = selectionApi.syncSelection(target, walk);
+    if (start === end) {
+      updateActiveQuery(walk, start);
     } else {
-      history.entries = history.entries.slice(0, history.index + 1);
-      history.entries.push({ value: newValue, caret });
-      if (history.entries.length > 100) {
-        history.entries.shift();
-      }
-      history.index = history.entries.length - 1;
-    }
-
-    history.lastType = changeType;
-    history.lastTime = now;
-  };
-
-  const restoreHistoryEntry = (entry: { value: string; caret: number }) => {
-    commitValue(entry.value, { type: 'input' });
-    pendingCaretRef.current = entry.caret;
-    setSelection({ start: entry.caret, end: entry.caret });
-    setQuery(null);
-    combobox.closeDropdown();
-    historyRef.current.lastType = null;
-  };
-
-  const undo = () => {
-    const history = historyRef.current;
-    if (history.index <= 0) {
-      return false;
-    }
-    history.index -= 1;
-    restoreHistoryEntry(history.entries[history.index]);
-    return true;
-  };
-
-  const redo = () => {
-    const history = historyRef.current;
-    if (history.index >= history.entries.length - 1) {
-      return false;
-    }
-    history.index += 1;
-    restoreHistoryEntry(history.entries[history.index]);
-    return true;
-  };
-
-  const updateActiveQuery = (markupValue: string, caret: number) => {
-    if (!interactive) {
       setQuery(null);
-      return;
     }
-    const model = getMentionModel(markupValue, sources);
-    setQuery(detectQuery(model.plainText, caret, sources, model.spans));
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const target = event.currentTarget;
-    const nextPlainText = target.value;
+    const nextPlainText = normalizeNewlines(target.value, singleLine);
     const caretAfter = target.selectionStart ?? nextPlainText.length;
     const before = selectionRef.current;
 
     const result = applyChangeToValue(
-      _value,
+      walk,
       nextPlainText,
       {
         selectionStartBefore: before.start,
@@ -415,132 +343,93 @@ export const Mentions = factory<MentionsFactory>((_props) => {
       configs
     );
 
-    commitValue(result.value, {
-      type: result.removedMention ? 'mention-remove' : 'input',
+    commitEdit(result.value, result.caretPlainTextIndex, before.end, {
+      type: getInputChangeType(event.nativeEvent, result.removedMention),
       nativeEvent: event.nativeEvent,
     });
-    pushHistory(
-      result.value,
-      result.caretPlainTextIndex,
-      result.removedMention ? 'mention-remove' : 'input'
-    );
-
-    pendingCaretRef.current = result.caretPlainTextIndex;
-    setSelection({ start: result.caretPlainTextIndex, end: result.caretPlainTextIndex });
-    updateActiveQuery(result.value, result.caretPlainTextIndex);
   };
 
-  const syncSelection = (target: HTMLTextAreaElement) => {
-    const start = target.selectionStart ?? 0;
-    const end = target.selectionEnd ?? 0;
-    selectionRef.current = { start, end };
-    setSelection({ start, end });
-    return { start, end };
-  };
-
-  const handleSelect = (event: React.SyntheticEvent<HTMLTextAreaElement>) => {
-    onSelect?.(event);
-    const target = event.currentTarget;
-    const { start, end } = syncSelection(target);
-
-    if (start === end) {
-      updateActiveQuery(_value, start);
-    } else {
-      setQuery(null);
-    }
-
-    if (onSelectionChange) {
-      const freshStates = getSelectionStates(spans, start, end);
-      const overlapping = spans
-        .filter((span) => freshStates.has(span.index))
-        .map<MentionOccurrence>((span) => ({
-          id: span.id,
-          display: span.display,
-          index: span.index,
-          plainTextIndex: span.plainStart,
-          trigger: span.trigger,
-        }));
-      onSelectionChange({ start, end }, overlapping);
-    }
-  };
-
-  const insertMention = (id: string) => {
-    if (!activeSource || !query) {
-      return;
-    }
-
+  const handleOptionSubmit = (id: string) => {
     const item = suggestions.find((suggestion) => suggestion.id === id);
-    if (!item) {
+    if (!activeSource || !query || !item) {
       return;
     }
 
     const display = item.display ?? item.id;
-    const queryEnd = query.queryEnd;
+    const insertion = insertMention({
+      walk,
+      config: activeSource.config,
+      queryStart: query.queryStart,
+      queryEnd: query.queryEnd,
+      id: item.id,
+      display,
+      appendSpace: activeSource.props.appendSpaceOnAdd ?? false,
+    });
 
-    const markupStart = mapPlainTextIndex(_value, configs, query.queryStart, 'START') ?? 0;
-    const markupEnd = mapPlainTextIndex(_value, configs, queryEnd, 'END') ?? _value.length;
-    const appendSpace = activeSource.props.appendSpaceOnAdd ?? false;
-
-    const insertMarkup = activeSource.config.serializer.insert({ id: item.id, display });
-    const newValue =
-      _value.slice(0, markupStart) +
-      insertMarkup +
-      (appendSpace ? ' ' : '') +
-      _value.slice(markupEnd);
-
-    const caretPlain =
-      getPlainText(_value.slice(0, markupStart), configs).length +
-      getMentionPlainText(activeSource.config, item.id, display).length +
-      (appendSpace ? 1 : 0);
-
-    commitValue(newValue, { type: 'mention-add' }, item.id);
-    pushHistory(newValue, caretPlain, 'mention-add');
-    pendingCaretRef.current = caretPlain;
-    setSelection({ start: caretPlain, end: caretPlain });
+    applyEdit(insertion.value, insertion.caret, query.queryEnd, { type: 'mention-add' }, item.id);
     setQuery(null);
-    combobox.closeDropdown();
     activeSource.props.onAdd?.({
       id: item.id,
       display,
       startPos: query.queryStart,
-      endPos: queryEnd,
+      endPos: query.queryEnd,
     });
   };
 
+  const inline = useMentionsInlineSuggestion({
+    enabled: suggestionsDisplay === 'inline',
+    query,
+    queryState,
+    selection,
+    plainText,
+    onAccept: handleOptionSubmit,
+  });
+
+  const clipboardHandlers = useMentionsClipboard({
+    walk,
+    configs,
+    singleLine,
+    interactive,
+    readLiveSelection,
+    commitEdit,
+    onCopy,
+    onCut,
+    onPaste,
+  });
+
+  const { caretStyle, handleScroll } = useMentionsOverlayPosition({
+    controlRef,
+    overlayRefs: [highlighterRef, inlineSuggestionRef],
+    anchorMode,
+    query,
+    singleLine,
+    value: walk.value,
+  });
+
+  /** Keyboard handling is not delegated to `Combobox.EventsTarget` because arrows and Enter must keep their textarea behavior while the dropdown is closed */
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     onKeyDown?.(event);
+    readLiveSelection(event.currentTarget);
 
-    if (event.defaultPrevented || !interactive) {
+    if (event.defaultPrevented || !interactive || isComposingEvent(event)) {
       return;
     }
 
     if (event.metaKey || event.ctrlKey) {
       const key = event.key.toLowerCase();
-      if (key === 'z') {
-        if (event.shiftKey ? redo() : undo()) {
+      if (key === 'z' || key === 'y') {
+        const type = key === 'y' || event.shiftKey ? 'redo' : 'undo';
+        const entry = type === 'redo' ? redo() : undo();
+        if (entry) {
           event.preventDefault();
-        }
-        return;
-      }
-      if (key === 'y') {
-        if (redo()) {
-          event.preventDefault();
+          commitEdit(entry.value, entry.caret, entry.caret, { type });
         }
         return;
       }
     }
 
     if (suggestionsDisplay === 'inline') {
-      if (
-        query &&
-        suggestions.length > 0 &&
-        (event.key === 'Tab' || event.key === 'Enter' || event.key === 'ArrowRight')
-      ) {
-        if (event.key !== 'ArrowRight' || selection.start === plainText.length) {
-          event.preventDefault();
-          insertMention(suggestions[0].id);
-        }
-      }
+      inline.handleInlineKeyDown(event);
       return;
     }
 
@@ -548,19 +437,15 @@ export const Mentions = factory<MentionsFactory>((_props) => {
       return;
     }
 
-    if (event.nativeEvent.code === 'ArrowDown') {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
-      setSelectedOptionId(combobox.selectNextOption());
-      setSelectedIndex(combobox.getSelectedOptionIndex());
-    } else if (event.nativeEvent.code === 'ArrowUp') {
-      event.preventDefault();
-      setSelectedOptionId(combobox.selectPreviousOption());
-      setSelectedIndex(combobox.getSelectedOptionIndex());
+      if (event.key === 'ArrowDown') {
+        selectNext();
+      } else {
+        selectPrevious();
+      }
     } else if (
-      (event.nativeEvent.code === 'Enter' ||
-        event.nativeEvent.code === 'NumpadEnter' ||
-        event.key === 'Tab') &&
-      !event.nativeEvent.isComposing &&
+      (event.key === 'Enter' || (event.key === 'Tab' && !event.shiftKey)) &&
       combobox.getSelectedOptionIndex() !== -1
     ) {
       event.preventDefault();
@@ -572,99 +457,15 @@ export const Mentions = factory<MentionsFactory>((_props) => {
     }
   };
 
-  useEffect(() => {
-    if (pendingCaretRef.current != null && textareaRef.current) {
-      const caret = pendingCaretRef.current;
-      textareaRef.current.setSelectionRange(caret, caret);
-      selectionRef.current = { start: caret, end: caret };
-      pendingCaretRef.current = null;
-    }
-  }, [_value]);
-
-  useEffect(() => {
-    const shouldOpen =
-      interactive &&
-      suggestionsDisplay === 'overlay' &&
-      query != null &&
-      (queryState.loading ||
-        !!queryState.error ||
-        suggestions.length > 0 ||
-        !!nothingFoundMessage ||
-        !!activeSource?.props.renderEmpty);
-
-    if (shouldOpen) {
-      combobox.openDropdown();
-    } else {
-      combobox.closeDropdown();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, queryState.loading, queryState.error, suggestions.length]);
-
-  useEffect(() => {
-    if (combobox.dropdownOpened && suggestions.length > 0) {
-      setSelectedOptionId(combobox.selectFirstOption());
-      setSelectedIndex(combobox.getSelectedOptionIndex());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [suggestions, combobox.dropdownOpened]);
-
-  useIsomorphicEffect(() => {
-    if (anchorMode !== 'caret' || !query || !textareaRef.current) {
+  const handleMentionPress = (caret: number) => {
+    const control = controlRef.current;
+    if (!control) {
       return;
     }
-    const coords = getCaretCoordinates(textareaRef.current, query.queryStart);
-    // Anchor spans the caret line (top + height) rather than being a zero-height point at the line's
-    // bottom edge. A point on the bottom clip edge of the overflow-hidden field is reported as hidden
-    // by the floating-ui `hide` middleware, which would set `display: none` on the dropdown.
-    setCaretStyle({
-      top: coords.top - textareaRef.current.scrollTop,
-      left: coords.left - textareaRef.current.scrollLeft,
-      height: coords.height,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, _value]);
 
-  const inlineTopItem = suggestionsDisplay === 'inline' && query ? suggestions[0] : undefined;
-  const inlineCompletion = inlineTopItem
-    ? (inlineTopItem.display ?? inlineTopItem.id).slice(query!.query.length)
-    : '';
-
-  const optionsContent = () => {
-    if (query == null || suggestionsDisplay === 'inline') {
-      return null;
-    }
-
-    if (queryState.error) {
-      return (
-        <Combobox.Empty {...getStyles('nothingFound')}>
-          {activeSource?.props.renderError?.(query.query, queryState.error) ??
-            'Failed to load suggestions'}
-        </Combobox.Empty>
-      );
-    }
-
-    if (queryState.loading) {
-      return <Combobox.Empty {...getStyles('nothingFound')}>Loading…</Combobox.Empty>;
-    }
-
-    if (suggestions.length === 0) {
-      const empty = activeSource?.props.renderEmpty?.(query.query) ?? nothingFoundMessage;
-      return empty ? <Combobox.Empty {...getStyles('nothingFound')}>{empty}</Combobox.Empty> : null;
-    }
-
-    return suggestions.map((item, index) => (
-      <Combobox.Option value={item.id} key={item.id}>
-        {activeSource?.props.renderSuggestion?.({
-          item,
-          query: query.query,
-          highlighted: index === selectedIndex,
-          index,
-          focused: index === selectedIndex,
-        }) ??
-          item.display ??
-          item.id}
-      </Combobox.Option>
-    ));
+    control.focus();
+    control.setSelectionRange(caret, caret);
+    syncSelectionAndQuery(control);
   };
 
   const field = (
@@ -674,25 +475,30 @@ export const Mentions = factory<MentionsFactory>((_props) => {
       data-no-overflow
       withAria={false}
       __staticSelector="Mentions"
+      __stylesApiProps={singleLine ? props : { ...props, multiline: true }}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       unstyled={unstyled}
+      className={className}
+      style={style}
       size={size}
       id={_id}
       disabled={disabled}
       required={required}
       attributes={attributes}
-      pointer={false}
+      {...wrapperProps}
+      pointer={wrapperProps.pointer ?? false}
       onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) {
           event.preventDefault();
-          textareaRef.current?.focus();
+          controlRef.current?.focus();
         }
       }}
-      {...(others as any)}
+      {...styleProps}
     >
       <div
         className={classes.control}
+        data-single-line={singleLine || undefined}
         style={
           {
             '--mentions-min-rows': minRows ?? 1,
@@ -706,55 +512,56 @@ export const Mentions = factory<MentionsFactory>((_props) => {
           segments={segments}
           trailingNewline={plainText.endsWith('\n')}
           renderMention={renderMention}
+          onMentionPress={interactive ? handleMentionPress : undefined}
         />
 
         <MentionsControl
-          {...nativeControlProps}
-          {...getStyles('input', { className: classes.field })}
+          form={form}
+          aria-invalid={wrapperProps.error ? true : undefined}
+          {...controlProps}
+          {...getStyles('field')}
+          {...clipboardHandlers}
+          {...selectionApi.compositionHandlers}
           singleLine={singleLine}
-          inputRef={mergedRef}
+          controlRef={mergedRef}
           value={plainText}
-          placeholder={placeholder}
           disabled={disabled}
+          required={required}
           readOnly={readOnly || mode === 'static'}
-          spellCheck={spellCheck}
           rows={singleLine ? undefined : (minRows ?? 1)}
-          aria-label={ariaLabel}
-          aria-labelledby={ariaLabelledby}
-          role={singleLine ? 'combobox' : undefined}
-          aria-autocomplete="list"
-          aria-expanded={singleLine ? combobox.dropdownOpened : undefined}
-          aria-controls={combobox.dropdownOpened ? (combobox.listId ?? undefined) : undefined}
-          aria-activedescendant={
-            combobox.dropdownOpened ? (selectedOptionId ?? undefined) : undefined
-          }
-          aria-haspopup="listbox"
+          interactive={interactive}
+          dropdownOpened={combobox.dropdownOpened}
+          listId={combobox.listId}
+          activeDescendant={activeDescendant}
+          popupVisible={!!inline.inlineItem}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          onSelect={handleSelect}
-          onFocus={onFocus}
+          onSelect={(event: React.SyntheticEvent<HTMLTextAreaElement>) => {
+            onSelect?.(event);
+            if (!selectionApi.isCaretRestorePending()) {
+              syncSelectionAndQuery(event.currentTarget);
+            }
+          }}
           onBlur={(event: React.FocusEvent<HTMLTextAreaElement>) => {
             onBlur?.(event);
-            combobox.closeDropdown();
+            setQuery(null);
           }}
           onClick={(event: React.MouseEvent<HTMLTextAreaElement>) => {
             onClick?.(event);
-            syncSelection(event.currentTarget);
+            syncSelectionAndQuery(event.currentTarget);
           }}
           onScroll={(event: React.UIEvent<HTMLTextAreaElement>) => {
             onScroll?.(event);
-            if (highlighterRef.current) {
-              highlighterRef.current.scrollTop = event.currentTarget.scrollTop;
-              highlighterRef.current.scrollLeft = event.currentTarget.scrollLeft;
-            }
+            handleScroll();
           }}
         />
 
-        {inlineTopItem && inlineCompletion ? (
+        {inline.inlineItem && query ? (
           <MentionsInlineSuggestion
+            ref={inlineSuggestionRef}
             getStyles={getStyles}
-            prefix={plainText.slice(0, selection.start)}
-            completion={inlineCompletion}
+            prefix={plainText.slice(0, query.queryEnd)}
+            completion={inline.inlineCompletion}
           />
         ) : null}
 
@@ -784,34 +591,42 @@ export const Mentions = factory<MentionsFactory>((_props) => {
       middlewares={{ flip: suggestionsPlacement === 'auto', shift: true }}
       width={anchorMode === 'caret' ? 'max-content' : 'target'}
       attributes={attributes}
-      onOptionSubmit={insertMention}
+      onOptionSubmit={handleOptionSubmit}
       {...comboboxProps}
     >
       {anchorMode === 'caret' ? field : <Combobox.DropdownTarget>{field}</Combobox.DropdownTarget>}
 
-      <Combobox.Dropdown>
-        <Combobox.Options aria-label={a11ySuggestionsListLabel}>
-          <ScrollArea.Autosize
-            mah={maxDropdownHeight ?? 220}
-            type="scroll"
-            scrollbars="y"
-            unstyled={unstyled}
-          >
-            {optionsContent()}
-          </ScrollArea.Autosize>
-        </Combobox.Options>
-      </Combobox.Dropdown>
+      {name ? (
+        <input type="hidden" name={name} form={form} value={walk.value} disabled={disabled} />
+      ) : null}
+
+      <MentionsDropdown
+        query={suggestionsDisplay === 'overlay' && query ? query.query : null}
+        label={a11ySuggestionsListLabel}
+        maxHeight={maxDropdownHeight}
+        unstyled={unstyled}
+        queryState={queryState}
+        source={activeSource}
+        optionIdPrefix={optionIdPrefix}
+        selectedOptionId={selectedOptionId}
+        nothingFoundMessage={nothingFoundMessage}
+        loadingMessage={loadingMessage}
+        errorMessage={errorMessage}
+        getStyles={getStyles}
+      />
     </Combobox>
   );
 });
 
 Mentions.classes = { ...InputBase.classes, ...Combobox.classes, ...classes };
+Mentions.varsResolver = varsResolver;
 Mentions.displayName = '@mantine/core/Mentions';
 Mentions.Mention = Mention;
 
 export namespace Mentions {
   export type Props = MentionsProps;
   export type StylesNames = MentionsStylesNames;
+  export type CssVariables = MentionsCssVariables;
   export type Factory = MentionsFactory;
 
   export namespace Mention {

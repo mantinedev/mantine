@@ -1,113 +1,117 @@
-import type { MentionConfig } from '../Mentions.types';
-import { getMentions } from './get-mentions';
-import { getPlainText } from './get-plain-text';
-import { mapPlainTextIndex } from './map-plain-text-index';
+/*
+ * Derived from react-mentions 4.4.10 (https://github.com/signavio/react-mentions)
+ * — BSD-3-Clause, Copyright (c) 2018 Signavio GmbH. See ../LICENSE for the full license text.
+ *
+ * Local changes compared to react-mentions 4.4.10:
+ * - The diff fallback runs whenever the selection-based edit does not reproduce the plain text
+ *   reported by the browser (stale selection, spellcheck, autocomplete), not only when the
+ *   splice keeps every mention intact, and its splice snaps to mention boundaries so mentions
+ *   stay atomic
+ * - Returns the new value together with removedMention and the caret position of the splice
+ *   that was applied
+ * - Takes the walkMentions result of the current value instead of re-parsing the value
+ * - TypeScript types adjusted for the Mantine build, formatted with oxfmt
+ */
+
+import { getMarkupRange, mapMarkupIndex } from './map-plain-text-index';
+import type { MentionConfig } from './types';
+import { walkMentions, type MentionWalk } from './walk-mentions';
 
 export interface MentionsSelection {
-  /** Caret start in the plain text before the change */
   selectionStartBefore: number;
-
-  /** Caret end in the plain text before the change */
   selectionEndBefore: number;
-
-  /** Caret end in the plain text after the change */
   selectionEndAfter: number;
 }
 
 export interface ApplyChangeResult {
-  /** New markup value */
   value: string;
-
-  /** `true` if the change removed at least one mention */
   removedMention: boolean;
-
-  /** Caret position in the plain text of the new value */
   caretPlainTextIndex: number;
+}
+
+interface PlainTextSplice {
+  start: number;
+  end: number;
+  insert: string;
 }
 
 function spliceString(str: string, start: number, end: number, insert: string): string {
   return str.slice(0, start) + insert + str.slice(end);
 }
 
-/**
- * Applies a plain-text change back to the markup value. Uses the selection captured before and after
- * the change to map the edited span through the markup and splice it. A change that clips any part of
- * a mention removes the whole mention (atomic edit).
- */
-export function applyChangeToValue(
-  value: string,
-  plainTextValue: string,
-  selection: MentionsSelection,
-  configs: MentionConfig[]
-): ApplyChangeResult {
+function getSelectionSplice(
+  oldPlainText: string,
+  plainText: string,
+  selection: MentionsSelection
+): PlainTextSplice {
   const { selectionEndAfter, selectionEndBefore } = selection;
   let { selectionStartBefore } = selection;
 
-  const oldPlainTextValue = getPlainText(value, configs);
-
-  // Replacing a selection with same-length content keeps every offset identical, shift the start so
-  // the changed character is still detected.
   if (
     selectionStartBefore === selectionEndBefore &&
     selectionEndBefore === selectionEndAfter &&
-    oldPlainTextValue.length === plainTextValue.length
+    oldPlainText.length === plainText.length
   ) {
     selectionStartBefore -= 1;
   }
 
-  const insert = plainTextValue.slice(selectionStartBefore, selectionEndAfter);
-
-  let spliceStart = Math.min(selectionStartBefore, selectionEndAfter);
-  let spliceEnd = selectionEndBefore;
+  const insert = plainText.slice(selectionStartBefore, selectionEndAfter);
+  const start = Math.min(selectionStartBefore, selectionEndAfter);
+  let end = selectionEndBefore;
 
   if (selectionStartBefore === selectionEndAfter) {
-    // Deletion without a selection (Backspace / Delete)
-    spliceEnd = Math.max(
+    end = Math.max(
       selectionEndBefore,
-      selectionStartBefore + (oldPlainTextValue.length - plainTextValue.length)
+      selectionStartBefore + (oldPlainText.length - plainText.length)
     );
   }
 
-  const mappedSpliceStart = mapPlainTextIndex(value, configs, spliceStart, 'START') ?? 0;
-  const mappedSpliceEnd = mapPlainTextIndex(value, configs, spliceEnd, 'END') ?? value.length;
+  return { start, end, insert };
+}
 
-  let newValue = spliceString(value, mappedSpliceStart, mappedSpliceEnd, insert);
-
-  // Fallback when the selection-based splice produced a value whose plain text does not match the
-  // one reported by the browser (for example spellcheck or autocomplete replacements).
-  const controlSpliceStart = mapPlainTextIndex(value, configs, spliceStart, 'NULL');
-  const controlSpliceEnd = mapPlainTextIndex(value, configs, spliceEnd, 'NULL');
-  const willBreakMention = controlSpliceStart === null || controlSpliceEnd === null;
-
-  if (!willBreakMention && getPlainText(newValue, configs) !== plainTextValue) {
-    let diffStart = 0;
-    const minLength = Math.min(oldPlainTextValue.length, plainTextValue.length);
-    while (diffStart < minLength && oldPlainTextValue[diffStart] === plainTextValue[diffStart]) {
-      diffStart += 1;
-    }
-
-    let oldDiffEnd = oldPlainTextValue.length;
-    let newDiffEnd = plainTextValue.length;
-    while (
-      oldDiffEnd > diffStart &&
-      newDiffEnd > diffStart &&
-      oldPlainTextValue[oldDiffEnd - 1] === plainTextValue[newDiffEnd - 1]
-    ) {
-      oldDiffEnd -= 1;
-      newDiffEnd -= 1;
-    }
-
-    const fallbackInsert = plainTextValue.slice(diffStart, newDiffEnd);
-    const fallbackStart = mapPlainTextIndex(value, configs, diffStart, 'START') ?? 0;
-    const fallbackEnd = mapPlainTextIndex(value, configs, oldDiffEnd, 'END') ?? value.length;
-    newValue = spliceString(value, fallbackStart, fallbackEnd, fallbackInsert);
-    spliceStart = diffStart;
+function getDiffSplice(oldPlainText: string, plainText: string): PlainTextSplice {
+  let start = 0;
+  const minLength = Math.min(oldPlainText.length, plainText.length);
+  while (start < minLength && oldPlainText[start] === plainText[start]) {
+    start += 1;
   }
 
-  const removedMention = getMentions(newValue, configs).length < getMentions(value, configs).length;
+  let oldEnd = oldPlainText.length;
+  let newEnd = plainText.length;
+  while (oldEnd > start && newEnd > start && oldPlainText[oldEnd - 1] === plainText[newEnd - 1]) {
+    oldEnd -= 1;
+    newEnd -= 1;
+  }
 
-  const caretPlainTextIndex =
-    getPlainText(value.slice(0, mappedSpliceStart), configs).length + insert.length;
+  return { start, end: oldEnd, insert: plainText.slice(start, newEnd) };
+}
+
+function reproducesPlainText(oldPlainText: string, plainText: string, splice: PlainTextSplice) {
+  return (
+    splice.start >= 0 &&
+    splice.start <= splice.end &&
+    splice.end <= oldPlainText.length &&
+    spliceString(oldPlainText, splice.start, splice.end, splice.insert) === plainText
+  );
+}
+
+export function applyChangeToValue(
+  walk: MentionWalk,
+  plainTextValue: string,
+  selection: MentionsSelection,
+  configs: MentionConfig[]
+): ApplyChangeResult {
+  const oldPlainTextValue = walk.plainText;
+  const selectionSplice = getSelectionSplice(oldPlainTextValue, plainTextValue, selection);
+  const splice = reproducesPlainText(oldPlainTextValue, plainTextValue, selectionSplice)
+    ? selectionSplice
+    : getDiffSplice(oldPlainTextValue, plainTextValue);
+
+  const { markupStart, markupEnd } = getMarkupRange(walk, splice.start, splice.end);
+  const newValue = spliceString(walk.value, markupStart, markupEnd, splice.insert);
+
+  const removedMention = walkMentions(newValue, configs).spans.length < walk.spans.length;
+  const caretPlainTextIndex = mapMarkupIndex(walk, markupStart) + splice.insert.length;
 
   return { value: newValue, removedMention, caretPlainTextIndex };
 }

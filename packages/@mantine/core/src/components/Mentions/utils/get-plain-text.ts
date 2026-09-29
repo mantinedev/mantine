@@ -1,27 +1,30 @@
-import type { MentionConfig } from '../Mentions.types';
-import { findAllMentions, getMentionPlainText } from './iterate-mentions';
+/*
+ * Derived from react-mentions 4.4.10 (https://github.com/signavio/react-mentions)
+ * — BSD-3-Clause, Copyright (c) 2018 Signavio GmbH. See ../LICENSE for the full license text.
+ *
+ * Local changes compared to react-mentions 4.4.10:
+ * - Derived from the spans of walkMentions instead of an iterateMentionsMarkup callback
+ * - getIdText renders each mention with its id (react-mentions getPlainText renders display)
+ * - The trigger prefix is part of the plain text only when withTrigger is set
+ * - TypeScript types adjusted for the Mantine build, formatted with oxfmt
+ */
 
-export interface GetPlainTextOptions {
-  /** If set, each mention is rendered with its id instead of its display text */
-  idOnly?: boolean;
+import type { MentionConfig } from './types';
+import { walkMentions, type MentionWalk } from './walk-mentions';
+
+export function getPlainText(value: string, configs: MentionConfig[]): string {
+  return walkMentions(value, configs).plainText;
 }
 
-/** Converts a markup value into the plain text visible to the user */
-export function getPlainText(
-  value: string,
-  configs: MentionConfig[],
-  options: GetPlainTextOptions = {}
-): string {
-  const mentions = findAllMentions(value, configs);
+export function getIdText({ value, spans }: MentionWalk, configs: MentionConfig[]): string {
   let result = '';
-  let cursor = 0;
+  let markupCursor = 0;
 
-  for (const mention of mentions) {
-    result += value.slice(cursor, mention.index);
-    result += getMentionPlainText(mention.config, mention.id, mention.display, options.idOnly);
-    cursor = mention.index + mention.markup.length;
+  for (const span of spans) {
+    result += value.slice(markupCursor, span.markupStart);
+    result += (configs[span.sourceIndex].withTrigger ? span.trigger : '') + span.id;
+    markupCursor = span.markupEnd;
   }
 
-  result += value.slice(cursor);
-  return result;
+  return result + value.slice(markupCursor);
 }

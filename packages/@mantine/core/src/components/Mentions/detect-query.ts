@@ -1,20 +1,13 @@
-import type { MentionSpan } from './get-mention-model';
 import type { ResolvedMentionSource } from './resolve-sources';
+import type { MentionSpan } from './utils/walk-mentions';
 
 export interface ActiveMentionQuery {
   sourceIndex: number;
   query: string;
-  /** Plain-text index of the trigger character */
   queryStart: number;
-  /** Plain-text index at the end of the matched trigger + query (the caret) */
   queryEnd: number;
 }
 
-/**
- * Scans backwards from the caret to find the nearest trigger that opens a dropdown and returns the
- * active query. Returns `null` when the caret is not positioned after a trigger, or when the trigger
- * belongs to an existing mention (so the dropdown does not reopen inside an already inserted mention).
- */
 export function detectQuery(
   plainText: string,
   caret: number,
@@ -26,27 +19,27 @@ export function detectQuery(
 
   for (const source of sources) {
     const match = before.match(source.regex);
-    if (!match) {
+    const full = match?.groups?.mentionsFull ?? match?.[1];
+    if (!match || full === undefined) {
       continue;
     }
 
-    const full = match[1];
-    const query = match[2] ?? '';
+    const query = match.groups?.mentionsQuery ?? match[2] ?? '';
     const queryStart = before.length - full.length;
 
     if (!active || queryStart > active.queryStart) {
-      active = { sourceIndex: source.index, query, queryStart, queryEnd: caret };
+      active = { sourceIndex: source.sourceIndex, query, queryStart, queryEnd: caret };
     }
   }
 
-  if (active) {
-    const insideMention = spans.some(
-      (span) => active!.queryStart >= span.plainStart && active!.queryStart < span.plainEnd
-    );
-    if (insideMention) {
-      return null;
-    }
+  if (!active) {
+    return null;
   }
 
-  return active;
+  const queryStart = active.queryStart;
+  const overlapsMention = spans.some(
+    (span) => span.plainStart < caret && span.plainEnd > queryStart
+  );
+
+  return overlapsMention ? null : active;
 }

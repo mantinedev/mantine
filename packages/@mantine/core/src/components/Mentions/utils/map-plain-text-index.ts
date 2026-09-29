@@ -1,58 +1,66 @@
-import type { MentionConfig, MentionMapDirection } from '../Mentions.types';
-import { findAllMentions, getMentionPlainText } from './iterate-mentions';
-
-/**
- * Converts a caret offset in the plain text to an offset in the markup string.
- * Mentions are atomic: an index that falls strictly inside a mention snaps to its start or end
- * (based on `direction`), or returns `null` when `direction` is `'NULL'`.
+/*
+ * Derived from react-mentions 4.4.10 (https://github.com/signavio/react-mentions)
+ * — BSD-3-Clause, Copyright (c) 2018 Signavio GmbH. See ../LICENSE for the full license text.
+ *
+ * Local changes compared to react-mentions 4.4.10:
+ * - Derived from the spans of a walkMentions result passed by the caller instead of an
+ *   iterateMentionsMarkup callback over the value
+ * - The NULL direction is removed, an index inside a mention maps to its START or END
+ * - mapMarkupIndex maps in the opposite direction (markup index to plain-text index),
+ *   getMarkupRange maps a plain-text range to the markup range that keeps mentions whole
+ * - TypeScript types adjusted for the Mantine build, formatted with oxfmt
  */
+
+import type { MentionMapDirection } from './types';
+import type { MentionWalk } from './walk-mentions';
+
 export function mapPlainTextIndex(
-  value: string,
-  configs: MentionConfig[],
+  walk: MentionWalk,
   plainTextIndex: number,
   direction: MentionMapDirection = 'START'
-): number | null {
-  const mentions = findAllMentions(value, configs);
+): number {
   let markupCursor = 0;
   let plainCursor = 0;
 
-  for (const mention of mentions) {
-    const gapLength = mention.index - markupCursor;
-
-    // Index falls inside the plain-text gap before the mention (inclusive of the gap end)
-    if (plainTextIndex <= plainCursor + gapLength) {
+  for (const span of walk.spans) {
+    if (plainTextIndex <= span.plainStart) {
       return markupCursor + (plainTextIndex - plainCursor);
     }
 
-    plainCursor += gapLength;
-    markupCursor = mention.index;
-
-    const mentionPlainLength = getMentionPlainText(
-      mention.config,
-      mention.id,
-      mention.display
-    ).length;
-    const mentionMarkupLength = mention.markup.length;
-
-    if (plainTextIndex < plainCursor + mentionPlainLength) {
-      if (plainTextIndex === plainCursor) {
-        return markupCursor;
-      }
-
-      if (direction === 'START') {
-        return markupCursor;
-      }
-
-      if (direction === 'END') {
-        return markupCursor + mentionMarkupLength;
-      }
-
-      return null;
+    if (plainTextIndex < span.plainEnd) {
+      return direction === 'START' ? span.markupStart : span.markupEnd;
     }
 
-    plainCursor += mentionPlainLength;
-    markupCursor += mentionMarkupLength;
+    markupCursor = span.markupEnd;
+    plainCursor = span.plainEnd;
   }
 
   return markupCursor + (plainTextIndex - plainCursor);
+}
+
+export function mapMarkupIndex(walk: MentionWalk, markupIndex: number): number {
+  let markupCursor = 0;
+  let plainCursor = 0;
+
+  for (const span of walk.spans) {
+    if (markupIndex <= span.markupStart) {
+      return plainCursor + (markupIndex - markupCursor);
+    }
+
+    if (markupIndex < span.markupEnd) {
+      return span.plainStart;
+    }
+
+    markupCursor = span.markupEnd;
+    plainCursor = span.plainEnd;
+  }
+
+  return plainCursor + (markupIndex - markupCursor);
+}
+
+export function getMarkupRange(walk: MentionWalk, start: number, end: number) {
+  return {
+    markupStart: mapPlainTextIndex(walk, start, 'START'),
+    markupEnd: mapPlainTextIndex(walk, end, 'END'),
+  };
 }
