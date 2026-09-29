@@ -45,9 +45,11 @@ describe('@mantine/core/Tilt', () => {
     expect(container.querySelector('.mantine-Tilt-glare')).toBeNull();
 
     rerender(
-      <Tilt withGlare>
-        <div>content</div>
-      </Tilt>
+      <>
+        <Tilt withGlare>
+          <div>content</div>
+        </Tilt>
+      </>
     );
     expect(container.querySelector('.mantine-Tilt-glare')).not.toBeNull();
   });
@@ -61,9 +63,11 @@ describe('@mantine/core/Tilt', () => {
     expect(container.querySelector('.mantine-Tilt-root')).not.toHaveAttribute('data-track-window');
 
     rerender(
-      <Tilt trackWindow>
-        <div>content</div>
-      </Tilt>
+      <>
+        <Tilt trackWindow>
+          <div>content</div>
+        </Tilt>
+      </>
     );
     expect(container.querySelector('.mantine-Tilt-root')).toHaveAttribute('data-track-window');
   });
@@ -76,8 +80,6 @@ describe('@mantine/core/Tilt', () => {
     );
     const root = container.querySelector('.mantine-Tilt-root')!;
     mockRect(root);
-
-    // Top-right corner: roll = tilt = 0.5 → scaled to 1 → full maxRotate (20deg) at the edges
     fireEvent.mouseMove(root, { clientX: 200, clientY: 0 });
 
     const content = container.querySelector('.mantine-Tilt-content') as HTMLElement;
@@ -99,8 +101,7 @@ describe('@mantine/core/Tilt', () => {
     fireEvent.mouseMove(root, { clientX: 200, clientY: 0 });
 
     const layer = container.querySelector('.mantine-Tilt-layer') as HTMLElement;
-    // roll = tilt = 0.5 → scaled to 1, offset = depth * shift = 20 → translate(20px, 20px)
-    expect(layer.style.transform).toContain('translate(20px, 20px)');
+    expect(layer.style.transform).toBe('translate(20px, -20px)');
   });
 
   it('resets the content when the pointer leaves', () => {
@@ -118,5 +119,101 @@ describe('@mantine/core/Tilt', () => {
 
     fireEvent.mouseLeave(root);
     expect(content.style.transform).toBe('rotateX(0deg) rotateY(0deg)');
+  });
+
+  it('moves the glare towards the pointer', () => {
+    const { container } = render(
+      <Tilt withGlare>
+        <div>content</div>
+      </Tilt>
+    );
+    const root = container.querySelector('.mantine-Tilt-root')!;
+    mockRect(root);
+
+    fireEvent.mouseMove(root, { clientX: 200, clientY: 0 });
+
+    const glare = container.querySelector('.mantine-Tilt-glare') as HTMLElement;
+    expect(glare.style.getPropertyValue('--tilt-glare-transform')).toBe('translate(28%, -28%)');
+    expect(glare.style.transform).toBe('');
+  });
+
+  it('uses transitionDuration while moving and twice the duration on reset by default', () => {
+    const { container } = render(
+      <Tilt transitionDuration={100}>
+        <div>content</div>
+      </Tilt>
+    );
+    const root = container.querySelector('.mantine-Tilt-root')!;
+    const content = container.querySelector('.mantine-Tilt-content') as HTMLElement;
+    mockRect(root);
+
+    fireEvent.mouseMove(root, { clientX: 200, clientY: 0 });
+    expect(content.style.transition).toBe('transform 100ms ease-out');
+
+    fireEvent.mouseLeave(root);
+    expect(content.style.transition).toBe('transform 200ms ease-out');
+  });
+
+  it('uses resetTransitionDuration when the content returns to the neutral position', () => {
+    const { container } = render(
+      <Tilt transitionDuration={100} resetTransitionDuration={600}>
+        <div>content</div>
+      </Tilt>
+    );
+    const root = container.querySelector('.mantine-Tilt-root')!;
+    const content = container.querySelector('.mantine-Tilt-content') as HTMLElement;
+    mockRect(root);
+
+    fireEvent.mouseMove(root, { clientX: 200, clientY: 0 });
+    expect(content.style.transition).toBe('transform 100ms ease-out');
+
+    fireEvent.mouseLeave(root);
+    expect(content.style.transition).toBe('transform 600ms ease-out');
+  });
+
+  it('clamps rotation to maxRotate when the pointer is outside the element with trackWindow', () => {
+    const { container } = render(
+      <Tilt trackWindow maxRotate={20}>
+        <div>content</div>
+      </Tilt>
+    );
+    const root = container.querySelector('.mantine-Tilt-root')!;
+    mockRect(root);
+
+    fireEvent.mouseMove(window, { clientX: 2000, clientY: 1000 });
+
+    const content = container.querySelector('.mantine-Tilt-content') as HTMLElement;
+    expect(content.style.transform).toBe('rotateX(-20deg) rotateY(20deg)');
+  });
+
+  it('does not rotate the content when reduced motion is preferred', () => {
+    const originalMatchMedia = window.matchMedia;
+    window.matchMedia = jest.fn().mockImplementation((query: string) => ({
+      matches: query === '(prefers-reduced-motion: reduce)',
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    }));
+
+    try {
+      const { container } = render(
+        <Tilt maxRotate={20}>
+          <div>content</div>
+        </Tilt>
+      );
+      const root = container.querySelector('.mantine-Tilt-root')!;
+      mockRect(root);
+
+      fireEvent.mouseMove(root, { clientX: 200, clientY: 0 });
+
+      const content = container.querySelector('.mantine-Tilt-content') as HTMLElement;
+      expect(content.style.transform).toBe('rotateX(0deg) rotateY(0deg)');
+    } finally {
+      window.matchMedia = originalMatchMedia;
+    }
   });
 });

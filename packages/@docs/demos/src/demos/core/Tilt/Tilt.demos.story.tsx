@@ -22,3 +22,8 @@ export const Demo_trackWindow = {
   name: '⭐ Demo: trackWindow',
   render: renderDemo(demos.trackWindow),
 };
+
+export const Demo_glare = {
+  name: '⭐ Demo: glare',
+  render: renderDemo(demos.glare),
+};

@@ -134,6 +134,9 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Stat/StatIcon.tsx',
   'packages/@mantine/core/src/components/Stat/StatCountdown.tsx',
 
+  // Tilt
+  'packages/@mantine/core/src/components/Tilt/TiltLayer.tsx',
+
   // List
   'packages/@mantine/core/src/components/List/ListItem/ListItem.tsx',
 

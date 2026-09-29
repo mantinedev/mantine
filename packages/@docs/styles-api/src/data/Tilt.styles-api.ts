@@ -5,7 +5,8 @@ export const TiltStylesApi: StylesApiData<TiltFactory> = {
   selectors: {
     root: 'Root element, the perspective container',
     content: 'Element that receives the tilt rotation, wraps children and glare',
-    glare: 'Light glare overlay, rendered only when withGlare prop is set',
+    glare:
+      'Container of the light glare, rendered only when `withGlare` prop is set. The moving gradient is its `::before` pseudo-element, style it with `.glare::before`',
     layer: 'Tilt.Layer root element',
   },
 

@@ -50,7 +50,7 @@ export interface TiltProps extends BoxProps, StylesApiProps<TiltFactory>, Elemen
   /** If set, the component reacts to the pointer position anywhere on the page @default false */
   trackWindow?: boolean;
 
-  /** If set, the content returns to its neutral position when the pointer leaves the element @default true */
+  /** If set, the content returns to its neutral position when the pointer leaves the element. Ignored when `trackWindow` is set @default true */
   resetOnLeave?: boolean;
 
   /** If set, a light glare that follows the pointer is displayed over the content @default false */
@@ -82,6 +82,10 @@ const varsResolver = createVarsResolver<TiltFactory>((_, { perspective, radius }
     '--tilt-radius': radius === undefined ? undefined : getRadius(radius),
   },
 }));
+
+function toEdgeRatio(value: number) {
+  return clamp(value * 2, -1, 1);
+}
 
 export const Tilt = factory<TiltFactory>((_props) => {
   const props = useProps('Tilt', defaultProps, _props);
@@ -124,12 +128,12 @@ export const Tilt = factory<TiltFactory>((_props) => {
   const reduceMotion = useReducedMotion();
   const { ref: tiltRef, roll, tilt } = useTilt<HTMLDivElement>({ trackWindow, resetOnLeave });
 
-  const activeRoll = reduceMotion ? 0 : clamp(roll * 2, -1, 1);
-  const activeTilt = reduceMotion ? 0 : clamp(tilt * 2, -1, 1);
+  const activeRoll = reduceMotion ? 0 : toEdgeRatio(roll);
+  const activeTilt = reduceMotion ? 0 : toEdgeRatio(tilt);
   const isNeutral = activeRoll === 0 && activeTilt === 0;
 
   const duration = isNeutral
-    ? (resetTransitionDuration ?? transitionDuration! * 2)
+    ? (resetTransitionDuration ?? transitionDuration * 2)
     : transitionDuration;
   const transition = `transform ${duration}ms ease-out`;
 
@@ -144,7 +148,7 @@ export const Tilt = factory<TiltFactory>((_props) => {
         <div
           {...getStyles('content', {
             style: {
-              transform: `rotateX(${activeRoll * maxRotate!}deg) rotateY(${activeTilt * maxRotate!}deg)`,
+              transform: `rotateX(${activeRoll * maxRotate}deg) rotateY(${activeTilt * maxRotate}deg)`,
               transition,
             },
           })}
@@ -154,8 +158,8 @@ export const Tilt = factory<TiltFactory>((_props) => {
             <div
               {...getStyles('glare', {
                 style: {
-                  transform: `translate(${activeTilt * 28}%, ${-activeRoll * 28}%)`,
-                  transition,
+                  '--tilt-glare-transform': `translate(${activeTilt * 28}%, ${-activeRoll * 28}%)`,
+                  '--tilt-glare-transition': transition,
                 },
               })}
             />
