@@ -37,6 +37,7 @@ describe('@mantine/hooks/use-countdown', () => {
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     jest.clearAllTimers();
   });
 
@@ -367,18 +368,18 @@ describe('@mantine/hooks/use-countdown', () => {
     expect(hook.result.current.count).toBe(7000);
   });
 
-  it('clears the interval on unmount', () => {
-    const clearIntervalSpy = jest.spyOn(window, 'clearInterval');
+  it('clears the timeout on unmount', () => {
+    const clearTimeoutSpy = jest.spyOn(window, 'clearTimeout');
     const onTick = jest.fn();
     const hook = renderHook(() => useCountdown({ countStart: 5000, autoStart: true, onTick }));
 
-    clearIntervalSpy.mockClear();
+    clearTimeoutSpy.mockClear();
     hook.unmount();
-    expect(clearIntervalSpy).toHaveBeenCalled();
+    expect(clearTimeoutSpy).toHaveBeenCalled();
 
     act(() => jest.advanceTimersByTime(3000));
     expect(onTick).not.toHaveBeenCalled();
-    clearIntervalSpy.mockRestore();
+    clearTimeoutSpy.mockRestore();
   });
 
   it('does not restart a stopped countdown when Activity shows the tree again', () => {
@@ -534,5 +535,152 @@ describe('@mantine/hooks/use-countdown', () => {
     act(() => hook.result.current.start());
     act(() => hook.result.current.start());
     expect(onComplete).toHaveBeenCalledTimes(1);
+  });
+
+  it('aligns ticks to the target date grid', () => {
+    const onTick = jest.fn();
+    const start = Date.now();
+    renderHook(() => useCountdown({ targetDate: start + 2400, interval: 1000, onTick }));
+
+    act(() => jest.advanceTimersByTime(399));
+    expect(onTick).not.toHaveBeenCalled();
+
+    act(() => jest.advanceTimersByTime(1));
+    expect(onTick).toHaveBeenLastCalledWith(2000);
+
+    act(() => jest.advanceTimersByTime(1000));
+    expect(onTick).toHaveBeenLastCalledWith(1000);
+
+    act(() => jest.advanceTimersByTime(1000));
+    expect(onTick).toHaveBeenLastCalledWith(0);
+    expect(onTick).toHaveBeenCalledTimes(3);
+  });
+
+  it('realigns to the target date grid after a late tick', () => {
+    const onTick = jest.fn();
+    const targetDate = Date.now() + 5000;
+    renderHook(() => useCountdown({ targetDate, interval: 1000, onTick }));
+
+    const fakeNow = Date.now.bind(Date);
+    const nowSpy = jest.spyOn(Date, 'now').mockImplementation(() => fakeNow() + 1);
+
+    act(() => jest.advanceTimersByTime(5000));
+    expect(onTick.mock.calls.map(([count]) => count)).toEqual([4000, 3000, 2000, 1000, 0]);
+    nowSpy.mockRestore();
+  });
+
+  it('reports whole grid values in targetDate mode when ticks fire late', () => {
+    const targetDate = Date.now() + 5000;
+    const hook = renderHook(() => useCountdown({ targetDate, interval: 1000 }));
+    const counts = [hook.result.current.count];
+    const seconds = [hook.result.current.formatted.seconds];
+
+    let offset = 0;
+    const fakeNow = Date.now.bind(Date);
+    jest.spyOn(Date, 'now').mockImplementation(() => fakeNow() + offset);
+
+    [1, 3, 2, 1, 2].forEach((lateness) => {
+      offset += lateness;
+      act(() => jest.advanceTimersByTime(1000));
+      counts.push(hook.result.current.count);
+      seconds.push(hook.result.current.formatted.seconds);
+    });
+
+    expect(counts).toEqual([5000, 4000, 3000, 2000, 1000, 0]);
+    expect(seconds).toEqual([5, 4, 3, 2, 1, 0]);
+  });
+
+  it('does not report the same grid value twice when a tick fires more than half an interval late', () => {
+    const onTick = jest.fn();
+    const targetDate = Date.now() + 5000;
+    const hook = renderHook(() => useCountdown({ targetDate, interval: 1000, onTick }));
+    const counts = [hook.result.current.count];
+
+    const fakeNow = Date.now.bind(Date);
+    let offset = 0;
+    jest.spyOn(Date, 'now').mockImplementation(() => fakeNow() + offset);
+
+    offset = 600;
+    act(() => jest.advanceTimersByTime(1000));
+    counts.push(hook.result.current.count);
+
+    [1400, 1000, 1000].forEach((step) => {
+      act(() => jest.advanceTimersByTime(step));
+      counts.push(hook.result.current.count);
+    });
+
+    expect(counts).toEqual([5000, 3000, 2000, 1000, 0]);
+    expect(onTick.mock.calls.map(([value]) => value)).toEqual([3000, 2000, 1000, 0]);
+  });
+
+  it('starts a targetDate run on the grid value when the target was created a moment earlier', () => {
+    const targetDate = Date.now() + 4998;
+    const hook = renderHook(() => useCountdown({ targetDate, interval: 1000 }));
+    const seconds = [hook.result.current.formatted.seconds];
+    const counts = [hook.result.current.count];
+
+    [998, 1000, 1000].forEach((step) => {
+      act(() => jest.advanceTimersByTime(step));
+      counts.push(hook.result.current.count);
+      seconds.push(hook.result.current.formatted.seconds);
+    });
+
+    expect(counts).toEqual([5000, 4000, 3000, 2000]);
+    expect(seconds).toEqual([5, 4, 3, 2]);
+  });
+
+  it('reports whole grid values anchored to the start in countStart mode when ticks fire late', () => {
+    const onComplete = jest.fn();
+    const hook = renderHook(() =>
+      useCountdown({ countStart: 2500, interval: 1000, autoStart: true, onComplete })
+    );
+    const counts = [hook.result.current.count];
+
+    let offset = 0;
+    const fakeNow = Date.now.bind(Date);
+    jest.spyOn(Date, 'now').mockImplementation(() => fakeNow() + offset);
+
+    [2, 1, 3].forEach((lateness) => {
+      offset += lateness;
+      act(() => jest.advanceTimersByTime(1000));
+      counts.push(hook.result.current.count);
+    });
+
+    expect(counts).toEqual([2500, 1500, 500, 0]);
+    expect(onComplete).toHaveBeenCalledTimes(1);
+  });
+
+  it('reports a single snapped tick after a large clock jump', () => {
+    const onTick = jest.fn();
+    const onComplete = jest.fn();
+    const targetDate = Date.now() + 10_000;
+    renderHook(() => useCountdown({ targetDate, interval: 1000, onTick, onComplete }));
+
+    const fakeNow = Date.now.bind(Date);
+    jest.spyOn(Date, 'now').mockImplementation(() => fakeNow() + 6004);
+
+    act(() => jest.advanceTimersByTime(1000));
+    expect(onTick.mock.calls.map(([count]) => count)).toEqual([3000]);
+
+    act(() => jest.advanceTimersByTime(3000));
+    expect(onTick).toHaveBeenLastCalledWith(0);
+    expect(onComplete).toHaveBeenCalledTimes(1);
+  });
+
+  it('clamps the last tick to the end of the countdown', () => {
+    const onTick = jest.fn();
+    const onComplete = jest.fn();
+    const hook = renderHook(() =>
+      useCountdown({ countStart: 2500, interval: 1000, autoStart: true, onTick, onComplete })
+    );
+
+    act(() => jest.advanceTimersByTime(2000));
+    expect(hook.result.current.count).toBe(500);
+    expect(onComplete).not.toHaveBeenCalled();
+
+    act(() => jest.advanceTimersByTime(500));
+    expect(hook.result.current.count).toBe(0);
+    expect(onComplete).toHaveBeenCalledTimes(1);
+    expect(onTick.mock.calls.map(([count]) => count)).toEqual([1500, 500, 0]);
   });
 });

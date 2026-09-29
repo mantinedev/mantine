@@ -1,4 +1,4 @@
-import { formatCountdown } from './format-countdown';
+import { formatCountdown, hasFractionToken } from './format-countdown';
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
@@ -35,5 +35,28 @@ describe('@mantine/core/Stat/formatCountdown', () => {
 
   it('keeps escaped tokens as literal text', () => {
     expect(formatCountdown(90 * SECOND, '[m]m[m] ss[s]')).toBe('m1m 30s');
+  });
+
+  it('rounds up to the smallest displayed unit', () => {
+    expect(formatCountdown(3 * HOUR - 1, 'HH:mm:ss')).toBe('03:00:00');
+    expect(formatCountdown(1, 'HH:mm:ss')).toBe('00:00:01');
+    expect(formatCountdown(0, 'HH:mm:ss')).toBe('00:00:00');
+    expect(formatCountdown(61 * SECOND, 'mm')).toBe('02');
+    expect(formatCountdown(DAY + 1, 'D[d]')).toBe('2d');
+  });
+
+  it('keeps exact fractions for S tokens', () => {
+    expect(formatCountdown(5 * SECOND + 199, 'ss.S')).toBe('05.1');
+    expect(formatCountdown(999, 'ss.S')).toBe('00.9');
+  });
+
+  it('does not treat Y and M as tokens', () => {
+    expect(formatCountdown(2 * DAY, 'Y M D')).toBe('Y M 2');
+  });
+
+  it('detects S tokens outside escaped literals', () => {
+    expect(hasFractionToken('mm:ss.SSS')).toBe(true);
+    expect(hasFractionToken('[Sale] mm:ss')).toBe(false);
+    expect(hasFractionToken('HH:mm:ss')).toBe(false);
   });
 });

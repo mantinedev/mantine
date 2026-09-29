@@ -1,53 +1,22 @@
-import { useRef, useState } from 'react';
-import { useIsomorphicEffect } from '@mantine/hooks';
-import {
-  Box,
-  BoxProps,
-  createVarsResolver,
-  ElementProps,
-  factory,
-  Factory,
-  GetStylesApi,
-  MantineColor,
-  MantineSize,
-  StylesApiProps,
-  useProps,
-  useStyles,
-} from '../../core';
-import { StatProvider } from './Stat.context';
+import { useCountdown, useMounted } from '@mantine/hooks';
+import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
+import { formatCountdown, hasFractionToken } from './format-countdown';
+import { StatBase, type StatFactory, type StatProps } from './StatBase';
 import { StatIcon } from './StatIcon';
 import { StatLabel } from './StatLabel';
 import { StatValue } from './StatValue';
-import { formatCountdown } from './format-countdown';
-import { getStatSizeVars } from './get-stat-vars';
-import type { StatCssVariables, StatFactory, StatStylesNames } from './Stat';
-import classes from './Stat.module.css';
 
 export interface StatCountdownProps
-  extends BoxProps, StylesApiProps<StatCountdownFactory>, ElementProps<'div', 'prefix' | 'color'> {
-  /** Caption displayed above the value */
-  label?: React.ReactNode;
-
-  /** Target time to count down to, a `Date` or a timestamp in milliseconds */
+  extends
+    BoxProps,
+    StylesApiProps<StatFactory>,
+    ElementProps<'div', 'prefix' | 'color'>,
+    Pick<StatProps, 'label' | 'prefix' | 'suffix' | 'color' | 'icon' | 'size'> {
+  /** Target time to count down to, a `Date` or a timestamp in milliseconds. Keep it stable between renders (`useState` or `useMemo`), a new target restarts the countdown */
   value?: number | Date;
 
-  /** dayjs-style format for the remaining time. Literals can be escaped with square brackets @default 'HH:mm:ss' */
+  /** dayjs-style format for the remaining time (`D`, `H`, `m`, `s`, `S`). Larger units roll into the leading token, `S` is tenths, `SS` hundredths and `SSS` milliseconds. Literals can be escaped with square brackets @default 'HH:mm:ss' */
   format?: string;
-
-  /** Content rendered before the value */
-  prefix?: React.ReactNode;
-
-  /** Content rendered after the value */
-  suffix?: React.ReactNode;
-
-  /** Key of `theme.colors` or any valid CSS color to set the value color */
-  color?: MantineColor;
-
-  /** Leading icon or illustration displayed next to the value */
-  icon?: React.ReactNode;
-
-  /** Controls label, value and icon sizes @default 'md' */
-  size?: MantineSize;
 
   /** Called once when the target time is reached */
   onFinish?: () => void;
@@ -59,125 +28,49 @@ export interface StatCountdownProps
 export type StatCountdownFactory = Factory<{
   props: StatCountdownProps;
   ref: HTMLDivElement;
-  stylesNames: StatStylesNames;
-  vars: StatCssVariables;
 }>;
 
 const defaultProps = {
-  size: 'md',
   format: 'HH:mm:ss',
 } satisfies Partial<StatCountdownProps>;
 
-const varsResolver = createVarsResolver<StatCountdownFactory>((_, { size }) => ({
-  root: getStatSizeVars(size),
-}));
-
-function getTargetTimestamp(value: number | Date | undefined): number {
-  if (value instanceof Date) {
-    return value.getTime();
+function getInitialRemaining(value: number | Date | undefined) {
+  if (value === undefined) {
+    return 0;
   }
 
-  return value ?? 0;
+  const remaining = new Date(value).getTime() - Date.now();
+  return Number.isNaN(remaining) ? 0 : Math.max(0, remaining);
 }
 
 export const StatCountdown = factory<StatCountdownFactory>((_props) => {
-  const props = useProps('StatCountdown', defaultProps, _props);
-  const {
-    classNames,
-    className,
-    style,
-    styles,
-    unstyled,
-    vars,
-    label,
-    value,
-    format,
-    prefix,
-    suffix,
-    color,
-    icon,
-    onFinish,
-    onTick,
-    mod,
-    attributes,
-    ...others
-  } = props;
+  const props = useProps(['Stat', 'StatCountdown'], defaultProps, _props);
+  const { label, value, format, prefix, suffix, color, icon, onFinish, onTick, ...others } = props;
 
-  const getStyles = useStyles<StatCountdownFactory>({
-    name: 'Stat',
-    classes,
-    props,
-    className,
-    style,
-    classNames,
-    styles,
-    unstyled,
-    attributes,
-    vars,
-    varsResolver,
+  const interval = hasFractionToken(format!) ? Math.ceil(1000 / 30) : 1000;
+  const mounted = useMounted();
+  const countdown = useCountdown({
+    targetDate: value,
+    interval,
+    onTick,
+    onComplete: onFinish,
   });
 
-  const target = getTargetTimestamp(value);
-  const targetRef = useRef(target);
-  targetRef.current = target;
-
-  const onTickRef = useRef(onTick);
-  onTickRef.current = onTick;
-
-  const onFinishRef = useRef(onFinish);
-  onFinishRef.current = onFinish;
-
-  const finishedRef = useRef(false);
-
-  const [remaining, setRemaining] = useState(0);
-
-  useIsomorphicEffect(() => {
-    finishedRef.current = false;
-    const period = /S/.test(format!) ? Math.ceil(1000 / 30) : 1000;
-    let timeoutId = -1;
-
-    const tick = () => {
-      if (finishedRef.current) {
-        return;
-      }
-
-      const next = Math.max(0, targetRef.current - Date.now());
-      setRemaining(next);
-      onTickRef.current?.(next);
-
-      if (next <= 0) {
-        finishedRef.current = true;
-        onFinishRef.current?.();
-        return;
-      }
-
-      timeoutId = window.setTimeout(tick, Math.min(period, next));
-    };
-
-    tick();
-
-    return () => window.clearTimeout(timeoutId);
-  }, [target, format]);
-
-  const live = /S/.test(format!) ? 'off' : 'polite';
+  const remaining = mounted ? countdown.count : getInitialRemaining(value);
 
   return (
-    <StatProvider value={{ getStyles: getStyles as GetStylesApi<StatFactory>, unstyled }}>
-      <Box {...getStyles('root')} mod={mod} {...others}>
-        {icon != null && <StatIcon>{icon}</StatIcon>}
-        <div {...getStyles('body')}>
-          {label != null && <StatLabel>{label}</StatLabel>}
-          <StatValue prefix={prefix} suffix={suffix} c={color} aria-live={live} aria-atomic>
-            {formatCountdown(remaining, format!)}
-          </StatValue>
-        </div>
-      </Box>
-    </StatProvider>
+    <StatBase {...others}>
+      {icon != null && <StatIcon>{icon}</StatIcon>}
+      {label != null && <StatLabel>{label}</StatLabel>}
+      <StatValue prefix={prefix} suffix={suffix} c={color} aria-live="off">
+        <span key={mounted ? 'live' : 'ssr'} suppressHydrationWarning={!mounted}>
+          {formatCountdown(remaining, format!)}
+        </span>
+      </StatValue>
+    </StatBase>
   );
 });
 
-StatCountdown.classes = classes;
-StatCountdown.varsResolver = varsResolver;
 StatCountdown.displayName = '@mantine/core/StatCountdown';
 
 export namespace StatCountdown {

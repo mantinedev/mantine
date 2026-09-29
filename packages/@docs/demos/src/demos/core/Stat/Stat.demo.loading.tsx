@@ -8,7 +8,15 @@ function Demo() {
   return (
     <Group gap={50}>
       <Stat label="Active users" value={92410} thousandSeparator loading />
-      <Stat label="Revenue" value={1340} prefix="$" loading />
+      <Stat
+        label="Revenue"
+        value={1340.5}
+        prefix="$"
+        decimalScale={2}
+        fixedDecimalScale
+        thousandSeparator
+        loading
+      />
     </Group>
   );
 }
@@ -18,7 +26,15 @@ function Demo() {
   return (
     <Group gap={50}>
       <Stat label="Active users" value={92410} thousandSeparator loading />
-      <Stat label="Revenue" value={1340} prefix="$" loading />
+      <Stat
+        label="Revenue"
+        value={1340.5}
+        prefix="$"
+        decimalScale={2}
+        fixedDecimalScale
+        thousandSeparator
+        loading
+      />
     </Group>
   );
 }

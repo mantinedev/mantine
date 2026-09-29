@@ -30,7 +30,8 @@ export interface UseCountdownOptions {
    * changing it while the countdown is not running resets `count` */
   countStart?: number;
 
-  /** Tick interval in milliseconds, `1000` by default */
+  /** Tick interval in milliseconds, `1000` by default. In `targetDate` mode ticks are aligned to the target,
+   * so `count` starts rounded up to and each tick reports a whole number of intervals before it. Values below `1` are clamped to `1` */
   interval?: number;
 
   /** Determines whether the countdown should start automatically,
@@ -75,12 +76,49 @@ function formatCountdown(count: number): UseCountdownFormatted {
   };
 }
 
+interface TickGridInput {
+  now: number;
+  end: number;
+  startedAt: number;
+  interval: number;
+  alignToEnd: boolean;
+}
+
+function positiveModulo(value: number, divisor: number) {
+  return ((value % divisor) + divisor) % divisor;
+}
+
+function getNextTickDelay({ now, end, startedAt, interval, alignToEnd }: TickGridInput) {
+  const gridOrigin = alignToEnd ? end : startedAt;
+  const toNextGridLine = positiveModulo(gridOrigin - now - 1, interval) + 1;
+  return Math.max(0, Math.min(end - now, toNextGridLine));
+}
+
+function getGridRemaining({ now, end, startedAt, interval, alignToEnd }: TickGridInput) {
+  if (now >= end) {
+    return 0;
+  }
+
+  const gridOrigin = alignToEnd ? end : startedAt;
+  const gridNow = gridOrigin + Math.round((now - gridOrigin) / interval) * interval;
+  return Math.max(0, end - gridNow);
+}
+
 function getTargetTime(targetDate: Date | number | string): number {
   return new Date(targetDate).getTime();
 }
 
 export function useCountdown(options: UseCountdownOptions = {}): UseCountdownReturnValue {
-  const { targetDate, countStart, interval = 1000, autoStart, onComplete, onTick } = options;
+  const {
+    targetDate,
+    countStart,
+    interval: intervalOption = 1000,
+    autoStart,
+    onComplete,
+    onTick,
+  } = options;
+
+  const interval = Math.max(1, intervalOption);
 
   const isTargetMode = targetDate !== undefined && targetDate !== null;
   const clampedCountStart = Math.max(0, countStart ?? 0);
@@ -90,12 +128,13 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
   const [running, setRunning] = useState(false);
 
   const endRef = useRef(0);
+  const anchorRef = useRef(0);
   const countRef = useRef(count);
   const runningRef = useRef(false);
   const completedRef = useRef(false);
   const initializedRef = useRef(false);
-  const optionsRef = useRef({ targetDate, clampedCountStart });
-  optionsRef.current = { targetDate, clampedCountStart };
+  const optionsRef = useRef({ targetDate, clampedCountStart, interval });
+  optionsRef.current = { targetDate, clampedCountStart, interval };
 
   const handleComplete = useCallbackRef(onComplete);
   const handleTick = useCallbackRef(onTick);
@@ -110,11 +149,18 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
     setCount(value);
   }, []);
 
-  const syncToEnd = useCallback((end: number) => {
-    const remaining = Number.isNaN(end) ? 0 : Math.max(0, end - Date.now());
+  const syncToEnd = useCallback((end: number, alignToGrid = false) => {
+    const exact = Number.isNaN(end) ? 0 : Math.max(0, end - Date.now());
+    const step = optionsRef.current.interval;
+    const remaining = alignToGrid ? Math.ceil(exact / step) * step : exact;
     endRef.current = end;
     setCountState(remaining);
     return remaining;
+  }, []);
+
+  const isTargetModeCurrent = useCallback(() => {
+    const current = optionsRef.current.targetDate;
+    return current !== undefined && current !== null;
   }, []);
 
   const getEnd = useCallback((resume: boolean) => {
@@ -140,7 +186,8 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
       return;
     }
 
-    if (syncToEnd(getEnd(true)) > 0) {
+    if (syncToEnd(getEnd(true), isTargetModeCurrent()) > 0) {
+      anchorRef.current = Date.now();
       completedRef.current = false;
       setRunningState(true);
     } else {
@@ -159,25 +206,6 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
     setRunningState(false);
     syncToEnd(getEnd(false));
   }, []);
-
-  useEffect(() => {
-    if (!running) {
-      return undefined;
-    }
-
-    const id = window.setInterval(() => {
-      const remaining = Math.max(0, endRef.current - Date.now());
-      setCountState(remaining);
-      handleTick(remaining);
-
-      if (remaining <= 0) {
-        window.clearInterval(id);
-        complete();
-      }
-    }, interval);
-
-    return () => window.clearInterval(id);
-  }, [running, interval]);
 
   useIsomorphicEffect(() => {
     if (initializedRef.current) {
@@ -200,7 +228,7 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
       return;
     }
 
-    if (syncToEnd(targetTime) <= 0) {
+    if (syncToEnd(targetTime, runningRef.current) <= 0) {
       complete();
     } else if (!runningRef.current && resolvedAutoStart) {
       start();
@@ -212,6 +240,53 @@ export function useCountdown(options: UseCountdownOptions = {}): UseCountdownRet
       syncToEnd(getEnd(false));
     }
   }, [clampedCountStart]);
+
+  useEffect(() => {
+    if (!running) {
+      return undefined;
+    }
+
+    let timeoutId = -1;
+
+    const getGridInput = (): TickGridInput => ({
+      now: Date.now(),
+      end: endRef.current,
+      startedAt: anchorRef.current,
+      interval,
+      alignToEnd: isTargetMode,
+    });
+
+    const schedule = () => {
+      timeoutId = window.setTimeout(tick, getNextTickDelay(getGridInput()));
+    };
+
+    const scheduleAfter = (reportedRemaining: number) => {
+      const now = Date.now();
+      const nextGridLineAt = endRef.current - reportedRemaining + interval;
+      const delay = Math.min(endRef.current, nextGridLineAt) - now;
+      timeoutId = window.setTimeout(tick, Math.max(1, delay));
+    };
+
+    const tick = () => {
+      if (!runningRef.current) {
+        return;
+      }
+
+      const remaining = getGridRemaining(getGridInput());
+      setCountState(remaining);
+      handleTick(remaining);
+
+      if (remaining <= 0) {
+        complete();
+      } else {
+        scheduleAfter(remaining);
+      }
+    };
+
+    schedule();
+
+    return () => window.clearTimeout(timeoutId);
+  }, [running, interval, targetTime]);
 
   const formatted = useMemo(() => formatCountdown(count), [count]);
 
