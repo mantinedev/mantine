@@ -4234,10 +4234,14 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     embla-carousel: ">=8.0.0"
     embla-carousel-react: ">=8.0.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4253,9 +4257,13 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
     recharts: ">=3.2.1"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4272,8 +4280,12 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4300,8 +4312,12 @@ __metadata:
     type-fest: "npm:^5.10.0"
   peerDependencies:
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4319,9 +4335,13 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     dayjs: ">=1.0.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4338,8 +4358,12 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4361,8 +4385,12 @@ __metadata:
     "@emotion/utils": ^1.2.1
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4375,7 +4403,11 @@ __metadata:
     klona: "npm:^2.0.6"
     zod: "npm:^4.6.5"
   peerDependencies:
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4383,7 +4415,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/hooks@workspace:packages/@mantine/hooks"
   peerDependencies:
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
+    react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4400,10 +4437,14 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     embla-carousel: ">=8.0.0"
     embla-carousel-react: ">=8.0.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4429,8 +4470,12 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4448,8 +4493,12 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4466,8 +4515,12 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4487,8 +4540,12 @@ __metadata:
     "@mantine/core": 9.7.4
     "@mantine/dates": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4505,8 +4562,12 @@ __metadata:
   peerDependencies:
     "@mantine/core": 9.7.4
     "@mantine/hooks": 9.7.4
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4514,7 +4575,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/store@workspace:packages/@mantine/store"
   peerDependencies:
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4532,8 +4597,12 @@ __metadata:
     "@mantine/hooks": 9.7.4
     "@tiptap/extension-link": ">=3.3.0"
     "@tiptap/react": ">=3.3.0"
+    "@types/react": ">=19.2.0"
     react: ^19.2.0
     react-dom: ^19.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 

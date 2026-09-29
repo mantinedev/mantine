@@ -37,6 +37,12 @@
     "directory": "packages/@mantine/store"
   },
   "peerDependencies": {
+    "@types/react": ">=19.2.0",
     "react": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   }
 }
