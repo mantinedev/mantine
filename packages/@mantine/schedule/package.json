@@ -38,8 +38,14 @@
     "@mantine/core": "9.6.3",
     "@mantine/dates": "9.6.3",
     "@mantine/hooks": "9.6.3",
+    "@types/react": ">=19.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "dependencies": {
     "rrule": "^2.8.1"

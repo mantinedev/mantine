@@ -37,8 +37,14 @@
     "@emotion/utils": "^1.2.1",
     "@mantine/core": "9.6.3",
     "@mantine/hooks": "9.6.3",
+    "@types/react": ">=19.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "dependencies": {
     "csstype": "^3.2.3",

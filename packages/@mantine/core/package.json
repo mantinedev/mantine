@@ -44,8 +44,14 @@
   },
   "peerDependencies": {
     "@mantine/hooks": "9.6.3",
+    "@types/react": ">=19.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.20",
