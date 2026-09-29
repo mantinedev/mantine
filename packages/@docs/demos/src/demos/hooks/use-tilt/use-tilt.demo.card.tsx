@@ -14,9 +14,8 @@ function Demo() {
   const transition = \`transform \${isNeutral ? 300 : 150}ms ease-out\`;
 
   return (
-    <Box style={{ perspective: 1000 }}>
+    <Box ref={ref} style={{ perspective: 1000, display: 'inline-block' }}>
       <Box
-        ref={ref}
         style={{
           position: 'relative',
           overflow: 'hidden',
@@ -86,9 +85,8 @@ function Demo() {
   const transition = `transform ${isNeutral ? 300 : 150}ms ease-out`;
 
   return (
-    <Box style={{ perspective: 1000 }}>
+    <Box ref={ref} style={{ perspective: 1000, display: 'inline-block' }}>
       <Box
-        ref={ref}
         style={{
           position: 'relative',
           overflow: 'hidden',
