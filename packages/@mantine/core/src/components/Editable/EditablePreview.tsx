@@ -43,20 +43,22 @@ export const EditablePreview = factory<EditablePreviewFactory>((_props) => {
   } = props;
 
   const ctx = useEditableContext();
-  const mergedRef = useMergedRef(ctx.previewRef, ref);
+  const mergedRef = useMergedRef(ctx.focus.previewRef, ref);
 
   if (ctx.controller.editing) {
     return null;
   }
 
-  const { activationMode, disabled } = ctx.controller;
+  const { activationMode, disabled, readOnly } = ctx.controller;
   const isEmpty = ctx.controller.value.length === 0;
-  const interactive = activationMode !== 'none' && !disabled;
+  const interactive = activationMode !== 'none' && !disabled && !readOnly;
 
   return (
     <Box
+      {...ctx.ariaProps}
       data-empty={isEmpty || undefined}
       data-disabled={disabled || undefined}
+      data-read-only={readOnly || undefined}
       data-multiline={ctx.multiline || undefined}
       {...others}
       ref={mergedRef}
@@ -64,7 +66,7 @@ export const EditablePreview = factory<EditablePreviewFactory>((_props) => {
       tabIndex={interactive ? 0 : undefined}
       {...ctx.getStyles('preview', { className, style, classNames, styles })}
       onClick={(event) => {
-        if (activationMode === 'click') {
+        if (activationMode === 'click' || activationMode === 'focus') {
           ctx.controller.edit();
         }
         onClick?.(event);
@@ -76,19 +78,14 @@ export const EditablePreview = factory<EditablePreviewFactory>((_props) => {
         onDoubleClick?.(event);
       }}
       onFocus={(event) => {
-        if (ctx.returningFocusRef.current) {
-          ctx.returningFocusRef.current = false;
-        } else if (activationMode === 'focus') {
+        const returning = ctx.focus.consumeReturningFocus();
+        if (!returning && activationMode === 'focus') {
           ctx.controller.edit();
         }
         onFocus?.(event);
       }}
       onKeyDown={(event) => {
-        if (
-          interactive &&
-          activationMode !== 'focus' &&
-          (event.key === 'Enter' || event.key === ' ')
-        ) {
+        if (interactive && (event.key === 'Enter' || event.key === ' ')) {
           event.preventDefault();
           ctx.controller.edit();
         }

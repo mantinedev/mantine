@@ -9,7 +9,12 @@ export { EditableSubmitTrigger } from './EditableSubmitTrigger';
 export { EditableCancelTrigger } from './EditableCancelTrigger';
 export { useEditable } from './use-editable';
 
-export type { EditableProps, EditableFactory, EditableStylesNames } from './Editable';
+export type {
+  EditableProps,
+  EditableFactory,
+  EditableStylesNames,
+  EditablePlaceholder,
+} from './Editable';
 export type {
   EditableAreaProps,
   EditableAreaFactory,
@@ -56,4 +61,3 @@ export type {
   EditableActivationMode,
   EditableSubmitMode,
 } from './use-editable';
-export type { EditablePlaceholder } from './Editable.context';

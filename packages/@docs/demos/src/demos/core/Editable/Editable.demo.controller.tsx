@@ -4,6 +4,8 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { Button, Editable, Group, Stack, Text, useEditable } from '@mantine/core';
 
+const preventBlur = (event: React.MouseEvent) => event.preventDefault();
+
 function Demo() {
   const editable = useEditable({ defaultValue: 'Controlled by the hook' });
 
@@ -12,9 +14,15 @@ function Demo() {
       <Editable controller={editable} />
 
       <Group>
-        <Button size="xs" variant="default" onClick={editable.edit}>Edit</Button>
-        <Button size="xs" variant="default" onClick={editable.submit}>Submit</Button>
-        <Button size="xs" variant="default" onClick={editable.cancel}>Cancel</Button>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={editable.edit}>
+          Edit
+        </Button>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={editable.submit}>
+          Submit
+        </Button>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={editable.cancel}>
+          Cancel
+        </Button>
       </Group>
 
       <Text size="sm">
@@ -25,6 +33,8 @@ function Demo() {
 }
 `;
 
+const preventBlur = (event: React.MouseEvent) => event.preventDefault();
+
 function Demo() {
   const editable = useEditable({ defaultValue: 'Controlled by the hook' });
 
@@ -33,13 +43,13 @@ function Demo() {
       <Editable controller={editable} />
 
       <Group>
-        <Button size="xs" variant="default" onClick={editable.edit}>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={editable.edit}>
           Edit
         </Button>
-        <Button size="xs" variant="default" onClick={editable.submit}>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={editable.submit}>
           Submit
         </Button>
-        <Button size="xs" variant="default" onClick={editable.cancel}>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={editable.cancel}>
           Cancel
         </Button>
       </Group>

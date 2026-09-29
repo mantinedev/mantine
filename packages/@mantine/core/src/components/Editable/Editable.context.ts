@@ -1,19 +1,19 @@
 import { createSafeContext, GetStylesApi } from '../../core';
-import type { EditableFactory } from './Editable';
+import type { EditableFactory, EditablePlaceholder } from './Editable';
 import type { UseEditableReturnValue } from './use-editable';
+import type { EditableFocus } from './use-editable-focus';
 
-export interface EditablePlaceholder {
-  edit?: string;
-  preview?: string;
+export interface EditableAriaProps {
+  'aria-label'?: string;
+  'aria-labelledby'?: string;
+  'aria-describedby'?: string;
 }
 
 export interface EditableContextValue {
   getStyles: GetStylesApi<EditableFactory>;
   controller: UseEditableReturnValue;
-  inputRef: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
-  previewRef: React.RefObject<HTMLDivElement | null>;
-  returningFocusRef: React.RefObject<boolean>;
-  exitViaBlurRef: React.RefObject<boolean>;
+  focus: EditableFocus;
+  ariaProps: EditableAriaProps;
   multiline: boolean;
   autosize: boolean;
   minRows: number | undefined;

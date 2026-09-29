@@ -1,5 +1,5 @@
 import { useCallback, useRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useCallbackRef, useIsomorphicEffect, useUncontrolled } from '@mantine/hooks';
 
 export type EditableActivationMode = 'focus' | 'click' | 'dblclick' | 'none';
 export type EditableSubmitMode = 'both' | 'enter' | 'blur' | 'none';
@@ -14,7 +14,7 @@ export interface UseEditableOptions {
   /** Called on every value change (on each keystroke) */
   onChange?: (value: string) => void;
 
-  /** Called when the edit is confirmed */
+  /** Called when the edit is confirmed, on every submit even when the value did not change */
   onValueCommit?: (value: string) => void;
 
   /** Called when the edit is cancelled */
@@ -70,13 +70,13 @@ export interface UseEditableReturnValue {
   /** Enters edit mode */
   edit: () => void;
 
-  /** Confirms the edit and calls `onValueCommit` */
+  /** Confirms the edit: exits edit mode and calls `onValueCommit` with the current value. Does nothing when not editing */
   submit: () => void;
 
-  /** Cancels the edit, reverts to the last committed value and calls `onValueRevert` */
+  /** Cancels the edit: exits edit mode, reverts the value to the one it had when editing started and calls `onValueRevert` with it. Does nothing when not editing */
   cancel: () => void;
 
-  /** Updates the current value */
+  /** Updates the current value, a following `submit` call in the same handler commits it */
   setValue: (value: string) => void;
 }
 
@@ -97,70 +97,73 @@ export function useEditable(options: UseEditableOptions = {}): UseEditableReturn
     readOnly = false,
   } = options;
 
-  const [value, setValueState] = useUncontrolled({
+  const [value, setUncontrolledValue] = useUncontrolled({
     value: valueProp,
     defaultValue,
     finalValue: '',
     onChange,
   });
 
-  const [editing, setEditingState] = useUncontrolled({
+  const [editing, setUncontrolledEditing] = useUncontrolled({
     value: editingProp,
     defaultValue: defaultEditing,
     finalValue: false,
     onChange: onEditingChange,
   });
 
-  const valueRef = useRef(value);
-  const editingRef = useRef(editing);
-  const previousValueRef = useRef(value);
-  const setValueStateRef = useRef(setValueState);
-  const setEditingStateRef = useRef(setEditingState);
-  const onValueCommitRef = useRef(onValueCommit);
-  const onValueRevertRef = useRef(onValueRevert);
-  const disabledRef = useRef(disabled);
-  const readOnlyRef = useRef(readOnly);
+  const setValueState = useCallbackRef(setUncontrolledValue);
+  const setEditingState = useCallbackRef(setUncontrolledEditing);
+  const handleValueCommit = useCallbackRef(onValueCommit);
+  const handleValueRevert = useCallbackRef(onValueRevert);
 
-  valueRef.current = value;
-  editingRef.current = editing;
-  setValueStateRef.current = setValueState;
-  setEditingStateRef.current = setEditingState;
-  onValueCommitRef.current = onValueCommit;
-  onValueRevertRef.current = onValueRevert;
-  disabledRef.current = disabled;
-  readOnlyRef.current = readOnly;
+  const optionsRef = useRef({ disabled, readOnly });
+  optionsRef.current = { disabled, readOnly };
+
+  const stateRef = useRef({ value, editing });
+  const previousValueRef = useRef(value);
+
+  useIsomorphicEffect(() => {
+    const entered = editing && !stateRef.current.editing;
+    stateRef.current = { value, editing };
+    if (entered) {
+      previousValueRef.current = value;
+    }
+  });
 
   const setValue = useCallback((next: string) => {
-    setValueStateRef.current(next);
+    stateRef.current.value = next;
+    setValueState(next);
   }, []);
 
   const edit = useCallback(() => {
-    if (disabledRef.current || readOnlyRef.current || editingRef.current) {
+    const { disabled: isDisabled, readOnly: isReadOnly } = optionsRef.current;
+    if (isDisabled || isReadOnly || stateRef.current.editing) {
       return;
     }
-    previousValueRef.current = valueRef.current;
-    editingRef.current = true;
-    setEditingStateRef.current(true);
+    previousValueRef.current = stateRef.current.value;
+    stateRef.current.editing = true;
+    setEditingState(true);
   }, []);
 
   const submit = useCallback(() => {
-    if (!editingRef.current) {
+    if (!stateRef.current.editing) {
       return;
     }
-    editingRef.current = false;
-    setEditingStateRef.current(false);
-    previousValueRef.current = valueRef.current;
-    onValueCommitRef.current?.(valueRef.current);
+    stateRef.current.editing = false;
+    setEditingState(false);
+    handleValueCommit(stateRef.current.value);
   }, []);
 
   const cancel = useCallback(() => {
-    if (!editingRef.current) {
+    if (!stateRef.current.editing) {
       return;
     }
-    editingRef.current = false;
-    setEditingStateRef.current(false);
-    setValueStateRef.current(previousValueRef.current);
-    onValueRevertRef.current?.(previousValueRef.current);
+    const previousValue = previousValueRef.current;
+    stateRef.current.editing = false;
+    setEditingState(false);
+    stateRef.current.value = previousValue;
+    setValueState(previousValue);
+    handleValueRevert(previousValue);
   }, []);
 
   return {

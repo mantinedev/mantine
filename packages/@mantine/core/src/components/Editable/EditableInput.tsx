@@ -1,4 +1,3 @@
-import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -31,22 +30,15 @@ const defaultProps: Partial<EditableInputProps> = {};
 
 export const EditableInput = factory<EditableInputFactory>((_props) => {
   const props = useProps('EditableInput', defaultProps, _props);
-  const {
-    classNames,
-    className,
-    style,
-    styles,
-    vars,
-    onChange,
-    onKeyDown,
-    onBlur,
-    ref,
-    ...others
-  } = props;
+  const { classNames, className, style, styles, vars, onChange, onKeyDown, ref, ...others } = props;
 
   const ctx = useEditableContext();
-  const field = useEditableField(false);
-  const mergedRef = useMergedRef(ctx.inputRef as React.Ref<HTMLInputElement>, ref);
+  const field = useEditableField<HTMLInputElement>({
+    multiline: false,
+    ref,
+    onChange,
+    onKeyDown,
+  });
 
   if (field.hidden) {
     return null;
@@ -55,22 +47,10 @@ export const EditableInput = factory<EditableInputFactory>((_props) => {
   return (
     <Box
       component="input"
+      {...ctx.ariaProps}
       {...others}
-      {...field.attributes}
-      ref={mergedRef}
+      {...field.fieldProps}
       {...ctx.getStyles('input', { className, style, classNames, styles })}
-      onChange={(event) => {
-        field.onChange(event);
-        onChange?.(event);
-      }}
-      onKeyDown={(event) => {
-        field.onKeyDown(event);
-        onKeyDown?.(event);
-      }}
-      onBlur={(event) => {
-        field.onBlur();
-        onBlur?.(event);
-      }}
     />
   );
 });

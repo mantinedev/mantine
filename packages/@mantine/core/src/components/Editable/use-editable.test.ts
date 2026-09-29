@@ -139,4 +139,71 @@ describe('@mantine/core/useEditable', () => {
     const hook = renderHook(() => useEditable({ defaultValue: 'a', defaultEditing: true }));
     expect(hook.result.current.editing).toBe(true);
   });
+
+  it('reverts to the value at edit start when editing is entered through the controlled prop', () => {
+    const onChange = jest.fn();
+    const onValueRevert = jest.fn();
+    const hook = renderHook(
+      ({ value, editing }) => useEditable({ value, editing, onChange, onValueRevert }),
+      { initialProps: { value: '', editing: false } }
+    );
+
+    hook.rerender({ value: 'Loaded', editing: false });
+    hook.rerender({ value: 'Loaded', editing: true });
+    hook.rerender({ value: 'LoadedX', editing: true });
+
+    act(() => hook.result.current.cancel());
+    expect(onChange).toHaveBeenLastCalledWith('Loaded');
+    expect(onValueRevert).toHaveBeenCalledWith('Loaded');
+  });
+
+  it('reverts to the value at edit start with defaultEditing', () => {
+    const hook = renderHook(() => useEditable({ defaultValue: 'a', defaultEditing: true }));
+
+    act(() => hook.result.current.setValue('b'));
+    act(() => hook.result.current.cancel());
+    expect(hook.result.current.value).toBe('a');
+  });
+
+  it('commits the value passed to setValue in the same handler as submit', () => {
+    const onValueCommit = jest.fn();
+    const hook = renderHook(() => useEditable({ defaultValue: 'a', onValueCommit }));
+
+    act(() => hook.result.current.edit());
+    act(() => {
+      hook.result.current.setValue('b');
+      hook.result.current.submit();
+    });
+
+    expect(onValueCommit).toHaveBeenCalledWith('b');
+    expect(hook.result.current.value).toBe('b');
+  });
+  it('does not re-snapshot the revert value on re-renders while controlled editing stays true', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(({ value, editing }) => useEditable({ value, editing, onChange }), {
+      initialProps: { value: 'a', editing: false },
+    });
+
+    hook.rerender({ value: 'a', editing: true });
+    hook.rerender({ value: 'b', editing: true });
+    hook.rerender({ value: 'b', editing: true });
+
+    act(() => hook.result.current.cancel());
+    expect(onChange).toHaveBeenLastCalledWith('a');
+  });
+
+  it('re-snapshots on the next controlled entry after the parent refuses edit()', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(({ value, editing }) => useEditable({ value, editing, onChange }), {
+      initialProps: { value: 'a', editing: false },
+    });
+
+    act(() => hook.result.current.edit());
+    hook.rerender({ value: 'b', editing: false });
+    hook.rerender({ value: 'b', editing: true });
+    hook.rerender({ value: 'c', editing: true });
+
+    act(() => hook.result.current.cancel());
+    expect(onChange).toHaveBeenLastCalledWith('b');
+  });
 });

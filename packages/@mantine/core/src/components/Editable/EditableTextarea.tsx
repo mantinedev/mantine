@@ -1,4 +1,3 @@
-import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -33,22 +32,15 @@ const defaultProps: Partial<EditableTextareaProps> = {};
 
 export const EditableTextarea = factory<EditableTextareaFactory>((_props) => {
   const props = useProps('EditableTextarea', defaultProps, _props);
-  const {
-    classNames,
-    className,
-    style,
-    styles,
-    vars,
-    onChange,
-    onKeyDown,
-    onBlur,
-    ref,
-    ...others
-  } = props;
+  const { classNames, className, style, styles, vars, onChange, onKeyDown, ref, ...others } = props;
 
   const ctx = useEditableContext();
-  const field = useEditableField(true);
-  const mergedRef = useMergedRef(ctx.inputRef as React.Ref<HTMLTextAreaElement>, ref);
+  const field = useEditableField<HTMLTextAreaElement>({
+    multiline: true,
+    ref,
+    onChange,
+    onKeyDown,
+  });
 
   if (field.hidden) {
     return null;
@@ -60,24 +52,12 @@ export const EditableTextarea = factory<EditableTextareaFactory>((_props) => {
   return (
     <Box
       component={(shouldAutosize ? TextareaAutosize : 'textarea') as any}
+      {...ctx.ariaProps}
       {...others}
-      {...field.attributes}
+      {...field.fieldProps}
       {...autosizeProps}
-      ref={mergedRef}
       rows={ctx.minRows}
       {...ctx.getStyles('input', { className, style, classNames, styles })}
-      onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        field.onChange(event);
-        onChange?.(event);
-      }}
-      onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        field.onKeyDown(event);
-        onKeyDown?.(event);
-      }}
-      onBlur={(event: React.FocusEvent<HTMLTextAreaElement>) => {
-        field.onBlur();
-        onBlur?.(event);
-      }}
     />
   );
 });
