@@ -1,6 +1,7 @@
 import { createSafeContext, GetStylesApi } from '../../core';
+import type { ImageCropperCropShape } from './compute-crop-area';
 import type { ImageCropperFactory } from './ImageCropper';
-import type { ImageCropperCropShape, UseImageCropperReturnValue } from './use-image-cropper';
+import type { UseImageCropperReturnValue } from './use-image-cropper';
 
 export interface ImageCropperContextValue {
   getStyles: GetStylesApi<ImageCropperFactory>;

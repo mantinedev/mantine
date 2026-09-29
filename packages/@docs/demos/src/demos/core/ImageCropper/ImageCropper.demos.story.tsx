@@ -22,3 +22,13 @@ export const Demo_exportImage = {
   name: '⭐ Demo: exportImage',
   render: renderDemo(demos.exportImage),
 };
+
+export const Demo_controller = {
+  name: '⭐ Demo: controller',
+  render: renderDemo(demos.controller),
+};
+
+export const Demo_customLayout = {
+  name: '⭐ Demo: customLayout',
+  render: renderDemo(demos.customLayout),
+};

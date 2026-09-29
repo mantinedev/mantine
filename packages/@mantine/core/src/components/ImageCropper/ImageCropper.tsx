@@ -8,18 +8,17 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import {
+  ImageCropperCropData,
+  ImageCropperCropShape,
+  ImageCropperFlip,
+  ResolvedImageCropperFlip,
+} from './compute-crop-area';
 import { ImageCropperProvider } from './ImageCropper.context';
 import { ImageCropperControls } from './ImageCropperControls';
 import { ImageCropperImage } from './ImageCropperImage';
 import { ImageCropperViewport } from './ImageCropperViewport';
-import {
-  ImageCropperCropShape,
-  ResolvedImageCropperFlip,
-  useImageCropper,
-  UseImageCropperReturnValue,
-} from './use-image-cropper';
-import { ImageCropperCropData } from './compute-crop-area';
-import { ImageCropperFlip } from './get-cropped-image';
+import { useImageCropper, UseImageCropperReturnValue } from './use-image-cropper';
 import classes from './ImageCropper.module.css';
 
 export type ImageCropperStylesNames =
@@ -85,7 +84,7 @@ export interface ImageCropperProps
   /** Called when flip changes */
   onFlipChange?: (flip: ResolvedImageCropperFlip) => void;
 
-  /** Called with the resolved crop rectangle when the crop changes */
+  /** Called with `{ pixels, percent }` crop data whenever the crop rectangle changes, including during panning */
   onCropChange?: (data: ImageCropperCropData) => void;
 
   /** If set, a rule-of-thirds grid is displayed over the crop area, `false` by default */

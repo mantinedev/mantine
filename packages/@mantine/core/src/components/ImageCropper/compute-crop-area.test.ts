@@ -2,6 +2,7 @@ import {
   computeCroppedArea,
   getContainedSize,
   getCropSize,
+  measureMedia,
   restrictPosition,
   rotateSize,
 } from './compute-crop-area';
@@ -36,11 +37,36 @@ describe('@mantine/core/ImageCropper/compute-crop-area', () => {
     });
   });
 
+  it('getCropSize fits the crop window into the rotated media bounding box', () => {
+    const media = { width: 480, height: 270 };
+    const container = { width: 480, height: 270 };
+    expect(getCropSize(media, container, 16 / 9, 0)).toEqual({ width: 480, height: 270 });
+
+    const rotated = getCropSize(media, container, 16 / 9, -90);
+    expect(rotated.width).toBeCloseTo(270);
+    expect(rotated.height).toBeCloseTo(151.875);
+
+    const diagonal = getCropSize({ width: 200, height: 200 }, { width: 400, height: 400 }, 1, 45);
+    expect(diagonal.width).toBeCloseTo(282.84, 1);
+    expect(diagonal.height).toBeCloseTo(282.84, 1);
+  });
+
+  it('measureMedia returns the contained size together with the natural size', () => {
+    expect(
+      measureMedia({ naturalWidth: 200, naturalHeight: 100 }, { width: 400, height: 400 })
+    ).toEqual({ width: 400, height: 200, naturalWidth: 200, naturalHeight: 100 });
+    expect(
+      measureMedia({ naturalWidth: 200, naturalHeight: 100 }, { width: 0, height: 400 })
+    ).toBeNull();
+    expect(
+      measureMedia({ naturalWidth: 0, naturalHeight: 0 }, { width: 400, height: 400 })
+    ).toBeNull();
+  });
+
   it('restrictPosition keeps the crop offset within the image bounds', () => {
     const media = { width: 200, height: 200, naturalWidth: 400, naturalHeight: 400 };
     const cropSize = { width: 100, height: 100 };
 
-    // maxPosition = (200 * 1) / 2 - 100 / 2 = 50
     expect(restrictPosition({ x: 1000, y: -1000 }, media, cropSize, 1, 0)).toEqual({
       x: 50,
       y: -50,
@@ -50,7 +76,6 @@ describe('@mantine/core/ImageCropper/compute-crop-area', () => {
   });
 
   it('restrictPosition centers the image when it is smaller than the crop window', () => {
-    // crop window (200) is larger than the image (100) on both axes
     const media = { width: 100, height: 100, naturalWidth: 100, naturalHeight: 100 };
     const cropSize = { width: 200, height: 200 };
 
@@ -72,6 +97,22 @@ describe('@mantine/core/ImageCropper/compute-crop-area', () => {
     expect(percent.height).toBeCloseTo(100);
   });
 
+  it('computeCroppedArea returns percent values without floating point noise', () => {
+    const { percent } = computeCroppedArea({
+      crop: { x: 48, y: 72 },
+      mediaSize: measureMedia(
+        { naturalWidth: 900, naturalHeight: 1125 },
+        { width: 120, height: 120 }
+      )!,
+      cropSize: { width: 96, height: 96 },
+      aspect: 1,
+      zoom: 2,
+      rotation: 0,
+    });
+
+    expect(percent).toEqual({ x: 0, y: 0, width: 50, height: 40, rotation: 0 });
+  });
+
   it('computeCroppedArea shifts the crop rectangle when the image is panned', () => {
     const centered = computeCroppedArea({
       crop: { x: 0, y: 0 },
@@ -91,7 +132,6 @@ describe('@mantine/core/ImageCropper/compute-crop-area', () => {
       rotation: 0,
     });
 
-    // Panning the image to the right moves the crop rectangle to the left in source pixels
     expect(panned.pixels.x).toBeLessThan(centered.pixels.x);
   });
 });
