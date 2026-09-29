@@ -38,7 +38,7 @@ export function useTourState({
   const { dir } = useDirection();
   const targetRef = useRef<HTMLElement | null>(null);
 
-  const [currentStep, setCurrentStep] = useUncontrolled({
+  const [currentStep, setCurrentStep, controlled] = useUncontrolled({
     value: step,
     defaultValue: defaultStep,
     finalValue: 0,
@@ -46,6 +46,22 @@ export function useTourState({
   });
 
   const [beaconOpenStep, setBeaconOpenStep] = useState<number | null>(null);
+
+  const resetUncontrolledStep = useEffectEvent(() => {
+    const initialStep = defaultStep ?? 0;
+    if (!controlled && currentStep !== initialStep) {
+      setCurrentStep(initialStep);
+    }
+  });
+
+  const wasActiveRef = useRef(!!active);
+
+  useEffect(() => {
+    if (wasActiveRef.current && !active) {
+      resetUncontrolledStep();
+    }
+    wasActiveRef.current = !!active;
+  }, [active]);
 
   const showTooltip = !!active && (mode === 'guided' || beaconOpenStep !== null);
   const displayStepIndex =
@@ -150,7 +166,7 @@ export function useTourState({
     (event) => {
       if (
         event.key === 'Escape' &&
-        active &&
+        showTooltip &&
         closeOnEscape &&
         !event.isComposing &&
         (event.target as HTMLElement | null)?.getAttribute?.('data-mantine-stop-propagation') !==

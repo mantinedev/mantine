@@ -29,16 +29,17 @@ export const TourBody = factory<TourBodyFactory>((_props) => {
   const props = useProps('TourBody', defaultProps, _props);
   const { children, classNames, className, style, styles, vars, id, ...others } = props;
   const ctx = useTourContext();
-  const { setBodyMounted } = ctx;
+  const { registerBody } = ctx;
+  const resolvedId = id ?? ctx.bodyId;
 
   useEffect(() => {
-    setBodyMounted(true);
-    return () => setBodyMounted(false);
-  }, [setBodyMounted]);
+    registerBody(resolvedId);
+    return () => registerBody(null);
+  }, [registerBody, resolvedId]);
 
   return (
     <Box
-      id={id ?? ctx.bodyId}
+      id={resolvedId}
       {...ctx.getStyles('body', { className, classNames, style, styles })}
       {...others}
     >

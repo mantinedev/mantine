@@ -28,8 +28,8 @@ function createMockContext(overrides: Partial<TourContextValue> = {}): TourConte
     bodyId: 'tour-body',
     titleMounted: false,
     bodyMounted: false,
-    setTitleMounted: jest.fn(),
-    setBodyMounted: jest.fn(),
+    registerTitle: jest.fn(),
+    registerBody: jest.fn(),
     setTargetElement: jest.fn(),
     ...overrides,
   };

@@ -1,5 +1,11 @@
+import { useEffect } from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ActionBar, ActionBarProps, ActionBarStylesNames } from './ActionBar';
+
+function EffectChild({ onCleanup }: { onCleanup: () => void }) {
+  useEffect(() => onCleanup, [onCleanup]);
+  return <div>effect-child</div>;
+}
 
 const defaultProps: ActionBarProps = {
   opened: true,
@@ -74,13 +80,61 @@ describe('@mantine/core/ActionBar', () => {
     expect(container.querySelector('.mantine-ActionBar-divider')).toBeInTheDocument();
   });
 
-  it('keeps DOM node with display: none when keepMounted is true and closed', () => {
-    const { container } = render(
-      <ActionBar {...defaultProps} opened={false} keepMounted>
-        test-keep-mounted
-      </ActionBar>
+  it('keeps children mounted and pauses their effects when closed with keepMounted', () => {
+    const cleanup = jest.fn();
+    const { rerender } = render(
+      <ActionBar opened keepMounted withinPortal={false} transitionProps={{ duration: 0 }}>
+        <EffectChild onCleanup={cleanup} />
+      </ActionBar>,
+      undefined,
+      { env: 'default' }
     );
-    expect(screen.getByText('test-keep-mounted')).toBeInTheDocument();
+
+    expect(cleanup).not.toHaveBeenCalled();
+
+    rerender(
+      <>
+        <ActionBar
+          opened={false}
+          keepMounted
+          withinPortal={false}
+          transitionProps={{ duration: 0 }}
+        >
+          <EffectChild onCleanup={cleanup} />
+        </ActionBar>
+      </>
+    );
+
+    expect(cleanup).toHaveBeenCalledTimes(1);
+    expect(screen.getByText('effect-child')).toBeInTheDocument();
+  });
+
+  it('keeps children effects running and hides the bar with display: none when keepMountedMode is display-none', () => {
+    const cleanup = jest.fn();
+    const transitionProps = { duration: 0, keepMountedMode: 'display-none' as const };
+    const { container, rerender } = render(
+      <ActionBar opened keepMounted withinPortal={false} transitionProps={transitionProps}>
+        <EffectChild onCleanup={cleanup} />
+      </ActionBar>,
+      undefined,
+      { env: 'default' }
+    );
+
+    rerender(
+      <>
+        <ActionBar
+          opened={false}
+          keepMounted
+          withinPortal={false}
+          transitionProps={transitionProps}
+        >
+          <EffectChild onCleanup={cleanup} />
+        </ActionBar>
+      </>
+    );
+
+    expect(cleanup).not.toHaveBeenCalled();
+    expect(screen.getByText('effect-child')).toBeInTheDocument();
     expect(container.querySelector('.mantine-ActionBar-root')).toHaveStyle({ display: 'none' });
   });
 

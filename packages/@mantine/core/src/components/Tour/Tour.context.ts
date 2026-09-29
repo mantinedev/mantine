@@ -73,10 +73,10 @@ export interface TourContextValue {
   /** Labels for tour UI elements */
   labels: TourLabels;
 
-  /** Id assigned to `Tour.Title`, referenced by the tooltip `aria-labelledby` */
+  /** Id of the mounted `Tour.Title` (or the generated fallback), referenced by the tooltip `aria-labelledby` */
   titleId: string;
 
-  /** Id assigned to `Tour.Body`, referenced by the tooltip `aria-describedby` */
+  /** Id of the mounted `Tour.Body` (or the generated fallback), referenced by the tooltip `aria-describedby` */
   bodyId: string;
 
   /** Whether `Tour.Title` is currently mounted */
@@ -85,11 +85,11 @@ export interface TourContextValue {
   /** Whether `Tour.Body` is currently mounted */
   bodyMounted: boolean;
 
-  /** Registers `Tour.Title` mount state */
-  setTitleMounted: (mounted: boolean) => void;
+  /** Registers the id of the mounted `Tour.Title`, `null` when it unmounts */
+  registerTitle: (id: string | null) => void;
 
-  /** Registers `Tour.Body` mount state */
-  setBodyMounted: (mounted: boolean) => void;
+  /** Registers the id of the mounted `Tour.Body`, `null` when it unmounts */
+  registerBody: (id: string | null) => void;
 
   /** Registers the current step target element, used to skip arrow hotkeys fired from inside it */
   setTargetElement: (element: HTMLElement | null) => void;

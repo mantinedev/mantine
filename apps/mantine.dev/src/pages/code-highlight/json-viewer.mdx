@@ -29,6 +29,12 @@ function Demo({ data }: { data: unknown }) {
 }
 ```
 
+## Long arrays and objects
+
+Use `maxDisplayLength` prop (default `100`) to limit the number of entries rendered for a single object or array. When an object or array has more entries than `maxDisplayLength`, only the first `maxDisplayLength` entries are displayed, followed by a "... N more items" (or "... N more keys") row.
+
+Use `groupArraysAfterLength` prop to split long arrays into collapsible groups instead. It is `false` by default; when set to a number, arrays with more items than that number are displayed as `[start...end]` group rows, each holding that many items. `maxDisplayLength` does not apply to grouped arrays – every item is available inside its group.
+
 ## Root name
 
 Use `rootName` prop to display a label for the root node. Set it to `false` (default) to hide it:
@@ -60,6 +66,8 @@ Use `collapseStringsAfterLength` prop to truncate long strings. Truncated string
 display a "show more" button that reveals the full value:
 
 <Demo data={JsonViewerDemos.collapseStrings} />
+
+String values longer than 20 characters wrap onto multiple lines instead of extending the row horizontally; these values have `data-wrap` attribute on the `value` element, which you can use to change the wrapping behavior with [Styles API](/styles/styles-api).
 
 ## Sort keys
 
