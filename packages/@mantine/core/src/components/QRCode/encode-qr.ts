@@ -14,8 +14,17 @@ export interface EncodeQRResult {
   size: number;
 }
 
-/** Encodes the given value into a QR code matrix without rendering it. Useful for custom renderers (rounded dots, gradients, canvas export, etc.). */
+const SURROGATES_REGEX = /[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDFFF]/g;
+
+function replaceLoneSurrogates(value: string) {
+  return value.replace(SURROGATES_REGEX, (match) => (match.length === 2 ? match : '\uFFFD'));
+}
+
+/** Encodes the given value into a QR code matrix without rendering it. Useful for custom renderers (rounded dots, gradients, canvas export, etc.). Lone UTF-16 surrogates are replaced with U+FFFD. Throws a `RangeError` when the value exceeds the capacity of a version 40 QR code for the given error correction level. */
 export function encodeQR(value: string, options?: EncodeQROptions): EncodeQRResult {
-  const result = encode(value, { ecc: options?.errorCorrectionLevel ?? 'M', border: 0 });
+  const result = encode(replaceLoneSurrogates(value), {
+    ecc: options?.errorCorrectionLevel ?? 'M',
+    border: 0,
+  });
   return { matrix: result.data, size: result.size };
 }

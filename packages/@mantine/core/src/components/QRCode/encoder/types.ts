@@ -1,7 +1,18 @@
 /*
- * Vendored from `uqr` (https://github.com/unjs/uqr) — MIT License.
+ * Vendored from uqr 0.1.3 (https://github.com/unjs/uqr) — MIT License.
+ * uqr is a port of the QR Code generator library by Project Nayuki
+ * (https://www.nayuki.io/page/qr-code-generator-library).
  * Copyright (c) Project Nayuki, Copyright (c) 2023 Anthony Fu.
  * See ./LICENSE for the full license text.
+ *
+ * Local changes compared to uqr 0.1.3:
+ * - Only the encoder is vendored: uqr's renderers (renderANSI, renderUnicode,
+ *   renderUnicodeCompact, renderSVG) and the getDataAt helper are removed together
+ *   with their renderer-only option types
+ * - TypeScript types adjusted for the Mantine build (strict mode)
+ * - Formatted with oxfmt
+ * - Lone UTF-16 surrogates are replaced with U+FFFD by the Mantine boundary
+ *   (../encode-qr.ts) before reaching this encoder, the algorithm is unchanged
  */
 
 /**
@@ -90,45 +101,4 @@ export interface QrCodeGenerateResult {
    * Data type of each module
    */
   types: QrCodeDataType[][];
-}
-
-export interface QrCodeGenerateInvertableOptions extends QrCodeGenerateOptions {
-  /**
-   * Adds the option to invert the colour scheme of the QR code in addition to the standard options.
-   */
-  invert?: boolean;
-}
-
-export interface QrCodeGenerateUnicodeOptions extends QrCodeGenerateInvertableOptions {
-  /**
-   * Character used to represent white modules in the QR code.
-   */
-  whiteChar?: string;
-  /**
-   * Character used to represent black modules in the QR code.
-   */
-  blackChar?: string;
-}
-
-export interface QrCodeGenerateSvgOptions extends QrCodeGenerateOptions {
-  /**
-   * Size of each pixel
-   *
-   * @default 10
-   */
-  pixelSize?: number;
-
-  /**
-   * Color of the white module
-   *
-   * @default 'white'
-   */
-  whiteColor?: string;
-
-  /**
-   * Color of the black module
-   *
-   * @default 'black'
-   */
-  blackColor?: string;
 }

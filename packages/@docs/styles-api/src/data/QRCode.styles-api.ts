@@ -5,7 +5,7 @@ export const QRCodeStylesApi: StylesApiData<QRCodeFactory> = {
   selectors: {
     root: 'Root element',
     svg: 'Inner `svg` element that renders the QR code modules',
-    image: 'Centered overlay element that wraps the `logo` content',
+    logo: 'Centered overlay element that wraps the `logo` prop content',
   },
 
   vars: {
