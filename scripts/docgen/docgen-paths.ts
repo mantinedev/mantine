@@ -52,6 +52,10 @@ const FILES_PATHS = getPaths([
 
   // Tour
   'packages/@mantine/core/src/components/Tour/TourStep/TourStep.tsx',
+  'packages/@mantine/core/src/components/Tour/TourRoot/TourRoot.tsx',
+  'packages/@mantine/core/src/components/Tour/TourTooltip/TourTooltip.tsx',
+  'packages/@mantine/core/src/components/Tour/TourOverlay/TourOverlay.tsx',
+  'packages/@mantine/core/src/components/Tour/TourBeacon/TourBeacon.tsx',
 
   // Accordion
   'packages/@mantine/core/src/components/Accordion/AccordionItem/AccordionItem.tsx',

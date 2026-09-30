@@ -60,4 +60,28 @@ describe('@mantine/core/TourBeacon', () => {
     await userEvent.click(screen.getByRole('button'));
     expect(onClick).toHaveBeenCalledTimes(1);
   });
+
+  it('applies style and styles.beacon to the beacon element', async () => {
+    await renderWithAct(
+      <TestContainer
+        {...defaultProps}
+        style={{ maxWidth: 111 }}
+        styles={{ beacon: { color: 'red' } }}
+        className="custom-beacon"
+      />
+    );
+    const beacon = screen.getByRole('button');
+    expect(beacon.style.maxWidth).toBe('111px');
+    expect(beacon.style.color).toBe('red');
+    expect(beacon).toHaveClass('custom-beacon');
+  });
+
+  it('applies Tour.Root attributes.beacon to the beacon element', async () => {
+    await renderWithAct(
+      <Tour.Root active stepsCount={1} attributes={{ beacon: { 'data-testid': 'beacon' } }}>
+        <TourBeacon {...defaultProps} />
+      </Tour.Root>
+    );
+    expect(screen.getByRole('button')).toHaveAttribute('data-testid', 'beacon');
+  });
 });

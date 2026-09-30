@@ -85,4 +85,41 @@ export const JsonViewerStylesApi: StylesApiData<JsonViewerFactory> = {
       '--jv-indent': 'Indent width per nesting level',
     },
   },
+
+  modifiers: [
+    { modifier: 'data-with-border', selector: 'root', condition: '`withBorder` prop is set' },
+    {
+      modifier: 'data-type',
+      selector: 'node',
+      value: '`array`, `object` or primitive value type name',
+    },
+    {
+      modifier: 'data-highlight',
+      selector: 'node',
+      condition: 'Node path is present in `highlightItems`',
+      value: '`added` or `removed`',
+    },
+    { modifier: 'data-root', selector: 'row', condition: 'Root node row' },
+    {
+      modifier: 'data-hoverable',
+      selector: 'row',
+      condition: 'Row can be expanded, collapsed or selected',
+    },
+    { modifier: 'data-expanded', selector: 'toggle', condition: 'Node is expanded' },
+    {
+      modifier: 'data-value-type',
+      selector: ['value', 'type'],
+      value: 'Value type name, for example `string`, `number`, `array`',
+    },
+    {
+      modifier: 'data-wrap',
+      selector: 'value',
+      condition: 'String value is longer than 20 characters and is wrapped onto multiple lines',
+    },
+    {
+      modifier: 'data-clickable',
+      selector: 'ellipsis',
+      condition: 'Ellipsis is rendered as show more/less button for a collapsed string',
+    },
+  ],
 };

@@ -274,7 +274,7 @@ function CollapsibleNode({
           </div>
         )}
       </div>
-      <div {...getStyles('row')} data-jv-row>
+      <div {...getStyles('row')} data-jv-row aria-hidden>
         <span {...getStyles('bracket')}>{closeBracket}</span>
       </div>
     </>
@@ -389,7 +389,7 @@ function ArrayChunkNode({
               />
             ))}
           </div>
-          <div {...nodeProps.getStyles('row')} data-jv-row>
+          <div {...nodeProps.getStyles('row')} data-jv-row aria-hidden>
             <span {...nodeProps.getStyles('bracket')}>]</span>
           </div>
         </>
