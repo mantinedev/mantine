@@ -1,0 +1,48 @@
+import { UseBrowserLanguageDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useBrowserLanguage);
+
+## Usage
+
+`use-browser-language` reactively reads the user's browser language preference from
+[navigator.language](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language).
+It is useful to pick a default locale for formatting or i18n fallback without a full
+internationalization library. The returned value updates automatically when the user changes
+their preferred language in the browser or operating system settings:
+
+<Demo data={UseBrowserLanguageDemos.usage} />
+
+## usePreferredLanguages
+
+`usePreferredLanguages` is a sibling hook that returns the full ordered list of the user's
+preferred languages from
+[navigator.languages](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages),
+with the most preferred language first. Use it when you need the complete preference order rather
+than a single primary language – for example, to find the best match against the locales your
+application supports:
+
+<Demo data={UseBrowserLanguageDemos.languages} />
+
+## Definition
+
+```tsx
+function useBrowserLanguage(): string | undefined;
+function usePreferredLanguages(): readonly string[];
+```
+
+## Reacting to changes
+
+Both hooks subscribe to the window
+[languagechange](https://developer.mozilla.org/en-US/docs/Web/API/Window/languagechange_event)
+event and re-read the corresponding `navigator` value when it fires, so components stay in sync
+when the user updates their language preferences at runtime.
+
+## Server-side rendering
+
+Both hooks resolve their value in an effect after the component mounts to avoid hydration
+mismatches. During server-side rendering and the first client render, `useBrowserLanguage`
+returns `undefined` and `usePreferredLanguages` returns an empty array. The real values are set
+right after the component mounts on the client – handle the initial `undefined`/empty state to
+avoid a layout shift.

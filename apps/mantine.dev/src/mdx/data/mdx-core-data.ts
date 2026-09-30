@@ -1018,6 +1018,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'menu bar, application menu, desktop menu, top menu, menubar, file edit view',
   },
 
+  Mentions: {
+    title: 'Mentions',
+    package: '@mantine/core',
+    slug: '/core/mentions',
+    props: ['Mentions', 'Mention'],
+    styles: ['Mentions'],
+    componentPrefix: 'Mentions',
+    description: 'Capture @-mentions in a textarea with a markup value and suggestions dropdown',
+    source: '@mantine/core/src/components/Mentions/Mentions.tsx',
+    docs: 'core/mentions.mdx',
+    searchTags: 'mention, mentions, tag people, at mention, autocomplete, suggestions, combobox',
+  },
+
   Progress: {
     title: 'Progress',
     package: '@mantine/core',
@@ -1164,6 +1177,32 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'password field, secret input, hidden input, passcode input, reveal password',
   },
 
+  Persona: {
+    title: 'Persona',
+    package: '@mantine/core',
+    slug: '/core/persona',
+    componentPrefix: 'Persona',
+    props: ['Persona', 'PersonaAvatar', 'PersonaPresence', 'PersonaText'],
+    styles: ['Persona'],
+    description: 'Display a person identity: avatar, presence badge and stacked text lines',
+    source: '@mantine/core/src/components/Persona/Persona.tsx',
+    docs: 'core/persona.mdx',
+    searchTags: 'user, profile, presence, avatar, contact, people, identity, presence badge',
+  },
+
+  Stat: {
+    title: 'Stat',
+    package: '@mantine/core',
+    slug: '/core/stat',
+    componentPrefix: 'Stat',
+    props: ['Stat', 'StatLabel', 'StatValue', 'StatDiff', 'StatIcon', 'StatCountdown'],
+    styles: ['Stat'],
+    description: 'Display a key metric with a label, formatted value, trend and countdown',
+    source: '@mantine/core/src/components/Stat/Stat.tsx',
+    docs: 'core/stat.mdx',
+    searchTags: 'statistic, metric, kpi, dashboard, number, trend, countdown, stat',
+  },
+
   PhoneInput: {
     title: 'PhoneInput',
     package: '@mantine/core',
@@ -1294,6 +1333,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/Timeline/Timeline.tsx',
     docs: 'core/timeline.mdx',
     searchTags: 'history, activity, chronology, events list, feed, vertical steps',
+  },
+
+  Tilt: {
+    title: 'Tilt',
+    package: '@mantine/core',
+    slug: '/core/tilt',
+    componentPrefix: 'Tilt',
+    props: ['Tilt', 'TiltLayer'],
+    styles: ['Tilt'],
+    description: 'Tilts its content in 3D in response to the pointer and device orientation',
+    source: '@mantine/core/src/components/Tilt/Tilt.tsx',
+    docs: 'core/tilt.mdx',
+    searchTags: 'parallax, 3d, hover, rotate, perspective, card, glare, mouse tilt',
   },
 
   Dialog: {
@@ -1488,6 +1540,18 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/Timer/Timer.tsx',
     docs: 'core/timer.mdx',
     searchTags: 'countdown, stopwatch, useTimer, use-timer, elapsed, pomodoro, clock',
+  },
+
+  QRCode: {
+    title: 'QRCode',
+    package: '@mantine/core',
+    slug: '/core/qr-code',
+    props: ['QRCode'],
+    styles: ['QRCode'],
+    description: 'Generate and display QR codes',
+    source: '@mantine/core/src/components/QRCode/QRCode.tsx',
+    docs: 'core/qr-code.mdx',
+    searchTags: 'qr, qr code, barcode, 2d code, scan, encodeQR',
   },
 
   FloatingWindow: {

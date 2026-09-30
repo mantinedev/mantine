@@ -137,6 +137,21 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Editable/EditableSubmitTrigger.tsx',
   'packages/@mantine/core/src/components/Editable/EditableCancelTrigger.tsx',
 
+  // Persona
+  'packages/@mantine/core/src/components/Persona/PersonaAvatar.tsx',
+  'packages/@mantine/core/src/components/Persona/PersonaPresence.tsx',
+  'packages/@mantine/core/src/components/Persona/PersonaText.tsx',
+
+  // Stat
+  'packages/@mantine/core/src/components/Stat/StatLabel.tsx',
+  'packages/@mantine/core/src/components/Stat/StatValue.tsx',
+  'packages/@mantine/core/src/components/Stat/StatDiff.tsx',
+  'packages/@mantine/core/src/components/Stat/StatIcon.tsx',
+  'packages/@mantine/core/src/components/Stat/StatCountdown.tsx',
+
+  // Tilt
+  'packages/@mantine/core/src/components/Tilt/TiltLayer.tsx',
+
   // List
   'packages/@mantine/core/src/components/List/ListItem/ListItem.tsx',
 

@@ -1,0 +1,127 @@
+.control {
+  position: relative;
+  width: 100%;
+  min-height: max(
+    calc(var(--mentions-min-rows, 1) * 1lh),
+    calc(var(--input-height) - 2 * var(--input-padding-y, 0rem))
+  );
+  max-height: calc(var(--mentions-max-rows) * 1lh);
+  overflow: hidden;
+}
+
+.highlighter {
+  margin: 0;
+  color: var(--input-color);
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  pointer-events: none;
+  min-height: inherit;
+  max-height: calc(var(--mentions-max-rows) * 1lh);
+
+  &[data-interactive] {
+    position: relative;
+    z-index: 2;
+
+    & .highlight {
+      pointer-events: auto;
+      cursor: default;
+    }
+  }
+}
+
+.highlight {
+  border-radius: var(--mantine-radius-sm);
+  color: var(--mentions-highlight-color, var(--mantine-primary-color-light-color));
+  background-color: var(--mentions-highlight-bg, var(--mantine-primary-color-light));
+}
+
+.field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--input-color);
+  -webkit-text-fill-color: transparent;
+  resize: none;
+  outline: none;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: var(--input-placeholder-color);
+    -webkit-text-fill-color: var(--input-placeholder-color);
+    opacity: 1;
+  }
+}
+
+.control[data-single-line] {
+  & .highlighter,
+  & .inlineSuggestion {
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow: hidden;
+    line-height: max(1lh, calc(var(--input-height) - 2 * var(--input-padding-y, 0rem)));
+  }
+}
+
+.caretAnchor {
+  position: absolute;
+  width: 1px;
+  height: 0;
+  pointer-events: none;
+}
+
+.nothingFound {
+  color: var(--mantine-color-dimmed);
+  text-align: center;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+}
+
+.inlineSuggestion {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.inlineSuggestionPrefix {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.inlineSuggestionText {
+  color: var(--mantine-color-placeholder);
+}

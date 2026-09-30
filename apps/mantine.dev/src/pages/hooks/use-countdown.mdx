@@ -50,6 +50,9 @@ interval to display milliseconds:
 
 The remaining time is always computed from a stored end timestamp rather than by decrementing a
 counter, so the countdown does not drift when ticks are delayed by slow frames or background tabs.
+In `targetDate` mode ticks are aligned to the target: `count` starts rounded up to a whole number of
+intervals before `targetDate` and each tick lands on and reports the next one, so a seconds display
+changes exactly on the second boundary and a slightly late tick does not skip a value.
 
 ## onComplete and onTick
 

@@ -1,5 +1,10 @@
 export * from './utils/index.js';
 
+export { useActiveElement } from './use-active-element/use-active-element.js';
+export {
+  useBrowserLanguage,
+  usePreferredLanguages,
+} from './use-browser-language/use-browser-language.js';
 export { useDebouncedCallback } from './use-debounced-callback/use-debounced-callback.js';
 export { useClickOutside } from './use-click-outside/use-click-outside.js';
 export { useClipboard } from './use-clipboard/use-clipboard.js';
@@ -29,6 +34,7 @@ export { useMediaQuery } from './use-media-query/use-media-query.js';
 export { useMergedRef, mergeRefs, assignRef } from './use-merged-ref/use-merged-ref.js';
 export { useMouse, useMousePosition } from './use-mouse/use-mouse.js';
 export { useMove, clampUseMovePosition } from './use-move/use-move.js';
+export { useTilt } from './use-tilt/use-tilt.js';
 export { usePagination } from './use-pagination/use-pagination.js';
 export { useQueue } from './use-queue/use-queue.js';
 export { usePageLeave } from './use-page-leave/use-page-leave.js';
@@ -101,6 +107,7 @@ export { useDrag } from './use-drag/use-drag.js';
 export { useSplitter } from './use-splitter/use-splitter.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
+export type { UseActiveElementOptions } from './use-active-element/use-active-element';
 export type {
   UseClipboardInput as UseClipboardOptions,
   UseClipboardReturnValue,
@@ -170,6 +177,7 @@ export type {
 } from './use-list-state/use-list-state';
 export type { UseStorageOptions, UseStorageReturnValue } from './use-local-storage/create-storage';
 export type { UseMovePosition, UseMoveHandlers, UseMoveReturnValue } from './use-move/use-move';
+export type { UseTiltOptions, UseTiltReturnValue, UseTiltSource } from './use-tilt/use-tilt';
 export type { UserNetworkReturnValue } from './use-network/use-network';
 export type {
   UseOrientationOptions,
