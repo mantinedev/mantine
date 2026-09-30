@@ -26,6 +26,15 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     searchTags: 'useActiveElement active element focus focused document.activeElement shadow dom',
   },
 
+  useBroadcastChannel: {
+    ...hDocs(
+      'useBroadcastChannel',
+      'Cross-tab and cross-context messaging with the BroadcastChannel API'
+    ),
+    searchTags:
+      'useBroadcastChannel broadcast channel cross tab message post structured clone same origin sync',
+  },
+
   useBrowserLanguage: {
     ...hDocs('useBrowserLanguage', 'Reads and subscribes to the browser language preferences'),
     searchTags:

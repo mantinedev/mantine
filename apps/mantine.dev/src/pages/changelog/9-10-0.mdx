@@ -4,6 +4,7 @@ import {
   ImageCropperDemos,
   TimerDemos,
   TooltipDemos,
+  UseBroadcastChannelDemos,
   UseClipboardDemos,
   UseDebouncedEffectDemos,
   UseHoldRepeatHandlersDemos,
@@ -96,3 +97,13 @@ supported `navigator.clipboard.writeText`. The new `supported` value indicates w
 blobs and images is available:
 
 <Demo data={UseClipboardDemos.image} />
+
+## use-broadcast-channel hook
+
+New [use-broadcast-channel](/hooks/use-broadcast-channel) hook is a reactive wrapper over the
+[BroadcastChannel API](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel) for
+same-origin messaging across tabs, windows, iframes and workers. Post a message from one context
+and receive it in all others subscribed to the same channel name, with support for
+structured-clone payloads and server-side rendering:
+
+<Demo data={UseBroadcastChannelDemos.usage} />
