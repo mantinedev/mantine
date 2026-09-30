@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { useClipboard } from '@mantine/hooks';
 import { Button, Stack } from '@mantine/core';
+import { useClipboard } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
