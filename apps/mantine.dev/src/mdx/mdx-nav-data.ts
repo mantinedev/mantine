@@ -148,6 +148,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'UI and Dom',
     pages: [
+      MDX_DATA.useActiveElement,
       MDX_DATA.useClickOutside,
       MDX_DATA.useCollapse,
       MDX_DATA.useColorScheme,
@@ -217,6 +218,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'Utilities',
     pages: [
+      MDX_DATA.useBrowserLanguage,
       MDX_DATA.useClipboard,
       MDX_DATA.useCountdown,
       MDX_DATA.useDocumentTitle,
@@ -314,6 +316,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.TagsInput,
       MDX_DATA.Select,
       MDX_DATA.MultiSelect,
+      MDX_DATA.Mentions,
       MDX_DATA.ComboboxPopover,
       MDX_DATA.TreeSelect,
       MDX_DATA.Cascader,

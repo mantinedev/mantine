@@ -1,0 +1,99 @@
+import { UseActiveElementDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useActiveElement);
+
+## Usage
+
+`use-active-element` reactively tracks
+[document.activeElement](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement)
+– the element that currently has focus. The returned value updates every time focus moves
+between elements, which is useful to build focus-aware UI, analytics, or to decide whether a
+global keyboard shortcut should fire. Focus the inputs below to see the value change:
+
+<Demo data={UseActiveElementDemos.usage} />
+
+## Definition
+
+```tsx
+interface UseActiveElementOptions {
+  /** If set, pierces shadow roots to return the truly-focused element inside web components,
+   *  true by default */
+  deep?: boolean;
+
+  /** If set, updates the returned element when the active element is removed from the DOM,
+   *  true by default */
+  triggerOnRemoval?: boolean;
+}
+
+function useActiveElement<T extends Element = Element>(
+  options?: UseActiveElementOptions,
+): T | null;
+```
+
+## Example: ignore shortcuts while typing
+
+A common use case is to disable global keyboard shortcuts while the user is typing in an input.
+Read the active element, check whether it is an editable field, and skip the shortcut if it is.
+In the example below, pressing <kbd>/</kbd> focuses the search field, but only when no input is
+already focused:
+
+<Demo data={UseActiveElementDemos.hotkey} />
+
+## Shadow DOM
+
+When focus is inside a [web component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components),
+`document.activeElement` returns the host element rather than the element that is actually
+focused inside its shadow root. With the `deep` option enabled (default), the hook walks
+`shadowRoot.activeElement` recursively and returns the real focused element. Set `deep: false`
+to get the top-level active element instead:
+
+```tsx
+import { useActiveElement } from '@mantine/hooks';
+
+function Demo() {
+  // Returns the host element instead of the focused element inside its shadow root
+  const activeElement = useActiveElement({ deep: false });
+  // ...
+}
+```
+
+## Trigger on removal
+
+Focusing an element and then removing it from the DOM does not dispatch a focus event, so the
+hook would otherwise keep returning the stale element. When `triggerOnRemoval` is enabled
+(default), the hook observes the DOM and re-reads `document.activeElement` when nodes are
+removed, so the returned value reflects the fallback focus (usually `document.body`). Set
+`triggerOnRemoval: false` to skip the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+if you do not need this behavior:
+
+```tsx
+import { useActiveElement } from '@mantine/hooks';
+
+function Demo() {
+  const activeElement = useActiveElement({ triggerOnRemoval: false });
+  // ...
+}
+```
+
+## TypeScript
+
+The hook accepts a generic type argument for the returned element. It defaults to `Element`,
+narrow it if you know the type of the focused element in advance:
+
+```tsx
+import { useActiveElement } from '@mantine/hooks';
+
+function Demo() {
+  const activeElement = useActiveElement<HTMLInputElement>();
+  // activeElement is typed as HTMLInputElement | null
+}
+```
+
+`UseActiveElementOptions` type is exported from the `@mantine/hooks` package, you can import it
+in your application:
+
+```tsx
+import type { UseActiveElementOptions } from '@mantine/hooks';
+```

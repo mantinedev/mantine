@@ -1,5 +1,10 @@
 export * from './utils/index.js';
 
+export { useActiveElement } from './use-active-element/use-active-element.js';
+export {
+  useBrowserLanguage,
+  usePreferredLanguages,
+} from './use-browser-language/use-browser-language.js';
 export { useDebouncedCallback } from './use-debounced-callback/use-debounced-callback.js';
 export { useClickOutside } from './use-click-outside/use-click-outside.js';
 export { useClipboard } from './use-clipboard/use-clipboard.js';
@@ -97,6 +102,7 @@ export { useDrag } from './use-drag/use-drag.js';
 export { useSplitter } from './use-splitter/use-splitter.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
+export type { UseActiveElementOptions } from './use-active-element/use-active-element';
 export type {
   UseClipboardInput as UseClipboardOptions,
   UseClipboardReturnValue,
