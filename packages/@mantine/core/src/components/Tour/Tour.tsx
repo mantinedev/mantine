@@ -122,7 +122,7 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** z-index of the tour @default 10000 */
   zIndex?: string | number;
 
-  /** Transition props for the tooltip */
+  /** Transition props for the tooltip @default { duration: 200, transition: 'pop' } */
   transitionProps?: TransitionOverride;
 
   /** Duration of the tooltip position transition between steps in ms @default 300 */
@@ -242,10 +242,12 @@ export const Tour = factory<TourFactory>((_props) => {
   const spotlightPaddingValue = spotlightPadding!;
   const id = useId();
   const maskId = `${id}-mask`;
-  const titleId = `${id}-title`;
-  const bodyId = `${id}-body`;
-  const [titleMounted, setTitleMounted] = useState(false);
-  const [bodyMounted, setBodyMounted] = useState(false);
+  const [registeredTitleId, registerTitle] = useState<string | null>(null);
+  const [registeredBodyId, registerBody] = useState<string | null>(null);
+  const titleId = registeredTitleId ?? `${id}-title`;
+  const bodyId = registeredBodyId ?? `${id}-body`;
+  const titleMounted = registeredTitleId !== null;
+  const bodyMounted = registeredBodyId !== null;
   const beaconToFocusRef = useRef<number | null>(null);
 
   const {
@@ -336,8 +338,8 @@ export const Tour = factory<TourFactory>((_props) => {
         bodyId,
         titleMounted,
         bodyMounted,
-        setTitleMounted,
-        setBodyMounted,
+        registerTitle,
+        registerBody,
         setTargetElement: noop,
       }}
     >

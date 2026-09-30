@@ -129,6 +129,8 @@ content that is not a plain description of the target.
   not interactive, add `tabIndex={0}` to it to make it reachable with the keyboard.
 - Focusing the target with the keyboard opens the dropdown, `Escape` and a press outside of the
   target and the dropdown close it.
+- `onDismiss` is called when the dropdown is closed with `Escape` key or with a press outside of
+  the target and the dropdown.
 - `aria-haspopup`, `aria-expanded`, `aria-controls` and `aria-describedby` attributes are managed
   by the component, see the [Dropdown role](#dropdown-role) section.
 - The `returnFocus` prop is ignored while focus activation is enabled (`events.focus`, the

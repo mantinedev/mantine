@@ -377,6 +377,31 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       );
     });
 
+    it('hides closing bracket rows from assistive technology but keeps them in line numbers', () => {
+      const { container } = render(
+        <JsonViewer
+          value={{ a: { b: 1 }, list: [1, 2, 3, 4] }}
+          groupArraysAfterLength={2}
+          allExpanded
+          withLineNumbers
+        />
+      );
+
+      const rows = Array.from(container.querySelectorAll<HTMLElement>('[data-jv-row]'));
+      const closingRows = rows.filter((row) => !row.hasAttribute('data-jv-node'));
+      expect(closingRows).toHaveLength(5);
+      closingRows.forEach((row) => {
+        expect(row).toHaveAttribute('aria-hidden', 'true');
+        expect(row.textContent).toMatch(/^[\]}]$/);
+      });
+      rows
+        .filter((row) => row.hasAttribute('data-jv-node'))
+        .forEach((row) => expect(row).not.toHaveAttribute('aria-hidden'));
+      expect(container.querySelectorAll('.mantine-JsonViewer-lineNumbers > div')).toHaveLength(
+        rows.length
+      );
+    });
+
     it('renders per-node copy control as a native button that is not nested in a button', () => {
       render(<JsonViewer value={{ a: { b: 1 } }} defaultExpandDepth={2} withCopy />);
 
@@ -491,6 +516,23 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       await userEvent.keyboard('{Enter}');
 
       expect(onValueSelect).toHaveBeenCalledWith(['name'], 'test');
+    });
+
+    it('does not select the row when Enter is pressed on the show more button', async () => {
+      const onValueSelect = jest.fn();
+      render(
+        <JsonViewer
+          value={{ s: 'abcdefghij' }}
+          collapseStringsAfterLength={3}
+          onValueSelect={onValueSelect}
+        />
+      );
+
+      screen.getByRole('button', { name: 'show more' }).focus();
+      await userEvent.keyboard('{Enter}');
+
+      expect(screen.getByRole('button', { name: 'show less' })).toBeInTheDocument();
+      expect(onValueSelect).not.toHaveBeenCalled();
     });
   });
 
@@ -748,6 +790,26 @@ describe('@mantine/code-highlight/JsonViewer', () => {
         </>
       );
       expect(document.querySelector('[data-root]')).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('does not render a toggle on the root row and ignores clicks on it', async () => {
+      const onExpandedPathsChange = jest.fn();
+      render(
+        <JsonViewer
+          value={{ a: { b: 1 } }}
+          withChevrons
+          onExpandedPathsChange={onExpandedPathsChange}
+        />
+      );
+
+      const root = document.querySelector<HTMLElement>('[data-root]')!;
+      expect(root.querySelector('.mantine-JsonViewer-toggle')).toBeNull();
+      expect(getRow(/^a/).querySelector('.mantine-JsonViewer-toggle')).toBeInTheDocument();
+
+      await userEvent.click(root);
+
+      expect(onExpandedPathsChange).not.toHaveBeenCalled();
+      expect(root).toHaveAttribute('aria-expanded', 'true');
     });
   });
 

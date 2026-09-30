@@ -544,7 +544,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     title: 'Tour',
     package: '@mantine/core',
     slug: '/core/tour',
-    props: ['Tour', 'TourStep'],
+    props: ['Tour', 'TourStep', 'TourRoot', 'TourTooltip', 'TourOverlay', 'TourBeacon'],
     styles: ['Tour'],
     componentPrefix: 'Tour',
     description: 'Guide users through your application with interactive step-by-step tours',

@@ -16,6 +16,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { ToggleVariant } from '../Toggle';
 import { ToolbarProvider } from './Toolbar.context';
 import { ToolbarDivider, ToolbarDividerStylesNames } from './ToolbarDivider/ToolbarDivider';
 import { ToolbarGroup, ToolbarGroupStylesNames } from './ToolbarGroup/ToolbarGroup';
@@ -75,6 +76,7 @@ export type ToolbarFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: ToolbarStylesNames;
   vars: ToolbarCssVariables;
+  variant: ToggleVariant;
   staticComponents: {
     Group: typeof ToolbarGroup;
     Toggle: typeof ToolbarToggle;

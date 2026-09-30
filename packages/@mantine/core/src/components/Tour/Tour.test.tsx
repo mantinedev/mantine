@@ -1041,5 +1041,140 @@ describe('@mantine/core/Tour', () => {
       await userEvent.click(getBeacons()[2]);
       expect(screen.getByRole('dialog').style.transition).not.toContain('top');
     });
+
+    it('ignores Escape while no beacon tooltip is open', async () => {
+      const onClose = jest.fn();
+      const onStepClose = jest.fn();
+      await renderWithAct(<BeaconTour onClose={onClose} onStepClose={onStepClose} />);
+
+      await userEvent.keyboard('{Escape}');
+      expect(onClose).not.toHaveBeenCalled();
+      expect(onStepClose).not.toHaveBeenCalled();
+      expect(getBeacons()).toHaveLength(3);
+    });
+
+    it('closes the open beacon tooltip with Escape and calls onClose', async () => {
+      const onClose = jest.fn();
+      await renderWithAct(<BeaconTour onClose={onClose} />);
+      await userEvent.click(getBeacons()[0]);
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+      await userEvent.keyboard('{Escape}');
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('focus trap', () => {
+    it('traps Tab inside the tooltip while the overlay blocks the page', async () => {
+      await renderWithAct(<DefaultTour withOverlay />);
+      await act(async () => {
+        await wait(20);
+      });
+
+      const dialog = screen.getByRole('dialog');
+      screen.getByRole('button', { name: 'Next' }).focus();
+      await userEvent.tab();
+      expect(dialog).toContainElement(document.activeElement as HTMLElement);
+
+      screen.getByLabelText('Close').focus();
+      await userEvent.tab({ shift: true });
+      expect(dialog).toContainElement(document.activeElement as HTMLElement);
+    });
+
+    it.each([
+      ['withOverlay={false}', { withOverlay: false }],
+      ['withOverlayInteraction', { withOverlay: true, withOverlayInteraction: true }],
+    ])('lets Tab leave the tooltip with %s', async (_, props) => {
+      await renderWithAct(<DefaultTour {...props} />);
+      await act(async () => {
+        await wait(20);
+      });
+
+      screen.getByRole('button', { name: 'Next' }).focus();
+      await userEvent.tab();
+      expect(screen.getByRole('dialog')).not.toContainElement(
+        document.activeElement as HTMLElement
+      );
+    });
+  });
+
+  describe('uncontrolled step', () => {
+    function UncontrolledTour(props: Partial<Tour.Props>) {
+      const [active, setActive] = useState(false);
+      return (
+        <>
+          <button type="button" onClick={() => setActive(true)}>
+            Start tour
+          </button>
+          <DefaultTour active={active} onClose={() => setActive(false)} {...props} />
+        </>
+      );
+    }
+
+    it('restarts from the first step after the tour is closed', async () => {
+      await renderWithAct(<UncontrolledTour />);
+      await userEvent.click(screen.getByText('Start tour'));
+      await userEvent.click(screen.getByText('Next'));
+      expect(screen.getByText('Step 2 Title')).toBeInTheDocument();
+
+      await userEvent.click(screen.getByText('Skip'));
+      await act(async () => {
+        await wait(300);
+      });
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+      await userEvent.click(screen.getByText('Start tour'));
+      expect(screen.getByText('Step 1 Title')).toBeInTheDocument();
+    });
+
+    it('restarts from defaultStep and reports the reset through onStepChange', async () => {
+      const onStepChange = jest.fn();
+      await renderWithAct(<UncontrolledTour defaultStep={1} onStepChange={onStepChange} />);
+      await userEvent.click(screen.getByText('Start tour'));
+      await userEvent.click(screen.getByText('Next'));
+      expect(screen.getByText('Step 3 Title')).toBeInTheDocument();
+      expect(onStepChange.mock.calls).toEqual([[2]]);
+
+      await userEvent.click(screen.getByText('Close'));
+      await act(async () => {
+        await wait(300);
+      });
+      expect(onStepChange.mock.calls).toEqual([[2], [1]]);
+
+      await userEvent.click(screen.getByText('Start tour'));
+      expect(screen.getByText('Step 2 Title')).toBeInTheDocument();
+    });
+
+    it('keeps the current step when the step is controlled', async () => {
+      function ControlledTour() {
+        const [active, setActive] = useState(false);
+        const [step, setStep] = useState(0);
+        return (
+          <>
+            <button type="button" onClick={() => setActive(true)}>
+              Start tour
+            </button>
+            <DefaultTour
+              active={active}
+              step={step}
+              onStepChange={setStep}
+              onClose={() => setActive(false)}
+            />
+          </>
+        );
+      }
+
+      await renderWithAct(<ControlledTour />);
+      await userEvent.click(screen.getByText('Start tour'));
+      await userEvent.click(screen.getByText('Next'));
+      await userEvent.click(screen.getByText('Skip'));
+      await act(async () => {
+        await wait(300);
+      });
+
+      await userEvent.click(screen.getByText('Start tour'));
+      expect(screen.getByText('Step 2 Title')).toBeInTheDocument();
+    });
   });
 });

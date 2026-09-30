@@ -263,6 +263,7 @@ describe('@mantine/core/TourRoot', () => {
           </>
         );
       });
+      expect(onStepClose.mock.calls).toEqual([[1]]);
       onStepOpen.mockClear();
       onStepClose.mockClear();
 
@@ -285,12 +286,54 @@ describe('@mantine/core/TourRoot', () => {
       expect(dialog).toHaveAccessibleDescription('Step 1 Content');
     });
 
-    it('moves focus to Tour.Tooltip when it opens', async () => {
+    it('moves focus inside Tour.Tooltip instead of the close button when focus is trapped', async () => {
       await renderWithAct(<CompoundTour />);
       await act(async () => {
         await wait(20);
       });
+      const dialog = screen.getByRole('dialog');
+      expect(dialog).toContainElement(document.activeElement as HTMLElement);
+      expect(document.activeElement).not.toBe(screen.getByLabelText('Close'));
+    });
+
+    it('focuses Tour.Tooltip when focus is not trapped', async () => {
+      await renderWithAct(<CompoundTour withOverlay={false} />);
+      await act(async () => {
+        await wait(20);
+      });
       expect(document.activeElement).toBe(screen.getByRole('dialog'));
+    });
+
+    it('traps Tab inside Tour.Tooltip while Tour.Overlay blocks the page', async () => {
+      await renderWithAct(<CompoundTour />);
+      await act(async () => {
+        await wait(20);
+      });
+
+      const dialog = screen.getByRole('dialog');
+      screen.getByRole('button', { name: 'Next' }).focus();
+      await userEvent.tab();
+      expect(dialog).toContainElement(document.activeElement as HTMLElement);
+
+      screen.getByLabelText('Close').focus();
+      await userEvent.tab({ shift: true });
+      expect(dialog).toContainElement(document.activeElement as HTMLElement);
+    });
+
+    it.each([
+      ['withOverlay={false}', { withOverlay: false }],
+      ['withOverlayInteraction', { withOverlayInteraction: true }],
+    ])('lets Tab leave Tour.Tooltip with %s', async (_, props) => {
+      await renderWithAct(<CompoundTour {...props} />);
+      await act(async () => {
+        await wait(20);
+      });
+
+      screen.getByRole('button', { name: 'Next' }).focus();
+      await userEvent.tab();
+      expect(screen.getByRole('dialog')).not.toContainElement(
+        document.activeElement as HTMLElement
+      );
     });
 
     it('moves focus to Tour.Tooltip when the focused Back button unmounts', async () => {
@@ -310,5 +353,46 @@ describe('@mantine/core/TourRoot', () => {
     );
     expect(renderContainer.querySelector('svg[role="presentation"]')).not.toBeInTheDocument();
     expect(screen.queryByLabelText('Close')).not.toBeInTheDocument();
+  });
+
+  describe('uncontrolled step', () => {
+    function UncontrolledTour(props: Partial<TourRootProps>) {
+      const [active, setActive] = useState(true);
+      const [step, setStep] = useState(0);
+      const current = STEPS[step] || STEPS[0];
+
+      return (
+        <>
+          <button type="button" onClick={() => setActive(true)}>
+            Start tour
+          </button>
+          <Tour.Root
+            active={active}
+            stepsCount={STEPS.length}
+            onStepChange={setStep}
+            onClose={() => setActive(false)}
+            withOverlay={false}
+            {...props}
+          >
+            <Tour.Tooltip targetElement={document.getElementById(current.target)} mounted>
+              <Tour.Title>{current.title}</Tour.Title>
+              <Tour.Navigation />
+            </Tour.Tooltip>
+          </Tour.Root>
+        </>
+      );
+    }
+
+    it('restarts from defaultStep after the tour is closed', async () => {
+      await renderWithAct(<UncontrolledTour />);
+      await userEvent.click(screen.getByText('Next'));
+      expect(screen.getByText('Step 2 Title')).toBeInTheDocument();
+
+      await userEvent.click(screen.getByText('Close'));
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+      await userEvent.click(screen.getByText('Start tour'));
+      expect(screen.getByText('Step 1 Title')).toBeInTheDocument();
+    });
   });
 });
