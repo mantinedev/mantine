@@ -14,8 +14,9 @@
  * - Lone UTF-16 surrogates are replaced with U+FFFD by the Mantine boundary
  *   (../encode-qr.ts) before reaching this encoder, the algorithm is unchanged
  */
-import type { QrCodeGenerateData, QrCodeGenerateOptions, QrCodeGenerateResult } from './types';
+
 import { EccMap, encodeSegments, makeBytes, makeSegments } from './qrcode';
+import type { QrCodeGenerateData, QrCodeGenerateOptions, QrCodeGenerateResult } from './types';
 import { QrCodeDataType } from './types';
 
 /**
