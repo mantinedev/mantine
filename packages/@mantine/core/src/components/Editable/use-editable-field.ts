@@ -1,39 +1,51 @@
+import { useMergedRef } from '@mantine/hooks';
 import { useEditableContext } from './Editable.context';
 
-export function useEditableField(multiline: boolean) {
+type EditableFieldElement = HTMLInputElement | HTMLTextAreaElement;
+
+interface UseEditableFieldInput<T extends EditableFieldElement> {
+  multiline: boolean;
+  ref: React.Ref<T> | undefined;
+  onChange: React.ChangeEventHandler<T> | undefined;
+  onKeyDown: React.KeyboardEventHandler<T> | undefined;
+}
+
+export function useEditableField<T extends EditableFieldElement>({
+  multiline,
+  ref,
+  onChange,
+  onKeyDown,
+}: UseEditableFieldInput<T>) {
   const ctx = useEditableContext();
-  const { controller } = ctx;
+  const { controller, focus } = ctx;
+  const mergedRef = useMergedRef(focus.inputRef as React.Ref<T>, ref);
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (event: React.ChangeEvent<T>) => {
     controller.setValue(event.currentTarget.value);
+    onChange?.(event);
   };
 
-  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (event.nativeEvent.isComposing) {
-      return;
-    }
+  const handleKeyDown = (event: React.KeyboardEvent<T>) => {
+    const composing = event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229;
 
-    if (event.key === 'Enter' && (!multiline || event.metaKey || event.ctrlKey)) {
-      if (controller.submitMode === 'both' || controller.submitMode === 'enter') {
+    if (!composing) {
+      if (event.key === 'Enter' && (!multiline || event.metaKey || event.ctrlKey)) {
+        if (controller.submitMode === 'both' || controller.submitMode === 'enter') {
+          event.preventDefault();
+          controller.submit();
+        }
+      } else if (event.key === 'Escape') {
         event.preventDefault();
-        controller.submit();
+        controller.cancel();
       }
-    } else if (event.key === 'Escape') {
-      event.preventDefault();
-      controller.cancel();
     }
-  };
 
-  const onBlur = () => {
-    if (controller.submitMode === 'both' || controller.submitMode === 'blur') {
-      ctx.exitViaBlurRef.current = true;
-      controller.submit();
-    }
+    onKeyDown?.(event);
   };
 
   return {
     hidden: !controller.editing,
-    attributes: {
+    fieldProps: {
       value: controller.value,
       disabled: controller.disabled,
       readOnly: controller.readOnly,
@@ -41,9 +53,10 @@ export function useEditableField(multiline: boolean) {
       maxLength: ctx.maxLength,
       name: ctx.name,
       placeholder: ctx.placeholder.edit,
+      'data-mantine-stop-propagation': true,
+      ref: mergedRef,
+      onChange: handleChange,
+      onKeyDown: handleKeyDown,
     },
-    onChange,
-    onKeyDown,
-    onBlur,
   };
 }

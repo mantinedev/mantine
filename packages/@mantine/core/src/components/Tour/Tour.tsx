@@ -7,6 +7,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getShadow,
   StylesApiProps,
   useProps,
   useStyles,
@@ -14,6 +15,7 @@ import {
 import { FocusTrap } from '../FocusTrap';
 import { OptionalPortal, PortalProps } from '../Portal';
 import { Transition, TransitionOverride } from '../Transition';
+import { getOverlayHitPath } from './get-overlay-hit-path';
 import { defaultLabels, TourLabels, TourProvider } from './Tour.context';
 import { TourBeacon, TourBeaconProps } from './TourBeacon/TourBeacon';
 import { TourBeaconPositioned } from './TourBeaconPositioned';
@@ -48,11 +50,9 @@ export type TourCssVariables = {
     | '--tour-z-index'
     | '--tour-overlay-color'
     | '--tour-tooltip-radius'
+    | '--tour-tooltip-shadow'
     | '--tour-beacon-size'
-    | '--tour-beacon-color'
-    | '--tour-spotlight-padding'
-    | '--tour-spotlight-radius'
-    | '--tour-tooltip-shadow';
+    | '--tour-beacon-color';
 };
 
 export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, ElementProps<'div'> {
@@ -83,7 +83,7 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** Whether to display the overlay @default true @category appearance */
   withOverlay?: boolean;
 
-  /** Whether target elements can be interacted with through the overlay, disables `closeOnOverlayClick` @default false @category behavior */
+  /** Whether pointer events pass through the spotlight cutout to the target element, the rest of the overlay keeps blocking clicks @default false @category behavior */
   withOverlayInteraction?: boolean;
 
   /** Whether to display the close button @default true @category appearance */
@@ -107,7 +107,7 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** Whether pressing Escape closes the tour @default true @category behavior */
   closeOnEscape?: boolean;
 
-  /** Whether clicking the overlay closes the tour, has no effect when `withOverlayInteraction` is set (the overlay does not receive clicks) @default false @category behavior */
+  /** Whether clicking the overlay closes the tour, with `withOverlayInteraction` only clicks outside the spotlight cutout close it @default false @category behavior */
   closeOnOverlayClick?: boolean;
 
   /** Labels for tour UI elements @category appearance */
@@ -122,7 +122,7 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** z-index of the tour @default 10000 */
   zIndex?: string | number;
 
-  /** Transition props for the tooltip @category appearance */
+  /** Transition props for the tooltip @default { duration: 200, transition: 'pop' } @category appearance */
   transitionProps?: TransitionOverride;
 
   /** Duration of the tooltip position transition between steps in ms @default 300 @category appearance */
@@ -134,7 +134,7 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** Tour step overlay color @default "rgba(0, 0, 0, 0.5)" @category appearance */
   overlayColor?: string;
 
-  /** Shadow for the tooltip @category appearance */
+  /** Key of `theme.shadows` or any valid CSS box-shadow value, controls the tooltip shadow @default 'md' @category appearance */
   tooltipShadow?: string;
 
   /** Tour steps – `Tour.Step` elements must be direct children (arrays are supported, Fragments and wrapper components are not) @category appearance */
@@ -179,17 +179,14 @@ const defaultProps = {
 } satisfies Partial<TourProps>;
 
 const varsResolver = createVarsResolver<TourFactory>(
-  (_, { zIndex, overlayColor, spotlightRadius, spotlightPadding, tooltipShadow }) => ({
+  (_, { zIndex, overlayColor, tooltipShadow }) => ({
     root: {
       '--tour-z-index': zIndex?.toString(),
       '--tour-overlay-color': overlayColor,
-      '--tour-tooltip-radius': spotlightRadius !== undefined ? `${spotlightRadius}px` : undefined,
+      '--tour-tooltip-radius': undefined,
+      '--tour-tooltip-shadow': getShadow(tooltipShadow),
       '--tour-beacon-size': undefined,
       '--tour-beacon-color': undefined,
-      '--tour-spotlight-padding':
-        spotlightPadding !== undefined ? `${spotlightPadding}px` : undefined,
-      '--tour-spotlight-radius': spotlightRadius !== undefined ? `${spotlightRadius}px` : undefined,
-      '--tour-tooltip-shadow': tooltipShadow,
     },
   })
 );
@@ -245,17 +242,19 @@ export const Tour = factory<TourFactory>((_props) => {
   const spotlightPaddingValue = spotlightPadding!;
   const id = useId();
   const maskId = `${id}-mask`;
-  const titleId = `${id}-title`;
-  const bodyId = `${id}-body`;
-  const [titleMounted, setTitleMounted] = useState(false);
-  const [bodyMounted, setBodyMounted] = useState(false);
+  const [registeredTitleId, registerTitle] = useState<string | null>(null);
+  const [registeredBodyId, registerBody] = useState<string | null>(null);
+  const titleId = registeredTitleId ?? `${id}-title`;
+  const bodyId = registeredBodyId ?? `${id}-body`;
+  const titleMounted = registeredTitleId !== null;
+  const bodyMounted = registeredBodyId !== null;
   const beaconToFocusRef = useRef<number | null>(null);
 
   const {
     steps,
-    setCurrentStep,
+    setStep,
     beaconOpenStep,
-    setBeaconOpenStep,
+    openBeaconStep,
     close,
     displayStep,
     displayStepIndex,
@@ -264,9 +263,9 @@ export const Tour = factory<TourFactory>((_props) => {
     floatingRefs,
     isCentered,
     constrainedWidth,
-    hasPositioned,
+    stepMoving,
     showTooltip,
-    lastActiveTargetRef,
+    clearExitedTarget,
   } = useTour({
     active,
     onClose,
@@ -298,7 +297,11 @@ export const Tour = factory<TourFactory>((_props) => {
   const focusTrapActive =
     showTooltip && mode === 'guided' && !!resolvedWithOverlay && !withOverlayInteraction;
 
-  const autoFocusRef = useTooltipAutoFocus(!focusTrapActive);
+  const autoFocusRef = useTooltipAutoFocus({
+    autoFocus: showTooltip && !focusTrapActive,
+    opened: showTooltip,
+    step: displayStepIndex,
+  });
   const tooltipMergedRef = useMergedRef(floatingRefs.setFloating, autoFocusRef);
 
   const getStyles = useStyles<TourFactory>({
@@ -320,32 +323,23 @@ export const Tour = factory<TourFactory>((_props) => {
       value={{
         getStyles,
         step: displayStepIndex,
-        setStep: (s) => {
-          if (mode === 'beacon' && beaconOpenStep !== null) {
-            setBeaconOpenStep(s);
-          }
-          setCurrentStep(s);
-        },
+        setStep,
         stepsCount: steps.length,
         close,
-        mode: mode!,
-        withOverlay: withOverlay!,
+        withOverlay: !!resolvedWithOverlay,
         withOverlayInteraction: withOverlayInteraction!,
         withCloseButton: withCloseButton!,
-        withKeyboardNavigation: withKeyboardNavigation!,
-        withScrollIntoView: withScrollIntoView!,
-        scrollToHandler,
         spotlightPadding: resolvedSpotlightPadding,
         spotlightRadius: resolvedSpotlightRadius,
-        closeOnEscape: closeOnEscape!,
         closeOnOverlayClick: closeOnOverlayClick!,
+        transitionProps,
         labels,
         titleId,
         bodyId,
         titleMounted,
         bodyMounted,
-        setTitleMounted,
-        setBodyMounted,
+        registerTitle,
+        registerBody,
         setTargetElement: noop,
       }}
     >
@@ -365,6 +359,7 @@ export const Tour = factory<TourFactory>((_props) => {
                   height="100%"
                   style={overlayStyles}
                   data-with-overlay-interaction={withOverlayInteraction || undefined}
+                  onMouseDown={(event) => event.preventDefault()}
                   onClick={() => {
                     if (closeOnOverlayClick) {
                       close();
@@ -383,7 +378,9 @@ export const Tour = factory<TourFactory>((_props) => {
                           rx={resolvedSpotlightRadius}
                           ry={resolvedSpotlightRadius}
                           fill="black"
-                          {...getStyles('spotlight')}
+                          {...getStyles('spotlight', {
+                            style: stepMoving ? { transition: 'all 150ms ease' } : undefined,
+                          })}
                         />
                       )}
                     </mask>
@@ -393,9 +390,21 @@ export const Tour = factory<TourFactory>((_props) => {
                     y="0"
                     width="100%"
                     height="100%"
-                    fill={overlayColor}
+                    style={{ fill: 'var(--tour-overlay-color)' }}
                     mask={`url(#${maskId})`}
                   />
+                  {withOverlayInteraction && (
+                    <path
+                      d={getOverlayHitPath(
+                        targetRect,
+                        resolvedSpotlightPadding,
+                        resolvedSpotlightRadius
+                      )}
+                      fillRule="evenodd"
+                      fill="transparent"
+                      style={{ pointerEvents: 'auto' }}
+                    />
+                  )}
                 </svg>
               )}
             </Transition>
@@ -414,8 +423,7 @@ export const Tour = factory<TourFactory>((_props) => {
                   target={stepData.target}
                   onClick={() => {
                     beaconToFocusRef.current = index;
-                    setBeaconOpenStep(index);
-                    setCurrentStep(index);
+                    openBeaconStep(index);
                   }}
                   ariaLabel={getBeaconLabel(labels.beacon, stepData.title)}
                   withInitialFocus={beaconToFocusRef.current === index}
@@ -432,9 +440,7 @@ export const Tour = factory<TourFactory>((_props) => {
             mounted={showTooltip && !!displayStep}
             duration={transitionProps?.duration ?? 200}
             transition={transitionProps?.transition ?? 'pop'}
-            onExited={() => {
-              lastActiveTargetRef.current = undefined;
-            }}
+            onExited={clearExitedTarget}
             timingFunction={transitionProps?.timingFunction}
           >
             {({
@@ -460,7 +466,7 @@ export const Tour = factory<TourFactory>((_props) => {
                     ...getStyles('tooltip').style,
                     ...(isCentered ? {} : floatingStyles),
                     ...transitionStyles,
-                    width: constrainedWidth,
+                    width: isCentered ? maxWidth : constrainedWidth,
                     transition: [
                       ...(transitionProperty
                         ? transitionProperty
@@ -470,7 +476,7 @@ export const Tour = factory<TourFactory>((_props) => {
                                 `${prop.trim()} ${transitionDuration} ${transitionTimingFunction || 'ease'}`
                             )
                         : []),
-                      ...(hasPositioned
+                      ...(stepMoving
                         ? ['top', 'left', 'translate'].map(
                             (prop) =>
                               `${prop} ${stepTransitionDuration}ms cubic-bezier(0.16, 1, 0.3, 1)`

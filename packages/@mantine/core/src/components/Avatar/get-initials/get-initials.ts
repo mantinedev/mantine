@@ -1,12 +1,16 @@
 export function getInitials(name: string, limit = 2) {
-  const splitted = name.split(/\s+/).filter(Boolean);
+  const words = name.normalize('NFC').trim().split(/\s+/).filter(Boolean);
 
-  if (splitted.length <= 1) {
-    return (splitted[0] ?? '').slice(0, limit).toUpperCase();
+  if (words.length === 0) {
+    return '';
   }
 
-  return splitted
-    .map((word) => word[0])
+  if (words.length === 1) {
+    return Array.from(words[0]).slice(0, limit).join('').toUpperCase();
+  }
+
+  return words
+    .map((word) => Array.from(word)[0])
     .slice(0, limit)
     .join('')
     .toUpperCase();

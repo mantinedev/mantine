@@ -7,13 +7,16 @@ import {
   Factory,
   useProps,
 } from '../../core';
+import { VisuallyHidden } from '../VisuallyHidden';
+import { usePersonaContext } from './Persona.context';
 import {
-  getPresenceProps,
+  getPresenceLabel,
   isPresenceVisible,
   PersonaPresenceGlyph,
+  PersonaPresenceLabels,
   PersonaPresenceValue,
-} from './get-presence-props';
-import { usePersonaContext } from './Persona.context';
+  resolvePresenceAppearance,
+} from './resolve-presence';
 
 export type PersonaPresenceStylesNames = 'presence';
 
@@ -21,6 +24,9 @@ export interface PersonaPresenceProps
   extends BoxProps, CompoundStylesApiProps<PersonaPresenceFactory>, ElementProps<'span'> {
   /** Presence status string or configuration object */
   presence?: PersonaPresenceValue;
+
+  /** Status labels announced by screen readers. Keys set here take precedence over the `labels` of the parent `Persona`, which take precedence over theme default `labels`. An empty string label renders no status text */
+  labels?: PersonaPresenceLabels;
 }
 
 export type PersonaPresenceFactory = Factory<{
@@ -66,26 +72,37 @@ function PresenceGlyph({ glyph }: { glyph: PersonaPresenceGlyph }) {
 
 export const PersonaPresence = factory<PersonaPresenceFactory>((_props) => {
   const props = useProps('PersonaPresence', null, _props);
-  const { className, style, classNames, styles, vars, presence, mod, ...others } = props;
+  const themeLabels = useProps('PersonaPresence', null, {} as PersonaPresenceProps).labels;
+  const { className, style, classNames, styles, vars, presence, labels, mod, ...others } = props;
   const ctx = usePersonaContext();
-  const resolved = getPresenceProps(presence);
 
   if (!isPresenceVisible(presence)) {
     return null;
   }
 
+  const appearance = resolvePresenceAppearance(presence);
+  const label = getPresenceLabel(presence, { ...themeLabels, ...ctx.labels, ..._props.labels });
+
   return (
-    <Box
-      component="span"
-      role="img"
-      aria-label={resolved.label}
-      __vars={{ '--persona-presence-color': resolved.color }}
-      mod={[{ variant: resolved.variant, processing: resolved.processing }, mod]}
-      {...ctx.getStyles('presence', { className, style, classNames, styles })}
-      {...others}
-    >
-      <PresenceGlyph glyph={resolved.glyph} />
-    </Box>
+    <>
+      <Box
+        component="span"
+        aria-hidden="true"
+        mod={[
+          {
+            status: appearance.status,
+            variant: appearance.variant,
+            processing: appearance.processing,
+          },
+          mod,
+        ]}
+        {...ctx.getStyles('presence', { className, style, classNames, styles })}
+        {...others}
+      >
+        <PresenceGlyph glyph={appearance.glyph} />
+      </Box>
+      {label !== '' && <VisuallyHidden>{label}</VisuallyHidden>}
+    </>
   );
 });
 

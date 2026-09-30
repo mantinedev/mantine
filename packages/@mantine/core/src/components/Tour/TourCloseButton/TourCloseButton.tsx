@@ -14,6 +14,10 @@ export function TourCloseButton(_props: TourCloseButtonProps) {
   const { onClick, ...others } = props;
   const ctx = useTourContext();
 
+  if (!ctx.withCloseButton) {
+    return null;
+  }
+
   return (
     <CloseButton
       aria-label={ctx.labels.close}

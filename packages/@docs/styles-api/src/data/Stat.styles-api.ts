@@ -33,7 +33,8 @@ export const StatStylesApi: StylesApiData<StatFactory> = {
     {
       modifier: 'data-direction',
       selector: 'diff',
-      value: '`up` for positive values, `down` for negative values, `none` for zero',
+      value:
+        '`up` for positive values, `down` for negative values, `none` for zero (or a delta that rounds to `0%` with the default formatter)',
     },
   ],
 };

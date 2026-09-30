@@ -15,13 +15,22 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  overflow: hidden;
   border-radius: inherit;
   pointer-events: none;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(255, 255, 255, 0.45),
-    rgba(255, 255, 255, 0) 55%
-  );
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.45),
+      rgba(255, 255, 255, 0) 55%
+    );
+    transform: var(--tilt-glare-transform);
+    transition: var(--tilt-glare-transition);
+  }
 }
 
 .layer {

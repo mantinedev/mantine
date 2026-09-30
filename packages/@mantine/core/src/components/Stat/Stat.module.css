@@ -17,11 +17,11 @@
   --stat-label-fz-lg: var(--mantine-font-size-sm);
   --stat-label-fz-xl: var(--mantine-font-size-md);
 
-  --stat-diff-fz-xs: var(--mantine-font-size-xs);
-  --stat-diff-fz-sm: var(--mantine-font-size-xs);
-  --stat-diff-fz-md: var(--mantine-font-size-sm);
-  --stat-diff-fz-lg: var(--mantine-font-size-sm);
-  --stat-diff-fz-xl: var(--mantine-font-size-md);
+  --stat-diff-fz-xs: var(--stat-label-fz-xs);
+  --stat-diff-fz-sm: var(--stat-label-fz-sm);
+  --stat-diff-fz-md: var(--stat-label-fz-md);
+  --stat-diff-fz-lg: var(--stat-label-fz-lg);
+  --stat-diff-fz-xl: var(--stat-label-fz-xl);
 
   --stat-icon-size-xs: 34px;
   --stat-icon-size-sm: 40px;
@@ -95,15 +95,22 @@
 
   &:where([data-direction='up']) {
     --stat-diff-color: var(--mantine-color-green-light-color);
+
+    @mixin where-dark {
+      --stat-diff-color: var(--mantine-color-green-text);
+    }
   }
 
   &:where([data-direction='down']) {
     --stat-diff-color: var(--mantine-color-red-light-color);
+
+    @mixin where-dark {
+      --stat-diff-color: var(--mantine-color-red-text);
+    }
   }
 }
 
 .diffIcon {
   width: 0.85em;
   height: 0.85em;
-  color: var(--stat-diff-color);
 }

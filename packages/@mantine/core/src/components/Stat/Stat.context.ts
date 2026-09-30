@@ -1,5 +1,5 @@
 import { createSafeContext, GetStylesApi } from '../../core';
-import type { StatFactory } from './Stat';
+import type { StatFactory } from './StatBase';
 
 interface StatContextValue {
   getStyles: GetStylesApi<StatFactory>;

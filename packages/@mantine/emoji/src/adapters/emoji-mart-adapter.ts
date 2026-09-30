@@ -1,3 +1,4 @@
+import { getCanonicalCategoryLabel } from '../categories';
 import { EmojiPickerCategory, EmojiPickerData, EmojiPickerEmoji } from '../types';
 
 interface EmojiMartSkin {
@@ -23,25 +24,16 @@ interface EmojiMartData {
   emojis: Record<string, EmojiMartEmoji>;
 }
 
-const CATEGORY_LABELS: Record<string, string> = {
-  frequent: 'Frequently Used',
-  people: 'Smileys & People',
-  nature: 'Animals & Nature',
-  foods: 'Food & Drink',
-  activity: 'Activity',
-  places: 'Travel & Places',
-  objects: 'Objects',
-  symbols: 'Symbols',
-  flags: 'Flags',
-};
-
-export function emojiMartAdapter(data: EmojiMartData): EmojiPickerData {
+export function emojiMartAdapter(data: EmojiMartData): EmojiPickerData;
+export function emojiMartAdapter(data: object): EmojiPickerData;
+export function emojiMartAdapter(input: object): EmojiPickerData {
+  const data = input as EmojiMartData;
   const emojis: Record<string, EmojiPickerEmoji> = {};
 
   for (const [id, emojiMartEmoji] of Object.entries(data.emojis)) {
     const defaultSkin = emojiMartEmoji.skins[0];
     const skinVariants =
-      emojiMartEmoji.skins.length > 1
+      emojiMartEmoji.skins.length === 6
         ? emojiMartEmoji.skins.slice(1).map((s) => s.native)
         : undefined;
 
@@ -57,7 +49,7 @@ export function emojiMartAdapter(data: EmojiMartData): EmojiPickerData {
 
   const categories: EmojiPickerCategory[] = data.categories.map((cat) => ({
     id: cat.id,
-    label: CATEGORY_LABELS[cat.id] || cat.id,
+    label: getCanonicalCategoryLabel(cat.id) || cat.id,
     emojis: cat.emojis,
   }));
 

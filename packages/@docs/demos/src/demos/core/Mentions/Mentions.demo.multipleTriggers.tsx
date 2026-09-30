@@ -20,7 +20,7 @@ function Demo() {
   return (
     <Mentions label="Mention people with @ and tag topics with #" minRows={3}>
       <Mentions.Mention trigger="@" data={users} />
-      <Mentions.Mention trigger="#" markup="#[__display__](__id__)" data={tags} appendSpaceOnAdd />
+      <Mentions.Mention trigger="#" data={tags} appendSpaceOnAdd />
     </Mentions>
   );
 }
@@ -42,7 +42,7 @@ function Demo() {
   return (
     <Mentions label="Mention people with @ and tag topics with #" minRows={3}>
       <Mentions.Mention trigger="@" data={users} />
-      <Mentions.Mention trigger="#" markup="#[__display__](__id__)" data={tags} appendSpaceOnAdd />
+      <Mentions.Mention trigger="#" data={tags} appendSpaceOnAdd />
     </Mentions>
   );
 }

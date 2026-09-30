@@ -15,20 +15,16 @@ export { ImageCropperControls } from './ImageCropperControls';
 export type { ImageCropperControlsProps } from './ImageCropperControls';
 
 export { useImageCropper } from './use-image-cropper';
-export type {
-  ImageCropperControllerOptions,
-  ImageCropperController,
-  ImageCropperCropShape,
-  ResolvedImageCropperFlip,
-} from './use-image-cropper';
+export type { ImageCropperControllerOptions, ImageCropperController } from './use-image-cropper';
 
-export { getCroppedImage } from './get-cropped-image';
-export type { GetCroppedImageOptions, ImageCropperFlip } from './get-cropped-image';
+export type { GetCroppedImageOptions } from './get-cropped-image';
 
 export type {
   ImageCropperArea,
   ImageCropperCropData,
+  ImageCropperCropShape,
+  ImageCropperFlip,
   ImageCropperPoint,
   ImageCropperSize,
-  ImageCropperMediaSize,
+  ResolvedImageCropperFlip,
 } from './compute-crop-area';

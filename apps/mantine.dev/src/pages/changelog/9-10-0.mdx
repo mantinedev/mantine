@@ -1,8 +1,11 @@
 import {
   EditableDemos,
   FileSizeDemos,
+  ImageCropperDemos,
   TimerDemos,
   TooltipDemos,
+  UseBroadcastChannelDemos,
+  UseClipboardDemos,
   UseDebouncedEffectDemos,
   UseHoldRepeatHandlersDemos,
 } from '@docs/demos';
@@ -20,13 +23,9 @@ All funds are used to improve Mantine and create new features and components.
 
 ## Timer component
 
-New [Timer](/core/timer) component – a controllable countdown and stopwatch. It counts up or down,
-has running/paused state, exposes start/pause/resume/reset/restart controls and `onTick`/`onComplete`
-callbacks. `Timer` is built on top of the new `useTimer` hook, which can be used on its own to build
-fully custom timer UIs, and it supports custom layouts with `Timer.Segment`, `Timer.Separator` and
-`Timer.Control` compound components:
+New [Timer](/core/timer) component – a controllable countdown and stopwatch with running/paused state, start/pause/resume/reset/restart actions, `onTick`/`onComplete` callbacks and custom layouts built with `Timer.Segment`, `Timer.Separator` and `Timer.Control` compound components, powered by the new `useTimer` hook that can also be used on its own:
 
-<Demo data={TimerDemos.usage} />
+<Demo data={TimerDemos.segments} />
 
 ## Editable component
 
@@ -78,3 +77,33 @@ for small info bubbles next to a label. Outside click and `Escape` closing can b
 new `closeOnClickOutside` and `closeOnEscape` props:
 
 <Demo data={TooltipDemos.click} />
+
+## ImageCropper component
+
+New [ImageCropper](/core/image-cropper) component provides an interactive crop UI: load an image,
+then pan, zoom, rotate and flip it inside a fixed crop window with a rectangle or circle shape and
+an optional aspect ratio. The cropped result can be exported as a `Blob` or data URL via a canvas,
+or read back as a crop rectangle in source pixels for server-side cropping. It has no third-party
+dependencies and works with server-side rendering:
+
+<Demo data={ImageCropperDemos.usage} />
+
+## use-clipboard blobs and images support
+
+[use-clipboard](/hooks/use-clipboard) `copy` function now accepts `Blob`, `ClipboardItem` and
+`ClipboardItem[]` values in addition to strings. This makes it possible to copy binary data such as
+images to the clipboard with `navigator.clipboard.write`, while strings keep using the widely
+supported `navigator.clipboard.writeText`. The new `supported` value indicates whether copying
+blobs and images is available:
+
+<Demo data={UseClipboardDemos.image} />
+
+## use-broadcast-channel hook
+
+New [use-broadcast-channel](/hooks/use-broadcast-channel) hook is a reactive wrapper over the
+[BroadcastChannel API](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel) for
+same-origin messaging across tabs, windows, iframes and workers. Post a message from one context
+and receive it in all others subscribed to the same channel name, with support for
+structured-clone payloads and server-side rendering:
+
+<Demo data={UseBroadcastChannelDemos.usage} />

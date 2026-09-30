@@ -9,16 +9,16 @@ export interface UseTiltOptions {
    *  Ignored when the `trackWindow` option is set to `true`, `true` by default */
   resetOnLeave?: boolean;
 
-  /** Adjusts raw device orientation roll value before it is returned */
+  /** Adjusts normalized device orientation roll value before it is returned */
   deviceOrientationRollAdjust?: (value: number) => number;
 
-  /** Adjusts raw device orientation tilt value before it is returned */
+  /** Adjusts normalized device orientation tilt value before it is returned */
   deviceOrientationTiltAdjust?: (value: number) => number;
 
-  /** Adjusts raw mouse roll value before it is returned */
+  /** Adjusts normalized mouse roll value before it is returned */
   mouseRollAdjust?: (value: number) => number;
 
-  /** Adjusts raw mouse tilt value before it is returned */
+  /** Adjusts normalized mouse tilt value before it is returned */
   mouseTiltAdjust?: (value: number) => number;
 }
 
@@ -28,10 +28,10 @@ export interface UseTiltReturnValue<T extends HTMLElement = any> {
   /** Ref callback that must be assigned to the target element */
   ref: React.RefCallback<T | null>;
 
-  /** Vertical tilt normalized to `[-0.5, 0.5]` for mouse input */
+  /** Vertical tilt normalized to `[-0.5, 0.5]` for mouse input, positive when the pointer is above the center of the element */
   roll: number;
 
-  /** Horizontal tilt normalized to `[-0.5, 0.5]` for mouse input */
+  /** Horizontal tilt normalized to `[-0.5, 0.5]` for mouse input, positive when the pointer is right of the center of the element */
   tilt: number;
 
   /** Input source that produced the current `roll` and `tilt` values */

@@ -1,3 +1,17 @@
+/*
+ * Derived from react-mentions 4.4.10 (https://github.com/signavio/react-mentions)
+ * — BSD-3-Clause, Copyright (c) 2018 Signavio GmbH. See ../LICENSE for the full license text.
+ *
+ * Local changes compared to react-mentions 4.4.10:
+ * - Combines markupToRegex, makeMentionsMarkup and the placeholder index helpers into one
+ *   serializer object (insert + findAll) per markup template
+ * - insert replaces both placeholders in one pass with a function replacer, so $ patterns
+ *   and placeholder names in an id or display are inserted literally
+ * - Placeholders match any character except a newline ([^\n]+?), so an unclosed opening
+ *   delimiter cannot capture a mention on a later line
+ * - TypeScript types adjusted for the Mantine build, formatted with oxfmt
+ */
+
 import { MentionSerializer } from '../Mentions.types';
 import { escapeRegex } from './escape-regex';
 
@@ -5,6 +19,7 @@ export const DEFAULT_MENTION_MARKUP = '@[__display__](__id__)';
 
 const DISPLAY_PLACEHOLDER = '__display__';
 const ID_PLACEHOLDER = '__id__';
+const PLACEHOLDERS_REGEX = /__id__|__display__/g;
 
 interface CompiledMarkup {
   source: string;
@@ -17,8 +32,8 @@ function compileMarkup(markup: string): CompiledMarkup {
   const idIndex = markup.indexOf(ID_PLACEHOLDER);
 
   const source = escapeRegex(markup)
-    .replace(DISPLAY_PLACEHOLDER, '([\\s\\S]+?)')
-    .replace(ID_PLACEHOLDER, '([\\s\\S]+?)');
+    .replace(DISPLAY_PLACEHOLDER, '([^\\n]+?)')
+    .replace(ID_PLACEHOLDER, '([^\\n]+?)');
 
   const hasDisplay = displayIndex !== -1;
   const hasId = idIndex !== -1;
@@ -50,8 +65,16 @@ export function createMarkupSerializer(template: string): MentionSerializer {
   return {
     id: template,
 
-    insert: ({ id, display }) =>
-      template.replace(ID_PLACEHOLDER, String(id)).replace(DISPLAY_PLACEHOLDER, display),
+    insert: ({ id, display }) => {
+      const replaced = new Set<string>();
+      return template.replace(PLACEHOLDERS_REGEX, (placeholder) => {
+        if (replaced.has(placeholder)) {
+          return placeholder;
+        }
+        replaced.add(placeholder);
+        return placeholder === ID_PLACEHOLDER ? String(id) : display;
+      });
+    },
 
     findAll: (value) => {
       const regex = new RegExp(source, 'g');

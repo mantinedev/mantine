@@ -25,7 +25,7 @@ function Card({ children }: { children?: React.ReactNode }) {
 export function Usage() {
   return (
     <div style={{ padding: 80 }}>
-      <Tilt withGlare>
+      <Tilt withGlare radius={16}>
         <Card>Hover to tilt</Card>
       </Tilt>
     </div>
@@ -35,7 +35,7 @@ export function Usage() {
 export function TrackWindow() {
   return (
     <div style={{ padding: 80 }}>
-      <Tilt trackWindow withGlare>
+      <Tilt trackWindow withGlare radius={16}>
         <Card>Move cursor anywhere</Card>
       </Tilt>
     </div>
@@ -45,7 +45,7 @@ export function TrackWindow() {
 export function Layers() {
   return (
     <div style={{ padding: 80 }}>
-      <Tilt maxRotate={14} withGlare>
+      <Tilt maxRotate={14} withGlare radius={16}>
         <Box
           style={{
             position: 'relative',
@@ -80,6 +80,36 @@ export function Layers() {
             PARALLAX
           </Tilt.Layer>
         </Box>
+      </Tilt>
+    </div>
+  );
+}
+
+export function WithRadius() {
+  return (
+    <div style={{ padding: 80, background: '#222' }}>
+      <Tilt withGlare radius={16}>
+        <Card>Rounded glare</Card>
+      </Tilt>
+    </div>
+  );
+}
+
+export function CustomTransitions() {
+  return (
+    <div style={{ padding: 80 }}>
+      <Tilt withGlare radius={16} transitionDuration={400} resetTransitionDuration={1200}>
+        <Card>Slow transitions</Card>
+      </Tilt>
+    </div>
+  );
+}
+
+export function NoResetOnLeave() {
+  return (
+    <div style={{ padding: 80 }}>
+      <Tilt withGlare radius={16} resetOnLeave={false}>
+        <Card>Keeps the last tilt</Card>
       </Tilt>
     </div>
   );

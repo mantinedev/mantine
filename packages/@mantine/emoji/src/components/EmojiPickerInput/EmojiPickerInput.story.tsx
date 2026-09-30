@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import data from '@emoji-mart/data';
+import { Button, Group } from '@mantine/core';
 import { emojiMartAdapter } from '../../adapters';
 import { EmojiPickerInput } from './EmojiPickerInput';
 
 export default { title: 'EmojiPickerInput' };
 
-const emojiData = emojiMartAdapter(data as any);
+const emojiData = emojiMartAdapter(data);
 
 export function Usage() {
   return (
@@ -26,8 +27,20 @@ export function Controlled() {
         onChange={setValue}
         placeholder="Select emoji"
         label="Controlled"
+        pickerProps={{ defaultSkinTone: 2 }}
       />
       <div style={{ marginTop: 8 }}>Value: {value ?? 'null'}</div>
+      <Group mt="md">
+        <Button variant="default" onClick={() => setValue('+1')}>
+          Set +1
+        </Button>
+        <Button variant="default" onClick={() => setValue('heart_eyes')}>
+          Set heart_eyes
+        </Button>
+        <Button variant="default" onClick={() => setValue(null)}>
+          Reset
+        </Button>
+      </Group>
     </div>
   );
 }
@@ -103,6 +116,20 @@ export function CloseOnSelectFalse() {
         closeOnSelect={false}
         placeholder="Select emoji"
         label="Close on select = false"
+      />
+    </div>
+  );
+}
+
+export function Clearable() {
+  return (
+    <div style={{ padding: 40 }}>
+      <EmojiPickerInput
+        data={emojiData}
+        clearable
+        defaultValue="grinning"
+        label="Clearable"
+        clearButtonProps={{ 'aria-label': 'Clear selected emoji' }}
       />
     </div>
   );

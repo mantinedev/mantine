@@ -20,21 +20,24 @@ an object with the following properties:
 
 `data` can be a string, a `Blob` or a `File`. When `data` is a string, it is wrapped in a `Blob`
 with the `mimeType` you provide. Use the `fileName` prop to set the suggested name of the downloaded
-file.
+file. When `fileName` is not set and `data` is a `File`, the file name is used.
+
+`onDownloadComplete` is called when the download is dispatched to the browser, not when the browser
+finishes saving the file.
 
 ## Async data
 
 `data` can be a function that returns a `Blob`/string or a promise that resolves with one. The
 function is called when the download is triggered, which is useful when the content has to be fetched
-or generated lazily. While the promise is resolving, the `loading` property is `true` and repeated
-triggers are ignored:
+or generated lazily. While the function is resolving, the `loading` property is `true` and repeated
+triggers are ignored (this applies only to function `data`):
 
 <Demo data={DownloadTriggerDemos.async} />
 
 ## Error handling
 
-If the async `data` function throws or rejects, the error is passed to the `onError` callback and
-the `loading` state is reset. `onDownloadComplete` is called after the download has been dispatched:
+If resolving `data` or dispatching the download fails, the error is passed to the `onError` callback
+and the `loading` state is reset. If `onError` is not set, the error is rethrown:
 
 <Demo data={DownloadTriggerDemos.error} />
 

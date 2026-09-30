@@ -52,6 +52,10 @@ const FILES_PATHS = getPaths([
 
   // Tour
   'packages/@mantine/core/src/components/Tour/TourStep/TourStep.tsx',
+  'packages/@mantine/core/src/components/Tour/TourRoot/TourRoot.tsx',
+  'packages/@mantine/core/src/components/Tour/TourTooltip/TourTooltip.tsx',
+  'packages/@mantine/core/src/components/Tour/TourOverlay/TourOverlay.tsx',
+  'packages/@mantine/core/src/components/Tour/TourBeacon/TourBeacon.tsx',
 
   // Accordion
   'packages/@mantine/core/src/components/Accordion/AccordionItem/AccordionItem.tsx',
@@ -127,6 +131,16 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Timer/TimerSeparator.tsx',
   'packages/@mantine/core/src/components/Timer/TimerControl.tsx',
 
+  // Editable
+  'packages/@mantine/core/src/components/Editable/EditableArea.tsx',
+  'packages/@mantine/core/src/components/Editable/EditablePreview.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableInput.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableTextarea.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableControl.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableEditTrigger.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableSubmitTrigger.tsx',
+  'packages/@mantine/core/src/components/Editable/EditableCancelTrigger.tsx',
+
   // Persona
   'packages/@mantine/core/src/components/Persona/PersonaAvatar.tsx',
   'packages/@mantine/core/src/components/Persona/PersonaPresence.tsx',
@@ -139,15 +153,8 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Stat/StatIcon.tsx',
   'packages/@mantine/core/src/components/Stat/StatCountdown.tsx',
 
-  // Editable
-  'packages/@mantine/core/src/components/Editable/EditableArea.tsx',
-  'packages/@mantine/core/src/components/Editable/EditablePreview.tsx',
-  'packages/@mantine/core/src/components/Editable/EditableInput.tsx',
-  'packages/@mantine/core/src/components/Editable/EditableTextarea.tsx',
-  'packages/@mantine/core/src/components/Editable/EditableControl.tsx',
-  'packages/@mantine/core/src/components/Editable/EditableEditTrigger.tsx',
-  'packages/@mantine/core/src/components/Editable/EditableSubmitTrigger.tsx',
-  'packages/@mantine/core/src/components/Editable/EditableCancelTrigger.tsx',
+  // Tilt
+  'packages/@mantine/core/src/components/Tilt/TiltLayer.tsx',
 
   // List
   'packages/@mantine/core/src/components/List/ListItem/ListItem.tsx',

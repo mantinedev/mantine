@@ -25,9 +25,17 @@ jest.mock('@tanstack/react-virtual', () => ({
 const testData = {
   categories: [{ id: 'people', label: 'Smileys & People', emojis: ['grinning'] }],
   emojis: {
-    grinning: { id: 'grinning', name: 'Grinning Face', keywords: ['happy'], emoji: '😀' },
+    grinning: {
+      id: 'grinning',
+      name: 'Grinning Face',
+      keywords: ['happy'],
+      emoji: '😀',
+      skins: ['😀1', '😀2', '😀3', '😀4', '😀5'],
+    },
   },
 };
+
+const popoverProps = { withinPortal: false, transitionProps: { duration: 0 } };
 
 describe('@mantine/emoji/EmojiPickerPopover', () => {
   it('renders target and hides picker by default', () => {
@@ -74,5 +82,111 @@ describe('@mantine/emoji/EmojiPickerPopover', () => {
     await userEvent.click(emojiButton!);
     expect(selectSpy).toHaveBeenCalled();
     expect(changeSpy).toHaveBeenCalledWith(false);
+  });
+
+  it('opens and closes on target click in uncontrolled mode', async () => {
+    const spy = jest.fn();
+    const targetClick = jest.fn();
+    const { getByText, queryByRole } = render(
+      <EmojiPickerPopover data={testData} popoverProps={popoverProps} onOpenedChange={spy}>
+        <button type="button" onClick={targetClick}>
+          Open
+        </button>
+      </EmojiPickerPopover>
+    );
+    await userEvent.click(getByText('Open'));
+    expect(queryByRole('grid')).toBeInTheDocument();
+    expect(spy).toHaveBeenLastCalledWith(true);
+    expect(targetClick).toHaveBeenCalledTimes(1);
+
+    await userEvent.click(getByText('Open'));
+    expect(queryByRole('grid')).not.toBeInTheDocument();
+    expect(spy).toHaveBeenLastCalledWith(false);
+  });
+
+  it('closes on emoji select in uncontrolled mode', async () => {
+    const { getByText, queryByRole, container } = render(
+      <EmojiPickerPopover data={testData} popoverProps={popoverProps}>
+        <button type="button">Open</button>
+      </EmojiPickerPopover>
+    );
+    await userEvent.click(getByText('Open'));
+    expect(queryByRole('grid')).toBeInTheDocument();
+    await userEvent.click(container.querySelector('[aria-label="Grinning Face"]')!);
+    expect(queryByRole('grid')).not.toBeInTheDocument();
+  });
+
+  it('closes on Escape in uncontrolled mode and can be reopened', async () => {
+    const { getByText, queryByRole } = render(
+      <EmojiPickerPopover data={testData} popoverProps={popoverProps}>
+        <button type="button">Open</button>
+      </EmojiPickerPopover>
+    );
+    await userEvent.click(getByText('Open'));
+    expect(queryByRole('grid')).toBeInTheDocument();
+    await userEvent.keyboard('{Escape}');
+    expect(queryByRole('grid')).not.toBeInTheDocument();
+    await userEvent.click(getByText('Open'));
+    expect(queryByRole('grid')).toBeInTheDocument();
+  });
+
+  it('keeps internal opened state when opened props are passed through popoverProps', async () => {
+    const onChange = jest.fn();
+    const onOpenedChange = jest.fn();
+    const { getByText, queryByRole } = render(
+      <div>
+        <EmojiPickerPopover
+          data={testData}
+          popoverProps={{ ...popoverProps, onChange, opened: true } as any}
+          onOpenedChange={onOpenedChange}
+        >
+          <button type="button">Open</button>
+        </EmojiPickerPopover>
+        <span>outside</span>
+      </div>
+    );
+    await userEvent.click(getByText('Open'));
+    expect(queryByRole('grid')).toBeInTheDocument();
+    await userEvent.click(getByText('outside'));
+    expect(queryByRole('grid')).not.toBeInTheDocument();
+    expect(onChange).not.toHaveBeenCalled();
+    expect(onOpenedChange).toHaveBeenLastCalledWith(false);
+
+    await userEvent.click(getByText('Open'));
+    await userEvent.keyboard('{Escape}');
+    expect(queryByRole('grid')).not.toBeInTheDocument();
+  });
+
+  it('closes on outside click in controlled mode', async () => {
+    const spy = jest.fn();
+    const { getByText } = render(
+      <div>
+        <span>outside</span>
+        <EmojiPickerPopover
+          data={testData}
+          opened
+          onOpenedChange={spy}
+          popoverProps={{ ...popoverProps, trapFocus: false }}
+        >
+          <button type="button">Open</button>
+        </EmojiPickerPopover>
+      </div>
+    );
+    await userEvent.click(getByText('outside'));
+    expect(spy).toHaveBeenCalledWith(false);
+  });
+
+  it('keeps uncontrolled skin tone when the dropdown is reopened', async () => {
+    const { getByText, container } = render(
+      <EmojiPickerPopover data={testData} popoverProps={popoverProps} closeOnSelect>
+        <button type="button">Open</button>
+      </EmojiPickerPopover>
+    );
+    await userEvent.click(getByText('Open'));
+    await userEvent.click(container.querySelector('[aria-label="Skin tone"]')!);
+    await userEvent.click(container.querySelector('[aria-label="Dark skin tone"]')!);
+    await userEvent.click(getByText('Open'));
+    await userEvent.click(getByText('Open'));
+    expect(container.querySelector('[aria-label="Grinning Face"]')).toHaveTextContent('😀5');
   });
 });

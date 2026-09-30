@@ -1,6 +1,4 @@
 const TIME_UNITS: [token: string, ms: number][] = [
-  ['Y', 1000 * 60 * 60 * 24 * 365],
-  ['M', 1000 * 60 * 60 * 24 * 30],
   ['D', 1000 * 60 * 60 * 24],
   ['H', 1000 * 60 * 60],
   ['m', 1000 * 60],
@@ -10,12 +8,22 @@ const TIME_UNITS: [token: string, ms: number][] = [
 
 const ESCAPE_REGEX = /\[[^\]]*\]/g;
 
-/** Formats a duration in milliseconds with dayjs-style tokens (`D`, `H`, `m`, `s`, `S`, ...). Literals can be escaped with square brackets, e.g. `D[d] HH:mm:ss`. */
+export function hasFractionToken(format: string): boolean {
+  return format.replace(ESCAPE_REGEX, '').includes('S');
+}
+
 export function formatCountdown(milliseconds: number, format: string): string {
   let leftDuration = Number.isFinite(milliseconds) ? Math.max(0, milliseconds) : 0;
 
   const keepList = (format.match(ESCAPE_REGEX) || []).map((str) => str.slice(1, -1));
   const template = format.replace(ESCAPE_REGEX, '[]');
+
+  if (!hasFractionToken(format)) {
+    const smallestUnit = TIME_UNITS.filter(([token]) => template.includes(token)).pop();
+    if (smallestUnit) {
+      leftDuration = Math.ceil(leftDuration / smallestUnit[1]) * smallestUnit[1];
+    }
+  }
 
   const replaced = TIME_UNITS.reduce((current, [token, unit]) => {
     if (!current.includes(token)) {

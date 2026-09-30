@@ -38,7 +38,7 @@ export const EditableEditTrigger = factory<EditableEditTriggerFactory>((_props) 
       component="button"
       {...others}
       type="button"
-      disabled={ctx.controller.disabled}
+      disabled={ctx.controller.disabled || ctx.controller.readOnly}
       {...ctx.getStyles('editTrigger', { className, style, classNames, styles })}
       onClick={(event) => {
         ctx.controller.edit();

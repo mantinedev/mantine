@@ -117,6 +117,7 @@
   height: var(--toolbar-toggle-size);
   padding: calc(var(--toolbar-toggle-size) / 5);
   border: 1px solid;
+  font-weight: var(--mantine-font-weight-medium);
 
   &:where([data-auto-width]) {
     width: auto;
@@ -139,16 +140,30 @@
     border-color: transparent;
 
     @mixin hover {
-      background-color: var(
-        --toolbar-toggle-active-hover,
-        var(--mantine-primary-color-light-hover)
-      );
+      &:where(:not([data-disabled])) {
+        background-color: var(
+          --toolbar-toggle-active-hover,
+          var(--mantine-primary-color-light-hover)
+        );
+      }
     }
   }
 
   &:where([data-disabled]) {
     cursor: not-allowed;
     opacity: var(--mantine-disabled-opacity);
+  }
+
+  &:where([data-disabled][data-active]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-4);
+      color: var(--mantine-color-gray-6);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-4);
+      color: var(--mantine-color-dark-2);
+    }
   }
 }
 

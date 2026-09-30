@@ -15,22 +15,16 @@
   }
 }
 
-.spotlight {
-  transition: all 150ms ease;
-}
-
 .tooltip {
-  --tour-tooltip-radius: var(--mantine-radius-default);
-
   position: absolute;
   pointer-events: auto;
   padding: var(--mantine-spacing-md);
-  border-radius: var(--tour-tooltip-radius);
+  border-radius: var(--tour-tooltip-radius, var(--mantine-radius-default));
+  box-shadow: var(--tour-tooltip-shadow, var(--mantine-shadow-md));
   z-index: 1;
   box-sizing: border-box;
 
   border: 1px solid var(--mantine-color-border);
-  box-shadow: var(--mantine-shadow-md);
   background-color: var(--mantine-color-surface-page);
 
   &:where([data-centered]) {
@@ -38,6 +32,7 @@
     top: 50%;
     left: 50%;
     translate: -50% -50%;
+    max-width: calc(100% - 16px);
   }
 }
 
@@ -76,15 +71,12 @@
 }
 
 .beacon {
-  --tour-beacon-size: 12px;
-  --tour-beacon-color: var(--mantine-primary-color-filled);
-
   position: absolute;
   pointer-events: auto;
-  width: var(--tour-beacon-size);
-  height: var(--tour-beacon-size);
+  width: var(--tour-beacon-size, 12px);
+  height: var(--tour-beacon-size, 12px);
   border-radius: 50%;
-  background-color: var(--tour-beacon-color);
+  background-color: var(--tour-beacon-color, var(--mantine-primary-color-filled));
   border: 0;
   padding: 0;
   cursor: pointer;
@@ -93,9 +85,9 @@
 
 .beaconPulse {
   position: absolute;
-  inset: calc(var(--tour-beacon-size) * -0.35);
+  inset: calc(var(--tour-beacon-size, 12px) * -0.35);
   border-radius: 50%;
-  background-color: var(--tour-beacon-color);
+  background-color: var(--tour-beacon-color, var(--mantine-primary-color-filled));
   opacity: 0.3;
   animation: tour-beacon-pulse 1.5s ease-in-out infinite;
 }

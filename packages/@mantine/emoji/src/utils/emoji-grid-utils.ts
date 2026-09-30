@@ -1,57 +1,73 @@
 import { EmojiPickerEmoji, FlattenedRowItem } from '../types';
 
-export function getAllEmojis(items: FlattenedRowItem[]): EmojiPickerEmoji[] {
+export interface EmojiGridRow {
+  itemIndex: number;
+  start: number;
+  length: number;
+}
+
+export interface EmojiGridModel {
+  emojis: EmojiPickerEmoji[];
+  rows: EmojiGridRow[];
+  emojiRows: number[];
+  itemOffsets: number[];
+}
+
+export type EmojiGridDirection = 'left' | 'right' | 'up' | 'down';
+
+export function createEmojiGridModel(items: FlattenedRowItem[]): EmojiGridModel {
   const emojis: EmojiPickerEmoji[] = [];
-  for (const item of items) {
-    if (item.type === 'row') {
-      emojis.push(...item.emojis);
-    }
-  }
-  return emojis;
-}
+  const rows: EmojiGridRow[] = [];
+  const emojiRows: number[] = [];
+  const itemOffsets: number[] = [];
 
-export function getEmojiIdAtIndex(
-  items: FlattenedRowItem[],
-  emojiIndex: number
-): string | undefined {
-  let count = 0;
-  for (const item of items) {
+  items.forEach((item, itemIndex) => {
+    itemOffsets.push(emojis.length);
     if (item.type === 'row') {
+      rows.push({ itemIndex, start: emojis.length, length: item.emojis.length });
       for (const emoji of item.emojis) {
-        if (count === emojiIndex) {
-          return emoji.id;
-        }
-        count++;
+        emojis.push(emoji);
+        emojiRows.push(rows.length - 1);
       }
     }
-  }
-  return undefined;
+  });
+
+  return { emojis, rows, emojiRows, itemOffsets };
 }
 
-export function getItemEmojiOffsets(items: FlattenedRowItem[]): number[] {
-  let globalEmojiIndex = 0;
-  const offsets: number[] = [];
-  for (const item of items) {
-    offsets.push(globalEmojiIndex);
-    if (item.type === 'row') {
-      globalEmojiIndex += item.emojis.length;
-    }
+export function getNextEmojiIndex(
+  model: EmojiGridModel,
+  index: number,
+  direction: EmojiGridDirection
+): number {
+  const lastIndex = model.emojis.length - 1;
+  if (lastIndex < 0) {
+    return -1;
   }
-  return offsets;
+
+  const current = Math.min(Math.max(index, 0), lastIndex);
+
+  if (direction === 'left') {
+    return Math.max(current - 1, 0);
+  }
+
+  if (direction === 'right') {
+    return Math.min(current + 1, lastIndex);
+  }
+
+  const rowPosition = model.emojiRows[current];
+  const targetRow = model.rows[rowPosition + (direction === 'down' ? 1 : -1)];
+  if (!targetRow) {
+    return current;
+  }
+
+  const column = current - model.rows[rowPosition].start;
+  return targetRow.start + Math.min(column, targetRow.length - 1);
 }
 
-export function emojiIndexToRowIndex(items: FlattenedRowItem[], emojiIndex: number): number {
-  let count = 0;
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    if (item.type === 'row') {
-      if (count + item.emojis.length > emojiIndex) {
-        return i;
-      }
-      count += item.emojis.length;
-    }
-  }
-  return 0;
+export function getEmojiItemIndex(model: EmojiGridModel, index: number): number {
+  const row = model.rows[model.emojiRows[index]];
+  return row ? row.itemIndex : -1;
 }
 
 export function applySkinTone(emoji: EmojiPickerEmoji, skinTone: number): EmojiPickerEmoji {

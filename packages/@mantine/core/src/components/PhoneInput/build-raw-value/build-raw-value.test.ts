@@ -69,6 +69,24 @@ describe('buildRawValue', () => {
       });
       expect(result).toBe('+12025551234');
     });
+
+    it('keeps typed dial code when auto-detect is enabled and input starts with +', () => {
+      const result = buildRawValue('+44207', {
+        canAutoDetect: true,
+        international: false,
+        selectedCountry: us,
+      });
+      expect(result).toBe('+44207');
+    });
+
+    it('prepends selected dial code when auto-detect is enabled but input has no +', () => {
+      const result = buildRawValue('44207', {
+        canAutoDetect: true,
+        international: false,
+        selectedCountry: us,
+      });
+      expect(result).toBe('+144207');
+    });
   });
 
   describe('without selected country', () => {

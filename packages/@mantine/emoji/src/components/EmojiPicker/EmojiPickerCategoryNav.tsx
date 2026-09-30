@@ -1,44 +1,37 @@
+import { memo } from 'react';
 import { UnstyledButton } from '@mantine/core';
-import { EmojiPickerCategory } from '../../types';
+import { getCanonicalCategoryIcon } from '../../categories';
 import { useEmojiPickerContext } from './EmojiPicker.context';
 
-interface EmojiPickerCategoryNavProps {
-  categories: EmojiPickerCategory[];
+export interface EmojiPickerNavCategory {
+  id: string;
+  label: string;
 }
 
-const CATEGORY_ICONS: Record<string, string> = {
-  frequent: '🕐',
-  people: '😀',
-  nature: '🐻',
-  foods: '🍔',
-  activity: '⚽',
-  places: '🚗',
-  objects: '💡',
-  symbols: '♻️',
-  flags: '🏳️',
-};
+interface EmojiPickerCategoryNavProps {
+  categories: EmojiPickerNavCategory[];
+  onCategoryClick: (categoryId: string) => void;
+}
 
-export function EmojiPickerCategoryNav({ categories }: EmojiPickerCategoryNavProps) {
+export const EmojiPickerCategoryNav = memo(function EmojiPickerCategoryNav({
+  categories,
+  onCategoryClick,
+}: EmojiPickerCategoryNavProps) {
   const ctx = useEmojiPickerContext();
 
   return (
     <div {...ctx.getStyles('categoryNav')}>
-      {categories.map((category) => {
-        const icon = CATEGORY_ICONS[category.id] || '📁';
-        return (
-          <UnstyledButton
-            key={category.id}
-            {...ctx.getStyles('categoryNavButton')}
-            aria-label={category.label}
-            title={category.label}
-            onClick={() => {
-              ctx.scrollToCategory(category.id);
-            }}
-          >
-            {icon}
-          </UnstyledButton>
-        );
-      })}
+      {categories.map((category) => (
+        <UnstyledButton
+          key={category.id}
+          {...ctx.getStyles('categoryNavButton')}
+          aria-label={category.label}
+          title={category.label}
+          onClick={() => onCategoryClick(category.id)}
+        >
+          {getCanonicalCategoryIcon(category.id) || '📁'}
+        </UnstyledButton>
+      ))}
     </div>
   );
-}
+});

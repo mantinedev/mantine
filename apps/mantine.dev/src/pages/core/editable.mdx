@@ -26,8 +26,9 @@ committed on `Enter` or blur and cancelled on `Escape`:
 
 ## Submit mode
 
-`submitMode` prop controls what commits the edit. `Escape` always reverts the value to the last
-committed state regardless of `submitMode`:
+`submitMode` prop controls what commits the edit. `Escape` always reverts the value to the one the
+field had when the current edit started, regardless of `submitMode`. Blur commits the edit only
+when focus leaves `Editable` – moving focus from the field to a trigger inside it keeps editing:
 
 - `both` (default) – the edit is committed on `Enter` and on blur
 - `enter` – the edit is committed only on `Enter`
@@ -36,6 +37,19 @@ committed state regardless of `submitMode`:
   `Editable.SubmitTrigger`
 
 <Demo data={EditableDemos.submitMode} />
+
+## Select on focus
+
+By default, the input contents are selected when the field enters edit mode so that typing replaces
+the value. Set `selectOnFocus={false}` to place the caret at the end of the value instead:
+
+```tsx
+import { Editable } from '@mantine/core';
+
+function Demo() {
+  return <Editable defaultValue="Project name" selectOnFocus={false} />;
+}
+```
 
 ## Placeholder
 
@@ -98,7 +112,13 @@ the field to fit its content and control its size with `minRows` and `maxRows`:
 
 ## useEditable hook
 
-`Editable` component supports the [controller pattern](/guides/controllers). Use the `useEditable` hook to manage `Editable` state:
+`Editable` component supports the [controller pattern](/guides/controllers). Use the `useEditable`
+hook to manage `Editable` state, to share one controller between several components or to build a
+fully custom edit-in-place UI. `useEditable` accepts the state and behavior options listed below
+(`value`, `defaultValue`, `onChange`, `onValueCommit`, `onValueRevert`, `editing`, `defaultEditing`,
+`onEditingChange`, `activationMode`, `submitMode`, `selectOnFocus`, `disabled` and `readOnly`) and
+returns the editing state and actions. Layout and field props (`multiline`, `placeholder`, `name`,
+`finalFocusRef`, etc.) stay on `Editable`:
 
 ```tsx
 import { useEditable } from '@mantine/core';
@@ -110,8 +130,8 @@ function Demo() {
   controller.isEditing(); // -> boolean, true while the field is in edit mode
 
   controller.edit(); // enters edit mode
-  controller.submit(); // commits the edit
-  controller.cancel(); // cancels the edit and reverts the value
+  controller.submit(); // commits the edit, calls onValueCommit
+  controller.cancel(); // reverts the value to the one it had when editing started, calls onValueRevert
   controller.setValue('New value'); // updates the value
 
   return null;
@@ -142,9 +162,13 @@ function Demo() {
 ## Controlling with useEditable
 
 To control `Editable` from outside, create a controller with `useEditable` and pass it to the
-`controller` prop. When a controller is provided, the option props on `Editable` are ignored – the
-controller owns the state. See the [Controllers](/guides/controllers) guide for how the pattern
-works across all components:
+`controller` prop. When a controller is provided, the props accepted by `useEditable` (listed
+above) are ignored on `Editable` – pass them to `useEditable`. See the
+[Controllers](/guides/controllers) guide for how the pattern works across all components.
+
+Buttons outside of `Editable` that call `submit` or `cancel` must call `event.preventDefault()` in
+`onMouseDown` (or `Editable` must use `submitMode="none"`) – otherwise the input loses focus on
+mousedown and the blur commits the edit before the button click is handled:
 
 <Demo data={EditableDemos.controller} />
 
@@ -174,13 +198,67 @@ cancel triggers in edit mode:
 
 `Editable` supports standard input attributes that are forwarded to the field: `disabled`,
 `readOnly`, `required`, `maxLength` and `name`. Set `name` to include the value in native form
-submission.
+submission. `readOnly` and `disabled` both make the preview non-interactive and disable
+`Editable.EditTrigger`.
+
+Limitations of native form integration:
+
+- In preview mode the value is submitted with a hidden input, which does not take part in
+  constraint validation – `required` is enforced by the browser only while the field is in edit
+  mode. Validate the value yourself if it must not be empty.
+- If the form is submitted while the field is in edit mode, the current (not yet committed) input
+  value is submitted.
+- With `submitMode="both"` or `submitMode="blur"` the edit is committed whenever focus leaves
+  `Editable`, including when the browser window loses focus (for example, when the user switches to another application).
+
+## Focus management
+
+When the edit is committed or cancelled with the keyboard (`Enter`, `Escape`) or with
+`Editable.SubmitTrigger` / `Editable.CancelTrigger`, focus returns to the preview. If the preview is
+not focusable (`activationMode="none"`), focus moves to the first focusable element inside
+`Editable`, for example `Editable.EditTrigger`. Set `finalFocusRef` to move focus to a different
+element instead. When the edit is committed by blur, focus stays where the user moved it:
+
+```tsx
+import { useRef } from 'react';
+import { Button, Editable, Group } from '@mantine/core';
+
+function Demo() {
+  const nextRef = useRef<HTMLButtonElement>(null);
+
+  return (
+    <Group>
+      <Editable defaultValue="Project name" finalFocusRef={nextRef} />
+      <Button ref={nextRef}>Next step</Button>
+    </Group>
+  );
+}
+```
+
+Moving focus from the input to an element inside `Editable` (for example, pressing `Tab` to reach
+`Editable.CancelTrigger`) does not commit the edit.
 
 ## Accessibility
 
-In `focus`, `click` and `dblclick` activation modes the preview is a `button` element, so it is
-focusable and can be activated with the keyboard. In `none` mode the preview is not interactive and
-editing is controlled with triggers or the controller.
+In `focus`, `click` and `dblclick` activation modes the preview has `role="button"` and
+`tabIndex={0}`, so it is focusable and can be activated with the keyboard. In `none` mode and when
+`disabled` or `readOnly` is set the preview is not interactive and editing is controlled with
+triggers or the controller.
+
+The preview is named by its text. Set `aria-label` or `aria-labelledby` on `Editable` to give the
+field a name that does not depend on the value – these props (and `aria-describedby`) are
+forwarded to both the preview and the input. This is required when the value can be empty and no
+`placeholder` is set:
+
+```tsx
+import { Editable } from '@mantine/core';
+
+function Demo() {
+  return <Editable aria-label="Project name" />;
+}
+```
+
+Pressing `Escape` in edit mode cancels the edit without closing an enclosing `Modal` or `Drawer`.
 
 When a trigger renders only an icon, set an `aria-label`:
 

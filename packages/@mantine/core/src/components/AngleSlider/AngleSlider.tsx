@@ -13,6 +13,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { getLastRadialStep } from './step-radial-value';
 import classes from './AngleSlider.module.css';
 
 export type AngleSliderStylesNames = 'root' | 'thumb' | 'label' | 'marks' | 'mark';
@@ -157,7 +158,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
     }
   };
 
-  const maxValue = normalizeRadialValue(360 - step, step);
+  const maxValue = getLastRadialStep(step);
 
   const { ref: radialMoveRef } = useRadialMove(update, {
     step,
@@ -197,8 +198,8 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
 
     if (DECREMENT_KEYS.has(event.key) || INCREMENT_KEYS.has(event.key)) {
       const direction = INCREMENT_KEYS.has(event.key) ? 1 : -1;
-      newValue = normalizeRadialValue((((_value + direction * delta) % 360) + 360) % 360, step);
-      newValue = newValue > maxValue ? 0 : newValue;
+      const next = _value + direction * delta;
+      newValue = next < 0 ? maxValue : next >= 360 ? 0 : normalizeRadialValue(next, step);
     } else if (event.key === 'Home') {
       newValue = 0;
     } else if (event.key === 'End') {

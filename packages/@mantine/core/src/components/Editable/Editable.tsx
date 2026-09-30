@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -25,6 +25,7 @@ import {
   useEditable,
   EditableController,
 } from './use-editable';
+import { hasFocusableAncestor, useEditableFocus } from './use-editable-focus';
 import classes from './Editable.module.css';
 
 export type EditableStylesNames =
@@ -37,9 +38,17 @@ export type EditableStylesNames =
   | 'submitTrigger'
   | 'cancelTrigger';
 
+export interface EditablePlaceholder {
+  /** Placeholder of the input displayed in edit mode */
+  edit?: string;
+
+  /** Text displayed in the preview when the value is empty */
+  preview?: string;
+}
+
 export interface EditableProps
   extends BoxProps, StylesApiProps<EditableFactory>, ElementProps<'div', 'onChange'> {
-  /** Controller returned by the `useEditable` hook. When provided, the editing state is controlled externally and the option props below are ignored */
+  /** Controller returned by the `useEditable` hook. When provided, the editing state is controlled externally and these props are ignored: `value`, `defaultValue`, `onChange`, `onValueCommit`, `onValueRevert`, `editing`, `defaultEditing`, `onEditingChange`, `activationMode`, `submitMode`, `selectOnFocus`, `disabled` and `readOnly` – pass them to `useEditable` instead */
   controller?: EditableController;
 
   /** Controlled value @category state */
@@ -51,7 +60,7 @@ export interface EditableProps
   /** Called on every value change (on each keystroke) @category state */
   onChange?: (value: string) => void;
 
-  /** Called when the edit is confirmed @category state */
+  /** Called when the edit is confirmed, on every submit even when the value did not change @category state */
   onValueCommit?: (value: string) => void;
 
   /** Called when the edit is cancelled @category state */
@@ -88,7 +97,7 @@ export interface EditableProps
   maxRows?: number;
 
   /** Placeholder text displayed when the value is empty. Can be a string or an object with `edit` and `preview` keys @category appearance */
-  placeholder?: string | { edit?: string; preview?: string };
+  placeholder?: string | EditablePlaceholder;
 
   /** If set, entering edit mode is disabled, `false` by default @category behavior */
   disabled?: boolean;
@@ -105,7 +114,7 @@ export interface EditableProps
   /** `name` attribute of the input, used for form submission */
   name?: string;
 
-  /** Element focused after the edit is confirmed with the keyboard. Defaults to the preview element */
+  /** Element focused when edit mode is exited with the keyboard or a trigger click. Defaults to the preview, or to the first focusable element inside `Editable` when the preview is not focusable */
   finalFocusRef?: React.RefObject<HTMLElement | null>;
 
   /** Custom layout built with `Editable.Preview`, `Editable.Input` and other compound components @category appearance */
@@ -169,6 +178,11 @@ export const Editable = factory<EditableFactory>((_props) => {
     name,
     finalFocusRef,
     children,
+    onBlur,
+    onMouseDown,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
     ...others
   } = props;
 
@@ -201,52 +215,53 @@ export const Editable = factory<EditableFactory>((_props) => {
     vars,
   });
 
-  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
-  const previewRef = useRef<HTMLDivElement | null>(null);
-  const returningFocusRef = useRef(false);
-  const exitViaBlurRef = useRef(false);
-  const isFirstRenderRef = useRef(true);
+  const focus = useEditableFocus({
+    editing: editable.editing,
+    selectOnFocus: editable.selectOnFocus,
+    finalFocusRef,
+  });
+  const rootRef = useMergedRef(focus.rootRef, ref);
+
+  const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+    const relatedTarget = event.relatedTarget as Node | null;
+    const leavesRoot = !relatedTarget || !event.currentTarget.contains(relatedTarget);
+
+    if (
+      editable.editing &&
+      leavesRoot &&
+      (editable.submitMode === 'both' || editable.submitMode === 'blur')
+    ) {
+      focus.markBlurExit();
+      editable.submit();
+    }
+
+    onBlur?.(event);
+  };
+
+  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (editable.editing && !hasFocusableAncestor(event.target as Element)) {
+      event.preventDefault();
+    }
+
+    onMouseDown?.(event);
+  };
 
   const normalizedPlaceholder =
     typeof placeholder === 'string'
       ? { edit: placeholder, preview: placeholder }
       : (placeholder ?? {});
 
-  useEffect(() => {
-    if (editable.editing) {
-      const input = inputRef.current;
-      if (input) {
-        input.focus();
-        if (editable.selectOnFocus) {
-          input.select();
-        }
-      }
-    } else if (!isFirstRenderRef.current) {
-      if (exitViaBlurRef.current) {
-        exitViaBlurRef.current = false;
-      } else {
-        const target = finalFocusRef?.current ?? previewRef.current;
-        if (target) {
-          if (target === previewRef.current) {
-            returningFocusRef.current = true;
-          }
-          target.focus();
-        }
-      }
-    }
-
-    isFirstRenderRef.current = false;
-  }, [editable.editing]);
-
   return (
     <EditableProvider
       value={{
         getStyles,
         controller: editable,
-        inputRef,
-        previewRef,
-        returningFocusRef,
-        exitViaBlurRef,
+        focus,
+        ariaProps: {
+          'aria-label': ariaLabel,
+          'aria-labelledby': ariaLabelledBy,
+          'aria-describedby': ariaDescribedBy,
+        },
         multiline: !!multiline,
         autosize: !!autosize,
         minRows,
@@ -257,7 +272,13 @@ export const Editable = factory<EditableFactory>((_props) => {
         name,
       }}
     >
-      <Box ref={ref} {...getStyles('root')} {...others}>
+      <Box
+        ref={rootRef}
+        {...getStyles('root')}
+        {...others}
+        onBlur={handleBlur}
+        onMouseDown={handleMouseDown}
+      >
         {name && !editable.editing ? (
           <input
             type="hidden"

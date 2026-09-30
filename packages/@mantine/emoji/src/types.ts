@@ -18,20 +18,6 @@ export interface EmojiPickerData {
   emojis: Record<string, EmojiPickerEmoji>;
 }
 
-export const CANONICAL_CATEGORY_IDS = [
-  'frequent',
-  'people',
-  'nature',
-  'foods',
-  'activity',
-  'places',
-  'objects',
-  'symbols',
-  'flags',
-] as const;
-
-export type CanonicalCategoryId = (typeof CANONICAL_CATEGORY_IDS)[number];
-
 export interface EmojiPickerLabels {
   search?: string;
   skinTone?: string;
@@ -44,6 +30,8 @@ export interface EmojiPickerLabels {
   skinToneDefault?: string;
   searchResults?: string;
   preview?: string;
+  clearSearch?: string;
+  emojis?: string;
 }
 
 export const DEFAULT_LABELS: Required<EmojiPickerLabels> = {
@@ -58,6 +46,8 @@ export const DEFAULT_LABELS: Required<EmojiPickerLabels> = {
   skinToneDefault: 'Default skin tone',
   searchResults: 'Search Results',
   preview: 'Emoji preview',
+  clearSearch: 'Clear search',
+  emojis: 'Emojis',
 };
 
 export type FlattenedRowItem =

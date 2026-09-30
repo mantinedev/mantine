@@ -17,7 +17,6 @@ function Demo() {
       defaultValue="Ping @[Walter White](walter) about it"
       minRows={3}
     >
-      {/* withTrigger keeps the trigger character visible in the mention text */}
       <Mentions.Mention trigger="@" data={users} withTrigger />
     </Mentions>
   );

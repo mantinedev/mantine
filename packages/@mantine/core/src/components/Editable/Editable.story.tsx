@@ -57,6 +57,27 @@ export function Disabled() {
   );
 }
 
+export function ReadOnly() {
+  return (
+    <Stack p={40} maw={320}>
+      <Editable defaultValue="Read only" readOnly />
+      <Editable defaultValue="Read only with trigger" readOnly activationMode="none">
+        <Editable.Preview />
+        <Editable.Input />
+        <Editable.EditTrigger aria-label="Edit">✎</Editable.EditTrigger>
+      </Editable>
+    </Stack>
+  );
+}
+
+export function EmptyWithLabel() {
+  return (
+    <div style={{ padding: 40, maxWidth: 320 }}>
+      <Editable aria-label="Project name" />
+    </div>
+  );
+}
+
 export function CustomLayout() {
   return (
     <div style={{ padding: 40, maxWidth: 320 }}>
@@ -64,17 +85,17 @@ export function CustomLayout() {
         <Editable.Preview />
         <Editable.Input />
         <Editable.Control>
-          <Editable.EditTrigger>
+          <Editable.EditTrigger aria-label="Edit">
             <ActionIcon component="span" variant="default" size="sm">
               ✎
             </ActionIcon>
           </Editable.EditTrigger>
-          <Editable.SubmitTrigger>
+          <Editable.SubmitTrigger aria-label="Save">
             <ActionIcon component="span" variant="light" color="green" size="sm">
               ✓
             </ActionIcon>
           </Editable.SubmitTrigger>
-          <Editable.CancelTrigger>
+          <Editable.CancelTrigger aria-label="Cancel">
             <ActionIcon component="span" variant="light" color="red" size="sm">
               ✕
             </ActionIcon>
@@ -104,6 +125,8 @@ export function Controlled() {
   );
 }
 
+const preventBlur = (event: React.MouseEvent) => event.preventDefault();
+
 export function ExternalController() {
   const controller = useEditable({ defaultValue: 'Controller value', activationMode: 'click' });
 
@@ -113,13 +136,13 @@ export function ExternalController() {
       <Text>value: {controller.value}</Text>
       <Text>editing: {String(controller.editing)}</Text>
       <Group>
-        <button type="button" onClick={controller.edit}>
+        <button type="button" onMouseDown={preventBlur} onClick={controller.edit}>
           edit
         </button>
-        <button type="button" onClick={controller.submit}>
+        <button type="button" onMouseDown={preventBlur} onClick={controller.submit}>
           submit
         </button>
-        <button type="button" onClick={controller.cancel}>
+        <button type="button" onMouseDown={preventBlur} onClick={controller.cancel}>
           cancel
         </button>
       </Group>

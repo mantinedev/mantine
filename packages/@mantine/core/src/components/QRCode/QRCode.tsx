@@ -14,10 +14,10 @@ import {
   useStyles,
 } from '../../core';
 import { encodeQR, QRCodeErrorCorrectionLevel } from './encode-qr';
-import { getQRCodePath } from './get-qr-path';
+import { getQRCodePath } from './get-qr-code-path';
 import classes from './QRCode.module.css';
 
-export type QRCodeStylesNames = 'root' | 'svg' | 'image';
+export type QRCodeStylesNames = 'root' | 'svg' | 'logo';
 
 export type QRCodeCssVariables = {
   root: '--qr-size' | '--qr-color';
@@ -77,6 +77,8 @@ export const QRCode = factory<QRCodeFactory>((_props) => {
     margin,
     logo,
     attributes,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
     ...others
   } = props;
 
@@ -94,27 +96,39 @@ export const QRCode = factory<QRCodeFactory>((_props) => {
     varsResolver,
   });
 
-  const { matrix, size: matrixSize } = useMemo(
-    () => encodeQR(value, { errorCorrectionLevel }),
-    [value, errorCorrectionLevel]
-  );
+  const quietZone = Number.isFinite(margin) ? Math.max(0, Math.floor(margin)) : defaultProps.margin;
 
-  const quietZone = margin ?? 4;
-  const total = matrixSize + quietZone * 2;
-  const path = useMemo(() => getQRCodePath(matrix, quietZone), [matrix, quietZone]);
+  const encoded = useMemo(() => {
+    try {
+      return encodeQR(value, { errorCorrectionLevel });
+    } catch (error) {
+      if (error instanceof RangeError) {
+        return null;
+      }
+
+      throw error;
+    }
+  }, [value, errorCorrectionLevel]);
+
+  const total = (encoded?.size ?? 0) + quietZone * 2;
+  const path = useMemo(
+    () => (encoded ? getQRCodePath(encoded.matrix, quietZone) : null),
+    [encoded, quietZone]
+  );
 
   return (
     <Box {...getStyles('root')} {...others}>
       <svg
-        {...getStyles('svg')}
         viewBox={`0 0 ${total} ${total}`}
         role="img"
-        aria-label={value}
+        aria-label={ariaLabel ?? value}
+        aria-labelledby={ariaLabelledBy}
         shapeRendering="crispEdges"
+        {...getStyles('svg')}
       >
-        <path d={path} fill="var(--qr-color)" />
+        {path && <path d={path} fill="var(--qr-color)" />}
       </svg>
-      {logo && <div {...getStyles('image')}>{logo}</div>}
+      {logo && <div {...getStyles('logo')}>{logo}</div>}
     </Box>
   );
 });

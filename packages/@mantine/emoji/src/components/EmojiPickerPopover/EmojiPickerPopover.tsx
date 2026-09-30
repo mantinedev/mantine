@@ -1,12 +1,13 @@
-import { useCallback, useState } from 'react';
+import { cloneElement, isValidElement, useCallback } from 'react';
 import { factory, Factory, Popover, PopoverProps, useProps } from '@mantine/core';
+import { useUncontrolled } from '@mantine/hooks';
 import { EmojiPickerEmoji } from '../../types';
 import { EmojiPicker, EmojiPickerProps } from '../EmojiPicker';
 import classes from './EmojiPickerPopover.module.css';
 
 export interface EmojiPickerPopoverProps extends EmojiPickerProps {
-  /** Props passed to the `Popover` component */
-  popoverProps?: Omit<PopoverProps, 'children'>;
+  /** Props passed to the `Popover` component, use `opened`, `defaultOpened` and `onOpenedChange` props to control opened state */
+  popoverProps?: Omit<PopoverProps, 'children' | 'opened' | 'defaultOpened' | 'onChange'>;
 
   /** Controlled popover opened state @category state */
   opened?: boolean;
@@ -43,19 +44,36 @@ export const EmojiPickerPopover = factory<EmojiPickerPopoverFactory>((_props) =>
     closeOnSelect,
     children,
     onEmojiSelect,
+    skinTone: skinToneProp,
+    defaultSkinTone,
+    onSkinToneChange,
     ...pickerProps
   } = props;
 
-  const [_opened, _setOpened] = useState(defaultOpened ?? false);
+  const [opened, setOpened] = useUncontrolled({
+    value: openedProp,
+    defaultValue: defaultOpened,
+    finalValue: false,
+    onChange: onOpenedChange,
+  });
 
-  const opened = openedProp ?? _opened;
-  const setOpened = useCallback(
-    (val: boolean) => {
-      _setOpened(val);
-      onOpenedChange?.(val);
-    },
-    [onOpenedChange]
-  );
+  const [skinTone, setSkinTone] = useUncontrolled({
+    value: skinToneProp,
+    defaultValue: defaultSkinTone,
+    finalValue: 0,
+    onChange: onSkinToneChange,
+  });
+
+  const isUncontrolled = openedProp === undefined;
+  const target =
+    isUncontrolled && isValidElement<{ onClick?: (event: React.MouseEvent) => void }>(children)
+      ? cloneElement(children, {
+          onClick: (event: React.MouseEvent) => {
+            setOpened(!opened);
+            children.props.onClick?.(event);
+          },
+        })
+      : children;
 
   const handleEmojiSelect = useCallback(
     (emoji: EmojiPickerEmoji) => {
@@ -69,17 +87,23 @@ export const EmojiPickerPopover = factory<EmojiPickerPopoverFactory>((_props) =>
 
   return (
     <Popover
-      opened={opened}
-      onChange={setOpened}
       position="bottom-start"
       offset={5}
       trapFocus
       returnFocus
       {...popoverProps}
+      opened={opened}
+      onChange={setOpened}
     >
-      <Popover.Target>{children}</Popover.Target>
+      <Popover.Target>{target}</Popover.Target>
       <Popover.Dropdown className={classes.dropdown}>
-        <EmojiPicker {...pickerProps} onEmojiSelect={handleEmojiSelect} autoFocus />
+        <EmojiPicker
+          {...pickerProps}
+          skinTone={skinTone}
+          onSkinToneChange={setSkinTone}
+          onEmojiSelect={handleEmojiSelect}
+          autoFocus
+        />
       </Popover.Dropdown>
     </Popover>
   );

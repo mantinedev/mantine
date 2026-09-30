@@ -8,12 +8,12 @@ import { Paper, SimpleGrid, Stat } from '@mantine/core';
 
 function Demo() {
   return (
-    <SimpleGrid cols={{ base: 1, sm: 3 }}>
+    <SimpleGrid cols={{ base: 1, sm: 3 }} w="100%">
       <Paper withBorder p="md" radius="md">
         <Stat label="Active users" value={92410} thousandSeparator diff={12.4} icon={<UsersIcon size={26} />} />
       </Paper>
       <Paper withBorder p="md" radius="md">
-        <Stat label="Revenue" value={1340.5} prefix="$" decimalScale={2} fixedDecimalScale diff={-4.1} icon={<CoinsIcon size={26} />} />
+        <Stat label="Revenue" value={1340.5} prefix="$" decimalScale={2} fixedDecimalScale thousandSeparator diff={-4.1} icon={<CoinsIcon size={26} />} />
       </Paper>
       <Paper withBorder p="md" radius="md">
         <Stat label="Orders" value={2847} thousandSeparator diff={0.8} icon={<ShoppingCartIcon size={26} />} />
@@ -42,6 +42,7 @@ function Demo() {
           prefix="$"
           decimalScale={2}
           fixedDecimalScale
+          thousandSeparator
           diff={-4.1}
           icon={<CoinsIcon size={26} />}
         />

@@ -43,6 +43,34 @@ denser code:
 
 <Demo data={QRCodeDemos.errorCorrection} />
 
+## Capacity
+
+The largest QR code (version 40) can hold a limited amount of data. The limits below are
+for arbitrary text encoded as UTF-8 bytes – non-ASCII characters take 2–4 bytes each,
+while values that contain only digits or uppercase letters fit more characters:
+
+- `L` – about 2953 bytes
+- `M` – about 2331 bytes
+- `Q` – about 1663 bytes
+- `H` – about 1273 bytes
+
+When the value is longer than the capacity of the selected level, `QRCode` renders an
+empty code instead of throwing an error. `encodeQR` throws a `RangeError` in this case,
+so you can use it to validate user input before rendering:
+
+```tsx
+import { encodeQR } from '@mantine/core';
+
+function canEncode(value: string) {
+  try {
+    encodeQR(value, { errorCorrectionLevel: 'H' });
+    return true;
+  } catch {
+    return false;
+  }
+}
+```
+
 ## Logo
 
 Pass any React node to the `logo` prop to render a centered overlay, usually a brand
@@ -65,13 +93,40 @@ const { matrix, size } = encodeQR('https://mantine.dev', { errorCorrectionLevel:
 // size – number of modules per side (without the quiet zone)
 ```
 
-The example below renders every dark module as a circle instead of a square:
+The example below renders modules as circles instead of squares. Finder patterns
+(the three large squares in the corners) and alignment patterns must stay solid squares
+so scanners can locate the code – every other module can change shape:
 
 <Demo data={QRCodeDemos.customRender} />
 
 ## Accessibility
 
 The inner `svg` element has `role="img"` and an `aria-label` set to the encoded
-`value`, so screen readers announce the content of the code. If the code is decorative
-or duplicated by nearby text, you can override these attributes with the
-[Styles API](/styles/styles-api) or by wrapping the component.
+`value`, so screen readers announce the content of the code. Set the `aria-label`
+(or `aria-labelledby`) prop to provide a more descriptive name – it is applied to
+the `svg` element:
+
+```tsx
+import { QRCode } from '@mantine/core';
+
+function Demo() {
+  return <QRCode value="https://mantine.dev" aria-label="Link to mantine.dev" />;
+}
+```
+
+Alternatively, override any attribute of the `svg` element with the `attributes` prop
+of the [Styles API](/styles/styles-api), for example to hide a decorative code that is
+duplicated by nearby text:
+
+```tsx
+import { QRCode } from '@mantine/core';
+
+function Demo() {
+  return (
+    <QRCode
+      value="https://mantine.dev"
+      attributes={{ svg: { 'aria-hidden': true } }}
+    />
+  );
+}
+```

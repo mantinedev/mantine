@@ -45,4 +45,30 @@ describe('@mantine/core/Mentions/create-markup-serializer', () => {
     expect(serializer.findAll(value)).toHaveLength(1);
     expect(serializer.findAll(value)).toHaveLength(1);
   });
+
+  it.each(['$$', '$&', '$`', "$'", '$1'])('inserts %s in id and display literally', (pattern) => {
+    const serializer = createMarkupSerializer(DEFAULT_MENTION_MARKUP);
+    expect(serializer.insert({ id: `id${pattern}`, display: `Name${pattern}` })).toBe(
+      `@[Name${pattern}](id${pattern})`
+    );
+  });
+
+  it('parses an id containing the closing delimiter up to the first delimiter (known limitation)', () => {
+    const serializer = createMarkupSerializer(DEFAULT_MENTION_MARKUP);
+    const inserted = serializer.insert({ id: 'a)b', display: 'Name' });
+    expect(inserted).toBe('@[Name](a)b)');
+    expect(serializer.findAll(inserted)[0]).toMatchObject({ id: 'a', markup: '@[Name](a)' });
+  });
+
+  it('does not replace placeholder names inside an inserted id', () => {
+    const serializer = createMarkupSerializer(DEFAULT_MENTION_MARKUP);
+    expect(serializer.insert({ id: '__display__', display: 'Name' })).toBe('@[Name](__display__)');
+  });
+
+  it('does not let a stray opening delimiter capture a mention on a later line', () => {
+    const serializer = createMarkupSerializer(DEFAULT_MENTION_MARKUP);
+    const found = serializer.findAll('x @[note\nline two @[Walter](w) end');
+    expect(found).toHaveLength(1);
+    expect(found[0]).toMatchObject({ id: 'w', display: 'Walter', markup: '@[Walter](w)' });
+  });
 });

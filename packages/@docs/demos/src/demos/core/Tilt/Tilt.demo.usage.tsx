@@ -20,7 +20,7 @@ function Demo() {
       >
         <Stack justify="center" h="100%" gap={4}>
           <Title order={3}>Hover to tilt</Title>
-          <Text>The card follows your cursor and returns to its resting position on leave.</Text>
+          <Text>The card reacts to your cursor and returns to its resting position on leave.</Text>
         </Stack>
       </Box>
     </Tilt>
@@ -44,7 +44,7 @@ function Demo() {
       >
         <Stack justify="center" h="100%" gap={4}>
           <Title order={3}>Hover to tilt</Title>
-          <Text>The card follows your cursor and returns to its resting position on leave.</Text>
+          <Text>The card reacts to your cursor and returns to its resting position on leave.</Text>
         </Stack>
       </Box>
     </Tilt>

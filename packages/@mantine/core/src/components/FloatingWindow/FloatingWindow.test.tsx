@@ -17,20 +17,20 @@ const dimensions = {
 // jsdom does not lay out elements, so `getBoundingClientRect` is mocked to
 // reflect the sizes that the component assigns to the root element
 function mockRootSize(width: number, height: number) {
-  return jest
-    .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
-    .mockImplementation(function (this: HTMLElement) {
-      return {
-        width: parseFloat(this.style.width) || width,
-        height: parseFloat(this.style.height) || height,
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        x: 0,
-        y: 0,
-      } as any;
-    });
+  return jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (
+    this: HTMLElement
+  ) {
+    return {
+      width: parseFloat(this.style.width) || width,
+      height: parseFloat(this.style.height) || height,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      x: 0,
+      y: 0,
+    } as any;
+  });
 }
 
 describe('@mantine/core/FloatingWindow', () => {

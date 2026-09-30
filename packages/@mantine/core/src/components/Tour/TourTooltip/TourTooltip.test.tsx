@@ -3,7 +3,10 @@ import { createContextContainer, renderWithAct, screen } from '@mantine-tests/co
 import { Tour } from '../Tour';
 import { TourTooltip, TourTooltipProps } from './TourTooltip';
 
-const TestContainer = createContextContainer(TourTooltip, Tour.Root, { active: true });
+const TestContainer = createContextContainer(TourTooltip, Tour.Root, {
+  active: true,
+  stepsCount: 1,
+});
 
 const defaultProps: TourTooltipProps = {
   mounted: true,
@@ -18,7 +21,7 @@ describe('@mantine/core/TourTooltip', () => {
   it('forwards ref to the rendered element', async () => {
     const ref = createRef<HTMLDivElement>();
     await renderWithAct(
-      <Tour.Root active>
+      <Tour.Root active stepsCount={1}>
         <TourTooltip {...defaultProps} ref={ref} />
       </Tour.Root>
     );
@@ -49,5 +52,42 @@ describe('@mantine/core/TourTooltip', () => {
   it('renders nothing when mounted is false', async () => {
     await renderWithAct(<TestContainer {...defaultProps} mounted={false} />);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('applies style and styles.tooltip to the dialog element', async () => {
+    await renderWithAct(
+      <TestContainer
+        {...defaultProps}
+        style={{ maxWidth: 111 }}
+        styles={{ tooltip: { color: 'red' } }}
+        className="custom-tooltip"
+      />
+    );
+    const dialog = screen.getByRole('dialog');
+    expect(dialog.style.maxWidth).toBe('111px');
+    expect(dialog.style.color).toBe('red');
+    expect(dialog).toHaveClass('custom-tooltip');
+  });
+
+  it('applies Tour.Root attributes.tooltip to the dialog element', async () => {
+    await renderWithAct(
+      <Tour.Root active stepsCount={1} attributes={{ tooltip: { 'data-testid': 'tip' } }}>
+        <TourTooltip {...defaultProps} />
+      </Tour.Root>
+    );
+    expect(screen.getByRole('dialog')).toHaveAttribute('data-testid', 'tip');
+  });
+
+  it('is labelled by a Tour.Title with a custom id', async () => {
+    await renderWithAct(
+      <TestContainer {...defaultProps}>
+        <Tour.Title id="custom-title">Custom title</Tour.Title>
+        <Tour.Body id="custom-body">Custom body</Tour.Body>
+      </TestContainer>
+    );
+    const dialog = screen.getByRole('dialog', { name: 'Custom title' });
+    expect(dialog).toHaveAttribute('aria-labelledby', 'custom-title');
+    expect(dialog).toHaveAttribute('aria-describedby', 'custom-body');
+    expect(dialog).toHaveAccessibleDescription('Custom body');
   });
 });

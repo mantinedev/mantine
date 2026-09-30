@@ -3,7 +3,6 @@ export { PersonaAvatar } from './PersonaAvatar';
 export { PersonaPresence } from './PersonaPresence';
 export { PersonaText } from './PersonaText';
 export { usePersonaContext } from './Persona.context';
-export { getPresenceProps } from './get-presence-props';
 
 export type {
   PersonaProps,
@@ -32,4 +31,5 @@ export type {
   PersonaPresenceStatus,
   PersonaPresenceConfig,
   PersonaPresenceValue,
-} from './get-presence-props';
+  PersonaPresenceLabels,
+} from './resolve-presence';

@@ -1,6 +1,7 @@
 {
   "name": "@mantine/emoji",
   "description": "Emoji picker components for Mantine",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "version": "9.0.1",
   "main": "cjs/index.cjs",
   "module": "esm/index.mjs",
@@ -25,7 +26,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mantinedev/mantine",
+    "url": "https://github.com/mantinedev/mantine.git",
     "directory": "packages/@mantine/emoji"
   },
   "homepage": "https://mantine.dev",
@@ -36,7 +37,7 @@
     "emoji-picker"
   ],
   "dependencies": {
-    "@tanstack/react-virtual": "^3.14.10"
+    "@tanstack/react-virtual": "^3.14.13"
   },
   "peerDependencies": {
     "@mantine/core": ">=9.0.0",
@@ -46,7 +47,10 @@
   },
   "devDependencies": {
     "@emoji-mart/data": "^1.2.1",
+    "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
-    "@mantine/hooks": "workspace:*"
+    "@mantine/hooks": "workspace:*",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   }
 }

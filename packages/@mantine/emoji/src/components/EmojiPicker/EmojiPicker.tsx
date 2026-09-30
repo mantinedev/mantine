@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useId, useMemo, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -24,10 +24,16 @@ import {
   EmojiPickerLabels,
   FlattenedRowItem,
 } from '../../types';
-import { applySkinTone, filterSupportedEmojis, flattenEmojiData } from '../../utils';
+import {
+  applySkinTone,
+  filterSupportedEmojis,
+  flattenEmojiData,
+  getEmojiItemIndex,
+} from '../../utils';
 import { EmojiPickerProvider } from './EmojiPicker.context';
-import { EmojiPickerCategoryNav } from './EmojiPickerCategoryNav';
-import { EmojiPickerGrid } from './EmojiPickerGrid';
+import { EmojiPickerCategoryNav, EmojiPickerNavCategory } from './EmojiPickerCategoryNav';
+import { EmojiPickerGrid, EmojiPickerScrollToItem } from './EmojiPickerGrid';
+import { EmojiPickerPreview } from './EmojiPickerPreview';
 import { EmojiPickerSearch } from './EmojiPickerSearch';
 import { EmojiPickerSkinTone } from './EmojiPickerSkinTone';
 import classes from './EmojiPicker.module.css';
@@ -39,7 +45,7 @@ export type EmojiPickerStylesNames =
   | 'categoryNav'
   | 'categoryNavButton'
   | 'content'
-  | 'category'
+  | 'empty'
   | 'categoryLabel'
   | 'grid'
   | 'emoji'
@@ -47,6 +53,7 @@ export type EmojiPickerStylesNames =
   | 'previewEmoji'
   | 'previewName'
   | 'skinToneSelector'
+  | 'skinToneDropdown'
   | 'skinToneButton';
 
 export type EmojiPickerCssVariables = {
@@ -193,13 +200,21 @@ const EMOJI_SIZES: Record<
   },
 };
 
+const EMOJI_FONT_SIZE_RATIO = 0.6;
+
+function getSizeValues(size: MantineSize | undefined) {
+  return EMOJI_SIZES[size || 'sm'] || EMOJI_SIZES.sm;
+}
+
 const varsResolver = createVarsResolver<EmojiPickerFactory>((_, { columns, emojiSize, size }) => {
-  const sizeValues = EMOJI_SIZES[size || 'sm'] || EMOJI_SIZES.sm;
+  const sizeValues = getSizeValues(size);
   return {
     root: {
       '--ep-columns': columns?.toString() ?? '9',
       '--ep-emoji-size': emojiSize ? rem(emojiSize) : rem(sizeValues.emojiSize),
-      '--ep-emoji-fz': emojiSize ? undefined : sizeValues.emojiFz,
+      '--ep-emoji-fz': emojiSize
+        ? rem(Math.round(emojiSize * EMOJI_FONT_SIZE_RATIO))
+        : sizeValues.emojiFz,
       '--ep-preview-py': sizeValues.previewPy,
       '--ep-skin-tone-size': sizeValues.skinToneSize,
       '--ep-skin-tone-fz': sizeValues.skinToneFz,
@@ -250,6 +265,7 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
     unstyled,
     vars,
     varsResolver,
+    stable: true,
   });
 
   const [skinTone, setSkinTone] = useUncontrolled({
@@ -259,6 +275,10 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
   });
 
   const cols = Math.max(columns ?? 9, 1);
+  const baseId = useId();
+  const idPrefix = `${baseId}-emoji`;
+  const gridId = `${baseId}-grid`;
+  const [activeDescendant, setActiveDescendant] = useState<string | undefined>(undefined);
 
   const filteredData = useMemo(() => {
     if (!withUnsupportedDetection) {
@@ -279,34 +299,52 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
     onSearchChange,
   });
 
-  const [hoveredEmoji, setHoveredEmoji] = useState<EmojiPickerEmoji | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const scrollToIndexRef = useRef<((index: number) => void) | null>(null);
+  const scrollToItemRef = useRef<EmojiPickerScrollToItem | null>(null);
 
   const mergedLabels: Required<EmojiPickerLabels> = useMemo(
     () => ({ ...DEFAULT_LABELS, ...labelsProp }),
     [labelsProp]
   );
 
-  const flattenedItems = useMemo(() => {
+  const ctxValue = useMemo(
+    () => ({ getStyles, labels: mergedLabels, size }),
+    [getStyles, mergedLabels, size]
+  );
+
+  const flattenedItems = useMemo<FlattenedRowItem[]>(() => {
     if (isSearching) {
-      const items: FlattenedRowItem[] = [];
-
-      if (results.length > 0) {
-        items.push({
-          type: 'header',
-          categoryId: 'search',
-          label: mergedLabels.searchResults,
-        });
-        for (let i = 0; i < results.length; i += cols) {
-          items.push({ type: 'row', emojis: results.slice(i, i + cols) });
-        }
-      }
-
-      return items;
+      return flattenEmojiData(
+        {
+          emojis: filteredData.emojis,
+          categories: [
+            {
+              id: 'search',
+              label: mergedLabels.searchResults,
+              emojis: results.map((emoji) => emoji.id),
+            },
+          ],
+        },
+        cols
+      );
     }
     return flattenEmojiData(filteredData, cols, categoryLabels);
   }, [filteredData, cols, categoryLabels, isSearching, results, mergedLabels.searchResults]);
+
+  const navCategories = useMemo(
+    () =>
+      flattenedItems.reduce<EmojiPickerNavCategory[]>((acc, item) => {
+        if (item.type === 'header') {
+          acc.push({ id: item.categoryId, label: item.label });
+        }
+        return acc;
+      }, []),
+    [flattenedItems]
+  );
+
+  const scrollToItem = useCallback((itemIndex: number) => {
+    scrollToItemRef.current?.(itemIndex, 'auto');
+  }, []);
 
   const handleEmojiSelect = useCallback(
     (emoji: EmojiPickerEmoji) => {
@@ -315,72 +353,72 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
     [onEmojiSelect]
   );
 
-  const handleEscape = useCallback(() => {
-    searchInputRef.current?.focus();
-  }, []);
-
-  const handleScrollToIndex = useCallback((rowIndex: number) => {
-    scrollToIndexRef.current?.(rowIndex);
-  }, []);
-
-  const handleScrollToCategory = useCallback(
-    (categoryId: string) => {
-      const rowIndex = flattenedItems.findIndex(
-        (item) => item.type === 'header' && item.categoryId === categoryId
-      );
-      if (rowIndex !== -1) {
-        scrollToIndexRef.current?.(rowIndex);
-      }
-    },
-    [flattenedItems]
-  );
-
   const {
-    focusedIndex,
-    setFocusedIndex,
-    focusedEmoji,
-    handleKeyDown,
+    model,
+    activeIndex,
+    activeEmoji,
     keyboardActive,
-    deactivateKeyboard,
+    handleKeyDown,
+    setPointerIndex,
+    setAnchorIndex,
   } = useEmojiGridNavigation({
-    flattenedItems,
-    columns: cols,
+    items: flattenedItems,
+    resetKey: query,
     skinTone,
     onEmojiSelect: handleEmojiSelect,
-    onEscape: handleEscape,
-    scrollToIndex: handleScrollToIndex,
+    scrollToItem,
   });
+
+  const handleGridKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === 'Escape') {
+        const focusStayedInGrid = event.currentTarget.contains(document.activeElement);
+        if (withSearch && focusStayedInGrid && searchInputRef.current) {
+          event.preventDefault();
+          searchInputRef.current.focus();
+        }
+        return;
+      }
+      handleKeyDown(event);
+    },
+    [handleKeyDown, withSearch]
+  );
 
   const handleSearchKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.nativeEvent.isComposing) {
+        return;
+      }
       if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter') {
-        handleKeyDown(event as unknown as React.KeyboardEvent);
+        handleKeyDown(event);
       }
     },
     [handleKeyDown]
   );
 
-  const ctxValue = {
-    getStyles,
-    columns: cols,
-    emojiSize,
-    skinTone,
-    size,
-    onEmojiSelect: handleEmojiSelect,
-    onSkinToneChange: setSkinTone,
-    hoveredEmoji,
-    setHoveredEmoji,
-    focusedEmojiIndex: focusedIndex,
-    setFocusedEmojiIndex: setFocusedIndex,
-    keyboardActive,
-    deactivateKeyboard,
-    flattenedItems,
-    labels: mergedLabels,
-    unstyled,
-    scrollToCategory: handleScrollToCategory,
-  };
+  const handleEmojiClick = useCallback(
+    (index: number) => {
+      const emoji = model.emojis[index];
+      if (emoji) {
+        setPointerIndex(index);
+        handleEmojiSelect(applySkinTone(emoji, skinTone));
+      }
+    },
+    [model, setPointerIndex, handleEmojiSelect, skinTone]
+  );
 
-  const previewEmoji = hoveredEmoji ? applySkinTone(hoveredEmoji, skinTone) : focusedEmoji;
+  const handleCategoryClick = useCallback(
+    (categoryId: string) => {
+      const itemIndex = flattenedItems.findIndex(
+        (item) => item.type === 'header' && item.categoryId === categoryId
+      );
+      if (itemIndex !== -1) {
+        setAnchorIndex(model.itemOffsets[itemIndex]);
+        scrollToItemRef.current?.(itemIndex, 'start');
+      }
+    },
+    [flattenedItems, model, setAnchorIndex]
+  );
 
   return (
     <EmojiPickerProvider value={ctxValue}>
@@ -393,48 +431,44 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
             autoFocus={autoFocus}
             inputRef={searchInputRef}
             onKeyDown={handleSearchKeyDown}
+            controls={flattenedItems.length > 0 ? gridId : undefined}
+            activeDescendant={activeDescendant}
             searchInputProps={searchInputProps}
           />
         )}
 
         {withCategoryNav && !isSearching && (
-          <EmojiPickerCategoryNav categories={filteredData.categories} />
+          <EmojiPickerCategoryNav
+            categories={navCategories}
+            onCategoryClick={handleCategoryClick}
+          />
         )}
 
-        {flattenedItems.length > 0 ? (
-          <EmojiPickerGrid
-            items={flattenedItems}
-            onKeyDown={handleKeyDown}
-            focusedEmojiIndex={focusedIndex}
-            emojiSize={emojiSize ?? (EMOJI_SIZES[size || 'sm'] || EMOJI_SIZES.sm).emojiSize}
-            scrollToIndexRef={scrollToIndexRef}
-            scrollAreaProps={scrollAreaProps}
-          />
-        ) : (
-          <div
-            {...getStyles('content')}
-            style={{ height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          >
-            {emptySearchContent || mergedLabels.noResults}
-          </div>
-        )}
+        <EmojiPickerGrid
+          items={flattenedItems}
+          itemOffsets={model.itemOffsets}
+          columns={cols}
+          skinTone={skinTone}
+          focusedIndex={keyboardActive ? activeIndex : -1}
+          focusedItemIndex={keyboardActive ? getEmojiItemIndex(model, activeIndex) : -1}
+          idPrefix={idPrefix}
+          gridId={gridId}
+          onActiveDescendantChange={setActiveDescendant}
+          emojiSize={emojiSize ?? getSizeValues(size).emojiSize}
+          emptyContent={emptySearchContent || mergedLabels.noResults}
+          onKeyDown={handleGridKeyDown}
+          onPointerIndex={setPointerIndex}
+          onEmojiClick={handleEmojiClick}
+          scrollToItemRef={scrollToItemRef}
+          scrollAreaProps={scrollAreaProps}
+        />
 
         {(withPreview || withSkinToneSelector) && (
-          <div {...getStyles('preview')} aria-live="polite">
-            {withPreview && (
-              <>
-                <span {...getStyles('previewEmoji')}>
-                  {previewEmoji ? previewEmoji.emoji : null}
-                </span>
-                <span {...getStyles('previewName')}>{previewEmoji ? previewEmoji.name : null}</span>
-              </>
-            )}
+          <EmojiPickerPreview emoji={activeEmoji} skinTone={skinTone} withPreview={!!withPreview}>
             {withSkinToneSelector && (
-              <div style={{ marginLeft: 'auto' }}>
-                <EmojiPickerSkinTone />
-              </div>
+              <EmojiPickerSkinTone skinTone={skinTone} onSkinToneChange={setSkinTone} />
             )}
-          </div>
+          </EmojiPickerPreview>
         )}
       </Box>
     </EmojiPickerProvider>

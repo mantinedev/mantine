@@ -55,6 +55,8 @@ export const MDX_CODE_HIGHLIGHT_DATA: Record<string, Frontmatter> = {
     styles: ['Diff'],
     description: 'Highlight differences between two strings',
     source: '@mantine/code-highlight/src/Diff/Diff.tsx',
+    license: 'MIT',
     docs: 'code-highlight/diff.mdx',
+    searchTags: 'diff, compare, changes, code review, side by side',
   },
 };

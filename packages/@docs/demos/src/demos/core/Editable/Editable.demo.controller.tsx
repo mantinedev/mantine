@@ -4,6 +4,8 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { Button, Editable, Group, Stack, Text, useEditable } from '@mantine/core';
 
+const preventBlur = (event: React.MouseEvent) => event.preventDefault();
+
 function Demo() {
   const controller = useEditable({ defaultValue: 'Controlled by the hook' });
 
@@ -12,9 +14,15 @@ function Demo() {
       <Editable controller={controller} />
 
       <Group>
-        <Button size="xs" variant="default" onClick={controller.edit}>Edit</Button>
-        <Button size="xs" variant="default" onClick={controller.submit}>Submit</Button>
-        <Button size="xs" variant="default" onClick={controller.cancel}>Cancel</Button>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={controller.edit}>
+          Edit
+        </Button>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={controller.submit}>
+          Submit
+        </Button>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={controller.cancel}>
+          Cancel
+        </Button>
       </Group>
 
       <Text size="sm">
@@ -25,6 +33,8 @@ function Demo() {
 }
 `;
 
+const preventBlur = (event: React.MouseEvent) => event.preventDefault();
+
 function Demo() {
   const controller = useEditable({ defaultValue: 'Controlled by the hook' });
 
@@ -33,13 +43,13 @@ function Demo() {
       <Editable controller={controller} />
 
       <Group>
-        <Button size="xs" variant="default" onClick={controller.edit}>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={controller.edit}>
           Edit
         </Button>
-        <Button size="xs" variant="default" onClick={controller.submit}>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={controller.submit}>
           Submit
         </Button>
-        <Button size="xs" variant="default" onClick={controller.cancel}>
+        <Button size="xs" variant="default" onMouseDown={preventBlur} onClick={controller.cancel}>
           Cancel
         </Button>
       </Group>

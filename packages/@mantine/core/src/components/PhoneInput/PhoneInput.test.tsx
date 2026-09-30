@@ -222,6 +222,132 @@ describe('@mantine/core/PhoneInput', () => {
     expect(onCountryChange).not.toHaveBeenCalled();
   });
 
+  it('auto-detects a country sharing the dial code when its area code is typed', () => {
+    const onCountryChange = jest.fn();
+    render(
+      <PhoneInput
+        {...testProps}
+        defaultCountry="us"
+        withCountryAutoDetect
+        onCountryChange={onCountryChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+12045551234' } });
+
+    expect(screen.getByRole('button', { name: /Canada/ })).toBeInTheDocument();
+    expect(onCountryChange).toHaveBeenCalledWith(expect.objectContaining({ iso2: 'ca' }));
+  });
+
+  it('keeps selected country sharing the dial code when no area code matches', () => {
+    const onCountryChange = jest.fn();
+    render(
+      <PhoneInput
+        {...testProps}
+        defaultCountry="ca"
+        withCountryAutoDetect
+        onCountryChange={onCountryChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+15' } });
+
+    expect(screen.getByRole('button', { name: /Canada/ })).toBeInTheDocument();
+    expect(onCountryChange).not.toHaveBeenCalled();
+  });
+
+  it('re-guesses country from controlled value when onlyCountries changes', () => {
+    const { rerender } = render(
+      <PhoneInput
+        {...testProps}
+        value="+442071234567"
+        onlyCountries={['us']}
+        onChange={jest.fn()}
+      />
+    );
+    expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+
+    rerender(
+      <PhoneInput
+        {...testProps}
+        value="+442071234567"
+        onlyCountries={['us', 'gb']}
+        onChange={jest.fn()}
+      />
+    );
+    expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
+  });
+
+  it('calls onCountryChange when controlled value switches to another dial code', () => {
+    const onCountryChange = jest.fn();
+    const { rerender } = render(
+      <PhoneInput
+        {...testProps}
+        value="+12025551234"
+        onChange={jest.fn()}
+        onCountryChange={onCountryChange}
+      />
+    );
+    expect(onCountryChange).not.toHaveBeenCalled();
+
+    rerender(
+      <PhoneInput
+        {...testProps}
+        value="+442071234567"
+        onChange={jest.fn()}
+        onCountryChange={onCountryChange}
+      />
+    );
+    expect(onCountryChange).toHaveBeenCalledTimes(1);
+    expect(onCountryChange).toHaveBeenCalledWith(expect.objectContaining({ iso2: 'gb' }));
+  });
+
+  it('does not call onCountryChange when controlled value keeps the same dial code without area match', () => {
+    const onCountryChange = jest.fn();
+    const { rerender } = render(
+      <PhoneInput
+        {...testProps}
+        value="+1204"
+        onChange={jest.fn()}
+        onCountryChange={onCountryChange}
+      />
+    );
+    expect(screen.getByRole('button', { name: /Canada/ })).toBeInTheDocument();
+
+    rerender(
+      <PhoneInput
+        {...testProps}
+        value="+15551234567"
+        onChange={jest.fn()}
+        onCountryChange={onCountryChange}
+      />
+    );
+    expect(screen.getByRole('button', { name: /Canada/ })).toBeInTheDocument();
+    expect(onCountryChange).not.toHaveBeenCalled();
+  });
+
+  it('auto-detects country from typed dial code when international is false', () => {
+    const onChange = jest.fn();
+    const onCountryChange = jest.fn();
+    render(
+      <PhoneInput
+        {...testProps}
+        international={false}
+        withCountryAutoDetect
+        onChange={onChange}
+        onCountryChange={onCountryChange}
+      />
+    );
+
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    fireEvent.change(input, { target: { value: '+44' } });
+
+    expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
+    expect(onCountryChange).toHaveBeenCalledWith(expect.objectContaining({ iso2: 'gb' }));
+    expect(onChange).toHaveBeenLastCalledWith('+44', expect.anything());
+    expect(input.value).toBe('');
+  });
+
   it('does not display dial code prefix when international is false', async () => {
     const onChange = jest.fn();
     render(<PhoneInput {...testProps} international={false} onChange={onChange} />);
@@ -234,6 +360,74 @@ describe('@mantine/core/PhoneInput', () => {
       '+12025551234',
       expect.objectContaining({ formattedValue: expect.any(String) })
     );
+  });
+
+  it('keeps cursor after inserted digit when international is false', async () => {
+    render(<PhoneInput {...testProps} international={false} defaultValue="+12025551234" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    expect(input.value).toBe('(202) 555-1234');
+
+    fireEvent.change(input, { target: { value: '(2092) 555-1234', selectionStart: 4 } });
+    await new Promise((resolve) => setTimeout(resolve, 30));
+
+    expect(input.value).toBe('(209) 255-5123');
+    expect(input.selectionStart).toBe(4);
+  });
+
+  it('keeps cursor after digit inserted at the start of a short national value', async () => {
+    render(<PhoneInput {...testProps} international={false} defaultValue="+12" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    expect(input.value).toBe('(2');
+
+    fireEvent.change(input, { target: { value: '9(2', selectionStart: 1 } });
+    await new Promise((resolve) => setTimeout(resolve, 30));
+
+    expect(input.value).toBe('(92');
+    expect(input.selectionStart).toBe(2);
+  });
+
+  it('sets aria-expanded and aria-controls on country button', async () => {
+    render(<PhoneInput {...testProps} onlyCountries={['us', 'gb']} />);
+    const button = screen.getByRole('button', { name: /United States/ });
+    expect(button).toHaveAttribute('aria-haspopup', 'listbox');
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+    expect(button).not.toHaveAttribute('aria-controls');
+
+    await userEvent.click(button);
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+    expect(button).toHaveAttribute('aria-controls', screen.getByRole('listbox').id);
+  });
+
+  it('places cursor at the start of national digits after country change when international is false', async () => {
+    render(
+      <PhoneInput
+        {...testProps}
+        international={false}
+        onlyCountries={['us', 'gb']}
+        defaultValue="+12025551234"
+      />
+    );
+    await userEvent.click(screen.getByRole('button', { name: /United States/ }));
+    await userEvent.click(screen.getByRole('option', { name: /United Kingdom/ }));
+    await new Promise((resolve) => setTimeout(resolve, 30));
+
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    expect(input.value).not.toContain('+44');
+    expect(input.selectionStart).toBe(0);
+  });
+
+  it('forwards autoComplete to the input', () => {
+    render(<PhoneInput {...testProps} autoComplete="tel" />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('autocomplete', 'tel');
+  });
+
+  it('moves focus to the input when non-searchable dropdown is opened from country button', async () => {
+    render(<PhoneInput {...testProps} searchable={false} onlyCountries={['us', 'gb']} />);
+    await userEvent.click(screen.getByRole('button', { name: /United States/ }));
+    expect(screen.getByRole('textbox')).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+    expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
   });
 
   it('updates button when controlled value changes via rerender', () => {

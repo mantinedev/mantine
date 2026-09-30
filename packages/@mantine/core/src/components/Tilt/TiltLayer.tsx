@@ -40,7 +40,7 @@ export const TiltLayer = factory<TiltLayerFactory>((_props) => {
   const { classNames, className, style, styles, depth, shift, ...others } = props;
   const ctx = useTiltContext();
 
-  const offset = (depth ?? 1) * (shift ?? 20);
+  const offset = depth * shift;
 
   return (
     <Box
@@ -50,7 +50,7 @@ export const TiltLayer = factory<TiltLayerFactory>((_props) => {
         styles,
         style: [
           {
-            transform: `translate(${ctx.tilt * offset}px, ${ctx.roll * offset}px)`,
+            transform: `translate(${ctx.tilt * offset}px, ${-ctx.roll * offset}px)`,
             transition: ctx.transition,
           },
           style,

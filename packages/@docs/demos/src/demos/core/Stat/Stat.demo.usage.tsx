@@ -2,7 +2,7 @@ import { Stat } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 function Wrapper(props: any) {
-  return <Stat label="Active users" value={92410} thousandSeparator diff={12.4} {...props} />;
+  return <Stat label="Active users" value={92410} thousandSeparator {...props} />;
 }
 
 const code = `
@@ -12,9 +12,8 @@ function Demo() {
   return (
     <Stat
       label="Active users"
-      value={92_410}
-      thousandSeparator
-      diff={12.4}{{props}}
+      value={92410}
+      thousandSeparator{{props}}
     />
   );
 }

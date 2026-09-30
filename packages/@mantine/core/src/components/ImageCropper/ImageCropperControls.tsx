@@ -103,7 +103,7 @@ export const ImageCropperControls = forwardRef<HTMLDivElement, ImageCropperContr
               step={controller.zoomStep}
               label={(value) => `${value.toFixed(1)}×`}
               onChange={controller.setZoom}
-              aria-label="Zoom"
+              thumbLabel="Zoom"
             />
 
             <ActionIcon

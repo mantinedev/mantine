@@ -7,7 +7,9 @@ import { useState } from 'react';
 import { Button, DownloadTrigger, Stack, Text } from '@mantine/core';
 
 async function generateReport(): Promise<string> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => {
+    setTimeout(resolve, 1000);
+  });
   throw new Error('Server is not available');
 }
 
@@ -29,7 +31,11 @@ function Demo() {
         )}
       </DownloadTrigger>
 
-      {error && <Text c="red" size="sm">{error}</Text>}
+      {error && (
+        <Text c="red" size="sm">
+          {error}
+        </Text>
+      )}
     </Stack>
   );
 }

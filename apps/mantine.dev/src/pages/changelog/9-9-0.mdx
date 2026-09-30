@@ -3,8 +3,13 @@ import {
   CompareSliderDemos,
   DownloadTriggerDemos,
   NumberInputDemos,
+  PersonaDemos,
+  QRCodeDemos,
   ScrollAreaDemos,
+  StatDemos,
+  TiltDemos,
   UseCountdownDemos,
+  UseTiltDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -72,3 +77,51 @@ hidden content past it and disappears once that edge is reached. Use `scrollFade
 length of the fade gradient:
 
 <Demo data={ScrollAreaDemos.scrollFade} />
+
+## QRCode component
+
+New [QRCode](/core/qr-code) component generates and renders QR codes as SVG. The
+encoder is bundled with `@mantine/core`, so it works without additional dependencies
+and supports server-side rendering. It is themeable with the `color` and `bg` props,
+supports a centered `logo` overlay, and exposes the `encodeQR` function for custom
+rendering:
+
+<Demo data={QRCodeDemos.usage} />
+
+## Tilt component
+
+New [Tilt](/core/tilt) component rotates its content in 3D in response to the pointer position
+and device orientation. It owns the `perspective` container and the transform, supports a layered
+depth effect with `Tilt.Layer`, an optional pointer-following `withGlare`, `trackWindow` to react
+to the pointer anywhere on the page, and respects `prefers-reduced-motion`:
+
+<Demo data={TiltDemos.layers} />
+
+## use-tilt hook
+
+New [use-tilt](/hooks/use-tilt) hook powers the `Tilt` component. It produces normalized `roll`
+and `tilt` values from the pointer position over a target element and, when available, the device
+orientation gyroscope. It is headless – map the returned values to CSS transforms to build tilt
+and layered depth effects that respond to the cursor on desktop and to device tilt on mobile:
+
+<Demo data={UseTiltDemos.card} />
+
+## Persona component
+
+New [Persona](/core/persona) component displays a person identity: an avatar, an optional
+presence badge and up to four stacked text lines. It composes `Avatar` and renders its own
+presence badge in a single component that is useful in people pickers, contact and chat lists,
+comment authors and profile headers. It supports presence statuses, initials and
+image avatars, configurable text position and alignment, and a polymorphic root:
+
+<Demo data={PersonaDemos.people} />
+
+## Stat component
+
+New [Stat](/core/stat) component displays a single key metric: a label, a formatted value,
+an optional prefix/suffix, a trend indicator and a countdown variant. It composes existing
+`NumberFormatter`, `RollingNumber` and `Skeleton` primitives into the dashboard-stat primitive,
+with a `diff` prop for up/down trends, an `animate` prop for value transitions, a `loading` state
+and a `Stat.Countdown` sub-component that ticks down to a target time:
+
+<Demo data={StatDemos.statRow} />

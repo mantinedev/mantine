@@ -6,7 +6,9 @@ export function Usage() {
   return (
     <div style={{ padding: 40, display: 'flex', gap: 20 }}>
       <QRCode value="https://mantine.dev" />
-      <QRCode value="https://mantine.dev" unstyled />
+      <div style={{ width: 160, height: 160 }}>
+        <QRCode value="https://mantine.dev" unstyled />
+      </div>
     </div>
   );
 }
@@ -58,6 +60,50 @@ export function WithLogo() {
           />
         }
       />
+    </div>
+  );
+}
+
+export function EmptyValue() {
+  return (
+    <div style={{ padding: 40 }}>
+      <QRCode value="" />
+    </div>
+  );
+}
+
+export function LongValue() {
+  return (
+    <div style={{ padding: 40 }}>
+      <QRCode value={'a'.repeat(2000)} size={400} />
+    </div>
+  );
+}
+
+export function OverCapacity() {
+  return (
+    <div style={{ padding: 40 }}>
+      <QRCode value={'a'.repeat(3000)} />
+    </div>
+  );
+}
+
+export function StringSize() {
+  return (
+    <div style={{ padding: 40, display: 'flex', gap: 20, alignItems: 'flex-start', width: 600 }}>
+      <QRCode value="https://mantine.dev" size="12rem" />
+      <QRCode value="https://mantine.dev" size="50%" />
+    </div>
+  );
+}
+
+export function DarkScheme() {
+  return (
+    <div
+      data-mantine-color-scheme="dark"
+      style={{ padding: 40, background: 'var(--mantine-color-dark-7)' }}
+    >
+      <QRCode value="https://mantine.dev" />
     </div>
   );
 }

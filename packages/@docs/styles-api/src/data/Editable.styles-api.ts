@@ -26,5 +26,15 @@ export const EditableStylesApi: StylesApiData<EditableFactory> = {
       selector: 'preview',
       condition: '`disabled` prop is set',
     },
+    {
+      modifier: 'data-read-only',
+      selector: 'preview',
+      condition: '`readOnly` prop is set',
+    },
+    {
+      modifier: 'data-multiline',
+      selector: 'preview',
+      condition: '`multiline` prop is set',
+    },
   ],
 };

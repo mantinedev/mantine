@@ -31,18 +31,10 @@ export interface MentionSerializer {
 export interface MentionSearchContext {
   /** Aborted automatically when the request becomes stale */
   signal: AbortSignal;
-
-  /** Pagination token, always `null` in the current version (reserved for future use) */
-  cursor: string | null;
-
-  /** Reason the data function was called, always `'query'` in the current version */
-  reason: 'query' | 'page';
 }
 
 /** Result returned by a `data` function */
-export type MentionResult =
-  | MentionItem[]
-  | { items: MentionItem[]; nextCursor?: string | null; hasMore?: boolean };
+export type MentionResult = MentionItem[] | { items: MentionItem[] };
 
 /** Function based on which suggestions are resolved, can be sync or async */
 export type MentionDataFn = (
@@ -69,13 +61,24 @@ export interface MentionOccurrence {
 }
 
 /** Type of the change that produced a new value */
-export type MentionsChangeTriggerType =
+export type MentionsChangeReasonType =
   | 'input'
   | 'paste'
   | 'cut'
   | 'mention-add'
   | 'mention-remove'
-  | 'insert-text';
+  | 'insert-text'
+  | 'undo'
+  | 'redo';
+
+/** Information about what caused a value change */
+export interface MentionsChangeReason {
+  /** Type of the change */
+  type: MentionsChangeReasonType;
+
+  /** Native event that caused the change, not set when the change has no DOM event (mention insertion, keyboard undo/redo) */
+  nativeEvent?: Event;
+}
 
 /** Payload passed to the `Mentions` `onChange` handler */
 export interface MentionsChangePayload {
@@ -98,32 +101,56 @@ export interface MentionsChangePayload {
   previousValue: string;
 
   /** Information about what caused the change */
-  trigger: {
-    type: MentionsChangeTriggerType;
-    nativeEvent?: Event;
-  };
+  reason: MentionsChangeReason;
 }
 
-/** Normalized configuration of a single `Mentions.Mention`, consumed by the pure utilities */
-export interface MentionConfig {
-  /** Trigger that opens this source's dropdown */
-  trigger: string | RegExp;
+/** Caret-aware state of a mention relative to the current selection */
+export type MentionSelectionState = 'inside' | 'boundary' | 'partial' | 'full';
 
-  /** Markup template stored in the value */
-  markup: string;
+/** Input passed to the `Mentions` `renderMention` function */
+export interface MentionsRenderMentionInput {
+  /** Mention id stored in the value */
+  id: string;
 
-  /** Serializer used to store and parse this source's mentions */
-  serializer: MentionSerializer;
+  /** Mention display text */
+  display: string;
 
-  /** Transforms the display text of a stored mention */
-  displayTransform: MentionDisplayTransform;
+  /** Trigger of the `Mentions.Mention` that produced the mention */
+  trigger: string;
 
-  /** If set, the trigger is kept as a prefix in the visible text of a stored mention */
-  withTrigger: boolean;
+  /** Caret-aware state of the mention, `null` when the selection does not touch it */
+  selectionState: MentionSelectionState | null;
 }
 
-/** Public alias used by the `getMentions` helper */
-export type MentionConfigInput = MentionConfig;
+/** Input passed to the `Mentions.Mention` `renderSuggestion` function */
+export interface MentionRenderSuggestionInput {
+  /** Suggestion item */
+  item: MentionItem;
 
-/** Direction used when mapping a plain-text index that falls inside a mention */
-export type MentionMapDirection = 'START' | 'END' | 'NULL';
+  /** Current query typed after the trigger */
+  query: string;
+
+  /** `true` when the option is selected with the keyboard, or is the first option when the dropdown opens */
+  highlighted: boolean;
+
+  /** Index of the option in the suggestions list */
+  index: number;
+}
+
+/** Function that filters the items of a static `data` array for the current query */
+export type MentionsFilter = (input: { query: string; items: MentionItem[] }) => MentionItem[];
+
+/** Lightweight source descriptor accepted by the public `getMentions` helper */
+export interface MentionSourceConfig {
+  /** Trigger that opens this source's dropdown @default '@' */
+  trigger?: string | RegExp;
+
+  /** Markup template or serializer @default `${trigger}[__display__](__id__)` */
+  markup?: string | MentionSerializer;
+
+  /** Customizes the visible text of a stored mention @default (_, display) => display */
+  displayTransform?: MentionDisplayTransform;
+
+  /** If set, the trigger character is kept as a prefix in the visible text of the mention @default false */
+  withTrigger?: boolean;
+}

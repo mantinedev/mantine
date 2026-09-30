@@ -1,8 +1,18 @@
 /*
- * Vendored from `uqr` (https://github.com/unjs/uqr) — MIT License.
+ * Vendored from uqr 0.1.3 (https://github.com/unjs/uqr) — MIT License.
+ * uqr is a port of the QR Code generator library by Project Nayuki
+ * (https://www.nayuki.io/page/qr-code-generator-library).
  * Copyright (c) Project Nayuki, Copyright (c) 2023 Anthony Fu.
- * See ./LICENSE for the full license text. Only the encoder is vendored;
- * uqr's ANSI/Unicode/SVG renderers are intentionally omitted.
+ * See ./LICENSE for the full license text.
+ *
+ * Local changes compared to uqr 0.1.3:
+ * - Only the encoder is vendored: uqr's renderers (renderANSI, renderUnicode,
+ *   renderUnicodeCompact, renderSVG) and the getDataAt helper are removed together
+ *   with their renderer-only option types
+ * - TypeScript types adjusted for the Mantine build (strict mode)
+ * - Formatted with oxfmt
+ * - Lone UTF-16 surrogates are replaced with U+FFFD by the Mantine boundary
+ *   (../encode-qr.ts) before reaching this encoder, the algorithm is unchanged
  */
 
 import { EccMap, encodeSegments, makeBytes, makeSegments } from './qrcode';

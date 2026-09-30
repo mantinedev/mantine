@@ -21,7 +21,7 @@ import { CountryOptionContent } from './CountryOptionContent';
 import { clampToMask, formatPhoneNumber } from './format-phone-number/format-phone-number';
 import { filterCountries, getCountries } from './get-countries/get-countries';
 import { getDigits } from './get-digits/get-digits';
-import { guessCountry } from './guess-country/guess-country';
+import { guessCountry, matchesAreaCode } from './guess-country/guess-country';
 import { ALL_COUNTRIES, PhoneInputCountryData } from './phone-data';
 import classes from './PhoneInput.module.css';
 
@@ -165,6 +165,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     onDropdownClose,
     withChevron,
     nothingFoundMessage,
+    autoComplete,
     ref,
     ...others
   } = props;
@@ -225,7 +226,11 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
   const store = useCombobox({
     opened: dropdownOpened,
     onDropdownOpen: () => {
-      store.focusSearchInput();
+      if (searchable) {
+        store.focusSearchInput();
+      } else {
+        store.focusTarget();
+      }
       onDropdownOpen?.();
     },
     onDropdownClose: () => {
@@ -234,20 +239,36 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     },
   });
 
-  useEffect(() => {
-    if (value) {
-      const detected = guessCountry(value, filteredCountries);
-      if (detected && detected.iso2 !== selectedCountry?.iso2) {
-        setSelectedCountry(detected);
-      }
-    }
-  }, [value]);
+  const isDetectedCountryDifferent = (
+    detected: PhoneInputCountryData,
+    current: PhoneInputCountryData | null,
+    rawValue: string
+  ) =>
+    detected.iso2 !== current?.iso2 &&
+    (detected.dialCode !== current?.dialCode || matchesAreaCode(detected, rawValue));
 
   useEffect(() => {
-    if (selectedCountry && !filteredCountries.find((c) => c.iso2 === selectedCountry.iso2)) {
-      setSelectedCountry(filteredCountries[0] || null);
+    const detected = value ? guessCountry(value, filteredCountries) : undefined;
+
+    if (detected) {
+      if (isDetectedCountryDifferent(detected, selectedCountry, value ?? '')) {
+        setSelectedCountry(detected);
+        onCountryChange?.(detected);
+      }
+      return;
     }
-  }, [filteredCountries]);
+
+    if (selectedCountry && !filteredCountries.find((c) => c.iso2 === selectedCountry.iso2)) {
+      const fallback = filteredCountries[0] || null;
+      setSelectedCountry(fallback);
+      if (fallback) {
+        onCountryChange?.(fallback);
+      }
+    }
+  }, [value, filteredCountries]);
+
+  const toDisplayValue = (formatted: string, country: PhoneInputCountryData | null) =>
+    international || !country ? formatted : formatted.replace(`+${country.dialCode} `, '');
 
   const focusInputAfterDialCode = useCallback(
     (country: PhoneInputCountryData, rawValue: string) => {
@@ -257,6 +278,10 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
           return;
         }
         input.focus();
+        if (!international) {
+          input.setSelectionRange(0, 0);
+          return;
+        }
         const formatted = formatPhoneNumber(rawValue, country);
         const dialCodePrefix = `+${country.dialCode} `;
         const cursorPos = formatted.startsWith(dialCodePrefix)
@@ -265,7 +290,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
         input.setSelectionRange(cursorPos, cursorPos);
       });
     },
-    []
+    [international]
   );
 
   const handleValueChange = (rawValue: string, country: PhoneInputCountryData | null) => {
@@ -312,11 +337,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
     if (canAutoDetect) {
       const detected = guessCountry(fullRaw, filteredCountries);
-      if (
-        detected &&
-        detected.iso2 !== selectedCountry?.iso2 &&
-        detected.dialCode !== selectedCountry?.dialCode
-      ) {
+      if (detected && isDetectedCountryDifferent(detected, selectedCountry, fullRaw)) {
         country = detected;
         setSelectedCountry(detected);
         onCountryChange?.(detected);
@@ -325,7 +346,14 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
     const newRaw = canAutoDetect ? fullRaw : clampToMask(fullRaw, country);
     const newFormatted = country ? formatPhoneNumber(newRaw, country) : newRaw;
-    const newCursor = computeCursorPosition(inputValue, cursorPos, newRaw, newFormatted);
+    const newDisplayRaw =
+      international || !country ? newRaw : newRaw.slice(country.dialCode.length + 1);
+    const newCursor = computeCursorPosition(
+      inputValue,
+      cursorPos,
+      newDisplayRaw,
+      toDisplayValue(newFormatted, country)
+    );
 
     setValue(newRaw);
     onChange?.(newRaw, { formattedValue: newFormatted, country });
@@ -363,10 +391,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
   const formattedValue =
     _value === '+' ? '+' : selectedCountry ? formatPhoneNumber(_value, selectedCountry) : _value;
-  const displayValue =
-    international || !selectedCountry
-      ? formattedValue
-      : formattedValue.replace(`+${selectedCountry.dialCode} `, '');
+  const displayValue = toDisplayValue(formattedValue, selectedCountry);
 
   const preferredIso2Set = useMemo(
     () => new Set(preferredList.map((c) => c.iso2)),
@@ -403,7 +428,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       onOptionSubmit={handleCountrySelect}
       {...comboboxProps}
     >
-      <Combobox.Target targetType="input">
+      <Combobox.Target targetType="input" autoComplete={autoComplete}>
         <InputBase
           ref={inputRef}
           type="tel"
@@ -414,6 +439,9 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
               disabled={disabled || readOnly}
               onClick={() => store.toggleDropdown()}
               aria-label={selectedCountry ? selectedCountry.name : 'Select country'}
+              aria-haspopup="listbox"
+              aria-expanded={store.dropdownOpened}
+              aria-controls={store.dropdownOpened ? (store.getListId() ?? undefined) : undefined}
               {...getStyles('countryButton', { focusable: true })}
             >
               {countryButtonContent}

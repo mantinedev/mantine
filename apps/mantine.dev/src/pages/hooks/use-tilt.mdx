@@ -15,6 +15,13 @@ element returns to its original position:
 
 <Demo data={UseTiltDemos.usage} />
 
+Assign `ref` to a static wrapper and apply the transform to its child: when the tracked element
+itself rotates, its receding edge can move out from under the pointer, which triggers
+`mouseleave`, resets the rotation and makes the element flicker near its edges.
+
+If you need a ready-to-use component with glare and layered depth effect, use the
+[Tilt](/core/tilt) component, which is built on top of this hook.
+
 ## Definition
 
 ```tsx
@@ -27,16 +34,16 @@ interface UseTiltOptions {
    *  Ignored when the trackWindow option is set to true, true by default */
   resetOnLeave?: boolean;
 
-  /** Adjusts raw device orientation roll value before it is returned */
+  /** Adjusts normalized device orientation roll value before it is returned */
   deviceOrientationRollAdjust?: (value: number) => number;
 
-  /** Adjusts raw device orientation tilt value before it is returned */
+  /** Adjusts normalized device orientation tilt value before it is returned */
   deviceOrientationTiltAdjust?: (value: number) => number;
 
-  /** Adjusts raw mouse roll value before it is returned */
+  /** Adjusts normalized mouse roll value before it is returned */
   mouseRollAdjust?: (value: number) => number;
 
-  /** Adjusts raw mouse tilt value before it is returned */
+  /** Adjusts normalized mouse tilt value before it is returned */
   mouseTiltAdjust?: (value: number) => number;
 }
 
@@ -44,10 +51,10 @@ interface UseTiltReturnValue<T extends HTMLElement = any> {
   /** Ref callback that must be assigned to the target element */
   ref: React.RefCallback<T | null>;
 
-  /** Vertical tilt normalized to `[-0.5, 0.5]` for mouse input */
+  /** Vertical tilt normalized to `[-0.5, 0.5]` for mouse input, positive when the pointer is above the center of the element */
   roll: number;
 
-  /** Horizontal tilt normalized to `[-0.5, 0.5]` for mouse input */
+  /** Horizontal tilt normalized to `[-0.5, 0.5]` for mouse input, positive when the pointer is right of the center of the element */
   tilt: number;
 
   /** Input source that produced the current `roll` and `tilt` values */
@@ -63,8 +70,11 @@ function useTilt<T extends HTMLElement = any>(
 
 `roll` is the vertical tilt and `tilt` is the horizontal tilt. For mouse input both values are
 normalized relative to the target center: they are `0` when the cursor is over the center and
-approach `-0.5`/`0.5` at the edges. Multiply them by the number of degrees or pixels you need
-and apply the result to a `transform`:
+approach `-0.5`/`0.5` at the edges. `roll` is positive when the pointer is above the center and
+`tilt` is positive when the pointer is right of the center. For device orientation, `roll` is
+`-beta / 90` and `tilt` is `gamma / 90`. Multiply the values by the number of degrees or pixels
+you need and apply the result to a `transform`. With `rotateX(roll)` and `rotateY(tilt)`, the
+edge under the pointer moves away from the viewer, as if the element were pressed at that point:
 
 ```tsx
 import { useTilt } from '@mantine/hooks';
@@ -73,9 +83,8 @@ function Demo() {
   const { ref, roll, tilt } = useTilt<HTMLDivElement>();
 
   return (
-    <div style={{ perspective: 800 }}>
+    <div ref={ref} style={{ perspective: 800 }}>
       <div
-        ref={ref}
         style={{
           transform: `rotateX(${roll * 20}deg) rotateY(${tilt * 20}deg)`,
         }}
@@ -127,10 +136,10 @@ limit the effect.
 
 ## Adjusting values
 
-Use the `*Adjust` options to transform the raw values before they are returned. This is useful
+Use the `*Adjust` options to transform the normalized values before they are returned. This is useful
 to amplify, dampen, clamp or invert the effect independently for each input source. In the
-example below the mouse values are inverted and amplified, so the card tilts away from the
-cursor:
+example below the mouse values are inverted and amplified, so the edge under the cursor lifts
+towards the viewer instead of moving away:
 
 <Demo data={UseTiltDemos.adjust} />
 

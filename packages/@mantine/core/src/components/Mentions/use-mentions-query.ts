@@ -1,16 +1,27 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { MentionDataFn, MentionItem, MentionResult } from './Mentions.types';
+import { MentionDataFn, MentionItem, MentionResult, MentionsFilter } from './Mentions.types';
 import { ResolvedMentionSource } from './resolve-sources';
-
-export type MentionsFilter = (input: { query: string; items: MentionItem[] }) => MentionItem[];
 
 export interface MentionsQueryState {
   items: MentionItem[];
   loading: boolean;
   error: unknown;
+  generation: number;
 }
 
-const EMPTY_STATE: MentionsQueryState = { items: [], loading: false, error: null };
+interface AsyncQueryState extends MentionsQueryState {
+  sourceIndex: number;
+  query: string | null;
+}
+
+const EMPTY_STATE: MentionsQueryState = { items: [], loading: false, error: null, generation: 0 };
+const LOADING_STATE: MentionsQueryState = {
+  items: [],
+  loading: true,
+  error: null,
+  generation: 0,
+};
+const EMPTY_ASYNC_STATE: AsyncQueryState = { ...EMPTY_STATE, sourceIndex: -1, query: null };
 
 function deburr(value: string): string {
   return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -43,55 +54,65 @@ export interface UseMentionsQueryInput {
   filter: false | MentionsFilter | undefined;
 }
 
-/** Resolves suggestions for the active mention source, handling local filtering and async data with abort + debounce */
 export function useMentionsQuery({
   source,
   query,
   enabled,
   filter,
 }: UseMentionsQueryInput): MentionsQueryState {
-  const [asyncState, setAsyncState] = useState<MentionsQueryState>(EMPTY_STATE);
-  const abortRef = useRef<AbortController | null>(null);
+  const [asyncState, setAsyncState] = useState<AsyncQueryState>(EMPTY_ASYNC_STATE);
   const debounceRef = useRef<number>(-1);
+  const generationRef = useRef(0);
 
   const data = source?.props.data;
   const maxSuggestions = source?.props.maxSuggestions;
   const debounceMs = source?.props.debounceMs ?? 0;
   const ignoreAccents = source?.props.ignoreAccents;
   const isFunctionData = typeof data === 'function';
-  const sourceIndex = source?.index ?? -1;
+  const sourceIndex = source?.sourceIndex ?? -1;
+  const hasSource = source != null;
 
   useEffect(() => {
     if (!enabled || query == null || !isFunctionData) {
-      abortRef.current?.abort();
-      window.clearTimeout(debounceRef.current);
-      setAsyncState(EMPTY_STATE);
+      setAsyncState(EMPTY_ASYNC_STATE);
       return undefined;
     }
 
     const dataFn = data as MentionDataFn;
-    abortRef.current?.abort();
-    window.clearTimeout(debounceRef.current);
-
     const controller = new AbortController();
-    abortRef.current = controller;
-    setAsyncState((current) => ({ ...current, loading: true, error: null }));
+    const context = { signal: controller.signal };
+
+    setAsyncState((current) =>
+      current.sourceIndex === sourceIndex && current.query === query
+        ? { ...current, loading: true, error: null }
+        : { ...LOADING_STATE, sourceIndex, query }
+    );
 
     const run = () => {
       Promise.resolve()
-        .then(() => dataFn(query, { signal: controller.signal, cursor: null, reason: 'query' }))
+        .then(() => dataFn(query, context))
         .then((result) => {
           if (!controller.signal.aborted) {
             setAsyncState({
               items: capItems(resolveResult(result), maxSuggestions),
               loading: false,
               error: null,
+              generation: ++generationRef.current,
+              sourceIndex,
+              query,
             });
           }
         })
         .catch((error) => {
           if (!controller.signal.aborted) {
-            setAsyncState({ items: [], loading: false, error });
+            setAsyncState({
+              items: [],
+              loading: false,
+              error,
+              generation: ++generationRef.current,
+              sourceIndex,
+              query,
+            });
           }
         });
     };
@@ -108,11 +129,8 @@ export function useMentionsQuery({
     };
   }, [sourceIndex, query, enabled, isFunctionData, data, maxSuggestions, debounceMs]);
 
-  // Array data is filtered synchronously so it always reflects the latest data/filter. It is
-  // memoized so the resulting `items` keeps a stable identity across unrelated re-renders (for
-  // example while navigating the dropdown), which keeps keyboard selection in place.
   const arrayState = useMemo<MentionsQueryState | null>(() => {
-    if (isFunctionData || !enabled || query == null || !source) {
+    if (isFunctionData || !enabled || query == null || !hasSource) {
       return null;
     }
     const items = data == null ? [] : (data as MentionItem[]);
@@ -122,12 +140,30 @@ export function useMentionsQuery({
         : filter
           ? filter({ query, items })
           : defaultFilter({ query, items }, ignoreAccents);
-    return { items: capItems(filtered, maxSuggestions), loading: false, error: null };
-  }, [isFunctionData, enabled, query, sourceIndex, data, filter, maxSuggestions, ignoreAccents]);
+    return {
+      items: capItems(filtered, maxSuggestions),
+      loading: false,
+      error: null,
+      generation: 0,
+    };
+  }, [isFunctionData, enabled, query, hasSource, data, filter, maxSuggestions, ignoreAccents]);
+
+  const asyncResult = useMemo<MentionsQueryState>(
+    () =>
+      asyncState.sourceIndex === sourceIndex && asyncState.query === query
+        ? {
+            items: asyncState.items,
+            loading: asyncState.loading,
+            error: asyncState.error,
+            generation: asyncState.generation,
+          }
+        : LOADING_STATE,
+    [asyncState, sourceIndex, query]
+  );
 
   if (!enabled || query == null || !source) {
     return EMPTY_STATE;
   }
 
-  return arrayState ?? asyncState;
+  return arrayState ?? asyncResult;
 }

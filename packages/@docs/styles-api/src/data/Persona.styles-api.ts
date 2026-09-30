@@ -17,6 +17,14 @@ export const PersonaStylesApi: StylesApiData<PersonaFactory> = {
       '--persona-presence-size': 'Controls presence badge width and height',
       '--persona-primary-fz': 'Controls primary text `font-size`',
       '--persona-secondary-fz': 'Controls secondary, tertiary and quaternary text `font-size`',
+      '--persona-presence-offset':
+        'Distance from the avatar corner to the presence badge center, `14.6%` (on the circle edge) for round avatars and `0px` (on the corner) for other `radius` values',
+    },
+    presence: {
+      '--persona-presence-color':
+        'Presence badge color, set by the `data-status` attribute; override it with `vars` or `styles`',
+      '--persona-presence-ring-color':
+        'Color of the ring that separates the badge from the avatar and of the ring statuses fill, `var(--mantine-color-body)` by default',
     },
   },
 
@@ -35,6 +43,12 @@ export const PersonaStylesApi: StylesApiData<PersonaFactory> = {
       modifier: 'data-presence-only',
       selector: 'root',
       condition: '`presenceOnly` prop is set',
+    },
+    {
+      modifier: 'data-status',
+      selector: 'presence',
+      value:
+        'Resolved presence status, for example `available` or `busy`, unrecognized statuses resolve to `unknown`',
     },
     {
       modifier: 'data-variant',

@@ -1,7 +1,7 @@
 import { DiffResult } from '../diff-algorithm';
 
 export interface LineEntry {
-  type: 'add' | 'remove' | 'equal';
+  type: DiffResult['type'];
   value: string;
   oldLineNumber?: number;
   newLineNumber?: number;
@@ -20,7 +20,7 @@ export function splitIntoLines(results: DiffResult[]): LineEntry[] {
         break;
       }
 
-      const value = i < lines.length - 1 ? `${lines[i]}\n` : lines[i];
+      const value = i < lines.length - 1 ? lines[i].replace(/\r$/, '') : lines[i];
       const entry: LineEntry = { type: result.type, value };
 
       if (result.type === 'equal') {

@@ -94,10 +94,9 @@ function Demo() {
 
 ## Canonical category IDs
 
-The adapters output categories using canonical IDs so that `categoryLabels` overrides work
-consistently across data sources:
+The adapters output categories using canonical IDs and labels so that `categoryLabels` overrides
+work consistently across data sources. Categories are emitted in the following order:
 
-- `frequent` – Frequently Used
 - `people` – Smileys & People
 - `nature` – Animals & Nature
 - `foods` – Food & Drink
@@ -106,3 +105,7 @@ consistently across data sources:
 - `objects` – Objects
 - `symbols` – Symbols
 - `flags` – Flags
+
+`frequent` (Frequently Used) is not emitted by the adapters. It is reserved for custom data:
+add a category with `id: 'frequent'` (for example, with recently used emojis) to your data
+and it is displayed with a clock icon in the category navigation.

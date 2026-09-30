@@ -1,4 +1,18 @@
-import { DiffDemos, EmojiPickerDemos, EmojiPickerInputDemos, EmojiPickerPopoverDemos, MaskedDateInputDemos, PhoneInputDemos, QuarterPickerDemos, QuarterPickerInputDemos, WeekPickerDemos, WeekPickerInputDemos } from '@docs/demos';
+import {
+  DiffDemos,
+  EmojiPickerDemos,
+  EmojiPickerInputDemos,
+  EmojiPickerPopoverDemos,
+  MaskedDateInputDemos,
+  MentionsDemos,
+  PhoneInputDemos,
+  QuarterPickerDemos,
+  QuarterPickerInputDemos,
+  UseActiveElementDemos,
+  UseBrowserLanguageDemos,
+  WeekPickerDemos,
+  WeekPickerInputDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -16,7 +30,7 @@ All funds are used to improve Mantine and create new features and components.
 New `@mantine/emoji` package provides emoji picker components. The package works with
 any emoji data source through adapters — built-in adapters for
 [emoji-mart](https://www.npmjs.com/package/@emoji-mart/data) and
-[emojibase](https://www.npmjs.com/package/emojibase) are included.
+[emojibase-data](https://www.npmjs.com/package/emojibase-data) are included.
 
 ### EmojiPicker
 
@@ -97,3 +111,34 @@ and the corresponding input components has been reworked:
 - When the dropdown of `DatePickerInput` and other input components is closed after a keyboard interaction,
   focus is returned to the input
 - Dropdown start padding is reduced when presets are displayed
+
+## use-active-element hook
+
+New [use-active-element](/hooks/use-active-element) hook reactively tracks
+`document.activeElement` – the element that currently has focus. It updates as focus moves,
+pierces shadow roots to return the truly-focused element inside web components, and can observe
+DOM removals so the returned value stays in sync when the focused element is unmounted. It is
+useful to build focus-aware UI or to decide whether a global keyboard shortcut should fire:
+
+<Demo data={UseActiveElementDemos.usage} />
+
+## use-browser-language hook
+
+New [use-browser-language](/hooks/use-browser-language) hook reactively reads the user's browser
+language preference from `navigator.language` and updates when it changes. It ships with a
+`usePreferredLanguages` sibling hook that returns the full ordered list of preferred languages
+from `navigator.languages`. Both hooks are useful to pick a default locale for formatting or i18n
+fallback without a full internationalization library:
+
+<Demo data={UseBrowserLanguageDemos.usage} />
+
+## Mentions component
+
+New [Mentions](/core/mentions) component captures `@`-mentions (and any other trigger) in a textarea.
+Typing a trigger opens a suggestions dropdown; picking a suggestion inserts a structured mention token
+into the value. The value is stored as markup (`@[Display](id)`) that preserves a stable id for each
+mention and round-trips through editing, while the user only ever sees the plain text. It supports
+multiple triggers, async data sources with `AbortSignal` cancellation, caret-anchored or inline
+suggestions and caret-aware mention styling, all with no third-party dependencies:
+
+<Demo data={MentionsDemos.usage} />

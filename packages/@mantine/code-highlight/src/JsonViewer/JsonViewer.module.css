@@ -15,30 +15,34 @@
     border: 1px solid;
     border-color: var(--mantine-color-border);
   }
-
-  [data-controls] {
-    display: flex;
-    gap: var(--mantine-spacing-xs);
-    padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
-    border-bottom: 1px solid;
-    border-color: var(--mantine-color-border);
-
-    [data-control] {
-      font-size: var(--mantine-font-size-xs);
-      padding: 2px 8px;
-      border-radius: var(--mantine-radius-sm);
-      color: var(--mantine-color-subtle-color);
-      background-color: var(--mantine-color-neutral-1);
-
-      @mixin hover {
-        background-color: var(--mantine-color-neutral-3);
-      }
-    }
-  }
 }
 
-.scrollarea {
-  /* empty for styling override target */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  border-bottom: 1px solid;
+
+  .copyAllButton ~ & {
+    padding-right: calc(44px + var(--mantine-spacing-xs));
+  }
+
+  border-color: var(--mantine-color-border);
+}
+
+.control {
+  font-size: var(--mantine-font-size-xs);
+  white-space: nowrap;
+  padding: 2px 8px;
+  border-radius: var(--mantine-radius-sm);
+
+  color: var(--mantine-color-subtle-color);
+  background-color: var(--mantine-color-neutral-1);
+
+  @mixin hover {
+    background-color: var(--mantine-color-neutral-3);
+  }
 }
 
 .content {
@@ -47,7 +51,7 @@
 
   .wrapper > & {
     flex: 1;
-    min-width: 0;
+    min-width: min-content;
   }
 }
 
@@ -56,11 +60,13 @@
   flex-direction: column;
   user-select: none;
   text-align: right;
-  padding: var(--mantine-spacing-xs) 0;
-  padding-right: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs);
+  padding-left: var(--mantine-spacing-sm);
   margin-right: var(--mantine-spacing-xs);
   border-right: 1px solid;
-  min-width: 2em;
+  box-sizing: content-box;
+  min-width: 2ch;
+
   border-color: var(--mantine-color-border);
   color: var(--mantine-color-dimmed);
 
@@ -86,8 +92,11 @@
     position: relative;
 
     & > * {
-      position: relative;
       z-index: 1;
+    }
+
+    & > :not(.toggle) {
+      position: relative;
     }
 
     &::before {
@@ -150,15 +159,19 @@
     opacity: 1;
   }
 
+  &[data-hoverable] {
+    @mixin hover {
+      .copyButton {
+        opacity: 1;
+      }
+    }
+  }
+
   &[data-hoverable]:not([data-root]) {
     cursor: default;
 
     @mixin hover {
       background-color: var(--mantine-color-hover-strong);
-
-      .copyButton {
-        opacity: 1;
-      }
     }
   }
 }
@@ -195,9 +208,14 @@
 }
 
 .value {
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
+  white-space: pre;
   line-height: 1.55;
+
+  &[data-wrap] {
+    min-width: 20ch;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
 
   &[data-value-type='string'] {
     @mixin where-light {
@@ -239,6 +257,21 @@
       color: var(--mantine-color-red-4);
     }
   }
+
+  &[data-value-type='bigint'] {
+    @mixin where-light {
+      color: var(--mantine-color-blue-7);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-blue-4);
+    }
+  }
+
+  &[data-value-type='circular'] {
+    font-style: italic;
+    color: var(--mantine-color-dimmed);
+  }
 }
 
 .bracket {
@@ -266,8 +299,7 @@
   }
 
   &[data-value-type='number'],
-  &[data-value-type='int'],
-  &[data-value-type='float'] {
+  &[data-value-type='bigint'] {
     @mixin where-light {
       background-color: var(--mantine-color-blue-0);
       color: var(--mantine-color-blue-7);
@@ -279,8 +311,7 @@
     }
   }
 
-  &[data-value-type='boolean'],
-  &[data-value-type='bool'] {
+  &[data-value-type='boolean'] {
     @mixin where-light {
       background-color: var(--mantine-color-orange-0);
       color: var(--mantine-color-orange-7);
@@ -303,6 +334,11 @@
       background-color: rgba(250, 82, 82, 0.15);
       color: var(--mantine-color-red-4);
     }
+  }
+
+  &[data-value-type='circular'] {
+    background-color: var(--mantine-color-neutral-1);
+    color: var(--mantine-color-subtle-color);
   }
 
   &[data-value-type='array'] {
@@ -335,6 +371,7 @@
   white-space: nowrap;
   flex-shrink: 0;
   align-self: center;
+
   color: var(--mantine-color-dimmed);
 }
 
@@ -385,6 +422,7 @@
   height: 28px;
   border-radius: var(--mantine-radius-sm);
   opacity: 0.5;
+
   color: var(--mantine-color-subtle-color);
   background-color: var(--mantine-color-surface-muted);
 

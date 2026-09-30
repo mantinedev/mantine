@@ -9,9 +9,8 @@ function Wrapper(props: any) {
     <Persona
       name="Vitaly Rtishchev"
       secondaryText="Creator of Mantine"
-      tertiaryText="Available"
+      tertiaryText="Local time 4:32 PM"
       avatar={{ src: IMAGE }}
-      presence="available"
       {...props}
     />
   );
@@ -25,9 +24,9 @@ function Demo() {
     <Persona
       name="Vitaly Rtishchev"
       secondaryText="Creator of Mantine"
-      tertiaryText="Available"
+      tertiaryText="Local time 4:32 PM"
       avatar={{ src: image }}
-      presence="available"{{props}}
+      {{props}}
     />
   );
 }

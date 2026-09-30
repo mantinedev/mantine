@@ -23,6 +23,11 @@ export const Demo_presenceOnly = {
   render: renderDemo(demos.presenceOnly),
 };
 
+export const Demo_radius = {
+  name: '⭐ Demo: radius',
+  render: renderDemo(demos.radius),
+};
+
 export const Demo_compound = {
   name: '⭐ Demo: compound',
   render: renderDemo(demos.compound),

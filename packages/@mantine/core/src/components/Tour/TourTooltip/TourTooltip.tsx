@@ -12,6 +12,7 @@ import {
   useProps,
 } from '../../../core';
 import { getFloatingPosition, FloatingPosition } from '../../../utils/Floating';
+import { FocusTrap } from '../../FocusTrap';
 import { Transition, TransitionOverride } from '../../Transition';
 import { useTourContext } from '../Tour.context';
 import { useTooltipAutoFocus } from '../use-tooltip-auto-focus';
@@ -30,7 +31,7 @@ export interface TourTooltipProps
   /** Whether the tooltip is visible */
   mounted?: boolean;
 
-  /** Transition props for the tooltip */
+  /** Transition props for the tooltip, merged with `transitionProps` of `Tour.Root` */
   transitionProps?: TransitionOverride;
 }
 
@@ -83,38 +84,47 @@ export const TourTooltip = factory<TourTooltipFactory>((_props) => {
     middleware: [offset(12), flip(), shift({ padding: 8 })],
   });
 
-  const autoFocusRef = useTooltipAutoFocus(true);
+  const trapActive = !!mounted && ctx.withOverlay && !ctx.withOverlayInteraction;
+  const autoFocusRef = useTooltipAutoFocus({
+    autoFocus: !!mounted && !trapActive,
+    opened: !!mounted,
+    step: ctx.step,
+  });
+  const transition = { ...ctx.transitionProps, ...transitionProps };
   const mergedRef = useMergedRef(refs.setFloating, autoFocusRef, ref);
+  const tooltipStyles = ctx.getStyles('tooltip', { className, classNames, style, styles });
 
   return (
     <Transition
       mounted={!!mounted}
-      duration={transitionProps?.duration ?? 200}
-      transition={transitionProps?.transition ?? 'fade'}
-      timingFunction={transitionProps?.timingFunction}
+      duration={transition.duration ?? 200}
+      transition={transition.transition ?? 'fade'}
+      timingFunction={transition.timingFunction}
     >
       {(transitionStyles) => (
-        <Box
-          ref={mergedRef}
-          role={role ?? 'dialog'}
-          tabIndex={tabIndex ?? -1}
-          aria-labelledby={ariaLabelledBy ?? (ctx.titleMounted ? ctx.titleId : undefined)}
-          aria-label={
-            ariaLabel ??
-            (ctx.titleMounted ? undefined : ctx.labels.stepCounter(ctx.step + 1, ctx.stepsCount))
-          }
-          aria-describedby={ariaDescribedBy ?? (ctx.bodyMounted ? ctx.bodyId : undefined)}
-          {...ctx.getStyles('tooltip', { className, classNames, style, styles })}
-          data-centered={!targetElement || undefined}
-          style={{
-            ...ctx.getStyles('tooltip').style,
-            ...(targetElement ? floatingStyles : {}),
-            ...transitionStyles,
-          }}
-          {...others}
-        >
-          {children}
-        </Box>
+        <FocusTrap active={trapActive} innerRef={mergedRef}>
+          <Box
+            role={role ?? 'dialog'}
+            tabIndex={tabIndex ?? -1}
+            aria-labelledby={ariaLabelledBy ?? (ctx.titleMounted ? ctx.titleId : undefined)}
+            aria-label={
+              ariaLabel ??
+              (ctx.titleMounted ? undefined : ctx.labels.stepCounter(ctx.step + 1, ctx.stepsCount))
+            }
+            aria-describedby={ariaDescribedBy ?? (ctx.bodyMounted ? ctx.bodyId : undefined)}
+            {...tooltipStyles}
+            data-centered={!targetElement || undefined}
+            style={{
+              ...tooltipStyles.style,
+              ...(targetElement ? floatingStyles : {}),
+              ...transitionStyles,
+            }}
+            {...others}
+          >
+            {trapActive && <FocusTrap.InitialFocus />}
+            {children}
+          </Box>
+        </FocusTrap>
       )}
     </Transition>
   );

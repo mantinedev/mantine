@@ -1,57 +1,11 @@
-import { PersonaPresenceStatus } from './get-presence-props';
+import { Avatar } from '../Avatar';
+import { Tooltip } from '../Tooltip';
 import { Persona } from './Persona';
 
 export default { title: 'Persona' };
 
 const IMAGE =
   'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png';
-
-const STATUSES: PersonaPresenceStatus[] = [
-  'available',
-  'away',
-  'busy',
-  'do-not-disturb',
-  'offline',
-  'out-of-office',
-  'blocked',
-  'unknown',
-];
-
-export function Usage() {
-  return (
-    <div style={{ padding: 40, maxWidth: 320 }}>
-      <Persona
-        name="Vitaly Rtishchev"
-        secondaryText="Creator of Mantine"
-        tertiaryText="Available"
-        avatar={{ src: IMAGE }}
-        presence="available"
-      />
-    </div>
-  );
-}
-
-export function Initials() {
-  return (
-    <div style={{ padding: 40, maxWidth: 320 }}>
-      <Persona
-        name="Jane Doe"
-        secondaryText="Product designer"
-        presence={{ status: 'busy', outOfOffice: true }}
-      />
-    </div>
-  );
-}
-
-export function Statuses() {
-  return (
-    <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {STATUSES.map((status) => (
-        <Persona key={status} name="Jane Doe" secondaryText={status} presence={status} />
-      ))}
-    </div>
-  );
-}
 
 export function Processing() {
   return (
@@ -100,46 +54,6 @@ export function TextPosition() {
   );
 }
 
-export function PresenceOnly() {
-  return (
-    <div style={{ padding: 40, maxWidth: 320 }}>
-      <Persona
-        name="Server status"
-        secondaryText="All systems operational"
-        presence="available"
-        presenceOnly
-      />
-    </div>
-  );
-}
-
-export function Radius() {
-  return (
-    <div style={{ padding: 40, maxWidth: 320 }}>
-      <Persona
-        name="Vitaly Rtishchev"
-        secondaryText="Creator of Mantine"
-        avatar={{ src: IMAGE }}
-        presence="available"
-        radius="md"
-      />
-    </div>
-  );
-}
-
-export function Compound() {
-  return (
-    <div style={{ padding: 40, maxWidth: 320 }}>
-      <Persona>
-        <Persona.Avatar src={IMAGE} />
-        <Persona.Presence presence="available" />
-        <Persona.Text level={1}>Vitaly Rtishchev</Persona.Text>
-        <Persona.Text level={2}>Creator of Mantine</Persona.Text>
-      </Persona>
-    </div>
-  );
-}
-
 export function Polymorphic() {
   return (
     <div style={{ padding: 40, maxWidth: 320 }}>
@@ -147,11 +61,105 @@ export function Polymorphic() {
         component="a"
         href="https://mantine.dev"
         target="_blank"
+        rel="noopener noreferrer"
         name="Vitaly Rtishchev"
         secondaryText="Open profile"
         avatar={{ src: IMAGE }}
         presence="available"
       />
+    </div>
+  );
+}
+
+export function PolymorphicButton() {
+  return (
+    <div style={{ padding: 40, maxWidth: 320 }}>
+      <Persona
+        component="button"
+        name="Vitaly Rtishchev"
+        secondaryText="Open profile"
+        avatar={{ src: IMAGE }}
+        presence="available"
+      />
+    </div>
+  );
+}
+
+export function Labels() {
+  return (
+    <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <Persona
+        name="Jane Doe"
+        secondaryText="Produktdesignerin"
+        presence="available"
+        labels={{ available: 'Verfügbar', busy: 'Beschäftigt', outOfOffice: 'nicht im Büro' }}
+      />
+      <Persona
+        name="John Doe"
+        secondaryText="Ortszeit 16:32"
+        presence={{ status: 'busy', outOfOffice: true }}
+        labels={{ available: 'Verfügbar', busy: 'Beschäftigt', outOfOffice: 'nicht im Büro' }}
+      />
+      <Persona labels={{ away: 'Abwesend' }}>
+        <Persona.Avatar name="Max Mustermann" />
+        <Persona.Presence presence="away" labels={{ away: '' }} />
+        <Persona.Text level={1}>Max Mustermann</Persona.Text>
+        <Persona.Text level={2}>Abwesend</Persona.Text>
+      </Persona>
+    </div>
+  );
+}
+
+export function BelowTruncation() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ width: 120, outline: '1px dashed gray' }}>
+        <Persona
+          textPosition="below"
+          name="Vitaly Rtishchev the creator of Mantine"
+          secondaryText="Creator of Mantine and many other open source libraries"
+          avatar={{ src: IMAGE }}
+          presence="available"
+        />
+      </div>
+    </div>
+  );
+}
+
+export function CustomAvatar() {
+  return (
+    <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <Persona
+        name="Jane Doe"
+        secondaryText="Custom avatar node"
+        avatar={
+          <Avatar color="grape" variant="filled" aria-hidden>
+            JD
+          </Avatar>
+        }
+        presence="busy"
+      />
+      <Persona
+        name="Jane Doe"
+        secondaryText="Avatar color override"
+        avatar={{ color: 'blue' }}
+        presence="available"
+      />
+    </div>
+  );
+}
+
+export function TooltipPresence() {
+  return (
+    <div style={{ padding: 40, maxWidth: 320 }}>
+      <Persona component="a" href="#">
+        <Persona.Avatar src={IMAGE} name="Vitaly Rtishchev" />
+        <Tooltip label="Busy">
+          <Persona.Presence presence="busy" />
+        </Tooltip>
+        <Persona.Text level={1}>Vitaly Rtishchev</Persona.Text>
+        <Persona.Text level={2}>Hover the badge</Persona.Text>
+      </Persona>
     </div>
   );
 }

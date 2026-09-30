@@ -1,5 +1,6 @@
-import { getPlainText } from './get-plain-text';
+import { getIdText, getPlainText } from './get-plain-text';
 import { createTestConfig } from './test-helpers';
+import { walkMentions } from './walk-mentions';
 
 describe('@mantine/core/Mentions/get-plain-text', () => {
   const configs = [createTestConfig('@')];
@@ -10,8 +11,8 @@ describe('@mantine/core/Mentions/get-plain-text', () => {
     );
   });
 
-  it('renders the id instead of the display when idOnly is set', () => {
-    expect(getPlainText('Hey @[Walter White](walter)', configs, { idOnly: true })).toBe(
+  it('renders the id instead of the display with getIdText', () => {
+    expect(getIdText(walkMentions('Hey @[Walter White](walter)', configs), configs)).toBe(
       'Hey @walter'
     );
   });
@@ -19,7 +20,7 @@ describe('@mantine/core/Mentions/get-plain-text', () => {
   it('hides the trigger prefix when withTrigger is not set', () => {
     const hidden = [createTestConfig('@', '@[__display__](__id__)', (_id, d) => d, false)];
     expect(getPlainText('Hey @[Walter White](walter)', hidden)).toBe('Hey Walter White');
-    expect(getPlainText('Hey @[Walter White](walter)', hidden, { idOnly: true })).toBe(
+    expect(getIdText(walkMentions('Hey @[Walter White](walter)', hidden), hidden)).toBe(
       'Hey walter'
     );
   });
@@ -38,7 +39,23 @@ describe('@mantine/core/Mentions/get-plain-text', () => {
     expect(getPlainText('@[Walter](walter) tagged #[news](1)', multi)).toBe('@Walter tagged #news');
   });
 
+  it('renders ids of multiple sources without their displayTransform with getIdText', () => {
+    const multi = [
+      createTestConfig('@', '@[__display__](__id__)', (id) => id.toUpperCase()),
+      createTestConfig('#', '#[__display__](__id__)', (_id, d) => d, false),
+    ];
+    const value = '@[Walter](walter) tagged #[news](1)';
+    expect(getPlainText(value, multi)).toBe('@WALTER tagged news');
+    expect(getIdText(walkMentions(value, multi), multi)).toBe('@walter tagged 1');
+  });
+
   it('returns the value unchanged when there are no mentions', () => {
     expect(getPlainText('plain text', configs)).toBe('plain text');
+  });
+
+  it('keeps a stray opening delimiter as text instead of capturing a mention on a later line', () => {
+    expect(getPlainText('x @[note\nline two @[Walter](w) end', configs)).toBe(
+      'x @[note\nline two @Walter end'
+    );
   });
 });

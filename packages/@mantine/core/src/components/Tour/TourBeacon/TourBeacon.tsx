@@ -63,6 +63,7 @@ export const TourBeacon = factory<TourBeaconFactory>((_props) => {
   });
 
   const mergedRef = useMergedRef(refs.setFloating, ref);
+  const beaconStyles = ctx.getStyles('beacon', { className, classNames, style, styles });
 
   if (!element) {
     return null;
@@ -73,9 +74,9 @@ export const TourBeacon = factory<TourBeaconFactory>((_props) => {
       ref={mergedRef}
       role="button"
       aria-label={ariaLabel || ctx.labels.beacon}
-      {...ctx.getStyles('beacon', { className, classNames, style, styles })}
+      {...beaconStyles}
       style={{
-        ...ctx.getStyles('beacon').style,
+        ...beaconStyles.style,
         ...floatingStyles,
       }}
       onClick={onClick}

@@ -173,4 +173,32 @@ describe('@mantine/hooks/use-tilt', () => {
     expect(removeSpy).toHaveBeenCalledWith('deviceorientation', expect.any(Function));
     removeSpy.mockRestore();
   });
+
+  it('removes mousemove and mouseleave listeners from the target on unmount', () => {
+    const { unmount } = render(<Target />);
+    const target = screen.getByTestId('target');
+    const removeSpy = jest.spyOn(target, 'removeEventListener');
+
+    unmount();
+
+    expect(removeSpy).toHaveBeenCalledWith('mousemove', expect.any(Function));
+    expect(removeSpy).toHaveBeenCalledWith('mouseleave', expect.any(Function));
+  });
+
+  it('rebinds mousemove listener when trackWindow changes', () => {
+    const { rerender } = render(<Target />);
+    const target = screen.getByTestId('target');
+    mockRect(target);
+
+    rerender(<Target options={{ trackWindow: true }} />);
+    fireEvent.mouseMove(window, { clientX: 150, clientY: 25 });
+    expect(target).toHaveTextContent('mouse 0.25 0.25');
+
+    rerender(<Target options={{ trackWindow: false }} />);
+    fireEvent.mouseMove(window, { clientX: 100, clientY: 50 });
+    expect(target).toHaveTextContent('mouse 0.25 0.25');
+
+    fireEvent.mouseMove(target, { clientX: 100, clientY: 50 });
+    expect(target).toHaveTextContent('mouse 0 0');
+  });
 });

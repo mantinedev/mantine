@@ -1,5 +1,6 @@
-import { MentionConfig, MentionDisplayTransform } from '../Mentions.types';
+import { MentionDisplayTransform } from '../Mentions.types';
 import { createMarkupSerializer } from './create-markup-serializer';
+import type { MentionConfig } from './types';
 
 export function createTestConfig(
   trigger: string,
@@ -9,7 +10,6 @@ export function createTestConfig(
 ): MentionConfig {
   return {
     trigger,
-    markup,
     serializer: createMarkupSerializer(markup),
     displayTransform,
     withTrigger,

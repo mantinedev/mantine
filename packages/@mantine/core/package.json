@@ -52,12 +52,12 @@
     "clsx": "^2.1.1",
     "react-number-format": "^5.4.5",
     "react-remove-scroll": "^2.7.2",
-    "type-fest": "^5.8.0"
+    "type-fest": "^5.10.0"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   }
 }

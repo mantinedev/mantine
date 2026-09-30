@@ -8,8 +8,9 @@ export default Layout(MDX_DATA.Tilt);
 
 `Tilt` rotates its content in 3D in response to the pointer position and, on supported mobile
 devices, the device orientation. It owns the `perspective` container and the transform, so you
-only need to provide the content. Wrap any element with a defined size – the component tilts it
-towards the cursor and animates it back to its resting position when the pointer leaves:
+only need to provide the content. Wrap any element with a defined size – the edge under the
+pointer moves away from the viewer, as if the card were pressed at that point, and the content
+animates back to its resting position when the pointer leaves:
 
 <Demo data={TiltDemos.usage} />
 
@@ -17,23 +18,12 @@ towards the cursor and animates it back to its resting position when the pointer
 control over the transforms, or you want to drive something other than a DOM element, use the
 hook directly.
 
-## Props
-
-- `maxRotate` – maximum rotation in degrees applied at the edges (default `15`)
-- `perspective` – perspective distance of the 3D container, numbers are converted to rem (default `1000`)
-- `radius` – key of `theme.radius` or any valid CSS value to round the content and glare
-- `withGlare` – render a light glare that follows the pointer (default `false`)
-- `transitionDuration` – transition duration in ms while the pointer moves (default `150`)
-- `resetTransitionDuration` – transition duration in ms when returning to the neutral position (defaults to `transitionDuration * 2`)
-- `trackWindow` – react to the pointer anywhere on the page instead of only when hovered (default `false`)
-- `resetOnLeave` – return to the neutral position when the pointer leaves (default `true`)
-
 <Demo data={TiltDemos.configurator} />
 
 ## Layers
 
-Use `Tilt.Layer` components to build a layered depth effect. Each layer shifts in the direction
-of the tilt by an amount controlled by its `depth` prop (`0` – static, `1` – full shift), so
+Use `Tilt.Layer` components to build a layered depth effect. Each layer shifts towards the
+pointer by an amount controlled by its `depth` prop (`0` – static, `1` – full shift), so
 layers with a higher `depth` appear closer to the viewer. The `shift` prop controls the distance
 in pixels a layer moves at `depth={1}` (default `20`):
 
@@ -44,11 +34,34 @@ and give each of them a different `depth` to create parallax.
 
 ## Glare
 
-Set `withGlare` to render a light reflection that follows the pointer across the surface. It is
-useful for card and image-like content. Style the glare with the `glare`
-[Styles API](/styles/styles-api) selector:
+Set `withGlare` to render a light reflection that moves towards the pointer across the surface.
+The glare is clipped to the content and follows its `radius`. It is useful for card and
+image-like content:
 
-<Demo data={TiltDemos.usage} />
+<Demo data={TiltDemos.glare} />
+
+The `glare` [Styles API](/styles/styles-api) selector targets the clipping container – the moving
+gradient itself is its `::before` pseudo-element. To change the reflection, target it from a class
+passed with `classNames`:
+
+```tsx
+import { Tilt } from '@mantine/core';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <Tilt withGlare classNames={{ glare: classes.glare }}>
+      {/* content */}
+    </Tilt>
+  );
+}
+```
+
+```css
+.glare::before {
+  background: radial-gradient(circle at 50% 50%, rgba(255, 220, 150, 0.6), transparent 60%);
+}
+```
 
 ## React to the whole page
 

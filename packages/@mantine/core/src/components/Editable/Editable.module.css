@@ -28,7 +28,7 @@
   cursor: text;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  min-width: rem(4px);
+  min-width: rem(60px);
 
   &[data-multiline] {
     display: block;
@@ -36,7 +36,12 @@
   }
 
   &[data-empty] {
+    min-height: calc(1lh + rem(4px));
     color: var(--mantine-color-placeholder);
+  }
+
+  &[data-read-only] {
+    cursor: default;
   }
 
   &[data-disabled] {
@@ -60,13 +65,13 @@
   }
 }
 
-input.input {
+.input:where(input) {
   field-sizing: content;
   min-width: rem(60px);
   max-width: 100%;
 }
 
-textarea.input {
+.input:where(textarea) {
   display: block;
   width: 100%;
 }

@@ -31,8 +31,8 @@
   position: absolute;
   inset: 0;
   margin: auto;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: none;
+  max-height: none;
   transform-origin: center center;
   will-change: transform;
   user-select: none;

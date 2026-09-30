@@ -1,4 +1,5 @@
-import { Paper, SimpleGrid } from '../../index';
+import { useState } from 'react';
+import { Button, Paper, SimpleGrid } from '../../index';
 import { Stat } from './Stat';
 
 export default { title: 'Stat' };
@@ -17,7 +18,14 @@ export function PrefixSuffix() {
   return (
     <div style={{ padding: 40, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
       <Paper withBorder p="md" radius="md">
-        <Stat label="Revenue" value={1340.5} prefix="$" decimalScale={2} fixedDecimalScale />
+        <Stat
+          label="Revenue"
+          value={1340.5}
+          prefix="$"
+          decimalScale={2}
+          fixedDecimalScale
+          thousandSeparator
+        />
       </Paper>
       <Paper withBorder p="md" radius="md">
         <Stat label="Conversion" value={4.28} suffix="%" diff={-1.4} />
@@ -80,6 +88,7 @@ export function Diffs() {
       <Stat label="Up" value={100} diff={12.4} />
       <Stat label="Down" value={100} diff={-8.2} />
       <Stat label="Neutral" value={100} diff={0} />
+      <Stat label="Rounds to zero" value={100} diff={0.04} />
       <Stat label="No icon" value={100} diff={5} withDiffIcon={false} />
     </div>
   );
@@ -89,7 +98,7 @@ export function Loading() {
   return (
     <div style={{ padding: 40, maxWidth: 260 }}>
       <Paper withBorder p="md" radius="md">
-        <Stat label="Active users" value={92410} loading />
+        <Stat label="Revenue" value={1340.5} prefix="$" suffix="USD" diff={4.1} loading />
       </Paper>
     </div>
   );
@@ -117,6 +126,7 @@ export function StatRow() {
             prefix="$"
             decimalScale={2}
             fixedDecimalScale
+            thousandSeparator
             diff={-4.1}
           />
         </Paper>
@@ -143,34 +153,101 @@ export function Compound() {
 }
 
 export function Countdown() {
+  const [targets] = useState(() => ({
+    sale: Date.now() + 1000 * 60 * 60 * 3 + 5000,
+    launch: Date.now() + 1000 * 60 * 60 * 26,
+    round: Date.now() + 15000,
+    short: Date.now() + 5400,
+  }));
+
   return (
     <div style={{ padding: 40, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
       <Paper withBorder p="md" radius="md">
-        <Stat.Countdown label="Sale ends in" value={Date.now() + 1000 * 60 * 60 * 3 + 5000} />
+        <Stat.Countdown label="Sale ends in" value={targets.sale} />
       </Paper>
       <Paper withBorder p="md" radius="md">
-        <Stat.Countdown
-          label="Launch in"
-          value={Date.now() + 1000 * 60 * 60 * 26}
-          format="D[d] HH:mm:ss"
-        />
+        <Stat.Countdown label="Launch in" value={targets.launch} format="D[d] HH:mm:ss" />
       </Paper>
       <Paper withBorder p="md" radius="md">
-        <Stat.Countdown label="Round ends" value={Date.now() + 15000} format="mm:ss.SSS" />
+        <Stat.Countdown label="Round ends" value={targets.round} format="mm:ss.SSS" />
+      </Paper>
+      <Paper withBorder p="md" radius="md">
+        <Stat.Countdown label="Short" value={targets.short} format="[Sale] mm:ss" />
       </Paper>
     </div>
   );
 }
 
 export function Animate() {
+  const [value, setValue] = useState(92410);
+
   return (
     <div style={{ padding: 40, maxWidth: 260 }}>
+      <Stat label="Live viewers" value={value} animate thousandSeparator />
+      <Button mt="md" onClick={() => setValue((current) => current + 1234)}>
+        Increment
+      </Button>
+    </div>
+  );
+}
+
+export function StringValue() {
+  return (
+    <div style={{ padding: 40, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+      <Stat label="Followers" value="12k" diff={3.2} />
+      <Stat label="Uptime" value="01:00:00" />
+      <Stat label="Score" value="N/A" />
+      <Stat label="Numeric string" value="1234.5" thousandSeparator />
+    </div>
+  );
+}
+
+export function Formatter() {
+  return (
+    <div style={{ padding: 40, display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+      <Stat label="Temperature" value={21.5} formatter={(value) => `${value} °C`} />
       <Stat
-        label="Live viewers"
-        value={Math.floor(Date.now() / 1000) % 1000}
-        animate
-        thousandSeparator
+        label="New customers"
+        value={482}
+        diff={38}
+        diffFormatter={(diff) => `${diff > 0 ? '+' : ''}${diff} this week`}
       />
+      <Stat
+        label="Localized labels"
+        value={100}
+        diff={-2.5}
+        diffLabels={{ increase: 'hausse', decrease: 'baisse', neutral: 'stable' }}
+      />
+    </div>
+  );
+}
+
+export function CompoundIcon() {
+  return (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Paper withBorder p="md" radius="md">
+        <Stat>
+          <Stat.Icon>
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Stat.Icon>
+          <Stat.Label>Downloads</Stat.Label>
+          <Stat.Value>18,320</Stat.Value>
+          <Stat.Diff value={8.1}>+8.1% vs last week</Stat.Diff>
+        </Stat>
+      </Paper>
     </div>
   );
 }

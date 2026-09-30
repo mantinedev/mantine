@@ -23,6 +23,10 @@ and `suffix` to render units, currency or icons before and after the value:
 
 <Demo data={StatDemos.formatting} />
 
+Numeric strings (`'1234.5'`) are formatted the same way as numbers. Strings that are not plain
+numbers (`'12k'`, `'01:00:00'`, `'N/A'`, `'—'`) are rendered as is, formatting props do not
+apply to them. `NaN` and `Infinity` values render nothing.
+
 To fully control value rendering, pass a `formatter` function. It receives the raw `value`
 and returns any React node, overriding `decimalScale`, separators and animation:
 
@@ -44,8 +48,10 @@ function Demo() {
 
 Set the `diff` prop to display a trend delta below the value. Its sign selects the direction:
 a positive value renders an up arrow colored green, a negative value renders a down arrow
-colored red and zero renders a neutral, dimmed delta. By default the delta is formatted as a
-percentage:
+colored red and zero renders a neutral, dimmed delta. By default the delta is rounded to at
+most one decimal and formatted as a signed percentage (`+0.3%`, `-12%`), and the direction
+follows the rounded value, so deltas that round to `0%` are neutral. `NaN` and `Infinity`
+deltas render nothing:
 
 <Demo data={StatDemos.diff} />
 
@@ -66,6 +72,11 @@ function Demo() {
 }
 ```
 
+The formatted delta is isolated left-to-right, so `+12.4%` keeps its sign first in right-to-left
+layouts. Values and deltas do not shrink – only the label is truncated – so in very narrow
+containers use responsive columns (for example `SimpleGrid` with `cols={{ base: 1, sm: 3 }}`)
+instead of a fixed number of columns.
+
 ## Icon
 
 Use the `icon` prop to render a leading icon or illustration next to the value:
@@ -75,7 +86,8 @@ Use the `icon` prop to render a leading icon or illustration next to the value:
 ## Loading state
 
 Set the `loading` prop to display a [Skeleton](/core/skeleton) in place of the value while
-data is being fetched:
+data is being fetched. `prefix` and `suffix` are kept around the skeleton, the trend indicator
+is hidden until the data is loaded and the root element gets `aria-busy="true"`:
 
 <Demo data={StatDemos.loading} />
 
@@ -91,22 +103,41 @@ Animation only applies to numeric values:
 `Stat.Countdown` renders a live countdown to a target time. The `value` prop accepts a `Date`
 or a timestamp in milliseconds, and the `format` prop controls how the remaining time is
 displayed with dayjs-style tokens (`D`, `H`, `m`, `s`, `S`). Literal characters can be escaped
-with square brackets, for example `D[d] HH:mm:ss`:
+with square brackets, for example `D[d] HH:mm:ss`. Keep the target stable between renders – create
+it with `useState` or `useMemo`, a new target restarts the countdown:
 
 <Demo data={StatDemos.countdown} />
 
-The larger units roll into the leading token when it is absent from the format, so `mm:ss`
-displays the full remaining time in minutes and seconds. `Stat.Countdown` supports the same
-`label`, `prefix`, `suffix`, `icon`, `color` and `size` props as `Stat`:
+The `format` of `Stat.Countdown` differs from the [Timer](/core/timer) `format`:
+
+- Units absent from the format roll into the leading token, so `mm:ss` displays 62 minutes
+  as `62:00`.
+- `S` displays tenths of a second (`Timer`'s `S` is unpadded milliseconds), `SS` hundredths and
+  `SSS` milliseconds.
+- The remaining time is rounded up to the smallest displayed unit: a 3 hour countdown starts at
+  `03:00:00`, its last value is `00:00:01` and `00:00:00` is displayed only when it has finished.
+  Formats with `S` tokens display the exact fraction.
+- `Timer`'s format has no `[literal]` escapes.
+
+With seconds formats, the display updates exactly when the remaining time crosses a second
+boundary of the target. The value is computed on the first render, so server-rendered markup
+shows the real remaining time, and it is replaced with the live value after hydration.
+`Stat.Countdown` supports the same `label`, `prefix`, `suffix`, `icon`, `color` and `size`
+props as `Stat`. It has no Styles API of its own: `classNames`, `styles` and `vars` use the
+`Stat` selectors, and theme default props, `classNames` and `styles` are read from
+`theme.components.Stat` (`theme.components.StatCountdown` default props take precedence):
 
 ```tsx
+import { useState } from 'react';
 import { Stat } from '@mantine/core';
 
 function Demo() {
+  const [target] = useState(() => Date.now() + 1000 * 60 * 15);
+
   return (
     <Stat.Countdown
       label="Offer expires in"
-      value={Date.now() + 1000 * 60 * 15}
+      value={target}
       format="mm:ss"
       onFinish={() => console.log('Countdown finished')}
       onTick={(remainingMs) => console.log(remainingMs)}
@@ -121,7 +152,9 @@ tick with the remaining time in milliseconds.
 ## Size
 
 `Stat` supports `xs`, `sm`, `md`, `lg` and `xl` sizes. The `size` prop scales the label, value,
-diff and icon. Change the `size` prop in the configurator above to see how it scales.
+diff and icon, and the gap between the icon and the body (`--stat-gap`). The gap between the
+label, value and diff is fixed. Change the `size` prop in the configurator above to see how it
+scales.
 
 ## Color
 
@@ -132,7 +165,7 @@ valid CSS color:
 import { Stat } from '@mantine/core';
 
 function Demo() {
-  return <Stat label="Active users" value={92_410} thousandSeparator color="blue" />;
+  return <Stat label="Active users" value={92410} thousandSeparator color="blue" />;
 }
 ```
 
@@ -149,7 +182,7 @@ Available components:
 - `Stat.Icon` – leading icon wrapper
 - `Stat.Label` – caption displayed above the value
 - `Stat.Value` – value wrapper, accepts `prefix` and `suffix` props
-- `Stat.Diff` – trend delta, accepts a `value` prop (or custom children)
+- `Stat.Diff` – trend delta, accepts `value`, `formatter`, `withIcon` and `labels` props (or custom children)
 
 ## Example: dashboard stat row
 
@@ -160,11 +193,31 @@ Compose multiple `Stat` components in a [SimpleGrid](/core/simple-grid) or
 
 ## Accessibility
 
-- `Stat.Countdown` renders the value as an `aria-live` region so screen readers announce the
-  remaining time. Fast countdowns that include millisecond tokens use `aria-live="off"` to
-  avoid spamming assistive technologies.
-- The trend direction is conveyed by the delta text and color; provide a descriptive `label`
-  so the metric is understandable without relying on color alone.
+- `Stat.Countdown` sets `aria-live="off"` on the value, so screen readers are not interrupted
+  every second. The current remaining time is read when the user navigates to it. To announce
+  milestones (for example "5 minutes left"), render your own live region and update it from
+  `onTick` only when a milestone is reached.
+- When `loading` is set, the root element has `aria-busy="true"`.
+- The trend direction is not conveyed by color or the arrow alone: `Stat.Diff` renders a
+  visually hidden direction text after the delta ("increase", "decrease" or "no change"), so
+  screen readers announce `+12.4% increase` even with a custom `diffFormatter`. The arrow is
+  hidden from assistive technologies. Use `diffLabels` on `Stat` or `labels` on `Stat.Diff`
+  to localize the direction texts:
+
+```tsx
+import { Stat } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stat
+      label="Chiffre d'affaires"
+      value={1340}
+      diff={12.4}
+      diffLabels={{ increase: 'hausse', decrease: 'baisse', neutral: 'stable' }}
+    />
+  );
+}
+```
 
 <StylesApiSelectors component="Stat" />
 

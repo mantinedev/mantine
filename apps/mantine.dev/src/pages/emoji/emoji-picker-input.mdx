@@ -12,7 +12,9 @@ export default Layout(MDX_DATA.EmojiPickerInput);
 
 ## Controlled
 
-The `value` is an emoji ID (a key in `data.emojis`). Use `value` and `onChange` to control it:
+The `value` is an emoji ID (a key in `data.emojis`). Use `value` and `onChange` to control it.
+When the value is set outside of the picker, the input displays the default (no skin tone)
+variant of the emoji:
 
 ```tsx
 import { useState } from 'react';
@@ -35,7 +37,9 @@ function Demo() {
 
 ## Clearable
 
-Set `clearable` to display a clear button when an emoji is selected:
+Set `clearable` to display a clear button when an emoji is selected. The clear button
+has `aria-label="Clear emoji"` by default, use `clearButtonProps` to change it or pass
+other props to the button:
 
 <Demo data={EmojiPickerInputDemos.clearable} />
 
@@ -57,7 +61,9 @@ Set `closeOnSelect={false}` to keep it open:
 ## EmojiPicker props
 
 Customize the underlying picker with the `pickerProps` prop.
-For example, you can change columns or hide sections:
+For example, you can change columns or hide sections. Skin tone selected in the picker
+is preserved when the dropdown is closed and opened again, use `pickerProps.skinTone`,
+`pickerProps.defaultSkinTone` and `pickerProps.onSkinToneChange` to control it:
 
 <Demo data={EmojiPickerInputDemos.pickerProps} />
 

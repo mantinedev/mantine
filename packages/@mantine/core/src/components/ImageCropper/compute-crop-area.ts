@@ -1,4 +1,34 @@
+/*
+ * Geometry helpers ported from react-easy-crop 5.x (https://github.com/ValentinH/react-easy-crop)
+ * — MIT License, Copyright (c) Valentin Hervieu. See ./LICENSE for the full license text.
+ *
+ * Local changes compared to react-easy-crop 5.x:
+ * - Only rotateSize, getCropSize, restrictPosition and computeCroppedArea are ported,
+ *   object-fit handling, zoom-to-point and initial-crop helpers are not included
+ * - getCropSize, restrictPosition and computeCroppedArea take size objects instead of
+ *   positional width/height arguments
+ * - computeCroppedArea rounds percent values to 1e-6 to drop floating point noise
+ * - getContainedSize and measureMedia added: the displayed media size is always the
+ *   image contained in the viewport (small images are scaled up)
+ * - computeCropGeometry added: derives media size, crop window, clamped offset and crop data
+ *   from the image, viewport and transform state in one call
+ * - Also hosts the shared ImageCropper types (crop shape, flip) and exports toRadians
+ * - TypeScript types adjusted for the Mantine build, formatted with oxfmt
+ */
+
 import { clamp } from '@mantine/hooks';
+
+export type ImageCropperCropShape = 'rectangle' | 'circle';
+
+export type ImageCropperFlip = {
+  horizontal?: boolean;
+  vertical?: boolean;
+};
+
+export interface ResolvedImageCropperFlip {
+  horizontal: boolean;
+  vertical: boolean;
+}
 
 export interface ImageCropperSize {
   width: number;
@@ -42,9 +72,11 @@ export interface ImageCropperCropData {
   percent: ImageCropperArea;
 }
 
-const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
+export const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
 
 const limit = (max: number, value: number) => Math.min(max, Math.max(0, value));
+
+const roundPercent = (value: number) => Math.round(value * 1e6) / 1e6;
 
 export function rotateSize(width: number, height: number, rotation: number): ImageCropperSize {
   const rad = toRadians(rotation);
@@ -66,13 +98,31 @@ export function getContainedSize(
   return { width: natural.width * scale, height: natural.height * scale };
 }
 
+export function measureMedia(
+  image: { naturalWidth: number; naturalHeight: number },
+  container: ImageCropperSize
+): ImageCropperMediaSize | null {
+  const contained = getContainedSize(
+    { width: image.naturalWidth, height: image.naturalHeight },
+    container
+  );
+
+  if (!contained.width || !contained.height) {
+    return null;
+  }
+
+  return { naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight, ...contained };
+}
+
 export function getCropSize(
   mediaSize: ImageCropperSize,
   containerSize: ImageCropperSize,
-  aspect: number
+  aspect: number,
+  rotation = 0
 ): ImageCropperSize {
-  const fittingWidth = Math.min(mediaSize.width, containerSize.width);
-  const fittingHeight = Math.min(mediaSize.height, containerSize.height);
+  const rotated = rotateSize(mediaSize.width, mediaSize.height, rotation);
+  const fittingWidth = Math.min(rotated.width, containerSize.width);
+  const fittingHeight = Math.min(rotated.height, containerSize.height);
 
   if (fittingWidth > fittingHeight * aspect) {
     return { width: fittingHeight * aspect, height: fittingHeight };
@@ -158,5 +208,58 @@ export function computeCroppedArea({
     rotation,
   };
 
-  return { pixels, percent: { ...percentArea, rotation } };
+  return {
+    pixels,
+    percent: {
+      x: roundPercent(percentArea.x),
+      y: roundPercent(percentArea.y),
+      width: roundPercent(percentArea.width),
+      height: roundPercent(percentArea.height),
+      rotation,
+    },
+  };
+}
+
+export interface ComputeCropGeometryInput {
+  image: { naturalWidth: number; naturalHeight: number };
+  container: ImageCropperSize;
+  aspectRatio: number | undefined;
+  rotation: number;
+  zoom: number;
+  crop: ImageCropperPoint;
+}
+
+export interface ImageCropperGeometry {
+  media: ImageCropperMediaSize;
+  cropSize: ImageCropperSize;
+  crop: ImageCropperPoint;
+  cropData: ImageCropperCropData;
+}
+
+export function computeCropGeometry({
+  image,
+  container,
+  aspectRatio,
+  rotation,
+  zoom,
+  crop,
+}: ComputeCropGeometryInput): ImageCropperGeometry | null {
+  const media = measureMedia(image, container);
+  if (!media) {
+    return null;
+  }
+
+  const aspect = aspectRatio || container.width / container.height;
+  const cropSize = getCropSize(media, container, aspect, rotation);
+  const restricted = restrictPosition(crop, media, cropSize, zoom, rotation);
+  const cropData = computeCroppedArea({
+    crop: restricted,
+    mediaSize: media,
+    cropSize,
+    aspect,
+    zoom,
+    rotation,
+  });
+
+  return { media, cropSize, crop: restricted, cropData };
 }
