@@ -167,10 +167,12 @@ export const TourRoot = factory<TourRootFactory>((_props) => {
 
   const labels: TourLabels = { ...defaultLabels, ...labelsProp };
   const id = useId();
-  const titleId = `${id}-title`;
-  const bodyId = `${id}-body`;
-  const [titleMounted, setTitleMounted] = useState(false);
-  const [bodyMounted, setBodyMounted] = useState(false);
+  const [registeredTitleId, registerTitle] = useState<string | null>(null);
+  const [registeredBodyId, registerBody] = useState<string | null>(null);
+  const titleId = registeredTitleId ?? `${id}-title`;
+  const bodyId = registeredBodyId ?? `${id}-body`;
+  const titleMounted = registeredTitleId !== null;
+  const bodyMounted = registeredBodyId !== null;
 
   const { currentStep, setStep, close, targetRef } = useTourState({
     active,
@@ -231,8 +233,8 @@ export const TourRoot = factory<TourRootFactory>((_props) => {
         bodyId,
         titleMounted,
         bodyMounted,
-        setTitleMounted,
-        setBodyMounted,
+        registerTitle,
+        registerBody,
         setTargetElement,
       }}
     >

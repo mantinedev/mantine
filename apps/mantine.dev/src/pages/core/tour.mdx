@@ -27,12 +27,15 @@ and `spotlightPadding` overrides.
 Set `mode="beacon"` to display pulsing indicators near target elements instead of a sequential walkthrough.
 Users can click beacons in any order to reveal tooltips. `onClose` is called when a beacon tooltip is closed –
 beacons stay on the page as long as `active` is `true`, so end the beacon tour by setting `active` to `false` from your own control.
+`Escape` closes only the open beacon tooltip – with no tooltip open, `Escape` does nothing and `onClose` is not called.
 
 <Demo data={TourDemos.beacon} />
 
 ## Controlled
 
-Control the active step externally with `step` and `onStepChange` props:
+Control the active step externally with `step` and `onStepChange` props. Without the `step` prop
+the tour is uncontrolled: it starts from `defaultStep` (`0` by default) and returns to it after
+it is closed, so starting the tour again always begins from the first step:
 
 <Demo data={TourDemos.controlled} />
 
@@ -82,7 +85,10 @@ For full control over the tooltip layout, use compound components (`Tour.Root`, 
 keyboard navigation, `Escape` and focus return. You are responsible for resolving target elements and
 passing them to `Tour.Overlay` (`targetRect`) and `Tour.Tooltip` (`targetElement`).
 `withOverlay` and `withCloseButton` props of `Tour.Root` hide `Tour.Overlay` and `Tour.CloseButton`,
-`transitionProps` is the default transition of `Tour.Tooltip`.
+`transitionProps` is the default transition of `Tour.Tooltip`. `Tour.Root` renders nothing while `active`
+is `false` – to play the exit transition of `Tour.Tooltip`, set its `mounted` prop to `false` first and set
+`active` to `false` after the transition ends. `Tour.Beacon` does not know the step title – pass a distinct
+`aria-label` to each beacon so that screen reader users can tell them apart (the default is `labels.beacon`).
 
 ## Tooltip position
 
@@ -135,4 +141,4 @@ Arrow keys are swapped in RTL direction (`ArrowLeft` goes to the next step). Arr
 - Step counter is announced via `aria-live="polite"`
 - When the overlay is active in guided mode, focus is trapped inside the tooltip
 - Focus returns to the previously focused element when the tour closes. In beacon mode, if the tour stays active after the tooltip is closed, focus returns to the beacon that opened it
-- Beacons have `role="button"` with `aria-label` built from `labels.beacon` and the step title (for example, `Start tour: Settings`)
+- Beacons have `role="button"` with `aria-label` built from `labels.beacon` and the step title (for example, `Start tour: Settings`). In the compound API, `Tour.Beacon` uses `labels.beacon` alone unless `aria-label` is passed

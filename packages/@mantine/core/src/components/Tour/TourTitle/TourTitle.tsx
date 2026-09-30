@@ -29,17 +29,18 @@ export const TourTitle = factory<TourTitleFactory>((_props) => {
   const props = useProps('TourTitle', defaultProps, _props);
   const { children, classNames, className, style, styles, vars, id, ...others } = props;
   const ctx = useTourContext();
-  const { setTitleMounted } = ctx;
+  const { registerTitle } = ctx;
+  const resolvedId = id ?? ctx.titleId;
 
   useEffect(() => {
-    setTitleMounted(true);
-    return () => setTitleMounted(false);
-  }, [setTitleMounted]);
+    registerTitle(resolvedId);
+    return () => registerTitle(null);
+  }, [registerTitle, resolvedId]);
 
   return (
     <Box
       component="h3"
-      id={id ?? ctx.titleId}
+      id={resolvedId}
       {...ctx.getStyles('title', { className, classNames, style, styles })}
       {...others}
     >
