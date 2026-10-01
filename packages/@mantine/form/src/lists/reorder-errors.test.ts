@@ -49,6 +49,26 @@ describe('@mantine/form/reorder-errors', () => {
     });
   });
 
+  it('does not move errors of items whose index starts with the same digits', () => {
+    expect(
+      reorderErrors(
+        'items',
+        { from: 1, to: 0 },
+        {
+          'items.0.name': 'Error 0',
+          'items.1.name': 'Error 1',
+          'items.10.name': 'Error 10',
+          'items.12': 'Error 12',
+        }
+      )
+    ).toStrictEqual({
+      'items.0.name': 'Error 1',
+      'items.1.name': 'Error 0',
+      'items.10.name': 'Error 10',
+      'items.12': 'Error 12',
+    });
+  });
+
   it('returns unchanged object if path does not exist', () => {
     const errors = { 'a.0': true };
     expect(reorderErrors('c', { from: 1, to: 2 }, errors)).toStrictEqual(errors);
