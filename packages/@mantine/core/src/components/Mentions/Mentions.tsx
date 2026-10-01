@@ -123,6 +123,9 @@ export interface MentionsProps
   /** Dropdown `max-height` before scroll @default 220 @category appearance */
   maxDropdownHeight?: number | string;
 
+  /** `behavior` passed down to `element.scrollIntoView` when options are scrolled into view with keyboard navigation @default 'instant' @category behavior */
+  scrollBehavior?: ScrollBehavior;
+
   /** Props passed down to the underlying `Combobox` @category appearance */
   comboboxProps?: ComboboxProps;
 
@@ -193,6 +196,7 @@ export const Mentions = factory<MentionsFactory>((_props) => {
     errorMessage,
     renderMention,
     maxDropdownHeight,
+    scrollBehavior,
     comboboxProps,
     a11ySuggestionsListLabel,
     mode,
@@ -236,6 +240,7 @@ export const Mentions = factory<MentionsFactory>((_props) => {
   const [query, setQuery] = useState<ActiveMentionQuery | null>(null);
 
   const store = useCombobox({
+    scrollBehavior,
     onDropdownClose: () => store.resetSelectedOption(),
   });
 

@@ -83,7 +83,7 @@ export interface AutocompleteProps
   /** If set, the dropdown opens when the input receives focus @default true @category behavior */
   openOnFocus?: boolean;
 
-  /** Store returned by the `useAutocomplete` hook. When provided, value and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props are ignored. The store is also passed to the underlying `Combobox`. A `store` passed in `comboboxProps` is always ignored @category state */
+  /** Store returned by the `useAutocomplete` hook. When provided, value and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen`, `onDropdownClose` and `scrollBehavior` props are ignored. The store is also passed to the underlying `Combobox`. A `store` passed in `comboboxProps` is always ignored @category state */
   store?: AutocompleteStore;
 }
 
@@ -127,6 +127,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
     withScrollArea,
     maxDropdownHeight,
     floatingHeight,
+    scrollBehavior,
     size,
     id,
     renderOption,
@@ -157,6 +158,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
     defaultDropdownOpened,
     onDropdownOpen,
     onDropdownClose,
+    scrollBehavior,
   });
 
   store.registerDropdownCallbacks({

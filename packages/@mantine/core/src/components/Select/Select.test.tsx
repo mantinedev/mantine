@@ -533,4 +533,13 @@ describe('@mantine/core/Select', () => {
     await userEvent.type(screen.getByRole('combobox'), 'Ang');
     expect(screen.getByRole('combobox')).toHaveValue('Ang');
   });
+
+  it('passes scrollBehavior to scrollIntoView when options are navigated with keyboard', async () => {
+    const spy = jest.spyOn(window.HTMLElement.prototype, 'scrollIntoView');
+    render(<Select {...defaultProps} scrollBehavior="smooth" />);
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.keyboard('{ArrowDown}');
+    expect(spy).toHaveBeenLastCalledWith({ block: 'nearest', behavior: 'smooth' });
+    spy.mockRestore();
+  });
 });

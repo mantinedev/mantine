@@ -218,6 +218,11 @@ you will need to change the dropdown styles with [Styles API](/styles/styles-api
 
 <Demo data={SelectDemos.scrollArea} />
 
+By default, options are scrolled into view instantly when they are navigated with the keyboard.
+Set `scrollBehavior="smooth"` to animate the scroll:
+
+<Demo data={SelectDemos.scrollBehavior} />
+
 ## Fit dropdown to viewport height
 
 Set `floatingHeight="viewport"` to make the dropdown grow to fill the available vertical

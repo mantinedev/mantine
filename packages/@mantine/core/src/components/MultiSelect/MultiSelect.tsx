@@ -130,6 +130,12 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** A function to render content of the option, replaces the default content of the option @category appearance */
   renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode;
 
+  /** Maximum number of pills displayed, the rest of the values are collapsed into a single `+N more` pill @category appearance */
+  maxDisplayedValues?: number;
+
+  /** Content of the pill displayed when the number of values exceeds `maxDisplayedValues` @default `+N more` @category appearance */
+  maxDisplayedValuesContent?: React.ReactNode | ((overflow: number) => React.ReactNode);
+
   /** A function to render content of the pill @category appearance */
   renderPill?: (props: ComboboxRenderPillInput<Value>) => React.ReactNode;
 
@@ -148,7 +154,7 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false @category behavior */
   withPillsReorder?: boolean;
 
-  /** Store returned by the `useMultiSelect` hook. When provided, value, search and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props are ignored. The store is also passed to the underlying `Combobox`. A `store` passed in `comboboxProps` is always ignored @category state */
+  /** Store returned by the `useMultiSelect` hook. When provided, value, search and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen`, `onDropdownClose` and `scrollBehavior` props are ignored. The store is also passed to the underlying `Combobox`. A `store` passed in `comboboxProps` is always ignored @category state */
   store?: MultiSelectStore<Value>;
 }
 
@@ -200,6 +206,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     withScrollArea,
     maxDropdownHeight,
     floatingHeight,
+    scrollBehavior,
     searchValue,
     defaultSearchValue,
     onSearchChange,
@@ -250,6 +257,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     mod,
     renderOption,
     renderPill,
+    maxDisplayedValues,
+    maxDisplayedValuesContent,
     onRemove,
     onClear,
     onMaxValues,
@@ -283,6 +292,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
       defaultDropdownOpened,
       onDropdownOpen,
       onDropdownClose,
+      scrollBehavior,
     }
   );
 
@@ -307,9 +317,13 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   const _value = store.value as NonNullable<typeof value>;
   const setValue = store.setValue;
 
+  const displayedValues = maxDisplayedValues != null ? _value.slice(0, maxDisplayedValues) : _value;
+  const overflowCount = _value.length - displayedValues.length;
+
   const { getPillProps, getListProps, handleInputKeyDown } = usePillsReorder({
-    value: _value,
-    onChange: setValue,
+    value: displayedValues,
+    onChange: (next) =>
+      setValue([...next, ..._value.slice(displayedValues.length)] as typeof _value),
     enabled: withPillsReorder && !disabled && !readOnly,
   });
 
@@ -357,7 +371,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     handleInputKeyDown(event);
   };
 
-  const values = _value.map((item, index) => {
+  const values = displayedValues.map((item, index) => {
     const optionData = valueOptions[index];
     const reorderProps = getPillProps(index);
 
@@ -395,6 +409,16 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
       </Pill>
     );
   });
+
+  if (overflowCount > 0) {
+    values.push(
+      <Pill key="__overflow" unstyled={unstyled} disabled={disabled} {...getStyles('pill')}>
+        {typeof maxDisplayedValuesContent === 'function'
+          ? maxDisplayedValuesContent(overflowCount)
+          : maxDisplayedValuesContent || `+${overflowCount} more`}
+      </Pill>
+    );
+  }
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {

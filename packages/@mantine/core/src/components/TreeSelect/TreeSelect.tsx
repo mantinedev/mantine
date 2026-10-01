@@ -182,6 +182,9 @@ export interface TreeSelectProps<Mode extends TreeSelectMode = 'single'>
   /** Props for the ScrollArea in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
+  /** `behavior` passed down to `element.scrollIntoView` when options are scrolled into view with keyboard navigation @default 'instant' @category behavior */
+  scrollBehavior?: ScrollBehavior;
+
   /** Controls the default chevron color @category appearance */
   chevronColor?: MantineColor;
 
@@ -301,6 +304,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     hiddenInputProps,
     hiddenInputValuesDivider,
     scrollAreaProps,
+    scrollBehavior,
     chevronColor,
     maxDropdownHeight,
     dropdownOpened,
@@ -358,6 +362,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
   const store = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
+    scrollBehavior,
     onDropdownOpen: () => {
       onDropdownOpen?.();
       store.updateSelectedOptionIndex('active', { scrollIntoView: true });

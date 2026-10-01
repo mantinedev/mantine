@@ -177,3 +177,8 @@ export const Demo_creatable = {
   name: '⭐ Demo: creatable',
   render: renderDemo(demos.creatable),
 };
+
+export const Demo_maxDisplayedValues = {
+  name: '⭐ Demo: maxDisplayedValues',
+  render: renderDemo(demos.maxDisplayedValues),
+};

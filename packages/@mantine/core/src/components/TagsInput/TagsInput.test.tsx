@@ -452,4 +452,82 @@ describe('@mantine/core/TagsInput', () => {
       expect(document.querySelector('input[name="test"]')).toHaveValue('new-tag');
     });
   });
+
+  it('passes scrollBehavior to scrollIntoView when options are navigated with keyboard', async () => {
+    const spy = jest.spyOn(window.HTMLElement.prototype, 'scrollIntoView');
+    render(<TagsInput {...defaultProps} scrollBehavior="smooth" />);
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.keyboard('{ArrowDown}');
+    expect(spy).toHaveBeenLastCalledWith({ block: 'nearest', behavior: 'smooth' });
+    spy.mockRestore();
+  });
+
+  it('collapses values that exceed maxDisplayedValues into an overflow pill', () => {
+    const { container } = render(
+      <TagsInput
+        {...defaultProps}
+        defaultValue={['test-1', 'test-2', 'test-3']}
+        maxDisplayedValues={1}
+      />
+    );
+
+    const pills = container.querySelectorAll('.mantine-TagsInput-pill');
+    expect(pills).toHaveLength(2);
+    expect(pills[0]).toHaveTextContent('test-1');
+    expect(pills[1]).toHaveTextContent('+2 more');
+    expect(pills[1].querySelector('button')).toBeNull();
+  });
+
+  it('does not render overflow pill when values fit into maxDisplayedValues', () => {
+    const { container } = render(
+      <TagsInput {...defaultProps} defaultValue={['test-1', 'test-2']} maxDisplayedValues={2} />
+    );
+
+    expect(container.querySelectorAll('.mantine-TagsInput-pill')).toHaveLength(2);
+    expect(screen.queryByText(/more/)).not.toBeInTheDocument();
+  });
+
+  it('supports maxDisplayedValuesContent and does not call renderPill for hidden values', () => {
+    const renderPill = jest.fn(({ value }) => <span>{value}</span>);
+    const maxDisplayedValuesContent = jest.fn((overflow: number) => `and ${overflow} others`);
+    render(
+      <TagsInput
+        {...defaultProps}
+        defaultValue={['test-1', 'test-2', 'test-3']}
+        maxDisplayedValues={1}
+        maxDisplayedValuesContent={maxDisplayedValuesContent}
+        renderPill={renderPill}
+      />
+    );
+
+    expect(screen.getByText('and 2 others')).toBeInTheDocument();
+    expect(maxDisplayedValuesContent).toHaveBeenCalledWith(2);
+    expect(renderPill).toHaveBeenCalledWith(expect.objectContaining({ value: 'test-1' }));
+    expect(renderPill).not.toHaveBeenCalledWith(expect.objectContaining({ value: 'test-2' }));
+  });
+
+  it('keeps collapsed values in place when visible pills are reordered', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <TagsInput
+        {...defaultProps}
+        defaultValue={['test-1', 'test-2', 'test-3']}
+        maxDisplayedValues={2}
+        withPillsReorder
+        onChange={spy}
+      />
+    );
+
+    const getPill = (index: number) =>
+      container.querySelector<HTMLElement>(`[data-mantine-pill-index="${index}"]`)!;
+
+    getPill(1).focus();
+    await userEvent.keyboard('{Alt>}{ArrowRight}{/Alt}');
+    expect(spy).not.toHaveBeenCalled();
+
+    getPill(0).focus();
+    await userEvent.keyboard('{Alt>}{ArrowRight}{/Alt}');
+    expect(spy).toHaveBeenLastCalledWith(['test-2', 'test-1', 'test-3']);
+    expect(getPill(1)).toHaveFocus();
+  });
 });

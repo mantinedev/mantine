@@ -180,4 +180,13 @@ describe('@mantine/core/Autocomplete', () => {
     await userEvent.click(screen.getByText('submit'));
     expect(spy).toHaveBeenCalledWith('test-1');
   });
+
+  it('passes scrollBehavior to scrollIntoView when options are navigated with keyboard', async () => {
+    const spy = jest.spyOn(window.HTMLElement.prototype, 'scrollIntoView');
+    render(<Autocomplete {...defaultProps} scrollBehavior="smooth" />);
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.keyboard('{ArrowDown}');
+    expect(spy).toHaveBeenLastCalledWith({ block: 'nearest', behavior: 'smooth' });
+    spy.mockRestore();
+  });
 });

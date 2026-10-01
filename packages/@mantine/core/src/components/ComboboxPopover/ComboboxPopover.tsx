@@ -274,6 +274,9 @@ export interface ComboboxPopoverProps<
   /** Props passed down to the underlying ScrollArea component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
+  /** `behavior` passed down to `element.scrollIntoView` when options are scrolled into view with keyboard navigation @default 'instant' @category behavior */
+  scrollBehavior?: ScrollBehavior;
+
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
 
@@ -344,6 +347,7 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
     allowDeselect,
     renderOption,
     scrollAreaProps,
+    scrollBehavior,
     hiddenInputProps,
     name,
     form,
@@ -372,6 +376,7 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
   const store = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
+    scrollBehavior,
     onDropdownOpen: () => {
       onDropdownOpen?.();
       if (searchable) {

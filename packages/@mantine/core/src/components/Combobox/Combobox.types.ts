@@ -102,6 +102,9 @@ export interface ComboboxLikeProps<Value extends Primitive = string> {
 
   /** If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. */
   floatingHeight?: 'viewport';
+
+  /** `behavior` passed down to `element.scrollIntoView` when options are scrolled into view with keyboard navigation @default 'instant' */
+  scrollBehavior?: ScrollBehavior;
 }
 
 export interface ComboboxLikeRenderOptionInput<T> {

@@ -98,6 +98,14 @@ once the limit is reached.
 
 <Demo data={MultiSelectDemos.maxValues} />
 
+## Max displayed values
+
+Set the `maxDisplayedValues` prop to limit the number of pills displayed in the input. The rest of the values
+are collapsed into a single `+N more` pill. Use the `maxDisplayedValuesContent` prop to change the content of that pill.
+`maxDisplayedValues` does not limit the number of values that can be selected, and `renderPill` is not called for the overflow pill.
+
+<Demo data={MultiSelectDemos.maxDisplayedValues} />
+
 ## Hide selected options
 
 To remove selected options from the list of available options, set the `hidePickedOptions` prop:
@@ -236,6 +244,8 @@ If you want to use native scrollbars, set `withScrollArea={false}`. Note that in
 you will need to change the dropdown styles with [Styles API](/styles/styles-api).
 
 <Demo data={MultiSelectDemos.scrollArea} />
+
+Set `scrollBehavior="smooth"` to animate the scroll when options are navigated with the keyboard.
 
 ## Fit dropdown to viewport height
 

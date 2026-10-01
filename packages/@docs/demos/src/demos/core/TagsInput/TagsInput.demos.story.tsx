@@ -182,3 +182,8 @@ export const Demo_validation = {
   name: '⭐ Demo: validation',
   render: renderDemo(demos.validation),
 };
+
+export const Demo_maxDisplayedValues = {
+  name: '⭐ Demo: maxDisplayedValues',
+  render: renderDemo(demos.maxDisplayedValues),
+};

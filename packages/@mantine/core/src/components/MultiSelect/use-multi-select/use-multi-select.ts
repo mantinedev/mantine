@@ -37,6 +37,9 @@ export interface MultiSelectStoreOptions<Value extends Primitive = string> {
 
   /** Called when dropdown closes */
   onDropdownClose?: () => void;
+
+  /** `behavior` passed down to `element.scrollIntoView` when options are scrolled into view with keyboard navigation @default 'instant' */
+  scrollBehavior?: ScrollBehavior;
 }
 
 export interface MultiSelectStore<Value extends Primitive = string> extends ComboboxStore {
@@ -82,6 +85,7 @@ export function useMultiSelect<Value extends Primitive = string>(
     defaultDropdownOpened,
     onDropdownOpen,
     onDropdownClose,
+    scrollBehavior,
   } = options;
 
   const { combobox, registerDropdownCallbacks } = useComboboxWithCallbacks({
@@ -89,6 +93,7 @@ export function useMultiSelect<Value extends Primitive = string>(
     defaultDropdownOpened,
     onDropdownOpen,
     onDropdownClose,
+    scrollBehavior,
   });
 
   const [value, setValueState, valueControlled] = useUncontrolled<Value[]>({

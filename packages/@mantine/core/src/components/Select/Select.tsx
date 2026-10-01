@@ -111,7 +111,7 @@ export interface SelectProps<Value extends Primitive = string>
   /** Opens dropdown when input receives focus (requires searchable={true}) @default true @category behavior */
   openOnFocus?: boolean;
 
-  /** Store returned by the `useSelect` hook. When provided, value, search and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props are ignored. The store is also passed to the underlying `Combobox`. A `store` passed in `comboboxProps` is always ignored @category state */
+  /** Store returned by the `useSelect` hook. When provided, value, search and dropdown state are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen`, `onDropdownClose` and `scrollBehavior` props are ignored. The store is also passed to the underlying `Combobox`. A `store` passed in `comboboxProps` is always ignored @category state */
   store?: SelectStore<Value>;
 }
 
@@ -160,6 +160,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
     withScrollArea,
     maxDropdownHeight,
     floatingHeight,
+    scrollBehavior,
     size,
     searchable,
     rightSection,
@@ -216,6 +217,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
       defaultDropdownOpened,
       onDropdownOpen,
       onDropdownClose,
+      scrollBehavior,
     }
   );
 

@@ -104,6 +104,9 @@ export interface PhoneInputProps
   /** Called when dropdown closes @category state */
   onDropdownClose?: () => void;
 
+  /** `behavior` passed down to `element.scrollIntoView` when options are scrolled into view with keyboard navigation @default 'instant' @category behavior */
+  scrollBehavior?: ScrollBehavior;
+
   /** Display chevron in the country button @default false @category appearance */
   withChevron?: boolean;
 
@@ -163,6 +166,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     comboboxProps,
     onDropdownOpen,
     onDropdownClose,
+    scrollBehavior,
     withChevron,
     nothingFoundMessage,
     autoComplete,
@@ -225,6 +229,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
   const store = useCombobox({
     opened: dropdownOpened,
+    scrollBehavior,
     onDropdownOpen: () => {
       if (searchable) {
         store.focusSearchInput();

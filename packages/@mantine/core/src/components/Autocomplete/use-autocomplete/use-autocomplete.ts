@@ -27,6 +27,9 @@ export interface AutocompleteStoreOptions {
 
   /** Called when dropdown closes */
   onDropdownClose?: () => void;
+
+  /** `behavior` passed down to `element.scrollIntoView` when options are scrolled into view with keyboard navigation @default 'instant' */
+  scrollBehavior?: ScrollBehavior;
 }
 
 export interface AutocompleteStore extends ComboboxStore {
@@ -49,6 +52,7 @@ export function useAutocomplete(options: AutocompleteStoreOptions = {}): Autocom
     defaultDropdownOpened: options.defaultDropdownOpened,
     onDropdownOpen: options.onDropdownOpen,
     onDropdownClose: options.onDropdownClose,
+    scrollBehavior: options.scrollBehavior,
   });
 
   const [value, setValueState, valueControlled] = useUncontrolled({

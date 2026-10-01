@@ -15,6 +15,7 @@ interface ComboboxWithCallbacksOptions {
   defaultDropdownOpened?: boolean;
   onDropdownOpen?: () => void;
   onDropdownClose?: () => void;
+  scrollBehavior?: ScrollBehavior;
 }
 
 export function useComboboxWithCallbacks({
@@ -22,12 +23,14 @@ export function useComboboxWithCallbacks({
   defaultDropdownOpened,
   onDropdownOpen,
   onDropdownClose,
+  scrollBehavior,
 }: ComboboxWithCallbacksOptions) {
   const callbacksRef = useRef<ComboboxDropdownCallbacks>({});
 
   const combobox = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
+    scrollBehavior,
     onDropdownOpen: (eventSource) => {
       onDropdownOpen?.();
       callbacksRef.current.onOpen?.(eventSource);

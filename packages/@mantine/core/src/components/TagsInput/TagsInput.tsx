@@ -115,6 +115,12 @@ export interface TagsInputProps
   /** A function to render content of the option, replaces the default content of the option @category appearance */
   renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxGenericItem>) => React.ReactNode;
 
+  /** Maximum number of pills displayed, the rest of the values are collapsed into a single `+N more` pill @category appearance */
+  maxDisplayedValues?: number;
+
+  /** Content of the pill displayed when the number of values exceeds `maxDisplayedValues` @default `+N more` @category appearance */
+  maxDisplayedValuesContent?: React.ReactNode | ((overflow: number) => React.ReactNode);
+
   /** A function to render content of the pill, replaces the default content of the pill @category appearance */
   renderPill?: (props: ComboboxRenderPillInput) => React.ReactNode;
 
@@ -133,7 +139,7 @@ export interface TagsInputProps
   /** If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false @category behavior */
   withPillsReorder?: boolean;
 
-  /** Store returned by the `useTagsInput` hook. When provided, value, search and dropdown state and tag submission rules are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen`, `onDropdownClose`, `maxTags`, `onMaxTags`, `allowDuplicates`, `isDuplicate`, `onDuplicate` and `splitChars` props are ignored. The store is also passed to the underlying `Combobox`. A `store` passed in `comboboxProps` is always ignored @category state */
+  /** Store returned by the `useTagsInput` hook. When provided, value, search and dropdown state and tag submission rules are owned by the store and `value`, `defaultValue`, `onChange`, `searchValue`, `defaultSearchValue`, `onSearchChange`, `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen`, `onDropdownClose`, `scrollBehavior`, `maxTags`, `onMaxTags`, `allowDuplicates`, `isDuplicate`, `onDuplicate` and `splitChars` props are ignored. The store is also passed to the underlying `Combobox`. A `store` passed in `comboboxProps` is always ignored @category state */
   store?: TagsInputStore;
 }
 
@@ -184,6 +190,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     withScrollArea,
     maxDropdownHeight,
     floatingHeight,
+    scrollBehavior,
     searchValue,
     defaultSearchValue,
     onSearchChange,
@@ -228,6 +235,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     mod,
     renderOption,
     renderPill,
+    maxDisplayedValues,
+    maxDisplayedValuesContent,
     onRemove,
     onClear,
     onMaxTags,
@@ -261,6 +270,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     defaultDropdownOpened,
     onDropdownOpen,
     onDropdownClose,
+    scrollBehavior,
     maxTags,
     onMaxTags,
     allowDuplicates,
@@ -289,9 +299,12 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     rest: { type, autoComplete, ...rest },
   } = extractStyleProps(others);
 
+  const displayedValues = maxDisplayedValues != null ? _value.slice(0, maxDisplayedValues) : _value;
+  const overflowCount = _value.length - displayedValues.length;
+
   const { getPillProps, getListProps, handleInputKeyDown } = usePillsReorder({
-    value: _value,
-    onChange: setValue,
+    value: displayedValues,
+    onChange: (next) => setValue([...next, ..._value.slice(displayedValues.length)]),
     enabled: withPillsReorder && !disabled && !readOnly,
   });
 
@@ -379,7 +392,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     }
   };
 
-  const values = _value.map((item, index) => {
+  const values = displayedValues.map((item, index) => {
     const onRemoveItem = () => {
       const next_value = _value.slice();
       next_value.splice(index, 1);
@@ -418,6 +431,22 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
       </Pill>
     );
   });
+
+  if (overflowCount > 0) {
+    values.push(
+      <Pill
+        key="__overflow"
+        unstyled={unstyled}
+        disabled={disabled}
+        attributes={attributes}
+        {...getStyles('pill')}
+      >
+        {typeof maxDisplayedValuesContent === 'function'
+          ? maxDisplayedValuesContent(overflowCount)
+          : maxDisplayedValuesContent || `+${overflowCount} more`}
+      </Pill>
+    );
+  }
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {

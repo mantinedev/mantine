@@ -35,3 +35,4 @@ export { renderPill } from './TagsInput.demo.renderPill';
 export { dragReorder } from './TagsInput.demo.dragReorder';
 export { floatingHeight } from './TagsInput.demo.floatingHeight';
 export { validation } from './TagsInput.demo.validation';
+export { maxDisplayedValues } from './TagsInput.demo.maxDisplayedValues';

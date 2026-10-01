@@ -33,3 +33,4 @@ export { fuzzySearch } from './Select.demo.fuzzySearch';
 export { loading } from './Select.demo.loading';
 export { openOnFocus } from './Select.demo.openOnFocus';
 export { creatable } from './Select.demo.creatable';
+export { scrollBehavior } from './Select.demo.scrollBehavior';

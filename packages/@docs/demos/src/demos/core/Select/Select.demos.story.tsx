@@ -167,3 +167,8 @@ export const Demo_creatable = {
   name: '⭐ Demo: creatable',
   render: renderDemo(demos.creatable),
 };
+
+export const Demo_scrollBehavior = {
+  name: '⭐ Demo: scrollBehavior',
+  render: renderDemo(demos.scrollBehavior),
+};

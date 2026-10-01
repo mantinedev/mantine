@@ -38,6 +38,9 @@ export interface TagsInputStoreOptions {
   /** Called when dropdown closes */
   onDropdownClose?: () => void;
 
+  /** `behavior` passed down to `element.scrollIntoView` when options are scrolled into view with keyboard navigation @default 'instant' */
+  scrollBehavior?: ScrollBehavior;
+
   /** Maximum number of tags @default Infinity */
   maxTags?: number;
 
@@ -109,6 +112,7 @@ export function useTagsInput(options: TagsInputStoreOptions = {}): TagsInputStor
     defaultDropdownOpened,
     onDropdownOpen,
     onDropdownClose,
+    scrollBehavior,
     maxTags = Infinity,
     onMaxTags,
     allowDuplicates,
@@ -124,6 +128,7 @@ export function useTagsInput(options: TagsInputStoreOptions = {}): TagsInputStor
     defaultDropdownOpened,
     onDropdownOpen,
     onDropdownClose,
+    scrollBehavior,
   });
 
   const [value, setValueState, valueControlled] = useUncontrolled<string[]>({
