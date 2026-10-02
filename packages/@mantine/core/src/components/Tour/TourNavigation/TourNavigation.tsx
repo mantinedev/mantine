@@ -53,6 +53,7 @@ export function TourNavigation(_props: TourNavigationProps) {
               }
             }}
             size="compact-sm"
+            color={ctx.color}
             {...ctx.getStyles('navigationButton')}
           >
             {isLastStep ? ctx.labels.close : ctx.labels.next}

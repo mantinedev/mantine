@@ -8,6 +8,8 @@ import {
   factory,
   Factory,
   getShadow,
+  getThemeColor,
+  MantineColor,
   StylesApiProps,
   useProps,
   useStyles,
@@ -52,7 +54,8 @@ export type TourCssVariables = {
     | '--tour-tooltip-radius'
     | '--tour-tooltip-shadow'
     | '--tour-beacon-size'
-    | '--tour-beacon-color';
+    | '--tour-beacon-color'
+    | '--tour-color';
 };
 
 export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, ElementProps<'div'> {
@@ -134,6 +137,9 @@ export interface TourProps extends BoxProps, StylesApiProps<TourFactory>, Elemen
   /** Tour step overlay color @default "rgba(0, 0, 0, 0.5)" */
   overlayColor?: string;
 
+  /** Key of `theme.colors` or any valid CSS color, controls beacon color and `Tour.Navigation` next button color @default theme.primaryColor */
+  color?: MantineColor;
+
   /** Key of `theme.shadows` or any valid CSS box-shadow value, controls the tooltip shadow @default 'md' */
   tooltipShadow?: string;
 
@@ -179,8 +185,9 @@ const defaultProps = {
 } satisfies Partial<TourProps>;
 
 const varsResolver = createVarsResolver<TourFactory>(
-  (_, { zIndex, overlayColor, tooltipShadow }) => ({
+  (theme, { zIndex, overlayColor, tooltipShadow, color }) => ({
     root: {
+      '--tour-color': color ? getThemeColor(color, theme) : undefined,
       '--tour-z-index': zIndex?.toString(),
       '--tour-overlay-color': overlayColor,
       '--tour-tooltip-radius': undefined,
@@ -233,6 +240,7 @@ export const Tour = factory<TourFactory>((_props) => {
     maxWidth,
     overlayColor,
     tooltipShadow,
+    color,
     children,
     attributes,
     ...others
@@ -333,6 +341,7 @@ export const Tour = factory<TourFactory>((_props) => {
         spotlightRadius: resolvedSpotlightRadius,
         closeOnOverlayClick: closeOnOverlayClick!,
         transitionProps,
+        color,
         labels,
         titleId,
         bodyId,

@@ -28,6 +28,7 @@ Set `mode="beacon"` to display pulsing indicators near target elements instead o
 Users can click beacons in any order to reveal tooltips. `onClose` is called when a beacon tooltip is closed –
 beacons stay on the page as long as `active` is `true`, so end the beacon tour by setting `active` to `false` from your own control.
 `Escape` closes only the open beacon tooltip – with no tooltip open, `Escape` does nothing and `onClose` is not called.
+Use `color` prop to change the beacon and the next button colors:
 
 <Demo data={TourDemos.beacon} />
 
@@ -111,7 +112,8 @@ Customize navigation button labels with the `labels` prop for i18n support:
 
 ## Scroll behavior
 
-By default, the tour scrolls the target element into view. Set `withScrollIntoView={false}` to disable,
+By default, the tour scrolls the target element into view when it is not fully visible,
+elements that are already visible are not scrolled. Set `withScrollIntoView={false}` to disable,
 or provide a `scrollToHandler` function for custom scroll behavior (e.g., scrolling within a specific container).
 
 ## Keyboard navigation

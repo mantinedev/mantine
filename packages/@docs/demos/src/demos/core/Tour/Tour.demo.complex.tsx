@@ -449,4 +449,5 @@ export const complex: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  defaultExpanded: false,
 };
