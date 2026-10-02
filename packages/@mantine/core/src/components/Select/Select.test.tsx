@@ -126,6 +126,21 @@ describe('@mantine/core/Select', () => {
     expect(screen.queryByRole('listbox')).toBe(null);
   });
 
+  it('sets aria-disabled on disabled options', () => {
+    render(
+      <Select
+        {...defaultProps}
+        dropdownOpened
+        data={[
+          { value: 'test-1', label: 'test-1' },
+          { value: 'test-2', label: 'test-2', disabled: true },
+        ]}
+      />
+    );
+    expect(screen.getByRole('option', { name: 'test-1' })).not.toHaveAttribute('aria-disabled');
+    expect(screen.getByRole('option', { name: 'test-2' })).toHaveAttribute('aria-disabled', 'true');
+  });
+
   it('allows searching options with searchable prop', async () => {
     render(<Select {...defaultProps} searchable />);
     await userEvent.click(screen.getByRole('combobox'));

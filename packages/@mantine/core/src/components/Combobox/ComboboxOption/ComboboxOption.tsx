@@ -71,6 +71,7 @@ export const ComboboxOption = factory<ComboboxOptionFactory>((_props) => {
         mod,
       ]}
       role="option"
+      aria-disabled={disabled || undefined}
       onClick={(event) => {
         if (!disabled) {
           ctx.onOptionSubmit?.(props.value as any, props);

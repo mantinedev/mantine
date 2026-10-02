@@ -51,6 +51,18 @@ describe('@mantine/core/ComboboxOption', () => {
     expect(screen.getByRole('option')).not.toHaveAttribute('data-combobox-disabled');
   });
 
+  it('sets aria-disabled attribute based on disabled prop', () => {
+    const { rerender } = render(<TestContainer {...defaultProps} disabled />);
+    expect(screen.getByRole('option')).toHaveAttribute('aria-disabled', 'true');
+
+    rerender(
+      <>
+        <TestContainer {...defaultProps} disabled={false} />
+      </>
+    );
+    expect(screen.getByRole('option')).not.toHaveAttribute('aria-disabled');
+  });
+
   it('calls onClick when the option is clicked', async () => {
     const spy = jest.fn();
     render(<TestContainer {...defaultProps} onClick={spy} />);
