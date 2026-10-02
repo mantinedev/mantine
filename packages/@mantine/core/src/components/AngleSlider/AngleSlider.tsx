@@ -250,6 +250,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
         aria-valuemax={360}
         aria-valuemin={0}
         aria-valuenow={_value}
+        aria-disabled={disabled}
         onKeyDown={handleKeyDown}
         aria-label={ariaLabel}
         {...getStyles('thumb', { style: { transform: `rotate(${_value}deg)` } })}
