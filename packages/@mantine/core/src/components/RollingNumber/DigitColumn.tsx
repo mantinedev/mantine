@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useStyles } from '../../core';
 import type { RollingNumberFactory } from './RollingNumber';
 
@@ -18,6 +19,9 @@ export function DigitColumn({
   empty,
   valueDirection,
 }: DigitColumnProps) {
+  const [renderedDigit, setRenderedDigit] = useState<string>(digit);
+  const isAnimating = previousDigit !== null && digit !== renderedDigit;
+
   const digitIndex = parseInt(digit, 10);
   const previousDigitIndex = previousDigit !== null ? parseInt(previousDigit, 10) : digitIndex;
 
@@ -40,15 +44,21 @@ export function DigitColumn({
         {...columnStyles}
         style={{
           ...columnStyles.style,
-          transform: `translateY(${-digitIndex}em)`,
-          ['--rn-roll-from' as any]: `translateY(${-previousDigitIndex}em)`,
-          ['--rn-roll-to' as any]: `translateY(${-animateToIndex}em)`,
+          ...(isAnimating
+            ? {
+                transform: `translateY(${-digitIndex}em)`,
+                ['--rn-roll-from' as any]: `translateY(${-previousDigitIndex}em)`,
+                ['--rn-roll-to' as any]: `translateY(${-animateToIndex}em)`,
+              }
+            : {
+                transform: 'none',
+                animation: 'none',
+              }),
         }}
         data-direction={direction}
+        onAnimationEnd={() => setRenderedDigit(digit)}
       >
-        {STRIP_CELLS.map((d, i) => (
-          <span key={i}>{d}</span>
-        ))}
+        {isAnimating ? STRIP_CELLS.map((d, i) => <span key={i}>{d}</span>) : <span>{digit}</span>}
       </span>
     </span>
   );

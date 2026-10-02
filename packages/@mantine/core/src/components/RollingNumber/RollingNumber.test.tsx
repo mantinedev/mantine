@@ -115,15 +115,17 @@ describe('@mantine/core/RollingNumber', () => {
     });
   });
 
-  it('renders digit columns with correct transform', () => {
+  it('renders digit columns without transform initially', () => {
     const { container } = render(<RollingNumber value={35} />);
     const columns = container.querySelectorAll('.mantine-RollingNumber-digitColumn');
-    expect(columns[0]).toHaveStyle({ transform: 'translateY(-3em)' });
-    expect(columns[1]).toHaveStyle({ transform: 'translateY(-5em)' });
+    expect(columns[0]).toHaveStyle({ transform: 'none' });
+    expect(columns[1]).toHaveStyle({ transform: 'none' });
   });
 
-  it('renders a 12-cell wraparound strip in each column', () => {
-    const { container } = render(<RollingNumber value={5} />);
+  it('renders a 12-cell wraparound strip during animation', () => {
+    const { container, rerender } = render(<RollingNumber value={4} />);
+    rerender(<RollingNumber value={4} />);
+    rerender(<RollingNumber value={5} />);
     const column = container.querySelector('.mantine-RollingNumber-digitColumn');
     expect(column!.children).toHaveLength(12);
     const cells = Array.from(column!.children).map((c) => c.textContent);
