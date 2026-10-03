@@ -67,14 +67,12 @@ const slides: LightboxSlideData[] = [
 
 ### Image loading
 
-All slides are mounted at once, so images are loaded lazily by default – only the active slide uses
-`loading="eager"`, every other slide uses `loading="lazy"` and is downloaded by the browser as it
-comes into view. This way opening a gallery with a large number of slides does not start a download
-for every image at once. Thumbnails are always lazy – note that `thumbSrc` falls back to `src`, so
-set it to a smaller image if the originals are large.
+By default, only the image of the active slide is loaded when the lightbox is opened, other images
+and thumbnails are loaded lazily. Thumbnails use `src` if `thumbSrc` is not set, set `thumbSrc`
+to a smaller image if the originals are large.
 
-Set the `loading` property on an image slide to override this per slide, for example to eagerly
-preload the slide next to the one that is opened first:
+Set the `loading` property on an image slide to change this, for example to preload
+the next slide:
 
 ```tsx
 import type { LightboxSlideData } from '@mantine/lightbox';
@@ -84,18 +82,6 @@ const slides: LightboxSlideData[] = [
   { src: 'image-2.png', alt: 'Second', loading: 'eager' },
 ];
 ```
-
-## Navigation and close behavior
-
-Use the following props to control built-in interactions:
-
-- `withNavigation` – shows previous/next arrow buttons, `true` by default
-- `loop` – enables infinite loop navigation, `false` by default
-- `closeOnClickOutside` – closes the lightbox when the empty space around the slide content is clicked, `false` by default
-- `closeOnSwipeDown` – closes the lightbox on mobile swipe down, `true` by default
-- `withKeyboardEvents` – enables keyboard shortcuts (arrows, `F`/`T`/`Z`), `true` by default; `Escape` always closes the lightbox
-- `returnFocus` – returns focus to the last active element when the lightbox is closed, `true` by default
-- `withInitialFocusPlaceholder` – adds a hidden focusable element at the start of the lightbox content so that the first toolbar button does not receive visible focus when the lightbox is opened with a pointer, `true` by default
 
 ## Zoom
 
@@ -107,19 +93,15 @@ pinch to adjust. Use `zoomMaxScale` to change the maximum zoom scale (`3` by def
 
 ## Thumbnails
 
-Enable the bottom thumbnail strip with `withThumbnails`. Click a thumbnail to navigate to that slide.
-Toggle visibility at runtime with the `T` keyboard shortcut or the toolbar button – the strip is
-animated with the `transitionDuration` prop value:
+Set `withThumbnails` to display the thumbnail strip at the bottom. Users can hide it
+with the `T` key or the toolbar button:
 
 <Demo data={LightboxDemos.thumbnails} />
 
 ### Custom thumbnails
 
-By default, thumbnails are rendered as `<img>` elements: image slides use `thumbSrc` or `src`,
-video slides use `thumbSrc` or `poster`, custom slides use `thumbSrc`. Set `renderThumb` on any
-slide to render custom thumbnail content instead – for example, a `<video>` element when the
-thumbnail is a small video rather than an image. The function receives `{ active }` payload, `active`
-is `true` for the thumbnail of the current slide. Rendered content is placed inside a 64x64px
+By default, thumbnails are images. Set `renderThumb` on a slide to render custom thumbnail
+content instead, for example a `<video>` element. The content is placed inside a 64x64px
 button, size it with `width: 100%` and `height: 100%`:
 
 ```tsx
@@ -144,7 +126,7 @@ const slides: LightboxSlideData[] = [
 
 ## All features
 
-Combine `withZoom`, `withThumbnails`, `withFullscreen`, and `withDownload` for the full experience:
+Zoom, thumbnails, fullscreen and download features can be combined:
 
 <Demo data={LightboxDemos.allFeatures} />
 
@@ -156,22 +138,18 @@ Set `loop` to enable infinite wrapping at the ends of the slide list:
 
 ## Slide transition
 
-By default, programmatic navigation (arrow buttons, keyboard, controlled index changes) snaps
-instantly. Set `withSlideTransition` to animate slide changes. The animation is handled by embla –
-use `emblaOptions={{ duration: 40 }}` to change its speed (embla duration is not in milliseconds,
-values between 20 and 60 are recommended):
+By default, slides are changed instantly when arrow buttons or keyboard are used.
+Set `withSlideTransition` to animate slide changes. Use `emblaOptions={{ duration: 40 }}`
+to change the animation speed. Embla duration is not in milliseconds, values between 20 and 60
+are recommended:
 
 <Demo data={LightboxDemos.transition} />
 
 ## Embla options
 
-The carousel behavior can be customized with the `emblaOptions` prop – it is passed directly to the
-underlying [embla carousel](https://www.embla-carousel.com/api/options/) instance. For example, you
-can change drag behavior or scroll animation speed.
-
-`loop` and `startIndex` are managed by the `loop` and `currentIndex` props and cannot be set through
-`emblaOptions`. A `watchDrag` callback is still called, but dragging is always disabled while the
-image is zoomed, so the zoom gesture is not interrupted:
+Use `emblaOptions` prop to pass [options](https://www.embla-carousel.com/api/options/) to
+the embla carousel. `loop` and `startIndex` options cannot be set this way, use `loop` and
+`currentIndex` props instead:
 
 ```tsx
 import { Lightbox } from '@mantine/lightbox';
@@ -202,18 +180,15 @@ function Demo() {
 
 ## Open and close transition
 
-By default, the overlay fades in and the content pops in – it is scaled from 95% to 100% while
-fading. Use `transitionProps` to change the animation of the content – the overlay always fades.
-`transitionProps` accepts the same options as the [Transition](/core/transition) component
-(`transition`, `duration`, `timingFunction`). Use `transitionDuration` as a shorthand to change only
-the duration (`200` by default):
+Use `transitionProps` to change the animation of the content, it accepts the same options
+as the [Transition](/core/transition) component. The overlay always fades. To change only
+the duration (`200` by default), use `transitionDuration`:
 
 <Demo data={LightboxDemos.overlayTransition} />
 
 ## Disable animations
 
-Set `transitionProps={{ duration: 0 }}` to open and close the lightbox instantly, without any
-animation:
+Set `transitionProps={{ duration: 0 }}` to open and close the lightbox without animation:
 
 <Demo data={LightboxDemos.disableTransition} />
 
@@ -226,17 +201,15 @@ Set `closeOnSwipeDown={false}` to disable:
 
 ## Click outside to close
 
-Set `closeOnClickOutside` to close the lightbox when the empty space around the current slide
-content is clicked – clicks on the image, video or any custom slide content are ignored, as well as
-clicks on the toolbar, navigation buttons, caption and thumbnails. The option is disabled by default
-to prevent accidental closing:
+Set `closeOnClickOutside` to close the lightbox when the empty space around the slide
+content is clicked. It is disabled by default to prevent accidental closing:
 
 <Demo data={LightboxDemos.closeOnClickOutside} />
 
 ## Store API
 
 Mount `Lightbox.Provider` once in your app and open the lightbox from anywhere
-using the static `Lightbox` methods (aliases of the default `lightbox` store actions):
+using the static `Lightbox` methods:
 
 ```tsx
 import { Lightbox } from '@mantine/lightbox';
@@ -257,9 +230,9 @@ Lightbox.setIndex(5);
 
 ## Multiple lightboxes
 
-By default, `Lightbox.Provider` and the static `Lightbox.open/close/next/prev/setIndex` methods
-use the shared `lightboxStore`. To run several independent lightboxes, create an isolated store
-with actions bound to it using `createLightbox` and pass the store to the `store` prop:
+By default, `Lightbox.Provider` and the static `Lightbox` methods use the shared `lightboxStore`.
+To use several independent lightboxes, create a separate store with `createLightbox`
+and pass it to the `store` prop:
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -290,28 +263,23 @@ function Demo() {
 
 ## Video slides
 
-Set `type: 'video'` on a slide to render a `<video>` element. Videos are automatically
-paused when navigating away from the slide. The `poster` image is used as the thumbnail,
-set `thumbSrc` to use a different image or `renderThumb` to render a custom thumbnail,
-for example a muted `<video>` element (see the last slide in the demo below):
+Set `type: 'video'` on a slide to render a `<video>` element. Videos are paused
+when the slide is changed. The `poster` image is used as the thumbnail unless
+`thumbSrc` or `renderThumb` is set:
 
 <Demo data={LightboxDemos.video} />
 
 ## Custom slides
 
-Set `type: 'custom'` with a `render` function for fully custom slide content.
-Use `renderThumb` or `thumbSrc` to provide the thumbnail – custom slides do not have a default one:
+Set `type: 'custom'` and a `render` function to display any content in a slide.
+Custom slides do not have a default thumbnail, set `renderThumb` or `thumbSrc`:
 
 <Demo data={LightboxDemos.custom} />
 
 ## Custom toolbar
 
-Override the default toolbar items with the `toolbarItems` prop. Each item has
-a `key`, `icon`, `label`, `onClick`, and optional `position` (`'left'` or `'right'`).
-
-`toolbarItems` can be either an array or a function that receives the current lightbox state and
-handlers – use the function form to build items that depend on the internal state, for example
-the thumbnails, fullscreen and zoom toggles. The function receives the following payload:
+Use `toolbarItems` prop to replace the default toolbar items. It accepts an array of items
+or a function that returns it. The function is called with the lightbox state and handlers:
 
 ```tsx
 interface ToolbarItemsPayload {
@@ -336,7 +304,7 @@ Use the built-in toolbar item factories for common actions:
 
 ## Compound components
 
-For full layout control, compose sub-components directly:
+To change the layout of the lightbox, use compound components:
 
 ```tsx
 import { Lightbox } from '@mantine/lightbox';
@@ -358,24 +326,12 @@ function CustomLightbox({ opened, onClose, slides }) {
 }
 ```
 
-Note that `Lightbox.Thumbnails` renders only when `withThumbnails` is set on `Lightbox.Root`.
-
-Available sub-components:
-- `Lightbox.Root` — overlay, portal, focus trap, scroll lock, keyboard handling
-- `Lightbox.Toolbar` — top bar with actions and slide counter
-- `Lightbox.Slides` — Embla carousel wrapper
-- `Lightbox.Slide` — individual slide (image, video, or custom)
-- `Lightbox.Thumbnails` — bottom thumbnail strip
-- `Lightbox.Navigation` — prev/next arrow buttons
-- `Lightbox.Caption` — text below the active slide
-- `Lightbox.CloseButton` — standalone close button
-- `Lightbox.Provider` — store-mode mount point
+`Lightbox.Thumbnails` is rendered only when `withThumbnails` is set on `Lightbox.Root`.
 
 ## Labels
 
-All strings rendered by the lightbox are defined in the `labels` prop. Pass the labels
-that you want to change – the rest fall back to the default English values, which are
-exported as `DEFAULT_LABELS`:
+Use `labels` prop to translate the lightbox. Labels that are not set fall back
+to the default English values:
 
 ```tsx
 import { Lightbox } from '@mantine/lightbox';
@@ -410,22 +366,16 @@ To change labels for all lightboxes in your application, set `labels` in
 
 ## Accessibility
 
-- Focus is trapped within the lightbox when opened and returned to the last active element when it is closed (`returnFocus` prop)
-- Focus is moved to a hidden placeholder element instead of the first toolbar button when the lightbox is opened, so that no focus ring is displayed for pointer users (`withInitialFocusPlaceholder` prop)
-- The content element has `role="dialog"` with `aria-modal="true"` and an accessible name from `labels.lightboxLabel` – pass `aria-label` to override it for a single lightbox
-- Always set the `alt` property on image slides – without it the image is treated as decorative by screen readers; for video slides set the `label` property
-- All interactive elements have `aria-label` attributes; the `label` property is required for custom toolbar items
-- `aria-live="polite"` region announces slide changes (including the current slide `alt`/`label`) to screen readers
-- Inactive slides are `inert` – their content is hidden from screen readers and removed from the tab order, so only the current slide is reachable
-- Body scroll is locked when the lightbox is open
-- Fullscreen mode entered from the toolbar is exited automatically when the lightbox is closed
+- Always set the `alt` property on image slides and the `label` property on video slides and custom toolbar items
+- The lightbox has `role="dialog"` and is labelled with `labels.lightboxLabel`, set `aria-label` to change the label of a single lightbox
+- Focus is trapped inside the lightbox and is returned to the previously focused element when it is closed
+- Slide changes are announced with `aria-live="polite"`
+- Inactive slides are hidden from screen readers and removed from the tab order
 
 ## Keyboard shortcuts
 
-`Escape` always closes the lightbox. Other shortcuts are active when `withKeyboardEvents` is set
-(default). They are ignored when focus is inside an input, textarea or media element anywhere in the
-lightbox, and when focus is on a button, link or other widget inside slide content – so controls in
-custom slides keep their own keyboard handling. `F`/`T`/`Z` only work when the corresponding feature is enabled:
+Set `withKeyboardEvents={false}` to disable all shortcuts except `Escape`. Shortcuts are ignored
+while focus is inside an input, a video or an interactive element of a custom slide:
 
 <KeyboardEventsTable
   data={[

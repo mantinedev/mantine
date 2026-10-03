@@ -30,8 +30,7 @@ Set `type="range"` to allow users to pick a quarters range:
 ## Presets
 
 Use the `presets` prop to add custom quarter presets. Presets are displayed next to the calendar.
-Preset values are normalized to the first day of their quarter before `onChange` is called, so any
-date inside the quarter can be used as a preset value:
+Any date inside the quarter can be used as a preset value:
 
 <Demo data={QuarterPickerInputDemos.presets} />
 
@@ -49,8 +48,7 @@ You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
 ## Value format
 
 Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label.
-The default format is `[Q]Q YYYY` (for example, `Q2 2026`); the `Q` token is provided by the
-[advancedFormat plugin](https://day.js.org/docs/en/plugin/advanced-format) that `@mantine/dates` registers:
+The default format is `[Q]Q YYYY`, for example `Q2 2026`:
 
 <Demo data={QuarterPickerInputDemos.valueFormat} />
 

@@ -26,8 +26,7 @@ For example, you can change the number of columns and hide the preview and categ
 
 ## onEmojiSelect
 
-Use the `onEmojiSelect` callback to handle emoji selection. The callback receives
-the full emoji object including the skin-toned variant:
+`onEmojiSelect` is called with the full emoji object when an emoji is selected:
 
 ```tsx
 import { useState } from 'react';
@@ -50,9 +49,8 @@ function Demo() {
 
 ## Controlled state
 
-Use `opened` and `onOpenedChange` to fully control the popover state. In controlled mode,
-the target element is not toggled automatically – add an `onClick` handler to it.
-Use `defaultOpened` to set the initial open state in uncontrolled mode:
+Use `opened` and `onOpenedChange` props to control the popover state. A controlled popover
+is not toggled when the target is clicked, add an `onClick` handler to the target element:
 
 ```tsx
 import { useState } from 'react';
@@ -79,8 +77,7 @@ function Demo() {
 
 ## Popover props
 
-Use the `popoverProps` prop to customize the underlying `Popover` component.
-For example, you can change the position, shadow, or offset:
+Use the `popoverProps` prop to pass props to the underlying `Popover` component:
 
 ```tsx
 import { ActionIcon } from '@mantine/core';

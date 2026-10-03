@@ -13,9 +13,8 @@ It is a polymorphic component and can be rendered as any element.
 
 ## Controlled and uncontrolled
 
-`Toggle` supports both controlled and uncontrolled modes. In uncontrolled mode, use `defaultActive`
-to set the initial state. In controlled mode, use `active` and `onActiveChange` props to manage
-the state.
+Use `defaultActive` to set the initial state of an uncontrolled `Toggle`,
+`active` and `onActiveChange` props to control it.
 
 ```tsx
 import { useState } from 'react';
@@ -36,7 +35,7 @@ function ControlledDemo() {
 ## Auto contrast
 
 Set `autoContrast` prop to automatically adjust icon color based on the active toggle
-background color. This is useful when using `variant="filled"` with light colors.
+background color, for example with `variant="filled"` and light colors.
 
 <Demo data={ToggleDemos.autoContrast} />
 
@@ -57,4 +56,5 @@ the width to adjust to content.
 When using icon-only toggles, provide an `aria-label` prop so that screen readers can
 announce the button purpose.
 
-When `Toggle` is rendered as a non-button element (for example, `component="a"`), the `disabled` prop sets `aria-disabled`, removes the element from the tab order and prevents `onClick` and active state changes, since such elements do not support the native `disabled` attribute.
+When `Toggle` is rendered as a non-button element (for example, `component="a"`), the `disabled` prop
+sets `aria-disabled`, removes the element from the tab order and prevents clicks.

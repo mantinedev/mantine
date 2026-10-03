@@ -1,9 +1,18 @@
 import { Children, useEffect, useEffectEvent, useRef, useState } from 'react';
-import { autoUpdate, flip, offset, shift, size, useFloating } from '@floating-ui/react';
+import { flip, offset, shift, size, useFloating } from '@floating-ui/react';
+import { flushSync } from 'react-dom';
 import { useDirection } from '../../core';
 import { getFloatingPosition } from '../../utils/Floating';
+import { isElementInView } from './is-element-in-view';
+import { pressAwareAutoUpdate } from './press-aware-auto-update';
 import type { TourStepProps } from './TourStep/TourStep';
-import { useTargetRect, type TargetRect, type TourTarget } from './use-target-rect';
+import {
+  resolveTarget,
+  useTargetElement,
+  useTargetRect,
+  type TargetRect,
+  type TourTarget,
+} from './use-target-rect';
 import { useTourState } from './use-tour-state';
 
 export interface UseTourInput {
@@ -114,7 +123,8 @@ export function useTour({
   };
 
   const resolvedTarget = showTooltip ? activeTarget : lastActiveTargetRef.current;
-  const { rect: targetRect, element: targetElement } = useTargetRect(resolvedTarget);
+  const targetElement = useTargetElement(resolvedTarget);
+  const { rect: targetRect, updateRect } = useTargetRect(targetElement);
 
   useEffect(() => {
     targetRef.current = targetElement;
@@ -123,7 +133,7 @@ export function useTour({
   const scrollTargetIntoView = useEffectEvent((element: HTMLElement) => {
     if (scrollToHandler) {
       scrollToHandler(element);
-    } else {
+    } else if (!isElementInView(element)) {
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   });
@@ -134,6 +144,15 @@ export function useTour({
     }
   }, [active, targetElement, withScrollIntoView]);
 
+  const nextTargetNeedsScroll = useEffectEvent(() => {
+    if (!withScrollIntoView || scrollToHandler) {
+      return false;
+    }
+
+    const element = resolveTarget(displayStep?.target);
+    return !!element && !isElementInView(element);
+  });
+
   const stepPosition = getFloatingPosition(dir, displayStep?.position || 'bottom');
   const isSidePlacement = stepPosition.startsWith('left') || stepPosition.startsWith('right');
 
@@ -143,7 +162,19 @@ export function useTour({
     elements: { reference: targetElement },
     placement: stepPosition,
     transform: false,
-    whileElementsMounted: autoUpdate,
+    whileElementsMounted: (reference, floating, update) => {
+      let mounted = false;
+      const cleanup = pressAwareAutoUpdate(reference, floating, () => {
+        update();
+        if (mounted) {
+          flushSync(updateRect);
+        } else {
+          updateRect();
+        }
+      });
+      mounted = true;
+      return cleanup;
+    },
     middleware: [
       offset(12),
       flip(isSidePlacement ? { fallbackAxisSideDirection: 'end' } : undefined),
@@ -188,7 +219,12 @@ export function useTour({
       return undefined;
     }
 
-    if (!hasPositioned || !previous.shown || previous.index === displayStepIndex) {
+    if (
+      !hasPositioned ||
+      !previous.shown ||
+      previous.index === displayStepIndex ||
+      nextTargetNeedsScroll()
+    ) {
       return undefined;
     }
 

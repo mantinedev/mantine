@@ -13,8 +13,7 @@ export default Layout(MDX_DATA.EmojiPickerInput);
 ## Controlled
 
 The `value` is an emoji ID (a key in `data.emojis`). Use `value` and `onChange` to control it.
-When the value is set outside of the picker, the input displays the default (no skin tone)
-variant of the emoji:
+When the value is not selected in the picker, the input displays the emoji without skin tone:
 
 ```tsx
 import { useState } from 'react';
@@ -60,17 +59,14 @@ Set `closeOnSelect={false}` to keep it open:
 
 ## EmojiPicker props
 
-Customize the underlying picker with the `pickerProps` prop.
-For example, you can change columns or hide sections. Skin tone selected in the picker
-is preserved when the dropdown is closed and opened again, use `pickerProps.skinTone`,
-`pickerProps.defaultSkinTone` and `pickerProps.onSkinToneChange` to control it:
+Use the `pickerProps` prop to pass props to the underlying `EmojiPicker`,
+for example to change the number of columns or hide sections:
 
 <Demo data={EmojiPickerInputDemos.pickerProps} />
 
 ## Controlled dropdown
 
-Use `opened` and `onOpenedChange` props to control the dropdown state.
-You can also use `defaultOpened` for the initial open state in uncontrolled mode:
+Use `opened` and `onOpenedChange` props to control the dropdown state:
 
 ```tsx
 import { useState } from 'react';
@@ -93,8 +89,8 @@ function Demo() {
 
 ## onEmojiSelect
 
-In addition to `onChange` (which provides the emoji ID), you can use `onEmojiSelect`
-to get the full emoji object including name, keywords, and skin variants:
+`onChange` is called with the emoji ID. Use `onEmojiSelect` to get the full emoji object
+with name, keywords and skin variants:
 
 ```tsx
 import { EmojiPickerInput } from '@mantine/emoji';
@@ -113,8 +109,7 @@ function Demo() {
 
 ## Popover props
 
-Use the `popoverProps` prop to customize the underlying `Popover` component.
-For example, you can change the position, shadow, or offset:
+Use the `popoverProps` prop to pass props to the underlying `Popover` component:
 
 ```tsx
 import { EmojiPickerInput } from '@mantine/emoji';
