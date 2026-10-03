@@ -6,32 +6,31 @@ export default Layout(MDX_DATA.FileSize);
 
 ## Usage
 
-`FileSize` formats a raw number of bytes into a human-readable file size (`1.45 kB`,
-`4.8 GB`). It is built on top of the native
+`FileSize` formats a number of bytes into a human-readable file size (`1.45 kB`, `4.8 GB`)
+with the native
 [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
-API and renders the formatted value as text without a wrapping element:
+API. It renders text without a wrapping element:
 
 <Demo data={FileSizeDemos.usage} />
 
 ## SI (decimal) and binary units
 
-By default, `FileSize` uses the decimal (SI) unit system: it scales by 1000 and uses
-`kB`, `MB`, `GB` units. Set `unitSystem="binary"` to scale by 1024 and use `KiB`,
-`MiB`, `GiB` units instead:
+By default, `FileSize` uses decimal (SI) units: it scales by 1000 and displays `kB`, `MB`, `GB`.
+Set `unitSystem="binary"` to scale by 1024 and display `KiB`, `MiB`, `GiB` instead:
 
 <Demo data={FileSizeDemos.unitSystem} />
 
 ## Bytes and bits
 
-The `value` is measured in bytes by default. Set `unit="bit"` to measure it in bits –
-useful for network throughput and bitrate:
+The `value` is measured in bytes by default. Set `unit="bit"` to measure it in bits,
+for example to display network speed or bitrate:
 
 <Demo data={FileSizeDemos.units} />
 
 ## Unit display
 
-Use the `unitDisplay` prop to control how the unit is rendered: `short` (`1.45 MB`),
-`long` (`1.45 megabytes`) or `narrow` (`1.45MB`). It defaults to `short`:
+Use the `unitDisplay` prop to control how the unit is rendered: `short` (default, `1.45 MB`),
+`long` (`1.45 megabytes`) or `narrow` (`1.45MB`):
 
 <Demo data={FileSizeDemos.unitDisplay} />
 
@@ -42,9 +41,8 @@ format the value for a specific locale:
 
 <Demo data={FileSizeDemos.locale} />
 
-Note that when rendering on the server it is usually better to set the `locale` prop
-explicitly rather than relying on the default host locale, which may differ between the
-server and the client and cause hydration mismatches.
+The default locale of the server and the client may differ. Set `locale` explicitly
+when rendering on the server to avoid hydration mismatches.
 
 ## Maximum fraction digits
 
@@ -61,9 +59,8 @@ function Demo() {
 
 ## formatBytes function
 
-`FileSize` is a thin wrapper around the `formatBytes` function. Use `formatBytes`
-directly when you need the formatted string instead of a React component, for example
-in an `aria-label` or a chart tooltip:
+`FileSize` is a wrapper around the `formatBytes` function. Use `formatBytes` when you need
+a string instead of a React component, for example in an `aria-label` or a chart tooltip:
 
 <Demo data={FileSizeDemos.functionUsage} />
 

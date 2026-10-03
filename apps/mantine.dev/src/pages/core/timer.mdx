@@ -6,11 +6,9 @@ export default Layout(MDX_DATA.Timer);
 
 ## Usage
 
-`Timer` is a controllable countdown and stopwatch readout. Unlike a fire-and-forget
-display, it has running/paused state, counts up or down, and can be started, paused, resumed,
-reset and restarted. `Timer` does not render playback buttons – build them with
-[Timer.Control](#custom-layout) or drive the timer with an external [useTimer](#controlling-the-timer)
-controller. Set `autoStart` to start the timer on mount:
+`Timer` is a stopwatch and countdown that can be started, paused, resumed, reset and restarted.
+It does not render playback buttons: add them with [Timer.Control](#custom-layout) or control
+the timer with [useTimer](#controlling-the-timer). Set `autoStart` to start the timer on mount:
 
 <Demo data={TimerDemos.usage} />
 
@@ -36,11 +34,9 @@ function Demo() {
 }
 ```
 
-In stopwatch mode you can set `targetMs` to count up to a boundary – the timer stops and calls
-`onComplete` once the target is reached. In countdown mode the timer completes when it reaches
-`targetMs`.
-
-If `startMs` is already at or past the boundary (a countdown with `startMs` below `targetMs`, or a stopwatch with `targetMs` below `startMs`), the timer completes immediately when it is started and calls `onComplete`. Changing `startMs` or `countdown` stops the timer and resets it to the new `startMs`.
+Set `targetMs` in stopwatch mode to stop the timer at that value. In both modes `onComplete`
+is called when the timer reaches `targetMs`. Changing `startMs` or `countdown` stops the timer
+and resets it to the new `startMs`.
 
 ## Format
 
@@ -62,8 +58,7 @@ tokens are supported:
 
 Literal text in `format` is not escaped: the letters `D`, `H`, `m`, `s` and `S` are always replaced with time values, even inside words.
 
-Each token renders its own time segment. Days accumulate all higher units, but other tokens are
-capped to their natural range (hours 0–23, minutes and seconds 0–59). Include a larger token
+All tokens except days are capped to their natural range. Include a larger token
 (for example `DD` or `HH`) for durations that exceed the largest unit in the format:
 
 <Demo data={TimerDemos.formats} />
@@ -75,24 +70,17 @@ frequently than once per second:
 
 ## Custom layout
 
-For custom layouts, pass `Timer.Segment`, `Timer.Separator` and `Timer.Control` as children
-instead of relying on the default readout. `Timer.Segment` displays a single time segment,
-`Timer.Separator` renders a separator between segments, and `Timer.Control` is a button that calls
-a controller action when clicked:
+Pass `Timer.Segment`, `Timer.Separator` and `Timer.Control` as children to replace
+the default readout. `Timer.Control` is a button that calls the controller action
+set with the `action` prop:
 
 <Demo data={TimerDemos.segments} />
 
-`Timer.Segment` `type` prop accepts `days`, `hours`, `minutes`, `seconds` and `milliseconds`.
-`Timer.Control` `action` prop accepts `start`, `pause`, `resume`, `reset` and `restart`. `start`
-continues from the current value, or restarts the timer from `startMs` if it has already completed.
-
 ## useTimer hook
 
-`Timer` is built on top of the `useTimer` hook. Use the hook directly to build a fully custom
-timer UI or to share one timer controller between several components. `useTimer` accepts the
-timer-specific options (`startMs`, `targetMs`, `countdown`, `interval`, `autoStart`, `onTick` and
-`onComplete`) – the same as the corresponding [Timer props](/core/timer?t=props), but not the DOM
-and style props – and returns the timer state and actions:
+`Timer` is built on top of the `useTimer` hook. Use the hook to build custom timer UI or to
+share one timer between several components. It accepts the same timer options as
+[Timer props](/core/timer?t=props) and returns the timer state and actions:
 
 ```tsx
 import { useTimer } from '@mantine/core';
@@ -118,24 +106,23 @@ function Demo() {
 ## Controlling the timer
 
 To control the timer from outside the component, create a controller with `useTimer` and pass it
-to `Timer` with the `controller` prop. When a controller is provided, the option props on `Timer`
-are ignored – the controller owns the state:
+to `Timer` with the `controller` prop. When a controller is provided, timer options set
+on `Timer` are ignored – pass them to `useTimer`:
 
 <Demo data={TimerDemos.controller} />
 
 ## Progress
 
 When `targetMs` is set (or in countdown mode, where it defaults to `0`), the controller exposes a
-`progress` value from `0` to `1`. It is convenient for binding the timer to a
-[Progress](/core/progress) bar or a [RingProgress](/core/ring-progress):
+`progress` value from `0` to `1`. Use it with [Progress](/core/progress) or
+[RingProgress](/core/ring-progress):
 
 <Demo data={TimerDemos.progress} />
 
 ## Timer.parse
 
 `Timer.parse` (also available as `useTimer.parse`) converts a duration object, `Date` or ISO date
-string to milliseconds. It is useful for the "count down to a date" scenario or for building
-`startMs`/`targetMs` values from time units:
+string to milliseconds:
 
 ```tsx
 import { Timer } from '@mantine/core';
@@ -146,23 +133,27 @@ Timer.parse({ hours: 1, minutes: 30 }); // -> 5400000
 Timer.parse('2030-01-01T00:00:00'); // -> milliseconds from now until the date
 ```
 
-When `Timer.parse` receives a `Date` or a date string, the result depends on the current time, so every call returns a different value. Compute it once (for example, with a `useState` initializer) – passing `Timer.parse(date)` directly to `startMs` gives the timer a new `startMs` on every render, and a changed `startMs` stops and resets the timer:
+With a `Date` or a date string, the result depends on the current time. Calculate it once
+(for example, with a `useState` initializer): a new `startMs` value on every render
+resets the timer.
 
 <Demo data={TimerDemos.deadline} />
 
-A date in the past produces a negative value, which `Timer` clamps to `0`, so a countdown with `autoStart` completes on mount. A string that cannot be parsed as a date produces `0`.
+A date in the past produces a negative value, which `Timer` clamps to `0`, so a countdown with `autoStart` completes on mount.
 
 ## Timer vs use-countdown
 
-[use-countdown](/hooks/use-countdown) is a display-only countdown hook: it counts down to a target
-date or from a duration and fires `onComplete`. `Timer` and `useTimer` are the interactive
-superset – they count up or down, expose pause/resume/restart controls and compound layout parts.
-Reach for `use-countdown` when you only need a countdown readout, and for `Timer`/`useTimer` when
-you need full playback control.
+[use-countdown](/hooks/use-countdown) is a display-only countdown hook. Use it when you only need
+a countdown readout, and use `Timer` or `useTimer` when the timer must count up or be paused,
+resumed and restarted.
 
 ## Accessibility
 
-The `Timer` root element has `role="timer"` and `aria-live="off"`, so screen readers do not announce every tick. To announce the value as it changes, set `aria-live="polite"` on `Timer` – it is recommended only for second (or slower) `interval` values, and keep `Timer.Control` elements outside of the announced region if you do not want their labels to be read on every update. `Timer.Control` controls are real `button` elements. When a control renders only an icon, set an `aria-label`:
+The `Timer` root element has `role="timer"` and `aria-live="off"`, so screen readers do not
+announce every tick. Set `aria-live="polite"` on `Timer` to announce value changes. It is
+recommended only with `interval` of one second or more.
+
+When `Timer.Control` renders only an icon, set an `aria-label`:
 
 ```tsx
 import { Timer } from '@mantine/core';
