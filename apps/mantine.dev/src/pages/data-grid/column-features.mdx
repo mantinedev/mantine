@@ -6,42 +6,30 @@ export default Layout(MDX_DATA.DataGridColumnFeatures);
 
 ## Column reorder
 
-Pass `withColumnReorder` to `useDataGrid` to enable column reordering. Users drag a column header
-with the pointer (mouse, pen or touch): the drag starts after 4px of movement so a plain click
-still sorts, a ghost of the header label follows the pointer, the source header is dimmed, and a
-2px drop line with a dot marks the target edge, decided by the pointer position relative to the
-middle of the hovered header.
+Pass `withColumnReorder` to `useDataGrid` to allow users to reorder columns by dragging
+column headers:
 
 <Demo data={DataGridDemos.columnReorder} />
 
-Valid targets are data columns in the same pin region and, under header groups, in the same parent
-group; utility columns and group headers are never targets. Dropping writes `columnOrder` through
-the store, where utility columns are always kept first. With `withColumnMenu` the column menu adds
-**Move left** and **Move right** items, which reorder from the keyboard with the same target rules
-(they follow the visual direction under RTL). There is no auto-scroll while dragging.
+- A column can be moved only within its pin region and its parent header group
+- Utility columns always stay first and cannot be moved
+- Set `withColumnMenu` on `DataGrid` to add **Move left** and **Move right** items to the column menu, they make reordering available from the keyboard
+- While rows are grouped, grouped columns are kept first and cannot be moved. Set `groupedColumnMode: false` to keep them in place, see [groupedColumnMode](/data-grid/grouping#groupedcolumnmode)
 
-While grouping with the default `groupedColumnMode: 'reorder'`, grouped columns are kept at the start of the data columns: they are neither drag sources nor drop targets and have no **Move left**/**Move right** menu items. The forced position is display-only: it is not written to `columnOrder` (neither by moving other columns nor in `store.columnOrder`, `getColumnOrder()` or persisted state), so when grouping is removed the grouped columns return to their own place in `columnOrder`. Set `groupedColumnMode: false` to leave grouped columns in place and keep them reorderable, see [groupedColumnMode](/data-grid/grouping#groupedcolumnmode).
-
-Use `columnOrder` and `onColumnOrderChange` for controlled state. Reset the column order
-with `store.table.setColumnOrder([])`; the store re-prepends any utility column id missing from
-the order, also when it restores persisted state.
+Use `columnOrder` and `onColumnOrderChange` for controlled state. To reset the column order,
+call `store.table.setColumnOrder([])`.
 
 ## Header groups
 
-Group columns under shared headers by nesting column definitions. Use the `columns` property
-on a column definition to create header groups. Group header cells carry `data-header-group`,
-draw a divider at their inline end (placeholders carry `data-placeholder` and draw nothing), keep
-their label start-aligned and take the same height as every other header row. Group headers keep
-their resize handle (resizing a group resizes its leaves proportionally) but have no sort button,
-column menu or drag behavior.
+Use the `columns` property of a column definition to group columns under a shared header.
+Group headers can be resized, but cannot be sorted or dragged and have no column menu.
 
 <Demo data={DataGridDemos.headerGroups} />
 
 ## Column alignment
 
-Set `meta.align` (`'start' | 'center' | 'end'`, default `start`) on a column to align its header,
-body and tfoot cells; the value is reflected as `data-align` on the cells. End-aligned columns use
-tabular figures automatically, which is the intended setting for numbers:
+Set `meta.align` on a column to align its header, body and footer cells. The default value is `start`.
+Columns with `align: 'end'` use tabular figures, use it for numbers:
 
 ```tsx
 const columns = [
@@ -53,21 +41,22 @@ const columns = [
 
 ## Utility columns
 
-Features that need their own column inject a TanStack display column at the start of the grid:
-`__reorder__` (`withRowReorder`), `__select__` (`withRowSelection`), `__expand__`
-(`withRowExpansion` without tree data) and `__rowNumber__` (`withRowNumbers`), in that order. They
-carry `meta.utility`, cannot be sorted, filtered, resized or hidden through the UI, are excluded
-from export and the column menu, are forced to the start of `columnPinning.start` under column
-pinning, and get their width from the grid `size` (overridable through `columnSizing`). The ids are
-exported as `UTILITY_COLUMN_IDS`, and code that iterates `table.getAllColumns()` should skip
-columns with `meta.utility`.
+Row reorder, row selection, row expansion and row numbers features add their own columns
+at the start of the grid:
+
+- `__reorder__` – `withRowReorder`
+- `__select__` – `withRowSelection`
+- `__expand__` – `withRowExpansion` without tree data
+- `__rowNumber__` – `withRowNumbers`
+
+Utility columns cannot be sorted, filtered, resized or hidden by the user and are not exported.
+Their ids are exported as `UTILITY_COLUMN_IDS`. If your code iterates over `table.getAllColumns()`,
+skip columns with `meta.utility`.
 
 ## Cell spanning
 
-Set `spanRows: true` on a column definition to merge adjacent rows that share the same value for
-that column into a single vertically spanning cell. Spans are recomputed from the rows that are
-actually rendered, so sorting, filtering and pagination only change which rows are adjacent — a run
-never crosses a page boundary, a pinned-row section, or a grouped row.
+Set `spanRows: true` on a column definition to merge cells of adjacent rows that have
+the same value in that column. Only rows that are displayed next to each other are merged.
 
 <Demo data={DataGridDemos.cellSpanning} />
 
@@ -97,13 +86,12 @@ const columns = [
 ];
 ```
 
-By default nullish values are not merged. Set `enableCellSpanning: false` on `tableOptions` to turn
-spanning off for the whole grid, or `enableCellSpanning: false` on a column to exclude it.
+Notes:
 
-Group rows are not spanned: they render one cell per column (the group label extends over the empty cells instead), and a group row always ends a `spanRows` run.
-
-Cell spanning is not applied when virtualization is enabled — the virtualized renderer positions every
-cell independently, so `spanRows` and `spanColumns` are ignored for grids that use `virtualize`.
+- `null` and `undefined` values are not merged
+- Group rows are not spanned
+- `spanRows` and `spanColumns` are ignored when `virtualize` is set
+- Set `enableCellSpanning: false` in `tableOptions` to disable spanning for the whole grid, or on a column definition to disable it for one column
 
 ## Related pages
 

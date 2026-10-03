@@ -6,54 +6,40 @@ export default Layout(MDX_DATA.DataGridSorting);
 
 ## Basic sorting
 
-Set `enableSorting: true` on columns that should be sortable. Sorting is enabled automatically
-when any column has this flag. Click a sortable column header to cycle through ascending,
-descending, and unsorted states.
+Set `enableSorting: true` on columns that should be sortable. Click a sortable column header
+to cycle through ascending, descending and unsorted states.
 
 <Demo data={DataGridDemos.sorting} />
 
 ## Sort indicators
 
-A sorted column shows a single arrow at full text color, pointing down for descending and rotated
-for ascending. Columns that are sortable but not sorted show a double chevron only while the
-header is hovered or focused; set `sortIndicator="always"` to keep it visible. `sortIndicatorPosition`
-controls where the arrow sits: `trailing` (default) pushes it to the far edge of the header cell,
-`inline` keeps it next to the label.
+A sorted column displays an arrow. Sortable columns that are not sorted display an indicator
+only while the header is hovered or focused, set `sortIndicator="always"` to keep it visible.
 
-The arrow side follows the column alignment (`meta.align`): start-aligned columns place the arrow at
-the end edge, end-aligned columns place it right before the label, centered columns keep it inline.
-Long labels are truncated with an ellipsis and never push the arrow out of the cell.
+Use `sortIndicatorPosition` to change the indicator position: `trailing` (default) places it
+at the far edge of the header cell, `inline` places it next to the label.
 
 <Demo data={DataGridDemos.sortIndicators} />
 
-Only sortable headers take a hover background and enter the tab order; a non-sortable header is a
-plain label. Both rules are reflected on the root as `data-sort-indicator` and
-`data-sort-indicator-position`, so one set of CSS rules drives the table header and the virtualized
-header.
-
 ## Multi-column sort
 
-Hold `Shift` and click additional column headers to sort by multiple columns simultaneously.
-Every sorted column shows its arrow; the grid renders no precedence numbers. Multi-sort is enabled
-by default: pass `enableMultiSort: false` to `useDataGrid` to turn it off, and
-`maxMultiSortColCount` to cap the number of sorted columns.
+Hold `Shift` and click column headers to sort by multiple columns. Pass `enableMultiSort: false`
+to `useDataGrid` to disable multi-column sort, or `maxMultiSortColCount` to limit the number
+of sorted columns.
 
 <Demo data={DataGridDemos.multiSort} />
 
 ## Controlled sorting
 
-Pass `sorting` and `onSortingChange` to `useDataGrid` to control sorting state externally.
-The state follows the TanStack Table `SortingState` format -- an array of `{ id: string, desc: boolean }` objects.
+Pass `sorting` and `onSortingChange` to `useDataGrid` to control sorting state.
+The state is an array of `{ id: string, desc: boolean }` objects (`SortingState` type of TanStack Table).
 
 <Demo data={DataGridDemos.controlledSorting} />
 
 ## Custom sort icons
 
-Use the `sortedIcon` and `unsortedIcon` props to replace the default indicators. `sortedIcon` must
-be direction-agnostic: the grid renders the same node for both directions and rotates it by 180
-degrees with CSS for ascending order, so pass a plain "down" arrow rather than an icon that already
-encodes a direction. `unsortedIcon` is displayed on sortable columns that are not sorted, following
-the `sortIndicator` reveal rule. Both icons are rendered at `--dg-icon-size` by default.
+Use `sortedIcon` and `unsortedIcon` props to replace the default indicators. `sortedIcon` must be
+an arrow that points down: the same icon is used for both directions and is rotated for ascending order.
 
 <Demo data={DataGridDemos.customSortIcons} />
 
@@ -65,8 +51,8 @@ With `withColumnMenu` set on `DataGrid`, every sortable column gets **Sort ascen
 
 ## Custom sort functions
 
-Set a custom `sortFn` on a column definition to override the default sort behavior. The value can
-be one of the built-in sort function names (a string) or a custom comparator function:
+Set `sortFn` on a column definition to change how the column is sorted. The value is the name
+of a built-in sort function or a comparator function:
 
 ```tsx
 const columns = [
@@ -89,7 +75,7 @@ const columns = [
 
 ## Built-in sort functions
 
-TanStack Table provides the following built-in sort function names that can be used as `sortFn`:
+Built-in sort functions of TanStack Table that can be used as `sortFn`:
 
 <DataTable
   head={['Name', 'Description']}
@@ -105,9 +91,7 @@ TanStack Table provides the following built-in sort function names that can be u
 
 ## Sort removal behavior
 
-By default, clicking a sorted column header cycles through ascending → descending → unsorted.
-Pass `enableSortingRemoval: false` to `useDataGrid` to skip the unsorted state and cycle only
-between ascending and descending:
+Pass `enableSortingRemoval: false` to `useDataGrid` to remove the unsorted state from the cycle:
 
 ```tsx
 const store = useDataGrid({
@@ -133,11 +117,11 @@ const store = useDataGrid({
 
 ## Server-side sorting
 
-For server-side sorting, set `manualSorting` to `true` and handle sorting in your data fetching logic.
+For server-side sorting, set `manualSorting: true` and sort the data in your data fetching logic.
 See the [Server-side](/data-grid/server-side) page for a complete example.
 
 ## Accessibility
 
-Sortable column headers render a button with `aria-sort` (`ascending`, `descending` or `none`) on
-the `th`. The button is focusable and can be activated with `Enter` or `Space`; the focus ring is
-drawn as a 2px inset ring on the whole header cell. Non-sortable headers never enter the tab order.
+Sortable column headers are buttons that can be activated with `Enter` or `Space`. The header
+cell has the `aria-sort` attribute (`ascending`, `descending` or `none`). Headers of columns
+that are not sortable cannot be focused.

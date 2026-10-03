@@ -7,16 +7,14 @@ export default Layout(MDX_DATA.GettingStartedDataGrid);
 
 Install `@mantine/data-grid` and its peer dependencies:
 
-<InstallScript packages="@mantine/data-grid @tanstack/react-table @tanstack/react-virtual" />
+<InstallScript packages="@mantine/data-grid @tanstack/react-table @tanstack/react-virtual @tanstack/match-sorter-utils" />
 
-After installation, import the package styles. Add the import after `@mantine/core` styles:
+Import the package styles after `@mantine/core` styles:
 
 ```tsx
 import '@mantine/core/styles.css';
 import '@mantine/data-grid/styles.css';
 ```
-
-Note: `@tanstack/react-virtual` is only needed if you plan to use the `virtualize` feature for large datasets.
 
 ## Quick start
 
@@ -43,8 +41,8 @@ function Demo() {
 
 ## Store hook
 
-Use `useDataGrid` to create a store that manages grid state. Pass it to DataGrid via the `store` prop.
-Most features are inferred automatically from columns and controlled state -- you rarely need explicit flags.
+Use `useDataGrid` to create a store that manages grid state and pass it to `DataGrid`
+with the `store` prop:
 
 ```tsx
 import { DataGrid, useDataGrid } from '@mantine/data-grid';
@@ -64,10 +62,8 @@ function Demo() {
 
 ## createDataGridColumnHelper
 
-`createDataGridColumnHelper` provides a type-safe API for building column definitions. Pass your row
-data type as a generic to get full autocompletion on accessor keys and cell values. It is a thin
-wrapper around TanStack Table's `createColumnHelper` that is already bound to the feature set
-DataGrid registers, so you do not have to pass the features generic yourself:
+`createDataGridColumnHelper` is a wrapper around TanStack Table's `createColumnHelper`.
+Pass your row data type as a generic to get autocompletion on accessor keys and cell values:
 
 ```tsx
 import { createDataGridColumnHelper, DataGrid, useDataGrid } from '@mantine/data-grid';
@@ -95,8 +91,7 @@ TanStack Table supports three kinds of column definitions:
 
 ## defaultColumn
 
-Pass `defaultColumn` via `tableOptions` to set fallback values for any column property that is not
-explicitly defined on individual columns:
+Pass `defaultColumn` in `tableOptions` to set default values of column properties:
 
 ```tsx
 const store = useDataGrid({
@@ -110,8 +105,8 @@ const store = useDataGrid({
 
 ## Features overview
 
-Features are configured via `useDataGrid` options. Most are inferred automatically when you provide
-controlled state or column-level flags:
+Features are configured with `useDataGrid` options. Most of them are enabled automatically
+when you pass controlled state or column-level flags:
 
 <DataTable
   head={['Feature', 'Inferred from']}
@@ -135,16 +130,13 @@ controlled state or column-level flags:
   ]}
 />
 
-Every `with*` flag can also be set explicitly to force a feature on or off. Features that render a
-column (`withRowSelection`, `withRowExpansion`, `withRowNumbers`, `withRowReorder`) and the grid
-`size` are `useDataGrid` options as well, because the store owns the column model. Appearance props
-such as `withTableBorder`, `radius`, `withRowBorders`, `striped`, `withColumnBorders`,
-`highlightOnHover`, `stickyHeader` and `virtualize` are set directly on the `DataGrid` component,
+Set the matching `with*` option (for example, `withSorting`) to force a feature on or off.
+Appearance props such as `striped` or `withColumnBorders` are set on the `DataGrid` component,
 see [Customization](/data-grid/customization).
 
 ## Peer dependencies
 
-`@mantine/data-grid` uses TanStack Table and TanStack Virtual as peer dependencies. This means you share versions with your application -- no bundled duplicates or version conflicts.
+`@mantine/data-grid` has the following peer dependencies:
 
 <DataTable
   head={['Package', 'Min version', 'Purpose']}

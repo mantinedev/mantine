@@ -6,57 +6,43 @@ export default Layout(MDX_DATA.DataGridEditing);
 
 ## Overview
 
-Editing is a grid-registered TanStack Table feature. It is enabled by setting `editingMode` in
-`useDataGrid` to `cell` or `row`; every other editing option lives next to it. There is one editing
-target per grid at a time, its drafts are kept in the editing state until they are saved or
-cancelled, and every look (rings, tints, disabled editors) is driven by data attributes so it is
-identical in the table body and the virtualized body. A cell is editable when it belongs to a data
-row and an accessor column, `meta.disableEditing` is not set, and the column is not a utility or
-actions column. Nothing is edited in list view.
+Set `editingMode` in `useDataGrid` to `cell` or `row` to enable editing. Only one cell or row
+can be edited at a time. Cells of accessor columns are editable unless `meta.disableEditing` is set.
+Editing is not available in list view.
 
 ## Cell editing
 
-Set `editingMode="cell"` in `useDataGrid` to edit one cell at a time. Double-click a cell (or
-press `Enter` / `F2` on a focused row, or on a focused cell under `withCellSelection`) to open its
-editor; `editTrigger="click"` opens it on a single click instead. Press `Enter` to save or `Escape`
-to cancel; moving focus out of the editor also saves. The `onEditSave` option receives the updated
-row:
+Set `editingMode: 'cell'` in `useDataGrid` to edit one cell at a time. Double-click a cell
+to open its editor, or set `editTrigger: 'click'` to open it with a single click.
+Press `Enter` to save and `Escape` to cancel, the value is also saved when the editor loses focus.
+`onEditSave` is called with the updated row:
 
 <Demo data={DataGridDemos.cellEditing} />
 
-The editing cell takes a 2px primary ring, the `td` drops its padding and the editor fills the cell
-at the row height, so editing never changes the layout.
-
 ## Row editing
 
-Set `editingMode="row"` to edit every editable cell of a row at once. Row editing is usually
-started from an actions column (below), from a double-click on any editable cell, or with
-`Enter` / `F2` on a focused row; the editor of the originating cell receives focus (the first
-editable cell when started from a button or the keyboard). `Tab` and `Shift + Tab` move between the
-editors of the row and wrap around, `Enter` saves, `Escape` cancels, and clicking outside the row
-saves it. The whole row takes the primary ring and the active editor cell a full ring.
+Set `editingMode: 'row'` to edit all editable cells of a row at once. Editing is started
+with a double-click on a cell or from an [actions column](#actions-column). `Enter` saves the row,
+`Escape` cancels editing and a click outside the row saves it.
 
 <Demo data={DataGridDemos.rowEditing} />
 
 ## Actions column
 
-Declare the actions column yourself as a display column with `meta.type: 'actions'`. The grid
-applies the actions-column contract to it: 80px wide (`size` overrides it), end-aligned, not
-sortable, filterable or resizable, no column menu, excluded from export, an empty header unless you
-supply one, and no vertical cell padding. Its cell reads `row.getIsEditing()` from the ordinary cell
-context and calls `row.startEditing()`, `row.saveEditing()` and `row.cancelEditing()` to switch
-between Edit / Delete and Save / Cancel. The grid never sizes your buttons: pass
-`size={store.getControlSize()}` to `ActionIcon` so they match the grid size.
+Add a display column with `meta.type: 'actions'` to render row action buttons. In its cell,
+use `row.getIsEditing()` to switch between Edit and Save / Cancel buttons and call
+`row.startEditing()`, `row.saveEditing()` and `row.cancelEditing()` when they are clicked.
+
+The column is 80px wide, set `size` to change it. Pass `size={store.getControlSize()}`
+to your buttons so they match the grid size.
 
 <Demo data={DataGridDemos.actionsColumn} />
 
 ## Floating actions
 
-Set `withFloatingEditActions` on `DataGrid` to render a floating Save / Cancel pill at the end edge
-of the row being edited, right under it (or above it when there is no room below inside the grid),
-so it never covers the row's editors, and following the row on scroll and resize. It is available
-in row mode only, works with or without an actions column, and its labels come from the `saveRow`
-and `cancelRow` labels. The Save button shows a loader while an async save is pending.
+Set `withFloatingEditActions` on `DataGrid` to display floating Save and Cancel buttons
+next to the row being edited. It works in row mode only, with or without an actions column.
+Use `saveRow` and `cancelRow` labels to change the button text.
 
 <Demo data={DataGridDemos.floatingEditActions} />
 
@@ -74,9 +60,8 @@ and `cancelRow` labels. The Save button shows a loader while an async save is pe
   ]}
 />
 
-Custom editors receive `onSave` and `onCancel` and decide which keys trigger them; an `Enter`
-whose default has been prevented by the editor (for example a `Select` picking an option) is not
-treated as a save. When editing ends, focus returns to the row (or the cell under cell selection).
+Custom editors receive `onSave` and `onCancel` and decide which keys call them.
+When editing ends, focus returns to the row.
 
 ## Editing options
 
@@ -96,17 +81,15 @@ All editing options live in `useDataGrid`:
   ]}
 />
 
-`newRow` is built by writing the changed drafts back through each column's `accessorKey` (dot paths
-included), so `accessorKey: 'address.city'` updates `newRow.address.city`; columns defined with
-`accessorFn` only receive the draft under `newRow[column.id]`. `changedColumnIds` lists the columns
-whose draft differs from the current value. A rejected save never reverts the drafts.
+`newRow` is the row with changed values applied. Dot paths are supported:
+`accessorKey: 'address.city'` updates `newRow.address.city`. For columns defined with `accessorFn`,
+the new value is written to `newRow[column.id]`.
 
 ## Async saves
 
-Return a promise from `onEditSave` to keep the editor open while the save is pending: the row
-carries `data-saving` and `aria-busy`, the default editor is disabled and the floating Save button
-shows a loader. When the promise resolves the editor closes; when it rejects, `onEditSaveError` is
-called and the editors stay open, marked invalid until the next change:
+Return a promise from `onEditSave` to keep the editor open while the save is pending.
+The default editor is disabled until the promise settles. If the promise is rejected,
+`onEditSaveError` is called and the editor stays open:
 
 ```tsx
 const store = useDataGrid({
@@ -123,43 +106,41 @@ const store = useDataGrid({
 });
 ```
 
-Custom editors that want to disable themselves during a save read `cell.row.getIsSaving()`.
+In custom editors, use `cell.row.getIsSaving()` to disable the input while the save is pending.
 
 ## Validation
 
-Add `meta.validate` to a column to validate drafts before they are saved. It receives the draft
-value and the row and returns a message (any `ReactNode`) or `null` / `undefined` when valid. A
-non-empty return marks the editor cell `data-invalid` and `aria-invalid`, exposes the message
-through `cell.getEditingError()`, shows it in a tooltip under the default editor (custom editors
-receive it as `error`) and blocks the save until the value changes. In row mode every editor is
-validated on commit and the row stays open while any of them fails.
+Add `meta.validate` to a column to validate the value before it is saved. The function receives
+the value and the row and returns an error message, or `null` if the value is valid.
+The error is displayed in a tooltip and the value cannot be saved until it is changed.
+In row mode all editors are validated when the row is saved.
 
 <Demo data={DataGridDemos.cellValidation} />
 
 ## Cell status
 
-Use `getCellStatus` to tint body cells that need attention outside of an active edit, for example
-cells with unsaved changes or values that failed a server-side check. Return `dirty` or `invalid`;
-the tints are `--dg-dirty-color` (12% yellow) and `--dg-invalid-color` (8% error color), painted
-over stripes, hover and selection, with invalid winning over dirty. The demo above marks every
-saved cell as `dirty`. The attributes `data-dirty` and `data-invalid` are set on the cell for your
-own styles.
+Use `getCellStatus` to highlight cells that are not being edited, for example cells with unsaved
+changes or values rejected by the server. Return `dirty` or `invalid` from the function.
+The demo above marks every saved cell as `dirty`. Use `--dg-dirty-color` and `--dg-invalid-color`
+CSS variables to change the colors.
 
 ## Custom edit components
 
-Define a custom `editComponent` in the column `meta` to replace the default text input with any
-Mantine component. The callback receives `{ value, onChange, onSave, onCancel, error, cell }`
-(`DataGridEditComponentProps`): call `onChange` with every draft change, `onSave` / `onCancel` to
-commit or leave, and render `error` when it is set. In cell mode the editor commits when focus
-leaves it; focus moving into a portal, such as a `Select` dropdown, does not count as leaving. Call
-`onSave` from `onChange` to commit as soon as an option is picked:
+Set `meta.editComponent` on a column to replace the default text input. The function receives
+the following props (`DataGridEditComponentProps` type):
+
+- `value` and `onChange` – the current value and a function to change it
+- `onSave` and `onCancel` – functions to save the value and to cancel editing
+- `error` – validation error
+- `cell` – the cell being edited
+
+To save the value as soon as an option is picked, call `onSave` in `onChange`:
 
 <Demo data={DataGridDemos.customEditComponent} />
 
 ## Disabling editing per column
 
-Set `meta.disableEditing: true` on any column definition to prevent that column from entering edit
-mode when the grid is in `cell` or `row` editing mode:
+Set `meta.disableEditing: true` on a column definition to make the column read-only:
 
 ```tsx
 const columns = [
@@ -169,15 +150,12 @@ const columns = [
 ];
 ```
 
-Read-only columns like IDs or computed fields should use this flag so users cannot accidentally
-modify them. Utility columns, display columns and the actions column are never editable;
-`column.getCanEdit()`, `row.getCanEdit()` and `cell.getCanEdit()` expose the rule.
+Utility columns, display columns and the actions column are never editable.
 
 ## Imperative API and controlled state
 
-The editing state is exposed as `store.getEditing()` (`{ rowId, columnId, values, status? } | null`)
-and can be controlled with `editing` / `onEditingChange` like any other TanStack state slice.
-The table, rows and cells expose the feature API:
+The editing state is available as `store.getEditing()` and can be controlled with `editing`
+and `onEditingChange`. The table, rows and cells have the following methods:
 
 ```tsx
 store.table.startEditing(rowId, columnId?);
@@ -199,14 +177,12 @@ cell.setEditingValue(value);
 cell.getEditingError();
 ```
 
-Starting another target while one is open commits the current one first; when it cannot close
-(validation failed, a save is pending or was rejected) the new target is refused until the user
-fixes or cancels the current one.
+When editing of another row or cell is started, the current one is saved first. If it cannot
+be saved (validation failed, a save is pending or was rejected), the new one is not opened.
 
 ## Modal editing
 
-For complex edit forms, handle `onRowDoubleClick` to open a modal instead of using inline editing.
-This approach gives full control over the edit UI and validation flow.
+For complex edit forms, use `onRowDoubleClick` to open a modal instead of inline editing:
 
 ```tsx
 <DataGrid

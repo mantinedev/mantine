@@ -6,19 +6,17 @@ export default Layout(MDX_DATA.DataGridCustomization);
 
 ## Frame
 
-The grid is a framed surface: `withTableBorder` (default `true`) draws a 1px `--dg-border-color`
-border around the toolbar, the table and the footer, and `radius` (default `theme.defaultRadius`)
-rounds it. `withTableBorder={false}` removes the border and the radius only; the toolbar and footer
-rules stay. The header sits on the page surface with no tint, weight 600 and the body font size.
+By default, the grid has a border around the toolbar, the table and the footer.
+Use `radius` to change its border radius and `withTableBorder={false}` to remove the border.
 
 <Demo data={DataGridDemos.frame} />
 
-`borderColor` changes the frame, header and footer rule color; it accepts a key of `theme.colors`
+Use `borderColor` to change the border color. It accepts a key of `theme.colors`
 or any valid CSS color.
 
 ## Separators
 
-Separators use the same vocabulary as the core `Table` component:
+Separator props are the same as in the core `Table` component:
 
 <DataTable
   head={['Prop', 'Type', 'Description']}
@@ -33,7 +31,7 @@ Separators use the same vocabulary as the core `Table` component:
   ]}
 />
 
-Stripes and rules are independent, so "stripes without rules" is `striped withRowBorders={false}`:
+To display stripes without row borders, set `striped` and `withRowBorders={false}`:
 
 <Demo data={DataGridDemos.separators} />
 
@@ -41,12 +39,12 @@ Stripes and rules are independent, so "stripes without rules" is `striped withRo
 
 ## Size
 
-`size` is a `useDataGrid` option (`'xs' | 'sm' | 'md' | 'lg' | 'xl'`, default `sm`) exposed as
-`store.getSize()` / `store.setSize` and persisted by `useDataGridState` under the `size` key. It sets the
-font size, row and header height, cell padding, the checkbox / radio size, the icon size and the
-footer height, and cascades a **control size** to the chrome (`store.getControlSize()`: `xs` for `xs` /
-`sm` grids, `sm` for `md`, `md` for `lg` / `xl`) that the toolbar, selection bar, footer and loading
-overlay use. Pass `store.getControlSize()` to your own buttons and inputs inside the grid so they match.
+`size` is a `useDataGrid` option, `sm` by default. It controls the font size, row height,
+cell padding and the size of controls and icons. Use `store.getSize()` and `store.setSize()`
+to read and change it.
+
+Controls in the toolbar, selection bar and footer use the size returned by `store.getControlSize()`.
+Pass it to your own buttons and inputs inside the grid so they match.
 
 <DataTable
   head={['size', 'Font', 'Row height', 'Padding x / y', 'Control', 'Icon', 'Control size', 'Footer height']}
@@ -61,18 +59,16 @@ overlay use. Pass `store.getControlSize()` to your own buttons and inputs inside
 
 <Demo data={DataGridDemos.sizes} />
 
-There is no numeric size: use the CSS variables below to fine-tune one value. The row height is a
-minimum in the table body (cells grow with wrapped content) and an estimate in the virtualized body.
-A density toggle is user-land UI built on `store.setSize`, for example a `SegmentedControl` in the
-toolbar:
+`size` does not accept numbers, use [CSS variables](#css-variables) to change individual values.
+To let users change the density, call `store.setSize`, for example from a `SegmentedControl`
+in the toolbar:
 
 <Demo data={DataGridDemos.sizeToggle} />
 
 ## CSS variables
 
-DataGrid exposes the following CSS variables on the root element. The size-derived values are
-written by the resolver for the current `size`; override any of them with `vars`, the Styles API
-or a stylesheet targeting the root class.
+The following CSS variables are set on the root element. Override them with `vars`,
+the Styles API or in a stylesheet.
 
 <DataTable
   head={['Variable', 'Description', 'Default']}
@@ -96,27 +92,22 @@ or a stylesheet targeting the root class.
   ]}
 />
 
-Cell selection edges, the selection bar, focus rings and pinned shadows are not colorable; they
-follow the theme's primary color, focus ring and shadows.
+Cell selection, the selection bar, focus rings and pinned column shadows do not have
+their own variables, they follow the theme.
 
 ## Styles API
 
-DataGrid supports the standard Mantine `classNames` and `styles` props to customize individual parts
-of the component. Target any selector from the Styles API table on the [DataGrid](/data-grid/data-grid)
-component page. Every look is keyed on data attributes on the root (`data-size`, `data-list-view`,
-`data-loading-variant`, ...), rows (`data-selected`, `data-striped`, `data-group-row`,
-`data-expanded`, `data-editing`, `data-pinned`, ...) and cells (`data-align`, `data-pinned`,
-`data-dirty`, ...), so one rule set serves the table body and the virtualized body.
+DataGrid supports `classNames` and `styles` props. Selectors are listed in the Styles API table
+on the [DataGrid](/data-grid/data-grid) page. Row and cell states are available as data attributes,
+for example `data-selected`, `data-striped` and `data-pinned`.
 
 <Demo data={DataGridDemos.stylesApi} />
 
 ## Compound components
 
-DataGrid renders a default layout when no children are provided. For custom layouts, use the compound
-component API to compose the grid from individual parts. Children render inside the frame in a
-fixed order: the toolbar slot (toolbar or selection bar), the body, then everything else. The table
-itself (header, body and `<tfoot>`) is always rendered by the grid, customize it with the Styles API
-selectors (`thead`, `tbody`, `tfoot`, `tr`, `th`, `td`, ...).
+Use compound components to add a toolbar, a selection bar and a footer to the grid.
+The table itself is always rendered by the grid. The toolbar and the selection bar are displayed
+above the table, other children below it.
 
 <Demo data={DataGridDemos.compoundComponents} />
 
@@ -133,57 +124,43 @@ Available compound components:
 
 ## Toolbar
 
-An empty `<DataGrid.Toolbar />` renders the global filter (with `withGlobalFilter`), a spacer,
-the column visibility toggle (with `withColumnVisibility`) and the export button. Any children
-replace this default. The bar wraps its controls, keeps `10px 12px` padding and an 8px gap at every
-size, and draws a 1px bottom rule. Controls take their size from `store.getControlSize()`, use it for
-your own buttons to match; a `div` with `flex: 1` is the spacer.
+`DataGrid.Toolbar` without children renders the global filter (with `withGlobalFilter`),
+the column visibility toggle (with `withColumnVisibility`) and the export button.
+Pass children to replace the default content. Use a `div` with `flex: 1` as a spacer.
 
 <Demo data={DataGridDemos.toolbarComposed} />
 
-`DataGrid.GlobalFilter` accepts `placeholder` and `textInputProps`; `DataGrid.RowCount` renders
-`18 rows` (the `rowCount` label) or `5 of 18 rows` (`rowCountFiltered`) from the filtered row model
-and never the selected count.
+`DataGrid.RowCount` displays the number of rows: `18 rows`, or `5 of 18 rows` when the data is filtered.
 
 ## Export button
 
-`DataGrid.ExportButton` opens a menu with CSV, Excel, print and copy-to-clipboard items backed by
-the `exportToCsv`, `exportToExcel`, `exportToPrint` and `copyToClipboard` utilities. `formats`
-picks and orders the items (a single format renders a plain button), `fileName` (default `data`)
-names the downloaded file, `rows` (`'all' | 'filtered' | 'selected' | 'page'`, default `all`) and
-`columns` (`'visible' | 'all' | string[]`, default `visible`) scope every format, and
-`csvOptions` / `excelOptions` / `printOptions` / `copyOptions` are passed to the matching utility.
-`onExport(format)` is called after an export runs, `children` replaces the button label and
-`menuProps` configures the menu. Utility columns, actions columns and columns with
-`meta.disableExport` are never exported.
+`DataGrid.ExportButton` opens a menu with CSV, Excel, print and copy to clipboard items:
 
-`all` exports every data row (ignoring filters) and `filtered` exports the rows that pass the
-current filters; both follow the current sort order and skip pagination, group rows and tree
-sub-rows. While rows are grouped, `filtered` lists the data rows in the grouped display order (rows
-of the first group, then the next group, sorted within each group), whereas `all` is a flat sort of
-every data row that ignores grouping. `page` exports the rows of the current page as displayed.
+- `formats` – formats to display and their order, a single format renders a button without a menu
+- `fileName` – name of the downloaded file, `data` by default
+- `rows` – rows to export: `all` (default), `filtered`, `selected` or `page`
+- `columns` – columns to export: `visible` (default), `all` or an array of column ids
+- `onExport` – called with the format after an export
+
+`all` and `filtered` rows follow the current sort order and ignore pagination, group rows and
+tree sub-rows are not exported. Utility columns, actions columns and columns with
+`meta.disableExport` are never exported.
 
 <Demo data={DataGridDemos.exportButton} />
 
 ## Selection bar
 
-`DataGrid.SelectionBar` is a sibling of `DataGrid.Toolbar`. While `rowSelection` is not empty the
-grid renders it in the toolbar slot instead of the toolbar (the root carries
-`data-selection-bar-visible`): the selected count (`selectionBarSelected` label, counted from the
-selection state), your bulk action controls as `children`, and a close button that clears the
-selection (`selectionBarClear` label). It shares the toolbar's padding and gap, so controls sized
-with `store.getControlSize()` line up with the toolbar. Without a toolbar the grid grows by one bar
-while the selection is active.
+`DataGrid.SelectionBar` replaces the toolbar while rows are selected. It displays the number
+of selected rows, bulk actions passed as `children` and a button that clears the selection.
 
 <Demo data={DataGridDemos.selectionBar} />
 
-Pass `floating` to render the bar above the grid content instead, centered near the bottom of the
-frame and above `DataGrid.Footer` (through `--dg-footer-height`) while the toolbar stays visible:
+Set `floating` to display the bar over the grid content near the bottom of the grid,
+the toolbar stays visible:
 
 <Demo data={DataGridDemos.selectionBarFloating} />
 
-`withCloseButton={false}` removes the close button and `closeButtonProps` configures it; a custom
-`onClick` runs before the selection is cleared.
+Set `withCloseButton={false}` to remove the close button. Use `closeButtonProps` to pass props to it.
 
 ## Footer
 
@@ -192,21 +169,17 @@ at the bottom of the frame; see [Pagination](/data-grid/pagination) for every op
 
 ## Column menu
 
-Set `withColumnMenu` on `DataGrid` to render a menu button in every data column header, at the
-inline end of the cell after the label, so it never triggers a sort. The button is revealed when
-the header is hovered or focused and while the menu is open (always visible on touch devices). Its
-items depend on the store features and the column's `enable*` flags: sort ascending / descending /
-clear sort (`enableSorting`), move left / right (`withColumnReorder`), pin / unpin
-(`withColumnPinning`), hide (`withColumnVisibility` and `enableHiding`), group / ungroup
-(`withGrouping`) and reset size (`withColumnResizing`). A column whose menu would be empty renders no
-button; utility and actions columns never do. `columnMenuItems` appends your own items after a
-divider, and `meta.disableColumnMenu` hides the menu for one column:
+Set `withColumnMenu` on `DataGrid` to add a menu button to every data column header.
+The button is displayed when the header is hovered or focused, it is always visible on touch devices.
+Menu items depend on the features enabled for the column: sorting, reordering, pinning, hiding,
+grouping and resizing.
+
+Use `columnMenuItems` to add your own items and `meta.disableColumnMenu` to hide the menu of one column:
 
 <Demo data={DataGridDemos.columnMenu} />
 
-`DataGrid.ColumnMenu` is the component behind the button. To render the column menu inside your
-own header cell, pass the `column` instance from the header context; `children` are appended after
-the built-in items and `menuProps` configures the menu:
+To render the column menu inside your own header cell, use `DataGrid.ColumnMenu` and pass
+the `column` instance to it. `children` are added after the built-in items:
 
 ```tsx
 {
@@ -224,7 +197,7 @@ the built-in items and `menuProps` configures the menu:
 
 ## Column meta
 
-`meta` on a column definition carries the grid-specific settings:
+`meta` of a column definition contains settings specific to the grid:
 
 <DataTable
   head={['Field', 'Description']}
@@ -245,8 +218,8 @@ the built-in items and `menuProps` configures the menu:
 
 ## Labels
 
-Override any text label by passing a `labels` prop to `DataGrid`. All keys are optional --
-only override what you need. `{token}` placeholders are replaced with the matching value:
+Use the `labels` prop of `DataGrid` to change or translate text labels. All keys are optional,
+`{token}` placeholders are replaced with values:
 
 ```tsx
 <DataGrid
@@ -294,8 +267,8 @@ The full list of keys is the `DataGridLabels` type, exported from the package to
 
 ## State persistence
 
-Save and restore grid state using the store. Access current state directly from `store.getSorting()`,
-`store.getColumnFilters()`, `store.getPagination()`, `store.getSize()`, etc.
+To save and restore grid state, use controlled state options of `useDataGrid`.
+The example below saves the sorting state to `localStorage`:
 
 ```tsx
 import { useState, useEffect } from 'react';
@@ -327,9 +300,8 @@ function Demo() {
 
 ### useDataGridState
 
-`useDataGridState` persists the selected state keys of a store to `localStorage` (writes are debounced)
-and restores them on mount and whenever `stateStorageKey` changes. Pass the store returned by
-`useDataGrid`; `size` is read from and restored into the store as well:
+`useDataGridState` saves the state keys listed in `persistedState` to `localStorage`
+and restores them on mount:
 
 ```tsx
 import { DataGrid, useDataGrid, useDataGridState } from '@mantine/data-grid';
@@ -347,18 +319,14 @@ function Demo() {
 }
 ```
 
-`columnOrder` is saved as `store.columnOrder`, so the display-only position of grouped columns is
-never persisted.
-
 ## Custom storage
 
-For session storage, URL search params, or server-side persistence, implement the same pattern
-with your preferred storage mechanism. The controlled state options in `useDataGrid` accept any state source.
+For session storage, URL search params or server-side persistence, use controlled state options
+of `useDataGrid` the same way as in the `localStorage` example above.
 
 ## Theme integration
 
-Use `createTheme` with `DataGrid.extend` to apply default props and class names globally. This
-removes the need to repeat props on every `<DataGrid>` usage in your app:
+Use `DataGrid.extend` to set default props and class names for all grids in your application:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -376,17 +344,14 @@ const theme = createTheme({
 
 ## Dark mode
 
-DataGrid automatically adapts to the active Mantine color scheme. Border, stripe, hover, and
-selected-row colors all derive from Mantine CSS variables, so switching between light and dark
-mode requires no additional configuration.
+DataGrid colors are based on Mantine CSS variables and follow the current color scheme,
+no additional configuration is required.
 
 ## ScrollArea configuration
 
-DataGrid wraps the table in a `ScrollArea` by default (`scrollbarSize={4}`, horizontal scrollbar
-inside the frame under the last row). Pass `scrollAreaProps` to configure it, or set
-`withScrollArea={false}` to handle overflow yourself. The grid attaches its own `viewportRef`, so
-`scrollAreaProps.viewportRef` overrides the ref the grid uses for scrolling and pinned-column
-shadows; `withScrollArea` is ignored under `virtualize` and in list view.
+The table is wrapped in `ScrollArea`. Use `scrollAreaProps` to pass props to it, or set
+`withScrollArea={false}` to handle overflow yourself. `withScrollArea` is ignored when
+`virtualize` is set and in list view.
 
 ```tsx
 <DataGrid
@@ -397,8 +362,7 @@ shadows; `withScrollArea` is ignored under `virtualize` and in list view.
 
 ## TanStack passthrough
 
-The `tableOptions` option in `useDataGrid` provides an escape hatch to the underlying TanStack Table
-instance. Any option not covered by the store can be passed directly.
+Use `tableOptions` in `useDataGrid` to pass options that the hook does not cover to TanStack Table:
 
 ```tsx
 const store = useDataGrid({

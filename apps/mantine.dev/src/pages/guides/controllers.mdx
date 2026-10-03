@@ -17,14 +17,12 @@ two kinds of these objects:
   and `useSelect` lets you build your own component on top of `Select` in the same way.
 
 Both are optional. Every component works without them with `value`, `defaultValue` and `onChange`
-props (or the component's own spelling, for example `opened`/`onChange`), see
-[Controlled vs Uncontrolled](/guides/controlled-vs-uncontrolled).
+props, see [Controlled vs Uncontrolled](/guides/controlled-vs-uncontrolled).
 
 ## Controllers
 
-A controller owns the component state and exposes actions and queries on it. Create it with the
-hook, pass the same state options that the component accepts as props, and pass the result to the
-component with the `controller` prop:
+A controller owns the component state. Create it with the hook, pass the same state options
+that the component accepts as props, and pass the result to the `controller` prop:
 
 ```tsx
 import { Accordion, Button, useAccordion } from '@mantine/core';
@@ -59,8 +57,7 @@ Each component documents the actions and queries of its controller on its own pa
 
 ## Stores
 
-A store is created and passed the same way, with a `use<Component>` hook and the `store` prop, but
-it has a different purpose. A controller drives a component that you use as is. A store is a base
+A store is created with a `use<Component>` hook and passed to the `store` prop. Use it as a base
 for your own component with its own props and behavior. For example, `useSelect` reuses the value,
 search and dropdown handling of `Select` to build a select that offers to create an option from the
 search text:
@@ -110,22 +107,18 @@ const controller = useAccordion();
 ```
 
 The `controller` prop description in the props table of each component lists the props it
-replaces. Styling and rendering props, for example `size`, `variant`, `classNames` and children,
-are never affected, and adding a controller never removes or renames a prop, so it is safe to adopt
-one in existing code. The same rules apply to the `store` prop.
+replaces. Other props, for example `size`, `variant` and `classNames`, work the same way
+with and without a controller. The same rules apply to the `store` prop.
 
 ## Usage with forms
 
-`form.getInputProps('field')` from [@mantine/form](/form/use-form) returns `value`, `onChange`,
-`error`, `onFocus` and `onBlur` (`defaultValue` instead of `value` in
-[uncontrolled mode](/form/uncontrolled)), and other form libraries provide a similar set of props.
-These props bind to the state props of the component, so how they combine with a controller depends
-on whether the controller owns the value.
+`form.getInputProps('field')` from [@mantine/form](/form/use-form) returns value, change handler
+and other props for the component. How they combine with a controller depends on whether
+the controller owns the value.
 
-Most controllers do not own the value. `useDateInput`, `useDatePickerInput`, `useCalendar` and the
-other `@mantine/dates` controllers own the displayed date, level and dropdown, while the selected
-value stays on the component. For these components, spread `form.getInputProps()` on the component
-and pass the controller next to it, the two do not overlap:
+Most controllers do not own the value. For example, `@mantine/dates` controllers own the displayed
+date, level and dropdown state, while the selected value stays on the component. For these
+components, spread `form.getInputProps()` on the component and pass the controller next to it:
 
 ```tsx
 import { DateInput, useDateInput } from '@mantine/dates';
@@ -145,38 +138,28 @@ function Demo() {
 }
 ```
 
-Three controllers own the value, because the component keeps entry state that `value` cannot
-express: `usePinInput` (one character per input), `useTimePicker` (hours, minutes, seconds and am/pm
-fields) and `useMaskedDateInput` (day, month, year and time fields). When one of them is passed, the
+`usePinInput`, `useTimePicker` and `useMaskedDateInput` own the value. When one of them is passed,
 `value`, `defaultValue` and `onChange` props of the component are ignored, so `form.getInputProps()`
-cannot be spread on the component next to the controller. Instead, create a component that accepts
-the same props, passes the props that the controller supersedes to the hook and forwards the rest to
-the component. The form binds to the props of that component, and the component owns the controller:
+cannot be spread on the component. Instead, create a component that accepts the same props, passes
+the props that the controller replaces to the hook and forwards the rest to the component:
 
 <Demo data={PinInputDemos.form} />
 
 The pattern has three rules:
 
-- Pass every prop that the `controller` prop supersedes to the hook, not only `value`,
-  `defaultValue` and `onChange`. The `controller` prop description in the props table lists them.
-  An option left on the component, for example `length` on `PinInput` or `format` on `TimePicker`,
-  is ignored once a controller is set.
-- Keep `error`, `onFocus` and `onBlur` on the component. They are not state props, so validation
-  errors and touched/dirty tracking work the same way as without a controller.
+- Pass every prop that the `controller` prop replaces to the hook, not only `value`,
+  `defaultValue` and `onChange`. For example, `length` of `PinInput` and `format` of `TimePicker`
+  are ignored on the component once a controller is set.
+- Keep `error`, `onFocus` and `onBlur` on the component.
 - Use `mode: 'uncontrolled'` and set `key={form.key('field')}` on the component that calls the hook.
-  In this mode `form.reset()` and `form.setFieldValue()` remount the field, and the controller with
-  it. In `mode: 'controlled'`, the form can only change the `value` prop, and a partially entered
-  time or date is reported as an empty value: it is the same before and after `form.reset()`, so
-  the controller receives no change and the partial entry stays on screen.
+  In `mode: 'controlled'`, `form.reset()` does not clear a partially entered time or date.
 
-Actions called on the controller inside the component, for example `clear()` or `setValue()`, report
-through `onChange` the same way as typing, so the form stays in sync. `getValue()` and the last
-`onChange` always agree: a value that the component cannot report, for example an incomplete time or
-a `MaskedDateInput` date outside of `minDate`/`maxDate`, is an empty string or `null` for both.
+Actions called on the controller, for example `clear()` or `setValue()`, call `onChange`
+the same way as typing, so the form stays in sync.
 
-The component that owns the controller is also the place to use queries that the form cannot see.
-The form knows only that an incomplete time is empty, while `controller.hasValue()` knows that the
-user has started typing:
+Inside this component you can use controller queries that the form cannot see. For example,
+the form treats an incomplete time as an empty value, while `controller.hasValue()` knows that
+the user has started typing:
 
 <Demo data={TimePickerDemos.form} />
 
@@ -234,10 +217,9 @@ function Demo() {
 }
 ```
 
-Actions and queries keep the same identity for the lifetime of the controller, so they are safe as
+Actions and queries keep the same reference for the lifetime of the controller, so they are safe as
 `useEffect` and `useCallback` dependencies and as props of memoized components. Queries always
-return the latest value, both during render and inside callbacks, where a value captured by a
-closure would be stale:
+return the latest value, both during render and inside callbacks:
 
 ```tsx
 import { useEffect } from 'react';
@@ -262,9 +244,8 @@ function Demo() {
 ```
 
 Queries that depend on rendered children, for example `getItems()` on `Accordion` or
-`getStepCount()` on `Stepper`, report what is mounted at the moment of the call and return an
-empty result before the component is rendered. Stores give the same guarantees, except
-`useDataGrid`, which returns a new object on every render.
+`getStepCount()` on `Stepper`, return an empty result before the component is rendered.
+Stores work the same way, except `useDataGrid`, which returns a new object on every render.
 
 ## TypeScript
 
@@ -293,8 +274,8 @@ function Demo() {
 }
 ```
 
-When the state type depends on an option, the type is a generic that is inferred from the options
-passed to the hook and flows through the `controller` prop to the component:
+When the state type depends on an option, the type is inferred from the options
+passed to the hook:
 
 ```tsx
 import { useAccordion } from '@mantine/core';

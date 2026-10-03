@@ -30,9 +30,7 @@ const store = useDataGrid({
 Set `manualFiltering` to disable client-side filtering. Use controlled `columnFilters`
 and `onColumnFiltersChange` to pass filter state to your API. The grid renders no filter inputs:
 bind your own controls to `store.setColumnFilter` / `store.getColumnFilterValue` or to
-`store.setGlobalFilter`, exactly as for client-side filtering (see [Filtering](/data-grid/filtering)).
-The filter values are whatever your controls store; the grid never interprets them under
-`manualFiltering`.
+`store.setGlobalFilter`, see [Filtering](/data-grid/filtering).
 
 ```tsx
 const store = useDataGrid({
@@ -47,9 +45,8 @@ const store = useDataGrid({
 
 ## Server-side pagination
 
-Set `manualPagination` and provide `rowCount` so DataGrid knows the total number of pages
-without having all data in memory. `DataGrid.Footer` reads the same value to render the
-`1–10 of 200` range and the page count; without `rowCount` the status falls back to `Page 1 of 2`.
+Set `manualPagination` and provide `rowCount` with the total number of rows. `DataGrid.Footer`
+uses it to display the `1–10 of 200` range and the page count.
 
 ```tsx
 const store = useDataGrid({
@@ -64,11 +61,9 @@ const store = useDataGrid({
 
 ## Full example
 
-The following example combines server-side sorting, filtering, and pagination with a simulated
-API delay. The `loading` prop renders skeleton rows on the first load and then, with
-`loadingVariant="bar"`, a progress bar under the header that keeps the current rows visible and
-interactive while the next page is fetched. See [States](/data-grid/states) for the other loading
-variants.
+Server-side sorting, filtering and pagination with a simulated API delay. With
+`loadingVariant="bar"`, the current rows stay visible while the next page is fetched.
+See [States](/data-grid/states) for the other loading variants.
 
 <Demo data={DataGridDemos.fullServerSide} />
 
@@ -94,7 +89,7 @@ When triggering API calls from filter controls, debounce the filter value to avo
 sending a request on every keystroke:
 
 ```tsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 
 const [filter, setFilter] = useState('');
@@ -124,9 +119,8 @@ const store = useDataGrid({
 
 ## Filter options from the API
 
-When using server-side filtering, the API typically returns the available filter values alongside
-the data (`withFaceting` would only see the current page). Feed them to your own filter controls,
-for example a `Select` in the toolbar:
+With server-side filtering, `withFaceting` only sees the current page. Get the available filter
+values from your API and pass them to your own filter controls, for example a `Select` in the toolbar:
 
 ```tsx
 <DataGrid store={store}>

@@ -14,8 +14,6 @@ yarn add @tanstack/react-table @tanstack/match-sorter-utils
 
 ## Feature support
 
-The table below lists every TanStack Table feature and its current status in DataGrid.
-
 <DataTable
   head={['Feature', 'Status', 'How to use']}
   data={[
@@ -80,29 +78,25 @@ The registered feature set itself is exported as `dataGridFeatures` (value) and 
 ## Features and row models
 
 In v9 features and row models are registered explicitly rather than passed as `getXRowModel`
-options. DataGrid does this for you: every table registers the full feature set, including every
-row model (filtered, grouped, sorted, expanded, paginated and faceted), because TanStack reads the
-feature set only once when the table is created.
+options. DataGrid does this for you: every table registers the full feature set and all row models.
 
-Stages of features you do not use are bypassed with TanStack's `manual*` options
-(`manualFiltering`, `manualGrouping`, `manualSorting`, `manualExpanding`, `manualPagination`), so
-they pass rows through unchanged. For example, `table.getRowModel()` resolves to the paginated row
-model, but an unpaginated grid sets `manualPagination` and still renders all of its rows through
-`table.getRowModel()`. Features switched on or off after mount take effect on the next render
-without recreating the table.
+Features that you do not use are bypassed with TanStack's `manual*` options. For example,
+an unpaginated grid sets `manualPagination` and renders all of its rows through `table.getRowModel()`.
 
 ## Editing feature
 
 Inline editing is implemented as a TanStack Table feature, `editingFeature`, registered on every
-DataGrid table. It adds the `editing` state slice with the `onEditingChange` option, and the
-`startEditing` / `saveEditing` / `cancelEditing` / `setEditing` table APIs, `getCanEdit` /
-`getIsEditing` / `getIsSaving` / `startEditing` / `saveEditing` / `cancelEditing` on rows,
-`getCanEdit` on columns and `getCanEdit` / `getIsEditing` / `getEditingValue` /
-`setEditingValue` / `getEditingError` on cells. The types are merged into `@tanstack/table-core`
-through module augmentation, so the APIs are typed on the bound `DataGridRow` / `DataGridCell`
-types. `editingFeature` is exported for tables built by hand with `useTable`. The augmentation
-requires `@tanstack/table-core` to be resolvable from your project, which is the case whenever
-`@tanstack/react-table` is installed with a hoisting package manager.
+DataGrid table. It adds the `editing` state with the `onEditingChange` option and the following APIs:
+
+- Table: `startEditing`, `saveEditing`, `cancelEditing`, `setEditing`
+- Row: `getCanEdit`, `getIsEditing`, `getIsSaving`, `startEditing`, `saveEditing`, `cancelEditing`
+- Column: `getCanEdit`
+- Cell: `getCanEdit`, `getIsEditing`, `getEditingValue`, `setEditingValue`, `getEditingError`
+
+The types are added to `@tanstack/table-core` with module augmentation. It requires
+`@tanstack/table-core` to be resolvable from your project, which is the case when
+`@tanstack/react-table` is installed with a hoisting package manager. `editingFeature` is
+exported for tables built by hand with `useTable`.
 
 ## Utility columns
 
@@ -119,15 +113,12 @@ The grid injects TanStack display columns for its own features, with the ids exp
   ]}
 />
 
-They are ordinary columns for TanStack: they appear in `table.getAllColumns()`,
-`getVisibleLeafColumns()`, header groups, `row.getVisibleCells()` and `columnOrder`. Code that
-iterates the columns for its own purposes (a custom visibility menu, an export, a column picker)
-should skip columns with `meta.utility`. The store keeps them first in `columnOrder` and at the
-head of `columnPinning.start`, and `columnVisibility: { __select__: false }` hides one.
-This placement applies to `columnOrder` and `columnPinning` passed to `useDataGrid` or through
-`tableOptions.state`. External atoms (`tableOptions.atoms.columnOrder`,
-`tableOptions.atoms.columnPinning`) are read by TanStack as-is, so when you control these slices
-with atoms, include the utility column ids in the atom value yourself.
+Utility columns are regular TanStack columns: they are included in `table.getAllColumns()`,
+header groups, `row.getVisibleCells()` and `columnOrder`. If your code iterates columns
+(a custom visibility menu, an export), skip columns with `meta.utility`.
+
+The store keeps utility columns first in `columnOrder` and `columnPinning.start`. If you control
+these slices with `tableOptions.atoms`, include the utility column ids in the atom value yourself.
 
 ## Using tableOptions
 
@@ -145,9 +136,6 @@ const store = useDataGrid({
   },
 });
 ```
-
-This provides a full escape hatch to the underlying TanStack Table instance without losing
-the DataGrid features built on top.
 
 ## Accessing table state
 

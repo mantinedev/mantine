@@ -14,36 +14,28 @@ chevron toggles rows that have children, and guide lines connect every level.
 
 ## Tree lines
 
-Guide lines are on by default (`withTreeLines`): a vertical line runs through every ancestor level
-at 10px, a horizontal connector leads to the chevron, and the line closes at the last sibling. The
-geometry is fixed at every grid size and the lines use `--dg-border-color`. The chevron slot is
-reserved on leaf rows so labels of siblings line up. Rows carry `data-tree-row`, `data-depth` and
-`data-leaf`.
-
-Set `withTreeLines={false}` for a plain indent with the chevron only:
+Guide lines are displayed by default. Set `withTreeLines={false}` for a plain indent with the
+chevron only:
 
 <Demo data={DataGridDemos.treeDataPlainIndent} />
 
 ## Icons and custom labels
 
-The tree cell wraps the output of the column's `cell` renderer in a `treeLabel` block that truncates
-long content with an ellipsis (or wraps it under `textOverflow="wrap"`), so icons and any other
+The tree cell renders the output of the column's `cell` renderer, so icons and any other
 inline content are rendered by the column itself:
 
 <Demo data={DataGridDemos.treeDataIcons} />
 
 ## Tree column
 
-The tree always lives in the first visible data column: put the column that should carry the
-indentation and the chevron first in your column definitions (or first in `columnOrder`). No expand
-utility column is injected for tree data; `withRowExpansion` and `renderExpandedRow` are ignored
-because expansion reveals the child rows.
+The tree is always displayed in the first visible data column. Put the column that should have
+the indentation and the chevron first in your column definitions or in `columnOrder`.
+`withRowExpansion` and `renderExpandedRow` are ignored for tree data.
 
 ## Filtering through tree hierarchy
 
 Set `filterFromLeafRows` to `true` to filter from leaf rows upward. When a leaf row matches
-the filter, its parent rows are automatically included to maintain the tree structure, and the
-guide lines close at the last visible sibling.
+the filter, its parent rows are included to keep the tree structure.
 
 <Demo data={DataGridDemos.treeDataFiltering} />
 
@@ -74,9 +66,8 @@ const store = useDataGrid({
 
 ## Selection
 
-With `withRowSelection`, `enableSubRowSelection` (default `true`) makes selecting a parent select
-its children. Tree rows take the ordinary selected look and the row focus model; the toggle buttons
-are labelled with the `expandRow` / `collapseRow` labels.
+With `withRowSelection`, selecting a parent row selects its children. This behavior is
+controlled by the `enableSubRowSelection` option, `true` by default.
 
 ## List view and row reorder
 

@@ -7,33 +7,24 @@ export default Layout(MDX_DATA.DataGridGrouping);
 ## Basic grouping
 
 Pass `grouping` with an array of column IDs to `useDataGrid` to group rows by one or more columns.
-Each group renders a group row with a chevron, the grouped value and the number of rows in the
-group; expand a group to reveal its rows.
+Each group is displayed as a group row with the grouped value and the number of rows in the group.
 
 <Demo data={DataGridDemos.grouping} />
 
 ## Group rows
 
-A group row is rendered per column, like any other row: utility cells behave as on a data row
-(the selection checkbox selects every leaf, the row number cell stays empty), the grouping column's
-cell holds the label (or the first visible data column when the grouping column is hidden), columns
-with an `aggregationFn` render their `aggregatedCell`, and the rest stay empty. The label reads
-`Department: Engineering (5)`: the column label (`meta.label`, a string `header` or the id) and the
-count at weight 400, the value at weight 600, rendered through the column's `cell` when it is a
-function. The count is the number of leaf rows in the group (`row.getLeafRows().length`), across
-nested groups.
+A group row displays its label in the cell of the grouping column, for example
+`Department: Engineering (5)`. The count is the number of leaf rows in the group, across nested
+groups. Columns with `aggregationFn` display their `aggregatedCell`.
 
-The whole row toggles the group: click anywhere on it, or press `Enter` / `Space` while it is
-focused; the chevron is decorative and the `tr` carries `aria-expanded`. Group rows always take the
-hover background, never the selected look, and carry `data-group-row`. Set `withTintedGroupRows` on
-`DataGrid` to paint them with `--dg-striped-color`:
+Click anywhere on a group row or press `Enter` / `Space` while it is focused to toggle the group.
+Set `withTintedGroupRows` on `DataGrid` to paint group rows with the striped color:
 
 <Demo data={DataGridDemos.groupingTinted} />
 
 ## Interactive grouping
 
-Use controlled `grouping` state with `onGroupingChange` to toggle grouping per column dynamically.
-Buttons or other controls can add or remove column IDs from the grouping array. With
+Use controlled `grouping` state with `onGroupingChange` to change grouping dynamically. With
 `withColumnMenu` on `DataGrid`, every column that can be grouped gets **Group by this column** /
 **Ungroup** items in its header menu.
 
@@ -42,7 +33,7 @@ Buttons or other controls can add or remove column IDs from the grouping array. 
 ## Multi-level grouping
 
 Pass multiple column IDs in the `grouping` array to create nested group hierarchies.
-The order of IDs determines the grouping depth — the first ID is the outermost group.
+The first ID is the outermost group.
 
 <Demo data={DataGridDemos.groupingMultiLevel} />
 
@@ -55,15 +46,12 @@ TanStack Table provides built-in aggregation functions: `sum`, `min`, `max`, `me
 
 ## Totals row
 
-Every column with an `aggregationFn` also gets a cell in the totals row of the table `<tfoot>`, which
-the grid renders automatically under the body (after any column `footer` row). The cell stacks a
-label above the value: the label is `meta.aggregationLabel`, or for a built-in aggregation name one
-of the `aggregationSum` (`Sum`), `aggregationCount`, `aggregationMean` (`Average`),
-`aggregationMin`, `aggregationMax`, `aggregationMedian`, `aggregationUnique`,
-`aggregationUniqueCount` and `aggregationExtent` (`Range`) labels; custom functions get no label.
-The value is formatted by `meta.formatAggregatedValue(value, rows)` (`String(value)` by default)
-and aggregates the filtered rows across every page, group rows excluded. Cells follow `meta.align`;
-the `aggregationCell`, `aggregationLabel` and `aggregationValue` selectors style them.
+Every column with `aggregationFn` also gets a cell in the totals row, which is rendered in the
+table footer whether or not the grid is grouped. Totals aggregate the filtered rows across all pages.
+
+Built-in aggregations are labelled with the `aggregation*` labels (`Sum`, `Average`, etc.),
+custom functions have no label. Use `meta.aggregationLabel` to set the label and
+`meta.formatAggregatedValue` to format the value:
 
 ```tsx
 const columns = [
@@ -80,15 +68,10 @@ const columns = [
 ];
 ```
 
-The totals row is rendered whether or not the grid is grouped, so an `aggregationFn` on a plain
-grid is the way to get a totals row.
-
 ## Custom aggregation
 
-Define a custom aggregation function for advanced calculations.
-
-In TanStack Table v9 custom aggregations are built with `constructAggregationFn`, which receives the
-rows and a `getValue` accessor:
+Use `constructAggregationFn` from TanStack Table to define a custom aggregation function.
+It receives the rows and a `getValue` accessor:
 
 ```tsx
 import { constructAggregationFn } from '@tanstack/react-table';
@@ -133,11 +116,10 @@ With `'reorder'`, grouped columns cannot be reordered while they are grouped, se
 
 ## Group selection
 
-With `withRowSelection`, the checkbox of a group row selects or deselects every leaf row of the
-group and shows the indeterminate state while only some of them are selected. Group rows themselves
-are never selected: `rowSelection` and `onRowSelectionChange` only contain data row ids, and a
-function passed to `enableRowSelection` is called for data rows only. The group checkbox is hidden
-when none of its leaf rows can be selected and in single selection mode.
+With `withRowSelection`, the checkbox of a group row selects or deselects all rows of the group.
+Group rows themselves are never selected: `rowSelection` contains data row ids only, and
+a function passed to `enableRowSelection` is called for data rows only. The group checkbox is
+not displayed in single selection mode.
 
 ## Expand and collapse all groups
 

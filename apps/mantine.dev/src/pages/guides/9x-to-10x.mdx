@@ -12,43 +12,33 @@ Update all `@mantine/*` packages to version 10.x.
 
 ## Colors system changes
 
-Version 10 ships a reworked color system. Most applications will see a refreshed look with
-no code changes required, but a few patterns need attention.
+10.x has a new colors system. Most applications get the new look without code changes,
+the cases that require changes are listed below.
 
 ### New OKLCH default palettes
 
-All 14 built-in palettes have been re-derived in the OKLCH color space on a shared perceptual-
-lightness ramp. Colors at the same index now have consistent perceived brightness across hues,
-so filled buttons and badges look visually uniform regardless of their color.
-
-The number of shades (10) and color names are unchanged. The `primaryShade` default has changed in
-dark mode from `{ light: 6, dark: 8 }` to `{ light: 6, dark: 7 }`, so dark-scheme filled controls
-use a slightly lighter shade. The visual appearance will also change — the new palettes are
-generally more vivid and perceptually balanced, with bright hues (yellow, orange, lime) slightly
-lifted to compensate for the Abney effect.
+All default colors were regenerated in the OKLCH color space. Color names and the number
+of shades are the same, color values are different. The default `primaryShade` changed
+from `{ light: 6, dark: 8 }` to `{ light: 6, dark: 7 }`.
 
 ### `--mantine-color-*` CSS variables are now OKLCH strings
 
-In v9 these variables emitted hex or RGB values. In v10 they emit `oklch(L C H)` strings, for
-example `oklch(0.52 0.22 255)`.
+In 9.x these variables had hex or RGB values. In 10.x their values are `oklch(L C H)` strings,
+for example `oklch(0.52 0.22 255)`.
 
-**Action required** if your application:
-- Reads `--mantine-color-*` values from the DOM and parses them as hex/RGB
-- Uses `getComputedStyle(el).getPropertyValue('--mantine-color-blue-6')` and then converts to
-  a hex string
-- Passes raw CSS variable values to a canvas `ctx.fillStyle` or similar API that only accepts
-  legacy formats
+Changes are required if your application:
 
-In those cases you can either update the code to work with oklch, or use the v9 opt-out
-described below.
+- Reads `--mantine-color-*` values from the DOM (for example, with `getComputedStyle`) and parses
+  them as hex or RGB
+- Passes CSS variable values to canvas `ctx.fillStyle` or other API that accepts only
+  legacy color formats
+
+In these cases, update the code to work with `oklch` values or use the [v9 opt-out](#v9-opt-out).
 
 ### `autoContrast` now defaults to `true`
 
-In v9 `theme.autoContrast` defaulted to `false`. In v10 it defaults to `true`, meaning filled
-controls automatically switch between black and white text based on the luminance of their
-background color (luminance threshold `0.2`).
-
-The following components are affected:
+`theme.autoContrast` is now `true` by default: text color of filled controls is black or white
+depending on the background color. The following components are affected:
 
 <DataTable
   head={['Component', 'Affected element']}
@@ -78,7 +68,7 @@ The following components are affected:
   ]}
 />
 
-To restore the v9 behaviour, disable `autoContrast` globally:
+To restore the 9.x behavior, disable `autoContrast` in the theme:
 
 ```tsx
 import { createTheme, MantineProvider } from '@mantine/core';
@@ -92,7 +82,7 @@ function Demo() {
 }
 ```
 
-You can also disable it on individual components without changing the theme:
+Or disable it on individual components:
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -104,14 +94,8 @@ function Demo() {
 
 ### Paper is deprecated — use Surface
 
-`Paper` is deprecated in v10 and will be removed in v11. The replacement is
-[Surface](/core/surface), which has the same API (`shadow`, `radius`, `withBorder`, padding props,
-polymorphic `component` prop) plus depth-aware background stepping in dark mode.
-
-The deprecated `Paper` wrapper still works in v10 with no visual change — it renders a flat surface
-on the body background with no depth stepping, so existing code is safe until v11.
-
-To migrate:
+`Paper` is deprecated and will be removed in 11.0. It still works in 10.x without visual changes.
+Replace it with [Surface](/core/surface), which supports the same props:
 
 ```tsx
 import { Paper, Surface } from '@mantine/core';
@@ -127,10 +111,8 @@ function Demo() {
 }
 ```
 
-In light color scheme the replacement is visually identical. In dark color scheme `Surface` is
-depth-aware by default (`autoDepth` prop is `true`): a standalone `Surface` renders one shade
-lighter than `Paper` (the panel level instead of the body background), and each nested `Surface`
-steps one level higher:
+In light color scheme `Surface` looks the same as `Paper`. In dark color scheme a standalone
+`Surface` is one shade lighter than `Paper`, and each nested `Surface` is one level higher:
 
 ```tsx
 import { Surface } from '@mantine/core';
@@ -147,41 +129,31 @@ function Demo() {
 }
 ```
 
-This is the intended look for cards and panels in 10.x. To keep the exact `Paper` appearance in
-dark color scheme, set `level={0}` – see the [Surface documentation](/core/surface) for details.
+To keep the `Paper` appearance in dark color scheme, set `level={0}`,
+see the [Surface documentation](/core/surface) for details.
 
 ### Darker dark theme
 
-The dark color scheme is darker than in v9. The base/page background is approximately two steps
-darker than the old `dark-7`, giving more headroom for surface elevation levels. If you relied on
-specific `dark-N` shade values for backgrounds, test your application in dark mode and adjust
-as needed.
+The dark color scheme is darker than in 9.x: the page background is approximately two steps
+darker than the old `dark-7`. If you relied on specific `dark-N` values for backgrounds,
+test your application in dark color scheme and adjust the styles.
 
-Floating dropdowns (`Popover`, `Menu`, `HoverCard`, and all `Combobox`-based components such as
-`Select` and `Autocomplete`) now render on the page surface, matching `Modal` and `Drawer`: in dark
-mode their background is `dark-7` instead of `dark-6`, separated from surrounding content by border
-and shadow. Light mode is visually unchanged.
+Other changes in dark color scheme:
 
-Wells – the `SegmentedControl` root, the `Tabs` `contained` list, and `ScrollArea` scrollbar
-backgrounds – now share the `--mantine-color-surface-sunken` token: `gray-1` in light mode, `dark-9`
-in dark mode. In dark mode they render tonally sunken below the page instead of the lighter
-`dark-4`/`dark-6` values used in v9.
-
-Code and inset content – `Code`, `Kbd`, `CodeHighlight`, `JsonViewer`, and `Typography`
-`pre`/`code`/`kbd` – use a separate `--mantine-color-surface-muted` token: `gray-0` in light mode,
-one step off the page, and `dark-5` in dark mode, two steps *above* the page so code reads as
-raised.
-
-Focus rings use a new `--mantine-color-focus-ring` token instead of
-`--mantine-primary-color-filled`. It follows `theme.primaryColor` and is unchanged in light mode
-(`blue-6` by default), but uses shade 5 in dark mode rather than `primaryShade.dark` (shade 7), so
-the ring stays legible against dark backgrounds.
+- `Popover`, `Menu`, `HoverCard` and `Combobox` based components (`Select`, `Autocomplete`, etc.)
+  dropdowns have `dark-7` background instead of `dark-6`, the same as `Modal` and `Drawer`
+- `SegmentedControl` root, `Tabs` `contained` list and `ScrollArea` scrollbars use
+  the `--mantine-color-surface-sunken` variable (`dark-9`) instead of `dark-4`/`dark-6`
+- `Code`, `Kbd`, `CodeHighlight`, `JsonViewer` and `Typography` code elements use
+  the `--mantine-color-surface-muted` variable (`dark-5`)
+- Focus rings use the new `--mantine-color-focus-ring` variable instead of
+  `--mantine-primary-color-filled`. It is shade 5 of `theme.primaryColor` instead of
+  `primaryShade.dark`. Light color scheme is not changed.
 
 ### New semantic color variables
 
-A layer of semantic role CSS variables has been added. Components use these tokens instead of
-hardcoding raw `gray-N` or `dark-N` indices. You can override them in CSS to theme the entire
-application uniformly:
+Components now use semantic CSS variables instead of `gray-N` and `dark-N` colors.
+Override them to change colors of all components:
 
 ```css
 /* Example: custom border color */
@@ -196,11 +168,8 @@ application uniformly:
 }
 ```
 
-The variables are defined as `var()` references to the underlying palette shades, so overriding
-`--mantine-color-gray-3` still cascades into `--mantine-color-border` automatically — existing
-shade-level overrides continue to work.
-
-Key role variables:
+The variables reference palette shades, so existing overrides of shades
+(for example, `--mantine-color-gray-3`) continue to work.
 
 <DataTable
   head={['Variable', 'Purpose']}
@@ -225,16 +194,11 @@ Key role variables:
   ]}
 />
 
-These tokens are backed by a new `--mantine-color-neutral-0..9` scheme-agnostic ladder (index `N`
-means the same role in both color schemes). See the [full token reference](/theming/colors) for the
-complete ladder and surface defaults.
+See the [colors guide](/theming/colors) for the full list of variables and their default values.
 
 ### Customizing surfaces and the dark ramp
 
-Two new theme-level tools give first-class control over the values above, in place of raw CSS
-variable overrides:
-
-The `surfaces` theme key overrides surface backgrounds per color scheme:
+Use the `surfaces` theme key to change surface backgrounds for each color scheme:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -248,9 +212,8 @@ const theme = createTheme({
 });
 ```
 
-The `tintColors` function mixes a color into every shade of a `MantineColorsTuple`, useful for
-tinting `darkColors` and friends. Target the **dark** ramp only – tinting light neutrals forces
-surfaces darker and breaks the flat light look:
+Use the `tintColors` function to mix a color into every shade of a colors tuple.
+Use it with `dark` colors only, tinting light neutral colors makes light surfaces darker:
 
 ```tsx
 import { tintColors, darkColors, createTheme } from '@mantine/core';
@@ -262,16 +225,13 @@ const theme = createTheme({
 });
 ```
 
-`tintColors` returns CSS `color-mix(in oklab, ...)` strings that are resolved by the browser, not
-concrete color values – the result cannot be fed into functions that expect a resolved color (such
-as `darken`), and it appears as a `color-mix(...)` expression, not a hex/rgb value, in computed
-styles.
+`tintColors` returns `color-mix(in oklab, ...)` strings, not resolved color values. The result
+cannot be passed to functions that expect a color value, for example `darken`.
 
 ### Warning and info color mappings
 
-Mantine's built-in semantic colors are `error` and `success` only. For `warning` and `info`
-states in `Alert`, `Notification`, and similar components, use the `yellow` and `blue` palette
-colors respectively:
+Built-in semantic colors are `error` and `success` only. For warning and info
+states in `Alert`, `Notification` and similar components, use `yellow` and `blue` colors:
 
 ```tsx
 import { Alert } from '@mantine/core';
@@ -292,10 +252,9 @@ function Demo() {
 
 ## Disabled state
 
-In v10 disabled elements no longer use dedicated gray colors. Instead, all components keep
-their regular colors and are rendered with reduced opacity controlled by the new
-`theme.disabledOpacity` option (`0.5` by default), exposed as `--mantine-disabled-opacity`
-CSS variable:
+Disabled elements no longer have gray colors. Components keep their regular colors and are
+displayed with reduced opacity. Use `theme.disabledOpacity` (`0.5` by default) to change it,
+the value is available as `--mantine-disabled-opacity` CSS variable:
 
 ```tsx
 import { createTheme, MantineProvider } from '@mantine/core';
@@ -320,19 +279,21 @@ styles, replace them with the opacity variable:
 ```
 
 The `disabledBody`, `disabledText` and `disabledBorder` keys of `vars.colors` in
-`@mantine/vanilla-extract` were removed for the same reason – use `--mantine-disabled-opacity`
+`@mantine/vanilla-extract` were removed as well, use `--mantine-disabled-opacity`
 in your `.css.ts` files instead.
 
-Note that the [v9 opt-out](#v9-opt-out) does not restore the gray disabled styles –
-components no longer read the removed variables.
+Note that the [v9 opt-out](#v9-opt-out) does not restore the gray disabled styles.
 
 ## Blockquote changes
 
-[Blockquote](/core/blockquote) was redesigned in v10: it no longer has a background and rounded
-corners, the icon is displayed above the quote instead of floating over the top left corner, and
-`iconSize` defaults to `24` instead of `48`. The `radius` prop and `--bq-bg-light`,
-`--bq-bg-dark`, `--bq-radius` CSS variables were removed. If you customized the background with
-these variables, use the `root` selector in `styles` or `classNames` instead:
+[Blockquote](/core/blockquote) has new styles:
+
+- It no longer has a background and rounded corners. The `radius` prop and `--bq-bg-light`,
+  `--bq-bg-dark`, `--bq-radius` CSS variables were removed.
+- The icon is displayed above the quote instead of the top left corner
+- The default `iconSize` is `24` instead of `48`
+
+If you used the removed prop or variables, use the `root` selector in `styles` or `classNames` instead:
 
 ```tsx
 import { Blockquote } from '@mantine/core';
@@ -355,22 +316,23 @@ function Demo() {
 
 ## ColorPicker changes
 
-[ColorPicker](/core/color-picker) and [ColorInput](/core/color-input) display `10` swatches per row
-by default instead of `7`. Set `swatchesPerRow={7}` to keep the previous density. Saturation picker,
-sliders, preview swatch and color swatches follow `theme.defaultRadius`; use the new `radius` prop
-to change it. Sliders were pill-shaped in v9 and the saturation picker had `sm` radius, there is no
-single `radius` value that restores both. `ColorInput` does not pass its `radius` prop to the picker.
+[ColorPicker](/core/color-picker) and [ColorInput](/core/color-input) changes:
+
+- `10` swatches per row are displayed by default instead of `7`. Set `swatchesPerRow={7}` to restore
+  the previous value.
+- Saturation picker, sliders and swatches use `theme.defaultRadius`. Use the new `radius` prop of
+  `ColorPicker` to change it. `ColorInput` does not pass its `radius` prop to the picker.
 
 ## Slider changes
 
-[Slider](/core/slider) and [RangeSlider](/core/range-slider) thumb has been redesigned. The thumb
-size is now defined per `size` (14px, 16px, 18px, 22px and 26px for `xs` to `xl`) instead of
-being twice the track height, the border is 2px instead of 4px, and the thumb is white with a
-colored border in both color schemes (in v9 the dark color scheme displayed a colored thumb with a
-white border). Hovered and dragged thumbs display a halo in the slider color. If you have
-customized `thumb` styles with Styles API, check that they still look as intended. Use
-`thumbSize` prop to restore the previous size and the new `variant="filled"` to get a thumb
-filled with the slider color.
+[Slider](/core/slider) and [RangeSlider](/core/range-slider) thumb has new styles:
+
+- The thumb size depends on `size` prop (from 14px for `xs` to 26px for `xl`) instead of
+  being twice the track height. Use `thumbSize` prop to restore the previous size.
+- The thumb is white with a 2px colored border in both color schemes. Set `variant="filled"`
+  to fill the thumb with the slider color.
+
+If you changed `thumb` styles with Styles API, check that they still look as intended.
 
 ## Stepper.Step step, state, allowStepClick and onClick props
 
@@ -412,9 +374,8 @@ opposite content instead – `Timeline` no longer sets the attribute:
 
 ## Controller hook types renamed
 
-`useTimer`, `useEditable` and `useImageCropper` now name their types `<Component>Controller` and
-`<Component>ControllerOptions`. The old names and the `useHook.Options`/`useHook.ReturnValue`
-namespace aliases have been removed without deprecated aliases:
+Types of `useTimer`, `useEditable` and `useImageCropper` hooks were renamed. The old names
+and the `useHook.Options`/`useHook.ReturnValue` namespace types were removed:
 
 <DataTable
   head={['9.x', '10.x']}
@@ -428,7 +389,7 @@ namespace aliases have been removed without deprecated aliases:
   ]}
 />
 
-Only the type names changed – the hooks, their options and their return values are the same:
+Hooks, their options and return values are the same:
 
 ```tsx
 // 9.x
@@ -440,9 +401,9 @@ import type { TimerController } from '@mantine/core';
 
 ## Tree store prop
 
-`Tree` now receives the value returned by `useTree` through the `store` prop instead of `tree`, and
-the `TreeController` type is renamed to `TreeStore`. The `tree` field of the `renderNode` payload and
-the `tree` prop of `FlatTreeNode` are renamed to `store` as well:
+The `tree` prop of `Tree` is renamed to `store`, and the `TreeController` type is renamed to `TreeStore`.
+The `tree` field of the `renderNode` payload and the `tree` prop of `FlatTreeNode` are renamed
+to `store` as well:
 
 ```tsx
 // 9.x
@@ -480,10 +441,9 @@ function Demo() {
 
 ## Picker inputs calendar theme defaults
 
-`DatePickerInput`, `MonthPickerInput`, `YearPickerInput`, `WeekPickerInput` and `QuarterPickerInput` now
-drive their pickers through a controller, so `defaultLevel` and `defaultDate` set in the theme
-`defaultProps` of `Calendar`, `DatePicker`, `MonthPicker`, `YearPicker`, `WeekPicker` or `QuarterPicker` no
-longer apply to the dropdown of the input.
+`defaultLevel` and `defaultDate` set in the theme `defaultProps` of `Calendar` and picker
+components (`DatePicker`, `MonthPicker`, `YearPicker`, `WeekPicker`, `QuarterPicker`) no longer
+apply to the dropdown of picker inputs (`DatePickerInput`, `MonthPickerInput`, etc.).
 Set them on the input component instead:
 
 ```tsx
@@ -501,10 +461,9 @@ const theme = createTheme({
 
 ## Picker inputs popoverProps.opened
 
-`DatePickerInput`, `MonthPickerInput`, `YearPickerInput`, `WeekPickerInput`, `QuarterPickerInput` and
-`DateTimePicker` now call `popoverProps.onChange` on every dropdown open and close, including the input click and the close after
-a date is picked. If you pass `popoverProps.opened`, update it in `popoverProps.onChange`, otherwise the
-input can no longer open or close its dropdown:
+Picker inputs (`DatePickerInput`, `MonthPickerInput`, etc.) and `DateTimePicker` now call
+`popoverProps.onChange` every time the dropdown is opened or closed. If you pass `popoverProps.opened`,
+update it in `popoverProps.onChange`, otherwise the input cannot open or close its dropdown:
 
 ```tsx
 import { useState } from 'react';
@@ -521,14 +480,14 @@ When you pass the `controller` prop, `popoverProps.opened` and `popoverProps.onC
 
 ## Picker inputs dropdown type and submit button
 
-`DatePickerInput`, `MonthPickerInput`, `YearPickerInput`, `WeekPickerInput`, `QuarterPickerInput` and
-`DateTimePicker` now open a bottom `Drawer` instead of a `Popover` when the viewport is narrower than
-`theme.breakpoints.sm`, and in `drawer` and `modal` dropdowns the value is applied only when the user
-presses the submit button. `onChange` is not called on selection in these dropdowns.
+Picker inputs (`DatePickerInput`, `MonthPickerInput`, etc.) and `DateTimePicker` now open
+a bottom `Drawer` instead of a `Popover` when the viewport is narrower than `theme.breakpoints.sm`.
+In `drawer` and `modal` dropdowns `onChange` is called only when the user presses the submit button.
 
-If your application relies on the popover on all viewports, set `dropdownType="popover"`. If you want
-to keep the drawer or modal but apply the value on selection, set `applyOnSubmit={false}`. Both can be
-set for all components in the theme:
+- To use the popover on all viewports, set `dropdownType="popover"`
+- To call `onChange` when a date is selected in the drawer or modal, set `applyOnSubmit={false}`
+
+Both props can be set for all components in the theme:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -546,15 +505,15 @@ const theme = createTheme({
 });
 ```
 
-The `dropdownType` prop still accepts `'popover'` and `'modal'`, and now also `'drawer'` and an
-object with breakpoints, for example, `{ base: 'drawer', sm: 'popover' }`.
+`dropdownType` prop also accepts `'drawer'` and an object with breakpoints,
+for example `{ base: 'drawer', sm: 'popover' }`.
 
 ## DateTimePicker and InlineDateTimePicker submit button
 
-`DateTimePicker` and `InlineDateTimePicker` submit buttons are now a `Button` with a text label (`Save` by
-default) instead of an `ActionIcon` with a check icon. `submitButtonProps` of both components now accepts
-`Button` props – remove `ActionIcon` specific props, for example, `size="input-sm"`, and use
-`submitButtonLabel` prop or the `submitButtonLabel` setting of `DatesProvider` to change the label:
+`DateTimePicker` and `InlineDateTimePicker` submit button is now a `Button` with a text label (`Save` by
+default) instead of an `ActionIcon` with a check icon. `submitButtonProps` accepts `Button` props:
+remove `ActionIcon` specific props, for example `size="input-sm"`. To change the label, use
+`submitButtonLabel` prop or the `submitButtonLabel` setting of `DatesProvider`:
 
 ```tsx
 import { DatesProvider, DateTimePicker } from '@mantine/dates';
@@ -570,9 +529,8 @@ function Demo() {
 
 ## useMatches options argument
 
-`useMatches` no longer accepts the second `options` argument (`getInitialValueInEffect`). The hook now
-resolves all breakpoints with `useSyncExternalStore` and returns the `base` value on the server and
-during hydration. Remove the second argument:
+`useMatches` no longer accepts the second `options` argument (`getInitialValueInEffect`).
+The hook returns the `base` value on the server and during hydration. Remove the second argument:
 
 ```tsx
 import { useMatches } from '@mantine/core';
@@ -592,9 +550,7 @@ use `data-empty` on `TimeInput` for your own purposes, rename your attribute.
 ## Combobox store listId and selectedOptionIndex
 
 The `listId` and `selectedOptionIndex` fields are removed from the store returned by `useCombobox` and
-`useVirtualizedCombobox`. They held a copy of the value from the last render and could be out of date.
-Use the `getListId()` and `getSelectedOptionIndex()` functions instead, they always return the current
-value:
+`useVirtualizedCombobox`. Use `getListId()` and `getSelectedOptionIndex()` functions instead:
 
 ```tsx
 const combobox = useCombobox();
@@ -612,10 +568,9 @@ combobox.getSelectedOptionIndex();
 
 ## comboboxProps.store in Select, MultiSelect, TagsInput and Autocomplete
 
-`Select`, `MultiSelect`, `TagsInput` and `Autocomplete` now always use their own store for the underlying
-`Combobox`, and a `store` passed in `comboboxProps` is ignored. To control the dropdown from outside, create
-a store with the component hook (`useSelect`, `useMultiSelect`, `useTagsInput` or `useAutocomplete`) and pass
-it to the `store` prop – it includes every `useCombobox` action:
+`Select`, `MultiSelect`, `TagsInput` and `Autocomplete` ignore `store` passed in `comboboxProps`.
+To control the dropdown, create a store with the component hook (`useSelect`, `useMultiSelect`,
+`useTagsInput` or `useAutocomplete`) and pass it to the `store` prop. It includes all `useCombobox` actions:
 
 ```tsx
 // 9.x
@@ -629,12 +584,12 @@ const store = useMultiSelect();
 
 ## Controller hooks return a memoized object
 
-`useTimer`, `useEditable`, `useImageCropper` and `usePagination` used to return a new object on every
-render. They now return an object that only changes identity when their state changes, and every
-action on it keeps a stable identity for the lifetime of the hook.
+`useTimer`, `useEditable`, `useImageCropper` and `usePagination` returned a new object on every
+render in 9.x. In 10.x the returned object changes only when the state changes, and its actions
+keep the same reference.
 
-If your code uses the returned object as a `useEffect` or `useCallback` dependency, that effect will
-now run less often – depend on the individual actions, or on state read through the hook's getters, instead:
+If you use the returned object as a `useEffect` or `useCallback` dependency, the effect now runs
+less often. Depend on individual actions or on state values instead:
 
 ```tsx
 const controller = useTimer();
@@ -654,10 +609,8 @@ useEffect(() => {
 
 ## ModalBase components removed
 
-`ModalBase`, `ModalBaseOverlay`, `ModalBaseContent`, `ModalBaseHeader`, `ModalBaseTitle`,
-`ModalBaseCloseButton`, `ModalBaseBody` and `NativeScrollArea` components are no longer exported from
-`@mantine/core`, along with the `ModalBaseHeaderProps`, `ModalBaseTitleProps`,
-`ModalBaseCloseButtonProps` and `ModalBaseBodyProps` types. If you built a custom dialog with them,
+`ModalBase*` and `NativeScrollArea` components and their props types are no longer exported from
+`@mantine/core`. If you built a custom dialog with them,
 use [Modal](/core/modal#compound-components) or [Drawer](/core/drawer#compound-components)
 compound components instead:
 
@@ -723,9 +676,8 @@ function Demo() {
 
 ## Drawer swipe to dismiss
 
-[Drawer](/core/drawer#swipe-to-dismiss) can now be dismissed with a swipe gesture, and swipe to
-dismiss is enabled by default. If swiping must not close your drawers, set `withSwipe={false}` on
-each `Drawer` or for all drawers in the theme:
+[Drawer](/core/drawer#swipe-to-dismiss) can now be closed with a swipe gesture, it is enabled
+by default. To disable it, set `withSwipe={false}` on `Drawer` or in the theme:
 
 ```tsx
 import { createTheme, Drawer } from '@mantine/core';
@@ -739,9 +691,8 @@ const theme = createTheme({
 });
 ```
 
-If only some elements inside a drawer must not start the swipe gesture (for example, drag and drop
-lists or other draggable widgets), keep swipe enabled and set the `data-drawer-no-swipe` attribute
-on those elements instead:
+To disable the swipe gesture only for some elements inside the drawer (for example, drag and drop
+lists), set the `data-drawer-no-swipe` attribute on these elements:
 
 ```tsx
 import { Drawer } from '@mantine/core';
@@ -757,8 +708,8 @@ function Demo() {
 
 ## v9 opt-out
 
-If your application cannot migrate immediately, you can restore the full v9 colors, variant
-derivations, and `autoContrast: false` with a single import:
+If your application cannot be migrated immediately, restore 9.x colors, variants
+and `autoContrast: false` with `v9Theme` and `v9CssVariablesResolver`:
 
 ```tsx
 import {
@@ -779,11 +730,9 @@ function App() {
 }
 ```
 
-`v9Theme` re-exports the v9 hex color tuples and sets `autoContrast: false`.
-`v9CssVariablesResolver` emits CSS variables as hex/RGB values as they were in v9.
-
-Note: `v9Theme` and `v9CssVariablesResolver` are provided for temporary migration purposes and
-will be removed in v11.
+`v9Theme` contains 9.x hex colors and sets `autoContrast: false`.
+`v9CssVariablesResolver` outputs CSS variables as hex/RGB values. Both are temporary
+and will be removed in 11.0.
 
 ## Browser support
 
@@ -794,5 +743,5 @@ following minimum browser versions:
 - Safari 16.2+ (released December 2022)
 - Firefox 113+ (released May 2023)
 
-Applications that must support older browsers should use the v9 opt-out above, or configure
-a PostCSS plugin to downconvert oklch values.
+To support older browsers, use the [v9 opt-out](#v9-opt-out) or configure
+a PostCSS plugin that converts `oklch` values.

@@ -5,15 +5,10 @@ export default Layout(MDX_DATA.DataGridAccessibility);
 
 ## Focus model
 
-A grid has exactly one focus model for its body. Without `withCellSelection`, rows are the focus
-targets: the first rendered row has `tabindex="0"`, the others `-1`, and a focused row shows a 2px
-inset ring on every cell. The tab stop stays on the first rendered row: arrow keys move focus
-between rows without moving it, so `Tab` always enters the grid at the first row. With
-`withCellSelection`, cells are the focus targets (roving `tabindex` managed by TanStack Table): the
-focused cell has `tabindex="0"` and the tab stop follows it; while no cell is focused, the first
-rendered cell is the tab stop and focusing it with `Tab` makes it the focused cell. Rows carry no
-`tabindex` and the focused cell shows a 2px focus ring. The same model serves the table body, the
-virtualized body and the list view (which always uses the row model).
+The grid body has one focus model. By default, rows are the focus targets: `Tab` moves focus
+to the first rendered row and arrow keys move it between rows. With `withCellSelection`, cells
+are the focus targets: `Tab` moves focus to the last focused cell, or to the first cell when
+none was focused. The list view always uses the row model.
 
 ## Keyboard navigation
 
@@ -69,32 +64,30 @@ Header:
 />
 
 Keys pressed inside controls within a row (checkboxes, buttons, editors) and inside a nested grid
-rendered in an expansion panel are never intercepted by the row handler.
+rendered in an expansion panel are not handled by the row.
 
 ## ARIA attributes
 
-- Sortable column headers carry `aria-sort` (`ascending`, `descending` or `none`) and render a button for the sort action
-- The column menu button is labelled with the `columnMenu` label (`Column menu`) and carries `aria-expanded` while open
-- Selection checkboxes and radios are labelled with the `selectAll` and `selectRow` labels, group row checkboxes with `selectGroup`; expand toggles with `expandRow` / `collapseRow`
-- The default inline editor is labelled with the column label (`meta.label`, a string `header` or the column id); custom `editComponent` editors can use `getColumnLabel(cell.column)` for the same label
-- The row reorder grip is pointer-only: it is `aria-hidden` and shows the `dragToReorder` label as a tooltip (`title`)
-- Group rows carry `aria-expanded` in the table and virtualized bodies; for expandable data rows and tree rows the expanded state is carried by the expand toggle button (`aria-expanded`), not by the row
-- The list view uses `role="list"` with `role="listitem"` items; a group item carries its expanded state on a button inside it (`aria-expanded`), and custom `renderListItem` content keeps its own semantics (the item itself is not a button)
-- A row with a pending async save carries `aria-busy`; invalid editor cells carry `aria-invalid`
-- The table (or the `role="grid"` container) carries `aria-busy` while `loading` is set; skeleton rows are `aria-hidden`
-- The virtualized body uses `role="grid"`, `aria-rowcount`, `role="row"` with `aria-rowindex`, and `role="gridcell"` / `role="columnheader"` with `aria-colindex`
+- Sortable column headers have `aria-sort` and render a button for the sort action
+- The column menu button is labelled with the `columnMenu` label and has `aria-expanded`
+- Selection checkboxes and radios are labelled with the `selectAll`, `selectRow` and `selectGroup` labels, expand toggles with `expandRow` / `collapseRow`
+- The default inline editor is labelled with the column label. Use `getColumnLabel(cell.column)` to get the same label in a custom `editComponent`
+- The row reorder grip is pointer-only and hidden from assistive technology
+- Group rows have `aria-expanded`. Expandable rows and tree rows have it on the expand toggle button
+- The list view uses `role="list"` with `role="listitem"` items
+- A row with a pending async save has `aria-busy`, invalid editor cells have `aria-invalid`
+- The grid has `aria-busy` while `loading` is set, skeleton rows are `aria-hidden`
+- The virtualized body uses `role="grid"` with `aria-rowcount`, `aria-rowindex` and `aria-colindex`
 
 ## Focus management
 
-- When editing ends with `Enter`, `Escape` or a save/cancel control, focus returns to the row (or to the cell under cell selection) so keyboard users keep their place; when the edit is committed because focus moved elsewhere (a click on another row, cell or input, or `Tab`), focus stays where it moved
-- The default editor is focused and its content selected when editing starts; in row mode the originating cell's editor is focused, or the first editable one
-- The row focus ring, the header focus ring and the editing rings are drawn as inset box-shadows, so they are never clipped by the frame
-- In virtualized mode, rows that scroll out of the window are unmounted; move focus with the arrow keys to keep it inside the rendered window
+- When editing ends with `Enter`, `Escape` or a save/cancel control, focus returns to the row or to the cell. When the edit is committed because focus moved elsewhere, focus stays where it moved
+- The default editor is focused and its content is selected when editing starts
+- In virtualized mode, rows that scroll out of the window are unmounted. Move focus with the arrow keys to keep it inside the rendered window
 
 ## Screen readers
 
-The table body renders semantic HTML table elements (`<table>`, `<thead>`, `<tbody>`, `<tfoot>`,
-`<tr>`, `<th>`, `<td>`), which screen readers interpret natively; row position is conveyed by the
-table structure. The virtualized body relies on the ARIA grid roles listed above. The status text
-of `DataGrid.Footer`, the row count and the selection bar count are plain text; they are not live
+The table body renders semantic HTML table elements, which screen readers interpret natively.
+The virtualized body relies on the ARIA grid roles listed above. The status text of
+`DataGrid.Footer`, the row count and the selection bar count are plain text, they are not live
 regions.

@@ -18,9 +18,7 @@ The `height` prop is required for all virtualization modes so the grid has a bou
 
 ## Basic virtualization
 
-Set `virtualize="rows"` to enable row virtualization for large datasets. When virtualization is enabled,
-only the rows visible in the viewport are rendered to the DOM. The `height` prop is required to define the
-scrollable container size.
+Set `virtualize="rows"` to render only the rows visible in the viewport:
 
 <Demo data={DataGridDemos.virtualization} />
 
@@ -34,18 +32,16 @@ estimate is resolved in this order, first hit wins:
 3. `estimateRowHeight`
 4. the row height of the current grid `size` (`32px` at `sm`)
 
-A numeric `getRowHeight` sets the rendered height of each row. The virtualized body measures rows
-after render when `getRowHeight` returns `'auto'`, when `estimateRowHeight` or
-`virtualScrollConfig.estimateSize` is set, and when row expansion is enabled; otherwise every row
-renders at the resolved height, so use `'auto'` for rows with wrapped content (for example with
-`textOverflow="wrap"`): cells of `'auto'` rows grow to fit their content.
+If `getRowHeight` returns a number, it is the rendered height of the row. Return `'auto'`
+for rows with wrapped content (for example with `textOverflow="wrap"`): such rows are measured
+after render and grow to fit their content.
 
 ## Virtual scroll config
 
 Fine-tune virtual scroll behavior with the `virtualScrollConfig` prop:
 
-- `overscan` -- number of rows rendered above and below the visible area (default: `10`)
-- `estimateSize` -- function returning the estimated row height in pixels
+- `overscan` – number of rows rendered above and below the visible area, `10` by default
+- `estimateSize` – function that returns the estimated row height in px
 
 ```tsx
 <DataGrid
@@ -63,16 +59,15 @@ Fine-tune virtual scroll behavior with the `virtualScrollConfig` prop:
 ## Infinite scroll
 
 Use the `onScrollToBottom` callback to load more data when the user scrolls near the bottom of the grid.
-This works with or without virtualization. Combine with `loading` and `loadingVariant="bar"` to show
+It works with or without virtualization. Combine it with `loading` and `loadingVariant="bar"` to show
 progress without hiding the rows that are already loaded.
 
 <Demo data={DataGridDemos.infiniteScroll} />
 
 ## Column virtualization
 
-Set `virtualize="columns"` to enable column virtualization when working with 50 or more columns.
-Only the columns visible in the horizontal scroll area are rendered to the DOM. Fine-tune behavior
-with the `virtualColumnConfig` option:
+Set `virtualize="columns"` to render only the columns visible in the horizontal scroll area.
+Use it for grids with 50 or more columns. Fine-tune behavior with the `virtualColumnConfig` prop:
 
 ```tsx
 <DataGrid
@@ -86,18 +81,13 @@ with the `virtualColumnConfig` option:
 />
 ```
 
-Combine row and column virtualization with `virtualize="rows,columns"` for grids with many rows
-and many columns simultaneously.
+Set `virtualize="rows,columns"` for grids with many rows and many columns.
 
 ## Parity with the table body
 
-The virtualized body renders `div` elements with ARIA grid roles instead of a `<table>`, but every
-look and behavior is keyed on the same data attributes, so it matches the table body: sort
-indicators and the header chrome (column menu, resize handles, reorder), utility columns as real
-cells, row selection and the row focus model, cell selection, group rows, tree rows, expansion
-panels, editing in both modes, the empty state, the three loading variants, pinned columns with the
-divider and shadow, and the chrome (toolbar, selection bar, footer, totals row). The header of a
-virtualized grid is always sticky at the top of its scroll container.
+The virtualized body renders `div` elements with ARIA grid roles instead of a `<table>`.
+It looks and behaves like the table body, see the table below for the features that are not supported.
+The header of a virtualized grid is always sticky.
 
 ## Feature compatibility
 
@@ -119,24 +109,19 @@ virtualized grid is always sticky at the top of its scroll container.
   ]}
 />
 
-Row pinning and row reorder are turned off with a development warning under any `virtualize`
-value. Virtualized rendering positions each cell independently, which is why cell spanning
-(`spanRows` / `spanColumns`) is not applied. The virtualized body scrolls inside its own container,
-so `withScrollArea` and `stickyHeaderOffset` do not apply to it.
+Row pinning and row reorder are turned off with a development warning when `virtualize` is set.
 
 ## Performance tips
 
 - Always memoize your `data` and `columns` arrays with `useMemo` to prevent unnecessary re-renders.
 - Set explicit `size` on columns to avoid layout recalculation.
 - Use `getRowId` to provide stable row identifiers instead of relying on array index.
-- Adjust `overscan` based on row height -- fewer overscan rows for tall rows, more for short rows.
+- Adjust `overscan` based on row height: fewer overscan rows for tall rows, more for short rows.
 - For extremely large datasets (1M+ rows), consider server-side pagination instead.
 
 ## Accessibility
 
-Virtualized grids maintain ARIA grid semantics. DataGrid sets `role="grid"` with `aria-rowcount` on
-the container, `role="row"` with `aria-rowindex` on each row, and `role="gridcell"` /
-`role="columnheader"` with `aria-colindex` on cells, so screen readers announce the row position
-(for example "row 500 of 100,000") even though only a window of rows is in the DOM. Keyboard
-navigation follows the same focus model as the table body, see
+The virtualized grid sets `aria-rowcount`, `aria-rowindex` and `aria-colindex`, so screen readers
+announce the row position (for example "row 500 of 100,000") even though only a part of the rows
+is in the DOM. Keyboard navigation follows the same focus model as the table body, see
 [Accessibility](/data-grid/accessibility).

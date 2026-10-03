@@ -7,17 +7,16 @@ export default Layout(MDX_DATA.Surface);
 
 ## Usage
 
-`Surface` is the depth-aware background primitive: it renders a container with background,
-optional shadow, border and border-radius, and picks its background color from one of three
-elevation levels. It replaces the deprecated [Paper](/core/paper) component and supports
-the same API (`shadow`, `radius`, `withBorder`, padding props, polymorphic `component` prop):
+`Surface` is a container with background, optional shadow, border and border-radius.
+Its background color depends on the depth level. `Surface` replaces the deprecated
+[Paper](/core/paper) component and supports the same props:
 
 <Demo data={SurfaceDemos.usage} />
 
 ## Surface levels
 
-Every `Surface` resolves to one of three depth levels. Each level maps to a surface color
-token defined by the [colors system](/theming/colors):
+`Surface` has three depth levels. Each level uses a surface color token
+of the [colors system](/theming/colors):
 
 <DataTable
   head={['Level', 'Token', 'Light', 'Dark']}
@@ -28,30 +27,18 @@ token defined by the [colors system](/theming/colors):
   ]}
 />
 
-In dark color scheme each level is one shade lighter than the previous one, so nested surfaces
-read as natural elevation layers. In light color scheme all levels are white by default – light
-interfaces are near-flat and rely on shadows and borders instead of tone, so the demos on this
-page are best viewed in dark color scheme.
-
-Two separate tokens cover non-container backgrounds, neither of which is a `Surface` level:
-`--mantine-color-surface-sunken` for wells that hold a raised child (`SegmentedControl` root, `Tabs`
-`contained` list, `ScrollArea` scrollbars), and `--mantine-color-surface-muted` for code and inset
-content (`Code`, `Kbd`, `CodeHighlight`, `Typography` `pre`). In dark color scheme a sunken well
-sits below the page while a muted surface sits one step above it.
+In dark color scheme each level is one shade lighter than the previous one. In light color
+scheme all levels are white by default, so the demos on this page are best viewed in dark
+color scheme.
 
 ## Automatic depth
 
-By default, each `Surface` renders one level above its parent surface (`autoDepth` prop is `true`).
-A standalone `Surface` resolves to level 1 (`surface-panel`), a `Surface` nested inside it resolves
-to level 2 (`surface-panel-2`), and deeper nesting is clamped at level 2:
+By default, each `Surface` renders one level above its parent `Surface`: a standalone
+`Surface` has level 1, a `Surface` nested inside it has level 2. Deeper nesting stays at level 2.
 
 <Demo data={SurfaceDemos.autoDepth} />
 
-The parent level is read from React context provided by the nearest ancestor `Surface`, so
-automatic depth works regardless of how deep in the DOM the nested `Surface` is rendered.
-
-Set `autoDepth={false}` to render the surface at the same level as its parent instead of
-stepping up:
+Set `autoDepth={false}` to render the surface at the same level as its parent:
 
 ```tsx
 import { Surface } from '@mantine/core';
@@ -70,18 +57,16 @@ function Demo() {
 
 ## level prop
 
-Set the `level` prop to control the depth explicitly. It accepts an absolute value (`0`–`2`,
-number or string) or a relative value (`"+1"`, `"-1"`) that is applied against the parent
-surface level. When `level` is set, it always overrides `autoDepth`, and both forms are
-clamped to the `0`–`2` range:
+Set `level` prop to control the depth explicitly. It accepts an absolute value (`0`–`2`)
+or a value relative to the parent surface level (`"+1"`, `"-1"`). `level` overrides `autoDepth`.
 
 <Demo data={SurfaceDemos.level} />
 
 ## Styling surfaces by level
 
-The root element always has the `data-mantine-surface-level` attribute with the resolved level
-(`0`, `1` or `2`). Use it to style surfaces differently depending on their depth, for example
-to add a border only to the deepest surfaces:
+The root element has `data-mantine-surface-level` attribute with the resolved level
+(`0`, `1` or `2`). Use it to change styles depending on the depth, for example to add
+a border only to the deepest surfaces:
 
 ```css
 .surface {
@@ -93,10 +78,9 @@ to add a border only to the deepest surfaces:
 
 ## Customize surface colors
 
-Surface level backgrounds are defined by the `--mantine-color-surface-page`,
-`--mantine-color-surface-panel` and `--mantine-color-surface-panel-2` CSS variables. Override
-them per color scheme with the `surfaces` [theme](/theming/theme-object) key – all components
-that use the corresponding token (including `Surface`) update together:
+Use the `surfaces` key of the [theme](/theming/theme-object) to change surface colors
+for each color scheme. The change applies to all components that use these colors,
+not only to `Surface`:
 
 ```tsx
 import { createTheme, MantineProvider } from '@mantine/core';
@@ -115,9 +99,9 @@ function Demo() {
 }
 ```
 
-Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, `sunken` and `muted` keys. Note that
-`page` also controls the page background (`--mantine-color-body`), modals and dropdowns – see
-the [colors guide](/theming/colors) for the full list of consumers.
+Each color scheme accepts `page`, `panel`, `panel2`, `sunken` and `muted` keys. Note that
+`page` is also the background of the page, modals and dropdowns, see the
+[colors guide](/theming/colors) for the full list.
 
 ## Migrating from Paper
 
@@ -138,10 +122,9 @@ function Demo() {
 }
 ```
 
-In light color scheme the replacement is visually identical. In dark color scheme there is one
-difference: `Paper` always renders on the body background (level 0), while a standalone
-`Surface` resolves to level 1 and renders one shade lighter. This is the intended look for
-cards and panels in 10.x. If you need to keep the exact `Paper` appearance, set `level={0}`:
+In light color scheme `Surface` looks the same as `Paper`. In dark color scheme `Paper`
+has the body background (level 0), while a standalone `Surface` has level 1 and is one shade
+lighter. To keep the `Paper` appearance, set `level={0}`:
 
 ```tsx
 import { Surface } from '@mantine/core';
