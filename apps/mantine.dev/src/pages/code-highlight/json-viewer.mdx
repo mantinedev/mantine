@@ -6,8 +6,7 @@ export default Layout(MDX_DATA.JsonViewer);
 
 ## Usage
 
-`JsonViewer` is an interactive component for viewing complex JSON structures.
-It supports expand/collapse, type indicators, copy to clipboard, and many other features.
+`JsonViewer` is an interactive component for viewing JSON structures:
 
 <Demo data={JsonViewerDemos.usage} />
 
@@ -15,11 +14,11 @@ It supports expand/collapse, type indicators, copy to clipboard, and many other 
 
 ## Default expand depth
 
-Use `defaultExpandDepth` prop to control how many levels are expanded by default. The root node is always expanded. With `1` (default) the root's direct children are visible and their nested objects and arrays are collapsed, with `2` those are expanded as well, and so on. Group rows created by `groupArraysAfterLength` count as one level. Empty objects and arrays are displayed inline as `{}` and `[]`:
+Use `defaultExpandDepth` prop to control how many levels are expanded by default. The root node is always expanded. With `1` (default), nested objects and arrays of the root node are collapsed:
 
 <Demo data={JsonViewerDemos.expandDepth} />
 
-`defaultExpandDepth` is applied once, to the `value` that is present when the component mounts. If `value` arrives later (for example, from an async request), the expanded state is not recomputed. To re-apply the default depth when data changes, remount the component with a `key` that changes together with the data, or manage expansion yourself with the controlled `expandedPaths` and `onExpandedPathsChange` props:
+`defaultExpandDepth` is applied only when the component mounts. If `value` is loaded later, change the `key` together with the data to apply it again, or control the expanded state with `expandedPaths` and `onExpandedPathsChange` props:
 
 ```tsx
 import { JsonViewer } from '@mantine/code-highlight';
@@ -31,9 +30,9 @@ function Demo({ data }: { data: unknown }) {
 
 ## Long arrays and objects
 
-Use `maxDisplayLength` prop (default `100`) to limit the number of entries rendered for a single object or array. When an object or array has more entries than `maxDisplayLength`, only the first `maxDisplayLength` entries are displayed, followed by a "... N more items" (or "... N more keys") row.
+Use `maxDisplayLength` prop (`100` by default) to limit the number of entries displayed for a single object or array. The rest of the entries are replaced with a "... N more items" row.
 
-Use `groupArraysAfterLength` prop to split long arrays into collapsible groups instead. It is `false` by default; when set to a number, arrays with more items than that number are displayed as `[start...end]` group rows, each holding that many items. `maxDisplayLength` does not apply to grouped arrays – every item is available inside its group.
+Set `groupArraysAfterLength` prop to a number to split longer arrays into collapsible `[start...end]` groups instead. `maxDisplayLength` does not apply to grouped arrays.
 
 ## Root name
 
@@ -43,7 +42,7 @@ Use `rootName` prop to display a label for the root node. Set it to `false` (def
 
 ## Expand all / collapse all controls
 
-Set `withControls` prop to display expand all and collapse all buttons. Collapse all collapses every nested node; the root node always stays expanded. The controls are not rendered when `allExpanded` is set:
+Set `withControls` prop to display expand all and collapse all buttons. The controls are not displayed when `allExpanded` is set:
 
 <Demo data={JsonViewerDemos.controls} />
 
@@ -56,7 +55,7 @@ to display the number of items in arrays and objects:
 
 ## Copy button
 
-Set `withCopy` prop to display a copy to clipboard button next to each node. The button is revealed when the row is hovered or focused; pressing `Ctrl + C` (`⌘ + C` on macOS) while a row is focused copies that node's value as well. `BigInt` values are copied as strings and circular references are replaced with `"[Circular]"`:
+Set `withCopy` prop to display a copy button when a row is hovered or focused:
 
 <Demo data={JsonViewerDemos.withCopy} />
 
@@ -67,7 +66,7 @@ display a "show more" button that reveals the full value:
 
 <Demo data={JsonViewerDemos.collapseStrings} />
 
-String values longer than 20 characters wrap onto multiple lines instead of extending the row horizontally; these values have `data-wrap` attribute on the `value` element, which you can use to change the wrapping behavior with [Styles API](/styles/styles-api).
+String values longer than 20 characters wrap onto multiple lines. These values have `data-wrap` attribute, use it to change the wrapping behavior with [Styles API](/styles/styles-api).
 
 ## Sort keys
 
@@ -78,17 +77,14 @@ comparator function:
 
 ## Highlight items
 
-Use `highlightItems` prop to highlight specific properties with diff-style colors.
-Pass a `Record<string, 'added' | 'removed'>` where keys are serialized property
-paths (use `serializeJsonViewerPath` helper to build them) and values indicate the highlight type:
+Use `highlightItems` prop to highlight properties with diff-style colors. It is an object:
+keys are property paths created with `serializeJsonViewerPath` function, values are `added` or `removed`:
 
 <Demo data={JsonViewerDemos.highlight} />
 
 ## All expanded
 
-Set `allExpanded` prop to expand all nodes and disable collapse interactions.
-This is useful when you want to display the full JSON structure without allowing
-the user to collapse any nodes:
+Set `allExpanded` prop to expand all nodes and disable collapse interactions:
 
 <Demo data={JsonViewerDemos.allExpanded} />
 
@@ -114,10 +110,8 @@ Set `withChevrons` prop to display expand/collapse chevrons next to collapsible 
 - `Enter` / `Space` – toggle expand/collapse on collapsible nodes, trigger `onValueSelect` on primitive nodes
 - `Ctrl + C` / `⌘ + C` – copy the focused node value when `withCopy` prop is set
 
-The root node, and every node when `allExpanded` is set, cannot be collapsed.
-
 ## Accessibility
 
-`JsonViewer` renders its content as an ARIA tree: the container has `role="tree"`, every row is a `role="treeitem"`, collapsible rows expose their state with `aria-expanded` and nested rows are wrapped in `role="group"` containers. `rootName` prop is used as the accessible name of the tree; when it is not set, the tree is labelled `JSON`.
+`JsonViewer` renders its content as an ARIA tree. `rootName` prop is used as the accessible name of the tree, when it is not set, the tree is labelled `JSON`.
 
-The component always renders left-to-right, regardless of the [direction](/styles/rtl) set on the application, because JSON is code and indentation, chevrons and line numbers are positioned physically.
+The component is always rendered left-to-right, regardless of the [direction](/styles/rtl) of the application.

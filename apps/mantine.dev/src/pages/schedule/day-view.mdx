@@ -6,46 +6,40 @@ export default Layout(MDX_DATA.DayView);
 
 ## Usage
 
-DayView displays events for a single day with time slots. It supports all-day events, overlapping events,
-drag and drop, custom time ranges, and more.
+`DayView` displays events for a single day with time slots.
 
 <Demo data={DayViewDemos.usage} />
 
 ## Time range
 
 Use `startTime` and `endTime` props to set the visible time range. Times should be in `HH:mm:ss` format.
-This is useful for focusing on specific hours like business hours.
 
 <Demo data={DayViewDemos.timeRange} />
 
 ## Start scroll time
 
-Use `startScrollTime` prop to set the initial scroll position to a specific time.
-The value should be in `HH:mm:ss` format. This is useful when you want the view to
-open at a specific time (e.g., business hours start) instead of midnight.
+Use `startScrollTime` prop to set the initial scroll position, for example to open the view
+at the start of business hours instead of midnight. The value must be in `HH:mm:ss` format.
 
 <Demo data={DayViewDemos.startScrollTime} />
 
 ## Interval minutes
 
 `intervalMinutes` prop controls the granularity of time slots. Default is `15` minutes.
-Common values are 15, 30, or 60 minutes.
 
 <Demo data={DayViewDemos.intervalMinutes} />
 
 ## Sub-hour grid lines
 
 When `intervalMinutes` is smaller than `60`, set `withSubHourGridLines={false}` to display only one
-grid line per hour while keeping the smaller interval for creating and resizing events. This is useful
-to achieve a Google Calendar like layout: events snap to 15 or 30 minutes increments, but the grid
-stays clean with hourly lines.
+grid line per hour. Events are still created and resized with the smaller interval.
 
 <Demo data={DayViewDemos.subHourGridLines} />
 
 ## All-day events
 
 Events that span the entire day are displayed in a dedicated all-day section at the top.
-When there are more than 2 all-day events, the component shows a "More events" indicator.
+When there are more than 2 all-day events, the component shows a "+N more" indicator.
 
 <Demo data={DayViewDemos.allDayEvents} />
 
@@ -66,15 +60,12 @@ to hide the time bubble.
 
 ## Current time indicator in a different timezone
 
-`@mantine/schedule` works with timezone-agnostic `YYYY-MM-DD HH:mm:ss` strings and does not
-perform any timezone conversions on its own. By default, the current time indicator is positioned
-based on the user's local time.
+`@mantine/schedule` does not perform timezone conversions. By default, the current time indicator
+is positioned based on the user's local time.
 
-To display the indicator in a different timezone, use the `getCurrentTime` prop. It is a function
-that returns the current time and is called on every tick, so the indicator keeps updating
-automatically. In the example below, the current time is converted to the selected timezone with
-the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone) – switch the timezone to
-see the indicator and the time bubble move accordingly:
+To display the indicator in a different timezone, use `getCurrentTime` prop – a function
+that returns the current time. In the example below, the current time is converted to the selected
+timezone with the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone):
 
 <Demo data={DayViewDemos.timezone} />
 
@@ -88,14 +79,10 @@ in `HH:mm:ss` format.
 
 ## Custom time slot props
 
-Use `getTimeSlotProps` to add custom props to individual time slots based on their time range.
-The function receives `{ start, end }` datetime strings in `YYYY-MM-DD HH:mm:ss` format
-and should return an object of props to spread onto the slot element, or `undefined`.
-
-This is useful for setting `data-business-hours` on a custom range that differs from the
-default 9:00–17:00, or for attaching custom event handlers to specific slots.
-Event handlers like `onClick` returned by `getTimeSlotProps` are composed with internal handlers
-(`onTimeSlotClick`) – both will fire without overriding each other.
+Use `getTimeSlotProps` to add props to individual time slots, for example `data-business-hours`
+or event handlers. The function receives `{ start, end }` datetime strings in `YYYY-MM-DD HH:mm:ss`
+format and returns an object of props or `undefined`. Event handlers returned by the function
+do not override internal handlers, both are called.
 
 <Demo data={DayViewDemos.getTimeSlotProps} />
 
@@ -108,8 +95,7 @@ Customize the height of time slots and the all-day section using `slotHeight` an
 
 ## Without header
 
-Set `withHeader={false}` to hide the header controls. This is useful when you want to
-build a custom header or embed the view in a larger component.
+Set `withHeader={false}` to hide the header controls.
 
 <Demo data={DayViewDemos.withoutHeader} />
 
@@ -136,36 +122,23 @@ or a function that returns a formatted string.
 
 ## Radius
 
-Use `radius` prop to control the border radius of the day view container.
+Use `radius` prop to change the border radius of the view and events.
 
 <Demo data={DayViewDemos.radius} />
 
 ## Overlap mode
 
-`eventOverlapMode` prop controls how events that overlap in time share the horizontal space:
+`eventOverlapMode` prop controls how overlapping events share the horizontal space:
 
-- `columns` (default) – the available width is split evenly between the overlapping events. Every event
-  is fully visible, but each one gets narrower as more events overlap.
-- `cascade` – each event is indented from the previous one and drawn on top of it, extending to the
-  right edge of the group. Events keep a readable width no matter how many of them overlap, at the cost
-  of covering the events underneath.
-
-Prefer `cascade` when your data regularly produces large groups of simultaneous events, where `columns`
-would shrink each event to an unreadable sliver.
+- `columns` (default) – the width is split evenly between overlapping events. Every event
+  is fully visible, but gets narrower as more events overlap.
+- `cascade` – each event is indented from the previous one and drawn on top of it. Events keep
+  a readable width, but cover the events underneath. Use it when many events overlap at the same time.
 
 <Demo data={DayViewDemos.eventOverlapMode} />
 
-The indent shrinks automatically as the group grows, so the event on top always keeps at least 60% of
-the available width.
-
-Covered events can still be read and interacted with: rest the pointer on one and it is raised above
-the events covering it, which also makes its resize handles reachable. Keyboard users get the same
-result by focusing the event with `Tab`, without any delay.
-
-`eventOverlapRaiseDelay` prop controls how long the pointer must rest on an event before it is raised,
-in milliseconds. The default of `600` is long enough that moving the pointer across a group to reach a
-specific event does not raise the events it passes over. Set a smaller value to make covered events
-reveal themselves sooner:
+In `cascade` mode, a covered event is raised above the others when it is hovered or focused.
+Use `eventOverlapRaiseDelay` prop to change the hover delay in milliseconds, `600` by default:
 
 ```tsx
 import { DayView } from '@mantine/schedule';
@@ -177,7 +150,7 @@ function Demo() {
 
 ## Drag and drop
 
-Enable drag and drop by setting `withDragDrop` prop. Use `onEventDrop` callback to handle
+Enable drag and drop by setting `withEventsDragAndDrop` prop. Use `onEventDrop` callback to handle
 event drops. All-day events cannot be dragged.
 
 <Demo data={DayViewDemos.dragDrop} />
@@ -203,19 +176,16 @@ The callback receives the `DataTransfer` object and the drop target datetime.
 
 ## Bidirectional drag and drop
 
-Combine `onExternalEventDrop` with `withEventsDragAndDrop` to enable bidirectional
-drag and drop. Items dragged from the sidebar are removed from the list and added
-to the schedule. Events dragged from the schedule back to the sidebar are removed
-from the schedule. The schedule sets `application/json` with `{ eventId }` in
-`dataTransfer` when an event is dragged, which the sidebar drop zone reads to
-identify the event.
+Combine `onExternalEventDrop` with `withEventsDragAndDrop` to drag items both into and out of
+the schedule. When an event is dragged, the schedule sets `application/json` data with `{ eventId }`
+in `dataTransfer`. Read it in your drop zone to identify the event.
 
 <Demo data={DayViewDemos.bidirectionalDragDrop} />
 
 ## Selective drag permissions
 
-Use `canDragEvent` callback to control which events can be dragged. This is useful for
-implementing locked or read-only events.
+Use `canDragEvent` callback to control which events can be dragged.
+Events that return `false` will not be draggable.
 
 <Demo data={DayViewDemos.canDragEvent} />
 
@@ -240,8 +210,8 @@ resized in 15-minute increments:
 
 ## Selective resize permissions
 
-Use `canResizeEvent` callback to control which events can be resized. This is useful for
-implementing locked or read-only events that should not be resizable.
+Use `canResizeEvent` callback to control which events can be resized.
+Events that return `false` will not show resize handles.
 
 <Demo data={DayViewDemos.canResizeEvent} />
 
@@ -254,10 +224,9 @@ add custom icons, badges, or any other content to events.
 
 ## Full event customization
 
-Use `renderEvent` prop to fully customize event rendering. This function receives the event
-data as the first argument and all props that would be passed to the event root element
-(including children) as the second argument, allowing you to wrap events in custom components
-like HoverCard, Tooltip, or custom wrappers.
+Use `renderEvent` prop to fully customize event rendering. The function receives the event
+as the first argument and the props of the event root element (including children) as the second
+argument. Use it to wrap events in `HoverCard`, `Tooltip` or other components.
 
 <Demo data={DayViewDemos.renderEvent} />
 
@@ -270,36 +239,27 @@ See [Recurring events guide](/schedule/recurring-events) for full documentation.
 
 ## Background events
 
-Set `display="background"` on an event to render it as a full-width, semi-transparent,
-non-interactive block behind regular events. Background events are useful for marking
-unavailability, lunch breaks, focus time, or other blocked periods. By default they
-cannot be clicked, dragged, or resized.
+Set `display="background"` on an event to render it as a full-width, semi-transparent block
+behind regular events. By default it cannot be clicked, dragged, or resized. Background events
+are useful for marking unavailability, lunch breaks, focus time, or other blocked periods.
 
 <Demo data={DayViewDemos.backgroundEvents} />
 
 ## Interactive background events
 
-Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
-background event calls `onEventClick` with the event object, the same as for regular events –
-use `event.display === 'background'` to tell them apart in the handler.
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. `onEventClick`
+is called with the background event, use `event.display === 'background'` to tell it apart
+from regular events.
 
-Note that an interactive background event covers the time slots underneath it: clicks and
-drag-to-select in its range go to the event instead of the grid. Interactive background
-events still cannot be dragged.
-
-The prop is supported by `DayView`, `WeekView`, `MonthView`, `ResourcesDayView` and
-`ResourcesWeekView`. `YearView` and the `MobileMonthView` that `Schedule` renders with
-`layout="responsive"` on small screens do not display background events at all, so the prop
-has no effect there.
+An interactive background event covers the time slots underneath it: clicks and drag-to-select
+in its range go to the event. Interactive background events still cannot be dragged.
 
 <Demo data={DayViewDemos.interactiveBackgroundEvents} />
 
 ## Resizable background events
 
-When `withEventResize` is set together with `withInteractiveBackgroundEvents`, background
-events render resize handles on their top and bottom edges. Dragging a handle calls
-`onEventResize` with the background event, the same way it does for regular events – use
-`event.display === 'background'` to tell them apart in the handler.
+Set `withEventResize` together with `withInteractiveBackgroundEvents` to make background events
+resizable. `onEventResize` is called with the background event, the same way as for regular events.
 
 All-day background events are never resizable. To keep background events fixed while
 regular events stay resizable, return `false` from `canResizeEvent`:
@@ -316,9 +276,8 @@ regular events stay resizable, return `false` from `canResizeEvent`:
 
 ## Custom background event styles with drag and drop blocking
 
-Use Styles API to customize background event appearance and prevent dropping
-regular events into blocked time ranges. This example uses diagonal red lines
-to indicate blocked time and rejects drops that overlap with background events.
+Use Styles API to customize background events appearance. The example below displays
+blocked time with diagonal red lines and rejects drops that overlap with background events.
 
 <Demo data={DayViewDemos.backgroundEventsCustomStyle} />
 
@@ -331,8 +290,7 @@ an `AgendaView` showing events for the current day as a list.
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions. In static mode, events and time slots
-are not clickable, draggable, or hoverable. This is useful for read-only displays or reports.
+Set `mode="static"` to disable all interactions.
 
 <Demo data={DayViewDemos.staticMode} />
 
@@ -352,7 +310,6 @@ Combine it with `labels` prop to translate all UI text.
 ## Controlled date
 
 Control the date externally using the `date` prop and `onDateChange` callback.
-This allows you to build custom navigation or integrate with other components.
 
 <Demo data={DayViewDemos.controlledDate} />
 
@@ -365,9 +322,8 @@ Use `onViewChange` prop to handle view level changes when the user clicks on vie
 ## Create and update events
 
 Set `withDragSlotSelect` prop to allow users to drag across time slots to select a time range.
-When the drag ends, the `onSlotDragEnd` callback is called with the range start and end dates.
-Combined with `onTimeSlotClick`, `onAllDaySlotClick`, and `onEventClick` callbacks, this enables
-a complete event creation and editing experience.
+When the drag ends, `onSlotDragEnd` is called with the range start and end dates.
+Combine it with `onTimeSlotClick`, `onAllDaySlotClick` and `onEventClick` to create and edit events.
 
 <Demo data={DayViewDemos.eventForm} />
 
@@ -381,11 +337,8 @@ and reducing padding on smaller screens. Container queries are supported in all 
 
 ### Focus management
 
-In the DayView component, focus is managed to provide an efficient keyboard navigation experience:
-
-- Only the first time slot is included in the tab order (`tabIndex={0}`)
-- All other time slots have `tabIndex={-1}` and can only be reached via arrow key navigation
-- This approach reduces the number of tab stops when navigating through the schedule
+Only the first time slot is included in the tab order. All other time slots can be reached
+with arrow keys.
 
 ### Keyboard interactions
 
@@ -404,4 +357,4 @@ In the DayView component, focus is managed to provide an efficient keyboard navi
 
 ### Slot labels
 
-Each time slot button has an `aria-label` attribute with the complete slot information including the time range (e.g., "Time slot 08:00:00 - 09:00:00"). This provides screen reader users with complete context about each slot.
+Each time slot button has an `aria-label` attribute with the time range (e.g., "Time slot 08:00:00 - 09:00:00").

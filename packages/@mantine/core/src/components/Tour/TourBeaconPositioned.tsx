@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { autoUpdate, offset, useFloating } from '@floating-ui/react';
+import { offset, useFloating } from '@floating-ui/react';
 import { useMergedRef } from '@mantine/hooks';
 import { UnstyledButton } from '../UnstyledButton';
+import { pressAwareAutoUpdate } from './press-aware-auto-update';
 import { useTargetElement, type TourTarget } from './use-target-rect';
 
 interface TourBeaconPositionedProps {
@@ -31,7 +32,7 @@ export function TourBeaconPositioned({
   const { refs, floatingStyles } = useFloating({
     elements: { reference: element },
     placement: 'top-end',
-    whileElementsMounted: autoUpdate,
+    whileElementsMounted: pressAwareAutoUpdate,
     middleware: [offset({ mainAxis: -4, crossAxis: -4 })],
   });
 

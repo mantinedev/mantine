@@ -25,6 +25,7 @@ export const TourStylesApi: StylesApiData<TourFactory> = {
       '--tour-tooltip-shadow': 'Controls `box-shadow` of the tooltip',
       '--tour-beacon-size': 'Controls `width` and `height` of the beacon',
       '--tour-beacon-color': 'Controls `background-color` of the beacon',
+      '--tour-color': 'Controls `background-color` of the beacon, set with `color` prop',
     },
   },
 

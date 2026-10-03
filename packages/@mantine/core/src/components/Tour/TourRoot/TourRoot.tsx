@@ -7,6 +7,8 @@ import {
   factory,
   Factory,
   getShadow,
+  getThemeColor,
+  MantineColor,
   StylesApiProps,
   useProps,
   useStyles,
@@ -86,6 +88,9 @@ export interface TourRootProps
   /** Tour step overlay color @default "rgba(0, 0, 0, 0.5)" */
   overlayColor?: string;
 
+  /** Key of `theme.colors` or any valid CSS color, controls `Tour.Beacon` color and `Tour.Navigation` next button color @default theme.primaryColor */
+  color?: MantineColor;
+
   /** Key of `theme.shadows` or any valid CSS box-shadow value, controls the tooltip shadow @default 'md' */
   tooltipShadow?: string;
 
@@ -116,8 +121,9 @@ const defaultProps = {
 } satisfies Partial<TourRootProps>;
 
 const varsResolver = createVarsResolver<TourRootFactory>(
-  (_, { zIndex, overlayColor, tooltipShadow }) => ({
+  (theme, { zIndex, overlayColor, tooltipShadow, color }) => ({
     root: {
+      '--tour-color': color ? getThemeColor(color, theme) : undefined,
       '--tour-z-index': zIndex?.toString(),
       '--tour-overlay-color': overlayColor,
       '--tour-tooltip-radius': undefined,
@@ -160,6 +166,7 @@ export const TourRoot = factory<TourRootFactory>((_props) => {
     transitionProps,
     overlayColor,
     tooltipShadow,
+    color,
     children,
     attributes,
     ...others
@@ -228,6 +235,7 @@ export const TourRoot = factory<TourRootFactory>((_props) => {
         spotlightRadius: spotlightRadius ?? 4,
         closeOnOverlayClick: closeOnOverlayClick!,
         transitionProps,
+        color,
         labels,
         titleId,
         bodyId,
