@@ -45,13 +45,13 @@ To change this behavior, set the `allowSingleDateInRange` prop. `allowSingleDate
 ## Presets
 
 Use the `presets` prop to add custom quarter presets. Presets are displayed next to the calendar.
-Preset values are normalized to the first day of their quarter before `onChange` is called, so any
-date inside the quarter can be used as a preset value.
-`@mantine/dates` registers the [dayjs quarterOfYear and advancedFormat plugins](https://day.js.org/docs/en/plugin/quarter-of-year),
-so you can use `dayjs().startOf('quarter')` and the `Q` format token once the package is imported.
-Note that TypeScript only knows the `quarter` unit after you extend dayjs with the `quarterOfYear` plugin in your own code, as shown in the demo.
+Any date inside the quarter can be used as a preset value.
 
 <Demo data={QuarterPickerDemos.presets} />
+
+`@mantine/dates` registers the [dayjs quarterOfYear and advancedFormat plugins](https://day.js.org/docs/en/plugin/quarter-of-year):
+you can use `dayjs().startOf('quarter')` and the `Q` format token. To use the `quarter` unit with TypeScript,
+extend dayjs with the `quarterOfYear` plugin in your code, as shown in the demo above.
 
 To use `presets` with `type="range"`, define the value as a tuple of two dates:
 
@@ -115,8 +115,7 @@ Set the `fullWidth` prop to make the quarter picker stretch to fill 100% of its 
 
 ## Change year and quarter controls format
 
-Use the `yearsListFormat` and `quartersListFormat` props to change the [dayjs format](https://day.js.org/docs/en/display/format) of year/quarter controls.
-`quartersListFormat` supports the `Q` token from the advancedFormat plugin:
+Use the `yearsListFormat` and `quartersListFormat` props to change the [dayjs format](https://day.js.org/docs/en/display/format) of year/quarter controls:
 
 <Demo data={QuarterPickerDemos.listFormat} />
 
@@ -204,6 +203,6 @@ When `presets` are used, only one preset button is in the tab order. With focus 
 `ArrowDown` and `ArrowUp` move focus between presets without selecting them, `Enter` or `Space`
 selects the focused preset, and `Tab` moves focus to the calendar.
 
-When the level is changed with the keyboard (for example, `Enter` on the month label), focus
+When the level is changed with the keyboard (for example, `Enter` on the year label), focus
 moves to the label of the new level or to the grid control in the tab order if the new level
 does not have a clickable label.

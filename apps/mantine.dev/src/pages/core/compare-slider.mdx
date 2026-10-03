@@ -6,42 +6,36 @@ export default Layout(MDX_DATA.CompareSlider);
 
 ## Usage
 
-`CompareSlider` displays two layers stacked in the same box with a draggable divider that clips
-the top layer to reveal the one underneath. It is commonly used to compare two versions of an
-image (before/after an edit), but the two sides can be any React nodes. Drag the handle, click
-anywhere on the slider or use the keyboard to change the divider position:
+`CompareSlider` displays two layers in the same box with a draggable divider between them.
+It is commonly used to compare two versions of an image. The `before` layer is displayed
+on the left/top side of the divider, the `after` layer – on the right/bottom side.
 
 <Demo data={CompareSliderDemos.usage} />
 
-The `before` layer is displayed on the left/top side of the divider, the `after` layer is
-displayed on the right/bottom side. Both layers are absolutely positioned and fill the
-container, so they should have the same size for a meaningful comparison.
-
 ## Compare any content
 
-`CompareSlider` is not limited to images – `before` and `after` accept any React node: videos,
-maps, charts, code blocks or plain markup. Both layers fill the container, make sure they have
-the same dimensions:
+`before` and `after` accept any React node: videos, maps, charts, code blocks or plain markup.
+Both layers fill the container, make sure they have the same dimensions:
 
 <Demo data={CompareSliderDemos.content} />
 
 ## Vertical orientation
 
-Set `orientation="vertical"` to move the divider vertically and clip the layers top/bottom:
+Set `orientation="vertical"` to move the divider vertically:
 
 <Demo data={CompareSliderDemos.vertical} />
 
 ## Controlled
 
-Set `position` and `onPositionChange` props to control the divider position. The position is a
-number between 0 and 100 that represents the percentage of the container revealed by the divider:
+Set `position` and `onPositionChange` props to control the divider position.
+The position is a number between 0 and 100:
 
 <Demo data={CompareSliderDemos.controlled} />
 
 ## Change position on hover
 
 Set `changePositionOnHover` to update the divider position when the pointer moves over the
-component, without requiring a drag:
+component:
 
 <Demo data={CompareSliderDemos.hover} />
 
@@ -52,7 +46,7 @@ Use the `handle` prop to replace the default divider handle with any React node:
 <Demo data={CompareSliderDemos.customHandle} />
 
 Set `withHandle={false}` to hide the handle. The divider line stays visible and the component
-remains interactive and keyboard accessible:
+remains interactive:
 
 ```tsx
 import { CompareSlider, Image } from '@mantine/core';
@@ -70,12 +64,10 @@ function Demo() {
 
 ## Container size
 
-`CompareSlider` does not have an intrinsic size – both layers are absolutely positioned, so the
-component must be given a definite size. It takes the full width of its parent, so in most layouts
-you only need to set a height with the `h` prop or an `aspect-ratio`. If the parent does not
-constrain the width (for example a flex or grid container that shrinks to content), set the width
-explicitly with the `w` or `maw` prop. Make both layers fill the box, for example with `h="100%"`,
-`w="100%"` and `fit="cover"` on `Image`:
+`CompareSlider` does not have an intrinsic size. It takes the full width of its parent,
+so in most layouts you only need to set a height with `h` prop or an `aspect-ratio`.
+If the parent does not constrain the width (for example, a flex container), set `w` or `maw` prop.
+Make both layers fill the box:
 
 ```tsx
 import { CompareSlider, Image } from '@mantine/core';
@@ -94,10 +86,10 @@ function Demo() {
 
 ## Transition
 
-Set the `transition` prop to animate divider position changes, for example when the position is
-changed with the keyboard or updated with a controlled value. Pass `true` to use the default
-`150ms` duration or a number to set a custom duration in milliseconds. The transition is
-disabled while the divider is being dragged and when `changePositionOnHover` is set:
+Set `transition` prop to animate position changes made with the keyboard or with a controlled
+value. Pass `true` to use the default `150ms` duration or a number to set the duration in
+milliseconds. The transition is not applied while the divider is dragged and when
+`changePositionOnHover` is set:
 
 ```tsx
 import { CompareSlider } from '@mantine/core';

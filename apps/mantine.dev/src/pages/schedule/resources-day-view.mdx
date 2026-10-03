@@ -23,25 +23,17 @@ tint the whole row.
 
 ## Interactive background events
 
-Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
-background event calls `onEventClick` with the event object, the same as for regular events –
-use `event.display === 'background'` to tell them apart in the handler.
-
-Note that an interactive background event covers the time slots underneath it: clicks and
-drag-to-select in its range go to the event instead of the grid. Interactive background
-events still cannot be dragged.
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. `onEventClick`
+is called the same way as for regular events, use `event.display === 'background'` to tell them apart.
+Interactive background events cover the time slots underneath them and cannot be dragged.
 
 <Demo data={ResourcesDayViewDemos.interactiveBackgroundEvents} />
 
 ## Resizable background events
 
-When `withEventResize` is set together with `withInteractiveBackgroundEvents`, background
-events render resize handles on their start and end edges. Dragging a handle calls
-`onEventResize` with the background event, the same way it does for regular events – use
-`event.display === 'background'` to tell them apart in the handler.
-
-All-day background events are never resizable. To keep background events fixed while
-regular events stay resizable, return `false` from `canResizeEvent`:
+Set both `withEventResize` and `withInteractiveBackgroundEvents` to allow resizing
+background events. All-day background events cannot be resized. To resize only regular
+events, return `false` from `canResizeEvent`:
 
 ```tsx
 <ResourcesDayView
@@ -62,8 +54,7 @@ and slot granularity.
 ## Multi-hour intervals
 
 `intervalMinutes` accepts values that divide evenly into an hour (for example `15` or `30`)
-or whole numbers of hours (for example `120` or `240`). Multi-hour intervals render wider
-columns that each span several hours, which is useful for displaying long time ranges compactly.
+or whole numbers of hours (for example `120` or `240`).
 
 <Demo data={ResourcesDayViewDemos.multiHourIntervals} />
 
@@ -104,21 +95,20 @@ Use `renderEvent` prop to fully customize event rendering.
 
 ## Drag and drop
 
-Enable cross-resource drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback
-receives the target `resourceId` as the fifth argument, allowing you to update the event's resource
-assignment.
+Enable drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback receives
+the `resourceId` of the target resource, use it to update the event's resource.
 
 <Demo data={ResourcesDayViewDemos.dragDrop} />
 
-To reject a drop based on where the event lands – for example to prevent double booking – use
+To reject a drop based on where the event lands, for example to prevent double booking, use
 `preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
-In resource views the conflict set is scoped to the target resource.
+In resource views, the event is checked against the events of the target resource.
 
 ## Drag interval
 
-By default events snap to `intervalMinutes` when moved by drag and drop. Set `eventDragInterval`
-to use a different snap step for dragging – for example, a grid with 30-minute slots whose events
-can be moved in 15-minute increments. A ghost preview shows where the event will land:
+By default, dragged events snap to `intervalMinutes`. Set `eventDragInterval` to use a different
+step, for example to move events in 15-minute increments on a grid with 30-minute slots.
+A ghost preview shows where the event will land:
 
 <Demo data={ResourcesDayViewDemos.eventDragInterval} />
 
@@ -146,9 +136,8 @@ To reject a resize based on the new range, use `preventEventOverlap` and `canRes
 
 ## Resize interval
 
-By default events snap to `intervalMinutes` when resized. Set `eventResizeInterval` to use a
-different snap step for resizing – for example, a grid with 30-minute slots whose events can be
-resized in 15-minute increments:
+By default, resized events snap to `intervalMinutes`. Set `eventResizeInterval` to use a different
+step, for example to resize events in 15-minute increments on a grid with 30-minute slots:
 
 <Demo data={ResourcesDayViewDemos.eventResizeInterval} />
 
@@ -161,8 +150,7 @@ existing event to edit it.
 
 ## Business hours
 
-Use `highlightBusinessHours` prop to visually distinguish business hours from non-business hours
-across all time slot columns.
+Use `highlightBusinessHours` prop to visually distinguish business hours from non-business hours.
 
 <Demo data={ResourcesDayViewDemos.businessHours} />
 
@@ -175,15 +163,10 @@ to hide the time bubble label.
 
 ## Current time indicator in a different timezone
 
-`@mantine/schedule` works with timezone-agnostic `YYYY-MM-DD HH:mm:ss` strings and does not
-perform any timezone conversions on its own. By default, the current time indicator is positioned
-based on the user's local time.
-
-To display the indicator in a different timezone, use the `getCurrentTime` prop. It is a function
-that returns the current time and is called on every tick, so the indicator keeps updating
-automatically. In the example below, the current time is converted to the selected timezone with
-the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone) – switch the timezone to
-see the indicator and the time bubble move accordingly:
+`@mantine/schedule` does not perform timezone conversions, the current time indicator
+is positioned based on the user's local time. To display it in a different timezone, pass
+a function that returns the current time to `getCurrentTime` prop. The example below uses
+the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone):
 
 <Demo data={ResourcesDayViewDemos.timezone} />
 
@@ -204,8 +187,8 @@ See [Recurring events guide](/schedule/recurring-events) for full documentation.
 ## Max events per time slot
 
 Use `maxEventsPerTimeSlot` prop to limit the number of visible overlapping events per time slot.
-When events exceed the limit, a "+N more" indicator is displayed. Clicking the indicator opens
-a popover with all events in the group. Use `moreEventsProps` to customize the popover behavior.
+The "+N more" indicator opens a popover with all events of the group, use `moreEventsProps`
+to customize it.
 
 <Demo data={ResourcesDayViewDemos.maxEventsPerTimeSlot} />
 
@@ -229,7 +212,6 @@ and `labels` to override UI labels.
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions. Events and time slots become non-interactive,
-useful for display-only views.
+Set `mode="static"` to disable all interactions.
 
 <Demo data={ResourcesDayViewDemos.staticMode} />

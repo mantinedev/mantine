@@ -7,34 +7,30 @@ export default Layout(MDX_DATA.QRCode);
 ## Usage
 
 `QRCode` encodes a string into a QR code and renders it as an SVG. The encoder is
-bundled with the component, so no additional dependencies or network requests are
-required – the code is generated on the client and works with server-side rendering:
+bundled with the component: no additional dependencies or network requests are
+required, and the component works with server-side rendering:
 
 <Demo data={QRCodeDemos.usage} />
 
 ## Size
 
-Set the `size` prop to control the width and height of the code. Numbers are
-converted to rem, strings are used as is. The code is always square and scales
-crisply to any size because it is rendered as vector graphics:
+Set `size` prop to control the width and height of the code. Numbers are
+converted to rem, strings are used as is:
 
 <Demo data={QRCodeDemos.sizes} />
 
 ## Colors
 
-Use the `color` prop to change the color of the dark modules and the standard
-[bg style prop](/styles/style-props) to change the background and quiet zone color.
-Both props accept `theme.colors` keys (for example `blue.8`) or any valid CSS color
-value. Keep a high contrast between the modules and the background so that the code
-stays scannable:
+Use `color` prop to change the color of the dark modules and
+[bg style prop](/styles/style-props) to change the background color.
+Keep a high contrast between the two colors so that the code stays scannable:
 
 <Demo data={QRCodeDemos.colors} />
 
 ## Error correction level
 
-The `errorCorrectionLevel` prop controls how much of the code can be damaged or
-covered while remaining readable. Higher levels add redundancy at the cost of a
-denser code:
+`errorCorrectionLevel` prop controls how much of the code can be damaged or
+covered while remaining readable. Higher levels produce a denser code:
 
 - `L` – recovers up to ~7% of data
 - `M` – recovers up to ~15% of data (default)
@@ -45,18 +41,16 @@ denser code:
 
 ## Capacity
 
-The largest QR code (version 40) can hold a limited amount of data. The limits below are
-for arbitrary text encoded as UTF-8 bytes – non-ASCII characters take 2–4 bytes each,
-while values that contain only digits or uppercase letters fit more characters:
+The amount of data a QR code can hold depends on the error correction level.
+The limits below are for text encoded as UTF-8 bytes, non-ASCII characters take 2–4 bytes each:
 
 - `L` – about 2953 bytes
 - `M` – about 2331 bytes
 - `Q` – about 1663 bytes
 - `H` – about 1273 bytes
 
-When the value is longer than the capacity of the selected level, `QRCode` renders an
-empty code instead of throwing an error. `encodeQR` throws a `RangeError` in this case,
-so you can use it to validate user input before rendering:
+When the value is longer than the capacity, `QRCode` renders an empty code.
+`encodeQR` throws a `RangeError` in this case, use it to validate user input:
 
 ```tsx
 import { encodeQR } from '@mantine/core';
@@ -73,17 +67,16 @@ function canEncode(value: string) {
 
 ## Logo
 
-Pass any React node to the `logo` prop to render a centered overlay, usually a brand
-logo. The overlay covers part of the code, so set `errorCorrectionLevel="H"` to make
+Pass any React node to the `logo` prop to display it in the center of the code.
+The logo covers part of the code, set `errorCorrectionLevel="H"` to make
 sure the code can still be scanned:
 
 <Demo data={QRCodeDemos.logo} />
 
 ## Custom rendering with encodeQR
 
-`QRCode` renders the code as a single SVG `path` of square modules. If you need full
-control over the appearance (rounded dots, gradients, canvas export, etc.), use the
-`encodeQR` function to get the raw module matrix and render it yourself:
+To fully control the appearance (rounded dots, gradients, canvas export, etc.), use
+`encodeQR` function to get the module matrix and render it yourself:
 
 ```tsx
 import { encodeQR } from '@mantine/core';
@@ -93,18 +86,15 @@ const { matrix, size } = encodeQR('https://mantine.dev', { errorCorrectionLevel:
 // size – number of modules per side (without the quiet zone)
 ```
 
-The example below renders modules as circles instead of squares. Finder patterns
-(the three large squares in the corners) and alignment patterns must stay solid squares
-so scanners can locate the code – every other module can change shape:
+Finder patterns (the three large squares in the corners) and alignment patterns must
+stay solid squares so that scanners can locate the code. Other modules can have any shape:
 
 <Demo data={QRCodeDemos.customRender} />
 
 ## Accessibility
 
-The inner `svg` element has `role="img"` and an `aria-label` set to the encoded
-`value`, so screen readers announce the content of the code. Set the `aria-label`
-(or `aria-labelledby`) prop to provide a more descriptive name – it is applied to
-the `svg` element:
+By default, `aria-label` of the code is the encoded `value`. Set `aria-label`
+or `aria-labelledby` prop to provide a more descriptive name:
 
 ```tsx
 import { QRCode } from '@mantine/core';
@@ -114,9 +104,8 @@ function Demo() {
 }
 ```
 
-Alternatively, override any attribute of the `svg` element with the `attributes` prop
-of the [Styles API](/styles/styles-api), for example to hide a decorative code that is
-duplicated by nearby text:
+To hide a decorative code that is duplicated by nearby text, use `attributes` prop
+of the [Styles API](/styles/styles-api):
 
 ```tsx
 import { QRCode } from '@mantine/core';

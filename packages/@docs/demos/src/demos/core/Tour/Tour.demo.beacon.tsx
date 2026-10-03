@@ -23,7 +23,7 @@ function Demo() {
         {active ? 'End beacon tour' : 'Start beacon tour'}
       </Button>
 
-      <Tour active={active} mode="beacon" defaultStep={-1}>
+      <Tour active={active} mode="beacon" defaultStep={-1} color="teal">
         <Tour.Step target="#beacon-target-1" title="Beacon 1">
           Click the beacon to see this tooltip.
         </Tour.Step>
@@ -56,7 +56,7 @@ function Demo() {
         {active ? 'End beacon tour' : 'Start beacon tour'}
       </Button>
 
-      <Tour active={active} mode="beacon" defaultStep={-1}>
+      <Tour active={active} mode="beacon" defaultStep={-1} color="teal">
         <Tour.Step target="#beacon-target-1" title="Beacon 1">
           Click the beacon to see this tooltip.
         </Tour.Step>

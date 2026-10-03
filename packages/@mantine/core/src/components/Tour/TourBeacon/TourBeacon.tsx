@@ -1,4 +1,4 @@
-import { autoUpdate, offset, useFloating } from '@floating-ui/react';
+import { offset, useFloating } from '@floating-ui/react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
@@ -11,6 +11,7 @@ import {
 } from '../../../core';
 import { getFloatingPosition } from '../../../utils/Floating';
 import { UnstyledButton } from '../../UnstyledButton';
+import { pressAwareAutoUpdate } from '../press-aware-auto-update';
 import { useTourContext } from '../Tour.context';
 import { useTargetElement } from '../use-target-rect';
 import classes from '../Tour.module.css';
@@ -58,7 +59,7 @@ export const TourBeacon = factory<TourBeaconFactory>((_props) => {
   const { refs, floatingStyles } = useFloating({
     elements: { reference: element },
     placement: getFloatingPosition(dir, 'right-start'),
-    whileElementsMounted: autoUpdate,
+    whileElementsMounted: pressAwareAutoUpdate,
     middleware: [offset(8)],
   });
 

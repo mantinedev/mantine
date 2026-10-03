@@ -53,22 +53,18 @@ receives the `resourceId` of the target resource.
 ## Event resize
 
 Enable event resizing with `withEventResize` prop. Events can be resized by dragging their left or
-right edges in all three views. In week view, resizing is constrained to the event's own day. In
-month view, resizing snaps to whole days and preserves the event's original time of day.
+right edges in all three views. In week view, an event cannot be resized to span multiple days. In
+month view, resizing snaps to whole days and keeps the time of day.
 
 <Demo data={ResourcesScheduleDemos.eventResize} />
 
 ## Drop validation
 
-`preventEventOverlap`, `canDropEvent`, `canResizeEventTo`, `canDropExternalEvent` and
-`onEventPlacementRejected` reject a drop or resize before it is committed. See
-[drop validation](/schedule/schedule/#drop-validation) for the full description of how the checks
-compose and what counts as a conflict.
+Use `preventEventOverlap`, `canDropEvent` and other validation props to reject a drop or resize
+before it is committed, see [drop validation](/schedule/schedule/#drop-validation).
 
-In resource views the conflict set is scoped to the **target** resource: moving an event onto another
-resource row is checked against the events already in that row, not the row it came from. The target
-resource is passed to `canDropEvent` and `canDropExternalEvent` as `resourceId`, and is reported on
-`onEventPlacementRejected`.
+In resource views, the event is checked against the events of the target resource.
+The target resource is passed to `canDropEvent` and `canDropExternalEvent` as `resourceId`.
 
 <Demo data={ResourcesDayViewDemos.canDropEvent} />
 

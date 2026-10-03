@@ -16,7 +16,7 @@ It supports three selection modes: single, multiple, and checkbox (with parent-c
 Data passed to the `data` prop must follow the same rules as the [Tree](/core/tree) component:
 
 - Data must be an array of `TreeNodeData` objects
-- Each node must have unique `value` and `label` keys
+- Each node must have `value` and `label` keys, `value` must be unique
 - Each node can have a `children` key with an array of child nodes
 
 ```tsx
@@ -37,7 +37,7 @@ const data: TreeNodeData[] = [
 
 ## Selection modes
 
-`TreeSelect` supports three selection modes controlled by the `mode` prop:
+Use the `mode` prop to change the selection mode:
 
 - `single` (default) – single value selection, renders as an input
 - `multiple` – multiple value selection, renders as pills
@@ -49,9 +49,8 @@ const data: TreeNodeData[] = [
 
 ### Checkbox mode
 
-In checkbox mode, checking a parent node automatically checks all its children.
-Unchecking a parent unchecks all children. If only some children are checked,
-the parent shows an indeterminate state.
+In checkbox mode, checking or unchecking a parent node does the same for all its children.
+If only some children are checked, the parent is displayed in indeterminate state.
 
 <Demo data={TreeSelectDemos.checkbox} />
 
@@ -137,34 +136,26 @@ Set the `maxValues` prop to limit the number of selected values in multiple and 
 
 ## renderNode
 
-The `renderNode` callback allows you to customize node rendering in the dropdown.
-It is called with an object containing `node`, `level`, `expanded`, `hasChildren`,
-`selected`, `checked`, `indeterminate` and `expand` properties:
+Use the `renderNode` callback to customize node rendering in the dropdown. It is called
+with the node and its state:
 
 <Demo data={TreeSelectDemos.renderNode} />
 
-The payload also includes an `expand` function that toggles the expanded state of the node.
-Use it to build a custom expand control inside `renderNode` without controlling the expanded
-state externally. Set `expandOnClick={false}` if you want expanding to happen only through your
-custom control:
+The payload includes an `expand` function that toggles the expanded state of the node.
+Use it to build a custom expand control. Set `expandOnClick={false}` to expand nodes
+only with your control:
 
 <Demo data={TreeSelectDemos.renderNodeExpand} />
 
 ## renderPill
 
-The `renderPill` callback allows you to customize how pills are rendered for selected values
-in `multiple` and `checkbox` modes. It is called with an object containing `node`, `value`,
-`onRemove`, `disabled` and `readOnly` properties and must return a React node. Call `onRemove`
-from your custom pill to remove the value: in `checkbox` mode it unchecks the node and, unless
-`checkStrictly` is set, all its children, the same way the default remove button does.
+Use the `renderPill` callback to customize pills of selected values in `multiple` and
+`checkbox` modes. Call `onRemove` from your pill to remove the value.
 
 <Demo data={TreeSelectDemos.renderPill} />
 
 `renderPill` is not called for the overflow pill displayed when the number of selected values
 exceeds `maxDisplayedValues`, use `maxDisplayedValuesContent` to customize it instead.
-
-If a selected value is not present in `data` (for example, when children are loaded asynchronously),
-`node` is a placeholder object with `value` and `label` both set to the value.
 
 ## Scrollable dropdown
 

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { autoUpdate, flip, offset, shift, useFloating } from '@floating-ui/react';
+import { flip, offset, shift, useFloating } from '@floating-ui/react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -13,7 +13,8 @@ import {
 } from '../../../core';
 import { getFloatingPosition, FloatingPosition } from '../../../utils/Floating';
 import { FocusTrap } from '../../FocusTrap';
-import { Transition, TransitionOverride } from '../../Transition';
+import { Transition, type TransitionOverride } from '../../Transition';
+import { pressAwareAutoUpdate } from '../press-aware-auto-update';
 import { useTourContext } from '../Tour.context';
 import { useTooltipAutoFocus } from '../use-tooltip-auto-focus';
 import classes from '../Tour.module.css';
@@ -80,7 +81,7 @@ export const TourTooltip = factory<TourTooltipFactory>((_props) => {
   const { refs, floatingStyles } = useFloating({
     elements: { reference: targetElement },
     placement: getFloatingPosition(dir, position!),
-    whileElementsMounted: autoUpdate,
+    whileElementsMounted: pressAwareAutoUpdate,
     middleware: [offset(12), flip(), shift({ padding: 8 })],
   });
 
