@@ -21,6 +21,23 @@ const TEST_ERRORS = {
 };
 
 describe('@mantine/form/clear-list-state', () => {
+  it('does not clear state of unrelated fields with matching path suffixes', () => {
+    const state = {
+      items: true,
+      'items.0.name': true,
+      'lineitems.0.name': true,
+      'billing.items.0.name': true,
+      'itemsExtra.0.name': true,
+    };
+
+    expect(clearListState('items', state)).toStrictEqual({
+      items: true,
+      'lineitems.0.name': true,
+      'billing.items.0.name': true,
+      'itemsExtra.0.name': true,
+    });
+  });
+
   it('clears list errors of given field', () => {
     expect(clearListState('fruits', TEST_ERRORS)).toStrictEqual({
       name: 'name-error',
