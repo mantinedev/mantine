@@ -19,15 +19,15 @@ Set `mode="split"` to display the diff in a side-by-side layout:
 
 ## Diff method
 
-The `diffMethod` prop controls the granularity of inline highlighting within changed lines.
-Supported values are `"chars"`, `"words"` (default), and `"lines"`:
+Use the `diffMethod` prop to change how changed lines are highlighted: by characters,
+by words (default) or by whole lines:
 
 <Demo data={DiffDemos.diffMethod} />
 
 ## Context lines
 
-Set `contextLines` prop to control how many unchanged lines are shown around changes.
-Lines beyond this range are collapsed and can be expanded by clicking the expand button:
+Set `contextLines` prop to control how many unchanged lines are displayed around changes.
+Other unchanged lines are collapsed and can be expanded with the expand button:
 
 <Demo data={DiffDemos.contextLines} />
 
@@ -44,8 +44,7 @@ Use `expandLabel` prop to change the expand button label:
 
 ## Custom colors
 
-Use `addColor` and `removeColor` props to customize the highlight colors.
-By default, `addColor` is `teal` and `removeColor` is `red`:
+Use `addColor` and `removeColor` props to change the highlight colors:
 
 <Demo data={DiffDemos.colors} />
 

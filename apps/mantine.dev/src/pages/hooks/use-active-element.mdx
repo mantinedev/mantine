@@ -8,9 +8,8 @@ export default Layout(MDX_DATA.useActiveElement);
 
 `use-active-element` reactively tracks
 [document.activeElement](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement)
-– the element that currently has focus. The returned value updates every time focus moves
-between elements, which is useful to build focus-aware UI, analytics, or to decide whether a
-global keyboard shortcut should fire. Focus the inputs below to see the value change:
+– the element that currently has focus. The returned value is updated every time focus moves
+to another element:
 
 <Demo data={UseActiveElementDemos.usage} />
 
@@ -34,20 +33,16 @@ function useActiveElement<T extends Element = Element>(
 
 ## Example: ignore shortcuts while typing
 
-A common use case is to disable global keyboard shortcuts while the user is typing in an input.
-Read the active element, check whether it is an editable field, and skip the shortcut if it is.
-In the example below, pressing <kbd>/</kbd> focuses the search field, but only when no input is
-already focused:
+Use the hook to disable global keyboard shortcuts while the user is typing.
+In the example below, <kbd>/</kbd> focuses the search field only when no input is focused:
 
 <Demo data={UseActiveElementDemos.hotkey} />
 
 ## Shadow DOM
 
 When focus is inside a [web component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components),
-`document.activeElement` returns the host element rather than the element that is actually
-focused inside its shadow root. With the `deep` option enabled (default), the hook walks
-`shadowRoot.activeElement` recursively and returns the real focused element. Set `deep: false`
-to get the top-level active element instead:
+`document.activeElement` returns the host element. By default, the hook returns the element
+that is focused inside the shadow root. Set `deep: false` to get the host element instead:
 
 ```tsx
 import { useActiveElement } from '@mantine/hooks';
@@ -61,12 +56,9 @@ function Demo() {
 
 ## Trigger on removal
 
-Focusing an element and then removing it from the DOM does not dispatch a focus event, so the
-hook would otherwise keep returning the stale element. When `triggerOnRemoval` is enabled
-(default), the hook observes the DOM and re-reads `document.activeElement` when nodes are
-removed, so the returned value reflects the fallback focus (usually `document.body`). Set
-`triggerOnRemoval: false` to skip the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-if you do not need this behavior:
+Focus events are not dispatched when the focused element is removed from the DOM.
+By default, the hook uses [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+to update the value in this case. Set `triggerOnRemoval: false` to disable it:
 
 ```tsx
 import { useActiveElement } from '@mantine/hooks';
