@@ -6,53 +6,39 @@ export default Layout(MDX_DATA.useCountdown);
 
 ## Usage
 
-`use-countdown` is a headless countdown hook. It supports two modes: counting down from a given
-duration (`countStart`) with `start`/`stop`/`reset` controls, and counting down to a target date
-(`targetDate`). It returns the remaining time in milliseconds, along with the same value split into
-`days`/`hours`/`minutes`/`seconds`/`milliseconds` segments – you decide how to render it.
+`use-countdown` counts down from a given duration (`countStart`) or to a target date
+(`targetDate`). It returns the remaining time in milliseconds and the same value split into
+days, hours, minutes, seconds and milliseconds.
 
-The example below uses `countStart` mode to implement a resend code cooldown. The countdown does not
-start automatically in `countStart` mode – call `start` to begin. Once it reaches `0`, calling
-`start` again restarts it from `countStart`:
+With `countStart`, the countdown does not start automatically – call `start` to begin.
+Once it reaches `0`, calling `start` again restarts it from `countStart`:
 
 <Demo data={UseCountdownDemos.usage} />
 
 ## Count down to a target date
 
-Pass a `targetDate` (`Date`, timestamp or date string) to count down to a specific moment. In this
-mode the countdown starts automatically and the remaining time is recomputed from the target on
-every tick, so it stays accurate even if the tab was in the background. When `targetDate` changes,
-the remaining time is recalculated. An invalid `targetDate` results in `count` of `0`, the countdown
-does not run and `onComplete` is not called:
+Pass `targetDate` (`Date`, timestamp or date string) to count down to a specific moment.
+In this mode, the countdown starts automatically:
 
 <Demo data={UseCountdownDemos.targetDate} />
 
 ## Controls
 
-The hook returns `start`, `stop` and `reset` functions in both modes:
-
-- `start` – begins the countdown. In `countStart` mode resumes from the current `count` if it was
-  stopped, or restarts from `countStart` if it has already reached `0`.
-- `stop` – pauses the countdown and keeps the current `count`.
-- `reset` – stops the countdown and restores `count` to `countStart`, or to the time remaining until
-  `targetDate` in `targetDate` mode.
-
-Changing `countStart` while the countdown is not running resets `count` to the new value:
+Use `start`, `stop` and `reset` functions to control the countdown. `start` resumes
+a stopped countdown from the current `count`. Changing `countStart` while the countdown
+is not running resets `count` to the new value:
 
 <Demo data={UseCountdownDemos.controls} />
 
 ## Interval and sub-second precision
 
-The `interval` option controls how often the countdown updates (`1000`ms by default). Use a smaller
+`interval` option controls how often the countdown updates (`1000`ms by default). Use a smaller
 interval to display milliseconds:
 
 <Demo data={UseCountdownDemos.subSecond} />
 
-The remaining time is always computed from a stored end timestamp rather than by decrementing a
-counter, so the countdown does not drift when ticks are delayed by slow frames or background tabs.
-In `targetDate` mode ticks are aligned to the target: `count` starts rounded up to a whole number of
-intervals before `targetDate` and each tick lands on and reports the next one, so a seconds display
-changes exactly on the second boundary and a slightly late tick does not skip a value.
+The remaining time is computed from the end timestamp, so the countdown does not drift
+when ticks are delayed, for example in background tabs.
 
 ## onComplete and onTick
 
@@ -100,9 +86,9 @@ Return object:
 - `count` – remaining time in milliseconds, never less than `0`
 - `formatted` – `count` split into `days`, `hours`, `minutes`, `seconds` and `milliseconds`
 - `running` – whether the countdown is currently running
-- `start` – start/resume the countdown
-- `stop` – stop the countdown, keep the current `count`
-- `reset` – stop the countdown and reset `count` to `countStart` or to the time remaining until `targetDate`
+- `start` – starts or resumes the countdown
+- `stop` – stops the countdown and keeps the current `count`
+- `reset` – stops the countdown and resets `count` to `countStart` or to the time remaining until `targetDate`
 
 ## Definition
 

@@ -8,7 +8,6 @@ export default Layout(MDX_DATA.useDrag);
 
 `use-drag` hook handles pointer drag gestures over an element. It tracks movement,
 velocity, direction and supports axis constraints, threshold activation and tap detection.
-The hook uses the Pointer Events API and works with both mouse and touch input.
 
 <Demo data={UseDragDemos.usage} />
 
@@ -30,8 +29,7 @@ this lets you distinguish clicks from drags on the same element:
 
 ## Swipe to dismiss
 
-Use `movement` and `velocity` on the last event to decide whether to dismiss an item.
-This pattern works well for notifications:
+Use `movement` and `velocity` on the last event to decide whether to dismiss an item:
 
 <Demo data={UseDragDemos.swipe} />
 

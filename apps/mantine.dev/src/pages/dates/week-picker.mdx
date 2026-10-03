@@ -7,7 +7,7 @@ export default Layout(MDX_DATA.WeekPicker);
 ## Usage
 
 `WeekPicker` renders the same calendar as [DatePicker](/dates/date-picker/), but selects whole weeks:
-hovering any day highlights its week and clicking selects it. Week numbers are displayed by default.
+hovering any day highlights its week and clicking selects it. Week numbers are always displayed.
 
 <Demo data={WeekPickerDemos.usage} />
 
@@ -16,8 +16,7 @@ hovering any day highlights its week and clicking selects it. Week numbers are d
 The value is a date string in `YYYY-MM-DD` format that points to the first day of the selected week.
 The first day of the week is determined by the `firstDayOfWeek` prop or by the
 [DatesProvider](/dates/getting-started/) settings (Monday by default). Use `getStartOfWeek` and `getEndOfWeek`
-exported from `@mantine/dates` to get the week boundaries from the value. If you pass a controlled value that
-falls in the middle of a week, the whole week that contains it is highlighted.
+exported from `@mantine/dates` to get the week boundaries from the value.
 
 <Demo data={WeekPickerDemos.weekValue} />
 
@@ -59,18 +58,16 @@ calendar layout and the value that is emitted:
 
 ## Week controls
 
-Week numbers are always displayed and act as controls: every week number is a button that
-selects its week. Days are not focusable, they can only be clicked with the mouse and serve as
-a visual representation of the value. Use `getWeekControlProps` to pass props to week controls
-based on the first date of the week, for example to change the `aria-label` or disable specific weeks:
+Every week number is a button that selects its week. Days are not focusable, they can only be
+clicked with the mouse. Use `getWeekControlProps` to pass props to week controls based on the first
+date of the week, for example to disable specific weeks:
 
 <Demo data={WeekPickerDemos.weekControlProps} />
 
 ## Presets
 
 Use the `presets` prop to add custom week presets. Presets are displayed next to the calendar.
-Preset values are normalized to the first day of their week before `onChange` is called, so any date
-inside the week can be used as a preset value:
+Any date inside the week can be used as a preset value:
 
 <Demo data={WeekPickerDemos.presets} />
 
@@ -87,18 +84,17 @@ Note that if you set the `date` prop, then the `defaultDate` value will be ignor
 
 ## Hide outside dates
 
-Days that belong to the selected week but are outside of the displayed month are highlighted too. Set `hideOutsideDates`
-to hide them. When `numberOfColumns` is larger than 1, outside dates are hidden by default and a week that spans two
-months is displayed partially; set `hideOutsideDates={false}` to always display whole weeks:
+Set `hideOutsideDates` to hide days of the selected week that are outside of the displayed month.
+When `numberOfColumns` is larger than 1, outside dates are hidden by default,
+set `hideOutsideDates={false}` to display whole weeks:
 
 <Demo data={WeekPickerDemos.hideOutsideDates} />
 
 ## Min and max date
 
-Set the `minDate` and `maxDate` props to define minimum and maximum dates. Days outside of the range are disabled,
-but a week is still selectable as long as it contains at least one enabled day. Note that the emitted value is
-the first day of the week, which can be before `minDate` when a week starts outside the allowed range but contains
-enabled days.
+Set the `minDate` and `maxDate` props to define minimum and maximum dates. A week can be selected
+if it contains at least one enabled day. Note that the value is the first day of the week,
+it can be before `minDate`.
 
 <Demo data={WeekPickerDemos.minMax} />
 
@@ -110,8 +106,7 @@ enabled days.
 
 ## Add props to day, year and month control
 
-Use `getDayProps`, `getMonthControlProps` and `getYearControlProps` to add props to the corresponding controls.
-Props returned from `getDayProps` are merged after the week selection props, so you can override any of them:
+Use `getDayProps`, `getMonthControlProps` and `getYearControlProps` to add props to the corresponding controls:
 
 <Demo data={WeekPickerDemos.controlProps} />
 
@@ -197,10 +192,7 @@ function Demo() {
 
 ### Keyboard interactions
 
-Only week controls (week numbers) can be focused with the keyboard. The control of the selected week
-is in the tab order; if no week is selected, the control of the current week or the first enabled week is used.
-When arrow navigation reaches the first/last week of the grid, the calendar switches to the
-previous/next month and focuses the target week.
+Only week controls (week numbers) can be focused with the keyboard.
 
 <KeyboardEventsTable
   data={[

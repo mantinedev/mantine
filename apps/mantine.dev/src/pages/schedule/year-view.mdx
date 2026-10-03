@@ -24,14 +24,10 @@ Set `withWeekDays={false}` to hide the weekday names row in each month.
 
 ## Render day
 
-Use `renderDay` to replace the entire content of a day cell. The function is called
-with the day date in `YYYY-MM-DD` format and the events grouped on that day – the same
-list that is used to render the default indicators, but without the three items limit.
-This makes it possible to display counts, badges or icons instead of the default dots.
-
-Note that when `renderDay` is set, the default event indicators are not rendered –
-the cell displays exactly what the function returns. The day cell has
-`position: relative`, so absolutely positioned content is placed relative to it.
+Use `renderDay` to replace the content of a day cell, for example to display counts, badges
+or icons instead of the default dots. The function is called with the day date in `YYYY-MM-DD`
+format and all events of that day. When `renderDay` is set, the default event indicators
+are not rendered.
 
 <Demo data={YearViewDemos.renderDay} />
 
@@ -111,14 +107,9 @@ and reducing padding on smaller screens. Container queries are supported in all 
 
 ### Focus management
 
-In the YearView component, focus is managed to provide an efficient keyboard navigation experience:
-
-- Only the first day of each month is included in the tab order (has `tabIndex={0}`)
-- All other days within a month have `tabIndex={-1}` and can only be reached via arrow key navigation
-- Outside days (days from adjacent months displayed in the current month view) are not focusable
+- Only the first day of each month is included in the tab order, all other days can be reached with arrow keys
+- Outside days are not focusable
 - Disabled days are skipped during keyboard navigation
-
-This approach reduces the number of tab stops when navigating through the calendar, making it faster for keyboard users to move between months while still allowing full access to all days via arrow keys.
 
 ### Keyboard interactions
 
@@ -147,4 +138,4 @@ Note that the following events will only trigger if focus is on a day control.
 
 ### Day labels
 
-Each day button has an `aria-label` attribute with the full date in the format "Month Day, Year" (e.g., "November 15, 2025"). This provides screen reader users with complete date information.
+Each day button has an `aria-label` attribute with the full date in the format "Month Day, Year" (e.g., "November 15, 2025").

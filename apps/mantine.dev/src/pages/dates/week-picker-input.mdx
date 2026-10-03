@@ -38,8 +38,7 @@ first week to the last day of the last week:
 ## Presets
 
 Use the `presets` prop to add custom week presets. Presets are displayed next to the calendar.
-Preset values are normalized to the first day of their week before `onChange` is called, so any date
-inside the week can be used as a preset value:
+Any date inside the week can be used as a preset value:
 
 <Demo data={WeekPickerInputDemos.presets} />
 
@@ -64,7 +63,7 @@ of the week. The default value is `MMM D, YYYY`:
 ## Value formatter
 
 `valueFormatter` is a more powerful alternative to the `valueFormat` prop.
-It allows formatting the value label with a custom function. The function receives the raw week start values.
+It allows formatting the value label with a custom function.
 The function is the same for all component types (`default`, `multiple` and `range`)
 – you need to perform additional checks inside the function to handle different types.
 
@@ -72,9 +71,8 @@ Example of using a custom formatter function with `type="multiple"`:
 
 <Demo data={WeekPickerInputDemos.valueFormatter} />
 
-`getWeekFormatter(firstDayOfWeek)` exported from `@mantine/dates` returns the default formatter,
-you can compose it with your own logic, for example, to add the ISO week number.
-The demo extends dayjs with the `isoWeek` plugin to get typed access to `isoWeek()`.
+`getWeekFormatter(firstDayOfWeek)` exported from `@mantine/dates` returns the default formatter.
+Use it in your own formatter, for example to add the ISO week number:
 
 <Demo data={WeekPickerInputDemos.weekNumberFormatter} />
 
@@ -101,9 +99,9 @@ prop, the clear button will not be displayed.
 
 ## Week controls
 
-Week numbers are always displayed and act as controls: they are the only focusable elements of the
-calendar, days can be clicked with the mouse only. Use `getWeekControlProps` to change `aria-label`
-or disable specific weeks, see [WeekPicker](/dates/week-picker/) documentation for details.
+Week numbers are the only focusable elements of the calendar, days can be clicked with the mouse only.
+Use `getWeekControlProps` to change `aria-label` or disable specific weeks,
+see [WeekPicker](/dates/week-picker/) documentation for details.
 
 ## Max level
 

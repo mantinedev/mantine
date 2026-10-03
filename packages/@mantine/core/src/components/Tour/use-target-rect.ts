@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useIsomorphicEffect } from '@mantine/hooks';
 
 export type TourTarget = string | React.RefObject<HTMLElement | null> | undefined;
@@ -10,7 +10,7 @@ export interface TargetRect {
   height: number;
 }
 
-function resolveTarget(target: TourTarget): HTMLElement | null {
+export function resolveTarget(target: TourTarget): HTMLElement | null {
   if (!target) {
     return null;
   }
@@ -49,34 +49,34 @@ export function useTargetElement(target: TourTarget) {
   return element;
 }
 
-export function useTargetRect(target: TourTarget) {
-  const element = useTargetElement(target);
+export function useTargetRect(element: HTMLElement | null) {
   const [rect, setRect] = useState<TargetRect | null>(null);
+
+  const updateRect = useCallback(() => {
+    if (!element) {
+      return;
+    }
+
+    const r = element.getBoundingClientRect();
+    setRect((previous) =>
+      previous &&
+      previous.top === r.top &&
+      previous.left === r.left &&
+      previous.width === r.width &&
+      previous.height === r.height
+        ? previous
+        : { top: r.top, left: r.left, width: r.width, height: r.height }
+    );
+  }, [element]);
 
   useEffect(() => {
     if (!element) {
       setRect(null);
-      return undefined;
+      return;
     }
 
-    const updateRect = () => {
-      const r = element.getBoundingClientRect();
-      setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
-    };
-
     updateRect();
+  }, [element, updateRect]);
 
-    const observer = new ResizeObserver(updateRect);
-    observer.observe(element);
-    window.addEventListener('scroll', updateRect, true);
-    window.addEventListener('resize', updateRect);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', updateRect, true);
-      window.removeEventListener('resize', updateRect);
-    };
-  }, [element]);
-
-  return { rect, element };
+  return { rect, updateRect };
 }

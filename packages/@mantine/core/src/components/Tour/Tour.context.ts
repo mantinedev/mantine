@@ -1,5 +1,5 @@
 import { createContext, use } from 'react';
-import type { GetStylesApi } from '../../core';
+import type { GetStylesApi, MantineColor } from '../../core';
 import type { TransitionOverride } from '../Transition';
 import type { TourFactory } from './Tour';
 import type { TourRootFactory } from './TourRoot/TourRoot';
@@ -57,6 +57,9 @@ export interface TourContextValue {
 
   /** Whether `Tour.CloseButton` is rendered */
   withCloseButton: boolean;
+
+  /** Key of `theme.colors` or any valid CSS color passed to `Tour.Navigation` next button */
+  color?: MantineColor;
 
   /** Padding around the spotlight cutout in px */
   spotlightPadding: number;

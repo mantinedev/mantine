@@ -22,12 +22,11 @@ Differences between [StyleX](https://stylexjs.com/) and [CSS Modules](/styles/cs
 - StyleX generates atomic class names with increased specificity – StyleX styles always
   override Mantine styles, regardless of the order in which styles are loaded
 - With StyleX you do not have access to [postcss-preset-mantine](/styles/postcss-preset) features like the `hover` and
-  `smaller-than` mixins. Because of this, you will not be able to copy-paste all demos from the Mantine documentation
-  and use them with StyleX.
+  `smaller-than` mixins, so not all demos from the Mantine documentation can be copied as is
 - StyleX requires a compiler plugin for your bundler. This page covers [Vite](https://vitejs.dev/) setup,
-  see [StyleX documentation](https://stylexjs.com/docs/learn/installation/) for other bundlers and frameworks.
+  see [StyleX documentation](https://stylexjs.com/docs/learn/installation/) for other bundlers and frameworks
 
-Note that you can use both [StyleX](https://stylexjs.com/) and [CSS Modules](/styles/css-modules) in the same project.
+You can use both [StyleX](https://stylexjs.com/) and [CSS Modules](/styles/css-modules) in the same project.
 
 ## Installation
 
@@ -58,9 +57,7 @@ export default defineConfig({
 ```
 
 `lightningcssOptions: { exclude: Features.LightDark }` is required to use `light-dark()` function in StyleX styles.
-Without it, StyleX replaces `light-dark()` with a fallback that depends on `color-scheme` declarations
-compiled by StyleX. Mantine sets `color-scheme` in its own styles, so the fallback does not work and
-colors defined with `light-dark()` are not applied.
+Without it, colors defined with `light-dark()` are not applied.
 
 In development, StyleX plugin injects generated styles into `index.html` automatically.
 If your framework renders the HTML document itself (for example, [TanStack Start](/guides/tanstack-start)),
@@ -240,9 +237,8 @@ Variables defined with `stylex.defineVars` must be exported from files with `.st
 
 ## Light and dark color schemes
 
-Mantine sets `color-scheme` CSS property based on the current [color scheme](/theming/color-schemes),
-so you can use `light-dark()` CSS function to define different values for light and dark color schemes.
-Note that `light-dark()` requires `lightningcssOptions` configuration described in the [installation](#installation) section:
+Use `light-dark()` CSS function to define different values for light and dark [color schemes](/theming/color-schemes).
+It requires `lightningcssOptions` configuration described in the [installation](#installation) section:
 
 ```tsx
 import * as stylex from '@stylexjs/stylex';
@@ -277,8 +273,8 @@ const styles = stylex.create({
 ## Dynamic styles
 
 StyleX dynamic styles are applied with `style` property returned by `stylex.props`.
-If you also pass `style` prop to the component, it overrides the one from spread `stylex.props`.
-To use both, pass an array to [style](/styles/style) prop – Mantine merges all styles from the array:
+If you also pass `style` prop to the component, it overrides the one from `stylex.props`.
+To use both, pass an array to [style](/styles/style) prop:
 
 ```tsx
 import * as stylex from '@stylexjs/stylex';
@@ -303,6 +299,5 @@ function Demo() {
 
 By default, StyleX does not use CSS layers and can be used with `@mantine/core/styles.css`.
 If you enable `useCSSLayers` option in StyleX plugin, import `@mantine/core/styles.layer.css`
-instead of `@mantine/core/styles.css`. Otherwise, Mantine styles, which are not wrapped in a layer,
-override all StyleX styles. See [Mantine styles](/styles/mantine-styles#css-layers) guide to learn more about
+instead. Otherwise, Mantine styles override all StyleX styles. See [Mantine styles](/styles/mantine-styles#css-layers) guide to learn more about
 CSS layers support.

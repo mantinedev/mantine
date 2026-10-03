@@ -22,8 +22,8 @@ function DefaultTour(props: Partial<Tour.Props>) {
   );
 }
 
-function stubRect(element: HTMLElement, rect: Partial<DOMRect>) {
-  return jest.spyOn(element, 'getBoundingClientRect').mockReturnValue({
+function createRect(rect: Partial<DOMRect>) {
+  return {
     top: 0,
     left: 0,
     width: 0,
@@ -34,8 +34,14 @@ function stubRect(element: HTMLElement, rect: Partial<DOMRect>) {
     y: 0,
     toJSON: () => {},
     ...rect,
-  } as DOMRect);
+  } as DOMRect;
 }
+
+function stubRect(element: HTMLElement, rect: Partial<DOMRect>) {
+  return jest.spyOn(element, 'getBoundingClientRect').mockReturnValue(createRect(rect));
+}
+
+const visibleRect = { top: 100, left: 100, width: 50, height: 20 };
 
 describe('@mantine/core/Tour', () => {
   let container: HTMLDivElement;
@@ -216,6 +222,28 @@ describe('@mantine/core/Tour', () => {
     expect(Tour.displayName).toBe('@mantine/core/Tour');
   });
 
+  it('sets --tour-color from color prop and passes color to the next button', async () => {
+    const { container: renderContainer } = await renderWithAct(<DefaultTour color="teal" />);
+    const root = renderContainer.querySelector<HTMLElement>('.mantine-Tour-root')!;
+    expect(root.style.getPropertyValue('--tour-color')).toBe('var(--mantine-color-teal-filled)');
+    expect(screen.getByRole('button', { name: 'Next' }).style.getPropertyValue('--button-bg')).toBe(
+      'var(--mantine-color-teal-filled)'
+    );
+  });
+
+  it('passes color from Tour.Root to the next button', async () => {
+    await renderWithAct(
+      <Tour.Root active stepsCount={2} color="teal" withOverlay={false}>
+        <Tour.Tooltip mounted>
+          <Tour.Navigation />
+        </Tour.Tooltip>
+      </Tour.Root>
+    );
+    expect(screen.getByRole('button', { name: 'Next' }).style.getPropertyValue('--button-bg')).toBe(
+      'var(--mantine-color-teal-filled)'
+    );
+  });
+
   it('resolves tooltipShadow and does not map spotlightRadius to the tooltip radius', async () => {
     const { container: renderContainer } = await renderWithAct(
       <DefaultTour tooltipShadow="lg" spotlightRadius={20} withOverlay />
@@ -230,6 +258,8 @@ describe('@mantine/core/Tour', () => {
   });
 
   it('animates the tooltip position only while moving to another step target', async () => {
+    stubRect(document.getElementById('target-1')!, visibleRect);
+    stubRect(document.getElementById('target-2')!, { ...visibleRect, top: 200 });
     const { rerender } = await renderWithAct(
       <DefaultTour step={0} stepTransitionDuration={50} withOverlay />
     );
@@ -250,6 +280,30 @@ describe('@mantine/core/Tour', () => {
     await act(async () => {
       await wait(80);
     });
+    expect(screen.getByRole('dialog').style.transition).not.toContain('top');
+  });
+
+  it('does not animate the tooltip position when the next step target has to be scrolled into view', async () => {
+    const nextTarget = document.getElementById('target-2')!;
+    stubRect(document.getElementById('target-1')!, visibleRect);
+    stubRect(nextTarget, { ...visibleRect, top: window.innerHeight + 100 });
+    nextTarget.scrollIntoView = jest.fn();
+
+    const { rerender } = await renderWithAct(
+      <DefaultTour step={0} stepTransitionDuration={50} withOverlay />
+    );
+    await act(async () => {
+      await wait(20);
+    });
+
+    await act(async () => {
+      rerender(
+        <>
+          <DefaultTour step={1} stepTransitionDuration={50} withOverlay />
+        </>
+      );
+    });
+    expect(nextTarget.scrollIntoView).toHaveBeenCalledTimes(1);
     expect(screen.getByRole('dialog').style.transition).not.toContain('top');
   });
 
@@ -753,6 +807,57 @@ describe('@mantine/core/Tour', () => {
       expect(spotlight).toHaveAttribute('rx', '6');
     });
 
+    it('updates the spotlight synchronously when the page scrolls', async () => {
+      const rect = stubRect(document.getElementById('target-1')!, {
+        top: 100,
+        left: 200,
+        width: 50,
+        height: 30,
+      });
+
+      const { container: renderContainer } = await renderWithAct(
+        <DefaultTour withOverlay spotlightPadding={10} />
+      );
+
+      const spotlight = renderContainer.querySelector('mask rect:nth-child(2)')!;
+      expect(spotlight).toHaveAttribute('y', '90');
+
+      rect.mockReturnValue(createRect({ top: 40, left: 200, width: 50, height: 30 }));
+      act(() => {
+        window.dispatchEvent(new Event('scroll'));
+        expect(spotlight).toHaveAttribute('y', '30');
+      });
+    });
+
+    it('freezes the spotlight and the tooltip while the target is pressed and syncs them after release', async () => {
+      const target = document.getElementById('target-1')!;
+      const rect = stubRect(target, { top: 100, left: 200, width: 50, height: 30 });
+
+      const { container: renderContainer } = await renderWithAct(
+        <DefaultTour withOverlay withOverlayInteraction spotlightPadding={10} />
+      );
+
+      const spotlight = renderContainer.querySelector('mask rect:nth-child(2)')!;
+      const tooltipTop = screen.getByRole('dialog').style.top;
+      expect(spotlight).toHaveAttribute('y', '90');
+
+      fireEvent.pointerDown(target);
+      rect.mockReturnValue(createRect({ top: 101, left: 200, width: 50, height: 30 }));
+      await act(async () => {
+        window.dispatchEvent(new Event('scroll'));
+        await wait(20);
+      });
+      expect(spotlight).toHaveAttribute('y', '90');
+      expect(screen.getByRole('dialog').style.top).toBe(tooltipTop);
+
+      fireEvent.pointerUp(target);
+      await act(async () => {
+        await wait(50);
+      });
+      expect(spotlight).toHaveAttribute('y', '91');
+      expect(screen.getByRole('dialog').style.top).not.toBe(tooltipTop);
+    });
+
     it('removes the spotlight when switching to a step whose target is not mounted', async () => {
       stubRect(document.getElementById('target-1')!, { top: 10, left: 20, width: 30, height: 40 });
       const ui = (step: number) => (
@@ -900,6 +1005,47 @@ describe('@mantine/core/Tour', () => {
       await renderWithAct(<DefaultTour withScrollIntoView={false} />);
       expect(scrollIntoView).not.toHaveBeenCalled();
     });
+
+    it('does not scroll when the target is fully visible in the viewport', async () => {
+      const targetEl = document.getElementById('target-1')!;
+      stubRect(targetEl, visibleRect);
+      targetEl.scrollIntoView = jest.fn();
+
+      await renderWithAct(<DefaultTour />);
+      expect(targetEl.scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    it('scrolls when the target is partially outside the viewport', async () => {
+      const targetEl = document.getElementById('target-1')!;
+      stubRect(targetEl, { ...visibleRect, top: window.innerHeight - 10 });
+      targetEl.scrollIntoView = jest.fn();
+
+      await renderWithAct(<DefaultTour />);
+      expect(targetEl.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' });
+    });
+
+    it('scrolls when the target is clipped by a scrollable ancestor', async () => {
+      const targetEl = document.getElementById('target-1')!;
+      const scrollContainer = document.createElement('div');
+      scrollContainer.style.overflow = 'auto';
+      container.appendChild(scrollContainer);
+      scrollContainer.appendChild(targetEl);
+      stubRect(scrollContainer, { top: 300, left: 0, width: 500, height: 100 });
+      stubRect(targetEl, visibleRect);
+      targetEl.scrollIntoView = jest.fn();
+
+      await renderWithAct(<DefaultTour />);
+      expect(targetEl.scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'center' });
+    });
+
+    it('calls scrollToHandler even when the target is fully visible', async () => {
+      const scrollToHandler = jest.fn();
+      const targetEl = document.getElementById('target-1')!;
+      stubRect(targetEl, visibleRect);
+
+      await renderWithAct(<DefaultTour scrollToHandler={scrollToHandler} />);
+      expect(scrollToHandler).toHaveBeenCalledWith(targetEl);
+    });
   });
 
   describe('per-step overrides', () => {
@@ -926,6 +1072,46 @@ describe('@mantine/core/Tour', () => {
       await renderWithAct(<BeaconTour />);
       expect(getBeacons()).toHaveLength(3);
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
+    it('resumes updates after release even when the target stops pointerup propagation', async () => {
+      const target = document.getElementById('target-1')!;
+      target.addEventListener('pointerup', (event) => event.stopPropagation());
+      const rect = stubRect(target, { top: 100, left: 200, width: 50, height: 30 });
+      await renderWithAct(<BeaconTour />);
+      const beacon = getBeacons()[0];
+      const beaconTransform = beacon.style.transform;
+
+      fireEvent.pointerDown(target);
+      fireEvent.pointerUp(target);
+      rect.mockReturnValue(createRect({ top: 101, left: 200, width: 50, height: 30 }));
+      await act(async () => {
+        window.dispatchEvent(new Event('scroll'));
+        await wait(50);
+      });
+      expect(beacon.style.transform).not.toBe(beaconTransform);
+    });
+
+    it('freezes the beacon while its target is pressed and syncs it after release', async () => {
+      const target = document.getElementById('target-1')!;
+      const rect = stubRect(target, { top: 100, left: 200, width: 50, height: 30 });
+      await renderWithAct(<BeaconTour />);
+      const beacon = getBeacons()[0];
+      const beaconTop = beacon.style.transform;
+
+      fireEvent.pointerDown(target);
+      rect.mockReturnValue(createRect({ top: 101, left: 200, width: 50, height: 30 }));
+      await act(async () => {
+        window.dispatchEvent(new Event('scroll'));
+        await wait(20);
+      });
+      expect(beacon.style.transform).toBe(beaconTop);
+
+      fireEvent.pointerUp(target);
+      await act(async () => {
+        await wait(50);
+      });
+      expect(beacon.style.transform).not.toBe(beaconTop);
     });
 
     it('includes the step title in the beacon accessible name', async () => {

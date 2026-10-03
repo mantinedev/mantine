@@ -6,19 +6,17 @@ export default Layout(MDX_DATA.useMask);
 
 ## Usage
 
-`useMask` attaches real-time input masking to any `<input>` element via a ref callback.
-It formats user input against a defined pattern and exposes both the masked display value
-and the raw unmasked value. If you need a ready-made input component, use [MaskInput](/core/mask-input)
-which wraps this hook with all standard input props.
+`use-mask` hook adds input masking to any `<input>` element. It returns a ref that must be passed
+to the input, the masked value and the raw unmasked value. If you need a ready-made input component,
+use [MaskInput](/core/mask-input).
 
 <Demo data={UseMaskDemos.usage} />
 
 ## isComplete, slotChar, and transform
 
-Use `isComplete` to check whether all required mask slots are filled — for example, to control
-a submit button. The `slotChar` option accepts a multi-character string to show positional
-hints for each slot. The `transform` option converts each character before validation —
-this example uses it to auto-uppercase input so the `A` token (`[A-Z]`) accepts lowercase letters:
+- `isComplete` – `true` when all required mask slots are filled, use it to enable a submit button
+- `slotChar` – accepts a multi-character string to show a hint for each slot
+- `transform` – converts each character before validation, the example uses it to uppercase the input
 
 <Demo data={UseMaskDemos.complete} />
 
@@ -38,23 +36,21 @@ Override or extend the built-in token map with the `tokens` option:
 ## Escaping
 
 Prefix a token character with `\` to treat it as a literal.
-In this example, `A` would normally be an uppercase letter token,
-but `\A` makes it a literal character:
+In this example, `\A` is a literal character, not an uppercase letter token:
 
 <Demo data={UseMaskDemos.escape} />
 
 ## Regex array format
 
-For complex masks where built-in tokens are not enough, pass an array of
-string literals and `RegExp` objects. This example creates a time input where
-the first digit is restricted to `0-2` and the minute tens digit to `0-5`:
+If built-in tokens are not enough, pass an array of string literals and `RegExp` objects.
+In this example, the first digit of the time input is restricted to `0-2`
+and the first digit of minutes to `0-5`:
 
 <Demo data={UseMaskDemos.regex} />
 
 ## Reset
 
-Use the `reset` function returned by the hook to programmatically clear
-the input value:
+Call `reset` function to clear the input value:
 
 <Demo data={UseMaskDemos.reset} />
 
