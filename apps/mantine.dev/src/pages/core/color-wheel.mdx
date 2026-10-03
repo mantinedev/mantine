@@ -6,15 +6,13 @@ export default Layout(MDX_DATA.ColorWheel);
 
 ## Usage
 
-`ColorWheel` is a circular hue selector. Its value is a hue in degrees (a number between 0 and 360).
-Drag the thumb around the ring or use the keyboard to change the value:
+`ColorWheel` is a circular hue selector. Its value is a hue in degrees, a number between 0 and 360:
 
 <Demo data={ColorWheelDemos.usage} />
 
 ## Controlled
 
-`ColorWheel` value is a number between 0 and 360 that represents the hue.
-Convert it to a color with the `hsl(hue, 100%, 50%)` syntax or with any color conversion function:
+Convert the value to a color with the `hsl(hue, 100%, 50%)` syntax or with any color conversion function:
 
 <Demo data={ColorWheelDemos.controlled} />
 
@@ -23,18 +21,16 @@ The value starts at the top of the ring (`0°` is red) and increases clockwise:
 
 ## Ring colors
 
-By default, the ring is rendered with fully saturated colors at 50% lightness. Use the
-`saturation` and `lightness` props (both are numbers between 0 and 100) to change how the
-ring colors are rendered. This only affects the appearance of the ring and the thumb – the
-value is always the hue in degrees:
+Use `saturation` and `lightness` props (numbers between 0 and 100) to change the ring colors.
+These props change only the appearance, the value is always the hue in degrees:
 
 <Demo data={ColorWheelDemos.ringColors} />
 
 ## Size and thickness
 
-Use the `size` prop to change the outer diameter of the wheel and the `thickness` prop to
-change the ring width in px. The thumb size is calculated based on the `thickness` value,
-you can override it with the `thumbSize` prop.
+Use `size` prop to change the outer diameter of the wheel and `thickness` prop to
+change the ring width. The thumb size is calculated from `thickness`, use `thumbSize`
+prop to override it.
 
 ```tsx
 import { ColorWheel } from '@mantine/core';
@@ -72,13 +68,9 @@ The `disabled` prop disables the component and prevents user interaction:
 
 ## ColorWheel with uncontrolled forms
 
-`ColorWheel` can be used with uncontrolled forms.
-Set the `name` attribute to include the hue value in the `FormData` object on form submission.
-To control the initial value in uncontrolled forms, use the `defaultValue` prop.
-
-Props for usage with uncontrolled forms:
-- `name` – name attribute passed to the hidden input
-- `hiddenInputProps` – additional props passed to the hidden input
+Set `name` prop to include the hue value in the `FormData` object on form submission.
+Use `defaultValue` prop to set the initial value and `hiddenInputProps` to pass
+additional props to the hidden input.
 
 ```tsx
 import { ColorWheel } from '@mantine/core';
@@ -111,7 +103,7 @@ function Demo() {
 }
 ```
 
-Keyboard interactions when the thumb is focused. Arrow keys wrap around: decreasing from 0 moves to the last step before 360, increasing from the last step moves to 0.
+Keyboard interactions when the thumb is focused. Arrow keys wrap around: decreasing from 0 moves to the last step before 360.
 
 <KeyboardEventsTable
   data={[
@@ -127,7 +119,7 @@ Keyboard interactions when the thumb is focused. Arrow keys wrap around: decreas
 ## Based on use-radial-move
 
 `ColorWheel` is based on the [use-radial-move](/hooks/use-radial-move) hook, the same hook
-that powers the [AngleSlider](/core/angle-slider) component. You can build a custom radial
-selector using this hook if you need more control over the component's behavior.
+that powers the [AngleSlider](/core/angle-slider) component. Use this hook to build
+a custom radial selector.
 
 <Demo data={UseRadialMoveDemos.usage} />

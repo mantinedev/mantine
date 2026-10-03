@@ -6,21 +6,17 @@ export default Layout(MDX_DATA.useTilt);
 
 ## Usage
 
-`use-tilt` produces normalized `roll` and `tilt` values from the pointer position over a
-target element and, when available, the device orientation gyroscope. It is headless: you map
-the returned values to CSS transforms to create a tilt or layered depth effect. On desktop the
-values follow the cursor, on supported mobile devices they follow the physical tilt of the
-device. By default `roll` and `tilt` reset to `0` when the pointer leaves the element, so the
-element returns to its original position:
+`use-tilt` returns normalized `roll` and `tilt` values based on the pointer position over
+the target element or, on supported mobile devices, the device orientation.
+Map these values to CSS transforms to create a tilt effect:
 
 <Demo data={UseTiltDemos.usage} />
 
-Assign `ref` to a static wrapper and apply the transform to its child: when the tracked element
-itself rotates, its receding edge can move out from under the pointer, which triggers
-`mouseleave`, resets the rotation and makes the element flicker near its edges.
+Assign `ref` to a static wrapper and apply the transform to its child. If the element
+with `ref` rotates itself, it flickers near its edges.
 
-If you need a ready-to-use component with glare and layered depth effect, use the
-[Tilt](/core/tilt) component, which is built on top of this hook.
+If you need a ready-to-use component with glare and layers, use the
+[Tilt](/core/tilt) component, which is based on this hook.
 
 ## Definition
 
@@ -68,13 +64,14 @@ function useTilt<T extends HTMLElement = any>(
 
 ## roll and tilt values
 
-`roll` is the vertical tilt and `tilt` is the horizontal tilt. For mouse input both values are
-normalized relative to the target center: they are `0` when the cursor is over the center and
-approach `-0.5`/`0.5` at the edges. `roll` is positive when the pointer is above the center and
-`tilt` is positive when the pointer is right of the center. For device orientation, `roll` is
-`-beta / 90` and `tilt` is `gamma / 90`. Multiply the values by the number of degrees or pixels
-you need and apply the result to a `transform`. With `rotateX(roll)` and `rotateY(tilt)`, the
-edge under the pointer moves away from the viewer, as if the element were pressed at that point:
+`roll` is the vertical tilt and `tilt` is the horizontal tilt:
+
+- Mouse: both values are `0` at the center of the element and approach `-0.5`/`0.5` at the edges.
+  `roll` is positive above the center, `tilt` is positive to the right of the center.
+- Device orientation: `roll` is `-beta / 90` and `tilt` is `gamma / 90`.
+
+Multiply the values by the number of degrees or pixels you need. With `rotateX(roll)` and
+`rotateY(tilt)`, the edge under the pointer moves away from the viewer:
 
 ```tsx
 import { useTilt } from '@mantine/hooks';
@@ -98,17 +95,14 @@ function Demo() {
 
 ## Example: 3D card
 
-Nested layers with different multipliers create a sense of depth. The example below tilts a
-payment card in 3D and moves a light glare across its surface based on the current `roll` and
-`tilt` values:
+Nested layers with different multipliers create a sense of depth:
 
 <Demo data={UseTiltDemos.card} />
 
 ## Reset on leave
 
-By default `roll` and `tilt` reset to `0` when the pointer leaves the target element, animating
-the element back to its neutral position. Set `resetOnLeave: false` to keep the last values
-after the pointer leaves:
+By default, `roll` and `tilt` reset to `0` when the pointer leaves the target element.
+Set `resetOnLeave: false` to keep the last values:
 
 ```tsx
 import { useTilt } from '@mantine/hooks';
@@ -122,24 +116,19 @@ function Demo() {
 
 ## React to the whole page
 
-By default the hook only updates while the target element is hovered. Set `trackWindow: true` to
-react to the pointer position anywhere on the page. The `roll` and `tilt` values are still
-computed relative to the element center, but they keep updating as the cursor moves across the
-whole document, which is useful for a hero element that should respond to the pointer even when
-it is not directly hovered:
+By default, the hook updates the values only while the target element is hovered.
+Set `trackWindow: true` to react to the pointer position anywhere on the page:
 
 <Demo data={UseTiltDemos.page} />
 
-When `trackWindow` is set to `true`, the values are not clamped to `[-0.5, 0.5]` – they grow larger
-the further the cursor is from the element. Clamp them or use the adjust options if you need to
-limit the effect.
+With `trackWindow`, the values are not clamped to `[-0.5, 0.5]` – they grow
+the further the cursor is from the element. Use the adjust options to limit the effect.
 
 ## Adjusting values
 
-Use the `*Adjust` options to transform the normalized values before they are returned. This is useful
-to amplify, dampen, clamp or invert the effect independently for each input source. In the
-example below the mouse values are inverted and amplified, so the edge under the cursor lifts
-towards the viewer instead of moving away:
+Use the `*Adjust` options to amplify, dampen, clamp or invert the values of each input
+source. In the example below, the mouse values are inverted and amplified, so the edge
+under the cursor moves towards the viewer:
 
 <Demo data={UseTiltDemos.adjust} />
 
@@ -162,19 +151,15 @@ function Demo() {
 
 ## Source selection
 
-The `source` field tells you which input is currently active: `'mouse'` or
-`'deviceOrientation'`. When the device reports gyroscope data, the hook switches to
-`deviceOrientation` and keeps using it. Otherwise it falls back to the pointer position. You can
-use `source` to render input-specific hints, for example prompting the user to move the cursor
-on desktop and to tilt the device on mobile.
+`source` is the active input: `'mouse'` or `'deviceOrientation'`. Once the device
+reports orientation data, the hook switches to `deviceOrientation` and keeps using it.
+Use `source` to display input-specific hints, for example "move the cursor" or "tilt the device".
 
 ## Device orientation permission
 
-On iOS 13+ access to device orientation data requires a user gesture: you must call
-`DeviceOrientationEvent.requestPermission()` from an event handler (for example a button click)
-before the browser starts emitting `deviceorientation` events. `use-tilt` does not prompt
-for permission automatically – it attempts to listen and silently falls back to the mouse until
-permission is granted. If you need device orientation on iOS, request permission yourself:
+On iOS 13+, access to device orientation requires a permission. `use-tilt` does not request
+it – call `DeviceOrientationEvent.requestPermission()` from an event handler, for example
+a button click. Until the permission is granted, the hook uses the pointer position:
 
 ```tsx
 async function requestOrientationPermission() {
@@ -187,9 +172,6 @@ async function requestOrientationPermission() {
   }
 }
 ```
-
-Once permission is granted, `use-tilt` picks up the events and switches `source` to
-`deviceOrientation` automatically.
 
 ## Exported types
 
