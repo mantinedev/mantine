@@ -62,16 +62,6 @@ Steps without a `target` prop render as centered cards, useful for welcome or co
 
 <Demo data={TourDemos.centered} />
 
-## Per-step overrides
-
-Individual `Tour.Step` components support per-step overrides for `withOverlay`, `spotlightPadding`,
-`spotlightRadius`, and `withBeacon` (in beacon mode). These override the parent `Tour` values for that step only.
-
-## Step lifecycle callbacks
-
-Use `onStepOpen` and `onStepClose` props on `Tour` for global step change notifications,
-or use `onStepOpen` and `onStepClose` on individual `Tour.Step` components for per-step callbacks.
-
 ## Custom content
 
 Use any React content inside `Tour.Step` children for rich tooltip content.
@@ -109,12 +99,6 @@ Customize navigation button labels with the `labels` prop for i18n support:
 ## Styles API
 
 <Demo data={TourDemos.stylesApi} />
-
-## Scroll behavior
-
-By default, the tour scrolls the target element into view when it is not fully visible,
-elements that are already visible are not scrolled. Set `withScrollIntoView={false}` to disable,
-or provide a `scrollToHandler` function for custom scroll behavior (e.g., scrolling within a specific container).
 
 ## Keyboard navigation
 

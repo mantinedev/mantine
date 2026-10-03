@@ -41,25 +41,6 @@ Disable the default header on all views by passing `withHeader={false}` through 
 
 <Demo data={ScheduleDemos.customHeader} />
 
-## Common props
-
-The following props are shared across all views:
-- `events` - Events to display
-- `locale` - Date formatting locale
-- `radius` - Border radius
-- `labels` - Label overrides for i18n
-- `renderEventBody` - Custom event renderer
-- `withDragDrop` - Enable drag and drop
-- `onEventDrop` - Drag and drop handler
-- `canDragEvent` - Drag permission callback
-- `withEventResize` - Enable event resizing
-- `onEventResize` - Resize handler
-- `canResizeEvent` - Resize permission callback
-- `mode` - Interaction mode (`default` or `static`)
-
-These props are automatically passed to all views. For view-specific customization, use the
-`dayViewProps`, `weekViewProps`, `monthViewProps`, and `yearViewProps` props.
-
 ## Agenda view
 
 Set `withAgenda` prop to display an "Agenda" button in the header of DayView, WeekView
