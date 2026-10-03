@@ -161,6 +161,9 @@ export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFact
   /** Events that trigger outside clicks */
   clickOutsideEvents?: string[];
 
+  /** Determines whether outside click listeners should be registered in the capture phase @default false */
+  capture?: boolean;
+
   /** Determines whether focus should be trapped within dropdown @default false */
   trapFocus?: boolean;
 
@@ -199,6 +202,7 @@ const defaultProps = {
   hideDetached: true,
   preventPositionChangeWhenVisible: true,
   clickOutsideEvents: ['mousedown', 'touchstart'],
+  capture: false,
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
   width: 'max-content',
@@ -237,6 +241,7 @@ export function Popover(_props: PopoverProps) {
     portalProps,
     closeOnEscape,
     clickOutsideEvents,
+    capture,
     trapFocus,
     onClose,
     onDismiss,
@@ -314,7 +319,9 @@ export function Popover(_props: PopoverProps) {
       }
     },
     clickOutsideEvents,
-    [targetNode, dropdownNode]
+    [targetNode, dropdownNode],
+    true,
+    capture
   );
 
   const reference = useCallback(

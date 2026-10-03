@@ -114,6 +114,38 @@ describe('@mantine/core/Popover', () => {
     expect(spy).toHaveBeenCalled();
   });
 
+  it('does not close when outside element stops propagation in bubble phase', async () => {
+    const spy = jest.fn();
+    render(
+      <>
+        <TestContainer defaultOpened onClose={spy} />
+        <div
+          role="presentation"
+          data-testid="outside-target"
+          onMouseDown={(event) => event.stopPropagation()}
+        />
+      </>
+    );
+    await userEvent.click(screen.getByTestId('outside-target'));
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('close popover when outside element stops propagation in bubble phase and capture is true', async () => {
+    const spy = jest.fn();
+    render(
+      <>
+        <TestContainer defaultOpened capture onClose={spy} />
+        <div
+          role="presentation"
+          data-testid="outside-target"
+          onMouseDown={(event) => event.stopPropagation()}
+        />
+      </>
+    );
+    await userEvent.click(screen.getByTestId('outside-target'));
+    expect(spy).toHaveBeenCalled();
+  });
+
   it('sets dropdown z-index based on zIndex prop', () => {
     render(<TestContainer defaultOpened zIndex={452} />);
     expect(screen.getByRole('dialog')).toHaveStyle({ zIndex: 452 });
