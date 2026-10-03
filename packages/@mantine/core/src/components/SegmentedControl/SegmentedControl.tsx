@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import {
-  randomId,
-  useId,
-  useMergedRef,
-  useMounted,
-  useShallowEffect,
-  useUncontrolled,
-} from '@mantine/hooks';
+import { useId, useMergedRef, useMounted, useShallowEffect, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -190,7 +183,7 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
   const _data = data.map((item) => (isPrimitive(item) ? { label: `${item}`, value: item } : item));
 
   const initialized = useMounted();
-  const [key, setKey] = useState(randomId());
+  const [key, setKey] = useState(0);
   const [parent, setParent] = useState<HTMLElement | null>(null);
   const [refs, setRefs] = useState<Record<string, HTMLElement | null>>({});
   const setElementRef = (element: HTMLElement | null, val: string) => {
@@ -258,7 +251,7 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
   const mergedRef = useMergedRef(ref, setParent);
 
   useShallowEffect(() => {
-    setKey(randomId());
+    setKey((current) => current + 1);
   }, [data.length]);
 
   useShallowEffect(() => {
