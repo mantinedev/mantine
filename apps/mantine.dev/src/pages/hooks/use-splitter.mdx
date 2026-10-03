@@ -8,24 +8,22 @@ export default Layout(MDX_DATA.useSplitter);
 
 `use-splitter` hook provides resizable split-pane functionality. It handles pointer drag
 on resize handles, keyboard navigation following the WAI-ARIA Window Splitter pattern,
-collapsible panels and min/max constraints. Sizes can be percentages (flexible panes) or
-`px`/`rem` (fixed panes).
+collapsible panels and min/max constraints.
 
 <Demo data={UseSplitterDemos.usage} />
 
 ## CSS units
 
-`defaultSize`, `min` and `max` accept CSS units. A plain `number` or `%` string is a flexible size
-that shares the leftover space, while a `px` or `rem` string is a fixed size that stays constant
-when the container is resized. Sizes are reported back in the unit they were declared in, so a
-`'240px'` pane stays `'240px'` in `sizes` and `onSizeChange`. When at least one pane uses a fixed
-unit, the hook resolves the layout in pixels using the measured container size:
+`defaultSize`, `min` and `max` accept CSS units. A number or `%` string is a flexible size
+that shares the leftover space, a `px` or `rem` string is a fixed size that does not change
+when the container is resized. Sizes are reported in the unit they were declared in:
+a `'240px'` pane stays `'240px'` in `sizes` and `onSizeChange`.
 
 <Demo data={UseSplitterDemos.cssUnits} />
 
 ## Vertical orientation
 
-Set `orientation="vertical"` to create a vertical split layout.
+Set `orientation: 'vertical'` to create a vertical split layout.
 Keyboard navigation uses ArrowUp/ArrowDown instead of ArrowLeft/ArrowRight:
 
 <Demo data={UseSplitterDemos.vertical} />
@@ -35,8 +33,7 @@ Keyboard navigation uses ArrowUp/ArrowDown instead of ArrowLeft/ArrowRight:
 Set `collapsible: true` on a panel to allow it to collapse to zero size.
 When dragged below the `collapseThreshold` (defaults to `min`), the panel
 snaps to 0%. Use `collapse()`, `expand()` and `toggleCollapse()` for
-programmatic control. Press Enter on a handle to toggle the smaller adjacent
-collapsible panel:
+programmatic control:
 
 <Demo data={UseSplitterDemos.collapsible} />
 
@@ -49,30 +46,28 @@ between its two adjacent panels:
 
 ## Redistribute
 
-By default, each handle only affects its two adjacent panels. When a neighbor panel
-is at its minimum, the handle stops. Use the `redistribute` prop to allow borrowing
-space from panels further away when the immediate neighbor cannot shrink any more.
+By default, each handle only affects its two adjacent panels: when a neighbor panel
+is at its minimum, the handle stops. Use the `redistribute` option to borrow
+space from panels further away.
 
 ### Nearest
 
-`redistribute="nearest"` takes space from the nearest panel in the drag direction first,
-then moves to the next one if more space is needed. Try dragging the first handle to
-the right — when the second panel hits its minimum (20%), space is taken from the third
-and fourth panels:
+`redistribute: 'nearest'` takes space from the nearest panel in the drag direction first,
+then moves to the next one if more space is needed. Drag the first handle to
+the right to see it:
 
 <Demo data={UseSplitterDemos.redistributeNearest} />
 
 ### Equal
 
-`redistribute="equal"` distributes the needed space equally among all panels in the
-drag direction, respecting each panel's minimum. Panels that hit their minimum are
-excluded and the remaining deficit is re-distributed among the rest:
+`redistribute: 'equal'` takes space equally from all panels in the
+drag direction, respecting the minimum size of each panel:
 
 <Demo data={UseSplitterDemos.redistributeEqual} />
 
 ### Custom function
 
-Pass a function to `redistribute` for full control over how space is borrowed.
+Pass a function to `redistribute` to control how space is borrowed.
 The function receives `{ sizes, panels, handleIndex, delta }` and must return
 a new sizes array. This example always borrows from the last panel when growing
 and from the first panel when shrinking:
@@ -81,24 +76,22 @@ and from the first panel when shrinking:
 
 ## Grip only handle
 
-You can make the drag handle a small floating grip button instead of a full-height bar.
-In this example, only the grip icon is draggable — the thin line between panels is not
+The drag handle can be a small grip button instead of a full-height bar.
+In this example, only the grip icon is draggable, the line between panels is not
 interactive:
 
 <Demo data={UseSplitterDemos.gripOnly} />
 
 ## Nested layout
 
-Compose multiple `useSplitter` instances to create complex layouts with both
-horizontal and vertical splits. Here the right side of a horizontal split contains
-a vertical split:
+Use several `useSplitter` instances to combine horizontal and vertical splits.
+Here the right side of a horizontal split contains a vertical split:
 
 <Demo data={UseSplitterDemos.nested} />
 
 ## Code editor layout
 
-A real-world example combining a collapsible file explorer sidebar, a code editor
-panel and a terminal — similar to VS Code:
+A collapsible file explorer sidebar, a code editor panel and a terminal:
 
 <Demo data={UseSplitterDemos.codeEditor} />
 
@@ -113,14 +106,12 @@ Use `setSizes()` for programmatic updates:
 
 Handles follow the WAI-ARIA Window Splitter pattern:
 
-| Key | Action |
-|-----|--------|
-| ArrowLeft/ArrowRight | Resize by `step` (horizontal) |
-| ArrowUp/ArrowDown | Resize by `step` (vertical) |
-| Shift + Arrow | Resize by `shiftStep` |
-| Home | Shrink panel before handle to its min |
-| End | Grow panel before handle to its max |
-| Enter | Toggle collapse of the smaller adjacent collapsible panel |
+- ArrowLeft/ArrowRight – resize by `step` (horizontal)
+- ArrowUp/ArrowDown – resize by `step` (vertical)
+- Shift + Arrow – resize by `shiftStep`
+- Home – shrink the panel before the handle to its min
+- End – grow the panel before the handle to its max
+- Enter – toggle collapse of the smaller adjacent collapsible panel
 
 ## Touch support
 
@@ -165,12 +156,14 @@ interface UseSplitterResolvedPanel {
   collapseThreshold?: number;
 }
 
-type UseSplitterRedistributeFn = (input: {
+interface UseSplitterRedistributeInput {
   sizes: number[];
   panels: UseSplitterResolvedPanel[];
   handleIndex: number;
   delta: number;
-}) => number[];
+}
+
+type UseSplitterRedistributeFn = (input: UseSplitterRedistributeInput) => number[];
 
 interface UseSplitterOptions {
   /** Panel configuration array (minimum 2 panels) */

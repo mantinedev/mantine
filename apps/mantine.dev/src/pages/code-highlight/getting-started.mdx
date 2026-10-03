@@ -70,14 +70,10 @@ function App() {
 
 ## Lazy languages loading
 
-Shiki loads grammars of all languages that are given to the highlighter in advance. If your
-application highlights code in dozens of languages, all of these grammars are downloaded before
-the first code block can be highlighted.
-
-To load grammars on demand, pass `resolveLanguage` option to `createShikiAdapter`. It is called
-with the language of a code block that is not loaded in the highlighter yet, and its return value
-is passed to shiki `highlighter.loadLanguage`. Code is highlighted once the grammar is loaded,
-until then it is displayed as plain text:
+By default, shiki downloads grammars of all languages given to the highlighter before
+the first code block is highlighted. To load grammars on demand, pass `resolveLanguage` option
+to `createShikiAdapter`. It is called with the language that is not loaded yet, its return value
+is passed to shiki `highlighter.loadLanguage`. Code is displayed as plain text until the grammar is loaded:
 
 ```tsx
 import { createShikiAdapter } from '@mantine/code-highlight';
@@ -126,13 +122,9 @@ its code is displayed as plain text.
 ## Unavailable languages
 
 If a code block uses a language that is not loaded in the highlighter and cannot be loaded on
-demand, its code is displayed as plain text instead of throwing an error. In development, a
-warning is logged to the console once per language – either add the language to the `langs`
-option of the highlighter, or load it on demand with `resolveLanguage`.
-
-If a grammar fails to load (for example, a dynamic import fails), the code stays plain text and
-the failure is not cached – the language is requested again the next time a code block with that
-language is mounted.
+demand, its code is displayed as plain text and a warning is logged to the console in development.
+To fix it, add the language to the `langs` option of the highlighter or load it on demand
+with `resolveLanguage`.
 
 ## Usage with highlight.js
 

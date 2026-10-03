@@ -10,15 +10,13 @@ export default Layout(MDX_DATA.ActionBar);
 providing contextual bulk actions. It is built using [Affix](/core/affix), [Transition](/core/transition)
 and [Paper](/core/paper) components.
 
-Content inside `ActionBar` is composed freely using existing Mantine components
-(`Button`, `ActionIcon`, `Group`, `Text`, etc.). Use `ActionBar.Divider` to
+`ActionBar` content can be any React node. Use `ActionBar.Divider` to
 add a vertical divider and `ActionBar.CloseButton` to add a close button that
-triggers the `onClose` callback.
+calls `onClose`.
 
 <Demo data={ActionBarDemos.usage} />
 
-`ActionBar` root has `role="group"` and the divider has `role="separator"` so that assistive
-technologies announce the controls as one bar. Set `aria-label` to describe what the actions apply to.
+`ActionBar` root has `role="group"`. Set `aria-label` to describe what the actions apply to.
 
 ## With ActionIcon buttons
 
@@ -60,9 +58,8 @@ function Demo() {
 ## keepMounted
 
 By default, the action bar is removed from the DOM when it is closed. Set `keepMounted`
-to keep it mounted instead – for example, if the bar contains form state that must be
-preserved between openings. The hidden bar is wrapped in React `Activity`, which preserves
-its state; to hide it with `display: none` instead, set `transitionProps={{ keepMountedMode: 'display-none' }}`:
+to keep it mounted, for example to preserve form state inside the bar. The hidden bar is wrapped
+in React `Activity`. To hide it with `display: none` instead, set `transitionProps={{ keepMountedMode: 'display-none' }}`:
 
 ```tsx
 import { ActionBar, Button } from '@mantine/core';

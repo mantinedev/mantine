@@ -6,93 +6,82 @@ export default Layout(MDX_DATA.Tour);
 
 ## Usage
 
-`Tour` component provides an interactive step-by-step guide for application onboarding.
-It highlights target elements with a spotlight overlay and displays tooltips with navigation controls.
-
-`Tour.Step` elements must be direct children of `Tour` – arrays of steps are supported, but steps wrapped in a `Fragment` or in a custom wrapper component are not detected.
+`Tour` is a step-by-step guide for application onboarding. It highlights target elements
+one by one and displays a tooltip with navigation controls next to each of them.
+`Tour.Step` components must be direct children of `Tour`.
 
 <Demo data={TourDemos.usage} />
 
 ## Complex example
 
-A more realistic example that demonstrates a dashboard onboarding tour with 7 steps.
-The tour starts with a centered welcome screen, highlights various UI elements across the page,
-and scrolls to elements inside a `ScrollArea` automatically. It also uses per-step `position`
-and `spotlightPadding` overrides.
+A dashboard onboarding tour: it starts with a centered welcome step, scrolls to targets
+inside `ScrollArea` and changes `position` and `spotlightPadding` of individual steps.
 
 <Demo data={TourDemos.complex} />
 
 ## Beacon mode
 
-Set `mode="beacon"` to display pulsing indicators near target elements instead of a sequential walkthrough.
-Users can click beacons in any order to reveal tooltips. `onClose` is called when a beacon tooltip is closed –
-beacons stay on the page as long as `active` is `true`, so end the beacon tour by setting `active` to `false` from your own control.
-`Escape` closes only the open beacon tooltip – with no tooltip open, `Escape` does nothing and `onClose` is not called.
-Use `color` prop to change the beacon and the next button colors:
+Set `mode="beacon"` to display pulsing beacons next to all targets instead of a sequential
+walkthrough. Users can click beacons in any order to open tooltips. Beacons stay on the page
+until `active` is set to `false`.
 
 <Demo data={TourDemos.beacon} />
 
 ## Controlled
 
-Control the active step externally with `step` and `onStepChange` props. Without the `step` prop
-the tour is uncontrolled: it starts from `defaultStep` (`0` by default) and returns to it after
-it is closed, so starting the tour again always begins from the first step:
+Use `step` and `onStepChange` props to control the current step. An uncontrolled tour
+always starts from `defaultStep`.
 
 <Demo data={TourDemos.controlled} />
 
 ## Overlay configuration
 
-Configure the overlay behavior with `withOverlay`, `withOverlayInteraction`, and `closeOnOverlayClick` props:
-
-- `withOverlay` - show or hide the backdrop overlay (default: `true`)
-- `withOverlayInteraction` - allow interacting with the target element through the spotlight cutout (default: `false`)
-- `closeOnOverlayClick` - close the tour when clicking the overlay (default: `false`)
-
-With `withOverlayInteraction` only the spotlight cutout lets pointer events through to the target element, the rest of the overlay keeps blocking clicks on the page. The two props can be combined: clicks inside the cutout reach the target, clicks outside of it close the tour when `closeOnOverlayClick` is set. The focus trap is disabled with `withOverlayInteraction` so that the target element can be reached with `Tab`. Dropdowns of components rendered in a portal (`Select`, `Menu`, etc.) are outside of the cutout and below the tour – set their `zIndex` above the tour `zIndex` (for example, `comboboxProps={{ zIndex: 10001 }}`) to make them interactive.
+- `withOverlay` – display the backdrop overlay, `true` by default
+- `withOverlayInteraction` – allow users to interact with the highlighted element, `false` by default
+- `closeOnOverlayClick` – close the tour when the overlay is clicked, `false` by default
 
 <Demo data={TourDemos.overlay} />
 
+Dropdowns rendered in a portal (`Select`, `Menu`, etc.) are displayed below the tour.
+To use them with `withOverlayInteraction`, set their `zIndex` to a value greater than
+the tour `zIndex`, for example `comboboxProps={{ zIndex: 10001 }}`.
+
 ## Step targets
 
-`Tour.Step` `target` prop accepts a CSS selector or a ref. A selector is resolved when the step activates and again when a matching element is added to the page later, so it works for elements that mount after the tour starts (for example, inside a panel opened by the previous step). A ref is resolved once when the step activates – the element must be mounted before that, use a selector for late-mounting targets.
+`target` prop of `Tour.Step` accepts a CSS selector or a ref. Use a selector for elements
+that are mounted after the step is activated, a ref must point to an element that is already mounted.
 
 ## Steps without target
 
-Steps without a `target` prop render as centered cards, useful for welcome or completion screens:
+Steps without `target` are displayed in the center of the screen. Use them for welcome
+and completion screens.
 
 <Demo data={TourDemos.centered} />
 
 ## Custom content
 
-Use any React content inside `Tour.Step` children for rich tooltip content.
-For full control over the tooltip layout, use compound components (`Tour.Root`, `Tour.Overlay`,
-`Tour.Tooltip`, `Tour.Title`, `Tour.Body`, `Tour.Navigation`, `Tour.CloseButton`, `Tour.Beacon`):
+`Tour.Step` children can be any React node. To build the tooltip layout yourself,
+use compound components:
 
 <Demo data={TourDemos.compound} />
 
-`Tour.Root` does not know your steps, pass the total number of steps with the `stepsCount` prop –
-`Tour.Navigation` uses it for the step counter and to display the close button on the last step,
-`ArrowRight` closes the tour on the last step. `Tour.Root` handles the current step (`step`, `defaultStep`, `onStepChange`),
-keyboard navigation, `Escape` and focus return. You are responsible for resolving target elements and
-passing them to `Tour.Overlay` (`targetRect`) and `Tour.Tooltip` (`targetElement`).
-`withOverlay` and `withCloseButton` props of `Tour.Root` hide `Tour.Overlay` and `Tour.CloseButton`,
-`transitionProps` is the default transition of `Tour.Tooltip`. `Tour.Root` renders nothing while `active`
-is `false` – to play the exit transition of `Tour.Tooltip`, set its `mounted` prop to `false` first and set
-`active` to `false` after the transition ends. `Tour.Beacon` does not know the step title – pass a distinct
-`aria-label` to each beacon so that screen reader users can tell them apart (the default is `labels.beacon`).
+Compound components do not know your steps:
+
+- Pass the total number of steps to `Tour.Root` with `stepsCount` prop
+- Find target elements yourself and pass them to `Tour.Overlay` (`targetRect`) and `Tour.Tooltip` (`targetElement`)
+- Set a distinct `aria-label` on each `Tour.Beacon`
+- To play the exit transition, set `mounted={false}` on `Tour.Tooltip` first and `active={false}` on `Tour.Root` after the transition ends
 
 ## Tooltip position
 
-Set the `position` prop on individual `Tour.Step` components to control tooltip placement.
-Supported values: `top`, `right`, `bottom`, `left`, and their `-start`/`-end` variants.
-If there is not enough space on the preferred side, the tooltip flips to the opposite side.
-`left` and `right` positions fall back to `bottom` or `top` when neither side has room for the full `maxWidth` of the tooltip (for example, on mobile screens).
+Set `position` on `Tour.Step` to change the tooltip placement. If there is not enough
+space, the tooltip flips to the opposite side.
 
 <Demo data={TourDemos.position} />
 
 ## Custom labels
 
-Customize navigation button labels with the `labels` prop for i18n support:
+Use `labels` prop to translate navigation buttons:
 
 <Demo data={TourDemos.labels} />
 
@@ -102,11 +91,8 @@ Customize navigation button labels with the `labels` prop for i18n support:
 
 ## Keyboard navigation
 
-When `withKeyboardNavigation` is enabled (default), arrow key navigation is available in guided mode.
-Arrow key navigation is not available in beacon mode. `Escape` closes the tour in both modes
-when `closeOnEscape` is `true` (default). Set `withKeyboardNavigation={false}` to disable arrow keys entirely.
-
-Arrow keys are swapped in RTL direction (`ArrowLeft` goes to the next step). Arrow hotkeys are ignored while the keyboard event originates inside the current step target element or inside an `input`, `textarea` or `select`, so targets that use arrow keys themselves (sliders, tabs, inputs with `withOverlayInteraction`) keep working. `Escape` closes the tour from any element, including inputs, except when it closes an open dropdown of another Mantine component (`Select`, `Autocomplete`, `Menu`, etc.) – the same rule `Modal` uses.
+Arrow keys are ignored while focus is inside the target element or an input.
+Set `withKeyboardNavigation={false}` to disable them.
 
 <KeyboardEventsTable
   data={[
@@ -122,9 +108,8 @@ Arrow keys are swapped in RTL direction (`ArrowLeft` goes to the next step). Arr
 
 ## Accessibility
 
-- The tooltip has `role="dialog"`, it is labelled by the step title (`aria-labelledby`) and described by the step body (`aria-describedby`). Steps without a title are labelled with the step counter text (`labels.stepCounter`)
-- When the tooltip opens, focus moves inside it (in beacon mode too), navigation buttons have accessible labels via the `labels` prop
-- Step counter is announced via `aria-live="polite"`
-- When the overlay is active in guided mode, focus is trapped inside the tooltip
-- Focus returns to the previously focused element when the tour closes. In beacon mode, if the tour stays active after the tooltip is closed, focus returns to the beacon that opened it
-- Beacons have `role="button"` with `aria-label` built from `labels.beacon` and the step title (for example, `Start tour: Settings`). In the compound API, `Tour.Beacon` uses `labels.beacon` alone unless `aria-label` is passed
+- The tooltip has `role="dialog"`, it is labelled by the step title and described by the step body
+- Focus is moved to the tooltip when it opens and is returned to the previously focused element when the tour closes
+- Focus is trapped inside the tooltip while the overlay is displayed
+- Step counter changes are announced with `aria-live="polite"`
+- Beacons are buttons labelled with `labels.beacon` and the step title, for example `Start tour: Settings`

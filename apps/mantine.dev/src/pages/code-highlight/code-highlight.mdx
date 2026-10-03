@@ -7,8 +7,7 @@ export default Layout(MDX_DATA.CodeHighlight);
 ## Example
 
 `CodeHighlight` component is used to display code snippets with syntax highlighting.
-It provides a flexible adapter system that allows you to use any code highlighting library
-of your choice.
+It can be used with any code highlighting library with [adapters](/code-highlight/getting-started/#adapters).
 
 Example of code highlighting with [shiki](https://shiki.matsu.io/):
 
@@ -51,15 +50,10 @@ Set `withLineNumbers` prop to display line numbers alongside the code:
 
 ## First line indentation
 
-`CodeHighlight` trims the code before rendering it, so the indentation of the **first** line
-is removed while every other line keeps it. Set `withFirstLineIndentation` prop to preserve it –
-this is useful for blocks whose first line is intentionally indented, for example column-aligned
-text or a wrapped shell command:
+`CodeHighlight` trims the code before rendering it, so the indentation of the first line
+is removed. Set `withFirstLineIndentation` prop to preserve it:
 
 <Demo data={CodeHighlightDemos.firstLineIndentation} />
-
-Blank lines at the start and trailing whitespace are removed in both cases. The prop also
-controls the code that is copied by the copy button.
 
 ## Expandable code
 

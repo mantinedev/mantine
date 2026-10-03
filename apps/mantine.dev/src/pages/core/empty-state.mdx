@@ -14,18 +14,13 @@ The simplest way to use it is with `icon`, `title` and `description` props:
 
 ## Compound components
 
-For full control over the content, use compound components instead of (or together with)
-the shorthand props. Available components:
-
-- `EmptyState.Indicator` – icon or illustration
-- `EmptyState.Title` – title text
-- `EmptyState.Description` – description text
-- `EmptyState.Actions` – wrapper for action buttons
+For full control over the content, use compound components instead of or together with
+the shorthand props:
 
 <Demo data={EmptyStateDemos.compound} />
 
-Shorthand props and compound components can be mixed. When both are provided, the content
-from `icon`, `title` and `description` props is rendered first, followed by `children`:
+When both are used, the content from `icon`, `title` and `description` props
+is rendered first, followed by `children`:
 
 ```tsx
 import { Button, EmptyState } from '@mantine/core';
@@ -59,9 +54,8 @@ without setting a `variant`:
 
 ## Title heading level
 
-By default, `EmptyState.Title` renders a `div` element without a semantic heading level. If
-the empty state title should be a heading, set the `order` prop to render it as an `h1`–`h6`
-element:
+By default, `EmptyState.Title` renders a `div` element. Set the `order` prop to render
+it as an `h1`–`h6` heading:
 
 ```tsx
 import { EmptyState } from '@mantine/core';
@@ -81,7 +75,6 @@ function Demo() {
 
 ## Accessibility
 
-- The root element is a plain `div`, it is not assigned a landmark role.
-- `EmptyState.Title` renders a non-heading `div` by default. Set the `order` prop if the title
-  should be exposed as a heading to assistive technologies.
-- Action buttons are rendered as provided – make sure they have accessible labels.
+- The root element does not have a landmark role
+- `EmptyState.Title` is not a heading by default, set the `order` prop to change that
+- Make sure that action buttons have accessible labels

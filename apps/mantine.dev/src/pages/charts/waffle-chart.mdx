@@ -7,20 +7,15 @@ export default Layout(MDX_DATA.WaffleChart);
 ## Usage
 
 `WaffleChart` displays parts of a whole as a grid of colored cells. Each segment
-of the `data` array is allocated a number of cells proportional to its `value`,
-which makes proportions easier to compare than in a pie or donut chart.
-
-Unlike most charts in `@mantine/charts`, `WaffleChart` does not use
-[recharts](https://recharts.org/) – the grid is rendered as a plain `svg` element.
+of the `data` array is allocated a number of cells proportional to its `value`.
 
 <Demo data={WaffleChartDemos.usage} />
 
 ## Total
 
 By default, the sum of all `value` fields is treated as 100% and the entire grid
-is filled. Set `total` to a larger number to leave the remaining cells empty –
-this is useful to display progress towards a goal. Values smaller than the sum of
-the data are ignored.
+is filled. Set `total` to a larger number to leave the remaining cells empty, for example
+to display progress towards a goal. Values smaller than the sum of the data are ignored.
 
 ## Tooltip
 
@@ -39,10 +34,9 @@ to move it to the `top`, `left` or `right` side, or set `withLegend={false}` to 
 
 ## Gap and grid size
 
-`rows` and `columns` control the number of cells in the grid (10 × 10 by default),
-`gap` controls the distance between them and `cellRadius` the border radius of each cell.
-Set `size` to control the width of the chart – if it is not set, the width is calculated
-from the number of columns.
+Use `rows` and `columns` props to change the number of cells in the grid (10 × 10 by default),
+`gap` to change the distance between them and `cellRadius` to change their border radius.
+Set `size` to control the width of the chart.
 
 <Demo data={WaffleChartDemos.gap} />
 
@@ -54,17 +48,12 @@ from the number of columns.
 
 ## Empty cells color
 
-Cells that are not allocated to any segment use `--waffle-empty-color` – set the
-`emptyColor` prop to change it:
+Use `emptyColor` prop to change the color of cells that are not allocated to any segment:
 
 <Demo data={WaffleChartDemos.emptyColor} />
 
 ## Accessibility
 
-The grid is exposed to screen readers as a single image labelled with every segment name and value,
-so the data is available whether or not the legend is displayed. The legend itself is `aria-hidden`
-because it repeats those names visually.
-
-Set `aria-label` (or `aria-labelledby`) to describe what the values represent. The chart root then
-becomes a labelled group – a plain `div` cannot carry an accessible name – and your label is
-announced alongside the generated data summary rather than replacing it.
+The grid is exposed to screen readers as a single image labelled with every segment name and value.
+Set `aria-label` or `aria-labelledby` to describe what the values represent, your label is
+announced together with the generated data summary.

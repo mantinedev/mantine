@@ -6,9 +6,9 @@ export default Layout(MDX_DATA.MaskInput);
 
 ## Usage
 
-`MaskInput` is a wrapper around [useMask](/hooks/use-mask) hook that provides all standard input
-props (label, description, error, etc.) and supports all mask options. The mask string defines
-the expected format using token characters (`9` for digits, `a` for letters, etc.).
+`MaskInput` is a wrapper around [useMask](/hooks/use-mask) hook. It supports all mask options
+and standard input props (label, description, error, etc.). The `mask` string defines the expected
+format, see [mask pattern syntax](#mask-pattern-syntax).
 
 <Demo data={MaskInputDemos.usage} />
 
@@ -60,17 +60,15 @@ Use the `resetRef` prop to get a function that clears the input value imperative
 
 ## With use-form
 
-`MaskInput` is uncontrolled by design – it manages its own DOM value internally.
-To integrate with [use-form](/form/use-form), pass the initial value via `defaultValue`
-and use the `onChangeRaw` callback to write the raw (unmasked) value to form state.
-In uncontrolled form mode, pass `{ forceUpdate: false }` to `form.setFieldValue` so the
-input is not remounted on every keystroke:
+To use `MaskInput` with [use-form](/form/use-form), pass the initial value with `defaultValue`
+and write the raw (unmasked) value to the form state in `onChangeRaw`. In uncontrolled form mode,
+pass `{ forceUpdate: false }` to `form.setFieldValue` so the input is not remounted on every keystroke:
 
 <Demo data={MaskInputDemos.withUseForm} />
 
 ## Mask pattern syntax
 
-The mask string defines the expected format. Each character is either a **token** (editable slot)
+Each character of the mask string is either a **token** (editable slot)
 or a **literal** (fixed character inserted automatically).
 
 ### Built-in tokens

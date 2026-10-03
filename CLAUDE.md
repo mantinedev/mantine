@@ -38,6 +38,19 @@ After running the commands above, check if `codex` CLI is available (`command -v
 - The codebase prefers clean, self-documenting code for implementation
 - Type definitions and public APIs should maintain their documentation comments
 
+## Writing Documentation
+
+Documentation is written for a human who skims: they look at the demo and read one or two sentences next to it. Pages written before 9.0 (`core/slider.mdx`, `core/popover.mdx`) are the target style, `core/tour.mdx` is a compound component example.
+
+- **One to three short sentences per demo.** Say what the prop or component does in plain words ("Set `x` prop to …"), then show the demo. If more must be said, put it in a short list after the demo.
+- **The demo and the props table are part of the page.** Text covers only what they cannot show. Lists of compound components, props, supported values and defaults already live there.
+- **Each fact once per page**, in the section where the reader looks for it. Keyboard and accessibility tables count: text next to them adds only what the table lacks.
+- **Document ordinary use.** A caveat earns its place when a user hits it in everyday usage and cannot work it out from the demo: a required prop, wrapper or styles import, a real gotcha, an accessibility requirement the user must fulfil. Corner cases found during code review, internal mechanisms and reasons behind the implementation belong in tests and commit messages.
+- **A sentence with five or more inline-code spans is an enumeration.** Rewrite it in plain words or as a list.
+- **Keep existing headings** when editing a page: other pages link to their anchors.
+
+After writing a section, reread it as a user who has never seen the source code and delete every sentence they would skip.
+
 ## Writing MDX Files
 
 **Markdown table syntax does not work.** The docs MDX pipeline (`apps/mantine.dev`, `apps/help.mantine.dev`) does not include `remark-gfm`, so pipe tables render as literal text on the page. Write tabular content either as a `<DataTable />` (available in every `apps/mantine.dev` mdx file without an import, see `MdxDataTable`) or as a regular list:

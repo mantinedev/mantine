@@ -7,8 +7,7 @@ export default Layout(MDX_DATA.Splitter);
 ## Usage
 
 `Splitter` component provides resizable split pane layout. It is built on top of the
-[use-splitter](/hooks/use-splitter/) hook and provides a declarative API with
-Styles API integration.
+[use-splitter](/hooks/use-splitter/) hook.
 
 <Demo data={SplitterDemos.usage} />
 
@@ -21,14 +20,11 @@ Styles API integration.
 - A `px` or `rem` string (`'240px'`, `'15rem'`) is a **fixed** size – the pane keeps its pixel size
   when the container is resized and only changes when its own handle is dragged.
 
-This makes it possible to mix a fixed-width sidebar with a fluid content pane that absorbs the
-remaining space:
-
 <Demo data={SplitterDemos.cssUnits} />
 
-Sizes are reported back in the unit they were declared in: a `'240px'` pane stays `'240px'` in
-`sizes` / `onSizeChange`, while a flexible pane reports its resolved percentage. When the container
-becomes smaller than the sum of the fixed panes, fixed panes shrink proportionally.
+`sizes` and `onSizeChange` use the unit the pane was declared with: a `'240px'` pane stays `'240px'`,
+a flexible pane reports a percentage. When the container is smaller than the sum of the fixed panes,
+fixed panes shrink proportionally.
 
 ## Vertical orientation
 

@@ -21,37 +21,30 @@ Set `mode="static"` to disable all interactions.
 ## Drag and drop
 
 Enable drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback receives
-the `resourceId` of the target resource, allowing you to update the event's resource assignment.
+the `resourceId` of the target resource, use it to update the event's resource.
 
 <Demo data={ResourcesMonthViewDemos.dragDrop} />
 
-To reject a drop based on where the event lands – for example to prevent double booking – use
+To reject a drop based on where the event lands, for example to prevent double booking, use
 `preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
-In resource views the conflict set is scoped to the target resource. Month view has no drag ghost, so a
-rejected drop is only reported through `onEventPlacementRejected`.
+In resource views, the event is checked against the events of the target resource. Month view has no drag ghost,
+a rejected drop is only reported with `onEventPlacementRejected`.
 
 ## Event resize
 
 Enable event resizing with `withEventResize` prop. Events can be resized by dragging their start or
-end edges, and the `onEventResize` callback is called with the updated event start and end dates.
+end edges, `onEventResize` is called with the new start and end dates.
 
 <Demo data={ResourcesMonthViewDemos.eventResize} />
 
 To reject a resize based on the new range, use `preventEventOverlap` and `canResizeEventTo`, see
 [drop validation](/schedule/schedule/#drop-validation).
 
-Resizing snaps to whole days and preserves the event's original time of day: dragging the end edge
-of an event that ends at `17:00` onto another day keeps the `17:00` end time. Events that end
-exactly at midnight are treated as ending on the previous day, so their end stays exclusive after
-a resize.
-
-Resize handles are rendered only on the edges where the event actually starts and ends. An event
-that continues outside the displayed month, or that is split across rows, does not render a handle
-on those edges. Events hidden behind the "+N more" indicator cannot be resized.
-
-Resizing never changes the event's resource — drag the event itself to move it to another resource.
-
-Use `canResizeEvent` to control which events can be resized.
+- Resizing snaps to whole days and keeps the time of day: an event that ends at `17:00` still ends at `17:00` on the new day
+- Resize handles are displayed only on the edges where the event starts and ends, an event that continues outside the displayed month has no handle on that edge
+- Events hidden behind the "+N more" indicator cannot be resized
+- Resizing does not change the event's resource, drag the event to move it to another resource
+- Use `canResizeEvent` to control which events can be resized
 
 ## Event form
 
@@ -111,8 +104,7 @@ Use `dayWidth` and `rowHeight` props to customize the dimensions of day columns 
 
 ## Start scroll date
 
-Use `startScrollDate` prop to scroll to a specific date on initial render. This is useful
-when the month has many days and you want the view to start at a specific date, for example today.
+Use `startScrollDate` prop to scroll to a specific date on initial render, for example to today.
 
 <Demo data={ResourcesMonthViewDemos.startScrollDate} />
 
@@ -124,8 +116,7 @@ Set `withWeekendDays={false}` to hide weekend day columns from the month grid.
 
 ## More events indicator
 
-When a day cell has more events than `maxEventsPerTimeSlot`, a "+X more" indicator is shown.
-Click the indicator to see all events for that day.
+Click the "+X more" indicator to see all events of the day.
 
 <Demo data={ResourcesMonthViewDemos.moreEvents} />
 

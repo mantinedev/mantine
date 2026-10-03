@@ -13,18 +13,14 @@ view switching. Use the view selector in the header to switch between different 
 
 ## Controlled state
 
-Control the current view and date externally using the `view`, `onViewChange`, `date`, and `onDateChange` props.
-This allows you to build custom navigation or integrate with other components.
+Use `view`, `onViewChange`, `date` and `onDateChange` props to control the current view and date.
 
 <Demo data={ScheduleDemos.controlled} />
 
 ## View-specific props
 
-Customize each view by passing view-specific props via `dayViewProps`, `weekViewProps`, `monthViewProps`,
-and `yearViewProps`. These props are forwarded to the corresponding view component.
-
-For example, you can set different time ranges for Day and Week views, or customize the first day of week
-for Month and Year views.
+Use `dayViewProps`, `weekViewProps`, `monthViewProps` and `yearViewProps` to pass props
+to the corresponding view component, for example to set different time ranges for Day and Week views.
 
 <Demo data={ScheduleDemos.viewProps} />
 
@@ -58,10 +54,9 @@ to different time slots and days across all views.
 
 ## Create and update events
 
-Set `withDragSlotSelect` prop to allow users to drag across time slots or day cells to select a range.
-When the drag ends, the `onSlotDragEnd` callback is called with the range start and end dates.
-Combined with `onTimeSlotClick`, `onAllDaySlotClick`, `onDayClick`, and `onEventClick` callbacks,
-this enables a complete event creation and editing experience across all views.
+Set `withDragSlotSelect` prop to allow users to select a range by dragging across time slots
+or day cells. When the drag ends, `onSlotDragEnd` is called with the range start and end dates.
+Combine it with slot, day and event click callbacks to create and edit events in all views.
 
 <Demo data={ScheduleDemos.eventForm} />
 
@@ -75,12 +70,9 @@ The callback receives the `DataTransfer` object and the drop target datetime.
 
 ## Bidirectional drag and drop
 
-Combine `onExternalEventDrop` with `withEventsDragAndDrop` to enable bidirectional
-drag and drop. Items dragged from the sidebar are removed from the list and added
-to the schedule. Events dragged from the schedule back to the sidebar are removed
-from the schedule. The schedule sets `application/json` with `{ eventId }` in
-`dataTransfer` when an event is dragged, which the sidebar drop zone reads to
-identify the event.
+Combine `onExternalEventDrop` with `withEventsDragAndDrop` to drag items both to and from
+the schedule. When an event is dragged, the schedule sets `application/json` data with `{ eventId }`
+in `dataTransfer`, read it in your drop zone to identify the event.
 
 <Demo data={ScheduleDemos.bidirectionalDragDrop} />
 
@@ -88,16 +80,15 @@ identify the event.
 
 Enable event resizing by setting `withEventResize` prop. Users can drag the top or bottom
 edge of an event to adjust its start or end time. Use `onEventResize` callback to handle
-the resize. Event resize works in both Day and Week views and can be combined with drag and drop.
+the resize. Event resize works in Day and Week views.
 
 <Demo data={ScheduleDemos.eventResize} />
 
 ## Drop validation
 
-By default a drop or resize is always committed and the application decides in `onEventDrop` /
-`onEventResize` whether to accept it. That produces a snap-back with no explanation. Use the
-validation props to reject a placement **before** it is committed, based on where the event is
-being dropped rather than on which event is being dragged:
+By default, every drop and resize is committed and the application decides in `onEventDrop` /
+`onEventResize` whether to accept it. Use the validation props to reject a placement before
+it is committed, based on where the event is being dropped:
 
 <DataTable
   head={['Prop', 'Description']}
@@ -122,48 +113,36 @@ being dropped rather than on which event is being dragged:
   ]}
 />
 
-The checks compose: a placement is allowed only when the overlap check passes **and** the matching
-callback returns a value other than `false`. The overlap check runs first, so `onEventPlacementRejected`
-can report `conflicts` without your code repeating the work.
+A placement is allowed only when the overlap check passes and the matching callback does not
+return `false`. The callbacks are called many times while the event is dragged, so they must be
+pure and cheap. Do not show notifications, update state or send requests from them,
+use `onEventPlacementRejected` for that.
 
-The callbacks and the function form of `preventEventOverlap` run at `dragover` / `pointermove`
-frequency to compute the live feedback described below, so they must be pure and cheap. Do not show
-notifications, update state or send requests from them – use `onEventPlacementRejected` for that.
-
-Live feedback before the pointer is released is limited to two places. The drag ghost gets
-`data-invalid` while it is over an invalid target – the ghost is only rendered when `eventDragInterval`
-is set, so without it the slot highlight looks the same over a valid and an invalid target. A resizing
-event gets `data-invalid` on the `event` selector in every view that supports resize. `MonthView`,
-`ResourcesMonthView` and the `WeekView` all-day row have no drag ghost and give no pre-drop feedback:
-there the rejection is only reported through `onEventPlacementRejected` on drop. The drop is still
-allowed at the browser level – marking it as not-allowed would make the browser skip the `drop` event
-entirely and `onEventPlacementRejected` would never fire.
+While the event is over an invalid target, `data-invalid` attribute is set on the drag ghost
+(rendered only when `eventDragInterval` is set) and on the event that is being resized.
+`MonthView`, `ResourcesMonthView` and the all-day row of `WeekView` have no drag ghost,
+the rejection is only reported with `onEventPlacementRejected`.
 
 <Demo data={WeekViewDemos.preventEventOverlap} />
 
 ### What counts as a conflict
 
-`preventEventOverlap` compares the candidate range against the events the view has expanded. These
-are excluded from the conflict set:
+`preventEventOverlap` compares the new range with other events of the view. These events
+are not counted as conflicts:
 
-- The moving event itself, matched by `id`, and other occurrences of the same recurring series that
-  share its `recurrenceId`.
-- Events with `display: 'background'` – they are a shading layer, not bookings.
-- All-day events when the moving event is timed, and timed events when the moving event is all-day.
+- The moving event itself
+- Events with `display: 'background'`
+- All-day events when the moving event is timed, and timed events when the moving event is all-day
 
-Touching is not overlapping: an event ending at 10:00 and one starting at 10:00 do not conflict.
+An event that ends at 10:00 and an event that starts at 10:00 do not conflict.
+In `Resources*` views, the event is checked against the events of the target resource.
 
-In `Resources*` views the conflict set is scoped to the **target** resource, so moving an event to a
-different resource row is checked against that row rather than the one it came from.
-
-`preventEventOverlap` is a **view-local** guard: it only sees events the current view has expanded, so
-a conflict outside the visible range is not detected. An application with authoritative data should
-still validate in `onEventDrop`.
+`preventEventOverlap` only sees the events of the current view, a conflict outside of the visible
+range is not detected. If you need a complete check, validate the placement in `onEventDrop` as well.
 
 ### Blocking drops onto closed hours
 
-Background events are deliberately not part of the conflict set. To block drops onto a closed or
-blocked zone, use `canDropEvent` with the exported `isEventsOverlap` helper:
+To block drops onto a closed zone, use `canDropEvent` with `isEventsOverlap` helper:
 
 ```tsx
 import { isEventsOverlap, ScheduleEventData } from '@mantine/schedule';
@@ -177,10 +156,15 @@ import { isEventsOverlap, ScheduleEventData } from '@mantine/schedule';
 
 ### Rejection data
 
-`onEventPlacementRejected` receives a discriminated union keyed on `action`. Every member carries
-`start`, `conflicts`, `reason` (`'overlap'` when the overlap check found a conflict, `'rejected'` when
-a callback returned `false`) and, in `Resources*` views, `resourceId` – the target resource for `drop`
-and `external-drop`, the event's own resource for `resize`:
+`onEventPlacementRejected` is called with an object that always has the following fields:
+
+- `action` – `drop`, `resize` or `external-drop`
+- `start` – start of the rejected placement
+- `reason` – `'overlap'` when the overlap check found a conflict, `'rejected'` when a callback returned `false`
+- `conflicts` – events that the placement overlaps
+- `resourceId` – only in `Resources*` views: the target resource for `drop` and `external-drop`, the event's own resource for `resize`
+
+Other fields depend on `action`:
 
 <DataTable
   head={['action', 'Extra fields']}
@@ -191,11 +175,9 @@ and `external-drop`, the event's own resource for `resize`:
   ]}
 />
 
-External drops carry no `event` and no `end` – `onExternalEventDrop` only produces a single datetime
-and the schedule does not know the duration of an external item – so `preventEventOverlap` does not
-apply to them, their `reason` is always `'rejected'` and `conflicts` is always empty. Note that
-`dataTransfer` data cannot be read while a drag is in progress, only `dataTransfer.types` is available
-to `canDropExternalEvent`.
+`preventEventOverlap` does not apply to external drops: the schedule does not know the duration
+of an external item. `canDropExternalEvent` can read only `dataTransfer.types`, the data itself
+is not available while the drag is in progress.
 
 ## Recurring events
 
