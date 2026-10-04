@@ -4741,11 +4741,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/store@workspace:packages/@mantine/store"
   peerDependencies:
-    "@types/react": ">=19.2.0"
     react: ^19.2.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
   languageName: unknown
   linkType: soft
 
