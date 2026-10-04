@@ -40,30 +40,13 @@ After running the commands above, check if `codex` CLI is available (`command -v
 
 ## Writing Documentation
 
-Documentation is written for a human who skims: they look at the demo and read one or two sentences next to it. Pages written before 9.0 (`core/slider.mdx`, `core/popover.mdx`) are the target style, `core/tour.mdx` is a compound component example.
+Before writing or editing `.mdx` pages (`apps/mantine.dev`, `apps/help.mantine.dev`), changelog pages, migration guides or demos in `packages/@docs/demos`, invoke the `mantine-docs` skill and follow it. Before handing the work back, run its checker: `python3 ~/.claude/skills/mantine-docs/scripts/check_docs.py`.
 
-- **One to three short sentences per demo.** Say what the prop or component does in plain words ("Set `x` prop to …"), then show the demo. If more must be said, put it in a short list after the demo.
-- **The demo and the props table are part of the page.** Text covers only what they cannot show. Lists of compound components, props, supported values and defaults already live there.
-- **Each fact once per page**, in the section where the reader looks for it. Keyboard and accessibility tables count: text next to them adds only what the table lacks.
-- **Document ordinary use.** A caveat earns its place when a user hits it in everyday usage and cannot work it out from the demo: a required prop, wrapper or styles import, a real gotcha, an accessibility requirement the user must fulfil. Corner cases found during code review, internal mechanisms and reasons behind the implementation belong in tests and commit messages.
-- **A sentence with five or more inline-code spans is an enumeration.** Rewrite it in plain words or as a list.
-- **Keep existing headings** when editing a page: other pages link to their anchors.
+Rules that break the page when ignored, for tools that cannot load the skill:
 
-After writing a section, reread it as a user who has never seen the source code and delete every sentence they would skip.
-
-## Writing MDX Files
-
-**Markdown table syntax does not work.** The docs MDX pipeline (`apps/mantine.dev`, `apps/help.mantine.dev`) does not include `remark-gfm`, so pipe tables render as literal text on the page. Write tabular content either as a `<DataTable />` (available in every `apps/mantine.dev` mdx file without an import, see `MdxDataTable`) or as a regular list:
-
-```mdx
-<DataTable
-  head={['Prop', 'Components']}
-  data={[
-    ['valueFormat', '`DateInput`, `DateTimePicker`'],
-    ['weekdayFormat', '`Calendar`, `DatePicker`'],
-  ]}
-/>
-```
+- **Text that explains a demo goes before the demo**, never after it.
+- **Markdown pipe tables do not render** (no `remark-gfm`). Use `<DataTable />` or a list.
+- **`DataTable` cells are rendered as is**: backticks inside a string are displayed literally, use `<code>` elements.
 
 ## Tests
 

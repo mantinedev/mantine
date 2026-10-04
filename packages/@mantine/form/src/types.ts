@@ -38,7 +38,14 @@ export type FormRule<Value, Values> =
         | Partial<
             {
               [Key in keyof ListValue]: ListValue[Key] extends ReadonlyArray<infer NestedListItem>
-                ? FormRulesRecord<NestedListItem, Values> | Rule<ListValue[Key], Values>
+                ?
+                    | (Partial<{
+                        [NestedKey in keyof NestedListItem]: FormRule<
+                          NestedListItem[NestedKey],
+                          Values
+                        >;
+                      }> & { [formRootRule]?: Rule<ListValue[Key], Values> })
+                    | Rule<ListValue[Key], Values>
                 : FormRulesRecord<ListValue[Key], Values> | Rule<ListValue[Key], Values>;
             } & { [formRootRule]?: Rule<Value, Values> }
           >

@@ -2065,6 +2065,7 @@ Additional information about ${component} component.`;
       'dates',
       'charts',
       'schedule',
+      'code-highlight',
       'guides',
       'theming',
       'styles',

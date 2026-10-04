@@ -178,7 +178,7 @@ describe('@mantine/core/AppShell', () => {
     drag(screen.getByRole('separator'), 50);
 
     const styles = getInlineStyles();
-    expect(styles).toContain(`--app-shell-navbar-width:${rem(350)}`);
+    expect(styles).toContain(`--app-shell-navbar-width:min(${rem(350)}`);
     expect(styles).not.toContain(`--app-shell-navbar-width:${rem(300)}`);
   });
 
@@ -200,7 +200,7 @@ describe('@mantine/core/AppShell', () => {
 
     render(<InitialSizesShell />);
 
-    expect(getInlineStyles()).toContain(`--app-shell-navbar-width:${rem(420)}`);
+    expect(getInlineStyles()).toContain(`--app-shell-navbar-width:min(${rem(420)}`);
     expect(screen.getByRole('separator')).toHaveAttribute('aria-valuenow', '420');
   });
 
@@ -243,7 +243,7 @@ describe('@mantine/core/AppShell', () => {
 
       fireEvent.keyDown(screen.getByRole('separator'), { key: 'ArrowRight' });
       expect(root).toHaveAttribute('data-resizing');
-      expect(getInlineStyles()).toContain(`--app-shell-navbar-width:${rem(310)}`);
+      expect(getInlineStyles()).toContain(`--app-shell-navbar-width:min(${rem(310)}`);
 
       act(() => {
         jest.advanceTimersByTime(300);

@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useEditorState } from '@tiptap/react';
 import { BoxProps, CompoundStylesApiProps, factory, Factory, useProps } from '@mantine/core';
 import {
   getImageFiles,
@@ -31,14 +32,28 @@ const PhotoIcon: RichTextEditorControlBaseProps['icon'] = (props) => <IconPhoto 
 export const RichTextEditorImageUploadControl = factory<RichTextEditorImageUploadControlFactory>(
   (_props) => {
     const props = useProps('RichTextEditorImageUploadControl', null, _props);
-    const { classNames, className, style, styles, vars, icon, accept, onClick, ...others } = props;
+    const {
+      classNames,
+      className,
+      style,
+      styles,
+      vars,
+      icon,
+      accept,
+      onClick,
+      disabled: disabledProp,
+      ...others
+    } = props;
 
     const ctx = useRichTextEditorContext();
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const isEditorUsable = () => !!ctx.editor && !ctx.editor.isDestroyed && ctx.editor.isEditable;
+    const usable = useEditorState({ editor: ctx.editor ?? null, selector: isEditorUsable });
+    const disabled = !(usable ?? false) || !!disabledProp;
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = getImageFiles(event.target.files);
-      if (files.length === 0 || !ctx.editor) {
+      if (files.length === 0 || !ctx.editor || !isEditorUsable()) {
         return;
       }
 
@@ -71,6 +86,7 @@ export const RichTextEditorImageUploadControl = factory<RichTextEditorImageUploa
           styles={styles}
           variant={ctx.variant}
           {...others}
+          disabled={disabled}
           onClick={(event) => {
             onClick?.(event);
 

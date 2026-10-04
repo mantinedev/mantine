@@ -20,11 +20,11 @@ export default Layout(MDX_DATA.Splitter);
 - A `px` or `rem` string (`'240px'`, `'15rem'`) is a **fixed** size – the pane keeps its pixel size
   when the container is resized and only changes when its own handle is dragged.
 
-<Demo data={SplitterDemos.cssUnits} />
-
 `sizes` and `onSizeChange` use the unit the pane was declared with: a `'240px'` pane stays `'240px'`,
 a flexible pane reports a percentage. When the container is smaller than the sum of the fixed panes,
 fixed panes shrink proportionally.
+
+<Demo data={SplitterDemos.cssUnits} />
 
 ## Vertical orientation
 

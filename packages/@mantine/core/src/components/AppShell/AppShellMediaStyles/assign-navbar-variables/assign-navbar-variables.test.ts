@@ -1,6 +1,7 @@
 import { DEFAULT_THEME, px, rem } from '../../../../core';
 import { AppShellProps } from '../../AppShell';
-import { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
+import { getResizedValue } from '../get-resized-value/get-resized-value';
+import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { assignNavbarVariables } from './assign-navbar-variables';
 
 function getTestObject(navbar: AppShellProps['navbar'], mode: 'fixed' | 'static' = 'fixed') {
@@ -140,8 +141,8 @@ describe('@mantine/core/AppShell/assign-navbar-variables resize', () => {
     const { baseStyles } = getResizedTestObject({ width: 300, breakpoint: 'sm' }, 420);
 
     expect(baseStyles).toMatchObject({
-      '--app-shell-navbar-width': rem(420),
-      '--app-shell-navbar-offset': rem(420),
+      '--app-shell-navbar-width': getResizedValue(420, 'horizontal'),
+      '--app-shell-navbar-offset': getResizedValue(420, 'horizontal'),
     });
   });
 
@@ -198,8 +199,8 @@ describe('@mantine/core/AppShell/assign-navbar-variables resize', () => {
     });
 
     expect(baseStyles).toMatchObject({
-      '--app-shell-navbar-width': rem(420),
-      '--app-shell-navbar-offset': rem(420),
+      '--app-shell-navbar-width': getResizedValue(420, 'horizontal'),
+      '--app-shell-navbar-offset': getResizedValue(420, 'horizontal'),
     });
   });
 });

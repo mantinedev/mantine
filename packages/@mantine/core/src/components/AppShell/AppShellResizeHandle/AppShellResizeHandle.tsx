@@ -111,6 +111,14 @@ export function AppShellResizeHandle({ section, sectionId }: AppShellResizeHandl
     }
   };
 
+  const cancelResize = () => {
+    controller?.reportCollapse(
+      section,
+      getCollapseState(dragRef.current.startSize, options.collapseThreshold)
+    );
+    controller?.endResize(section, null);
+  };
+
   const onPointerMove = (event: PointerEvent) => {
     if (event.pointerId !== activePointerIdRef.current) {
       return;
@@ -163,7 +171,7 @@ export function AppShellResizeHandle({ section, sectionId }: AppShellResizeHandl
 
     stopListeners();
     clearPreview();
-    controller?.endResize(section, null);
+    cancelResize();
   };
 
   const onDragKeyDown = (event: KeyboardEvent) => {
@@ -175,7 +183,7 @@ export function AppShellResizeHandle({ section, sectionId }: AppShellResizeHandl
     stopListeners();
     clearPreview();
     handleRef.current?.setAttribute('aria-valuenow', String(Math.round(dragRef.current.startSize)));
-    controller?.endResize(section, null);
+    cancelResize();
   };
 
   const getCurrentSize = () => {
@@ -318,7 +326,7 @@ export function AppShellResizeHandle({ section, sectionId }: AppShellResizeHandl
       clearPreview();
 
       if (wasDragging) {
-        controller?.endResize(section, null);
+        cancelResize();
       }
     },
     []
@@ -328,9 +336,13 @@ export function AppShellResizeHandle({ section, sectionId }: AppShellResizeHandl
     return null;
   }
 
-  const currentValue = controller[section].size ?? measuredSize;
   const viewportMax = viewportPx / theme.scale;
   const effectiveMax = Math.min(options.max ?? viewportMax, viewportMax);
+  const committedSize = controller[section].size;
+  const currentValue =
+    committedSize !== undefined && viewportPx > 0
+      ? Math.min(committedSize, viewportMax)
+      : (committedSize ?? measuredSize);
 
   return (
     <Box

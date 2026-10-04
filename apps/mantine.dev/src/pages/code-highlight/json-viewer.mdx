@@ -6,11 +6,11 @@ export default Layout(MDX_DATA.JsonViewer);
 
 ## Usage
 
-`JsonViewer` is an interactive component for viewing JSON structures:
-
-<Demo data={JsonViewerDemos.usage} />
+`JsonViewer` is an interactive component for viewing JSON structures.
 
 `JsonViewer` displays values the way `JSON.stringify` serializes them: values that implement `toJSON()` (for example, `Date`) are displayed as the result of `toJSON()`, and `Map` / `Set` are displayed as empty objects.
+
+<Demo data={JsonViewerDemos.usage} />
 
 ## Default expand depth
 
@@ -62,11 +62,11 @@ Set `withCopy` prop to display a copy button when a row is hovered or focused:
 ## Collapse long strings
 
 Use `collapseStringsAfterLength` prop to truncate long strings. Truncated strings
-display a "show more" button that reveals the full value:
-
-<Demo data={JsonViewerDemos.collapseStrings} />
+display a "show more" button that reveals the full value.
 
 String values longer than 20 characters wrap onto multiple lines. These values have `data-wrap` attribute, use it to change the wrapping behavior with [Styles API](/styles/styles-api).
+
+<Demo data={JsonViewerDemos.collapseStrings} />
 
 ## Sort keys
 
