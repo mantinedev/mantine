@@ -233,9 +233,9 @@ async function handleImageUpload(file: File) {
 }
 ```
 
-<Demo data={TipTapDemos.imageUpload} />
-
 Note that the image node must be created with `getUploadImageExtension`: if a plain `@tiptap/extension-image` extension is used instead, `RichTextEditor.ImageUpload` control logs a warning and does not insert anything.
+
+<Demo data={TipTapDemos.imageUpload} />
 
 ### Upload error handling
 
@@ -250,8 +250,6 @@ and register it with the editor. `TableKit` bundles all required node extensions
 `TableHeader` and `TableCell`) in one package:
 
 <InstallScript packages="@tiptap/extension-table" />
-
-<Demo data={TipTapDemos.table} />
 
 `RichTextEditor` provides the following table controls. All of them are disabled when the table
 extension is not installed, and every control except `RichTextEditor.TableInsert` is additionally
@@ -268,6 +266,8 @@ disabled while the cursor is not inside a table:
 - `RichTextEditor.TableToggleHeaderRow` / `RichTextEditor.TableToggleHeaderColumn` – toggle header row/column
 - `RichTextEditor.TableMergeCells` / `RichTextEditor.TableSplitCell` – merge selected cells / split a merged cell
 
+<Demo data={TipTapDemos.table} />
+
 ## Details
 
 To add collapsible sections (`<details>`/`<summary>`), install the
@@ -276,11 +276,11 @@ three nodes it provides – `Details`, `DetailsSummary` and `DetailsContent`:
 
 <InstallScript packages="@tiptap/extension-details" />
 
-<Demo data={TipTapDemos.details} />
-
 `RichTextEditor.Details` toggles a collapsible section: it wraps the current block in a details node,
 or removes the details node when the cursor is already inside one. The control is automatically
 disabled when the details extension is not installed.
+
+<Demo data={TipTapDemos.details} />
 
 ## Invisible characters
 
@@ -290,11 +290,11 @@ and register it. Set `visible: false` to hide the marks until the control is tog
 
 <InstallScript packages="@tiptap/extension-invisible-characters" />
 
-<Demo data={TipTapDemos.invisibleCharacters} />
-
 `RichTextEditor.InvisibleCharacters` toggles the visibility of formatting marks. The control reflects
 the current visibility as its active state and is automatically disabled when the extension is not
 installed.
+
+<Demo data={TipTapDemos.invisibleCharacters} />
 
 ## Removing the paragraph wrapper
 

@@ -23,19 +23,17 @@ Set `mode="static"` to disable all interactions.
 Enable drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback receives
 the `resourceId` of the target resource, use it to update the event's resource.
 
-<Demo data={ResourcesMonthViewDemos.dragDrop} />
-
 To reject a drop based on where the event lands, for example to prevent double booking, use
 `preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
 In resource views, the event is checked against the events of the target resource. Month view has no drag ghost,
 a rejected drop is only reported with `onEventPlacementRejected`.
 
+<Demo data={ResourcesMonthViewDemos.dragDrop} />
+
 ## Event resize
 
 Enable event resizing with `withEventResize` prop. Events can be resized by dragging their start or
 end edges, `onEventResize` is called with the new start and end dates.
-
-<Demo data={ResourcesMonthViewDemos.eventResize} />
 
 To reject a resize based on the new range, use `preventEventOverlap` and `canResizeEventTo`, see
 [drop validation](/schedule/schedule/#drop-validation).
@@ -45,6 +43,8 @@ To reject a resize based on the new range, use `preventEventOverlap` and `canRes
 - Events hidden behind the "+N more" indicator cannot be resized
 - Resizing does not change the event's resource, drag the event to move it to another resource
 - Use `canResizeEvent` to control which events can be resized
+
+<Demo data={ResourcesMonthViewDemos.eventResize} />
 
 ## Event form
 

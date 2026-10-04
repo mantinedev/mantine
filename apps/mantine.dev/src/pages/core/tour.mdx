@@ -40,11 +40,11 @@ always starts from `defaultStep`.
 - `withOverlayInteraction` – allow users to interact with the highlighted element, `false` by default
 - `closeOnOverlayClick` – close the tour when the overlay is clicked, `false` by default
 
-<Demo data={TourDemos.overlay} />
-
 Dropdowns rendered in a portal (`Select`, `Menu`, etc.) are displayed below the tour.
 To use them with `withOverlayInteraction`, set their `zIndex` to a value greater than
 the tour `zIndex`, for example `comboboxProps={{ zIndex: 10001 }}`.
+
+<Demo data={TourDemos.overlay} />
 
 ## Step targets
 
@@ -61,16 +61,14 @@ and completion screens.
 ## Custom content
 
 `Tour.Step` children can be any React node. To build the tooltip layout yourself,
-use compound components:
-
-<Demo data={TourDemos.compound} />
-
-Compound components do not know your steps:
+use compound components. Compound components do not know your steps:
 
 - Pass the total number of steps to `Tour.Root` with `stepsCount` prop
 - Find target elements yourself and pass them to `Tour.Overlay` (`targetRect`) and `Tour.Tooltip` (`targetElement`)
 - Set a distinct `aria-label` on each `Tour.Beacon`
 - To play the exit transition, set `mounted={false}` on `Tour.Tooltip` first and `active={false}` on `Tour.Root` after the transition ends
+
+<Demo data={TourDemos.compound} />
 
 ## Tooltip position
 

@@ -76,16 +76,19 @@ instead of dayjs – this way you do not need to import `dayjs/locale/*` modules
 
 The following props accept a function:
 
-| Prop | Components |
-| --- | --- |
-| `valueFormatter` | `DatePickerInput`, `MonthPickerInput`, `YearPickerInput` |
-| `valueFormat` | `DateInput`, `DateTimePicker`, `InlineDateTimePicker` |
-| `monthLabelFormat` | `Calendar`, `DatePicker`, `DateInput`, `MiniCalendar`, `MonthLevel` and all components that use them |
-| `yearLabelFormat` | `Calendar`, `DatePicker`, `YearLevel` and all components that use them |
-| `decadeLabelFormat` | `Calendar`, `DatePicker`, `DecadeLevel` and all components that use them |
-| `weekdayFormat` | `Calendar`, `DatePicker`, `Month`, `WeekdaysRow` and all components that use them |
-| `monthsListFormat` | `Calendar`, `MonthPicker`, `MonthsList` and all components that use them |
-| `yearsListFormat` | `Calendar`, `YearPicker`, `YearsList` and all components that use them |
+<DataTable
+  head={['Prop', 'Components']}
+  data={[
+    [<><code>valueFormatter</code></>, <><code>DatePickerInput</code>, <code>MonthPickerInput</code>, <code>YearPickerInput</code></>],
+    [<><code>valueFormat</code></>, <><code>DateInput</code>, <code>DateTimePicker</code>, <code>InlineDateTimePicker</code></>],
+    [<><code>monthLabelFormat</code></>, <><code>Calendar</code>, <code>DatePicker</code>, <code>DateInput</code>, <code>MiniCalendar</code>, <code>MonthLevel</code> and all components that use them</>],
+    [<><code>yearLabelFormat</code></>, <><code>Calendar</code>, <code>DatePicker</code>, <code>YearLevel</code> and all components that use them</>],
+    [<><code>decadeLabelFormat</code></>, <><code>Calendar</code>, <code>DatePicker</code>, <code>DecadeLevel</code> and all components that use them</>],
+    [<><code>weekdayFormat</code></>, <><code>Calendar</code>, <code>DatePicker</code>, <code>Month</code>, <code>WeekdaysRow</code> and all components that use them</>],
+    [<><code>monthsListFormat</code></>, <><code>Calendar</code>, <code>MonthPicker</code>, <code>MonthsList</code> and all components that use them</>],
+    [<><code>yearsListFormat</code></>, <><code>Calendar</code>, <code>YearPicker</code>, <code>YearsList</code> and all components that use them</>],
+  ]}
+/>
 
 Note that `DateInput.valueFormat` is also used to parse user input. When it is set to a function,
 the component can no longer parse arbitrary formats – set the [dateParser](/dates/date-input/#date-parser)

@@ -259,9 +259,7 @@ Use the `notifications.cleanQueue` function to remove all notifications from the
 Use `notifications.promise` function to display a loading notification while a promise is pending
 and update it with success or error state once the promise settles. The function accepts a promise
 and an object with `loading`, `success` and `error` notifications. `success` and `error` can be
-functions – they receive the resolved value or the rejection reason and return notification props:
-
-<Demo data={NotificationsDemos.promise} />
+functions – they receive the resolved value or the rejection reason and return notification props.
 
 State objects accept all [notification props](#notification-props) except `id`.
 `notifications.promise` applies the following defaults, all of them can be overridden
@@ -274,6 +272,8 @@ in the corresponding state object:
 All three states are displayed in the same notification, props that are not set in the next state
 are kept from the previous one. For example, if `title` is set only in `loading`, it is also displayed
 in `success` and `error` states.
+
+<Demo data={NotificationsDemos.promise} />
 
 `notifications.promise` returns the promise that was passed to it, so you can await it or chain it.
 If the loading notification was closed before the promise settled, the `success` or `error` state
@@ -342,9 +342,7 @@ function Demo() {
 
 The `Notifications` prop sets the default for all notifications, it can be overridden for
 individual notifications with the `withAutoCloseProgress` property in `notifications.show`
-and `notifications.update` functions:
-
-<Demo data={NotificationsDemos.autoCloseProgress} />
+and `notifications.update` functions.
 
 Note that:
 
@@ -353,6 +351,8 @@ Note that:
 - The progress line uses notification `color`
 - The progress line is a part of the default notification rendering, it is not displayed for notifications rendered with `renderNotification`
 - Use `progress` [Styles API](/styles/styles-api/) selector of the `Notifications` component to customize the line, for example, to change its height or color
+
+<Demo data={NotificationsDemos.autoCloseProgress} />
 
 ## Pause auto close on hover
 

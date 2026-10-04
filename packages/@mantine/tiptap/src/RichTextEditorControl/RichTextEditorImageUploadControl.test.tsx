@@ -312,6 +312,34 @@ describe('@mantine/tiptap/RichTextEditorImageUploadControl', () => {
     warn.mockRestore();
   });
 
+  it('disables the control and ignores picked files while the editor is read-only', async () => {
+    const onImageUpload = jest.fn(() => Promise.resolve('https://cdn/a.png'));
+    let editor: Editor | null = null;
+    const { container } = render(
+      <TestEditor
+        extensions={createUploadExtensions({ onImageUpload })}
+        onEditor={(instance) => {
+          editor = instance;
+        }}
+      />
+    );
+    const control = await screen.findByLabelText(label);
+    expect(control).toBeEnabled();
+
+    act(() => editor!.setEditable(false));
+    expect(control).toBeDisabled();
+
+    await act(async () => {
+      pickFiles(container, [createImageFile()]);
+    });
+
+    expect(onImageUpload).not.toHaveBeenCalled();
+    expect(container.querySelector('img')).toBeNull();
+
+    act(() => editor!.setEditable(true));
+    expect(control).toBeEnabled();
+  });
+
   it('warns and inserts nothing when the image extension was not created with getUploadImageExtension', async () => {
     const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const onImageUpload = jest.fn(() => Promise.resolve('https://cdn/a.png'));

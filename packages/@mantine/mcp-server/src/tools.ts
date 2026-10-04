@@ -11,6 +11,7 @@ const groupSchema = z.enum([
   'extensions',
   'form',
 ]);
+const nameSchema = z.string().trim().min(1);
 
 function text(payload: unknown) {
   return {
@@ -52,7 +53,7 @@ export function registerTools(server: McpServer, client: MantineMcpDataClient): 
       description:
         'Get documentation for a Mantine component, hook, guide or FAQ page. Without a section it returns an outline (description plus section list) — pass a section to fetch just that part, or full:true for the whole page.',
       inputSchema: z.object({
-        name: z.string().describe('Item name or id, e.g. "useForm", "Button", "form-validation"'),
+        name: nameSchema.describe('Item name or id, e.g. "useForm", "Button", "form-validation"'),
         kind: kindSchema.optional(),
         section: z.string().optional().describe('Section slug from the outline, e.g. "zod"'),
         full: z.boolean().optional().describe('Return the entire page; can be very large'),
@@ -80,7 +81,7 @@ export function registerTools(server: McpServer, client: MantineMcpDataClient): 
       title: 'Get Mantine props or signature',
       description:
         'Get props for a Mantine component, or the TypeScript signature for a hook. Pages documenting an API in prose point at the relevant section instead.',
-      inputSchema: z.object({ name: z.string(), kind: kindSchema.optional() }),
+      inputSchema: z.object({ name: nameSchema, kind: kindSchema.optional() }),
     },
     async (args) => {
       const result = await client.getProps(args);
@@ -122,7 +123,7 @@ export function registerTools(server: McpServer, client: MantineMcpDataClient): 
       title: 'Resolve a Mantine symbol',
       description:
         'Resolve a Mantine symbol (useForm, useDisclosure, UseFormReturnType) to its TypeScript signature and exported types, without knowing which page documents it.',
-      inputSchema: z.object({ symbol: z.string() }),
+      inputSchema: z.object({ symbol: nameSchema }),
     },
     async ({ symbol }) => {
       const result = await client.getApi(symbol);
