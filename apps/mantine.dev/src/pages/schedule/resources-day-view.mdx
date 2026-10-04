@@ -98,11 +98,11 @@ Use `renderEvent` prop to fully customize event rendering.
 Enable drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback receives
 the `resourceId` of the target resource, use it to update the event's resource.
 
-<Demo data={ResourcesDayViewDemos.dragDrop} />
-
 To reject a drop based on where the event lands, for example to prevent double booking, use
 `preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
 In resource views, the event is checked against the events of the target resource.
+
+<Demo data={ResourcesDayViewDemos.dragDrop} />
 
 ## Drag interval
 
@@ -129,10 +129,10 @@ Events can be dragged both within the schedule and to an external area.
 Enable event resizing with `withEventResize` prop. Events can be resized by dragging
 their left or right edges.
 
-<Demo data={ResourcesDayViewDemos.eventResize} />
-
 To reject a resize based on the new range, use `preventEventOverlap` and `canResizeEventTo`, see
 [drop validation](/schedule/schedule/#drop-validation).
+
+<Demo data={ResourcesDayViewDemos.eventResize} />
 
 ## Resize interval
 
