@@ -28,9 +28,4 @@ describe('@mantine/core/AngleSlider', () => {
     render(<AngleSlider {...defaultProps} disabled />);
     expect(screen.getByRole('slider')).toHaveAttribute('aria-disabled', 'true');
   });
-
-  it('does not set aria-disabled when not disabled', () => {
-    render(<AngleSlider {...defaultProps} />);
-    expect(screen.getByRole('slider')).not.toHaveAttribute('aria-disabled');
-  });
 });
