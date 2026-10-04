@@ -48,8 +48,14 @@
     "@mantine/hooks": "9.6.3",
     "@tiptap/extension-link": ">=3.3.0",
     "@tiptap/react": ">=3.3.0",
+    "@types/react": ">=19.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",

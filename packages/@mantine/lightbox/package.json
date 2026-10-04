@@ -45,10 +45,16 @@
   "peerDependencies": {
     "@mantine/core": "9.6.3",
     "@mantine/hooks": "9.6.3",
+    "@types/react": ">=19.2.0",
     "embla-carousel": ">=8.0.0",
     "embla-carousel-react": ">=8.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@mantine/store": "9.6.3"

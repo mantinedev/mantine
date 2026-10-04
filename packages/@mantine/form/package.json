@@ -32,7 +32,13 @@
     "directory": "packages/@mantine/form"
   },
   "peerDependencies": {
+    "@types/react": ">=19.2.0",
     "react": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@standard-schema/spec": "^1.1.0",
