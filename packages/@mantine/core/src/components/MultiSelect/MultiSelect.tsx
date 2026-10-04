@@ -264,9 +264,9 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   const _id = useId(id);
   const comboboxLabelId = getComboboxLabelId({
     id: _id,
-    label: label,
-    labelProps: labelProps,
-    inputWrapperOrder: inputWrapperOrder,
+    label,
+    labelProps,
+    inputWrapperOrder,
   });
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
