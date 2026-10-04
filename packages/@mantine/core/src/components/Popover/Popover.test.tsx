@@ -114,7 +114,7 @@ describe('@mantine/core/Popover', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('does not close when outside element stops propagation in bubble phase', async () => {
+  it('does not close when outside element stops propagation', async () => {
     const spy = jest.fn();
     render(
       <>
@@ -130,11 +130,11 @@ describe('@mantine/core/Popover', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('close popover when outside element stops propagation in bubble phase and capture is true', async () => {
+  it('closes when outside element stops propagation and clickOutsideCapture is set', async () => {
     const spy = jest.fn();
     render(
       <>
-        <TestContainer defaultOpened capture onClose={spy} />
+        <TestContainer defaultOpened clickOutsideCapture onClose={spy} />
         <div
           role="presentation"
           data-testid="outside-target"
