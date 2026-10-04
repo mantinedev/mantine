@@ -1,4 +1,5 @@
 import 'dayjs/locale/ru';
+import { createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Schedule, ScheduleProps, ScheduleStylesNames } from './Schedule';
@@ -378,5 +379,115 @@ describe('@mantine/schedule/Schedule', () => {
 
     await userEvent.click(bgEvent);
     expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  describe('drop validation props', () => {
+    const validationProps = {
+      preventEventOverlap: true,
+      canDropEvent: () => true,
+      canDropExternalEvent: () => true,
+      canResizeEventTo: () => true,
+      onEventPlacementRejected: () => {},
+    };
+
+    const validationPropNames = Object.keys(validationProps);
+
+    const collectValidationPropWarnings = (view: 'month' | 'year') => {
+      const error = jest.spyOn(console, 'error').mockImplementation(() => {});
+      render(<Schedule {...defaultProps} view={view} {...validationProps} />);
+      const messages = error.mock.calls.map((call) => call.map(String).join(' '));
+      error.mockRestore();
+      return messages.filter((message) =>
+        validationPropNames.some((name) => message.includes(name))
+      );
+    };
+
+    it('does not forward validation props the month view does not declare', () => {
+      expect(collectValidationPropWarnings('month')).toEqual([]);
+    });
+
+    it('does not forward validation props to the year view', () => {
+      expect(collectValidationPropWarnings('year')).toEqual([]);
+    });
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'drop') => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      Object.defineProperty(event, 'clientX', { value: 0, configurable: true });
+      Object.defineProperty(event, 'clientY', { value: 0, configurable: true });
+      fireEvent(node, event);
+    };
+
+    const dropFirstEvent = (container: HTMLElement, target: Element) => {
+      fireDrag(container.querySelector('[data-event-id="1"]')!, 'dragStart');
+      fireDrag(target, 'drop');
+    };
+
+    it('forwards canDropEvent to the day view', () => {
+      const canDropEvent = jest.fn(() => false);
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <Schedule
+          {...defaultProps}
+          view="day"
+          withEventsDragAndDrop
+          canDropEvent={canDropEvent}
+          onEventDrop={onEventDrop}
+        />
+      );
+
+      dropFirstEvent(container, container.querySelector('.mantine-DayView-dayViewTimeSlots')!);
+
+      expect(canDropEvent).toHaveBeenCalledTimes(1);
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+
+    it('forwards canDropEvent to the week view', () => {
+      const canDropEvent = jest.fn(() => false);
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <Schedule
+          {...defaultProps}
+          view="week"
+          withEventsDragAndDrop
+          canDropEvent={canDropEvent}
+          onEventDrop={onEventDrop}
+        />
+      );
+
+      dropFirstEvent(
+        container,
+        container.querySelectorAll('.mantine-WeekView-weekViewDaySlots')[0]
+      );
+
+      expect(canDropEvent).toHaveBeenCalledTimes(1);
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+
+    it('forwards canDropEvent to the month view', () => {
+      const canDropEvent = jest.fn(() => false);
+      const onEventDrop = jest.fn();
+      const { container } = render(
+        <Schedule
+          {...defaultProps}
+          view="month"
+          withEventsDragAndDrop
+          canDropEvent={canDropEvent}
+          onEventDrop={onEventDrop}
+        />
+      );
+
+      dropFirstEvent(container, screen.getByRole('button', { name: 'January 15, 2024' }));
+
+      expect(canDropEvent).toHaveBeenCalledTimes(1);
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
   });
 });

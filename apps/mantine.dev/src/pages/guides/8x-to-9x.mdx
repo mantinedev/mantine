@@ -18,9 +18,8 @@ file and ask your AI agent to perform the migration for you.
 
 ## Prerequisites
 
-Mantine 9.x requires React 19.2 or later. If your project uses an older React version,
-you need to update it before migrating to Mantine 9.x. If you cannot update React to 19.2+
-yet, you can continue using Mantine 8.x until you are ready to update React and migrate to Mantine 9.x.
+Mantine 9.x requires React 19.2 or later. Update React before migrating.
+If you cannot update React yet, continue using Mantine 8.x.
 
 ## Update dependencies
 
@@ -158,8 +157,8 @@ import { Typography } from '@mantine/core';
 
 ## Popover and Tooltip positionDependencies prop
 
-The [Popover](/core/popover) and [Tooltip](/core/tooltip) components no longer accept the `positionDependencies` prop; it is no longer required
-– the position is now calculated automatically.
+The [Popover](/core/popover) and [Tooltip](/core/tooltip) components no longer accept the `positionDependencies` prop.
+Remove it, the position is now recalculated automatically.
 
 ```tsx
 import { Popover } from '@mantine/core';
@@ -186,7 +185,6 @@ function Demo(props) {
 ## use-fullscreen hook changes
 
 The [use-fullscreen](/hooks/use-fullscreen) hook was split into two hooks: `useFullscreenElement` and `useFullscreenDocument`.
-This change was required to fix a stale ref issue in the previous implementation.
 
 New usage with the `document` element:
 
@@ -199,7 +197,8 @@ New usage with a custom target element:
 ## use-mouse hook changes
 
 The [use-mouse](/hooks/use-mouse) hook was split into two hooks: `useMouse` and `useMousePosition`.
-This change was required to fix a stale ref issue in the previous implementation.
+`useMouse` now tracks the position over the element that `ref` is assigned to, use `useMousePosition`
+to track the position over the `document`.
 
 Previous usage with the `document` element:
 
@@ -225,7 +224,7 @@ New usage with `document`:
 ## use-mutation-observer hook changes
 
 The [use-mutation-observer](/hooks/use-mutation-observer) hook now uses the new callback ref approach.
-This change was required to fix stale ref issues and improve compatibility with dynamic node changes.
+To observe an external element, use `useMutationObserverTarget` instead.
 
 Previous usage (8.x):
 
@@ -355,9 +354,8 @@ function Demo() {
 
 ## Grid overflow="hidden" no longer required
 
-The [Grid](/core/grid) component no longer uses negative margins for spacing between columns.
-It now uses native CSS `gap` property, so you can safely remove `overflow="hidden"` from your
-`Grid` components — it is no longer needed to prevent content overflow:
+The [Grid](/core/grid) component now uses native CSS `gap` property instead of negative margins.
+Remove `overflow="hidden"` from your `Grid` components, it is no longer needed to prevent content overflow:
 
 ```tsx
 import { Grid } from '@mantine/core';
@@ -385,12 +383,9 @@ function Demo() {
 
 ## useLocalStorage and useSessionStorage return type
 
-The `useLocalStorage` and `useSessionStorage` hooks now correctly include `undefined` in the
-return type when no `defaultValue` is provided. Previously, calling these hooks without
-`defaultValue` would type the value as `T` (e.g., `string`), even though at runtime
-the value could be `undefined`.
-
-If you relied on the incorrect type, update your code to handle `undefined`:
+The `useLocalStorage` and `useSessionStorage` hooks now include `undefined` in the
+return type when no `defaultValue` is provided. Update your code to handle `undefined`
+or provide `defaultValue`:
 
 ```tsx
 import { useLocalStorage } from '@mantine/hooks';
@@ -408,11 +403,12 @@ const [value, setValue] = useLocalStorage({
 });
 ```
 
-The same change applies to `readLocalStorageValue`, `useSessionStorage`, and `readSessionStorageValue`.
+The same change applies to `readLocalStorageValue` and `readSessionStorageValue`.
 
 ## useHeadroom returns object instead of boolean
 
-The `useHeadroom` hook now returns an `{ pinned: boolean; scrollProgress: number }` object instead of a plain boolean. `scrollProgress` is a value between `0` (fully hidden) and `1` (fully visible) that can be used for scroll-linked reveal animations. A new `scrollDistance` option controls how many pixels of scrolling are required to fully reveal or hide the element (default: `100`).
+The `useHeadroom` hook now returns an object with `pinned` and `scrollProgress` properties
+instead of a boolean:
 
 ```tsx
 import { useHeadroom } from '@mantine/hooks';
@@ -445,7 +441,7 @@ function Demo() {
 ## Notifications pauseResetOnHover default change
 
 In 8.x, hovering over a notification paused the auto close timer only for that notification.
-In 9.x, the default behavior changed – hovering over any notification now pauses the auto close timer of all
+In 9.x, hovering over any notification pauses the auto close timer of all
 visible notifications. To keep the previous behavior, set `pauseResetOnHover="notification"`:
 
 ```tsx

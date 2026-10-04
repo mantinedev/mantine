@@ -90,13 +90,17 @@ indicator appears. The value is clamped between 1 and 10. Day cell height adjust
 
 ## Many events
 
-When a day has many events, the component shows a "More events" indicator.
+When a day has many events, the component shows a "+N more" indicator.
 
 <Demo data={MonthViewDemos.manyEvents} />
 
 ## Drag and drop
 
 Enable drag and drop to move events between days.
+
+To reject a drop based on where the event lands – for example to prevent double booking – use
+`preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
+Month view has no drag ghost, so a rejected drop is only reported through `onEventPlacementRejected`.
 
 <Demo data={MonthViewDemos.dragDrop} />
 
@@ -110,21 +114,17 @@ The callback receives the `DataTransfer` object and the drop target datetime.
 
 ## Bidirectional drag and drop
 
-Combine `onExternalEventDrop` with `withEventsDragAndDrop` to enable bidirectional
-drag and drop. Items dragged from the sidebar are removed from the list and added
-to the schedule. Events dragged from the schedule back to the sidebar are removed
-from the schedule. The schedule sets `application/json` with `{ eventId }` in
-`dataTransfer` when an event is dragged, which the sidebar drop zone reads to
-identify the event.
+Combine `onExternalEventDrop` with `withEventsDragAndDrop` to drag items both into and out of
+the schedule. When an event is dragged, the schedule sets `application/json` data with `{ eventId }`
+in `dataTransfer`. Read it in your drop zone to identify the event.
 
 <Demo data={MonthViewDemos.bidirectionalDragDrop} />
 
 ## Full event customization
 
-Use `renderEvent` prop to fully customize event rendering. This function receives the event
-data as the first argument and all props that would be passed to the event root element
-(including children) as the second argument, allowing you to wrap events in custom components
-like HoverCard, Tooltip, or custom wrappers.
+Use `renderEvent` prop to fully customize event rendering. The function receives the event
+as the first argument and the props of the event root element (including children) as the second
+argument. Use it to wrap events in `HoverCard`, `Tooltip` or other components.
 
 <Demo data={MonthViewDemos.renderEvent} />
 
@@ -152,13 +152,12 @@ span the full height of the day cell in the month view.
 
 ## Interactive background events
 
-Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
-background event calls `onEventClick` with the event object, the same as for regular events –
-use `event.display === 'background'` to tell them apart in the handler.
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. `onEventClick`
+is called with the background event, use `event.display === 'background'` to tell it apart
+from regular events.
 
-Note that an interactive background event covers the day cells underneath it: clicks and
-drag-to-select in its range go to the event instead of the cells. Background events still
-cannot be dragged or resized.
+An interactive background event covers the day cells underneath it: clicks and drag-to-select
+in its range go to the event. Background events still cannot be dragged or resized.
 
 <Demo data={MonthViewDemos.interactiveBackgroundEvents} />
 
@@ -185,9 +184,8 @@ Combine it with `labels` prop to translate all UI text.
 ## Create and update events
 
 Set `withDragSlotSelect` prop to allow users to drag across day cells to select a date range.
-When the drag ends, the `onSlotDragEnd` callback is called with the range start and end dates.
-Combined with `onDayClick` and `onEventClick` callbacks, this enables a complete event creation
-and editing experience.
+When the drag ends, `onSlotDragEnd` is called with the range start and end dates.
+Combine it with `onDayClick` and `onEventClick` to create and edit events.
 
 <Demo data={MonthViewDemos.eventForm} />
 
@@ -201,14 +199,9 @@ and reducing padding on smaller screens. Container queries are supported in all 
 
 ### Focus management
 
-In the MonthView component, focus is managed to provide an efficient keyboard navigation experience:
-
-- Only the first day in the month view is included in the tab order (has `tabIndex={0}`)
-- All other days have `tabIndex={-1}` and can only be reached via arrow key navigation
-- Outside days (days from adjacent months) are navigable using arrow keys when `withOutsideDays` is `true`
+- Only the first day is included in the tab order, all other days can be reached with arrow keys
+- Outside days can be focused with arrow keys when `withOutsideDays` is `true`
 - Disabled days are skipped during keyboard navigation
-
-This approach reduces the number of tab stops when navigating through the calendar, making it faster for keyboard users to move through the view while still allowing full access to all days via arrow keys.
 
 ### Keyboard interactions
 
@@ -237,4 +230,4 @@ Note that the following events will only trigger if focus is on a day control.
 
 ### Day labels
 
-Each day button has an `aria-label` attribute with the full date in the format "Month Day, Year" (e.g., "November 15, 2025"). This provides screen reader users with complete date information.
+Each day button has an `aria-label` attribute with the full date in the format "Month Day, Year" (e.g., "November 15, 2025").

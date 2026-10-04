@@ -5,6 +5,7 @@ import { getPackagesList } from '../../packages/get-packages-list';
 export const ROLLUP_EXTERNALS = [
   ...builtinModules,
   ...builtinModules.map((m) => `node:${m}`),
+  '@modelcontextprotocol/server/stdio',
   'dayjs/locale/ru',
   'dayjs/locale/es',
   'dayjs/plugin/customParseFormat.js',
@@ -19,6 +20,10 @@ export const ROLLUP_EXTERNALS = [
   'react-is',
   'react/jsx-runtime',
   '@tiptap/react/menus',
+  '@tiptap/pm/state',
+  '@tiptap/pm/model',
+  '@tiptap/pm/view',
+  '@tiptap/pm/transform',
   ...getPackagesList().map((pkg) => pkg.packageJson.name!),
   ...Object.keys({
     ...packageJson.devDependencies,

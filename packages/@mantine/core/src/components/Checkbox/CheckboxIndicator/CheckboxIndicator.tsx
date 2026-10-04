@@ -25,9 +25,14 @@ import { CheckboxIcon } from '../CheckIcon';
 import classes from './CheckboxIndicator.module.css';
 
 export type CheckboxIndicatorStylesNames = 'indicator' | 'icon';
-export type CheckboxIndicatorVariant = 'filled' | 'outline';
+export type CheckboxIndicatorVariant = 'filled' | 'outline' | 'light';
 export type CheckboxIndicatorCssVariables = {
-  indicator: '--checkbox-size' | '--checkbox-radius' | '--checkbox-color' | '--checkbox-icon-color';
+  indicator:
+    | '--checkbox-size'
+    | '--checkbox-radius'
+    | '--checkbox-color'
+    | '--checkbox-icon-color'
+    | '--checkbox-bg';
 };
 
 export interface CheckboxIndicatorProps
@@ -82,16 +87,36 @@ const varsResolver = createVarsResolver<CheckboxIndicatorFactory>(
         ? `var(--mantine-color-${parsedColor.color}-outline)`
         : parsedColor.color;
 
+    const lightColors =
+      variant === 'light'
+        ? theme.variantColorResolver({
+            color: color || theme.primaryColor,
+            theme,
+            variant: 'light',
+            autoContrast,
+          })
+        : undefined;
+
+    const resolvedColor =
+      variant === 'outline'
+        ? outlineColor
+        : lightColors
+          ? lightColors.color
+          : getThemeColor(color, theme);
+
     return {
       indicator: {
         '--checkbox-size': getSize(size, 'checkbox-size'),
         '--checkbox-radius': radius === undefined ? undefined : getRadius(radius),
-        '--checkbox-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
+        '--checkbox-color': resolvedColor,
+        '--checkbox-bg': lightColors?.background,
         '--checkbox-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
-          : getAutoContrastValue(autoContrast, theme)
-            ? getContrastColor({ color, theme, autoContrast })
-            : undefined,
+          : lightColors
+            ? lightColors.color
+            : getAutoContrastValue(autoContrast, theme)
+              ? getContrastColor({ color, theme, autoContrast })
+              : undefined,
       },
     };
   }

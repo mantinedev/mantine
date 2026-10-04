@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { Sparkline, SparklineProps, SparklineStylesNames } from './Sparkline';
 
 const defaultProps: SparklineProps = {
@@ -6,8 +6,6 @@ const defaultProps: SparklineProps = {
 };
 
 describe('@mantine/core/Sparkline', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<SparklineProps, SparklineStylesNames>({
     component: Sparkline,
     props: defaultProps,

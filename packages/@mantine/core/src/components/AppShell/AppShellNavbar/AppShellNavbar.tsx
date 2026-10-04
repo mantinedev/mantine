@@ -1,4 +1,5 @@
 import React from 'react';
+import { useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -10,6 +11,7 @@ import {
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
 import type { AppShellCompoundProps } from '../AppShell.types';
+import { AppShellResizeHandle } from '../AppShellResizeHandle/AppShellResizeHandle';
 import classes from '../AppShell.module.css';
 
 export type AppShellNavbarStylesNames = 'navbar';
@@ -42,19 +44,45 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props) => {
   } = useProps('AppShellNavbar', null, _props);
 
   const ctx = useAppShellContext();
+  const sectionId = useId(others.id);
 
   if (ctx.disabled) {
     return null;
   }
 
+  const isResizable = ctx.resize?.navbar.enabled ?? false;
+  const boxProps = ctx.getStyles('navbar', { className, classNames, styles, style });
+
+  if (!isResizable) {
+    return (
+      <Box
+        component="nav"
+        mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
+        {...boxProps}
+        {...others}
+        __vars={{ '--app-shell-navbar-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
+      />
+    );
+  }
+
+  const { children, dangerouslySetInnerHTML, ...rest } = others;
+
   return (
     <Box
       component="nav"
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
-      {...ctx.getStyles('navbar', { className, classNames, styles, style })}
-      {...others}
+      {...boxProps}
+      {...rest}
       __vars={{ '--app-shell-navbar-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
-    />
+      id={sectionId}
+    >
+      {dangerouslySetInnerHTML ? (
+        <div style={{ display: 'contents' }} dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
+      ) : (
+        children
+      )}
+      <AppShellResizeHandle section="navbar" sectionId={sectionId} />
+    </Box>
   );
 });
 

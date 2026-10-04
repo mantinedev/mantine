@@ -6,8 +6,7 @@ export default Layout(MDX_DATA.WeekView);
 
 ## Usage
 
-WeekView displays events for an entire week with time slots. It supports all-day events, overlapping events,
-drag and drop, custom time ranges, and more.
+`WeekView` displays events for an entire week with time slots.
 
 <Demo data={WeekViewDemos.usage} />
 
@@ -25,9 +24,8 @@ Use `startTime` and `endTime` props to set the visible time range. Times should 
 
 ## Start scroll time
 
-Use `startScrollTime` prop to set the initial scroll position to a specific time.
-The value should be in `HH:mm:ss` format. This is useful when you want the view to
-open at a specific time (e.g., business hours start) instead of midnight.
+Use `startScrollTime` prop to set the initial scroll position, for example to open the view
+at the start of business hours instead of midnight. The value must be in `HH:mm:ss` format.
 
 <Demo data={WeekViewDemos.startScrollTime} />
 
@@ -39,10 +37,8 @@ open at a specific time (e.g., business hours start) instead of midnight.
 
 ## Sub-hour grid lines
 
-By default, `WeekView` displays a grid line for every time slot. When `intervalMinutes` is smaller
-than `60`, set `withSubHourGridLines={false}` to display only one grid line per hour while keeping
-the smaller interval for creating and resizing events. This is useful to achieve a Google Calendar
-like layout: events snap to 15 or 30 minutes increments, but the grid stays clean with hourly lines.
+When `intervalMinutes` is smaller than `60`, set `withSubHourGridLines={false}` to display only one
+grid line per hour. Events are still created and resized with the smaller interval.
 
 <Demo data={WeekViewDemos.subHourGridLines} />
 
@@ -78,29 +74,26 @@ Set `withWeekNumber={false}` to hide the week number in the top-left corner.
 
 ## Current time indicator
 
-Set `withCurrentTimeIndicator` to display a line showing the current time on today's column.
+A line showing the current time is displayed on today's column by default.
+Set `withCurrentTimeIndicator={false}` to hide it.
 
 <Demo data={WeekViewDemos.currentTimeIndicator} />
 
 ## Force current time indicator
 
 Set `forceCurrentTimeIndicator` to display the current time indicator on the same day of week
-even when viewing a different week. This is useful to give users a sense of the current time
-position relative to their schedule.
+even when viewing a different week.
 
 <Demo data={WeekViewDemos.forceCurrentTimeIndicator} />
 
 ## Current time indicator in a different timezone
 
-`@mantine/schedule` works with timezone-agnostic `YYYY-MM-DD HH:mm:ss` strings and does not
-perform any timezone conversions on its own. By default, the current time indicator is positioned
-based on the user's local time.
+`@mantine/schedule` does not perform timezone conversions. By default, the current time indicator
+is positioned based on the user's local time.
 
-To display the indicator in a different timezone, use the `getCurrentTime` prop. It is a function
-that returns the current time and is called on every tick, so the indicator keeps updating
-automatically. In the example below, the current time is converted to the selected timezone with
-the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone) – switch the timezone to
-see the indicator and the time bubble move to the matching day and position:
+To display the indicator in a different timezone, use `getCurrentTime` prop – a function
+that returns the current time. In the example below, the current time is converted to the selected
+timezone with the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone):
 
 <Demo data={WeekViewDemos.timezone} />
 
@@ -157,7 +150,7 @@ Customize the height of time slots and the all-day section using `slotHeight` an
 
 ## Radius
 
-Use `radius` prop to customize the border radius of events.
+Use `radius` prop to change the border radius of the view and events.
 
 <Demo data={WeekViewDemos.radius} />
 
@@ -177,14 +170,10 @@ are marked as fully outside business hours:
 
 ## Custom time slot props
 
-Use `getTimeSlotProps` to add custom props to individual time slots based on their time range.
-The function receives `{ start, end }` datetime strings in `YYYY-MM-DD HH:mm:ss` format
-and should return an object of props to spread onto the slot element, or `undefined`.
-
-This is useful for setting `data-business-hours` on a custom range that differs from the
-default 9:00–17:00, or for attaching custom event handlers to specific slots.
-Event handlers like `onClick` returned by `getTimeSlotProps` are composed with internal handlers
-(`onTimeSlotClick`) – both will fire without overriding each other.
+Use `getTimeSlotProps` to add props to individual time slots, for example `data-business-hours`
+or event handlers. The function receives `{ start, end }` datetime strings in `YYYY-MM-DD HH:mm:ss`
+format and returns an object of props or `undefined`. Event handlers returned by the function
+do not override internal handlers, both are called.
 
 <Demo data={WeekViewDemos.getTimeSlotProps} />
 
@@ -196,30 +185,17 @@ When multiple events overlap in time, they are automatically positioned side by 
 
 ## Overlap mode
 
-`eventOverlapMode` prop controls how events that overlap in time share the horizontal space:
+`eventOverlapMode` prop controls how overlapping events share the horizontal space:
 
-- `columns` (default) – the available width is split evenly between the overlapping events. Every event
-  is fully visible, but each one gets narrower as more events overlap.
-- `cascade` – each event is indented from the previous one and drawn on top of it, extending to the
-  right edge of the group. Events keep a readable width no matter how many of them overlap, at the cost
-  of covering the events underneath.
-
-Prefer `cascade` when your data regularly produces large groups of simultaneous events, where `columns`
-would shrink each event to an unreadable sliver.
+- `columns` (default) – the width is split evenly between overlapping events. Every event
+  is fully visible, but gets narrower as more events overlap.
+- `cascade` – each event is indented from the previous one and drawn on top of it. Events keep
+  a readable width, but cover the events underneath. Use it when many events overlap at the same time.
 
 <Demo data={WeekViewDemos.eventOverlapMode} />
 
-The indent shrinks automatically as the group grows, so the event on top always keeps at least 60% of
-the available width.
-
-Covered events can still be read and interacted with: rest the pointer on one and it is raised above
-the events covering it, which also makes its resize handles reachable. Keyboard users get the same
-result by focusing the event with `Tab`, without any delay.
-
-`eventOverlapRaiseDelay` prop controls how long the pointer must rest on an event before it is raised,
-in milliseconds. The default of `600` is long enough that moving the pointer across a group to reach a
-specific event does not raise the events it passes over. Set a smaller value to make covered events
-reveal themselves sooner:
+In `cascade` mode, a covered event is raised above the others when it is hovered or focused.
+Use `eventOverlapRaiseDelay` prop to change the hover delay in milliseconds, `600` by default:
 
 ```tsx
 import { WeekView } from '@mantine/schedule';
@@ -231,7 +207,10 @@ function Demo() {
 
 ## Drag and drop
 
-Enable drag and drop by setting `withDragDrop` prop. Events can be dragged to different days and times.
+Enable drag and drop by setting `withEventsDragAndDrop` prop. Events can be dragged to different days and times.
+
+To reject a drop based on where the event lands – for example to prevent double booking – use
+`preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
 
 <Demo data={WeekViewDemos.dragDrop} />
 
@@ -260,12 +239,9 @@ The callback receives the `DataTransfer` object and the drop target datetime.
 
 ## Bidirectional drag and drop
 
-Combine `onExternalEventDrop` with `withEventsDragAndDrop` to enable bidirectional
-drag and drop. Items dragged from the sidebar are removed from the list and added
-to the schedule. Events dragged from the schedule back to the sidebar are removed
-from the schedule. The schedule sets `application/json` with `{ eventId }` in
-`dataTransfer` when an event is dragged, which the sidebar drop zone reads to
-identify the event.
+Combine `onExternalEventDrop` with `withEventsDragAndDrop` to drag items both into and out of
+the schedule. When an event is dragged, the schedule sets `application/json` data with `{ eventId }`
+in `dataTransfer`. Read it in your drop zone to identify the event.
 
 <Demo data={WeekViewDemos.bidirectionalDragDrop} />
 
@@ -273,7 +249,10 @@ identify the event.
 
 Enable event resizing by setting `withEventResize` prop. Users can drag the top or bottom
 edge of an event to adjust its start or end time. Use `onEventResize` callback to handle
-the resize. Use `canResizeEvent` to control which events can be resized.
+the resize.
+
+To reject a resize based on the new range, use `preventEventOverlap` and `canResizeEventTo`, see
+[drop validation](/schedule/schedule/#drop-validation).
 
 <Demo data={WeekViewDemos.eventResize} />
 
@@ -294,10 +273,9 @@ Events that return `false` will not show resize handles.
 
 ## Full event customization
 
-Use `renderEvent` prop to fully customize event rendering. This function receives the event
-data as the first argument and all props that would be passed to the event root element
-(including children) as the second argument, allowing you to wrap events in custom components
-like HoverCard, Tooltip, or custom wrappers.
+Use `renderEvent` prop to fully customize event rendering. The function receives the event
+as the first argument and the props of the event root element (including children) as the second
+argument. Use it to wrap events in `HoverCard`, `Tooltip` or other components.
 
 <Demo data={WeekViewDemos.renderEvent} />
 
@@ -325,22 +303,19 @@ are useful for marking unavailability, lunch breaks, focus time, or other blocke
 
 ## Interactive background events
 
-Set `withInteractiveBackgroundEvents` prop to make background events clickable. Clicking a
-background event calls `onEventClick` with the event object, the same as for regular events –
-use `event.display === 'background'` to tell them apart in the handler.
+Set `withInteractiveBackgroundEvents` prop to make background events clickable. `onEventClick`
+is called with the background event, use `event.display === 'background'` to tell it apart
+from regular events.
 
-Note that an interactive background event covers the time slots underneath it: clicks and
-drag-to-select in its range go to the event instead of the grid. Interactive background
-events still cannot be dragged.
+An interactive background event covers the time slots underneath it: clicks and drag-to-select
+in its range go to the event. Interactive background events still cannot be dragged.
 
 <Demo data={WeekViewDemos.interactiveBackgroundEvents} />
 
 ## Resizable background events
 
-When `withEventResize` is set together with `withInteractiveBackgroundEvents`, background
-events render resize handles on their top and bottom edges. Dragging a handle calls
-`onEventResize` with the background event, the same way it does for regular events – use
-`event.display === 'background'` to tell them apart in the handler.
+Set `withEventResize` together with `withInteractiveBackgroundEvents` to make background events
+resizable. `onEventResize` is called with the background event, the same way as for regular events.
 
 All-day background events are never resizable. To keep background events fixed while
 regular events stay resizable, return `false` from `canResizeEvent`:
@@ -356,10 +331,8 @@ regular events stay resizable, return `false` from `canResizeEvent`:
 
 ## Custom background event styles with drag and drop blocking
 
-Use Styles API to customize background event appearance and prevent dropping
-regular events into blocked time ranges. This example uses diagonal red lines
-to indicate lunch breaks across the entire week and rejects drops that overlap
-with background events.
+Use Styles API to customize background events appearance. The example below displays
+blocked time with diagonal red lines and rejects drops that overlap with background events.
 
 <Demo data={WeekViewDemos.backgroundEventsCustomStyle} />
 
@@ -386,9 +359,9 @@ Combine it with `labels` prop to translate all UI text.
 ## Create and update events
 
 Set `withDragSlotSelect` prop to allow users to drag across time slots to select a time range.
-When the drag ends, the `onSlotDragEnd` callback is called with the range start and end dates.
-The drag is constrained to a single day column. Combined with `onTimeSlotClick`, `onAllDaySlotClick`,
-and `onEventClick` callbacks, this enables a complete event creation and editing experience.
+The drag is constrained to a single day column. When the drag ends, `onSlotDragEnd` is called with
+the range start and end dates. Combine it with `onTimeSlotClick`, `onAllDaySlotClick` and `onEventClick`
+to create and edit events.
 
 <Demo data={WeekViewDemos.eventForm} />
 
@@ -402,11 +375,8 @@ and reducing padding on smaller screens. Container queries are supported in all 
 
 ### Focus management
 
-In the WeekView component, focus is managed to provide an efficient keyboard navigation experience:
-
-- The weekdays row, all-day slots row, and time slots grid each have their first element in the tab order (`tabIndex={0}`)
-- All other elements have `tabIndex={-1}` and can only be reached via arrow key navigation
-- This approach reduces the number of tab stops when navigating through the schedule
+The weekdays row, all-day slots row and time slots grid each have only their first element
+in the tab order. All other elements can be reached with arrow keys.
 
 ### Keyboard interactions
 
@@ -469,4 +439,4 @@ Time slots:
 
 ### Slot labels
 
-Each time slot button has an `aria-label` attribute with the complete slot information including the date and time range (e.g., "Time slot 2025-11-03 08:00:00 - 09:00:00"). All-day slots have labels like "All day 2025-11-03", and weekday buttons have labels like "Weekday 2025-11-03". This provides screen reader users with complete context about each element.
+Each time slot button has an `aria-label` attribute with the date and time range (e.g., "Time slot 2025-11-03 08:00:00 - 09:00:00"). All-day slots have labels like "All day 2025-11-03", and weekday buttons have labels like "Weekday 2025-11-03".

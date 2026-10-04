@@ -2,7 +2,7 @@
   "name": "@mantine/code-highlight",
   "version": "9.6.3",
   "description": "Code highlight with Mantine theme",
-  "homepage": "https://mantine.dev/x/code-highlight/",
+  "homepage": "https://mantine.dev/code-highlight/code-highlight/",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "keywords": [
@@ -57,7 +57,7 @@
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   }
 }

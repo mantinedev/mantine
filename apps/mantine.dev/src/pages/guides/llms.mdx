@@ -1,3 +1,4 @@
+import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -5,105 +6,64 @@ export default Layout(MDX_DATA.LLMDocumentation);
 
 # Mantine with LLMs
 
-Mantine provides LLM-friendly documentation to help AI tools like **Cursor**, **Windsurf**, **GitHub Copilot**, **ChatGPT**, and **Claude** understand and work with the Mantine UI library.
-
-`llms.txt` documentation is updated with every Mantine release.
+Mantine provides three ways to give AI coding tools accurate knowledge of the library:
+[llms.txt documentation](#documentation), an [MCP server](#mcp-server) and
+[skills](#skills). All of them are updated with every Mantine release.
 
 ## Documentation
 
-Links:
+- [llms.txt](/llms.txt) – compact index that links to per-page `.md` files
+- [llms-full.txt](/llms-full.txt) – all documentation in a single file (~4.6MB)
 
-- [llms.txt](/llms.txt) – compact
-- [Download](/llms-full.txt) full documentation in single document (~1.8MB)
+The files follow the [llms.txt](https://llmstxt.org/) standard and are generated from the
+documentation source. They include components with props and Styles API, hooks, form, dates,
+charts, schedule, theming, styles, guides and FAQ pages.
 
-The LLM documentation includes:
+To use them, give the tool the `https://mantine.dev/llms.txt` URL and mention that you are using
+Mantine v9. In chat applications such as ChatGPT and Claude, paste the URL into the prompt.
+In Cursor, add it with the `@Docs` feature.
 
-- **Getting Started** - Installation and setup guides
-- **Components** - All Mantine components with props, examples, and usage
-- **Hooks** - Complete hooks documentation with examples
-- **Theming** - Theme customization and MantineProvider setup
-- **Styles** - CSS modules, CSS variables, and styling approaches
-- **Frequently Asked Questions** - Common questions and solutions
+## MCP server
 
-## Cursor
+`@mantine/mcp-server` package lets AI agents search and read Mantine documentation on their own.
+The server reads static data published on `mantine.dev` – 406 documents covering components, hooks,
+`@mantine/form`, styling, theming, framework and migration guides, and FAQ pages (changelogs are
+not indexed) – and exposes the following tools:
 
-In Cursor, you can reference the documentation using the `@Docs` feature:
-
-1. Type `@Docs` in your prompt
-2. Reference the Mantine documentation URL: `https://mantine.dev/llms.txt`
-3. Ask questions about Mantine components, styling, or implementation
-
-## Windsurf
-
-For Windsurf users:
-
-1. Reference the documentation using `@https://mantine.dev/llms.txt`
-2. Or add it to your `.windsurfrules` file for persistent access
-
-## ChatGPT and Claude
-
-When using ChatGPT or Claude:
-
-1. Mention that you're using Mantine v9
-2. Reference the documentation URL: `https://mantine.dev/llms.txt`
-3. The AI will fetch and use the documentation to provide accurate answers
-
-### GitHub Copilot
-
-While Copilot doesn't directly support external documentation, you can:
-
-1. Include relevant documentation snippets in your comments
-2. Reference component names and props accurately for better suggestions
-
-## Skills
-
-Mantine also provides skills for AI coding agents in the
-[`mantinedev/skills`](https://github.com/mantinedev/skills) repository.
-
-Currently available skills:
-
-- `mantine-combobox` – Build custom select/autocomplete/multiselect components with `Combobox`
-- `mantine-form` – Build forms with `@mantine/form`, validation, nested fields, and form context
-- `mantine-custom-components` – Create custom components with Mantine factory APIs and Styles API
-
-### Install skills
-
-Install each skill from the repository:
-
-```bash
-npx skills add https://github.com/mantinedev/skills --skill mantine-combobox
-npx skills add https://github.com/mantinedev/skills --skill mantine-form
-npx skills add https://github.com/mantinedev/skills --skill mantine-custom-components
-```
-
-### Use skills
-
-In your AI prompt, explicitly tell the agent to use one of the installed skills.
-
-Examples:
-
-- "Use `$mantine-form` and build a profile form with validation and nested fields"
-- "Use `$mantine-combobox` and create a searchable multi-select with custom option rendering"
-- "Use `$mantine-custom-components` and scaffold a polymorphic component with Styles API support"
-
-If your agent does not support `$skill-name` mentions, reference the skill name in plain text and ask the agent to follow it.
-
-## MCP server (experimental)
-
-Mantine also provides an MCP server package:
-
-- `@mantine/mcp-server`
-
-The server reads Mantine static MCP data published on `mantine.dev` and exposes tools that AI agents can call directly:
-
-- `list_items`
-- `get_item_doc`
-- `get_item_props`
-- `search_docs`
+<DataTable
+  head={['Tool', 'Description']}
+  data={[
+    [
+      <Code>search_docs</Code>,
+      'Search all documentation; returns ranked matches, often pointing at a specific section',
+    ],
+    [
+      <Code>get_item_doc</Code>,
+      <>
+        Outline by default, one section with <Code>section</Code>, whole page with{' '}
+        <Code>full: true</Code>
+      </>,
+    ],
+    [<Code>get_item_props</Code>, "Component props, or a hook's TypeScript signature"],
+    [
+      <Code>list_items</Code>,
+      <>
+        Filter by <Code>kind</Code>, <Code>group</Code>, <Code>category</Code>,{' '}
+        <Code>package</Code> or <Code>query</Code>
+      </>,
+    ],
+    [
+      <Code>get_api</Code>,
+      <>
+        Resolve a symbol (<Code>useForm</Code>, <Code>useDisclosure</Code>) to its signature
+      </>,
+    ],
+  ]}
+/>
 
 ### MCP server configuration
 
-Most MCP-compatible tools support adding servers with a JSON configuration. Use this server definition:
+Most MCP clients accept a JSON configuration. Use this server definition:
 
 ```json
 {
@@ -116,7 +76,10 @@ Most MCP-compatible tools support adding servers with a JSON configuration. Use 
 }
 ```
 
-To use a different data source (for example, alpha docs or local static files), add env variables:
+The server can be configured with environment variables:
+
+- `MANTINE_MCP_DATA_URL` – data source, `https://mantine.dev/mcp` by default. Change it to use alpha docs or local static files.
+- `MANTINE_MCP_TIMEOUT_MS` – request timeout in milliseconds, `10000` by default
 
 ```json
 {
@@ -125,72 +88,86 @@ To use a different data source (for example, alpha docs or local static files), 
       "command": "npx",
       "args": ["-y", "@mantine/mcp-server"],
       "env": {
-        "MANTINE_MCP_DATA_URL": "https://mantine.dev/mcp"
+        "MANTINE_MCP_DATA_URL": "https://alpha.mantine.dev/mcp"
       }
     }
   }
 }
 ```
 
-### Using MCP server with different tools
+### Claude Code
 
-#### Claude Desktop
+```bash
+claude mcp add mantine -- npx -y @mantine/mcp-server
+```
 
-1. Open MCP settings in Claude Desktop
-2. Add the `mantine` server configuration above
-3. Start a new chat and ask for Mantine guidance, for example: "Find Button props and give me a usage example"
+### Codex
 
-#### Cursor
+```bash
+codex mcp add mantine -- npx -y @mantine/mcp-server
+```
 
-1. Open Cursor MCP/server settings
-2. Add the same `mantine` server config
-3. Use agent mode and ask Mantine-specific questions – Cursor will call MCP tools automatically
+### Cursor
 
-#### Windsurf
+Add the configuration above to `.cursor/mcp.json` in your project, or to `~/.cursor/mcp.json`
+to use the server in all projects.
 
-1. Open Windsurf MCP/server settings
-2. Register `@mantine/mcp-server` with the same config
-3. Ask for component docs, props, and examples directly in chat
+### GitHub Copilot in VS Code
 
-#### Other MCP clients (VS Code/Cline and others)
+Add the server to `.vscode/mcp.json` in your project. Note that VS Code uses the `servers` key
+instead of `mcpServers`:
 
-If the client supports custom MCP servers, add the same command and args:
+```json
+{
+  "servers": {
+    "mantine": {
+      "command": "npx",
+      "args": ["-y", "@mantine/mcp-server"]
+    }
+  }
+}
+```
 
-- command: `npx`
-- args: `["-y", "@mantine/mcp-server"]`
+### Claude Desktop
 
-Then use prompts like:
+Open Settings → Developer → Edit Config and add the configuration above to
+`claude_desktop_config.json`, then restart the application.
 
-- "List Mantine items related to input fields"
-- "Get full docs for Button"
-- "Search Mantine docs for color scheme and dark mode"
+### Other MCP clients
+
+If the client supports custom MCP servers, use `npx` as the command and
+`["-y", "@mantine/mcp-server"]` as the arguments.
+
+## Skills
+
+Mantine provides skills for AI coding agents in the
+[mantinedev/skills](https://github.com/mantinedev/skills) repository:
+
+- `mantine-combobox` – build custom select, autocomplete and multiselect components with `Combobox`
+- `mantine-form` – build forms with `@mantine/form`: validation, nested fields and form context
+- `mantine-custom-components` – create custom components with Mantine factory APIs and Styles API
+
+### Install skills
+
+```bash
+npx skills add https://github.com/mantinedev/skills --skill mantine-combobox
+npx skills add https://github.com/mantinedev/skills --skill mantine-form
+npx skills add https://github.com/mantinedev/skills --skill mantine-custom-components
+```
+
+### Use skills
+
+Agents pick up installed skills on their own when the task matches. To be explicit, name the
+skill in your prompt, for example "Use `mantine-form` skill and build a profile form with
+validation and nested fields".
 
 ## Example prompts
 
-Here are some example prompts you can use with AI tools:
-
 - "Using Mantine v9, how do I create a dark mode toggle?"
 - "Show me how to use the AppShell component with a collapsible navbar"
-- "How can I customize the theme colors in MantineProvider?"
 - "Create a form with validation using Mantine's form hooks"
-- "How to align input with a button in a flex container?"
-
-## Documentation Generation
-
-The LLM documentation is automatically generated from our source files using a compilation script. It includes:
-
-- Component documentation from MDX files
-- Props tables and types
-- Code examples and demos
-- Styles API documentation
-- FAQ content from help.mantine.dev
-
-There are two generated formats:
-
-- `llms.txt` – the default compact index that links to per-page `.md` files under the `/llms` path
-- `llms-full.txt` – a single large file with all documentation content
-
-To ensure you have the latest documentation, we regenerate these files with each release. The files follow the [LLMs.txt](https://llmstxt.org/) standard for better compatibility with AI tools.
+- "Find Button props and give me a usage example"
+- "Search Mantine docs for color scheme and dark mode"
 
 ## Contributing
 

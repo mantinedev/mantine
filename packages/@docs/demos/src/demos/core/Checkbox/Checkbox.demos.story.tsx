@@ -102,3 +102,8 @@ export const Demo_maxSelectedValues = {
   name: '⭐ Demo: maxSelectedValues',
   render: renderDemo(demos.maxSelectedValues),
 };
+
+export const Demo_lightVariant = {
+  name: '⭐ Demo: lightVariant',
+  render: renderDemo(demos.lightVariant),
+};

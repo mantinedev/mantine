@@ -20,6 +20,13 @@ import type {
   CodeHighlightTabsProps,
   CodeHighlightTabsStylesNames,
 } from './CodeHighlightTabs/CodeHighlightTabs';
+import type {
+  JsonViewerCssVariables,
+  JsonViewerFactory,
+  JsonViewerHighlightType,
+  JsonViewerProps,
+  JsonViewerStylesNames,
+} from './JsonViewer/JsonViewer';
 import type { NormalizeCodeOptions } from './normalize-code';
 
 export { CodeHighlight } from './CodeHighlight/CodeHighlight.js';
@@ -27,6 +34,7 @@ export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight.js';
 export { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs.js';
 export { CodeHighlightControl } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl.js';
 export { useCodeHighlightContext } from './CodeHighlight/CodeHighlight.context.js';
+export { JsonViewer, serializePath as serializeJsonViewerPath } from './JsonViewer/JsonViewer.js';
 
 export {
   CodeHighlightAdapterProvider,
@@ -60,5 +68,10 @@ export type {
   CodeHighlightControlProps,
   CodeHighlightContextValue,
   CodeHighlightAdapter,
+  JsonViewerProps,
+  JsonViewerStylesNames,
+  JsonViewerCssVariables,
+  JsonViewerFactory,
+  JsonViewerHighlightType,
   NormalizeCodeOptions,
 };

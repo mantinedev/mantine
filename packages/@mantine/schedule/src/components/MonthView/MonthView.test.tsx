@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import { fireEvent } from '@testing-library/react';
+import { createEvent, fireEvent } from '@testing-library/react';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { getWeekNumber, toDateString } from '../../utils';
@@ -1004,6 +1004,98 @@ describe('@mantine/schedule/MonthView', () => {
       expect(container.querySelector('.mantine-MonthView-monthViewBackgroundEvent')!.tagName).toBe(
         'DIV'
       );
+    });
+  });
+
+  describe('drop validation', () => {
+    const movingEvent = {
+      id: 1,
+      title: 'Moving',
+      start: '2025-11-03 09:00:00',
+      end: '2025-11-03 10:00:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const blockingEvent = {
+      id: 2,
+      title: 'Blocking',
+      start: '2025-11-05 09:30:00',
+      end: '2025-11-05 10:30:00',
+      color: 'red',
+      payload: {},
+    };
+
+    const fireDrag = (node: Element, type: 'dragStart' | 'drop') => {
+      const event = createEvent[type](node);
+      Object.defineProperty(event, 'dataTransfer', {
+        value: {
+          effectAllowed: 'move',
+          types: ['application/json'],
+          getData: jest.fn(),
+          setData: jest.fn(),
+        },
+      });
+      fireEvent(node, event);
+    };
+
+    const dropOnNovember5 = (props: Partial<MonthViewProps>) => {
+      const { container } = render(
+        <MonthView
+          {...defaultProps}
+          withEventsDragAndDrop
+          events={[movingEvent, blockingEvent]}
+          {...props}
+        />
+      );
+
+      fireDrag(container.querySelector('[data-event-id="1"]')!, 'dragStart');
+      fireDrag(screen.getByRole('button', { name: 'November 5, 2025' }), 'drop');
+    };
+
+    it('calls onEventDrop with the event moved to the target day', () => {
+      const onEventDrop = jest.fn();
+      dropOnNovember5({ onEventDrop });
+
+      expect(onEventDrop).toHaveBeenCalledTimes(1);
+      expect(onEventDrop.mock.calls[0][0]).toMatchObject({
+        eventId: 1,
+        newStart: '2025-11-05 09:00:00',
+        newEnd: '2025-11-05 10:00:00',
+      });
+    });
+
+    it('does not call onEventDrop when preventEventOverlap finds a conflict', () => {
+      const onEventDrop = jest.fn();
+      dropOnNovember5({ onEventDrop, preventEventOverlap: true });
+
+      expect(onEventDrop).not.toHaveBeenCalled();
+    });
+
+    it('calls onEventPlacementRejected with the conflicting event', () => {
+      const onEventPlacementRejected = jest.fn();
+      dropOnNovember5({
+        onEventDrop: jest.fn(),
+        onEventPlacementRejected,
+        preventEventOverlap: true,
+      });
+
+      expect(onEventPlacementRejected).toHaveBeenCalledTimes(1);
+      expect(onEventPlacementRejected.mock.calls[0][0]).toMatchObject({
+        action: 'drop',
+        reason: 'overlap',
+        start: '2025-11-05 09:00:00',
+      });
+      expect(onEventPlacementRejected.mock.calls[0][0].conflicts[0].id).toBe(2);
+    });
+
+    it('does not call onEventDrop when canDropEvent returns false', () => {
+      const onEventDrop = jest.fn();
+      const canDropEvent = jest.fn(() => false);
+      dropOnNovember5({ onEventDrop, canDropEvent });
+
+      expect(canDropEvent).toHaveBeenCalledTimes(1);
+      expect(onEventDrop).not.toHaveBeenCalled();
     });
   });
 });

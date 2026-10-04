@@ -38,19 +38,15 @@ After running the commands above, check if `codex` CLI is available (`command -v
 - The codebase prefers clean, self-documenting code for implementation
 - Type definitions and public APIs should maintain their documentation comments
 
-## Writing MDX Files
+## Writing Documentation
 
-**Markdown table syntax does not work.** The docs MDX pipeline (`apps/mantine.dev`, `apps/help.mantine.dev`) does not include `remark-gfm`, so pipe tables render as literal text on the page. Write tabular content either as a `<DataTable />` (available in every `apps/mantine.dev` mdx file without an import, see `MdxDataTable`) or as a regular list:
+Before writing or editing `.mdx` pages (`apps/mantine.dev`, `apps/help.mantine.dev`), changelog pages, migration guides or demos in `packages/@docs/demos`, invoke the `mantine-docs` skill and follow it. Before handing the work back, run its checker: `python3 ~/.claude/skills/mantine-docs/scripts/check_docs.py`.
 
-```mdx
-<DataTable
-  head={['Prop', 'Components']}
-  data={[
-    ['valueFormat', '`DateInput`, `DateTimePicker`'],
-    ['weekdayFormat', '`Calendar`, `DatePicker`'],
-  ]}
-/>
-```
+Rules that break the page when ignored, for tools that cannot load the skill:
+
+- **Text that explains a demo goes before the demo**, never after it.
+- **Markdown pipe tables do not render** (no `remark-gfm`). Use `<DataTable />` or a list.
+- **`DataTable` cells are rendered as is**: backticks inside a string are displayed literally, use `<code>` elements.
 
 ## Tests
 

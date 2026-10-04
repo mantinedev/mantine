@@ -466,6 +466,17 @@ export function IconBraces(props: IconProps) {
   );
 }
 
+export function IconPhoto(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M15 8h.01" />
+      <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
+      <path d="M6 18l3.5 -4a.55 .55 0 0 1 .9 0l2.1 2.4l3.5 -4.2a.55 .55 0 0 1 .9 0l2.1 2.8" />
+    </IconBase>
+  );
+}
+
 export function IconTablePlus(props: IconProps) {
   return (
     <IconBase {...props}>

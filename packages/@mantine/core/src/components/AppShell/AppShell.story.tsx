@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Box } from '../../core';
 import { Button } from '../Button';
@@ -5,6 +6,7 @@ import { Group } from '../Group';
 import { Modal } from '../Modal';
 import { ScrollArea } from '../ScrollArea';
 import { AppShell } from './AppShell';
+import { useAppShellResize } from './use-app-shell-resize/use-app-shell-resize';
 
 export default { title: 'AppShell' };
 
@@ -376,6 +378,84 @@ export function StaticInsideFixed() {
           Outer footer (fixed)
         </Group>
       </AppShell.Footer>
+    </AppShell>
+  );
+}
+
+export function Resizable() {
+  const resize = useAppShellResize({
+    navbar: { min: 150, max: 500, collapseThreshold: 120 },
+    aside: { min: 150, max: 500 },
+    header: { min: 40, max: 160 },
+    footer: { min: 40, max: 160 },
+    onCollapseChange: (section, collapsed) => console.log(section, collapsed),
+  });
+
+  return (
+    <AppShell
+      padding="md"
+      resize={resize}
+      navbar={{ width: 300, breakpoint: 'sm' }}
+      aside={{ width: 300, breakpoint: 'sm' }}
+      header={{ height: 60 }}
+      footer={{ height: 60 }}
+    >
+      <AppShell.Header p="md">Header</AppShell.Header>
+      <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
+      <AppShell.Aside p="md">Aside</AppShell.Aside>
+      <AppShell.Footer p="md">Footer</AppShell.Footer>
+      <AppShell.Main>
+        <Button onClick={resize.resetAll}>Reset sizes</Button>
+        <Box mt="md">{longContent}</Box>
+      </AppShell.Main>
+    </AppShell>
+  );
+}
+
+export function ResizableAltLayout() {
+  const [navbarCollapsed, setNavbarCollapsed] = useState(false);
+  const resize = useAppShellResize({
+    navbar: { min: 150, max: 500, collapseThreshold: 120 },
+    aside: { min: 150, max: 500 },
+    header: { min: 40, max: 160 },
+    footer: { min: 40, max: 160 },
+    onCollapseChange: (section, collapsed) => {
+      if (section === 'navbar') {
+        setNavbarCollapsed(collapsed);
+      }
+    },
+  });
+
+  return (
+    <AppShell
+      padding="md"
+      layout="alt"
+      resize={resize}
+      navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: navbarCollapsed } }}
+      aside={{ width: 300, breakpoint: 'sm' }}
+      header={{ height: 60 }}
+      footer={{ height: 60 }}
+    >
+      <AppShell.Header p="md">Header starts after the navbar in alt layout</AppShell.Header>
+      <AppShell.Navbar p="md">Navbar spans the full viewport height</AppShell.Navbar>
+      <AppShell.Aside p="md">Aside spans the full viewport height</AppShell.Aside>
+      <AppShell.Footer p="md">Footer</AppShell.Footer>
+      <AppShell.Main>
+        <Group>
+          <Button onClick={() => setNavbarCollapsed((c) => !c)}>
+            {navbarCollapsed ? 'Expand navbar' : 'Collapse navbar'}
+          </Button>
+          <Button onClick={resize.resetAll} variant="default">
+            Reset sizes
+          </Button>
+        </Group>
+        <Box mt="md">
+          Drag the navbar or aside edge: the header and footer edges follow it, because in alt
+          layout their margins come from the navbar/aside offsets. Drag the navbar below 120 to
+          collapse it.
+        </Box>
+        <Box mt="md">{longContent}</Box>
+      </AppShell.Main>
     </AppShell>
   );
 }

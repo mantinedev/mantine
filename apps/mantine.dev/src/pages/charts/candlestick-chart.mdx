@@ -7,10 +7,8 @@ export default Layout(MDX_DATA.CandlestickChart);
 ## Usage
 
 `CandlestickChart` is a financial chart that displays open, high, low and close (OHLC)
-values as candles. Each candle is colored based on its direction: candles with
-`close >= open` (price went up) use `upColor`, candles with `close < open`
-(price went down) use `downColor`. The thin line (wick) shows the high–low range,
-the thick body shows the open–close range.
+values as candles. The body of a candle shows the open–close range, the thin line shows
+the high–low range.
 
 <Demo data={CandlestickChartDemos.usage} />
 
@@ -34,10 +32,9 @@ function Demo() {
 }
 ```
 
-Unlike other charts, the y-axis is not anchored to zero – its domain is calculated
-from the minimum low and maximum high values in the data with a small padding, so that
-candles fill the available vertical space. To control the domain manually, pass
-`domain` through `yAxisProps`.
+Unlike other charts, the y-axis does not start at zero: its domain is calculated from
+the lowest and the highest values in the data. To change the domain, pass `domain`
+through `yAxisProps`.
 
 ## Custom data keys
 
@@ -48,8 +45,8 @@ If your data uses keys other than `open`/`high`/`low`/`close`, map them with the
 
 ## Colors
 
-Use `upColor` and `downColor` props to change the colors of rising and falling candles.
-Colors are referenced from [theme](/theming/colors/) the same way as in other components,
+Use `upColor` and `downColor` props to change the colors of rising (`close >= open`)
+and falling candles. Colors are referenced from [theme](/theming/colors/) the same way as in other components,
 for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS color value is also accepted.
 
 <Demo data={CandlestickChartDemos.colors} />
@@ -95,8 +92,7 @@ Use `xAxisLabel` and `yAxisLabel` props to display axis labels:
 
 ## Reference lines
 
-Use the `referenceLines` prop to render reference lines. Reference lines are useful for
-highlighting support and resistance levels. Each line is positioned by its `y` data value
-and supports a theme `color` and a `label`:
+Use the `referenceLines` prop to render reference lines, for example to highlight
+support and resistance levels:
 
 <Demo data={CandlestickChartDemos.referenceLines} />

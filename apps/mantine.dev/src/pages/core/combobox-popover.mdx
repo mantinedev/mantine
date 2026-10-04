@@ -6,12 +6,9 @@ export default Layout(MDX_DATA.ComboboxPopover);
 
 ## Usage
 
-`ComboboxPopover` allows adding a combobox dropdown with selectable options to any button element.
-Unlike `Select` and `MultiSelect`, it does not render an input – instead, you provide your own
-target element (typically a `Button`) via `ComboboxPopover.Target`.
-
-`ComboboxPopover.Target` child must be a single element or component that accepts a `ref`.
-Fragments, strings, and other primitive values are not supported.
+`ComboboxPopover` adds a dropdown with selectable options to any button. Unlike `Select`
+and `MultiSelect`, it does not render an input: pass your own target element to
+`ComboboxPopover.Target`. The target must be a single element or component that accepts a `ref`.
 
 <Demo data={ComboboxPopoverDemos.usage} />
 
@@ -24,8 +21,7 @@ an array of strings, objects with `value` and `label`, or grouped items.
 
 ## Searchable
 
-Set `searchable` prop to enable a search input inside the dropdown that filters options as you type.
-Use `nothingFoundMessage` to display a message when no options match the search query.
+Set `searchable` prop to add a search input to the dropdown:
 
 <Demo data={ComboboxPopoverDemos.searchable} />
 
@@ -43,16 +39,14 @@ Use `filter` prop with `searchable` to provide a custom filtering and sorting fu
 
 ## Limit options
 
-Use `limit` prop with `searchable` to limit the number of options displayed at a time.
-This is useful for large data sets to improve performance:
+Use `limit` prop with `searchable` to limit the number of options displayed at a time:
 
 <Demo data={ComboboxPopoverDemos.limit} />
 
 ## Multiple selection
 
-Set `multiple` prop to allow selecting multiple values. When `multiple` is set,
-`value` type changes from `string | null` to `string[]`, and `onChange` callback
-receives an array of selected values.
+Set `multiple` prop to allow selecting multiple values. `value` type changes
+from `string | null` to `string[]`.
 
 <Demo data={ComboboxPopoverDemos.multiple} />
 
@@ -96,9 +90,7 @@ Use `maxDropdownHeight` to control the maximum height:
 
 ## Control dropdown opened state
 
-Use `dropdownOpened` prop to control the dropdown state.
-Additionally, you can use `onDropdownOpen` and `onDropdownClose` callbacks
-to react to dropdown state changes.
+Use `dropdownOpened`, `onDropdownOpen` and `onDropdownClose` props to control the dropdown state:
 
 <Demo data={ComboboxPopoverDemos.dropdownOpened} />
 

@@ -19,6 +19,11 @@
     }
   }
 
+  &:where([data-invalid]) .eventInner {
+    border: 1px solid var(--mantine-color-error);
+    opacity: 0.6;
+  }
+
   &:where([data-dragging]) {
     opacity: 0.2;
 

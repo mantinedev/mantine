@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { PieChart, PieChartProps, PieChartStylesNames } from './PieChart';
 
 const defaultProps: PieChartProps = {
@@ -6,8 +6,6 @@ const defaultProps: PieChartProps = {
 };
 
 describe('@mantine/charts/PieChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<PieChartProps, PieChartStylesNames>({
     component: PieChart,
     props: defaultProps,

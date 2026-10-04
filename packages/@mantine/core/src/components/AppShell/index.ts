@@ -12,6 +12,12 @@ import type {
   AppShellHeaderConfiguration,
   AppShellNavbarConfiguration,
   AppShellResponsiveSize,
+  AppShellResizeController,
+  AppShellResizeSection,
+  AppShellResizeSectionController,
+  AppShellResizeSectionOptions,
+  AppShellResizeSizes,
+  UseAppShellResizeInput,
 } from './AppShell.types';
 import type { AppShellAsideProps } from './AppShellAside/AppShellAside';
 import type { AppShellFooterProps } from './AppShellFooter/AppShellFooter';
@@ -28,6 +34,7 @@ export { AppShellNavbar } from './AppShellNavbar/AppShellNavbar';
 export { AppShellSection } from './AppShellSection/AppShellSection';
 export { AppShellMain } from './AppShellMain/AppShellMain';
 export { useAppShellContext } from './AppShell.context';
+export { useAppShellResize } from './use-app-shell-resize/use-app-shell-resize';
 
 export type {
   AppShellProps,
@@ -47,4 +54,10 @@ export type {
   AppShellMainProps,
   AppShellNavbarProps,
   AppShellSectionProps,
+  AppShellResizeController,
+  AppShellResizeSection,
+  AppShellResizeSectionController,
+  AppShellResizeSectionOptions,
+  AppShellResizeSizes,
+  UseAppShellResizeInput,
 };

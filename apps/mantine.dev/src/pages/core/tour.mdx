@@ -1,0 +1,113 @@
+import { TourDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Tour);
+
+## Usage
+
+`Tour` is a step-by-step guide for application onboarding. It highlights target elements
+one by one and displays a tooltip with navigation controls next to each of them.
+`Tour.Step` components must be direct children of `Tour`.
+
+<Demo data={TourDemos.usage} />
+
+## Complex example
+
+A dashboard onboarding tour: it starts with a centered welcome step, scrolls to targets
+inside `ScrollArea` and changes `position` and `spotlightPadding` of individual steps.
+
+<Demo data={TourDemos.complex} />
+
+## Beacon mode
+
+Set `mode="beacon"` to display pulsing beacons next to all targets instead of a sequential
+walkthrough. Users can click beacons in any order to open tooltips. Beacons stay on the page
+until `active` is set to `false`.
+
+<Demo data={TourDemos.beacon} />
+
+## Controlled
+
+Use `step` and `onStepChange` props to control the current step. An uncontrolled tour
+always starts from `defaultStep`.
+
+<Demo data={TourDemos.controlled} />
+
+## Overlay configuration
+
+- `withOverlay` – display the backdrop overlay, `true` by default
+- `withOverlayInteraction` – allow users to interact with the highlighted element, `false` by default
+- `closeOnOverlayClick` – close the tour when the overlay is clicked, `false` by default
+
+Dropdowns rendered in a portal (`Select`, `Menu`, etc.) are displayed below the tour.
+To use them with `withOverlayInteraction`, set their `zIndex` to a value greater than
+the tour `zIndex`, for example `comboboxProps={{ zIndex: 10001 }}`.
+
+<Demo data={TourDemos.overlay} />
+
+## Step targets
+
+`target` prop of `Tour.Step` accepts a CSS selector or a ref. Use a selector for elements
+that are mounted after the step is activated, a ref must point to an element that is already mounted.
+
+## Steps without target
+
+Steps without `target` are displayed in the center of the screen. Use them for welcome
+and completion screens.
+
+<Demo data={TourDemos.centered} />
+
+## Custom content
+
+`Tour.Step` children can be any React node. To build the tooltip layout yourself,
+use compound components. Compound components do not know your steps:
+
+- Pass the total number of steps to `Tour.Root` with `stepsCount` prop
+- Find target elements yourself and pass them to `Tour.Overlay` (`targetRect`) and `Tour.Tooltip` (`targetElement`)
+- Set a distinct `aria-label` on each `Tour.Beacon`
+- To play the exit transition, set `mounted={false}` on `Tour.Tooltip` first and `active={false}` on `Tour.Root` after the transition ends
+
+<Demo data={TourDemos.compound} />
+
+## Tooltip position
+
+Set `position` on `Tour.Step` to change the tooltip placement. If there is not enough
+space, the tooltip flips to the opposite side.
+
+<Demo data={TourDemos.position} />
+
+## Custom labels
+
+Use `labels` prop to translate navigation buttons:
+
+<Demo data={TourDemos.labels} />
+
+## Styles API
+
+<Demo data={TourDemos.stylesApi} />
+
+## Keyboard navigation
+
+Arrow keys are ignored while focus is inside the target element or an input.
+Set `withKeyboardNavigation={false}` to disable them.
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Go to the next step, closes the tour on the last step',
+      condition: 'guided mode only',
+    },
+    { key: 'ArrowLeft', description: 'Go to the previous step', condition: 'guided mode only' },
+    { key: 'Escape', description: 'Close the tour', condition: 'closeOnEscape is true (default)' },
+  ]}
+/>
+
+## Accessibility
+
+- The tooltip has `role="dialog"`, it is labelled by the step title and described by the step body
+- Focus is moved to the tooltip when it opens and is returned to the previously focused element when the tour closes
+- Focus is trapped inside the tooltip while the overlay is displayed
+- Step counter changes are announced with `aria-live="polite"`
+- Beacons are buttons labelled with `labels.beacon` and the step title, for example `Start tour: Settings`

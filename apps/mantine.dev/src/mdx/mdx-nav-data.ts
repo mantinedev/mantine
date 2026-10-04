@@ -23,13 +23,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
 
   {
     category: 'Framework guides',
-    pages: [
-      MDX_DATA.NextJs,
-      MDX_DATA.Vite,
-      MDX_DATA.ReactRouter,
-      MDX_DATA.Gatsby,
-      MDX_DATA.Redwood,
-    ],
+    pages: [MDX_DATA.NextJs, MDX_DATA.Vite, MDX_DATA.ReactRouter, MDX_DATA.TanStackStart],
   },
 
   {
@@ -49,6 +43,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
   {
     category: 'Changelog',
     pages: [
+      MDX_DATA.Changelog970,
       MDX_DATA.Changelog960,
       MDX_DATA.Changelog950,
       MDX_DATA.Changelog940,
@@ -130,7 +125,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
   },
   {
     category: 'Styles integrations',
-    pages: [MDX_DATA.Emotion, MDX_DATA.UsageWithSass, MDX_DATA.VanillaExtract],
+    pages: [MDX_DATA.Emotion, MDX_DATA.UsageWithSass, MDX_DATA.VanillaExtract, MDX_DATA.StyleX],
   },
   {
     category: 'Other',
@@ -327,6 +322,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.CloseButton,
       MDX_DATA.CopyButton,
       MDX_DATA.FileButton,
+      MDX_DATA.Toggle,
       MDX_DATA.UnstyledButton,
     ],
   },
@@ -374,6 +370,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.ActionBar,
       MDX_DATA.FloatingIndicator,
       MDX_DATA.FloatingWindow,
+      MDX_DATA.Tour,
     ],
   },
   {
@@ -414,6 +411,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'Miscellaneous',
     pages: [
+      MDX_DATA.Toolbar,
       MDX_DATA.Collapse,
       MDX_DATA.FocusTrap,
       MDX_DATA.Marquee,
@@ -506,9 +504,13 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
   },
 
   {
+    category: 'Code highlight',
+    pages: [MDX_DATA.GettingStartedCodeHighlight, MDX_DATA.CodeHighlight, MDX_DATA.JsonViewer],
+  },
+
+  {
     category: 'Other extensions',
     pages: [
-      MDX_DATA.CodeHighlight,
       MDX_DATA.Notifications,
       MDX_DATA.Spotlight,
       MDX_DATA.Carousel,

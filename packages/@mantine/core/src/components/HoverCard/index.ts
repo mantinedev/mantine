@@ -5,7 +5,7 @@ export { HoverCardGroup, HoverCardGroupContext } from './HoverCardGroup/HoverCar
 export { useHoverCardContext } from './HoverCard.context';
 
 export type { HoverCardContextValue } from './HoverCard.context';
-export type { HoverCardProps } from './HoverCard';
+export type { HoverCardProps, HoverCardEvents } from './HoverCard';
 export type { HoverCardDropdownProps } from './HoverCardDropdown/HoverCardDropdown';
 export type { HoverCardTargetProps } from './HoverCardTarget/HoverCardTarget';
 export type {

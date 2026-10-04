@@ -1,0 +1,536 @@
+.root {
+  --jv-radius: var(--mantine-radius-sm);
+  --jv-fz: 13px;
+  --jv-indent: 16px;
+
+  position: relative;
+  direction: ltr;
+  font-family: var(--mantine-font-family-monospace);
+  font-size: var(--jv-fz);
+  line-height: 1.55;
+  border-radius: var(--jv-radius);
+
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-0);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-8);
+  }
+
+  &[data-with-border] {
+    border: 1px solid;
+
+    @mixin where-light {
+      border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin where-dark {
+      border-color: var(--mantine-color-dark-4);
+    }
+  }
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  border-bottom: 1px solid;
+
+  .copyAllButton ~ & {
+    padding-right: calc(44px + var(--mantine-spacing-xs));
+  }
+
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
+  }
+}
+
+.control {
+  font-size: var(--mantine-font-size-xs);
+  white-space: nowrap;
+  padding: 2px 8px;
+  border-radius: var(--mantine-radius-sm);
+
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-1);
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
+    color: var(--mantine-color-dark-1);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-2);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+}
+
+.content {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  overflow: hidden;
+
+  .wrapper > & {
+    flex: 1;
+    min-width: min-content;
+  }
+}
+
+.lineNumbers {
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  text-align: right;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs);
+  padding-left: var(--mantine-spacing-sm);
+  margin-right: var(--mantine-spacing-xs);
+  border-right: 1px solid;
+  box-sizing: content-box;
+  min-width: 2ch;
+
+  @mixin where-light {
+    color: var(--mantine-color-gray-7);
+    border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-dark-2);
+    border-color: var(--mantine-color-dark-4);
+  }
+
+  & > div {
+    padding: 1px 0;
+    line-height: 1.55;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    box-sizing: border-box;
+  }
+}
+
+.wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+.node {
+  position: relative;
+
+  &[data-highlight] > .row {
+    position: relative;
+
+    & > * {
+      z-index: 1;
+    }
+
+    & > :not(.toggle) {
+      position: relative;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -1000px;
+      right: -1000px;
+      z-index: 0;
+      pointer-events: none;
+    }
+  }
+
+  &[data-highlight='added'] > .row::before {
+    @mixin where-light {
+      background-color: var(--mantine-color-green-1);
+    }
+
+    @mixin where-dark {
+      background-color: rgba(64, 192, 87, 0.15);
+    }
+  }
+
+  &[data-highlight='removed'] > .row::before {
+    @mixin where-light {
+      background-color: var(--mantine-color-red-1);
+    }
+
+    @mixin where-dark {
+      background-color: rgba(250, 82, 82, 0.15);
+    }
+  }
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  min-height: 24px;
+  padding: 1px 4px;
+  border-radius: var(--mantine-radius-sm);
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+
+  &:focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: -2px;
+  }
+
+  .copyButton {
+    opacity: 0;
+    transition: opacity 100ms ease;
+  }
+
+  &:focus-within .copyButton {
+    opacity: 1;
+  }
+
+  &[data-hoverable] {
+    @mixin hover {
+      .copyButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  &[data-hoverable]:not([data-root]) {
+    cursor: default;
+
+    @mixin hover {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-1);
+      }
+
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-6);
+      }
+    }
+  }
+}
+
+.toggle {
+  position: absolute;
+  left: calc(var(--mantine-spacing-sm) * -1 - 4px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 24px;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  @mixin where-light {
+    color: var(--mantine-color-gray-6);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-dark-3);
+  }
+
+  &[data-expanded] {
+    transform: rotate(90deg);
+  }
+}
+
+.key {
+  @mixin where-light {
+    color: var(--mantine-color-violet-7);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-violet-4);
+  }
+
+  white-space: nowrap;
+  line-height: 1.55;
+}
+
+.value {
+  white-space: pre;
+  line-height: 1.55;
+
+  &[data-wrap] {
+    min-width: 20ch;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  &[data-value-type='string'] {
+    @mixin where-light {
+      color: var(--mantine-color-teal-8);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-teal-4);
+    }
+  }
+
+  &[data-value-type='number'] {
+    @mixin where-light {
+      color: var(--mantine-color-blue-7);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-blue-4);
+    }
+  }
+
+  &[data-value-type='boolean'] {
+    @mixin where-light {
+      color: var(--mantine-color-orange-7);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-orange-4);
+    }
+  }
+
+  &[data-value-type='null'],
+  &[data-value-type='undefined'] {
+    @mixin where-light {
+      color: var(--mantine-color-red-7);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-red-4);
+    }
+  }
+
+  &[data-value-type='bigint'] {
+    @mixin where-light {
+      color: var(--mantine-color-blue-7);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-blue-4);
+    }
+  }
+
+  &[data-value-type='circular'] {
+    font-style: italic;
+
+    @mixin where-light {
+      color: var(--mantine-color-gray-7);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-dark-2);
+    }
+  }
+}
+
+.bracket {
+  @mixin where-light {
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-dark-2);
+  }
+}
+
+.type {
+  font-size: calc(var(--jv-fz) * 0.85);
+  padding: 0 4px;
+  border-radius: var(--mantine-radius-xs);
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: center;
+
+  &[data-value-type='string'] {
+    @mixin where-light {
+      background-color: var(--mantine-color-teal-0);
+      color: var(--mantine-color-teal-8);
+    }
+
+    @mixin where-dark {
+      background-color: rgba(18, 184, 134, 0.15);
+      color: var(--mantine-color-teal-4);
+    }
+  }
+
+  &[data-value-type='number'],
+  &[data-value-type='bigint'] {
+    @mixin where-light {
+      background-color: var(--mantine-color-blue-0);
+      color: var(--mantine-color-blue-7);
+    }
+
+    @mixin where-dark {
+      background-color: rgba(34, 139, 230, 0.15);
+      color: var(--mantine-color-blue-4);
+    }
+  }
+
+  &[data-value-type='boolean'] {
+    @mixin where-light {
+      background-color: var(--mantine-color-orange-0);
+      color: var(--mantine-color-orange-7);
+    }
+
+    @mixin where-dark {
+      background-color: rgba(253, 126, 20, 0.15);
+      color: var(--mantine-color-orange-4);
+    }
+  }
+
+  &[data-value-type='null'],
+  &[data-value-type='undefined'] {
+    @mixin where-light {
+      background-color: var(--mantine-color-red-0);
+      color: var(--mantine-color-red-7);
+    }
+
+    @mixin where-dark {
+      background-color: rgba(250, 82, 82, 0.15);
+      color: var(--mantine-color-red-4);
+    }
+  }
+
+  &[data-value-type='circular'] {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+      color: var(--mantine-color-gray-7);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+      color: var(--mantine-color-dark-2);
+    }
+  }
+
+  &[data-value-type='array'] {
+    @mixin where-light {
+      background-color: var(--mantine-color-cyan-0);
+      color: var(--mantine-color-cyan-8);
+    }
+
+    @mixin where-dark {
+      background-color: rgba(21, 170, 191, 0.15);
+      color: var(--mantine-color-cyan-4);
+    }
+  }
+
+  &[data-value-type='object'] {
+    @mixin where-light {
+      background-color: var(--mantine-color-grape-0);
+      color: var(--mantine-color-grape-8);
+    }
+
+    @mixin where-dark {
+      background-color: rgba(190, 75, 219, 0.15);
+      color: var(--mantine-color-grape-4);
+    }
+  }
+}
+
+.size {
+  font-size: calc(var(--jv-fz) * 0.85);
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: center;
+
+  @mixin where-light {
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-dark-3);
+  }
+}
+
+.ellipsis {
+  @mixin where-light {
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-dark-3);
+  }
+
+  &[data-clickable] {
+    font-size: calc(var(--jv-fz) * 0.85);
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    @mixin hover {
+      text-decoration-style: solid;
+    }
+  }
+}
+
+.copyButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: var(--mantine-radius-xs);
+
+  @mixin where-light {
+    color: var(--mantine-color-gray-6);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-dark-3);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      color: var(--mantine-color-gray-7);
+      background-color: var(--mantine-color-gray-2);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-dark-1);
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+}
+
+.copyAllButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--mantine-radius-sm);
+  opacity: 0.5;
+
+  @mixin where-light {
+    color: var(--mantine-color-gray-7);
+    background-color: var(--mantine-color-gray-0);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-dark-1);
+    background-color: var(--mantine-color-dark-8);
+  }
+
+  @mixin hover {
+    opacity: 1;
+  }
+}

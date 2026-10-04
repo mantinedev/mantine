@@ -21,7 +21,7 @@ export function FrameworksGuides() {
         />
       </SimpleGrid>
 
-      <SimpleGrid type="container" cols={{ base: 1, '580px': 2, '920px': 3 }} mt="lg" spacing="lg">
+      <SimpleGrid type="container" cols={{ base: 1, '580px': 2 }} mt="lg" spacing="lg">
         <GettingStartedCard
           title="React Router"
           logo="react-router"
@@ -29,20 +29,12 @@ export function FrameworksGuides() {
           link="/guides/react-router"
           description="Get started with React Router"
         />
-
         <GettingStartedCard
-          title="Redwood"
-          description="Get started with RedwoodJS"
-          logo="redwood"
+          title="TanStack Start"
+          logo="tanstack-start"
           type="secondary"
-          link="/guides/redwood"
-        />
-        <GettingStartedCard
-          title="Gatsby"
-          logo="gatsby"
-          type="secondary"
-          link="/guides/gatsby"
-          description="Get started with Gatsby"
+          link="/guides/tanstack-start"
+          description="Get started with TanStack Start"
         />
       </SimpleGrid>
       <Space h="xl" />

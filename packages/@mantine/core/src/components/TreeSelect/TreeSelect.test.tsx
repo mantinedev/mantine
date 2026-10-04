@@ -9,7 +9,12 @@ import {
   userEvent,
 } from '@mantine-tests/core';
 import type { TreeNodeData } from '../Tree';
-import { TreeSelect, TreeSelectProps, TreeSelectStylesNames } from './TreeSelect';
+import {
+  TreeSelect,
+  TreeSelectProps,
+  TreeSelectRenderPillPayload,
+  TreeSelectStylesNames,
+} from './TreeSelect';
 
 const treeData: TreeNodeData[] = [
   {
@@ -242,6 +247,149 @@ describe('@mantine/core/TreeSelect', () => {
       );
       expect(screen.getByText('Apple', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
       expect(screen.getByText('Milk', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    });
+  });
+
+  describe('renderPill', () => {
+    const customPill = ({ value, onRemove }: TreeSelectRenderPillPayload) => (
+      <button type="button" onClick={onRemove} data-testid={`custom-${value}`}>
+        {`custom-${value}`}
+      </button>
+    );
+
+    it('calls renderPill with node, value, onRemove, disabled and readOnly', () => {
+      const renderPill = jest.fn(customPill);
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="multiple"
+          defaultValue={['apple', 'milk']}
+          disabled
+          readOnly
+          renderPill={renderPill}
+        />
+      );
+
+      expect(renderPill).toHaveBeenCalledWith(
+        expect.objectContaining({
+          node: expect.objectContaining({ value: 'apple', label: 'Apple' }),
+          value: 'apple',
+          onRemove: expect.any(Function),
+          disabled: true,
+          readOnly: true,
+        })
+      );
+      expect(renderPill).toHaveBeenCalledWith(
+        expect.objectContaining({
+          node: expect.objectContaining({ value: 'milk', label: 'Milk' }),
+          value: 'milk',
+        })
+      );
+    });
+
+    it('renders renderPill output instead of the default pill', () => {
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="multiple"
+          defaultValue={['apple', 'milk']}
+          renderPill={customPill}
+        />
+      );
+
+      expect(screen.getByTestId('custom-apple')).toBeInTheDocument();
+      expect(screen.getByTestId('custom-milk')).toBeInTheDocument();
+      expect(document.querySelector('.mantine-Pill-root')).toBe(null);
+    });
+
+    it('removes the value when onRemove from the payload is called in multiple mode', async () => {
+      const spy = jest.fn();
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="multiple"
+          defaultValue={['apple', 'milk']}
+          name="test-multiple"
+          onRemove={spy}
+          renderPill={customPill}
+        />
+      );
+
+      await userEvent.click(screen.getByTestId('custom-apple'));
+
+      expect(document.querySelector('input[name="test-multiple"]')).toHaveValue('milk');
+      expect(spy).toHaveBeenCalledWith('apple');
+      expect(screen.queryByTestId('custom-apple')).toBe(null);
+    });
+
+    it('unchecks the whole subtree when onRemove is called for a parent pill in checkbox mode', async () => {
+      const spy = jest.fn();
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="checkbox"
+          checkedStrategy="parent"
+          defaultValue={['fruits']}
+          name="test-checkbox"
+          onRemove={spy}
+          renderPill={customPill}
+        />
+      );
+
+      await userEvent.click(screen.getByTestId('custom-fruits'));
+
+      expect(document.querySelector('input[name="test-checkbox"]')).toHaveValue('');
+      expect(spy).toHaveBeenCalledWith('fruits');
+    });
+
+    it('unchecks only the node itself when checkStrictly is set', async () => {
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="checkbox"
+          checkStrictly
+          defaultValue={['fruits', 'apple']}
+          name="test-checkbox"
+          renderPill={customPill}
+        />
+      );
+
+      await userEvent.click(screen.getByTestId('custom-fruits'));
+
+      expect(document.querySelector('input[name="test-checkbox"]')).toHaveValue('apple');
+    });
+
+    it('passes a placeholder node when the value is not present in data', () => {
+      const renderPill = jest.fn(customPill);
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="multiple"
+          defaultValue={['unknown']}
+          renderPill={renderPill}
+        />
+      );
+
+      expect(renderPill).toHaveBeenCalledWith(
+        expect.objectContaining({ node: { value: 'unknown', label: 'unknown' }, value: 'unknown' })
+      );
+    });
+
+    it('does not call renderPill for the overflow pill', () => {
+      const renderPill = jest.fn(customPill);
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="multiple"
+          defaultValue={['apple', 'milk']}
+          maxDisplayedValues={1}
+          renderPill={renderPill}
+        />
+      );
+
+      expect(renderPill).toHaveBeenCalledWith(expect.objectContaining({ value: 'apple' }));
+      expect(renderPill).not.toHaveBeenCalledWith(expect.objectContaining({ value: 'milk' }));
+      expect(screen.getByText('+1 more', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
     });
   });
 

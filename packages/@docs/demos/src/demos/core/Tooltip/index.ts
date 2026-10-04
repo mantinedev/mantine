@@ -13,3 +13,4 @@ export { inline } from './Tooltip.demo.inline';
 export { nested } from './Tooltip.demo.nested';
 export { offsetAxis } from './Tooltip.demo.offsetAxis';
 export { target } from './Tooltip.demo.target';
+export { hideDetached } from './Tooltip.demo.hideDetached';
