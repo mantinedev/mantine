@@ -829,6 +829,7 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       expect(typeof dayEvents[0].position?.weekIndex).toBe('number');
     });
   });
+
   describe('row assignment equivalence', () => {
     function createRandom(seed: number) {
       let state = seed;
