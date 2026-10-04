@@ -94,22 +94,22 @@ it is committed, based on where the event is being dropped:
   head={['Prop', 'Description']}
   data={[
     [
-      '`preventEventOverlap`',
+      <><code>preventEventOverlap</code></>,
       'Rejects placements that would overlap another event. Pass a function to decide per pair of events.',
     ],
     [
-      '`canDropEvent`',
-      'Called while an event is dragged over a target and again before the drop is committed, return `false` to reject the drop',
+      <><code>canDropEvent</code></>,
+      <>Called while an event is dragged over a target and again before the drop is committed, return <code>false</code> to reject the drop</>,
     ],
     [
-      '`canResizeEventTo`',
-      'Called on every pointer move while an event is resized and again before the resize is committed, return `false` to reject the new size',
+      <><code>canResizeEventTo</code></>,
+      <>Called on every pointer move while an event is resized and again before the resize is committed, return <code>false</code> to reject the new size</>,
     ],
     [
-      '`canDropExternalEvent`',
-      'Called while an external item is dragged over a target and again before the drop is committed, return `false` to reject the drop',
+      <><code>canDropExternalEvent</code></>,
+      <>Called while an external item is dragged over a target and again before the drop is committed, return <code>false</code> to reject the drop</>,
     ],
-    ['`onEventPlacementRejected`', 'Called when a drop or resize is rejected'],
+    [<><code>onEventPlacementRejected</code></>, 'Called when a drop or resize is rejected'],
   ]}
 />
 
@@ -169,9 +169,9 @@ Other fields depend on `action`:
 <DataTable
   head={['action', 'Extra fields']}
   data={[
-    ['`drop`', '`event`, `end`'],
-    ['`resize`', '`event`, `end`, `edge`'],
-    ['`external-drop`', '`dataTransfer`'],
+    [<><code>drop</code></>, <><code>event</code>, <code>end</code></>],
+    [<><code>resize</code></>, <><code>event</code>, <code>end</code>, <code>edge</code></>],
+    [<><code>external-drop</code></>, <><code>dataTransfer</code></>],
   ]}
 />
 

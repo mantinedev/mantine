@@ -60,4 +60,5 @@ export const hideDetached: MantineDemo = {
   code,
   centered: true,
   component: Demo,
+  defaultExpanded: false,
 };

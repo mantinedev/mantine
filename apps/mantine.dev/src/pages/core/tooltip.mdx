@@ -66,10 +66,7 @@ element is removed from the DOM, hidden with `display: none`, or scrolled out of
 the viewport or of a scrollable container that clips it.
 
 By default, `hideDetached` is enabled – the tooltip is hidden with the target element.
-You can change this behavior with `hideDetached={false}`. To see the difference, try to scroll
-the root element of the following demo:
-
-<Demo data={TooltipDemos.hideDetached} demoProps={{ defaultExpanded: false }} />
+You can change this behavior with `hideDetached={false}`.
 
 Note that `hideDetached` has no effect on [Tooltip.Floating](#floating-tooltip) –
 it is positioned relative to the mouse pointer rather than to a target element.
@@ -79,6 +76,10 @@ so the target is always considered detached and the tooltip is hidden. Set `env=
 [MantineProvider](/theming/mantine-provider/#env) in your test wrapper, as described in the
 [Jest](/guides/jest) and [Vitest](/guides/vitest) guides, or pass `hideDetached={false}` –
 otherwise `hideDetached` detection is disabled only in the `test` environment.
+
+To see the difference, try to scroll the root element of the following demo:
+
+<Demo data={TooltipDemos.hideDetached} demoProps={{ defaultExpanded: false }} />
 
 ## Required ref prop
 
@@ -187,15 +188,15 @@ function Demo() {
 
 ## Interactive tooltip
 
-By default, the tooltip closes as soon as the pointer leaves the target element, and the tooltip body ignores pointer events. Set the `interactive` prop to keep the tooltip open while the pointer travels from the target to the tooltip and rests over its content:
-
-<Demo data={TooltipDemos.interactive} />
+By default, the tooltip closes as soon as the pointer leaves the target element, and the tooltip body ignores pointer events. Set the `interactive` prop to keep the tooltip open while the pointer travels from the target to the tooltip and rests over its content.
 
 The `interactive` prop satisfies the _hoverable_ condition of [WCAG 2.1 success criterion 1.4.13: Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html), so the pointer can reach the tooltip body without dismissing it, for example to read or select its content.
 
 Do not put interactive or focusable content (links, buttons, inputs) inside a tooltip. Interactive content should be put in a [Popover](/core/popover) instead, which is reachable by mouse, keyboard, and touch.
 
 Note that an interactive tooltip receives pointer events, which means that while it is open, it intercepts clicks and hover events of the elements that it overlaps. The tooltip stops receiving pointer events as soon as it starts closing. The `interactive` prop is not supported by `Tooltip.Floating`, which always follows the mouse.
+
+<Demo data={TooltipDemos.interactive} />
 
 ## Multiline
 

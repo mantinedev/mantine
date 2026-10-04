@@ -19,6 +19,35 @@ All funds are used to improve Mantine and create new features and components.
 
 <SponsorButton />
 
+## @mantine/mcp-server documentation coverage
+
+[@mantine/mcp-server](https://www.npmjs.com/package/@mantine/mcp-server) now exposes 406 documentation
+pages instead of 164. Previously only components were indexed – hooks, [@mantine/form](/form/use-form),
+styling, theming, guides and [help.mantine.dev](https://help.mantine.dev) FAQ pages are now included as
+well. Changelog pages are deliberately excluded to keep search results focused on current APIs.
+
+Documentation is now retrieved by section rather than by whole page. `get_item_doc` returns a page
+outline (description, import statement and the list of section headings) by default, a single section
+with the `section` argument, or the entire page with `full: true`. Requesting `useForm` this way returns
+about 1KB instead of 9KB, and the largest pages drop from roughly 89KB to 4KB.
+
+Other improvements:
+
+- **New `get_api` tool** – resolves a symbol such as `useForm` or `useDisclosure` to its TypeScript
+  signature and exported types without knowing which page documents it
+- **Ranked search** – `search_docs` results point at the specific section that matched, so a query like
+  "validate a form with zod" resolves to the `zod` section of the schema validation page
+- **Search synonyms** – queries now match the search keywords maintained in the documentation, so
+  "command palette" finds [Spotlight](/x/spotlight)
+- **More filters** – `list_items` accepts `group`, `category` and `package` in addition to `kind`
+- **Hook signatures** – `get_item_props` returns the TypeScript signature for hooks, and points at the
+  relevant section for pages that document their API in prose
+
+The server was also migrated to the official Model Context Protocol SDK, so the protocol version is
+negotiated with the client instead of being pinned.
+
+For setup details, supported tools, and client-specific instructions, see [Mantine with LLMs](/guides/llms).
+
 ## Tour component
 
 New [Tour](/core/tour) component provides interactive step-by-step application onboarding.
@@ -62,13 +91,13 @@ available in other components like [Button](/core/button):
 Images can be uploaded via toolbar button, drag and drop, or paste.
 During upload, a local preview is shown with a loading indicator.
 
-<Demo data={TipTapDemos.imageUpload} />
-
 Configuring `getUploadImageExtension` is enough to enable uploads – `onImageUpload` and
 `onImageUploadError` props of `RichTextEditor` are optional overrides for the toolbar control.
 `onImageUpload` can resolve either to a string or to `{ src, alt, title }` (new exported
 `ImageUploadResult` type) to set alternative text on the uploaded image. Several files picked,
 dropped or pasted together are inserted in the order they were selected and are undone as one step.
+
+<Demo data={TipTapDemos.imageUpload} />
 
 ## Schedule event overlap mode
 
@@ -76,15 +105,15 @@ dropped or pasted together are inserted in the order they were selected and are 
 that controls how events overlapping in time share the horizontal space. The default `columns` mode
 splits the available width evenly between them, which becomes unreadable once a large number of events
 overlap. The new `cascade` mode indents each event and stacks it over the previous one, so every event
-keeps a readable width no matter how many of them overlap:
-
-<Demo data={WeekViewDemos.eventOverlapMode} />
+keeps a readable width no matter how many of them overlap.
 
 The indent shrinks automatically as the group grows, so the event on top always keeps at least 60% of
 the available width. Covered events can still be read and used: rest the pointer on one and it is
 raised above the events covering it, which also makes its resize handles reachable. Keyboard users get
 the same result by focusing the event with `Tab`. `eventOverlapRaiseDelay` prop controls how long the
 pointer must rest on an event before it is raised, in milliseconds (`600` by default).
+
+<Demo data={WeekViewDemos.eventOverlapMode} />
 
 ## Schedule drop validation
 
@@ -101,48 +130,19 @@ handler and not update state – which produced a snap-back with no explanation:
 - `canDropExternalEvent` does the same for items dragged in from outside the schedule.
 - `onEventPlacementRejected` reports the rejection with the conflicting events and the reason.
 
-<Demo data={WeekViewDemos.preventEventOverlap} />
-
 The checks compose: a placement is allowed only when the overlap check passes and the matching
 callback returns a value other than `false`. The overlap check runs first, so `onEventPlacementRejected`
 can report `conflicts` without your code repeating the work. While the pointer is over an invalid
 target the drag ghost and the resizing event get `data-invalid`, so the rejection is visible before the
 pointer is released.
 
+<Demo data={WeekViewDemos.preventEventOverlap} />
+
 In [resource views](/schedule/resources-schedule) the conflict set is scoped to the **target**
 resource, so moving an event onto another resource row is checked against that row rather than the one
 it came from:
 
 <Demo data={ResourcesDayViewDemos.canDropEvent} />
-
-## @mantine/mcp-server documentation coverage
-
-[@mantine/mcp-server](https://www.npmjs.com/package/@mantine/mcp-server) now exposes 406 documentation
-pages instead of 164. Previously only components were indexed – hooks, [@mantine/form](/form/use-form),
-styling, theming, guides and [help.mantine.dev](https://help.mantine.dev) FAQ pages are now included as
-well. Changelog pages are deliberately excluded to keep search results focused on current APIs.
-
-Documentation is now retrieved by section rather than by whole page. `get_item_doc` returns a page
-outline (description, import statement and the list of section headings) by default, a single section
-with the `section` argument, or the entire page with `full: true`. Requesting `useForm` this way returns
-about 1KB instead of 9KB, and the largest pages drop from roughly 89KB to 4KB.
-
-Other improvements:
-
-- **New `get_api` tool** – resolves a symbol such as `useForm` or `useDisclosure` to its TypeScript
-  signature and exported types without knowing which page documents it
-- **Ranked search** – `search_docs` results point at the specific section that matched, so a query like
-  "validate a form with zod" resolves to the `zod` section of the schema validation page
-- **Search synonyms** – queries now match the search keywords maintained in the documentation, so
-  "command palette" finds [Spotlight](/x/spotlight)
-- **More filters** – `list_items` accepts `group`, `category` and `package` in addition to `kind`
-- **Hook signatures** – `get_item_props` returns the TypeScript signature for hooks, and points at the
-  relevant section for pages that document their API in prose
-
-The server was also migrated to the official Model Context Protocol SDK, so the protocol version is
-negotiated with the client instead of being pinned.
-
-For setup details, supported tools, and client-specific instructions, see [Mantine with LLMs](/guides/llms).
 
 ## TreeSelect renderPill
 
@@ -201,32 +201,16 @@ Note that when the `resize` prop is used, `--app-shell-*` CSS variables are defi
 `AppShell` root element instead of `:root`, so they cannot be read from content rendered in a
 [Portal](/core/portal), for example from a [Modal](/core/modal) or a [Drawer](/core/drawer).
 
-## TanStack Start template
+## Templates and guides
 
-New [mantine-tanstack-start-template](https://github.com/mantinedev/mantine-tanstack-start-template)
-is now available. It includes Mantine with [CSS modules](/styles/css-modules),
-[postcss-preset-mantine](/styles/postcss-preset), Vitest, Storybook, oxlint and oxfmt setup.
-To set up Mantine in an existing TanStack Start application, follow the
-[TanStack Start guide](/guides/tanstack-start).
-
-## StyleX guide
-
-New [StyleX guide](/styles/stylex) explains how to set up [StyleX](https://stylexjs.com/)
-in a Vite application and use it to style Mantine components: applying styles to root and
-inner elements, overriding components CSS variables, referencing Mantine theme tokens,
-light and dark color schemes and responsive styles.
-
-## Gatsby and Redwood guides deprecation
-
-Gatsby and Redwood guides have been removed from the documentation, and the
-`gatsby-template` and `redwood-template` templates are no longer maintained.
-Both frameworks are no longer actively developed. If you are starting a new project, use
-[Next.js](/guides/next), [Vite](/guides/vite), [React Router](/guides/react-router)
-or [TanStack Start](/guides/tanstack-start) instead. Existing Gatsby and Redwood applications
-can keep using Mantine – the setup does not change.
+- New [mantine-tanstack-start-template](https://github.com/mantinedev/mantine-tanstack-start-template) and [TanStack Start guide](/guides/tanstack-start) to set up Mantine in a TanStack Start application.
+- [vite-template](https://github.com/mantinedev/vite-template) now uses [Vite+](https://viteplus.dev/): Vite, Vitest, oxlint and oxfmt run through the `vp` CLI and are configured in `vite.config.mjs`.
+- New [StyleX guide](/styles/stylex) explains how to style Mantine components with [StyleX](https://stylexjs.com/) in a Vite application.
 
 ## Other changes
 
-- [HoverCard](/core/hover-card) can now be opened with the keyboard and is announced by screen readers: the dropdown is opened when the target is focused with the keyboard and closed with `Escape`. New `events` prop controls which interactions open the dropdown (`{ hover: true, focus: true, touch: false }` by default), new `interactive` prop keeps the dropdown open while the pointer travels from the target to the dropdown, and new `role` prop switches the target/dropdown relation between `dialog` and `tooltip`. Note that focus activation is enabled by default and a tap on a touch device no longer opens the dropdown – set `events={{ focus: false, touch: true }}` and `closeOnEscape={false}` to restore the previous behavior. Standalone hover cards (outside of `HoverCard.Group`) are now also closed by a press outside of the target and the dropdown, controlled by the `closeOnClickOutside` prop. New `onDismiss` callback is called when the dropdown is closed with `Escape` key or with a press outside of the target and the dropdown, and new `returnFocus` prop returns focus to the target when the dropdown closes (ignored while focus activation is enabled). `HoverCardEvents` type is exported from `@mantine/core`.
-- [Checkbox](/core/checkbox) and [Radio](/core/radio) `variant="light"` colors are resolved with `theme.variantColorResolver`, the same way as in [Button](/core/button), so any CSS color or theme color with a shade can be used.
-- [ActionBar](/core/action-bar) with `keepMounted` now keeps the closed bar inside React `Activity` instead of hiding it with `display: none` – its state is preserved, but effects inside it are paused while it is closed. Set `transitionProps={{ keepMountedMode: 'display-none' }}` to restore the previous behavior.
+- [HoverCard](/core/hover-card) now opens on keyboard focus, closes with `Escape` or a press outside, and is announced by screen readers. New `events`, `interactive`, `role` and `returnFocus` props, and `onDismiss` callback.
+- [HoverCard](/core/hover-card) no longer opens with a tap on touch devices. Set `events={{ focus: false, touch: true }}` and `closeOnEscape={false}` to restore the previous behavior.
+- [Checkbox](/core/checkbox) and [Radio](/core/radio) `variant="light"` colors are resolved with `theme.variantColorResolver`, so any CSS color or theme color with a shade can be used.
+- [ActionBar](/core/action-bar) with `keepMounted` now uses React `Activity` instead of `display: none`, so effects are paused while the bar is closed. Set `transitionProps={{ keepMountedMode: 'display-none' }}` to restore the previous behavior.
+- Gatsby and Redwood guides have been removed, `gatsby-template` and `redwood-template` are no longer maintained. Existing applications can keep using Mantine, the setup does not change.

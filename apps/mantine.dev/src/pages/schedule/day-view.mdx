@@ -153,10 +153,10 @@ function Demo() {
 Enable drag and drop by setting `withEventsDragAndDrop` prop. Use `onEventDrop` callback to handle
 event drops. All-day events cannot be dragged.
 
-<Demo data={DayViewDemos.dragDrop} />
-
 To reject a drop based on where the event lands – for example to prevent double booking – use
 `preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
+
+<Demo data={DayViewDemos.dragDrop} />
 
 ## Drag interval
 
@@ -195,10 +195,10 @@ Enable event resizing by setting `withEventResize` prop. Users can drag the top 
 edge of an event to adjust its start or end time. Use `onEventResize` callback to handle
 the resize.
 
-<Demo data={DayViewDemos.eventResize} />
-
 To reject a resize based on the new range, use `preventEventOverlap` and `canResizeEventTo`, see
 [drop validation](/schedule/schedule/#drop-validation).
+
+<Demo data={DayViewDemos.eventResize} />
 
 ## Resize interval
 

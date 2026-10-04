@@ -59,12 +59,12 @@ function Demo() {
 
 By default, a menu opens when its target is clicked. Once a menu is open, hovering another
 target switches to it. Set `trigger="hover"` to open menus on hover, the menu closes when
-the pointer leaves the bar:
-
-<Demo data={MenubarDemos.hover} />
+the pointer leaves the bar.
 
 Set `loop={false}` to stop arrow key navigation from wrapping around from the last menu
 to the first and vice versa.
+
+<Demo data={MenubarDemos.hover} />
 
 ## Submenus
 
@@ -82,11 +82,11 @@ single-choice options. By default, clicking these items does not close the menu.
 ## Controlled
 
 Use `openIndex` and `onOpenChange` props to control which menu is open. `openIndex` is the
-index of the opened `Menubar.Menu` or `null` when all menus are closed:
-
-<Demo data={MenubarDemos.controlled} />
+index of the opened `Menubar.Menu` or `null` when all menus are closed.
 
 Use `defaultOpenIndex` to open a menu initially without controlling the state.
+
+<Demo data={MenubarDemos.controlled} />
 
 ## Position
 
