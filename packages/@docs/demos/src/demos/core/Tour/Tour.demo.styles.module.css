@@ -1,0 +1,31 @@
+.tooltip {
+  background-color: var(--mantine-color-blue-6);
+  border-color: var(--mantine-color-blue-8);
+}
+
+.title {
+  color: var(--mantine-color-white);
+}
+
+.body {
+  color: var(--mantine-color-white);
+}
+
+.stepCounter {
+  color: var(--mantine-color-blue-2);
+}
+
+.closeButton {
+  color: var(--mantine-color-white);
+}
+
+.navigationButton {
+  color: var(--mantine-color-white);
+  border-color: var(--mantine-color-blue-4);
+  background-color: var(--mantine-color-blue-7);
+
+  @mixin hover {
+    color: var(--mantine-color-white);
+    background-color: var(--mantine-color-blue-8);
+  }
+}

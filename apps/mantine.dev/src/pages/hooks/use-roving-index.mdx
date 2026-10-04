@@ -23,10 +23,12 @@ Set `orientation` to control which arrow keys are used for navigation:
 
 ## Grid navigation
 
-Set `columns` to enable 2D grid navigation. ArrowLeft/ArrowRight navigate within a row,
-ArrowUp/ArrowDown navigate across rows preserving the column position.
-Navigation stops at grid boundaries. Use Ctrl+Home/Ctrl+End to jump to the first/last item in the grid,
-and Home/End to jump to the first/last item in the current row.
+Set `columns` to enable grid navigation. Navigation stops at grid boundaries.
+
+- ArrowLeft/ArrowRight – move within the row
+- ArrowUp/ArrowDown – move between rows, the column is preserved
+- Home/End – first/last item in the current row
+- Ctrl+Home/Ctrl+End – first/last item in the grid
 
 <Demo data={UseRovingIndexDemos.grid} />
 
@@ -41,7 +43,7 @@ receives focus instead.
 ## Loop
 
 By default, navigation wraps around at boundaries (`loop` is `true`).
-Set `loop={false}` to stop at the first and last items.
+Set `loop: false` to stop at the first and last items.
 
 <Demo data={UseRovingIndexDemos.loop} />
 
@@ -67,9 +69,9 @@ function Demo() {
 
 ## activateOnFocus
 
-Set `activateOnFocus` to `true` to automatically click items when they receive focus
-via keyboard navigation. This is useful for tab-like interfaces where focus and selection
-should be synchronized:
+Set `activateOnFocus` to `true` to click items when they receive focus
+via keyboard navigation, for example in tab-like interfaces where focus and selection
+are synchronized:
 
 ```tsx
 import { useRovingIndex } from '@mantine/hooks';
@@ -86,7 +88,7 @@ function Demo() {
 
 ## RTL support
 
-Set `dir="rtl"` to swap ArrowLeft/ArrowRight behavior for right-to-left layouts:
+Set `dir: 'rtl'` to swap ArrowLeft/ArrowRight behavior for right-to-left layouts:
 
 ```tsx
 import { useRovingIndex } from '@mantine/hooks';

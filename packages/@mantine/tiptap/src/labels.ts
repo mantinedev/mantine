@@ -137,6 +137,9 @@ export interface RichTextEditorLabels {
   /** Aria-label for task list lift task */
   tasksLiftLabel: string;
 
+  /** RichTextEditor.ImageUpload control aria-label */
+  imageUploadControlLabel?: string;
+
   /** RichTextEditor.TableInsert control aria-label */
   tableInsertControlLabel?: string;
 
@@ -229,6 +232,7 @@ export const DEFAULT_LABELS: ResolvedRichTextEditorLabels = {
   tasksControlLabel: 'Task list',
   tasksSinkLabel: 'Decrease task level',
   tasksLiftLabel: 'Increase task level',
+  imageUploadControlLabel: 'Upload image',
 
   // Table
   tableInsertControlLabel: 'Insert table',

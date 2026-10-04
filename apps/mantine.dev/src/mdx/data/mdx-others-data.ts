@@ -79,19 +79,6 @@ export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
     searchTags: 'top progress bar, page loading bar, route progress, nprogress, youtube bar',
   },
 
-  CodeHighlight: {
-    title: 'CodeHighlight',
-    package: '@mantine/code-highlight',
-    slug: '/x/code-highlight',
-    props: ['CodeHighlight', 'CodeHighlightTabs', 'InlineCodeHighlight'],
-    styles: ['CodeHighlight', 'CodeHighlightTabs', 'InlineCodeHighlight'],
-    description: 'Highlight code with shiki or highlight.js',
-    source: '@mantine/code-highlight/src',
-    license: 'MIT',
-    docs: 'x/code-highlight.mdx',
-    searchTags: 'syntax highlighting, prism, shiki, highlight.js, code block, snippet',
-  },
-
   Modals: {
     title: 'Modals manager',
     package: '@mantine/modals',

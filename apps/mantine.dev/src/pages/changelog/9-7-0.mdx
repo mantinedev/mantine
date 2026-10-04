@@ -1,0 +1,217 @@
+import {
+  Changelog970Demos,
+  NotificationsDemos,
+  ResourcesDayViewDemos,
+  TipTapDemos,
+  TooltipDemos,
+  TreeSelectDemos,
+  WeekViewDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog970);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## @mantine/mcp-server documentation coverage
+
+[@mantine/mcp-server](https://www.npmjs.com/package/@mantine/mcp-server) now exposes 406 documentation
+pages instead of 164. Previously only components were indexed – hooks, [@mantine/form](/form/use-form),
+styling, theming, guides and [help.mantine.dev](https://help.mantine.dev) FAQ pages are now included as
+well. Changelog pages are deliberately excluded to keep search results focused on current APIs.
+
+Documentation is now retrieved by section rather than by whole page. `get_item_doc` returns a page
+outline (description, import statement and the list of section headings) by default, a single section
+with the `section` argument, or the entire page with `full: true`. Requesting `useForm` this way returns
+about 1KB instead of 9KB, and the largest pages drop from roughly 89KB to 4KB.
+
+Other improvements:
+
+- **New `get_api` tool** – resolves a symbol such as `useForm` or `useDisclosure` to its TypeScript
+  signature and exported types without knowing which page documents it
+- **Ranked search** – `search_docs` results point at the specific section that matched, so a query like
+  "validate a form with zod" resolves to the `zod` section of the schema validation page
+- **Search synonyms** – queries now match the search keywords maintained in the documentation, so
+  "command palette" finds [Spotlight](/x/spotlight)
+- **More filters** – `list_items` accepts `group`, `category` and `package` in addition to `kind`
+- **Hook signatures** – `get_item_props` returns the TypeScript signature for hooks, and points at the
+  relevant section for pages that document their API in prose
+
+The server was also migrated to the official Model Context Protocol SDK, so the protocol version is
+negotiated with the client instead of being pinned.
+
+For setup details, supported tools, and client-specific instructions, see [Mantine with LLMs](/guides/llms).
+
+## Tour component
+
+New [Tour](/core/tour) component provides interactive step-by-step application onboarding.
+It highlights target elements with a spotlight overlay and displays tooltips with navigation controls.
+Supports both guided (sequential) and beacon (non-sequential) modes.
+
+<Demo data={Changelog970Demos.tour} />
+
+## Toolbar component
+
+New [Toolbar](/core/toolbar) component provides an accessible toolbar container with roving tabindex
+keyboard navigation, toggle groups with single/multiple selection, visual grouping, and dividers.
+Styling is similar to [RichTextEditor](/x/tiptap) toolbar.
+
+<Demo data={Changelog970Demos.toolbar} />
+
+## Toggle component
+
+New [Toggle](/core/toggle) component is a button that can be toggled between active and inactive states:
+
+<Demo data={Changelog970Demos.toggle} />
+
+## JsonViewer component
+
+New [JsonViewer](/code-highlight/json-viewer) component can be used to display complex JSON
+structures with expand/collapse, type indicators, copy to clipboard, and other features:
+
+<Demo data={Changelog970Demos.jsonViewer} />
+
+## Light Checkbox and Radio variant
+
+[Checkbox](/core/checkbox) and [Radio](/core/radio) components now support `variant="light"` –
+the indicator uses a light background color with a colored icon, similar to the light variant
+available in other components like [Button](/core/button):
+
+<Demo data={Changelog970Demos.checkboxRadioLightVariant} />
+
+## RichTextEditor image upload
+
+[RichTextEditor](/x/tiptap) now supports image upload with loading states.
+Images can be uploaded via toolbar button, drag and drop, or paste.
+During upload, a local preview is shown with a loading indicator.
+
+Configuring `getUploadImageExtension` is enough to enable uploads – `onImageUpload` and
+`onImageUploadError` props of `RichTextEditor` are optional overrides for the toolbar control.
+`onImageUpload` can resolve either to a string or to `{ src, alt, title }` (new exported
+`ImageUploadResult` type) to set alternative text on the uploaded image. Several files picked,
+dropped or pasted together are inserted in the order they were selected and are undone as one step.
+
+<Demo data={TipTapDemos.imageUpload} />
+
+## Schedule event overlap mode
+
+[DayView](/schedule/day-view) and [WeekView](/schedule/week-view) now support `eventOverlapMode` prop
+that controls how events overlapping in time share the horizontal space. The default `columns` mode
+splits the available width evenly between them, which becomes unreadable once a large number of events
+overlap. The new `cascade` mode indents each event and stacks it over the previous one, so every event
+keeps a readable width no matter how many of them overlap.
+
+The indent shrinks automatically as the group grows, so the event on top always keeps at least 60% of
+the available width. Covered events can still be read and used: rest the pointer on one and it is
+raised above the events covering it, which also makes its resize handles reachable. Keyboard users get
+the same result by focusing the event with `Tab`. `eventOverlapRaiseDelay` prop controls how long the
+pointer must rest on an event before it is raised, in milliseconds (`600` by default).
+
+<Demo data={WeekViewDemos.eventOverlapMode} />
+
+## Schedule drop validation
+
+All [Schedule](/schedule/schedule) views can now reject a drag or resize **before** it is committed,
+based on where the event is being dropped rather than on which event is being dragged. Previously
+`canDragEvent` and `canResizeEvent` only decided whether an event was draggable or resizable at all,
+so the only way to prevent a double booking was to accept the drop, notice the conflict in the
+handler and not update state – which produced a snap-back with no explanation:
+
+- `preventEventOverlap` rejects placements that would make the event overlap another event. Pass a
+  function to decide per pair of events: return `true` to forbid that particular overlap.
+- `canDropEvent` and `canResizeEventTo` are called before a drop or resize is committed – return
+  `false` to reject it.
+- `canDropExternalEvent` does the same for items dragged in from outside the schedule.
+- `onEventPlacementRejected` reports the rejection with the conflicting events and the reason.
+
+The checks compose: a placement is allowed only when the overlap check passes and the matching
+callback returns a value other than `false`. The overlap check runs first, so `onEventPlacementRejected`
+can report `conflicts` without your code repeating the work. While the pointer is over an invalid
+target the drag ghost and the resizing event get `data-invalid`, so the rejection is visible before the
+pointer is released.
+
+<Demo data={WeekViewDemos.preventEventOverlap} />
+
+In [resource views](/schedule/resources-schedule) the conflict set is scoped to the **target**
+resource, so moving an event onto another resource row is checked against that row rather than the one
+it came from:
+
+<Demo data={ResourcesDayViewDemos.canDropEvent} />
+
+## TreeSelect renderPill
+
+[TreeSelect](/core/tree-select) now supports `renderPill` prop to customize how pills are rendered
+for selected values in `multiple` and `checkbox` modes, similar to `renderPill` prop of
+[MultiSelect](/core/multi-select). The callback receives the tree node, so pills can use
+`nodeProps` or the node structure, for example to show a different icon for parent and leaf nodes:
+
+<Demo data={TreeSelectDemos.renderPill} />
+
+## Tooltip hideDetached
+
+[Tooltip](/core/tooltip) now supports `hideDetached` prop, which works the same way as
+[Popover hideDetached](/core/popover/#hide-detached). It is enabled by default: the tooltip is now
+hidden when its target element is removed from the DOM, hidden with `display: none`, or scrolled out
+of a container that clips it. Previously, the tooltip stayed in place, floating over unrelated
+content. Set `hideDetached={false}` to restore the previous behavior. The prop has no effect on
+`Tooltip.Floating`, which is positioned relative to the mouse pointer.
+
+Note that jsdom reports zero-size rectangles for every element, so in Jest and Vitest every tooltip
+is treated as detached and hidden unless the test wrapper sets `env="test"` on `MantineProvider`
+(as described in the [Jest](/guides/jest) and [Vitest](/guides/vitest) guides) or the component is
+rendered with `hideDetached={false}`.
+
+<Demo data={TooltipDemos.hideDetached} />
+
+## Notifications auto close progress
+
+[Notifications](/x/notifications) now support `withAutoCloseProgress` prop. When set, a progress line
+that fills up until the notification auto closes is displayed at the bottom of every notification.
+The line fades out while the auto close timer is paused (for example, when the notification is hovered),
+starts over when the timer restarts, and uses the notification color. The prop sets the default for all notifications, it can be overridden
+for individual notifications with `withAutoCloseProgress` property in `notifications.show` and
+`notifications.update` functions:
+
+<Demo data={NotificationsDemos.autoCloseProgress} />
+
+## Notifications promise
+
+New `notifications.promise` function displays a loading notification while a promise is pending and
+updates it with success or error state once the promise settles. `success` and `error` can be
+functions that receive the resolved value or the rejection reason:
+
+<Demo data={NotificationsDemos.promise} />
+
+## AppShell resizable sections
+
+[AppShell](/core/app-shell) now supports resizing `AppShell.Navbar`/`AppShell.Aside`
+horizontally and `AppShell.Header`/`AppShell.Footer` vertically. Pass a `useAppShellResize`
+hook instance to the `resize` prop to enable it for the configured sections – handles support
+mouse, touch and keyboard, and can report drag-to-collapse. Each section accepts a `label` option
+to localize the `aria-label` of its handle.
+See [AppShell examples](/app-shell/?e=ResizableAppShell) for more details.
+
+Note that when the `resize` prop is used, `--app-shell-*` CSS variables are defined on the
+`AppShell` root element instead of `:root`, so they cannot be read from content rendered in a
+[Portal](/core/portal), for example from a [Modal](/core/modal) or a [Drawer](/core/drawer).
+
+## Templates and guides
+
+- New [mantine-tanstack-start-template](https://github.com/mantinedev/mantine-tanstack-start-template) and [TanStack Start guide](/guides/tanstack-start) to set up Mantine in a TanStack Start application.
+- [vite-template](https://github.com/mantinedev/vite-template) now uses [Vite+](https://viteplus.dev/): Vite, Vitest, oxlint and oxfmt run through the `vp` CLI and are configured in `vite.config.mjs`.
+- New [StyleX guide](/styles/stylex) explains how to style Mantine components with [StyleX](https://stylexjs.com/) in a Vite application.
+
+## Other changes
+
+- [HoverCard](/core/hover-card) now opens on keyboard focus, closes with `Escape` or a press outside, and is announced by screen readers. New `events`, `interactive`, `role` and `returnFocus` props, and `onDismiss` callback.
+- [HoverCard](/core/hover-card) no longer opens with a tap on touch devices. Set `events={{ focus: false, touch: true }}` and `closeOnEscape={false}` to restore the previous behavior.
+- [Checkbox](/core/checkbox) and [Radio](/core/radio) `variant="light"` colors are resolved with `theme.variantColorResolver`, so any CSS color or theme color with a shade can be used.
+- [ActionBar](/core/action-bar) with `keepMounted` now uses React `Activity` instead of `display: none`, so effects are paused while the bar is closed. Set `transitionProps={{ keepMountedMode: 'display-none' }}` to restore the previous behavior.
+- [Mantine skills](/guides/llms/#skills) for AI coding agents (`mantine-form`, `mantine-combobox`, `mantine-custom-components`) have been updated for 9.x with corrected API details and new patterns.
+- Gatsby and Redwood guides have been removed, `gatsby-template` and `redwood-template` are no longer maintained. Existing applications can keep using Mantine, the setup does not change.

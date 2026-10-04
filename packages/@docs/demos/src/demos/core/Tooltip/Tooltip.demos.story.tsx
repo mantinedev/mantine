@@ -77,3 +77,8 @@ export const Demo_target = {
   name: '⭐ Demo: target',
   render: renderDemo(demos.target),
 };
+
+export const Demo_hideDetached = {
+  name: '⭐ Demo: hideDetached',
+  render: renderDemo(demos.hideDetached),
+};

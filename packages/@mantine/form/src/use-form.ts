@@ -203,7 +203,11 @@ export function useForm<
   const setValues: SetValues<Values> = useCallback(
     (values) => {
       const previousValues = $values.refValues.current;
-      $values.setValues({ values, updateState: mode === 'controlled' });
+      const resolvedValues = typeof values === 'function' ? values(previousValues) : values;
+      Object.keys(resolvedValues).forEach((key) => {
+        $status.setCalculatedFieldDirty(key, (resolvedValues as Record<string, any>)[key]);
+      });
+      $values.setValues({ values: resolvedValues, updateState: mode === 'controlled' });
       handleValuesChanges(previousValues);
     },
     [onValuesChange, handleValuesChanges]
@@ -413,6 +417,7 @@ export function useForm<
 
   const resetField = useCallback(
     (path: PropertyKey) => {
+      $status.clearFieldDirty(String(path));
       $values.resetField(path, [
         ...$watch.getFieldSubscribers(path as LooseKeys<Values>),
         mode !== 'controlled'

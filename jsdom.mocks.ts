@@ -1,45 +1,55 @@
 /* oxlint-disable no-console */
 import '@testing-library/jest-dom';
 
-const { getComputedStyle } = window;
-window.getComputedStyle = (elt) => getComputedStyle(elt);
-window.HTMLElement.prototype.scrollIntoView = () => {};
+if (typeof window !== 'undefined') {
+  const { getComputedStyle } = window;
+  window.getComputedStyle = (elt) => getComputedStyle(elt);
+  window.HTMLElement.prototype.scrollIntoView = () => {};
 
-// jsdom does not implement media playback and logs an error without these stubs.
-window.HTMLMediaElement.prototype.play = () => Promise.resolve();
-window.HTMLMediaElement.prototype.pause = () => {};
-window.HTMLMediaElement.prototype.load = () => {};
+  // jsdom does not implement media playback and logs an error without these stubs.
+  window.HTMLMediaElement.prototype.play = () => Promise.resolve();
+  window.HTMLMediaElement.prototype.pause = () => {};
+  window.HTMLMediaElement.prototype.load = () => {};
 
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
-
-class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-}
-
-window.ResizeObserver = ResizeObserver;
-
-if (!document.fonts) {
-  Object.defineProperty(document, 'fonts', {
+  Object.defineProperty(window, 'matchMedia', {
     writable: true,
-    value: {
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
-    },
+      dispatchEvent: jest.fn(),
+    })),
   });
+
+  class ResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+
+  window.ResizeObserver = ResizeObserver;
+
+  if (!document.fonts) {
+    Object.defineProperty(document, 'fonts', {
+      writable: true,
+      value: {
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+      },
+    });
+  }
+
+  class IntersectionObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+
+  window.IntersectionObserver = IntersectionObserver as any;
 }
 
 const originalConsoleError = console.error;
@@ -53,10 +63,15 @@ console.error = (...data) => {
   originalConsoleError(...data);
 };
 
-class IntersectionObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-}
-
-window.IntersectionObserver = IntersectionObserver as any;
+// recharts ResponsiveContainer measures its parent with ResizeObserver, which is stubbed in jsdom,
+// so every chart test logs a zero size warning.
+const originalConsoleWarn = console.warn;
+console.warn = (...data) => {
+  if (
+    typeof data[0]?.toString === 'function' &&
+    data[0].toString().includes('of chart should be greater than 0')
+  ) {
+    return;
+  }
+  originalConsoleWarn(...data);
+};

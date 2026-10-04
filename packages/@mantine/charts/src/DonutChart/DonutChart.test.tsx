@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { DonutChart, DonutChartProps, DonutChartStylesNames } from './DonutChart';
 
 const data = [
@@ -13,8 +13,6 @@ const defaultProps: DonutChartProps = {
 };
 
 describe('@mantine/charts/DonutChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<DonutChartProps, DonutChartStylesNames>({
     component: DonutChart,
     props: defaultProps,

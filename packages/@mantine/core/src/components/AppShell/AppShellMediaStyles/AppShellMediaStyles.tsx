@@ -1,5 +1,6 @@
 import { InlineStyles, useMantineContext, useMantineTheme } from '../../../core';
 import type { AppShellProps } from '../AppShell';
+import type { AppShellResizeSection, AppShellResizeSizes } from '../AppShell.types';
 import { getVariables } from './get-variables/get-variables';
 
 interface AppShellMediaStylesProps {
@@ -10,6 +11,7 @@ interface AppShellMediaStylesProps {
   padding: AppShellProps['padding'] | undefined;
   mode: 'fixed' | 'static';
   selector?: string;
+  resize?: { sizes: AppShellResizeSizes; enabled: Partial<Record<AppShellResizeSection, boolean>> };
 }
 
 export function AppShellMediaStyles({
@@ -20,6 +22,7 @@ export function AppShellMediaStyles({
   padding,
   mode,
   selector,
+  resize,
 }: AppShellMediaStylesProps) {
   const theme = useMantineTheme();
   const ctx = useMantineContext();
@@ -31,6 +34,7 @@ export function AppShellMediaStyles({
     padding,
     theme,
     mode,
+    resize,
   });
   return (
     <InlineStyles

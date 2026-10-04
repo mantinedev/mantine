@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { AreaChart, AreaChartProps, AreaChartStylesNames } from './AreaChart';
 
 const defaultProps: AreaChartProps = {
@@ -12,8 +12,6 @@ const defaultProps: AreaChartProps = {
 };
 
 describe('@mantine/charts/AreaChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<AreaChartProps, AreaChartStylesNames>({
     component: AreaChart,
     props: defaultProps,

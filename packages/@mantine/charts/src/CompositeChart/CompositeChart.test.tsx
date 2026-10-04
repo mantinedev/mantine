@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { CompositeChart, CompositeChartProps, CompositeChartStylesNames } from './CompositeChart';
 
 const defaultProps: CompositeChartProps = {
@@ -12,8 +12,6 @@ const defaultProps: CompositeChartProps = {
 };
 
 describe('@mantine/charts/CompositeChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<CompositeChartProps, CompositeChartStylesNames>({
     component: CompositeChart,
     props: defaultProps,

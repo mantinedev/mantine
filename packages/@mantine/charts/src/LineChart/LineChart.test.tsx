@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { LineChart, LineChartProps, LineChartStylesNames } from './LineChart';
 
 const defaultProps: LineChartProps = {
@@ -12,8 +12,6 @@ const defaultProps: LineChartProps = {
 };
 
 describe('@mantine/charts/LineChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<LineChartProps, LineChartStylesNames>({
     component: LineChart,
     props: defaultProps,

@@ -27,6 +27,7 @@ export const RadioStylesApi: StylesApiData<RadioFactory> = {
       '--radio-size': 'Controls radio `width` and `height`',
       '--radio-icon-color': 'Controls radio icon `color`',
       '--radio-icon-size': 'Controls radio icon `width` and `height`',
+      '--radio-bg': 'Controls radio `background-color` for `light` variant',
     },
   },
 

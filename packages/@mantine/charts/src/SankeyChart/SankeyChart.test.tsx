@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { SankeyChart, SankeyChartProps, SankeyChartStylesNames } from './SankeyChart';
 
 const data = {
@@ -22,8 +22,6 @@ const defaultProps: SankeyChartProps = {
 };
 
 describe('@mantine/charts/SankeyChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<SankeyChartProps, SankeyChartStylesNames>({
     component: SankeyChart,
     props: defaultProps,

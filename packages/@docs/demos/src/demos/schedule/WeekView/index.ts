@@ -44,3 +44,4 @@ export { controlledDate } from './WeekView.demo.controlledDate';
 export { viewChange } from './WeekView.demo.viewChange';
 export { getTimeSlotProps } from './WeekView.demo.getTimeSlotProps';
 export { withAgenda } from './WeekView.demo.withAgenda';
+export { preventEventOverlap } from './WeekView.demo.preventEventOverlap';

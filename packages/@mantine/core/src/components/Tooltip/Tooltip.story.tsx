@@ -299,3 +299,43 @@ export function Interactive() {
     </div>
   );
 }
+
+export function HideDetached() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ width: 400, height: 200, overflow: 'auto', border: '1px solid gray' }}>
+        <div style={{ width: 1000, height: 400, padding: 40 }}>
+          <Tooltip position="bottom" label="Hidden when detached" opened>
+            <button type="button">Hides when detached</button>
+          </Tooltip>
+
+          <Tooltip position="bottom" label="Visible when detached" opened hideDetached={false}>
+            <button type="button" style={{ marginLeft: 40 }}>
+              Stays visible
+            </button>
+          </Tooltip>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function HideDetachedTarget() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ width: 400, height: 200, overflow: 'auto', border: '1px solid gray' }}>
+        <div style={{ width: 1000, height: 400, padding: 40 }}>
+          <button type="button" id="hide-detached-target">
+            Target for the tooltip
+          </button>
+          <Tooltip
+            target="#hide-detached-target"
+            position="bottom"
+            label="Hidden when detached"
+            opened
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

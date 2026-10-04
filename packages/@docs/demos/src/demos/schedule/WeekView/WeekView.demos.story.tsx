@@ -227,3 +227,8 @@ export const Demo_subHourGridLines = {
   name: '⭐ Demo: subHourGridLines',
   render: renderDemo(demos.subHourGridLines),
 };
+
+export const Demo_preventEventOverlap = {
+  name: '⭐ Demo: preventEventOverlap',
+  render: renderDemo(demos.preventEventOverlap),
+};

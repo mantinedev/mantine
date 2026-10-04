@@ -45,10 +45,11 @@ export const configurator: MantineDemo = {
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
     {
       prop: 'variant',
-      type: 'segmented',
+      type: 'select',
       data: [
         { value: 'filled', label: 'Filled' },
         { value: 'outline', label: 'Outline' },
+        { value: 'light', label: 'Light' },
       ],
       initialValue: 'filled',
       libraryValue: 'filled',

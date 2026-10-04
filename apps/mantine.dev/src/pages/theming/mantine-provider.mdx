@@ -350,6 +350,7 @@ might impact tests and/or make it harder to test components:
 
 - transitions that mount/unmount a child component with delay
 - portals that render a child component in a different part of the DOM
+- `hideDetached` detection in [Popover](/core/popover) and [Tooltip](/core/tooltip) – jsdom reports zero-size elements, so without `env="test"` every target is considered detached and the dropdown or tooltip is hidden
 
 To enable the test environment, set `env` to `test`:
 

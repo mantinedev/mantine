@@ -34,6 +34,9 @@ export interface NotificationData
   /** Determines whether notification can be closed with close button, drag or horizontal scroll swipe, `true` by default */
   allowClose?: boolean;
 
+  /** Determines whether a progress line that fills up until the notification auto closes is displayed at the bottom of the notification, overrides `withAutoCloseProgress` from `Notifications` */
+  withAutoCloseProgress?: boolean;
+
   /** Called when notification closes */
   onClose?: (props: NotificationData) => void;
 
@@ -178,6 +181,74 @@ export function updateNotification(
   return notification.id;
 }
 
+export type PromiseNotificationData = Omit<NotificationData, 'id'>;
+
+export interface PromiseNotificationOptions<T> {
+  /** Notification id, used for all three states, by default `id` is randomly generated */
+  id?: string;
+
+  /** Notification displayed while the promise is pending, `loading: true` and `autoClose: false` are applied by default */
+  loading: PromiseNotificationData;
+
+  /** Notification displayed when the promise resolves, `color: 'teal'` is applied by default. Function receives the resolved value. */
+  success: PromiseNotificationData | ((value: T) => PromiseNotificationData);
+
+  /** Notification displayed when the promise rejects, `color: 'red'` is applied by default. Function receives the rejection reason. */
+  error: PromiseNotificationData | ((error: unknown) => PromiseNotificationData);
+}
+
+function resolvePromiseNotificationData<T>(
+  data: PromiseNotificationData | ((value: T) => PromiseNotificationData),
+  value: T
+) {
+  return typeof data === 'function' ? data(value) : data;
+}
+
+function upsertNotification(notification: NotificationData, store: NotificationsStore) {
+  const state = store.getState();
+  const exists = [...state.notifications, ...state.queue].some(
+    (item) => item.id === notification.id
+  );
+
+  return exists ? updateNotification(notification, store) : showNotification(notification, store);
+}
+
+const pendingPromises = new WeakMap<NotificationsStore, Map<string, object>>();
+
+export function promiseNotification<T>(
+  promise: Promise<T>,
+  options: PromiseNotificationOptions<T>,
+  store: NotificationsStore = notificationsStore
+): Promise<T> {
+  const id = options.id || randomId();
+  const owners = pendingPromises.get(store) || new Map<string, object>();
+  const owner = {};
+
+  pendingPromises.set(store, owners);
+  owners.set(id, owner);
+
+  upsertNotification({ loading: true, autoClose: false, ...options.loading, id }, store);
+
+  const settle = (data: PromiseNotificationData) => {
+    if (owners.get(id) !== owner) {
+      return;
+    }
+
+    owners.delete(id);
+    upsertNotification(
+      { ...options.loading, loading: false, autoClose: undefined, ...data, id },
+      store
+    );
+  };
+
+  promise.then(
+    (value) => settle({ color: 'teal', ...resolvePromiseNotificationData(options.success, value) }),
+    (error) => settle({ color: 'red', ...resolvePromiseNotificationData(options.error, error) })
+  );
+
+  return promise;
+}
+
 export function cleanNotifications(store: NotificationsStore = notificationsStore) {
   updateNotificationsState(store, () => []);
 }
@@ -195,6 +266,7 @@ export const notifications = {
   show: showNotification,
   hide: hideNotification,
   update: updateNotification,
+  promise: promiseNotification,
   clean: cleanNotifications,
   cleanQueue: cleanNotificationsQueue,
   updateState: updateNotificationsState,

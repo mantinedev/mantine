@@ -16,6 +16,10 @@
     --checkbox-icon-color: var(--checkbox-color);
   }
 
+  &:where([data-variant='light']) {
+    --checkbox-icon-color: var(--checkbox-color);
+  }
+
   position: relative;
   border: 1px solid transparent;
   width: var(--checkbox-size);
@@ -67,6 +71,20 @@
       @mixin dark {
         color: var(--mantine-color-dark-3);
       }
+    }
+  }
+}
+
+.indicator--light {
+  &[data-indeterminate]:not([data-disabled]),
+  &[data-checked]:not([data-disabled]) {
+    background-color: var(--checkbox-bg);
+    border-color: transparent;
+
+    & > .icon {
+      color: var(--checkbox-icon-color);
+      opacity: 1;
+      transform: none;
     }
   }
 }
