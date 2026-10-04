@@ -63,6 +63,18 @@ describe('@mantine/core/ComboboxOption', () => {
     expect(screen.getByRole('option')).not.toHaveAttribute('aria-disabled');
   });
 
+  it('allows overriding aria-disabled attribute', () => {
+    const { rerender } = render(<TestContainer {...defaultProps} aria-disabled />);
+    expect(screen.getByRole('option')).toHaveAttribute('aria-disabled', 'true');
+
+    rerender(
+      <>
+        <TestContainer {...defaultProps} disabled aria-disabled={false} />
+      </>
+    );
+    expect(screen.getByRole('option')).toHaveAttribute('aria-disabled', 'false');
+  });
+
   it('calls onClick when the option is clicked', async () => {
     const spy = jest.fn();
     render(<TestContainer {...defaultProps} onClick={spy} />);
