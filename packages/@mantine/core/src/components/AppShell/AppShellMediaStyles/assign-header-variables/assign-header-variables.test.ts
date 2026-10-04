@@ -1,5 +1,6 @@
 import { rem } from '../../../../core';
 import type { AppShellProps } from '../../AppShell';
+import { getResizedValue } from '../get-resized-value/get-resized-value';
 import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { assignHeaderVariables } from './assign-header-variables';
 
@@ -114,15 +115,15 @@ describe('@mantine/core/AppShell/assign-header-variables resize', () => {
     const { baseStyles } = getResizedTestObject({ height: 100 }, 420);
 
     expect(baseStyles).toMatchObject({
-      '--app-shell-header-height': rem(420),
-      '--app-shell-header-offset': rem(420),
+      '--app-shell-header-height': getResizedValue(420, 'vertical'),
+      '--app-shell-header-offset': getResizedValue(420, 'vertical'),
     });
   });
 
   it('respects offset: false when resized', () => {
     const { baseStyles } = getResizedTestObject({ height: 100, offset: false }, 420);
 
-    expect(baseStyles['--app-shell-header-height']).toBe(rem(420));
+    expect(baseStyles['--app-shell-header-height']).toBe(getResizedValue(420, 'vertical'));
     expect(baseStyles['--app-shell-header-offset']).toBeUndefined();
   });
 
