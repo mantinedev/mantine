@@ -115,16 +115,8 @@ describe('@mantine/core/RollingNumber', () => {
     });
   });
 
-  it('renders digit columns without transform initially', () => {
-    const { container } = render(<RollingNumber value={35} />);
-    const columns = container.querySelectorAll('.mantine-RollingNumber-digitColumn');
-    expect(columns[0]).toHaveStyle({ transform: 'none' });
-    expect(columns[1]).toHaveStyle({ transform: 'none' });
-  });
-
   it('renders a 12-cell wraparound strip during animation', () => {
     const { container, rerender } = render(<RollingNumber value={4} />);
-    rerender(<RollingNumber value={4} />);
     rerender(<RollingNumber value={5} />);
     const column = container.querySelector('.mantine-RollingNumber-digitColumn');
     expect(column!.children).toHaveLength(12);
@@ -140,7 +132,7 @@ describe('@mantine/core/RollingNumber', () => {
     const onesColumn = columns[columns.length - 1] as HTMLElement;
     expect(onesColumn.style.getPropertyValue('--rn-roll-from')).toBe('translateY(-9em)');
     expect(onesColumn.style.getPropertyValue('--rn-roll-to')).toBe('translateY(-10em)');
-    expect(onesColumn.style.transform).toBe('translateY(0em)');
+    expect(onesColumn.style.getPropertyValue('top')).toBe('0em');
   });
 
   it('does not use the wraparound cell on a normal forward step', () => {
@@ -148,9 +140,9 @@ describe('@mantine/core/RollingNumber', () => {
     rerender(<RollingNumber value={3} />);
     rerender(<RollingNumber value={5} />);
     const onesColumn = container.querySelector('.mantine-RollingNumber-digitColumn') as HTMLElement;
-    expect(onesColumn.style.getPropertyValue('--rn-roll-from')).toBe('translateY(-3em)');
-    expect(onesColumn.style.getPropertyValue('--rn-roll-to')).toBe('translateY(-5em)');
-    expect(onesColumn.style.transform).toBe('translateY(-5em)');
+    expect(onesColumn.style.getPropertyValue('--rn-roll-from')).toBe('translateY(2em)');
+    expect(onesColumn.style.getPropertyValue('--rn-roll-to')).toBe('translateY(0em)');
+    expect(onesColumn.style.getPropertyValue('top')).toBe('-5em');
   });
 
   it('does not wrap when value direction is down', () => {
@@ -159,8 +151,8 @@ describe('@mantine/core/RollingNumber', () => {
     rerender(<RollingNumber value={9} />);
     const columns = container.querySelectorAll('.mantine-RollingNumber-digitColumn');
     const onesColumn = columns[columns.length - 1] as HTMLElement;
-    expect(onesColumn.style.getPropertyValue('--rn-roll-to')).toBe('translateY(-9em)');
-    expect(onesColumn.style.transform).toBe('translateY(-9em)');
+    expect(onesColumn.style.getPropertyValue('--rn-roll-to')).toBe('translateY(0em)');
+    expect(onesColumn.style.getPropertyValue('top')).toBe('-9em');
   });
 
   it('handles negative values', () => {
