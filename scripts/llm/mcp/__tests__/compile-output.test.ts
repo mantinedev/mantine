@@ -94,13 +94,13 @@ describeCompiled('compiled MCP data (skipped: run npm run compile:mcp first)', (
     index
       .filter((i) => i.kind === 'faq')
       .forEach((item) => {
-        expect(item.docsUrl.startsWith('https://help.mantine.dev')).toBe(true);
+        expect(new URL(item.docsUrl).origin).toBe('https://help.mantine.dev');
       });
 
     index
       .filter((i) => i.kind !== 'faq')
       .forEach((item) => {
-        expect(item.docsUrl.startsWith('https://mantine.dev')).toBe(true);
+        expect(new URL(item.docsUrl).origin).toBe('https://mantine.dev');
       });
   });
 

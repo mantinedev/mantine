@@ -30,6 +30,6 @@ jobs:
       - name: Validate esm entry points
         run: npm run test:esm-entrypoints
       - name: Compile MCP documentation data
-        run: npm run compile:mcp
+        run: npm run compile:llm && npm run compile:mcp
       - name: Run tests
         run: npm test
