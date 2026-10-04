@@ -413,6 +413,7 @@ export function useForm<
 
   const resetField = useCallback(
     (path: PropertyKey) => {
+      $status.clearFieldDirty(String(path));
       $values.resetField(path, [
         ...$watch.getFieldSubscribers(path as LooseKeys<Values>),
         mode !== 'controlled'
