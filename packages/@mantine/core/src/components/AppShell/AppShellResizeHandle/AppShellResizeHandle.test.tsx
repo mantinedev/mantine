@@ -246,6 +246,27 @@ describe('@mantine/core/AppShellResizeHandle', () => {
     }
   });
 
+  it('keeps aria-valuenow within aria-valuemax when the viewport shrinks below the committed size', () => {
+    mockSectionSize(300, 800);
+    const originalInnerWidth = window.innerWidth;
+    window.innerWidth = 1000;
+
+    try {
+      render(<CallbackShell max={5000} />);
+      const handle = screen.getByRole('separator');
+      drag(handle, 400);
+      expect(handle).toHaveAttribute('aria-valuenow', '700');
+
+      window.innerWidth = 400;
+      fireEvent(window, new Event('resize'));
+
+      expect(handle).toHaveAttribute('aria-valuemax', '400');
+      expect(handle).toHaveAttribute('aria-valuenow', '400');
+    } finally {
+      window.innerWidth = originalInnerWidth;
+    }
+  });
+
   it('updates aria-valuemax when options.max changes', () => {
     mockSectionSize(300, 800);
     const { rerender } = render(<CallbackShell max={400} />);
@@ -581,6 +602,45 @@ describe('@mantine/core/AppShellResizeHandle', () => {
     expect(onCollapseChange).toHaveBeenCalledTimes(2);
     expect(onCollapseChange).toHaveBeenNthCalledWith(1, 'navbar', true);
     expect(onCollapseChange).toHaveBeenNthCalledWith(2, 'navbar', false);
+  });
+
+  it('restores the starting collapse state when Escape cancels a drag that crossed the threshold', () => {
+    mockSectionSize(300, 800);
+    const onCollapseChange = jest.fn();
+    render(<CallbackShell collapseThreshold={120} min={0} onCollapseChange={onCollapseChange} />);
+
+    fireEvent.pointerDown(screen.getByRole('separator'), { button: 0, clientX: 0, clientY: 0 });
+    fireEvent.pointerMove(document, { clientX: -250 });
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    expect(onCollapseChange).toHaveBeenCalledTimes(2);
+    expect(onCollapseChange).toHaveBeenNthCalledWith(1, 'navbar', true);
+    expect(onCollapseChange).toHaveBeenNthCalledWith(2, 'navbar', false);
+  });
+
+  it('restores the starting collapse state when the pointer is canceled', () => {
+    mockSectionSize(300, 800);
+    const onCollapseChange = jest.fn();
+    render(<CallbackShell collapseThreshold={120} min={0} onCollapseChange={onCollapseChange} />);
+
+    fireEvent.pointerDown(screen.getByRole('separator'), { button: 0, clientX: 0, clientY: 0 });
+    fireEvent.pointerMove(document, { clientX: -250 });
+    fireEvent.pointerCancel(document);
+
+    expect(onCollapseChange).toHaveBeenCalledTimes(2);
+    expect(onCollapseChange).toHaveBeenLastCalledWith('navbar', false);
+  });
+
+  it('does not report a collapse change when a canceled drag never crossed the threshold', () => {
+    mockSectionSize(300, 800);
+    const onCollapseChange = jest.fn();
+    render(<CallbackShell collapseThreshold={120} min={0} onCollapseChange={onCollapseChange} />);
+
+    fireEvent.pointerDown(screen.getByRole('separator'), { button: 0, clientX: 0, clientY: 0 });
+    fireEvent.pointerMove(document, { clientX: -50 });
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    expect(onCollapseChange).not.toHaveBeenCalled();
   });
 
   it('reports collapse using the unclamped size, not the clamped size', () => {

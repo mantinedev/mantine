@@ -1,6 +1,7 @@
 import { keys, rem } from '../../../../core';
 import type { AppShellProps } from '../../AppShell';
 import { getBaseSize } from '../get-base-size/get-base-size';
+import { getResizedValue } from '../get-resized-value/get-resized-value';
 import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { isPrimitiveSize } from '../is-primitive-size/is-primitive-size';
 import { isResponsiveSize } from '../is-responsive-size/is-responsive-size';
@@ -33,7 +34,7 @@ export function assignFooterVariables({
   }
 
   if (resizedSize !== undefined) {
-    const resizedValue = rem(resizedSize);
+    const resizedValue = getResizedValue(resizedSize, 'vertical');
     baseStyles['--app-shell-footer-height'] = resizedValue;
     if (shouldOffset) {
       baseStyles['--app-shell-footer-offset'] = resizedValue;

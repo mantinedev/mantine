@@ -196,7 +196,7 @@ function createStringifyReplacer() {
 
 export function safeStringify(value: any): string {
   try {
-    return JSON.stringify(value, createStringifyReplacer(), 2);
+    return JSON.stringify(value, createStringifyReplacer(), 2) ?? String(value);
   } catch {
     return String(value);
   }

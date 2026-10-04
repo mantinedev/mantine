@@ -160,6 +160,12 @@ describe('safeStringify', () => {
     expect(safeStringify(null)).toBe('null');
   });
 
+  it('falls back to String for values JSON.stringify cannot serialize', () => {
+    expect(safeStringify(undefined)).toBe('undefined');
+    expect(safeStringify(Symbol('id'))).toBe('Symbol(id)');
+    expect(typeof safeStringify(() => {})).toBe('string');
+  });
+
   it('replaces circular references with [Circular]', () => {
     const obj: any = { a: 1 };
     obj.self = obj;

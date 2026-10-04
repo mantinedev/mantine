@@ -86,6 +86,17 @@ describe('@mantine/mcp-server/tools', () => {
     expect(byName.get_api.config.inputSchema.safeParse({}).success).toBe(false);
   });
 
+  it('rejects empty and whitespace-only lookup names', () => {
+    const { byName } = setup();
+    ['', '   '].forEach((value) => {
+      expect(byName.get_item_doc.config.inputSchema.safeParse({ name: value }).success).toBe(false);
+      expect(byName.get_item_props.config.inputSchema.safeParse({ name: value }).success).toBe(
+        false
+      );
+      expect(byName.get_api.config.inputSchema.safeParse({ symbol: value }).success).toBe(false);
+    });
+  });
+
   it('search_docs forwards its arguments and returns the result as JSON text', async () => {
     const { byName, client } = setup();
     const args = { query: 'validate a form with zod', kind: 'guide', limit: 3 };
