@@ -79,6 +79,24 @@ describe('@mantine/hooks/use-pagination', () => {
     });
   });
 
+  it('does not hide a single page behind dots', () => {
+    const { result } = renderHook(() => usePagination({ total: 10, initialPage: 7 }));
+    expect(result.current.range).toStrictEqual([1, 'dots', 6, 7, 8, 9, 10]);
+  });
+
+  it('does not hide a single page behind dots with custom parameters', () => {
+    const { result } = renderHook(() =>
+      usePagination({
+        total: 20,
+        siblings: 2,
+        boundaries: 2,
+        initialPage: 15,
+      })
+    );
+
+    expect(result.current.range).toStrictEqual([1, 2, 'dots', 13, 14, 15, 16, 17, 18, 19, 20]);
+  });
+
   it('truncates total value', () => {
     const hook = renderHook(() => usePagination({ total: 45.21 }));
     expect(hook.result.current.range).toStrictEqual([1, 2, 3, 4, 5, 'dots', 45]);
