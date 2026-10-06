@@ -18,7 +18,7 @@ async function processFile(
   outputFolder: string
 ) {
   const result = await postcss([
-    postcssPresetMantine,
+    postcssPresetMantine({ autoRem: true }),
     postcssModules({ generateScopedName, getJSON: () => {}, scopeBehaviour }),
   ]).process(fs.readFileSync(filePath, 'utf-8'), { from: path.basename(filePath) });
 
@@ -65,8 +65,10 @@ export async function generateCoreCSS() {
 
   await fs.ensureDir(outputFolder);
 
-  modules.forEach((file) => processFile(file, 'local', outputFolder));
-  global.forEach((file) => processFile(file, 'global', outputFolder));
+  await Promise.all([
+    ...modules.map((file) => processFile(file, 'local', outputFolder)),
+    ...global.map((file) => processFile(file, 'global', outputFolder)),
+  ]);
 }
 
 export async function generateCSS() {
