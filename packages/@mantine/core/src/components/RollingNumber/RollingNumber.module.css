@@ -41,6 +41,7 @@
 }
 
 .digitColumn {
+  position: relative;
   display: flex;
   flex-direction: column;
   animation: mantine-rolling-number-roll var(--rn-duration) var(--rn-timing-function);
