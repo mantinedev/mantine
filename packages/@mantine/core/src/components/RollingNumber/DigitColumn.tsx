@@ -40,7 +40,6 @@ export function DigitColumn({
         {...columnStyles}
         style={{
           ...columnStyles.style,
-          position: 'relative',
           top: `${-digitIndex}em`,
           ['--rn-roll-from' as any]: `translateY(${digitIndex - previousDigitIndex}em)`,
           ['--rn-roll-to' as any]: `translateY(${digitIndex - animateToIndex}em)`,
