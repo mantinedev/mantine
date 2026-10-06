@@ -770,7 +770,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
     const slotRect = targetSlot.getBoundingClientRect();
     const viewportRect = viewportRef.current.getBoundingClientRect();
-    viewportRef.current.scrollTo({ left: 0, top: slotRect.top - viewportRect.top });
+    const headerEl = viewportRef.current.querySelector(`.${classes.weekViewHeader}`);
+    const headerHeight = headerEl ? headerEl.getBoundingClientRect().height : 0;
+    viewportRef.current.scrollTo({
+      left: 0,
+      top: slotRect.top - viewportRect.top + viewportRef.current.scrollTop - headerHeight,
+    });
   }, []);
 
   const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, dayIndex: number) => {

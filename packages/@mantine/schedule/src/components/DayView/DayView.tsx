@@ -473,7 +473,10 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
     const slotRect = targetSlot.getBoundingClientRect();
     const viewportRect = viewportRef.current.getBoundingClientRect();
-    viewportRef.current.scrollTo({ left: 0, top: slotRect.top - viewportRect.top });
+    viewportRef.current.scrollTo({
+      left: 0,
+      top: slotRect.top - viewportRect.top + viewportRef.current.scrollTop,
+    });
   }, []);
 
   const dragOffsetRef = useRef<{ offset: number; size: number }>({ offset: 0, size: 0 });
