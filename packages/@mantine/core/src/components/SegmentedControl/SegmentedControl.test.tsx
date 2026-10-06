@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { renderToString } from 'react-dom/server';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { MantineProvider } from '../../core';
 import {
   SegmentedControl,
   SegmentedControlProps,
@@ -23,6 +25,20 @@ describe('@mantine/core/SegmentedControl', () => {
     varsResolver: true,
     displayName: '@mantine/core/SegmentedControl',
     stylesApiSelectors: ['root', 'label', 'input', 'control', 'indicator', 'innerLabel'],
+  });
+
+  it('does not call Math.random during server rendering', () => {
+    const spy = jest.spyOn(Math, 'random');
+    try {
+      renderToString(
+        <MantineProvider>
+          <SegmentedControl {...defaultProps} />
+        </MantineProvider>
+      );
+      expect(spy).not.toHaveBeenCalled();
+    } finally {
+      spy.mockRestore();
+    }
   });
 
   it('prevents value changes when readOnly is true', async () => {
