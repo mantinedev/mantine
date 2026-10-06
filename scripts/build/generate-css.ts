@@ -65,10 +65,8 @@ export async function generateCoreCSS() {
 
   await fs.ensureDir(outputFolder);
 
-  await Promise.all([
-    ...modules.map((file) => processFile(file, 'local', outputFolder)),
-    ...global.map((file) => processFile(file, 'global', outputFolder)),
-  ]);
+  modules.forEach((file) => processFile(file, 'local', outputFolder));
+  global.forEach((file) => processFile(file, 'global', outputFolder));
 }
 
 export async function generateCSS() {
