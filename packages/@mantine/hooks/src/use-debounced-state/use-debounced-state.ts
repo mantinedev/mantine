@@ -23,6 +23,9 @@ export function useDebouncedState<T = any>(
       clearTimeout();
       if (leadingRef.current && options.leading) {
         setValue(newValue);
+        timeoutRef.current = window.setTimeout(() => {
+          leadingRef.current = true;
+        }, wait);
       } else {
         timeoutRef.current = window.setTimeout(() => {
           leadingRef.current = true;
