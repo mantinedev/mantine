@@ -295,8 +295,10 @@ describe('@mantine/core/HoverCard', () => {
     expect(screen.queryByText('test-dropdown')).not.toBeInTheDocument();
   });
 
-  it('does not close dropdown on outside press if closeOnClickOutside is false', () => {
-    render(<TestContainer initiallyOpened closeOnClickOutside={false} events={{ focus: false }} />);
+  it('does not close dropdown on outside press if closeOnClickOutside is false', async () => {
+    await renderWithAct(
+      <TestContainer initiallyOpened closeOnClickOutside={false} events={{ focus: false }} />
+    );
     fireEvent.pointerDown(document.body);
     expect(screen.getByText('test-dropdown')).toBeInTheDocument();
   });
