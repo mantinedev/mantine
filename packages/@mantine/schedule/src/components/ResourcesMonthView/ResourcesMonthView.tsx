@@ -490,7 +490,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       const viewportRect = viewportRef.current.getBoundingClientRect();
       const labelWidth = resourceLabelRef.current?.getBoundingClientRect().width ?? 0;
       viewportRef.current.scrollTo({
-        left: labelRect.left - viewportRect.left - labelWidth,
+        left: labelRect.left - viewportRect.left + viewportRef.current.scrollLeft - labelWidth,
         top: 0,
       });
     },
