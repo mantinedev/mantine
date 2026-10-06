@@ -8,7 +8,7 @@ interface GetMinTimeInput {
 
 export function getMinTime({ minDate, value }: GetMinTimeInput): string | undefined {
   const minTime = minDate ? dayjs(minDate).format('HH:mm:ss') : null;
-  return value && minDate && value === minDate
+  return value && minDate && dayjs(value).isSame(minDate, 'day')
     ? minTime != null
       ? minTime
       : undefined
@@ -22,7 +22,7 @@ interface GetMaxTimeInput {
 
 export function getMaxTime({ maxDate, value }: GetMaxTimeInput): string | undefined {
   const maxTime = maxDate ? dayjs(maxDate).format('HH:mm:ss') : null;
-  return value && maxDate && value === maxDate
+  return value && maxDate && dayjs(value).isSame(maxDate, 'day')
     ? maxTime != null
       ? maxTime
       : undefined

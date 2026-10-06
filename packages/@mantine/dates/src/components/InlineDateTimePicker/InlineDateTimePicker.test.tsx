@@ -108,6 +108,42 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
     expect(screen.queryByLabelText('test-time-picker-hours')).not.toBeInTheDocument();
   });
 
+  it('does not allow time before minDate time when value is on the minDate day', async () => {
+    const spy = jest.fn();
+    render(
+      <InlineDateTimePicker
+        {...defaultProps}
+        minDate="2022-04-11 10:30:00"
+        defaultValue="2022-04-11 12:00:00"
+        onChange={spy}
+      />
+    );
+
+    await userEvent.clear(getTimePicker());
+    await userEvent.type(getTimePicker(), '08');
+    await userEvent.click(document.body);
+
+    expect(spy).toHaveBeenLastCalledWith('2022-04-11 10:30:00');
+  });
+
+  it('does not allow time after maxDate time when value is on the maxDate day', async () => {
+    const spy = jest.fn();
+    render(
+      <InlineDateTimePicker
+        {...defaultProps}
+        maxDate={new Date(2022, 3, 11, 18, 15)}
+        defaultValue="2022-04-11 12:00:00"
+        onChange={spy}
+      />
+    );
+
+    await userEvent.clear(getTimePicker());
+    await userEvent.type(getTimePicker(), '20');
+    await userEvent.click(document.body);
+
+    expect(spy).toHaveBeenLastCalledWith('2022-04-11 18:15:00');
+  });
+
   describe('range type', () => {
     const rangeProps: any = {
       ...defaultProps,
