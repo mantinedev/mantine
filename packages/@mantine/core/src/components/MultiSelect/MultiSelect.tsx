@@ -27,6 +27,7 @@ import {
   useCombobox,
   usePillsReorder,
 } from '../Combobox';
+import { getComboboxLabelId } from '../Combobox/get-combobox-label-id/get-combobox-label-id';
 import { getOptionByLabel } from '../Combobox/get-options-lockup/get-option-by-label';
 import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
@@ -261,6 +262,12 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   } = props;
 
   const _id = useId(id);
+  const comboboxLabelId = getComboboxLabelId({
+    id: _id,
+    label,
+    labelProps,
+    inputWrapperOrder,
+  });
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
   const retainedSelectedOptions = useRef<Record<string, ComboboxItem<Primitive>>>({});
@@ -583,8 +590,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
           withAlignedLabels={withAlignedLabels}
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
-          labelId={label ? `${_id}-label` : undefined}
-          aria-label={label ? undefined : others['aria-label']}
+          labelId={comboboxLabelId}
+          aria-label={comboboxLabelId ? undefined : others['aria-label']}
           renderOption={renderOption}
           scrollAreaProps={scrollAreaProps}
         />
