@@ -96,6 +96,41 @@ function tests(mode: FormMode) {
     });
   });
 
+  it('keeps errors and dirty state of unrelated fields when removing a list item', () => {
+    const hook = renderHook(() =>
+      useForm({
+        mode,
+        initialValues: {
+          items: [{ name: 'first' }, { name: 'second' }],
+          lineitems: [{ name: 'other' }],
+          billing: { items: [{ name: 'nested' }] },
+        },
+        initialErrors: {
+          'items.0.name': 'removed-error',
+          'items.1.name': 'remaining-error',
+          'lineitems.0.name': 'other-error',
+          'billing.items.0.name': 'nested-error',
+        },
+        initialDirty: {
+          'items.0.name': true,
+          'lineitems.0.name': true,
+          'billing.items.0.name': true,
+        },
+      })
+    );
+
+    act(() => hook.result.current.removeListItem('items', 0));
+    expect(hook.result.current.errors).toStrictEqual({
+      'items.0.name': 'remaining-error',
+      'lineitems.0.name': 'other-error',
+      'billing.items.0.name': 'nested-error',
+    });
+    expect(hook.result.current.getDirty()).toStrictEqual({
+      'lineitems.0.name': true,
+      'billing.items.0.name': true,
+    });
+  });
+
   it('calls onValuesChange when removeListItem is called', () => {
     const spy = jest.fn();
     const hook = renderHook(() =>
