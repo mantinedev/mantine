@@ -59,6 +59,18 @@ describe('@mantine/core/Tooltip', () => {
     expect(screen.getByRole('tooltip', { hidden: true })).not.toHaveAttribute('data-interactive');
   });
 
+  it('does not open or describe the target when disabled', async () => {
+    render(
+      <Tooltip label="test-tooltip" disabled transitionProps={{ duration: 0 }}>
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    await userEvent.hover(screen.getByRole('button'));
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+    expect(screen.getByRole('button')).not.toHaveAttribute('aria-describedby');
+  });
+
   it('exposes TooltipGroup and TooltipFloating as static properties', () => {
     expect(Tooltip.Floating).toBe(TooltipFloating);
     expect(Tooltip.Group).toBe(TooltipGroup);
