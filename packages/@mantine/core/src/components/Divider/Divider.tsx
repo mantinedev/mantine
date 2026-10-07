@@ -95,6 +95,7 @@ export const Divider = factory<DividerFactory>((_props) => {
     <Box
       mod={[{ orientation, withLabel: !!label }, mod]}
       role="separator"
+      aria-orientation={orientation}
       {...getStyles('root')}
       {...others}
     >
