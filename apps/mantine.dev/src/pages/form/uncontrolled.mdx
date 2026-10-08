@@ -24,7 +24,7 @@ forms and forms with expensive children.
 The form component still rerenders when:
 
 - an error is set or cleared
-- a value is written by the form: `form.setFieldValue`, `form.setValues`, `form.reset`, `form.initialize` and list handlers
+- a value is written by the form: `form.setFieldValue`, `form.setValues`, `form.reset`, `form.initialize` and list handlers, except [setFieldValue with forceUpdate: false](/form/values/#setfieldvalue-without-form-rerender)
 - a field changes and its input is not subscribed, for example a native `input` element
 - `form.submitting` or `form.validating` changes
 

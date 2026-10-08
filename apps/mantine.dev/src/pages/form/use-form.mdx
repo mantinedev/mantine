@@ -79,6 +79,9 @@ form.setFieldValue('path', value);
 // Set the value of a nested field
 form.setFieldValue('user.firstName', 'Jane');
 
+// Update the subscribed input without rerendering the form component
+form.setFieldValue('path', value, { forceUpdate: false });
+
 // Set initialValues and values once, ignored on subsequent calls
 form.initialize(values);
 

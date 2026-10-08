@@ -78,6 +78,51 @@ The `form.setFieldValue` handler allows you to set the value of the field at the
 
 <Demo data={FormDemos.setFieldValue} />
 
+## setFieldValue without form rerender
+
+In [uncontrolled mode](/form/uncontrolled/), `form.setFieldValue` rerenders the form component
+so that any input receives the new value. Pass `{ forceUpdate: false }` to skip that render:
+the input subscribed to the field updates alone, the same way as when the user types.
+Use it when a field is set on every change of another field, for example to generate a
+URL slug from a name:
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+}
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    touchTrigger: 'focus',
+    initialValues: { name: '', slug: '' },
+  });
+
+  form.watch('name', ({ value }) => {
+    // Stop generating the slug once the user has edited it
+    if (!form.isTouched('slug')) {
+      form.setFieldValue('slug', slugify(value), { forceUpdate: false });
+    }
+  });
+
+  return (
+    <>
+      <TextInput label="Name" {...form.getInputProps('name')} />
+      <TextInput label="Slug" {...form.getInputProps('slug')} />
+    </>
+  );
+}
+```
+
+If the input of the field is not subscribed, for example a native `input` element, the form
+component rerenders anyway to pass the new value. The option has no effect in controlled mode.
+
 ## Initialize form
 
 When called, the `form.initialize` handler sets `initialValues` and `values` to the same value
