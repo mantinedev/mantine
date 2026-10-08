@@ -203,6 +203,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     onPositionChange,
     opened,
     defaultOpened,
+    disabled,
     events,
     interactive,
     arrowRef,
