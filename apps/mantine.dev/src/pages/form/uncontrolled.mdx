@@ -6,49 +6,37 @@ export default Layout(MDX_DATA.formUncontrolled);
 
 ## Controlled mode
 
-Controlled mode is the default mode of the form. In this mode, the form data is
-stored in React state: `form.values` update on every change, and every component that
-uses `form.values` rerenders on every change. Controlled mode is not recommended for
-large forms:
+Controlled mode is the default mode. Form values are stored in React state:
+`form.values` is updated on every change and the component that calls `useForm`
+rerenders with all its children. Use it for small forms and when you render
+`form.values` directly:
 
 <Demo data={FormDemos.controlled} />
 
 ## Uncontrolled mode
 
-Uncontrolled mode is an alternative form mode introduced in the 7.8.0 release.
-It is now the recommended mode for all forms.
-Uncontrolled mode provides significant performance improvements for large forms.
+In uncontrolled mode, form values are stored outside of React state. The component
+that calls `useForm` does not rerender when the user types: each input is subscribed
+to its own field and rerenders alone. `form.values` is not updated, read values with
+`form.getValues()`. Both modes have the same API, set `mode: 'uncontrolled'` for large
+forms and forms with expensive children.
 
-With uncontrolled mode, the form data is stored outside of React state. The component
-that calls `useForm` does not rerender when a field changes: each Mantine input is subscribed
-to its own field and rerenders alone. `form.values` do not update at all:
+The form component still rerenders when:
+
+- an error is set or cleared
+- a value is written by the form: `form.setFieldValue`, `form.setValues`, `form.reset`, `form.initialize` and list handlers
+- a field changes and its input is not subscribed, for example a native `input` element
+- `form.submitting` or `form.validating` changes
+
+Example of uncontrolled mode, note that `form.values` in the code block is not updated:
 
 <Demo data={FormDemos.uncontrolled} />
 
 ## form.getValues
 
-The `form.getValues` function returns the current form values. It can be
-used anywhere in the component to get the current form values. It can
-be used in both controlled and uncontrolled modes.
-
-```tsx
-import { useForm } from '@mantine/form';
-
-const form = useForm({
-  mode: 'uncontrolled',
-  initialValues: { name: 'John Doe' },
-});
-
-form.getValues(); // { name: 'John Doe' }
-
-form.setValues({ name: 'John Smith' });
-form.getValues(); // { name: 'John Smith' }
-```
-
-Although `form.values` can be used to get the current form values in controlled mode, it is
-recommended to use `form.getValues` instead as it always returns the latest
-values while `form.values` is outdated in uncontrolled mode and before the state
-update in controlled mode.
+`form.getValues()` returns the current values in both modes. `form.values` is a snapshot
+from the last render: it is stale until the next render in controlled mode and is not
+updated at all in uncontrolled mode.
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -61,55 +49,41 @@ const form = useForm({
 const handleNameChange = () => {
   form.setFieldValue('name', 'Test Name');
 
-  // ❌ Do not use form.values to get the current form values
-  // form.values has a stale name value until the next rerender in controlled mode
-  // and is always outdated in uncontrolled mode
+  // ❌ form.values is outdated
   console.log(form.values); // { name: 'John Doe' }
 
-  // ✅ Use form.getValues to get the current form values
-  // form.getValues always returns the latest form values
+  // ✅ form.getValues always returns the latest values
   console.log(form.getValues()); // { name: 'Test Name' }
 };
 ```
 
-`form.getValues()` returns a ref value of the current form values. This means that
-you cannot pass it to the `useEffect` dependencies array as it will always be the same
-reference.
+`form.getValues()` reads the value, it does not subscribe the component to changes.
+In uncontrolled mode, a `useEffect` with `form.getValues()` in dependencies does not
+run again when values change because the component does not rerender. Use the
+[onValuesChange](/form/watch/#onvalueschange) option or
+[form.watch](/form/watch/#formwatch) instead:
 
 ```tsx
 import { useEffect } from 'react';
 import { useForm } from '@mantine/form';
 
-const form = useForm({ mode: 'uncontrolled' });
-
-useEffect(() => {
-  // ❌ This will not work as form.getValues() is a ref value
-  // and will always be the same reference
-}, [form.getValues()]);
-```
-
-Instead of observing form values with `useEffect`, use the `onValuesChange` callback
-to listen to form value changes:
-
-```tsx
-import { useForm } from '@mantine/form';
-
 const form = useForm({
   mode: 'uncontrolled',
-  initialValues: { name: 'John Doe' },
-  onValuesChange: (values) => {
-    // ✅ This will be called on every form value change
-    console.log(values);
-  },
+  initialValues: { name: '' },
+  // ✅ Called on every change
+  onValuesChange: (values) => console.log(values),
 });
+
+// ❌ Runs only once, the component does not rerender when values change
+useEffect(() => {}, [form.getValues()]);
 ```
 
 ## Conditional fields
 
-The most common case where uncontrolled mode is surprising is rendering a part
-of the form conditionally. `form.getValues()` returns the current values, but it
-does not subscribe the component to changes – the value is read once and the
-component is never rerendered, so the condition never updates:
+Rendering a part of the form based on a field value is the most common case where
+uncontrolled mode is surprising: `form.getValues()` is read once during render and the
+condition never updates. Use [form.useWatchValue](/form/watch/#formusewatchvalue), it
+subscribes the component to a single field:
 
 ```tsx
 import { Checkbox, Collapse, TextInput } from '@mantine/core';
@@ -121,44 +95,10 @@ function Demo() {
     initialValues: { shipsInternationally: false, country: '' },
   });
 
-  // ❌ Does not work: the component is not rerendered when the checkbox is toggled,
-  // the collapsed section never opens
-  const shipsInternationally = form.getValues().shipsInternationally;
+  // ❌ Does not rerender the component when the checkbox is toggled
+  const stale = form.getValues().shipsInternationally;
 
-  return (
-    <>
-      <Checkbox
-        label="Ships internationally"
-        {...form.getInputProps('shipsInternationally', {
-          type: 'checkbox',
-        })}
-      />
-      <Collapse expanded={shipsInternationally}>
-        <TextInput
-          label="Country"
-          {...form.getInputProps('country')}
-        />
-      </Collapse>
-    </>
-  );
-}
-```
-
-Use [form.useWatchValue](/form/values/#formusewatchvalue) instead – it
-subscribes to a single field and rerenders the component when that field
-changes:
-
-```tsx
-import { Checkbox, Collapse, TextInput } from '@mantine/core';
-import { useForm } from '@mantine/form';
-
-function Demo() {
-  const form = useForm({
-    mode: 'uncontrolled',
-    initialValues: { shipsInternationally: false, country: '' },
-  });
-
-  // ✅ Works: the component is rerendered when the checkbox is toggled
+  // ✅ Rerenders the component when the checkbox is toggled
   const shipsInternationally = form.useWatchValue('shipsInternationally');
 
   return (
@@ -170,10 +110,7 @@ function Demo() {
         })}
       />
       <Collapse expanded={shipsInternationally}>
-        <TextInput
-          label="Country"
-          {...form.getInputProps('country')}
-        />
+        <TextInput label="Country" {...form.getInputProps('country')} />
       </Collapse>
     </>
   );
@@ -182,17 +119,17 @@ function Demo() {
 
 ## Dirty and touched state
 
-`form.isDirty()` and `form.isTouched()` return the current state when called, but the form
+`form.isDirty()` and `form.isTouched()` return the current state when called, the form
 component does not rerender when it changes. To render dirty or touched state, use
-[form.useDirty and form.useTouched](/form/status/#usedirty-and-usetouched-hooks) hooks,
-they subscribe the component the same way as `form.useWatchValue`.
+[form.useDirty and form.useTouched](/form/status/#usedirty-and-usetouched-hooks) hooks.
 
 ## form.getInputProps
 
 [form.getInputProps](/form/get-input-props/) returns the same props in both modes:
-`value` (or `checked`), `onChange`, `onFocus`, `onBlur` and `error`. In uncontrolled mode
-the input is subscribed to its field, so `form.setFieldValue`, `form.setValues`, `form.reset`
-and list handlers update it without rerendering the form component. No `key` prop is required:
+`value` (or `checked`), `onChange`, `onFocus`, `onBlur` and `error`. In uncontrolled mode,
+all Mantine inputs are subscribed to their field and receive values written with
+`form.setFieldValue`, `form.setValues`, `form.reset` and list handlers without rerendering
+the form component. No `key` prop is required:
 
 ```tsx
 import { Button, TextInput } from '@mantine/core';
@@ -215,86 +152,7 @@ function Demo() {
 }
 ```
 
-An input that is not subscribed to its field, for example a native `input` element or a
-third-party component, still receives the new `value`: the form component rerenders when
-that field changes, the same way as in controlled mode.
-
-In [lists of fields](/form/nested/#nested-arrays), use a stable key for each item, for example
-a `randomId()` stored in the item. The key keeps focus on an item when items are reordered,
-values are displayed correctly with any key:
-
-```tsx
-import { useForm } from '@mantine/form';
-import { randomId } from '@mantine/hooks';
-
-function Demo() {
-  const form = useForm({
-    mode: 'uncontrolled',
-    initialValues: {
-      jobs: [
-        { company: 'Google', key: randomId() },
-        { company: 'Facebook', key: randomId() },
-      ],
-    },
-  });
-
-  const fields = form.getValues().jobs.map((item, index) => (
-    <input key={item.key} {...form.getInputProps(`jobs.${index}.company`)} />
-  ));
-
-  return <form>{fields}</form>;
-}
-```
-
-## Uncontrolled mode in custom components
-
-A custom component that supports `value` and `onChange` props works in uncontrolled mode.
-To rerender it without rerendering the form component, subscribe it to the field with the
-[use-form-field](/hooks/use-form-field/) hook. Components built with the
-[use-uncontrolled](/hooks/use-uncontrolled/) hook are subscribed automatically when `onChange`
-is passed to the hook as is:
-
-```tsx
-import { useUncontrolled } from '@mantine/hooks';
-
-interface CustomInputProps {
-  value?: string;
-  defaultValue?: string;
-  onChange?: (value: string) => void;
-}
-
-// ✅ CustomInput is subscribed to the form field
-function CustomInput({
-  value,
-  defaultValue,
-  onChange,
-}: CustomInputProps) {
-  const [_value, handleChange] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: '',
-    onChange,
-  });
-
-  return (
-    <input
-      type="text"
-      value={_value}
-      onChange={(event) => handleChange(event.currentTarget.value)}
-    />
-  );
-}
-
-function Demo() {
-  const form = useForm({
-    mode: 'uncontrolled',
-    initialValues: { text: 'Initial' },
-  });
-
-  return <CustomInput {...form.getInputProps('text')} />;
-}
-```
-
-If the component keeps state that the value cannot express, for example a partially entered
-date, use the `onExternalWrite` option of [use-form-field](/hooks/use-form-field/#onexternalwrite)
-to clear that state when the form writes the field value.
+Native inputs and third-party components that are not subscribed still receive the new
+`value`: the form component rerenders when their field changes, the same way as in
+controlled mode. To subscribe a custom component to its field, see
+[custom inputs](/form/get-input-props/#custom-inputs).

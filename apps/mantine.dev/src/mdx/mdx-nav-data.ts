@@ -604,24 +604,39 @@ const FORM_PAGES_GROUP: MdxPagesCategory[] = [
     pages: [MDX_DATA.FormPackage],
   },
   {
-    category: 'Form',
+    category: 'Usage',
     pages: [
       MDX_DATA.useForm,
-      MDX_DATA.useField,
       MDX_DATA.formUncontrolled,
-      MDX_DATA.formValues,
       MDX_DATA.formGetInputProps,
-      MDX_DATA.formErrors,
+      MDX_DATA.formValues,
+      MDX_DATA.formWatch,
+      MDX_DATA.formSubmission,
+      MDX_DATA.formNested,
+      MDX_DATA.formStatus,
+    ],
+  },
+  {
+    category: 'Validation',
+    pages: [
       MDX_DATA.formValidation,
       MDX_DATA.formSchemaValidation,
       MDX_DATA.formValidators,
-      MDX_DATA.formNested,
-      MDX_DATA.formStatus,
+      MDX_DATA.formErrors,
+    ],
+  },
+  {
+    category: 'Advanced',
+    pages: [
       MDX_DATA.createFormContext,
       MDX_DATA.formActions,
-      MDX_DATA.formRecipes,
-      MDX_DATA.formAllInputs,
+      MDX_DATA.formTypescript,
+      MDX_DATA.useField,
     ],
+  },
+  {
+    category: 'Examples',
+    pages: [MDX_DATA.formRecipes, MDX_DATA.formAllInputs],
   },
 ];
 

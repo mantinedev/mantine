@@ -5,7 +5,9 @@ export default Layout(MDX_DATA.formActions);
 
 ## Usage
 
-Form actions allow you to change the form state from anywhere in your application.
+Form actions allow you to change the form state from anywhere in your application,
+for example from a component that is not rendered inside the form or from a non-React module.
+To share the form with nested components, use [form context](/form/create-form-context/) instead.
 The form actions mechanism is similar to the [notifications system](/x/notifications/),
 [modals manager](/x/modals/) and other similar packages.
 

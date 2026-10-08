@@ -1,0 +1,187 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.formTypescript);
+
+## Get values type
+
+Form values type is inferred from `initialValues`. Use `typeof form.values` to reference it:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ initialValues: { name: '', age: 0 } });
+
+  // Get the inferred form values type, will be `{ name: string; age: number }`
+  type FormValues = typeof form.values;
+
+  // Use the values type in handleSubmit function or anywhere else
+  const handleSubmit = (values: FormValues) => console.log(values);
+}
+```
+
+## Set values type
+
+By default, form value types will be inferred from `initialValues`.
+To avoid that, you can pass a type to the `useForm` hook. This approach is useful when
+types cannot be correctly inferred or when you want to provide more specific types:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string; // regular field, same as inferred type
+  role: 'user' | 'admin'; // union, more specific than inferred string type
+
+  // values that may be undefined or null
+  // cannot be correctly inferred in strict mode
+  age: number | undefined;
+  registeredAt: Date | null;
+
+  // Arrays that are empty cannot be inferred correctly
+  jobs: string[];
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      role: 'user',
+      age: undefined,
+      registeredAt: null,
+      jobs: [],
+    },
+  });
+}
+```
+
+## TransformedValues type
+
+To get transformed values (output of [transformValues](/form/submission/#transformvalues)), use the `TransformedValues` type.
+It is useful when you want to create a custom submit function:
+
+```tsx
+import { TransformedValues, useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      locationId: '2',
+    },
+
+    transformValues: (values) => ({
+      ...values,
+      locationId: Number(values.locationId),
+    }),
+  });
+
+  type Transformed = TransformedValues<typeof form>;
+  // -> { name: string, locationId: number }
+
+  const handleSubmit = (values: TransformedValues<typeof form>) => {};
+
+  return <form onSubmit={form.onSubmit(handleSubmit)} />;
+}
+```
+
+## Set transformed values type
+
+By default, transformed values type is the same as form values type. To set a different type, you can pass a second generic
+argument to the `useForm`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  locationId: string;
+}
+
+interface TransformedValues {
+  name: string;
+  locationId: number;
+}
+
+function Demo() {
+  const form = useForm<FormValues, TransformedValues>({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      locationId: '2',
+    },
+
+    transformValues: (values) => ({
+      ...values,
+      locationId: Number(values.locationId),
+    }),
+  });
+}
+```
+
+## UseFormReturnType
+
+`UseFormReturnType` can be used when you want to pass the `form` as a prop to another component.
+To share the form with many nested components, use [form context](/form/create-form-context/) instead:
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { useForm, UseFormReturnType } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  occupation: string;
+}
+
+function NameInput({
+  form,
+}: {
+  form: UseFormReturnType<FormValues>;
+}) {
+  return (
+    <TextInput
+      {...form.getInputProps('name')}
+    />
+  );
+}
+
+function OccupationInput({
+  form,
+}: {
+  form: UseFormReturnType<FormValues>;
+}) {
+  return (
+    <TextInput
+      {...form.getInputProps('occupation')}
+    />
+  );
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', occupation: '' },
+  });
+  return (
+    <>
+      <NameInput form={form} />
+      <OccupationInput form={form} />
+    </>
+  );
+}
+```
+
+## FormErrors type
+
+`form.errors` type is `Record<string, React.ReactNode>`, it is exported as `FormErrors`,
+see [Form errors](/form/errors/#formerrors-type).
+
+## Validation return types
+
+The return types of `form.validate`, `form.validateField` and `form.isValid` depend on the rules:
+with sync rules the results are returned directly, with any async rule they are wrapped in a `Promise`.
+With [schemaResolver](/form/schema-validation/#sync-and-async-schemas), pass `{ sync: true }` to get
+sync return types.

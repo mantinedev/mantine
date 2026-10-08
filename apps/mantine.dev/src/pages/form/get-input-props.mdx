@@ -7,7 +7,8 @@ export default Layout(MDX_DATA.formGetInputProps);
 ## getInputProps handler
 
 `form.getInputProps` returns an object with `value`, `onChange`, `onFocus`, `onBlur`, `error`
-and all props specified in the `enhanceGetInputProps` function. The return value should be spread to the input component.
+and all props added with the `enhanceGetInputProps` option. Spread the returned object to the input component.
+Examples with every Mantine input are on the [use-form with all inputs](/form/all-inputs/) page.
 
 You can pass the following options to `form.getInputProps` as the second argument:
 
@@ -72,65 +73,16 @@ Example of using `enhanceGetInputProps` to add additional props to the input bas
 
 <Demo data={FormDemos.enhanceGetInputPropsOptions} />
 
-Example of using `enhanceGetInputProps` to add `disabled` prop to all inputs if the form
-has not been initialized yet:
+Example of using `enhanceGetInputProps` to add `disabled` prop to all inputs until
+the form is [initialized](/form/values/#initialize-form) with data from the backend:
 
 <Demo data={FormDemos.enhanceGetInputPropsForm} />
 
-## Initialize form
+## Custom inputs
 
-When called, the `form.initialize` handler sets `initialValues` and `values` to the same value
-and marks the form as initialized. It can be used only once. Subsequent `form.initialize` calls
-are ignored.
-
-`form.initialize` is useful when you want to sync form values with backend API response:
-
-<Demo data={FormDemos.initialize} />
-
-Example with [TanStack Query](https://tanstack.com/query/latest) (react-query):
-
-```tsx
-import { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useForm } from '@mantine/form';
-
-function Demo() {
-  const query = useQuery({
-    queryKey: ['current-user'],
-    queryFn: () => fetch('/api/users/me').then((res) => res.json()),
-  });
-
-  const form = useForm({
-    mode: 'uncontrolled',
-    initialValues: {
-      name: '',
-      email: '',
-    },
-  });
-
-  useEffect(() => {
-    if (query.data) {
-      // Even if query.data changes, the form will be initialized only once
-      form.initialize(query.data);
-    }
-  }, [query.data]);
-}
-```
-
-## Integrate getInputProps with custom inputs
-
-`form.getInputProps` returns an object with the following properties:
-
-- `value`
-- `onChange`
-- `onFocus`
-- `onBlur`
-- `error`
-
-To create a custom input that works with `form.getInputProps`, make sure that your component
-accepts these props and passes them to the input component or uses them in some other way.
-
-Example of creating a custom input component:
+Any component that accepts `value`, `onChange`, `onFocus`, `onBlur` and `error` props
+works with `form.getInputProps`. The component must pass them to the input element
+or use them in some other way:
 
 ```tsx
 interface CustomInputProps {
@@ -182,6 +134,44 @@ function Demo() {
 }
 ```
 
-In uncontrolled mode, the form component rerenders to pass a new `value` to a custom input.
-To rerender the input on its own instead, subscribe it to the field with the
-[use-form-field](/hooks/use-form-field/) hook.
+In [uncontrolled mode](/form/uncontrolled/), the form component rerenders to pass a new `value`
+to a component like this. To rerender the input alone, subscribe it to the field: components
+built with the [use-uncontrolled](/hooks/use-uncontrolled/) hook are subscribed automatically
+when `onChange` is passed to the hook as is, other components can call
+[use-form-field](/hooks/use-form-field/) directly:
+
+```tsx
+import { useUncontrolled } from '@mantine/hooks';
+
+interface CustomInputProps {
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+}
+
+// ✅ CustomInput is subscribed to the form field
+function CustomInput({
+  value,
+  defaultValue,
+  onChange,
+}: CustomInputProps) {
+  const [_value, handleChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: '',
+    onChange,
+  });
+
+  return (
+    <input
+      type="text"
+      value={_value}
+      onChange={(event) => handleChange(event.currentTarget.value)}
+    />
+  );
+}
+```
+
+If the component keeps state that the value cannot express, for example a partially entered
+date, use the `onExternalWrite` option of [use-form-field](/hooks/use-form-field/#onexternalwrite)
+to clear that state when the form writes the field value.

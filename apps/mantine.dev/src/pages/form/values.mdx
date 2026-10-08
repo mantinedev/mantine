@@ -6,7 +6,8 @@ export default Layout(MDX_DATA.formValues);
 
 ## Initial values
 
-In most cases you should set `initialValues`:
+In most cases you should set `initialValues`. They define the fields of the form and
+their types, and they are used by `form.reset` and dirty checks:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -19,6 +20,35 @@ const form = useForm({
   },
 });
 ```
+
+To change values after the form was created, use one of the handlers below:
+
+- `form.initialize` – load a record once, sets both values and initial values
+- `form.setValues` and `form.setFieldValue` – update values, initial values stay the same
+- `form.setInitialValues` – change the values used by `form.reset` and dirty checks
+- `form.reset` and `form.resetField` – go back to initial values
+
+## getValues
+
+`form.getValues()` returns the current values. Use it in event handlers and callbacks.
+`form.values` is a snapshot from the last render, it is outdated in handlers and is not
+updated at all in [uncontrolled mode](/form/uncontrolled/#formgetvalues):
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: 'John Doe' },
+});
+
+form.getValues(); // { name: 'John Doe' }
+
+form.setValues({ name: 'John Smith' });
+form.getValues(); // { name: 'John Smith' }
+```
+
+To render a value or run an effect when it changes, see [Watching values](/form/watch/).
 
 ## setValues handler
 
@@ -42,11 +72,17 @@ form.setValues({ name: 'John', age: 21 });
 form.getValues(); // -> { name: 'John', email: '', age: 21 }
 ```
 
+## setFieldValue handler
+
+The `form.setFieldValue` handler allows you to set the value of the field at the given path:
+
+<Demo data={FormDemos.setFieldValue} />
+
 ## Initialize form
 
 When called, the `form.initialize` handler sets `initialValues` and `values` to the same value
 and marks the form as initialized. It can be used only once. Subsequent `form.initialize` calls
-are ignored.
+are ignored. `form.initialized` is `true` after the form was initialized.
 
 `form.initialize` is useful when you want to sync form values with backend API response:
 
@@ -89,21 +125,35 @@ It is usually a good idea to set `readOnly` or `disabled` on all form fields bef
 
 <Demo data={FormDemos.enhanceGetInputPropsForm} />
 
-## setFieldValue handler
-
-The `form.setFieldValue` handler allows you to set the value of the field at the given path:
-
-<Demo data={FormDemos.setFieldValue} />
-
 ## reset handler
 
-The `form.reset` handler sets values to `initialValues` and clears all errors:
+The `form.reset` handler sets values to `initialValues`, clears all errors and resets
+touched and dirty state. With a `type="reset"` button, use [form.onReset](/form/submission/#onreset-handler)
+as the `onReset` handler of the form element instead:
 
 <Demo data={FormDemos.reset} />
 
+## resetField handler
+
+The `form.resetField` handler sets the value of a single field to its initial value:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: 'John', email: 'john@mantine.dev' },
+});
+
+form.setValues({ name: 'Jane', email: 'jane@mantine.dev' });
+form.resetField('name');
+form.getValues(); // -> { name: 'John', email: 'jane@mantine.dev' }
+```
+
 ## setInitialValues handler
 
-The `form.setInitialValues` handler allows you to update `initialValues` after the form was initialized:
+The `form.setInitialValues` handler allows you to update `initialValues` after the form was initialized.
+`form.getInitialValues()` returns the current initial values:
 
 ```tsx
 import { useEffect } from 'react';
@@ -132,263 +182,8 @@ function Demo() {
 }
 ```
 
-## transformValues
+## Values and object identity
 
-Use `transformValues` to transform values before they get submitted in the `onSubmit` handler.
-For example, it can be used to merge several fields into one or to convert types:
-
-<Demo data={FormDemos.transformValues} />
-
-## Get transformed values
-
-You can get transformed values outside of the `form.onSubmit` method by calling `form.getTransformedValues`.
-It accepts `values` that need to be transformed as an optional argument. If it is not provided, then
-the result of `form.getValues()` transformation will be returned instead:
-
-```tsx
-import { useForm } from '@mantine/form';
-
-function Demo() {
-  const form = useForm({
-    mode: 'uncontrolled',
-    initialValues: {
-      firstName: 'John',
-      lastName: 'Doe',
-    },
-
-    transformValues: (values) => ({
-      fullName: `${values.firstName} ${values.lastName}`,
-    }),
-  });
-
-  form.getTransformedValues(); // -> { fullName: 'John Doe' }
-  form.getTransformedValues({
-    firstName: 'Jane',
-    lastName: 'Loe',
-  }); // { fullName: 'Jane Loe' }
-}
-```
-
-## onValuesChange
-
-The `onValuesChange` function is called every time form values change. Use it
-instead of `useEffect` to subscribe to form value changes:
-
-<Demo data={FormDemos.onValuesChange} />
-
-## form.watch
-
-`form.watch` is an effect function that allows subscribing to changes of a
-specific form field. It accepts a field path and a callback function that is
-called with the new value, previous value, touched and dirty field states:
-
-<Demo data={FormDemos.watch} />
-
-Note that `form.watch` uses `useEffect` under the hood – all hook rules apply.
-For example, you cannot use `form.watch` conditionally or inside loops.
-
-```tsx
-function Demo() {
-  const form = useForm({
-    mode: 'uncontrolled',
-    initialValues: { name: '' },
-  });
-
-  // ❌ This will not work
-  if (Math.random() > 0.5) {
-    form.watch('name', ({ previousValue, value, touched, dirty }) => {
-      console.log({ previousValue, value, touched, dirty });
-    });
-  }
-}
-```
-
-## form.useWatchValue
-
-`form.useWatchValue` subscribes to a single field and returns its current value.
-Unlike `form.watch`, which takes a callback, it returns the value directly and
-rerenders the component in which it is called when that field changes. Use it
-when you need a form value during render – for example, to show a section of the
-form conditionally:
-
-<Demo data={FormDemos.watchValue} />
-
-`form.useWatchValue` works the same way in both controlled and uncontrolled
-modes. In uncontrolled mode, reading a value with `form.getValues()` during
-render does not rerender the component when the value changes – use
-`form.useWatchValue` instead:
-
-```tsx
-import { Collapse } from '@mantine/core';
-import { useForm } from '@mantine/form';
-
-function Demo() {
-  const form = useForm({
-    mode: 'uncontrolled',
-    initialValues: { shipsInternationally: false },
-  });
-
-  // ❌ Does not rerender the component when the value changes
-  const staleValue = form.getValues().shipsInternationally;
-
-  // ✅ Rerenders the component when the value changes
-  const shipsInternationally = form.useWatchValue('shipsInternationally');
-
-  return <Collapse expanded={shipsInternationally}>{/* ... */}</Collapse>;
-}
-```
-
-Only the component that calls `form.useWatchValue` is rerendered, and only when
-the value of the given field changes – changes to other fields do not trigger a
-rerender.
-
-Note that `form.useWatchValue` is a hook – all hook rules apply. For example,
-you cannot call it conditionally or inside loops.
-
-```tsx
-function Demo() {
-  const form = useForm({
-    mode: 'uncontrolled',
-    initialValues: { name: '' },
-  });
-
-  // ❌ This will not work
-  if (Math.random() > 0.5) {
-    const name = form.useWatchValue('name');
-  }
-}
-```
-
-## form.watch with arrays
-
-`form.watch` works with array fields – the callback is triggered when any
-nested field within the array changes or when list operations
-(`insertListItem`, `removeListItem`, `reorderListItem`, `replaceListItem`)
-are performed:
-
-<Demo data={FormDemos.watchList} />
-
-## form.watch cascade
-
-By default, `form.watch` notifies parent watchers when nested fields change
-(upward cascade). To also enable downward cascade (notifying nested field
-watchers when a parent is set directly), set `cascadeUpdates: true`:
-
-<Demo data={FormDemos.cascadeUpdates} />
-
-## Get values type
-
-```tsx
-import { useForm } from '@mantine/form';
-
-function Demo() {
-  const form = useForm({ initialValues: { name: '', age: 0 } });
-
-  // Get the inferred form values type, will be `{ name: string; age: number }`
-  type FormValues = typeof form.values;
-
-  // Use the values type in handleSubmit function or anywhere else
-  const handleSubmit = (values: FormValues) => console.log(values);
-}
-```
-
-## Get transformed values type
-
-To get transformed values (output of [transformValues](#transformvalues)), use the `TransformedValues` type.
-It is useful when you want to create a custom submit function:
-
-```tsx
-import { TransformedValues, useForm } from '@mantine/form';
-
-function Demo() {
-  const form = useForm({
-    mode: 'uncontrolled',
-    initialValues: {
-      name: '',
-      locationId: '2',
-    },
-
-    transformValues: (values) => ({
-      ...values,
-      locationId: Number(values.locationId),
-    }),
-  });
-
-  type Transformed = TransformedValues<typeof form>;
-  // -> { name: string, locationId: number }
-
-  const handleSubmit = (values: TransformedValues<typeof form>) => {};
-
-  return <form onSubmit={form.onSubmit(handleSubmit)} />;
-}
-```
-
-## Set values type
-
-By default, form value types will be inferred from `initialValues`.
-To avoid that, you can pass a type to the `useForm` hook. This approach is useful when
-types cannot be correctly inferred or when you want to provide more specific types:
-
-```tsx
-import { useForm } from '@mantine/form';
-
-interface FormValues {
-  name: string; // regular field, same as inferred type
-  role: 'user' | 'admin'; // union, more specific than inferred string type
-
-  // values that may be undefined or null
-  // cannot be correctly inferred in strict mode
-  age: number | undefined;
-  registeredAt: Date | null;
-
-  // Arrays that are empty cannot be inferred correctly
-  jobs: string[];
-}
-
-function Demo() {
-  const form = useForm<FormValues>({
-    mode: 'uncontrolled',
-    initialValues: {
-      name: '',
-      role: 'user',
-      age: undefined,
-      registeredAt: null,
-      jobs: [],
-    },
-  });
-}
-```
-
-## Set transformed values type
-
-By default, transformed values type is the same as form values type. To set a different type, you can pass a second generic
-argument to the `useForm`:
-
-```tsx
-import { useForm } from '@mantine/form';
-
-interface FormValues {
-  name: string;
-  locationId: string;
-}
-
-interface TransformedValues {
-  name: string;
-  locationId: number;
-}
-
-function Demo() {
-  const form = useForm<FormValues, TransformedValues>({
-    mode: 'uncontrolled',
-    initialValues: {
-      name: '',
-      locationId: '2',
-    },
-
-    transformValues: (values) => ({
-      ...values,
-      locationId: Number(values.locationId),
-    }),
-  });
-}
-```
+Form values are not cloned: objects passed to `initialValues`, `form.setValues`,
+`form.setFieldValue` and `form.initialize` are stored as is. Do not mutate them after
+they were passed to the form.

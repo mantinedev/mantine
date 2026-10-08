@@ -1,0 +1,116 @@
+import { FormDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.formWatch);
+
+## Usage
+
+`useForm` provides several ways to react to value changes. Pick the one that matches the task:
+
+- `form.getValues()` – read the current values in an event handler, see [Form values](/form/values/#getvalues)
+- `form.useWatchValue(path)` – render a part of the form based on a field value
+- `form.watch(path, callback)` – run an effect when a field changes
+- `onValuesChange` option – react to any change in the form, for example to save values to local storage
+
+## form.useWatchValue
+
+`form.useWatchValue` subscribes the component to a single field and returns its current value.
+The component rerenders only when that field changes, changes to other fields do not trigger
+a rerender. Use it when you need a form value during render – for example, to show a section
+of the form conditionally:
+
+<Demo data={FormDemos.watchValue} />
+
+`form.useWatchValue` works the same way in both controlled and uncontrolled
+modes. In uncontrolled mode, reading a value with `form.getValues()` during
+render does not rerender the component when the value changes – use
+`form.useWatchValue` instead:
+
+```tsx
+import { Collapse } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { shipsInternationally: false },
+  });
+
+  // ❌ Does not rerender the component when the value changes
+  const staleValue = form.getValues().shipsInternationally;
+
+  // ✅ Rerenders the component when the value changes
+  const shipsInternationally = form.useWatchValue('shipsInternationally');
+
+  return <Collapse expanded={shipsInternationally}>{/* ... */}</Collapse>;
+}
+```
+
+Note that `form.useWatchValue` is a hook – all hook rules apply. For example,
+you cannot call it conditionally or inside loops.
+
+```tsx
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '' },
+  });
+
+  // ❌ This will not work
+  if (Math.random() > 0.5) {
+    const name = form.useWatchValue('name');
+  }
+}
+```
+
+## form.watch
+
+`form.watch` is an effect function that allows subscribing to changes of a
+specific form field. It accepts a field path and a callback function that is
+called with the new value, previous value, touched and dirty field states:
+
+<Demo data={FormDemos.watch} />
+
+Note that `form.watch` uses `useEffect` under the hood – all hook rules apply.
+For example, you cannot use `form.watch` conditionally or inside loops.
+
+```tsx
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '' },
+  });
+
+  // ❌ This will not work
+  if (Math.random() > 0.5) {
+    form.watch('name', ({ previousValue, value, touched, dirty }) => {
+      console.log({ previousValue, value, touched, dirty });
+    });
+  }
+}
+```
+
+## form.watch with arrays
+
+`form.watch` works with array fields – the callback is triggered when any
+nested field within the array changes or when list operations
+(`insertListItem`, `removeListItem`, `reorderListItem`, `replaceListItem`)
+are performed:
+
+<Demo data={FormDemos.watchList} />
+
+## form.watch cascade
+
+By default, `form.watch` notifies parent watchers when nested fields change
+(upward cascade). To also enable downward cascade (notifying nested field
+watchers when a parent is set directly), set `cascadeUpdates: true`:
+
+<Demo data={FormDemos.cascadeUpdates} />
+
+## onValuesChange
+
+The `onValuesChange` function is called with new and previous values every time form values change.
+Use it instead of `useEffect` to subscribe to form value changes:
+
+<Demo data={FormDemos.onValuesChange} />

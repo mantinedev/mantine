@@ -6,16 +6,28 @@ export default Layout(MDX_DATA.formRecipes);
 
 ## Set initial values with async request
 
+Load data from the backend and put it in the form with `form.setValues`. To set values and
+initial values at once, use [form.initialize](/form/values/#initialize-form) instead:
+
 <Demo data={FormDemos.asyncSetValues} />
 
 ## Save form values to local storage
+
+Save values with the [onValuesChange](/form/watch/#onvalueschange) option and restore
+them with `form.setValues` when the form is mounted:
 
 <Demo data={FormDemos.localStorage} />
 
 ## List items reordering
 
+Drag and drop reordering of [list items](/form/nested/#nested-arrays) with
+[dnd-kit](https://dndkit.com/) and `form.reorderListItem`:
+
 <Demo data={FormDemos.dnd} />
 
 ## Form with multiple steps
+
+A single form split across [Stepper](/core/stepper/) steps. Each step validates
+its own fields with `form.validate` before the next step is shown:
 
 <Demo data={FormDemos.stepper} />

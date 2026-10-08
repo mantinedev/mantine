@@ -6,7 +6,9 @@ export default Layout(MDX_DATA.createFormContext);
 
 ## Usage
 
-The `createFormContext` function creates a context provider and hook to get the form object from context:
+The `createFormContext` function creates a context provider and hook to get the form object from context.
+Use it to split a large form into components without passing the `form` object as a prop to each of them.
+To change the form from a component outside of its tree, use [form actions](/form/actions/) instead:
 
 ```tsx
 import { TextInput } from '@mantine/core';

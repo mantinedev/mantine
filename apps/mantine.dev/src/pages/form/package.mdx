@@ -9,9 +9,9 @@ export default Layout(MDX_DATA.FormPackage);
 [![npm](https://img.shields.io/npm/dm/@mantine/form)](https://www.npmjs.com/package/@mantine/form)
 
 [@mantine/form](https://www.npmjs.com/package/@mantine/form) package
-contains the `useForm` hook that manages form state, validation, and submission.
-The `useForm` hook is designed to be used with other Mantine libraries (`@mantine/core`, `@mantine/dates`, etc.)
-– all Mantine inputs are compatible with `useForm` out of the box.
+contains the `useForm` hook that manages form state, validation and submission.
+The package does not depend on any other libraries except React: it works with
+Mantine inputs, native inputs and any other component that accepts `value` and `onChange` props.
 
 ## Installation
 
@@ -19,14 +19,26 @@ The `useForm` hook is designed to be used with other Mantine libraries (`@mantin
 
 ## Usage
 
-The `@mantine/form` package can be used in any web React application.
-Although the package is designed to work with Mantine components, it can
-be used with native inputs or any other form libraries – it is standalone
-and does not have any dependencies except React.
+A form is created with the `useForm` hook and connected to inputs with `form.getInputProps`:
 
-Example of using the `useForm` hook to create a simple form:
+- `initialValues` define the fields of the form and their types
+- `validate` holds a rule per field, a rule returns an error message or `null`
+- `form.getInputProps('email')` returns `value`, `onChange`, `onBlur`, `onFocus` and `error` props for the input
+- `form.onSubmit(handleSubmit)` validates the form and calls `handleSubmit` with values only when all rules pass
 
-<Demo data={FormDemos.usage} demoProps={{ defaultExpanded: false }} />
+<Demo data={FormDemos.usage} />
+
+## Next steps
+
+- [use-form](/form/use-form/) – all hook options and the returned form object
+- [Form modes](/form/uncontrolled/) – controlled and uncontrolled modes, what rerenders on change
+- [Form values](/form/values/) – load data from the backend, update and reset values
+- [Form validation](/form/validation/) – rules, validation on change and blur, async validation
+- [Form submission](/form/submission/) – async submission, server errors, transformed values
+- [Nested fields and lists](/form/nested/) – objects, arrays and dynamic lists of fields
+- [use-form with all inputs](/form/all-inputs/) – examples with every Mantine input
+
+To manage a single input without a form, use the [use-field](/form/use-field/) hook.
 
 ## License
 

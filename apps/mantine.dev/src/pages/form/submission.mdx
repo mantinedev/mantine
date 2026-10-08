@@ -1,0 +1,183 @@
+import { FormDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.formSubmission);
+
+## onSubmit handler
+
+`form.onSubmit` creates the `onSubmit` handler for the form element. It calls `event.preventDefault()`,
+validates the form and then calls one of two callbacks:
+
+- `handleSubmit` – called with form values when validation passes
+- `handleValidationFailure` – optional, called with validation errors when validation fails
+
+Both callbacks also receive the submit event. `handleValidationFailure` receives form values as the second argument:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ mode: 'uncontrolled' });
+
+  return (
+    <form
+      onSubmit={form.onSubmit(
+        (values, event) => {
+          console.log(values); // form.getValues() at the moment of submit
+        },
+        (validationErrors, values, event) => {
+          console.log(validationErrors); // form.errors at the moment of submit
+        }
+      )}
+    />
+  );
+}
+```
+
+Use `handleValidationFailure` to perform an action when the user tries to submit a form
+with invalid values, for example, to show a notification:
+
+<Demo data={FormDemos.onSubmitErrors} />
+
+## Focus the first invalid field
+
+To get the DOM node of any input, use `form.getInputNode('path-to-field')`. Note that
+in order for this feature to work, you need to spread `form.getInputProps('path-to-field')` to
+the input element. Combine it with `handleValidationFailure` to focus the first invalid field:
+
+<Demo data={FormDemos.focusError} />
+
+## Submitting state
+
+`form.submitting` is `true` while the promise returned from `handleSubmit` is pending.
+It is set back to `false` when the promise resolves or rejects. Use it to disable inputs
+and show a loading state on the submit button:
+
+<Demo data={FormDemos.submitting} />
+
+You can also set `form.submitting` manually with `form.setSubmitting`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({ mode: 'uncontrolled' });
+form.submitting; // -> false
+
+form.setSubmitting(true);
+form.submitting; // -> true
+
+form.setSubmitting(false);
+form.submitting; // -> false
+```
+
+## Server errors
+
+To display errors returned from the backend, call `form.setErrors` or `form.setFieldError`
+in `handleSubmit`. Errors are cleared when the user changes the field value. See
+[Form errors](/form/errors/) for all error handlers:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { email: '' },
+  });
+
+  const handleSubmit = async (values: typeof form.values) => {
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      body: JSON.stringify(values),
+    });
+
+    if (response.status === 422) {
+      // Response body: { email: 'Email is already taken' }
+      form.setErrors(await response.json());
+    }
+  };
+
+  return <form onSubmit={form.onSubmit(handleSubmit)} />;
+}
+```
+
+## transformValues
+
+Use `transformValues` to transform values before they get submitted in the `onSubmit` handler.
+For example, it can be used to merge several fields into one or to convert types:
+
+<Demo data={FormDemos.transformValues} />
+
+## Get transformed values
+
+You can get transformed values outside of the `form.onSubmit` method by calling `form.getTransformedValues`.
+It accepts `values` that need to be transformed as an optional argument. If it is not provided, then
+the result of `form.getValues()` transformation will be returned instead:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      firstName: 'John',
+      lastName: 'Doe',
+    },
+
+    transformValues: (values) => ({
+      fullName: `${values.firstName} ${values.lastName}`,
+    }),
+  });
+
+  form.getTransformedValues(); // -> { fullName: 'John Doe' }
+  form.getTransformedValues({
+    firstName: 'Jane',
+    lastName: 'Loe',
+  }); // { fullName: 'Jane Loe' }
+}
+```
+
+To type a submit handler declared outside of `form.onSubmit`, use the
+[TransformedValues](/form/typescript/#transformedvalues-type) type.
+
+## onSubmitPreventDefault option
+
+By default, `event.preventDefault()` is called on the form `onSubmit` handler.
+If you want to change this behavior, you can pass the `onSubmitPreventDefault` option
+to the `useForm` hook. It can have the following values:
+
+- `always` (default) - always call `event.preventDefault()`
+- `never` - never call `event.preventDefault()`
+- `validation-failed` - call `event.preventDefault()` only if validation failed
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  onSubmitPreventDefault: 'never',
+});
+```
+
+## onReset handler
+
+`form.onReset` is the `onReset` handler for the form element, it calls `form.reset`.
+Use it with a `type="reset"` button to [reset the form](/form/values/#reset-handler):
+
+```tsx
+import { Button } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ mode: 'uncontrolled' });
+
+  return (
+    <form onSubmit={form.onSubmit(console.log)} onReset={form.onReset}>
+      <Button type="reset">Reset</Button>
+      <Button type="submit">Submit</Button>
+    </form>
+  );
+}
+```

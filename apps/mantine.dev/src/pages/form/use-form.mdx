@@ -4,19 +4,36 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.useForm);
 
-## Installation
-
-The `@mantine/form` package does not depend on any other libraries. You can use it with or without `@mantine/core` inputs:
-
-<InstallScript packages="@mantine/form" />
-
 ## Usage
+
+The `useForm` hook returns a form object with values, errors, validation and submission handlers.
+Installation and a walkthrough of the example below are on the [Get started](/form/package/) page:
 
 <Demo data={FormDemos.usage} />
 
-## API overview
+## Options
 
-All examples below use the following example use-form hook.
+All options are optional. Options are read on every render, you can pass values that depend on props or state.
+
+- `mode` – `controlled` (default) or `uncontrolled`, see [Form modes](/form/uncontrolled/)
+- `initialValues` – initial form values, define the shape and type of the form, see [Form values](/form/values/)
+- `initialErrors`, `initialTouched`, `initialDirty` – initial errors and field status
+- `validate` – rules object, function or [schema](/form/schema-validation/), see [Form validation](/form/validation/)
+- `validateInputOnChange`, `validateInputOnBlur` – validate fields on change or blur, `true` or an array of field paths
+- `clearInputErrorOnChange` – clear field error when its value changes, `true` by default
+- `validateDebounce` – debounce in ms for async validation triggered on change or blur
+- `resolveValidationError` – converts an error thrown by an async rule to an error message
+- `transformValues` – transforms values before they are passed to the submit handler, see [Form submission](/form/submission/)
+- `onSubmitPreventDefault` – `always` (default), `never` or `validation-failed`
+- `onValuesChange` – called with new and previous values on every change, see [Watching values](/form/watch/)
+- `cascadeUpdates` – notify nested field watchers when a parent value is set, `false` by default
+- `enhanceGetInputProps` – adds props to the object returned by `form.getInputProps`, see [getInputProps](/form/get-input-props/)
+- `touchTrigger` – `change` (default) or `focus`, see [Form status](/form/status/)
+- `name` – form name for [form actions](/form/actions/)
+
+## Form object
+
+All examples below use the following form:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -44,13 +61,16 @@ const form = useForm({
 [Form values guide](/form/values/)
 
 ```tsx
-// get the current form values
+// Current form values, always up to date in both modes
 form.getValues();
 
-// Set all form values
+// Values snapshot from the last render, stale in uncontrolled mode
+form.values;
+
+// Set all form values, the payload is shallow merged with the current values
 form.setValues(values);
 
-// Set all form values using the previous state
+// Set form values using the previous state
 form.setValues((prev) => ({ ...prev, ...values }));
 
 // Set the value of a single field
@@ -59,39 +79,76 @@ form.setFieldValue('path', value);
 // Set the value of a nested field
 form.setFieldValue('user.firstName', 'Jane');
 
-// Resets form values to `initialValues`,
-// clears all validation errors,
-// resets touched and dirty state
+// Set initialValues and values once, ignored on subsequent calls
+form.initialize(values);
+
+// True after form.initialize was called
+form.initialized;
+
+// Reset values to initialValues, clear errors, touched and dirty state
 form.reset();
 
-// Reset the field at `path` to its initial value
+// Reset the field at the given path to its initial value
 form.resetField('path');
 
-// Sets initial values, used when the form is reset
+// Set initial values used by form.reset and dirty checks
 form.setInitialValues({ values: 'object' });
+
+// Current initial values
+form.getInitialValues();
+
+// Values transformed with the transformValues option
+form.getTransformedValues();
+```
+
+### Inputs
+
+[getInputProps guide](/form/get-input-props/)
+
+```tsx
+// Props for an input: value, onChange, onFocus, onBlur, error
+form.getInputProps('path');
+
+// Props for a checkbox: checked instead of value
+form.getInputProps('accepted', { type: 'checkbox' });
+
+// Props for a radio option
+form.getInputProps('path', { type: 'radio', value: 'option' });
+
+// DOM node of the input with the given path
+form.getInputNode('path');
+```
+
+### Watchers
+
+[Watching values guide](/form/watch/)
+
+```tsx
+// Run an effect when the field changes
+form.watch('path', ({ previousValue, value, touched, dirty }) => {});
+
+// Subscribe the component to the field value, rerenders when it changes
+const value = form.useWatchValue('path');
 ```
 
 ### List items
 
-[Nested fields guide](/form/nested/)
+[Nested fields and lists guide](/form/nested/)
 
 ```tsx
-// Inserts the given list item at the specified path
+// Insert an item at the end of the list
 form.insertListItem('fruits', { name: 'Apple', available: true });
 
-// An optional index may be provided to specify the position in a nested field.
-// If the index is provided, the item will be inserted at the given position.
-// If the index is larger than the current list, the element is inserted at the last position.
+// Insert an item at the given index
 form.insertListItem('fruits', { name: 'Orange', available: true }, 1);
 
-// Removes the list item at the specified path and index.
+// Remove the item at the given index
 form.removeListItem('fruits', 1);
 
-// Replaces the list item at the specified path and index with the given item.
+// Replace the item at the given index
 form.replaceListItem('fruits', 1, { name: 'Apple', available: true });
 
-// Swaps two items of the list at the specified path.
-// You should make sure that there are elements at the `from` and `to` index.
+// Move the item from one index to another
 form.reorderListItem('fruits', { from: 1, to: 0 });
 ```
 
@@ -100,213 +157,106 @@ form.reorderListItem('fruits', { from: 1, to: 0 });
 [Form validation guide](/form/validation/)
 
 ```tsx
-import { useForm } from '@mantine/form';
+// Validate all fields, set form.errors, return { hasErrors, errors }
+form.validate();
 
-const form = useForm({
-  mode: 'uncontrolled',
-  initialValues: {
-    email: '',
-    user: {
-      firstName: '',
-      lastName: '',
-    },
-  },
-  validate: {
-    email: (value) => (value.length < 2 ? 'Invalid email' : null),
-    user: {
-      firstName: (value) =>
-        value.length < 2
-          ? 'First name must have at least 2 letters'
-          : null,
-    },
-  },
-});
+// Validate a single field, set its error, return { hasError, error }
+form.validateField('user.firstName');
 
-// Validates all fields with the specified `validate` function or schema, sets form.errors
+// Same as form.validate and form.validateField but do not set errors, return boolean
+form.isValid();
+form.isValid('user.firstName');
+
+// Validation results are returned directly with sync rules
+// and wrapped in a Promise when any rule is async
 await form.validate();
 
-// Validates a single field at the specified path, sets form.errors
-await form.validateField('user.firstName');
-
-// Works the same way as form.validate but does not set form.errors, returns Promise<boolean>
-await form.isValid();
-await form.isValid('user.firstName');
-
-// true while any async validation is running
+// True while any async validation is running
 form.validating;
 
-// true while async validation is running for a specific field
-form.isValidating('email');
+// True while async validation of the given field is running
+form.isValidating('path');
 ```
 
 ### Errors
 
 [Form errors guide](/form/errors/)
 
-Validation errors occur when defined validation rules were violated, `initialErrors` were specified in useForm properties,
-or validation errors were set manually.
-
 ```tsx
-// get the current errors state
+// Current errors
 form.errors;
 
 // Set all errors
 form.setErrors({ path: 'Error message', path2: 'Another error' });
 
-// Set an error message at the specified path
+// Set the error of a single field
 form.setFieldError('user.lastName', 'No special characters allowed');
 
-// Clears all errors
+// Clear all errors
 form.clearErrors();
 
-// Clears the error of the field at the specified path
+// Clear the error of a single field
 form.clearFieldError('path');
 ```
 
-### onReset and onSubmit
+### Submission
 
-Wrapper function for the form `onSubmit` and `onReset` event handler. The `onSubmit` handler accepts as a second argument a function
-that will be called with the errors object when validation fails.
-
-```tsx
-import { useForm } from '@mantine/form';
-
-function Demo() {
-  const form = useForm({ mode: 'uncontrolled' });
-
-  const handleSubmit = (values: typeof form.values) => {
-    console.log(values);
-  };
-
-  return (
-    <>
-      {/* Supply handle submit as a single argument to receive validated values */}
-      <form onSubmit={form.onSubmit(handleSubmit)} />
-
-      {/* Supply a second argument to handle errors */}
-      <form
-        onSubmit={form.onSubmit(
-          (values, event) => {
-            console.log(
-              values, // <- form.getValues() at the moment of submit
-              event // <- form element submit event
-            );
-          },
-          (validationErrors, values, event) => {
-            console.log(
-              validationErrors, // <- form.errors at the moment of submit
-              values, // <- form.getValues() at the moment of submit
-              event // <- form element submit event
-            );
-          }
-        )}
-      />
-
-      {/* form.onReset calls form.reset */}
-      <form onReset={form.onReset}></form>
-    </>
-  );
-}
-```
-
-### onSubmitPreventDefault option
-
-By default, `event.preventDefault()` is called on the form `onSubmit` handler.
-If you want to change this behavior, you can pass the `onSubmitPreventDefault` option
-to the `useForm` hook. It can have the following values:
-
-- `always` (default) - always call `event.preventDefault()`
-- `never` - never call `event.preventDefault()`
-- `validation-failed` - call `event.preventDefault()` only if validation failed
+[Form submission guide](/form/submission/)
 
 ```tsx
-import { useForm } from '@mantine/form';
+// Form element onSubmit handler: validates the form,
+// calls handleSubmit with transformed values when validation passes
+// and handleValidationFailure with errors when it fails
+<form onSubmit={form.onSubmit(handleSubmit, handleValidationFailure)} />;
 
-const form = useForm({
-  mode: 'uncontrolled',
-  onSubmitPreventDefault: 'never',
-});
+// Form element onReset handler, calls form.reset
+<form onReset={form.onReset} />;
+
+// True while the promise returned from handleSubmit is pending
+form.submitting;
+
+// Set submitting state manually
+form.setSubmitting(true);
 ```
 
 ### Touched and dirty
 
-[Touched & dirty guide](/form/status/)
+[Form status guide](/form/status/)
 
 ```tsx
-// Returns true if the user interacted with any field inside the form in any way
+// True if the user interacted with any field in the form
 form.isTouched();
 
-// Returns true if the user interacted with the field at the specified path
+// True if the user interacted with the given field
 form.isTouched('path');
 
-// Set all touched values
-form.setTouched({ 'user.firstName': true, 'user.lastName': false });
-
-// Clears the touched status of all fields
-form.resetTouched();
-
-// Returns true if form values are not deep equal to initialValues
+// True if form values are not deep equal to initial values
 form.isDirty();
 
-// Returns true if the field value is not deep equal to initialValues
+// True if the field value is not deep equal to its initial value
 form.isDirty('path');
 
-// Sets the dirty status of all fields
+// Subscribe the component to touched and dirty state, rerenders when it changes
+const dirty = form.useDirty();
+const touched = form.useTouched('path');
+
+// Touched and dirty state of all fields
+form.getTouched();
+form.getDirty();
+
+// Set touched and dirty state of fields
+form.setTouched({ 'user.firstName': true, 'user.lastName': false });
 form.setDirty({ 'user.firstName': true, 'user.lastName': false });
 
-// Clears the dirty status of all fields, saves form.values snapshot
-// After form.resetDirty is called, form.isDirty will compare
-// form.getValues() to the snapshot instead of initialValues
+// Clear touched state of all fields
+form.resetTouched();
+
+// Clear dirty state of all fields, next dirty checks compare
+// values to the current values instead of initial values
 form.resetDirty();
 ```
 
-## UseFormReturnType
+## Types
 
-`UseFormReturnType` can be used when you want to pass the `form` as a prop to another component:
-
-```tsx
-import { TextInput } from '@mantine/core';
-import { useForm, UseFormReturnType } from '@mantine/form';
-
-interface FormValues {
-  name: string;
-  occupation: string;
-}
-
-function NameInput({
-  form,
-}: {
-  form: UseFormReturnType<FormValues>;
-}) {
-  return (
-    <TextInput
-      {...form.getInputProps('name')}
-    />
-  );
-}
-
-function OccupationInput({
-  form,
-}: {
-  form: UseFormReturnType<FormValues>;
-}) {
-  return (
-    <TextInput
-      {...form.getInputProps('occupation')}
-    />
-  );
-}
-
-function Demo() {
-  const form = useForm<FormValues>({
-    mode: 'uncontrolled',
-    initialValues: { name: '', occupation: '' },
-  });
-  return (
-    <>
-      <NameInput form={form} />
-      <OccupationInput form={form} />
-    </>
-  );
-}
-```
+`UseFormReturnType`, `TransformedValues`, `FormErrors` and `useForm` generics are described
+on the [TypeScript](/form/typescript/) page.

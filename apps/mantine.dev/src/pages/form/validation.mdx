@@ -7,7 +7,9 @@ export default Layout(MDX_DATA.formValidation);
 ## Validation with rules object
 
 To validate a form with a rules object, provide an object of functions which take the field value as an argument
-and return an error message (any React node) or null if the field is valid:
+and return an error message (any React node) or null if the field is valid. Common checks are available as
+[premade validators](/form/validators/), and schemas from zod and other libraries can be used with
+[schema validation](/form/schema-validation/):
 
 <Demo data={FormDemos.rulesValidation} />
 
@@ -37,19 +39,6 @@ const form = useForm({
 });
 ```
 
-## formRootRule
-
-`formRootRule` is a special rule path that can be used to validate objects and arrays
-alongside their nested fields. For example, it is useful when you want to capture
-a list of values, validate each value individually, and then validate the list itself
-to not be empty:
-
-<Demo data={FormDemos.rootRuleArray} />
-
-Another example is to validate an object's field combination:
-
-<Demo data={FormDemos.rootRuleObject} />
-
 ## Validation based on other form values
 
 You can get all form values as the second rule function argument to perform field validation based on other
@@ -65,6 +54,12 @@ errors of corresponding fields. If a field is valid or field validation is not r
 from the validation results.
 
 <Demo data={FormDemos.validateFunction} />
+
+## When validation runs
+
+By default, the form is validated when it is submitted with [form.onSubmit](/form/submission/).
+Validation can also be triggered on change and on blur with the options below, or at any time
+with `form.validate`, `form.validateField` and `form.isValid`.
 
 ## Validate fields on change
 
@@ -150,21 +145,33 @@ const form = useForm({
   demoProps={{ toggle: true }}
 />
 
-## Validation in onSubmit handler
+## validate and validateField handlers
 
-`form.onSubmit` accepts two arguments: the first argument is the `handleSubmit` function that will be called with form values when validation
-was completed without errors. The second argument is the `handleErrors` function, which is called with the errors object when validation was completed with errors.
+`form.validate` validates all fields and sets `form.errors`. `form.validateField` validates
+a single field and sets its error only:
 
-You can use the `handleErrors` function to perform certain actions when the user tries to submit the form without values.
-For example, you can show a notification:
+```tsx
+import { useForm } from '@mantine/form';
 
-<Demo data={FormDemos.onSubmitErrors} />
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: '', age: 0 },
+  validate: {
+    name: (value) => (value.trim().length < 2 ? 'Too short' : null),
+    age: (value) => (value < 18 ? 'Too young' : null),
+  },
+});
+
+form.validate(); // -> { hasErrors: true, errors: { name: 'Too short', age: 'Too young' } }
+form.errors; // -> { name: 'Too short', age: 'Too young' }
+
+form.validateField('name'); // -> { hasError: true, error: 'Too short' }
+```
 
 ## isValid handler
 
 `form.isValid` performs form validation with the given validation functions, rules object, or schema, but unlike
-`form.validate`, it does not set `form.errors` and just returns a boolean value indicating whether the form is valid.
-If any of the validation rules are async, `form.isValid` returns a `Promise<boolean>` instead.
+`form.validate`, it does not set `form.errors` and just returns a boolean value indicating whether the form is valid:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -183,6 +190,19 @@ form.isValid(); // -> false
 form.isValid('name'); // -> false
 ```
 
+## formRootRule
+
+`formRootRule` is a special rule path that can be used to validate objects and arrays
+alongside their nested fields. For example, it is useful when you want to capture
+a list of values, validate each value individually, and then validate the list itself
+to not be empty:
+
+<Demo data={FormDemos.rootRuleArray} />
+
+Another example is to validate an object's field combination:
+
+<Demo data={FormDemos.rootRuleObject} />
+
 ## Async validation
 
 Validation rules can be async – return a `Promise` that resolves to an error message or `null`.
@@ -190,11 +210,9 @@ When all rules are synchronous, `form.validate()`, `form.validateField()` and `f
 their results directly (not wrapped in a `Promise`). When any rule is async, these methods return promises instead.
 TypeScript infers the correct return type based on your validation rules, so you get precise types without manual annotations.
 
-The `form.validating` property is `true` while any async validation is in progress, and `form.isValidating(path)` can be used to check individual fields.
-The `validating` state is never set for forms with only synchronous rules.
-
 Each rule receives an `AbortSignal` as the fourth argument. The signal is aborted when a newer validation
 supersedes the current one, which you can use to cancel in-flight HTTP requests and avoid race conditions.
+If an async rule throws, the error is converted to an error message with the `resolveValidationError` option.
 
 <Demo data={FormDemos.asyncValidation} />
 
@@ -207,14 +225,38 @@ or `form.onSubmit()`.
 
 <Demo data={FormDemos.asyncValidationDebounce} />
 
-## Focus the first invalid field
+## Validating state
 
-The second argument of the `form.onSubmit` function is a callback function that is called
-with the [errors object](/form/errors) when form validation fails.
-You can use this callback to focus the first invalid field or perform any other action.
+`form.validating` is `true` while any async validation is in progress. This applies to `form.validate()`,
+`form.validateField()`, `form.isValid()` and the validation triggered by `form.onSubmit`.
+The state is never set for forms with only synchronous rules.
 
-To get the DOM node of any input, use `form.getInputNode('path-to-field')`. Note that
-in order for this feature to work, you need to spread `form.getInputProps('path-to-field')` to
-the input element.
+`form.isValidating(path)` returns `true` if a specific field is currently being
+validated. When `form.validate()` or `form.onSubmit` runs all rules, every field
+with a rule is considered validating. When `form.validateField(path)` is called,
+only the targeted field is considered validating.
 
-<Demo data={FormDemos.focusError} />
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { username: '' },
+  validate: {
+    username: async (value) => {
+      // simulate an API call
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      return value === 'admin' ? 'Username is taken' : null;
+    },
+  },
+});
+
+form.validating; // -> false while idle, true during validation
+form.isValidating('username'); // -> true while `username` rule is running
+```
+
+## Validation errors on submit
+
+`form.onSubmit` validates the form before calling the submit handler. To react to validation errors,
+for example to show a notification or to focus the first invalid field, see
+[Form submission](/form/submission/#onsubmit-handler).

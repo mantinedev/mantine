@@ -6,10 +6,13 @@ export default Layout(MDX_DATA.formStatus);
 
 ## Touched and dirty state
 
-`form.isTouched` and `form.isDirty` fields provide information about the current field status:
+`form.isTouched` and `form.isDirty` functions provide information about the current field status:
 
 - A field is considered to be `touched` when the user focused it or its value was changed programmatically with the `form.setFieldValue` handler
 - A field is considered to be `dirty` when its value was changed and the new value is different from the field value specified in `initialValues` (compared with [fast-deep-equal](https://www.npmjs.com/package/fast-deep-equal))
+
+Submitting and validating states are described on the [Form submission](/form/submission/#submitting-state)
+and [Form validation](/form/validation/#validating-state) pages.
 
 <Demo data={FormDemos.status} />
 
@@ -32,6 +35,10 @@ form.isDirty('nested.field'); // -> nested fields are also supported
 // then the functions will return the form state instead
 form.isTouched(); // -> was any field in the form focused or changed?
 form.isDirty(); // -> was any field in the form modified?
+
+// Touched and dirty state of all fields as objects
+form.getTouched(); // -> { a: true }
+form.getDirty(); // -> { a: true }
 ```
 
 ## useDirty and useTouched hooks
@@ -113,6 +120,25 @@ const form = useForm({
 });
 ```
 
+## setTouched and setDirty
+
+`form.setTouched` and `form.setDirty` set the state of several fields at once:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { a: 1, nested: { field: '' } },
+});
+
+form.setTouched({ a: true, 'nested.field': false });
+form.setDirty({ a: true });
+
+form.isTouched('a'); // -> true
+form.isDirty('a'); // -> true
+```
+
 ## resetTouched and resetDirty
 
 The `form.resetTouched` and `form.resetDirty` functions will make all fields clean and untouched.
@@ -156,57 +182,4 @@ form.isDirty(); // -> false
 
 form.setValues({ a: 3 });
 form.isDirty(); // -> true
-```
-
-## Submitting state
-
-The `form.submitting` field will be set to `true` if the function passed to
-`form.onSubmit` returns a promise. After the promise is resolved or rejected,
-`form.submitting` will be set to `false`:
-
-<Demo data={FormDemos.submitting} />
-
-You can also manually set `form.submitting` to `true` or `false`:
-
-```tsx
-import { useForm } from '@mantine/form';
-
-const form = useForm({ mode: 'uncontrolled' });
-form.submitting; // -> false
-
-form.setSubmitting(true);
-form.submitting; // -> true
-
-form.setSubmitting(false);
-form.submitting; // -> false
-```
-
-## Validating state
-
-The `form.validating` property is `true` while any async validation is in
-progress. This applies to `form.validate()`, `form.validateField()`,
-`form.isValid()`, and the validation triggered by `form.onSubmit`.
-
-`form.isValidating(path)` returns `true` if a specific field is currently being
-validated. When `form.validate()` or `form.onSubmit` runs all rules, every field
-with a rule is considered validating. When `form.validateField(path)` is called,
-only the targeted field is considered validating.
-
-```tsx
-import { useForm } from '@mantine/form';
-
-const form = useForm({
-  mode: 'uncontrolled',
-  initialValues: { username: '' },
-  validate: {
-    username: async (value) => {
-      // simulate an API call
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      return value === 'admin' ? 'Username is taken' : null;
-    },
-  },
-});
-
-form.validating; // -> false while idle, true during validation
-form.isValidating('username'); // -> true while `username` rule is running
 ```

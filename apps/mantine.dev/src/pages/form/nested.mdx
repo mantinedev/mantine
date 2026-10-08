@@ -45,6 +45,9 @@ await form.validateField('deeply.nested.object.0.item');
 
 ## Nested objects
 
+Nested object fields are connected to inputs with their path, `form.getInputProps('user.firstName')`.
+Validation rules and errors use the same paths:
+
 <Demo data={FormDemos.nested} />
 
 ## Set nested object value
@@ -100,6 +103,12 @@ form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occup
 
 ## Nested arrays
 
+Array items are connected to inputs with their index in the path, `form.getInputProps('employees.0.name')`.
+Items are added and removed with list handlers. Give each item a stable React key, for example a
+`randomId()` stored in the item: the key keeps focus on the right input when items are inserted,
+removed or reordered. The index as a key displays values correctly, but focus stays on the index
+instead of the item:
+
 <Demo data={FormDemos.lists} />
 
 ## List handlers
@@ -111,7 +120,14 @@ The `useForm` hook provides the following handlers to manage list state:
 - `reorderListItem` – reorders a list item with the given position at the specified field
 - `replaceListItem` – replaces a list item at the given index with a new value
 
+A [drag and drop reordering example](/form/recipes/#list-items-reordering) is available in recipes.
+
 ## List value validation
+
+Rules for list items are declared once and applied to every item. To validate the list itself,
+for example to require at least one item, use [formRootRule](/form/validation/#formrootrule).
+To validate list items on change or blur, use `FORM_INDEX` in the field path, see
+[validate fields on change](/form/validation/#validate-fields-on-change):
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -148,3 +164,9 @@ console.log(form.errors);
 //  'users.1.name': 'Name should have at least 2 letters'
 // }
 ```
+
+## Watching nested fields
+
+`form.watch` on an object or array path is called when any nested field changes, see
+[form.watch with arrays](/form/watch/#formwatch-with-arrays) and
+[form.watch cascade](/form/watch/#formwatch-cascade).
