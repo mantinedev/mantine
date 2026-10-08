@@ -175,6 +175,16 @@ describe('@mantine/core/MultiSelect', () => {
     expect(screen.getByText('test-1', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
   });
 
+  it('does not remove last value when backspace is pressed and readOnly is set', async () => {
+    render(
+      <MultiSelect {...defaultProps} defaultValue={['test-1', 'test-2']} searchable readOnly />
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.keyboard('{Backspace}');
+    expect(screen.getByText('test-1', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    expect(screen.getByText('test-2', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+  });
+
   it('toggles dropdown when space is pressed and searchable is false', async () => {
     render(<MultiSelect {...defaultProps} searchable={false} />);
     // Use focus instead of click to avoid triggering onClick handler

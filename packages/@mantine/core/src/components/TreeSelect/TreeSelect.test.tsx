@@ -236,6 +236,34 @@ describe('@mantine/core/TreeSelect', () => {
       expect(spy).toHaveBeenCalledWith('milk');
     });
 
+    it('removes last value when backspace is pressed with empty search', async () => {
+      render(
+        <TreeSelect {...defaultProps} mode="multiple" defaultValue={['apple', 'milk']} searchable />
+      );
+      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.keyboard('{Backspace}');
+      expect(
+        screen.queryByText('Milk', { selector: '.mantine-Pill-label' })
+      ).not.toBeInTheDocument();
+      expect(screen.getByText('Apple', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    });
+
+    it('does not remove last value when backspace is pressed and readOnly is set', async () => {
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="multiple"
+          defaultValue={['apple', 'milk']}
+          searchable
+          readOnly
+        />
+      );
+      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.keyboard('{Backspace}');
+      expect(screen.getByText('Apple', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+      expect(screen.getByText('Milk', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    });
+
     it('renders pills for selected values', () => {
       render(
         <TreeSelect
