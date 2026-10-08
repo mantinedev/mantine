@@ -52,7 +52,8 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
         function startMaxWaitTimer() {
           if (maxWait !== undefined && maxWaitTimerRef.current === 0) {
             maxWaitTimerRef.current = window.setTimeout(() => {
-              if (debounceTimerRef.current !== 0) {
+              maxWaitTimerRef.current = 0;
+              if (debounceTimerRef.current !== 0 && currentCallback._hasPendingCallback) {
                 const latestArgs = latestArgsRef.current!;
                 clearTimeoutAndLeadingRef();
                 handleCallback(...latestArgs);
@@ -71,7 +72,6 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
           const flush = () => {
             if (debounceTimerRef.current !== 0) {
               clearTimeoutAndLeadingRef();
-              handleCallback(...args);
             }
           };
 
