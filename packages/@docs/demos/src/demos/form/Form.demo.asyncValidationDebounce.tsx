@@ -51,7 +51,6 @@ function Demo() {
         label="Username"
         description="Try: admin, user, test, mantine"
         placeholder="Pick a username"
-        key={form.key('username')}
         disabled={form.submitting}
         rightSection={form.isValidating('username') ? <Loader size={16} /> : null}
         {...form.getInputProps('username')}
@@ -62,7 +61,6 @@ function Demo() {
         mt="md"
         label="Email"
         placeholder="your@email.com"
-        key={form.key('email')}
         disabled={form.submitting}
         {...form.getInputProps('email')}
       />
@@ -119,7 +117,6 @@ function Demo() {
         label="Username"
         description="Try: admin, user, test, mantine"
         placeholder="Pick a username"
-        key={form.key('username')}
         disabled={form.submitting}
         rightSection={form.isValidating('username') ? <Loader size={16} /> : null}
         {...form.getInputProps('username')}
@@ -130,7 +127,6 @@ function Demo() {
         mt="md"
         label="Email"
         placeholder="your@email.com"
-        key={form.key('email')}
         disabled={form.submitting}
         {...form.getInputProps('email')}
       />

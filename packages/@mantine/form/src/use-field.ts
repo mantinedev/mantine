@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { createFormField, setFormField } from './form-store/form-field';
 import { getInputOnChange } from './get-input-on-change';
 import { FormMode, GetInputPropsType } from './types';
 import { shouldValidateOnChange } from './validate';
@@ -45,8 +46,7 @@ export interface UseFieldInput<
 }
 
 interface SetValueOptions {
-  updateState?: boolean;
-  updateKey?: boolean;
+  fromInput?: boolean;
 }
 
 interface GetInputPropsOptions {
@@ -62,35 +62,18 @@ interface GetInputPropsSharedReturn {
   onChange: (value: any) => void;
 }
 
-type GetInputPropsTypeValue<
-  T,
-  FieldType extends GetInputPropsType,
-  Mode extends FormMode,
-> = FieldType extends 'checkbox'
-  ? Mode extends 'controlled'
-    ? { checked: boolean }
-    : { defaultChecked: boolean }
+type GetInputPropsTypeValue<T, FieldType extends GetInputPropsType> = FieldType extends 'checkbox'
+  ? { checked: boolean }
   : FieldType extends 'radio'
-    ? Mode extends 'controlled'
-      ? { checked: boolean; value: T }
-      : { defaultChecked: boolean; value: T }
-    : Mode extends 'controlled'
-      ? { value: T }
-      : { defaultValue: T };
+    ? { checked: boolean; value: T }
+    : { value: T };
 
-type GetInputPropsReturnType<
-  T,
-  FieldType extends GetInputPropsType,
-  Mode extends FormMode,
-> = GetInputPropsSharedReturn & GetInputPropsTypeValue<T, FieldType, Mode>;
+type GetInputPropsReturnType<T, FieldType extends GetInputPropsType> = GetInputPropsSharedReturn &
+  GetInputPropsTypeValue<T, FieldType>;
 
-export interface UseFieldReturnType<
-  T,
-  FieldType extends GetInputPropsType = 'input',
-  Mode extends FormMode = 'controlled',
-> {
+export interface UseFieldReturnType<T, FieldType extends GetInputPropsType = 'input'> {
   /** Returns props to pass to the input element */
-  getInputProps: (options?: GetInputPropsOptions) => GetInputPropsReturnType<T, FieldType, Mode>;
+  getInputProps: (options?: GetInputPropsOptions) => GetInputPropsReturnType<T, FieldType>;
 
   /** Returns current input value */
   getValue: () => T;
@@ -121,9 +104,6 @@ export interface UseFieldReturnType<
 
   /** Resets touched state to false */
   resetTouched: () => void;
-
-  /** Key that should be added to the input when mode is uncontrolled */
-  key: number;
 }
 
 export function useField<
@@ -142,10 +122,11 @@ export function useField<
   validate,
   resolveValidationError,
   type = 'input' as FieldType,
-}: UseFieldInput<T, FieldType, Mode>): UseFieldReturnType<T, FieldType, Mode> {
+}: UseFieldInput<T, FieldType, Mode>): UseFieldReturnType<T, FieldType> {
   const [valueState, setValueState] = useState(initialValue);
   const valueRef = useRef(valueState);
-  const [key, setKey] = useState(0);
+  const [, setVersion] = useState(0);
+  const [binding] = useState(() => createFormField<T>('', () => valueRef.current));
   const [error, setError] = useState<React.ReactNode>(initialError || null);
   const touchedRef = useRef(initialTouched || false);
   const [, setTouchedState] = useState(touchedRef.current);
@@ -161,14 +142,9 @@ export function useField<
   }, []);
 
   const setValue = useCallback(
-    (
-      value: T,
-      {
-        updateKey = mode === 'uncontrolled',
-        updateState = mode === 'controlled',
-      }: SetValueOptions = {}
-    ) => {
+    (value: T, { fromInput = false }: SetValueOptions = {}) => {
       if (valueRef.current === value) {
+        !fromInput && binding.notifyExternalWrite();
         return;
       }
 
@@ -180,17 +156,18 @@ export function useField<
         setError(null);
       }
 
-      if (updateState) {
+      if (mode === 'controlled') {
         setValueState(value);
-      }
-
-      if (updateKey) {
-        setKey((currentKey) => currentKey + 1);
+      } else if (!fromInput || !binding.hasValueListeners()) {
+        setVersion((current) => current + 1);
       }
 
       if (validateOnChange) {
         _validate();
       }
+
+      binding.notifyValue();
+      !fromInput && binding.notifyExternalWrite();
     },
     [error, clearErrorOnChange, onValueChange]
   );
@@ -232,7 +209,8 @@ export function useField<
   }, []);
 
   const getInputProps = ({ withError = true, withFocus = true, ...otherOptions }: any = {}) => {
-    const onChange = getInputOnChange<T>((val) => setValue(val as any, { updateKey: false }));
+    const handleChange = getInputOnChange<T>((val) => setValue(val as any, { fromInput: true }));
+    const onChange = type === 'radio' ? handleChange : setFormField(handleChange, binding.field);
 
     const payload: any = { onChange };
 
@@ -241,13 +219,12 @@ export function useField<
     }
 
     if (type === 'checkbox') {
-      payload[mode === 'controlled' ? 'checked' : 'defaultChecked'] = valueRef.current;
+      payload.checked = valueRef.current;
     } else if (type === 'radio') {
-      payload[mode === 'controlled' ? 'checked' : 'defaultChecked'] =
-        valueRef.current === otherOptions.value;
+      payload.checked = valueRef.current === otherOptions.value;
       payload.value = otherOptions.value;
     } else {
-      payload[mode === 'controlled' ? 'value' : 'defaultValue'] = valueRef.current;
+      payload.value = valueRef.current;
     }
 
     if (withFocus) {
@@ -268,7 +245,6 @@ export function useField<
   const resetTouched = useCallback(() => setTouched(false), []);
 
   return {
-    key,
     getValue,
     setValue,
     reset,

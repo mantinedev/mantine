@@ -1,0 +1,136 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useFormField);
+
+## Usage
+
+The `use-form-field` hook connects a component to a [use-form](/form/use-form/) field.
+Pass the `onChange` handler received from `form.getInputProps` to the hook. If the handler
+was created by the form, the hook subscribes the component to the field value: the component
+rerenders when the value changes, and the component that called `useForm` does not.
+
+All Mantine inputs use this hook, as do components built with [use-uncontrolled](/hooks/use-uncontrolled/)
+that pass `onChange` to it as is. Use it directly in components that keep their own state:
+
+```tsx
+import { useState } from 'react';
+import { useFormField } from '@mantine/hooks';
+
+interface CustomInputProps {
+  value?: string;
+  onChange?: (value: string) => void;
+}
+
+function CustomInput({ value, onChange }: CustomInputProps) {
+  const field = useFormField<string>(onChange);
+  const currentValue = field.subscribed ? field.value : value;
+
+  return (
+    <input
+      value={currentValue ?? ''}
+      onChange={(event) => onChange?.(event.currentTarget.value)}
+    />
+  );
+}
+```
+
+When the handler does not come from a form, `field.subscribed` is `false` and the component
+keeps using the `value` prop.
+
+## onExternalWrite
+
+Some components keep state that the value cannot express, for example a date input with a
+partially entered date reports `null` until the date is complete. `form.reset()` writes `null`
+again, so the value does not change and the component cannot know that it has to clear the
+entry. `onExternalWrite` is called with the field value when the form writes it with
+`form.setFieldValue`, `form.setValues`, `form.reset`, `form.resetField`, `form.initialize`
+or list handlers. It is not called for changes reported by the component itself. The callback
+must update the internal state only and must not call `onChange`:
+
+```tsx
+import { useState } from 'react';
+import { useFormField } from '@mantine/hooks';
+
+interface ExpiryInputProps {
+  value?: string;
+  onChange?: (value: string) => void;
+}
+
+function splitExpiry(value: string | undefined) {
+  const [month = '', year = ''] = (value || '').split('/');
+  return { month, year };
+}
+
+function ExpiryInput({ value, onChange }: ExpiryInputProps) {
+  const [parts, setParts] = useState(() => splitExpiry(value));
+
+  useFormField<string>(onChange, {
+    subscribe: false,
+    onExternalWrite: (external) => setParts(splitExpiry(external)),
+  });
+
+  const handleChange = (next: { month: string; year: string }) => {
+    setParts(next);
+    const complete = next.month.length === 2 && next.year.length === 2;
+    onChange?.(complete ? `${next.month}/${next.year}` : '');
+  };
+
+  return (
+    <div>
+      <input
+        placeholder="MM"
+        value={parts.month}
+        onChange={(event) => handleChange({ ...parts, month: event.currentTarget.value })}
+      />
+      <input
+        placeholder="YY"
+        value={parts.year}
+        onChange={(event) => handleChange({ ...parts, year: event.currentTarget.value })}
+      />
+    </div>
+  );
+}
+```
+
+Set `subscribe: false` when the component renders the `value` prop instead of the subscribed
+value. The form component then rerenders when the field changes.
+
+## Definition
+
+```tsx
+interface UseFormFieldOptions<Value = any> {
+  /** If set, the component is subscribed to the field value and must render the returned `value` instead of the `value` prop, `true` by default */
+  subscribe?: boolean;
+
+  /** Called with the field value when the form writes it. Not called for changes reported by the component itself. Must not call `onChange`. */
+  onExternalWrite?: (value: Value) => void;
+}
+
+interface UseFormFieldReturnValue<Value = any> {
+  /** `true` if the handler was returned by `form.getInputProps` or `field.getInputProps`, handlers returned by `useField` for `type: 'radio'` are not bound */
+  bound: boolean;
+
+  /** `true` if the component is subscribed to the field value and must render `value` */
+  subscribed: boolean;
+
+  /** Path of the field in form values, `null` if the component is not bound */
+  path: string | null;
+
+  /** Current field value, `undefined` if the component is not subscribed */
+  value: Value | undefined;
+}
+
+function useFormField<Value = any>(
+  onChange: unknown,
+  options?: UseFormFieldOptions<Value>
+): UseFormFieldReturnValue<Value>;
+```
+
+## Exported types
+
+The `UseFormFieldOptions`, `UseFormFieldReturnValue` and `FormField` types are exported from `@mantine/hooks`:
+
+```tsx
+import type { UseFormFieldOptions, UseFormFieldReturnValue, FormField } from '@mantine/hooks';
+```

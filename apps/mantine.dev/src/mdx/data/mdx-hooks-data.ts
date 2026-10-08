@@ -104,6 +104,7 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Detects if any element within the given element has focus'
   ),
   useForceUpdate: hDocs('useForceUpdate', 'Forces the component to rerender without state change'),
+  useFormField: hDocs('useFormField', 'Subscribes an input to its @mantine/form field'),
   useFullscreen: hDocs(
     'useFullscreen',
     'Enter/exit fullscreen mode with given element or entire page'

@@ -57,7 +57,7 @@ function Demo() {
   return (
     <form onSubmit={form.onSubmit((values) => setSubmitted(values.time))}>
       <Stack>
-        <TimeField label="Start time" key={form.key('time')} {...form.getInputProps('time')} />
+        <TimeField label="Start time" {...form.getInputProps('time')} />
 
         <Text size="sm">
           Submitted value: <Code>{submitted || 'none'}</Code>
@@ -125,7 +125,7 @@ function Demo() {
   return (
     <form onSubmit={form.onSubmit((values) => setSubmitted(values.time))}>
       <Stack>
-        <TimeField label="Start time" key={form.key('time')} {...form.getInputProps('time')} />
+        <TimeField label="Start time" {...form.getInputProps('time')} />
 
         <Text size="sm">
           Submitted value: <Code>{submitted || 'none'}</Code>

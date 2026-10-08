@@ -1,5 +1,5 @@
 import { use } from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useFormField, useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -177,8 +177,12 @@ export const Switch = factory<SwitchFactory>((_props) => {
   const describedBy =
     [descriptionId, errorId, rest['aria-describedby']].filter(Boolean).join(' ') || undefined;
 
+  const formField = useFormField<boolean>(onChange);
+
   const withContextProps = {
-    checked: ctx?.value.includes(rest.value as string) ?? checked,
+    checked:
+      ctx?.value.includes(rest.value as string) ??
+      (formField.subscribed ? (formField.value ?? defaultChecked ?? false) : checked),
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
       ctx?.onChange(event);
       onChange?.(event);

@@ -20,7 +20,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Checkbox
         label="I accept the terms and conditions"
-        key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
 
@@ -45,7 +44,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Checkbox
         label="I accept the terms and conditions"
-        key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
 

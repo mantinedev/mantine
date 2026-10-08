@@ -34,6 +34,41 @@ form.isTouched(); // -> was any field in the form focused or changed?
 form.isDirty(); // -> was any field in the form modified?
 ```
 
+## useDirty and useTouched hooks
+
+`form.isDirty` and `form.isTouched` return the current state when called but do not subscribe
+the component to changes. In [uncontrolled mode](/form/uncontrolled), the form component does not
+rerender when a field becomes dirty or touched, so a value read during render is not updated.
+Use `form.useDirty` and `form.useTouched` hooks to rerender the component when the state changes,
+for example to disable the submit button until the user changes something:
+
+```tsx
+import { Button, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '' },
+  });
+
+  // Rerenders the component when the form becomes dirty or clean
+  const dirty = form.useDirty();
+
+  // Both hooks accept a field path
+  const nameTouched = form.useTouched('name');
+
+  return (
+    <form onSubmit={form.onSubmit(console.log)}>
+      <TextInput label="Name" {...form.getInputProps('name')} />
+      <Button type="submit" disabled={!dirty}>
+        Save
+      </Button>
+    </form>
+  );
+}
+```
+
 ## touchTrigger option
 
 The `touchTrigger` option allows customizing events that change the touched state.

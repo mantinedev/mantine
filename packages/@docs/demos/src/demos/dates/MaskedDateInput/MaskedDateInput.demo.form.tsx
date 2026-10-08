@@ -69,7 +69,6 @@ function Demo() {
           minDate="1924-01-01"
           maxDate="2024-12-31"
           withDropdown={false}
-          key={form.key('birthday')}
           {...form.getInputProps('birthday')}
         />
 
@@ -151,7 +150,6 @@ function Demo() {
           minDate="1924-01-01"
           maxDate="2024-12-31"
           withDropdown={false}
-          key={form.key('birthday')}
           {...form.getInputProps('birthday')}
         />
 

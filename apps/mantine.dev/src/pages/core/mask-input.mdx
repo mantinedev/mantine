@@ -54,15 +54,17 @@ This example auto-uppercases input so the `A` token accepts lowercase letters:
 ## Reset value
 
 `MaskInput` is uncontrolled internally – setting `value` from a parent will not clear it.
-Use the `resetRef` prop to get a function that clears the input value imperatively:
+Use the `resetRef` prop to get a function that clears the input value imperatively.
+Values written by [use-form](#with-use-form) are an exception, the form writes them to the input:
 
 <Demo data={MaskInputDemos.resetRef} />
 
 ## With use-form
 
-To use `MaskInput` with [use-form](/form/use-form), pass the initial value with `defaultValue`
-and write the raw (unmasked) value to the form state in `onChangeRaw`. In uncontrolled form mode,
-pass `{ forceUpdate: false }` to `form.setFieldValue` so the input is not remounted on every keystroke:
+`MaskInput` works with [use-form](/form/use-form) like any other input, spread
+`form.getInputProps('field')` on it. The form receives the raw (unmasked) value, for example
+`1234567890` for `(123) 456-7890`. `form.setFieldValue` and `form.reset` accept both raw and
+masked values:
 
 <Demo data={MaskInputDemos.withUseForm} />
 

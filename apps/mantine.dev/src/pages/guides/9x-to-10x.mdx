@@ -706,6 +706,67 @@ function Demo() {
 }
 ```
 
+## form.key removed
+
+Remove `key={form.key('path')}` from inputs rendered with `form.getInputProps`. Inputs now
+receive values from `form.setFieldValue`, `form.setValues` and `form.reset` without a remount.
+In lists, use a stable key of the list item, for example a `randomId()` stored in the item,
+not the field path:
+
+```tsx
+// 9.x
+<TextInput key={form.key('name')} {...form.getInputProps('name')} />
+
+// 10.x
+<TextInput {...form.getInputProps('name')} />
+```
+
+`useField` no longer returns `key`, remove `key={field.key}` the same way.
+
+## Uncontrolled form inputs receive value
+
+In `mode: 'uncontrolled'`, `form.getInputProps` and `field.getInputProps` return `value` and
+`checked` instead of `defaultValue` and `defaultChecked`, the same as in controlled mode. Change
+custom inputs that read only `defaultValue` to read `value`, and `enhanceGetInputProps`
+functions that read `inputProps.defaultValue` to read `inputProps.value`.
+
+Set an initial value for every field that is rendered with an input. A field that is missing
+from `initialValues` is passed as `value={undefined}` and React warns when it later becomes
+controlled, as it did in controlled mode before.
+
+If your custom input keeps state that `value` cannot express, for example a partially entered
+date, use the [use-form-field](/hooks/use-form-field#onexternalwrite) hook to clear it when
+the form writes the value. Previously the `key` remount did that.
+
+## form.isDirty and form.isTouched in uncontrolled mode
+
+In `mode: 'uncontrolled'`, the form component no longer rerenders when a field becomes dirty or
+clean. If you read `form.isDirty()` or `form.isTouched()` during render, for example to disable a
+submit button, replace the call with the `form.useDirty()` or `form.useTouched()` hook, both accept
+an optional field path:
+
+```tsx
+// 9.x
+<Button disabled={!form.isDirty()}>Save</Button>
+
+// 10.x
+const dirty = form.useDirty();
+<Button disabled={!dirty}>Save</Button>
+```
+
+Calls outside of render, for example in `form.onSubmit` or event handlers, do not change.
+
+## Form values are not cloned on every change
+
+`form.getValues()` and `form.values` keep the same object references for values that did not
+change. Do not mutate the returned object, use `form.setFieldValue` or `form.setValues` instead.
+
+## UseFieldReturnType type parameters
+
+`UseFieldReturnType` accepts two type parameters instead of three, remove the third `Mode`
+argument: `UseFieldReturnType<string, 'input', 'uncontrolled'>` becomes
+`UseFieldReturnType<string, 'input'>`.
+
 ## v9 opt-out
 
 If your application cannot be migrated immediately, restore 9.x colors, variants

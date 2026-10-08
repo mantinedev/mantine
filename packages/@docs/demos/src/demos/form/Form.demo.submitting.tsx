@@ -39,7 +39,6 @@ function Demo() {
         withAsterisk
         label="Name"
         placeholder="Your name"
-        key={form.key('name')}
         disabled={form.submitting}
         {...form.getInputProps('name')}
       />
@@ -85,7 +84,6 @@ function Demo() {
         withAsterisk
         label="Name"
         placeholder="Your name"
-        key={form.key('name')}
         disabled={form.submitting}
         {...form.getInputProps('name')}
       />

@@ -18,7 +18,7 @@ describe('@mantine/form/use-field/get-input-props', () => {
       useField({ mode: 'uncontrolled', initialValue: 'test', initialError: 'test-error' })
     );
     expect(hook.result.current.getInputProps()).toStrictEqual({
-      defaultValue: 'test',
+      value: 'test',
       error: 'test-error',
       onChange: expect.any(Function),
       onBlur: expect.any(Function),
@@ -64,7 +64,7 @@ describe('@mantine/form/use-field/get-input-props', () => {
       useField({ mode: 'uncontrolled', initialValue: 'red', type: 'radio' })
     );
     expect(hook.result.current.getInputProps({ value: 'red' })).toStrictEqual({
-      defaultChecked: true,
+      checked: true,
       value: 'red',
       error: null,
       onChange: expect.any(Function),
@@ -96,7 +96,7 @@ describe('@mantine/form/use-field/get-input-props', () => {
       })
     );
     expect(hook.result.current.getInputProps()).toStrictEqual({
-      defaultChecked: false,
+      checked: false,
       error: 'test-error',
       onChange: expect.any(Function),
       onBlur: expect.any(Function),

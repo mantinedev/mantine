@@ -90,9 +90,6 @@ export interface UseFieldReturnType<ValueType> {
 
   /** Resets the touched state to false */
   resetTouched: () => void;
-
-  /** key that should be added to the input when the mode is uncontrolled */
-  key: number;
 }
 ```
 
@@ -139,7 +136,7 @@ set the `clearErrorOnChange` option to `false`:
 ## Uncontrolled mode
 
 The uncontrolled mode of the `use-field` hook works similarly to the uncontrolled mode of [use-form](/form/uncontrolled).
-In uncontrolled mode, rerenders are minimized and the input value is managed by the input itself.
+In uncontrolled mode, the component that calls `useField` does not rerender when the input value changes: the input is subscribed to the field and rerenders alone.
 It is useful if you experience performance issues with controlled mode, but in most cases controlled
 mode is recommended as it always provides up-to-date field information as React state.
 

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useCallbackRef, useDidUpdate, useLatestRef } from '@mantine/hooks';
+import { useCallbackRef, useDidUpdate, useFormField, useLatestRef } from '@mantine/hooks';
 import { DateStringValue, DateTimeStringValue } from '../../types';
 import { buildDateString } from './build-date-string/build-date-string';
 import { getDaysInMonth } from './get-days-in-month/get-days-in-month';
@@ -253,7 +253,7 @@ export function useMaskedDateInput(
   options: MaskedDateInputControllerOptions = {}
 ): MaskedDateInputController {
   const {
-    value: valueProp,
+    value: valueOption,
     defaultValue,
     onChange,
     withTime = false,
@@ -267,6 +267,15 @@ export function useMaskedDateInput(
 
   const minDate = toDateString(minDateOption);
   const maxDate = toDateString(maxDateOption);
+
+  const handleExternalWrite = useCallbackRef((external: MaskedDateInputValue) =>
+    commit(external ? parseFields(external, format, amPmLabels) : EMPTY_FIELDS, 'never')
+  );
+
+  const formField = useFormField<MaskedDateInputValue>(onChange, {
+    onExternalWrite: handleExternalWrite,
+  });
+  const valueProp = formField.subscribed ? formField.value : valueOption;
 
   const build = (fields: Fields) =>
     buildDateString({ ...fields, withTime, withSeconds, format, amPmLabels });

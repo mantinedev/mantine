@@ -148,18 +148,16 @@ export function ControlMode() {
         label="select"
         defaultDropdownOpened
         data={['React', 'Angular']}
-        key={form.key('select')}
         {...form.getInputProps('select')}
       />
 
-      <TextInput label="Name" key={form.key('name')} {...form.getInputProps('name')} />
+      <TextInput label="Name" {...form.getInputProps('name')} />
       <Checkbox
         mt="md"
         label="Accept terms of use"
-        key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
-      <Textarea label="area" key={form.key('area')} {...form.getInputProps('area')} />
+      <Textarea label="area" {...form.getInputProps('area')} />
       <Group mt="xl">
         <Button onClick={() => form.setFieldValue('name', 'test-name')}>Set name</Button>
         <Button
@@ -259,34 +257,24 @@ export function ReorderWithErrors() {
   });
 
   const fields = form.getValues().sortable.map((element, i) => (
-    <>
-      <Group key={element.key}>
-        <TextInput
-          placeholder="input"
-          key={form.key(`sortable.${element.key}.value1`)}
-          {...form.getInputProps(`sortable.${i}.value1`)}
-        />
-        <TextInput
-          placeholder="input"
-          key={form.key(`sortable.${element.key}.value2`)}
-          {...form.getInputProps(`sortable.${i}.value2`)}
-        />
-        <Button
-          variant="default"
-          disabled={i === 0}
-          onClick={() => form.reorderListItem('sortable', { from: i, to: i - 1 })}
-        >
-          Up
-        </Button>
-        <Button
-          variant="default"
-          disabled={i === form.getValues().sortable.length - 1}
-          onClick={() => form.reorderListItem('sortable', { from: i, to: i + 1 })}
-        >
-          Down
-        </Button>
-      </Group>
-    </>
+    <Group key={element.key}>
+      <TextInput placeholder="input" {...form.getInputProps(`sortable.${i}.value1`)} />
+      <TextInput placeholder="input" {...form.getInputProps(`sortable.${i}.value2`)} />
+      <Button
+        variant="default"
+        disabled={i === 0}
+        onClick={() => form.reorderListItem('sortable', { from: i, to: i - 1 })}
+      >
+        Up
+      </Button>
+      <Button
+        variant="default"
+        disabled={i === form.getValues().sortable.length - 1}
+        onClick={() => form.reorderListItem('sortable', { from: i, to: i + 1 })}
+      >
+        Down
+      </Button>
+    </Group>
   ));
 
   return (

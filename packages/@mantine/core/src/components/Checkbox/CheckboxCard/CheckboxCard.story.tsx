@@ -64,11 +64,7 @@ export function WithUseForm() {
 
   return (
     <div style={{ padding: 40 }}>
-      <CheckboxCard
-        p="md"
-        {...form.getInputProps('checkbox', { type: 'checkbox' })}
-        key={form.key('checkbox')}
-      >
+      <CheckboxCard p="md" {...form.getInputProps('checkbox', { type: 'checkbox' })}>
         <CheckboxIndicator />
         Some label
       </CheckboxCard>

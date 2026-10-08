@@ -61,14 +61,12 @@ function Demo() {
           <TextInput
             label="Username"
             placeholder="Username"
-            key={form.key('username')}
             {...form.getInputProps('username')}
           />
           <PasswordInput
             mt="md"
             label="Password"
             placeholder="Password"
-            key={form.key('password')}
             {...form.getInputProps('password')}
           />
         </Stepper.Step>
@@ -77,14 +75,12 @@ function Demo() {
           <TextInput
             label="Name"
             placeholder="Name"
-            key={form.key('name')}
             {...form.getInputProps('name')}
           />
           <TextInput
             mt="md"
             label="Email"
             placeholder="Email"
-            key={form.key('email')}
             {...form.getInputProps('email')}
           />
         </Stepper.Step>
@@ -93,14 +89,12 @@ function Demo() {
           <TextInput
             label="Website"
             placeholder="Website"
-            key={form.key('website')}
             {...form.getInputProps('website')}
           />
           <TextInput
             mt="md"
             label="GitHub"
             placeholder="GitHub"
-            key={form.key('github')}
             {...form.getInputProps('github')}
           />
         </Stepper.Step>
@@ -175,49 +169,26 @@ function Demo() {
     <>
       <Stepper active={active}>
         <Stepper.Step label="First step" description="Profile settings">
-          <TextInput
-            label="Username"
-            placeholder="Username"
-            key={form.key('username')}
-            {...form.getInputProps('username')}
-          />
+          <TextInput label="Username" placeholder="Username" {...form.getInputProps('username')} />
           <PasswordInput
             mt="md"
             label="Password"
             placeholder="Password"
-            key={form.key('password')}
             {...form.getInputProps('password')}
           />
         </Stepper.Step>
 
         <Stepper.Step label="Second step" description="Personal information">
-          <TextInput
-            label="Name"
-            placeholder="Name"
-            key={form.key('name')}
-            {...form.getInputProps('name')}
-          />
-          <TextInput
-            mt="md"
-            label="Email"
-            placeholder="Email"
-            key={form.key('email')}
-            {...form.getInputProps('email')}
-          />
+          <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+          <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
         </Stepper.Step>
 
         <Stepper.Step label="Final step" description="Social media">
-          <TextInput
-            label="Website"
-            placeholder="Website"
-            key={form.key('website')}
-            {...form.getInputProps('website')}
-          />
+          <TextInput label="Website" placeholder="Website" {...form.getInputProps('website')} />
           <TextInput
             mt="md"
             label="GitHub"
             placeholder="GitHub"
-            key={form.key('github')}
             {...form.getInputProps('github')}
           />
         </Stepper.Step>

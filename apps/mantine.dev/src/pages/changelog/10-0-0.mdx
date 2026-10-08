@@ -7,6 +7,7 @@ import {
   DatePickerInputDemos,
   DateTimePickerDemos,
   DrawerDemos,
+  FormDemos,
   MenuDemos,
   NavLinkDemos,
   TableOfContentsDemos,
@@ -118,6 +119,24 @@ Components with stores:
 `Tree` now takes its store through the `store` prop, and the types of `useTimer`, `useEditable` and
 `useImageCropper` are renamed to `<Component>Controller` and `<Component>ControllerOptions`, see the
 [migration guide](/guides/9x-to-10x).
+
+## use-form engine and uncontrolled mode
+
+[use-form](/form/use-form) keeps form state outside of React state. In
+[uncontrolled mode](/form/uncontrolled), each input is subscribed to its own field and rerenders
+alone: the component that calls `useForm` does not rerender when the user types, and
+`form.setFieldValue`, `form.setValues`, `form.reset` and list handlers update inputs without a
+remount. `key={form.key()}` is no longer needed and `form.key` has been removed.
+`form.getInputProps` returns `value` and `checked` in both modes. New `form.useDirty` and
+`form.useTouched` hooks subscribe a component to [dirty and touched state](/form/status#usedirty-and-usetouched-hooks).
+
+Custom inputs subscribe to a field with the new [use-form-field](/hooks/use-form-field) hook,
+components built with [use-uncontrolled](/hooks/use-uncontrolled) are subscribed automatically.
+Its `onExternalWrite` option lets components with internal entry state, for example
+[TimePicker](/dates/time-picker) and [MaskedDateInput](/dates/masked-date-input), clear it when
+the form resets the value:
+
+<Demo data={FormDemos.uncontrolled} />
 
 ## Modal and Drawer updates
 

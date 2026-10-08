@@ -52,19 +52,16 @@ export function WatchArrays() {
             label="Name"
             style={{ flex: 1 }}
             {...form.getInputProps(`products.${index}.name`)}
-            key={form.key(`products.${index}.name`)}
           />
           <NumberInput
             label="Price"
             style={{ width: 100 }}
             {...form.getInputProps(`products.${index}.price`)}
-            key={form.key(`products.${index}.price`)}
           />
           <NumberInput
             label="Qty"
             style={{ width: 80 }}
             {...form.getInputProps(`products.${index}.quantity`)}
-            key={form.key(`products.${index}.quantity`)}
           />
           <Button color="red" onClick={() => form.removeListItem('products', index)}>
             Remove

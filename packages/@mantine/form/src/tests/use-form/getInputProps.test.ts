@@ -2,11 +2,11 @@ import { act, renderHook } from '@testing-library/react';
 import { FormMode } from '../../types';
 import { useForm } from '../../use-form';
 
-function getInputProps(mode: FormMode, input: Record<string, any>) {
+function getInputProps(input: Record<string, any>) {
   const { value, error, ...others } = input;
   const result = {
     ...others,
-    [mode === 'controlled' ? 'value' : 'defaultValue']: value,
+    value,
     error,
     onBlur: expect.any(Function),
     onChange: expect.any(Function),
@@ -28,7 +28,7 @@ function tests(mode: FormMode) {
     );
 
     expect(hook.result.current.getInputProps('fruit')).toStrictEqual(
-      getInputProps(mode, { value: 'banana', error: 'invalid fruit' })
+      getInputProps({ value: 'banana', error: 'invalid fruit' })
     );
   });
 
@@ -42,7 +42,7 @@ function tests(mode: FormMode) {
     );
 
     expect(hook.result.current.getInputProps('fruit.name')).toStrictEqual(
-      getInputProps(mode, { value: 'banana', error: 'invalid fruit' })
+      getInputProps({ value: 'banana', error: 'invalid fruit' })
     );
   });
 
@@ -56,7 +56,7 @@ function tests(mode: FormMode) {
     );
 
     expect(hook.result.current.getInputProps('a.1.b')).toStrictEqual(
-      getInputProps(mode, { value: 2, error: 'error-b' })
+      getInputProps({ value: 2, error: 'error-b' })
     );
   });
 
@@ -70,8 +70,8 @@ function tests(mode: FormMode) {
       withError: true,
     }) as any;
 
-    expect(result[mode === 'controlled' ? 'checked' : 'defaultChecked']).toBe(false);
-    expect(result[mode === 'controlled' ? 'value' : 'defaultValue']).toBe(undefined);
+    expect(result.checked).toBe(false);
+    expect(result.value).toBe(undefined);
   });
 
   it('does not return an error if withError is set to false', () => {
@@ -83,7 +83,7 @@ function tests(mode: FormMode) {
       type: 'checkbox',
       withError: false,
     }) as any;
-    expect(result[mode === 'controlled' ? 'checked' : 'defaultChecked']).toBe(true);
+    expect(result.checked).toBe(true);
     expect('error' in result).toBe(false);
   });
 
@@ -157,7 +157,7 @@ function tests(mode: FormMode) {
       value: 'red',
     }) as any;
 
-    expect(result[mode === 'controlled' ? 'checked' : 'defaultChecked']).toBe(true);
+    expect(result.checked).toBe(true);
     expect(result.value).toBe('red');
     expect(result.defaultValue).toBe(undefined);
   });
@@ -170,7 +170,7 @@ function tests(mode: FormMode) {
       value: 'blue',
     }) as any;
 
-    expect(result[mode === 'controlled' ? 'checked' : 'defaultChecked']).toBe(false);
+    expect(result.checked).toBe(false);
     expect(result.value).toBe('blue');
   });
 

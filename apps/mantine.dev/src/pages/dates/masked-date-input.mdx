@@ -176,7 +176,9 @@ the controller supersedes (`value`, `defaultValue`, `onChange`, `withTime`, `wit
 `amPmLabels`, `minDate`, `maxDate` and `pasteSplit`) to `useMaskedDateInput` and forwards the rest to
 `MaskedDateInput`. The form binds to the props of that component, and the component owns the
 controller. `error`, `onFocus` and `onBlur` reach `MaskedDateInput` as usual, so validation errors and
-touched/dirty tracking work without extra code:
+touched/dirty tracking work without extra code. `form.reset()` and `form.setFieldValue()` clear a
+partially entered date in both form modes. See the
+[Controllers guide](/guides/controllers#usage-with-forms) for the details of the pattern:
 
 <Demo data={MaskedDateInputDemos.form} />
 
@@ -184,14 +186,6 @@ The controller adds what the form cannot see on its own: a partially entered dat
 outside of `minDate`/`maxDate` are both `null` for the form, so validation reports them as missing,
 while `controller.hasValue()` and the individual field values (`getDay()`, `getMonth()`, `getYear()`)
 let the field replace that error with a more specific message.
-
-Use `mode: 'uncontrolled'` and set `key={form.key('birthday')}` on the component that calls
-`useMaskedDateInput`. In this mode `form.reset()` and `form.setFieldValue()` remount the field, and
-the controller with it, so a partially entered date is cleared along with the value. In
-`mode: 'controlled'`, the form can only change the `value` prop: when the user has entered a part of
-a date, the form value is `null` before and after `form.reset()`, so the controller receives no
-change and the partial entry stays on screen. See the
-[Controllers guide](/guides/controllers#usage-with-forms) for the details of the pattern.
 
 ## Clearable
 

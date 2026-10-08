@@ -47,7 +47,6 @@ function Demo() {
     <form onSubmit={form.onSubmit(console.log)}>
       <CustomInput
         {...form.getInputProps('customInput')}
-        key={form.key('customInput')}
         placeholder="Custom input"
       />
 
@@ -95,11 +94,7 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(console.log)}>
-      <CustomInput
-        {...form.getInputProps('customInput')}
-        key={form.key('customInput')}
-        placeholder="Custom input"
-      />
+      <CustomInput {...form.getInputProps('customInput')} placeholder="Custom input" />
 
       <Button type="submit" mt="md">
         Submit

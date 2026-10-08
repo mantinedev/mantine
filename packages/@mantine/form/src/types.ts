@@ -98,9 +98,7 @@ export interface GetInputPropsOptions {
 export interface GetInputPropsReturnType {
   onChange: any;
   value?: any;
-  defaultValue?: any;
   checked?: any;
-  defaultChecked?: any;
   error?: any;
   onFocus?: any;
   onBlur?: any;
@@ -263,7 +261,11 @@ export type UseWatchValue<out Values, out Field extends LooseKeys<Values> = Loos
   path: TField
 ) => FormPathValue<TValues, TField>;
 
-export type Key<Values> = <Field extends LooseKeys<Values>>(path: Field) => string;
+export type UseFormStatus<out Values, out Field extends LooseKeys<Values> = LooseKeys<Values>> = <
+  TField extends Field,
+>(
+  path?: TField
+) => boolean;
 
 export type GetInputNode<Values> = <NodeType extends HTMLElement, Field extends LooseKeys<Values>>(
   path: Field
@@ -335,7 +337,8 @@ interface _UseFormReturnType<out Values, out TransformedValues = Values, Rules =
   getDirty: GetStatus;
   watch: Watch<Values>;
   useWatchValue: UseWatchValue<Values>;
-  key: Key<Values>;
+  useDirty: UseFormStatus<Values>;
+  useTouched: UseFormStatus<Values>;
   getInputNode: GetInputNode<Values>;
   resetField: <Field extends LooseKeys<Values>>(path: Field) => void;
 }

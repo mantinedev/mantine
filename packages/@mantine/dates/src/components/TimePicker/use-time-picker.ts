@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useCallbackRef, useDidUpdate, useLatestRef } from '@mantine/hooks';
+import { useCallbackRef, useDidUpdate, useFormField, useLatestRef } from '@mantine/hooks';
 import {
   TimePickerAmPmLabels,
   TimePickerField,
@@ -129,7 +129,7 @@ const DEFAULT_AM_PM_LABELS: TimePickerAmPmLabels = { am: 'AM', pm: 'PM' };
 
 export function useTimePicker(options: TimePickerControllerOptions = {}): TimePickerController {
   const {
-    value: valueProp,
+    value: valueOption,
     defaultValue,
     onChange,
     type = 'time',
@@ -142,6 +142,16 @@ export function useTimePicker(options: TimePickerControllerOptions = {}): TimePi
   } = options;
 
   const format = type === 'duration' ? '24h' : formatOption;
+
+  const handleExternalWrite = useCallbackRef((external: string) =>
+    commit(
+      external ? parseFields(external) : { hours: null, minutes: null, seconds: null, amPm: null },
+      'never'
+    )
+  );
+
+  const formField = useFormField<string>(onChange, { onExternalWrite: handleExternalWrite });
+  const valueProp = formField.subscribed ? formField.value : valueOption;
 
   const parsedInitialTime = getParsedTime({
     time: valueProp || defaultValue || '',

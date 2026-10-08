@@ -1,6 +1,6 @@
 import { use } from 'react';
 import cx from 'clsx';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useFormField, useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   createVarsResolver,
@@ -83,7 +83,15 @@ const varsResolver = createVarsResolver<PasswordInputFactory>((_, { size }) => (
 
 function PasswordInputField(props: React.ComponentProps<'input'>) {
   const ctx = use(InputWrapperContext);
-  return <input {...props} aria-describedby={ctx?.describedBy} />;
+  const formField = useFormField<string>(props.onChange);
+
+  return (
+    <input
+      {...props}
+      {...(formField.subscribed ? { value: formField.value ?? '' } : null)}
+      aria-describedby={ctx?.describedBy}
+    />
+  );
 }
 
 export const PasswordInput = factory<PasswordInputFactory>((_props) => {

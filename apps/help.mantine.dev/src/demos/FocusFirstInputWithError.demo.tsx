@@ -32,7 +32,6 @@ function Demo() {
         withAsterisk
         label="Your name"
         placeholder="Your name"
-        key={form.key('name')}
         {...form.getInputProps('name')}
       />
 
@@ -41,7 +40,6 @@ function Demo() {
         label="Your email"
         placeholder="your@email.com"
         mt="md"
-        key={form.key('email')}
         {...form.getInputProps('email')}
       />
 
@@ -81,7 +79,6 @@ function Demo() {
         withAsterisk
         label="Your name"
         placeholder="Your name"
-        key={form.key('name')}
         {...form.getInputProps('name')}
       />
 
@@ -90,7 +87,6 @@ function Demo() {
         label="Your email"
         placeholder="your@email.com"
         mt="md"
-        key={form.key('email')}
         {...form.getInputProps('email')}
       />
 

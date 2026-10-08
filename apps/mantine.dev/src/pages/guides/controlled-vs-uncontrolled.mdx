@@ -115,7 +115,8 @@ function Demo() {
 ## Uncontrolled use-form
 
 [@mantine/form](/form/use-form) supports uncontrolled mode. Use it to build large
-forms with many fields without re-rendering the form on every change.
+forms with many fields without re-rendering the form on every change: each input is
+subscribed to its own field and rerenders alone.
 
 Example of uncontrolled mode with `useForm`:
 
@@ -140,13 +141,11 @@ function Demo() {
     <form onSubmit={form.onSubmit(setSubmittedValues)}>
       <TextInput
         {...form.getInputProps('name')}
-        key={form.key('name')}
         label="Name"
         placeholder="Name"
       />
       <TextInput
         {...form.getInputProps('email')}
-        key={form.key('email')}
         mt="md"
         label="Email"
         placeholder="Email"

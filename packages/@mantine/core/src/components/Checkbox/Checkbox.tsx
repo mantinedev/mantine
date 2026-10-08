@@ -1,5 +1,5 @@
 import { use, useEffect, useRef } from 'react';
-import { useId, useMergedRef } from '@mantine/hooks';
+import { useFormField, useId, useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -237,8 +237,12 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
   const describedBy =
     [descriptionId, errorId, rest['aria-describedby']].filter(Boolean).join(' ') || undefined;
 
+  const formField = useFormField<boolean>(onChange);
+
   const withContextProps = {
-    checked: ctx?.value.includes(rest.value as string) ?? checked,
+    checked:
+      ctx?.value.includes(rest.value as string) ??
+      (formField.subscribed ? (formField.value ?? false) : checked),
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
       if (readOnly) {
         return;

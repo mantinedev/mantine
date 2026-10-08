@@ -233,12 +233,14 @@ export const Slider = factory<SliderFactory>((_props) => {
 
   const { dir } = useDirection();
   const [hovered, setHovered] = useState(false);
-  const [_value, setValue] = useUncontrolled({
-    value: typeof value === 'number' ? clamp(value, min, max) : value,
+  const [uncontrolledValue, setValue] = useUncontrolled({
+    value,
     defaultValue: typeof defaultValue === 'number' ? clamp(defaultValue, min, max) : defaultValue,
     finalValue: clamp(0, min, max),
     onChange,
   });
+
+  const _value = clamp(uncontrolledValue, min, max);
 
   const valueRef = useRef(_value);
   const onChangeEndRef = useRef(onChangeEnd);

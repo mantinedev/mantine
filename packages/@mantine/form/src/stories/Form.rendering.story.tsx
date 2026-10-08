@@ -32,7 +32,7 @@ export function UncontrolledResetField() {
 
   return (
     <FormBase form={form}>
-      <TextInput {...form.getInputProps('foo')} key={form.key('foo')} />
+      <TextInput {...form.getInputProps('foo')} />
       <Button onClick={() => form.resetField('foo')}>Reset Field</Button>
       <Button onClick={() => form.setFieldValue('foo', 'foo')}>Set Field</Button>
     </FormBase>

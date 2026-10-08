@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useFormFieldValue } from '../use-form-field/use-form-field';
 
 export interface UseUncontrolledOptions<T> {
   /** Value for controlled state */
@@ -35,10 +36,17 @@ export function useUncontrolled<T>({
     defaultValue !== undefined ? defaultValue : finalValue
   );
 
+  const field = useFormFieldValue<T>(onChange);
+
   const handleUncontrolledChange = (val: T, ...payload: any[]) => {
     setUncontrolledValue(val);
     onChange?.(val, ...payload);
   };
+
+  if (field.subscribed) {
+    const fallbackValue = defaultValue !== undefined ? defaultValue : finalValue;
+    return [(field.value !== undefined ? field.value : fallbackValue) as T, onChange, true];
+  }
 
   if (value !== undefined) {
     return [value as T, onChange, true];

@@ -1,35 +1,51 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { useFormActions } from './actions';
-import { getInputOnChange } from './get-input-on-change';
-import { useFormErrors } from './hooks/use-form-errors/use-form-errors';
-import { useFormList } from './hooks/use-form-list/use-form-list';
-import { useFormStatus } from './hooks/use-form-status/use-form-status';
-import { useFormValidating } from './hooks/use-form-validating/use-form-validating';
-import { useFormValues } from './hooks/use-form-values/use-form-values';
-import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
-import { getDataPath, getPath } from './paths';
-import { LooseKeys } from './paths.types';
+import { createFormStore, FormStore } from './form-store/form-store';
+import { getPath } from './paths';
 import {
   FormErrors,
+  FormFieldSubscriber,
   FormRulesRecord,
   GetInputNode,
   GetInputProps,
-  GetTransformedValues,
-  Initialize,
-  IsValidating,
-  Key,
-  OnReset,
-  OnSubmit,
-  Reset,
-  SetFieldValue,
-  SetValues,
   UseFormInput,
   UseFormReturnType,
+  UseFormStatus,
+  UseWatchValue,
+  Watch,
 } from './types';
-import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
 
-const defaultResolveValidationError = (err: unknown) =>
-  err instanceof Error ? err.message : String(err);
+function createWatchHooks(store: FormStore) {
+  const watch: Watch<any> = (path, callback) => {
+    useEffect(() => store.subscribeWatch(String(path), callback), [path, callback]);
+  };
+
+  const useWatchValue: UseWatchValue<any> = (path) => {
+    const subscribe = useCallback(
+      (listener: () => void) => {
+        const subscriber: FormFieldSubscriber<any, any> = () => listener();
+        return store.subscribeWatch(String(path), subscriber);
+      },
+      [path]
+    );
+
+    const getSnapshot = useCallback(() => getPath(path, store.getValues()), [path]);
+
+    return useSyncExternalStore(subscribe, getSnapshot, getSnapshot) as any;
+  };
+
+  const useDirty: UseFormStatus<any> = (path) => {
+    const getSnapshot = useCallback(() => store.isDirty(path), [path]);
+    return useSyncExternalStore(store.subscribeStatus, getSnapshot, getSnapshot);
+  };
+
+  const useTouched: UseFormStatus<any> = (path) => {
+    const getSnapshot = useCallback(() => store.isTouched(path), [path]);
+    return useSyncExternalStore(store.subscribeStatus, getSnapshot, getSnapshot);
+  };
+
+  return { watch, useWatchValue, useDirty, useTouched };
+}
 
 export function useForm<
   Values extends Record<string, any>,
@@ -57,435 +73,106 @@ export function useForm<
 export function useForm<
   Values extends Record<PropertyKey, any> = Record<string, any>,
   TransformedValues = Values,
->({
-  name,
-  mode = 'controlled',
-  initialValues,
-  initialErrors = {},
-  initialDirty = {},
-  initialTouched = {},
-  clearInputErrorOnChange = true,
-  validateInputOnChange = false,
-  validateInputOnBlur = false,
-  onValuesChange,
-  transformValues = ((values: Values) => values) as any,
-  enhanceGetInputProps,
-  validate: rules,
-  onSubmitPreventDefault = 'always',
-  touchTrigger = 'change',
-  cascadeUpdates = false,
-  validateDebounce = 0,
-  resolveValidationError = defaultResolveValidationError,
-}: UseFormInput<Values, TransformedValues> = {}): UseFormReturnType<Values, TransformedValues> {
-  const $errors = useFormErrors<Values>(initialErrors);
-  const $values = useFormValues<Values>({ initialValues, onValuesChange, mode });
-  const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values, mode });
-  const $watch = useFormWatch<Values>({ $values, $status, cascadeUpdates });
-  const $list = useFormList<Values>({ $values, $errors, $status, $watch });
-  const $validating = useFormValidating();
-  const [formKey, setFormKey] = useState(0);
-  const [fieldKeys, setFieldKeys] = useState<Record<string, number>>({});
-  const [submitting, setSubmitting] = useState(false);
-  const validateGeneration = useRef(0);
-  const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+>(
+  input: UseFormInput<Values, TransformedValues> = {}
+): UseFormReturnType<Values, TransformedValues> {
+  const [{ store, watch, useWatchValue, useDirty, useTouched }] = useState(() => {
+    const formStore = createFormStore(input);
+    return { store: formStore, ...createWatchHooks(formStore) };
+  });
 
-  useEffect(() => {
-    return () => {
-      Object.values(timers.current).forEach(clearTimeout);
-    };
-  }, []);
+  store.setOptions(input);
+  useSyncExternalStore(store.subscribe, store.getVersion, store.getVersion);
+  useEffect(() => store.destroy, [store]);
 
-  const reset: Reset = useCallback(() => {
-    const previousValues = $values.refValues.current;
-    $values.resetValues();
-    $errors.clearErrors();
-    $status.resetDirty();
-    $status.resetTouched();
-    $validating.clearValidating();
-    mode === 'uncontrolled' && setFormKey((key) => key + 1);
-    $watch.notifyWatchSubscribers(previousValues);
-  }, []);
+  const values = store.getValues();
+  const initialValues = store.getInitialValues();
+  const touched = store.getTouched();
+  const dirty = store.getDirty();
+  const validatingFields = store.getValidatingFields();
+  const formValidating = store.isFormValidating();
+  const { validate: rules, resolveValidationError } = input;
 
-  const handleValuesChanges = useCallback(
-    (previousValues: Values) => {
-      clearInputErrorOnChange && $errors.clearErrors();
-      mode === 'uncontrolled' && setFormKey((key) => key + 1);
-      $watch.notifyWatchSubscribers(previousValues);
-    },
-    [clearInputErrorOnChange]
+  const getValues = useCallback(() => store.getValues(), [store, values]);
+  const getInitialValues = useCallback(() => store.getInitialValues(), [store, initialValues]);
+  const getTouched = useCallback(() => store.getTouched(), [store, touched]);
+  const getDirty = useCallback(() => store.getDirty(), [store, dirty]);
+  const isTouched = useCallback((path?: unknown) => store.isTouched(path), [store, touched]);
+
+  const isDirty = useCallback(
+    (path?: unknown) => store.isDirty(path),
+    [store, dirty, values, initialValues]
   );
-
-  const initialize: Initialize<Values> = useCallback(
-    (values) => {
-      const previousValues = $values.refValues.current;
-      $values.initialize(values, () => mode === 'uncontrolled' && setFormKey((key) => key + 1));
-      handleValuesChanges(previousValues);
-    },
-    [handleValuesChanges]
-  );
-
-  const debouncedValidateField = useMemo(() => {
-    const handleValidation = (path: string) => {
-      const signal = $validating.getAbortSignal(path);
-      const result = validateFieldValue(
-        path,
-        rules,
-        $values.refValues.current,
-        resolveValidationError,
-        signal
-      );
-
-      const applyResult = (results: { hasError: boolean; error: React.ReactNode }) => {
-        if (signal.aborted) {
-          return;
-        }
-        if (results.hasError) {
-          $errors.setFieldError(path as any, results.error);
-        } else {
-          $errors.clearFieldError(path);
-        }
-      };
-
-      const cleanup = () => {
-        if (!signal.aborted) {
-          $validating.setFieldValidating(path, false);
-        }
-      };
-
-      if (result instanceof Promise) {
-        $validating.setFieldValidating(path, true);
-        result.then(applyResult).finally(cleanup);
-      } else {
-        applyResult(result);
-      }
-    };
-
-    return (path: string) => {
-      clearTimeout(timers.current[path]);
-      if (validateDebounce > 0) {
-        timers.current[path] = setTimeout(() => handleValidation(path), validateDebounce);
-      } else {
-        handleValidation(path);
-      }
-    };
-  }, [validateDebounce, rules, resolveValidationError]);
-
-  const setFieldValue: SetFieldValue<Values> = useCallback(
-    (path, value, options) => {
-      const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
-      const resolvedValue =
-        value instanceof Function ? value(getPath(path, $values.refValues.current) as any) : value;
-
-      $status.setCalculatedFieldDirty(path, resolvedValue);
-      touchTrigger === 'change' && $status.setFieldTouched(path, true);
-      !shouldValidate && clearInputErrorOnChange && $errors.clearFieldError(path);
-
-      $values.setFieldValue({
-        path,
-        value,
-        updateState: mode === 'controlled',
-        subscribers: [
-          ...$watch.getFieldSubscribers(path),
-          shouldValidate ? () => debouncedValidateField(String(path)) : null,
-          options?.forceUpdate !== false && mode !== 'controlled'
-            ? () =>
-                setFieldKeys((keys) => ({
-                  ...keys,
-                  [path as string]: (keys[path as string] || 0) + 1,
-                }))
-            : null,
-        ],
-      });
-    },
-    [onValuesChange, rules, debouncedValidateField]
-  );
-
-  const setValues: SetValues<Values> = useCallback(
-    (values) => {
-      const previousValues = $values.refValues.current;
-      const resolvedValues = typeof values === 'function' ? values(previousValues) : values;
-      Object.keys(resolvedValues).forEach((key) => {
-        $status.setCalculatedFieldDirty(key, (resolvedValues as Record<string, any>)[key]);
-      });
-      $values.setValues({ values: resolvedValues, updateState: mode === 'controlled' });
-      handleValuesChanges(previousValues);
-    },
-    [onValuesChange, handleValuesChanges]
-  );
-
-  const validate = useCallback(() => {
-    const generation = ++validateGeneration.current;
-    const signal = $validating.getAbortSignal('__form__');
-
-    const handleResult = (results: { hasErrors: boolean; errors: Record<string, any> }) => {
-      if (generation !== validateGeneration.current) {
-        return { hasErrors: false, errors: {} };
-      }
-      $errors.setErrors(results.errors);
-      return results;
-    };
-
-    const cleanup = () => {
-      if (generation === validateGeneration.current) {
-        $validating.setFormValidating(false);
-      }
-    };
-
-    const result = validateValues(rules, $values.refValues.current, resolveValidationError, signal);
-
-    if (result instanceof Promise) {
-      $validating.setFormValidating(true);
-      return result.then(handleResult).finally(cleanup);
-    }
-
-    return handleResult(result);
-  }, [rules, resolveValidationError]);
-
-  const validateField = useCallback(
-    (path: string) => {
-      const signal = $validating.getAbortSignal(String(path));
-
-      const applyResult = (results: { hasError: boolean; error: React.ReactNode }) => {
-        if (signal.aborted) {
-          return { hasError: false, error: null };
-        }
-        if (results.hasError) {
-          $errors.setFieldError(path, results.error);
-        } else {
-          $errors.clearFieldError(path);
-        }
-        return results;
-      };
-
-      const cleanup = () => {
-        if (!signal.aborted) {
-          $validating.setFieldValidating(String(path), false);
-        }
-      };
-
-      const result = validateFieldValue(
-        path,
-        rules,
-        $values.refValues.current,
-        resolveValidationError,
-        signal
-      );
-
-      if (result instanceof Promise) {
-        $validating.setFieldValidating(String(path), true);
-        return result.then(applyResult).finally(cleanup);
-      }
-
-      return applyResult(result);
-    },
-    [rules, resolveValidationError]
-  );
-
-  const getInputProps: GetInputProps<Values> = (
-    path,
-    { type = 'input', withError = true, withFocus, ...otherOptions } = {}
-  ) => {
-    const _withFocus = withFocus ?? type !== 'radio';
-    const onChange = getInputOnChange((value) =>
-      setFieldValue(path, value as any, { forceUpdate: false })
-    );
-
-    const payload: any = { onChange, 'data-path': getDataPath(name, path) };
-
-    if (withError) {
-      payload.error = $errors.errorsState[path];
-    }
-
-    if (type === 'checkbox') {
-      payload[mode === 'controlled' ? 'checked' : 'defaultChecked'] = getPath(
-        path,
-        $values.refValues.current
-      );
-    } else if (type === 'radio') {
-      payload[mode === 'controlled' ? 'checked' : 'defaultChecked'] =
-        getPath(path, $values.refValues.current) === otherOptions.value;
-      payload.value = otherOptions.value;
-    } else {
-      payload[mode === 'controlled' ? 'value' : 'defaultValue'] = getPath(
-        path,
-        $values.refValues.current
-      );
-    }
-
-    if (_withFocus) {
-      payload.onFocus = () => $status.setFieldTouched(path, true);
-      payload.onBlur = () => {
-        if (shouldValidateOnChange(path, validateInputOnBlur)) {
-          debouncedValidateField(String(path));
-        }
-      };
-    }
-
-    return Object.assign(
-      payload,
-      enhanceGetInputProps?.({
-        inputProps: payload,
-        field: path,
-        options: { type, withError, withFocus: _withFocus, ...otherOptions },
-        form: form as any,
-      })
-    );
-  };
-
-  const onSubmit: OnSubmit<Values, TransformedValues> =
-    (handleSubmit, handleValidationFailure) => (event) => {
-      if (onSubmitPreventDefault === 'always') {
-        event?.preventDefault();
-      }
-
-      setSubmitting(true);
-
-      const handleValidation = (results: { hasErrors: boolean; errors: Record<string, any> }) => {
-        if (results.hasErrors) {
-          if (onSubmitPreventDefault === 'validation-failed') {
-            event?.preventDefault();
-          }
-
-          handleValidationFailure?.(results.errors, $values.refValues.current, event);
-          setSubmitting(false);
-        } else {
-          const submitResult = handleSubmit?.(
-            transformValues($values.refValues.current) as any,
-            event
-          );
-
-          if (submitResult instanceof Promise) {
-            submitResult.finally(() => setSubmitting(false));
-          } else {
-            setSubmitting(false);
-          }
-        }
-      };
-
-      const result = validate();
-      if (result instanceof Promise) {
-        result.then(handleValidation).catch(() => {
-          setSubmitting(false);
-        });
-      } else {
-        handleValidation(result);
-      }
-    };
-
-  const getTransformedValues: GetTransformedValues<Values, TransformedValues> = (input) =>
-    (transformValues as any)(input || $values.refValues.current);
-
-  const onReset: OnReset = useCallback((event) => {
-    event.preventDefault();
-    reset();
-  }, []);
 
   const isValid = useCallback(
-    (path?: string) => {
-      const signal = new AbortController().signal;
-      if (path) {
-        const result = validateFieldValue(
-          path,
-          rules,
-          $values.refValues.current,
-          resolveValidationError,
-          signal
-        );
-        if (result instanceof Promise) {
-          return result.then((r) => !r.hasError);
-        }
-        return !result.hasError;
-      }
-      const result = validateValues(
-        rules,
-        $values.refValues.current,
-        resolveValidationError,
-        signal
-      );
-      if (result instanceof Promise) {
-        return result.then((r) => !r.hasErrors);
-      }
-      return !result.hasErrors;
-    },
-    [rules, resolveValidationError, $values.refValues.current]
+    (path?: unknown) => store.isValid(path),
+    [store, rules, resolveValidationError, values]
   );
 
-  const key: Key<Values> = (path) => `${formKey}-${String(path)}-${fieldKeys[String(path)] || 0}`;
-
-  const getInputNode: GetInputNode<Values> = (path) =>
-    document.querySelector(`[data-path="${getDataPath(name, path)}"]`);
-
-  const resetField = useCallback(
-    (path: PropertyKey) => {
-      $status.clearFieldDirty(String(path));
-      $values.resetField(path, [
-        ...$watch.getFieldSubscribers(path as LooseKeys<Values>),
-        mode !== 'controlled'
-          ? () =>
-              setFieldKeys((keys) => ({
-                ...keys,
-                [path as string]: (keys[path as string] || 0) + 1,
-              }))
-          : null,
-      ]);
-    },
-    [$values.resetField, mode, setFieldKeys]
+  const isValidating = useCallback(
+    (path?: unknown) => store.isValidating(path),
+    [store, validatingFields, formValidating]
   );
 
-  const form = {
-    watch: $watch.watch,
-    useWatchValue: $watch.useWatchValue,
+  const getInputProps: GetInputProps<Values> = (path, options) =>
+    store.getInputProps(path, options, form);
 
-    initialized: $values.initialized.current,
-    values: mode === 'uncontrolled' ? $values.refValues.current : $values.stateValues,
-    getValues: $values.getValues,
-    getInitialValues: $values.getValuesSnapshot,
-    setInitialValues: $values.setValuesSnapshot,
-    resetField,
-    initialize,
-    setValues,
-    setFieldValue,
+  const getInputNode: GetInputNode<Values> = (path) => store.getInputNode(path) as any;
 
-    submitting,
-    setSubmitting,
+  const form: any = {
+    watch,
+    useWatchValue,
+    useDirty,
+    useTouched,
 
-    validating: $validating.validating,
-    isValidating: $validating.isValidating as IsValidating<Values>,
+    initialized: store.isInitialized(),
+    values,
+    getValues,
+    getInitialValues,
+    setInitialValues: store.setInitialValues,
+    resetField: store.resetField,
+    initialize: store.initialize,
+    setValues: store.setValues,
+    setFieldValue: store.setFieldValue,
 
-    errors: $errors.errorsState,
-    setErrors: $errors.setErrors,
-    setFieldError: $errors.setFieldError,
-    clearFieldError: $errors.clearFieldError,
-    clearErrors: $errors.clearErrors,
+    submitting: store.isSubmitting(),
+    setSubmitting: store.setSubmitting,
 
-    resetDirty: $status.resetDirty,
-    setTouched: $status.setTouched,
-    setDirty: $status.setDirty,
-    isTouched: $status.isTouched,
-    resetTouched: $status.resetTouched,
-    isDirty: $status.isDirty,
-    getTouched: $status.getTouched,
-    getDirty: $status.getDirty,
+    validating: store.isValidating(),
+    isValidating,
 
-    reorderListItem: $list.reorderListItem,
-    insertListItem: $list.insertListItem,
-    removeListItem: $list.removeListItem,
-    replaceListItem: $list.replaceListItem,
+    errors: store.getErrors(),
+    setErrors: store.setErrors,
+    setFieldError: store.setFieldError,
+    clearFieldError: store.clearFieldError,
+    clearErrors: store.clearErrors,
 
-    reset,
-    validate,
-    validateField,
+    resetDirty: store.resetDirty,
+    setTouched: store.setTouched,
+    setDirty: store.setDirty,
+    isTouched,
+    resetTouched: store.resetTouched,
+    isDirty,
+    getTouched,
+    getDirty,
+
+    reorderListItem: store.reorderListItem,
+    insertListItem: store.insertListItem,
+    removeListItem: store.removeListItem,
+    replaceListItem: store.replaceListItem,
+
+    reset: store.reset,
+    validate: store.validate,
+    validateField: store.validateField,
     getInputProps,
-    onSubmit,
-    onReset,
+    onSubmit: store.onSubmit,
+    onReset: store.onReset,
     isValid,
-    getTransformedValues,
-    key,
-
+    getTransformedValues: store.getTransformedValues,
     getInputNode,
   };
 
-  useFormActions(name, form as any);
+  useFormActions(input.name, form);
 
-  return form as any;
+  return form;
 }

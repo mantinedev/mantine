@@ -33,14 +33,12 @@ function Demo() {
       <TextInput
         label="Name"
         placeholder="Name"
-        key={form.key('name')}
         {...form.getInputProps('name')}
       />
       <TextInput
         mt="md"
         label="Occupation"
         placeholder="Occupation"
-        key={form.key('occupation')}
         {...form.getInputProps('occupation')}
       />
     </Box>
@@ -71,17 +69,11 @@ function Demo() {
 
   return (
     <Box maw={340} mx="auto">
-      <TextInput
-        label="Name"
-        placeholder="Name"
-        key={form.key('name')}
-        {...form.getInputProps('name')}
-      />
+      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
       <TextInput
         mt="md"
         label="Occupation"
         placeholder="Occupation"
-        key={form.key('occupation')}
         {...form.getInputProps('occupation')}
       />
     </Box>

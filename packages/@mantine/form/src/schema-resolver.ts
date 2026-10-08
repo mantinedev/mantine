@@ -1,5 +1,5 @@
 import { StandardSchemaV1 } from '@standard-schema/spec';
-import { filterErrors } from './hooks/use-form-errors/filter-errors/filter-errors';
+import { filterErrors } from './form-store/filter-errors/filter-errors';
 import { FormErrors } from './types';
 
 function issuesToFormErrors(issues: ReadonlyArray<StandardSchemaV1.Issue>): FormErrors {

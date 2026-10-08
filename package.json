@@ -129,7 +129,6 @@
     "fuse.js": "^7.5.0",
     "highlight.js": "^11.12.0",
     "html-react-parser": "^6.1.8",
-    "klona": "^2.0.6",
     "lowlight": "^3.3.0",
     "react": "19.3.0",
     "react-dropzone": "20.1.2",

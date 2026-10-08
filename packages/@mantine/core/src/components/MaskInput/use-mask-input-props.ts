@@ -1,4 +1,4 @@
-import { assignRef, useMask, useMergedRef } from '@mantine/hooks';
+import { assignRef, useFormField, useMask, useMergedRef } from '@mantine/hooks';
 import type { MaskInputProps } from './MaskInput';
 
 export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTMLInputElement> }) {
@@ -17,10 +17,22 @@ export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTML
     beforeMaskedStateChange,
     resetRef,
     ref,
-    ...elementProps
+    value,
+    defaultValue,
+    onChange,
+    ...others
   } = props;
 
-  const { ref: maskCallbackRef, reset } = useMask({
+  const formField = useFormField<string>(onChange, {
+    subscribe: false,
+    onExternalWrite: (external) => setValue(external == null ? '' : String(external)),
+  });
+
+  const {
+    ref: maskCallbackRef,
+    reset,
+    setValue,
+  } = useMask({
     mask,
     tokens,
     modify,
@@ -30,7 +42,10 @@ export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTML
     showMaskOnFocus,
     transform,
     autoClear,
-    onChangeRaw,
+    onChangeRaw: (rawValue, maskedValue) => {
+      onChangeRaw?.(rawValue, maskedValue);
+      formField.bound && (onChange as any)(rawValue);
+    },
     onComplete,
     beforeMaskedStateChange,
   });
@@ -38,6 +53,10 @@ export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTML
   assignRef(resetRef, reset);
 
   const maskRef = useMergedRef(ref, maskCallbackRef);
+
+  const elementProps = formField.bound
+    ? { ...others, defaultValue: defaultValue ?? value }
+    : { ...others, value, defaultValue, onChange };
 
   return { maskRef, elementProps };
 }

@@ -52,7 +52,7 @@ export function DirtyUncontrolled() {
 
   return (
     <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
-      <TextInput {...form.getInputProps('text')} key={form.key('text')} />
+      <TextInput {...form.getInputProps('text')} />
       <div>{form.isDirty() ? 'Dirty' : 'Not dirty'}</div>
     </div>
   );

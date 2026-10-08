@@ -54,6 +54,28 @@ Call `reset` function to clear the input value:
 
 <Demo data={UseMaskDemos.reset} />
 
+## Set value
+
+Call `setValue` function to replace the input value. The mask is applied to the given value,
+`onChangeRaw` and `onComplete` are not called:
+
+```tsx
+import { useMask } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, setValue } = useMask({ mask: '(999) 999-9999' });
+
+  return (
+    <>
+      <input ref={ref} />
+      <button type="button" onClick={() => setValue('1234567890')}>
+        Set value
+      </button>
+    </>
+  );
+}
+```
+
 ## Mask pattern syntax
 
 The mask string defines the expected format. Each character is either a **token** (editable slot)
@@ -148,6 +170,9 @@ interface UseMaskReturnValue {
 
   // Clear the input value and reset state
   reset: () => void;
+
+  // Sets the input value and applies the mask to it, does not call onChangeRaw and onComplete
+  setValue: (value: string) => void;
 }
 
 function useMask(options: UseMaskOptions): UseMaskReturnValue;

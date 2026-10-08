@@ -25,7 +25,6 @@ function Demo() {
         <TextInput
           label="Name"
           placeholder="Name"
-          key={form.key('person.name')}
           {...form.getInputProps('person.name')}
         />
         <Button onClick={() => form.setFieldValue("person", { name: "Jane Doe" })}>Set 'person' object to \`{'{ name: "Jane Doe" }'}\`</Button>
@@ -64,12 +63,7 @@ function Demo() {
   return (
     <Provider form={form}>
       <Stack>
-        <TextInput
-          label="Name"
-          placeholder="Name"
-          key={form.key('person.name')}
-          {...form.getInputProps('person.name')}
-        />
+        <TextInput label="Name" placeholder="Name" {...form.getInputProps('person.name')} />
         <Button onClick={() => form.setFieldValue('person', { name: 'Jane Doe' })}>
           Set 'person' object to `{'{ name: "Jane Doe" }'}`
         </Button>

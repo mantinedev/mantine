@@ -24,13 +24,11 @@ function Demo() {
     <form onSubmit={form.onSubmit(setSubmittedValues)}>
       <TextInput
         {...form.getInputProps('name')}
-        key={form.key('name')}
         label="Name"
         placeholder="Name"
       />
       <TextInput
         {...form.getInputProps('email')}
-        key={form.key('email')}
         mt="md"
         label="Email"
         placeholder="Email"
@@ -63,19 +61,8 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(setSubmittedValues)}>
-      <TextInput
-        {...form.getInputProps('name')}
-        key={form.key('name')}
-        label="Name"
-        placeholder="Name"
-      />
-      <TextInput
-        {...form.getInputProps('email')}
-        key={form.key('email')}
-        mt="md"
-        label="Email"
-        placeholder="Email"
-      />
+      <TextInput {...form.getInputProps('name')} label="Name" placeholder="Name" />
+      <TextInput {...form.getInputProps('email')} mt="md" label="Email" placeholder="Email" />
       <Button type="submit" mt="md">
         Submit
       </Button>

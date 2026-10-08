@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
+import { useCallbackRef, useFormField, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import { createPinArray } from '../create-pin-array/create-pin-array';
 
 export interface PinInputControllerOptions {
@@ -73,7 +73,9 @@ export interface PinInputController {
 }
 
 export function usePinInput(options: PinInputControllerOptions = {}): PinInputController {
-  const { length = 4, value: valueProp, defaultValue, onChange, onComplete } = options;
+  const { length = 4, value: valueOption, defaultValue, onChange, onComplete } = options;
+  const formField = useFormField<string>(onChange);
+  const valueProp = formField.subscribed ? formField.value : valueOption;
 
   const completedRef = useRef(false);
   const lastFocusedIndexRef = useRef(-1);

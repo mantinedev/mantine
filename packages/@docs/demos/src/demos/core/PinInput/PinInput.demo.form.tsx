@@ -68,7 +68,7 @@ function Demo() {
   return (
     <form onSubmit={form.onSubmit((values) => setSubmitted(values.code))}>
       <Stack>
-        <PinField length={6} type="number" key={form.key('code')} {...form.getInputProps('code')} />
+        <PinField length={6} type="number" {...form.getInputProps('code')} />
 
         <Text size="sm">
           Submitted code: <Code>{submitted ?? 'none'}</Code>
@@ -129,7 +129,7 @@ function Demo() {
   return (
     <form onSubmit={form.onSubmit((values) => setSubmitted(values.code))}>
       <Stack>
-        <PinField length={6} type="number" key={form.key('code')} {...form.getInputProps('code')} />
+        <PinField length={6} type="number" {...form.getInputProps('code')} />
 
         <Text size="sm">
           Submitted code: <Code>{submitted ?? 'none'}</Code>

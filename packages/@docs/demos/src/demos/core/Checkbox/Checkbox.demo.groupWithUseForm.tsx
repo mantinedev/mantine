@@ -24,7 +24,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Checkbox.Group
         {...form.getInputProps('frameworks')}
-        key={form.key('frameworks')}
         label="Select your favorite frameworks/libraries"
         withAsterisk
       >
@@ -61,7 +60,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Checkbox.Group
         {...form.getInputProps('frameworks')}
-        key={form.key('frameworks')}
         label="Select your favorite frameworks/libraries"
         withAsterisk
       >

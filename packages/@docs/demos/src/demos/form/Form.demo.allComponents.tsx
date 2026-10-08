@@ -55,7 +55,6 @@ function Demo() {
         withAsterisk
         label="Email"
         placeholder="your@email.com"
-        key={form.key('email')}
         {...form.getInputProps('email')}
       />
 
@@ -85,7 +84,6 @@ function DemoTextInput() {
         withAsterisk
         label="Email"
         placeholder="your@email.com"
-        key={form.key('email')}
         {...form.getInputProps('email')}
       />
 
@@ -118,7 +116,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <AngleSlider
         aria-label="Angle"
-        key={form.key('angle')}
         {...form.getInputProps('angle')}
       />
 
@@ -140,7 +137,7 @@ function DemoAngleSlider() {
 
   return (
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
-      <AngleSlider aria-label="Angle" key={form.key('angle')} {...form.getInputProps('angle')} />
+      <AngleSlider aria-label="Angle" {...form.getInputProps('angle')} />
 
       <Group mt="md">
         <Button type="submit">Submit</Button>
@@ -175,7 +172,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Checkbox
         label="I agree to sell my privacy"
-        key={form.key('termsParams')}
         {...form.getInputProps('termsParams', { type: 'checkbox' })}
       />
 
@@ -203,7 +199,6 @@ function DemoCheckbox() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Checkbox
         label="I agree to sell my privacy"
-        key={form.key('termsParams')}
         {...form.getInputProps('termsParams', { type: 'checkbox' })}
       />
 
@@ -237,7 +232,6 @@ function Demo() {
       <Checkbox.Group
         label="Select your favorite frameworks/libraries"
         withAsterisk
-        key={form.key('favFrameworks')}
         {...form.getInputProps('favFrameworks')}
       >
         <Group mt="xs">
@@ -269,7 +263,6 @@ function DemoCheckboxGroup() {
       <Checkbox.Group
         label="Select your favorite frameworks/libraries"
         withAsterisk
-        key={form.key('favFrameworks')}
         {...form.getInputProps('favFrameworks')}
       >
         <Group mt="xs">
@@ -308,7 +301,6 @@ function Demo() {
   return (
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Chip
-        key={form.key('awesome')}
         {...form.getInputProps('awesome', { type: 'checkbox' })}
       >
         Mantine is awesome
@@ -332,9 +324,7 @@ function DemoChip() {
 
   return (
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
-      <Chip key={form.key('awesome')} {...form.getInputProps('awesome', { type: 'checkbox' })}>
-        Mantine is awesome
-      </Chip>
+      <Chip {...form.getInputProps('awesome', { type: 'checkbox' })}>Mantine is awesome</Chip>
 
       <Group mt="md">
         <Button type="submit">Submit</Button>
@@ -366,7 +356,6 @@ function Demo() {
       <ColorInput
         label="Your favorite color"
         placeholder="Pick color"
-        key={form.key('color')}
         {...form.getInputProps('color')}
       />
 
@@ -391,7 +380,6 @@ function DemoColorInput() {
       <ColorInput
         label="Your favorite color"
         placeholder="Pick color"
-        key={form.key('color')}
         {...form.getInputProps('color')}
       />
 
@@ -425,7 +413,6 @@ function Demo() {
       <Text size="sm" fw={500} mb={3}>Pick color</Text>
       <ColorPicker
         format="hex"
-        key={form.key('color')}
         {...form.getInputProps('color')}
       />
 
@@ -450,7 +437,7 @@ function DemoColorPicker() {
       <Text size="sm" fw={500} mb={3}>
         Pick color
       </Text>
-      <ColorPicker format="hex" key={form.key('color')} {...form.getInputProps('color')} />
+      <ColorPicker format="hex" {...form.getInputProps('color')} />
 
       <Group mt="md">
         <Button type="submit">Submit</Button>
@@ -484,14 +471,12 @@ function Demo() {
         <TextInput
           label="Name"
           placeholder="Your name"
-          key={form.key('name')}
           {...form.getInputProps('name')}
         />
         <TextInput
           label="Email"
           placeholder="Your email"
           mt="md"
-          key={form.key('email')}
           {...form.getInputProps('email')}
         />
       </Fieldset>
@@ -516,17 +501,11 @@ function DemoFieldset() {
   return (
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Fieldset legend="Personal information">
-        <TextInput
-          label="Name"
-          placeholder="Your name"
-          key={form.key('name')}
-          {...form.getInputProps('name')}
-        />
+        <TextInput label="Name" placeholder="Your name" {...form.getInputProps('name')} />
         <TextInput
           label="Email"
           placeholder="Your email"
           mt="md"
-          key={form.key('email')}
           {...form.getInputProps('email')}
         />
       </Fieldset>
@@ -561,7 +540,6 @@ function Demo() {
       <FileInput
         label="Avatar"
         placeholder="Upload avatar"
-        key={form.key('avatar')}
         {...form.getInputProps('avatar')}
       />
 
@@ -583,12 +561,7 @@ function DemoFileInput() {
 
   return (
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
-      <FileInput
-        label="Avatar"
-        placeholder="Upload avatar"
-        key={form.key('avatar')}
-        {...form.getInputProps('avatar')}
-      />
+      <FileInput label="Avatar" placeholder="Upload avatar" {...form.getInputProps('avatar')} />
 
       <Group mt="md">
         <Button type="submit">Submit</Button>
@@ -621,7 +594,6 @@ function Demo() {
         <Input
           component="input"
           placeholder="Your phone"
-          key={form.key('phone')}
           {...form.getInputProps('phone')}
         />
       </Input.Wrapper>
@@ -645,12 +617,7 @@ function DemoInput() {
   return (
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Input.Wrapper label="Phone" withAsterisk>
-        <Input
-          component="input"
-          placeholder="Your phone"
-          key={form.key('phone')}
-          {...form.getInputProps('phone')}
-        />
+        <Input component="input" placeholder="Your phone" {...form.getInputProps('phone')} />
       </Input.Wrapper>
 
       <Group mt="md">
@@ -686,7 +653,6 @@ function Demo() {
         formatOnBlur
         autosize
         minRows={4}
-        key={form.key('packageJson')}
         {...form.getInputProps('packageJson')}
       />
 
@@ -714,7 +680,6 @@ function DemoJsonInput() {
         formatOnBlur
         autosize
         minRows={4}
-        key={form.key('packageJson')}
         {...form.getInputProps('packageJson')}
       />
 
@@ -748,7 +713,6 @@ function Demo() {
       <NativeSelect
         label="Select framework"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        key={form.key('framewrok')}
         {...form.getInputProps('framewrok')}
       />
 
@@ -773,7 +737,6 @@ function DemoNativeSelect() {
       <NativeSelect
         label="Select framework"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        key={form.key('framewrok')}
         {...form.getInputProps('framewrok')}
       />
 
@@ -809,7 +772,6 @@ function Demo() {
         placeholder="Your age"
         min={0}
         max={120}
-        key={form.key('age')}
         {...form.getInputProps('age')}
       />
 
@@ -836,7 +798,6 @@ function DemoNumberInput() {
         placeholder="Your age"
         min={0}
         max={120}
-        key={form.key('age')}
         {...form.getInputProps('age')}
       />
 
@@ -870,7 +831,6 @@ function Demo() {
       <PasswordInput
         label="Password"
         placeholder="Your password"
-        key={form.key('password')}
         {...form.getInputProps('password')}
       />
 
@@ -895,7 +855,6 @@ function DemoPasswordInput() {
       <PasswordInput
         label="Password"
         placeholder="Your password"
-        key={form.key('password')}
         {...form.getInputProps('password')}
       />
 
@@ -928,7 +887,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Text size="sm" fw={500} mb={3}>Enter PIN</Text>
       <PinInput
-        key={form.key('pin')}
         {...form.getInputProps('pin')}
       />
 
@@ -953,7 +911,7 @@ function DemoPinInput() {
       <Text size="sm" fw={500} mb={3}>
         Enter PIN
       </Text>
-      <PinInput key={form.key('pin')} {...form.getInputProps('pin')} />
+      <PinInput {...form.getInputProps('pin')} />
 
       <Group mt="md">
         <Button type="submit">Submit</Button>
@@ -984,7 +942,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Radio.Group
         label="Select your favorite framework/library"
-        key={form.key('framework')}
         {...form.getInputProps('framework')}
       >
         <Group mt="xs">
@@ -1015,7 +972,6 @@ function DemoRadioGroup() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Radio.Group
         label="Select your favorite framework/library"
-        key={form.key('framework')}
         {...form.getInputProps('framework')}
       >
         <Group mt="xs">
@@ -1055,7 +1011,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Text size="sm" fw={500} mb={3}>Price range</Text>
       <RangeSlider
-        key={form.key('range')}
         {...form.getInputProps('range')}
       />
 
@@ -1080,7 +1035,7 @@ function DemoRangeSlider() {
       <Text size="sm" fw={500} mb={3}>
         Price range
       </Text>
-      <RangeSlider key={form.key('range')} {...form.getInputProps('range')} />
+      <RangeSlider {...form.getInputProps('range')} />
 
       <Group mt="md">
         <Button type="submit">Submit</Button>
@@ -1111,7 +1066,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Text size="sm" fw={500} mb={3}>Rating</Text>
       <Rating
-        key={form.key('rating')}
         {...form.getInputProps('rating')}
       />
 
@@ -1136,7 +1090,7 @@ function DemoRating() {
       <Text size="sm" fw={500} mb={3}>
         Rating
       </Text>
-      <Rating key={form.key('rating')} {...form.getInputProps('rating')} />
+      <Rating {...form.getInputProps('rating')} />
 
       <Group mt="md">
         <Button type="submit">Submit</Button>
@@ -1168,7 +1122,6 @@ function Demo() {
       <Text size="sm" fw={500} mb={3}>Select framework</Text>
       <SegmentedControl
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        key={form.key('framewrok')}
         {...form.getInputProps('framewrok')}
       />
 
@@ -1195,7 +1148,6 @@ function DemoSegmentedControl() {
       </Text>
       <SegmentedControl
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        key={form.key('framewrok')}
         {...form.getInputProps('framewrok')}
       />
 
@@ -1228,7 +1180,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Text size="sm" fw={500} mb={3}>Volume</Text>
       <Slider
-        key={form.key('value')}
         {...form.getInputProps('value')}
       />
 
@@ -1253,7 +1204,7 @@ function DemoSlider() {
       <Text size="sm" fw={500} mb={3}>
         Volume
       </Text>
-      <Slider key={form.key('value')} {...form.getInputProps('value')} />
+      <Slider {...form.getInputProps('value')} />
 
       <Group mt="md">
         <Button type="submit">Submit</Button>
@@ -1284,7 +1235,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Switch
         label="Enable notifications"
-        key={form.key('notifications')}
         {...form.getInputProps('notifications', { type: 'checkbox' })}
       />
 
@@ -1308,7 +1258,6 @@ function DemoSwitch() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Switch
         label="Enable notifications"
-        key={form.key('notifications')}
         {...form.getInputProps('notifications', { type: 'checkbox' })}
       />
 
@@ -1341,7 +1290,6 @@ function Demo() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Switch.Group
         label="Select your favorite frameworks/libraries"
-        key={form.key('favFrameworks')}
         {...form.getInputProps('favFrameworks')}
       >
         <Group mt="xs">
@@ -1372,7 +1320,6 @@ function DemoSwitchGroup() {
     <form onSubmit={form.onSubmit((values) => console.log(values))}>
       <Switch.Group
         label="Select your favorite frameworks/libraries"
-        key={form.key('favFrameworks')}
         {...form.getInputProps('favFrameworks')}
       >
         <Group mt="xs">
@@ -1413,7 +1360,6 @@ function Demo() {
       <Textarea
         label="Your message"
         placeholder="Your message"
-        key={form.key('message')}
         {...form.getInputProps('message')}
       />
 
@@ -1438,7 +1384,6 @@ function DemoTextarea() {
       <Textarea
         label="Your message"
         placeholder="Your message"
-        key={form.key('message')}
         {...form.getInputProps('message')}
       />
 
@@ -1473,7 +1418,6 @@ function Demo() {
         label="Pick framework"
         placeholder="Pick framework"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        key={form.key('framework')}
         {...form.getInputProps('framework')}
       />
 
@@ -1499,7 +1443,6 @@ function DemoAutocomplete() {
         label="Pick framework"
         placeholder="Pick framework"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        key={form.key('framework')}
         {...form.getInputProps('framework')}
       />
 
@@ -1534,7 +1477,6 @@ function Demo() {
         label="Pick frameworks"
         placeholder="Pick frameworks"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        key={form.key('frameworks')}
         {...form.getInputProps('frameworks')}
       />
 
@@ -1560,7 +1502,6 @@ function DemoMultiSelect() {
         label="Pick frameworks"
         placeholder="Pick frameworks"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        key={form.key('frameworks')}
         {...form.getInputProps('frameworks')}
       />
 
@@ -1595,7 +1536,6 @@ function Demo() {
         label="Pick framework"
         placeholder="Pick framework"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        key={form.key('framework')}
         {...form.getInputProps('framework')}
       />
 
@@ -1621,7 +1561,6 @@ function DemoSelect() {
         label="Pick framework"
         placeholder="Pick framework"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        key={form.key('framework')}
         {...form.getInputProps('framework')}
       />
 
@@ -1655,7 +1594,6 @@ function Demo() {
       <TagsInput
         label="Press Enter to submit a tag"
         placeholder="Enter tag"
-        key={form.key('frameworks')}
         {...form.getInputProps('frameworks')}
       />
 
@@ -1680,7 +1618,6 @@ function DemoTagsInput() {
       <TagsInput
         label="Press Enter to submit a tag"
         placeholder="Enter tag"
-        key={form.key('frameworks')}
         {...form.getInputProps('frameworks')}
       />
 
@@ -1715,9 +1652,7 @@ function Demo() {
         mask="(999) 999-9999"
         placeholder="(___) ___-____"
         label="Phone"
-        key={form.key('phone')}
-        defaultValue={form.getValues().phone}
-        onChangeRaw={(raw) => form.setFieldValue('phone', raw, { forceUpdate: false })}
+        {...form.getInputProps('phone')}
       />
 
       <Group mt="md">
@@ -1742,9 +1677,7 @@ function DemoMaskInput() {
         mask="(999) 999-9999"
         placeholder="(___) ___-____"
         label="Phone"
-        key={form.key('phone')}
-        defaultValue={form.getValues().phone}
-        onChangeRaw={(raw) => form.setFieldValue('phone', raw, { forceUpdate: false })}
+        {...form.getInputProps('phone')}
       />
 
       <Group mt="md">

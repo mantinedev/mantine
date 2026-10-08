@@ -97,4 +97,30 @@ describe('@mantine/form/set-path', () => {
       ],
     });
   });
+  it('keeps built-in objects intact and does not write through them', () => {
+    const date = new Date(2024, 0, 1);
+    const values = { date, other: '' };
+    const result = setPath('date.x', 1, values);
+
+    expect(result.date).toBe(date);
+    expect(result.date.getTime()).toBe(date.getTime());
+    expect(setPath('other', 'next', values)).toStrictEqual({ date, other: 'next' });
+  });
+
+  it('keeps the prototype of class instances', () => {
+    class Point {
+      constructor(
+        public x = 0,
+        public y = 0
+      ) {}
+
+      sum() {
+        return this.x + this.y;
+      }
+    }
+
+    const result = setPath('point.x', 5, { point: new Point(1, 2) });
+    expect(result.point).toBeInstanceOf(Point);
+    expect(result.point.sum()).toBe(7);
+  });
 });

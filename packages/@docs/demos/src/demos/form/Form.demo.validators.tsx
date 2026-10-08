@@ -45,7 +45,6 @@ function Demo() {
         label="Name"
         placeholder="Name"
         withAsterisk
-        key={form.key('name')}
         {...form.getInputProps('name')}
       />
       <TextInput
@@ -53,7 +52,6 @@ function Demo() {
         placeholder="Your job"
         withAsterisk
         mt="md"
-        key={form.key('job')}
         {...form.getInputProps('job')}
       />
       <TextInput
@@ -61,7 +59,6 @@ function Demo() {
         placeholder="Your email"
         withAsterisk
         mt="md"
-        key={form.key('email')}
         {...form.getInputProps('email')}
       />
       <TextInput
@@ -69,7 +66,6 @@ function Demo() {
         placeholder="Your favorite color"
         withAsterisk
         mt="md"
-        key={form.key('favoriteColor')}
         {...form.getInputProps('favoriteColor')}
       />
       <NumberInput
@@ -77,7 +73,6 @@ function Demo() {
         placeholder="Your age"
         withAsterisk
         mt="md"
-        key={form.key('age')}
         {...form.getInputProps('age')}
       />
       <TextInput
@@ -85,7 +80,6 @@ function Demo() {
         placeholder="https://example.com"
         withAsterisk
         mt="md"
-        key={form.key('website')}
         {...form.getInputProps('website')}
       />
       <NativeSelect
@@ -93,7 +87,6 @@ function Demo() {
         data={['', 'developer', 'designer', 'manager']}
         withAsterisk
         mt="md"
-        key={form.key('role')}
         {...form.getInputProps('role')}
       />
 
@@ -131,19 +124,12 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(() => {})}>
-      <TextInput
-        label="Name"
-        placeholder="Name"
-        withAsterisk
-        key={form.key('name')}
-        {...form.getInputProps('name')}
-      />
+      <TextInput label="Name" placeholder="Name" withAsterisk {...form.getInputProps('name')} />
       <TextInput
         label="Your job"
         placeholder="Your job"
         withAsterisk
         mt="md"
-        key={form.key('job')}
         {...form.getInputProps('job')}
       />
       <TextInput
@@ -151,7 +137,6 @@ function Demo() {
         placeholder="Your email"
         withAsterisk
         mt="md"
-        key={form.key('email')}
         {...form.getInputProps('email')}
       />
       <TextInput
@@ -159,7 +144,6 @@ function Demo() {
         placeholder="Your favorite color"
         withAsterisk
         mt="md"
-        key={form.key('favoriteColor')}
         {...form.getInputProps('favoriteColor')}
       />
       <NumberInput
@@ -167,7 +151,6 @@ function Demo() {
         placeholder="Your age"
         withAsterisk
         mt="md"
-        key={form.key('age')}
         {...form.getInputProps('age')}
       />
       <TextInput
@@ -175,7 +158,6 @@ function Demo() {
         placeholder="https://example.com"
         withAsterisk
         mt="md"
-        key={form.key('website')}
         {...form.getInputProps('website')}
       />
       <NativeSelect
@@ -183,7 +165,6 @@ function Demo() {
         data={['', 'developer', 'designer', 'manager']}
         withAsterisk
         mt="md"
-        key={form.key('role')}
         {...form.getInputProps('role')}
       />
 

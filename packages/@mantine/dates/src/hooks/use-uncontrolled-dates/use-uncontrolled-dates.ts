@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useFormField, useUncontrolled } from '@mantine/hooks';
 import { DatePickerType, DatePickerValue, DateStringValue } from '../../types';
 import { toDateString, toDateTimeString } from '../../utils';
 
@@ -21,17 +21,19 @@ export const convertDatesValue = (value: any, withTime: boolean) => {
 
 export function useUncontrolledDates<Type extends DatePickerType = 'default'>({
   type,
-  value,
+  value: valueProp,
   defaultValue,
   onChange,
   withTime = false,
 }: UseUncontrolledDates<Type>) {
   const storedType = useRef<Type>(type);
+  const formField = useFormField<DatePickerValue<Type>>(onChange);
+  const value = formField.subscribed ? formField.value : valueProp;
   const [_value, _setValue, controlled] = useUncontrolled<any>({
     value: convertDatesValue(value, withTime),
     defaultValue: convertDatesValue(defaultValue, withTime),
     finalValue: getEmptyValue(type),
-    onChange,
+    onChange: formField.bound ? (val: any) => onChange?.(val) : onChange,
   });
 
   let _finalValue = _value;

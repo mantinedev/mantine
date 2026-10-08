@@ -38,13 +38,11 @@ function Demo() {
       <TextInput
         label="Email"
         placeholder="Email"
-        key={form.key('email')}
         {...form.getInputProps('email')}
       />
       <Checkbox
         mt="sm"
         label="I accept terms and conditions"
-        key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
     </form>
@@ -78,16 +76,10 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(console.log)}>
-      <TextInput
-        label="Email"
-        placeholder="Email"
-        key={form.key('email')}
-        {...form.getInputProps('email')}
-      />
+      <TextInput label="Email" placeholder="Email" {...form.getInputProps('email')} />
       <Checkbox
         mt="sm"
         label="I accept terms and conditions"
-        key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
     </form>

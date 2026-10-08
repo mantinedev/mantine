@@ -1,4 +1,5 @@
 import { use } from 'react';
+import { useFormField } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -297,6 +298,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
   } = props as typeof props & Pick<React.HTMLAttributes<HTMLDivElement>, 'dir'>;
 
   const { styleProps, rest } = extractStyleProps(others);
+  const formField = useFormField((rest as any).onChange);
   const ctx = use(InputWrapperContext);
   const stylesCtx: InputStylesCtx = { offsetBottom: ctx?.offsetBottom, offsetTop: ctx?.offsetTop };
 
@@ -386,6 +388,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
         <Box
           component="input"
           {...rest}
+          {...(formField.subscribed ? { value: formField.value ?? '' } : null)}
           {...ariaAttributes}
           required={required}
           mod={{

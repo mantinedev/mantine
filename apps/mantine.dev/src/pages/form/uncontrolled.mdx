@@ -7,15 +7,11 @@ export default Layout(MDX_DATA.formUncontrolled);
 ## Controlled mode
 
 Controlled mode is the default mode of the form. In this mode, the form data is
-stored in React state and all components are rerendered when the form data changes.
-Controlled mode is not recommended for large forms.
-
-Example of a form with controlled mode:
+stored in React state: `form.values` update on every change, and every component that
+uses `form.values` rerenders on every change. Controlled mode is not recommended for
+large forms:
 
 <Demo data={FormDemos.controlled} />
-
-As you can see in the example above, `form.values` update on every change. This
-means that every component that uses `form.values` will rerender on every change.
 
 ## Uncontrolled mode
 
@@ -23,14 +19,11 @@ Uncontrolled mode is an alternative form mode introduced in the 7.8.0 release.
 It is now the recommended mode for all forms.
 Uncontrolled mode provides significant performance improvements for large forms.
 
-With uncontrolled mode, the form data is stored in a ref instead of React state
-and `form.values` are not updated on every change.
-
-Example of a form with uncontrolled mode:
+With uncontrolled mode, the form data is stored outside of React state. The component
+that calls `useForm` does not rerender when a field changes: each Mantine input is subscribed
+to its own field and rerenders alone. `form.values` do not update at all:
 
 <Demo data={FormDemos.uncontrolled} />
-
-As you can see in the example above, `form.values` do not update at all.
 
 ## form.getValues
 
@@ -136,7 +129,6 @@ function Demo() {
     <>
       <Checkbox
         label="Ships internationally"
-        key={form.key('shipsInternationally')}
         {...form.getInputProps('shipsInternationally', {
           type: 'checkbox',
         })}
@@ -144,7 +136,6 @@ function Demo() {
       <Collapse expanded={shipsInternationally}>
         <TextInput
           label="Country"
-          key={form.key('country')}
           {...form.getInputProps('country')}
         />
       </Collapse>
@@ -174,7 +165,6 @@ function Demo() {
     <>
       <Checkbox
         label="Ships internationally"
-        key={form.key('shipsInternationally')}
         {...form.getInputProps('shipsInternationally', {
           type: 'checkbox',
         })}
@@ -182,7 +172,6 @@ function Demo() {
       <Collapse expanded={shipsInternationally}>
         <TextInput
           label="Country"
-          key={form.key('country')}
           {...form.getInputProps('country')}
         />
       </Collapse>
@@ -191,18 +180,22 @@ function Demo() {
 }
 ```
 
+## Dirty and touched state
+
+`form.isDirty()` and `form.isTouched()` return the current state when called, but the form
+component does not rerender when it changes. To render dirty or touched state, use
+[form.useDirty and form.useTouched](/form/status/#usedirty-and-usetouched-hooks) hooks,
+they subscribe the component the same way as `form.useWatchValue`.
+
 ## form.getInputProps
 
-[form.getInputProps](/form/get-input-props/) returns different props for controlled
-and uncontrolled modes. In controlled mode, the returned object has `value` prop,
-while in uncontrolled mode it has `defaultValue` prop.
-
-Uncontrolled mode relies on the `key` returned from `form.key()` to update
-components when `form.setFieldValue` or `form.setValues` are called. You should
-set the `key` supplied by `form.key()` to the input component to ensure that it has
-the updated value:
+[form.getInputProps](/form/get-input-props/) returns the same props in both modes:
+`value` (or `checked`), `onChange`, `onFocus`, `onBlur` and `error`. In uncontrolled mode
+the input is subscribed to its field, so `form.setFieldValue`, `form.setValues`, `form.reset`
+and list handlers update it without rerendering the form component. No `key` prop is required:
 
 ```tsx
+import { Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 function Demo() {
@@ -212,39 +205,28 @@ function Demo() {
   });
 
   return (
-    <input {...form.getInputProps('text')} key={form.key('text')} />
+    <>
+      <TextInput {...form.getInputProps('text')} />
+      <Button onClick={() => form.setFieldValue('text', 'Updated')}>
+        Set value
+      </Button>
+    </>
   );
 }
 ```
 
-In case you need to have a [list of fields](/form/nested/#nested-arrays),
-do not pass the `key` to the input component directly. Instead, add a wrapper
-element and pass the `key` to it:
+An input that is not subscribed to its field, for example a native `input` element or a
+third-party component, still receives the new `value`: the form component rerenders when
+that field changes, the same way as in controlled mode.
+
+In [lists of fields](/form/nested/#nested-arrays), use a stable key for each item, for example
+a `randomId()` stored in the item. The key keeps focus on an item when items are reordered,
+values are displayed correctly with any key:
 
 ```tsx
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 
-// ❌ Incorrect: Do not override key prop, even in lists
-function Demo() {
-  const form = useForm({
-    mode: 'uncontrolled',
-    initialValues: {
-      jobs: [{ company: 'Google' }, { company: 'Facebook' }],
-    },
-  });
-
-  const fields = form.getValues().jobs.map((_, index) => (
-      <input
-        {...form.getInputProps(`jobs.${index}.company`)}
-        key={index}
-      />
-    ));
-
-  return <form>{fields}</form>;
-}
-
-// ✅ Correct: Add a wrapper element and pass key to it
 function Demo() {
   const form = useForm({
     mode: 'uncontrolled',
@@ -257,13 +239,8 @@ function Demo() {
   });
 
   const fields = form.getValues().jobs.map((item, index) => (
-      <div key={item.key}>
-        <input
-          {...form.getInputProps(`jobs.${index}.company`)}
-          key={form.key(`jobs.${index}.company`)}
-        />
-      </div>
-    ));
+    <input key={item.key} {...form.getInputProps(`jobs.${index}.company`)} />
+  ));
 
   return <form>{fields}</form>;
 }
@@ -271,9 +248,11 @@ function Demo() {
 
 ## Uncontrolled mode in custom components
 
-If you want to build a custom component that supports uncontrolled form mode,
-you must add support for the `defaultValue` prop. The best way to add support for
-`defaultValue` is to use the [use-uncontrolled](/hooks/use-uncontrolled/) hook:
+A custom component that supports `value` and `onChange` props works in uncontrolled mode.
+To rerender it without rerendering the form component, subscribe it to the field with the
+[use-form-field](/hooks/use-form-field/) hook. Components built with the
+[use-uncontrolled](/hooks/use-uncontrolled/) hook are subscribed automatically when `onChange`
+is passed to the hook as is:
 
 ```tsx
 import { useUncontrolled } from '@mantine/hooks';
@@ -284,7 +263,7 @@ interface CustomInputProps {
   onChange?: (value: string) => void;
 }
 
-// ✅ CustomInput supports both controlled and uncontrolled modes
+// ✅ CustomInput is subscribed to the form field
 function CustomInput({
   value,
   defaultValue,
@@ -293,7 +272,7 @@ function CustomInput({
   const [_value, handleChange] = useUncontrolled({
     value,
     defaultValue,
-    finalValue: 'Final',
+    finalValue: '',
     onChange,
   });
 
@@ -312,13 +291,10 @@ function Demo() {
     initialValues: { text: 'Initial' },
   });
 
-  // ✅ CustomInput supports `defaultValue` prop,
-  // it can be used in uncontrolled mode
-  return (
-    <CustomInput
-      {...form.getInputProps('text')}
-      key={form.key('text')}
-    />
-  );
+  return <CustomInput {...form.getInputProps('text')} />;
 }
 ```
+
+If the component keeps state that the value cannot express, for example a partially entered
+date, use the `onExternalWrite` option of [use-form-field](/hooks/use-form-field/#onexternalwrite)
+to clear that state when the form writes the field value.

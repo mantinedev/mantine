@@ -1,4 +1,4 @@
-import { filterErrors } from '../hooks/use-form-errors/filter-errors/filter-errors';
+import { filterErrors } from '../form-store/filter-errors/filter-errors';
 import { getPath } from '../paths';
 import {
   FormErrors,

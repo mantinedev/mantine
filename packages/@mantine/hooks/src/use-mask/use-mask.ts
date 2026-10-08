@@ -76,6 +76,9 @@ export interface UseMaskReturnValue {
 
   /** Clear the input value and reset state */
   reset: () => void;
+
+  /** Sets the input value and applies the mask to it, does not call `onChangeRaw` and `onComplete` */
+  setValue: (value: string) => void;
 }
 
 interface MaskSlot {
@@ -1008,7 +1011,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     return checkComplete(processedRef.current, slots);
   })();
 
-  const reset = useCallback(() => {
+  const clear = useCallback((notify: boolean) => {
     const opts = optionsRef.current;
     const input = inputRef.current;
 
@@ -1033,10 +1036,47 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       }
     }
 
-    if (opts.onChangeRaw) {
+    if (notify && opts.onChangeRaw) {
       opts.onChangeRaw('', '');
     }
   }, []);
+
+  const reset = useCallback(() => clear(true), [clear]);
+
+  const setValue = useCallback(
+    (next: string) => {
+      if (!next) {
+        clear(false);
+        return;
+      }
+
+      const opts = optionsRef.current;
+      const {
+        slots: initialSlots,
+        slotChar: initialSlotChar,
+        transform,
+      } = getResolvedOptions(opts, '');
+      const initialProcessed = processInput(next, initialSlots, initialSlotChar, transform);
+      const initialRaw = extractRaw(initialProcessed, initialSlots);
+      const { slots, slotChar } = getResolvedOptions(opts, initialRaw);
+      const reprocessed = processInput(next, slots, slotChar, transform);
+      const newRaw = extractRaw(reprocessed, slots);
+      const showSlots = opts.alwaysShowMask || isFocusedRef.current;
+      const showOnFocus = opts.showMaskOnFocus !== false;
+      const displayValue = buildDisplayValue(
+        reprocessed,
+        slots,
+        slotChar,
+        showSlots && (showOnFocus || reprocessed.length > 0)
+      );
+
+      undoStackRef.current = [];
+      redoStackRef.current = [];
+      wasCompleteRef.current = checkComplete(reprocessed, slots);
+      applyValue({ reprocessed, newRaw, displayValue, resolvedSlots: slots, notifyChange: false });
+    },
+    [applyValue, clear]
+  );
 
   return {
     ref: refCallback,
@@ -1044,6 +1084,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
     rawValue,
     isComplete,
     reset,
+    setValue,
   };
 }
 

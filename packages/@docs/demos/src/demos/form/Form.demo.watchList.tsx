@@ -35,19 +35,16 @@ function Demo() {
           <TextInput
             label="Name"
             style={{ flex: 1 }}
-            key={form.key(\`products.\${index}.name\`)}
             {...form.getInputProps(\`products.\${index}.name\`)}
           />
           <NumberInput
             label="Price"
             style={{ width: 80 }}
-            key={form.key(\`products.\${index}.price\`)}
             {...form.getInputProps(\`products.\${index}.price\`)}
           />
           <NumberInput
             label="Qty"
             style={{ width: 80 }}
-            key={form.key(\`products.\${index}.quantity\`)}
             {...form.getInputProps(\`products.\${index}.quantity\`)}
           />
           <Button
@@ -109,19 +106,16 @@ function Demo() {
           <TextInput
             label="Name"
             style={{ flex: 1 }}
-            key={form.key(`products.${index}.name`)}
             {...form.getInputProps(`products.${index}.name`)}
           />
           <NumberInput
             label="Price"
             style={{ width: 80 }}
-            key={form.key(`products.${index}.price`)}
             {...form.getInputProps(`products.${index}.price`)}
           />
           <NumberInput
             label="Qty"
             style={{ width: 80 }}
-            key={form.key(`products.${index}.quantity`)}
             {...form.getInputProps(`products.${index}.quantity`)}
           />
           <Button color="red" onClick={() => form.removeListItem('products', index)}>

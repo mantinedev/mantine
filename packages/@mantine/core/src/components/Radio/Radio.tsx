@@ -1,5 +1,5 @@
 import { use } from 'react';
-import { useId } from '@mantine/hooks';
+import { useFormField, useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -223,7 +223,12 @@ export const Radio = factory<RadioFactory>((_props) => {
   const describedBy =
     [descriptionId, errorId, rest['aria-describedby']].filter(Boolean).join(' ') || undefined;
 
-  const contextChecked = ctx ? ctx.value === rest.value : undefined;
+  const formField = useFormField<boolean>(onChange);
+  const contextChecked = ctx
+    ? ctx.value === rest.value
+    : formField.subscribed
+      ? (formField.value ?? false)
+      : undefined;
 
   const withContextProps = {
     checked: contextChecked ?? checked,

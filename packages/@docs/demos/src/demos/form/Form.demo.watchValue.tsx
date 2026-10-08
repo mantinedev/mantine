@@ -23,13 +23,11 @@ function Demo() {
       <TextInput
         label="Email"
         placeholder="Email"
-        key={form.key('email')}
         {...form.getInputProps('email')}
       />
 
       <Checkbox
         label="Ships internationally"
-        key={form.key('shipsInternationally')}
         {...form.getInputProps('shipsInternationally', { type: 'checkbox' })}
       />
 
@@ -37,7 +35,6 @@ function Demo() {
         <TextInput
           label="Country"
           placeholder="Country"
-          key={form.key('country')}
           {...form.getInputProps('country')}
         />
       </Collapse>
@@ -60,26 +57,15 @@ function Demo() {
 
   return (
     <Stack>
-      <TextInput
-        label="Email"
-        placeholder="Email"
-        key={form.key('email')}
-        {...form.getInputProps('email')}
-      />
+      <TextInput label="Email" placeholder="Email" {...form.getInputProps('email')} />
 
       <Checkbox
         label="Ships internationally"
-        key={form.key('shipsInternationally')}
         {...form.getInputProps('shipsInternationally', { type: 'checkbox' })}
       />
 
       <Collapse expanded={shipsInternationally}>
-        <TextInput
-          label="Country"
-          placeholder="Country"
-          key={form.key('country')}
-          {...form.getInputProps('country')}
-        />
+        <TextInput label="Country" placeholder="Country" {...form.getInputProps('country')} />
       </Collapse>
     </Stack>
   );

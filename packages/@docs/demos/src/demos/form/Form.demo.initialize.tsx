@@ -33,13 +33,11 @@ function Demo() {
     <>
       <TextInput
         {...form.getInputProps('name')}
-        key={form.key('name')}
         label="Name"
         placeholder="Name"
       />
       <NumberInput
         {...form.getInputProps('age')}
-        key={form.key('age')}
         label="Age"
         placeholder="Age"
         mt="md"
@@ -77,19 +75,8 @@ function Demo() {
 
   return (
     <>
-      <TextInput
-        {...form.getInputProps('name')}
-        key={form.key('name')}
-        label="Name"
-        placeholder="Name"
-      />
-      <NumberInput
-        {...form.getInputProps('age')}
-        key={form.key('age')}
-        label="Age"
-        placeholder="Age"
-        mt="md"
-      />
+      <TextInput {...form.getInputProps('name')} label="Name" placeholder="Name" />
+      <NumberInput {...form.getInputProps('age')} label="Age" placeholder="Age" mt="md" />
       <Button onClick={() => apiRequest().then((values) => form.initialize(values))} mt="md">
         Initialize form
       </Button>

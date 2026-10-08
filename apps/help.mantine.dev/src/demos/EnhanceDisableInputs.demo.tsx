@@ -23,14 +23,12 @@ function Demo() {
         label="Your name"
         placeholder="Your name"
         {...form.getInputProps('name')}
-        key={form.key('name')}
       />
       <TextInput
         label="Your email"
         placeholder="Your email"
         mt="md"
         {...form.getInputProps('email')}
-        key={form.key('email')}
       />
       <Button mt="md" onClick={() => setDisabled((d) => !d)}>
         Toggle disabled
@@ -51,18 +49,12 @@ function Demo() {
 
   return (
     <form>
-      <TextInput
-        label="Your name"
-        placeholder="Your name"
-        {...form.getInputProps('name')}
-        key={form.key('name')}
-      />
+      <TextInput label="Your name" placeholder="Your name" {...form.getInputProps('name')} />
       <TextInput
         label="Your email"
         placeholder="Your email"
         mt="md"
         {...form.getInputProps('email')}
-        key={form.key('email')}
       />
       <Button mt="md" onClick={() => setDisabled((d) => !d)}>
         Toggle disabled

@@ -31,10 +31,9 @@ function Demo() {
 
   return (
     <>
-      <TextInput {...form.getInputProps('name', { fieldType: 'name' })} key={form.key('name')} />
+      <TextInput {...form.getInputProps('name', { fieldType: 'name' })} />
       <NumberInput
         {...form.getInputProps('age')}
-        key={form.key('age')}
         label="Age"
         placeholder="Age"
         mt="md"
@@ -69,14 +68,8 @@ function Demo() {
 
   return (
     <>
-      <TextInput {...form.getInputProps('name', { fieldType: 'name' })} key={form.key('name')} />
-      <NumberInput
-        {...form.getInputProps('age')}
-        key={form.key('age')}
-        label="Age"
-        placeholder="Age"
-        mt="md"
-      />
+      <TextInput {...form.getInputProps('name', { fieldType: 'name' })} />
+      <NumberInput {...form.getInputProps('age')} label="Age" placeholder="Age" mt="md" />
     </>
   );
 }

@@ -45,6 +45,7 @@ export { useResizeObserver, useElementSize } from './use-resize-observer/use-res
 export { useShallowEffect } from './use-shallow-effect/use-shallow-effect.js';
 export { useToggle } from './use-toggle/use-toggle.js';
 export { useUncontrolled } from './use-uncontrolled/use-uncontrolled.js';
+export { useFormField } from './use-form-field/use-form-field.js';
 export { useViewportSize } from './use-viewport-size/use-viewport-size.js';
 export { useWindowEvent } from './use-window-event/use-window-event.js';
 export { useWindowScroll } from './use-window-scroll/use-window-scroll.js';
@@ -223,6 +224,11 @@ export type {
   UseUncontrolledOptions,
   UseUncontrolledReturnValue,
 } from './use-uncontrolled/use-uncontrolled';
+export type {
+  FormField,
+  UseFormFieldOptions,
+  UseFormFieldReturnValue,
+} from './use-form-field/use-form-field';
 export type {
   UseValidatedStateValue,
   UseValidatedStateReturnValue,

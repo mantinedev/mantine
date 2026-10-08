@@ -129,11 +129,7 @@ function Demo() {
   const controller = useDateInput();
 
   return (
-    <DateInput
-      controller={controller}
-      key={form.key('date')}
-      {...form.getInputProps('date')}
-    />
+    <DateInput controller={controller} {...form.getInputProps('date')} />
   );
 }
 ```
@@ -151,8 +147,9 @@ The pattern has three rules:
   `defaultValue` and `onChange`. For example, `length` of `PinInput` and `format` of `TimePicker`
   are ignored on the component once a controller is set.
 - Keep `error`, `onFocus` and `onBlur` on the component.
-- Use `mode: 'uncontrolled'` and set `key={form.key('field')}` on the component that calls the hook.
-  In `mode: 'controlled'`, `form.reset()` does not clear a partially entered time or date.
+- Pass `onChange` to the hook as is. The hook subscribes to the form field through it, so the
+  component rerenders alone in uncontrolled mode and `form.reset()` clears a partially entered
+  time or date.
 
 Actions called on the controller, for example `clear()` or `setValue()`, call `onChange`
 the same way as typing, so the form stays in sync.

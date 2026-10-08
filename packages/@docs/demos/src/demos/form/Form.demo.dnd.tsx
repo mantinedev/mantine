@@ -42,12 +42,10 @@ function SortableItem({ id, index, form }) {
       </Center>
       <TextInput
         placeholder="John Doe"
-        key={form.key(\`employees.\${index}.name\`)}
         {...form.getInputProps(\`employees.\${index}.name\`)}
       />
       <TextInput
         placeholder="example@mail.com"
-        key={form.key(\`employees.\${index}.email\`)}
         {...form.getInputProps(\`employees.\${index}.email\`)}
       />
     </Group>
@@ -116,14 +114,9 @@ function SortableItem({ id, index, form }: any) {
       <Center {...listeners}>
         <DotsSixVerticalIcon size={18} />
       </Center>
-      <TextInput
-        placeholder="John Doe"
-        key={form.key(`employees.${index}.name`)}
-        {...form.getInputProps(`employees.${index}.name`)}
-      />
+      <TextInput placeholder="John Doe" {...form.getInputProps(`employees.${index}.name`)} />
       <TextInput
         placeholder="example@mail.com"
-        key={form.key(`employees.${index}.email`)}
         {...form.getInputProps(`employees.${index}.email`)}
       />
     </Group>

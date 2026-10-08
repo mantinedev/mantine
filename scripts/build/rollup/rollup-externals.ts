@@ -20,7 +20,6 @@ export const ROLLUP_EXTERNALS = [
   'dayjs/plugin/advancedFormat',
   'dayjs/plugin/quarterOfYear.js',
   'dayjs/plugin/quarterOfYear',
-  'klona/full',
   'culori/fn',
   'highlight.js/lib/languages/typescript',
   'react-is',

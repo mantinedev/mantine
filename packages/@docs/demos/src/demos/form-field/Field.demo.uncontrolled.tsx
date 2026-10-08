@@ -17,7 +17,6 @@ function Demo() {
     <>
       <TextInput
         {...field.getInputProps()}
-        key={field.key}
         label="Name"
         placeholder="Enter your name"
         mb="md"
@@ -37,13 +36,7 @@ function Demo() {
 
   return (
     <>
-      <TextInput
-        {...field.getInputProps()}
-        key={field.key}
-        label="Name"
-        placeholder="Enter your name"
-        mb="md"
-      />
+      <TextInput {...field.getInputProps()} label="Name" placeholder="Enter your name" mb="md" />
       <Button onClick={field.validate}>Validate</Button>
     </>
   );

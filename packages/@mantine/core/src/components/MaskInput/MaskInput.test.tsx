@@ -148,7 +148,6 @@ describe('@mantine/core/MaskInput', () => {
           <MaskInput
             mask="(999) 999-9999"
             label="Phone"
-            key={form.key('phone')}
             defaultValue={form.getValues().phone}
             onChangeRaw={(raw) => form.setFieldValue('phone', raw, { forceUpdate: false })}
           />
@@ -166,4 +165,45 @@ describe('@mantine/core/MaskInput', () => {
     expect(screen.getByLabelText('Phone')).toHaveValue('(123) 456-7890');
     expect(handleSubmit.mock.calls[0][0]).toStrictEqual({ phone: '1234567890' });
   });
+
+  it.each(['controlled', 'uncontrolled'] as const)(
+    'works with form.getInputProps in %s mode',
+    async (mode) => {
+      let form: any;
+      const handleSubmit = jest.fn();
+
+      function TestForm() {
+        form = useForm({ mode, initialValues: { phone: '1234567890' } });
+
+        return (
+          <form onSubmit={form.onSubmit(handleSubmit)}>
+            <MaskInput mask="(999) 999-9999" label="Phone" {...form.getInputProps('phone')} />
+            <button type="submit">Submit</button>
+          </form>
+        );
+      }
+
+      render(<TestForm />);
+      expect(screen.getByLabelText('Phone')).toHaveValue('(123) 456-7890');
+
+      await userEvent.click(screen.getByLabelText('Phone'));
+      await userEvent.keyboard('{Backspace}');
+      expect(form.getValues().phone).toBe('123456789');
+
+      act(() => form.setFieldValue('phone', '5551234567'));
+      expect(screen.getByLabelText('Phone')).toHaveValue('(555) 123-4567');
+      expect(form.isTouched('phone')).toBe(true);
+
+      act(() => form.reset());
+      expect(screen.getByLabelText('Phone')).toHaveValue('(123) 456-7890');
+      expect(form.isDirty()).toBe(false);
+      expect(form.isTouched()).toBe(false);
+
+      act(() => form.setFieldValue('phone', ''));
+      expect(screen.getByLabelText('Phone')).toHaveValue('');
+
+      await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+      expect(handleSubmit.mock.calls[0][0]).toStrictEqual({ phone: '' });
+    }
+  );
 });

@@ -4670,7 +4670,6 @@ __metadata:
   dependencies:
     "@standard-schema/spec": "npm:^1.1.0"
     fast-deep-equal: "npm:^3.1.3"
-    klona: "npm:^2.0.6"
     zod: "npm:^4.6.5"
   peerDependencies:
     react: ^19.2.0
@@ -14538,13 +14537,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"klona@npm:^2.0.6":
-  version: 2.0.6
-  resolution: "klona@npm:2.0.6"
-  checksum: 10c0/94eed2c6c2ce99f409df9186a96340558897b3e62a85afdc1ee39103954d2ebe1c1c4e9fe2b0952771771fa96d70055ede8b27962a7021406374fdb695fd4d01
-  languageName: node
-  linkType: hard
-
 "known-css-properties@npm:^0.37.0":
   version: 0.37.0
   resolution: "known-css-properties@npm:0.37.0"
@@ -14946,7 +14938,6 @@ __metadata:
     jest: "npm:^30.5.2"
     jest-axe: "npm:^11.0.0"
     jest-environment-jsdom: "npm:^30.5.2"
-    klona: "npm:^2.0.6"
     lodash: "npm:^4.18.1"
     lowlight: "npm:^3.3.0"
     mantine-docgen-script: "npm:^2.0.0"

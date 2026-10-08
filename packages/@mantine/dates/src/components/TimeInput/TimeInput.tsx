@@ -12,6 +12,7 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
+import { useFormField } from '@mantine/hooks';
 import classes from './TimeInput.module.css';
 
 export interface TimeInputProps
@@ -120,8 +121,10 @@ export const TimeInput = factory<TimeInputFactory>((_props) => {
     }
   };
 
+  const formField = useFormField<string>(onChange);
+  const _value = formField.subscribed ? (formField.value ?? '') : value;
   const [uncontrolledEmpty, setUncontrolledEmpty] = useState(!others.defaultValue);
-  const isEmpty = value !== undefined ? !value : uncontrolledEmpty;
+  const isEmpty = _value !== undefined ? !_value : uncontrolledEmpty;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUncontrolledEmpty(!event.currentTarget.value);
@@ -133,7 +136,7 @@ export const TimeInput = factory<TimeInputFactory>((_props) => {
       classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
       styles={resolvedStyles}
       unstyled={unstyled}
-      value={value}
+      value={_value}
       step={step ?? (withSeconds ? 1 : 60)}
       data-empty={isEmpty || undefined}
       {...others}

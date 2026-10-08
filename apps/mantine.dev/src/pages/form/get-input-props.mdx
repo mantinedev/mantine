@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.formGetInputProps);
 
 ## getInputProps handler
 
-`form.getInputProps` returns an object with `value` (`defaultValue` for "uncontrolled" mode), `onChange`, `onFocus`, `onBlur`, `error`
+`form.getInputProps` returns an object with `value`, `onChange`, `onFocus`, `onBlur`, `error`
 and all props specified in the `enhanceGetInputProps` function. The return value should be spread to the input component.
 
 You can pass the following options to `form.getInputProps` as the second argument:
@@ -35,11 +35,9 @@ function Demo() {
   return (
     <>
       <TextInput
-        key={form.key('name')}
         {...form.getInputProps('name')}
       />
       <Checkbox
-        key={form.key('accepted')}
         {...form.getInputProps('accepted', { type: 'checkbox' })}
       />
     </>
@@ -50,7 +48,7 @@ function Demo() {
 ## Radio inputs
 
 Use `type: 'radio'` with `value` option to use `getInputProps` with individual radio inputs.
-When `type` is `radio`, `getInputProps` returns `checked` (or `defaultChecked` in uncontrolled mode)
+When `type` is `radio`, `getInputProps` returns `checked`
 comparing the form value against the provided option `value`, and passes `value` through to the input.
 
 <Demo data={FormDemos.radioGetInputProps} />
@@ -124,7 +122,6 @@ function Demo() {
 `form.getInputProps` returns an object with the following properties:
 
 - `value`
-- `defaultValue`
 - `onChange`
 - `onFocus`
 - `onBlur`
@@ -138,7 +135,6 @@ Example of creating a custom input component:
 ```tsx
 interface CustomInputProps {
   value?: string;
-  defaultValue?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -147,7 +143,6 @@ interface CustomInputProps {
 
 export function CustomInput({
   value,
-  defaultValue,
   onChange,
   onFocus,
   onBlur,
@@ -157,7 +152,6 @@ export function CustomInput({
     <div>
       <input
         value={value}
-        defaultValue={defaultValue}
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
@@ -183,8 +177,11 @@ function Demo() {
   return (
     <CustomInput
       {...form.getInputProps('name')}
-      key={form.key('name')}
     />
   );
 }
 ```
+
+In uncontrolled mode, the form component rerenders to pass a new `value` to a custom input.
+To rerender the input on its own instead, subscribe it to the field with the
+[use-form-field](/hooks/use-form-field/) hook.

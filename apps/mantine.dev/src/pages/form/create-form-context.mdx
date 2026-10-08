@@ -30,7 +30,6 @@ function ContextField() {
   return (
     <TextInput
       label="Your name"
-      key={form.key('name')}
       {...form.getInputProps('name')}
     />
   );
@@ -87,7 +86,6 @@ export function NameInput() {
   return (
     <TextInput
       label="Name"
-      key={form.key('name')}
       {...form.getInputProps('name')}
     />
   );
@@ -114,7 +112,6 @@ function UserForm() {
       <form onSubmit={form.onSubmit(() => {})}>
         <NumberInput
           label="Age"
-          key={form.key('age')}
           {...form.getInputProps('age')}
         />
         <NameInput />

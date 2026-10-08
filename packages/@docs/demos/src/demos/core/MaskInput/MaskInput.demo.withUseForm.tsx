@@ -19,7 +19,7 @@ function Demo() {
         mask="(999) 999-9999"
         placeholder="(___) ___-____"
         label="Phone"
-        onChangeRaw={(raw) => form.setFieldValue('phone', raw, { forceUpdate: false })}
+        {...form.getInputProps('phone')}
       />
 
       <Button type="submit" mt="md">
@@ -42,7 +42,7 @@ function Demo() {
         mask="(999) 999-9999"
         placeholder="(___) ___-____"
         label="Phone"
-        onChangeRaw={(raw) => form.setFieldValue('phone', raw, { forceUpdate: false })}
+        {...form.getInputProps('phone')}
       />
 
       <Button type="submit" mt="md">
