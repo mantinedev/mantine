@@ -1,4 +1,6 @@
+import { Fragment, Slice } from '@tiptap/pm/model';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { dropPoint } from '@tiptap/pm/transform';
 
 export interface ImageUploadResult {
   /** URL of the uploaded image, set as `src` attribute */
@@ -17,6 +19,9 @@ export interface UploadImageOptions {
 
   /** Called when image upload fails */
   onImageUploadError?: (file: File, error: unknown) => void;
+
+  /** Called for every image in pasted or dropped HTML, return `true` to download the image and pass it to `onImageUpload`. By default, only images with `data:` URL sources are uploaded. */
+  shouldUploadPastedImage?: (src: string) => boolean;
 }
 
 interface SuccessfulUpload {
@@ -163,17 +168,23 @@ function repairSettledUploads(view: any, transactions: readonly any[], newState:
   return tr ? tr.setMeta('addToHistory', false) : null;
 }
 
+function createUploadId() {
+  return Math.random().toString(36).slice(2, 10);
+}
+
 function startUpload(
   view: any,
   file: File,
-  blobUrl: string,
+  blobUrl: string | null,
   uploadId: string,
   options: UploadImageOptions
 ) {
   options
     .onImageUpload(file)
     .then((result) => {
-      URL.revokeObjectURL(blobUrl);
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl);
+      }
 
       if (view.isDestroyed) {
         return;
@@ -247,7 +258,7 @@ export function insertImageFilesWithUpload(
   const uploads = files.map((file) => ({
     file,
     blobUrl: URL.createObjectURL(file),
-    uploadId: Math.random().toString(36).slice(2, 10),
+    uploadId: createUploadId(),
   }));
 
   view.dispatch(
@@ -273,6 +284,184 @@ export function insertImageWithUpload(
   insertImageFilesWithUpload(view, [file], pos, options);
 }
 
+function isDataUrl(src: string) {
+  return /^data:/i.test(src);
+}
+
+function getExtensionFromMimeType(type: string) {
+  const subtype = type.split('/')[1] ?? '';
+  return subtype.split('+')[0] || 'bin';
+}
+
+function dataUrlToFile(src: string): File {
+  const separator = src.indexOf(',');
+  if (separator === -1) {
+    throw new Error('Invalid data URL');
+  }
+
+  const header = src.slice(5, separator);
+  const data = src.slice(separator + 1);
+  const [type = '', ...params] = header.split(';');
+  const mimeType = type || 'application/octet-stream';
+  const bytes = params.includes('base64')
+    ? Uint8Array.from(atob(data), (char) => char.charCodeAt(0))
+    : new TextEncoder().encode(decodeURIComponent(data));
+
+  return new File([bytes], `pasted-image.${getExtensionFromMimeType(mimeType)}`, {
+    type: mimeType,
+  });
+}
+
+function getRemoteFileName(src: string, type: string) {
+  let name = '';
+  try {
+    name = decodeURIComponent(new URL(src, window.location.href).pathname.split('/').pop() ?? '');
+  } catch {
+    name = '';
+  }
+
+  if (!name) {
+    return `pasted-image.${getExtensionFromMimeType(type)}`;
+  }
+
+  return name.includes('.') ? name : `${name}.${getExtensionFromMimeType(type)}`;
+}
+
+async function remoteUrlToFile(src: string): Promise<File> {
+  const response = await fetch(src);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch image: ${response.status}`);
+  }
+
+  const blob = await response.blob();
+  const type = blob.type || 'application/octet-stream';
+  return new File([blob], getRemoteFileName(src, type), { type });
+}
+
+async function pastedImageToFile(src: string): Promise<File> {
+  return isDataUrl(src) ? dataUrlToFile(src) : remoteUrlToFile(src);
+}
+
+function restoreImageNode(view: any, uploadId: string, src: string) {
+  if (view.isDestroyed) {
+    return;
+  }
+
+  const upload: SuccessfulUpload = { status: 'success', attrs: { src } };
+  const found = findUploadNode(view.state.doc, uploadId);
+
+  if (!found) {
+    getSettledUploads(view).set(uploadId, upload);
+    return;
+  }
+
+  view.dispatch(
+    settleUploadNode(view.state.tr, found.pos, found.node, upload).setMeta('addToHistory', false)
+  );
+}
+
+interface PendingPastedImage {
+  uploadId: string;
+  src: string;
+}
+
+interface MappedSlice {
+  slice: any;
+  pending: PendingPastedImage[];
+}
+
+function shouldUploadPastedImage(node: any, options: UploadImageOptions) {
+  if (node.type.name !== 'image' || node.attrs.uploadId || typeof node.attrs.src !== 'string') {
+    return false;
+  }
+
+  return options.shouldUploadPastedImage
+    ? options.shouldUploadPastedImage(node.attrs.src)
+    : isDataUrl(node.attrs.src);
+}
+
+function mapPastedSlice(slice: any, options: UploadImageOptions): MappedSlice {
+  const pending: PendingPastedImage[] = [];
+
+  const mapFragment = (fragment: any): any => {
+    const nodes: any[] = [];
+
+    fragment.forEach((node: any) => {
+      if (shouldUploadPastedImage(node, options)) {
+        const uploadId = createUploadId();
+        pending.push({ uploadId, src: node.attrs.src });
+        nodes.push(
+          node.type.create(
+            { ...node.attrs, uploading: true, uploadError: false, uploadId },
+            null,
+            node.marks
+          )
+        );
+        return;
+      }
+
+      nodes.push(node.content.size > 0 ? node.copy(mapFragment(node.content)) : node);
+    });
+
+    return Fragment.fromArray(nodes);
+  };
+
+  const content = mapFragment(slice.content);
+  return {
+    slice: pending.length > 0 ? new Slice(content, slice.openStart, slice.openEnd) : slice,
+    pending,
+  };
+}
+
+function stripImages(slice: any): any {
+  const stripFragment = (fragment: any): any => {
+    const nodes: any[] = [];
+
+    fragment.forEach((node: any) => {
+      if (node.type.name === 'image') {
+        return;
+      }
+
+      nodes.push(node.content.size > 0 ? node.copy(stripFragment(node.content)) : node);
+    });
+
+    return Fragment.fromArray(nodes);
+  };
+
+  return new Slice(stripFragment(slice.content), slice.openStart, slice.openEnd);
+}
+
+function startPastedUploads(view: any, pending: PendingPastedImage[], options: UploadImageOptions) {
+  pending.forEach(({ uploadId, src }) => {
+    pastedImageToFile(src).then(
+      (file) => startUpload(view, file, null, uploadId, options),
+      () => restoreImageNode(view, uploadId, src)
+    );
+  });
+}
+
+function getBlockInsertPos(state: any): number {
+  const { $from } = state.selection;
+
+  if (state.schema.nodes.image?.isInline || !$from.parent.isTextblock) {
+    return $from.pos;
+  }
+
+  if ($from.parentOffset === 0) {
+    return $from.before();
+  }
+
+  if ($from.parentOffset === $from.parent.content.size) {
+    return $from.after();
+  }
+
+  return $from.pos;
+}
+
+function hasUploadImageNode(view: any) {
+  return Boolean(view.state.schema.nodes.image?.spec.attrs?.uploadId);
+}
+
 export function getUploadImageExtensionOptions(editor: any): Partial<UploadImageOptions> {
   const extension = editor?.extensionManager?.extensions?.find(
     (item: any) => item.name === 'image'
@@ -291,7 +480,12 @@ export function getUploadImageExtension(TipTapImage: any, options: UploadImageOp
         ...this.parent?.(),
         onImageUpload: options.onImageUpload,
         onImageUploadError: options.onImageUploadError,
+        shouldUploadPastedImage: options.shouldUploadPastedImage,
       };
+    },
+
+    parseHTML() {
+      return [{ tag: 'img[src]' }];
     },
 
     addAttributes() {
@@ -367,6 +561,7 @@ export function getUploadImageExtension(TipTapImage: any, options: UploadImageOp
       const uploadOptions: UploadImageOptions = {
         onImageUpload: this.options.onImageUpload,
         onImageUploadError: this.options.onImageUploadError,
+        shouldUploadPastedImage: this.options.shouldUploadPastedImage,
       };
       let editorView: any = null;
 
@@ -388,41 +583,92 @@ export function getUploadImageExtension(TipTapImage: any, options: UploadImageOp
           },
 
           props: {
-            handleDrop(view, event) {
+            handleDrop(view, event, slice, moved) {
               if (!event.dataTransfer || !uploadOptions.onImageUpload) {
                 return false;
               }
 
               const files = getImageFiles(event.dataTransfer.files);
-              if (files.length === 0) {
+              const pos = view.posAtCoords({ left: event.clientX, top: event.clientY });
+
+              if (files.length > 0) {
+                event.preventDefault();
+
+                if (pos) {
+                  insertImageFilesWithUpload(view, files, pos.pos, uploadOptions);
+                }
+
+                return true;
+              }
+
+              if (moved || !pos || !hasUploadImageNode(view)) {
+                return false;
+              }
+
+              const mapped = mapPastedSlice(slice, uploadOptions);
+              if (mapped.pending.length === 0) {
                 return false;
               }
 
               event.preventDefault();
-              const pos = view.posAtCoords({
-                left: event.clientX,
-                top: event.clientY,
-              });
-
-              if (pos) {
-                insertImageFilesWithUpload(view, files, pos.pos, uploadOptions);
-              }
+              const insertPos = dropPoint(view.state.doc, pos.pos, mapped.slice) ?? pos.pos;
+              view.dispatch(
+                view.state.tr
+                  .replaceRange(insertPos, insertPos, mapped.slice)
+                  .setMeta('uiEvent', 'drop')
+              );
+              startPastedUploads(view, mapped.pending, uploadOptions);
 
               return true;
             },
 
-            handlePaste(view, event) {
+            handlePaste(view, event, slice) {
               if (!event.clipboardData || !uploadOptions.onImageUpload) {
                 return false;
               }
 
               const files = getImageFiles(event.clipboardData.files);
-              if (files.length === 0) {
+
+              if (files.length > 0) {
+                event.preventDefault();
+                const text = stripImages(slice);
+
+                if (text.content.size > 0 && text.content.textBetween(0, text.content.size)) {
+                  view.dispatch(
+                    view.state.tr
+                      .replaceSelection(text)
+                      .setMeta('paste', true)
+                      .setMeta('uiEvent', 'paste')
+                  );
+                }
+
+                insertImageFilesWithUpload(
+                  view,
+                  files,
+                  getBlockInsertPos(view.state),
+                  uploadOptions
+                );
+                return true;
+              }
+
+              if (!hasUploadImageNode(view)) {
+                return false;
+              }
+
+              const mapped = mapPastedSlice(slice, uploadOptions);
+              if (mapped.pending.length === 0) {
                 return false;
               }
 
               event.preventDefault();
-              insertImageFilesWithUpload(view, files, view.state.selection.from, uploadOptions);
+              view.dispatch(
+                view.state.tr
+                  .replaceSelection(mapped.slice)
+                  .scrollIntoView()
+                  .setMeta('paste', true)
+                  .setMeta('uiEvent', 'paste')
+              );
+              startPastedUploads(view, mapped.pending, uploadOptions);
 
               return true;
             },
