@@ -77,6 +77,7 @@ interface TestEditorProps {
   onEditor?: (editor: Editor | null) => void;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   labels?: Partial<RichTextEditorLabels>;
+  content?: string;
 }
 
 function TestEditor({
@@ -86,10 +87,11 @@ function TestEditor({
   onEditor,
   onClick,
   labels,
+  content = '<p>Text</p>',
 }: TestEditorProps) {
   const editor = useEditor({
     extensions,
-    content: '<p>Text</p>',
+    content,
     shouldRerenderOnTransaction: true,
   });
 
@@ -643,5 +645,276 @@ describe('@mantine/tiptap/UploadImage history and preview URL lifecycle', () => 
     jest.advanceTimersByTime(3000);
 
     expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:test/photo.png');
+  });
+});
+
+describe('@mantine/tiptap/UploadImage pasted HTML', () => {
+  const pngBase64 = 'iVBORw0KGgo=';
+
+  interface PasteOptions {
+    html: string;
+    text?: string;
+    files?: File[];
+  }
+
+  function createPasteEvent({ html, text = '', files = [] }: PasteOptions) {
+    const event = new Event('paste', { bubbles: true, cancelable: true });
+    Object.defineProperty(event, 'clipboardData', {
+      value: {
+        files,
+        types: [],
+        items: [],
+        getData: (type: string) =>
+          type === 'text/html' ? html : type === 'text/plain' ? text : '',
+      },
+    });
+    return event;
+  }
+
+  async function renderPasteEditor(options: Partial<UploadImageOptions> = {}) {
+    const { onImageUpload, resolve } = createDeferredUploader();
+    const extensions = createUploadExtensions({ onImageUpload, ...options });
+    let editor: Editor | null = null;
+    const { container } = render(
+      <TestEditor
+        extensions={extensions}
+        content="<p>Text</p><p></p>"
+        onEditor={(value) => {
+          editor = value;
+        }}
+      />
+    );
+    await screen.findByLabelText(label);
+    act(() => {
+      editor!.commands.focus('end');
+    });
+
+    const paste = async (pasteOptions: PasteOptions) => {
+      const event = createPasteEvent(pasteOptions);
+      await act(async () => {
+        editor!.view.dom.dispatchEvent(event);
+        await flushPromises();
+      });
+      return event;
+    };
+
+    return { container, editor: editor! as Editor, onImageUpload, resolve, paste };
+  }
+
+  function getParagraphs(editor: Editor) {
+    const texts: string[] = [];
+    editor.state.doc.forEach((node) => {
+      if (node.type.name === 'paragraph') {
+        texts.push(node.textContent);
+      }
+    });
+    return texts;
+  }
+
+  function getBlockTypes(editor: Editor) {
+    const types: string[] = [];
+    editor.state.doc.forEach((node) => {
+      types.push(node.type.name);
+    });
+    return types;
+  }
+
+  it('uploads base64 images from pasted HTML and keeps the surrounding text', async () => {
+    const { container, editor, onImageUpload, resolve, paste } = await renderPasteEditor();
+
+    await paste({
+      html: `<p>Before</p><img src="data:image/png;base64,${pngBase64}" alt="Chart"><p>After</p>`,
+      text: 'Before\nAfter',
+    });
+
+    expect(onImageUpload).toHaveBeenCalledTimes(1);
+    const file = onImageUpload.mock.calls[0][0];
+    expect(file.type).toBe('image/png');
+    expect(file.size).toBe(8);
+    expect(file.name).toBe('pasted-image.png');
+
+    expect(getParagraphs(editor)).toEqual(['Text', 'Before', 'After']);
+    expect(getImageAttrs(editor)).toEqual([
+      expect.objectContaining({
+        src: `data:image/png;base64,${pngBase64}`,
+        alt: 'Chart',
+        uploading: true,
+      }),
+    ]);
+    expect(container.querySelector('[data-uploading]')).not.toBeNull();
+
+    await act(async () => {
+      resolve(file.name, 'https://cdn/chart.png');
+      await flushPromises();
+    });
+
+    expect(getImageSources(container)).toEqual(['https://cdn/chart.png']);
+    expect(getImageAttrs(editor)).toEqual([
+      expect.objectContaining({ src: 'https://cdn/chart.png', alt: 'Chart', uploading: false }),
+    ]);
+  });
+
+  it('uploads images with an uppercase data URL scheme', async () => {
+    const { onImageUpload, paste } = await renderPasteEditor();
+
+    await paste({ html: `<img src="DATA:image/png;base64,${pngBase64}">` });
+
+    expect(onImageUpload).toHaveBeenCalledTimes(1);
+    expect(onImageUpload.mock.calls[0][0].type).toBe('image/png');
+  });
+
+  it('restores the original image when a pasted data URL cannot be decoded', async () => {
+    const { container, editor, onImageUpload, paste } = await renderPasteEditor();
+
+    await paste({ html: '<img src="data:image/png;base64,%%%not-base64%%%">' });
+
+    expect(onImageUpload).not.toHaveBeenCalled();
+    expect(getImageAttrs(editor)).toEqual([
+      expect.objectContaining({
+        src: 'data:image/png;base64,%%%not-base64%%%',
+        uploading: false,
+        uploadError: false,
+        uploadId: null,
+      }),
+    ]);
+    expect(container.querySelector('[data-uploading]')).toBeNull();
+  });
+
+  it('inserts pasted text before image files when the clipboard carries both', async () => {
+    const { container, editor, onImageUpload, paste } = await renderPasteEditor();
+
+    const event = await paste({
+      html: '<p>Hello from Word</p><img src="https://remote/pic.png">',
+      text: 'Hello from Word',
+      files: [createImageFile('photo.png')],
+    });
+
+    expect(event.defaultPrevented).toBe(true);
+    expect(onImageUpload).toHaveBeenCalledTimes(1);
+    expect(getParagraphs(editor)).toEqual(['Text', 'Hello from Word', '']);
+    expect(getBlockTypes(editor)).toEqual(['paragraph', 'paragraph', 'image', 'paragraph']);
+    expect(getImageSources(container)).toEqual(['blob:test/photo.png']);
+  });
+
+  it('ignores pasted HTML without text when the clipboard carries image files', async () => {
+    const { container, editor, onImageUpload, paste } = await renderPasteEditor();
+
+    await paste({
+      html: '<img src="https://remote/pic.png">',
+      files: [createImageFile('photo.png')],
+    });
+
+    expect(onImageUpload).toHaveBeenCalledTimes(1);
+    expect(editor.getText().trim()).toBe('Text');
+    expect(getBlockTypes(editor)).toEqual(['paragraph', 'image', 'paragraph']);
+    expect(getImageSources(container)).toEqual(['blob:test/photo.png']);
+  });
+
+  it('leaves remote images in pasted HTML untouched by default', async () => {
+    const { container, editor, onImageUpload, paste } = await renderPasteEditor();
+
+    const event = await paste({
+      html: '<p>Before</p><img src="https://remote/pic.png"><p>After</p>',
+      text: 'Before\nAfter',
+    });
+
+    expect(event.defaultPrevented).toBe(true);
+    expect(onImageUpload).not.toHaveBeenCalled();
+    expect(getParagraphs(editor)).toEqual(['Text', 'Before', 'After']);
+    expect(getImageSources(container)).toEqual(['https://remote/pic.png']);
+  });
+
+  it('uploads remote images from pasted HTML when shouldUploadPastedImage allows them', async () => {
+    const fetchMock = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        blob: () => Promise.resolve(new Blob(['remote'], { type: 'image/jpeg' })),
+      })
+    );
+    Object.defineProperty(globalThis, 'fetch', { writable: true, value: fetchMock });
+
+    const { container, editor, onImageUpload, resolve, paste } = await renderPasteEditor({
+      shouldUploadPastedImage: (src) => src.startsWith('https://remote/'),
+    });
+
+    await paste({
+      html: '<p>Before</p><img src="https://remote/photos/pic.jpg"><img src="https://other/skip.png">',
+      text: 'Before',
+    });
+
+    expect(fetchMock).toHaveBeenCalledWith('https://remote/photos/pic.jpg');
+    expect(onImageUpload).toHaveBeenCalledTimes(1);
+    const file = onImageUpload.mock.calls[0][0];
+    expect(file.name).toBe('pic.jpg');
+    expect(file.type).toBe('image/jpeg');
+    expect(getImageSources(container)).toEqual([
+      'https://remote/photos/pic.jpg',
+      'https://other/skip.png',
+    ]);
+
+    await act(async () => {
+      resolve('pic.jpg', 'https://cdn/pic.jpg');
+      await flushPromises();
+    });
+
+    expect(getImageSources(container)).toEqual(['https://cdn/pic.jpg', 'https://other/skip.png']);
+    expect(getImageAttrs(editor).map((attrs) => attrs.uploading)).toEqual([false, false]);
+  });
+
+  it('restores the original image when a pasted remote image cannot be fetched', async () => {
+    Object.defineProperty(globalThis, 'fetch', {
+      writable: true,
+      value: jest.fn(() => Promise.reject(new TypeError('CORS'))),
+    });
+    const onImageUploadError = jest.fn();
+
+    const { container, editor, onImageUpload, paste } = await renderPasteEditor({
+      shouldUploadPastedImage: () => true,
+      onImageUploadError,
+    });
+
+    await paste({ html: '<img src="https://remote/pic.png">' });
+
+    expect(onImageUpload).not.toHaveBeenCalled();
+    expect(onImageUploadError).not.toHaveBeenCalled();
+    expect(getImageSources(container)).toEqual(['https://remote/pic.png']);
+    expect(getImageAttrs(editor)).toEqual([
+      expect.objectContaining({
+        src: 'https://remote/pic.png',
+        uploading: false,
+        uploadError: false,
+        uploadId: null,
+      }),
+    ]);
+    expect(container.querySelector('[data-uploading]')).toBeNull();
+  });
+
+  it('does not upload pasted base64 images when the extension has no onImageUpload', async () => {
+    const extensions = [StarterKit, TipTapImage.configure({ allowBase64: true })];
+    let editor: Editor | null = null;
+    render(
+      <TestEditor
+        extensions={extensions}
+        content="<p>Text</p><p></p>"
+        onEditor={(value) => {
+          editor = value;
+        }}
+      />
+    );
+    await screen.findByLabelText(label);
+    act(() => {
+      editor!.commands.focus('end');
+    });
+
+    await act(async () => {
+      editor!.view.dom.dispatchEvent(
+        createPasteEvent({ html: `<img src="data:image/png;base64,${pngBase64}">` })
+      );
+      await flushPromises();
+    });
+
+    expect(getImageAttrs(editor!)).toEqual([
+      expect.objectContaining({ src: `data:image/png;base64,${pngBase64}` }),
+    ]);
   });
 });
