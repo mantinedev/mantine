@@ -32,12 +32,14 @@ export function SortableItem({ id, index, form }: SortableItemProps) {
       >
         <DotsSixVerticalIcon size={18} />
       </ActionIcon>
+
       <TextInput
         placeholder="What needs to be done?"
         aria-label="Task"
         style={{ flex: 1 }}
         {...form.getInputProps(`items.${index}.title`)}
       />
+
       <ActionIcon
         variant="default"
         size="input-sm"

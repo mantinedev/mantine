@@ -16,6 +16,7 @@ export function PreferencesSection({ form }: PreferencesSectionProps) {
         data={['English', 'German', 'Spanish', 'French']}
         {...form.getInputProps('preferences.language')}
       />
+
       <Switch
         label="Subscribe to newsletter"
         {...form.getInputProps('preferences.newsletter', { type: 'checkbox' })}

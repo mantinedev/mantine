@@ -16,10 +16,12 @@ function slugify(value: string) {
 
 export function GeneratedSlug() {
   const form = useForm<PageValues>({
-    mode: 'uncontrolled',
     // Only focus marks the slug as touched, setFieldValue does not
     touchTrigger: 'focus',
-    initialValues: { name: '', slug: '' },
+    initialValues: {
+      name: '',
+      slug: '',
+    },
     validate: {
       name: (value) => (value.trim().length === 0 ? 'Name is required' : null),
       slug: (value) => (/^[a-z0-9-]+$/.test(value) ? null : 'Slug can contain only a-z, 0-9 and -'),
@@ -46,6 +48,7 @@ export function GeneratedSlug() {
           withAsterisk
           {...form.getInputProps('name')}
         />
+
         <TextInput
           label="Slug"
           placeholder="my-first-post"
@@ -53,10 +56,12 @@ export function GeneratedSlug() {
           withAsterisk
           {...form.getInputProps('slug')}
         />
+
         <Group justify="flex-end">
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Create page</Button>
         </Group>
       </Stack>

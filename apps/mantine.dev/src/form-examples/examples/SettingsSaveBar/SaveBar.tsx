@@ -23,10 +23,12 @@ export function SaveBar({ visible, saving, onDiscard }: SaveBarProps) {
         <Text size="sm" fw={500}>
           You have unsaved changes
         </Text>
+
         <Group gap="xs">
           <Button variant="default" onClick={onDiscard} disabled={saving}>
             Discard
           </Button>
+
           <Button type="submit" loading={saving}>
             Save
           </Button>

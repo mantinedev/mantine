@@ -24,8 +24,10 @@ export function FileUpload() {
   const [progress, setProgress] = useState(0);
 
   const form = useForm<UploadValues>({
-    mode: 'uncontrolled',
-    initialValues: { title: '', files: [] },
+    initialValues: {
+      title: '',
+      files: [],
+    },
     validate: {
       title: isNotEmpty('Title is required'),
       files: (value) => {
@@ -92,15 +94,19 @@ export function FileUpload() {
               <Dropzone.Accept>
                 <UploadSimpleIcon size={40} color="var(--mantine-color-blue-6)" />
               </Dropzone.Accept>
+
               <Dropzone.Reject>
                 <XIcon size={40} color="var(--mantine-color-red-6)" />
               </Dropzone.Reject>
+
               <Dropzone.Idle>
-                <ImageIcon size={40} color="var(--mantine-color-dimmed)" />
+                <ImageIcon size={40} />
               </Dropzone.Idle>
+
               <div>
                 <Text size="sm">Drag images here or click to select files</Text>
-                <Text size="xs" c="dimmed">
+
+                <Text size="xs">
                   {files.length === 0
                     ? 'No files selected'
                     : `${files.length} file(s), ${formatSize(totalSize(files))}`}

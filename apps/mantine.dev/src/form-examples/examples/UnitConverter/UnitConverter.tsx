@@ -29,8 +29,11 @@ function requiredWhenDefault(unit: Values['defaultUnit']) {
 
 export function UnitConverter() {
   const form = useForm<Values>({
-    mode: 'uncontrolled',
-    initialValues: { defaultUnit: 'celsius', celsius: '', fahrenheit: '' },
+    initialValues: {
+      defaultUnit: 'celsius',
+      celsius: '',
+      fahrenheit: '',
+    },
     validate: {
       celsius: requiredWhenDefault('celsius'),
       fahrenheit: requiredWhenDefault('fahrenheit'),
@@ -72,6 +75,7 @@ export function UnitConverter() {
           ]}
           {...form.getInputProps('defaultUnit')}
         />
+
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <NumberInput
             label="Celsius"
@@ -83,6 +87,7 @@ export function UnitConverter() {
             withAsterisk={defaultUnit === 'celsius'}
             {...form.getInputProps('celsius')}
           />
+
           <NumberInput
             label="Fahrenheit"
             placeholder="68"
@@ -94,10 +99,12 @@ export function UnitConverter() {
             {...form.getInputProps('fahrenheit')}
           />
         </SimpleGrid>
+
         <Group justify="flex-end">
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Save</Button>
         </Group>
       </Stack>

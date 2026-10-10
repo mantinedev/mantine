@@ -9,7 +9,6 @@ const TIMEZONES = ['UTC', 'Europe/London', 'Europe/Berlin', 'America/New_York', 
 
 export function ReusableFields() {
   const form = useProfileForm({
-    mode: 'uncontrolled',
     initialValues: {
       fullName: '',
       username: '',
@@ -39,6 +38,7 @@ export function ReusableFields() {
           <TextField name="fullName" label="Full name" placeholder="Jane Doe" withAsterisk />
           <TextField name="username" label="Username" placeholder="jane_doe" withAsterisk />
           <TextField name="email" label="Email" placeholder="jane@mantine.dev" withAsterisk />
+
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <SelectField
               name="role"
@@ -47,8 +47,10 @@ export function ReusableFields() {
               data={ROLES}
               withAsterisk
             />
+
             <SelectField name="timezone" label="Timezone" data={TIMEZONES} />
           </SimpleGrid>
+
           <Group justify="flex-end">
             <Button type="submit">Save profile</Button>
           </Group>

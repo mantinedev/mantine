@@ -157,6 +157,26 @@ describe('@mantine/core/PinInput', () => {
     expect(getInputs(container)[0]).toHaveFocus();
   });
 
+  it('does not change values with Backspace, Delete and paste when readOnly is set', async () => {
+    const onChange = jest.fn();
+    const { container } = render(
+      <PinInput {...defaultProps} length={4} defaultValue="1234" readOnly onChange={onChange} />
+    );
+    const inputs = getInputs(container);
+
+    await userEvent.click(inputs[3]);
+    await userEvent.keyboard('{Backspace}');
+    expect(getInputValues(container)).toStrictEqual(['1', '2', '3', '4']);
+    expect(inputs[2]).toHaveFocus();
+
+    await userEvent.keyboard('{Delete}');
+    expect(getInputValues(container)).toStrictEqual(['1', '2', '3', '4']);
+
+    fireEvent.paste(inputs[0], { clipboardData: { getData: () => '5678' } });
+    expect(getInputValues(container)).toStrictEqual(['1', '2', '3', '4']);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it('backspace on first input does not throw', async () => {
     const { container } = render(<PinInput length={4} />);
     const inputs = getInputs(container);

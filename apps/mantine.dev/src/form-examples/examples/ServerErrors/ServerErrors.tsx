@@ -34,8 +34,11 @@ function signUp(values: SignUpValues) {
 
 export function ServerErrors() {
   const form = useForm<SignUpValues>({
-    mode: 'uncontrolled',
-    initialValues: { username: '', email: '', password: '' },
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+    },
     validate: {
       username: isNotEmpty('Username is required'),
       email: isEmail('Invalid email'),
@@ -67,12 +70,14 @@ export function ServerErrors() {
           withAsterisk
           {...form.getInputProps('username')}
         />
+
         <TextInput
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
           {...form.getInputProps('email')}
         />
+
         <PasswordInput
           label="Password"
           placeholder="At least 8 characters"

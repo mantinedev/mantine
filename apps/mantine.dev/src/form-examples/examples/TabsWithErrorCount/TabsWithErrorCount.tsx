@@ -22,7 +22,6 @@ export function TabsWithErrorCount() {
   const [activeTab, setActiveTab] = useState<SettingsTab>('profile');
 
   const form = useForm<SettingsValues>({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',

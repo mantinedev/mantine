@@ -25,7 +25,6 @@ function validateSkills(skills: Skill[]) {
 
 export function ListMinimum() {
   const form = useForm<ProjectValues>({
-    mode: 'uncontrolled',
     initialValues: {
       projectName: '',
       skills: [{ id: randomId(), name: '' }],
@@ -62,6 +61,7 @@ export function ListMinimum() {
         style={{ flex: 1 }}
         {...form.getInputProps(`skills.${index}.name`)}
       />
+
       <ActionIcon
         variant="default"
         size="input-sm"
@@ -82,17 +82,12 @@ export function ListMinimum() {
           withAsterisk
           {...form.getInputProps('projectName')}
         />
+
         <Stack gap="xs">
           <Text size="sm" fw={500}>
             Skills
           </Text>
-          {skills.length > 0 ? (
-            skills
-          ) : (
-            <Text size="sm" c="dimmed">
-              No skills added
-            </Text>
-          )}
+          {skills.length > 0 ? skills : <Text size="xs">No skills added</Text>}
           {form.errors.skills && (
             <Text c="red" size="sm">
               {form.errors.skills}
@@ -108,6 +103,7 @@ export function ListMinimum() {
             </Button>
           </Group>
         </Stack>
+
         <Group justify="flex-end">
           <Button type="submit">Create project</Button>
         </Group>

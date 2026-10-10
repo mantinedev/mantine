@@ -706,6 +706,31 @@ function Demo() {
 }
 ```
 
+## Uncontrolled mode is the default
+
+`useForm` and `useField` now use `mode: 'uncontrolled'` by default. In uncontrolled mode the
+component does not rerender when the user types and `form.values` is a snapshot from the last
+render. If a form reads `form.values` during render, either replace `form.values` with
+`form.getValues()` in event handlers and `form.useWatchValue('path')` in render, or set
+`mode: 'controlled'` to keep the previous behavior:
+
+```tsx
+// 9.x
+const form = useForm({ initialValues: { name: '' } });
+<Text>{form.values.name}</Text>
+
+// 10.x
+const form = useForm({ mode: 'controlled', initialValues: { name: '' } });
+<Text>{form.values.name}</Text>
+
+// 10.x, uncontrolled
+const form = useForm({ initialValues: { name: '' } });
+const name = form.useWatchValue('name');
+<Text>{name}</Text>
+```
+
+See [form modes](/form/uncontrolled) for the differences between the two modes.
+
 ## form.key removed
 
 Remove `key={form.key('path')}` from inputs rendered with `form.getInputProps`. Inputs now

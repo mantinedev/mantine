@@ -35,7 +35,6 @@ const schema = z.object({
 
 export function ZodSchema() {
   const form = useForm<RegistrationValues>({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -62,12 +61,14 @@ export function ZodSchema() {
           withAsterisk
           {...form.getInputProps('name')}
         />
+
         <TextInput
           label="Email"
           placeholder="john@mantine.dev"
           withAsterisk
           {...form.getInputProps('email')}
         />
+
         <NumberInput
           label="Age"
           placeholder="18"
@@ -76,6 +77,7 @@ export function ZodSchema() {
           max={120}
           {...form.getInputProps('age')}
         />
+
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
             label="City"
@@ -83,6 +85,7 @@ export function ZodSchema() {
             withAsterisk
             {...form.getInputProps('address.city')}
           />
+
           <TextInput
             label="Zip code"
             placeholder="10115"
@@ -90,12 +93,15 @@ export function ZodSchema() {
             {...form.getInputProps('address.zip')}
           />
         </SimpleGrid>
+
         <div>
           <Text size="sm" fw={500} mb="xs">
             Tickets
           </Text>
+
           <TicketsList form={form} />
         </div>
+
         <Group justify="flex-end">
           <Button type="submit">Register</Button>
         </Group>

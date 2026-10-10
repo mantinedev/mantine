@@ -17,8 +17,10 @@ function updatePassword(values: PasswordValues) {
 
 export function PasswordStrength() {
   const form = useForm<PasswordValues>({
-    mode: 'uncontrolled',
-    initialValues: { password: '', confirmPassword: '' },
+    initialValues: {
+      password: '',
+      confirmPassword: '',
+    },
     validate: {
       password: validatePassword,
       confirmPassword: matchesField('password', 'Passwords do not match'),
@@ -42,12 +44,14 @@ export function PasswordStrength() {
           withAsterisk
           {...form.getInputProps('password')}
         />
+
         <PasswordInput
           label="Confirm password"
           placeholder="Repeat your new password"
           withAsterisk
           {...form.getInputProps('confirmPassword')}
         />
+
         <Group justify="flex-end">
           <Button type="submit" loading={form.submitting}>
             Update password

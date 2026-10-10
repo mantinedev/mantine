@@ -26,7 +26,6 @@ function getAdultCutoff() {
 
 export function DatesForm() {
   const form = useForm<Values>({
-    mode: 'uncontrolled',
     initialValues: {
       guestName: '',
       birthDate: null,
@@ -74,6 +73,7 @@ export function DatesForm() {
           withAsterisk
           {...form.getInputProps('guestName')}
         />
+
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <DateInput
             label="Birth date"
@@ -82,6 +82,7 @@ export function DatesForm() {
             maxDate={new Date()}
             {...form.getInputProps('birthDate')}
           />
+
           <DatePickerInput
             type="range"
             label="Stay"
@@ -92,6 +93,7 @@ export function DatesForm() {
             {...form.getInputProps('stay')}
           />
         </SimpleGrid>
+
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <DateTimePicker
             label="Arrival time"
@@ -100,12 +102,15 @@ export function DatesForm() {
             valueFormat="DD MMM YYYY HH:mm"
             {...form.getInputProps('arrival')}
           />
+
           <TimeInput label="Preferred call time" {...form.getInputProps('callTime')} />
         </SimpleGrid>
+
         <Group justify="flex-end">
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Book</Button>
         </Group>
       </Stack>

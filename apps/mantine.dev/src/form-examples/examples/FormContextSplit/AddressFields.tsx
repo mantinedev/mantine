@@ -15,6 +15,7 @@ export function AddressFields() {
           withAsterisk
           {...form.getInputProps('street')}
         />
+
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
             label="City"
@@ -22,12 +23,14 @@ export function AddressFields() {
             withAsterisk
             {...form.getInputProps('city')}
           />
+
           <TextInput
             label="Postal code"
             placeholder="NW1 6XE"
             {...form.getInputProps('postalCode')}
           />
         </SimpleGrid>
+
         <Select
           label="Country"
           placeholder="Pick a country"

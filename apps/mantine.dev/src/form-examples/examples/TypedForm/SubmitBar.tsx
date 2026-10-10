@@ -12,6 +12,7 @@ export function SubmitBar({ form }: SubmitBarProps) {
       <Button variant="default" onClick={form.reset}>
         Reset
       </Button>
+
       <Button type="submit" loading={form.submitting}>
         Submit
       </Button>

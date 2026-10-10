@@ -10,8 +10,9 @@ interface TableValues {
 
 export function EditableTable() {
   const form = useForm<TableValues>({
-    mode: 'uncontrolled',
-    initialValues: { rows: ROWS },
+    initialValues: {
+      rows: ROWS,
+    },
     validate: {
       rows: {
         name: isNotEmpty('Required'),
@@ -38,6 +39,7 @@ export function EditableTable() {
           <Button variant="default" onClick={form.reset}>
             Reset all
           </Button>
+
           <Button type="submit">Save changes</Button>
         </Group>
       </Stack>

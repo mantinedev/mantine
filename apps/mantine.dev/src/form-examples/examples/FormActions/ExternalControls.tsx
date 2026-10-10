@@ -14,6 +14,7 @@ export function ExternalControls() {
         >
           Fill demo data
         </Button>
+
         <Button
           size="xs"
           variant="default"
@@ -21,9 +22,11 @@ export function ExternalControls() {
         >
           Set error
         </Button>
+
         <Button size="xs" variant="default" onClick={() => demoFormActions.validate()}>
           Validate
         </Button>
+
         <Button size="xs" variant="default" onClick={() => demoFormActions.reset()}>
           Clear
         </Button>

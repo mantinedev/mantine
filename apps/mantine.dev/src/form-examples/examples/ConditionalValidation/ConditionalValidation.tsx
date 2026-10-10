@@ -13,7 +13,6 @@ interface OrderValues {
 
 export function ConditionalValidation() {
   const form = useForm<OrderValues>({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -63,17 +62,20 @@ export function ConditionalValidation() {
           withAsterisk
           {...form.getInputProps('name')}
         />
+
         <TextInput
           label="Email"
           placeholder="john@mantine.dev"
           withAsterisk
           {...form.getInputProps('email')}
         />
+
         <div>
           <Checkbox
             label="Ship to a different address"
             {...form.getInputProps('shipToDifferentAddress', { type: 'checkbox' })}
           />
+
           <Collapse expanded={shipToDifferentAddress} onTransitionEnd={handleCollapseEnd}>
             <Stack mt="md">
               <TextInput
@@ -82,6 +84,7 @@ export function ConditionalValidation() {
                 withAsterisk
                 {...form.getInputProps('street')}
               />
+
               <SimpleGrid cols={{ base: 1, sm: 2 }}>
                 <TextInput
                   label="City"
@@ -89,6 +92,7 @@ export function ConditionalValidation() {
                   withAsterisk
                   {...form.getInputProps('city')}
                 />
+
                 <TextInput
                   label="Zip code"
                   placeholder="10115"
@@ -99,6 +103,7 @@ export function ConditionalValidation() {
             </Stack>
           </Collapse>
         </div>
+
         <Group justify="flex-end">
           <Button type="submit">Place order</Button>
         </Group>

@@ -7,7 +7,7 @@ import { Text, TextInput } from '@mantine/core';
 import { useField } from '@mantine/form';
 
 function Demo() {
-  const field = useField({ initialValue: '' });
+  const field = useField({ mode: 'controlled', initialValue: '' });
 
   return (
     <>
@@ -31,7 +31,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const field = useField({ initialValue: '' });
+  const field = useField({ mode: 'controlled', initialValue: '' });
 
   return (
     <>

@@ -275,8 +275,8 @@
   --mantine-color-surface-sunken: var(--mantine-color-dark-9);
   --mantine-color-surface-muted: var(--mantine-color-dark-5);
   --mantine-color-body: var(--mantine-color-surface-page);
-  --mantine-color-error: var(--mantine-color-red-8);
-  --mantine-color-success: var(--mantine-color-teal-8);
+  --mantine-color-error: var(--mantine-color-red-7);
+  --mantine-color-success: var(--mantine-color-teal-7);
   --mantine-color-placeholder: var(--mantine-color-neutral-5);
   --mantine-color-anchor: var(--mantine-color-blue-4);
   --mantine-color-focus-ring: var(--mantine-color-blue-5);

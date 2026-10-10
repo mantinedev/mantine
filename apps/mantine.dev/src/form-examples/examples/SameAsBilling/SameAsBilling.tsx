@@ -18,10 +18,13 @@ const addressRules = {
 
 export function SameAsBilling() {
   const form = useForm<Values>({
-    mode: 'uncontrolled',
     // Watchers of nested shipping fields are notified when the whole shipping object is set
     cascadeUpdates: true,
-    initialValues: { billing: emptyAddress, shipping: emptyAddress, sameAsBilling: false },
+    initialValues: {
+      billing: emptyAddress,
+      shipping: emptyAddress,
+      sameAsBilling: false,
+    },
     validate: {
       billing: addressRules,
       shipping: {
@@ -61,20 +64,24 @@ export function SameAsBilling() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <AddressFields form={form} prefix="billing" legend="Billing address" />
+
         <Checkbox
           label="Shipping address is the same as billing"
           {...form.getInputProps('sameAsBilling', { type: 'checkbox' })}
         />
+
         <AddressFields
           form={form}
           prefix="shipping"
           legend="Shipping address"
           disabled={sameAsBilling}
         />
+
         <Group justify="flex-end">
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Save addresses</Button>
         </Group>
       </Stack>

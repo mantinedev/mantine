@@ -21,6 +21,7 @@ export function QuestionCard({ form, index }: QuestionCardProps) {
             style={{ flex: 1 }}
             {...form.getInputProps(`questions.${index}.text`)}
           />
+
           <ActionIcon
             variant="default"
             size="input-sm"

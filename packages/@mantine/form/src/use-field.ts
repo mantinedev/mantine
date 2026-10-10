@@ -9,9 +9,9 @@ type UseFieldErrorResolver = (error: unknown) => React.ReactNode;
 export interface UseFieldInput<
   T,
   FieldType extends GetInputPropsType = 'input',
-  Mode extends FormMode = 'controlled',
+  Mode extends FormMode = 'uncontrolled',
 > {
-  /** Field mode, controlled by default */
+  /** Field mode @default 'uncontrolled' */
   mode?: Mode;
 
   /** Initial field value */
@@ -108,10 +108,10 @@ export interface UseFieldReturnType<T, FieldType extends GetInputPropsType = 'in
 
 export function useField<
   T,
-  Mode extends FormMode = 'controlled',
+  Mode extends FormMode = 'uncontrolled',
   FieldType extends GetInputPropsType = 'input',
 >({
-  mode = 'controlled' as Mode,
+  mode = 'uncontrolled' as Mode,
   clearErrorOnChange = true,
   initialValue,
   initialError = null,

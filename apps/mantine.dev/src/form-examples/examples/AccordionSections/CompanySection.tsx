@@ -15,6 +15,7 @@ export function CompanySection({ form }: CompanySectionProps) {
         withAsterisk
         {...form.getInputProps('company.name')}
       />
+
       <TextInput
         label="Website"
         placeholder="https://mantine.dev"

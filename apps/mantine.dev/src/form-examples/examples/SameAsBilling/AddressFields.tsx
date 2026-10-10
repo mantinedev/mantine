@@ -19,6 +19,7 @@ export function AddressFields({ form, prefix, legend, disabled = false }: Addres
           withAsterisk={!disabled}
           {...form.getInputProps(`${prefix}.street`)}
         />
+
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
             label="City"
@@ -26,6 +27,7 @@ export function AddressFields({ form, prefix, legend, disabled = false }: Addres
             withAsterisk={!disabled}
             {...form.getInputProps(`${prefix}.city`)}
           />
+
           <TextInput
             label="ZIP code"
             placeholder="12345"

@@ -17,7 +17,7 @@ The `use-field` hook accepts the following options object as a single argument:
 
 ```tsx
 interface UseFieldInput<T> {
-  /** Field mode, controlled by default */
+  /** Field mode @default 'uncontrolled' */
   mode?: 'controlled' | 'uncontrolled';
 
   /** Initial field value */
@@ -122,7 +122,9 @@ lead to race conditions:
 ## Touched and dirty
 
 To get information about whether the field has been focused at least once, use the `isTouched` method.
-To check if the value has been changed from the initial value, use the `isDirty` method:
+To check if the value has been changed from the initial value, use the `isDirty` method. In the default
+uncontrolled mode the component does not rerender when the status changes, so to display the status
+during render set `mode: 'controlled'`, as in the example below:
 
 <Demo data={FieldDemos.statusControlled} />
 

@@ -4,22 +4,12 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.formUncontrolled);
 
-## Controlled mode
-
-Controlled mode is the default mode. Form values are stored in React state:
-`form.values` is updated on every change and the component that calls `useForm`
-rerenders with all its children. Use it for small forms and when you render
-`form.values` directly:
-
-<Demo data={FormDemos.controlled} />
-
 ## Uncontrolled mode
 
-In uncontrolled mode, form values are stored outside of React state. The component
-that calls `useForm` does not rerender when the user types: each input is subscribed
-to its own field and rerenders alone. `form.values` is not updated, read values with
-`form.getValues()`. Both modes have the same API, set `mode: 'uncontrolled'` for large
-forms and forms with expensive children.
+Uncontrolled mode is the default mode. Form values are stored outside of React state.
+The component that calls `useForm` does not rerender when the user types: each input
+is subscribed to its own field and rerenders alone. `form.values` is not updated, read
+values with `form.getValues()`.
 
 The form component still rerenders when:
 
@@ -31,6 +21,15 @@ The form component still rerenders when:
 Example of uncontrolled mode, note that `form.values` in the code block is not updated:
 
 <Demo data={FormDemos.uncontrolled} />
+
+## Controlled mode
+
+In controlled mode, form values are stored in React state: `form.values` is updated
+on every change and the component that calls `useForm` rerenders with all its children.
+Both modes have the same API, set `mode: 'controlled'` for small forms when you render
+`form.values` directly:
+
+<Demo data={FormDemos.controlled} />
 
 ## form.getValues
 

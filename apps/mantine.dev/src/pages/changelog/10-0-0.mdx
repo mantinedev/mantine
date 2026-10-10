@@ -122,9 +122,9 @@ Components with stores:
 
 ## use-form engine and uncontrolled mode
 
-[use-form](/form/use-form) keeps form state outside of React state. In
-[uncontrolled mode](/form/uncontrolled), each input is subscribed to its own field and rerenders
-alone: the component that calls `useForm` does not rerender when the user types, and
+[use-form](/form/use-form) keeps form state outside of React state.
+[Uncontrolled mode](/form/uncontrolled) is now the default mode of `useForm` and `useField`: each
+input is subscribed to its own field and rerenders alone: the component that calls `useForm` does not rerender when the user types, and
 `form.setFieldValue`, `form.setValues`, `form.reset` and list handlers update inputs without a
 remount. `key={form.key()}` is no longer needed and `form.key` has been removed.
 `form.getInputProps` returns `value` and `checked` in both modes. New `form.useDirty` and

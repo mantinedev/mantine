@@ -42,7 +42,7 @@ function isRelatedPath(a: string, b: string) {
 function resolveOptions(input: UseFormInput<any, any>) {
   return {
     name: input.name,
-    mode: input.mode ?? 'controlled',
+    mode: input.mode ?? 'uncontrolled',
     clearInputErrorOnChange: input.clearInputErrorOnChange ?? true,
     validateInputOnChange: input.validateInputOnChange ?? false,
     validateInputOnBlur: input.validateInputOnBlur ?? false,

@@ -15,6 +15,7 @@ export function SecurityTab({ form }: SecurityTabProps) {
         withAsterisk
         {...form.getInputProps('password')}
       />
+
       <PasswordInput
         label="Confirm password"
         placeholder="Repeat the password"

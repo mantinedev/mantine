@@ -12,7 +12,6 @@ const validate = Object.fromEntries(FIELDS.map((field) => [field, isNotEmpty('Re
 
 export function LargeForm() {
   const form = useForm<LargeFormValues>({
-    mode: 'uncontrolled',
     initialValues,
     validate,
   });
@@ -64,9 +63,11 @@ export function LargeForm() {
           <Button variant="default" onClick={handleFillAll}>
             Fill all
           </Button>
+
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Submit</Button>
         </Group>
       </Stack>

@@ -21,7 +21,6 @@ interface PostValues {
 
 export function TagsAndKeywords() {
   const form = useForm<PostValues>({
-    mode: 'uncontrolled',
     initialValues: {
       title: '',
       tags: ['react'],

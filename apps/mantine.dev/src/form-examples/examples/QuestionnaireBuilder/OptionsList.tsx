@@ -23,6 +23,7 @@ export function OptionsList({ form, questionIndex }: OptionsListProps) {
             style={{ flex: 1 }}
             {...form.getInputProps(`questions.${questionIndex}.options.${optionIndex}.label`)}
           />
+
           <ActionIcon
             variant="default"
             size="input-sm"

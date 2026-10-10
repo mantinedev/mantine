@@ -10,7 +10,7 @@ interface RowsTableProps {
 export function RowsTable({ form }: RowsTableProps) {
   const rows = form.getValues().rows.map((row, index) => (
     <Table.Tr key={row.id}>
-      <Table.Td c="dimmed">{row.id}</Table.Td>
+      <Table.Td>{row.id}</Table.Td>
       <Table.Td>
         <TextInput
           variant="unstyled"

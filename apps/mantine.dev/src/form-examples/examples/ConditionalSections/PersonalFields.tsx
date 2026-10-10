@@ -17,6 +17,7 @@ export function PersonalFields({ form }: PersonalFieldsProps) {
           withAsterisk
           {...form.getInputProps('personal.firstName')}
         />
+
         <TextInput
           label="Last name"
           placeholder="Doe"
@@ -24,6 +25,7 @@ export function PersonalFields({ form }: PersonalFieldsProps) {
           {...form.getInputProps('personal.lastName')}
         />
       </SimpleGrid>
+
       <DateInput
         label="Birth date"
         placeholder="Pick a date"

@@ -29,7 +29,6 @@ function sendApplication(values: ApplicationValues) {
 
 export function JobApplication() {
   const form = useForm<ApplicationValues>({
-    mode: 'uncontrolled',
     initialValues: {
       fullName: '',
       email: '',
@@ -75,6 +74,7 @@ export function JobApplication() {
             withAsterisk
             {...form.getInputProps('fullName')}
           />
+
           <TextInput
             label="Email"
             placeholder="john@mantine.dev"
@@ -82,6 +82,7 @@ export function JobApplication() {
             {...form.getInputProps('email')}
           />
         </SimpleGrid>
+
         <PhoneInput
           label="Phone"
           placeholder="+1 (555) 123-4567"
@@ -89,12 +90,14 @@ export function JobApplication() {
           withAsterisk
           {...form.getInputProps('phone')}
         />
+
         <TextInput
           label="LinkedIn profile"
           placeholder="https://linkedin.com/in/johndoe"
           withAsterisk
           {...form.getInputProps('linkedin')}
         />
+
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <NumberInput
             label="Expected salary"
@@ -107,6 +110,7 @@ export function JobApplication() {
             step={1000}
             {...form.getInputProps('salary')}
           />
+
           <NumberInput
             label="Years of experience"
             placeholder="5"
@@ -116,6 +120,7 @@ export function JobApplication() {
             {...form.getInputProps('experience')}
           />
         </SimpleGrid>
+
         <Textarea
           label="Cover letter"
           placeholder="Tell us why you are a great fit for this role"
@@ -124,6 +129,7 @@ export function JobApplication() {
           minRows={4}
           {...form.getInputProps('coverLetter')}
         />
+
         <Group justify="flex-end">
           <Button type="submit" loading={form.submitting}>
             Send application

@@ -111,7 +111,7 @@ export function InvoiceItemsTable({ form }: InvoiceItemsTableProps) {
             ) : (
               <Table.Tr>
                 <Table.Td colSpan={5}>
-                  <Text size="sm" c="dimmed" ta="center">
+                  <Text size="xs" ta="center">
                     No items yet
                   </Text>
                 </Table.Td>

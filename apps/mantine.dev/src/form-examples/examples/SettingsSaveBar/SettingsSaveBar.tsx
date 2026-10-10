@@ -18,7 +18,6 @@ function saveSettings(values: SettingsValues) {
 
 export function SettingsSaveBar() {
   const form = useForm<SettingsValues>({
-    mode: 'uncontrolled',
     initialValues: {
       displayName: 'John Doe',
       email: 'john@mantine.dev',
@@ -53,12 +52,14 @@ export function SettingsSaveBar() {
           withAsterisk
           {...form.getInputProps('displayName')}
         />
+
         <TextInput
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
           {...form.getInputProps('email')}
         />
+
         <Textarea
           label="Bio"
           placeholder="A few words about you"
@@ -66,6 +67,7 @@ export function SettingsSaveBar() {
           minRows={3}
           {...form.getInputProps('bio')}
         />
+
         <Switch
           label="Public profile"
           description="Anyone can see your profile page"

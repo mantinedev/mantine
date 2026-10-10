@@ -23,8 +23,11 @@ function calculateTotal({ product, quantity, discount }: Values) {
 
 export function OrderTotal() {
   const form = useForm<Values, OrderPayload>({
-    mode: 'uncontrolled',
-    initialValues: { product: null, quantity: 1, discount: 0 },
+    initialValues: {
+      product: null,
+      quantity: 1,
+      discount: 0,
+    },
     validate: {
       product: isNotEmpty('Select a product'),
       quantity: isInRange({ min: 1 }, 'Quantity must be at least 1'),
@@ -59,6 +62,7 @@ export function OrderTotal() {
           }))}
           {...form.getInputProps('product')}
         />
+
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <NumberInput
             label="Quantity"
@@ -69,6 +73,7 @@ export function OrderTotal() {
             allowDecimal={false}
             {...form.getInputProps('quantity')}
           />
+
           <NumberInput
             label="Discount"
             placeholder="0"
@@ -78,11 +83,14 @@ export function OrderTotal() {
             {...form.getInputProps('discount')}
           />
         </SimpleGrid>
+
         <OrderSummary product={product} quantity={quantity} discount={discount} total={total} />
+
         <Group justify="flex-end">
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Place order</Button>
         </Group>
       </Stack>

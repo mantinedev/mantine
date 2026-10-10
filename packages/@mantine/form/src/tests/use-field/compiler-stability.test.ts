@@ -17,7 +17,7 @@ describe('@mantine/form/use-field compiler stability', () => {
   });
 
   it('changes isTouched identity after the field is touched', () => {
-    const hook = renderHook(() => useField({ initialValue: 'test' }));
+    const hook = renderHook(() => useField({ initialValue: 'test', mode: 'controlled' }));
     const before = hook.result.current.isTouched;
     act(() => hook.result.current.getInputProps().onFocus?.());
     expect(hook.result.current.isTouched).not.toBe(before);

@@ -51,7 +51,7 @@ export function TasksList({ form }: TasksListProps) {
       </DndContext>
 
       {ids.length === 0 && (
-        <Text size="sm" c="dimmed" ta="center">
+        <Text size="xs" ta="center">
           No tasks yet
         </Text>
       )}

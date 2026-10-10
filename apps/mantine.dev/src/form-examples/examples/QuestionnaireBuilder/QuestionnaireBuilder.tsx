@@ -8,7 +8,6 @@ import { createOption, createQuestion, QuestionnaireValues } from './types';
 
 export function QuestionnaireBuilder() {
   const form = useForm<QuestionnaireValues>({
-    mode: 'uncontrolled',
     initialValues: {
       title: 'Customer satisfaction',
       questions: [
@@ -60,7 +59,7 @@ export function QuestionnaireBuilder() {
         ))}
 
         {questions.length === 0 && (
-          <Text size="sm" c="dimmed" ta="center">
+          <Text size="xs" ta="center">
             No questions yet
           </Text>
         )}

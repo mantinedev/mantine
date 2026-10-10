@@ -20,8 +20,10 @@ export function AutosaveServer() {
   const [savedAt, setSavedAt] = useState<string | null>(null);
 
   const form = useForm<NoteValues>({
-    mode: 'uncontrolled',
-    initialValues: { title: 'Meeting notes', content: '' },
+    initialValues: {
+      title: 'Meeting notes',
+      content: '',
+    },
     onValuesChange: (values) => save(values),
   });
 
@@ -46,11 +48,14 @@ export function AutosaveServer() {
     <Stack>
       <Group justify="space-between">
         <SaveStatus status={status} savedAt={savedAt} dirty={dirty} />
+
         <Button variant="default" size="xs" onClick={saveNow} disabled={!dirty}>
           Save now
         </Button>
       </Group>
+
       <TextInput label="Title" placeholder="Note title" {...form.getInputProps('title')} />
+
       <Textarea
         label="Content"
         placeholder="Start typing, the note is saved automatically"

@@ -8,7 +8,7 @@ interface UsersTableProps {
 export function UsersTable({ users }: UsersTableProps) {
   if (users.length === 0) {
     return (
-      <Text c="dimmed" size="sm" mt="md">
+      <Text size="xs" mt="md">
         No users yet
       </Text>
     );

@@ -10,6 +10,7 @@ export function ProfileTab({ form }: ProfileTabProps) {
   return (
     <Stack>
       <TextInput label="Name" placeholder="John Doe" withAsterisk {...form.getInputProps('name')} />
+
       <TextInput
         label="Email"
         placeholder="john@mantine.dev"

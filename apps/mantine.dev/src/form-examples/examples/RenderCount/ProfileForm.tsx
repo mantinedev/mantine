@@ -17,7 +17,10 @@ interface ProfileFormProps {
 export function ProfileForm({ mode }: ProfileFormProps) {
   const form = useForm<ProfileValues>({
     mode,
-    initialValues: { name: '', email: '' },
+    initialValues: {
+      name: '',
+      email: '',
+    },
     validate: {
       name: isNotEmpty('Name is required'),
       email: isEmail('Invalid email'),
@@ -40,6 +43,7 @@ export function ProfileForm({ mode }: ProfileFormProps) {
             <RenderCountBadge label="Form renders" />
             <ExpensiveChild />
           </Group>
+
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <TextInput
               label="Name"
@@ -47,6 +51,7 @@ export function ProfileForm({ mode }: ProfileFormProps) {
               withAsterisk
               {...form.getInputProps('name')}
             />
+
             <TextInput
               label="Email"
               placeholder="you@mantine.dev"
@@ -54,6 +59,7 @@ export function ProfileForm({ mode }: ProfileFormProps) {
               {...form.getInputProps('email')}
             />
           </SimpleGrid>
+
           <Group justify="space-between">
             <CurrentName form={form} />
             <Button type="submit">Save profile</Button>

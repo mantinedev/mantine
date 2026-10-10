@@ -46,8 +46,11 @@ const schema = z.object({
 
 export function ZodAsyncSchema() {
   const form = useForm<SignUpValues>({
-    mode: 'uncontrolled',
-    initialValues: { username: '', email: '', password: '' },
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+    },
     validateInputOnChange: ['username', 'email'],
     validateDebounce: 400,
     validate: schemaResolver(schema),
@@ -71,6 +74,7 @@ export function ZodAsyncSchema() {
           loading={form.isValidating('username')}
           {...form.getInputProps('username')}
         />
+
         <TextInput
           label="Email"
           placeholder="you@mantine.dev"
@@ -78,12 +82,14 @@ export function ZodAsyncSchema() {
           loading={form.isValidating('email')}
           {...form.getInputProps('email')}
         />
+
         <PasswordInput
           label="Password"
           placeholder="At least 8 characters"
           withAsterisk
           {...form.getInputProps('password')}
         />
+
         <Group justify="flex-end">
           <Button type="submit" loading={form.validating || form.submitting}>
             Create account

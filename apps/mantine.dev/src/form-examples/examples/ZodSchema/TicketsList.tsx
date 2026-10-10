@@ -21,6 +21,7 @@ export function TicketsList({ form }: TicketsListProps) {
         style={{ flex: 1 }}
         {...form.getInputProps(`tickets.${index}.holder`)}
       />
+
       <ActionIcon
         variant="default"
         size="input-sm"
@@ -34,13 +35,7 @@ export function TicketsList({ form }: TicketsListProps) {
 
   return (
     <Stack gap="xs">
-      {tickets.length > 0 ? (
-        tickets
-      ) : (
-        <Text size="sm" c="dimmed">
-          No tickets yet
-        </Text>
-      )}
+      {tickets.length > 0 ? tickets : <Text size="xs">No tickets yet</Text>}
       {form.errors.tickets && (
         <Text c="red" size="sm">
           {form.errors.tickets}

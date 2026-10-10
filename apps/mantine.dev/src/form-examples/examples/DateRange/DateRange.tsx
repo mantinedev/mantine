@@ -22,8 +22,10 @@ function getNights(checkIn: string | null, checkOut: string | null) {
 
 export function DateRange() {
   const form = useForm<BookingValues>({
-    mode: 'uncontrolled',
-    initialValues: { checkIn: null, checkOut: null },
+    initialValues: {
+      checkIn: null,
+      checkOut: null,
+    },
     validateInputOnChange: ['checkIn', 'checkOut'],
     validate: {
       checkIn: (value, values) => {
@@ -94,6 +96,7 @@ export function DateRange() {
             clearable
             {...form.getInputProps('checkIn')}
           />
+
           <DatePickerInput
             label="Check-out"
             placeholder="Pick a date"
@@ -112,6 +115,7 @@ export function DateRange() {
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Book</Button>
         </Group>
       </Stack>

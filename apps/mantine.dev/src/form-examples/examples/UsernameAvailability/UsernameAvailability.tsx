@@ -43,8 +43,10 @@ function signUp(values: SignUpValues) {
 
 export function UsernameAvailability() {
   const form = useForm<SignUpValues>({
-    mode: 'uncontrolled',
-    initialValues: { username: '', email: '' },
+    initialValues: {
+      username: '',
+      email: '',
+    },
     validateInputOnChange: ['username'],
     validateDebounce: 400,
     resolveValidationError: (error) =>
@@ -80,7 +82,7 @@ export function UsernameAvailability() {
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Stack>
+      <Stack maw={420} mx="auto">
         <TextInput
           label="Username"
           placeholder="your_username"
@@ -89,14 +91,16 @@ export function UsernameAvailability() {
           success={usernameAvailable ? 'Username is available' : null}
           {...form.getInputProps('username')}
         />
+
         <TextInput
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
           {...form.getInputProps('email')}
         />
+
         <Group justify="flex-end">
-          <Button type="submit" loading={form.validating || form.submitting}>
+          <Button type="submit" disabled={form.validating} loading={form.submitting}>
             Create account
           </Button>
         </Group>

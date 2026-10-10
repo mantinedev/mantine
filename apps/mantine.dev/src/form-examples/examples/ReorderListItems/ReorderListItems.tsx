@@ -10,7 +10,6 @@ export function ReorderListItems() {
   const [draft, setDraft] = useState('');
 
   const form = useForm<TasksValues>({
-    mode: 'uncontrolled',
     initialValues: {
       items: [
         { key: randomId(), title: 'Write release notes' },
@@ -59,6 +58,7 @@ export function ReorderListItems() {
               }
             }}
           />
+
           <Button variant="default" onClick={addItem}>
             Add
           </Button>

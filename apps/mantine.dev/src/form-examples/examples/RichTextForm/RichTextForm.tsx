@@ -10,8 +10,10 @@ interface Values {
 
 export function RichTextForm() {
   const form = useForm<Values>({
-    mode: 'uncontrolled',
-    initialValues: { title: '', content: '' },
+    initialValues: {
+      title: '',
+      content: '',
+    },
     validate: {
       title: isNotEmpty('Title is required'),
       content: isNotEmptyHTML('Article content is required'),
@@ -34,11 +36,14 @@ export function RichTextForm() {
           withAsterisk
           {...form.getInputProps('title')}
         />
+
         <ContentEditor label="Content" withAsterisk {...form.getInputProps('content')} />
+
         <Group justify="flex-end">
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Publish</Button>
         </Group>
       </Stack>

@@ -7,7 +7,6 @@ import { PersonalFields } from './PersonalFields';
 
 export function FormContextSplit() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       firstName: '',
       lastName: '',
@@ -40,10 +39,12 @@ export function FormContextSplit() {
         <Stack>
           <PersonalFields />
           <AddressFields />
+
           <Group justify="flex-end">
             <Button variant="default" onClick={form.reset}>
               Reset
             </Button>
+
             <Button type="submit">Create account</Button>
           </Group>
         </Stack>

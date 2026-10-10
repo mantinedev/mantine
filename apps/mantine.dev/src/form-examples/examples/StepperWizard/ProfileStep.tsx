@@ -10,6 +10,7 @@ export function ProfileStep({ form }: ProfileStepProps) {
   return (
     <Stack mt="md">
       <TextInput label="Name" placeholder="John Doe" withAsterisk {...form.getInputProps('name')} />
+
       <TextInput
         label="Email"
         placeholder="john@mantine.dev"

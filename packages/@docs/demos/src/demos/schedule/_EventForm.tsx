@@ -29,6 +29,7 @@ export function EventForm({
   ...others
 }: EventFormProps) {
   const form = useForm({
+    mode: 'controlled',
     initialValues: {
       id: values?.id,
       title: values?.title || '',
@@ -149,6 +150,7 @@ export function EventForm({
   ...others
 }: EventFormProps) {
   const form = useForm({
+    mode: 'controlled',
     initialValues: {
       id: values?.id,
       title: values?.title || '',

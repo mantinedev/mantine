@@ -15,6 +15,7 @@ export function AccountStep({ form }: AccountStepProps) {
         withAsterisk
         {...form.getInputProps('username')}
       />
+
       <PasswordInput
         label="Password"
         placeholder="At least 8 characters"

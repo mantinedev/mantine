@@ -1,4 +1,4 @@
-import { Anchor, Input, PinInput, Stack, Text } from '@mantine/core';
+import { Anchor, Input, PinInput, Stack, usePinInput } from '@mantine/core';
 import { hasLength, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
@@ -17,11 +17,19 @@ function verifyCode(code: string) {
 
 export function OtpForm() {
   const form = useForm<OtpValues>({
-    mode: 'uncontrolled',
-    initialValues: { code: '' },
+    initialValues: {
+      code: '',
+    },
     validate: {
       code: hasLength(CODE_LENGTH, `Enter all ${CODE_LENGTH} digits`),
     },
+  });
+
+  const codeProps = form.getInputProps('code', { withError: false });
+  const pinInput = usePinInput({
+    length: CODE_LENGTH,
+    value: codeProps.value,
+    onChange: codeProps.onChange,
   });
 
   const handleSubmit = async (values: OtpValues) => {
@@ -32,6 +40,7 @@ export function OtpForm() {
       notifications.show({ title: 'Code verified', message: 'Your phone number is confirmed' });
     } else {
       form.setFieldError('code', `Invalid code, enter ${VALID_CODE}`);
+      pinInput.focus(CODE_LENGTH - 1);
     }
   };
 
@@ -41,35 +50,36 @@ export function OtpForm() {
     }
   });
 
-  const error = form.errors.code;
+  const handleResend = () => {
+    form.reset();
+    pinInput.focus(0);
+  };
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack gap="xs" align="flex-start">
-        <div>
-          <Text size="sm" fw={500} mb={3}>
-            Verification code
-          </Text>
-          <Text size="xs" c="dimmed" mb={8}>
-            Enter the code sent to your phone. Hint: {VALID_CODE}
-          </Text>
+        <Input.Wrapper
+          label="Verification code"
+          description={`Enter the code sent to your phone. Hint: ${VALID_CODE}`}
+          error={form.errors.code}
+        >
           <PinInput
-            length={CODE_LENGTH}
+            controller={pinInput}
             type="number"
             size="lg"
-            oneTimeCode
-            disabled={form.submitting}
-            error={!!error}
-            {...form.getInputProps('code', { withError: false })}
+            readOnly={form.submitting}
+            error={!!form.errors.code}
+            onFocus={codeProps.onFocus}
+            onBlur={codeProps.onBlur}
           />
-          {error && <Input.Error mt={6}>{error}</Input.Error>}
-        </div>
+        </Input.Wrapper>
+
         <Anchor
           component="button"
           type="button"
           size="sm"
           disabled={form.submitting}
-          onClick={form.reset}
+          onClick={handleResend}
         >
           Resend code
         </Anchor>

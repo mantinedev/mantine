@@ -22,8 +22,12 @@ export function StepperWizard() {
   const [active, setActive] = useState(0);
 
   const form = useForm<WizardValues>({
-    mode: 'uncontrolled',
-    initialValues: { username: '', password: '', name: '', email: '' },
+    initialValues: {
+      username: '',
+      password: '',
+      name: '',
+      email: '',
+    },
     validate: {
       username: hasLength({ min: 3 }, 'Username must be at least 3 characters'),
       password: hasLength({ min: 8 }, 'Password must be at least 8 characters'),

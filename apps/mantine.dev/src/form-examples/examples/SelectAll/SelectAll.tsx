@@ -10,8 +10,10 @@ interface RoleValues {
 
 export function SelectAll() {
   const form = useForm<RoleValues>({
-    mode: 'uncontrolled',
-    initialValues: { name: '', permissions: ['read'] },
+    initialValues: {
+      name: '',
+      permissions: ['read'],
+    },
     validate: {
       name: isNotEmpty('Role name is required'),
       permissions: (value) => (value.length === 0 ? 'Select at least one permission' : null),
@@ -62,6 +64,7 @@ export function SelectAll() {
               )
             }
           />
+
           <Checkbox.Group {...form.getInputProps('permissions')}>
             <Stack gap="sm" mt="sm">
               {items}
@@ -73,6 +76,7 @@ export function SelectAll() {
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Create role</Button>
         </Group>
       </Stack>

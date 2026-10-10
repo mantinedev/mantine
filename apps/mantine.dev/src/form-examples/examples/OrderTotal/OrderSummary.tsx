@@ -22,13 +22,17 @@ export function OrderSummary({ product, quantity, discount, total }: OrderSummar
           <Text size="sm">{item ? item.label : 'No product selected'}</Text>
           <Text size="sm">{item ? `${count} × ${currency.format(item.price)}` : '—'}</Text>
         </Group>
+
         <Group justify="space-between">
           <Text size="sm">Discount</Text>
           <Text size="sm">{percent}%</Text>
         </Group>
+
         <Divider />
+
         <Group justify="space-between">
           <Text fw={500}>Total</Text>
+
           <Text fw={700} size="lg">
             {currency.format(total)}
           </Text>

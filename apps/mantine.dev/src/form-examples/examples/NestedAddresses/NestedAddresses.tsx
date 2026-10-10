@@ -12,7 +12,6 @@ interface ContactValues {
 
 export function NestedAddresses() {
   const form = useForm<ContactValues>({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       addresses: [
@@ -58,7 +57,7 @@ export function NestedAddresses() {
         ))}
 
         {addresses.length === 0 && (
-          <Text size="sm" c="dimmed" ta="center">
+          <Text size="xs" ta="center">
             No addresses yet
           </Text>
         )}

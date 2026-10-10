@@ -18,8 +18,10 @@ function RenderCount() {
 
 export function CustomInputSubscription() {
   const form = useForm<ReviewValues>({
-    mode: 'uncontrolled',
-    initialValues: { rating: 0, comment: '' },
+    initialValues: {
+      rating: 0,
+      comment: '',
+    },
     validate: {
       rating: (value) => (value > 0 ? null : 'Pick a rating'),
     },
@@ -51,6 +53,7 @@ export function CustomInputSubscription() {
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Submit review</Button>
         </Group>
       </Stack>

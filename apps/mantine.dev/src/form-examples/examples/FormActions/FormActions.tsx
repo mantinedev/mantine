@@ -6,9 +6,12 @@ import { DemoFormValues } from './form-actions';
 
 function DemoForm() {
   const form = useForm<DemoFormValues>({
-    mode: 'uncontrolled',
     name: 'demo-form',
-    initialValues: { name: '', email: '', age: '' },
+    initialValues: {
+      name: '',
+      email: '',
+      age: '',
+    },
     validate: {
       name: isNotEmpty('Name is required'),
       email: isEmail('Invalid email'),
@@ -32,12 +35,14 @@ function DemoForm() {
           withAsterisk
           {...form.getInputProps('name')}
         />
+
         <TextInput
           label="Email"
           placeholder="jane@mantine.dev"
           withAsterisk
           {...form.getInputProps('email')}
         />
+
         <NumberInput
           label="Age"
           placeholder="Your age"
@@ -46,6 +51,7 @@ function DemoForm() {
           withAsterisk
           {...form.getInputProps('age')}
         />
+
         <Group justify="flex-end">
           <Button type="submit">Submit</Button>
         </Group>

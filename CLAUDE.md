@@ -83,6 +83,8 @@ Issues live in GitLab at `rtivital/mantine-private` (the `gitlab` remote), drive
 
 When asked to create a task or a card, create it on the Trello board "Mantine" (https://trello.com/b/gVKkeDwD/mantine) in the "AI tickets" list, using the `claude.ai Trello` MCP tools (`trelloWriteCard` with `action: "create"`). List ARI: `ari:cloud:trello::list/workspace/602e1f4b6594f8550ee3b896/6ac9f6842e504980f2fda91a`. Card name is a short title, description holds the details (context, files, acceptance criteria). GitLab issues (above) are for bug reports and feature work tracked in the issue tracker; Trello is for tasks the owner asks to be written down.
 
+Every card has a per-board number, visible in the card URL slug (`/c/<shortLink>/<number>-<slug>`). After creating a card, read the number from its `url` and update the name to `#<number> <title>` so the number is visible on the board. When the owner refers to a ticket by number ("work on ticket 2801"), find it with `trelloSearch` (`action: "search_cards"`, query `2801`, `boardIds` scoped to the Mantine board ARI `ari:cloud:trello::board/workspace/602e1f4b6594f8550ee3b896/628b47720dde7f8f3763c604`); add `is:archived` to the query for archived cards.
+
 ### Triage labels
 
 The five canonical triage labels, used verbatim on the GitLab tracker. See `docs/agents/triage-labels.md`.

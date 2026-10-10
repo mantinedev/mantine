@@ -1,12 +1,12 @@
 import { Button, Group, TextInput } from '@mantine/core';
-import { useField } from '@mantine/form';
+import { emailRegexp, useField } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import classes from './SubscribeInput.module.css';
 
 function checkSubscription(email: string) {
   return new Promise<string | null>((resolve) => {
     setTimeout(() => {
-      if (!/^\S+@\S+\.\S+$/.test(email)) {
+      if (!emailRegexp.test(email)) {
         resolve('Invalid email');
       } else if (email.toLowerCase() === 'taken@mantine.dev') {
         resolve('Already subscribed');
@@ -19,7 +19,6 @@ function checkSubscription(email: string) {
 
 export function SubscribeInput() {
   const field = useField({
-    mode: 'uncontrolled',
     initialValue: '',
     validate: checkSubscription,
   });
@@ -45,10 +44,10 @@ export function SubscribeInput() {
           withAsterisk
           style={{ flex: 1 }}
           classNames={classes}
-          loading={field.isValidating}
-          disabled={field.isValidating}
+          readOnly={field.isValidating}
           {...field.getInputProps()}
         />
+
         <Button type="submit" loading={field.isValidating}>
           Subscribe
         </Button>

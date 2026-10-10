@@ -273,6 +273,8 @@ export type GetInputNode<Values> = <NodeType extends HTMLElement, Field extends 
 
 export interface UseFormInput<Values, TransformedValues = Values> {
   name?: string;
+
+  /** Form mode @default 'uncontrolled' */
   mode?: FormMode;
   initialValues?: Values;
   initialErrors?: FormErrors;

@@ -53,7 +53,7 @@ const form = useForm({
 
 ## isEmail
 
-`isEmail` uses `/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/` regexp to determine whether the form value is an email:
+`isEmail` checks whether the form value is an email. The regexp it uses is exported as `emailRegexp`, use it for checks outside of form validation, for example in an API call:
 
 ```tsx
 import { isEmail, useForm } from '@mantine/form';

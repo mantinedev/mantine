@@ -50,11 +50,13 @@ export function ContentEditor({
             <RichTextEditor.Italic />
             <RichTextEditor.Underline />
           </RichTextEditor.ControlsGroup>
+
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.H2 />
             <RichTextEditor.BulletList />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
+
         <RichTextEditor.Content mih={160} />
       </RichTextEditor>
     </Input.Wrapper>

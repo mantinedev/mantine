@@ -16,8 +16,11 @@ function login(values: LoginValues) {
 
 export function LoginForm() {
   const form = useForm<LoginValues>({
-    mode: 'uncontrolled',
-    initialValues: { email: '', password: '', rememberMe: false },
+    initialValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
     validate: {
       email: isEmail('Invalid email'),
       password: hasLength({ min: 8 }, 'Password must be at least 8 characters'),
@@ -34,28 +37,32 @@ export function LoginForm() {
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Stack>
+      <Stack maw={420} mx="auto">
         <TextInput
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
           {...form.getInputProps('email')}
         />
+
         <PasswordInput
           label="Password"
           placeholder="Your password"
           withAsterisk
           {...form.getInputProps('password')}
         />
+
         <Group justify="space-between">
           <Checkbox
             label="Remember me"
             {...form.getInputProps('rememberMe', { type: 'checkbox' })}
           />
+
           <Anchor component="button" type="button" size="sm">
             Forgot password?
           </Anchor>
         </Group>
+
         <Group justify="flex-end">
           <Button type="submit" loading={form.submitting}>
             Sign in

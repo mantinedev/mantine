@@ -13,6 +13,7 @@ export function NotificationsTab({ form }: NotificationsTabProps) {
         label="Email notifications"
         {...form.getInputProps('emailNotifications', { type: 'checkbox' })}
       />
+
       <Switch
         label="Push notifications"
         {...form.getInputProps('pushNotifications', { type: 'checkbox' })}

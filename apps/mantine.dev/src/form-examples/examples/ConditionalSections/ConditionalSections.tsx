@@ -15,7 +15,6 @@ function whenType<T>(type: AccountType, rule: (value: T) => ReactNode) {
 
 export function ConditionalSections() {
   const form = useForm<Values>({
-    mode: 'uncontrolled',
     initialValues: {
       accountType: 'personal',
       personal: { firstName: '', lastName: '', birthDate: null },
@@ -74,6 +73,7 @@ export function ConditionalSections() {
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Create account</Button>
         </Group>
       </Stack>

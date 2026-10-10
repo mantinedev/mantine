@@ -28,7 +28,6 @@ function register(values: RegistrationValues) {
 
 export function RegistrationForm() {
   const form = useForm<RegistrationValues>({
-    mode: 'uncontrolled',
     initialValues: {
       firstName: '',
       lastName: '',
@@ -43,7 +42,7 @@ export function RegistrationForm() {
       email: isEmail('Invalid email'),
       password: validatePassword,
       confirmPassword: matchesField('password', 'Passwords do not match'),
-      terms: (value) => (value ? null : 'You must accept terms and conditions'),
+      terms: isNotEmpty('You must accept terms and conditions'),
     },
   });
 
@@ -65,6 +64,7 @@ export function RegistrationForm() {
             withAsterisk
             {...form.getInputProps('firstName')}
           />
+
           <TextInput
             label="Last name"
             placeholder="Doe"
@@ -72,23 +72,28 @@ export function RegistrationForm() {
             {...form.getInputProps('lastName')}
           />
         </SimpleGrid>
+
         <TextInput
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
           {...form.getInputProps('email')}
         />
+
         <PasswordInputWithRequirements form={form} />
+
         <PasswordInput
           label="Confirm password"
           placeholder="Repeat your password"
           withAsterisk
           {...form.getInputProps('confirmPassword')}
         />
+
         <Checkbox
           label="I accept terms and conditions"
           {...form.getInputProps('terms', { type: 'checkbox' })}
         />
+
         <Group justify="flex-end">
           <Button type="submit" loading={form.submitting}>
             Create account

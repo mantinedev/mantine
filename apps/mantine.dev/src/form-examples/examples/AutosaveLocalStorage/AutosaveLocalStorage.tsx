@@ -29,8 +29,10 @@ export function AutosaveLocalStorage() {
   const [savedAt, setSavedAt] = useState<string | null>(null);
 
   const form = useForm<PostValues>({
-    mode: 'uncontrolled',
-    initialValues: { title: '', body: '' },
+    initialValues: {
+      title: '',
+      body: '',
+    },
     validate: {
       title: isNotEmpty('Title is required'),
       body: hasLength({ min: 10 }, 'Body must be at least 10 characters'),
@@ -73,6 +75,7 @@ export function AutosaveLocalStorage() {
           withAsterisk
           {...form.getInputProps('title')}
         />
+
         <Textarea
           label="Body"
           placeholder="Write your post, it is saved as you type"
@@ -81,14 +84,15 @@ export function AutosaveLocalStorage() {
           minRows={4}
           {...form.getInputProps('body')}
         />
+
         <Group justify="space-between">
-          <Text size="sm" c="dimmed">
-            {savedAt ? `Draft saved at ${savedAt}` : 'No draft saved'}
-          </Text>
+          <Text size="xs">{savedAt ? `Draft saved at ${savedAt}` : 'No draft saved'}</Text>
+
           <Group>
             <Button variant="default" onClick={discardDraft}>
               Discard draft
             </Button>
+
             <Button type="submit">Publish</Button>
           </Group>
         </Group>

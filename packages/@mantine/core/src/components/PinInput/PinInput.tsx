@@ -326,11 +326,16 @@ export const PinInput = factory<PinInputFactory>((props) => {
 
       case 'Delete':
         event.preventDefault();
-        setFieldValue('', index);
+        if (!readOnly) {
+          setFieldValue('', index);
+        }
         break;
 
       case 'Backspace':
-        if (inputValue === '') {
+        if (readOnly) {
+          event.preventDefault();
+          focusInputField('prev', index);
+        } else if (inputValue === '') {
           event.preventDefault();
           focusInputField('prev', index);
         } else {
@@ -361,6 +366,11 @@ export const PinInput = factory<PinInputFactory>((props) => {
 
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
     event.preventDefault();
+
+    if (readOnly) {
+      return;
+    }
+
     const pasteData = event.clipboardData.getData('text/plain').replace(/[\n\r\s]+/g, '');
     const isValid = validate(pasteData.trim());
 

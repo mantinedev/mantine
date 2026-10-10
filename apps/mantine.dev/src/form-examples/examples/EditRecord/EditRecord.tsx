@@ -33,8 +33,12 @@ function saveUser(values: UserRecord) {
 
 export function EditRecord() {
   const form = useForm<UserRecord>({
-    mode: 'uncontrolled',
-    initialValues: { name: '', email: '', role: null, bio: '' },
+    initialValues: {
+      name: '',
+      email: '',
+      role: null,
+      bio: '',
+    },
     validate: {
       name: isNotEmpty('Name is required'),
       email: isEmail('Invalid email'),
@@ -69,6 +73,7 @@ export function EditRecord() {
             {loading ? 'Loading record' : dirty ? 'Unsaved changes' : 'No changes'}
           </Badge>
         </Group>
+
         <TextInput
           label="Name"
           placeholder="John Doe"
@@ -76,6 +81,7 @@ export function EditRecord() {
           loading={loading}
           {...form.getInputProps('name')}
         />
+
         <TextInput
           label="Email"
           placeholder="john@mantine.dev"
@@ -83,6 +89,7 @@ export function EditRecord() {
           loading={loading}
           {...form.getInputProps('email')}
         />
+
         <Select
           label="Role"
           placeholder="Pick role"
@@ -91,6 +98,7 @@ export function EditRecord() {
           loading={loading}
           {...form.getInputProps('role')}
         />
+
         <Textarea
           label="Bio"
           placeholder="A few words about the user"
@@ -99,10 +107,12 @@ export function EditRecord() {
           loading={loading}
           {...form.getInputProps('bio')}
         />
+
         <Group justify="flex-end">
           <Button variant="default" onClick={form.reset} disabled={loading || !dirty}>
             Reset to loaded values
           </Button>
+
           <Button type="submit" loading={form.submitting} disabled={loading}>
             Save
           </Button>

@@ -28,7 +28,6 @@ interface Values {
 
 export function PickersForm() {
   const form = useForm<Values>({
-    mode: 'uncontrolled',
     initialValues: {
       accentColor: '#228be6',
       fontSize: 16,
@@ -59,6 +58,7 @@ export function PickersForm() {
             withAsterisk
             {...form.getInputProps('accentColor')}
           />
+
           <NativeSelect label="Language" data={languages} {...form.getInputProps('language')} />
         </SimpleGrid>
 
@@ -103,6 +103,7 @@ export function PickersForm() {
               {...form.getInputProps('theme', { withError: false })}
             />
           </Input.Wrapper>
+
           <Input.Wrapper label="Newsletter">
             <Switch
               mt={9}
@@ -116,6 +117,7 @@ export function PickersForm() {
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Save preferences</Button>
         </Group>
       </Stack>

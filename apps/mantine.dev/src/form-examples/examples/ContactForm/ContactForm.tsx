@@ -1,7 +1,6 @@
 import { Button, Group, Select, Stack, Textarea, TextInput } from '@mantine/core';
 import { isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { SUBJECTS } from './data';
 
 const MAX_LENGTH = 500;
 
@@ -19,8 +18,11 @@ function sendMessage(values: ContactValues) {
 
 export function ContactForm() {
   const form = useForm<ContactValues>({
-    mode: 'uncontrolled',
-    initialValues: { subject: null, email: '', message: '' },
+    initialValues: {
+      subject: null,
+      email: '',
+      message: '',
+    },
     validate: {
       subject: isNotEmpty('Select a subject'),
       email: isEmail('Invalid email'),
@@ -55,20 +57,27 @@ export function ContactForm() {
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Stack>
+      <Stack maw={420} mx="auto">
         <Select
           label="Subject"
           placeholder="Pick a subject"
-          data={SUBJECTS}
+          data={[
+            { value: 'bug', label: 'Bug report' },
+            { value: 'feature', label: 'Feature request' },
+            { value: 'billing', label: 'Billing question' },
+            { value: 'other', label: 'Other' },
+          ]}
           withAsterisk
           {...form.getInputProps('subject')}
         />
+
         <TextInput
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
           {...form.getInputProps('email')}
         />
+
         <Textarea
           label="Message"
           placeholder="How can we help?"
@@ -80,6 +89,7 @@ export function ContactForm() {
           onKeyDown={handleKeyDown}
           {...form.getInputProps('message')}
         />
+
         <Group justify="flex-end">
           <Button type="submit" loading={form.submitting}>
             Send message

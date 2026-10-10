@@ -24,9 +24,14 @@ export function ValidateOnBlur() {
   const [showSummary, setShowSummary] = useState(false);
 
   const form = useForm<ProfileValues>({
-    mode: 'uncontrolled',
     validateInputOnBlur: true,
-    initialValues: { firstName: '', lastName: '', email: '', website: '', bio: '' },
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      website: '',
+      bio: '',
+    },
     validate: {
       firstName: isNotEmpty('First name is required'),
       lastName: isNotEmpty('Last name is required'),
@@ -64,6 +69,7 @@ export function ValidateOnBlur() {
             withAsterisk
             {...form.getInputProps('firstName')}
           />
+
           <TextInput
             label="Last name"
             placeholder="Doe"
@@ -71,18 +77,21 @@ export function ValidateOnBlur() {
             {...form.getInputProps('lastName')}
           />
         </SimpleGrid>
+
         <TextInput
           label="Email"
           placeholder="john@mantine.dev"
           withAsterisk
           {...form.getInputProps('email')}
         />
+
         <TextInput
           label="Website"
           placeholder="https://mantine.dev"
           withAsterisk
           {...form.getInputProps('website')}
         />
+
         <Textarea
           label="Bio"
           placeholder="A few words about yourself"
@@ -91,6 +100,7 @@ export function ValidateOnBlur() {
           minRows={3}
           {...form.getInputProps('bio')}
         />
+
         <Group justify="flex-end">
           <Button type="submit">Save profile</Button>
         </Group>

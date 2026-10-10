@@ -21,7 +21,6 @@ export function UnsavedChangesPrompt() {
   const [opened, { open, close }] = useDisclosure(false);
 
   const form = useForm<ProfileValues>({
-    mode: 'uncontrolled',
     initialValues: {
       name: 'John Doe',
       email: 'john@mantine.dev',
@@ -85,22 +84,26 @@ export function UnsavedChangesPrompt() {
             <Badge color={dirty ? 'orange' : 'teal'}>
               {dirty ? 'Unsaved changes' : 'All changes saved'}
             </Badge>
+
             <Button variant="default" size="xs" onClick={handleNavigate}>
               Go to dashboard
             </Button>
           </Group>
+
           <TextInput
             label="Name"
             placeholder="Your name"
             withAsterisk
             {...form.getInputProps('name')}
           />
+
           <TextInput
             label="Email"
             placeholder="you@mantine.dev"
             withAsterisk
             {...form.getInputProps('email')}
           />
+
           <Textarea
             label="Bio"
             placeholder="A few words about you"
@@ -108,6 +111,7 @@ export function UnsavedChangesPrompt() {
             minRows={3}
             {...form.getInputProps('bio')}
           />
+
           <Group justify="flex-end">
             <Button type="submit" loading={form.submitting}>
               Save profile

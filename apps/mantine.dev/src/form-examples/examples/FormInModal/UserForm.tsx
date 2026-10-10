@@ -17,12 +17,14 @@ export function UserForm({ form, onCancel }: UserFormProps) {
         data-autofocus
         {...form.getInputProps('name')}
       />
+
       <TextInput
         label="Email"
         placeholder="john@mantine.dev"
         withAsterisk
         {...form.getInputProps('email')}
       />
+
       <Select
         label="Role"
         placeholder="Pick role"
@@ -30,10 +32,12 @@ export function UserForm({ form, onCancel }: UserFormProps) {
         data={['Admin', 'Editor', 'Viewer']}
         {...form.getInputProps('role')}
       />
+
       <Group justify="flex-end" mt="md">
         <Button variant="default" onClick={onCancel} disabled={form.submitting}>
           Cancel
         </Button>
+
         <Button type="submit" loading={form.submitting}>
           Add user
         </Button>

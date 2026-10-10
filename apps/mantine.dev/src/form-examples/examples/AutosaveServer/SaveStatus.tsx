@@ -11,9 +11,8 @@ export function SaveStatus({ status, savedAt, dirty }: SaveStatusProps) {
     return (
       <Group gap="xs">
         <Loader size="xs" />
-        <Text size="sm" c="dimmed">
-          Saving…
-        </Text>
+
+        <Text size="xs">Saving…</Text>
       </Group>
     );
   }
@@ -23,7 +22,7 @@ export function SaveStatus({ status, savedAt, dirty }: SaveStatusProps) {
   }
 
   return (
-    <Text size="sm" c="dimmed">
+    <Text size="xs">
       {status === 'saved' && savedAt ? `Saved at ${savedAt}` : 'All changes saved'}
     </Text>
   );

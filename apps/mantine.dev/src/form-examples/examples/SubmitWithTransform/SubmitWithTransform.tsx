@@ -33,7 +33,6 @@ const initialValues: EventValues = {
 
 export function SubmitWithTransform() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues,
     validate: {
       title: isNotEmpty('Title is required'),
@@ -77,6 +76,7 @@ export function SubmitWithTransform() {
           withAsterisk
           {...form.getInputProps('title')}
         />
+
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <DateInput
             label="Date"
@@ -84,6 +84,7 @@ export function SubmitWithTransform() {
             withAsterisk
             {...form.getInputProps('date')}
           />
+
           <NumberInput
             label="Capacity"
             placeholder="Number of seats"
@@ -93,23 +94,28 @@ export function SubmitWithTransform() {
             {...form.getInputProps('capacity')}
           />
         </SimpleGrid>
+
         <MultiSelect
           label="Tags"
           placeholder="Pick tags"
           data={['React', 'TypeScript', 'CSS', 'Design']}
           {...form.getInputProps('tags')}
         />
+
         <TagsInput
           label="Invite emails"
           placeholder="Type an email and press Enter"
           description="Invitations are sent when the event is created"
           {...form.getInputProps('emails')}
         />
+
         <Switch label="Public event" {...form.getInputProps('isPublic', { type: 'checkbox' })} />
+
         <Group justify="flex-end">
           <Button variant="default" onClick={showPreview}>
             Preview payload
           </Button>
+
           <Button type="submit">Create event</Button>
         </Group>
       </Stack>

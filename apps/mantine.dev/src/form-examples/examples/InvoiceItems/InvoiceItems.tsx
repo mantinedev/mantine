@@ -12,7 +12,6 @@ interface InvoiceValues {
 
 export function InvoiceItems() {
   const form = useForm<InvoiceValues>({
-    mode: 'uncontrolled',
     initialValues: {
       customer: '',
       items: [

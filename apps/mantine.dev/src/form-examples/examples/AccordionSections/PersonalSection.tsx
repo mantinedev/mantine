@@ -16,6 +16,7 @@ export function PersonalSection({ form }: PersonalSectionProps) {
           withAsterisk
           {...form.getInputProps('personal.firstName')}
         />
+
         <TextInput
           label="Last name"
           placeholder="Doe"
@@ -23,6 +24,7 @@ export function PersonalSection({ form }: PersonalSectionProps) {
           {...form.getInputProps('personal.lastName')}
         />
       </SimpleGrid>
+
       <TextInput
         label="Email"
         placeholder="john@mantine.dev"

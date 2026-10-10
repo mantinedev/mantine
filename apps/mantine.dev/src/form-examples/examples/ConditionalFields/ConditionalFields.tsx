@@ -11,8 +11,12 @@ interface DeliveryValues {
 
 export function ConditionalFields() {
   const form = useForm<DeliveryValues>({
-    mode: 'uncontrolled',
-    initialValues: { name: '', method: 'pickup', address: '', leaveAtDoor: false },
+    initialValues: {
+      name: '',
+      method: 'pickup',
+      address: '',
+      leaveAtDoor: false,
+    },
     validate: {
       name: isNotEmpty('Name is required'),
       address: (value, values) =>
@@ -57,6 +61,7 @@ export function ConditionalFields() {
                 withAsterisk
                 {...form.getInputProps('address')}
               />
+
               <Checkbox
                 label="Leave at door"
                 {...form.getInputProps('leaveAtDoor', { type: 'checkbox' })}

@@ -24,6 +24,7 @@ export function FilesList({ files, disabled, onRemove }: FilesListProps) {
         <Text size="sm">
           {file.name} ({formatSize(file.size)})
         </Text>
+
         <ActionIcon
           variant="default"
           size="sm"

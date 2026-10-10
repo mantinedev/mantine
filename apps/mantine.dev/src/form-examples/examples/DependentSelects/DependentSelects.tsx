@@ -20,8 +20,10 @@ export function DependentSelects() {
   const [loading, setLoading] = useState(false);
 
   const form = useForm<Values>({
-    mode: 'uncontrolled',
-    initialValues: { country: null, city: null },
+    initialValues: {
+      country: null,
+      city: null,
+    },
     validate: {
       country: isNotEmpty('Select a country'),
       city: isNotEmpty('Select a city'),
@@ -75,6 +77,7 @@ export function DependentSelects() {
             data={countries}
             {...form.getInputProps('country')}
           />
+
           <Select
             label="City"
             placeholder={country ? 'Pick a city' : 'Pick a country first'}
@@ -85,10 +88,12 @@ export function DependentSelects() {
             {...form.getInputProps('city')}
           />
         </SimpleGrid>
+
         <Group justify="flex-end">
           <Button variant="default" onClick={form.reset}>
             Reset
           </Button>
+
           <Button type="submit">Save</Button>
         </Group>
       </Stack>

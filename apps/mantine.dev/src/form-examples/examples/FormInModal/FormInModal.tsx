@@ -18,8 +18,11 @@ export function FormInModal() {
   const [users, setUsers] = useState<User[]>([]);
 
   const form = useForm<UserValues>({
-    mode: 'uncontrolled',
-    initialValues: { name: '', email: '', role: null },
+    initialValues: {
+      name: '',
+      email: '',
+      role: null,
+    },
     validate: {
       name: isNotEmpty('Name is required'),
       email: isEmail('Invalid email'),

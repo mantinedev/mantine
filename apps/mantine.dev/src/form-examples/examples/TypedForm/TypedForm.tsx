@@ -15,8 +15,11 @@ export function TypedForm() {
   const [errorList, setErrorList] = useState<string[]>([]);
 
   const form = useForm<Values, Payload>({
-    mode: 'uncontrolled',
-    initialValues: { name: '', age: '', tags: '' },
+    initialValues: {
+      name: '',
+      age: '',
+      tags: '',
+    },
     validate: {
       name: isNotEmpty('Name is required'),
       age: matches(/^\d+$/, 'Age must be a whole number'),
@@ -56,7 +59,9 @@ export function TypedForm() {
           withAsterisk
           {...form.getInputProps('name')}
         />
+
         <TextInput label="Age" placeholder="32" withAsterisk {...form.getInputProps('age')} />
+
         <TextInput
           label="Tags"
           placeholder="react, forms, typescript"

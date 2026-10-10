@@ -16,9 +16,8 @@ export function SummaryStep({ form }: SummaryStepProps) {
     { label: 'Email', value: values.email },
   ].map((row) => (
     <Group key={row.label} justify="space-between" gap="xs">
-      <Text size="sm" c="dimmed">
-        {row.label}
-      </Text>
+      <Text size="xs">{row.label}</Text>
+
       <Text size="sm" fw={500}>
         {row.value}
       </Text>

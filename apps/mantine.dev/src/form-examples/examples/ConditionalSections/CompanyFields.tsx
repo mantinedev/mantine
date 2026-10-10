@@ -15,6 +15,7 @@ export function CompanyFields({ form }: CompanyFieldsProps) {
         withAsterisk
         {...form.getInputProps('company.name')}
       />
+
       <TextInput
         label="VAT number"
         placeholder="DE123456789"
@@ -22,6 +23,7 @@ export function CompanyFields({ form }: CompanyFieldsProps) {
         withAsterisk
         {...form.getInputProps('company.vatNumber')}
       />
+
       <TextInput
         label="Contact person"
         placeholder="Jane Doe"

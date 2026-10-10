@@ -52,10 +52,12 @@ export function AddressCard({ form, index }: AddressCardProps) {
             </Text>
             {isPrimary && <Badge size="sm">Primary</Badge>}
           </Group>
+
           <Group gap="xs" wrap="nowrap">
             <Button size="compact-xs" variant="default" disabled={isPrimary} onClick={setPrimary}>
               Set as primary
             </Button>
+
             <ActionIcon
               variant="default"
               aria-label="Remove address"
@@ -65,12 +67,14 @@ export function AddressCard({ form, index }: AddressCardProps) {
             </ActionIcon>
           </Group>
         </Group>
+
         <TextInput
           label="Label"
           placeholder="Home"
           withAsterisk
           {...form.getInputProps(`addresses.${index}.label`)}
         />
+
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
             label="Street"
@@ -78,6 +82,7 @@ export function AddressCard({ form, index }: AddressCardProps) {
             withAsterisk
             {...form.getInputProps(`addresses.${index}.street`)}
           />
+
           <TextInput
             label="City"
             placeholder="London"
