@@ -4,7 +4,7 @@ import {
   Badge,
   Button,
   Group,
-  Paper,
+  Surface,
   SimpleGrid,
   Stack,
   Text,
@@ -43,7 +43,7 @@ export function AddressCard({ form, index }: AddressCardProps) {
   };
 
   return (
-    <Paper withBorder p="md">
+    <Surface withBorder p="md">
       <Stack gap="sm">
         <Group justify="space-between" wrap="nowrap">
           <Group gap="xs">
@@ -93,6 +93,6 @@ export function AddressCard({ form, index }: AddressCardProps) {
           />
         </SimpleGrid>
       </Stack>
-    </Paper>
+    </Surface>
   );
 }

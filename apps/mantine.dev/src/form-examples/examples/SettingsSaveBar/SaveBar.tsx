@@ -1,4 +1,4 @@
-import { Button, Group, Paper, Text } from '@mantine/core';
+import { Button, Group, Surface, Text } from '@mantine/core';
 
 interface SaveBarProps {
   visible: boolean;
@@ -12,7 +12,7 @@ export function SaveBar({ visible, saving, onDiscard }: SaveBarProps) {
   }
 
   return (
-    <Paper
+    <Surface
       withBorder
       shadow="md"
       p="md"
@@ -34,6 +34,6 @@ export function SaveBar({ visible, saving, onDiscard }: SaveBarProps) {
           </Button>
         </Group>
       </Group>
-    </Paper>
+    </Surface>
   );
 }

@@ -1,4 +1,4 @@
-import { Divider, Group, Paper, Stack, Text } from '@mantine/core';
+import { Divider, Group, Surface, Stack, Text } from '@mantine/core';
 import { products } from './data';
 
 export const currency = new Intl.NumberFormat('en-US', {
@@ -19,7 +19,7 @@ export function OrderSummary({ product, quantity, discount, total }: OrderSummar
   const percent = typeof discount === 'number' ? discount : 0;
 
   return (
-    <Paper withBorder p="md">
+    <Surface withBorder p="md">
       <Stack gap="xs">
         <Group justify="space-between">
           <Text size="sm">{item ? item.label : 'No product selected'}</Text>
@@ -41,6 +41,6 @@ export function OrderSummary({ product, quantity, discount, total }: OrderSummar
           </Text>
         </Group>
       </Stack>
-    </Paper>
+    </Surface>
   );
 }

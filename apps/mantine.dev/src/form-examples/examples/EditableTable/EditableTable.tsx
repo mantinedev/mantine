@@ -22,6 +22,8 @@ export function EditableTable() {
     },
   });
 
+  const dirty = form.useDirty();
+
   const handleSubmit = (values: TableValues) => {
     const changedRows = values.rows.filter((_, index) => form.isDirty(`rows.${index}`)).length;
     notifications.show({
@@ -36,9 +38,11 @@ export function EditableTable() {
         <RowsTable form={form} />
 
         <Group justify="flex-end">
-          <Button size="md" variant="default" onClick={form.reset}>
-            Reset all
-          </Button>
+          {dirty && (
+            <Button size="md" variant="default" onClick={form.reset}>
+              Reset all
+            </Button>
+          )}
 
           <Button size="md" type="submit">
             Save changes

@@ -1,9 +1,9 @@
-import { Button, Group, Paper } from '@mantine/core';
+import { Button, Group, Surface } from '@mantine/core';
 import { demoFormActions } from './form-actions';
 
 export function ExternalControls() {
   return (
-    <Paper withBorder p="md">
+    <Surface withBorder p="md">
       <Group gap="xs">
         <Button
           size="xs"
@@ -35,6 +35,6 @@ export function ExternalControls() {
           Clear
         </Button>
       </Group>
-    </Paper>
+    </Surface>
   );
 }

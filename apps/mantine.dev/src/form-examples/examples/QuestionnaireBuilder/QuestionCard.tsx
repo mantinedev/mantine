@@ -1,5 +1,5 @@
 import { TrashIcon } from '@phosphor-icons/react';
-import { ActionIcon, Group, Paper, Stack, TextInput } from '@mantine/core';
+import { ActionIcon, Group, Surface, Stack, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 import { OptionsList } from './OptionsList';
 import { QuestionnaireValues } from './types';
@@ -11,7 +11,7 @@ interface QuestionCardProps {
 
 export function QuestionCard({ form, index }: QuestionCardProps) {
   return (
-    <Paper withBorder p="md">
+    <Surface withBorder p="md">
       <Stack gap="sm">
         <Group gap="xs" wrap="nowrap" align="flex-start">
           <TextInput
@@ -36,6 +36,6 @@ export function QuestionCard({ form, index }: QuestionCardProps) {
 
         <OptionsList form={form} questionIndex={index} />
       </Stack>
-    </Paper>
+    </Surface>
   );
 }

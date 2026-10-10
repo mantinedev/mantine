@@ -1,4 +1,4 @@
-import { Badge, Button, Group, Paper, SimpleGrid, Stack, TextInput } from '@mantine/core';
+import { Badge, Button, Group, Surface, SimpleGrid, Stack, TextInput } from '@mantine/core';
 import { FormMode, isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { CurrentName } from './CurrentName';
@@ -35,7 +35,7 @@ export function ProfileForm({ mode }: ProfileFormProps) {
   };
 
   return (
-    <Paper withBorder p="md">
+    <Surface withBorder p="md">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           <Group>
@@ -70,6 +70,6 @@ export function ProfileForm({ mode }: ProfileFormProps) {
           </Group>
         </Stack>
       </form>
-    </Paper>
+    </Surface>
   );
 }

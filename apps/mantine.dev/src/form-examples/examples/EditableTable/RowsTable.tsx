@@ -1,7 +1,7 @@
-import { ArrowCounterClockwiseIcon } from '@phosphor-icons/react';
-import { ActionIcon, NumberInput, ScrollArea, Table, TextInput } from '@mantine/core';
+import { NumberInput, ScrollArea, Table, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 import { TableRow } from './data';
+import { RowResetButton } from './RowResetButton';
 
 interface RowsTableProps {
   form: UseFormReturnType<{ rows: TableRow[] }>;
@@ -40,14 +40,7 @@ export function RowsTable({ form }: RowsTableProps) {
         />
       </Table.Td>
       <Table.Td>
-        <ActionIcon
-          variant="default"
-          size="input-md"
-          aria-label="Reset row"
-          onClick={() => form.resetField(`rows.${index}`)}
-        >
-          <ArrowCounterClockwiseIcon size={16} />
-        </ActionIcon>
+        <RowResetButton form={form} index={index} />
       </Table.Td>
     </Table.Tr>
   ));
@@ -57,11 +50,13 @@ export function RowsTable({ form }: RowsTableProps) {
       <Table verticalSpacing={2} stickyHeader>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th w={40}>#</Table.Th>
-            <Table.Th>Name</Table.Th>
-            <Table.Th>Email</Table.Th>
-            <Table.Th>Qty</Table.Th>
-            <Table.Th w={40} />
+            <Table.Th w={40} py="sm">
+              #
+            </Table.Th>
+            <Table.Th py="sm">Name</Table.Th>
+            <Table.Th py="sm">Email</Table.Th>
+            <Table.Th py="sm">Qty</Table.Th>
+            <Table.Th w={50} py="sm" />
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

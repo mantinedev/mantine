@@ -13,7 +13,7 @@ export function OptionsList({ form, questionIndex }: OptionsListProps) {
   const error = form.errors[`questions.${questionIndex}.options`];
 
   return (
-    <Stack gap="xs" pl="md">
+    <Stack gap="xs" pl="xl">
       {options.map((option, optionIndex) => (
         <Group key={option.key} gap="xs" wrap="nowrap" align="flex-start">
           <TextInput
