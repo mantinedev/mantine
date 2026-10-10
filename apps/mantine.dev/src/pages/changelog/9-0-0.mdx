@@ -582,7 +582,7 @@ function Demo() {
 - [Spoiler](/core/spoiler) component:
   - `initialState` prop was renamed to `defaultExpanded` for consistency with other components
   - New `showAriaLabel` and `hideAriaLabel` props allow customizing ARIA labels
-- [Checkbox.Group](/core/checkbox/#checkboxgroup-with-formdata) and [Switch.Group](/core/switch/#switchgroup-with-formdata) can now be used in uncontrolled forms and can be accessed through `FormData`
+- [Checkbox.Group](/core/checkbox/#checkboxgroup-with-uncontrolled-forms) and [Switch.Group](/core/switch/#switchgroup-with-uncontrolled-forms) can now be used in uncontrolled forms and can be accessed through `FormData`
 - [ColorPicker](/core/color-picker) component now supports `name` and `hiddenInputProps` props to include color value in uncontrolled form submissions
 - [Dialog](/core/dialog) now enables `withBorder` by default
 - [Pagination](/core/pagination) component now supports `input-` prefix for `size` prop to match input and button sizes
@@ -612,7 +612,7 @@ function Demo() {
 - [use-mouse](/hooks/use-mouse) hook now uses the new callback ref approach to resolve the issue with stale refs. The previous hook functionality was split into two hooks: `useMouse` (for ref) and `useMousePosition` (for document).
 - [use-mutation-observer](/hooks/use-mutation-observer) hook now uses the new callback ref approach. The new approach makes hook usable with dynamic node changes. Additionally, a new `useMutationObserverTarget` hook was added for observing external target elements.
 - [use-disclosure](/hooks/use-disclosure) hook now supports new `set` handler
-- [use-floating-indicator](/hooks/use-floating-indicator) hook now supports `onTransitionStart` and `onTransitionEnd` callbacks
+- [FloatingIndicator](/core/floating-indicator) component now supports `onTransitionStart` and `onTransitionEnd` callbacks
 - `@mantine/hooks` types were renamed for consistency:
   - `UseScrollSpyReturnType` → `UseScrollSpyReturnValue`
   - `StateHistory` → `UseStateHistoryValue`
