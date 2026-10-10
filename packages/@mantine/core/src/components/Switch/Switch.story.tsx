@@ -172,3 +172,14 @@ export function Inert() {
     </div>
   );
 }
+
+export function GroupSizes() {
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+    <Switch.Group key={size} size={size} defaultValue={['react']} label={`Size ${size}`}>
+      <Switch value="react" label="React" mt="xs" />
+      <Switch value="svelte" label="Svelte" mt="xs" />
+    </Switch.Group>
+  ));
+
+  return <div style={{ padding: 40 }}>{sizes}</div>;
+}

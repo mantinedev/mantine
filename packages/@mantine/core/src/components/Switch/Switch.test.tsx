@@ -129,4 +129,28 @@ describe('@mantine/core/Switch', () => {
     act(() => input.click());
     expect(input).toBeChecked();
   });
+
+  it('uses size from Switch.Group for css variables', () => {
+    const { container } = render(
+      <Switch.Group size="md">
+        <Switch value="test" label="test" />
+      </Switch.Group>
+    );
+
+    expect(container.querySelector('.mantine-Switch-root')).toHaveStyle({
+      '--switch-height': 'var(--switch-height-md)',
+    });
+  });
+
+  it('passes size from Switch.Group to classNames callbacks', () => {
+    const { container } = render(
+      <Switch.Group size="xl">
+        <Switch value="test" label="test" classNames={(_, p) => ({ root: `size-${p.size}` })} />
+      </Switch.Group>
+    );
+
+    const root = container.querySelector('.mantine-Switch-root')!;
+    expect(root).toHaveClass('size-xl');
+    expect(root.className).not.toContain('size-undefined');
+  });
 });

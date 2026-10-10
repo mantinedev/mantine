@@ -84,3 +84,14 @@ export function UncontrolledForm() {
     </form>
   );
 }
+
+export function GroupSizes() {
+  const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+    <Checkbox.Group key={size} size={size} defaultValue={['react']} label={`Size ${size}`}>
+      <Checkbox value="react" label="React" mt="xs" />
+      <Checkbox value="svelte" label="Svelte" mt="xs" />
+    </Checkbox.Group>
+  ));
+
+  return <div style={{ padding: 40 }}>{sizes}</div>;
+}

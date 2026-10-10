@@ -215,10 +215,11 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const ctx = use(CheckboxGroupContext);
   const _size = size || ctx?.size;
+  const resolvedProps = { ...props, size: _size };
 
   const getStyles = useStyles<CheckboxFactory>({
     name: 'Checkbox',
-    props,
+    props: resolvedProps,
     classes,
     className,
     style,
@@ -272,7 +273,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
     <InlineInput
       {...getStyles('root')}
       __staticSelector="Checkbox"
-      __stylesApiProps={props}
+      __stylesApiProps={resolvedProps}
       id={uuid}
       size={_size}
       labelPosition={labelPosition}

@@ -144,4 +144,28 @@ describe('@mantine/core/Radio', () => {
       'var(--mantine-color-red-filled)'
     );
   });
+
+  it('uses size from Radio.Group for css variables', () => {
+    const { container } = render(
+      <Radio.Group size="md">
+        <Radio value="test" label="test" />
+      </Radio.Group>
+    );
+
+    expect(container.querySelector('.mantine-Radio-root')).toHaveStyle({
+      '--radio-size': 'var(--radio-size-md)',
+    });
+  });
+
+  it('passes size from Radio.Group to classNames callbacks', () => {
+    const { container } = render(
+      <Radio.Group size="xl">
+        <Radio value="test" label="test" classNames={(_, p) => ({ root: `size-${p.size}` })} />
+      </Radio.Group>
+    );
+
+    const root = container.querySelector('.mantine-Radio-root')!;
+    expect(root).toHaveClass('size-xl');
+    expect(root.className).not.toContain('size-undefined');
+  });
 });

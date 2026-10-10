@@ -197,10 +197,15 @@ export const Radio = factory<RadioFactory>((_props) => {
     ...others
   } = props;
 
+  const ctx = use(RadioGroupContext);
+  const contextSize = ctx?.size ?? size;
+  const componentSize = props.size ? size : contextSize;
+  const resolvedProps = { ...props, size: componentSize };
+
   const getStyles = useStyles<RadioFactory>({
     name: 'Radio',
     classes,
-    props,
+    props: resolvedProps,
     className,
     style,
     classNames,
@@ -210,11 +215,6 @@ export const Radio = factory<RadioFactory>((_props) => {
     vars,
     varsResolver,
   });
-
-  const ctx = use(RadioGroupContext);
-
-  const contextSize = ctx?.size ?? size;
-  const componentSize = props.size ? size : contextSize;
 
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
@@ -244,7 +244,7 @@ export const Radio = factory<RadioFactory>((_props) => {
     <InlineInput
       {...getStyles('root')}
       __staticSelector="Radio"
-      __stylesApiProps={props}
+      __stylesApiProps={resolvedProps}
       id={uuid}
       size={componentSize}
       labelPosition={labelPosition}

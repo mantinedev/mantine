@@ -278,4 +278,28 @@ describe('@mantine/core/Checkbox', () => {
       'var(--mantine-color-red-filled)'
     );
   });
+
+  it('uses size from Checkbox.Group for css variables', () => {
+    const { container } = render(
+      <Checkbox.Group size="md">
+        <Checkbox value="test" label="test" />
+      </Checkbox.Group>
+    );
+
+    expect(container.querySelector('.mantine-Checkbox-root')).toHaveStyle({
+      '--checkbox-size': 'var(--checkbox-size-md)',
+    });
+  });
+
+  it('passes size from Checkbox.Group to classNames callbacks', () => {
+    const { container } = render(
+      <Checkbox.Group size="xl">
+        <Checkbox value="test" label="test" classNames={(_, p) => ({ root: `size-${p.size}` })} />
+      </Checkbox.Group>
+    );
+
+    const root = container.querySelector('.mantine-Checkbox-root')!;
+    expect(root).toHaveClass('size-xl');
+    expect(root.className).not.toContain('size-undefined');
+  });
 });

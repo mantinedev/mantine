@@ -155,10 +155,11 @@ export const Switch = factory<SwitchFactory>((_props) => {
 
   const ctx = use(SwitchGroupContext);
   const _size = size || ctx?.size;
+  const resolvedProps = { ...props, size: _size };
 
   const getStyles = useStyles<SwitchFactory>({
     name: 'Switch',
-    props,
+    props: resolvedProps,
     classes,
     className,
     style,
@@ -201,7 +202,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
     <InlineInput
       {...getStyles('root')}
       __staticSelector="Switch"
-      __stylesApiProps={props}
+      __stylesApiProps={resolvedProps}
       id={uuid}
       size={_size}
       labelPosition={labelPosition}
