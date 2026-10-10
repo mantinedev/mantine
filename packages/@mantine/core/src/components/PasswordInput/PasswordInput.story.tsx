@@ -9,3 +9,14 @@ export function Usage() {
     </div>
   );
 }
+
+export function Sizes() {
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+  return (
+    <div style={{ padding: 40, maxWidth: 440, display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {sizes.map((size) => (
+        <PasswordInput key={size} size={size} label={size} defaultValue="secret" />
+      ))}
+    </div>
+  );
+}
