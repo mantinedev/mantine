@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "RenderCount.tsx",
+    "language": "tsx",
+    "code": "import { Stack } from '@mantine/core';\nimport { ProfileForm } from './ProfileForm';\n\nexport function RenderCount() {\n  return (\n    <Stack>\n      <ProfileForm mode=\"controlled\" />\n      <ProfileForm mode=\"uncontrolled\" />\n    </Stack>\n  );\n}\n"
+  },
+  {
+    "fileName": "CurrentName.tsx",
+    "language": "tsx",
+    "code": "import { Text } from '@mantine/core';\nimport { UseFormReturnType } from '@mantine/form';\n\ninterface CurrentNameProps {\n  form: UseFormReturnType<{ name: string }>;\n}\n\nexport function CurrentName({ form }: CurrentNameProps) {\n  const name = form.useWatchValue('name');\n\n  return (\n    <Text size=\"sm\" c=\"dimmed\">\n      Signed as {name || '—'}\n    </Text>\n  );\n}\n"
+  },
+  {
+    "fileName": "ExpensiveChild.tsx",
+    "language": "tsx",
+    "code": "import { RenderCountBadge } from './RenderCountBadge';\n\nexport function ExpensiveChild() {\n  return <RenderCountBadge label=\"Child renders\" />;\n}\n"
+  },
+  {
+    "fileName": "ProfileForm.tsx",
+    "language": "tsx",
+    "code": "import { Badge, Button, Group, Paper, SimpleGrid, Stack, TextInput } from '@mantine/core';\nimport { FormMode, isEmail, isNotEmpty, useForm } from '@mantine/form';\nimport { notifications } from '@mantine/notifications';\nimport { CurrentName } from './CurrentName';\nimport { ExpensiveChild } from './ExpensiveChild';\nimport { RenderCountBadge } from './RenderCountBadge';\n\ninterface ProfileValues {\n  name: string;\n  email: string;\n}\n\ninterface ProfileFormProps {\n  mode: FormMode;\n}\n\nexport function ProfileForm({ mode }: ProfileFormProps) {\n  const form = useForm<ProfileValues>({\n    mode,\n    initialValues: { name: '', email: '' },\n    validate: {\n      name: isNotEmpty('Name is required'),\n      email: isEmail('Invalid email'),\n    },\n  });\n\n  const handleSubmit = (values: ProfileValues) => {\n    notifications.show({\n      title: 'Profile saved',\n      message: `${values.name} (${values.email}) saved from the ${mode} form`,\n    });\n  };\n\n  return (\n    <Paper withBorder p=\"md\">\n      <form onSubmit={form.onSubmit(handleSubmit)}>\n        <Stack>\n          <Group>\n            <Badge variant=\"default\">{mode}</Badge>\n            <RenderCountBadge label=\"Form renders\" />\n            <ExpensiveChild />\n          </Group>\n          <SimpleGrid cols={{ base: 1, sm: 2 }}>\n            <TextInput\n              label=\"Name\"\n              placeholder=\"Jane Doe\"\n              withAsterisk\n              {...form.getInputProps('name')}\n            />\n            <TextInput\n              label=\"Email\"\n              placeholder=\"you@mantine.dev\"\n              withAsterisk\n              {...form.getInputProps('email')}\n            />\n          </SimpleGrid>\n          <Group justify=\"space-between\">\n            <CurrentName form={form} />\n            <Button type=\"submit\">Save profile</Button>\n          </Group>\n        </Stack>\n      </form>\n    </Paper>\n  );\n}\n"
+  },
+  {
+    "fileName": "RenderCountBadge.tsx",
+    "language": "tsx",
+    "code": "import { useRef } from 'react';\nimport { Badge } from '@mantine/core';\n\ninterface RenderCountBadgeProps {\n  label: string;\n}\n\nexport function RenderCountBadge({ label }: RenderCountBadgeProps) {\n  const renders = useRef(0);\n  renders.current += 1;\n\n  return (\n    <Badge>\n      {label}: {renders.current}\n    </Badge>\n  );\n}\n"
+  }
+]

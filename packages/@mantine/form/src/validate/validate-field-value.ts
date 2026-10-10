@@ -10,9 +10,12 @@ function fieldResultFromErrors(
   path: string,
   errors: Record<string, React.ReactNode>
 ): FormFieldValidationResult {
-  const pathInError = Object.keys(errors).find((errorKey) =>
-    path.split('.').every((pathPart, i) => pathPart === errorKey.split('.')[i])
-  );
+  const pathInError =
+    path in errors
+      ? path
+      : Object.keys(errors).find((errorKey) =>
+          path.split('.').every((pathPart, i) => pathPart === errorKey.split('.')[i])
+        );
   return { hasError: !!pathInError, error: pathInError ? errors[pathInError] : null };
 }
 

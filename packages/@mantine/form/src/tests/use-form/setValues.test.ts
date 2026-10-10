@@ -29,6 +29,19 @@ function tests(mode: FormMode) {
     expect(hook.result.current.errors).toStrictEqual({ a: 1, b: 2 });
   });
 
+  it('clears only errors of the fields written with setValues', () => {
+    const hook = renderHook(() =>
+      useForm<Values>({
+        mode,
+        initialValues: { a: 1, b: 2 },
+        initialErrors: { a: 'a', b: 'b', 'a.nested': 'nested' },
+      })
+    );
+
+    act(() => hook.result.current.setValues({ a: 3 }));
+    expect(hook.result.current.errors).toStrictEqual({ b: 'b' });
+  });
+
   it('allows setting values partial', () => {
     const hook = renderHook(() => useForm<Values>({ mode, initialValues: { a: 1, b: 2 } }));
     act(() => hook.result.current.setValues({ a: 3 }));

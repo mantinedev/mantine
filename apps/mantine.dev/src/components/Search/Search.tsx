@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import Fuse from 'fuse.js';
+import { useHotkeys } from '@mantine/hooks';
 import { createSpotlight, Spotlight, SpotlightFilterFunction } from '@mantine/spotlight';
 import { MDX_NAV_SEARCH_PAGES } from '@/mdx';
 
@@ -59,10 +60,12 @@ export function Search() {
     onClick: () => router.push(page.slug),
   }));
 
+  useHotkeys([['/', () => searchHandlers.open()]]);
+
   return (
     <Spotlight
       store={searchStore}
-      shortcut={['mod + K', 'mod + P', '/']}
+      shortcut={['mod + K', 'mod + P']}
       actions={actions}
       tagsToIgnore={[]}
       filter={fuzzySearchFilter}

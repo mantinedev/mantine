@@ -1,0 +1,52 @@
+.root {
+  max-width: calc(100vw - var(--examples-shell-navbar-width));
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    max-width: calc(100vw - var(--mantine-spacing-md));
+  }
+}
+
+.preview {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.header {
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-6));
+}
+
+.title {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 600;
+}
+
+.description {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-gray-6);
+  margin-top: 3px;
+}
+
+.inner {
+  display: flex;
+  justify-content: center;
+  padding: 50px var(--mantine-spacing-lg);
+  min-height: 400px;
+
+  @mixin smaller-than $docs-navbar-breakpoint {
+    padding: var(--mantine-spacing-lg) var(--mantine-spacing-md);
+  }
+}
+
+.wrapper {
+  flex: 1;
+  max-width: 560px;
+  min-width: 0;
+}
+
+.code {
+  border-top: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-6));
+  position: relative;
+  z-index: 2;
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+}

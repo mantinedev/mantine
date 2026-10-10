@@ -34,7 +34,7 @@ import { theme } from '../../theme';
 import { emotionCache } from '../emotion';
 import '../styles/variables.css';
 
-const excludeShell = ['/', '/combobox', '/app-shell'];
+const excludeShell = ['/', '/combobox', '/app-shell', '/form/examples'];
 
 async function loadShiki() {
   const { createHighlighter } = await import('shiki');

@@ -41,9 +41,10 @@ const navigationLinksData: NavigationLinkData[] = [
 interface DocsHeaderProps {
   headerControlsProps?: Partial<React.ComponentProps<typeof HeaderControls>>;
   withNav?: boolean;
+  fluid?: boolean;
 }
 
-export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
+export function DocsHeader({ headerControlsProps, withNav, fluid }: DocsHeaderProps) {
   const router = useRouter();
   const activeCategory = getActiveCategory(router.pathname);
   const ctx = useShellContext();
@@ -83,7 +84,7 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
 
   return (
     <header className={classes.header} data-without-nav={!withNav || undefined}>
-      <Container size={1440}>
+      <Container size={1440} fluid={fluid}>
         <div className={classes.headerMain}>
           <div className={classes.headerMainWrapper}>
             <Burger

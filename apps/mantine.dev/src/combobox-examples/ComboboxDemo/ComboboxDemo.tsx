@@ -37,7 +37,7 @@ export function ComboboxDemo() {
         </div>
       </div>
       <div className={classes.code}>
-        <CodeHighlightTabs code={codeData.code} getFileIcon={getCodeFileIcon} />
+        <CodeHighlightTabs key={id} code={codeData.code} getFileIcon={getCodeFileIcon} />
       </div>
     </div>
   );

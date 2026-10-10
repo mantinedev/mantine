@@ -155,12 +155,12 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     docs: 'form/use-field.mdx',
   },
 
-  formRecipes: {
-    title: 'Recipes',
+  formExamples: {
+    title: 'Form examples',
     package: '@mantine/form',
-    slug: '/form/recipes',
-    description: 'use-form examples',
-    docs: 'form/recipes.mdx',
+    slug: '/form/examples',
+    description: '50+ examples of use-form usage',
+    searchTags: 'recipes, login, registration, validation, dependent fields, lists, stepper',
   },
 
   formAllInputs: {

@@ -32,7 +32,7 @@ export function AppShellPage() {
 
       <div>
         {state === 'code' ? (
-          <CodeHighlightTabs code={data.code} getFileIcon={getCodeFileIcon} />
+          <CodeHighlightTabs key={exampleId} code={data.code} getFileIcon={getCodeFileIcon} />
         ) : (
           <data.component />
         )}

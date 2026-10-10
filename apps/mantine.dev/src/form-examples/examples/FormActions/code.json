@@ -1,0 +1,17 @@
+[
+  {
+    "fileName": "FormActions.tsx",
+    "language": "tsx",
+    "code": "import { Button, Group, NumberInput, Stack, TextInput } from '@mantine/core';\nimport { isEmail, isInRange, isNotEmpty, useForm } from '@mantine/form';\nimport { notifications } from '@mantine/notifications';\nimport { ExternalControls } from './ExternalControls';\nimport { DemoFormValues } from './form-actions';\n\nfunction DemoForm() {\n  const form = useForm<DemoFormValues>({\n    mode: 'uncontrolled',\n    name: 'demo-form',\n    initialValues: { name: '', email: '', age: '' },\n    validate: {\n      name: isNotEmpty('Name is required'),\n      email: isEmail('Invalid email'),\n      age: isInRange({ min: 18, max: 120 }, 'Age must be between 18 and 120'),\n    },\n  });\n\n  const handleSubmit = (values: DemoFormValues) => {\n    notifications.show({\n      title: 'Form submitted',\n      message: `${values.name} (${values.email}), age ${values.age}`,\n    });\n  };\n\n  return (\n    <form onSubmit={form.onSubmit(handleSubmit)}>\n      <Stack>\n        <TextInput\n          label=\"Name\"\n          placeholder=\"Jane Doe\"\n          withAsterisk\n          {...form.getInputProps('name')}\n        />\n        <TextInput\n          label=\"Email\"\n          placeholder=\"jane@mantine.dev\"\n          withAsterisk\n          {...form.getInputProps('email')}\n        />\n        <NumberInput\n          label=\"Age\"\n          placeholder=\"Your age\"\n          min={0}\n          max={120}\n          withAsterisk\n          {...form.getInputProps('age')}\n        />\n        <Group justify=\"flex-end\">\n          <Button type=\"submit\">Submit</Button>\n        </Group>\n      </Stack>\n    </form>\n  );\n}\n\nexport function FormActions() {\n  return (\n    <Stack>\n      <ExternalControls />\n      <DemoForm />\n    </Stack>\n  );\n}\n"
+  },
+  {
+    "fileName": "ExternalControls.tsx",
+    "language": "tsx",
+    "code": "import { Button, Group, Paper } from '@mantine/core';\nimport { demoFormActions } from './form-actions';\n\nexport function ExternalControls() {\n  return (\n    <Paper withBorder p=\"md\">\n      <Group gap=\"xs\">\n        <Button\n          size=\"xs\"\n          variant=\"default\"\n          onClick={() =>\n            demoFormActions.setValues({ name: 'Jane Doe', email: 'jane@mantine.dev', age: 32 })\n          }\n        >\n          Fill demo data\n        </Button>\n        <Button\n          size=\"xs\"\n          variant=\"default\"\n          onClick={() => demoFormActions.setFieldError('email', 'This email is already taken')}\n        >\n          Set error\n        </Button>\n        <Button size=\"xs\" variant=\"default\" onClick={() => demoFormActions.validate()}>\n          Validate\n        </Button>\n        <Button size=\"xs\" variant=\"default\" onClick={() => demoFormActions.reset()}>\n          Clear\n        </Button>\n      </Group>\n    </Paper>\n  );\n}\n"
+  },
+  {
+    "fileName": "form-actions.ts",
+    "language": "tsx",
+    "code": "import { createFormActions } from '@mantine/form';\n\nexport interface DemoFormValues {\n  name: string;\n  email: string;\n  age: number | string;\n}\n\n// Form name must match the `name` option passed to useForm\nexport const demoFormActions = createFormActions<DemoFormValues>('demo-form');\n"
+  }
+]

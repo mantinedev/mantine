@@ -1,19 +1,8 @@
+import type { ExampleItem, ExamplesGroup } from '@/components/ExamplesShell';
 import { COMBOBOX_EXAMPLES_COMPONENTS } from './examples';
 
-export interface ComboboxExample {
-  /** Demo id, based on it component will render component on the page */
+export interface ComboboxExample extends ExampleItem {
   id: keyof typeof COMBOBOX_EXAMPLES_COMPONENTS;
-
-  /** Name used in search */
-  name: string;
-
-  /** Short component description, used in search */
-  description: string;
-
-  /** Full component description, displayed on the page */
-  fullDescription?: string;
-
-  /** Type based on which components are ordered in the navbar, also used for filtering */
   type:
     | 'select'
     | 'autocomplete'
@@ -25,6 +14,18 @@ export interface ComboboxExample {
     | 'treeselect'
     | 'other';
 }
+
+export const COMBOBOX_EXAMPLES_GROUPS: ExamplesGroup[] = [
+  { type: 'select', label: 'Select' },
+  { type: 'autocomplete', label: 'Autocomplete' },
+  { type: 'multiselect', label: 'Multiselect' },
+  { type: 'button', label: 'Button' },
+  { type: 'dropdown', label: 'Dropdown' },
+  { type: 'animations', label: 'Animations' },
+  { type: 'virtualization', label: 'Virtualization' },
+  { type: 'treeselect', label: 'Tree select' },
+  { type: 'other', label: 'Other' },
+];
 
 export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
   {

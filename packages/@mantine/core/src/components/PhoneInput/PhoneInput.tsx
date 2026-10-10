@@ -224,7 +224,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     value,
     defaultValue,
     finalValue: initialCountry && international ? `+${initialCountry.dialCode}` : '',
-    onChange: () => {},
+    onChange,
   });
 
   const store = useCombobox({
@@ -300,8 +300,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
   const handleValueChange = (rawValue: string, country: PhoneInputCountryData | null) => {
     const formattedValue = country ? formatPhoneNumber(rawValue, country) : rawValue;
-    setValue(rawValue);
-    onChange?.(rawValue, { formattedValue, country });
+    setValue(rawValue, { formattedValue, country });
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -316,8 +315,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       if (withCountryAutoDetect || !selectedCountry) {
         countryLockedRef.current = false;
         if (hasPlus) {
-          setValue('+');
-          onChange?.('+', { formattedValue: '+', country: selectedCountry });
+          setValue('+', { formattedValue: '+', country: selectedCountry });
           requestAnimationFrame(() => {
             input.setSelectionRange(1, 1);
           });
@@ -360,8 +358,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       toDisplayValue(newFormatted, country)
     );
 
-    setValue(newRaw);
-    onChange?.(newRaw, { formattedValue: newFormatted, country });
+    setValue(newRaw, { formattedValue: newFormatted, country });
 
     requestAnimationFrame(() => {
       input.setSelectionRange(newCursor, newCursor);

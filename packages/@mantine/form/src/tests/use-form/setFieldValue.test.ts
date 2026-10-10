@@ -55,6 +55,32 @@ function tests(mode: FormMode) {
     act(() => hook.result.current.setFieldValue('a.b.c', (prev) => prev + 1));
     expect(hook.result.current.getValues()).toStrictEqual({ a: { d: 2, b: { c: 2 } } });
   });
+
+  it('clears errors of the field and its nested fields', () => {
+    const hook = renderHook(() =>
+      useForm({
+        mode,
+        initialValues: { user: { name: '', email: '' }, other: '' },
+        initialErrors: { user: 'root', 'user.name': 'name', 'user.email': 'email', other: 'other' },
+      })
+    );
+
+    act(() => hook.result.current.setFieldValue('user', { name: 'John', email: '' }));
+    expect(hook.result.current.errors).toStrictEqual({ other: 'other' });
+  });
+
+  it('does not clear errors of fields with a matching prefix', () => {
+    const hook = renderHook(() =>
+      useForm({
+        mode,
+        initialValues: { items: ['', '', ''] },
+        initialErrors: { 'items.1': 'one', 'items.10': 'ten' },
+      })
+    );
+
+    act(() => hook.result.current.setFieldValue('items.1', 'value'));
+    expect(hook.result.current.errors).toStrictEqual({ 'items.10': 'ten' });
+  });
 }
 
 describe('@mantine/form/setFieldValue-controlled', () => {

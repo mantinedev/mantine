@@ -42,7 +42,7 @@ export function Shell({
       }}
     >
       <div>
-        <DocsHeader headerControlsProps={headerControlsProps} withNav={withNav} />
+        <DocsHeader headerControlsProps={headerControlsProps} withNav={withNav} fluid={fluid} />
         {withMobileNavbar && mobileNavbarOpened && <DocsMobileNavbar />}
         {withNavbar ? (
           <Container size={1440} fluid={fluid} px={fluid ? 0 : undefined}>

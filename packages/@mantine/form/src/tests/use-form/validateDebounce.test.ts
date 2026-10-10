@@ -58,4 +58,80 @@ describe('@mantine/form/validateDebounce', () => {
       expect.anything()
     );
   });
+
+  it('marks field as validating while debounced validation is pending', () => {
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: { name: '' },
+        validateInputOnChange: true,
+        validateDebounce: 100,
+        validate: { name: (value) => (value.length < 2 ? 'error' : null) },
+      })
+    );
+
+    expect(hook.result.current.isValidating('name')).toBe(false);
+
+    act(() => hook.result.current.setFieldValue('name', 'a'));
+    expect(hook.result.current.isValidating('name')).toBe(true);
+    expect(hook.result.current.validating).toBe(true);
+
+    act(() => jest.advanceTimersByTime(100));
+    expect(hook.result.current.isValidating('name')).toBe(false);
+    expect(hook.result.current.errors.name).toBe('error');
+  });
+
+  it('keeps field validating when a previous async validation resolves during debounce', async () => {
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: { name: '' },
+        validateInputOnChange: true,
+        validateDebounce: 100,
+        validate: {
+          name: (value) =>
+            new Promise<string | null>((resolve) => {
+              setTimeout(() => resolve(value === 'taken' ? 'taken' : null), 50);
+            }),
+        },
+      })
+    );
+
+    act(() => hook.result.current.setFieldValue('name', 'taken'));
+    act(() => jest.advanceTimersByTime(120));
+    expect(hook.result.current.isValidating('name')).toBe(true);
+
+    act(() => hook.result.current.setFieldValue('name', 'takenn'));
+    await act(async () => {
+      jest.advanceTimersByTime(50);
+      await Promise.resolve();
+    });
+    expect(hook.result.current.isValidating('name')).toBe(true);
+    expect(hook.result.current.errors).toStrictEqual({});
+
+    await act(async () => {
+      jest.advanceTimersByTime(200);
+      await Promise.resolve();
+    });
+    expect(hook.result.current.isValidating('name')).toBe(false);
+    expect(hook.result.current.errors).toStrictEqual({});
+  });
+
+  it('cancels pending debounced validation on reset', () => {
+    const validateSpy = jest.fn().mockReturnValue('error');
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: { name: '' },
+        validateInputOnChange: true,
+        validateDebounce: 100,
+        validate: { name: validateSpy },
+      })
+    );
+
+    act(() => hook.result.current.setFieldValue('name', 'a'));
+    act(() => hook.result.current.reset());
+    expect(hook.result.current.isValidating('name')).toBe(false);
+
+    act(() => jest.advanceTimersByTime(100));
+    expect(validateSpy).not.toHaveBeenCalled();
+    expect(hook.result.current.errors).toStrictEqual({});
+  });
 });

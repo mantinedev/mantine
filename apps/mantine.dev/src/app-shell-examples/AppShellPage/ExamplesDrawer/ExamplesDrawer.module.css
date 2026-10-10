@@ -2,17 +2,19 @@
   display: block;
   width: 100%;
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg);
-  border-radius: var(--mantine-radius-md);
+  color: var(--mantine-color-text);
 
   @mixin hover {
-    &:not([data-active]) {
-      background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-    }
+    background-color: var(--mantine-color-hover);
   }
 
   &[data-active] {
-    color: var(--mantine-color-white);
-    background-color: var(--mantine-color-blue-filled);
+    box-shadow: inset 2px 0 0 var(--mantine-primary-color-filled);
+    background-color: var(--mantine-color-hover);
+
+    @mixin hover {
+      background-color: var(--mantine-color-hover-strong);
+    }
   }
 }
 
@@ -24,9 +26,8 @@
 
 .description {
   display: block;
-  opacity: 0.6;
   font-size: var(--mantine-font-size-sm);
-  color: inherit;
+  color: var(--mantine-color-dimmed);
 }
 
 .menuButton {

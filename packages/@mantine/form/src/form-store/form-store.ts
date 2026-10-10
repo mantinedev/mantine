@@ -21,7 +21,12 @@ import {
   ReorderPayload,
   UseFormInput,
 } from '../types';
-import { shouldValidateOnChange, validateFieldValue, validateValues } from '../validate';
+import {
+  getRuleForPath,
+  shouldValidateOnChange,
+  validateFieldValue,
+  validateValues,
+} from '../validate';
 import { filterErrors } from './filter-errors/filter-errors';
 import { createFormField, setFormField } from './form-field';
 
@@ -168,6 +173,23 @@ export function createFormStore(input: UseFormInput<any, any>) {
     });
   };
 
+  const clearFieldErrorTree = (path: unknown | unknown[]) => {
+    const roots = (Array.isArray(path) ? path : [path]).map(String);
+    const keys = Object.keys(errors).filter((item) =>
+      roots.some((root) => item === root || item.startsWith(`${root}.`))
+    );
+
+    if (keys.length === 0) {
+      return;
+    }
+
+    setErrors((current) => {
+      const result = { ...current };
+      keys.forEach((item) => delete result[item]);
+      return result;
+    });
+  };
+
   const setFieldError = (path: unknown, error: React.ReactNode) => {
     if (error == null || error === false) {
       clearFieldError(path);
@@ -243,8 +265,10 @@ export function createFormStore(input: UseFormInput<any, any>) {
   };
 
   const setFieldValidating = (path: string, value: boolean) => {
-    validatingFields = { ...validatingFields, [path]: value };
-    render();
+    if (!!validatingFields[path] !== value) {
+      validatingFields = { ...validatingFields, [path]: value };
+      render();
+    }
   };
 
   const setFormValidating = (value: boolean) => {
@@ -269,6 +293,7 @@ export function createFormStore(input: UseFormInput<any, any>) {
   };
 
   const clearValidating = () => {
+    Object.values(timers).forEach(clearTimeout);
     validatingFields = {};
     formValidating = false;
     Object.values(abortControllers).forEach((controller) => controller.abort());
@@ -365,9 +390,15 @@ export function createFormStore(input: UseFormInput<any, any>) {
     clearTimeout(timers[path]);
 
     if (options.validateDebounce > 0) {
-      timers[path] = setTimeout(() => validateField(path), options.validateDebounce);
+      abortControllers[path]?.abort();
+      setFieldValidating(path, true);
+      timers[path] = setTimeout(() => {
+        const result = validateField(path);
+        !(result instanceof Promise) && setFieldValidating(path, false);
+      }, options.validateDebounce);
     } else {
-      validateField(path);
+      const result = validateField(path);
+      !(result instanceof Promise) && setFieldValidating(path, false);
     }
   };
 
@@ -430,7 +461,7 @@ export function createFormStore(input: UseFormInput<any, any>) {
 
     setCalculatedFieldDirty(path, resolvedValue);
     options.touchTrigger === 'change' && setFieldTouched(path, true);
-    !shouldValidate && options.clearInputErrorOnChange && clearFieldError(path);
+    !shouldValidate && options.clearInputErrorOnChange && clearFieldErrorTree(path);
 
     if (currentValue !== resolvedValue) {
       const previousValues = values;
@@ -468,7 +499,9 @@ export function createFormStore(input: UseFormInput<any, any>) {
 
     values = { ...previousValues, ...resolvedValues };
     options.onValuesChange?.(values, previousValues);
-    handleValuesChange(previousValues);
+    options.clearInputErrorOnChange && clearFieldErrorTree(Object.keys(resolvedValues));
+    render();
+    notifyChangedWatchers(previousValues);
     Object.keys(resolvedValues).forEach((key) => notifyFields(key, 'form'));
   };
 
@@ -504,6 +537,7 @@ export function createFormStore(input: UseFormInput<any, any>) {
     const key = String(path);
     const snapshotValue = getPath(path, valuesSnapshot);
     clearFieldDirty(key);
+    clearFieldErrorTree(key);
 
     if (typeof snapshotValue === 'undefined') {
       return;
@@ -529,12 +563,19 @@ export function createFormStore(input: UseFormInput<any, any>) {
   };
 
   const writeList = (path: unknown, nextValues: unknown) => {
+    const key = String(path);
+    const hasRootRule =
+      typeof options.rules === 'object' && getRuleForPath(key, options.rules) !== null;
+    const shouldValidate =
+      hasRootRule && shouldValidateOnChange(path, options.validateInputOnChange);
     const previousValues = values;
     values = nextValues;
+    !shouldValidate && options.clearInputErrorOnChange && clearFieldError(key);
     render();
     options.onValuesChange?.(values, previousValues);
     notifyChangedWatchers(previousValues);
-    notifyFields(String(path), 'form');
+    shouldValidate && debouncedValidateField(key);
+    notifyFields(key, 'form');
     notifyStatus();
   };
 

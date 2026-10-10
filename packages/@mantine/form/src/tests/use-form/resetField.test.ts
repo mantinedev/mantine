@@ -22,6 +22,25 @@ function tests(mode: FormMode) {
     act(() => hook.result.current.resetField('c'));
     expect(hook.result.current.values).toStrictEqual({ a: 1, b: 2 });
   });
+
+  it('clears errors of the field and its nested fields', () => {
+    const hook = renderHook(() =>
+      useForm({ mode, initialValues: { user: { name: '' }, email: '' } })
+    );
+
+    act(() => {
+      hook.result.current.setFieldValue('user.name', 'John');
+      hook.result.current.setErrors({ user: 'root', 'user.name': 'name', email: 'email' });
+    });
+    expect(hook.result.current.errors).toStrictEqual({
+      user: 'root',
+      'user.name': 'name',
+      email: 'email',
+    });
+
+    act(() => hook.result.current.resetField('user'));
+    expect(hook.result.current.errors).toStrictEqual({ email: 'email' });
+  });
 }
 
 describe('@mantine/form/resetField-controlled', () => {

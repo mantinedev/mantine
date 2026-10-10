@@ -79,6 +79,10 @@ Examples:
 
 Issues live in GitLab at `rtivital/mantine-private` (the `gitlab` remote), driven by the `glab` CLI — not the public GitHub issues on `origin`. See `docs/agents/issue-tracker.md`.
 
+### Tasks (Trello)
+
+When asked to create a task or a card, create it on the Trello board "Mantine" (https://trello.com/b/gVKkeDwD/mantine) in the "AI tickets" list, using the `claude.ai Trello` MCP tools (`trelloWriteCard` with `action: "create"`). List ARI: `ari:cloud:trello::list/workspace/602e1f4b6594f8550ee3b896/6ac9f6842e504980f2fda91a`. Card name is a short title, description holds the details (context, files, acceptance criteria). GitLab issues (above) are for bug reports and feature work tracked in the issue tracker; Trello is for tasks the owner asks to be written down.
+
 ### Triage labels
 
 The five canonical triage labels, used verbatim on the GitLab tracker. See `docs/agents/triage-labels.md`.

@@ -1,0 +1,11 @@
+.root {
+  --examples-shell-navbar-width: 300px;
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    --examples-shell-navbar-width: 0;
+  }
+}
+
+.main {
+  padding-inline-start: var(--examples-shell-navbar-width);
+}

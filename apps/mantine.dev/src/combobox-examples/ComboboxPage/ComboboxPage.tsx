@@ -1,6 +1,7 @@
+import { ExamplesShell } from '@/components/ExamplesShell';
 import { PageHead } from '@/components/PageHead';
+import { COMBOBOX_EXAMPLES_DATA, COMBOBOX_EXAMPLES_GROUPS } from '../combobox-examples-data';
 import { ComboboxDemo } from '../ComboboxDemo/ComboboxDemo';
-import { ComboboxShell } from '../ComboboxShell/ComboboxShell';
 
 export function ComboboxPage() {
   return (
@@ -9,9 +10,13 @@ export function ComboboxPage() {
         title="Combobox examples"
         description="50+ examples of using Mantine Combobox component"
       />
-      <ComboboxShell>
+      <ExamplesShell
+        data={COMBOBOX_EXAMPLES_DATA}
+        groups={COMBOBOX_EXAMPLES_GROUPS}
+        basePath="/combobox"
+      >
         <ComboboxDemo />
-      </ComboboxShell>
+      </ExamplesShell>
     </>
   );
 }

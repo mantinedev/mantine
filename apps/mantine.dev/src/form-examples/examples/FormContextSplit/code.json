@@ -1,0 +1,22 @@
+[
+  {
+    "fileName": "FormContextSplit.tsx",
+    "language": "tsx",
+    "code": "import { Button, Group, Stack } from '@mantine/core';\nimport { isEmail, isNotEmpty } from '@mantine/form';\nimport { notifications } from '@mantine/notifications';\nimport { AddressFields } from './AddressFields';\nimport { AccountValues, FormProvider, useForm } from './form-context';\nimport { PersonalFields } from './PersonalFields';\n\nexport function FormContextSplit() {\n  const form = useForm({\n    mode: 'uncontrolled',\n    initialValues: {\n      firstName: '',\n      lastName: '',\n      email: '',\n      street: '',\n      city: '',\n      postalCode: '',\n      country: null,\n    },\n    validate: {\n      firstName: isNotEmpty('First name is required'),\n      lastName: isNotEmpty('Last name is required'),\n      email: isEmail('Invalid email'),\n      street: isNotEmpty('Street is required'),\n      city: isNotEmpty('City is required'),\n      country: isNotEmpty('Country is required'),\n    },\n  });\n\n  const handleSubmit = (values: AccountValues) => {\n    notifications.show({\n      title: 'Account created',\n      message: `${values.firstName} ${values.lastName} (${values.email}), shipping to ${values.city}, ${values.country}`,\n    });\n  };\n\n  return (\n    <FormProvider form={form}>\n      <form onSubmit={form.onSubmit(handleSubmit)}>\n        <Stack>\n          <PersonalFields />\n          <AddressFields />\n          <Group justify=\"flex-end\">\n            <Button variant=\"default\" onClick={form.reset}>\n              Reset\n            </Button>\n            <Button type=\"submit\">Create account</Button>\n          </Group>\n        </Stack>\n      </form>\n    </FormProvider>\n  );\n}\n"
+  },
+  {
+    "fileName": "AddressFields.tsx",
+    "language": "tsx",
+    "code": "import { Fieldset, Select, SimpleGrid, Stack, TextInput } from '@mantine/core';\nimport { useFormContext } from './form-context';\n\nconst COUNTRIES = ['United Kingdom', 'United States', 'Germany', 'France', 'Japan'];\n\nexport function AddressFields() {\n  const form = useFormContext();\n\n  return (\n    <Fieldset legend=\"Shipping address\">\n      <Stack gap=\"sm\">\n        <TextInput\n          label=\"Street\"\n          placeholder=\"12 Baker St\"\n          withAsterisk\n          {...form.getInputProps('street')}\n        />\n        <SimpleGrid cols={{ base: 1, sm: 2 }}>\n          <TextInput\n            label=\"City\"\n            placeholder=\"London\"\n            withAsterisk\n            {...form.getInputProps('city')}\n          />\n          <TextInput\n            label=\"Postal code\"\n            placeholder=\"NW1 6XE\"\n            {...form.getInputProps('postalCode')}\n          />\n        </SimpleGrid>\n        <Select\n          label=\"Country\"\n          placeholder=\"Pick a country\"\n          data={COUNTRIES}\n          withAsterisk\n          {...form.getInputProps('country')}\n        />\n      </Stack>\n    </Fieldset>\n  );\n}\n"
+  },
+  {
+    "fileName": "PersonalFields.tsx",
+    "language": "tsx",
+    "code": "import { Fieldset, SimpleGrid, Stack, TextInput } from '@mantine/core';\nimport { useFormContext } from './form-context';\n\nexport function PersonalFields() {\n  const form = useFormContext();\n\n  return (\n    <Fieldset legend=\"Personal information\">\n      <Stack gap=\"sm\">\n        <SimpleGrid cols={{ base: 1, sm: 2 }}>\n          <TextInput\n            label=\"First name\"\n            placeholder=\"Jane\"\n            withAsterisk\n            {...form.getInputProps('firstName')}\n          />\n          <TextInput\n            label=\"Last name\"\n            placeholder=\"Doe\"\n            withAsterisk\n            {...form.getInputProps('lastName')}\n          />\n        </SimpleGrid>\n        <TextInput\n          label=\"Email\"\n          placeholder=\"jane@mantine.dev\"\n          withAsterisk\n          {...form.getInputProps('email')}\n        />\n      </Stack>\n    </Fieldset>\n  );\n}\n"
+  },
+  {
+    "fileName": "form-context.ts",
+    "language": "tsx",
+    "code": "import { createFormContext } from '@mantine/form';\n\nexport interface AccountValues {\n  firstName: string;\n  lastName: string;\n  email: string;\n  street: string;\n  city: string;\n  postalCode: string;\n  country: string | null;\n}\n\nexport const [FormProvider, useFormContext, useForm] = createFormContext<AccountValues>();\n"
+  }
+]

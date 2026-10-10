@@ -196,6 +196,7 @@ export function useField<
         const result = await validationResult;
         setIsValidating(false);
         setError(result);
+        return result;
       } catch (err) {
         setIsValidating(false);
         const resolvedError = errorResolver(err);

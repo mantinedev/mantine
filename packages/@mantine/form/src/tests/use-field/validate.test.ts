@@ -49,6 +49,30 @@ describe('@mantine/form/use-field/validate', () => {
     expect(hook.result.current.error).toBe(null);
   });
 
+  it('returns validation result from validate handler', async () => {
+    const sync = renderHook(() =>
+      useField({ initialValue: 'test', validate: (value) => (value === 'test' ? 'error' : null) })
+    );
+    await expect(act(() => sync.result.current.validate())).resolves.toBe('error');
+
+    const async = renderHook(() => useField({ initialValue: 'test', validate: validateAsync }));
+    let result: unknown;
+    await act(async () => {
+      const validate = async.result.current.validate();
+      jest.advanceTimersByTime(1000);
+      result = await validate;
+    });
+    expect(result).toBe('error');
+
+    await act(() => async.result.current.setValue('new value'));
+    await act(async () => {
+      const validate = async.result.current.validate();
+      jest.advanceTimersByTime(1000);
+      result = await validate;
+    });
+    expect(result).toBe(null);
+  });
+
   it('works correctly with validators', async () => {
     const hook = renderHook(() =>
       useField({ initialValue: '', validate: isNotEmpty('test error') })

@@ -636,7 +636,7 @@ const FORM_PAGES_GROUP: MdxPagesCategory[] = [
   },
   {
     category: 'Examples',
-    pages: [MDX_DATA.formRecipes, MDX_DATA.formAllInputs],
+    pages: [MDX_DATA.formExamples, MDX_DATA.formAllInputs],
   },
 ];
 

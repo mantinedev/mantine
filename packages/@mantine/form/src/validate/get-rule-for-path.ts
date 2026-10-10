@@ -1,4 +1,5 @@
 import { FormRulesRecord } from '../types';
+import { formRootRule } from './validate-values';
 
 export function getRuleForPath<T>(
   path: string,
@@ -27,6 +28,17 @@ export function getRuleForPath<T>(
 
   if (typeof current === 'function') {
     return current;
+  }
+
+  const isListItemPath = /^\d+$/.test(segments[segments.length - 1]);
+
+  if (
+    !isListItemPath &&
+    current != null &&
+    typeof current === 'object' &&
+    formRootRule in current
+  ) {
+    return current[formRootRule];
   }
 
   return null;

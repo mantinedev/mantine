@@ -1,0 +1,91 @@
+import {
+  Button,
+  Chip,
+  Group,
+  Input,
+  MultiSelect,
+  Stack,
+  TagsInput,
+  TextInput,
+} from '@mantine/core';
+import { isNotEmpty, useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import { CATEGORIES, COLLABORATORS, SUGGESTED_TAGS } from './data';
+
+interface PostValues {
+  title: string;
+  tags: string[];
+  categories: string[];
+  collaborators: string[];
+}
+
+export function TagsAndKeywords() {
+  const form = useForm<PostValues>({
+    mode: 'uncontrolled',
+    initialValues: {
+      title: '',
+      tags: ['react'],
+      categories: [],
+      collaborators: [],
+    },
+    validate: {
+      title: isNotEmpty('Title is required'),
+      tags: (value) => (value.length > 5 ? 'Use at most 5 tags' : null),
+      categories: isNotEmpty('Select at least one category'),
+    },
+  });
+
+  const handleSubmit = (values: PostValues) => {
+    notifications.show({
+      title: 'Post published',
+      message: `${values.title} published in ${values.categories.join(', ')} with ${values.tags.length} tags`,
+    });
+  };
+
+  const categoryChips = CATEGORIES.map((category) => (
+    <Chip key={category} value={category} size="sm">
+      {category}
+    </Chip>
+  ));
+
+  return (
+    <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Stack>
+        <TextInput
+          label="Title"
+          placeholder="Building forms with Mantine"
+          withAsterisk
+          {...form.getInputProps('title')}
+        />
+
+        <TagsInput
+          label="Tags"
+          placeholder="Press Enter to add a tag"
+          description="Up to 5 tags"
+          data={SUGGESTED_TAGS}
+          {...form.getInputProps('tags')}
+        />
+
+        <Input.Wrapper label="Categories" withAsterisk error={form.errors.categories}>
+          <Chip.Group multiple {...form.getInputProps('categories')}>
+            <Group gap="xs" mt={4} mb={4}>
+              {categoryChips}
+            </Group>
+          </Chip.Group>
+        </Input.Wrapper>
+
+        <MultiSelect
+          label="Collaborators"
+          placeholder="Pick people"
+          data={COLLABORATORS}
+          clearable
+          {...form.getInputProps('collaborators')}
+        />
+
+        <Group justify="flex-end">
+          <Button type="submit">Publish post</Button>
+        </Group>
+      </Stack>
+    </form>
+  );
+}
