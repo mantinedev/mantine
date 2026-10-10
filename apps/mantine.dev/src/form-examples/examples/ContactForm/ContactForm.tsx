@@ -91,10 +91,10 @@ export function ContactForm() {
           onKeyDown={handleKeyDown}
           bottomSection={
             <Group justify="space-between">
-              <Text size="sm">
+              <Text size="xs">
                 {message.length}/{MAX_LENGTH} characters
               </Text>
-              <Text size="sm">Ctrl + Enter to send</Text>
+              <Text size="xs">Ctrl + Enter to send</Text>
             </Group>
           }
           {...form.getInputProps('message')}

@@ -1,7 +1,10 @@
 import { Divider, Group, Paper, Stack, Text } from '@mantine/core';
 import { products } from './data';
 
-export const currency = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+export const currency = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
 
 interface OrderSummaryProps {
   product: string | null;

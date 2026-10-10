@@ -15,8 +15,20 @@ export function NestedAddresses() {
     initialValues: {
       name: '',
       addresses: [
-        { key: randomId(), label: 'Home', street: '12 Baker St', city: 'London', isPrimary: true },
-        { key: randomId(), label: 'Office', street: '', city: '', isPrimary: false },
+        {
+          key: randomId(),
+          label: 'Home',
+          street: '12 Baker St',
+          city: 'London',
+          isPrimary: true,
+        },
+        {
+          key: randomId(),
+          label: 'Office',
+          street: '',
+          city: '',
+          isPrimary: false,
+        },
       ],
     },
     validate: {

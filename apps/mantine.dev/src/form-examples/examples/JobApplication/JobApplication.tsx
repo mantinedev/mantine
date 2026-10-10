@@ -150,7 +150,7 @@ export function JobApplication() {
           minRows={4}
           maxRows={8}
           bottomSection={
-            <Text size="sm">
+            <Text size="xs">
               {coverLetter.length} characters, at least {MIN_COVER_LETTER_LENGTH} required
             </Text>
           }

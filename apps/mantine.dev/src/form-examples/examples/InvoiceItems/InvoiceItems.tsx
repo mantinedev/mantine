@@ -15,8 +15,18 @@ export function InvoiceItems() {
     initialValues: {
       customer: '',
       items: [
-        { key: randomId(), description: 'Design work', quantity: 10, price: 80 },
-        { key: randomId(), description: 'Hosting', quantity: 1, price: 25 },
+        {
+          key: randomId(),
+          description: 'Design work',
+          quantity: 10,
+          price: 80,
+        },
+        {
+          key: randomId(),
+          description: 'Hosting',
+          quantity: 1,
+          price: 25,
+        },
       ],
     },
     validate: {

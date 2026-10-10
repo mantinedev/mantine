@@ -42,7 +42,12 @@ export function TicketsList({ form }: TicketsListProps) {
         <Button
           variant="default"
           leftSection={<PlusIcon size={16} />}
-          onClick={() => form.insertListItem('tickets', { key: randomId(), holder: '' })}
+          onClick={() =>
+            form.insertListItem('tickets', {
+              key: randomId(),
+              holder: '',
+            })
+          }
         >
           Add ticket
         </Button>

@@ -16,9 +16,19 @@ function completeOnboarding(values: OnboardingValues) {
 export function AccordionSections() {
   const form = useForm<OnboardingValues>({
     initialValues: {
-      personal: { firstName: '', lastName: '', email: '' },
-      company: { name: '', website: '' },
-      preferences: { language: null, newsletter: false },
+      personal: {
+        firstName: '',
+        lastName: '',
+        email: '',
+      },
+      company: {
+        name: '',
+        website: '',
+      },
+      preferences: {
+        language: null,
+        newsletter: false,
+      },
     },
     validate: {
       personal: {

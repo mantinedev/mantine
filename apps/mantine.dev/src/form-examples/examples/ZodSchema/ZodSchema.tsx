@@ -39,8 +39,16 @@ export function ZodSchema() {
       name: '',
       email: '',
       age: '',
-      address: { city: '', zip: '' },
-      tickets: [{ key: randomId(), holder: '' }],
+      address: {
+        city: '',
+        zip: '',
+      },
+      tickets: [
+        {
+          key: randomId(),
+          holder: '',
+        },
+      ],
     },
     validate: schemaResolver(schema, { sync: true }),
   });

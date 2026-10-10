@@ -17,9 +17,16 @@ export interface QuestionnaireValues {
 }
 
 export function createOption(label = ''): Option {
-  return { key: randomId(), label };
+  return {
+    key: randomId(),
+    label,
+  };
 }
 
 export function createQuestion(): Question {
-  return { key: randomId(), text: '', options: [createOption(), createOption()] };
+  return {
+    key: randomId(),
+    text: '',
+    options: [createOption(), createOption()],
+  };
 }

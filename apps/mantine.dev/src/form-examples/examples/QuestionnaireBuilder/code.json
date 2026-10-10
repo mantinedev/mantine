@@ -17,6 +17,6 @@
   {
     "fileName": "types.ts",
     "language": "tsx",
-    "code": "import { randomId } from '@mantine/hooks';\n\nexport interface Option {\n  key: string;\n  label: string;\n}\n\nexport interface Question {\n  key: string;\n  text: string;\n  options: Option[];\n}\n\nexport interface QuestionnaireValues {\n  title: string;\n  questions: Question[];\n}\n\nexport function createOption(label = ''): Option {\n  return { key: randomId(), label };\n}\n\nexport function createQuestion(): Question {\n  return { key: randomId(), text: '', options: [createOption(), createOption()] };\n}\n"
+    "code": "import { randomId } from '@mantine/hooks';\n\nexport interface Option {\n  key: string;\n  label: string;\n}\n\nexport interface Question {\n  key: string;\n  text: string;\n  options: Option[];\n}\n\nexport interface QuestionnaireValues {\n  title: string;\n  questions: Question[];\n}\n\nexport function createOption(label = ''): Option {\n  return {\n    key: randomId(),\n    label,\n  };\n}\n\nexport function createQuestion(): Question {\n  return {\n    key: randomId(),\n    text: '',\n    options: [createOption(), createOption()],\n  };\n}\n"
   }
 ]

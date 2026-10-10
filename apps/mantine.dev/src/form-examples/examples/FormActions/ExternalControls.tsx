@@ -9,7 +9,11 @@ export function ExternalControls() {
           size="xs"
           variant="default"
           onClick={() =>
-            demoFormActions.setValues({ name: 'Jane Doe', email: 'jane@mantine.dev', age: 32 })
+            demoFormActions.setValues({
+              name: 'Jane Doe',
+              email: 'jane@mantine.dev',
+              age: 32,
+            })
           }
         >
           Fill demo data

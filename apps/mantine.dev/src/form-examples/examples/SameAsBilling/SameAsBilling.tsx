@@ -8,7 +8,11 @@ interface Values extends AddressValues {
   sameAsBilling: boolean;
 }
 
-const emptyAddress: Address = { street: '', city: '', zip: '' };
+const emptyAddress: Address = {
+  street: '',
+  city: '',
+  zip: '',
+};
 
 const addressRules = {
   street: isNotEmpty('Street is required'),

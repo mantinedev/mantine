@@ -12,10 +12,22 @@ export function ReorderListItems() {
   const form = useForm<TasksValues>({
     initialValues: {
       items: [
-        { key: randomId(), title: 'Write release notes' },
-        { key: randomId(), title: 'Review pull requests' },
-        { key: randomId(), title: 'Update dependencies' },
-        { key: randomId(), title: 'Publish the release' },
+        {
+          key: randomId(),
+          title: 'Write release notes',
+        },
+        {
+          key: randomId(),
+          title: 'Review pull requests',
+        },
+        {
+          key: randomId(),
+          title: 'Update dependencies',
+        },
+        {
+          key: randomId(),
+          title: 'Publish the release',
+        },
       ],
     },
     validate: {

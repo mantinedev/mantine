@@ -27,7 +27,12 @@ export function ListMinimum() {
   const form = useForm<ProjectValues>({
     initialValues: {
       projectName: '',
-      skills: [{ id: randomId(), name: '' }],
+      skills: [
+        {
+          id: randomId(),
+          name: '',
+        },
+      ],
     },
     validateInputOnChange: [`skills.${FORM_INDEX}.name`],
     validate: {
@@ -93,7 +98,12 @@ export function ListMinimum() {
             <Button
               variant="default"
               leftSection={<PlusIcon size={16} />}
-              onClick={() => form.insertListItem('skills', { id: randomId(), name: '' })}
+              onClick={() =>
+                form.insertListItem('skills', {
+                  id: randomId(),
+                  name: '',
+                })
+              }
             >
               Add skill
             </Button>

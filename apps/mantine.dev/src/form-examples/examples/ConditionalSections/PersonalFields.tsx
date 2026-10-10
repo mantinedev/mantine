@@ -1,5 +1,5 @@
 import { SimpleGrid, TextInput } from '@mantine/core';
-import { DateInput } from '@mantine/dates';
+import { MaskedDateInput } from '@mantine/dates';
 import { UseFormReturnType } from '@mantine/form';
 import { PersonalValues } from './types';
 
@@ -28,10 +28,9 @@ export function PersonalFields({ form }: PersonalFieldsProps) {
         />
       </SimpleGrid>
 
-      <DateInput
+      <MaskedDateInput
         size="md"
         label="Birth date"
-        placeholder="Pick a date"
         withAsterisk
         maxDate={new Date()}
         {...form.getInputProps('personal.birthDate')}

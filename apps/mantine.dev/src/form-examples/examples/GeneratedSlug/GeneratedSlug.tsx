@@ -28,12 +28,20 @@ export function GeneratedSlug() {
     },
   });
 
+  // setFieldValue rerenders the component that calls useForm,
+  // forceUpdate: false updates only the input subscribed to the slug field
   form.watch('name', ({ value }) => {
     if (!form.isTouched('slug')) {
-      // forceUpdate: false updates the slug input without rerendering the form
       form.setFieldValue('slug', slugify(value), { forceUpdate: false });
     }
   });
+
+  const slugProps = form.getInputProps('slug');
+
+  const handleSlugBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    form.setFieldValue('slug', slugify(event.currentTarget.value), { forceUpdate: false });
+    slugProps.onBlur?.(event);
+  };
 
   const handleSubmit = (values: PageValues) => {
     notifications.show({ title: 'Page created', message: `Page ${values.slug} created` });
@@ -56,7 +64,8 @@ export function GeneratedSlug() {
           placeholder="my-first-post"
           description="Generated from name until you edit it"
           withAsterisk
-          {...form.getInputProps('slug')}
+          {...slugProps}
+          onBlur={handleSlugBlur}
         />
 
         <Group justify="flex-end">

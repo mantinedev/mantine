@@ -17,8 +17,16 @@ export function ConditionalSections() {
   const form = useForm<Values>({
     initialValues: {
       accountType: 'personal',
-      personal: { firstName: '', lastName: '', birthDate: null },
-      company: { name: '', vatNumber: '', contactPerson: '' },
+      personal: {
+        firstName: '',
+        lastName: '',
+        birthDate: null,
+      },
+      company: {
+        name: '',
+        vatNumber: '',
+        contactPerson: '',
+      },
     },
     validate: {
       personal: {
@@ -69,11 +77,13 @@ export function ConditionalSections() {
             <Radio value="company" label="Company" />
           </Group>
         </Radio.Group>
+
         {accountType === 'personal' ? (
           <PersonalFields form={form} />
         ) : (
           <CompanyFields form={form} />
         )}
+
         <Group justify="flex-end">
           <Button size="md" variant="default" onClick={form.reset}>
             Reset
