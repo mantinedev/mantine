@@ -66,6 +66,7 @@ export function UnitConverter() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <Select
+          size="md"
           label="Default unit"
           description="The default unit is required, the other one is filled in automatically"
           allowDeselect={false}
@@ -78,6 +79,7 @@ export function UnitConverter() {
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <NumberInput
+            size="md"
             label="Celsius"
             placeholder="20"
             suffix=" °C"
@@ -89,6 +91,7 @@ export function UnitConverter() {
           />
 
           <NumberInput
+            size="md"
             label="Fahrenheit"
             placeholder="68"
             suffix=" °F"
@@ -101,11 +104,13 @@ export function UnitConverter() {
         </SimpleGrid>
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Save</Button>
+          <Button size="md" type="submit">
+            Save
+          </Button>
         </Group>
       </Stack>
     </form>

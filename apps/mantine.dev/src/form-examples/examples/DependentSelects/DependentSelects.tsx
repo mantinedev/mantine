@@ -71,6 +71,7 @@ export function DependentSelects() {
       <Stack>
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <Select
+            size="md"
             label="Country"
             placeholder="Pick a country"
             withAsterisk
@@ -79,6 +80,7 @@ export function DependentSelects() {
           />
 
           <Select
+            size="md"
             label="City"
             placeholder={country ? 'Pick a city' : 'Pick a country first'}
             withAsterisk
@@ -90,11 +92,13 @@ export function DependentSelects() {
         </SimpleGrid>
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Save</Button>
+          <Button size="md" type="submit">
+            Save
+          </Button>
         </Group>
       </Stack>
     </form>

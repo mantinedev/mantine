@@ -84,6 +84,7 @@ export function UsernameAvailability() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack maw={420} mx="auto">
         <TextInput
+          size="md"
           label="Username"
           placeholder="your_username"
           withAsterisk
@@ -93,6 +94,7 @@ export function UsernameAvailability() {
         />
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
@@ -100,7 +102,7 @@ export function UsernameAvailability() {
         />
 
         <Group justify="flex-end">
-          <Button type="submit" disabled={form.validating} loading={form.submitting}>
+          <Button size="md" type="submit" disabled={form.validating} loading={form.submitting}>
             Create account
           </Button>
         </Group>

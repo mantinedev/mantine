@@ -37,7 +37,7 @@ export function StarRating({ label, value, onChange, onFocus, onBlur, error }: S
   });
 
   return (
-    <Input.Wrapper label={label} error={error} withAsterisk>
+    <Input.Wrapper size="md" label={label} error={error} withAsterisk>
       <Group gap={2} mt={4} mb={error ? 6 : 0}>
         {stars}
       </Group>

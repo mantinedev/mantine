@@ -28,11 +28,11 @@ export function PasswordInputWithRequirements({ form }: PasswordInputWithRequire
     return (
       <Group key={requirement.label} gap="xs">
         {passed ? (
-          <CheckIcon size={14} weight="bold" color="var(--mantine-color-teal-6)" />
+          <CheckIcon size={14} weight="bold" color="var(--mantine-color-success)" />
         ) : (
-          <XIcon size={14} weight="bold" color="var(--mantine-color-red-6)" />
+          <XIcon size={14} weight="bold" color="var(--mantine-color-error)" />
         )}
-        <Text size="sm" c={passed ? 'teal' : 'red'}>
+        <Text size="sm" c={passed ? 'var(--mantine-color-success)' : 'var(--mantine-color-error)'}>
           {requirement.label}
         </Text>
       </Group>
@@ -40,9 +40,15 @@ export function PasswordInputWithRequirements({ form }: PasswordInputWithRequire
   });
 
   return (
-    <Popover opened={opened} position="bottom-start" width="target">
+    <Popover
+      opened={opened}
+      position="bottom-start"
+      width="target"
+      transitionProps={{ duration: 0 }}
+    >
       <Popover.Target>
         <PasswordInput
+          size="md"
           label="Password"
           placeholder="Your password"
           withAsterisk

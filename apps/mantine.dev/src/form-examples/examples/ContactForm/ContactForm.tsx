@@ -1,4 +1,4 @@
-import { Button, Group, Select, Stack, Textarea, TextInput } from '@mantine/core';
+import { Button, Group, Select, Stack, Text, Textarea, TextInput } from '@mantine/core';
 import { isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
@@ -59,6 +59,7 @@ export function ContactForm() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack maw={420} mx="auto">
         <Select
+          size="md"
           label="Subject"
           placeholder="Pick a subject"
           data={[
@@ -72,6 +73,7 @@ export function ContactForm() {
         />
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
@@ -79,19 +81,27 @@ export function ContactForm() {
         />
 
         <Textarea
+          size="md"
           label="Message"
           placeholder="How can we help?"
-          description={`${message.length}/${MAX_LENGTH} characters. Ctrl + Enter to send`}
-          inputWrapperOrder={['label', 'input', 'description', 'error']}
           autosize
           minRows={4}
+          maxRows={8}
           withAsterisk
           onKeyDown={handleKeyDown}
+          bottomSection={
+            <Group justify="space-between">
+              <Text size="sm">
+                {message.length}/{MAX_LENGTH} characters
+              </Text>
+              <Text size="sm">Ctrl + Enter to send</Text>
+            </Group>
+          }
           {...form.getInputProps('message')}
         />
 
         <Group justify="flex-end">
-          <Button type="submit" loading={form.submitting}>
+          <Button size="md" type="submit" loading={form.submitting}>
             Send message
           </Button>
         </Group>

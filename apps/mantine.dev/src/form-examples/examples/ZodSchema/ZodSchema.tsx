@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Button, Group, NumberInput, SimpleGrid, Stack, Text, TextInput } from '@mantine/core';
+import { Button, Group, Input, NumberInput, SimpleGrid, Stack, TextInput } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
@@ -56,6 +56,7 @@ export function ZodSchema() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Name"
           placeholder="John Doe"
           withAsterisk
@@ -63,6 +64,7 @@ export function ZodSchema() {
         />
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="john@mantine.dev"
           withAsterisk
@@ -70,6 +72,7 @@ export function ZodSchema() {
         />
 
         <NumberInput
+          size="md"
           label="Age"
           placeholder="18"
           withAsterisk
@@ -80,6 +83,7 @@ export function ZodSchema() {
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
+            size="md"
             label="City"
             placeholder="Berlin"
             withAsterisk
@@ -87,6 +91,7 @@ export function ZodSchema() {
           />
 
           <TextInput
+            size="md"
             label="Zip code"
             placeholder="10115"
             withAsterisk
@@ -95,15 +100,17 @@ export function ZodSchema() {
         </SimpleGrid>
 
         <div>
-          <Text size="sm" fw={500} mb="xs">
+          <Input.Label size="md" mb="xs">
             Tickets
-          </Text>
+          </Input.Label>
 
           <TicketsList form={form} />
         </div>
 
         <Group justify="flex-end">
-          <Button type="submit">Register</Button>
+          <Button size="md" type="submit">
+            Register
+          </Button>
         </Group>
       </Stack>
     </form>

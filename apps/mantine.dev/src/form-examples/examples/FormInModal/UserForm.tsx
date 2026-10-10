@@ -11,6 +11,7 @@ export function UserForm({ form, onCancel }: UserFormProps) {
   return (
     <Stack>
       <TextInput
+        size="md"
         label="Name"
         placeholder="John Doe"
         withAsterisk
@@ -19,6 +20,7 @@ export function UserForm({ form, onCancel }: UserFormProps) {
       />
 
       <TextInput
+        size="md"
         label="Email"
         placeholder="john@mantine.dev"
         withAsterisk
@@ -26,6 +28,7 @@ export function UserForm({ form, onCancel }: UserFormProps) {
       />
 
       <Select
+        size="md"
         label="Role"
         placeholder="Pick role"
         withAsterisk
@@ -34,11 +37,11 @@ export function UserForm({ form, onCancel }: UserFormProps) {
       />
 
       <Group justify="flex-end" mt="md">
-        <Button variant="default" onClick={onCancel} disabled={form.submitting}>
+        <Button size="md" variant="default" onClick={onCancel} disabled={form.submitting}>
           Cancel
         </Button>
 
-        <Button type="submit" loading={form.submitting}>
+        <Button size="md" type="submit" loading={form.submitting}>
           Add user
         </Button>
       </Group>

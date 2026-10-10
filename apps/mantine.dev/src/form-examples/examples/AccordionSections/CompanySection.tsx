@@ -10,6 +10,7 @@ export function CompanySection({ form }: CompanySectionProps) {
   return (
     <Stack>
       <TextInput
+        size="md"
         label="Company name"
         placeholder="Mantine"
         withAsterisk
@@ -17,6 +18,7 @@ export function CompanySection({ form }: CompanySectionProps) {
       />
 
       <TextInput
+        size="md"
         label="Website"
         placeholder="https://mantine.dev"
         withAsterisk

@@ -2,12 +2,13 @@ import { useState } from 'react';
 import {
   Button,
   Checkbox,
+  Flex,
   Input,
   RangeSlider,
   Select,
-  SimpleGrid,
   Stack,
   TextInput,
+  Title,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { CATEGORIES, PRODUCTS, Product } from './data';
@@ -51,11 +52,19 @@ export function FiltersForm() {
   const dirty = form.useDirty();
 
   return (
-    <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl">
-      <Stack>
-        <TextInput label="Search" placeholder="Product name" {...form.getInputProps('search')} />
+    <Flex gap="xl" direction={{ base: 'column', sm: 'row' }}>
+      <Stack w={{ base: '100%', sm: '30%' }} flex="none">
+        <Title order={4}>Filters</Title>
+
+        <TextInput
+          size="md"
+          label="Search"
+          placeholder="Product name"
+          {...form.getInputProps('search')}
+        />
 
         <Select
+          size="md"
           label="Category"
           placeholder="All categories"
           data={CATEGORIES}
@@ -64,9 +73,12 @@ export function FiltersForm() {
         />
 
         <div>
-          <Input.Label mb={6}>Price</Input.Label>
+          <Input.Label size="md" mb={6}>
+            Price
+          </Input.Label>
 
           <RangeSlider
+            size="md"
             min={0}
             max={2000}
             step={50}
@@ -77,16 +89,23 @@ export function FiltersForm() {
         </div>
 
         <Checkbox
+          size="md"
           label="In stock only"
           {...form.getInputProps('inStockOnly', { type: 'checkbox' })}
         />
 
-        <Button variant="default" disabled={!dirty} onClick={form.reset}>
-          Clear filters
-        </Button>
+        {dirty && (
+          <Button variant="default" size="md" onClick={form.reset}>
+            Clear filters
+          </Button>
+        )}
       </Stack>
 
-      <ProductsTable products={products} total={PRODUCTS.length} />
-    </SimpleGrid>
+      <Stack flex={1} miw={0}>
+        <Title order={4}>Data</Title>
+
+        <ProductsTable products={products} total={PRODUCTS.length} />
+      </Stack>
+    </Flex>
   );
 }

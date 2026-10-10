@@ -50,11 +50,13 @@ export function CustomInputSubscription() {
         />
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Submit review</Button>
+          <Button size="md" type="submit">
+            Submit review
+          </Button>
         </Group>
       </Stack>
     </form>

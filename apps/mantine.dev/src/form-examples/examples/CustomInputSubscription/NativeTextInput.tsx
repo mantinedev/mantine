@@ -13,7 +13,7 @@ interface NativeTextInputProps {
 
 export function NativeTextInput({ label, error, ...inputProps }: NativeTextInputProps) {
   return (
-    <Input.Wrapper label={label} error={error}>
+    <Input.Wrapper size="md" label={label} error={error}>
       <input className={classes.nativeInput} aria-invalid={!!error} {...inputProps} />
     </Input.Wrapper>
   );

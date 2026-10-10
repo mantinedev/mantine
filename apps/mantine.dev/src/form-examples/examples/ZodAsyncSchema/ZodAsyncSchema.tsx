@@ -30,17 +30,19 @@ function signUp(values: SignUpValues) {
   });
 }
 
+const usernameSchema = z
+  .string()
+  .min(3, { error: 'Username must have at least 3 characters', abort: true });
+const emailSchema = z.email({ error: 'Invalid email', abort: true });
+
 // abort: true skips the async check when the sync check fails
 const schema = z.object({
-  username: z
-    .string()
-    .min(3, { error: 'Username must have at least 3 characters', abort: true })
-    .refine(async (value) => !(await isUsernameTaken(value)), { error: 'Username is taken' }),
-  email: z
-    .email({ error: 'Invalid email', abort: true })
-    .refine(async (value) => !(await isEmailTaken(value)), {
-      error: 'Email is already registered',
-    }),
+  username: usernameSchema.refine(async (value) => !(await isUsernameTaken(value)), {
+    error: 'Username is taken',
+  }),
+  email: emailSchema.refine(async (value) => !(await isEmailTaken(value)), {
+    error: 'Email is already registered',
+  }),
   password: z.string().min(8, { error: 'Password must have at least 8 characters' }),
 });
 
@@ -56,6 +58,16 @@ export function ZodAsyncSchema() {
     validate: schemaResolver(schema),
   });
 
+  const username = form.useWatchValue('username');
+  const email = form.useWatchValue('email');
+  const usernameValidating = form.isValidating('username');
+  const emailValidating = form.isValidating('email');
+
+  const usernameAvailable =
+    usernameSchema.safeParse(username).success && !usernameValidating && !form.errors.username;
+  const emailAvailable =
+    emailSchema.safeParse(email).success && !emailValidating && !form.errors.email;
+
   const handleSubmit = async (values: SignUpValues) => {
     const user = await signUp(values);
     notifications.show({
@@ -68,22 +80,27 @@ export function ZodAsyncSchema() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Username"
           placeholder="your_username"
           withAsterisk
-          loading={form.isValidating('username')}
+          loading={usernameValidating}
+          success={usernameAvailable ? 'Username is available' : null}
           {...form.getInputProps('username')}
         />
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
-          loading={form.isValidating('email')}
+          loading={emailValidating}
+          success={emailAvailable ? 'Email is available' : null}
           {...form.getInputProps('email')}
         />
 
         <PasswordInput
+          size="md"
           label="Password"
           placeholder="At least 8 characters"
           withAsterisk
@@ -91,7 +108,7 @@ export function ZodAsyncSchema() {
         />
 
         <Group justify="flex-end">
-          <Button type="submit" loading={form.validating || form.submitting}>
+          <Button size="md" type="submit" disabled={form.validating} loading={form.submitting}>
             Create account
           </Button>
         </Group>

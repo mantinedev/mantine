@@ -8,5 +8,5 @@ interface CurrentNameProps {
 export function CurrentName({ form }: CurrentNameProps) {
   const name = form.useWatchValue('name');
 
-  return <Text size="xs">Signed as {name || '—'}</Text>;
+  return <Text size="sm">Signed as {name || '—'}</Text>;
 }

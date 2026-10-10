@@ -1,5 +1,5 @@
 import { TrashIcon } from '@phosphor-icons/react';
-import { ActionIcon, NumberInput, Table, Text, TextInput } from '@mantine/core';
+import { ActionIcon, Input, NumberInput, Table, Text, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 
 export interface InvoiceItem {
@@ -46,6 +46,7 @@ export function InvoiceItemsTable({ form }: InvoiceItemsTableProps) {
     <Table.Tr key={item.key}>
       <Table.Td>
         <TextInput
+          size="md"
           placeholder="Item description"
           aria-label="Description"
           {...form.getInputProps(`items.${index}.description`)}
@@ -53,6 +54,7 @@ export function InvoiceItemsTable({ form }: InvoiceItemsTableProps) {
       </Table.Td>
       <Table.Td>
         <NumberInput
+          size="md"
           min={1}
           max={1000}
           clampBehavior="strict"
@@ -62,6 +64,7 @@ export function InvoiceItemsTable({ form }: InvoiceItemsTableProps) {
       </Table.Td>
       <Table.Td>
         <NumberInput
+          size="md"
           min={0}
           max={1_000_000}
           clampBehavior="strict"
@@ -80,7 +83,7 @@ export function InvoiceItemsTable({ form }: InvoiceItemsTableProps) {
       <Table.Td>
         <ActionIcon
           variant="default"
-          size="input-sm"
+          size="input-md"
           aria-label="Remove item"
           onClick={() => form.removeListItem('items', index)}
         >
@@ -111,7 +114,7 @@ export function InvoiceItemsTable({ form }: InvoiceItemsTableProps) {
             ) : (
               <Table.Tr>
                 <Table.Td colSpan={5}>
-                  <Text size="xs" ta="center">
+                  <Text size="sm" ta="center">
                     No items yet
                   </Text>
                 </Table.Td>
@@ -131,9 +134,9 @@ export function InvoiceItemsTable({ form }: InvoiceItemsTableProps) {
       </Table.ScrollContainer>
 
       {form.errors.items && (
-        <Text size="sm" c="red" mt="xs">
+        <Input.Error size="md" mt="xs">
           {form.errors.items}
-        </Text>
+        </Input.Error>
       )}
     </div>
   );

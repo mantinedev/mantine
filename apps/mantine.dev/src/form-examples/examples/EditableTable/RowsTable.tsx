@@ -14,7 +14,7 @@ export function RowsTable({ form }: RowsTableProps) {
       <Table.Td>
         <TextInput
           variant="unstyled"
-          size="sm"
+          size="md"
           aria-label="Name"
           {...form.getInputProps(`rows.${index}.name`)}
         />
@@ -22,7 +22,7 @@ export function RowsTable({ form }: RowsTableProps) {
       <Table.Td>
         <TextInput
           variant="unstyled"
-          size="sm"
+          size="md"
           aria-label="Email"
           {...form.getInputProps(`rows.${index}.email`)}
         />
@@ -30,7 +30,7 @@ export function RowsTable({ form }: RowsTableProps) {
       <Table.Td>
         <NumberInput
           variant="unstyled"
-          size="sm"
+          size="md"
           hideControls
           min={0}
           max={10000}
@@ -42,6 +42,7 @@ export function RowsTable({ form }: RowsTableProps) {
       <Table.Td>
         <ActionIcon
           variant="default"
+          size="input-md"
           aria-label="Reset row"
           onClick={() => form.resetField(`rows.${index}`)}
         >

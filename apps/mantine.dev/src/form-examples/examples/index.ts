@@ -53,8 +53,6 @@ import OrderTotalCode from './OrderTotal/code.json';
 import { OrderTotal } from './OrderTotal/OrderTotal';
 import OtpFormCode from './OtpForm/code.json';
 import { OtpForm } from './OtpForm/OtpForm';
-import PasswordStrengthCode from './PasswordStrength/code.json';
-import { PasswordStrength } from './PasswordStrength/PasswordStrength';
 import PickersFormCode from './PickersForm/code.json';
 import { PickersForm } from './PickersForm/PickersForm';
 import QuestionnaireBuilderCode from './QuestionnaireBuilder/code.json';
@@ -132,7 +130,6 @@ export const FORM_EXAMPLES_COMPONENTS = {
   DateRange: example(DateRange, DateRangeCode),
   ZodSchema: example(ZodSchema, ZodSchemaCode),
   ZodAsyncSchema: example(ZodAsyncSchema, ZodAsyncSchemaCode),
-  PasswordStrength: example(PasswordStrength, PasswordStrengthCode),
   ServerErrors: example(ServerErrors, ServerErrorsCode),
   ConditionalValidation: example(ConditionalValidation, ConditionalValidationCode),
   ListMinimum: example(ListMinimum, ListMinimumCode),

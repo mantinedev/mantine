@@ -10,7 +10,7 @@ export function SectionControl({ label, valid }: SectionControlProps) {
   return (
     <Group gap="xs">
       <Text fw={500}>{label}</Text>
-      {valid && <CheckCircleIcon size={20} weight="fill" color="var(--mantine-color-green-6)" />}
+      {valid && <CheckCircleIcon size={20} weight="fill" color="var(--mantine-color-success)" />}
     </Group>
   );
 }

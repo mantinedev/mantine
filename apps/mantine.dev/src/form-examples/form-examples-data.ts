@@ -19,6 +19,9 @@ export interface FormExample extends ExampleItem {
 
   /** use-form APIs used in the example, displayed as badges and used in search */
   features: string[];
+
+  /** Removes the max-width limit of the preview, for examples with tables and multi-column layouts */
+  fullWidth?: boolean;
 }
 
 export const FORM_EXAMPLES_GROUPS: ExamplesGroup[] = [
@@ -65,6 +68,7 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     type: 'basic',
     mode: 'uncontrolled',
     features: ['onValuesChange', 'useDirty', 'reset'],
+    fullWidth: true,
   },
   {
     id: 'SubscribeInput',
@@ -123,14 +127,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     features: ['schemaResolver', 'zod', 'async validation', 'validateDebounce'],
   },
   {
-    id: 'PasswordStrength',
-    name: 'Password strength',
-    description: 'Strength meter in a popover, custom input with getInputProps spreading',
-    type: 'validation',
-    mode: 'uncontrolled',
-    features: ['useWatchValue', 'validate'],
-  },
-  {
     id: 'ServerErrors',
     name: 'Server errors',
     description: 'Field and form-level errors returned from the backend',
@@ -157,10 +153,10 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
   {
     id: 'JobApplication',
     name: 'Job application',
-    description: 'Formats validated on blur, ranges validated on change',
+    description: 'Single-value inputs validated on blur, phone and cover letter on submit',
     type: 'validation',
     mode: 'uncontrolled',
-    features: ['validateInputOnBlur', 'validateInputOnChange', 'isInRange', 'matches'],
+    features: ['validateInputOnBlur', 'isInRange', 'matches', 'PhoneInput', 'NumberInput'],
   },
   {
     id: 'GeneratedSlug',

@@ -14,6 +14,7 @@ export function AddressFields({ form, prefix, legend, disabled = false }: Addres
     <Fieldset legend={legend}>
       <Stack gap="sm">
         <TextInput
+          size="md"
           label="Street"
           placeholder="12 Main St"
           withAsterisk={!disabled}
@@ -22,6 +23,7 @@ export function AddressFields({ form, prefix, legend, disabled = false }: Addres
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
+            size="md"
             label="City"
             placeholder="Springfield"
             withAsterisk={!disabled}
@@ -29,6 +31,7 @@ export function AddressFields({ form, prefix, legend, disabled = false }: Addres
           />
 
           <TextInput
+            size="md"
             label="ZIP code"
             placeholder="12345"
             withAsterisk={!disabled}

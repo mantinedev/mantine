@@ -40,6 +40,7 @@ export function InvoiceItems() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Customer"
           placeholder="Acme Inc."
           withAsterisk
@@ -66,7 +67,9 @@ export function InvoiceItems() {
         </Group>
 
         <Group justify="flex-end">
-          <Button type="submit">Create invoice</Button>
+          <Button size="md" type="submit">
+            Create invoice
+          </Button>
         </Group>
       </Stack>
     </form>

@@ -16,11 +16,11 @@ export function DiscardChangesModal({
       <Text size="sm">You have unsaved changes. If you leave this page, they will be lost.</Text>
 
       <Group justify="flex-end" mt="md">
-        <Button variant="default" onClick={onKeepEditing}>
+        <Button variant="default" size="md" onClick={onKeepEditing}>
           Keep editing
         </Button>
 
-        <Button color="red" onClick={onDiscard}>
+        <Button color="red" size="md" onClick={onDiscard}>
           Discard
         </Button>
       </Group>

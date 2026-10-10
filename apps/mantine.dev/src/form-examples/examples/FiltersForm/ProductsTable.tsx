@@ -10,6 +10,7 @@ export function ProductsTable({ products, total }: ProductsTableProps) {
   const rows = products.map((product) => (
     <Table.Tr key={product.id}>
       <Table.Td>{product.name}</Table.Td>
+      <Table.Td>{product.category}</Table.Td>
       <Table.Td>${product.price}</Table.Td>
       <Table.Td>
         <Badge variant={product.inStock ? 'filled' : 'default'} color="teal">
@@ -21,17 +22,18 @@ export function ProductsTable({ products, total }: ProductsTableProps) {
 
   return (
     <Stack gap="xs">
-      <Text size="xs">
+      <Text size="sm">
         {products.length} of {total} products
       </Text>
 
       <ScrollArea h={360} type="auto">
-        <Table verticalSpacing="xs" layout="fixed">
+        <Table verticalSpacing="xs" layout="fixed" miw={480}>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Name</Table.Th>
-              <Table.Th w={70}>Price</Table.Th>
-              <Table.Th w={90}>Stock</Table.Th>
+              <Table.Th w={130}>Category</Table.Th>
+              <Table.Th w={90}>Price</Table.Th>
+              <Table.Th w={110}>Stock</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -39,8 +41,8 @@ export function ProductsTable({ products, total }: ProductsTableProps) {
               rows
             ) : (
               <Table.Tr>
-                <Table.Td colSpan={3}>
-                  <Text size="xs" ta="center">
+                <Table.Td colSpan={4}>
+                  <Text size="sm" ta="center">
                     No products match the filters
                   </Text>
                 </Table.Td>

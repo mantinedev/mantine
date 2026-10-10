@@ -54,15 +54,23 @@ export function TypedForm() {
     <form onSubmit={form.onSubmit(handleSubmit, showErrors)}>
       <Stack>
         <TextInput
+          size="md"
           label="Name"
           placeholder="Jane Doe"
           withAsterisk
           {...form.getInputProps('name')}
         />
 
-        <TextInput label="Age" placeholder="32" withAsterisk {...form.getInputProps('age')} />
+        <TextInput
+          size="md"
+          label="Age"
+          placeholder="32"
+          withAsterisk
+          {...form.getInputProps('age')}
+        />
 
         <TextInput
+          size="md"
           label="Tags"
           placeholder="react, forms, typescript"
           description="Comma separated"

@@ -53,6 +53,7 @@ export function OrderTotal() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <Select
+          size="md"
           label="Product"
           placeholder="Pick a product"
           withAsterisk
@@ -65,6 +66,7 @@ export function OrderTotal() {
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <NumberInput
+            size="md"
             label="Quantity"
             placeholder="1"
             withAsterisk
@@ -75,6 +77,7 @@ export function OrderTotal() {
           />
 
           <NumberInput
+            size="md"
             label="Discount"
             placeholder="0"
             suffix="%"
@@ -87,11 +90,13 @@ export function OrderTotal() {
         <OrderSummary product={product} quantity={quantity} discount={discount} total={total} />
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Place order</Button>
+          <Button size="md" type="submit">
+            Place order
+          </Button>
         </Group>
       </Stack>
     </form>

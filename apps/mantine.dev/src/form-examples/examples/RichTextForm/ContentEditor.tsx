@@ -42,7 +42,7 @@ export function ContentEditor({
   });
 
   return (
-    <Input.Wrapper label={label} withAsterisk={withAsterisk} error={error}>
+    <Input.Wrapper size="md" label={label} withAsterisk={withAsterisk} error={error}>
       <RichTextEditor editor={editor} mb={error ? 5 : 0}>
         <RichTextEditor.Toolbar>
           <RichTextEditor.ControlsGroup>

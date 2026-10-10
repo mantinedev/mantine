@@ -9,11 +9,11 @@ interface SubmitBarProps {
 export function SubmitBar({ form }: SubmitBarProps) {
   return (
     <Group justify="flex-end">
-      <Button variant="default" onClick={form.reset}>
+      <Button size="md" variant="default" onClick={form.reset}>
         Reset
       </Button>
 
-      <Button type="submit" loading={form.submitting}>
+      <Button size="md" type="submit" loading={form.submitting}>
         Submit
       </Button>
     </Group>

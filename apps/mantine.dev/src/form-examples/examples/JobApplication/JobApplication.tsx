@@ -5,11 +5,14 @@ import {
   PhoneInput,
   SimpleGrid,
   Stack,
+  Text,
   Textarea,
   TextInput,
 } from '@mantine/core';
-import { hasLength, isEmail, isInRange, isNotEmpty, isUrl, useForm } from '@mantine/form';
+import { hasLength, isEmail, isInRange, isNotEmpty, matches, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
+
+const MIN_COVER_LETTER_LENGTH = 50;
 
 interface ApplicationValues {
   fullName: string;
@@ -38,23 +41,31 @@ export function JobApplication() {
       experience: '',
       coverLetter: '',
     },
-    validateInputOnBlur: ['email', 'phone', 'linkedin'],
-    validateInputOnChange: ['salary', 'experience'],
+    // Phone is a multi-part input and cover letter is long text, both are validated on submit only
+    validateInputOnBlur: ['email', 'linkedin', 'salary', 'experience'],
     validate: {
       fullName: isNotEmpty('Full name is required'),
       email: isEmail('Invalid email'),
       phone: (value) =>
         isNotEmpty('Phone number is required')(value) ||
         (value.replace(/\D/g, '').length >= 7 ? null : 'Invalid phone number'),
-      linkedin: isUrl('Invalid LinkedIn profile URL'),
+      linkedin: matches(
+        /^https:\/\/(www\.)?linkedin\.com\/in\/[\w-]+\/?(\?.*)?$/,
+        'Enter a profile URL like https://linkedin.com/in/johndoe'
+      ),
       salary: isInRange(
-        { min: 30000, max: 300000 },
+        { min: 30_000, max: 300_000 },
         'Expected salary must be between $30,000 and $300,000'
       ),
-      experience: isInRange({ min: 0, max: 50 }, 'Years of experience must be between 0 and 50'),
-      coverLetter: hasLength({ min: 50 }, 'Cover letter must be at least 50 characters'),
+      experience: (value) => (value === '' ? 'Years of experience is required' : null),
+      coverLetter: hasLength(
+        { min: MIN_COVER_LETTER_LENGTH },
+        `Cover letter must be at least ${MIN_COVER_LETTER_LENGTH} characters`
+      ),
     },
   });
+
+  const coverLetter = form.useWatchValue('coverLetter');
 
   const handleSubmit = async (values: ApplicationValues) => {
     const application = await sendApplication(values);
@@ -69,6 +80,7 @@ export function JobApplication() {
       <Stack>
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
+            size="md"
             label="Full name"
             placeholder="John Doe"
             withAsterisk
@@ -76,6 +88,7 @@ export function JobApplication() {
           />
 
           <TextInput
+            size="md"
             label="Email"
             placeholder="john@mantine.dev"
             withAsterisk
@@ -84,14 +97,16 @@ export function JobApplication() {
         </SimpleGrid>
 
         <PhoneInput
+          size="md"
           label="Phone"
-          placeholder="+1 (555) 123-4567"
+          placeholder="Your phone number"
           defaultCountry="us"
           withAsterisk
           {...form.getInputProps('phone')}
         />
 
         <TextInput
+          size="md"
           label="LinkedIn profile"
           placeholder="https://linkedin.com/in/johndoe"
           withAsterisk
@@ -100,38 +115,50 @@ export function JobApplication() {
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <NumberInput
+            size="md"
             label="Expected salary"
-            placeholder="85,000"
+            placeholder="Annual salary in USD"
             withAsterisk
             prefix="$"
             thousandSeparator=","
-            min={0}
-            max={1_000_000}
+            allowNegative={false}
+            allowDecimal={false}
             step={1000}
             {...form.getInputProps('salary')}
           />
 
           <NumberInput
+            size="md"
             label="Years of experience"
-            placeholder="5"
+            placeholder="Full years"
             withAsterisk
+            allowNegative={false}
+            allowDecimal={false}
             min={0}
             max={50}
+            clampBehavior="strict"
             {...form.getInputProps('experience')}
           />
         </SimpleGrid>
 
         <Textarea
+          size="md"
           label="Cover letter"
           placeholder="Tell us why you are a great fit for this role"
           withAsterisk
           autosize
           minRows={4}
+          maxRows={8}
+          bottomSection={
+            <Text size="sm">
+              {coverLetter.length} characters, at least {MIN_COVER_LETTER_LENGTH} required
+            </Text>
+          }
           {...form.getInputProps('coverLetter')}
         />
 
         <Group justify="flex-end">
-          <Button type="submit" loading={form.submitting}>
+          <Button size="md" type="submit" loading={form.submitting}>
             Send application
           </Button>
         </Group>

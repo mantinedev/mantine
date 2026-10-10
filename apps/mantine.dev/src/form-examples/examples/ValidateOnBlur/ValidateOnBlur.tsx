@@ -41,8 +41,6 @@ export function ValidateOnBlur() {
     },
   });
 
-  const focusField = (path: string) => form.getInputNode(path)?.focus();
-
   const handleSubmit = (values: ProfileValues) => {
     setShowSummary(false);
     notifications.show({
@@ -53,17 +51,15 @@ export function ValidateOnBlur() {
 
   const handleErrors = (errors: FormErrors) => {
     setShowSummary(true);
-    focusField(Object.keys(errors)[0]);
+    form.getInputNode(Object.keys(errors)[0])?.focus();
   };
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
-        {showSummary && (
-          <ErrorSummary errors={form.errors} labels={LABELS} onFocusField={focusField} />
-        )}
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
+            size="md"
             label="First name"
             placeholder="John"
             withAsterisk
@@ -71,6 +67,7 @@ export function ValidateOnBlur() {
           />
 
           <TextInput
+            size="md"
             label="Last name"
             placeholder="Doe"
             withAsterisk
@@ -79,6 +76,7 @@ export function ValidateOnBlur() {
         </SimpleGrid>
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="john@mantine.dev"
           withAsterisk
@@ -86,6 +84,7 @@ export function ValidateOnBlur() {
         />
 
         <TextInput
+          size="md"
           label="Website"
           placeholder="https://mantine.dev"
           withAsterisk
@@ -93,16 +92,22 @@ export function ValidateOnBlur() {
         />
 
         <Textarea
+          size="md"
           label="Bio"
           placeholder="A few words about yourself"
           withAsterisk
           autosize
           minRows={3}
+          maxRows={6}
           {...form.getInputProps('bio')}
         />
 
+        {showSummary && <ErrorSummary form={form} labels={LABELS} />}
+
         <Group justify="flex-end">
-          <Button type="submit">Save profile</Button>
+          <Button size="md" type="submit">
+            Save profile
+          </Button>
         </Group>
       </Stack>
     </form>

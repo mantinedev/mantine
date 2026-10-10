@@ -38,6 +38,7 @@ export function LargeForm() {
 
   const inputs = FIELDS.map((field, index) => (
     <TextInput
+      size="md"
       key={field}
       label={`Field ${index + 1}`}
       placeholder={`Value ${index + 1}`}
@@ -60,15 +61,17 @@ export function LargeForm() {
         </ScrollArea>
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={handleFillAll}>
+          <Button size="md" variant="default" onClick={handleFillAll}>
             Fill all
           </Button>
 
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Submit</Button>
+          <Button size="md" type="submit">
+            Submit
+          </Button>
         </Group>
       </Stack>
     </form>

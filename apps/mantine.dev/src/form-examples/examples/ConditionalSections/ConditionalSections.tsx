@@ -58,7 +58,12 @@ export function ConditionalSections() {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
-        <Radio.Group label="Account type" withAsterisk {...form.getInputProps('accountType')}>
+        <Radio.Group
+          size="md"
+          label="Account type"
+          withAsterisk
+          {...form.getInputProps('accountType')}
+        >
           <Group mt="xs">
             <Radio value="personal" label="Personal" />
             <Radio value="company" label="Company" />
@@ -70,11 +75,13 @@ export function ConditionalSections() {
           <CompanyFields form={form} />
         )}
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Create account</Button>
+          <Button size="md" type="submit">
+            Create account
+          </Button>
         </Group>
       </Stack>
     </form>

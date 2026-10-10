@@ -12,7 +12,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { Stack, Text } from '@mantine/core';
+import { Input, Stack, Text } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 import { SortableItem } from './SortableItem';
 import { TasksValues } from './types';
@@ -51,15 +51,15 @@ export function TasksList({ form }: TasksListProps) {
       </DndContext>
 
       {ids.length === 0 && (
-        <Text size="xs" ta="center">
+        <Text size="sm" ta="center">
           No tasks yet
         </Text>
       )}
 
       {form.errors.items && (
-        <Text size="sm" c="red" mt="xs">
+        <Input.Error size="md" mt="xs">
           {form.errors.items}
-        </Text>
+        </Input.Error>
       )}
     </div>
   );

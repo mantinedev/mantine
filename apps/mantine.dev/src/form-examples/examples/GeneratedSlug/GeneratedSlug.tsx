@@ -43,6 +43,7 @@ export function GeneratedSlug() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Name"
           placeholder="My first post"
           withAsterisk
@@ -50,6 +51,7 @@ export function GeneratedSlug() {
         />
 
         <TextInput
+          size="md"
           label="Slug"
           placeholder="my-first-post"
           description="Generated from name until you edit it"
@@ -58,11 +60,13 @@ export function GeneratedSlug() {
         />
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Create page</Button>
+          <Button size="md" type="submit">
+            Create page
+          </Button>
         </Group>
       </Stack>
     </form>

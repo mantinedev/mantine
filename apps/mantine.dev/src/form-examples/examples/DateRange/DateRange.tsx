@@ -90,6 +90,7 @@ export function DateRange() {
       <Stack>
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <DatePickerInput
+            size="md"
             label="Check-in"
             placeholder="Pick a date"
             withAsterisk
@@ -98,6 +99,7 @@ export function DateRange() {
           />
 
           <DatePickerInput
+            size="md"
             label="Check-out"
             placeholder="Pick a date"
             withAsterisk
@@ -112,11 +114,13 @@ export function DateRange() {
           </Text>
         )}
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Book</Button>
+          <Button size="md" type="submit">
+            Book
+          </Button>
         </Group>
       </Stack>
     </form>

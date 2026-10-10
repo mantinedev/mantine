@@ -54,13 +54,20 @@ export function AutosaveServer() {
         </Button>
       </Group>
 
-      <TextInput label="Title" placeholder="Note title" {...form.getInputProps('title')} />
+      <TextInput
+        size="md"
+        label="Title"
+        placeholder="Note title"
+        {...form.getInputProps('title')}
+      />
 
       <Textarea
+        size="md"
         label="Content"
         placeholder="Start typing, the note is saved automatically"
         autosize
         minRows={5}
+        maxRows={10}
         {...form.getInputProps('content')}
       />
     </Stack>

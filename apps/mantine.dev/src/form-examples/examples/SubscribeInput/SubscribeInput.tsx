@@ -38,6 +38,7 @@ export function SubscribeInput() {
     <form onSubmit={handleSubmit}>
       <Group align="flex-end" pb={18}>
         <TextInput
+          size="md"
           label="Email"
           placeholder="you@mantine.dev"
           description="taken@mantine.dev is already subscribed"
@@ -48,7 +49,7 @@ export function SubscribeInput() {
           {...field.getInputProps()}
         />
 
-        <Button type="submit" loading={field.isValidating}>
+        <Button type="submit" size="md" loading={field.isValidating}>
           Subscribe
         </Button>
       </Group>

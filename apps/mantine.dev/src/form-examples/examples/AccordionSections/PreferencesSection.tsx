@@ -10,6 +10,7 @@ export function PreferencesSection({ form }: PreferencesSectionProps) {
   return (
     <Stack>
       <Select
+        size="md"
         label="Language"
         placeholder="Pick language"
         withAsterisk
@@ -18,6 +19,7 @@ export function PreferencesSection({ form }: PreferencesSectionProps) {
       />
 
       <Switch
+        size="md"
         label="Subscribe to newsletter"
         {...form.getInputProps('preferences.newsletter', { type: 'checkbox' })}
       />

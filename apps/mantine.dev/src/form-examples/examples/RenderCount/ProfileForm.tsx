@@ -46,6 +46,7 @@ export function ProfileForm({ mode }: ProfileFormProps) {
 
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <TextInput
+              size="md"
               label="Name"
               placeholder="Jane Doe"
               withAsterisk
@@ -53,6 +54,7 @@ export function ProfileForm({ mode }: ProfileFormProps) {
             />
 
             <TextInput
+              size="md"
               label="Email"
               placeholder="you@mantine.dev"
               withAsterisk
@@ -62,7 +64,9 @@ export function ProfileForm({ mode }: ProfileFormProps) {
 
           <Group justify="space-between">
             <CurrentName form={form} />
-            <Button type="submit">Save profile</Button>
+            <Button size="md" type="submit">
+              Save profile
+            </Button>
           </Group>
         </Stack>
       </form>

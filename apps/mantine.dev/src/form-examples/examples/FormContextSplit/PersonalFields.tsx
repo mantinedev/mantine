@@ -9,6 +9,7 @@ export function PersonalFields() {
       <Stack gap="sm">
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
+            size="md"
             label="First name"
             placeholder="Jane"
             withAsterisk
@@ -16,6 +17,7 @@ export function PersonalFields() {
           />
 
           <TextInput
+            size="md"
             label="Last name"
             placeholder="Doe"
             withAsterisk
@@ -24,6 +26,7 @@ export function PersonalFields() {
         </SimpleGrid>
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="jane@mantine.dev"
           withAsterisk

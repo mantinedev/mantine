@@ -36,11 +36,13 @@ export function EditableTable() {
         <RowsTable form={form} />
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset all
           </Button>
 
-          <Button type="submit">Save changes</Button>
+          <Button size="md" type="submit">
+            Save changes
+          </Button>
         </Group>
       </Stack>
     </form>

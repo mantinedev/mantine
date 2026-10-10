@@ -91,6 +91,7 @@ export function UnsavedChangesPrompt() {
           </Group>
 
           <TextInput
+            size="md"
             label="Name"
             placeholder="Your name"
             withAsterisk
@@ -98,6 +99,7 @@ export function UnsavedChangesPrompt() {
           />
 
           <TextInput
+            size="md"
             label="Email"
             placeholder="you@mantine.dev"
             withAsterisk
@@ -105,15 +107,17 @@ export function UnsavedChangesPrompt() {
           />
 
           <Textarea
+            size="md"
             label="Bio"
             placeholder="A few words about you"
             autosize
             minRows={3}
+            maxRows={6}
             {...form.getInputProps('bio')}
           />
 
           <Group justify="flex-end">
-            <Button type="submit" loading={form.submitting}>
+            <Button size="md" type="submit" loading={form.submitting}>
               Save profile
             </Button>
           </Group>

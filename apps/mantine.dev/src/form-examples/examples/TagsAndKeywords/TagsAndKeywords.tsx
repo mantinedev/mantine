@@ -42,7 +42,7 @@ export function TagsAndKeywords() {
   };
 
   const categoryChips = CATEGORIES.map((category) => (
-    <Chip key={category} value={category} size="sm">
+    <Chip key={category} value={category} size="md">
       {category}
     </Chip>
   ));
@@ -51,6 +51,7 @@ export function TagsAndKeywords() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Title"
           placeholder="Building forms with Mantine"
           withAsterisk
@@ -58,6 +59,7 @@ export function TagsAndKeywords() {
         />
 
         <TagsInput
+          size="md"
           label="Tags"
           placeholder="Press Enter to add a tag"
           description="Up to 5 tags"
@@ -65,7 +67,7 @@ export function TagsAndKeywords() {
           {...form.getInputProps('tags')}
         />
 
-        <Input.Wrapper label="Categories" withAsterisk error={form.errors.categories}>
+        <Input.Wrapper size="md" label="Categories" withAsterisk error={form.errors.categories}>
           <Chip.Group multiple {...form.getInputProps('categories')}>
             <Group gap="xs" mt={4} mb={4}>
               {categoryChips}
@@ -74,6 +76,7 @@ export function TagsAndKeywords() {
         </Input.Wrapper>
 
         <MultiSelect
+          size="md"
           label="Collaborators"
           placeholder="Pick people"
           data={COLLABORATORS}
@@ -82,7 +85,9 @@ export function TagsAndKeywords() {
         />
 
         <Group justify="flex-end">
-          <Button type="submit">Publish post</Button>
+          <Button size="md" type="submit">
+            Publish post
+          </Button>
         </Group>
       </Stack>
     </form>

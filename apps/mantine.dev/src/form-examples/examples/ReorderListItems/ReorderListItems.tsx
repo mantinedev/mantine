@@ -46,6 +46,7 @@ export function ReorderListItems() {
       <Stack>
         <Group gap="xs" wrap="nowrap" align="flex-end">
           <TextInput
+            size="md"
             label="New task"
             placeholder="Buy milk"
             style={{ flex: 1 }}
@@ -59,7 +60,7 @@ export function ReorderListItems() {
             }}
           />
 
-          <Button variant="default" onClick={addItem}>
+          <Button size="md" variant="default" onClick={addItem}>
             Add
           </Button>
         </Group>
@@ -67,7 +68,9 @@ export function ReorderListItems() {
         <TasksList form={form} />
 
         <Group justify="flex-end">
-          <Button type="submit">Save order</Button>
+          <Button size="md" type="submit">
+            Save order
+          </Button>
         </Group>
       </Stack>
     </form>

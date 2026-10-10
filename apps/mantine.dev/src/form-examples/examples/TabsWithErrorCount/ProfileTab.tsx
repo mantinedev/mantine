@@ -9,9 +9,16 @@ interface ProfileTabProps {
 export function ProfileTab({ form }: ProfileTabProps) {
   return (
     <Stack>
-      <TextInput label="Name" placeholder="John Doe" withAsterisk {...form.getInputProps('name')} />
+      <TextInput
+        size="md"
+        label="Name"
+        placeholder="John Doe"
+        withAsterisk
+        {...form.getInputProps('name')}
+      />
 
       <TextInput
+        size="md"
         label="Email"
         placeholder="john@mantine.dev"
         withAsterisk

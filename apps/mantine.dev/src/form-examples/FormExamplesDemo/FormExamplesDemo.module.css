@@ -42,6 +42,10 @@
   flex: 1;
   max-width: 560px;
   min-width: 0;
+
+  &[data-full-width] {
+    max-width: 100%;
+  }
 }
 
 .code {

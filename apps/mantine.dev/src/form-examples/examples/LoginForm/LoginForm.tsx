@@ -39,6 +39,7 @@ export function LoginForm() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack maw={420} mx="auto">
         <TextInput
+          size="md"
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
@@ -46,6 +47,7 @@ export function LoginForm() {
         />
 
         <PasswordInput
+          size="md"
           label="Password"
           placeholder="Your password"
           withAsterisk
@@ -54,17 +56,18 @@ export function LoginForm() {
 
         <Group justify="space-between">
           <Checkbox
+            size="md"
             label="Remember me"
             {...form.getInputProps('rememberMe', { type: 'checkbox' })}
           />
 
-          <Anchor component="button" type="button" size="sm">
+          <Anchor component="button" type="button" size="md">
             Forgot password?
           </Anchor>
         </Group>
 
         <Group justify="flex-end">
-          <Button type="submit" loading={form.submitting}>
+          <Button size="md" type="submit" loading={form.submitting}>
             Sign in
           </Button>
         </Group>

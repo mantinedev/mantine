@@ -35,12 +35,13 @@ export function ConditionalValidation() {
 
   const shipToDifferentAddress = form.useWatchValue('shipToDifferentAddress');
 
-  // Clear address values and their errors only after the collapse animation ends
-  const handleCollapseEnd = () => {
-    if (!shipToDifferentAddress) {
-      form.setValues({ street: '', city: '', zip: '' });
+  form.watch('shipToDifferentAddress', ({ value }) => {
+    if (!value) {
+      form.clearFieldError('street');
+      form.clearFieldError('city');
+      form.clearFieldError('zip');
     }
-  };
+  });
 
   const handleSubmit = (values: OrderValues) => {
     const address = values.shipToDifferentAddress
@@ -57,6 +58,7 @@ export function ConditionalValidation() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Name"
           placeholder="John Doe"
           withAsterisk
@@ -64,6 +66,7 @@ export function ConditionalValidation() {
         />
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="john@mantine.dev"
           withAsterisk
@@ -72,13 +75,15 @@ export function ConditionalValidation() {
 
         <div>
           <Checkbox
+            size="md"
             label="Ship to a different address"
             {...form.getInputProps('shipToDifferentAddress', { type: 'checkbox' })}
           />
 
-          <Collapse expanded={shipToDifferentAddress} onTransitionEnd={handleCollapseEnd}>
+          <Collapse expanded={shipToDifferentAddress}>
             <Stack mt="md">
               <TextInput
+                size="md"
                 label="Street"
                 placeholder="123 Main St"
                 withAsterisk
@@ -87,6 +92,7 @@ export function ConditionalValidation() {
 
               <SimpleGrid cols={{ base: 1, sm: 2 }}>
                 <TextInput
+                  size="md"
                   label="City"
                   placeholder="Berlin"
                   withAsterisk
@@ -94,6 +100,7 @@ export function ConditionalValidation() {
                 />
 
                 <TextInput
+                  size="md"
                   label="Zip code"
                   placeholder="10115"
                   withAsterisk
@@ -105,7 +112,9 @@ export function ConditionalValidation() {
         </div>
 
         <Group justify="flex-end">
-          <Button type="submit">Place order</Button>
+          <Button size="md" type="submit">
+            Place order
+          </Button>
         </Group>
       </Stack>
     </form>

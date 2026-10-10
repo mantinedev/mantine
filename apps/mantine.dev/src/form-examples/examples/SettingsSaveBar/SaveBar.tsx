@@ -25,11 +25,11 @@ export function SaveBar({ visible, saving, onDiscard }: SaveBarProps) {
         </Text>
 
         <Group gap="xs">
-          <Button variant="default" onClick={onDiscard} disabled={saving}>
+          <Button size="md" variant="default" onClick={onDiscard} disabled={saving}>
             Discard
           </Button>
 
-          <Button type="submit" loading={saving}>
+          <Button size="md" type="submit" loading={saving}>
             Save
           </Button>
         </Group>

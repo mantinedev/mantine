@@ -1,5 +1,5 @@
 import { PlusIcon } from '@phosphor-icons/react';
-import { Button, Group, Stack, Text, TextInput } from '@mantine/core';
+import { Button, Group, Input, Stack, Text, TextInput } from '@mantine/core';
 import { FORM_INDEX, formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
@@ -48,6 +48,7 @@ export function QuestionnaireBuilder() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Questionnaire title"
           placeholder="Customer satisfaction"
           withAsterisk
@@ -59,16 +60,12 @@ export function QuestionnaireBuilder() {
         ))}
 
         {questions.length === 0 && (
-          <Text size="xs" ta="center">
+          <Text size="sm" ta="center">
             No questions yet
           </Text>
         )}
 
-        {form.errors.questions && (
-          <Text size="sm" c="red">
-            {form.errors.questions}
-          </Text>
-        )}
+        {form.errors.questions && <Input.Error size="md">{form.errors.questions}</Input.Error>}
 
         <Group>
           <Button
@@ -81,7 +78,9 @@ export function QuestionnaireBuilder() {
         </Group>
 
         <Group justify="flex-end">
-          <Button type="submit">Save questionnaire</Button>
+          <Button size="md" type="submit">
+            Save questionnaire
+          </Button>
         </Group>
       </Stack>
     </form>

@@ -11,6 +11,7 @@ export function PersonalSection({ form }: PersonalSectionProps) {
     <Stack>
       <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <TextInput
+          size="md"
           label="First name"
           placeholder="John"
           withAsterisk
@@ -18,6 +19,7 @@ export function PersonalSection({ form }: PersonalSectionProps) {
         />
 
         <TextInput
+          size="md"
           label="Last name"
           placeholder="Doe"
           withAsterisk
@@ -26,6 +28,7 @@ export function PersonalSection({ form }: PersonalSectionProps) {
       </SimpleGrid>
 
       <TextInput
+        size="md"
         label="Email"
         placeholder="john@mantine.dev"
         withAsterisk

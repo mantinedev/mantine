@@ -1,14 +1,13 @@
 import { Alert, Anchor, List } from '@mantine/core';
-import { FormErrors } from '@mantine/form';
+import { UseFormReturnType } from '@mantine/form';
 
-interface ErrorSummaryProps {
-  errors: FormErrors;
+interface ErrorSummaryProps<Values> {
+  form: UseFormReturnType<Values>;
   labels: Record<string, string>;
-  onFocusField: (path: string) => void;
 }
 
-export function ErrorSummary({ errors, labels, onFocusField }: ErrorSummaryProps) {
-  const entries = Object.entries(errors);
+export function ErrorSummary<Values>({ form, labels }: ErrorSummaryProps<Values>) {
+  const entries = Object.entries(form.errors);
 
   if (entries.length === 0) {
     return null;
@@ -19,7 +18,12 @@ export function ErrorSummary({ errors, labels, onFocusField }: ErrorSummaryProps
       <List size="sm">
         {entries.map(([path, error]) => (
           <List.Item key={path}>
-            <Anchor component="button" type="button" size="sm" onClick={() => onFocusField(path)}>
+            <Anchor
+              component="button"
+              type="button"
+              size="sm"
+              onClick={() => form.getInputNode(path)?.focus()}
+            >
               {labels[path] ?? path}
             </Anchor>
             : {error}

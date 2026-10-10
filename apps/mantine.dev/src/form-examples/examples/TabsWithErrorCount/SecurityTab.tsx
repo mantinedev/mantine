@@ -10,6 +10,7 @@ export function SecurityTab({ form }: SecurityTabProps) {
   return (
     <Stack>
       <PasswordInput
+        size="md"
         label="New password"
         placeholder="At least 8 characters"
         withAsterisk
@@ -17,6 +18,7 @@ export function SecurityTab({ form }: SecurityTabProps) {
       />
 
       <PasswordInput
+        size="md"
         label="Confirm password"
         placeholder="Repeat the password"
         withAsterisk

@@ -10,6 +10,7 @@ export function AddressFields() {
     <Fieldset legend="Shipping address">
       <Stack gap="sm">
         <TextInput
+          size="md"
           label="Street"
           placeholder="12 Baker St"
           withAsterisk
@@ -18,6 +19,7 @@ export function AddressFields() {
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
+            size="md"
             label="City"
             placeholder="London"
             withAsterisk
@@ -25,6 +27,7 @@ export function AddressFields() {
           />
 
           <TextInput
+            size="md"
             label="Postal code"
             placeholder="NW1 6XE"
             {...form.getInputProps('postalCode')}
@@ -32,6 +35,7 @@ export function AddressFields() {
         </SimpleGrid>
 
         <Select
+          size="md"
           label="Country"
           placeholder="Pick a country"
           data={COUNTRIES}

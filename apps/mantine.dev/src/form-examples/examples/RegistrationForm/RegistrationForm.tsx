@@ -59,6 +59,7 @@ export function RegistrationForm() {
       <Stack>
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
+            size="md"
             label="First name"
             placeholder="John"
             withAsterisk
@@ -66,6 +67,7 @@ export function RegistrationForm() {
           />
 
           <TextInput
+            size="md"
             label="Last name"
             placeholder="Doe"
             withAsterisk
@@ -74,6 +76,7 @@ export function RegistrationForm() {
         </SimpleGrid>
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
@@ -83,6 +86,7 @@ export function RegistrationForm() {
         <PasswordInputWithRequirements form={form} />
 
         <PasswordInput
+          size="md"
           label="Confirm password"
           placeholder="Repeat your password"
           withAsterisk
@@ -90,12 +94,13 @@ export function RegistrationForm() {
         />
 
         <Checkbox
+          size="md"
           label="I accept terms and conditions"
           {...form.getInputProps('terms', { type: 'checkbox' })}
         />
 
         <Group justify="flex-end">
-          <Button type="submit" loading={form.submitting}>
+          <Button size="md" type="submit" loading={form.submitting}>
             Create account
           </Button>
         </Group>

@@ -31,6 +31,7 @@ export function RichTextForm() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Title"
           placeholder="How to build forms with Mantine"
           withAsterisk
@@ -40,11 +41,13 @@ export function RichTextForm() {
         <ContentEditor label="Content" withAsterisk {...form.getInputProps('content')} />
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Publish</Button>
+          <Button size="md" type="submit">
+            Publish
+          </Button>
         </Group>
       </Stack>
     </form>

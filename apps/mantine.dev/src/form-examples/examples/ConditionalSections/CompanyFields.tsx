@@ -10,6 +10,7 @@ export function CompanyFields({ form }: CompanyFieldsProps) {
   return (
     <>
       <TextInput
+        size="md"
         label="Company name"
         placeholder="Mantine Inc."
         withAsterisk
@@ -17,6 +18,7 @@ export function CompanyFields({ form }: CompanyFieldsProps) {
       />
 
       <TextInput
+        size="md"
         label="VAT number"
         placeholder="DE123456789"
         description="Two uppercase letters followed by 8–12 digits"
@@ -25,6 +27,7 @@ export function CompanyFields({ form }: CompanyFieldsProps) {
       />
 
       <TextInput
+        size="md"
         label="Contact person"
         placeholder="Jane Doe"
         withAsterisk

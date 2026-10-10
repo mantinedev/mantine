@@ -53,17 +53,24 @@ export function PickersForm() {
       <Stack>
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <ColorInput
+            size="md"
             label="Accent color"
             placeholder="#228be6"
             withAsterisk
             {...form.getInputProps('accentColor')}
           />
 
-          <NativeSelect label="Language" data={languages} {...form.getInputProps('language')} />
+          <NativeSelect
+            size="md"
+            label="Language"
+            data={languages}
+            {...form.getInputProps('language')}
+          />
         </SimpleGrid>
 
-        <Input.Wrapper label="Font size" mb="md">
+        <Input.Wrapper size="md" label="Font size" mb="md">
           <Slider
+            size="md"
             min={12}
             max={24}
             step={1}
@@ -74,15 +81,15 @@ export function PickersForm() {
           />
         </Input.Wrapper>
 
-        <Input.Wrapper label="Satisfaction" withAsterisk error={form.errors.satisfaction}>
-          <Rating mt={5} {...form.getInputProps('satisfaction', { withError: false })} />
+        <Input.Wrapper size="md" label="Satisfaction" withAsterisk error={form.errors.satisfaction}>
+          <Rating size="md" mt={5} {...form.getInputProps('satisfaction', { withError: false })} />
         </Input.Wrapper>
 
-        <Input.Wrapper label="Interests" withAsterisk error={form.errors.interests}>
+        <Input.Wrapper size="md" label="Interests" withAsterisk error={form.errors.interests}>
           <Chip.Group multiple {...form.getInputProps('interests', { withError: false })}>
             <Group gap="xs" mt="xs" mb={form.errors.interests ? 5 : 0}>
               {interests.map((item) => (
-                <Chip key={item.value} value={item.value}>
+                <Chip key={item.value} value={item.value} size="md">
                   {item.label}
                 </Chip>
               ))}
@@ -91,8 +98,9 @@ export function PickersForm() {
         </Input.Wrapper>
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
-          <Input.Wrapper label="Theme">
+          <Input.Wrapper size="md" label="Theme">
             <SegmentedControl
+              size="md"
               fullWidth
               mt={5}
               data={[
@@ -104,8 +112,9 @@ export function PickersForm() {
             />
           </Input.Wrapper>
 
-          <Input.Wrapper label="Newsletter">
+          <Input.Wrapper size="md" label="Newsletter">
             <Switch
+              size="md"
               mt={9}
               label="Send me product updates"
               {...form.getInputProps('newsletter', { type: 'checkbox' })}
@@ -114,11 +123,13 @@ export function PickersForm() {
         </SimpleGrid>
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Save preferences</Button>
+          <Button size="md" type="submit">
+            Save preferences
+          </Button>
         </Group>
       </Stack>
     </form>

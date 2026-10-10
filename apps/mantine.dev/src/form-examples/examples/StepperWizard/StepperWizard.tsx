@@ -72,13 +72,17 @@ export function StepperWizard() {
 
       <Group justify="flex-end" mt="xl">
         {active > 0 && (
-          <Button variant="default" onClick={prevStep} disabled={form.submitting}>
+          <Button size="md" variant="default" onClick={prevStep} disabled={form.submitting}>
             Back
           </Button>
         )}
-        {active < 2 && <Button onClick={nextStep}>Next</Button>}
+        {active < 2 && (
+          <Button size="md" onClick={nextStep}>
+            Next
+          </Button>
+        )}
         {active === 2 && (
-          <Button type="submit" loading={form.submitting}>
+          <Button size="md" type="submit" loading={form.submitting}>
             Create account
           </Button>
         )}

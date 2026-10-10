@@ -69,6 +69,7 @@ export function FileUpload() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Album title"
           placeholder="Summer trip"
           withAsterisk
@@ -76,6 +77,7 @@ export function FileUpload() {
         />
 
         <Input.Wrapper
+          size="md"
           label="Images"
           description="Up to 5 MB per file, 10 MB in total"
           withAsterisk
@@ -106,7 +108,7 @@ export function FileUpload() {
               <div>
                 <Text size="sm">Drag images here or click to select files</Text>
 
-                <Text size="xs">
+                <Text size="sm">
                   {files.length === 0
                     ? 'No files selected'
                     : `${files.length} file(s), ${formatSize(totalSize(files))}`}
@@ -125,7 +127,7 @@ export function FileUpload() {
         {form.submitting && <Progress value={progress} animated />}
 
         <Group justify="flex-end">
-          <Button type="submit" loading={form.submitting}>
+          <Button size="md" type="submit" loading={form.submitting}>
             Upload
           </Button>
         </Group>

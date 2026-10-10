@@ -1,5 +1,5 @@
 import { PlusIcon, TrashIcon } from '@phosphor-icons/react';
-import { ActionIcon, Button, Group, Stack, Text, TextInput } from '@mantine/core';
+import { ActionIcon, Button, Group, Input, Stack, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 import { createOption, QuestionnaireValues } from './types';
 
@@ -19,14 +19,14 @@ export function OptionsList({ form, questionIndex }: OptionsListProps) {
           <TextInput
             placeholder={`Option ${optionIndex + 1}`}
             aria-label={`Option ${optionIndex + 1}`}
-            size="sm"
+            size="md"
             style={{ flex: 1 }}
             {...form.getInputProps(`questions.${questionIndex}.options.${optionIndex}.label`)}
           />
 
           <ActionIcon
             variant="default"
-            size="input-sm"
+            size="input-md"
             aria-label="Remove option"
             onClick={() => form.removeListItem(`questions.${questionIndex}.options`, optionIndex)}
           >
@@ -35,11 +35,7 @@ export function OptionsList({ form, questionIndex }: OptionsListProps) {
         </Group>
       ))}
 
-      {error && (
-        <Text size="sm" c="red">
-          {error}
-        </Text>
-      )}
+      {error && <Input.Error size="md">{error}</Input.Error>}
 
       <Group>
         <Button

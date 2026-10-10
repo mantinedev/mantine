@@ -45,6 +45,7 @@ export function SelectAll() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Role name"
           placeholder="Maintainer"
           withAsterisk
@@ -53,6 +54,7 @@ export function SelectAll() {
 
         <div>
           <Checkbox
+            size="md"
             label="Permissions"
             fw={500}
             checked={allSelected}
@@ -65,7 +67,7 @@ export function SelectAll() {
             }
           />
 
-          <Checkbox.Group {...form.getInputProps('permissions')}>
+          <Checkbox.Group size="md" {...form.getInputProps('permissions')}>
             <Stack gap="sm" mt="sm">
               {items}
             </Stack>
@@ -73,11 +75,13 @@ export function SelectAll() {
         </div>
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Create role</Button>
+          <Button size="md" type="submit">
+            Create role
+          </Button>
         </Group>
       </Stack>
     </form>

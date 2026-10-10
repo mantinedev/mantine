@@ -15,6 +15,7 @@ export function QuestionCard({ form, index }: QuestionCardProps) {
       <Stack gap="sm">
         <Group gap="xs" wrap="nowrap" align="flex-start">
           <TextInput
+            size="md"
             label={`Question ${index + 1}`}
             placeholder="Type your question"
             withAsterisk
@@ -24,9 +25,9 @@ export function QuestionCard({ form, index }: QuestionCardProps) {
 
           <ActionIcon
             variant="default"
-            size="input-sm"
+            size="input-md"
             aria-label="Remove question"
-            mt={22}
+            mt={25}
             onClick={() => form.removeListItem('questions', index)}
           >
             <TrashIcon size={18} color="var(--mantine-color-red-6)" />

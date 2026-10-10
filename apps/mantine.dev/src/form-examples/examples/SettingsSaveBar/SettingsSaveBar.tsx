@@ -47,6 +47,7 @@ export function SettingsSaveBar() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Display name"
           placeholder="Your name"
           withAsterisk
@@ -54,6 +55,7 @@ export function SettingsSaveBar() {
         />
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
@@ -61,14 +63,17 @@ export function SettingsSaveBar() {
         />
 
         <Textarea
+          size="md"
           label="Bio"
           placeholder="A few words about you"
           autosize
           minRows={3}
+          maxRows={6}
           {...form.getInputProps('bio')}
         />
 
         <Switch
+          size="md"
           label="Public profile"
           description="Anyone can see your profile page"
           {...form.getInputProps('publicProfile', { type: 'checkbox' })}

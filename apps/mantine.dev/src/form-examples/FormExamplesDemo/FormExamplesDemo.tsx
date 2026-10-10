@@ -27,7 +27,11 @@ export function FormExamplesDemo() {
           </Text>
         </div>
         <div className={classes.inner}>
-          <div className={classes.wrapper} key={id}>
+          <div
+            className={classes.wrapper}
+            key={id}
+            data-full-width={metaData.fullWidth || undefined}
+          >
             <codeData.component />
           </div>
         </div>

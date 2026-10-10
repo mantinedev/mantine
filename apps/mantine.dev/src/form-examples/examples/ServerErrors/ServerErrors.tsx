@@ -65,6 +65,7 @@ export function ServerErrors() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Username"
           placeholder="your_username"
           withAsterisk
@@ -72,6 +73,7 @@ export function ServerErrors() {
         />
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="you@mantine.dev"
           withAsterisk
@@ -79,6 +81,7 @@ export function ServerErrors() {
         />
 
         <PasswordInput
+          size="md"
           label="Password"
           placeholder="At least 8 characters"
           withAsterisk
@@ -90,7 +93,7 @@ export function ServerErrors() {
           </Alert>
         )}
         <Group justify="flex-end">
-          <Button type="submit" loading={form.submitting}>
+          <Button size="md" type="submit" loading={form.submitting}>
             Create account
           </Button>
         </Group>

@@ -70,6 +70,7 @@ export function AutosaveLocalStorage() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Title"
           placeholder="Post title"
           withAsterisk
@@ -77,23 +78,27 @@ export function AutosaveLocalStorage() {
         />
 
         <Textarea
+          size="md"
           label="Body"
           placeholder="Write your post, it is saved as you type"
           withAsterisk
           autosize
           minRows={4}
+          maxRows={8}
           {...form.getInputProps('body')}
         />
 
         <Group justify="space-between">
-          <Text size="xs">{savedAt ? `Draft saved at ${savedAt}` : 'No draft saved'}</Text>
+          <Text size="sm">{savedAt ? `Draft saved at ${savedAt}` : 'No draft saved'}</Text>
 
           <Group>
-            <Button variant="default" onClick={discardDraft}>
+            <Button size="md" variant="default" onClick={discardDraft}>
               Discard draft
             </Button>
 
-            <Button type="submit">Publish</Button>
+            <Button size="md" type="submit">
+              Publish
+            </Button>
           </Group>
         </Group>
       </Stack>

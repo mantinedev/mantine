@@ -39,6 +39,7 @@ export function ConditionalFields() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Name"
           placeholder="Jane Doe"
           withAsterisk
@@ -46,7 +47,12 @@ export function ConditionalFields() {
         />
 
         <div>
-          <Radio.Group label="Delivery method" withAsterisk {...form.getInputProps('method')}>
+          <Radio.Group
+            size="md"
+            label="Delivery method"
+            withAsterisk
+            {...form.getInputProps('method')}
+          >
             <Group mt="xs">
               <Radio value="pickup" label="Pickup" />
               <Radio value="courier" label="Courier" />
@@ -56,6 +62,7 @@ export function ConditionalFields() {
           <Collapse expanded={isCourier}>
             <Stack mt="md">
               <TextInput
+                size="md"
                 label="Address"
                 placeholder="Street, building, apartment"
                 withAsterisk
@@ -63,6 +70,7 @@ export function ConditionalFields() {
               />
 
               <Checkbox
+                size="md"
                 label="Leave at door"
                 {...form.getInputProps('leaveAtDoor', { type: 'checkbox' })}
               />
@@ -71,7 +79,9 @@ export function ConditionalFields() {
         </div>
 
         <Group justify="flex-end">
-          <Button type="submit">Place order</Button>
+          <Button size="md" type="submit">
+            Place order
+          </Button>
         </Group>
       </Stack>
     </form>

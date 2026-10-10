@@ -75,6 +75,7 @@ export function EditRecord() {
         </Group>
 
         <TextInput
+          size="md"
           label="Name"
           placeholder="John Doe"
           withAsterisk
@@ -83,6 +84,7 @@ export function EditRecord() {
         />
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="john@mantine.dev"
           withAsterisk
@@ -91,6 +93,7 @@ export function EditRecord() {
         />
 
         <Select
+          size="md"
           label="Role"
           placeholder="Pick role"
           withAsterisk
@@ -100,20 +103,22 @@ export function EditRecord() {
         />
 
         <Textarea
+          size="md"
           label="Bio"
           placeholder="A few words about the user"
           autosize
           minRows={2}
+          maxRows={6}
           loading={loading}
           {...form.getInputProps('bio')}
         />
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset} disabled={loading || !dirty}>
+          <Button size="md" variant="default" onClick={form.reset} disabled={loading || !dirty}>
             Reset to loaded values
           </Button>
 
-          <Button type="submit" loading={form.submitting} disabled={loading}>
+          <Button size="md" type="submit" loading={form.submitting} disabled={loading}>
             Save
           </Button>
         </Group>

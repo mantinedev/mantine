@@ -68,6 +68,7 @@ export function DatesForm() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Guest name"
           placeholder="Jane Doe"
           withAsterisk
@@ -76,6 +77,7 @@ export function DatesForm() {
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <DateInput
+            size="md"
             label="Birth date"
             placeholder="Pick a date"
             withAsterisk
@@ -84,6 +86,7 @@ export function DatesForm() {
           />
 
           <DatePickerInput
+            size="md"
             type="range"
             label="Stay"
             placeholder="Check-in – check-out"
@@ -96,6 +99,7 @@ export function DatesForm() {
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <DateTimePicker
+            size="md"
             label="Arrival time"
             placeholder="Pick date and time"
             withAsterisk
@@ -103,15 +107,17 @@ export function DatesForm() {
             {...form.getInputProps('arrival')}
           />
 
-          <TimeInput label="Preferred call time" {...form.getInputProps('callTime')} />
+          <TimeInput size="md" label="Preferred call time" {...form.getInputProps('callTime')} />
         </SimpleGrid>
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Book</Button>
+          <Button size="md" type="submit">
+            Book
+          </Button>
         </Group>
       </Stack>
     </form>

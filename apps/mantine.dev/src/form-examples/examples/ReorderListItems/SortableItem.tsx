@@ -24,7 +24,7 @@ export function SortableItem({ id, index, form }: SortableItemProps) {
     >
       <ActionIcon
         variant="default"
-        size="input-sm"
+        size="input-md"
         aria-label="Drag to reorder"
         style={{ cursor: 'grab', touchAction: 'none' }}
         {...attributes}
@@ -34,6 +34,7 @@ export function SortableItem({ id, index, form }: SortableItemProps) {
       </ActionIcon>
 
       <TextInput
+        size="md"
         placeholder="What needs to be done?"
         aria-label="Task"
         style={{ flex: 1 }}
@@ -42,7 +43,7 @@ export function SortableItem({ id, index, form }: SortableItemProps) {
 
       <ActionIcon
         variant="default"
-        size="input-sm"
+        size="input-md"
         aria-label="Remove task"
         onClick={() => form.removeListItem('items', index)}
       >

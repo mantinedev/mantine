@@ -8,10 +8,10 @@ interface FieldProps {
 
 export function TextField({ name, ...props }: FieldProps & Omit<TextInputProps, 'name'>) {
   const form = useProfileFormContext();
-  return <TextInput name={name} {...props} {...form.getInputProps(name)} />;
+  return <TextInput size="md" name={name} {...props} {...form.getInputProps(name)} />;
 }
 
 export function SelectField({ name, ...props }: FieldProps & Omit<SelectProps, 'name'>) {
   const form = useProfileFormContext();
-  return <Select name={name} {...props} {...form.getInputProps(name)} />;
+  return <Select size="md" name={name} {...props} {...form.getInputProps(name)} />;
 }

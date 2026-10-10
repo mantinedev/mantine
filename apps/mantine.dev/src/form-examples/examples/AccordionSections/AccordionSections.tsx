@@ -81,7 +81,7 @@ export function AccordionSections() {
       </Accordion>
 
       <Group justify="flex-end" mt="md">
-        <Button type="submit" loading={form.submitting}>
+        <Button size="md" type="submit" loading={form.submitting}>
           Complete onboarding
         </Button>
       </Group>

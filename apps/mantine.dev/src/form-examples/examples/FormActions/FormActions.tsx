@@ -30,6 +30,7 @@ function DemoForm() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Name"
           placeholder="Jane Doe"
           withAsterisk
@@ -37,6 +38,7 @@ function DemoForm() {
         />
 
         <TextInput
+          size="md"
           label="Email"
           placeholder="jane@mantine.dev"
           withAsterisk
@@ -44,6 +46,7 @@ function DemoForm() {
         />
 
         <NumberInput
+          size="md"
           label="Age"
           placeholder="Your age"
           min={0}
@@ -53,7 +56,9 @@ function DemoForm() {
         />
 
         <Group justify="flex-end">
-          <Button type="submit">Submit</Button>
+          <Button size="md" type="submit">
+            Submit
+          </Button>
         </Group>
       </Stack>
     </form>

@@ -1,5 +1,5 @@
 import { PlusIcon, TrashIcon } from '@phosphor-icons/react';
-import { ActionIcon, Button, Group, Stack, Text, TextInput } from '@mantine/core';
+import { ActionIcon, Button, Group, Input, Stack, Text, TextInput } from '@mantine/core';
 import { FORM_INDEX, formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
@@ -56,6 +56,7 @@ export function ListMinimum() {
   const skills = form.getValues().skills.map((skill, index) => (
     <Group key={skill.id} align="flex-start" wrap="nowrap">
       <TextInput
+        size="md"
         placeholder="React"
         aria-label="Skill name"
         style={{ flex: 1 }}
@@ -64,7 +65,7 @@ export function ListMinimum() {
 
       <ActionIcon
         variant="default"
-        size="input-sm"
+        size="input-md"
         aria-label="Remove skill"
         onClick={() => form.removeListItem('skills', index)}
       >
@@ -77,6 +78,7 @@ export function ListMinimum() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Project name"
           placeholder="Mantine"
           withAsterisk
@@ -84,15 +86,9 @@ export function ListMinimum() {
         />
 
         <Stack gap="xs">
-          <Text size="sm" fw={500}>
-            Skills
-          </Text>
-          {skills.length > 0 ? skills : <Text size="xs">No skills added</Text>}
-          {form.errors.skills && (
-            <Text c="red" size="sm">
-              {form.errors.skills}
-            </Text>
-          )}
+          <Input.Label size="md">Skills</Input.Label>
+          {skills.length > 0 ? skills : <Text size="sm">No skills added</Text>}
+          {form.errors.skills && <Input.Error size="md">{form.errors.skills}</Input.Error>}
           <Group>
             <Button
               variant="default"
@@ -105,7 +101,9 @@ export function ListMinimum() {
         </Stack>
 
         <Group justify="flex-end">
-          <Button type="submit">Create project</Button>
+          <Button size="md" type="submit">
+            Create project
+          </Button>
         </Group>
       </Stack>
     </form>

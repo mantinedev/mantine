@@ -69,6 +69,7 @@ export function AddressCard({ form, index }: AddressCardProps) {
         </Group>
 
         <TextInput
+          size="md"
           label="Label"
           placeholder="Home"
           withAsterisk
@@ -77,6 +78,7 @@ export function AddressCard({ form, index }: AddressCardProps) {
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
+            size="md"
             label="Street"
             placeholder="12 Baker St"
             withAsterisk
@@ -84,6 +86,7 @@ export function AddressCard({ form, index }: AddressCardProps) {
           />
 
           <TextInput
+            size="md"
             label="City"
             placeholder="London"
             {...form.getInputProps(`addresses.${index}.city`)}

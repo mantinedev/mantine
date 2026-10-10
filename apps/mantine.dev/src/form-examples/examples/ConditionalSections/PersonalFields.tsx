@@ -12,6 +12,7 @@ export function PersonalFields({ form }: PersonalFieldsProps) {
     <>
       <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <TextInput
+          size="md"
           label="First name"
           placeholder="Jane"
           withAsterisk
@@ -19,6 +20,7 @@ export function PersonalFields({ form }: PersonalFieldsProps) {
         />
 
         <TextInput
+          size="md"
           label="Last name"
           placeholder="Doe"
           withAsterisk
@@ -27,6 +29,7 @@ export function PersonalFields({ form }: PersonalFieldsProps) {
       </SimpleGrid>
 
       <DateInput
+        size="md"
         label="Birth date"
         placeholder="Pick a date"
         withAsterisk

@@ -93,7 +93,7 @@ export function TabsWithErrorCount() {
       </Tabs>
 
       <Group justify="flex-end" mt="md">
-        <Button type="submit" loading={form.submitting}>
+        <Button size="md" type="submit" loading={form.submitting}>
           Save settings
         </Button>
       </Group>

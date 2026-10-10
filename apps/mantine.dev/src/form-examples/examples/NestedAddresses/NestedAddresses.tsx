@@ -1,5 +1,5 @@
 import { PlusIcon } from '@phosphor-icons/react';
-import { Button, Group, Stack, Text, TextInput } from '@mantine/core';
+import { Button, Group, Input, Stack, Text, TextInput } from '@mantine/core';
 import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
@@ -46,6 +46,7 @@ export function NestedAddresses() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Name"
           placeholder="Jane Doe"
           withAsterisk
@@ -57,16 +58,12 @@ export function NestedAddresses() {
         ))}
 
         {addresses.length === 0 && (
-          <Text size="xs" ta="center">
+          <Text size="sm" ta="center">
             No addresses yet
           </Text>
         )}
 
-        {form.errors.addresses && (
-          <Text size="sm" c="red">
-            {form.errors.addresses}
-          </Text>
-        )}
+        {form.errors.addresses && <Input.Error size="md">{form.errors.addresses}</Input.Error>}
 
         <Group>
           <Button
@@ -87,7 +84,9 @@ export function NestedAddresses() {
         </Group>
 
         <Group justify="flex-end">
-          <Button type="submit">Save contact</Button>
+          <Button size="md" type="submit">
+            Save contact
+          </Button>
         </Group>
       </Stack>
     </form>

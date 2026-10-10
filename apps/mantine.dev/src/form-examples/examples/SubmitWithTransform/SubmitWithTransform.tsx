@@ -71,6 +71,7 @@ export function SubmitWithTransform() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
+          size="md"
           label="Event title"
           placeholder="Mantine meetup"
           withAsterisk
@@ -79,6 +80,7 @@ export function SubmitWithTransform() {
 
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <DateInput
+            size="md"
             label="Date"
             placeholder="Pick date"
             withAsterisk
@@ -86,6 +88,7 @@ export function SubmitWithTransform() {
           />
 
           <NumberInput
+            size="md"
             label="Capacity"
             placeholder="Number of seats"
             withAsterisk
@@ -96,6 +99,7 @@ export function SubmitWithTransform() {
         </SimpleGrid>
 
         <MultiSelect
+          size="md"
           label="Tags"
           placeholder="Pick tags"
           data={['React', 'TypeScript', 'CSS', 'Design']}
@@ -103,20 +107,27 @@ export function SubmitWithTransform() {
         />
 
         <TagsInput
+          size="md"
           label="Invite emails"
           placeholder="Type an email and press Enter"
           description="Invitations are sent when the event is created"
           {...form.getInputProps('emails')}
         />
 
-        <Switch label="Public event" {...form.getInputProps('isPublic', { type: 'checkbox' })} />
+        <Switch
+          size="md"
+          label="Public event"
+          {...form.getInputProps('isPublic', { type: 'checkbox' })}
+        />
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={showPreview}>
+          <Button size="md" variant="default" onClick={showPreview}>
             Preview payload
           </Button>
 
-          <Button type="submit">Create event</Button>
+          <Button size="md" type="submit">
+            Create event
+          </Button>
         </Group>
       </Stack>
     </form>

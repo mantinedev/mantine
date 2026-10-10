@@ -52,7 +52,9 @@ export function ReusableFields() {
           </SimpleGrid>
 
           <Group justify="flex-end">
-            <Button type="submit">Save profile</Button>
+            <Button size="md" type="submit">
+              Save profile
+            </Button>
           </Group>
         </Stack>
       </form>

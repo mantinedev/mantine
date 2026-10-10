@@ -66,6 +66,7 @@ export function SameAsBilling() {
         <AddressFields form={form} prefix="billing" legend="Billing address" />
 
         <Checkbox
+          size="md"
           label="Shipping address is the same as billing"
           {...form.getInputProps('sameAsBilling', { type: 'checkbox' })}
         />
@@ -78,11 +79,13 @@ export function SameAsBilling() {
         />
 
         <Group justify="flex-end">
-          <Button variant="default" onClick={form.reset}>
+          <Button size="md" variant="default" onClick={form.reset}>
             Reset
           </Button>
 
-          <Button type="submit">Save addresses</Button>
+          <Button size="md" type="submit">
+            Save addresses
+          </Button>
         </Group>
       </Stack>
     </form>
