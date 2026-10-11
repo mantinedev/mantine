@@ -484,4 +484,110 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith('third');
   });
+
+  it('does not flush an already executed leading callback', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, leading: true })
+    );
+
+    result.current('first');
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(result.current.isPending()).toBe(false);
+
+    result.current.flush();
+    result.current.flush();
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not repeat an already executed leading callback on unmount', () => {
+    const callback = jest.fn();
+    const { result, unmount } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, leading: true, flushOnUnmount: true })
+    );
+
+    result.current('first');
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(result.current.isPending()).toBe(false);
+
+    unmount();
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(jest.getTimerCount()).toBe(0);
+  });
+
+  it.each([50, 100, 200])(
+    'does not repeat an already executed leading callback when maxWait is %s',
+    (maxWait) => {
+      const callback = jest.fn();
+      const { result } = renderHook(() =>
+        useDebouncedCallback(callback, { delay: 100, leading: true, maxWait })
+      );
+
+      result.current('first');
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(result.current.isPending()).toBe(false);
+
+      jest.advanceTimersByTime(maxWait);
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(result.current.isPending()).toBe(false);
+    }
+  );
+
+  it('preserves leading cooldown and restarts maxWait after an empty maxWait timer', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, leading: true, maxWait: 50 })
+    );
+
+    result.current('first');
+    jest.advanceTimersByTime(50);
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    jest.advanceTimersByTime(10);
+    result.current('second');
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(result.current.isPending()).toBe(true);
+
+    jest.advanceTimersByTime(49);
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    jest.advanceTimersByTime(1);
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenLastCalledWith('second');
+    expect(result.current.isPending()).toBe(false);
+
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(2);
+  });
+
+  it('flushes the latest pending leading callback only once', () => {
+    const callback = jest.fn();
+    const { result, unmount } = renderHook(() =>
+      useDebouncedCallback(callback, {
+        delay: 100,
+        leading: true,
+        maxWait: 200,
+        flushOnUnmount: true,
+      })
+    );
+
+    result.current('first');
+    result.current('second');
+    result.current('latest');
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(result.current.isPending()).toBe(true);
+
+    result.current.flush();
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenLastCalledWith('latest');
+    expect(result.current.isPending()).toBe(false);
+
+    result.current.flush();
+    unmount();
+    jest.advanceTimersByTime(200);
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(jest.getTimerCount()).toBe(0);
+  });
 });

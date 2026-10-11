@@ -231,6 +231,7 @@ export function TreeNode({
       })}
       role="treeitem"
       aria-selected={selected}
+      aria-expanded={hasChildren ? isExpanded : undefined}
       data-value={node.value}
       data-selected={selected || undefined}
       data-level={level}

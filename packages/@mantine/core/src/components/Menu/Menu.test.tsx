@@ -120,6 +120,30 @@ describe('@mantine/core/Menu', () => {
     expectOpened();
   });
 
+  it('closes menu when outside element stops propagation and clickOutsideCapture is set', async () => {
+    const { rerender } = render(
+      <>
+        <TestContainer defaultOpened />
+        <button type="button" onMouseDown={(event) => event.stopPropagation()}>
+          outside
+        </button>
+      </>
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'outside' }));
+    expectOpened();
+
+    rerender(
+      <>
+        <TestContainer defaultOpened clickOutsideCapture />
+        <button type="button" onMouseDown={(event) => event.stopPropagation()}>
+          outside
+        </button>
+      </>
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'outside' }));
+    expectClosed();
+  });
+
   it('closes menu when item is clicked', async () => {
     render(<TestContainer defaultOpened />);
     await userEvent.click(screen.getByText('test-item-1'));

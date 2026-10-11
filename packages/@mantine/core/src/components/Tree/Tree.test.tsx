@@ -119,6 +119,28 @@ describe('@mantine/core/Tree', () => {
     });
   });
 
+  describe('Expanded state', () => {
+    it('sets aria-expanded on nodes with children', async () => {
+      render(<Tree data={complexTreeData} expandOnClick />);
+      const node = screen.getAllByRole('treeitem')[0];
+
+      expect(node).toHaveAttribute('aria-expanded', 'false');
+
+      await userEvent.click(screen.getByText('Node 1'));
+      expect(node).toHaveAttribute('aria-expanded', 'true');
+
+      await userEvent.click(screen.getByText('Node 1'));
+      expect(node).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('does not set aria-expanded on leaf nodes', () => {
+      render(<Tree data={complexTreeData} />);
+      const leaf = screen.getAllByRole('treeitem').find((node) => node.dataset.value === 'node-3');
+
+      expect(leaf).not.toHaveAttribute('aria-expanded');
+    });
+  });
+
   describe('Selection', () => {
     it('selects node on click when selectOnClick is true', async () => {
       const TestComponent = () => {
