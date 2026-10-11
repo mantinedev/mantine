@@ -9,7 +9,7 @@ export interface FormProviderProps<Form> {
 
 type IsAny<T> = 0 extends 1 & T ? true : false;
 
-interface UseContextForm<Values, TransformedValues> {
+export interface UseContextForm<Values, TransformedValues> {
   <R extends FormErrors | Promise<FormErrors> = FormErrors>(
     input: UseFormInput<Values, TransformedValues> & { validate: (values: Values) => R }
   ): UseFormReturnType<Values, TransformedValues, (values: Values) => R>;
