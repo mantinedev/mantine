@@ -1,0 +1,37 @@
+name: Deploy help.mantine.dev
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: help-mantine-dev
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Build public packages
+        run: npm run build all
+      - name: Build help site
+        run: npm run hc:build
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: yarn wrangler pages deploy apps/help.mantine.dev/out --branch master --project-name help-mantine-dev
