@@ -16,7 +16,6 @@ function Demo() {
         variant="rail"
       />
       <NavLink
-        href="#required-for-focus"
         label="Projects"
         leftSection={<FolderIcon size={16} />}
         variant="rail"
@@ -54,7 +53,6 @@ function Demo() {
         variant="rail"
       />
       <NavLink
-        href="#required-for-focus"
         label="Projects"
         leftSection={<FolderIcon size={16} />}
         variant="rail"

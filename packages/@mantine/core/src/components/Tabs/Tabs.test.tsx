@@ -216,6 +216,9 @@ describe('@mantine/core/Tabs', () => {
     expect(getTab('tab-2')).toHaveFocus();
 
     await userEvent.tab();
+    expect(screen.getByRole('tabpanel')).toHaveFocus();
+
+    await userEvent.tab();
     expect(document.body).toHaveFocus();
   });
 
@@ -241,6 +244,51 @@ describe('@mantine/core/Tabs', () => {
       <Tabs {...defaultProps} keepMounted={false} defaultValue="tab-1" />
     );
     expect(container.querySelectorAll('.mantine-Tabs-panel')[1].textContent).toBe('');
+  });
+
+  it('keeps inactive panels in the DOM hidden with display: none when keepMountedMode="display-none"', () => {
+    render(<Tabs {...defaultProps} keepMountedMode="display-none" defaultValue="tab-1" />);
+    expect(screen.getByText('tab-2 panel')).toBeInTheDocument();
+    expectActiveTab('tab-1');
+  });
+
+  it('keeps Tabs.Panel content mounted when panel keepMounted overrides parent keepMounted={false}', async () => {
+    render(
+      <Tabs keepMounted={false} defaultValue="tab-1">
+        <Tabs.List aria-label="test-tabs">
+          <Tabs.Tab value="tab-1">tab-1</Tabs.Tab>
+          <Tabs.Tab value="tab-2">tab-2</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel value="tab-1">tab-1 panel</Tabs.Panel>
+        <Tabs.Panel value="tab-2" keepMounted>
+          tab-2 panel
+        </Tabs.Panel>
+      </Tabs>
+    );
+
+    expect(screen.getByText('tab-2 panel')).toHaveStyle({ display: 'none' });
+
+    await userEvent.click(screen.getAllByRole('tab')[1]);
+    expect(screen.queryByText('tab-1 panel')).not.toBeInTheDocument();
+    expect(screen.getByText('tab-2 panel')).not.toHaveStyle({ display: 'none' });
+  });
+
+  it('makes panels focusable by default and allows overriding tabIndex', () => {
+    const { rerender } = render(
+      <Tabs defaultValue="tab-1">
+        <Tabs.Panel value="tab-1">tab-1 panel</Tabs.Panel>
+      </Tabs>
+    );
+    expect(screen.getByRole('tabpanel')).toHaveAttribute('tabindex', '0');
+
+    rerender(
+      <Tabs defaultValue="tab-1">
+        <Tabs.Panel value="tab-1" tabIndex={-1}>
+          tab-1 panel
+        </Tabs.Panel>
+      </Tabs>
+    );
+    expect(screen.getByRole('tabpanel')).toHaveAttribute('tabindex', '-1');
   });
 
   it('exposes TabsList, TabsTab and TabsPanel component with as static properties', () => {

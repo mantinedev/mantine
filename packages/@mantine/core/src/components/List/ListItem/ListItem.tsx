@@ -19,6 +19,9 @@ export interface ListItemProps
 
   /** Item content */
   children?: React.ReactNode;
+
+  /** Ordinal number of the item in an ordered list, sets `value` attribute of the `li` element */
+  value?: number;
 }
 
 export type ListItemFactory = Factory<{
@@ -45,7 +48,7 @@ export const ListItem = factory<ListItemFactory>((_props) => {
     >
       <div {...ctx.getStyles('itemWrapper', stylesApiProps)}>
         {_icon && <span {...ctx.getStyles('itemIcon', stylesApiProps)}>{_icon}</span>}
-        <span {...ctx.getStyles('itemLabel', stylesApiProps)}>{children}</span>
+        <div {...ctx.getStyles('itemLabel', stylesApiProps)}>{children}</div>
       </div>
     </Box>
   );

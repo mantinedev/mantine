@@ -169,7 +169,7 @@ export interface __InputProps {
   __bottomSection?: React.ReactNode;
 
   /** Props passed down to the `__bottomSection` element */
-  __bottomSectionProps?: React.ComponentProps<'div'>;
+  __bottomSectionProps?: React.ComponentProps<'div'> & DataAttributes;
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
@@ -320,13 +320,13 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
 
   const ariaAttributes = withAria
     ? {
-        required,
         disabled,
         'aria-invalid': error ? true : undefined,
         'aria-describedby': ctx?.describedBy,
+        'aria-busy': loading || undefined,
         id: ctx?.inputId || id,
       }
-    : {};
+    : { disabled, id: ctx?.inputId ? undefined : id };
 
   const loadingIndicator = loading ? (
     <Loader

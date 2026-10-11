@@ -1,3 +1,4 @@
+import 'dayjs/locale/ru';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { MiniCalendar, MiniCalendarProps, MiniCalendarStylesNames } from './MiniCalendar';
 
@@ -22,17 +23,17 @@ describe('@mantine/dates/MiniCalendar', () => {
       <MiniCalendar {...defaultProps} date="2025-01-01" numberOfDays={3} />
     );
     expect(container.querySelectorAll('.mantine-MiniCalendar-day')).toHaveLength(3);
-    expect(screen.getByLabelText('2025-01-01')).toBeInTheDocument();
-    expect(screen.getByLabelText('2025-01-02')).toBeInTheDocument();
-    expect(screen.getByLabelText('2025-01-03')).toBeInTheDocument();
+    expect(screen.getByLabelText('1 January 2025')).toBeInTheDocument();
+    expect(screen.getByLabelText('2 January 2025')).toBeInTheDocument();
+    expect(screen.getByLabelText('3 January 2025')).toBeInTheDocument();
   });
 
   it('supports defaultDate', async () => {
     render(<MiniCalendar {...defaultProps} defaultDate="2025-01-01" numberOfDays={7} />);
-    expect(screen.getByLabelText('2025-01-01')).toBeInTheDocument();
+    expect(screen.getByLabelText('1 January 2025')).toBeInTheDocument();
 
     await userEvent.click(screen.getByLabelText('next'));
-    expect(screen.getByLabelText('2025-01-08')).toBeInTheDocument();
+    expect(screen.getByLabelText('8 January 2025')).toBeInTheDocument();
   });
 
   it('supports controlled date', async () => {
@@ -40,25 +41,25 @@ describe('@mantine/dates/MiniCalendar', () => {
     render(
       <MiniCalendar {...defaultProps} date="2025-01-01" numberOfDays={7} onDateChange={spy} />
     );
-    expect(screen.getByLabelText('2025-01-01')).toBeInTheDocument();
+    expect(screen.getByLabelText('1 January 2025')).toBeInTheDocument();
 
     await userEvent.click(screen.getByLabelText('next'));
     expect(spy).toHaveBeenCalledWith('2025-01-08');
-    expect(screen.getByLabelText('2025-01-01')).toBeInTheDocument();
-    expect(screen.queryByLabelText('2025-01-08')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('1 January 2025')).toBeInTheDocument();
+    expect(screen.queryByLabelText('8 January 2025')).not.toBeInTheDocument();
   });
 
   it('calls onChange when day is clicked', () => {
     const spy = jest.fn();
     render(<MiniCalendar {...defaultProps} onChange={spy} date="2025-01-01" />);
-    screen.getByLabelText(new RegExp('2025-01-02')).click();
+    screen.getByLabelText('2 January 2025').click();
     expect(spy).toHaveBeenCalledWith('2025-01-02');
   });
 
   it('sets data-selected attribute on selected day', () => {
     render(<MiniCalendar {...defaultProps} value="2025-01-02" date="2025-01-01" />);
-    expect(screen.getByLabelText('2025-01-02')).toHaveAttribute('data-selected');
-    expect(screen.getByLabelText('2025-01-01')).not.toHaveAttribute('data-selected');
+    expect(screen.getByLabelText('2 January 2025')).toHaveAttribute('data-selected');
+    expect(screen.getByLabelText('1 January 2025')).not.toHaveAttribute('data-selected');
   });
 
   it('calls onNext and onPrevious callbacks', () => {
@@ -79,7 +80,7 @@ describe('@mantine/dates/MiniCalendar', () => {
     render(
       <MiniCalendar {...defaultProps} date="2025-01-01" maxDate="2025-01-03" numberOfDays={7} />
     );
-    expect(screen.getByLabelText('2025-01-04')).toBeDisabled();
+    expect(screen.getByLabelText('4 January 2025')).toBeDisabled();
     expect(screen.getByLabelText('next')).toBeDisabled();
   });
 
@@ -87,7 +88,7 @@ describe('@mantine/dates/MiniCalendar', () => {
     render(
       <MiniCalendar {...defaultProps} date="2025-01-01" minDate="2025-01-03" numberOfDays={7} />
     );
-    expect(screen.getByLabelText('2025-01-02')).toBeDisabled();
+    expect(screen.getByLabelText('2 January 2025')).toBeDisabled();
     expect(screen.getByLabelText('previous')).toBeDisabled();
   });
 
@@ -142,5 +143,21 @@ describe('@mantine/dates/MiniCalendar', () => {
 
     expect(container.querySelector('[data-test-previous]')).toBeInTheDocument();
     expect(container.querySelector('[data-test-next]')).toBeInTheDocument();
+  });
+
+  it('exposes selected state with aria-pressed', () => {
+    render(<MiniCalendar {...defaultProps} date="2025-01-01" value="2025-01-02" />);
+    expect(screen.getByLabelText('2 January 2025')).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByLabelText('1 January 2025')).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('formats day aria-label with locale and supports getDayAriaLabel', () => {
+    const { rerender } = render(<MiniCalendar {...defaultProps} date="2025-01-01" locale="ru" />);
+    expect(screen.getByLabelText('1 января 2025')).toBeInTheDocument();
+
+    rerender(
+      <MiniCalendar {...defaultProps} date="2025-01-01" getDayAriaLabel={(date) => `Day ${date}`} />
+    );
+    expect(screen.getByLabelText('Day 2025-01-01')).toBeInTheDocument();
   });
 });

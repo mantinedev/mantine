@@ -13,9 +13,17 @@ It is commonly used for displaying logos, testimonials, or any repeating content
 
 ## Pause on hover
 
-Set `pauseOnHover` prop to pause the animation when the user hovers over the component:
+Set `pauseOnHover` prop to pause the animation when the user hovers over the component
+or moves focus inside it:
 
 <Demo data={MarqueeDemos.pauseOnHover} />
+
+## Pause control
+
+Set `playing={false}` to pause the animation. Content that moves for more than five seconds
+must have a control to pause it ([WCAG 2.2.2](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html)):
+
+<Demo data={MarqueeDemos.playing} />
 
 ## Vertical orientation
 
@@ -52,3 +60,10 @@ Use the following props to customize the marquee behavior:
 - `gap` – gap between repeated children, key of `theme.spacing` or any valid CSS value
 
 <Demo data={MarqueeDemos.configurator} />
+
+## Accessibility
+
+`Marquee` renders children `repeat` times. Only the first copy is exposed to assistive
+technologies, the repeated copies have `aria-hidden` and `inert` attributes. The animation
+stops when the user has reduced motion enabled in the operating system and
+`respectReducedMotion` is enabled on the [theme](/theming/theme-object/).

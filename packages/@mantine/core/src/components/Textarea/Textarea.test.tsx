@@ -1,4 +1,10 @@
-import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
+import {
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  screen,
+  tests,
+} from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
 import { Textarea, TextareaProps } from './Textarea';
 
@@ -32,5 +38,26 @@ describe('@mantine/core/Textarea', () => {
     component: Textarea,
     props: defaultProps,
     componentName: 'Textarea',
+  });
+
+  it('renders bottomSection inside the input wrapper', () => {
+    const { container, rerender } = render(
+      <Textarea
+        label="test-label"
+        bottomSection="bottom-content"
+        bottomSectionProps={{ 'data-test': 'bottom' }}
+      />
+    );
+    const wrapper = container.querySelector('.mantine-Textarea-wrapper')!;
+    const section = screen.getByText('bottom-content');
+
+    expect(wrapper).toHaveAttribute('data-with-bottom-section');
+    expect(wrapper).toContainElement(section);
+    expect(section).toHaveClass('mantine-Textarea-bottomSection');
+    expect(section).toHaveAttribute('data-test', 'bottom');
+
+    rerender(<Textarea label="test-label" />);
+    expect(wrapper).not.toHaveAttribute('data-with-bottom-section');
+    expect(screen.queryByText('bottom-content')).not.toBeInTheDocument();
   });
 });

@@ -23,6 +23,7 @@ export function RatingItem({
   active,
   value,
   readOnly,
+  disabled,
   fractionValue,
   color,
   id,
@@ -50,6 +51,7 @@ export function RatingItem({
           value={value}
           onBlur={onBlur}
           onChange={onInputChange}
+          disabled={disabled}
           {...others}
         />
       )}
@@ -58,8 +60,8 @@ export function RatingItem({
         component={readOnly ? 'div' : 'label'}
         {...ctx.getStyles('label')}
         data-read-only={readOnly || undefined}
-        htmlFor={id}
-        onClick={readOnly ? undefined : () => onChange(value)}
+        htmlFor={readOnly ? undefined : id}
+        onClick={readOnly || disabled ? undefined : () => onChange(value)}
         __vars={{
           '--rating-item-z-index': (fractionValue === 1 ? undefined : active ? 2 : 0)?.toString(),
         }}

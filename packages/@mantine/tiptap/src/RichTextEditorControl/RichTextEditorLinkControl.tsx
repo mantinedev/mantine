@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useEditorState } from '@tiptap/react';
 import {
   BoxProps,
@@ -15,7 +15,7 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
-import { useDisclosure, useInputState, useWindowEvent } from '@mantine/hooks';
+import { useDisclosure, useInputState } from '@mantine/hooks';
 import { IconExternalLink, IconLink } from '../icons/Icons';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
 import { RichTextEditorControlBase, RichTextEditorControlBaseProps } from './RichTextEditorControl';
@@ -108,7 +108,17 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
     }
   };
 
-  useWindowEvent('edit-link', handleOpen, false);
+  useEffect(() => {
+    const editor = ctx.editor as any;
+    if (!editor || editor.isDestroyed) {
+      return undefined;
+    }
+
+    editor.on('edit-link', handleOpen);
+    return () => {
+      editor.off('edit-link', handleOpen);
+    };
+  }, [ctx.editor, handleOpen]);
 
   const active = useEditorState({
     editor: ctx.editor ?? null,

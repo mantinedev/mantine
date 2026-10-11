@@ -45,6 +45,9 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Tabs/TabsList/TabsList.tsx',
   'packages/@mantine/core/src/components/Tabs/TabsPanel/TabsPanel.tsx',
 
+  // Table
+  'packages/@mantine/core/src/components/Table/TableScrollContainer.tsx',
+
   // Toolbar
   'packages/@mantine/core/src/components/Toolbar/ToolbarToggle/ToolbarToggle.tsx',
   'packages/@mantine/core/src/components/Toolbar/ToolbarToggleGroup/ToolbarToggleGroup.tsx',

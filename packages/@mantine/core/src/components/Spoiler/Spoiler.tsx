@@ -144,7 +144,6 @@ export const Spoiler = factory<SpoilerFactory>((_props) => {
           style: { maxHeight: !show ? rem(maxHeight) : height ? rem(height) : undefined },
         })}
         data-reduce-motion
-        role="region"
         id={regionId}
       >
         <div ref={contentRef}>{children}</div>

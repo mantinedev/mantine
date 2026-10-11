@@ -21,6 +21,10 @@
     grid-template-columns: 1fr min(100%, var(--container-size)) 1fr;
     margin-inline: auto;
 
+    &:where([data-fluid]) {
+      --container-size: 100%;
+    }
+
     & > * {
       grid-column: 2;
     }

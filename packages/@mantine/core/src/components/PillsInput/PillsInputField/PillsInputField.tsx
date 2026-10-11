@@ -51,6 +51,7 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props) => {
     mod,
     attributes,
     ref,
+    onMouseDown,
     ...others
   } = props;
   const ctx = use(PillsInputContext);
@@ -83,8 +84,12 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props) => {
       id={inputWrapperCtx?.inputId || id}
       aria-invalid={ctx?.hasError}
       aria-describedby={inputWrapperCtx?.describedBy}
+      aria-required={(ctx?.required && !others.required) || undefined}
       type="text"
-      onMouseDown={(event) => !pointer && event.stopPropagation()}
+      onMouseDown={(event) => {
+        !pointer && event.stopPropagation();
+        onMouseDown?.(event);
+      }}
     />
   );
 });

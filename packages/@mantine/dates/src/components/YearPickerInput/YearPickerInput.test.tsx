@@ -1,6 +1,14 @@
+import dayjs from 'dayjs';
 import { __InputStylesNames } from '@mantine/core';
-import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
-import { datesTests, expectValue } from '@mantine-tests/dates';
+import {
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  screen,
+  tests,
+  userEvent,
+} from '@mantine-tests/core';
+import { clickInput, datesTests, expectNoPopover, expectValue } from '@mantine-tests/dates';
 import { YearPickerInput, YearPickerInputProps } from './YearPickerInput';
 
 const defaultProps = {
@@ -79,6 +87,37 @@ describe('@mantine/dates/YearPickerInput', () => {
       />
     );
     expectValue(container, '22 – 24');
+  });
+
+  it('selects preset value and closes the dropdown', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <YearPickerInput
+        {...defaultProps}
+        onChange={spy}
+        presets={[
+          { label: 'This year', value: '2022-01-01' },
+          { label: 'Next year', value: '2023-01-01' },
+        ]}
+      />
+    );
+
+    await clickInput(container);
+    await userEvent.click(screen.getByText('Next year'));
+    expect(spy).toHaveBeenLastCalledWith('2023-01-01');
+    expectValue(container, '2023');
+    expectNoPopover(container);
+  });
+
+  it('supports custom valueFormatter', () => {
+    const { container } = render(
+      <YearPickerInput
+        {...defaultProps}
+        value="2022-04-11"
+        valueFormatter={({ date }) => `${dayjs(date as string).format('YYYY')} custom`}
+      />
+    );
+    expectValue(container, '2022 custom');
   });
 
   it('has correct default __staticSelector', () => {

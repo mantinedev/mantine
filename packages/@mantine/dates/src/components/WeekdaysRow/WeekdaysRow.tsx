@@ -32,10 +32,10 @@ export interface WeekdaysRowProps
   /** dayjs locale */
   locale?: string;
 
-  /** Number 0-6, 0 – Sunday, 6 – Saturday @default 1 – Monday */
+  /** Number 0-6, 0 – Sunday, 6 – Saturday. The default value is defined by `DatesProvider`. */
   firstDayOfWeek?: DayOfWeek;
 
-  /** dayjs format to get weekday name @default 'dd' */
+  /** `dayjs` format string or a function that receives a weekday date in `YYYY-MM-DD` format and returns the weekday label @default 'dd' */
   weekdayFormat?: DateLabelFormat;
 
   /** Sets cell type that is used for weekdays @default 'th' */
@@ -94,20 +94,25 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props) => {
   });
 
   const ctx = useDatesContext();
+  const scope = CellComponent === 'th' ? 'col' : undefined;
 
   const weekdays = getWeekdayNames({
     locale: ctx.getLocale(locale),
     format: weekdayFormat,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
   }).map((weekday, index) => (
-    <CellComponent key={index} {...getStyles('weekday')}>
+    <CellComponent key={index} scope={scope} {...getStyles('weekday')}>
       {weekday}
     </CellComponent>
   ));
 
   return (
     <Box component="tr" {...getStyles('weekdaysRow')} {...others}>
-      {withWeekNumbers && <CellComponent {...getStyles('weekday')}>#</CellComponent>}
+      {withWeekNumbers && (
+        <CellComponent scope={scope} {...getStyles('weekday')}>
+          #
+        </CellComponent>
+      )}
       {weekdays}
     </Box>
   );

@@ -56,7 +56,7 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props) => {
     mod,
     attributes,
     ...others
-  } = useProps('ButtonGroup', defaultProps, _props);
+  } = props;
 
   const getStyles = useStyles<ButtonGroupFactory>({
     name: 'ButtonGroup',

@@ -1,6 +1,6 @@
 import { use, useEffect, useRef, useState } from 'react';
 import { clampUseMovePosition, useMove, UseMovePosition } from '@mantine/hooks';
-import { Box, ElementProps, MantineSize } from '../../../core';
+import { Box, ElementProps, MantineSize, useMantineTheme } from '../../../core';
 import { ColorPickerContext } from '../ColorPicker.context';
 import { HsvaColor } from '../ColorPicker.types';
 import { convertHsvaTo } from '../converters';
@@ -32,6 +32,7 @@ export function Saturation({
   ...others
 }: SaturationProps) {
   const { getStyles } = use(ColorPickerContext)!;
+  const theme = useMantineTheme();
 
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
   const positionRef = useRef(position);
@@ -83,6 +84,16 @@ export function Saturation({
         handleArrow(event, { x: position.x - 0.05, y: position.y });
         break;
       }
+
+      case 'Home': {
+        handleArrow(event, { x: 0, y: position.y });
+        break;
+      }
+
+      case 'End': {
+        handleArrow(event, { x: 1, y: position.y });
+        break;
+      }
     }
   };
 
@@ -93,10 +104,13 @@ export function Saturation({
       {...others}
       role="slider"
       aria-label={saturationLabel}
-      aria-valuenow={position.x}
+      aria-valuenow={Math.round(position.x * 100)}
+      aria-valuemin={0}
+      aria-valuemax={100}
       aria-valuetext={convertHsvaTo('rgba', value)}
       tabIndex={focusable ? 0 : -1}
       onKeyDown={handleKeyDown}
+      data-focus-ring={theme.focusRing}
     >
       <div
         {...getStyles('saturationOverlay', {

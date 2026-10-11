@@ -39,7 +39,7 @@ export interface SemiCircleProgressProps
   /** Width of the component and diameter of the full circle in px. The visible SVG height will be size/2 @default 200 @category appearance */
   size?: number;
 
-  /** Stroke width of the circle segments in px @default 12 @category appearance */
+  /** Stroke width of the circle segments in px. Cannot exceed size / 2 and will be automatically clamped if necessary @default 12 @category appearance */
   thickness?: number;
 
   /** Orientation of the circle @default 'up' @category appearance */
@@ -51,7 +51,7 @@ export interface SemiCircleProgressProps
   /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor @category appearance */
   filledSegmentColor?: MantineColor;
 
-  /** Key of `theme.colors` or any valid CSS color value @default 'gray.2' in light mode, 'dark.4' in dark mode @category appearance */
+  /** Key of `theme.colors` or any valid CSS color value @default var(--mantine-color-track) @category appearance */
   emptySegmentColor?: MantineColor;
 
   /** Transition duration for the filled segment progress changes in ms. Does not affect color transitions @default 0 @category appearance */
@@ -62,6 +62,9 @@ export interface SemiCircleProgressProps
 
   /** Label position relative to the circle center @default 'bottom' @category appearance */
   labelPosition?: 'center' | 'bottom';
+
+  /** Determines whether `role="progressbar"` and `aria-*` value attributes should be added to the root element @default true @category accessibility */
+  withAria?: boolean;
 }
 
 export type SemiCircleProgressFactory = Factory<{
@@ -77,6 +80,7 @@ const defaultProps = {
   orientation: 'up',
   fillDirection: 'left-to-right',
   labelPosition: 'bottom',
+  withAria: true,
 } satisfies Partial<SemiCircleProgressProps>;
 
 function getRotation({
@@ -96,6 +100,10 @@ function getRotation({
   return undefined;
 }
 
+function getClampedThickness(thickness: number, size: number) {
+  return Math.min(thickness, size / 2);
+}
+
 const varsResolver = createVarsResolver<SemiCircleProgressFactory>(
   (
     theme,
@@ -106,6 +114,7 @@ const varsResolver = createVarsResolver<SemiCircleProgressFactory>(
       fillDirection,
       transitionDuration,
       thickness,
+      size,
     }
   ) => ({
     root: {
@@ -117,7 +126,7 @@ const varsResolver = createVarsResolver<SemiCircleProgressFactory>(
         : undefined,
       '--scp-rotation': getRotation({ orientation, fillDirection }),
       '--scp-transition-duration': transitionDuration ? `${transitionDuration}ms` : undefined,
-      '--scp-thickness': rem(thickness),
+      '--scp-thickness': rem(getClampedThickness(thickness!, size!)),
     },
   })
 );
@@ -141,6 +150,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) =>
     transitionDuration,
     label,
     labelPosition,
+    withAria,
     attributes,
     ...others
   } = props;
@@ -159,27 +169,45 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) =>
     varsResolver,
   });
 
+  const clampedThickness = getClampedThickness(thickness, size);
+  const clampedValue = clamp(value, 0, 100);
   const coordinateForCircle = size / 2;
-  const radius = (size - 2 * thickness) / 2;
+  const radius = (size - 2 * clampedThickness) / 2;
   const circumference = Math.PI * radius;
-  const semiCirclePercentage = clamp(value, 0, 100) * (circumference / 100);
+  const semiCirclePercentage = clampedValue * (circumference / 100);
+
+  const ariaAttributes = withAria
+    ? {
+        role: 'progressbar',
+        'aria-valuemin': 0,
+        'aria-valuemax': 100,
+        'aria-valuenow': clampedValue,
+        'aria-valuetext': `${clampedValue}%`,
+      }
+    : {};
 
   return (
-    <Box size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...ariaAttributes} {...others}>
       {label && (
         <div {...getStyles('label')} data-position={labelPosition} data-orientation={orientation}>
           {label}
         </div>
       )}
 
-      <svg width={size} height={size / 2} viewBox={`0 0 ${size} ${size / 2}`} {...getStyles('svg')}>
+      <svg
+        width={size}
+        height={size / 2}
+        viewBox={`0 0 ${size} ${size / 2}`}
+        aria-hidden
+        {...getStyles('svg')}
+      >
         <circle
           cx={coordinateForCircle}
           cy={coordinateForCircle}
           r={radius}
           fill="none"
           stroke="var(--scp-empty-segment-color)"
-          strokeWidth={thickness}
+          strokeWidth={clampedThickness}
           strokeDasharray={circumference}
           {...getStyles('emptySegment', { style: { strokeDashoffset: circumference } })}
         />
@@ -190,7 +218,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) =>
           r={radius}
           fill="none"
           stroke="var(--scp-filled-segment-color)"
-          strokeWidth={thickness}
+          strokeWidth={clampedThickness}
           strokeDasharray={circumference}
           {...getStyles('filledSegment', {
             style: {

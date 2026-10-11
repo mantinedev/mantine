@@ -58,34 +58,37 @@ export interface RatingProps
   /** Icon displayed for selected rating items. Can be a function that receives the rating value. @category appearance */
   fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Number of fractions each item can be divided into, default is 1 @category behavior */
+  /** Number of fractions each item can be divided into, must be `1` or greater @default 1 @category behavior */
   fractions?: number;
 
   /** Controls component size @default 'sm' @category appearance */
   size?: MantineSize | number | (string & {});
 
-  /** Number of rating items (stars), default is 5 @category appearance */
+  /** Number of rating items (stars) @default 5 @category appearance */
   count?: number;
 
   /** Called when rating item is hovered. Receives -1 when hover ends. @category behavior */
   onHover?: (value: number) => void;
 
-  /** Function to generate aria-label for each rating value. Receives the rating value as argument, default is (value) => String(value) @category accessibility */
-  getSymbolLabel?: (index: number) => string;
+  /** Function to generate `aria-label` for each rating value. Receives the rating value as argument. In `readOnly` mode, used to generate `aria-label` of the root element for the current value @default (value) => String(value) @category accessibility */
+  getSymbolLabel?: (value: number) => string;
 
   /** Name attribute for form submission. If not provided, a unique id will be generated. */
   name?: string;
 
-  /** When true, rating cannot be changed by user interaction, default is false @category behavior */
+  /** When true, rating cannot be changed by user interaction @default false @category behavior */
   readOnly?: boolean;
 
-  /** When true, clicking the same rating value clears the rating to 0, default is false @category behavior */
+  /** When true, rating cannot be changed and is displayed with disabled styles @default false @category behavior */
+  disabled?: boolean;
+
+  /** When true, clicking the same rating value clears the rating to 0 @default false @category behavior */
   allowClear?: boolean;
 
-  /** When true, only the clicked rating item is highlighted, not all items up to the selected value, default is false @category appearance */
+  /** When true, only the clicked rating item is highlighted, not all items up to the selected value @default false @category appearance */
   highlightSelectedOnly?: boolean;
 
-  /** Key of theme.colors or any CSS color value, default is 'yellow' @category appearance */
+  /** Key of `theme.colors` or any CSS color value @default 'yellow' @category appearance */
   color?: MantineColor;
 }
 
@@ -129,6 +132,7 @@ export const Rating = factory<RatingFactory>((_props) => {
     count,
     onMouseEnter,
     readOnly,
+    disabled,
     allowClear,
     onMouseMove,
     onHover,
@@ -145,6 +149,7 @@ export const Rating = factory<RatingFactory>((_props) => {
     fullSymbol,
     highlightSelectedOnly,
     attributes,
+    mod,
     ref,
     ...others
   } = props;
@@ -184,6 +189,14 @@ export const Rating = factory<RatingFactory>((_props) => {
   const _fractions = Math.floor(fractions);
   const _count = Math.floor(count);
 
+  if (!(_fractions >= 1)) {
+    throw new Error(
+      `[@mantine/core] Rating: fractions prop must be a number greater than or equal to 1, received ${fractions}`
+    );
+  }
+
+  const interactive = !readOnly && !disabled;
+
   const decimalUnit = 1 / _fractions;
   const stableValueRounded = roundValueTo(_value, decimalUnit);
   const finalValue = hovered !== -1 ? hovered : stableValueRounded;
@@ -213,13 +226,13 @@ export const Rating = factory<RatingFactory>((_props) => {
 
   const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseEnter?.(event);
-    !readOnly && setOutside(false);
+    interactive && setOutside(false);
   };
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseMove?.(event);
 
-    if (readOnly) {
+    if (!interactive) {
       return;
     }
 
@@ -232,7 +245,7 @@ export const Rating = factory<RatingFactory>((_props) => {
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseLeave?.(event);
 
-    if (readOnly) {
+    if (!interactive) {
       return;
     }
 
@@ -277,7 +290,7 @@ export const Rating = factory<RatingFactory>((_props) => {
     const touch = event.changedTouches[0];
     touchStartPosition.current = null;
 
-    if (startPosition && touch && !readOnly) {
+    if (startPosition && touch && interactive) {
       event.preventDefault();
       applyValue(getRatingFromCoordinates(touch.clientX));
       lastTouchTimestamp.current = Date.now();
@@ -289,7 +302,7 @@ export const Rating = factory<RatingFactory>((_props) => {
   const handleItemBlur = () => isOutside && setHovered(-1);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement> | number) => {
-    if (!readOnly) {
+    if (interactive) {
       if (typeof event === 'number') {
         setHovered(event);
       } else {
@@ -299,7 +312,7 @@ export const Rating = factory<RatingFactory>((_props) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement> | number) => {
-    if (readOnly || Date.now() - lastTouchTimestamp.current < EMULATED_CLICK_TIMEOUT) {
+    if (!interactive || Date.now() - lastTouchTimestamp.current < EMULATED_CLICK_TIMEOUT) {
       return;
     }
 
@@ -311,7 +324,7 @@ export const Rating = factory<RatingFactory>((_props) => {
     .map((_, index) => {
       const integerValue = index + 1;
       const fractionItems = Array.from(new Array(index === 0 ? _fractions + 1 : _fractions));
-      const isGroupActive = !readOnly && Math.ceil(hovered) === integerValue;
+      const isGroupActive = interactive && Math.ceil(hovered) === integerValue;
 
       return (
         <div
@@ -335,6 +348,7 @@ export const Rating = factory<RatingFactory>((_props) => {
                 active={symbolValue === finalValue}
                 checked={symbolValue === stableValueRounded}
                 readOnly={readOnly}
+                disabled={disabled}
                 fractionValue={fractionValue}
                 value={symbolValue}
                 name={_name}
@@ -364,6 +378,10 @@ export const Rating = factory<RatingFactory>((_props) => {
         variant={variant}
         size={size}
         id={_id}
+        role={readOnly ? 'img' : 'radiogroup'}
+        aria-label={readOnly ? getSymbolLabel(stableValueRounded) : undefined}
+        aria-disabled={!readOnly && disabled ? true : undefined}
+        mod={[{ disabled }, mod]}
         {...others}
       >
         {items}

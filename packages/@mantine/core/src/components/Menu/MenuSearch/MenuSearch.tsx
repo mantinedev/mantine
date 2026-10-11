@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { useCallbackRef, useMergedRef } from '@mantine/hooks';
+import { useCallbackRef, useId, useMergedRef } from '@mantine/hooks';
 import { createEventHandler, ElementProps, factory, Factory, useProps } from '../../../core';
 import { Input, InputProps } from '../../Input/Input';
+import { usePopoverContext } from '../../Popover/Popover.context';
 import { useMenuContext } from '../Menu.context';
 import classes from '../Menu.module.css';
 
@@ -21,7 +22,9 @@ function getItems(dropdown: HTMLElement | null): HTMLElement[] {
   );
 }
 
-function clearActive(dropdown: HTMLElement | null) {
+function clearActive(dropdown: HTMLElement | null, input: HTMLElement | null) {
+  input?.removeAttribute('aria-activedescendant');
+
   if (!dropdown) {
     return;
   }
@@ -32,10 +35,19 @@ function clearActive(dropdown: HTMLElement | null) {
   });
 }
 
-function setActive(item: HTMLElement | null, dropdown: HTMLElement | null) {
-  clearActive(dropdown);
+function setActive(
+  item: HTMLElement | null,
+  dropdown: HTMLElement | null,
+  input: HTMLElement,
+  getItemId: () => string
+) {
+  clearActive(dropdown, input);
   if (item) {
+    if (!item.id) {
+      item.id = getItemId();
+    }
     item.setAttribute('data-menu-active', 'true');
+    input.setAttribute('aria-activedescendant', item.id);
     item.scrollIntoView({ block: 'nearest' });
   }
 }
@@ -70,6 +82,13 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const mergedRef = useMergedRef(ref, inputRef);
   const emitChange = useCallbackRef(onChange);
+  const popoverCtx = usePopoverContext();
+  const itemIdPrefix = useId();
+  const itemIdCounter = useRef(0);
+  const getItemId = () => {
+    itemIdCounter.current += 1;
+    return `${itemIdPrefix}-item-${itemIdCounter.current}`;
+  };
 
   useEffect(() => {
     const unregister = ctx.registerSearch();
@@ -77,29 +96,27 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
   }, [ctx.registerSearch]);
 
   useEffect(() => {
-    if (clearSearchOnClose) {
-      ctx.searchExitClearRef.current = () => {
-        emitChange({
-          currentTarget: { value: '' },
-        } as unknown as React.ChangeEvent<HTMLInputElement>);
-      };
-    } else {
-      ctx.searchExitClearRef.current = null;
+    if (!clearSearchOnClose) {
+      return undefined;
     }
-  }, [clearSearchOnClose, ctx.searchExitClearRef]);
+
+    return ctx.registerSearchExitClear(() => {
+      emitChange({
+        currentTarget: { value: '' },
+      } as unknown as React.ChangeEvent<HTMLInputElement>);
+    });
+  }, [clearSearchOnClose, ctx.registerSearchExitClear]);
 
   useEffect(() => {
     if (!ctx.opened) {
-      const dropdown = getDropdown(inputRef.current);
-      clearActive(dropdown);
+      clearActive(getDropdown(inputRef.current), inputRef.current);
     }
   }, [ctx.opened]);
 
   const handleChange = createEventHandler<any>(
     onChange,
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      const dropdown = getDropdown(event.currentTarget);
-      clearActive(dropdown);
+      clearActive(getDropdown(event.currentTarget), event.currentTarget);
     }
   );
 
@@ -120,7 +137,7 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
         }
         const current = getActiveIndex(items);
         const next = current >= items.length - 1 ? (ctx.loop ? 0 : current) : current + 1;
-        setActive(items[next] ?? null, dropdown);
+        setActive(items[next] ?? null, dropdown, event.currentTarget, getItemId);
       } else if (event.key === 'ArrowUp') {
         event.preventDefault();
         if (items.length === 0) {
@@ -135,16 +152,16 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
                 ? items.length - 1
                 : 0
             : current - 1;
-        setActive(items[next] ?? null, dropdown);
+        setActive(items[next] ?? null, dropdown, event.currentTarget, getItemId);
       } else if (event.key === 'Home') {
         event.preventDefault();
         if (items.length > 0) {
-          setActive(items[0]!, dropdown);
+          setActive(items[0]!, dropdown, event.currentTarget, getItemId);
         }
       } else if (event.key === 'End') {
         event.preventDefault();
         if (items.length > 0) {
-          setActive(items[items.length - 1]!, dropdown);
+          setActive(items[items.length - 1]!, dropdown, event.currentTarget, getItemId);
         }
       } else if (event.key === 'Enter') {
         if (event.nativeEvent.isComposing || (event.nativeEvent as KeyboardEvent).keyCode === 229) {
@@ -175,6 +192,7 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
       data-mantine-stop-propagation
       type="search"
       size={size}
+      aria-controls={popoverCtx.opened ? popoverCtx.getDropdownId() : undefined}
       {...others}
       ref={mergedRef}
       classNames={[{ input: _styles.className }, classNames] as any}

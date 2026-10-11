@@ -51,7 +51,8 @@ size matches the link size: 14px for `xs`, 16px for `sm`, 18px for `md`, 20px fo
 
 ## Nested NavLinks
 
-To create nested links, put `NavLink` as children of another `NavLink`. By default, nested links
+To create nested links, put `NavLink` as children of another `NavLink`. A parent with children
+is rendered as a `button` that expands and collapses nested links. By default, nested links
 are offset so that their labels align with the parent link label (28px for `size="sm"`). Use
 `childrenOffset` prop to change the offset:
 

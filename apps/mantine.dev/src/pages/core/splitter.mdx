@@ -78,6 +78,24 @@ between panes is still visible and draggable:
 
 <Demo data={SplitterDemos.withHandle} />
 
+## Handle props
+
+Use `getHandleProps` to pass props to each handle. It is called with the handle index.
+Set `aria-label` on handles to make them accessible to screen reader users:
+
+```tsx
+import { Splitter } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Splitter getHandleProps={(index) => ({ 'aria-label': `Resize pane ${index + 1}` })}>
+      <Splitter.Pane defaultSize={50}>First pane</Splitter.Pane>
+      <Splitter.Pane defaultSize={50}>Second pane</Splitter.Pane>
+    </Splitter>
+  );
+}
+```
+
 ## Imperative API
 
 Use `splitterRef` prop to access imperative splitter API:

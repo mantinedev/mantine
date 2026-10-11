@@ -34,7 +34,7 @@ export function DigitColumn({
   const columnStyles = getStyles('digitColumn');
 
   return (
-    <span {...digitStyles} data-empty={empty || undefined} aria-hidden="true">
+    <span {...digitStyles} data-empty={empty || undefined} data-reduce-motion aria-hidden="true">
       <span
         key={digit}
         {...columnStyles}
@@ -45,6 +45,7 @@ export function DigitColumn({
           ['--rn-roll-to' as any]: `translateY(${-animateToIndex}em)`,
         }}
         data-direction={direction}
+        data-reduce-motion
       >
         {STRIP_CELLS.map((d, i) => (
           <span key={i}>{d}</span>

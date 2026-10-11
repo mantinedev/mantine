@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { act, fireEvent, waitFor } from '@testing-library/react';
 import { flushSync } from 'react-dom';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { DirectionProvider } from '../../core';
 import { Menu } from '../Menu';
 import { Modal } from '../Modal';
 import { Menubar, MenubarProps, MenubarStylesNames } from './Menubar';
@@ -202,6 +203,70 @@ describe('@mantine/core/Menubar', () => {
 
     fireEvent.keyDown(getTarget('Edit'), { key: 'ArrowLeft' });
     expect(getTarget('File')).toHaveFocus();
+  });
+
+  it('swaps ArrowRight and ArrowLeft in RTL direction', () => {
+    render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <TestContainer />
+      </DirectionProvider>
+    );
+    focusElement(getTarget('File'));
+
+    fireEvent.keyDown(getTarget('File'), { key: 'ArrowLeft' });
+    expect(getTarget('Edit')).toHaveFocus();
+
+    fireEvent.keyDown(getTarget('Edit'), { key: 'ArrowRight' });
+    expect(getTarget('File')).toHaveFocus();
+  });
+
+  it('switches to the adjacent menu with ArrowLeft from inside the dropdown in RTL direction', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <TestContainer />
+      </DirectionProvider>
+    );
+    focusElement(getTarget('File'));
+    fireEvent.keyDown(getTarget('File'), { key: 'ArrowDown' });
+    await waitFor(() => expect(screen.getByText('New file').closest('button')).toHaveFocus());
+
+    fireEvent.keyDown(screen.getByText('New file').closest('button')!, { key: 'ArrowLeft' });
+    await waitFor(() => expect(screen.getByText('Undo').closest('button')).toHaveFocus());
+    expect(screen.queryByText('New file')).not.toBeInTheDocument();
+  });
+
+  it('moves focus to the next target that starts with the typed character', () => {
+    render(<TestContainer />);
+    focusElement(getTarget('File'));
+
+    fireEvent.keyDown(getTarget('File'), { key: 'v' });
+    expect(getTarget('View')).toHaveFocus();
+    expect(getTarget('View')).toHaveAttribute('tabindex', '0');
+    expectAllClosed();
+
+    fireEvent.keyDown(getTarget('View'), { key: 'X' });
+    expect(getTarget('View')).toHaveFocus();
+  });
+
+  it('opens the matched menu with type-ahead while another menu is open', async () => {
+    render(<TestContainer />);
+    await userEvent.click(getTarget('File'));
+    expectMenuOpen('New file');
+
+    fireEvent.keyDown(getTarget('File'), { key: 'e' });
+    expect(getTarget('Edit')).toHaveFocus();
+    expectMenuOpen('Undo');
+    expect(screen.queryByText('New file')).not.toBeInTheDocument();
+  });
+
+  it('sets aria-expanded="false" on closed targets', async () => {
+    render(<TestContainer />);
+    expect(getTarget('File')).toHaveAttribute('aria-expanded', 'false');
+    expect(getTarget('Edit')).toHaveAttribute('aria-expanded', 'false');
+
+    await userEvent.click(getTarget('File'));
+    expect(getTarget('File')).toHaveAttribute('aria-expanded', 'true');
+    expect(getTarget('Edit')).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('wraps with arrow navigation by default', () => {

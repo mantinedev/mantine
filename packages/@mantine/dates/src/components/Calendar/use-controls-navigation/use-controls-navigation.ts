@@ -70,7 +70,7 @@ export function useControlsNavigation({
 
   const requestControlFocus = usePendingControlFocus({ controlsRef, period: date });
 
-  const { handleDayKeyDown, handleWeekControlKeyDown } = useDaysNavigation({
+  const { handleDayKeyDown, handleWeekControlKeyDown, preserveFocusOnShift } = useDaysNavigation({
     month: date,
     numberOfColumns,
     firstDayOfWeek,
@@ -126,5 +126,6 @@ export function useControlsNavigation({
       weekControlsRefs.current[levelIndex][rowIndex] = [node];
     },
     onWeekControlKeyDown: handleWeekControlKeyDown,
+    preserveDayFocusOnShift: preserveFocusOnShift,
   };
 }

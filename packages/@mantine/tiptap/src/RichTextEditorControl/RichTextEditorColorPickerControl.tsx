@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useEditorState } from '@tiptap/react';
 import {
   ActionIcon,
   BoxProps,
@@ -40,7 +41,12 @@ export function RichTextEditorColorPickerControl(props: RichTextEditorColorPicke
   const { editor, labels, getStyles, variant } = useRichTextEditorContext();
   const [opened, { toggle, close }] = useDisclosure(false);
   const [state, setState] = useState<'palette' | 'colorPicker'>('palette');
-  const currentColor = editor?.getAttributes('textStyle').color || 'var(--mantine-color-text)';
+  const currentColor =
+    useEditorState({
+      editor: editor ?? null,
+      selector: () =>
+        editor && !editor.isDestroyed ? editor.getAttributes('textStyle').color || null : null,
+    }) || 'var(--mantine-color-text)';
 
   const handleChange = (value: string, shouldClose = true) => {
     (editor?.chain() as any)?.focus().setColor(value).run();

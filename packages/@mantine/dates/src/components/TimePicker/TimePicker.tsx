@@ -100,10 +100,10 @@ export interface TimePickerProps
   /** `form` prop passed down to the hidden input */
   form?: string;
 
-  /** Min possible time value in `hh:mm:ss` format @category behavior */
+  /** Min possible time value in `hh:mm` or `hh:mm:ss` format @category behavior */
   min?: string;
 
-  /** Max possible time value in `hh:mm:ss` format @category behavior */
+  /** Max possible time value in `hh:mm` or `hh:mm:ss` format @category behavior */
   max?: string;
 
   /** Time format, `'24h'` by default @category appearance */
@@ -484,7 +484,6 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   max={isDuration ? DURATION_HOURS_MAX : controller.format === '12h' ? 12 : 23}
                   allowTemporaryZero={controller.format === '12h'}
                   disableAutoAdvance={isDuration}
-                  focusable
                   step={hoursStep}
                   ref={_hoursRef}
                   aria-label={hoursInputLabel}
@@ -517,7 +516,6 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   onChange={controller.setMinutes}
                   min={0}
                   max={59}
-                  focusable
                   step={minutesStep}
                   ref={_minutesRef}
                   onPreviousInput={() => controller.focus('hours')}
@@ -549,7 +547,6 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                       onChange={controller.setSeconds}
                       min={0}
                       max={59}
-                      focusable
                       step={secondsStep}
                       ref={_secondsRef}
                       onPreviousInput={() => controller.focus('minutes')}

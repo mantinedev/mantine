@@ -11,7 +11,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useSpotlightContext } from './Spotlight.context';
-import { spotlightActions } from './spotlight.store';
+import { spotlightActions, useSpotlight } from './spotlight.store';
 import classes from './Spotlight.module.css';
 
 export type SpotlightSearchStylesNames = InputStylesNames;
@@ -41,6 +41,7 @@ export const SpotlightSearch = factory<SpotlightSearchFactory>((props) => {
     props
   );
   const ctx = useSpotlightContext();
+  const { listId, selectedActionId } = useSpotlight(ctx.store);
   const inputStyles = ctx.getStyles('search');
   const [isComposing, setIsComposing] = useState(false); // IME
 
@@ -71,6 +72,11 @@ export const SpotlightSearch = factory<SpotlightSearchFactory>((props) => {
       {...inputStyles}
       classNames={[{ input: inputStyles.className }, classNames] as any}
       styles={[{ input: inputStyles.style }, styles] as any}
+      role="combobox"
+      aria-autocomplete="list"
+      aria-expanded={!!listId}
+      aria-controls={listId || undefined}
+      aria-activedescendant={(listId && selectedActionId) || undefined}
       {...others}
       value={value ?? ctx.query}
       onChange={(event) => {

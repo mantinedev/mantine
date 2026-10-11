@@ -109,6 +109,12 @@ export function useCollapse({
       onTransitionStartEvent();
     }
 
+    if (!elementRef.current) {
+      setStylesRaw(expanded ? {} : collapsedStyles);
+      setState(expanded ? 'entered' : 'exited');
+      return;
+    }
+
     if (expanded) {
       window.requestAnimationFrame(() => {
         if (!isCurrentTransition() || !elementRef.current) {

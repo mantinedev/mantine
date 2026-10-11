@@ -5,12 +5,12 @@ const code = `
 import { Textarea } from '@mantine/core';
 
 function Demo() {
-  return <Textarea resize="vertical" label="Disabled" placeholder="Your comment" />;
+  return <Textarea resize="vertical" label="Resizable textarea" placeholder="Your comment" />;
 }
 `;
 
 function Demo() {
-  return <Textarea resize="vertical" label="Disabled" placeholder="Your comment" />;
+  return <Textarea resize="vertical" label="Resizable textarea" placeholder="Your comment" />;
 }
 
 export const resize: MantineDemo = {

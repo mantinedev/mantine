@@ -28,8 +28,11 @@ export interface MarqueeProps
   /** Reverses animation direction @default false @category appearance */
   reverse?: boolean;
 
-  /** Pauses animation on hover @default false @category behavior */
+  /** Pauses animation on hover and when focus is inside the marquee @default false @category behavior */
   pauseOnHover?: boolean;
+
+  /** Controls whether the animation is running, set to `false` to pause it @default true @category behavior */
+  playing?: boolean;
 
   /** Content to scroll @category appearance */
   children: React.ReactNode;
@@ -46,13 +49,13 @@ export interface MarqueeProps
   /** Gap between repeated children, key of `theme.spacing` or any valid CSS value @default 'md' @category appearance */
   gap?: MantineSpacing;
 
-  /** Whether to show gradient fade on edges, @default true @category appearance */
+  /** Whether to show gradient fade on edges @default true @category appearance */
   fadeEdges?: boolean;
 
-  /** Color of the fade gradient, @default 'var(--mantine-color-body)' @category appearance */
+  /** Color of the fade gradient @default 'var(--mantine-color-body)' @category appearance */
   fadeEdgeColor?: string;
 
-  /** Size of the fade gradient, @default '5%' @category appearance */
+  /** Size of the fade gradient @default '5%' @category appearance */
   fadeEdgeSize?: string;
 }
 
@@ -68,6 +71,7 @@ const defaultProps = {
   duration: 100_000,
   orientation: 'horizontal',
   fadeEdges: true,
+  playing: true,
 } satisfies Partial<MarqueeProps>;
 
 const varsResolver = createVarsResolver<MarqueeFactory>(
@@ -94,6 +98,7 @@ export const Marquee = factory<MarqueeFactory>((_props) => {
     children,
     reverse,
     pauseOnHover,
+    playing,
     orientation,
     repeat,
     duration,
@@ -123,7 +128,12 @@ export const Marquee = factory<MarqueeFactory>((_props) => {
   const repeatedChildren = Array(repeat)
     .fill(0)
     .map((_, index) => (
-      <div key={index} {...getStyles('group')}>
+      <div
+        key={index}
+        {...getStyles('group')}
+        aria-hidden={index > 0 || undefined}
+        inert={index > 0 || undefined}
+      >
         {children}
       </div>
     ));
@@ -131,10 +141,12 @@ export const Marquee = factory<MarqueeFactory>((_props) => {
   return (
     <Box
       {...getStyles('root')}
-      mod={[{ orientation, reverse, pauseOnHover, 'fade-edges': fadeEdges }, mod]}
+      mod={[{ orientation, reverse, pauseOnHover, paused: !playing, 'fade-edges': fadeEdges }, mod]}
       {...others}
     >
-      <div {...getStyles('content')}>{repeatedChildren}</div>
+      <div {...getStyles('content')} data-reduce-motion>
+        {repeatedChildren}
+      </div>
     </Box>
   );
 });

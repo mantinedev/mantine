@@ -310,26 +310,24 @@ describe('@mantine/core/Tree/use-tree', () => {
       expect(result.current.selectedState).toEqual(['src', 'package.json']);
     });
 
-    it('toggleSelected returns new selection value in single mode', () => {
-      const { result } = renderHook(() => useTree());
-      let returnValue: unknown;
+    it('toggleSelected selects node in single mode', () => {
+      const { result } = renderHook(() => useTree({ initialSelectedState: ['package.json'] }));
 
-      act(() => {
-        returnValue = result.current.toggleSelected('src');
-      });
-      expect(returnValue).toEqual(['src']);
+      act(() => result.current.toggleSelected('src'));
+      expect(result.current.selectedState).toEqual(['src']);
       expect(result.current.anchorNode).toBe('src');
     });
 
-    it('toggleSelected returns empty array when deselecting in single mode', () => {
-      const { result } = renderHook(() => useTree({ initialSelectedState: ['src'] }));
-      let returnValue: unknown;
+    it('toggleSelected deselects node in single mode', () => {
+      const onSelectedStateChange = jest.fn();
+      const { result } = renderHook(() =>
+        useTree({ initialSelectedState: ['src'], onSelectedStateChange })
+      );
 
-      act(() => {
-        returnValue = result.current.toggleSelected('src');
-      });
-      expect(returnValue).toEqual([]);
+      act(() => result.current.toggleSelected('src'));
+      expect(result.current.selectedState).toEqual([]);
       expect(result.current.anchorNode).toBe(null);
+      expect(onSelectedStateChange).toHaveBeenCalledWith([]);
     });
   });
 
@@ -361,18 +359,15 @@ describe('@mantine/core/Tree/use-tree', () => {
       expect(result.current.selectedState).toEqual(['src', 'package.json']);
     });
 
-    it('toggleSelected returns filtered array when deselecting in multiple mode', () => {
+    it('toggleSelected removes node from selection in multiple mode', () => {
       const { result } = renderHook(() => useTree({ multiple: true }));
-      let returnValue: unknown;
 
       act(() => result.current.toggleSelected('src'));
       act(() => result.current.toggleSelected('package.json'));
+      act(() => result.current.toggleSelected('src'));
 
-      act(() => {
-        returnValue = result.current.toggleSelected('src');
-      });
-
-      expect(returnValue).toEqual(['package.json']);
+      expect(result.current.selectedState).toEqual(['package.json']);
+      expect(result.current.anchorNode).toBe(null);
     });
 
     it('deselect removes only the specified node', () => {

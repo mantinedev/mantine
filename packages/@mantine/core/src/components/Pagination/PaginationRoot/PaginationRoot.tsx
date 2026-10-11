@@ -38,7 +38,7 @@ export interface PaginationRootProps
   extends
     BoxProps,
     StylesApiProps<PaginationRootFactory>,
-    ElementProps<'div', 'value' | 'onChange'> {
+    ElementProps<'nav', 'value' | 'onChange'> {
   /** `height` and `min-width` of controls @default 'md' @category appearance */
   size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
 
@@ -99,7 +99,7 @@ export interface PaginationRootProps
 
 export type PaginationRootFactory = Factory<{
   props: PaginationRootProps;
-  ref: HTMLDivElement;
+  ref: HTMLElement;
   stylesNames: PaginationRootStylesNames;
   vars: PaginationRootCssVariables;
 }>;
@@ -183,6 +183,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
     <PaginationProvider
       value={{
         total: pagination.total,
+        startValue: pagination.startValue,
         range: pagination.range,
         active: pagination.active,
         disabled,
@@ -196,7 +197,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
         getStyles,
       }}
     >
-      <Box {...getStyles('root')} mod={[{ layout }, mod]} {...others} />
+      <Box component="nav" {...getStyles('root')} mod={[{ layout }, mod]} {...others} />
     </PaginationProvider>
   );
 });

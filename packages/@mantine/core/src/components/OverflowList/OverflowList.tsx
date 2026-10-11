@@ -133,7 +133,11 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
 
   const containerRef = useRef<HTMLElement>(null);
   const rootRef = useMergedRef(containerRef, ref);
-  const finalVisibleCount = visibleCount - subtractCount;
+  const visibleLimit =
+    maxVisibleItems !== undefined && Number.isFinite(maxVisibleItems)
+      ? Math.max(0, maxVisibleItems)
+      : Infinity;
+  const finalVisibleCount = Math.max(0, Math.min(visibleCount, visibleLimit) - subtractCount);
   const overflowCount = data.length - finalVisibleCount;
   const showOverflow = overflowCount > 0 && phase !== 'measuring';
   const isCollapseStart = collapseFrom === 'start';
@@ -151,7 +155,7 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
     setPhase('measuring');
     setVisibleCount(data.length);
     setSubtractCount(0);
-  }, [dataKey, maxRows, collapseFrom]);
+  }, [dataKey, maxRows, maxVisibleItems, collapseFrom]);
 
   useIsomorphicEffect(() => {
     if (phase === 'measuring') {
@@ -228,7 +232,7 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
         count = widths.length - i;
       }
 
-      count = Math.min(count, maxVisibleItems!);
+      count = Math.min(count, visibleLimit);
       setVisibleCount(count);
       return;
     }
@@ -253,7 +257,7 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
       return acc + rowData.itemsSizesMap[position].elements.size;
     }, 0);
 
-    fittingCount = Math.min(fittingCount, maxVisibleItems);
+    fittingCount = Math.min(fittingCount, visibleLimit);
     setVisibleCount(fittingCount);
   };
 
@@ -308,10 +312,10 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
     : null;
 
   let finalItems = data;
-  if (maxVisibleItems) {
+  if (Number.isFinite(visibleLimit)) {
     finalItems = isCollapseStart
-      ? finalItems.slice(-maxVisibleItems!)
-      : finalItems.slice(0, maxVisibleItems);
+      ? finalItems.slice(Math.max(0, data.length - visibleLimit))
+      : finalItems.slice(0, visibleLimit);
   }
 
   const indexOffset = isCollapseStart ? data.length - finalItems.length : 0;

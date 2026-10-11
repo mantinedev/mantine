@@ -1,4 +1,4 @@
-import { cloneElement, useEffect, useRef } from 'react';
+import { cloneElement, useRef } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import {
@@ -33,12 +33,13 @@ import {
   TooltipGroupContextValue,
 } from './TooltipGroup/TooltipGroup';
 import { useTooltip } from './use-tooltip';
+import { TooltipTarget, useTooltipTarget } from './use-tooltip-target';
 import classes from './Tooltip.module.css';
 export interface TooltipProps extends TooltipBaseProps {
   /** Called when tooltip position changes @category behavior */
   onPositionChange?: (position: FloatingPosition) => void;
 
-  /** Open delay in ms @category behavior */
+  /** Open delay in ms @default 0 @category behavior */
   openDelay?: number;
 
   /** Close delay in ms @default 0 @category behavior */
@@ -71,7 +72,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type @default { duration: 100, transition: 'fade' } @category appearance */
   transitionProps?: TransitionOverride;
 
-  /** Determines which events are used to open the tooltip. Set `click: true` to toggle the tooltip on trigger click – hover and focus opening are disabled in this mode @default { hover: true, focus: false, touch: false } @category behavior */
+  /** Determines which events are used to open the tooltip. Set `click: true` to toggle the tooltip on trigger click – hover and focus opening are disabled in this mode @default { hover: true, focus: true, touch: false } @category behavior */
   events?: { hover?: boolean; focus?: boolean; touch?: boolean; click?: boolean };
 
   /** If set, the tooltip is closed when a click is registered outside of the tooltip, applies only to click mode @default true @category behavior */
@@ -96,7 +97,7 @@ export interface TooltipProps extends TooltipBaseProps {
   autoContrast?: boolean;
 
   /** Selector, ref of an element or element itself that should be used for positioning */
-  target?: React.RefObject<HTMLElement | null> | HTMLElement | null | string;
+  target?: TooltipTarget;
 
   /** If set, the tooltip is hidden when the target element is removed from the DOM, hidden with `display: none` or scrolled out of the visible area. Has no effect on `Tooltip.Floating` @default true */
   hideDetached?: boolean;
@@ -123,7 +124,7 @@ const defaultProps = {
   arrowPosition: 'side',
   offset: 5,
   transitionProps: { duration: 100, transition: 'fade' },
-  events: { hover: true, focus: false, touch: false },
+  events: { hover: true, focus: true, touch: false },
   closeOnClickOutside: true,
   closeOnEscape: true,
   zIndex: getDefaultZIndex('popover'),
@@ -226,18 +227,11 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     hideDetached,
   });
 
-  useEffect(() => {
-    const targetNode =
-      target instanceof HTMLElement
-        ? target
-        : typeof target === 'string'
-          ? document.querySelector(target)
-          : target?.current || null;
-
-    if (targetNode) {
-      tooltip.reference(targetNode);
-    }
-  }, [target, tooltip]);
+  useTooltipTarget({
+    target,
+    setReference: tooltip.reference,
+    getReferenceProps: tooltip.getReferenceProps,
+  });
 
   const getStyles = useStyles<TooltipFactory>({
     name: 'Tooltip',
@@ -261,6 +255,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     );
   }
 
+  const targetRef = useMergedRef(tooltip.reference, getRefProp(child), ref);
   const tooltipStyles = getStyles('tooltip');
   const interactiveMod = interactive && !disabled && !!tooltip.opened;
   const mergeStyles =
@@ -321,9 +316,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     );
   }
 
-  // fallback to children-based approach
   const childProps = child!.props as any;
-  const targetRef = useMergedRef(tooltip.reference, getRefProp(child), ref);
   const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
 
   return (

@@ -1,6 +1,14 @@
+import dayjs from 'dayjs';
 import { __InputStylesNames } from '@mantine/core';
-import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
-import { datesTests, expectValue } from '@mantine-tests/dates';
+import {
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  screen,
+  tests,
+  userEvent,
+} from '@mantine-tests/core';
+import { clickInput, datesTests, expectNoPopover, expectValue } from '@mantine-tests/dates';
 import { MonthPickerInput, MonthPickerInputProps } from './MonthPickerInput';
 
 const defaultProps = {
@@ -89,6 +97,37 @@ describe('@mantine/dates/MonthPickerInput', () => {
       />
     );
     expectValue(container, 'April – May');
+  });
+
+  it('selects preset value and closes the dropdown', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <MonthPickerInput
+        {...defaultProps}
+        onChange={spy}
+        presets={[
+          { label: 'This month', value: '2022-04-01' },
+          { label: 'Next month', value: '2022-05-01' },
+        ]}
+      />
+    );
+
+    await clickInput(container);
+    await userEvent.click(screen.getByText('Next month'));
+    expect(spy).toHaveBeenLastCalledWith('2022-05-01');
+    expectValue(container, 'May 2022');
+    expectNoPopover(container);
+  });
+
+  it('supports custom valueFormatter', () => {
+    const { container } = render(
+      <MonthPickerInput
+        {...defaultProps}
+        value="2022-04-11"
+        valueFormatter={({ date }) => `${dayjs(date as string).format('YYYY-MM')} custom`}
+      />
+    );
+    expectValue(container, '2022-04 custom');
   });
 
   it('has correct default __staticSelector', () => {

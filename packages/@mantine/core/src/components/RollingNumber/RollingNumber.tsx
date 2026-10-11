@@ -180,6 +180,7 @@ export const RollingNumber = factory<RollingNumberFactory>((_props) => {
             key={slot.key}
             {...getStyles('char')}
             data-empty={slot.empty || undefined}
+            data-reduce-motion
             aria-hidden="true"
           >
             {slot.char}

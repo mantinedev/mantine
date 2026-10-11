@@ -188,7 +188,6 @@ export const Carousel = factory<CarouselFactory>((_props) => {
     orientation,
     height,
     includeGapInSize,
-    draggable,
     initialSlide,
     withControls,
     withIndicators,
@@ -220,6 +219,7 @@ export const Carousel = factory<CarouselFactory>((_props) => {
   });
 
   const _id = useId(id);
+  const slidesId = `${_id}-slides`;
 
   const responsiveClassName = useRandomClassName();
   const { dir } = useDirection();
@@ -252,12 +252,12 @@ export const Carousel = factory<CarouselFactory>((_props) => {
   const handlePrevious = useCallback(() => {
     embla?.scrollPrev();
     onPreviousSlide?.();
-  }, [embla]);
+  }, [embla, onPreviousSlide]);
 
   const handleNext = useCallback(() => {
     embla?.scrollNext();
     onNextSlide?.();
-  }, [embla]);
+  }, [embla, onNextSlide]);
 
   const handleKeydown = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -283,7 +283,7 @@ export const Carousel = factory<CarouselFactory>((_props) => {
         }
       }
     },
-    [embla, handleNext, handlePrevious]
+    [embla, handleNext, handlePrevious, withKeyboardEvents]
   );
 
   useEffect(() => {
@@ -361,10 +361,8 @@ export const Carousel = factory<CarouselFactory>((_props) => {
       <UnstyledButton
         {...getStyles('indicator')}
         key={index}
-        role="tab"
         aria-label={`Go to slide ${index + 1}`}
-        aria-selected={index === selected}
-        tabIndex={index === selected ? 0 : -1}
+        aria-current={index === selected || undefined}
         data-active={index === selected || undefined}
         onClick={() => handleScroll(index)}
         onKeyDown={(event) => handleIndicatorKeyDown(event, index)}
@@ -398,7 +396,7 @@ export const Carousel = factory<CarouselFactory>((_props) => {
         {withControls && (
           <div {...getStyles('controls')} data-orientation={orientation}>
             <UnstyledButton
-              aria-controls={_id}
+              aria-controls={slidesId}
               aria-label="Previous slide"
               aria-disabled={!canScrollPrev}
               data-inactive={!canScrollPrev || undefined}
@@ -430,7 +428,7 @@ export const Carousel = factory<CarouselFactory>((_props) => {
             </UnstyledButton>
 
             <UnstyledButton
-              aria-controls={_id}
+              aria-controls={slidesId}
               aria-label="Next slide"
               aria-disabled={!canScrollNext}
               data-inactive={!canScrollNext || undefined}
@@ -471,6 +469,7 @@ export const Carousel = factory<CarouselFactory>((_props) => {
         >
           <div
             {...getStyles('container', { className: responsiveClassName })}
+            id={slidesId}
             data-orientation={orientation}
           >
             {children}
@@ -480,7 +479,7 @@ export const Carousel = factory<CarouselFactory>((_props) => {
         {withIndicators && (
           <div
             {...getStyles('indicators')}
-            role="tablist"
+            role="group"
             aria-label="Slides"
             data-orientation={orientation}
           >

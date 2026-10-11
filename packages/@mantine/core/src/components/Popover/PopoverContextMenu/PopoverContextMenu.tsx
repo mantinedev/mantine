@@ -39,7 +39,16 @@ export function PopoverContextMenu(props: PopoverContextMenuProps) {
     },
   });
 
-  return cloneElement(child, handlers as any);
+  const accessibleProps = ctx.withRoles
+    ? {
+        'aria-haspopup': 'dialog',
+        'aria-expanded': ctx.opened,
+        'aria-controls': ctx.opened ? ctx.getDropdownId() : undefined,
+        id: ctx.getTargetId(),
+      }
+    : {};
+
+  return cloneElement(child, { ...accessibleProps, ...handlers } as any);
 }
 
 PopoverContextMenu.displayName = '@mantine/core/PopoverContextMenu';

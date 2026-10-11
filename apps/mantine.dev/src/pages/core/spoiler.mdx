@@ -69,6 +69,9 @@ To disable animations, set `transitionDuration={0}`:
 
 ## Get control ref
 
+Use `controlRef` prop to get a ref of the control button. The control is rendered only
+when the content is taller than `maxHeight`, until then the ref is `null`:
+
 ```tsx
 import { useRef } from 'react';
 import { Spoiler } from '@mantine/core';
@@ -78,9 +81,12 @@ function Demo() {
   return (
     <Spoiler
       controlRef={spoilerControlRef}
+      maxHeight={120}
       hideLabel="Hide"
       showLabel="Show"
-    />
+    >
+      {/* Content taller than maxHeight */}
+    </Spoiler>
   );
 }
 ```
@@ -90,7 +96,7 @@ function Demo() {
 The Spoiler component implements proper ARIA attributes for screen reader support:
 
 - Toggle button has `aria-expanded` indicating the expanded/collapsed state
-- Content region has `role="region"` and is associated with the button via `aria-controls`
+- Toggle button is associated with the content element via `aria-controls`
 - Keyboard support: Space or Enter key toggles the spoiler when the button is focused
 
 ### Best practices for label text

@@ -37,6 +37,7 @@ export const textWrap: MantineDemo = {
       data: [
         { value: 'wrap', label: 'wrap' },
         { value: 'balance', label: 'balance' },
+        { value: 'pretty', label: 'pretty' },
       ],
     },
   ],

@@ -86,27 +86,27 @@ describe('@mantine/core/TreeSelect', () => {
   it('opens/closes dropdown on input click', async () => {
     render(<TreeSelect {...defaultProps} />);
     expect(screen.queryByRole('listbox')).toBe(null);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByRole('listbox')).toBeVisible();
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.queryByRole('listbox')).toBe(null);
   });
 
   it('allows controlling dropdown state with dropdownOpened prop', async () => {
     const { rerender } = render(<TreeSelect {...defaultProps} dropdownOpened />);
     expect(screen.getByRole('listbox')).toBeVisible();
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByRole('listbox')).toBeVisible();
 
     rerender(<TreeSelect {...defaultProps} dropdownOpened={false} />);
     expect(screen.queryByRole('listbox')).toBe(null);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.queryByRole('listbox')).toBe(null);
   });
 
   it('renders tree nodes when dropdown is opened', async () => {
     render(<TreeSelect {...defaultProps} />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByRole('option', { name: 'Fruits' })).toBeVisible();
     expect(screen.getByRole('option', { name: 'Vegetables' })).toBeVisible();
     expect(screen.getByRole('option', { name: 'Milk' })).toBeVisible();
@@ -114,7 +114,7 @@ describe('@mantine/core/TreeSelect', () => {
 
   it('shows children when parent is expanded', async () => {
     render(<TreeSelect {...defaultProps} defaultExpandedValues={['fruits']} />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
     expect(screen.getByRole('option', { name: 'Banana' })).toBeVisible();
     expect(screen.queryByRole('option', { name: 'Carrot' })).toBe(null);
@@ -122,7 +122,7 @@ describe('@mantine/core/TreeSelect', () => {
 
   it('expands all nodes when defaultExpandAll is true', async () => {
     render(<TreeSelect {...defaultProps} defaultExpandAll />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
     expect(screen.getByRole('option', { name: 'Banana' })).toBeVisible();
     expect(screen.getByRole('option', { name: 'Carrot' })).toBeVisible();
@@ -131,7 +131,7 @@ describe('@mantine/core/TreeSelect', () => {
 
   it('does not show children when parent is collapsed', async () => {
     render(<TreeSelect {...defaultProps} />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
     expect(screen.queryByRole('option', { name: 'Banana' })).toBe(null);
   });
@@ -139,45 +139,45 @@ describe('@mantine/core/TreeSelect', () => {
   describe('single mode', () => {
     it('supports uncontrolled state', async () => {
       render(<TreeSelect {...defaultProps} />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Milk' }));
-      expect(screen.getByRole('textbox')).toHaveValue('Milk');
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
     });
 
     it('supports controlled state', async () => {
       const spy = jest.fn();
       render(<TreeSelect {...defaultProps} value="milk" onChange={spy} />);
-      expect(screen.getByRole('textbox')).toHaveValue('Milk');
-      await userEvent.click(screen.getByRole('textbox'));
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
-      expect(screen.getByRole('textbox')).toHaveValue('Milk');
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
       expect(spy).toHaveBeenCalledWith('fruits');
     });
 
     it('allows deselecting option by default', async () => {
       render(<TreeSelect {...defaultProps} defaultValue="milk" />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Milk' }));
-      expect(screen.getByRole('textbox')).toHaveValue('');
+      expect(screen.getByRole('combobox')).toHaveValue('');
     });
 
     it('does not allow to deselect option if allowDeselect is false', async () => {
       render(<TreeSelect {...defaultProps} defaultValue="milk" allowDeselect={false} />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Milk' }));
-      expect(screen.getByRole('textbox')).toHaveValue('Milk');
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
     });
 
     it('selects nested child nodes', async () => {
       render(<TreeSelect {...defaultProps} defaultExpandedValues={['fruits']} />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
-      expect(screen.getByRole('textbox')).toHaveValue('Apple');
+      expect(screen.getByRole('combobox')).toHaveValue('Apple');
     });
 
     it('sets hidden input value', async () => {
       render(<TreeSelect {...defaultProps} name="test-tree-select" />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Milk' }));
       expect(document.querySelector('input[name="test-tree-select"]')).toHaveValue('milk');
     });
@@ -186,7 +186,7 @@ describe('@mantine/core/TreeSelect', () => {
   describe('multiple mode', () => {
     it('supports uncontrolled state', async () => {
       render(<TreeSelect {...defaultProps} mode="multiple" defaultExpandAll name="test-multi" />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
       expect(document.querySelector('input[name="test-multi"]')).toHaveValue('apple');
 
@@ -206,7 +206,7 @@ describe('@mantine/core/TreeSelect', () => {
           name="test-multi"
         />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Banana' }));
       expect(document.querySelector('input[name="test-multi"]')).toHaveValue('apple');
       expect(spy).toHaveBeenCalledWith(['apple', 'banana']);
@@ -222,7 +222,7 @@ describe('@mantine/core/TreeSelect', () => {
           name="test-multi"
         />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
       expect(document.querySelector('input[name="test-multi"]')).toHaveValue('banana');
     });
@@ -398,7 +398,7 @@ describe('@mantine/core/TreeSelect', () => {
       render(
         <TreeSelect {...defaultProps} mode="checkbox" defaultExpandAll name="test-checkbox" />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
       expect(document.querySelector('input[name="test-checkbox"]')).toHaveValue('apple');
     });
@@ -407,7 +407,7 @@ describe('@mantine/core/TreeSelect', () => {
       render(
         <TreeSelect {...defaultProps} mode="checkbox" defaultExpandAll name="test-checkbox" />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
       expect(document.querySelector('input[name="test-checkbox"]')).toHaveValue('apple,banana');
     });
@@ -422,7 +422,7 @@ describe('@mantine/core/TreeSelect', () => {
           name="test-checkbox"
         />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
       expect(document.querySelector('input[name="test-checkbox"]')).toHaveValue('fruits');
     });
@@ -437,7 +437,7 @@ describe('@mantine/core/TreeSelect', () => {
           name="test-checkbox"
         />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
       expect(document.querySelector('input[name="test-checkbox"]')).toHaveValue('');
     });
@@ -452,7 +452,7 @@ describe('@mantine/core/TreeSelect', () => {
           name="test-checkbox"
         />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
       const hiddenValue = document
         .querySelector('input[name="test-checkbox"]')!
@@ -470,7 +470,7 @@ describe('@mantine/core/TreeSelect', () => {
           name="test-checkbox"
         />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
       expect(document.querySelector('input[name="test-checkbox"]')).toHaveValue('fruits');
     });
@@ -564,39 +564,39 @@ describe('@mantine/core/TreeSelect', () => {
   describe('search', () => {
     it('filters options with searchable prop', async () => {
       render(<TreeSelect {...defaultProps} searchable defaultExpandAll />);
-      await userEvent.click(screen.getByRole('textbox'));
-      await userEvent.type(screen.getByRole('textbox'), 'Apple');
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.type(screen.getByRole('combobox'), 'Apple');
       expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
       expect(screen.queryByRole('option', { name: 'Milk' })).toBe(null);
     });
 
     it('displays nothing found message when no options match', async () => {
       render(<TreeSelect {...defaultProps} searchable nothingFoundMessage="Nothing found" />);
-      await userEvent.click(screen.getByRole('textbox'));
-      await userEvent.type(screen.getByRole('textbox'), 'xyz');
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.type(screen.getByRole('combobox'), 'xyz');
       expect(screen.getByText('Nothing found')).toBeVisible();
     });
 
     it('calls onSearchChange when search value changes', async () => {
       const spy = jest.fn();
       render(<TreeSelect {...defaultProps} searchable onSearchChange={spy} />);
-      await userEvent.click(screen.getByRole('textbox'));
-      await userEvent.type(screen.getByRole('textbox'), 'test');
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.type(screen.getByRole('combobox'), 'test');
       expect(spy).toHaveBeenCalledWith('test');
     });
 
     it('clears search on selection when clearSearchOnChange is true', async () => {
       render(<TreeSelect {...defaultProps} searchable />);
-      await userEvent.click(screen.getByRole('textbox'));
-      await userEvent.type(screen.getByRole('textbox'), 'Mil');
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.type(screen.getByRole('combobox'), 'Mil');
       await userEvent.click(screen.getByRole('option', { name: 'Milk' }));
-      expect(screen.getByRole('textbox')).toHaveValue('Milk');
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
     });
 
     it('auto-expands parent branches in filtered results', async () => {
       render(<TreeSelect {...defaultProps} searchable />);
-      await userEvent.click(screen.getByRole('textbox'));
-      await userEvent.type(screen.getByRole('textbox'), 'Apple');
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.type(screen.getByRole('combobox'), 'Apple');
       expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
     });
   });
@@ -604,7 +604,7 @@ describe('@mantine/core/TreeSelect', () => {
   describe('keyboard navigation', () => {
     it('expands node on ArrowRight key', async () => {
       render(<TreeSelect {...defaultProps} />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
 
       expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
 
@@ -616,7 +616,7 @@ describe('@mantine/core/TreeSelect', () => {
 
     it('collapses node on ArrowLeft key', async () => {
       render(<TreeSelect {...defaultProps} defaultExpandedValues={['fruits']} />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
 
       expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
 
@@ -637,9 +637,9 @@ describe('@mantine/core/TreeSelect', () => {
           clearButtonProps={{ 'aria-label': 'Clear value' }}
         />
       );
-      expect(screen.getByRole('textbox')).toHaveValue('Milk');
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
       await userEvent.click(screen.getByLabelText('Clear value'));
-      expect(screen.getByRole('textbox')).toHaveValue('');
+      expect(screen.getByRole('combobox')).toHaveValue('');
     });
 
     it('calls onClear when clear button is clicked', async () => {
@@ -660,7 +660,7 @@ describe('@mantine/core/TreeSelect', () => {
 
   it('displays nothing found message when data is empty', async () => {
     render(<TreeSelect {...defaultProps} data={[]} nothingFoundMessage="No data" />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByText('No data')).toBeVisible();
   });
 
@@ -691,9 +691,9 @@ describe('@mantine/core/TreeSelect', () => {
     }
 
     render(<Wrapper />);
-    expect(screen.getByRole('textbox')).toHaveValue('Alpha');
+    expect(screen.getByRole('combobox')).toHaveValue('Alpha');
     await userEvent.click(screen.getByRole('button', { name: 'Update' }));
-    expect(screen.getByRole('textbox')).toHaveValue('Updated');
+    expect(screen.getByRole('combobox')).toHaveValue('Updated');
   });
 
   it('renders tree lines with withLines prop', async () => {
@@ -720,35 +720,35 @@ describe('@mantine/core/TreeSelect', () => {
   describe('searchable single mode displays selection', () => {
     it('shows defaultValue label on mount', () => {
       render(<TreeSelect {...defaultProps} searchable defaultValue="milk" />);
-      expect(screen.getByRole('textbox')).toHaveValue('Milk');
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
     });
 
     it('shows controlled value label on mount', () => {
       render(<TreeSelect {...defaultProps} searchable value="milk" />);
-      expect(screen.getByRole('textbox')).toHaveValue('Milk');
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
     });
 
     it('updates displayed label when controlled value changes', () => {
       const { rerender } = render(<TreeSelect {...defaultProps} searchable value="milk" />);
-      expect(screen.getByRole('textbox')).toHaveValue('Milk');
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
 
       rerender(<TreeSelect {...defaultProps} searchable value="fruits" />);
-      expect(screen.getByRole('textbox')).toHaveValue('Fruits');
+      expect(screen.getByRole('combobox')).toHaveValue('Fruits');
     });
 
     it('clears displayed label when controlled value becomes null', () => {
       const { rerender } = render(<TreeSelect {...defaultProps} searchable value="milk" />);
-      expect(screen.getByRole('textbox')).toHaveValue('Milk');
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
 
       rerender(<TreeSelect {...defaultProps} searchable value={null} />);
-      expect(screen.getByRole('textbox')).toHaveValue('');
+      expect(screen.getByRole('combobox')).toHaveValue('');
     });
   });
 
   describe('expandOnClick expands parent nodes without selecting', () => {
     it('expands parent without selecting in single mode', async () => {
       render(<TreeSelect {...defaultProps} expandOnClick name="test" />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
       expect(document.querySelector('input[name="test"]')).toHaveValue('');
       expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
@@ -756,7 +756,7 @@ describe('@mantine/core/TreeSelect', () => {
 
     it('expands parent without selecting in multiple mode', async () => {
       render(<TreeSelect {...defaultProps} mode="multiple" expandOnClick name="test" />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
       expect(document.querySelector('input[name="test"]')).toHaveValue('');
       expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
@@ -764,7 +764,7 @@ describe('@mantine/core/TreeSelect', () => {
 
     it('selects leaf nodes normally in single mode with expandOnClick', async () => {
       render(<TreeSelect {...defaultProps} expandOnClick defaultExpandAll name="test" />);
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
       expect(document.querySelector('input[name="test"]')).toHaveValue('apple');
     });
@@ -782,7 +782,7 @@ describe('@mantine/core/TreeSelect', () => {
           name="test"
         />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Banana' }));
       expect(document.querySelector('input[name="test"]')).toHaveValue('apple');
     });
@@ -791,7 +791,7 @@ describe('@mantine/core/TreeSelect', () => {
       render(
         <TreeSelect {...defaultProps} mode="checkbox" maxValues={1} defaultExpandAll name="test" />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
       expect(document.querySelector('input[name="test"]')).toHaveValue('');
     });
@@ -807,7 +807,7 @@ describe('@mantine/core/TreeSelect', () => {
           name="test"
         />
       );
-      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.click(screen.getByRole('combobox'));
       await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
       expect(document.querySelector('input[name="test"]')).toHaveValue('');
     });
@@ -824,7 +824,7 @@ describe('@mantine/core/TreeSelect', () => {
           name="test"
         />
       );
-      const input = screen.getByRole('textbox');
+      const input = screen.getByRole('combobox');
       await userEvent.click(input);
       await userEvent.type(input, 'Ban');
       await userEvent.click(screen.getByRole('option', { name: 'Banana' }));
@@ -846,7 +846,7 @@ describe('@mantine/core/TreeSelect', () => {
           name="test"
         />
       );
-      const input = screen.getByRole('textbox');
+      const input = screen.getByRole('combobox');
       await userEvent.click(input);
       await userEvent.type(input, 'Ban');
       await userEvent.click(screen.getByRole('option', { name: 'Banana' }));
@@ -858,7 +858,7 @@ describe('@mantine/core/TreeSelect', () => {
       render(
         <TreeSelect {...defaultProps} mode="multiple" searchable defaultExpandAll name="test" />
       );
-      const input = screen.getByRole('textbox');
+      const input = screen.getByRole('combobox');
       await userEvent.click(input);
       await userEvent.type(input, 'App');
       await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
@@ -875,8 +875,8 @@ describe('@mantine/core/TreeSelect', () => {
         <TreeSelect {...defaultProps} searchable name="test" defaultValue="apple" data={treeData} />
       );
 
-      await externalInputFill(screen.getByRole('textbox'), 'Broccoli');
-      expect(screen.getByRole('textbox')).toHaveValue('Apple');
+      await externalInputFill(screen.getByRole('combobox'), 'Broccoli');
+      expect(screen.getByRole('combobox')).toHaveValue('Apple');
       expect(getHiddenInput()).toHaveValue('apple');
     });
 
@@ -885,24 +885,203 @@ describe('@mantine/core/TreeSelect', () => {
         <TreeSelect {...defaultProps} searchable mode="multiple" name="test" data={treeData} />
       );
 
-      await externalInputFill(screen.getByRole('textbox'), 'Broccoli');
-      expect(screen.getByRole('textbox')).toHaveValue('');
+      await externalInputFill(screen.getByRole('combobox'), 'Broccoli');
+      expect(screen.getByRole('combobox')).toHaveValue('');
       expect(getHiddenInput()).toHaveValue('');
     });
 
     it('does not open the dropdown', async () => {
       render(<TreeSelect {...defaultProps} searchable name="test" data={treeData} />);
-      await externalInputFill(screen.getByRole('textbox'), 'Broccoli');
+      await externalInputFill(screen.getByRole('combobox'), 'Broccoli');
       expect(screen.queryByRole('option')).toBe(null);
     });
 
     it('does not interfere with typing', async () => {
       render(<TreeSelect {...defaultProps} searchable name="test" data={treeData} />);
-      await userEvent.click(screen.getByRole('textbox'));
-      await userEvent.type(screen.getByRole('textbox'), 'Broc');
-      expect(screen.getByRole('textbox')).toHaveValue('Broc');
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.type(screen.getByRole('combobox'), 'Broc');
+      expect(screen.getByRole('combobox')).toHaveValue('Broc');
       expect(screen.getByRole('option', { name: 'Broccoli' })).toBeVisible();
       expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
+    });
+  });
+
+  describe('accessibility attributes', () => {
+    it('sets role="combobox" and aria-expanded on the single mode input', async () => {
+      render(<TreeSelect {...defaultProps} />);
+      const input = screen.getByRole('combobox');
+      expect(input).toHaveAttribute('aria-expanded', 'false');
+      await userEvent.click(input);
+      expect(input).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('sets role="combobox" and aria-expanded on the multiple mode input', async () => {
+      render(<TreeSelect {...defaultProps} mode="multiple" />);
+      const input = screen.getByRole('combobox');
+      expect(input).toHaveAttribute('aria-expanded', 'false');
+      await userEvent.click(input);
+      expect(input).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('sets aria-checked="mixed" on partially checked parent', async () => {
+      render(
+        <TreeSelect {...defaultProps} mode="checkbox" defaultExpandAll defaultValue={['apple']} />
+      );
+      await userEvent.click(screen.getByRole('combobox'));
+      expect(screen.getByRole('option', { name: 'Fruits' })).toHaveAttribute(
+        'aria-checked',
+        'mixed'
+      );
+      expect(screen.getByRole('option', { name: 'Apple' })).toHaveAttribute('aria-checked', 'true');
+      expect(screen.getByRole('option', { name: 'Vegetables' })).toHaveAttribute(
+        'aria-checked',
+        'false'
+      );
+    });
+  });
+
+  it('moves highlight from a leaf to its parent on ArrowLeft', async () => {
+    render(<TreeSelect {...defaultProps} defaultExpandedValues={['fruits']} />);
+    const input = screen.getByRole('combobox');
+    await userEvent.click(input);
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}');
+    const apple = screen.getByRole('option', { name: 'Apple' });
+    expect(apple).toHaveAttribute('data-combobox-selected');
+
+    await userEvent.keyboard('{ArrowLeft}');
+    const fruits = screen.getByRole('option', { name: 'Fruits' });
+    expect(fruits).toHaveAttribute('data-combobox-selected');
+    expect(input).toHaveAttribute('aria-activedescendant', fruits.id);
+    expect(screen.getByRole('option', { name: 'Apple' })).toBeInTheDocument();
+  });
+
+  describe('disabled nodes in checkbox mode', () => {
+    const disabledData: TreeNodeData[] = [
+      {
+        value: 'fruits',
+        label: 'Fruits',
+        children: [
+          { value: 'apple', label: 'Apple' },
+          { value: 'banana', label: 'Banana', nodeProps: { disabled: true } },
+        ],
+      },
+    ];
+
+    it('does not check disabled leaves when parent is checked', async () => {
+      const spy = jest.fn();
+      render(<TreeSelect data={disabledData} mode="checkbox" defaultExpandAll onChange={spy} />);
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
+      expect(spy).toHaveBeenLastCalledWith(['apple']);
+    });
+
+    it('does not uncheck disabled leaves when parent is unchecked', async () => {
+      const spy = jest.fn();
+      render(
+        <TreeSelect
+          data={disabledData}
+          mode="checkbox"
+          defaultExpandAll
+          defaultValue={['apple', 'banana']}
+          checkedStrategy="child"
+          onChange={spy}
+        />
+      );
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
+      expect(spy).toHaveBeenLastCalledWith(['banana']);
+    });
+
+    it('unchecks enabled leaves when parent has unchecked disabled leaf', async () => {
+      const spy = jest.fn();
+      render(
+        <TreeSelect
+          data={disabledData}
+          mode="checkbox"
+          defaultExpandAll
+          defaultValue={['apple']}
+          onChange={spy}
+        />
+      );
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
+      expect(spy).toHaveBeenLastCalledWith([]);
+    });
+
+    it('expands parent with only disabled leaves on click when expandOnClick is set', async () => {
+      const spy = jest.fn();
+      const allDisabledData: TreeNodeData[] = [
+        {
+          value: 'fruits',
+          label: 'Fruits',
+          children: [
+            { value: 'apple', label: 'Apple', nodeProps: { disabled: true } },
+            { value: 'banana', label: 'Banana', nodeProps: { disabled: true } },
+          ],
+        },
+      ];
+
+      render(<TreeSelect data={allDisabledData} mode="checkbox" expandOnClick onChange={spy} />);
+      await userEvent.click(screen.getByRole('combobox'));
+      expect(screen.queryByRole('option', { name: 'Apple' })).not.toBeInTheDocument();
+      await userEvent.click(screen.getByRole('option', { name: 'Fruits' }));
+      expect(screen.getByRole('option', { name: 'Apple' })).toBeInTheDocument();
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('does not remove disabled values with Backspace and hides their pill remove button', async () => {
+      const spy = jest.fn();
+      render(
+        <TreeSelect
+          data={disabledData}
+          mode="multiple"
+          defaultValue={['apple', 'banana']}
+          searchable
+          onChange={spy}
+        />
+      );
+      expect(document.querySelectorAll('.mantine-Pill-remove')).toHaveLength(1);
+      await userEvent.type(screen.getByRole('combobox'), '{Backspace}');
+      expect(spy).toHaveBeenLastCalledWith(['banana']);
+      await userEvent.type(screen.getByRole('combobox'), '{Backspace}');
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('late data', () => {
+    it('applies defaultExpandAll when data arrives after mount', async () => {
+      const { rerender } = render(<TreeSelect data={[]} defaultExpandAll />);
+      rerender(<TreeSelect data={treeData} defaultExpandAll />);
+      await userEvent.click(screen.getByRole('combobox'));
+      expect(screen.getByRole('option', { name: 'Apple' })).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: 'Carrot' })).toBeInTheDocument();
+    });
+
+    it('applies defaultExpandedValues when data arrives after mount', async () => {
+      const { rerender } = render(<TreeSelect data={[]} defaultExpandedValues={['fruits']} />);
+      rerender(<TreeSelect data={treeData} defaultExpandedValues={['fruits']} />);
+      await userEvent.click(screen.getByRole('combobox'));
+      expect(screen.getByRole('option', { name: 'Apple' })).toBeInTheDocument();
+      expect(screen.queryByRole('option', { name: 'Carrot' })).not.toBeInTheDocument();
+    });
+
+    it('shows defaultValue label in searchable mode when data arrives after mount', () => {
+      const { rerender } = render(<TreeSelect data={[]} searchable defaultValue="milk" />);
+      rerender(<TreeSelect data={treeData} searchable defaultValue="milk" />);
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
+    });
+
+    it('does not restore defaultValue label when value was cleared before data arrived', async () => {
+      const clearProps = {
+        searchable: true,
+        clearable: true,
+        defaultValue: 'milk',
+        clearButtonProps: { 'aria-label': 'Clear value' },
+      };
+      const { rerender } = render(<TreeSelect data={[]} {...clearProps} />);
+      await userEvent.click(screen.getByLabelText('Clear value'));
+      rerender(<TreeSelect data={treeData} {...clearProps} />);
+      expect(screen.getByRole('combobox')).toHaveValue('');
     });
   });
 });

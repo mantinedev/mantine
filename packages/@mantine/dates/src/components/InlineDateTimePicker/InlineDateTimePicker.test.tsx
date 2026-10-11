@@ -1,3 +1,4 @@
+import { act } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { InlineDateTimePicker, InlineDateTimePickerProps } from './InlineDateTimePicker';
 
@@ -97,6 +98,60 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
     expect(spy).toHaveBeenLastCalledWith('2022-04-11 14:00:00');
   });
 
+  it('keeps time of the existing value over defaultTimeValue', () => {
+    render(
+      <InlineDateTimePicker
+        {...defaultProps}
+        defaultValue="2022-04-11 14:30:00"
+        defaultTimeValue="09:15"
+      />
+    );
+    expect(getTimePicker()).toHaveValue('14');
+  });
+
+  it('assigns defaultTimeValue to the selected date when there is no value', async () => {
+    const spy = jest.fn();
+    render(
+      <InlineDateTimePicker
+        {...defaultProps}
+        defaultDate="2022-04-01"
+        defaultTimeValue="09:15"
+        onChange={spy}
+      />
+    );
+    expect(getTimePicker()).toHaveValue('09');
+    await userEvent.click(getDay('3'));
+    expect(spy).toHaveBeenLastCalledWith('2022-04-03 09:15:00');
+  });
+
+  it('clamps time to minDate time on the minDate day', async () => {
+    render(
+      <InlineDateTimePicker
+        {...defaultProps}
+        defaultValue="2022-04-11 14:00:00"
+        minDate="2022-04-11 12:30:00"
+      />
+    );
+    await userEvent.clear(getTimePicker());
+    await userEvent.type(getTimePicker(), '09');
+    act(() => getSubmitButton().focus());
+    expect(getTimePicker()).toHaveValue('12');
+  });
+
+  it('clamps time to maxDate time on the maxDate day', async () => {
+    render(
+      <InlineDateTimePicker
+        {...defaultProps}
+        defaultValue="2022-04-11 10:00:00"
+        maxDate="2022-04-11 18:30:00"
+      />
+    );
+    await userEvent.clear(getTimePicker());
+    await userEvent.type(getTimePicker(), '21');
+    act(() => getSubmitButton().focus());
+    expect(getTimePicker()).toHaveValue('18');
+  });
+
   it('supports withSeconds prop', () => {
     const { rerender } = render(
       <InlineDateTimePicker {...defaultProps} defaultValue="2022-04-11 14:45:54" />
@@ -193,6 +248,28 @@ describe('@mantine/dates/InlineDateTimePicker', () => {
       expect(rangeInfo).toBeInTheDocument();
       expect(rangeInfo!.textContent).toContain('11/04/2022');
       expect(rangeInfo!.textContent).toContain('15/04/2022');
+    });
+
+    it('announces range info updates', () => {
+      const { container } = render(
+        <InlineDateTimePicker {...rangeProps} defaultValue={['2022-04-11', '2022-04-15']} />
+      );
+      expect(container.querySelector('.mantine-InlineDateTimePicker-rangeInfo')).toHaveAttribute(
+        'aria-live',
+        'polite'
+      );
+    });
+
+    it('keeps times of the existing range value over defaultTimeValue', () => {
+      render(
+        <InlineDateTimePicker
+          {...rangeProps}
+          defaultValue={['2022-04-11 14:30:00', '2022-04-15 16:00:00']}
+          defaultTimeValue="09:15"
+        />
+      );
+      expect(screen.getByLabelText('test-time-picker-hours')).toHaveValue('14');
+      expect(screen.getByLabelText('test-end-time-picker-hours')).toHaveValue('16');
     });
 
     it('calls onSubmit in range mode', async () => {

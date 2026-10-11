@@ -1,5 +1,5 @@
-import React, { useEffect, useEffectEvent, useLayoutEffect, useRef } from 'react';
-import { useMergedRef } from '@mantine/hooks';
+import React, { useEffect, useEffectEvent, useRef } from 'react';
+import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
@@ -197,7 +197,7 @@ export function TextareaAutosize({
     onChange?.(event);
   };
 
-  useLayoutEffect(resizeTextarea);
+  useIsomorphicEffect(resizeTextarea);
 
   useEffect(() => {
     const handleResize = () => resizeTextarea();

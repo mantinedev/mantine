@@ -272,10 +272,10 @@ export interface NumberInputProps<T extends NumberInputNumericType = number>
   /** If set, all text is selected when the input receives focus @default false @category behavior */
   selectAllOnFocus?: boolean;
 
-  /** Called when the increment button or arrow up key is pressed and the value has reached the maximum @category behavior */
+  /** Called when the decrement button or arrow down key is pressed and the value has reached the minimum @category behavior */
   onMinReached?: () => void;
 
-  /** Called when the decrement button or arrow down key is pressed and the value has reached the minimum @category behavior */
+  /** Called when the increment button or arrow up key is pressed and the value has reached the maximum @category behavior */
   onMaxReached?: () => void;
 }
 

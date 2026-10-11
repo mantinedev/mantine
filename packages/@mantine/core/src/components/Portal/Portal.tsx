@@ -29,6 +29,9 @@ export interface BasePortalProps extends React.ComponentProps<'div'> {
    * container node appended to document.body. When false, each Portal creates
    * its own container node.
    *
+   * `className`, `style` and `id` are applied only to the container node created
+   * for this Portal: they are ignored when the shared node or `target` is used.
+   *
    * Has no effect when target is specified.
    *
    * @default true
@@ -43,10 +46,14 @@ export interface PortalProps extends BasePortalProps {
 
 let cachedSharedPortalNode: HTMLElement | null = null;
 
-function getTargetNode({ target, reuseTargetNode, ...others }: BasePortalProps): HTMLElement {
+function getTargetNode({
+  target,
+  reuseTargetNode,
+  ...others
+}: BasePortalProps): HTMLElement | null {
   if (target) {
     if (typeof target === 'string') {
-      return document.querySelector<HTMLElement>(target) || createPortalNode(others);
+      return document.querySelector<HTMLElement>(target);
     }
 
     return target;
@@ -68,7 +75,7 @@ function getTargetNode({ target, reuseTargetNode, ...others }: BasePortalProps):
       return existingNode;
     }
 
-    const node = createPortalNode(others);
+    const node = createPortalNode({});
     node.setAttribute('data-mantine-shared-portal-node', 'true');
     document.body.appendChild(node);
     cachedSharedPortalNode = node;

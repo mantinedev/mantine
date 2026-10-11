@@ -49,7 +49,7 @@ export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, Elemen
   /** Type of queries used for responsive styles @default 'media' @category appearance */
   type?: 'media' | 'container';
 
-  /** Breakpoints values, only used with `type="container"` @category appearance */
+  /** Breakpoints values used in media and container queries, overrides `theme.breakpoints` for this grid and its columns @category appearance */
   breakpoints?: GridBreakpoints;
 }
 

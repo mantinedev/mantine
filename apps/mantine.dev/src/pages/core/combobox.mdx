@@ -108,6 +108,11 @@ interface ComboboxStore {
    * */
   selectFirstOption(): string | null;
 
+  /** Selects last `Combobox.Option` that is not disabled.
+   *  If there are no such options, the function does nothing.
+   * */
+  selectLastOption(): string | null;
+
   /** Selects next `Combobox.Option` that is not disabled.
    *  If the current option is the last one, the function selects first option, if `loop` is true.
    */
@@ -130,7 +135,16 @@ interface ComboboxStore {
    *  The function is required to be used with searchable components to update selected option index
    *  when options list changes based on search query.
    */
-  updateSelectedOptionIndex(target?: 'active' | 'selected'): void;
+  updateSelectedOptionIndex(
+    target?: 'active' | 'selected' | number,
+    options?: { scrollIntoView?: boolean }
+  ): void;
+
+  /** Returns id of the currently selected option element or `null` */
+  getSelectedOptionId(): string | null;
+
+  /** Subscribes to selected option id changes, returns unsubscribe function */
+  subscribeToSelectedOptionId(listener: () => void): () => void;
 
   /** Returns list id, used for `aria-*` attributes */
   getListId(): string | null;

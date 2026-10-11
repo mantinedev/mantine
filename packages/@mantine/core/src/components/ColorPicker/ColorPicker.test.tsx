@@ -1,4 +1,4 @@
-import { render, tests, userEvent } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ColorPicker, ColorPickerProps, ColorPickerStylesNames } from './ColorPicker';
 
 const defaultProps: ColorPickerProps = {
@@ -108,5 +108,89 @@ describe('@mantine/core/ColorPicker', () => {
     const input = container.querySelector('input[name="color"]') as HTMLInputElement;
     expect(input).toBeInTheDocument();
     expect(input.value).toBe('#ff0000');
+  });
+
+  const labels = { saturationLabel: 'Saturation', hueLabel: 'Hue', alphaLabel: 'Alpha' };
+
+  it('changes hue with arrow, Home and End keys', async () => {
+    const onChange = jest.fn();
+    const onChangeEnd = jest.fn();
+    render(
+      <ColorPicker
+        {...labels}
+        format="hsla"
+        defaultValue="hsla(0, 100%, 50%, 1)"
+        onChange={onChange}
+        onChangeEnd={onChangeEnd}
+      />
+    );
+
+    const hue = screen.getByRole('slider', { name: 'Hue' });
+    hue.focus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(onChange).toHaveBeenLastCalledWith('hsla(18, 100%, 50%, 1)');
+    expect(onChangeEnd).toHaveBeenLastCalledWith('hsla(18, 100%, 50%, 1)');
+
+    await userEvent.keyboard('{End}');
+    expect(onChangeEnd).toHaveBeenLastCalledWith('hsla(360, 100%, 50%, 1)');
+
+    await userEvent.keyboard('{Home}');
+    expect(onChangeEnd).toHaveBeenLastCalledWith('hsla(0, 100%, 50%, 1)');
+  });
+
+  it('changes alpha with arrow, Home and End keys', async () => {
+    const onChangeEnd = jest.fn();
+    render(
+      <ColorPicker
+        {...labels}
+        format="hsla"
+        defaultValue="hsla(0, 100%, 50%, 0.5)"
+        onChangeEnd={onChangeEnd}
+      />
+    );
+
+    const alpha = screen.getByRole('slider', { name: 'Alpha' });
+    alpha.focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(onChangeEnd).toHaveBeenLastCalledWith('hsla(0, 100%, 50%, 0.45)');
+
+    await userEvent.keyboard('{Home}');
+    expect(onChangeEnd).toHaveBeenLastCalledWith('hsla(0, 100%, 50%, 0)');
+
+    await userEvent.keyboard('{End}');
+    expect(onChangeEnd).toHaveBeenLastCalledWith('hsla(0, 100%, 50%, 1)');
+  });
+
+  it('changes saturation and brightness with arrow, Home and End keys', async () => {
+    const onChangeEnd = jest.fn();
+    render(
+      <ColorPicker {...labels} format="hex" defaultValue="#808080" onChangeEnd={onChangeEnd} />
+    );
+
+    const saturation = screen.getByRole('slider', { name: 'Saturation' });
+    saturation.focus();
+    await userEvent.keyboard('{ArrowUp}');
+    expect(onChangeEnd).toHaveBeenCalledTimes(1);
+    const afterUp = onChangeEnd.mock.calls[0][0];
+    expect(afterUp).not.toBe('#808080');
+
+    await userEvent.keyboard('{End}');
+    expect(saturation).toHaveAttribute('aria-valuenow', '100');
+
+    await userEvent.keyboard('{Home}');
+    expect(saturation).toHaveAttribute('aria-valuenow', '0');
+  });
+
+  it('exposes readable slider values to assistive technology', () => {
+    render(<ColorPicker {...labels} format="rgba" defaultValue="rgba(0, 150, 255, 0.426)" />);
+
+    const saturation = screen.getByRole('slider', { name: 'Saturation' });
+    expect(saturation).toHaveAttribute('aria-valuenow', '100');
+    expect(saturation).toHaveAttribute('aria-valuemin', '0');
+    expect(saturation).toHaveAttribute('aria-valuemax', '100');
+
+    const hueText = screen.getByRole('slider', { name: 'Hue' }).getAttribute('aria-valuetext');
+    expect(hueText).toMatch(/^\d+°$/);
+    expect(screen.getByRole('slider', { name: 'Alpha' })).toHaveAttribute('aria-valuetext', '43%');
   });
 });

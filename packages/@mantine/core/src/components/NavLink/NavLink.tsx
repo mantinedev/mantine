@@ -1,4 +1,4 @@
-import { useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -96,10 +96,10 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** If set, a vertical guideline is displayed at the start of nested links @default false @category appearance */
   withGuideline?: boolean;
 
-  /** If set, disabled styles will be added to the root element @default false @category behavior */
+  /** If set, the root element is marked as disabled with `aria-disabled` and disabled styles, clicks are ignored @default false @category behavior */
   disabled?: boolean;
 
-  /** If set, adjusts text color based on background color for `filled` variant @category appearance */
+  /** If set, adjusts text color based on background color for `filled` variant @default theme.autoContrast @category appearance */
   autoContrast?: boolean;
 
   /** Called when the root element is clicked @category behavior */
@@ -108,7 +108,7 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** Called on keydown of the root element @category behavior */
   onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 
-  /** If set to `false`, child `NavLinks` are unmounted when collapsed */
+  /** If set to `false`, child `NavLinks` are unmounted when collapsed. By default, collapsed children are kept mounted. @default true @category behavior */
   keepMounted?: boolean;
 }
 
@@ -213,8 +213,17 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
   });
 
   const withChildren = !!children;
+  const collapseId = useId();
+  const component =
+    (others as any).component ?? (withChildren && !(others as any).href ? 'button' : 'a');
+  const handleSpaceKey = withChildren && component !== 'button';
 
-  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (disabled) {
+      event.preventDefault();
+      return;
+    }
+
     onClick?.(event);
 
     if (withChildren) {
@@ -227,12 +236,12 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
     <>
       <UnstyledButton
         {...getStyles('root')}
-        component="a"
+        component={component}
         onClick={handleClick}
-        onKeyDown={(event) => {
+        onKeyDown={(event: React.KeyboardEvent<HTMLElement>) => {
           onKeyDown?.(event);
 
-          if (event.nativeEvent.code === 'Space' && withChildren) {
+          if (event.nativeEvent.code === 'Space' && handleSpaceKey && !disabled) {
             event.preventDefault();
             setOpened(!_opened);
           }
@@ -241,6 +250,9 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
         size={size}
         variant={variant}
         mod={[{ disabled, active, expanded: _opened }, mod]}
+        aria-expanded={withChildren ? _opened : undefined}
+        aria-controls={withChildren ? collapseId : undefined}
+        aria-disabled={disabled || undefined}
         {...others}
       >
         {leftSection && (
@@ -275,7 +287,12 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
         )}
       </UnstyledButton>
       {withChildren && (
-        <Collapse expanded={_opened} keepMounted={keepMounted} {...getStyles('collapse')}>
+        <Collapse
+          expanded={_opened}
+          keepMounted={keepMounted}
+          id={collapseId}
+          {...getStyles('collapse')}
+        >
           <Box {...getStyles('children')} mod={{ 'with-guideline': withGuideline, variant }}>
             {children}
           </Box>

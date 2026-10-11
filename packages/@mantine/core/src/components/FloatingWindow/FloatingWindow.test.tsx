@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { fireEvent } from '@testing-library/react';
+import { createRef, useState } from 'react';
+import { act, fireEvent } from '@testing-library/react';
+import { SetFloatingWindowPosition } from '@mantine/hooks';
 import { render, screen, tests } from '@mantine-tests/core';
 import { FloatingWindow, FloatingWindowProps, FloatingWindowStylesNames } from './FloatingWindow';
 
@@ -519,6 +520,155 @@ describe('@mantine/core/FloatingWindow', () => {
     expect(screen.getByTestId('position')).toHaveTextContent('120,140');
 
     fireEvent.mouseUp(document);
+  });
+
+  it('sets data-dragging while the window is dragged', () => {
+    render(<FloatingWindow withinPortal={false} data-testid="window" />);
+    const root = screen.getByTestId('window');
+    expect(root).not.toHaveAttribute('data-dragging');
+
+    fireEvent.mouseDown(root, { button: 0, clientX: 0, clientY: 0 });
+    expect(root).toHaveAttribute('data-dragging');
+
+    fireEvent.mouseUp(document);
+    expect(root).not.toHaveAttribute('data-dragging');
+  });
+
+  it('removes document move listeners after the drag ends', () => {
+    const addEventListener = jest.spyOn(document, 'addEventListener');
+    render(<FloatingWindow withinPortal={false} data-testid="window" />);
+
+    fireEvent.mouseDown(screen.getByTestId('window'), { button: 0, clientX: 0, clientY: 0 });
+    const moveListener = addEventListener.mock.calls.find(([type]) => type === 'touchmove');
+    const signal = (moveListener?.[2] as AddEventListenerOptions).signal!;
+    expect(signal.aborted).toBe(false);
+
+    fireEvent.mouseUp(document);
+    expect(signal.aborted).toBe(true);
+    addEventListener.mockRestore();
+  });
+
+  it('restricts movement to the given axis', () => {
+    const onPositionChange = jest.fn();
+    render(
+      <FloatingWindow
+        withinPortal={false}
+        axis="x"
+        initialPosition={{ top: 10, left: 10 }}
+        onPositionChange={onPositionChange}
+        data-testid="window"
+      />
+    );
+
+    fireEvent.mouseDown(screen.getByTestId('window'), { button: 0, clientX: 0, clientY: 0 });
+    fireEvent.mouseMove(document, { clientX: 50, clientY: 60 });
+    expect(onPositionChange).toHaveBeenLastCalledWith({ x: 50, y: 10 });
+    fireEvent.mouseUp(document);
+  });
+
+  it('starts dragging only from dragHandleSelector and not from excludeDragHandleSelector', () => {
+    const onDragStart = jest.fn();
+    render(
+      <FloatingWindow
+        withinPortal={false}
+        dragHandleSelector="[data-handle]"
+        excludeDragHandleSelector="[data-exclude]"
+        onDragStart={onDragStart}
+      >
+        <div data-handle>
+          handle
+          <button type="button" data-exclude>
+            excluded
+          </button>
+        </div>
+        <div>body</div>
+      </FloatingWindow>
+    );
+
+    fireEvent.mouseDown(screen.getByText('body'), { button: 0 });
+    fireEvent.mouseDown(screen.getByText('excluded'), { button: 0 });
+    expect(onDragStart).not.toHaveBeenCalled();
+
+    fireEvent.mouseDown(screen.getByText('handle'), { button: 0 });
+    expect(onDragStart).toHaveBeenCalledTimes(1);
+    fireEvent.mouseUp(document);
+  });
+
+  it('sets position with setPositionRef', () => {
+    const setPositionRef =
+      createRef<SetFloatingWindowPosition>() as React.RefObject<SetFloatingWindowPosition | null>;
+    const onPositionChange = jest.fn();
+    render(
+      <FloatingWindow
+        withinPortal={false}
+        constrainToViewport={false}
+        setPositionRef={setPositionRef}
+        onPositionChange={onPositionChange}
+        data-testid="window"
+      />
+    );
+
+    act(() => setPositionRef.current!({ top: 40, left: 30 }));
+    expect(onPositionChange).toHaveBeenLastCalledWith({ x: 30, y: 40 });
+    expect(screen.getByTestId('window')).toHaveStyle({ left: '30px', top: '40px' });
+  });
+
+  it('calls onPositionChange with the initial position', () => {
+    const onPositionChange = jest.fn();
+    render(
+      <FloatingWindow
+        withinPortal={false}
+        initialPosition={{ top: 20, left: 15 }}
+        onPositionChange={onPositionChange}
+      />
+    );
+    expect(onPositionChange).toHaveBeenCalledWith({ x: 15, y: 20 });
+  });
+
+  it('moves the focused window with arrow keys', () => {
+    const onPositionChange = jest.fn();
+    render(
+      <FloatingWindow
+        withinPortal={false}
+        constrainToViewport={false}
+        initialPosition={{ top: 100, left: 100 }}
+        onPositionChange={onPositionChange}
+        data-testid="window"
+      >
+        <input aria-label="inner" />
+      </FloatingWindow>
+    );
+
+    const root = screen.getByTestId('window');
+    expect(root).toHaveAttribute('tabindex', '0');
+
+    fireEvent.keyDown(root, { key: 'ArrowRight' });
+    expect(onPositionChange).toHaveBeenLastCalledWith({ x: 110, y: 100 });
+
+    fireEvent.keyDown(root, { key: 'ArrowDown', shiftKey: true });
+    expect(onPositionChange).toHaveBeenLastCalledWith({ x: 110, y: 150 });
+
+    onPositionChange.mockClear();
+    fireEvent.keyDown(screen.getByRole('textbox'), { key: 'ArrowLeft' });
+    expect(onPositionChange).not.toHaveBeenCalled();
+  });
+
+  it('is not focusable and does not move with keyboard when enabled is false', () => {
+    const onPositionChange = jest.fn();
+    render(
+      <FloatingWindow
+        withinPortal={false}
+        enabled={false}
+        onPositionChange={onPositionChange}
+        data-testid="window"
+      />
+    );
+
+    const root = screen.getByTestId('window');
+    expect(root).not.toHaveAttribute('tabindex');
+    onPositionChange.mockClear();
+    fireEvent.keyDown(root, { key: 'ArrowRight' });
+    expect(onPositionChange).not.toHaveBeenCalled();
   });
 
   it('throws error when ResizeHandle is used outside FloatingWindow', () => {

@@ -14,6 +14,7 @@ import {
 import { Loader, LoaderProps } from '../Loader';
 import { Overlay, OverlayProps } from '../Overlay';
 import { Transition, TransitionOverride } from '../Transition';
+import { VisuallyHidden } from '../VisuallyHidden';
 import classes from './LoadingOverlay.module.css';
 
 export type LoadingOverlayStylesNames = 'root' | 'loader' | 'overlay';
@@ -34,6 +35,9 @@ export interface LoadingOverlayProps
 
   /** Controls overlay visibility. Typically used with state (useState, useDisclosure). @default false */
   visible?: boolean;
+
+  /** Text announced by screen readers when the overlay becomes visible @default 'Loading' @category accessibility */
+  loadingLabel?: string;
 
   /** Controls `z-index` of both the overlay and loader. The loader receives `z-index + 1`. @default 400 */
   zIndex?: string | number;
@@ -62,6 +66,7 @@ const defaultProps = {
   transitionProps: { transition: 'fade', duration: 0 },
   overlayProps: { backgroundOpacity: 0.75 },
   zIndex: getDefaultZIndex('overlay'),
+  loadingLabel: 'Loading',
 } satisfies Partial<LoadingOverlayProps>;
 
 const varsResolver = createVarsResolver<LoadingOverlayFactory>((_, { zIndex }) => ({
@@ -84,6 +89,7 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props) => {
     overlayProps,
     visible,
     zIndex,
+    loadingLabel,
     attributes,
     onEnter,
     onEntered,
@@ -121,7 +127,8 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props) => {
       onExited={onExited}
     >
       {(transitionStyles) => (
-        <Box {...getStyles('root', { style: transitionStyles })} {...others}>
+        <Box role="status" {...getStyles('root', { style: transitionStyles })} {...others}>
+          <VisuallyHidden>{loadingLabel}</VisuallyHidden>
           <Loader
             unstyled={unstyled}
             {...loaderProps}

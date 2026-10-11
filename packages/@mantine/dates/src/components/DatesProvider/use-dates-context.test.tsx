@@ -42,4 +42,38 @@ describe('@mantine/dates/use-dates-context', () => {
     expect(hook.result.current.getWeekendDays()).toStrictEqual([1, 2]);
     expect(hook.result.current.getWeekendDays([1, 5])).toStrictEqual([1, 5]);
   });
+
+  it('resolves labelSeparator and submitButtonLabel', () => {
+    const defaults = renderHook(() => useDatesContext());
+    expect(defaults.result.current.getLabelSeparator()).toBe('–');
+    expect(defaults.result.current.getLabelSeparator('/')).toBe('/');
+    expect(defaults.result.current.getSubmitButtonLabel()).toBe('Save');
+    expect(defaults.result.current.getSubmitButtonLabel('Apply')).toBe('Apply');
+
+    const custom = renderHook(() => useDatesContext(), {
+      wrapper: ({ children }) => (
+        <DatesProvider settings={{ labelSeparator: '→', submitButtonLabel: 'Done' }}>
+          {children}
+        </DatesProvider>
+      ),
+    });
+    expect(custom.result.current.getLabelSeparator()).toBe('→');
+    expect(custom.result.current.getLabelSeparator('')).toBe('');
+    expect(custom.result.current.getSubmitButtonLabel()).toBe('Done');
+  });
+
+  it('falls back to defaults for settings that are not provided', () => {
+    const hook = renderHook(() => useDatesContext(), {
+      wrapper: ({ children }) => (
+        <DatesProvider settings={{ locale: 'ru' }}>{children}</DatesProvider>
+      ),
+    });
+
+    expect(hook.result.current.locale).toBe('ru');
+    expect(hook.result.current.firstDayOfWeek).toBe(1);
+    expect(hook.result.current.weekendDays).toStrictEqual([0, 6]);
+    expect(hook.result.current.labelSeparator).toBe('–');
+    expect(hook.result.current.consistentWeeks).toBe(false);
+    expect(hook.result.current.submitButtonLabel).toBe('Save');
+  });
 });

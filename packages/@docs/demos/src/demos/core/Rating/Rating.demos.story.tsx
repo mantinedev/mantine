@@ -32,3 +32,8 @@ export const Demo_allowClear = {
   name: '⭐ Demo: allowClear',
   render: renderDemo(demos.allowClear),
 };
+
+export const Demo_disabled = {
+  name: '⭐ Demo: disabled',
+  render: renderDemo(demos.disabled),
+};

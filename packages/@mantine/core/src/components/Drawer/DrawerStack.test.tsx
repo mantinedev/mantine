@@ -55,6 +55,14 @@ describe('@mantine/core/Drawer.Stack', () => {
     }
   );
 
+  it('makes drawers behind the top one inert', () => {
+    render(<TestContainer />);
+    fireEvent.click(screen.getByText('Open a'));
+    fireEvent.click(screen.getByText('Open b'));
+    expect(screen.getByRole('dialog', { name: 'a' })).toHaveAttribute('inert');
+    expect(screen.getByRole('dialog', { name: 'b' })).not.toHaveAttribute('inert');
+  });
+
   it('handles Escape independently in separate stacks', () => {
     render(
       <>

@@ -8,7 +8,6 @@ export default Layout(MDX_DATA.LoadingOverlay);
 
 `LoadingOverlay` renders an overlay with a loader over the parent element with relative position.
 It is usually used to indicate the loading state of forms.
-Note that elements under the overlay are still focusable with the keyboard, so remember to add additional logic to handle this case.
 
 The `LoadingOverlay` rendering is controlled by the `visible` prop:
 
@@ -26,3 +25,25 @@ To replace the default loader with any custom content, set `loaderProps={{ child
 You can put any React node inside `loaderProps.children`:
 
 <Demo data={LoadingOverlayDemos.customLoader} />
+
+## Accessibility
+
+The overlay has `role="status"` and announces the `loadingLabel` text (`'Loading'` by default)
+to screen readers when it becomes visible.
+
+Elements under the overlay are still focusable with the keyboard. Set the `inert` attribute on the
+covered content while the overlay is visible. Do not set it on the element that contains the overlay,
+otherwise the loading state is hidden from screen readers:
+
+```tsx
+import { Box, LoadingOverlay } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box pos="relative">
+      <LoadingOverlay visible={loading} />
+      <form inert={loading}>{/* ...form fields */}</form>
+    </Box>
+  );
+}
+```

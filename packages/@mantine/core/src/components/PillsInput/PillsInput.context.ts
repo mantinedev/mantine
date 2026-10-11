@@ -6,6 +6,7 @@ export interface PillsInputContextValue {
   fieldRef: React.RefObject<HTMLInputElement | null>;
   size: MantineSize | (string & {});
   disabled: boolean | undefined;
+  required: boolean | undefined;
   hasError: boolean | undefined;
   variant: InputVariant | (string & {}) | undefined;
 }

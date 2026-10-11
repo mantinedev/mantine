@@ -9,6 +9,7 @@ export default Layout(MDX_DATA.TableOfContents);
 Use the `TableOfContents` component to display a table of contents like
 in the sidebar of mantine.dev documentation. The component tracks
 the scroll position and highlights the current heading in the list.
+Clicking a control scrolls the page to the associated heading.
 
 <Demo data={TableOfContentsDemos.usage} />
 
@@ -68,7 +69,8 @@ function Demo() {
 
 You can pass props down to controls rendered by the `TableOfContents` component
 with the `getControlProps` function. It accepts an object with `active` and `data`
-properties and should return a props object.
+properties and should return a props object. It replaces the default function that
+renders the heading value and scrolls to the heading on click.
 
 Example of changing controls to links:
 

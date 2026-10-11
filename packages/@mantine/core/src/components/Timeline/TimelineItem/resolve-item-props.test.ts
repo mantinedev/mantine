@@ -1,5 +1,5 @@
 import { TimelineContextValue } from '../Timeline.context';
-import { getItemActiveState, resolveItemProps } from './resolve-item-props';
+import { getItemActiveState, isCurrentItem, resolveItemProps } from './resolve-item-props';
 
 function getContext(overrides?: Partial<TimelineContextValue>): TimelineContextValue {
   return {
@@ -81,5 +81,19 @@ describe('@mantine/core/Timeline/resolve-item-props', () => {
 
   it('passes the align of the context through', () => {
     expect(resolveItemProps(input, getContext({ align: 'right' })).align).toBe('right');
+  });
+});
+
+describe('@mantine/core/Timeline/is-current-item', () => {
+  it('marks only the active boundary item as current', () => {
+    const ctx = getContext({ active: 1, itemsCount: 3 });
+    expect(isCurrentItem(0, ctx)).toBe(false);
+    expect(isCurrentItem(1, ctx)).toBe(true);
+    expect(isCurrentItem(2, ctx)).toBe(false);
+    expect(isCurrentItem(undefined, ctx)).toBe(false);
+    expect(isCurrentItem(0, getContext({ active: -1 }))).toBe(false);
+    expect(isCurrentItem(1, getContext({ active: 1, itemsCount: 3, reverseActive: true }))).toBe(
+      true
+    );
   });
 });

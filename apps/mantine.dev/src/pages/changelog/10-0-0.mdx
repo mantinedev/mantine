@@ -680,3 +680,9 @@ remove the navigation buttons and edge gradients while keeping native and drag s
 - [Select](/core/select#scrollable-dropdown), [MultiSelect](/core/multi-select), [TagsInput](/core/tags-input), [Autocomplete](/core/autocomplete), [TreeSelect](/core/tree-select), [PhoneInput](/core/phone-input), [Mentions](/core/mentions) and [ComboboxPopover](/core/combobox-popover) now support `scrollBehavior` prop – set it to `smooth` to animate the scroll when options are navigated with the keyboard.
 - [Stepper.Step](/core/stepper#wrapping-stepperstep) can now be wrapped in another component – the step index is passed by forwarding the props the wrapper receives or declared with the `step` prop.
 - [Timeline.Item](/core/timeline#wrapping-timelineitem) can now be wrapped in another component – the item index is passed by forwarding the props the wrapper receives or declared with the new `index` prop. New `active` and `lineActive` props allow an item to be active while the line after it is not.
+- [Tooltip](/core/tooltip) now opens when the target receives keyboard focus – set `events={{ hover: true, focus: false, touch: false }}` to restore the previous behavior.
+- [Combobox.Target](/core/combobox) now sets `role="combobox"` and `aria-expanded` on the target element by default – set `withExpandedAttribute={false}` to restore the previous behavior.
+- [Pagination](/core/pagination) root element is now a `nav` landmark.
+- [NavLink](/core/nav-link) with nested links and without `href` is now rendered as a `button` element.
+- [LoadingOverlay](/core/loading-overlay) now announces its loading state to screen readers, use `loadingLabel` prop to change the announced text.
+- [Pill](/core/pill) remove button now has a default `aria-label="Remove"`.

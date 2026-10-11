@@ -39,6 +39,7 @@ export interface ControlsListProps {
   getControlProps: GetControlProps | undefined;
   withCellSpacing: boolean | undefined;
   fullWidth: boolean | undefined;
+  label?: string;
 }
 
 interface ListInput {
@@ -120,6 +121,7 @@ export function ControlsList({
   getControlProps,
   withCellSpacing,
   fullWidth,
+  label,
 }: ControlsListProps) {
   const ctx = useCalendarContext();
   const column = useCalendarColumn();
@@ -192,6 +194,8 @@ export function ControlsList({
       component="table"
       size={size}
       {...ctx.getStyles(`${kind}List`)}
+      role="grid"
+      aria-label={label}
       data-full-width={fullWidth || undefined}
     >
       <tbody>{rows}</tbody>

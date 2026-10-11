@@ -59,7 +59,7 @@ export const usage: MantineDemo = {
         { value: 'horizontal', label: 'Horizontal' },
       ],
       initialValue: 'vertical',
-      libraryValue: 'vertical',
+      libraryValue: 'horizontal',
     },
     { prop: 'withDivider', type: 'boolean', libraryValue: false, initialValue: false },
   ],

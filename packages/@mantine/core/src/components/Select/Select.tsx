@@ -310,7 +310,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
         floatingHeight={floatingHeight}
         keepMounted={autoSelectOnBlur}
         onOptionSubmit={(val) => {
-          onOptionSubmit?.(val as any);
+          onOptionSubmit?.(optionsLockup[val].value as any);
           const optionLockup = allowDeselect
             ? `${optionsLockup[val].value}` === `${_value}`
               ? null

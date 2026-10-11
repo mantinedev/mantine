@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, RefObject } from 'react';
+import { useCallback, useEffect, useRef, useState, RefObject } from 'react';
 import { useMutationObserverTarget, useTimeout } from '@mantine/hooks';
 import { getEnv } from '../../core';
 import { toInt } from '../ScrollArea/utils';
@@ -20,6 +20,10 @@ function isParent(
   }
   return false;
 }
+
+const DIR_OBSERVER_OPTIONS: MutationObserverInit = { attributes: true, attributeFilter: ['dir'] };
+
+const getDocumentElement = () => document.documentElement;
 
 interface UseFloatingIndicatorInput {
   target: HTMLElement | null | undefined;
@@ -165,17 +169,18 @@ export function useFloatingIndicator({
     { autoInvoke: true }
   );
 
-  useMutationObserverTarget(
-    (mutations) => {
+  const handleDirMutation = useCallback(
+    (mutations: MutationRecord[]) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'dir') {
           updatePositionWithoutAnimation();
         }
       });
     },
-    { attributes: true, attributeFilter: ['dir'] },
-    () => document.documentElement
+    [target, parent]
   );
+
+  useMutationObserverTarget(handleDirMutation, DIR_OBSERVER_OPTIONS, getDocumentElement);
 
   return { initialized, hidden };
 }

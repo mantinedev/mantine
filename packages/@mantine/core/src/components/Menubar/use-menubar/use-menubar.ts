@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useCallbackRef, useId, useLatestRef, useUncontrolled } from '@mantine/hooks';
 
 export type MenubarOpenSource = 'click' | 'hover';
@@ -97,7 +97,7 @@ export interface MenubarController {
   focusTarget: (index: number) => void;
 }
 
-const FOCUS_MENU_ITEM_DELAY = 40;
+const FOCUS_MENU_ITEM_MAX_FRAMES = 60;
 
 export function useMenubar(options: MenubarControllerOptions = {}): MenubarController {
   const { openIndex: openIndexProp, defaultOpenIndex, onOpenChange, loop = true } = options;
@@ -262,8 +262,18 @@ export function useMenubar(options: MenubarControllerOptions = {}): MenubarContr
 
   const focusLastMenu = useCallbackRef(() => focusEdgeMenu('last'));
 
+  const focusMenuItemFrameRef = useRef<number | null>(null);
+
   const focusMenuItem = useCallbackRef((index: number, position: 'first' | 'last' = 'first') => {
-    window.setTimeout(() => {
+    if (focusMenuItemFrameRef.current !== null) {
+      window.cancelAnimationFrame(focusMenuItemFrameRef.current);
+    }
+
+    let frames = 0;
+
+    const attempt = () => {
+      focusMenuItemFrameRef.current = null;
+
       if (openIndexRef.current !== index) {
         return;
       }
@@ -280,9 +290,26 @@ export function useMenubar(options: MenubarControllerOptions = {}): MenubarContr
       if (items && items.length > 0) {
         const item = position === 'first' ? items[0] : items[items.length - 1];
         item?.focus();
+        return;
       }
-    }, FOCUS_MENU_ITEM_DELAY);
+
+      frames += 1;
+      if (frames < FOCUS_MENU_ITEM_MAX_FRAMES) {
+        focusMenuItemFrameRef.current = window.requestAnimationFrame(attempt);
+      }
+    };
+
+    focusMenuItemFrameRef.current = window.requestAnimationFrame(attempt);
   });
+
+  useEffect(
+    () => () => {
+      if (focusMenuItemFrameRef.current !== null) {
+        window.cancelAnimationFrame(focusMenuItemFrameRef.current);
+      }
+    },
+    []
+  );
 
   return useMemo(
     () => ({

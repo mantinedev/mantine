@@ -1,4 +1,11 @@
-import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
+import {
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  screen,
+  tests,
+  userEvent,
+} from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
 import { PillsInput, PillsInputProps } from './PillsInput';
 
@@ -48,5 +55,54 @@ describe('@mantine/core/PillsInput', () => {
     component: PillsInput,
     props: defaultProps,
     componentName: 'PillsInput',
+  });
+
+  it('focuses the field when the wrapper is clicked', async () => {
+    const { container } = render(
+      <PillsInput label="test-label">
+        <PillsInput.Field />
+      </PillsInput>
+    );
+    await userEvent.click(container.querySelector('.mantine-PillsInput-input')!);
+    expect(screen.getByRole('textbox')).toHaveFocus();
+  });
+
+  it('does not focus the field when the wrapper is clicked inside disabled fieldset', async () => {
+    const { container } = render(
+      <fieldset disabled>
+        <PillsInput label="test-label">
+          <PillsInput.Field />
+        </PillsInput>
+      </fieldset>
+    );
+    await userEvent.click(container.querySelector('.mantine-PillsInput-input')!);
+    expect(screen.getByRole('textbox')).not.toHaveFocus();
+  });
+
+  it('marks the field as required when required is set', () => {
+    const { rerender } = render(
+      <PillsInput label="test-label" required>
+        <PillsInput.Field />
+      </PillsInput>
+    );
+    expect(screen.getByRole('textbox')).toHaveAttribute('aria-required', 'true');
+
+    rerender(
+      <PillsInput label="test-label">
+        <PillsInput.Field />
+      </PillsInput>
+    );
+    expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-required');
+  });
+
+  it('calls onMouseDown passed to the field', async () => {
+    const spy = jest.fn();
+    render(
+      <PillsInput label="test-label">
+        <PillsInput.Field onMouseDown={spy} />
+      </PillsInput>
+    );
+    await userEvent.click(screen.getByRole('textbox'));
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });

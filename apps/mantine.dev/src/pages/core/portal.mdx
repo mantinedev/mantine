@@ -36,12 +36,13 @@ function Demo() {
 }
 ```
 
-In the example above, the div element is rendered outside of the parent main (before the closing body tag),
-but still receives the `opened` and `onClose` props. The element will not be affected by the parent z-index.
+In the example above, the div element is rendered outside of the parent main (before the closing body tag).
+The element will not be affected by the parent z-index.
 
 ## Reuse target node
 
 By default, Portal reuses the same target node for all instances (`reuseTargetNode={true}`).
+`className`, `style` and `id` props are not applied to the shared node.
 To create a new target node for each instance, set `reuseTargetNode={false}`. In the following
 example, all three paragraphs will be rendered in separate target nodes:
 
@@ -92,7 +93,7 @@ function Demo() {
 }
 ```
 
-If you don't specify the target element, a new one will be created and appended to the `document.body` for each Portal component.
+If the selector does not match any element, the portal content is not rendered.
 
 ## Server side rendering
 

@@ -47,7 +47,7 @@ export interface PillProps extends BoxProps, StylesApiProps<PillFactory>, Elemen
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem.  @default 'xl' */
   radius?: MantineRadius;
 
-  /** Adds disabled attribute, applies disabled styles */
+  /** Sets `data-disabled` attribute, applies disabled styles and hides the remove button */
   disabled?: boolean;
 }
 
@@ -100,6 +100,8 @@ export const Pill = factory<PillFactory>((_props) => {
   const ctx = use(PillGroupContext);
   const pillsInputCtx = use(PillsInputContext);
   const _size = size || ctx?.size || undefined;
+  const _disabled = disabled || ctx?.disabled;
+  const withinInput = !!pillsInputCtx;
   const _variant = pillsInputCtx?.variant === 'filled' ? 'contrast' : variant || 'default';
 
   const getStyles = useStyles<PillFactory>({
@@ -114,7 +116,7 @@ export const Pill = factory<PillFactory>((_props) => {
     attributes,
     vars,
     varsResolver,
-    stylesCtx: { size: _size, withinInput: !!pillsInputCtx },
+    stylesCtx: { size: _size, withinInput },
   });
 
   return (
@@ -125,9 +127,9 @@ export const Pill = factory<PillFactory>((_props) => {
       {...getStyles('root', { variant: _variant })}
       mod={[
         {
-          'with-remove': withRemoveButton && !disabled,
-          'within-input': !!pillsInputCtx,
-          disabled: disabled || ctx?.disabled,
+          'with-remove': withRemoveButton && !_disabled,
+          'within-input': withinInput,
+          disabled: _disabled,
         },
         mod,
       ]}
@@ -138,8 +140,7 @@ export const Pill = factory<PillFactory>((_props) => {
         <CloseButton
           variant="transparent"
           radius={radius}
-          tabIndex={-1}
-          aria-hidden
+          {...(withinInput ? { tabIndex: -1, 'aria-hidden': true } : { 'aria-label': 'Remove' })}
           unstyled={unstyled}
           {...removeButtonProps}
           {...getStyles('remove', {

@@ -130,11 +130,11 @@
   margin-top: var(--separator-spacing);
   overflow: hidden;
 
-  &:where(:first-of-type) {
+  :where([role='listitem']:first-child) > & {
     margin-top: 0;
   }
 
-  &:where(:last-of-type) {
+  :where([role='listitem']:last-child) > & {
     min-height: auto;
 
     & .verticalSeparator {

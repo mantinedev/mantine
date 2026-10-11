@@ -132,7 +132,9 @@ function Demo() {
 ## Keep mounted
 
 By default, the element is unmounted from the DOM when the transition is
-complete. Use `keepMounted` to keep the element mounted with `display: none`:
+complete. Use `keepMounted` to keep the element mounted. The hidden element is wrapped
+in React `Activity` component, set `keepMountedMode="display-none"` to hide it with
+`display: none` styles instead:
 
 ```tsx
 import { Transition } from '@mantine/core';

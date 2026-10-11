@@ -145,13 +145,14 @@ function Demo() {
 Use `getYearControlProps` to customize the `aria-label` attribute:
 
 ```tsx
+import dayjs from 'dayjs';
 import { YearPicker } from '@mantine/dates';
 
 function Demo() {
   return (
     <YearPicker
       getYearControlProps={(date) => ({
-        'aria-label': `Select year ${date.getFullYear()}`,
+        'aria-label': `Select year ${dayjs(date).year()}`,
       })}
     />
   );

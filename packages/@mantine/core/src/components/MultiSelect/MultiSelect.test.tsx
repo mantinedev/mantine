@@ -681,4 +681,106 @@ describe('@mantine/core/MultiSelect', () => {
     expect(spy).toHaveBeenLastCalledWith(['test-2', 'test-1', 'test-3']);
     expect(getPill(1)).toHaveFocus();
   });
+
+  it('sets aria-multiselectable on the listbox', async () => {
+    render(
+      <MultiSelect {...defaultProps} dropdownOpened comboboxProps={{ withinPortal: false }} />
+    );
+    expect(screen.getByRole('listbox')).toHaveAttribute('aria-multiselectable', 'true');
+  });
+
+  it('removes the last value with Backspace, skipping values of disabled options', async () => {
+    const onChange = jest.fn();
+    const onRemove = jest.fn();
+    render(
+      <MultiSelect
+        {...defaultProps}
+        data={[
+          { value: 'a', label: 'A' },
+          { value: 'b', label: 'B', disabled: true },
+        ]}
+        defaultValue={['a', 'b']}
+        searchable
+        onChange={onChange}
+        onRemove={onRemove}
+      />
+    );
+
+    await userEvent.type(screen.getByRole('combobox'), '{Backspace}');
+    expect(onRemove).toHaveBeenCalledWith('a');
+    expect(onChange).toHaveBeenLastCalledWith(['b']);
+
+    onRemove.mockClear();
+    await userEvent.type(screen.getByRole('combobox'), '{Backspace}');
+    expect(onRemove).not.toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not remove values with Backspace when readOnly', async () => {
+    const onChange = jest.fn();
+    render(
+      <MultiSelect {...defaultProps} defaultValue={['test-1']} readOnly onChange={onChange} />
+    );
+    await userEvent.type(screen.getByRole('combobox'), '{Backspace}');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('deselects an option when it is submitted again from the dropdown', async () => {
+    const onChange = jest.fn();
+    const onRemove = jest.fn();
+    render(
+      <MultiSelect
+        {...defaultProps}
+        defaultValue={['test-1']}
+        dropdownOpened
+        comboboxProps={{ withinPortal: false }}
+        onChange={onChange}
+        onRemove={onRemove}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('option', { name: 'test-1' }));
+    expect(onChange).toHaveBeenLastCalledWith([]);
+    expect(onRemove).toHaveBeenCalledWith('test-1');
+  });
+
+  it('passes typed value to onOptionSubmit', async () => {
+    const spy = jest.fn();
+    render(
+      <MultiSelect<number>
+        data={[
+          { value: 1, label: 'One' },
+          { value: 2, label: 'Two' },
+        ]}
+        dropdownOpened
+        comboboxProps={{ withinPortal: false }}
+        onOptionSubmit={spy}
+      />
+    );
+    await userEvent.click(screen.getByRole('option', { name: 'Two' }));
+    expect(spy).toHaveBeenCalledWith(2);
+  });
+
+  it('clears aria-activedescendant when search changes', async () => {
+    render(
+      <MultiSelect
+        data={['React', 'Angular', 'Vue']}
+        searchable
+        comboboxProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+      />
+    );
+    const input = screen.getByRole('combobox');
+    await userEvent.click(input);
+    await userEvent.keyboard('{ArrowDown}');
+    expect(input).toHaveAttribute('aria-activedescendant');
+    await userEvent.type(input, 'vu');
+    expect(input).not.toHaveAttribute('aria-activedescendant');
+  });
+
+  it('sets native required on the input only when no values are selected', () => {
+    const { rerender } = render(<MultiSelect {...defaultProps} required value={[]} />);
+    expect(screen.getByRole('combobox')).toHaveAttribute('required');
+    rerender(<MultiSelect {...defaultProps} required value={['test-1']} />);
+    expect(screen.getByRole('combobox')).not.toHaveAttribute('required');
+  });
 });

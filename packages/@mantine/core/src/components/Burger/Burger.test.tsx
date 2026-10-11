@@ -1,4 +1,4 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { VisuallyHidden } from '../VisuallyHidden';
 import { Burger, BurgerProps, BurgerStylesNames } from './Burger';
 
@@ -37,6 +37,15 @@ describe('@mantine/core/Burger', () => {
 
     rerender(<Burger aria-label="test" opened={false} />);
     expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('renders a button element that calls onClick', async () => {
+    const spy = jest.fn();
+    render(<Burger aria-label="Toggle navigation" onClick={spy} />);
+    const button = screen.getByRole('button', { name: 'Toggle navigation' });
+    expect(button.tagName).toBe('BUTTON');
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('allows overriding aria-expanded attribute', () => {

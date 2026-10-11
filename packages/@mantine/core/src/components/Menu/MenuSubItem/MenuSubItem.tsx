@@ -39,7 +39,7 @@ export interface MenuSubItemProps extends BoxProps, CompoundStylesApiProps<MenuS
   /** Sets disabled attribute, applies disabled styles */
   disabled?: boolean;
 
-  /** If set, the menu is closed when the item is clicked. Overrides `closeOnItemClick` prop on the `Menu` component. */
+  /** If set, the menu is closed when the item is clicked. `closeOnItemClick` prop of the `Menu` component does not apply to sub items, they keep the menu opened unless this prop is set. @default false */
   closeMenuOnClick?: boolean;
 }
 

@@ -20,8 +20,8 @@ import classes from './Progress.module.css';
 export type ProgressStylesNames = ProgressRootStylesNames;
 
 export interface ProgressProps extends __ProgressRootProps, StylesApiProps<ProgressFactory> {
-  /** Value of the progress */
-  value: number;
+  /** Value of the progress in 0–100 range, ignored when `indeterminate` is set */
+  value?: number;
 
   /** Key of `theme.colors` or any valid CSS value @default theme.primaryColor */
   color?: MantineColor;
@@ -31,6 +31,9 @@ export interface ProgressProps extends __ProgressRootProps, StylesApiProps<Progr
 
   /** If set, the sections stripes are animated (automatically enables striped) @default false */
   animated?: boolean;
+
+  /** If set, displays an indeterminate loading animation for progress of unknown duration, `value` is ignored @default false */
+  indeterminate?: boolean;
 }
 
 export type ProgressFactory = Factory<{
@@ -55,7 +58,9 @@ export const Progress = factory<ProgressFactory>((_props) => {
     color,
     striped,
     animated,
+    indeterminate,
     'aria-label': label,
+    'aria-valuetext': valueText,
     ...others
   } = props;
 
@@ -73,11 +78,13 @@ export const Progress = factory<ProgressFactory>((_props) => {
       {...others}
     >
       <ProgressSection
-        value={value}
+        value={value ?? 0}
         color={color}
         striped={striped}
         animated={animated}
+        indeterminate={indeterminate}
         aria-label={label}
+        aria-valuetext={valueText}
       />
     </ProgressRoot>
   );

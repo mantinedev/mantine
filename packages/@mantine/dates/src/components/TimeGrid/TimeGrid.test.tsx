@@ -70,4 +70,31 @@ describe('@mantine/dates/TimeGrid', () => {
     expect(screen.getByRole('button', { name: '10:00' })).toBeDisabled();
     expect(screen.getByRole('button', { name: '15:00' })).toBeDisabled();
   });
+
+  it('marks the control matching controlled value as pressed', () => {
+    const { rerender } = render(<TimeGrid {...defaultProps} value="10:00" onChange={() => {}} />);
+    expect(screen.getByRole('button', { name: '10:00' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: '10:00' })).toHaveAttribute('data-active');
+    expect(screen.getByRole('button', { name: '15:00' })).toHaveAttribute('aria-pressed', 'false');
+
+    rerender(<TimeGrid {...defaultProps} value="15:00" onChange={() => {}} />);
+    expect(screen.getByRole('button', { name: '10:00' })).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByRole('button', { name: '15:00' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('formats control labels with format, withSeconds and amPmLabels', () => {
+    const { rerender } = render(<TimeGrid data={['10:00:15', '15:30:45']} format="12h" />);
+    expect(screen.getByRole('button', { name: '10:00 AM' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '3:30 PM' })).toBeInTheDocument();
+
+    rerender(<TimeGrid data={['10:00:15', '15:30:45']} withSeconds />);
+    expect(screen.getByRole('button', { name: '10:00:15' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '15:30:45' })).toBeInTheDocument();
+
+    rerender(
+      <TimeGrid data={['10:00:15', '15:30:45']} format="12h" amPmLabels={{ am: 'am', pm: 'pm' }} />
+    );
+    expect(screen.getByRole('button', { name: '10:00 am' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '3:30 pm' })).toBeInTheDocument();
+  });
 });

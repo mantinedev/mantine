@@ -940,4 +940,119 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-hours')).toHaveValue('12');
     expect(screen.queryByText('15:45')).not.toBeInTheDocument();
   });
+
+  it('supports AM/PM text input with withDropdown (12h format)', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} format="12h" withDropdown onChange={spy} />);
+    const amPm = screen.getByLabelText('test-am-pm');
+    expect(amPm.tagName).toBe('INPUT');
+    expect(amPm).toHaveValue('--');
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '3');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '45');
+    expect(amPm).toHaveFocus();
+
+    await userEvent.keyboard('p');
+    expect(amPm).toHaveValue('PM');
+    expect(spy).toHaveBeenLastCalledWith('15:45');
+
+    await userEvent.keyboard('{ArrowUp}');
+    expect(amPm).toHaveValue('AM');
+    expect(spy).toHaveBeenLastCalledWith('03:45');
+
+    await userEvent.keyboard('{End}');
+    expect(amPm).toHaveValue('PM');
+
+    await userEvent.keyboard('{Home}');
+    expect(amPm).toHaveValue('AM');
+
+    await userEvent.keyboard('{Backspace}');
+    expect(amPm).toHaveValue('--');
+  });
+
+  it('ignores text that does not match AM/PM labels in AM/PM text input', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} format="12h" withDropdown onChange={spy} />);
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '3');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '45');
+    await userEvent.keyboard('x');
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('--');
+    expect(spy).not.toHaveBeenCalledWith('03:45');
+  });
+
+  it('resolves typed custom AM/PM labels in AM/PM text input', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        format="12h"
+        withDropdown
+        amPmLabels={{ am: 'ДП', pm: 'ПП' }}
+        onChange={spy}
+      />
+    );
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '3');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '45');
+    await userEvent.keyboard('П');
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('ПП');
+    expect(spy).toHaveBeenLastCalledWith('15:45');
+  });
+
+  it('resolves custom AM/PM labels that share the first character', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        format="12h"
+        withDropdown
+        amPmLabels={{ am: '午前', pm: '午後' }}
+        onChange={spy}
+      />
+    );
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '3');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '45');
+    const amPm = screen.getByLabelText('test-am-pm');
+
+    await userEvent.keyboard('午');
+    expect(amPm).toHaveValue('午');
+    expect(spy).not.toHaveBeenCalledWith('03:45');
+
+    await userEvent.keyboard('後');
+    expect(amPm).toHaveValue('午後');
+    expect(spy).toHaveBeenLastCalledWith('15:45');
+
+    await userEvent.keyboard('{Backspace}');
+    expect(amPm).toHaveValue('--');
+
+    await userEvent.keyboard('午前');
+    expect(amPm).toHaveValue('午前');
+    expect(spy).toHaveBeenLastCalledWith('03:45');
+  });
+
+  it('renders and selects grouped presets', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        withDropdown
+        onChange={spy}
+        presets={[
+          { label: 'Morning', values: ['09:00', '10:30'] },
+          { label: 'Evening', values: ['18:00', '19:15'] },
+        ]}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    expect(screen.getByText('Morning')).toBeInTheDocument();
+    expect(screen.getByText('Evening')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByText('19:15'));
+    expect(spy).toHaveBeenLastCalledWith('19:15');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('19');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('15');
+  });
 });

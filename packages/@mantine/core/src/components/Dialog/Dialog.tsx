@@ -1,6 +1,7 @@
 import {
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -11,7 +12,7 @@ import {
   useStyles,
 } from '../../core';
 import { Affix, AffixBaseProps } from '../Affix';
-import { CloseButton } from '../CloseButton';
+import { __CloseButtonProps, CloseButton } from '../CloseButton';
 import { Paper, PaperBaseProps } from '../Paper';
 import { Transition, TransitionOverride } from '../Transition';
 import classes from './Dialog.module.css';
@@ -28,11 +29,14 @@ export interface DialogProps
     PaperBaseProps,
     StylesApiProps<DialogFactory>,
     ElementProps<'div'> {
-  /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node @default false */
+  /** If set, the dialog is not unmounted from the DOM when hidden, it is hidden with the `keepMountedMode` of `transitionProps` (React `Activity` by default) @default false */
   keepMounted?: boolean;
 
   /** If set, displays the close button @default false @category appearance */
   withCloseButton?: boolean;
+
+  /** Props passed down to the close button, use to set `aria-label`, `icon` or `size` */
+  closeButtonProps?: __CloseButtonProps & BoxProps & ElementProps<'button'> & DataAttributes;
 
   /** Called on close button click @category state */
   onClose?: () => void;
@@ -88,6 +92,7 @@ export const Dialog = factory<DialogFactory>((_props) => {
     opened,
     transitionProps,
     withCloseButton,
+    closeButtonProps,
     withinPortal,
     children,
     onClose,
@@ -126,7 +131,18 @@ export const Dialog = factory<DialogFactory>((_props) => {
             {...others}
           >
             {withCloseButton && (
-              <CloseButton onClick={onClose} unstyled={unstyled} {...getStyles('closeButton')} />
+              <CloseButton
+                {...closeButtonProps}
+                unstyled={unstyled}
+                {...getStyles('closeButton', {
+                  className: closeButtonProps?.className,
+                  style: closeButtonProps?.style,
+                })}
+                onClick={(event) => {
+                  closeButtonProps?.onClick?.(event);
+                  onClose?.();
+                }}
+              />
             )}
             {children}
           </Paper>

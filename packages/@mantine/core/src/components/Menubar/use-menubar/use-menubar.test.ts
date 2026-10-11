@@ -319,6 +319,28 @@ describe('@mantine/core/Menubar/use-menubar', () => {
     jest.useRealTimers();
   });
 
+  it('focusMenuItem focuses an item of a dropdown that is rendered later', () => {
+    jest.useFakeTimers();
+    const { hook, root } = renderMenubar();
+    root.children[1].setAttribute('aria-controls', 'late-dropdown');
+
+    act(() => {
+      hook.result.current.openMenu(1);
+      hook.result.current.focusMenuItem(1);
+    });
+    act(() => jest.advanceTimersByTime(200));
+
+    const dropdown = document.createElement('div');
+    dropdown.id = 'late-dropdown';
+    dropdown.innerHTML = '<button data-menu-item>First</button>';
+    document.body.appendChild(dropdown);
+
+    act(() => jest.advanceTimersByTime(50));
+    expect(document.activeElement).toBe(dropdown.children[0]);
+
+    jest.useRealTimers();
+  });
+
   it('focusMenuItem does nothing when the menu is closed before the item is focused', () => {
     jest.useFakeTimers();
     const { hook, root } = renderMenubar();

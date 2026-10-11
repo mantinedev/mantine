@@ -1,5 +1,6 @@
 import {
   BoxProps,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -10,6 +11,8 @@ import {
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
 import { TextareaAutosize } from './Autosize';
+
+type BottomSectionProps = React.ComponentProps<'div'> & DataAttributes;
 
 export interface TextareaProps
   extends
@@ -35,7 +38,7 @@ export interface TextareaProps
   bottomSection?: React.ReactNode;
 
   /** Props passed down to the `bottomSection` element */
-  bottomSectionProps?: React.ComponentProps<'div'>;
+  bottomSectionProps?: BottomSectionProps;
 }
 
 export type TextareaFactory = Factory<{

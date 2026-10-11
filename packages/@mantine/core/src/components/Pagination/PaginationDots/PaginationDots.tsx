@@ -36,7 +36,11 @@ export const PaginationDots = factory<PaginationDotsFactory>((_props) => {
   const ctx = usePaginationContext();
 
   return (
-    <Box {...ctx.getStyles('dots', { className, style, styles, classNames })} {...others}>
+    <Box
+      {...ctx.getStyles('dots', { className, style, styles, classNames })}
+      aria-hidden
+      {...others}
+    >
       <Icon
         style={{
           width: 'calc(var(--pagination-control-size) / 1.8)',

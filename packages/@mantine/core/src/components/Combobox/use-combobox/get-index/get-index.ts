@@ -51,3 +51,13 @@ export function getFirstIndex(elements: NodeListOf<HTMLDivElement> | HTMLDivElem
 
   return -1;
 }
+
+export function getLastIndex(elements: NodeListOf<HTMLDivElement> | HTMLDivElement[]) {
+  for (let i = elements.length - 1; i >= 0; i -= 1) {
+    if (!elements[i].hasAttribute('data-combobox-disabled')) {
+      return i;
+    }
+  }
+
+  return -1;
+}

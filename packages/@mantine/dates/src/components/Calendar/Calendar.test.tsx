@@ -718,4 +718,77 @@ describe('@mantine/dates/Calendar', () => {
     expect(onMonthSelect).toHaveBeenCalledWith('2022-05-01');
     expectHeaderLevel('year', '2022');
   });
+
+  describe('enableKeyboardNavigation', () => {
+    const focusDay = () => screen.getByLabelText('11 April 2022').focus();
+
+    it('navigates by year with Ctrl/Cmd + ArrowUp/ArrowDown', async () => {
+      render(<Calendar {...defaultProps} />);
+      focusDay();
+
+      await userEvent.keyboard('{Control>}{ArrowDown}{/Control}');
+      expectHeaderLevel('month', 'April 2023');
+      expect(document.activeElement).toHaveAttribute('aria-label', '11 April 2023');
+
+      await userEvent.keyboard('{Meta>}{ArrowUp}{/Meta}');
+      await userEvent.keyboard('{Control>}{ArrowUp}{/Control}');
+      expectHeaderLevel('month', 'April 2021');
+    });
+
+    it('navigates by decade with Ctrl/Cmd + Shift + ArrowUp/ArrowDown', async () => {
+      render(<Calendar {...defaultProps} />);
+      focusDay();
+
+      await userEvent.keyboard('{Control>}{Shift>}{ArrowDown}{/Shift}{/Control}');
+      expectHeaderLevel('month', 'April 2032');
+      expect(document.activeElement).toHaveAttribute('aria-label', '11 April 2032');
+
+      await userEvent.keyboard('{Meta>}{Shift>}{ArrowUp}{/Shift}{/Meta}');
+      expectHeaderLevel('month', 'April 2022');
+    });
+
+    it('opens year level with Y key at month level', async () => {
+      render(<Calendar {...defaultProps} />);
+      focusDay();
+
+      await userEvent.keyboard('y');
+      expectHeaderLevel('year', '2022');
+    });
+
+    it('ignores shortcuts when enableKeyboardNavigation is false', async () => {
+      render(<Calendar {...defaultProps} enableKeyboardNavigation={false} />);
+      focusDay();
+
+      await userEvent.keyboard('{Control>}{ArrowDown}{/Control}');
+      await userEvent.keyboard('{Control>}{Shift>}{ArrowDown}{/Shift}{/Control}');
+      await userEvent.keyboard('y');
+      expectHeaderLevel('month', 'April 2022');
+    });
+
+    it('ignores shortcuts when calendar is static', async () => {
+      render(<Calendar {...defaultProps} static />);
+      screen.getByLabelText('next-month').focus();
+
+      await userEvent.keyboard('{Control>}{ArrowDown}{/Control}');
+      await userEvent.keyboard('y');
+      expectHeaderLevel('month', 'April 2022');
+    });
+  });
+
+  it('exposes month grid with accessible name', async () => {
+    render(<Calendar {...defaultProps} />);
+    expect(screen.getByRole('grid', { name: 'April 2022' })).toBeInTheDocument();
+
+    await userEvent.click(screen.getByLabelText('month-level'));
+    expect(screen.getByRole('grid', { name: '2022' })).toBeInTheDocument();
+
+    await userEvent.click(screen.getByLabelText('year-level'));
+    expect(screen.getByRole('grid', { name: '2020 – 2029' })).toBeInTheDocument();
+  });
+
+  it('renders static month as a table without grid role', () => {
+    render(<Calendar {...defaultProps} static />);
+    expect(screen.queryByRole('grid')).not.toBeInTheDocument();
+    expect(screen.getByRole('table', { name: 'April 2022' })).toBeInTheDocument();
+  });
 });

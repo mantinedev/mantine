@@ -37,7 +37,11 @@ export function MenuContextMenu(props: MenuContextMenuProps) {
     open: () => ctx.openDropdown(),
   });
 
-  return cloneElement(child, handlers as any);
+  const accessibleProps = popoverCtx.withRoles
+    ? { 'aria-controls': ctx.opened ? popoverCtx.getDropdownId() : undefined }
+    : {};
+
+  return cloneElement(child, { ...accessibleProps, ...handlers } as any);
 }
 
 MenuContextMenu.displayName = '@mantine/core/MenuContextMenu';

@@ -51,4 +51,14 @@ describe('@mantine/core/ProgressSection', () => {
     rerender(<TestContainer value={20} animated={false} />);
     expect(screen.getByRole('progressbar')).not.toHaveAttribute('data-animated');
   });
+
+  it('removes role and aria attributes when withAria is false', () => {
+    const { container } = render(<TestContainer value={20} withAria={false} />);
+    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+    const section = container.querySelector('.mantine-Progress-section')!;
+    expect(section).not.toHaveAttribute('aria-valuenow');
+    expect(section).not.toHaveAttribute('aria-valuemin');
+    expect(section).not.toHaveAttribute('aria-valuemax');
+    expect(section).not.toHaveAttribute('aria-valuetext');
+  });
 });

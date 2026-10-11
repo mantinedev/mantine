@@ -37,3 +37,8 @@ export const Demo_vertical = {
   name: '⭐ Demo: vertical',
   render: renderDemo(demos.vertical),
 };
+
+export const Demo_indeterminate = {
+  name: '⭐ Demo: indeterminate',
+  render: renderDemo(demos.indeterminate),
+};

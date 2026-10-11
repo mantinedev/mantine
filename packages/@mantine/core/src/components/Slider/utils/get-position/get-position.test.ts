@@ -10,4 +10,8 @@ describe('@mantine/core/Slider/get-position', () => {
     expect(getPosition({ value: 20, min: 100, max: 400 })).toBe(0);
     expect(getPosition({ value: 500, min: 100, max: 400 })).toBe(100);
   });
+
+  it('returns 0 when min equals max', () => {
+    expect(getPosition({ value: 10, min: 10, max: 10 })).toBe(0);
+  });
 });

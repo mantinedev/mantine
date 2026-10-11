@@ -278,4 +278,34 @@ describe('@mantine/core/PasswordInput', () => {
 
     expect(screen.getByLabelText('Password')).toHaveAttribute('aria-describedby', 'field-help');
   });
+
+  it('sets aria-invalid on the input when error is set', () => {
+    const { rerender } = render(<PasswordInput label="Password" error="Error" />);
+    expect(screen.getByLabelText('Password')).toHaveAttribute('aria-invalid', 'true');
+
+    rerender(<PasswordInput label="Password" />);
+    expect(screen.getByLabelText('Password')).not.toHaveAttribute('aria-invalid');
+  });
+
+  it('renders loader and does not pass loading props to the input', () => {
+    const { container, rerender } = render(
+      <PasswordInput label="Password" loading loadingPosition="left" inputSize="5" />
+    );
+    const input = screen.getByLabelText('Password');
+
+    expect(
+      container.querySelector(
+        '.mantine-PasswordInput-section[data-position="left"] .mantine-Loader-root'
+      )
+    ).toBeInTheDocument();
+    expect(input).toHaveAttribute('aria-busy', 'true');
+    expect(input).toHaveAttribute('size', '5');
+    expect(input).not.toHaveAttribute('loading');
+    expect(input).not.toHaveAttribute('loadingposition');
+    expect(input).not.toHaveAttribute('inputsize');
+
+    rerender(<PasswordInput label="Password" />);
+    expect(container.querySelector('.mantine-Loader-root')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('Password')).not.toHaveAttribute('aria-busy');
+  });
 });

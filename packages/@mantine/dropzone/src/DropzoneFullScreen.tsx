@@ -104,8 +104,10 @@ export const DropzoneFullScreen = factory<DropzoneFullScreenFactory>((_props) =>
     }
   };
 
-  const handleDragLeave = () => {
-    setCounter((prev) => prev - 1);
+  const handleDragLeave = (event: DragEvent) => {
+    if (event.dataTransfer?.types.includes('Files')) {
+      setCounter((prev) => Math.max(0, prev - 1));
+    }
   };
 
   useEffect(() => {

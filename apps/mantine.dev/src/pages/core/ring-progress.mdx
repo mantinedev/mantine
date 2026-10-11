@@ -67,3 +67,24 @@ By default, transitions are disabled. To enable them, set the `transitionDuratio
 to a number of milliseconds:
 
 <Demo data={RingProgressDemos.transitions} />
+
+## Accessibility
+
+Each section has `role="progressbar"` with `aria-valuenow` set to the section value. Set `aria-label`
+on each section to label it for screen readers. To remove the `progressbar` role and `aria-*`
+attributes from sections, set `withAria={false}`:
+
+```tsx
+import { RingProgress } from '@mantine/core';
+
+function Demo() {
+  return (
+    <RingProgress
+      sections={[
+        { value: 40, color: 'cyan', 'aria-label': 'Documents' },
+        { value: 15, color: 'orange', 'aria-label': 'Photos' },
+      ]}
+    />
+  );
+}
+```

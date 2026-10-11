@@ -530,4 +530,80 @@ describe('@mantine/core/TagsInput', () => {
     expect(spy).toHaveBeenLastCalledWith(['test-2', 'test-1', 'test-3']);
     expect(getPill(1)).toHaveFocus();
   });
+
+  it('sets aria-autocomplete="list" on the input', () => {
+    render(<TagsInput aria-label="Tags" />);
+    expect(screen.getByRole('combobox')).toHaveAttribute('aria-autocomplete', 'list');
+  });
+
+  it('calls onChange when tags are added and removed', async () => {
+    const spy = jest.fn();
+    render(<TagsInput aria-label="Tags" onChange={spy} />);
+    const input = screen.getByRole('combobox');
+
+    await userEvent.type(input, 'React{Enter}');
+    expect(spy).toHaveBeenLastCalledWith(['React']);
+
+    await userEvent.type(input, 'Vue{Enter}');
+    expect(spy).toHaveBeenLastCalledWith(['React', 'Vue']);
+
+    await userEvent.keyboard('{Backspace}');
+    expect(spy).toHaveBeenLastCalledWith(['React']);
+  });
+
+  it('limits pasted tags to maxTags and calls onMaxTags for the rest', async () => {
+    const onChange = jest.fn();
+    const onMaxTags = jest.fn();
+    render(
+      <TagsInput
+        aria-label="Tags"
+        defaultValue={['React']}
+        maxTags={2}
+        onChange={onChange}
+        onMaxTags={onMaxTags}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.paste('Angular,Vue,Svelte');
+
+    expect(onChange).toHaveBeenLastCalledWith(['React', 'Angular']);
+    expect(onMaxTags).toHaveBeenCalledTimes(2);
+    expect(onMaxTags).toHaveBeenCalledWith('Vue');
+    expect(onMaxTags).toHaveBeenCalledWith('Svelte');
+  });
+
+  it('rejects duplicates and respects maxTags when accepting value on blur', async () => {
+    const onChange = jest.fn();
+    const onDuplicate = jest.fn();
+    const onMaxTags = jest.fn();
+    const { rerender } = render(
+      <TagsInput
+        aria-label="Tags"
+        defaultValue={['React']}
+        onChange={onChange}
+        onDuplicate={onDuplicate}
+      />
+    );
+    const input = screen.getByRole('combobox');
+
+    await userEvent.type(input, 'react');
+    await userEvent.tab();
+    expect(onDuplicate).toHaveBeenCalledWith('react');
+    expect(onChange).not.toHaveBeenCalled();
+
+    rerender(
+      <TagsInput
+        aria-label="Tags"
+        defaultValue={['React']}
+        maxTags={1}
+        onChange={onChange}
+        onMaxTags={onMaxTags}
+      />
+    );
+    await userEvent.type(screen.getByRole('combobox'), 'Vue');
+    await userEvent.tab();
+    expect(onMaxTags).toHaveBeenCalledWith('Vue');
+    expect(onChange).not.toHaveBeenCalled();
+  });
 });

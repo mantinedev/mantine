@@ -1,4 +1,4 @@
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { Timeline, TimelineProps, TimelineStylesNames } from './Timeline';
 import { TimelineItem } from './TimelineItem/TimelineItem';
 
@@ -17,6 +17,8 @@ const defaultProps: TimelineProps = {
 };
 
 describe('@mantine/core/Timeline', () => {
+  tests.axe([<Timeline {...defaultProps} active={1} key="1" />]);
+
   tests.itSupportsSystemProps<TimelineProps, TimelineStylesNames>({
     component: Timeline,
     props: defaultProps,
@@ -166,5 +168,42 @@ describe('@mantine/core/Timeline', () => {
 
   it('exposes TimelineItem as Timeline.Item', () => {
     expect(Timeline.Item).toBe(TimelineItem);
+  });
+
+  it('exposes items as a list and marks the current item with aria-current', () => {
+    const { rerender } = render(<Timeline {...defaultProps} active={1} />);
+    expect(screen.getByRole('list')).toBeInTheDocument();
+    const items = screen.getAllByRole('listitem');
+    expect(items).toHaveLength(3);
+    expect(items[0]).not.toHaveAttribute('aria-current');
+    expect(items[1]).toHaveAttribute('aria-current', 'step');
+    expect(items[2]).not.toHaveAttribute('aria-current');
+
+    rerender(<Timeline {...defaultProps} active={-1} />);
+    screen.getAllByRole('listitem').forEach((item) => {
+      expect(item).not.toHaveAttribute('aria-current');
+    });
+  });
+
+  it('sets aria-current on the boundary item when reverseActive is set', () => {
+    render(<Timeline {...defaultProps} active={0} reverseActive />);
+    const items = screen.getAllByRole('listitem');
+    expect(items[2]).toHaveAttribute('aria-current', 'step');
+    expect(items[0]).not.toHaveAttribute('aria-current');
+  });
+
+  it('ignores non-element children', () => {
+    const { container } = render(
+      <Timeline active={1}>
+        text
+        <Timeline.Item>1</Timeline.Item>
+        <Timeline.Item>2</Timeline.Item>
+      </Timeline>
+    );
+    const items = container.querySelectorAll('.mantine-Timeline-item');
+    expect(items).toHaveLength(2);
+    expect(items[0]).toHaveAttribute('data-first');
+    expect(items[1]).toHaveAttribute('data-last');
+    expect(items[1]).toHaveAttribute('aria-current', 'step');
   });
 });

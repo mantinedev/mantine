@@ -124,7 +124,12 @@ export const FlatTreeNode = memo(function FlatTreeNode({
       }
     }
 
-    if (event.nativeEvent.code === 'ArrowDown' || event.nativeEvent.code === 'ArrowUp') {
+    if (
+      event.nativeEvent.code === 'ArrowDown' ||
+      event.nativeEvent.code === 'ArrowUp' ||
+      ((event.nativeEvent.code === 'Home' || event.nativeEvent.code === 'End') &&
+        event.target === event.currentTarget)
+    ) {
       const root = findElementAncestor(event.currentTarget as HTMLElement, '[data-tree-root]');
 
       if (!root) {
@@ -142,10 +147,30 @@ export const FlatTreeNode = memo(function FlatTreeNode({
         return;
       }
 
-      const nextIndex = event.nativeEvent.code === 'ArrowDown' ? index + 1 : index - 1;
+      const nextIndex =
+        event.nativeEvent.code === 'Home'
+          ? 0
+          : event.nativeEvent.code === 'End'
+            ? nodes.length - 1
+            : event.nativeEvent.code === 'ArrowDown'
+              ? index + 1
+              : index - 1;
       const nextNode = nodes[nextIndex];
       nextNode?.setAttribute('data-focus-ring', 'true');
       nextNode?.focus();
+    }
+
+    if (event.nativeEvent.code === 'Enter' && event.target === event.currentTarget) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (expandOnClick && hasChildren) {
+        store.toggleExpanded(node.value);
+      }
+
+      if (selectOnClick) {
+        store.select(node.value);
+      }
     }
 
     if (event.nativeEvent.code === 'Space') {
@@ -188,6 +213,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
       role="treeitem"
       aria-selected={selected}
       aria-expanded={hasChildren ? expanded : undefined}
+      aria-busy={isLoading || undefined}
       data-value={node.value}
       data-selected={selected || undefined}
       data-level={level}

@@ -22,6 +22,17 @@ describe('@mantine/core/LoadingOverlay', () => {
     expect(container.querySelector('.mantine-LoadingOverlay-root')).not.toBeInTheDocument();
   });
 
+  it('announces the loading state with role="status"', () => {
+    const { rerender } = render(<LoadingOverlay visible={false} />);
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+
+    rerender(<LoadingOverlay visible />);
+    expect(screen.getByRole('status')).toHaveTextContent('Loading');
+
+    rerender(<LoadingOverlay visible loadingLabel="Saving form" />);
+    expect(screen.getByRole('status')).toHaveTextContent('Saving form');
+  });
+
   it('passes loaderProps to Loader component', () => {
     render(<LoadingOverlay visible loaderProps={{ 'data-testid': 'test-loader' } as any} />);
     expect(screen.getByTestId('test-loader')).toBeInTheDocument();

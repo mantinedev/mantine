@@ -6,10 +6,10 @@ export function Usage() {
   return (
     <>
       <div id="portal-target" />
-      <Portal style={{ background: 'pink' }} className="class1 class2">
+      <Portal style={{ background: 'pink' }} className="class1 class2" reuseTargetNode={false}>
         <p>First</p>
       </Portal>
-      <Portal style={{ background: 'pink' }}>
+      <Portal style={{ background: 'pink' }} reuseTargetNode={false}>
         <p>Second</p>
       </Portal>
     </>

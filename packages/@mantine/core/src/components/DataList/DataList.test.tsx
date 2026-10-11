@@ -16,6 +16,11 @@ const defaultProps: DataListProps = {
 };
 
 describe('@mantine/core/DataList', () => {
+  tests.axe([
+    <DataList {...defaultProps} key="horizontal" />,
+    <DataList {...defaultProps} orientation="vertical" withDivider key="vertical" />,
+  ]);
+
   tests.itSupportsSystemProps<DataListProps, DataListStylesNames>({
     component: DataList,
     props: defaultProps,

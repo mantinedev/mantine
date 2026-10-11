@@ -61,7 +61,7 @@ export function getTimeString({
     return { valid: true, value };
   }
 
-  if (amPm === null) {
+  if (amPm !== amPmLabels.am && amPm !== amPmLabels.pm) {
     return { valid: false, value: '' };
   }
 

@@ -98,4 +98,35 @@ describe('@mantine/dates/CalendarHeader', () => {
     render(<CalendarHeader {...defaultProps} __staticSelector="Calendar" />);
     expect(screen.getByLabelText('next')).toHaveClass('mantine-Calendar-calendarHeaderControl');
   });
+
+  it('does not set disabled and tabindex on static level control', () => {
+    render(
+      <CalendarHeader {...defaultProps} levelControlAriaLabel="test-level" hasNextLevel={false} />
+    );
+    const level = screen.getByLabelText('test-level');
+    expect(level.tagName).toBe('DIV');
+    expect(level).not.toHaveAttribute('disabled');
+    expect(level).not.toHaveAttribute('tabindex');
+  });
+
+  it('renders controls in headerControlsOrder order', () => {
+    const { container, rerender } = render(
+      <CalendarHeader {...defaultProps} levelControlAriaLabel="level" />
+    );
+    const getOrder = () =>
+      Array.from(container.querySelector('.mantine-CalendarHeader-calendarHeader')!.children).map(
+        (node) => node.getAttribute('data-direction') || 'level'
+      );
+
+    expect(getOrder()).toStrictEqual(['previous', 'level', 'next']);
+
+    rerender(
+      <CalendarHeader
+        {...defaultProps}
+        levelControlAriaLabel="level"
+        headerControlsOrder={['level', 'previous', 'next']}
+      />
+    );
+    expect(getOrder()).toStrictEqual(['level', 'previous', 'next']);
+  });
 });

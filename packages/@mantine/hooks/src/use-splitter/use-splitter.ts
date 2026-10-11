@@ -1050,7 +1050,8 @@ export function useSplitter<T extends HTMLElement = any>(
       return {
         ref: getHandleRefCallback(index),
         role: 'separator' as const,
-        'aria-orientation': orient,
+        'aria-orientation':
+          orient === 'horizontal' ? ('vertical' as const) : ('horizontal' as const),
         'aria-valuenow': Math.round(beforeSize),
         'aria-valuemin': Math.round(getMin(beforePanel)),
         'aria-valuemax': Math.round(getMax(beforePanel)),

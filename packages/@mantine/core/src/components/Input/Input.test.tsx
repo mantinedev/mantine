@@ -234,6 +234,62 @@ describe('@mantine/core/Input', () => {
     expect(ref.current).toBe(getInputWrapper(container));
   });
 
+  it('replaces section with loader based on loadingPosition', () => {
+    const { container, rerender } = render(
+      <Input loading leftSection="left-section" rightSection="right-section" />
+    );
+    const getSection = (position: string) =>
+      container.querySelector(`.mantine-Input-section[data-position="${position}"]`);
+
+    expect(getSection('right')!.querySelector('.mantine-Loader-root')).toBeInTheDocument();
+    expect(screen.queryByText('right-section')).not.toBeInTheDocument();
+    expect(screen.getByText('left-section')).toBeInTheDocument();
+
+    rerender(
+      <Input
+        loading
+        loadingPosition="left"
+        leftSection="left-section"
+        rightSection="right-section"
+      />
+    );
+    expect(getSection('left')!.querySelector('.mantine-Loader-root')).toBeInTheDocument();
+    expect(screen.queryByText('left-section')).not.toBeInTheDocument();
+    expect(screen.getByText('right-section')).toBeInTheDocument();
+
+    rerender(<Input leftSection="left-section" rightSection="right-section" />);
+    expect(container.querySelector('.mantine-Loader-root')).not.toBeInTheDocument();
+  });
+
+  it('sets aria-busy attribute based on loading prop', () => {
+    const { rerender } = render(<Input loading />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('aria-busy', 'true');
+
+    rerender(<Input loading={false} />);
+    expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-busy');
+  });
+
+  it('keeps disabled, required and id when withAria is false', () => {
+    render(<Input withAria={false} disabled required id="test-id" error loading />);
+    const input = screen.getByRole('textbox');
+    expect(input).toBeDisabled();
+    expect(input).toBeRequired();
+    expect(input).toHaveAttribute('id', 'test-id');
+    expect(input).not.toHaveAttribute('aria-invalid');
+    expect(input).not.toHaveAttribute('aria-busy');
+  });
+
+  it('does not set wrapper input id or aria-describedby when withAria is false', () => {
+    render(
+      <Input.Wrapper label="test" description="test-description" id="wrapper-id">
+        <Input withAria={false} id="input-id" />
+      </Input.Wrapper>
+    );
+    const input = screen.getByRole('textbox');
+    expect(input).not.toHaveAttribute('id');
+    expect(input).not.toHaveAttribute('aria-describedby');
+  });
+
   it('exposes compound components', () => {
     expect(Input.Wrapper).toBe(InputWrapper);
     expect(Input.Label).toBe(InputLabel);

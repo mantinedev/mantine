@@ -40,6 +40,8 @@ export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((prop
   return (
     <Box
       {...ctx.getStyles('actionsGroup', { className, style, classNames, styles })}
+      role="group"
+      aria-label={label}
       {...others}
       __vars={{
         '--spotlight-label': `'${label?.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`,

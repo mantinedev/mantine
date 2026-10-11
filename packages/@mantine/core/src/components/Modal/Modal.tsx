@@ -97,6 +97,9 @@ export const Modal = factory<ModalFactory>((_props) => {
     zIndex,
     onExitTransitionEnd,
     transitionProps,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
     ...others
   } = useProps('Modal', defaultProps, _props);
   const hasHeader = !!title || withCloseButton;
@@ -123,7 +126,13 @@ export const Modal = factory<ModalFactory>((_props) => {
       {...stackEntry.rootProps}
     >
       {withOverlay && <ModalOverlay {...stackEntry.overlayProps} {...overlayProps} />}
-      <ModalContent radius={radius} {...stackEntry.contentProps}>
+      <ModalContent
+        radius={radius}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        {...stackEntry.contentProps}
+      >
         {hasHeader && (
           <ModalHeader>
             {title && <ModalTitle>{title}</ModalTitle>}

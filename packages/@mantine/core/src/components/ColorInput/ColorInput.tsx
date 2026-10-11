@@ -22,7 +22,8 @@ import {
   parseColor,
 } from '../ColorPicker';
 import { ColorSwatch } from '../ColorSwatch';
-import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProps } from '../Input';
+import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
+import { splitInputProps } from '../Input/use-input-props';
 import { InputBase } from '../InputBase';
 import { Popover, PopoverProps } from '../Popover';
 import { EyeDropperIcon } from './EyeDropperIcon';
@@ -141,7 +142,7 @@ export const ColorInput = factory<ColorInputFactory>((_props) => {
     swatchesPerRow,
     fullWidth,
     ...others
-  } = useInputProps('ColorInput', defaultProps, _props);
+  } = splitInputProps(props);
 
   const getStyles = useStyles<ColorInputFactory>({
     name: 'ColorInput',

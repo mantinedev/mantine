@@ -233,21 +233,20 @@ function Demo() {
 Use `getYearControlProps`/`getMonthControlProps`/`getDayProps` to customize the `aria-label` attribute:
 
 ```tsx
+import dayjs from 'dayjs';
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
   return (
     <DatePicker
       getDayProps={(date) => ({
-        'aria-label': `Select date ${
-          date.getMonth() + 1
-        }/${date.getDate()}/${date.getFullYear()}`,
+        'aria-label': `Select date ${dayjs(date).format('MM/DD/YYYY')}`,
       })}
       getYearControlProps={(date) => ({
-        'aria-label': `Select year ${date.getFullYear()}`,
+        'aria-label': `Select year ${dayjs(date).year()}`,
       })}
       getMonthControlProps={(date) => ({
-        'aria-label': `Select month ${date.getFullYear()}/${date.getMonth()}`,
+        'aria-label': `Select month ${dayjs(date).format('YYYY/MM')}`,
       })}
     />
   );
@@ -256,8 +255,9 @@ function Demo() {
 
 ### Keyboard interactions
 
-Note that the following events will only trigger if focus is on a date control.
-Arrow navigation is not limited to the current month: outside dates that are visible
+Arrow keys without modifiers work when focus is on a date control. Shortcuts with
+`Ctrl`/`Cmd` and `Y` work when focus is anywhere inside the calendar, set
+`enableKeyboardNavigation={false}` to disable them. Arrow navigation is not limited to the current month: outside dates that are visible
 in the grid can be focused, and when the target date is not displayed, the calendar
 switches to the previous/next month and focuses the target date.
 
@@ -281,6 +281,11 @@ switches to the previous/next month and focuses the target date.
       description:
         'Focuses the same weekday of the previous week, switches to the previous month if needed',
     },
+    { key: 'Ctrl/Cmd + ArrowUp', description: 'Switches to the previous year' },
+    { key: 'Ctrl/Cmd + ArrowDown', description: 'Switches to the next year' },
+    { key: 'Ctrl/Cmd + Shift + ArrowUp', description: 'Switches to the previous decade' },
+    { key: 'Ctrl/Cmd + Shift + ArrowDown', description: 'Switches to the next decade' },
+    { key: 'Y', description: 'Opens year level when month level is displayed' },
   ]}
 />
 

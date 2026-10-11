@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useEffect, useRef } from 'react';
 import {
   Box,
@@ -174,7 +175,7 @@ export interface CalendarProps
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way @category behavior */
   static?: boolean;
 
-  /** Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) @category behavior */
+  /** Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) @default true @category behavior */
   enableKeyboardNavigation?: boolean;
 
   /** Controller returned by the `useCalendar` hook. When provided, the displayed date and level are owned by the controller and `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel` and `onLevelChange` props are ignored @category state */
@@ -369,65 +370,6 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     calendar.setLevel(nextLevel);
   };
 
-  useEffect(() => {
-    if (!enableKeyboardNavigation || isStatic) {
-      return;
-    }
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (!calendarRef.current?.contains(document.activeElement)) {
-        return;
-      }
-
-      const isCtrlOrCmd = event.ctrlKey || event.metaKey;
-      const isShift = event.shiftKey;
-
-      switch (event.key) {
-        case 'ArrowUp':
-          if (isCtrlOrCmd && isShift) {
-            event.preventDefault();
-            handlePreviousDecade();
-          } else if (isCtrlOrCmd) {
-            event.preventDefault();
-            handlePreviousYear();
-          }
-          break;
-
-        case 'ArrowDown':
-          if (isCtrlOrCmd && isShift) {
-            event.preventDefault();
-            handleNextDecade();
-          } else if (isCtrlOrCmd) {
-            event.preventDefault();
-            handleNextYear();
-          }
-          break;
-
-        case 'y':
-        case 'Y':
-          if (_level === 'month') {
-            event.preventDefault();
-            changeLevel('year');
-          }
-          break;
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [
-    enableKeyboardNavigation,
-    isStatic,
-    _level,
-    handleNextYear,
-    handlePreviousYear,
-    handleNextDecade,
-    handlePreviousDecade,
-  ]);
-
   const _minDate = toDateString(minDate);
   const _maxDate = toDateString(maxDate);
   const _locale = datesCtx.getLocale(locale);
@@ -480,6 +422,75 @@ export const Calendar = factory<CalendarFactory>((_props) => {
     onPrevious: levelHandlers.onPrevious,
     onNext: levelHandlers.onNext,
   });
+
+  useEffect(() => {
+    if (!enableKeyboardNavigation || isStatic) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!calendarRef.current?.contains(document.activeElement)) {
+        return;
+      }
+
+      const isCtrlOrCmd = event.ctrlKey || event.metaKey;
+      const isShift = event.shiftKey;
+      const preserveFocus = (years: number) =>
+        _level === 'month' &&
+        navigation.preserveDayFocusOnShift(
+          (date) => dayjs(date).add(years, 'year').format('YYYY-MM-DD') as DateStringValue
+        );
+
+      switch (event.key) {
+        case 'ArrowUp':
+          if (isCtrlOrCmd && isShift) {
+            event.preventDefault();
+            preserveFocus(-10);
+            handlePreviousDecade();
+          } else if (isCtrlOrCmd) {
+            event.preventDefault();
+            preserveFocus(-1);
+            handlePreviousYear();
+          }
+          break;
+
+        case 'ArrowDown':
+          if (isCtrlOrCmd && isShift) {
+            event.preventDefault();
+            preserveFocus(10);
+            handleNextDecade();
+          } else if (isCtrlOrCmd) {
+            event.preventDefault();
+            preserveFocus(1);
+            handleNextYear();
+          }
+          break;
+
+        case 'y':
+        case 'Y':
+          if (_level === 'month') {
+            event.preventDefault();
+            changeLevel('year');
+          }
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [
+    enableKeyboardNavigation,
+    isStatic,
+    _level,
+    handleNextYear,
+    handlePreviousYear,
+    handleNextDecade,
+    handlePreviousDecade,
+    navigation,
+  ]);
 
   const monthDescends = clampLevel('month', minLevel, maxLevel) === 'month';
   const yearDescends = clampLevel('year', minLevel, maxLevel) === 'year';

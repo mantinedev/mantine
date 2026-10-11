@@ -229,6 +229,68 @@ describe('@mantine/dates/DateTimePicker', () => {
     expect(onDropdownClose).toHaveBeenCalledTimes(1);
   });
 
+  it('clamps time to minDate time on the minDate day', async () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        defaultValue="2022-04-11 14:00:00"
+        minDate="2022-04-11 12:30:00"
+      />
+    );
+    await clickInput(container);
+    await userEvent.clear(getTimePicker());
+    await userEvent.type(getTimePicker(), '09');
+    act(() => getSubmitButton().focus());
+    expect(getTimePicker()).toHaveValue('12');
+  });
+
+  it('clamps time to maxDate time on the maxDate day', async () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        defaultValue="2022-04-11 10:00:00"
+        maxDate="2022-04-11 18:30:00"
+      />
+    );
+    await clickInput(container);
+    await userEvent.clear(getTimePicker());
+    await userEvent.type(getTimePicker(), '21');
+    act(() => getSubmitButton().focus());
+    expect(getTimePicker()).toHaveValue('18');
+  });
+
+  it('does not clamp time on days other than minDate/maxDate day', async () => {
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        defaultValue="2022-04-12 14:00:00"
+        minDate="2022-04-11 12:30:00"
+      />
+    );
+    await clickInput(container);
+    await userEvent.clear(getTimePicker());
+    await userEvent.type(getTimePicker(), '09');
+    act(() => getSubmitButton().focus());
+    expect(getTimePicker()).toHaveValue('09');
+  });
+
+  it('assigns defaultTimeValue to the selected date', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateTimePicker
+        {...defaultProps}
+        defaultDate="2022-04-11"
+        defaultTimeValue="10:45"
+        onChange={spy}
+      />
+    );
+    await clickInput(container);
+    await userEvent.click(container.querySelectorAll('table button')[6]);
+    await userEvent.click(getSubmitButton());
+    expect(spy).toHaveBeenLastCalledWith('2022-04-03 10:45:00');
+    expectValue(container, '03/04/2022 10:45');
+  });
+
   it('closes a dropdown controlled with popoverProps.opened with the submit button', async () => {
     const onDropdownClose = jest.fn();
     const { container } = render(<PopoverOpenedTest onDropdownClose={onDropdownClose} />);

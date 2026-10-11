@@ -136,6 +136,139 @@ describe('@mantine/core/OverflowList', () => {
       rectSpy.mockRestore();
     });
 
+    const renderTestItem = (item: string) => <div>{item}</div>;
+    const renderTestOverflow = (items: string[]) => <div>{`+${items.length}`}</div>;
+
+    it('limits visible items with maxVisibleItems', async () => {
+      render(
+        <OverflowList
+          className={ROOT_CLASS}
+          gap={0}
+          data={['A', 'B', 'C', 'D']}
+          maxVisibleItems={2}
+          renderItem={renderTestItem}
+          renderOverflow={renderTestOverflow}
+        />
+      );
+
+      expect(await screen.findByText('+2')).toBeInTheDocument();
+      expect(screen.getByText('A')).toBeInTheDocument();
+      expect(screen.getByText('B')).toBeInTheDocument();
+      expect(screen.queryByText('C')).not.toBeInTheDocument();
+      expect(screen.queryByText('D')).not.toBeInTheDocument();
+    });
+
+    it('limits visible items with maxVisibleItems when collapseFrom="start"', async () => {
+      render(
+        <OverflowList
+          className={ROOT_CLASS}
+          gap={0}
+          data={['A', 'B', 'C', 'D']}
+          maxVisibleItems={2}
+          collapseFrom="start"
+          renderItem={renderTestItem}
+          renderOverflow={renderTestOverflow}
+        />
+      );
+
+      expect(await screen.findByText('+2')).toBeInTheDocument();
+      expect(screen.queryByText('A')).not.toBeInTheDocument();
+      expect(screen.queryByText('B')).not.toBeInTheDocument();
+      expect(screen.getByText('C')).toBeInTheDocument();
+      expect(screen.getByText('D')).toBeInTheDocument();
+    });
+
+    it('moves all items to overflow when maxVisibleItems is 0', async () => {
+      const { rerender } = render(
+        <OverflowList
+          className={ROOT_CLASS}
+          gap={0}
+          data={['A', 'B', 'C', 'D']}
+          maxVisibleItems={0}
+          renderItem={renderTestItem}
+          renderOverflow={renderTestOverflow}
+        />
+      );
+
+      expect(await screen.findByText('+4')).toBeInTheDocument();
+      expect(screen.queryByText('A')).not.toBeInTheDocument();
+
+      rerender(
+        <OverflowList
+          className={ROOT_CLASS}
+          gap={0}
+          data={['A', 'B', 'C', 'D']}
+          maxVisibleItems={0}
+          collapseFrom="start"
+          renderItem={renderTestItem}
+          renderOverflow={renderTestOverflow}
+        />
+      );
+
+      expect(await screen.findByText('+4')).toBeInTheDocument();
+      expect(screen.queryByText('D')).not.toBeInTheDocument();
+    });
+
+    it('recomputes when maxVisibleItems changes', async () => {
+      const { rerender } = render(
+        <OverflowList
+          className={ROOT_CLASS}
+          gap={0}
+          data={['A', 'B', 'C', 'D']}
+          maxVisibleItems={1}
+          renderItem={renderTestItem}
+          renderOverflow={renderTestOverflow}
+        />
+      );
+
+      expect(await screen.findByText('+3')).toBeInTheDocument();
+
+      rerender(
+        <OverflowList
+          className={ROOT_CLASS}
+          gap={0}
+          data={['A', 'B', 'C', 'D']}
+          maxVisibleItems={3}
+          renderItem={renderTestItem}
+          renderOverflow={renderTestOverflow}
+        />
+      );
+
+      expect(await screen.findByText('+1')).toBeInTheDocument();
+      expect(screen.getByText('C')).toBeInTheDocument();
+    });
+
+    it('limits visible rows with maxRows', async () => {
+      const { rerender } = render(
+        <OverflowList
+          className={ROOT_CLASS}
+          gap={0}
+          maxRows={2}
+          data={['LONG', 'A', 'LONG', 'A', 'LONG']}
+          renderItem={renderTestItem}
+          renderOverflow={renderTestOverflow}
+        />
+      );
+
+      expect(await screen.findByText('+3')).toBeInTheDocument();
+      expect(screen.getAllByText('LONG')).toHaveLength(1);
+      expect(screen.getAllByText('A')).toHaveLength(1);
+
+      rerender(
+        <OverflowList
+          className={ROOT_CLASS}
+          gap={0}
+          maxRows={1}
+          data={['LONG', 'A', 'LONG', 'A', 'LONG']}
+          renderItem={renderTestItem}
+          renderOverflow={renderTestOverflow}
+        />
+      );
+
+      expect(await screen.findByText('+5')).toBeInTheDocument();
+      expect(screen.queryByText('LONG')).not.toBeInTheDocument();
+    });
+
     it('recomputes the visible/overflow split when string data is reordered at the same length', async () => {
       const short = ['A', 'B', 'C', 'D', 'LONG'];
       const reordered = ['LONG', 'A', 'B', 'C', 'D'];

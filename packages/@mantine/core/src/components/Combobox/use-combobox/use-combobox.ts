@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
 import { findElementBySelector, findElementsBySelector, getRootElement } from '../../../core/utils';
-import { getFirstIndex, getNextIndex, getPreviousIndex } from './get-index/get-index';
+import { getFirstIndex, getLastIndex, getNextIndex, getPreviousIndex } from './get-index/get-index';
 
 export type ComboboxDropdownEventSource = 'keyboard' | 'mouse' | 'unknown';
 
@@ -37,6 +37,11 @@ export interface ComboboxStore {
    * */
   selectFirstOption: () => string | null;
 
+  /** Selects last `Combobox.Option` that is not disabled.
+   *  If there are no such options, the function does nothing.
+   * */
+  selectLastOption: () => string | null;
+
   /** Selects next `Combobox.Option` that is not disabled.
    *  If the current option is the last one, the function selects first option, if `loop` is true.
    */
@@ -63,6 +68,12 @@ export interface ComboboxStore {
     target?: 'active' | 'selected' | number,
     options?: { scrollIntoView?: boolean }
   ) => void;
+
+  /** Returns id of the currently selected (highlighted) option element or `null`, used for `aria-activedescendant` */
+  getSelectedOptionId: () => string | null;
+
+  /** Subscribes to selected option id changes, returns unsubscribe function */
+  subscribeToSelectedOptionId: (listener: () => void) => () => void;
 
   /** Returns list id, used for `aria-*` attributes */
   getListId: () => string | null;
@@ -99,10 +110,10 @@ export interface UseComboboxOptions {
   /** Called when dropdown opens with event source: keyboard, mouse or unknown. Useful for analytics or side effects on dropdown opening */
   onDropdownOpen?: (eventSource: ComboboxDropdownEventSource) => void;
 
-  /** Determines whether arrow key presses should loop through items (first to last and last to first). Defaults to `true` */
+  /** Determines whether arrow key presses should loop through items (first to last and last to first) @default true */
   loop?: boolean;
 
-  /** `behavior` passed down to `element.scrollIntoView`. Controls the scrolling animation when options are scrolled into view. Defaults to `'instant'` */
+  /** `behavior` passed down to `element.scrollIntoView`. Controls the scrolling animation when options are scrolled into view @default 'instant' */
   scrollBehavior?: ScrollBehavior;
 }
 
@@ -136,6 +147,24 @@ export function useCombobox({
   const focusSearchTimeout = useRef<number>(-1);
   const focusTargetTimeout = useRef<number>(-1);
   const selectedIndexUpdateTimeout = useRef<number>(-1);
+  const selectedOptionId = useRef<string | null>(null);
+  const selectedOptionIdListeners = useRef(new Set<() => void>());
+
+  const setSelectedOptionId = useCallback((id: string | null) => {
+    if (selectedOptionId.current !== id) {
+      selectedOptionId.current = id;
+      selectedOptionIdListeners.current.forEach((listener) => listener());
+    }
+  }, []);
+
+  const getSelectedOptionId = useCallback(() => selectedOptionId.current, []);
+
+  const subscribeToSelectedOptionId = useCallback((listener: () => void) => {
+    selectedOptionIdListeners.current.add(listener);
+    return () => {
+      selectedOptionIdListeners.current.delete(listener);
+    };
+  }, []);
 
   const writeDropdownOpened = useCallbackRef((next: boolean) => {
     if (opened === undefined) {
@@ -171,6 +200,7 @@ export function useCombobox({
     const root = getRootElement(targetRef.current);
     const selected = findElementBySelector(`#${listId.current} [data-combobox-selected]`, root);
     selected?.removeAttribute('data-combobox-selected');
+    setSelectedOptionId(null);
   }, []);
 
   const selectOption = useCallback(
@@ -195,6 +225,7 @@ export function useCombobox({
           block: 'nearest',
           behavior: settings.current.scrollBehavior,
         });
+        setSelectedOptionId(items[nextIndex].id || null);
         return items[nextIndex].id;
       }
 
@@ -251,6 +282,15 @@ export function useCombobox({
     return selectOption(getFirstIndex(items));
   }, [selectOption]);
 
+  const selectLastOption = useCallback(() => {
+    const root = getRootElement(targetRef.current);
+    const items = findElementsBySelector<HTMLDivElement>(
+      `#${listId.current} [data-combobox-option]`,
+      root
+    );
+    return selectOption(getLastIndex(items));
+  }, [selectOption]);
+
   const updateSelectedOptionIndex: ComboboxStore['updateSelectedOptionIndex'] = useCallback(
     (target = 'selected', options) => {
       if (typeof target === 'number') {
@@ -271,6 +311,7 @@ export function useCombobox({
         return;
       }
 
+      window.clearTimeout(selectedIndexUpdateTimeout.current);
       selectedIndexUpdateTimeout.current = window.setTimeout(() => {
         const root = getRootElement(targetRef.current);
         const items = findElementsBySelector<HTMLDivElement>(
@@ -280,6 +321,10 @@ export function useCombobox({
         const index = items.findIndex((option) => option.hasAttribute(`data-combobox-${target}`));
 
         selectedOptionIndex.current = index;
+
+        if (target === 'selected') {
+          setSelectedOptionId(items[index]?.id || null);
+        }
 
         if (options?.scrollIntoView) {
           items[index]?.scrollIntoView({
@@ -341,11 +386,15 @@ export function useCombobox({
       getSelectedOptionIndex,
       selectOption,
       selectFirstOption,
+      selectLastOption,
       selectActiveOption,
       selectNextOption,
       selectPreviousOption,
       resetSelectedOption,
       updateSelectedOptionIndex,
+
+      getSelectedOptionId,
+      subscribeToSelectedOptionId,
 
       getListId,
       setListId,

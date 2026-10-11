@@ -45,7 +45,7 @@ export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   /** Number of lines after which Text will be truncated @category appearance */
   lineClamp?: number;
 
-  /** Side on which Text must be truncated, if `true`, text is truncated from the start @category appearance */
+  /** Side on which Text must be truncated, if `true`, text is truncated from the end @category appearance */
   truncate?: TextTruncate;
 
   /** Sets `line-height` to 1 for centering @default false @category appearance */
@@ -78,8 +78,6 @@ const defaultProps = {
 } satisfies Partial<TextProps>;
 
 const varsResolver = createVarsResolver<TextFactory>(
-  // Will be removed in 9.0
-
   (theme, { variant, lineClamp, gradient, size, textWrap }) => ({
     root: {
       '--text-fz': getFontSize(size),

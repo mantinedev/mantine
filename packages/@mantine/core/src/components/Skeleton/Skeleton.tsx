@@ -95,7 +95,14 @@ export const Skeleton = factory<SkeletonFactory>((_props) => {
     varsResolver,
   });
 
-  return <Box {...getStyles('root')} mod={[{ visible, animate }, mod]} {...others} />;
+  return (
+    <Box
+      {...getStyles('root')}
+      mod={[{ visible, animate }, mod]}
+      aria-busy={visible || undefined}
+      {...others}
+    />
+  );
 });
 
 Skeleton.classes = classes;

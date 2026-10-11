@@ -18,6 +18,36 @@
   }
 }
 
+@keyframes indeterminate-animation {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+@keyframes indeterminate-animation-rtl {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-250%);
+  }
+}
+
+@keyframes indeterminate-animation-vertical {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(-250%);
+  }
+}
+
 .root {
   --progress-radius: var(--mantine-radius-default);
   --progress-size: var(--progress-size-md);
@@ -83,6 +113,26 @@
     border-end-start-radius: var(--progress-radius);
   }
 
+  &:where([data-indeterminate]) {
+    width: 40%;
+    border-radius: var(--progress-radius);
+    animation: indeterminate-animation 1.5s ease-in-out infinite;
+
+    &:where([data-animated]) {
+      animation:
+        indeterminate-animation 1.5s ease-in-out infinite,
+        stripes-animation 1s linear infinite;
+    }
+
+    @mixin rtl {
+      animation-name: indeterminate-animation-rtl;
+
+      &:where([data-animated]) {
+        animation-name: indeterminate-animation-rtl, stripes-animation;
+      }
+    }
+  }
+
   .root:where([data-orientation='vertical']) & {
     width: 100%;
     height: var(--progress-section-size);
@@ -115,6 +165,18 @@
       border-radius: 0;
       border-end-start-radius: var(--progress-radius);
       border-end-end-radius: var(--progress-radius);
+    }
+
+    &:where([data-indeterminate]) {
+      height: 40%;
+      border-radius: var(--progress-radius);
+      animation: indeterminate-animation-vertical 1.5s ease-in-out infinite;
+
+      &:where([data-animated]) {
+        animation:
+          indeterminate-animation-vertical 1.5s ease-in-out infinite,
+          stripes-animation-vertical 1s linear infinite;
+      }
     }
   }
 }

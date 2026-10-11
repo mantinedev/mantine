@@ -422,6 +422,71 @@ describe('@mantine/dates/DateInput', () => {
     expectNoPopover(container);
   });
 
+  it('reverts typed date outside of minDate/maxDate on blur', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        defaultValue="2022-04-11"
+        minDate="2022-04-01"
+        maxDate="2022-04-30"
+        valueFormat="YYYY-MM-DD"
+        onChange={spy}
+      />
+    );
+
+    await userEvent.clear(getInput(container));
+    await userEvent.type(getInput(container), '2022-05-15');
+    await userEvent.tab();
+    expectValue(container, '2022-04-11');
+    expect(spy).not.toHaveBeenCalledWith('2022-05-15');
+
+    await userEvent.clear(getInput(container));
+    await userEvent.type(getInput(container), '2022-03-15');
+    await userEvent.tab();
+    expectValue(container, '2022-04-11');
+    expect(spy).not.toHaveBeenCalledWith('2022-03-15');
+
+    await userEvent.clear(getInput(container));
+    await userEvent.type(getInput(container), '2022-04-20');
+    await userEvent.tab();
+    expectValue(container, '2022-04-20');
+    expect(spy).toHaveBeenLastCalledWith('2022-04-20');
+  });
+
+  it('keeps time part of typed value when withTime is set', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateInput
+        {...defaultProps}
+        withTime
+        valueFormat="YYYY-MM-DD HH:mm:ss"
+        onChange={spy}
+        name="date"
+      />
+    );
+
+    await userEvent.type(getInput(container), '2022-04-11 14:45:30');
+    await userEvent.tab();
+    expect(spy).toHaveBeenLastCalledWith('2022-04-11 14:45:30');
+    expect(container.querySelector('input[type="hidden"]')).toHaveValue('2022-04-11 14:45:30');
+    expectValue(container, '2022-04-11 14:45:30');
+  });
+
+  it('calls getDayProps once per day render and its onClick once per click', async () => {
+    const onDayClick = jest.fn();
+    const getDayProps = jest.fn(() => ({ onClick: onDayClick }));
+    const { container } = render(
+      <DateInput {...defaultProps} defaultValue="2022-04-11" getDayProps={getDayProps} />
+    );
+    await userEvent.click(getInput(container));
+    getDayProps.mockClear();
+
+    await userEvent.click(container.querySelectorAll('table button')[10]);
+    expect(onDayClick).toHaveBeenCalledTimes(1);
+    expect(getDayProps).not.toHaveBeenCalled();
+  });
+
   it('has correct default __staticSelector', () => {
     const { container } = render(
       <DateInput

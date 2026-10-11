@@ -175,6 +175,17 @@ describe('@mantine/dates/YearPicker', () => {
     expect(document.body).toHaveFocus();
   });
 
+  it('calls onYearSelect with selected year', async () => {
+    const onYearSelect = jest.fn();
+    const onChange = jest.fn();
+    const { container } = render(
+      <YearPicker date="2022-04-11" onYearSelect={onYearSelect} onChange={onChange} />
+    );
+    await userEvent.click(container.querySelectorAll('table button')[2]);
+    expect(onYearSelect).toHaveBeenCalledWith('2022-01-01');
+    expect(onChange).toHaveBeenCalledWith('2022-01-01');
+  });
+
   it('correctly handles presets', async () => {
     const spy = jest.fn();
     const { container } = render(

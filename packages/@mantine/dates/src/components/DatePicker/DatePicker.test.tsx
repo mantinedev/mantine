@@ -168,6 +168,46 @@ describe('@mantine/dates/DatePicker', () => {
     expect(container.querySelector('[data-selected]')!.textContent).toBe('12');
   });
 
+  it('supports enhanced keyboard navigation', async () => {
+    render(
+      <DatePicker {...defaultProps} ariaLabels={{ monthLevelControl: 'month-level' }} />
+    );
+    const levelControl = () => screen.getByLabelText('month-level');
+    levelControl().focus();
+
+    await userEvent.keyboard('{Control>}{ArrowUp}{/Control}');
+    expect(levelControl().textContent).toBe('April 2021');
+
+    await userEvent.keyboard('{Control>}{ArrowDown}{/Control}');
+    expect(levelControl().textContent).toBe('April 2022');
+
+    await userEvent.keyboard('{Control>}{Shift>}{ArrowDown}{/Shift}{/Control}');
+    expect(levelControl().textContent).toBe('April 2032');
+
+    await userEvent.keyboard('{Control>}{Shift>}{ArrowUp}{/Shift}{/Control}');
+    expect(levelControl().textContent).toBe('April 2022');
+
+    await userEvent.keyboard('y');
+    expect(screen.queryByLabelText('month-level')).toBe(null);
+    expect(screen.getByText('Jan')).toBeInTheDocument();
+  });
+
+  it('disables enhanced keyboard navigation with enableKeyboardNavigation={false}', async () => {
+    render(
+      <DatePicker
+        {...defaultProps}
+        enableKeyboardNavigation={false}
+        ariaLabels={{ monthLevelControl: 'month-level' }}
+      />
+    );
+    screen.getByLabelText('month-level').focus();
+
+    await userEvent.keyboard('{Control>}{ArrowUp}{/Control}');
+    await userEvent.keyboard('{Control>}{Shift>}{ArrowDown}{/Shift}{/Control}');
+    await userEvent.keyboard('y');
+    expect(screen.getByLabelText('month-level').textContent).toBe('April 2022');
+  });
+
   it('supports custom __staticSelector', () => {
     const { container } = render(<DatePicker {...defaultProps} __staticSelector="Calendar" />);
     expect(container.querySelector('.mantine-Calendar-month')).toBeInTheDocument();

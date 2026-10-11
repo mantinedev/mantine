@@ -17,10 +17,10 @@ const defaultProps = {
 } satisfies Partial<CopyButtonProps>;
 
 export function CopyButton(props: CopyButtonProps) {
-  const { children, timeout, value, ...others } = useProps('CopyButton', defaultProps, props);
+  const { children, timeout, value } = useProps('CopyButton', defaultProps, props);
   const clipboard = useClipboard({ timeout });
   const copy = () => clipboard.copy(value);
-  return <>{children({ copy, copied: clipboard.copied, ...others })}</>;
+  return <>{children({ copy, copied: clipboard.copied })}</>;
 }
 
 CopyButton.displayName = '@mantine/core/CopyButton';

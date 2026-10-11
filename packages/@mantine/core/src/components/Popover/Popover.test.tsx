@@ -1,4 +1,4 @@
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Popover, PopoverProps, PopoverStylesNames } from './Popover';
 import { PopoverContextMenu } from './PopoverContextMenu/PopoverContextMenu';
@@ -149,6 +149,50 @@ describe('@mantine/core/Popover', () => {
     offsetWidth.mockRestore();
   });
 
+  it('calls onDismiss on Escape and outside click', async () => {
+    const onDismiss = jest.fn();
+    render(
+      <>
+        <TestContainer defaultOpened onDismiss={onDismiss} />
+        <button type="button">outside</button>
+      </>
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'outside' }));
+    expect(onDismiss).toHaveBeenCalledTimes(1);
+    expect(screen.queryByText('test-dropdown')).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: 'test-target' }));
+    await userEvent.type(screen.getByRole('textbox', { name: '1' }), '{Escape}');
+    expect(onDismiss).toHaveBeenCalledTimes(2);
+    expect(screen.queryByText('test-dropdown')).not.toBeInTheDocument();
+  });
+
+  it('does not call onDismiss on outside click while closed', async () => {
+    const onDismiss = jest.fn();
+    render(
+      <>
+        <TestContainer onDismiss={onDismiss} />
+        <button type="button">outside</button>
+      </>
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'outside' }));
+    expect(onDismiss).not.toHaveBeenCalled();
+  });
+
+  it('returns focus to the target when the dropdown closes', async () => {
+    const { rerender } = render(<TestContainer opened={false} trapFocus returnFocus />);
+    const target = screen.getByRole('button', { name: 'test-target' });
+    act(() => target.focus());
+
+    rerender(<TestContainer opened trapFocus returnFocus />);
+    await waitFor(() => expect(screen.getByRole('textbox', { name: '2' })).toHaveFocus());
+
+    rerender(<TestContainer opened={false} trapFocus returnFocus />);
+    await waitFor(() => expect(target).toHaveFocus());
+  });
+
   it('exposes PopoverTarget and PopoverDropdown as static properties', () => {
     expect(Popover.Dropdown).toBe(PopoverDropdown);
     expect(Popover.Target).toBe(PopoverTarget);
@@ -223,6 +267,21 @@ describe('@mantine/core/Popover', () => {
       fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
 
       expect(screen.getByTestId('context-area')).toHaveAttribute('data-expanded', 'true');
+    });
+
+    it('connects the wrapped child with the dropdown', () => {
+      render(<ContextMenuContainer />);
+      const area = screen.getByTestId('context-area');
+      expect(area).toHaveAttribute('aria-haspopup', 'dialog');
+      expect(area).toHaveAttribute('aria-expanded', 'false');
+      expect(area).not.toHaveAttribute('aria-controls');
+
+      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+
+      const dropdown = screen.getByRole('dialog');
+      expect(area).toHaveAttribute('aria-expanded', 'true');
+      expect(area).toHaveAttribute('aria-controls', dropdown.id);
+      expect(dropdown).toHaveAttribute('aria-labelledby', area.id);
     });
 
     it('does not intercept right-click when parent Popover is disabled', () => {

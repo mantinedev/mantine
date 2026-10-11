@@ -219,6 +219,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
     label,
     labelTransitionProps,
     labelAlwaysOn,
+    thumbLabel,
     thumbFromLabel,
     thumbToLabel,
     thumbValueText,
@@ -336,7 +337,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           }
         }
 
-        if (clampedVal > (max - (minRange - 0.000000001) || min)) {
+        if (clampedVal > max - (minRange - 0.000000001)) {
           clone[index] = valueRef.current[index];
         }
 
@@ -358,7 +359,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           }
         }
 
-        if (clampedVal < clone[0] + minRange) {
+        if (clampedVal < min + (minRange - 0.000000001)) {
           clone[index] = valueRef.current[index];
         }
 
@@ -571,6 +572,38 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           break;
         }
 
+        case 'Home': {
+          event.preventDefault();
+          const focusedIndex = getFocusedThumbIndex();
+          thumbs.current[focusedIndex].focus();
+          const nextValue =
+            restrictToMarks && marks
+              ? focusedIndex === 0
+                ? getFirstMarkValue(marks)
+                : getNextMarkValue(valueRef.current[0], marks)
+              : focusedIndex === 0
+                ? domainMin
+                : Math.min(Math.max(valueRef.current[0] + minRange, domainMin), domainMax);
+          setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
+          break;
+        }
+
+        case 'End': {
+          event.preventDefault();
+          const focusedIndex = getFocusedThumbIndex();
+          thumbs.current[focusedIndex].focus();
+          const nextValue =
+            restrictToMarks && marks
+              ? focusedIndex === 1
+                ? getLastMarkValue(marks)
+                : getPreviousMarkValue(valueRef.current[1], marks)
+              : focusedIndex === 1
+                ? domainMax
+                : Math.max(Math.min(valueRef.current[1] - minRange, domainMax), domainMin);
+          setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
+          break;
+        }
+
         default: {
           break;
         }
@@ -646,7 +679,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
                 thumbs.current[0] = node;
               }
             }}
-            thumbLabel={thumbFromLabel}
+            thumbLabel={thumbFromLabel ?? thumbLabel}
             thumbValueText={thumbValueText}
             onMouseDown={() => handleThumbMouseDown(0)}
             onFocus={() => setFocused(0)}
@@ -660,7 +693,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
 
           <Thumb
             {...sharedThumbProps}
-            thumbLabel={thumbToLabel}
+            thumbLabel={thumbToLabel ?? thumbLabel}
             value={scale(_value[1])}
             position={positions[1]}
             dragging={active}

@@ -6,6 +6,11 @@ const defaultProps: ScrollerProps = {
 };
 
 describe('@mantine/core/Scroller', () => {
+  tests.axe([
+    <Scroller {...defaultProps} key="1" />,
+    <Scroller {...defaultProps} showStartControl showEndControl key="2" />,
+  ]);
+
   tests.itSupportsSystemProps<ScrollerProps, ScrollerStylesNames>({
     component: Scroller,
     props: defaultProps,
@@ -113,5 +118,26 @@ describe('@mantine/core/Scroller', () => {
     render(<Scroller {...defaultProps} showStartControl showEndControl />);
     expect(screen.getByLabelText('Scroll left')).toHaveAttribute('data-position', 'start');
     expect(screen.getByLabelText('Scroll right')).toHaveAttribute('data-position', 'end');
+  });
+
+  it('hides controls that cannot scroll from keyboard and assistive technologies', () => {
+    const { container } = render(<Scroller {...defaultProps} />);
+    const [start, end] = Array.from(container.querySelectorAll('button'));
+    [start, end].forEach((control) => {
+      expect(control).toHaveAttribute('data-hidden');
+      expect(control).toHaveAttribute('aria-hidden', 'true');
+      expect(control).toHaveAttribute('tabindex', '-1');
+    });
+  });
+
+  it('exposes controls when showStartControl and showEndControl are set', () => {
+    const { rerender } = render(<Scroller {...defaultProps} showStartControl />);
+    expect(screen.getByRole('button', { name: 'Scroll left' })).not.toHaveAttribute('data-hidden');
+    expect(screen.getByRole('button', { name: 'Scroll left' })).toHaveAttribute('tabindex', '0');
+    expect(screen.queryByRole('button', { name: 'Scroll right' })).not.toBeInTheDocument();
+
+    rerender(<Scroller {...defaultProps} showEndControl />);
+    expect(screen.getByRole('button', { name: 'Scroll right' })).toHaveAttribute('tabindex', '0');
+    expect(screen.queryByRole('button', { name: 'Scroll left' })).not.toBeInTheDocument();
   });
 });

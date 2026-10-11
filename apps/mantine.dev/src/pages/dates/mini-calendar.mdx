@@ -54,3 +54,16 @@ function Demo() {
   );
 }
 ```
+
+Day buttons are labelled with the full date in the current locale, for example `5 March 2025`. Use `getDayAriaLabel` to change the label:
+
+```tsx
+import dayjs from 'dayjs';
+import { MiniCalendar } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MiniCalendar getDayAriaLabel={(date) => dayjs(date).format('dddd, D MMMM YYYY')} />
+  );
+}
+```

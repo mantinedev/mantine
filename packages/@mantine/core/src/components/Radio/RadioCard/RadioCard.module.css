@@ -15,4 +15,9 @@
 
     border-color: var(--mantine-color-border);
   }
+
+  &:where(:disabled, [data-disabled]) {
+    cursor: not-allowed;
+    opacity: var(--mantine-disabled-opacity);
+  }
 }

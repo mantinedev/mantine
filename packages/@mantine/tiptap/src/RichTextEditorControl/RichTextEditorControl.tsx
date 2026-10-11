@@ -61,7 +61,6 @@ export const RichTextEditorControl = factory<RichTextEditorControlFactory>((_pro
       data-disabled={disabled || undefined}
       data-active={active || undefined}
       aria-pressed={(active && interactive) || undefined}
-      aria-hidden={!interactive || undefined}
       unstyled={ctx.unstyled}
       variant={ctx.variant || 'default'}
       onMouseDown={(event) => {

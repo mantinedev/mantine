@@ -26,10 +26,6 @@ function Demo() {
       scrollSpyOptions={{
         selector: 'h1, h2, h3, h4, h5, h6',
       }}
-      getControlProps={({ data }) => ({
-        onClick: () => data.getNode().scrollIntoView(),
-        children: data.value,
-      })}
     />
   );
 }
@@ -45,10 +41,6 @@ function Demo() {
       scrollSpyOptions={{
         selector: 'h1, h2, h3, h4, h5, h6',
       }}
-      getControlProps={({ data }) => ({
-        onClick: () => data.getNode().scrollIntoView(),
-        children: data.value,
-      })}
     />
   );
 }

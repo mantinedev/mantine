@@ -65,3 +65,13 @@ export function getFirstIndex({ totalOptionsCount, isOptionDisabled }: GetFirstI
 
   return -1;
 }
+
+export function getLastIndex({ totalOptionsCount, isOptionDisabled }: GetFirstIndexOptions) {
+  for (let i = totalOptionsCount - 1; i >= 0; i -= 1) {
+    if (!isOptionDisabled(i)) {
+      return i;
+    }
+  }
+
+  return -1;
+}

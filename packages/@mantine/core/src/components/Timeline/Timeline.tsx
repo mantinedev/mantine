@@ -1,4 +1,4 @@
-import { Children, cloneElement } from 'react';
+import { Children, cloneElement, isValidElement } from 'react';
 import {
   Box,
   BoxProps,
@@ -41,7 +41,7 @@ export interface TimelineProps
   /** Key of `theme.colors` or any valid CSS color to control active item colors @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default '1000px' */
   radius?: MantineRadius;
 
   /** Size of the bullet @default 20 */
@@ -50,13 +50,13 @@ export interface TimelineProps
   /** Position of content relative to the bullet @default 'left' */
   align?: 'right' | 'left';
 
-  /** Control width of the line */
+  /** Control width of the line @default 4 */
   lineWidth?: number | string;
 
   /** If set, the active items direction is reversed without reversing items order @default false */
   reverseActive?: boolean;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color for `filled` variant @default theme.autoContrast */
   autoContrast?: boolean;
 }
 
@@ -127,7 +127,9 @@ export const Timeline = factory<TimelineFactory>((_props) => {
   });
 
   const activeIndex = active ?? -1;
-  const _children = Children.toArray(children) as React.ReactElement<TimelineItemProps>[];
+  const _children = Children.toArray(children).filter(
+    isValidElement
+  ) as React.ReactElement<TimelineItemProps>[];
   const items = _children.map((item, index) =>
     cloneElement(item, { index: item.props.index ?? index })
   );
@@ -136,7 +138,7 @@ export const Timeline = factory<TimelineFactory>((_props) => {
     <TimelineProvider
       value={{ getStyles, active: activeIndex, itemsCount: _children.length, reverseActive, align }}
     >
-      <Box {...getStyles('root')} mod={[{ align }, mod]} {...others}>
+      <Box {...getStyles('root')} mod={[{ align }, mod]} role="list" {...others}>
         {items}
       </Box>
     </TimelineProvider>

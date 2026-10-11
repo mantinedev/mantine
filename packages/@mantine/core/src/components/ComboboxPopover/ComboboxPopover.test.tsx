@@ -366,4 +366,123 @@ describe('@mantine/core/ComboboxPopover', () => {
     await userEvent.click(screen.getByRole('option', { name: 'test-2' }));
     expect(screen.getByRole('combobox')).toHaveTextContent('test-2');
   });
+
+  it('labels the listbox with the target', async () => {
+    render(<ComboboxPopover {...defaultProps} />);
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.getByRole('listbox')).toHaveAttribute(
+      'aria-labelledby',
+      screen.getByRole('combobox').id
+    );
+  });
+
+  it('labels the listbox with the target id when target has its own id', async () => {
+    render(
+      <ComboboxPopover data={['test-1']}>
+        <ComboboxPopover.Target>
+          <Button id="custom-target">Custom</Button>
+        </ComboboxPopover.Target>
+      </ComboboxPopover>
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.getByRole('listbox')).toHaveAttribute('aria-labelledby', 'custom-target');
+  });
+
+  it('labels the listbox with the target in searchable mode', async () => {
+    render(<ComboboxPopover {...defaultProps} searchable />);
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.getByRole('listbox')).toHaveAttribute(
+      'aria-labelledby',
+      screen.getByRole('combobox').id
+    );
+  });
+
+  it('uses aria-label as the listbox name', async () => {
+    render(<ComboboxPopover {...defaultProps} aria-label="Frameworks" />);
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.getByRole('listbox', { name: 'Frameworks' })).toBeInTheDocument();
+  });
+
+  it('sets aria-multiselectable on the listbox in multiple mode', async () => {
+    render(
+      <ComboboxPopover data={['test-1', 'test-2']} multiple>
+        {target}
+      </ComboboxPopover>
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.getByRole('listbox')).toHaveAttribute('aria-multiselectable', 'true');
+  });
+
+  it('opens dropdown with Enter and submits option with ArrowDown and Enter', async () => {
+    const spy = jest.fn();
+    render(
+      <ComboboxPopover
+        {...defaultProps}
+        onChange={spy}
+        comboboxProps={{ transitionProps: { duration: 0 } }}
+      />
+    );
+    screen.getByRole('combobox').focus();
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByRole('listbox')).toBeVisible();
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+    expect(spy).toHaveBeenCalledWith('test-2');
+  });
+
+  it('highlights first option on open when selectFirstOptionOnDropdownOpen is set', async () => {
+    render(<ComboboxPopover {...defaultProps} selectFirstOptionOnDropdownOpen />);
+    await userEvent.click(screen.getByRole('combobox'));
+    await waitFor(() =>
+      expect(screen.getByRole('option', { name: 'test-1' })).toHaveAttribute(
+        'data-combobox-selected'
+      )
+    );
+  });
+
+  it('supports controlled search value', async () => {
+    const spy = jest.fn();
+    render(
+      <ComboboxPopover
+        data={['React', 'Angular', 'Vue']}
+        searchable
+        searchValue="an"
+        onSearchChange={spy}
+        defaultDropdownOpened
+      >
+        {target}
+      </ComboboxPopover>
+    );
+    expect(screen.getAllByRole('option')).toHaveLength(1);
+    expect(screen.getByRole('option', { name: 'Angular' })).toBeInTheDocument();
+    await userEvent.type(screen.getByPlaceholderText('Search...'), 'g');
+    expect(spy).toHaveBeenLastCalledWith('ang');
+    expect(screen.getAllByRole('option')).toHaveLength(1);
+  });
+
+  it('limits the number of displayed options', async () => {
+    render(
+      <ComboboxPopover data={['a', 'b', 'c', 'd']} limit={2} searchable defaultDropdownOpened>
+        {target}
+      </ComboboxPopover>
+    );
+    expect(screen.getAllByRole('option')).toHaveLength(2);
+  });
+
+  it('supports renderOption', async () => {
+    render(
+      <ComboboxPopover
+        {...defaultProps}
+        defaultValue="test-2"
+        defaultDropdownOpened
+        renderOption={({ option, checked }) => (
+          <span>
+            {option.label}
+            {checked ? ' (checked)' : ''}
+          </span>
+        )}
+      />
+    );
+    expect(screen.getByText('test-1')).toBeInTheDocument();
+    expect(screen.getByText('test-2 (checked)')).toBeInTheDocument();
+  });
 });

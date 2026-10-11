@@ -7,7 +7,7 @@ export interface FocusTrapProps {
   /** Element to trap focus at, must support ref prop */
   children: any;
 
-  /** If set to `false`, disables focus trap */
+  /** If set to `false`, disables focus trap @default true */
   active?: boolean;
 
   /** Prop that is used to access element ref @default 'ref' */

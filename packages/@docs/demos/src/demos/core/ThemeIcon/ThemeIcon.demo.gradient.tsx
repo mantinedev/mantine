@@ -12,7 +12,6 @@ function Demo() {
     <ThemeIcon
       variant="gradient"
       size="xl"
-      aria-label="Gradient action icon"
       gradient={{ from: '${props.gradientFrom}', to: '${props.gradientTo}', deg: ${props.gradientDegree} }}
     >
       <HeartIcon />
@@ -26,7 +25,6 @@ function Wrapper(props: any) {
     <ThemeIcon
       variant="gradient"
       size="xl"
-      aria-label="Gradient action icon"
       gradient={{ from: props.gradientFrom, to: props.gradientTo, deg: props.gradientDegree }}
     >
       <HeartIcon />

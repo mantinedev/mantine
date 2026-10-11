@@ -58,10 +58,10 @@ export interface MonthSettings {
   /** `dayjs` locale, the default value is defined by `DatesProvider` @category appearance */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday @category appearance */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. The default value is defined by `DatesProvider`. @category appearance */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names @default 'dd' @category appearance */
+  /** `dayjs` format string or a function that returns weekday label for the given date @default 'dd' @category appearance */
   weekdayFormat?: DateLabelFormat;
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. @category appearance */
@@ -333,6 +333,7 @@ export const Month = factory<MonthFactory>((_props) => {
     <Box
       component="table"
       {...getStyles('month')}
+      role={isStatic ? undefined : 'grid'}
       size={size}
       data-full-width={fullWidth || undefined}
       data-week-mode={withWeekControls || undefined}

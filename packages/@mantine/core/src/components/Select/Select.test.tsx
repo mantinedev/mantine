@@ -542,4 +542,53 @@ describe('@mantine/core/Select', () => {
     expect(spy).toHaveBeenLastCalledWith({ block: 'nearest', behavior: 'smooth' });
     spy.mockRestore();
   });
+
+  it('sets aria-autocomplete="list" only when searchable', () => {
+    const { rerender } = render(<Select {...defaultProps} />);
+    expect(screen.getByRole('combobox')).not.toHaveAttribute('aria-autocomplete');
+    rerender(<Select {...defaultProps} searchable />);
+    expect(screen.getByRole('combobox')).toHaveAttribute('aria-autocomplete', 'list');
+  });
+
+  it('passes typed value to onOptionSubmit', async () => {
+    const spy = jest.fn();
+    render(
+      <Select<number>
+        data={[
+          { value: 1, label: 'One' },
+          { value: 2, label: 'Two' },
+        ]}
+        dropdownOpened
+        comboboxProps={{ withinPortal: false }}
+        onOptionSubmit={spy}
+      />
+    );
+    await userEvent.click(screen.getByRole('option', { name: 'Two' }));
+    expect(spy).toHaveBeenCalledWith(2);
+  });
+
+  it('selects option with typeahead and Home/End when not searchable', async () => {
+    const spy = jest.fn();
+    render(
+      <Select
+        data={['Apple', 'Banana', 'Blueberry', 'Cherry']}
+        onChange={spy}
+        comboboxProps={{ withinPortal: false, transitionProps: { duration: 0 } }}
+      />
+    );
+    screen.getByRole('combobox').focus();
+    await userEvent.keyboard('{Enter}');
+    await userEvent.keyboard('blu');
+    await userEvent.keyboard('{Enter}');
+    expect(spy).toHaveBeenLastCalledWith(
+      'Blueberry',
+      expect.objectContaining({ value: 'Blueberry' })
+    );
+
+    await userEvent.keyboard('{Enter}{End}{Enter}');
+    expect(spy).toHaveBeenLastCalledWith('Cherry', expect.objectContaining({ value: 'Cherry' }));
+
+    await userEvent.keyboard('{Enter}{Home}{Enter}');
+    expect(spy).toHaveBeenLastCalledWith('Apple', expect.objectContaining({ value: 'Apple' }));
+  });
 });

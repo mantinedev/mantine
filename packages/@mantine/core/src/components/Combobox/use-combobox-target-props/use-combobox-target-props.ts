@@ -1,5 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
+import { findElementsBySelector, getRootElement } from '../../../core/utils';
 import { useComboboxContext } from '../Combobox.context';
+import { ComboboxStore } from '../use-combobox/use-combobox';
+
+const TYPEAHEAD_TIMEOUT = 500;
+
+function selectOptionByText(store: ComboboxStore, text: string) {
+  const root = getRootElement(store.targetRef.current);
+  const items = findElementsBySelector<HTMLDivElement>(
+    `#${store.getListId()} [data-combobox-option]`,
+    root
+  );
+
+  if (items.length === 0) {
+    return;
+  }
+
+  const query = text.toLowerCase();
+  const isRepeatedChar = query.split('').every((char) => char === query[0]);
+  const search = isRepeatedChar ? query[0] : query;
+  const currentIndex = store.getSelectedOptionIndex();
+  const startIndex = isRepeatedChar ? currentIndex + 1 : Math.max(currentIndex, 0);
+
+  for (let i = 0; i < items.length; i += 1) {
+    const index = (startIndex + i) % items.length;
+    const item = items[index];
+
+    if (
+      !item.hasAttribute('data-combobox-disabled') &&
+      (item.textContent || '').trim().toLowerCase().startsWith(search)
+    ) {
+      store.selectOption(index);
+      return;
+    }
+  }
+}
+
+function isPrintableKey(event: React.KeyboardEvent) {
+  return event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey;
+}
 
 interface UseComboboxTargetPropsInput {
   targetType: 'input' | 'button' | undefined;
@@ -9,6 +48,7 @@ interface UseComboboxTargetPropsInput {
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement> | undefined;
   onClick: React.MouseEventHandler<HTMLInputElement> | undefined;
   autoComplete: string | undefined;
+  readOnly?: boolean;
 }
 
 export function useComboboxTargetProps({
@@ -19,9 +59,46 @@ export function useComboboxTargetProps({
   withExpandedAttribute,
   targetType,
   autoComplete,
+  readOnly,
 }: UseComboboxTargetPropsInput) {
   const ctx = useComboboxContext();
-  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const selectedOptionId = useSyncExternalStore(
+    ctx.store.subscribeToSelectedOptionId,
+    ctx.store.getSelectedOptionId,
+    () => null
+  );
+  const typeahead = useRef('');
+  const typeaheadTimeout = useRef(-1);
+  const typeaheadSelectTimeout = useRef(-1);
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(typeaheadTimeout.current);
+      window.clearTimeout(typeaheadSelectTimeout.current);
+    },
+    []
+  );
+
+  const handleTypeahead = (char: string) => {
+    window.clearTimeout(typeaheadTimeout.current);
+    typeahead.current += char;
+    typeaheadTimeout.current = window.setTimeout(() => {
+      typeahead.current = '';
+    }, TYPEAHEAD_TIMEOUT);
+
+    const text = typeahead.current;
+
+    if (ctx.store.isDropdownOpened()) {
+      selectOptionByText(ctx.store, text);
+    } else {
+      ctx.store.openDropdown('keyboard');
+      window.clearTimeout(typeaheadSelectTimeout.current);
+      typeaheadSelectTimeout.current = window.setTimeout(
+        () => selectOptionByText(ctx.store, text),
+        0
+      );
+    }
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
@@ -41,10 +118,10 @@ export function useComboboxTargetProps({
 
         if (!ctx.store.dropdownOpened) {
           ctx.store.openDropdown('keyboard');
-          setSelectedOptionId(ctx.store.selectActiveOption());
+          ctx.store.selectActiveOption();
           ctx.store.updateSelectedOptionIndex('selected', { scrollIntoView: true });
         } else {
-          setSelectedOptionId(ctx.store.selectNextOption());
+          ctx.store.selectNextOption();
         }
       }
 
@@ -53,10 +130,10 @@ export function useComboboxTargetProps({
 
         if (!ctx.store.dropdownOpened) {
           ctx.store.openDropdown('keyboard');
-          setSelectedOptionId(ctx.store.selectActiveOption());
+          ctx.store.selectActiveOption();
           ctx.store.updateSelectedOptionIndex('selected', { scrollIntoView: true });
         } else {
-          setSelectedOptionId(ctx.store.selectPreviousOption());
+          ctx.store.selectPreviousOption();
         }
       }
 
@@ -83,11 +160,26 @@ export function useComboboxTargetProps({
         ctx.store.closeDropdown('keyboard');
       }
 
-      if (event.nativeEvent.code === 'Space') {
+      if (targetType === 'button' && ctx.store.dropdownOpened) {
+        if (event.key === 'Home') {
+          event.preventDefault();
+          ctx.store.selectFirstOption();
+        }
+
+        if (event.key === 'End') {
+          event.preventDefault();
+          ctx.store.selectLastOption();
+        }
+      }
+
+      if (event.nativeEvent.code === 'Space' && typeahead.current === '') {
         if (targetType === 'button') {
           event.preventDefault();
           ctx.store.toggleDropdown('keyboard');
         }
+      } else if (targetType === 'button' && isPrintableKey(event)) {
+        event.preventDefault();
+        handleTypeahead(event.key);
       }
     }
   };
@@ -101,6 +193,10 @@ export function useComboboxTargetProps({
           : undefined,
         'aria-controls':
           ctx.store.dropdownOpened && ctx.store.getListId() ? ctx.store.getListId() : undefined,
+        'aria-autocomplete':
+          withExpandedAttribute && targetType === 'input' && !readOnly
+            ? ('list' as const)
+            : undefined,
         'aria-activedescendant': ctx.store.dropdownOpened
           ? selectedOptionId || undefined
           : undefined,

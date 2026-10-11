@@ -1,4 +1,4 @@
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { CloseButton, CloseButtonProps, CloseButtonStylesNames } from './CloseButton';
 import { CloseIcon } from './CloseIcon';
 
@@ -20,6 +20,27 @@ describe('@mantine/core/CloseButton', () => {
     children: true,
     displayName: '@mantine/core/CloseButton',
     stylesApiSelectors: ['root'],
+  });
+
+  it('blocks click when disabled', async () => {
+    const spy = jest.fn();
+    render(<CloseButton aria-label="close" disabled onClick={spy} />);
+    const button = screen.getByRole('button');
+    expect(button).toBeDisabled();
+    expect(button).toHaveAttribute('data-disabled');
+    await userEvent.click(button);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('sets data-disabled and aria-disabled without native disabled attribute when data-disabled is set', async () => {
+    const spy = jest.fn();
+    render(<CloseButton aria-label="close" data-disabled onClick={spy} />);
+    const button = screen.getByRole('button');
+    expect(button).not.toHaveAttribute('disabled');
+    expect(button).toHaveAttribute('data-disabled');
+    expect(button).toHaveAttribute('aria-disabled', 'true');
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('allows rendering custom icon', () => {

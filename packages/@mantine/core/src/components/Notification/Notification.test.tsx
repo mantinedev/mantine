@@ -1,5 +1,5 @@
 import { SmileyIcon } from '@phosphor-icons/react';
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Notification, NotificationProps, NotificationStylesNames } from './Notification';
 
 const getRoot = (container: HTMLElement) => container.querySelector('.mantine-Notification-root');
@@ -154,5 +154,46 @@ describe('@mantine/core/Notification', () => {
       '--loader-size': 'var(--loader-size-xs)',
       '--loader-color': 'var(--mantine-color-teal-filled)',
     });
+  });
+
+  it('calls onClose and closeButtonProps.onClick when close button is clicked', async () => {
+    const onClose = jest.fn();
+    const onClick = jest.fn();
+    render(
+      <Notification
+        {...defaultProps}
+        withCloseButton
+        onClose={onClose}
+        closeButtonProps={{ 'aria-label': 'Close notification', onClick }}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'Close notification' }));
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders loader instead of icon when loading is set', () => {
+    const { container } = render(<Notification {...defaultProps} icon="test-icon" loading />);
+    expect(container.querySelector('.mantine-Notification-loader')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-Notification-icon')).not.toBeInTheDocument();
+    expect(container).not.toHaveTextContent('test-icon');
+  });
+
+  it('merges loaderProps and closeButtonProps className with Styles API classes', () => {
+    const { container } = render(
+      <Notification
+        {...defaultProps}
+        loading
+        withCloseButton
+        loaderProps={{ className: 'custom-loader' }}
+        closeButtonProps={{ className: 'custom-close' }}
+      />
+    );
+
+    const loader = container.querySelector('.mantine-Notification-loader');
+    expect(loader).toHaveClass('custom-loader');
+    const closeButton = container.querySelector('.mantine-Notification-closeButton');
+    expect(closeButton).toHaveClass('custom-close');
   });
 });

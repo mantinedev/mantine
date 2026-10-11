@@ -23,7 +23,13 @@ export function getFormattedTime({
     typeof value === 'string' ? value : getTimeFromDate(value, withSeconds)
   );
 
-  if (splitted.hours === null || splitted.minutes === null) {
+  if (
+    splitted.hours === null ||
+    splitted.minutes === null ||
+    Number.isNaN(splitted.hours) ||
+    Number.isNaN(splitted.minutes) ||
+    (withSeconds && Number.isNaN(splitted.seconds))
+  ) {
     return null;
   }
 

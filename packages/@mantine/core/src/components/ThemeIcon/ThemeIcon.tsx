@@ -33,7 +33,7 @@ export type ThemeIconCssVariables = {
 
 export interface ThemeIconProps
   extends BoxProps, StylesApiProps<ThemeIconFactory>, ElementProps<'div'> {
-  /** Controls width and height of the button. Numbers are converted to rem. @default 'md' */
+  /** Controls width and height of the icon container. Numbers are converted to rem. @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
   /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor */
@@ -48,7 +48,7 @@ export interface ThemeIconProps
   /** Icon displayed inside the component */
   children?: React.ReactNode;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color for `filled` variant @default theme.autoContrast */
   autoContrast?: boolean;
 }
 

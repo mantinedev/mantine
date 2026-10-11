@@ -80,16 +80,27 @@ export const Collapse = factory<CollapseFactory>((props) => {
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 0 : transitionDuration;
-  const hook = orientation === 'horizontal' ? useHorizontalCollapse : useCollapse;
+  const horizontal = orientation === 'horizontal';
 
-  const collapse = hook({
+  const verticalCollapse = useCollapse({
     expanded,
     transitionDuration: duration,
     transitionTimingFunction,
-    onTransitionEnd,
-    onTransitionStart,
+    onTransitionEnd: horizontal ? undefined : onTransitionEnd,
+    onTransitionStart: horizontal ? undefined : onTransitionStart,
     keepMounted: false,
   });
+
+  const horizontalCollapse = useHorizontalCollapse({
+    expanded,
+    transitionDuration: duration,
+    transitionTimingFunction,
+    onTransitionEnd: horizontal ? onTransitionEnd : undefined,
+    onTransitionStart: horizontal ? onTransitionStart : undefined,
+    keepMounted: false,
+  });
+
+  const collapse = horizontal ? horizontalCollapse : verticalCollapse;
 
   if (duration === 0) {
     if (keepMounted === true && (keepMountedMode === 'display-none' || env !== 'test')) {

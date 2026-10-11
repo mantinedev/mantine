@@ -89,4 +89,45 @@ describe('@mantine/dates/Day', () => {
     rerender(<Day {...defaultProps} date={dayjs().format('YYYY-MM-DD')} />);
     expect(screen.getByRole('button')).toHaveAttribute('data-today');
   });
+
+  it('exposes selected state with aria-pressed', () => {
+    const { rerender } = render(<Day {...defaultProps} />);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'false');
+
+    rerender(<Day {...defaultProps} selected />);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'true');
+
+    rerender(<Day {...defaultProps} selected disabled />);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('sets aria-current="date" on today', () => {
+    const { rerender } = render(<Day {...defaultProps} date="2021-11-01" />);
+    expect(screen.getByRole('button')).not.toHaveAttribute('aria-current');
+
+    rerender(<Day {...defaultProps} date={dayjs().format('YYYY-MM-DD')} />);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-current', 'date');
+  });
+
+  it('does not set button-only attributes on static day', () => {
+    const { container } = render(<Day {...defaultProps} static selected disabled tabIndex={0} />);
+    const day = container.querySelector('[data-static]')!;
+    expect(day).not.toHaveAttribute('disabled');
+    expect(day).not.toHaveAttribute('aria-pressed');
+    expect(day).not.toHaveAttribute('tabindex');
+    expect(day).toHaveAttribute('data-disabled');
+  });
+
+  it('renders falsy renderDay result as is and falls back to day number for nullish result', () => {
+    const { rerender } = render(<Day {...defaultProps} renderDay={() => 0} />);
+    expect(screen.getByRole('button').textContent).toBe('0');
+
+    rerender(<Day {...defaultProps} renderDay={() => ''} />);
+    expect(screen.getByRole('button').textContent).toBe('');
+
+    rerender(<Day {...defaultProps} renderDay={() => null} />);
+    expect(screen.getByRole('button').textContent).toBe(
+      String(new Date(defaultProps.date).getDate())
+    );
+  });
 });

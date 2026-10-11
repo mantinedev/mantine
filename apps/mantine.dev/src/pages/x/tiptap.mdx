@@ -733,3 +733,21 @@ export const DEFAULT_LABELS: ResolvedRichTextEditorLabels = {
   colorPickerColorLabel: (color) => `Set text color ${color}`,
 };
 ```
+
+## Accessibility
+
+`RichTextEditor.Toolbar` has `role="toolbar"` and is a single tab stop. Use the keyboard to move focus between controls:
+
+- `ArrowRight` / `ArrowLeft` – next / previous control
+- `Home` / `End` – first / last control
+
+Set `aria-label` on the editor content with `editorProps` so that screen readers announce it:
+
+```tsx
+import { useEditor } from '@tiptap/react';
+
+const editor = useEditor({
+  extensions: [/* ... */],
+  editorProps: { attributes: { 'aria-label': 'Post content' } },
+});
+```

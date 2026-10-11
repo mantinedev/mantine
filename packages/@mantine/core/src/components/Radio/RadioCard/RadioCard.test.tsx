@@ -1,5 +1,5 @@
 import { createEvent, fireEvent } from '@testing-library/react';
-import { render, screen, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { RadioGroup } from '../RadioGroup/RadioGroup';
 import { RadioCard, RadioCardProps, RadioCardStylesNames } from './RadioCard';
 
@@ -175,5 +175,110 @@ describe('@mantine/core/RadioCard', () => {
 
     fireEvent.click(screen.getAllByRole('radio')[1]);
     expect(spy).toHaveBeenCalledWith('2');
+  });
+
+  it('skips disabled cards in arrow navigation', () => {
+    const spy = jest.fn();
+    render(
+      <RadioGroup value="1" onChange={spy}>
+        <RadioCard value="1">Option 1</RadioCard>
+        <RadioCard value="2" disabled>
+          Option 2
+        </RadioCard>
+        <RadioCard value="3">Option 3</RadioCard>
+      </RadioGroup>
+    );
+
+    const radios = screen.getAllByRole('radio');
+    radios[0].focus();
+    fireEvent(radios[0], createEvent.keyDown(radios[0], { code: 'ArrowDown' }));
+
+    expect(radios[2]).toHaveFocus();
+    expect(spy).toHaveBeenCalledWith('3');
+    expect(spy).not.toHaveBeenCalledWith('2');
+  });
+
+  it('disables all cards and blocks selection when Radio.Group is disabled', async () => {
+    const spy = jest.fn();
+    render(
+      <RadioGroup disabled onChange={spy}>
+        <RadioCard value="1">Option 1</RadioCard>
+        <RadioCard value="2">Option 2</RadioCard>
+      </RadioGroup>
+    );
+
+    const radios = screen.getAllByRole('radio');
+    radios.forEach((radio) => {
+      expect(radio).toBeDisabled();
+      expect(radio).toHaveAttribute('data-disabled', 'true');
+    });
+
+    await userEvent.click(radios[1]);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('makes only the checked card a tab stop', () => {
+    render(
+      <RadioGroup value="2">
+        <RadioCard value="1">Option 1</RadioCard>
+        <RadioCard value="2">Option 2</RadioCard>
+        <RadioCard value="3">Option 3</RadioCard>
+      </RadioGroup>
+    );
+
+    const radios = screen.getAllByRole('radio');
+    expect(radios.map((radio) => radio.tabIndex)).toEqual([-1, 0, -1]);
+  });
+
+  it('makes the first enabled card a tab stop when no card is checked', () => {
+    render(
+      <RadioGroup>
+        <RadioCard value="1" disabled>
+          Option 1
+        </RadioCard>
+        <RadioCard value="2">Option 2</RadioCard>
+        <RadioCard value="3">Option 3</RadioCard>
+      </RadioGroup>
+    );
+
+    const radios = screen.getAllByRole('radio');
+    expect(radios.map((radio) => radio.tabIndex)).toEqual([-1, 0, -1]);
+  });
+
+  it('moves the tab stop to the newly selected card', async () => {
+    render(
+      <RadioGroup defaultValue="1">
+        <RadioCard value="1">Option 1</RadioCard>
+        <RadioCard value="2">Option 2</RadioCard>
+      </RadioGroup>
+    );
+
+    const radios = screen.getAllByRole('radio');
+    await userEvent.click(radios[1]);
+    expect(radios.map((radio) => radio.tabIndex)).toEqual([-1, 0]);
+  });
+
+  it('selects first and last enabled cards with Home and End keys', () => {
+    const spy = jest.fn();
+    render(
+      <RadioGroup value="2" onChange={spy}>
+        <RadioCard value="1">Option 1</RadioCard>
+        <RadioCard value="2">Option 2</RadioCard>
+        <RadioCard value="3">Option 3</RadioCard>
+        <RadioCard value="4" disabled>
+          Option 4
+        </RadioCard>
+      </RadioGroup>
+    );
+
+    const radios = screen.getAllByRole('radio');
+    radios[1].focus();
+    fireEvent(radios[1], createEvent.keyDown(radios[1], { code: 'End' }));
+    expect(radios[2]).toHaveFocus();
+    expect(spy).toHaveBeenLastCalledWith('3');
+
+    fireEvent(radios[2], createEvent.keyDown(radios[2], { code: 'Home' }));
+    expect(radios[0]).toHaveFocus();
+    expect(spy).toHaveBeenLastCalledWith('1');
   });
 });

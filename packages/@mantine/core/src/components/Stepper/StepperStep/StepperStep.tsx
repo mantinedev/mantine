@@ -168,6 +168,7 @@ export const StepperStep = factory<StepperStepFactory>((props) => {
         mod,
       ]}
       {...dataAttributes}
+      aria-current={resolved.state === 'stepProgress' ? 'step' : undefined}
       {...others}
       onClick={(event) => {
         onClick?.(event);

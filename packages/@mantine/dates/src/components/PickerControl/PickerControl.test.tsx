@@ -53,6 +53,17 @@ describe('@mantine/dates/PickerControl', () => {
     expect(screen.getByRole('button')).not.toHaveAttribute('data-selected');
   });
 
+  it('exposes selected state with aria-pressed', () => {
+    const { rerender } = render(<PickerControl {...defaultProps} />);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'false');
+
+    rerender(<PickerControl {...defaultProps} selected />);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'true');
+
+    rerender(<PickerControl {...defaultProps} selected disabled />);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'false');
+  });
+
   it('supports custom __staticSelector', () => {
     render(<PickerControl {...defaultProps} __staticSelector="Calendar" />);
     expect(screen.getByRole('button')).toHaveClass('mantine-Calendar-pickerControl');

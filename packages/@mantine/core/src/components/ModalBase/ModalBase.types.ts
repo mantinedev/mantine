@@ -36,6 +36,7 @@ export interface ModalBaseOverlayProps
 }
 
 export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
+  /** If set, the component does not have any styles applied, use with Styles API to apply custom styles */
   unstyled?: boolean;
   __handledEscapeEvents?: WeakSet<KeyboardEvent>;
   __stackActive?: boolean;

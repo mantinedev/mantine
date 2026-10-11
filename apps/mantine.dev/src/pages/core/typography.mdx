@@ -7,7 +7,8 @@ export default Layout(MDX_DATA.Typography);
 ## Usage
 
 Mantine does not include typography global styles.
-Use `Typography` to add typography styles to your html content:
+Use `Typography` to add typography styles to your html content.
+Sanitize untrusted HTML (for example, with [DOMPurify](https://github.com/cure53/DOMPurify)) before passing it to `dangerouslySetInnerHTML`:
 
 ```tsx
 import { Typography } from '@mantine/core';
@@ -40,6 +41,8 @@ function Demo() {
 - images
 - hr
 - kbd
+- mark
 - code and pre
+- details and summary
 
 <Demo data={TypographyDemos.all} />

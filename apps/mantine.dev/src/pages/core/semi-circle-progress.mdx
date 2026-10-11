@@ -28,3 +28,17 @@ By default, transitions are disabled, to enable them, set `transitionDuration` p
 to a number of milliseconds:
 
 <Demo data={SemiCircleProgressDemos.transitions} />
+
+## Accessibility
+
+The root element has `role="progressbar"` with `aria-valuenow` set to the current value.
+Set `aria-label` to label the progress for screen readers, use `aria-valuetext` to override
+the default percent value text. Set `withAria={false}` to remove these attributes:
+
+```tsx
+import { SemiCircleProgress } from '@mantine/core';
+
+function Demo() {
+  return <SemiCircleProgress value={40} aria-label="Disk usage" />;
+}
+```

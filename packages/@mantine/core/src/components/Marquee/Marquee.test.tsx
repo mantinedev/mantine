@@ -1,4 +1,4 @@
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { Marquee, MarqueeProps, MarqueeStylesNames } from './Marquee';
 
 const defaultProps: MarqueeProps = {
@@ -95,5 +95,39 @@ describe('@mantine/core/Marquee', () => {
     expect(container.querySelector('.mantine-Marquee-root')).toHaveStyle({
       '--marquee-fade-size': '10%',
     });
+  });
+
+  it('hides repeated groups from assistive technologies', () => {
+    const { container } = render(
+      <Marquee repeat={3}>
+        <a href="#">link</a>
+      </Marquee>
+    );
+    const groups = container.querySelectorAll('.mantine-Marquee-group');
+    expect(groups[0]).not.toHaveAttribute('aria-hidden');
+    expect(groups[0]).not.toHaveAttribute('inert');
+    expect(groups[1]).toHaveAttribute('aria-hidden', 'true');
+    expect(groups[1]).toHaveAttribute('inert');
+    expect(groups[2]).toHaveAttribute('aria-hidden', 'true');
+    expect(groups[2]).toHaveAttribute('inert');
+    expect(screen.getAllByRole('link')).toHaveLength(1);
+  });
+
+  it('sets data-reduce-motion attribute on content', () => {
+    const { container } = render(<Marquee {...defaultProps} />);
+    expect(container.querySelector('.mantine-Marquee-content')).toHaveAttribute(
+      'data-reduce-motion'
+    );
+  });
+
+  it('sets data-paused attribute when playing is false', () => {
+    const { container, rerender } = render(<Marquee {...defaultProps} />);
+    expect(container.querySelector('.mantine-Marquee-root')).not.toHaveAttribute('data-paused');
+
+    rerender(<Marquee {...defaultProps} playing={false} />);
+    expect(container.querySelector('.mantine-Marquee-root')).toHaveAttribute('data-paused');
+
+    rerender(<Marquee {...defaultProps} playing />);
+    expect(container.querySelector('.mantine-Marquee-root')).not.toHaveAttribute('data-paused');
   });
 });

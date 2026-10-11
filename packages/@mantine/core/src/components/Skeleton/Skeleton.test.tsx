@@ -28,4 +28,12 @@ describe('@mantine/core/Skeleton', () => {
     rerender(<Skeleton animate />);
     expect(container.querySelector('.mantine-Skeleton-root')).toHaveAttribute('data-animate');
   });
+
+  it('sets aria-busy while visible', () => {
+    const { rerender, container } = render(<Skeleton visible>Content</Skeleton>);
+    expect(container.querySelector('.mantine-Skeleton-root')).toHaveAttribute('aria-busy', 'true');
+
+    rerender(<Skeleton visible={false}>Content</Skeleton>);
+    expect(container.querySelector('.mantine-Skeleton-root')).not.toHaveAttribute('aria-busy');
+  });
 });

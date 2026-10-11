@@ -170,13 +170,50 @@ export function useDaysNavigation({
     }
   });
 
+  const getFocusedDate = () => {
+    const grids = getGrids();
+
+    for (const weekControls of [false, true]) {
+      const refs = weekControls ? weekControlsRefs : daysRefs;
+
+      for (let levelIndex = 0; levelIndex < grids.length; levelIndex += 1) {
+        for (let rowIndex = 0; rowIndex < grids[levelIndex].length; rowIndex += 1) {
+          const row = refs.current?.[levelIndex]?.[rowIndex] || [];
+          const cellIndex = row.indexOf(document.activeElement as HTMLButtonElement);
+
+          if (cellIndex !== -1) {
+            return {
+              date: grids[levelIndex][rowIndex][weekControls ? 0 : cellIndex],
+              weekControls,
+            };
+          }
+        }
+      }
+    }
+
+    return null;
+  };
+
+  const preserveFocusOnShift = (shift: (date: DateStringValue) => DateStringValue) => {
+    const focused = getFocusedDate();
+
+    if (focused) {
+      pending.current = {
+        date: shift(focused.date),
+        step: focused.weekControls ? 7 : 1,
+        month,
+        weekControls: focused.weekControls,
+      };
+    }
+  };
+
   const handleDayKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
     payload: { date: DateStringValue }
   ) => {
     const direction = getDirection(event.key);
 
-    if (!direction) {
+    if (!direction || event.ctrlKey || event.metaKey) {
       return;
     }
 
@@ -196,7 +233,7 @@ export function useDaysNavigation({
   ) => {
     const direction = getDirection(event.key);
 
-    if (direction !== 'up' && direction !== 'down') {
+    if ((direction !== 'up' && direction !== 'down') || event.ctrlKey || event.metaKey) {
       return;
     }
 
@@ -210,5 +247,5 @@ export function useDaysNavigation({
     });
   };
 
-  return { handleDayKeyDown, handleWeekControlKeyDown };
+  return { handleDayKeyDown, handleWeekControlKeyDown, preserveFocusOnShift };
 }

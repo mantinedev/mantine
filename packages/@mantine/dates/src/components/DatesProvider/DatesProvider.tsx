@@ -2,11 +2,22 @@ import { createContext } from 'react';
 import { DayOfWeek } from '../../types';
 
 export interface DatesProviderValue {
+  /** `dayjs` locale used for formatting, the locale module must be imported separately @default 'en' */
   locale: string;
+
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday @default 1 */
   firstDayOfWeek: DayOfWeek;
+
+  /** Indices of weekend days, 0-6, where 0 – Sunday and 6 – Saturday @default [0, 6] */
   weekendDays: DayOfWeek[];
+
+  /** Separator between start and end dates in range picker inputs value @default '–' */
   labelSeparator: string;
+
+  /** If set, every month has 6 weeks @default false */
   consistentWeeks: boolean;
+
+  /** Label of the submit button in picker inputs dropdowns @default 'Save' */
   submitButtonLabel: string;
 }
 

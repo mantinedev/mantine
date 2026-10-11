@@ -299,6 +299,37 @@ describe('@mantine/core/JsonInput', () => {
     expect(input).toHaveValue('{"TEST":TRUE}');
   });
 
+  it('re-validates when controlled value changes externally', () => {
+    const { rerender } = render(<JsonInput label="test" value='{"a":1}' onChange={() => {}} />);
+    const input = screen.getByRole('textbox');
+    expect(input).not.toHaveAttribute('aria-invalid');
+
+    rerender(<JsonInput label="test" value="{invalid" onChange={() => {}} />);
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+
+    rerender(<JsonInput label="test" value='{"a":2}' onChange={() => {}} />);
+    expect(input).not.toHaveAttribute('aria-invalid');
+  });
+
+  it('does not show validation error while typing in controlled mode', async () => {
+    const user = userEvent.setup();
+
+    function Controlled() {
+      const [value, setValue] = useState('');
+      return <JsonInput label="test" value={value} onChange={setValue} />;
+    }
+
+    render(<Controlled />);
+    const input = screen.getByRole('textbox');
+
+    await user.click(input);
+    await user.paste('{"a":');
+    expect(input).not.toHaveAttribute('aria-invalid');
+
+    await user.tab();
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+  });
+
   it('applies data-monospace attribute', () => {
     const { container } = render(<JsonInput label="test" />);
     const input = container.querySelector('textarea')!;

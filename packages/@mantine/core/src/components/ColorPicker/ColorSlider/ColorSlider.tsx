@@ -59,11 +59,12 @@ export interface ColorSliderProps
   overlays: React.CSSProperties[];
   round: boolean;
   thumbColor?: string;
+  getValueText?: (value: number) => string;
 }
 
 export type ColorSliderOptions = Omit<
   ColorSliderProps,
-  'maxValue' | 'overlays' | 'round' | 'thumbColor'
+  'maxValue' | 'overlays' | 'round' | 'thumbColor' | 'getValueText'
 >;
 
 export type ColorSliderFactory = Factory<{
@@ -92,6 +93,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props) => {
     thumbColor = 'transparent',
     onScrubStart,
     onScrubEnd,
+    getValueText,
     __staticSelector = 'ColorPicker',
     attributes,
     ref,
@@ -155,6 +157,16 @@ export const ColorSlider = factory<ColorSliderFactory>((_props) => {
         handleArrow(event, { x: position.x - 0.05, y: position.y });
         break;
       }
+
+      case 'Home': {
+        handleArrow(event, { x: 0, y: position.y });
+        break;
+      }
+
+      case 'End': {
+        handleArrow(event, { x: 1, y: position.y });
+        break;
+      }
     }
   };
 
@@ -172,6 +184,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props) => {
       aria-valuenow={value}
       aria-valuemax={maxValue}
       aria-valuemin={0}
+      aria-valuetext={getValueText ? getValueText(value) : String(Math.round(value))}
       tabIndex={focusable ? 0 : -1}
       onKeyDown={handleKeyDown}
       data-focus-ring={theme.focusRing}

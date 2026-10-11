@@ -11,7 +11,7 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   /** Function that receives button props and returns react node that should be rendered @category appearance */
   children: (props: { onClick: () => void }) => React.ReactNode;
 
-  /** If set, user can pick more than one file @category state */
+  /** If set, user can pick more than one file @default false @category state */
   multiple?: Multiple;
 
   /** File input accept attribute, for example, `"image/png,image/jpeg"` @category behavior */
@@ -26,7 +26,7 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   /** Reference of the function that should be called when value changes to null or empty array */
   resetRef?: React.Ref<() => void>;
 
-  /** Disables file picker @category behavior */
+  /** Disables file picker @default false @category behavior */
   disabled?: boolean;
 
   /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. @category behavior */

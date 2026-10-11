@@ -21,6 +21,8 @@ describe('@mantine/core/SemiCircleProgress', () => {
     patchConsoleError.release();
   });
 
+  tests.axe([<SemiCircleProgress key="1" {...defaultProps} aria-label="Disk usage" />]);
+
   tests.itSupportsSystemProps<SemiCircleProgressProps, SemiCircleProgressStylesNames>({
     component: SemiCircleProgress,
     props: defaultProps,
@@ -72,5 +74,42 @@ describe('@mantine/core/SemiCircleProgress', () => {
     expect(svg).toHaveAttribute('width', '240');
     expect(svg).toHaveAttribute('height', '120');
     expect(svg).toHaveAttribute('viewBox', '0 0 240 120');
+  });
+
+  it('exposes progressbar role with clamped aria values', () => {
+    const { container, rerender } = render(
+      <SemiCircleProgress {...defaultProps} value={40} aria-label="Disk usage" />
+    );
+    const progressbar = screen.getByRole('progressbar', { name: 'Disk usage' });
+    expect(progressbar).toHaveAttribute('aria-valuenow', '40');
+    expect(progressbar).toHaveAttribute('aria-valuemin', '0');
+    expect(progressbar).toHaveAttribute('aria-valuemax', '100');
+    expect(progressbar).toHaveAttribute('aria-valuetext', '40%');
+    expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+
+    rerender(<SemiCircleProgress {...defaultProps} value={150} aria-label="Disk usage" />);
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100');
+  });
+
+  it('allows overriding aria-valuetext', () => {
+    render(
+      <SemiCircleProgress {...defaultProps} aria-label="Disk usage" aria-valuetext="40 of 100 GB" />
+    );
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuetext', '40 of 100 GB');
+  });
+
+  it('does not add progressbar role when withAria is false', () => {
+    render(<SemiCircleProgress {...defaultProps} withAria={false} />);
+    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+  });
+
+  it('clamps thickness so that radius is not negative', () => {
+    const { container } = render(
+      <SemiCircleProgress {...defaultProps} size={100} thickness={80} />
+    );
+    container.querySelectorAll('circle').forEach((circle) => {
+      expect(Number(circle.getAttribute('r'))).toBeGreaterThanOrEqual(0);
+      expect(circle).toHaveAttribute('stroke-width', '50');
+    });
   });
 });

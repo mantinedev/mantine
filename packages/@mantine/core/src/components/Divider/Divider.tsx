@@ -91,14 +91,17 @@ export const Divider = factory<DividerFactory>((_props) => {
     varsResolver,
   });
 
+  const withLabel = !!label && orientation !== 'vertical';
+
   return (
     <Box
-      mod={[{ orientation, withLabel: !!label }, mod]}
+      mod={[{ orientation, withLabel }, mod]}
       role="separator"
+      aria-orientation={orientation === 'vertical' ? 'vertical' : undefined}
       {...getStyles('root')}
       {...others}
     >
-      {label && (
+      {withLabel && (
         <Box component="span" mod={{ position: labelPosition }} {...getStyles('label')}>
           {label}
         </Box>

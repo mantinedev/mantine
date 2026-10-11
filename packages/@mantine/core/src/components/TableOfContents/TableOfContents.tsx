@@ -68,7 +68,7 @@ export interface TableOfContentsProps
   /** Controls font-size, padding and depth offset of controls, custom string and number values change only font-size @default 'sm' @category appearance */
   size?: MantineSize | (string & {}) | number;
 
-  /** If set, adjusts text color based on background color for `filled` variant @category appearance */
+  /** If set, adjusts text color based on background color for `filled` variant @default theme.autoContrast @category appearance */
   autoContrast?: boolean;
 
   /** Options passed down to `use-scroll-spy` hook */
@@ -77,12 +77,12 @@ export interface TableOfContentsProps
   /** Data used to render content until actual values are retrieved from the DOM @category appearance */
   initialData?: InitialTableOfContentsData[];
 
-  /** A function to pass props down to controls, accepts values from `use-scroll-spy` hook as an argument and active state. */
+  /** A function to pass props down to controls, accepts values from `use-scroll-spy` hook as an argument and active state. By default, controls display heading value and scroll to the heading on click. */
   getControlProps?: (
     payload: TableOfContentsGetControlPropsPayload
   ) => UnstyledButtonProps & ElementProps<'button'> & Record<`data-${string}`, any>;
 
-  /** Minimum `depth` value that requires offset, `1` by default @category appearance */
+  /** Minimum `depth` value that requires offset @default 1 @category appearance */
   minDepthToOffset?: number;
 
   /** Offset of nested controls, multiplied by (`depth` - `minDepthToOffset`) and added to the horizontal padding, by default depends on `size` (`12px` for `size="sm"`) @category appearance */
@@ -114,6 +114,7 @@ const defaultProps = {
   withGuideline: true,
   getControlProps: ({ data }) => ({
     children: data.value,
+    onClick: () => data.getNode()?.scrollIntoView(),
   }),
 } satisfies Partial<TableOfContentsProps>;
 
@@ -205,6 +206,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props) => {
         key={data.id || `${idBase}-${index}`}
         __vars={{ '--depth-offset': `${data.depth - (minDepthToOffset ?? 1)}` }}
         data-active={index === spy.active || undefined}
+        aria-current={index === spy.active ? 'location' : undefined}
         variant={variant}
         {...controlProps}
         {...getStyles('control', {

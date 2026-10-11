@@ -6,9 +6,12 @@ import {
   factory,
   Factory,
   rem,
+  useDirection,
   useProps,
 } from '@mantine/core';
+import { useMergedRef } from '@mantine/hooks';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
+import { useToolbarNavigation } from './use-toolbar-navigation';
 import classes from '../RichTextEditor.module.css';
 
 export type RichTextEditorToolbarStylesNames = 'toolbar';
@@ -41,16 +44,33 @@ export const RichTextEditorToolbar = factory<RichTextEditorToolbarFactory>((_pro
     stickyOffset,
     mod,
     variant,
+    ref,
+    onKeyDown,
+    onFocus,
     ...others
   } = props;
   const ctx = useRichTextEditorContext();
+  const { dir } = useDirection();
+  const { toolbarRef, handleKeyDown, handleFocus } = useToolbarNavigation(dir);
+  const mergedRef = useMergedRef(ref, toolbarRef);
 
   return (
     <Box
+      ref={mergedRef}
+      role="toolbar"
+      aria-orientation="horizontal"
       mod={[{ sticky }, mod]}
       variant={variant || ctx.variant}
       {...ctx.getStyles('toolbar', { className, style, styles, classNames })}
       {...others}
+      onKeyDown={(event) => {
+        handleKeyDown(event);
+        onKeyDown?.(event);
+      }}
+      onFocus={(event) => {
+        handleFocus(event);
+        onFocus?.(event);
+      }}
       __vars={{ '--rte-sticky-offset': rem(stickyOffset) }}
     />
   );

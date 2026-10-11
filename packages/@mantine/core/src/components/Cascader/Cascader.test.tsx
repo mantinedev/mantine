@@ -125,9 +125,9 @@ describe('@mantine/core/Cascader', () => {
   it('opens/closes dropdown on input click', async () => {
     render(<Cascader {...defaultProps} />);
     expect(screen.queryByRole('option', { name: 'Asia' })).toBe(null);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.getByRole('option', { name: 'Asia' })).toBeVisible();
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.queryByRole('option', { name: 'Asia' })).toBe(null);
   });
 
@@ -178,7 +178,7 @@ describe('@mantine/core/Cascader', () => {
 
   it('displays the selected path in the input using the separator', () => {
     render(<Cascader {...defaultProps} defaultValue={['asia', 'jp', 'tokyo']} />);
-    expect(screen.getByRole('textbox')).toHaveValue('Asia / Japan / Tokyo');
+    expect(screen.getByRole('combobox')).toHaveValue('Asia / Japan / Tokyo');
   });
 
   it('supports custom formatValue', () => {
@@ -189,7 +189,7 @@ describe('@mantine/core/Cascader', () => {
         formatValue={({ options }) => options.map((option) => option.label).join(' > ')}
       />
     );
-    expect(screen.getByRole('textbox')).toHaveValue('Asia > Japan > Tokyo');
+    expect(screen.getByRole('combobox')).toHaveValue('Asia > Japan > Tokyo');
   });
 
   it('does not expand or select disabled options', async () => {
@@ -212,16 +212,16 @@ describe('@mantine/core/Cascader', () => {
         clearButtonProps={{ 'aria-label': 'Clear value' }}
       />
     );
-    expect(screen.getByRole('textbox')).toHaveValue('Asia / Japan / Tokyo');
+    expect(screen.getByRole('combobox')).toHaveValue('Asia / Japan / Tokyo');
     await userEvent.click(screen.getByLabelText('Clear value'));
     expect(spy).toHaveBeenCalledWith(null, []);
-    expect(screen.getByRole('textbox')).toHaveValue('');
+    expect(screen.getByRole('combobox')).toHaveValue('');
   });
 
   it('flattens paths into a searchable list and commits the picked path', async () => {
     const spy = jest.fn();
     render(<Cascader {...defaultProps} searchable onChange={spy} />);
-    await userEvent.type(screen.getByRole('textbox'), 'Paris');
+    await userEvent.type(screen.getByRole('combobox'), 'Paris');
     const option = await screen.findByRole('option', { name: /Paris/ });
     await userEvent.click(option);
     expect(spy).toHaveBeenCalledWith(['europe', 'fr', 'paris'], expect.any(Array));
@@ -229,7 +229,7 @@ describe('@mantine/core/Cascader', () => {
 
   it('shows nothingFoundMessage when no search result matches', async () => {
     render(<Cascader {...defaultProps} searchable nothingFoundMessage="Nothing found" />);
-    await userEvent.type(screen.getByRole('textbox'), 'zzzzz');
+    await userEvent.type(screen.getByRole('combobox'), 'zzzzz');
     expect(screen.getByText('Nothing found')).toBeInTheDocument();
   });
 
@@ -237,7 +237,7 @@ describe('@mantine/core/Cascader', () => {
     render(<Cascader {...defaultProps} dropdownOpened />);
     await userEvent.click(screen.getByRole('option', { name: 'Asia' }));
     expect(screen.getByRole('option', { name: 'Japan' })).toBeVisible();
-    screen.getByRole('textbox').focus();
+    screen.getByRole('combobox').focus();
     await userEvent.keyboard('{ArrowLeft}');
     expect(screen.queryByRole('option', { name: 'Japan' })).toBe(null);
   });
@@ -280,14 +280,14 @@ describe('@mantine/core/Cascader', () => {
   it('does not open the dropdown when readOnly is set', async () => {
     const onDropdownOpen = jest.fn();
     render(<Cascader {...defaultProps} searchable readOnly onDropdownOpen={onDropdownOpen} />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('combobox'));
     expect(screen.queryByRole('option', { name: 'Asia' })).toBe(null);
     expect(onDropdownOpen).not.toHaveBeenCalled();
   });
 
   it('opens the dropdown and highlights the first option on ArrowDown', async () => {
     render(<Cascader {...defaultProps} />);
-    screen.getByRole('textbox').focus();
+    screen.getByRole('combobox').focus();
     await userEvent.keyboard('{ArrowDown}');
     const asia = screen.getByRole('option', { name: 'Asia' });
     expect(asia).toBeVisible();
@@ -296,7 +296,7 @@ describe('@mantine/core/Cascader', () => {
 
   it('keeps the parent highlighted when collapsing back to the first column', async () => {
     render(<Cascader {...defaultProps} dropdownOpened />);
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('combobox');
     input.focus();
 
     // Down highlights Asia, Right enters its children (Japan highlighted)
@@ -355,7 +355,7 @@ describe('@mantine/core/Cascader', () => {
         onChange={spy}
       />
     );
-    screen.getByRole('textbox').focus();
+    screen.getByRole('combobox').focus();
     // The selected leaf is focused on open – pressing Enter toggles it off
     await userEvent.keyboard('{Enter}');
     expect(spy).toHaveBeenCalledWith(null, []);
@@ -494,20 +494,20 @@ describe('@mantine/core/Cascader', () => {
   describe('external input changes (autofill)', () => {
     it('does not display phantom text', async () => {
       render(<Cascader {...defaultProps} searchable defaultValue={['asia', 'jp', 'tokyo']} />);
-      await externalInputFill(screen.getByRole('textbox'), 'Paris');
-      expect(screen.getByRole('textbox')).toHaveValue('Asia / Japan / Tokyo');
+      await externalInputFill(screen.getByRole('combobox'), 'Paris');
+      expect(screen.getByRole('combobox')).toHaveValue('Asia / Japan / Tokyo');
     });
 
     it('does not open the dropdown', async () => {
       render(<Cascader {...defaultProps} searchable />);
-      await externalInputFill(screen.getByRole('textbox'), 'Paris');
+      await externalInputFill(screen.getByRole('combobox'), 'Paris');
       expect(screen.queryByRole('option')).toBe(null);
     });
 
     it('does not interfere with typing', async () => {
       render(<Cascader {...defaultProps} searchable />);
-      await userEvent.type(screen.getByRole('textbox'), 'Paris');
-      expect(screen.getByRole('textbox')).toHaveValue('Paris');
+      await userEvent.type(screen.getByRole('combobox'), 'Paris');
+      expect(screen.getByRole('combobox')).toHaveValue('Paris');
       expect(screen.getByRole('option', { name: 'Europe / France / Paris' })).toBeVisible();
     });
   });

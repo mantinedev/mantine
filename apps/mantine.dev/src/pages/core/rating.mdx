@@ -51,6 +51,10 @@ function Demo() {
 
 <Demo data={RatingDemos.readOnly} />
 
+## Disabled
+
+<Demo data={RatingDemos.disabled} />
+
 ## Allow clear
 
 Set `allowClear` prop to allow users to reset the rating to 0 by clicking the same rating value again.
@@ -69,3 +73,26 @@ This is useful when you want to give users the ability to undo their rating sele
 ## Symbols for each item
 
 <Demo data={RatingDemos.customSymbol} />
+
+## Accessibility
+
+`Rating` renders a radio group: each value is a radio input labeled with `getSymbolLabel`.
+Set `aria-label` to label the group for screen readers. In `readOnly` mode, the component is
+rendered with `role="img"` and its `aria-label` is generated with `getSymbolLabel` from the current value:
+
+```tsx
+import { Rating } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Rating aria-label="Product rating" />
+      <Rating
+        readOnly
+        value={4}
+        getSymbolLabel={(value) => `Rated ${value} out of 5`}
+      />
+    </>
+  );
+}
+```

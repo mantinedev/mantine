@@ -313,7 +313,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
               id={overlay._id}
               __vars={{
                 ...__vars,
-                '--mb-z-index': (zIndex || getDefaultZIndex('modal')).toString(),
+                '--mb-z-index': (zIndex ?? getDefaultZIndex('modal')).toString(),
                 '--mb-shadow': getShadow(shadow),
                 '--mb-padding': getSpacing(padding),
               }}

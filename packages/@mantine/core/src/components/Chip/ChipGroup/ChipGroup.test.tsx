@@ -76,4 +76,48 @@ describe('@mantine/core/ChipGroup', () => {
     await clickChip(2, 'checkbox');
     expect(spy).toHaveBeenLastCalledWith(['test-2', 'test-3']);
   });
+
+  it('shares one name across radio chips', () => {
+    render(<ChipGroup {...defaultProps} />);
+    const radios = screen.getAllByRole('radio');
+    const name = radios[0].getAttribute('name');
+    expect(name).toBeTruthy();
+    expect(radios.every((radio) => radio.getAttribute('name') === name)).toBe(true);
+  });
+
+  it('does not set shared name on checkbox chips', () => {
+    render(<ChipGroup {...defaultProps} multiple />);
+    expect(screen.getAllByRole('checkbox')[0]).not.toHaveAttribute('name');
+  });
+
+  it('keeps non-string values when multiple prop is false', async () => {
+    const spy = jest.fn();
+    render(
+      <ChipGroup<false, number> defaultValue={1} onChange={spy}>
+        <Chip value={1}>One</Chip>
+        <Chip value={2}>Two</Chip>
+      </ChipGroup>
+    );
+    expect(getChip(0, 'radio')).toBeChecked();
+    await clickChip(1, 'radio');
+    expect(spy).toHaveBeenLastCalledWith(2);
+    expect(getChip(1, 'radio')).toBeChecked();
+    expect(getChip(0, 'radio')).not.toBeChecked();
+  });
+
+  it('keeps non-string values when multiple prop is true', async () => {
+    const spy = jest.fn();
+    render(
+      <ChipGroup<true, number> multiple defaultValue={[1]} onChange={spy}>
+        <Chip value={1}>One</Chip>
+        <Chip value={2}>Two</Chip>
+      </ChipGroup>
+    );
+    await clickChip(1, 'checkbox');
+    expect(spy).toHaveBeenLastCalledWith([1, 2]);
+    await clickChip(0, 'checkbox');
+    expect(spy).toHaveBeenLastCalledWith([2]);
+    expect(getChip(0, 'checkbox')).not.toBeChecked();
+    expect(getChip(1, 'checkbox')).toBeChecked();
+  });
 });

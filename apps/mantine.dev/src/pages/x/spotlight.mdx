@@ -191,6 +191,7 @@ Available components:
 - `Spotlight.Action` – action button
 - `Spotlight.ActionsGroup` - group of actions
 - `Spotlight.Empty` – empty state (nothing found)
+- `Spotlight.Footer` – content displayed below the actions list
 
 <Demo data={SpotlightDemos.compound} />
 
@@ -216,6 +217,25 @@ function Demo() {
         right: 0
       </div>
     </>
+  );
+}
+```
+
+## Accessibility
+
+The search input is a `combobox` and the actions list is a `listbox`, arrow keys move the active option and `Enter` triggers it.
+When the search query changes, the number of displayed actions is announced to screen readers.
+Use `getResultsAnnouncement` prop to translate the message:
+
+```tsx
+import { Spotlight } from '@mantine/spotlight';
+
+function Demo() {
+  return (
+    <Spotlight
+      actions={[]}
+      getResultsAnnouncement={(count) => `${count} résultats`}
+    />
   );
 }
 ```

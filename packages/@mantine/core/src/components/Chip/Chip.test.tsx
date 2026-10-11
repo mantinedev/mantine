@@ -1,5 +1,5 @@
 import { createRef } from 'react';
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Chip, ChipProps, ChipStylesNames } from './Chip';
 
 const defaultProps: ChipProps = {
@@ -38,5 +38,20 @@ describe('@mantine/core/Chip', () => {
     const ref = createRef<HTMLDivElement>();
     render(<Chip {...defaultProps} rootRef={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
+  });
+
+  it('toggles uncontrolled standalone chip and calls onChange', async () => {
+    const spy = jest.fn();
+    render(<Chip onChange={spy}>Chip</Chip>);
+    const input = screen.getByRole('checkbox');
+    expect(input).not.toBeChecked();
+
+    await userEvent.click(input);
+    expect(input).toBeChecked();
+    expect(spy).toHaveBeenLastCalledWith(true);
+
+    await userEvent.click(input);
+    expect(input).not.toBeChecked();
+    expect(spy).toHaveBeenLastCalledWith(false);
   });
 });

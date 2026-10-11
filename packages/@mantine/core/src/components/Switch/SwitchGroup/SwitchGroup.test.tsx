@@ -74,6 +74,29 @@ describe('@mantine/core/SwitchGroup', () => {
     expect(screen.getAllByRole('switch')[2]).not.toBeDisabled();
   });
 
+  it('does not change value when readOnly is set', async () => {
+    const spy = jest.fn();
+    render(
+      <SwitchGroup {...defaultProps} defaultValue={['test-value-1']} readOnly onChange={spy} />
+    );
+    const switches = screen.getAllByRole('switch');
+    await userEvent.click(switches[1]);
+    await userEvent.click(switches[0]);
+    expect(spy).not.toHaveBeenCalled();
+    expect(switches[0]).toBeChecked();
+    expect(switches[1]).not.toBeChecked();
+  });
+
+  it('disables all children and blocks onChange when disabled is set', async () => {
+    const spy = jest.fn();
+    render(<SwitchGroup {...defaultProps} disabled onChange={spy} />);
+    const switches = screen.getAllByRole('switch');
+    expect(switches.every((element) => (element as HTMLInputElement).disabled)).toBe(true);
+    await userEvent.click(switches[0]);
+    expect(spy).not.toHaveBeenCalled();
+    expect(switches[0]).not.toBeChecked();
+  });
+
   it('links group to the label with aria-labelledby only when label is rendered', () => {
     const { rerender } = render(
       <SwitchGroup label="Group label">

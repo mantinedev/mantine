@@ -140,6 +140,9 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
     mod,
     attributes,
     dir,
+    loading,
+    loadingPosition,
+    inputSize,
     ...others
   } = props;
 
@@ -267,15 +270,20 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
         withErrorStyles={withErrorStyles}
         withSuccessStyles={withSuccessStyles}
         attributes={attributes}
+        loading={loading}
+        loadingPosition={loadingPosition}
       >
         <PasswordInputField
           required={required}
+          aria-invalid={!!error || undefined}
+          aria-busy={loading || undefined}
           data-invalid={!!error || undefined}
           data-with-left-section={!!leftSection || undefined}
           {...getStyles('innerInput')}
           disabled={disabled}
           id={uuid}
           dir={dir}
+          size={inputSize ? Number(inputSize) : undefined}
           {...rest}
           autoComplete={rest.autoComplete || 'off'}
           type={_visible ? 'text' : 'password'}

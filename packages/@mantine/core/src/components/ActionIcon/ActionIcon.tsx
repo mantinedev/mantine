@@ -59,6 +59,7 @@ export type ActionIconCssVariables = {
 };
 
 export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFactory> {
+  /** If set, applies disabled styles and `aria-disabled` without the native `disabled` attribute, the button stays focusable and receives events (for example, to display a `Tooltip`) */
   'data-disabled'?: boolean;
   __staticSelector?: string;
 
@@ -86,7 +87,7 @@ export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFact
   /** Icon element */
   children?: React.ReactNode;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color for `filled` variant @default theme.autoContrast */
   autoContrast?: boolean;
 }
 
@@ -171,6 +172,7 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props) => {
     <UnstyledButton
       {...getStyles('root', { active: !disabled && !loading && !dataDisabled })}
       aria-busy={loading || undefined}
+      aria-disabled={dataDisabled || undefined}
       unstyled={unstyled}
       variant={variant}
       size={size}

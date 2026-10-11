@@ -35,7 +35,7 @@ export interface LoaderProps
   /** Loader type, key of `loaders` prop @default 'oval' */
   type?: MantineLoader;
 
-  /** Object of loaders components, can be customized via default props or inline. */
+  /** Object of loaders components, can be customized via default props or inline. @default { bars, oval, dots } */
   loaders?: MantineLoadersRecord;
 
   /** Overrides default loader with given content */

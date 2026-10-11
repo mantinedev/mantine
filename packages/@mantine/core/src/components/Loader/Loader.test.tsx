@@ -48,4 +48,15 @@ describe('@mantine/core/Loader', () => {
   it('exposes defaultLoaders as static property', () => {
     expect(Loader.defaultLoaders).toStrictEqual(defaultLoaders);
   });
+
+  it('renders children instead of the default loader', () => {
+    const { container } = render(
+      <Loader loaders={{ ...defaultLoaders, oval: customLoader }}>
+        <span data-children-loader />
+      </Loader>
+    );
+
+    expect(container.querySelector('[data-children-loader]')).toBeInTheDocument();
+    expect(container.querySelector('[data-custom-loader]')).not.toBeInTheDocument();
+  });
 });

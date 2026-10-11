@@ -91,7 +91,7 @@ export interface TabsProps
   /** Controls how inactive tabs content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles @default 'activity' */
   keepMountedMode?: 'activity' | 'display-none';
 
-  /** If set, adjusts text color based on background color for `pills` variant @category appearance */
+  /** If set, adjusts text color based on background color for `pills` variant @default theme.autoContrast @category appearance */
   autoContrast?: boolean;
 }
 

@@ -29,4 +29,19 @@ describe('@mantine/core/OptionalPortal', () => {
     expect(screen.queryByText('test-portal')).not.toBeInTheDocument();
     expect(target.querySelectorAll('*')).toHaveLength(1);
   });
+
+  it('supports withinPortal from theme default props', () => {
+    const target = document.createElement('div');
+    render(
+      <MantineProvider
+        theme={{ components: { OptionalPortal: { defaultProps: { withinPortal: false } } } }}
+      >
+        <OptionalPortal target={target}>
+          <span>test-portal</span>
+        </OptionalPortal>
+      </MantineProvider>
+    );
+    expect(screen.getByText('test-portal')).toBeInTheDocument();
+    expect(target.querySelectorAll('*')).toHaveLength(0);
+  });
 });

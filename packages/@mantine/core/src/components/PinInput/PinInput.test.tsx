@@ -1,6 +1,6 @@
 import { fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { PinInput, PinInputProps, PinInputStylesNames } from './PinInput';
 
 const defaultProps: PinInputProps = {};
@@ -517,6 +517,72 @@ describe('@mantine/core/PinInput', () => {
     fireEvent.keyDown(inputs[0], { key: '1' });
 
     // The focus should move to next input when pressing same key
+    expect(inputs[1]).toHaveFocus();
+  });
+
+  it('labels the group with aria-label and inputs with their position', () => {
+    const { container } = render(<PinInput length={3} aria-label="Verification code" />);
+    expect(screen.getByRole('group')).toHaveAttribute('aria-label', 'Verification code');
+    expect(
+      Array.from(getInputs(container)).map((input) => input.getAttribute('aria-label'))
+    ).toEqual(['Verification code 1 of 3', 'Verification code 2 of 3', 'Verification code 3 of 3']);
+  });
+
+  it('uses ariaLabel as base of input labels', () => {
+    const { container, rerender } = render(
+      <PinInput length={2} aria-label="Group" ariaLabel="Digit" />
+    );
+    expect(getInputs(container)[1]).toHaveAttribute('aria-label', 'Digit 2 of 2');
+
+    rerender(<PinInput length={2} />);
+    expect(getInputs(container)[0]).toHaveAttribute('aria-label', 'PinInput 1 of 2');
+  });
+
+  it('blocks non-digit characters but allows other keys with inputMode="numeric"', () => {
+    const { container } = render(<PinInput length={4} inputMode="numeric" />);
+    const input = getInputs(container)[0];
+
+    expect(fireEvent.keyDown(input, { key: 'a' })).toBe(false);
+    expect(fireEvent.keyDown(input, { key: '-' })).toBe(false);
+    expect(fireEvent.keyDown(input, { key: '1' })).toBe(true);
+    expect(fireEvent.keyDown(input, { key: 'Enter' })).toBe(true);
+    expect(fireEvent.keyDown(input, { key: 'Home' })).toBe(true);
+    expect(fireEvent.keyDown(input, { key: 'End' })).toBe(true);
+    expect(fireEvent.keyDown(input, { key: 'v', ctrlKey: true })).toBe(true);
+  });
+
+  it('allows Backspace with inputMode="numeric"', async () => {
+    const { container } = render(<PinInput length={4} inputMode="numeric" defaultValue="12" />);
+    const inputs = getInputs(container);
+
+    await userEvent.click(inputs[1]);
+    await userEvent.keyboard('{Backspace}');
+    expect(getInputValues(container)).toEqual(['1', '', '', '']);
+  });
+
+  it('submits parent form with Enter when inputMode="numeric"', async () => {
+    const onSubmit = jest.fn((event: React.FormEvent) => event.preventDefault());
+    const { container } = render(
+      <form onSubmit={onSubmit}>
+        <PinInput length={2} inputMode="numeric" />
+        <button type="submit">Submit</button>
+      </form>
+    );
+
+    await userEvent.click(getInputs(container)[0]);
+    await userEvent.keyboard('{Enter}');
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not move focus with arrow keys when manageFocus is false', async () => {
+    const { container } = render(<PinInput length={4} manageFocus={false} />);
+    const inputs = getInputs(container);
+
+    await userEvent.click(inputs[1]);
+    await userEvent.keyboard('{ArrowRight}');
+    expect(inputs[1]).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowLeft}');
     expect(inputs[1]).toHaveFocus();
   });
 });

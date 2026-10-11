@@ -219,6 +219,9 @@ export const DrawerContent = factory<DrawerContentFactory>((_props) => {
                   {...others}
                   component="section"
                   {...contentProps}
+                  aria-labelledby={others['aria-labelledby'] ?? contentProps['aria-labelledby']}
+                  aria-describedby={others['aria-describedby'] ?? contentProps['aria-describedby']}
+                  inert={__stackActive === false || undefined}
                   radius={radius || ctx.radius || 0}
                   style={[contentStyles.style, stackContentStyle]}
                   className={cx(

@@ -30,6 +30,11 @@ describe('@mantine/core/InputBase', () => {
     selector: 'input',
   });
 
+  tests.itConnectsLabelAndInput<InputBaseProps>({
+    component: InputBase,
+    props: defaultProps,
+  });
+
   tests.itSupportsSharedInputDefaults<InputBaseProps>({
     component: InputBase,
     props: defaultProps,

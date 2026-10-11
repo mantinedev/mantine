@@ -43,7 +43,7 @@ describe('useSplitter', () => {
 
     const props = result.current.getHandleProps({ index: 0 });
     expect(props.role).toBe('separator');
-    expect(props['aria-orientation']).toBe('horizontal');
+    expect(props['aria-orientation']).toBe('vertical');
     expect(props['aria-valuenow']).toBe(50);
     expect(props['aria-valuemin']).toBe(10);
     expect(props['aria-valuemax']).toBe(80);
@@ -51,7 +51,7 @@ describe('useSplitter', () => {
     expect(props['data-orientation']).toBe('horizontal');
   });
 
-  it('returns vertical aria-orientation when orientation is vertical', () => {
+  it('returns horizontal aria-orientation when orientation is vertical', () => {
     const { result } = renderHook(() =>
       useSplitter({
         panels: defaultPanels,
@@ -60,7 +60,7 @@ describe('useSplitter', () => {
     );
 
     const props = result.current.getHandleProps({ index: 0 });
-    expect(props['aria-orientation']).toBe('vertical');
+    expect(props['aria-orientation']).toBe('horizontal');
     expect(props['data-orientation']).toBe('vertical');
   });
 

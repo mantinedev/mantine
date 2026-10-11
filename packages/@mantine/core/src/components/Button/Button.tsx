@@ -62,6 +62,7 @@ export type ButtonCssVariables = {
 };
 
 export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
+  /** If set, applies disabled styles and `aria-disabled` without the native `disabled` attribute, the button stays focusable and receives events (for example, to display a `Tooltip`) @category behavior */
   'data-disabled'?: boolean;
 
   /** Controls button `height`, `font-size` and horizontal `padding` @default 'sm' @category appearance */
@@ -100,7 +101,7 @@ export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
   /** Props added to the `Loader` component (only visible when `loading` prop is set) */
   loaderProps?: LoaderProps;
 
-  /** If set, adjusts text color based on background color for `filled` variant @category appearance */
+  /** If set, adjusts text color based on background color for `filled` variant @default theme.autoContrast @category appearance */
   autoContrast?: boolean;
 }
 
@@ -200,6 +201,8 @@ export const Button = polymorphicFactory<ButtonFactory>((_props) => {
   return (
     <UnstyledButton
       {...getStyles('root', { active: !disabled && !loading && !dataDisabled })}
+      aria-busy={loading || undefined}
+      aria-disabled={dataDisabled || undefined}
       unstyled={unstyled}
       variant={variant}
       disabled={disabled || loading}

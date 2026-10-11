@@ -46,6 +46,7 @@ export const SpotlightActionsList = factory<SpotlightActionsListFactory>((props)
       scrollbarSize="var(--spotlight-actions-list-padding)"
       offsetScrollbars="y"
       id={listId}
+      role="listbox"
       {...others}
     >
       {children}

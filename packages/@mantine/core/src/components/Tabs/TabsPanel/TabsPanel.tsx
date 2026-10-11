@@ -74,6 +74,7 @@ export const TabsPanel = factory<TabsPanelFactory>((_props) => {
       role="tabpanel"
       id={ctx.getPanelId(value)}
       aria-labelledby={ctx.getTabId(value)}
+      tabIndex={0}
       {...others}
     >
       {content}

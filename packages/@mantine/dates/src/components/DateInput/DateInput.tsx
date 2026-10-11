@@ -310,18 +310,21 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     onKeyDown?.(event);
   };
 
-  const _getDayProps = (day: DateStringValue) => ({
-    ...getDayProps?.(day),
-    selected: dayjs(_value).isSame(day, 'day'),
-    onClick: (event: any) => {
-      getDayProps?.(day).onClick?.(event);
+  const _getDayProps = (day: DateStringValue) => {
+    const dayProps = getDayProps?.(day);
+    return {
+      ...dayProps,
+      selected: dayjs(_value).isSame(day, 'day'),
+      onClick: (event: any) => {
+        dayProps?.onClick?.(event);
 
-      const val = _allowDeselect ? (dayjs(_value).isSame(day, 'day') ? null : day) : day;
-      setValue(val);
-      !controlled && val && setInputValue(formatValue(val));
-      controller.closeDropdown();
-    },
-  });
+        const val = _allowDeselect ? (dayjs(_value).isSame(day, 'day') ? null : day) : day;
+        setValue(val);
+        !controlled && val && setInputValue(formatValue(val));
+        controller.closeDropdown();
+      },
+    };
+  };
 
   const handlePresetSelect = (val: DateStringValue | null) => {
     setValue(val);

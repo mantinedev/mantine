@@ -48,6 +48,12 @@ from which you should only specify two (for example, `top` and `left`, `bottom` 
 
 <Demo data={UseFloatingWindowDemos.setPosition} />
 
+## Keyboard support
+
+When the element has focus, arrow keys move it in 10px steps, hold `Shift` to move it
+in 50px steps. The hook does not make the element focusable: set `tabIndex={0}` on it
+to enable keyboard support.
+
 ## Lock axis
 
 Use `axis` option to restrict movement to the specified axis:

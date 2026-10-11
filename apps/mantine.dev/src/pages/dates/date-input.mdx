@@ -67,15 +67,14 @@ function Demo() {
 
 If your `valueFormat` includes time (for example, `YYYY-MM-DD HH:mm`), set the `withTime` prop
 to preserve the time part of the value. Without `withTime`, the time portion is discarded and
-always defaults to `00:00`. When using `withTime`, you will also need to provide a custom `dateParser`
-that returns a date-time string:
+always defaults to `00:00`:
 
 <Demo data={DateInputDemos.time} />
 
 ## Date parser
 
 Use the `dateParser` prop to replace the default date parser. The parser function accepts user input (string)
-and must return a `Date` object:
+and returns a `YYYY-MM-DD` date string (`YYYY-MM-DD HH:mm:ss` with `withTime`) or `null` if the input cannot be parsed. A `Date` object is also accepted:
 
 <Demo data={DateInputDemos.parser} />
 

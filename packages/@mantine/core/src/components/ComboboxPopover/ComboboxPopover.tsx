@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import cx from 'clsx';
-import { useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Factory,
   genericFactory,
@@ -28,6 +28,7 @@ import {
 import { ComboboxParsedItem } from '../Combobox/Combobox.types';
 import { isEmptyComboboxData } from '../Combobox/OptionsDropdown/is-empty-combobox-data';
 import { ScrollArea, ScrollAreaProps } from '../ScrollArea';
+import { ComboboxPopoverContext } from './ComboboxPopover.context';
 import { ComboboxPopoverValue } from './ComboboxPopover.types';
 import { ComboboxPopoverTarget } from './ComboboxPopoverTarget';
 import comboboxClasses from '../Combobox/Combobox.module.css';
@@ -120,6 +121,9 @@ interface SearchableDropdownProps {
   unstyled: boolean | undefined;
   renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
   scrollAreaProps: ScrollAreaProps | undefined;
+  labelId: string | undefined;
+  'aria-label': string | undefined;
+  multiple: boolean | undefined;
   onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -138,6 +142,9 @@ function SearchableDropdown({
   unstyled,
   renderOption,
   scrollAreaProps,
+  labelId,
+  'aria-label': ariaLabel,
+  multiple,
   onSearchChange,
 }: SearchableDropdownProps) {
   const filteredData = (filter || defaultOptionsFilter)({
@@ -167,7 +174,11 @@ function SearchableDropdown({
   return (
     <Combobox.Dropdown data-composed>
       <Combobox.Search value={search} onChange={onSearchChange} placeholder="Search..." />
-      <Combobox.Options>
+      <Combobox.Options
+        labelledBy={ariaLabel ? undefined : labelId}
+        aria-label={ariaLabel}
+        aria-multiselectable={multiple || undefined}
+      >
         {withScrollArea ? (
           <ScrollArea.Autosize
             mah={maxDropdownHeight ?? 220}
@@ -195,6 +206,9 @@ export interface ComboboxPopoverProps<
 > extends StylesApiProps<ComboboxPopoverFactory> {
   /** If set, multiple items can be selected at the same time @category state */
   multiple?: Multiple;
+
+  /** Accessible name of the options list, also applied to the target element. If not set, the list is labelled by the target element @category accessibility */
+  'aria-label'?: string;
 
   /** Controlled component value @category state */
   value?: ComboboxPopoverValue<Multiple, Value>;
@@ -356,6 +370,12 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
     ...others
   } = props;
 
+  const ariaLabel = others['aria-label'];
+
+  const generatedTargetId = useId();
+  const [targetId, setTargetId] = useState(generatedTargetId);
+  const popoverContext = useMemo(() => ({ generatedTargetId, setTargetId }), [generatedTargetId]);
+
   const parsedData = useMemo(() => getParsedComboboxData(data), [data]);
   const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
 
@@ -428,62 +448,68 @@ export const ComboboxPopover = genericFactory<ComboboxPopoverFactory>((_props) =
 
   return (
     <>
-      <Combobox
-        store={store}
-        __staticSelector="ComboboxPopover"
-        classNames={resolvedClassNames}
-        styles={resolvedStyles}
-        unstyled={unstyled}
-        attributes={attributes}
-        onOptionSubmit={handleOptionSubmit}
-        returnFocus
-        {...comboboxProps}
-        {...others}
-      >
-        {children}
-        {searchable ? (
-          <SearchableDropdown
-            data={parsedData as any}
-            filter={filter as OptionsFilter<Primitive> | undefined}
-            search={_searchValue}
-            limit={limit}
-            nothingFoundMessage={nothingFoundMessage}
-            withScrollArea={withScrollArea}
-            maxDropdownHeight={maxDropdownHeight}
-            value={_value}
-            checkIconPosition={checkIconPosition}
-            withCheckIcon={withCheckIcon}
-            withAlignedLabels={withAlignedLabels}
-            unstyled={unstyled}
-            renderOption={renderOption}
-            scrollAreaProps={scrollAreaProps}
-            onSearchChange={(event) => {
-              handleSearchChange(event.currentTarget.value);
-            }}
-          />
-        ) : (
-          <OptionsDropdown
-            data={parsedData as any}
-            filter={filter as OptionsFilter<Primitive> | undefined}
-            search={undefined}
-            limit={limit}
-            hiddenWhenEmpty={!nothingFoundMessage}
-            withScrollArea={withScrollArea}
-            maxDropdownHeight={maxDropdownHeight}
-            filterOptions={false}
-            value={_value}
-            checkIconPosition={checkIconPosition}
-            withCheckIcon={withCheckIcon}
-            withAlignedLabels={withAlignedLabels}
-            nothingFoundMessage={nothingFoundMessage}
-            unstyled={unstyled}
-            renderOption={renderOption}
-            scrollAreaProps={scrollAreaProps}
-            labelId={undefined}
-            aria-label={undefined}
-          />
-        )}
-      </Combobox>
+      <ComboboxPopoverContext.Provider value={popoverContext}>
+        <Combobox
+          store={store}
+          __staticSelector="ComboboxPopover"
+          classNames={resolvedClassNames}
+          styles={resolvedStyles}
+          unstyled={unstyled}
+          attributes={attributes}
+          onOptionSubmit={handleOptionSubmit}
+          returnFocus
+          {...comboboxProps}
+          {...others}
+        >
+          {children}
+          {searchable ? (
+            <SearchableDropdown
+              data={parsedData as any}
+              filter={filter as OptionsFilter<Primitive> | undefined}
+              search={_searchValue}
+              limit={limit}
+              nothingFoundMessage={nothingFoundMessage}
+              withScrollArea={withScrollArea}
+              maxDropdownHeight={maxDropdownHeight}
+              value={_value}
+              checkIconPosition={checkIconPosition}
+              withCheckIcon={withCheckIcon}
+              withAlignedLabels={withAlignedLabels}
+              unstyled={unstyled}
+              renderOption={renderOption}
+              scrollAreaProps={scrollAreaProps}
+              labelId={targetId}
+              aria-label={ariaLabel}
+              multiple={multiple}
+              onSearchChange={(event) => {
+                handleSearchChange(event.currentTarget.value);
+              }}
+            />
+          ) : (
+            <OptionsDropdown
+              data={parsedData as any}
+              filter={filter as OptionsFilter<Primitive> | undefined}
+              search={undefined}
+              limit={limit}
+              hiddenWhenEmpty={!nothingFoundMessage}
+              withScrollArea={withScrollArea}
+              maxDropdownHeight={maxDropdownHeight}
+              filterOptions={false}
+              value={_value}
+              checkIconPosition={checkIconPosition}
+              withCheckIcon={withCheckIcon}
+              withAlignedLabels={withAlignedLabels}
+              nothingFoundMessage={nothingFoundMessage}
+              unstyled={unstyled}
+              renderOption={renderOption}
+              scrollAreaProps={scrollAreaProps}
+              labelId={ariaLabel ? undefined : targetId}
+              aria-label={ariaLabel}
+              multiple={multiple}
+            />
+          )}
+        </Combobox>
+      </ComboboxPopoverContext.Provider>
       <Combobox.HiddenInput
         name={name}
         value={_value}

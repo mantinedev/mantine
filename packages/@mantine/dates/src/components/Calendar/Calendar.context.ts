@@ -47,6 +47,7 @@ export interface CalendarNavigation {
     event: React.KeyboardEvent<HTMLButtonElement>,
     payload: { rowIndex: number; date: DateStringValue }
   ) => void;
+  preserveDayFocusOnShift: (shift: (date: DateStringValue) => DateStringValue) => void;
 }
 
 export type CalendarControlHandler = (

@@ -4,3 +4,4 @@ export { vertical } from './Marquee.demo.vertical';
 export { pauseOnHover } from './Marquee.demo.pauseOnHover';
 export { multipleRows } from './Marquee.demo.multipleRows';
 export { fadeEdges } from './Marquee.demo.fadeEdges';
+export { playing } from './Marquee.demo.playing';

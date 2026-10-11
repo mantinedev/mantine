@@ -133,7 +133,7 @@ export function useTooltip(settings: UseTooltip) {
 
   const clickEnabled = settings.events?.click === true;
   const hoverEnabled = !clickEnabled && (settings.events?.hover ?? true);
-  const focusEnabled = !clickEnabled && (settings.events?.focus ?? false);
+  const focusEnabled = !clickEnabled && (settings.events?.focus ?? true);
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {

@@ -56,6 +56,7 @@ describe('@mantine/core/ActionIcon', () => {
     render(<ActionIcon aria-label="test" data-disabled onClick={spy} />);
     const button = screen.getByRole('button');
     expect(button).toHaveAttribute('data-disabled');
+    expect(button).toHaveAttribute('aria-disabled', 'true');
     expect(button).not.toHaveAttribute('disabled');
     await userEvent.click(button);
     expect(spy).toHaveBeenCalledTimes(1);

@@ -20,4 +20,20 @@ describe('@mantine/core/Title', () => {
     rerender(<Title />);
     expect(container.querySelector('.mantine-Title-root')).not.toHaveAttribute('data-line-clamp');
   });
+
+  it('renders heading element based on order prop', () => {
+    const { container, rerender } = render(<Title>Heading</Title>);
+    expect(container.querySelector('h1')).toHaveAttribute('data-order', '1');
+
+    for (const order of [2, 3, 4, 5, 6] as const) {
+      rerender(<Title order={order}>Heading</Title>);
+      expect(container.querySelector(`h${order}`)).toHaveAttribute('data-order', String(order));
+    }
+  });
+
+  it('renders nothing for out-of-range order', () => {
+    const { container } = render(<Title order={7 as any}>Heading</Title>);
+    expect(container.querySelector('.mantine-Title-root')).not.toBeInTheDocument();
+    expect(container).not.toHaveTextContent('Heading');
+  });
 });

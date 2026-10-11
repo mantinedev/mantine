@@ -36,9 +36,7 @@ export type ColorPickerStylesNames =
   | 'sliderOverlay'
   | 'thumb'
   | 'saturation'
-  | 'thumb'
   | 'saturationOverlay'
-  | 'thumb'
   | 'swatches'
   | 'swatch';
 

@@ -10,6 +10,7 @@ export interface ResolveItemPropsInput {
 export interface ResolvedItemProps {
   active: boolean;
   lineActive: boolean;
+  current: boolean;
   bodyFirst: boolean;
   first: boolean;
   last: boolean;
@@ -32,6 +33,17 @@ export function getItemActiveState(
   return { active: ctx.active >= index, lineActive: ctx.active - 1 >= index };
 }
 
+export function isCurrentItem(
+  index: number | undefined,
+  ctx: Pick<TimelineContextValue, 'active' | 'itemsCount' | 'reverseActive'>
+) {
+  if (index === undefined || ctx.active < 0) {
+    return false;
+  }
+
+  return ctx.reverseActive ? index === ctx.itemsCount - ctx.active - 1 : index === ctx.active;
+}
+
 export function resolveItemProps(
   input: ResolveItemPropsInput,
   ctx: TimelineContextValue
@@ -41,6 +53,7 @@ export function resolveItemProps(
   return {
     active: input.active ?? derived.active,
     lineActive: input.lineActive ?? derived.lineActive,
+    current: isCurrentItem(input.index, ctx),
     bodyFirst:
       (ctx.align === 'left' && !!input.alternate) || (ctx.align === 'right' && !input.alternate),
     first: input.index === 0,

@@ -479,7 +479,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     title: 'Table',
     package: '@mantine/core',
     slug: '/core/table',
-    props: ['Table'],
+    props: ['Table', 'TableScrollContainer'],
     styles: ['Table'],
     description: 'Render table with theme styles',
     source: '@mantine/core/src/components/Table/Table.tsx',

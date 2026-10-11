@@ -168,7 +168,7 @@ Events that trigger the tooltip can be changed with the `events` prop; it accept
 with the following properties that determine which events will trigger the tooltip:
 
 - `hover` – mouse hover event, `true` by default
-- `focus` – focus/blur events excluding clicks on the target element, `false` by default
+- `focus` – focus/blur events excluding clicks on the target element, `true` by default
 - `touch` – events for touchscreen devices, `false` by default
 - `click` – toggles the tooltip on trigger click, disables `hover` and `focus` opening, `false` by default
 
@@ -179,7 +179,7 @@ function Demo() {
   return (
     <Tooltip
       label="Tooltip"
-      events={{ hover: true, focus: true, touch: false }}
+      events={{ hover: true, focus: false, touch: true }}
     >
       <button>target</button>
     </Tooltip>
@@ -296,25 +296,9 @@ Tooltip follows the [WAI-ARIA tooltip pattern](https://www.w3.org/WAI/ARIA/apg/p
 - `Tooltip.Floating` is ignored by screen readers
 - Uncontrolled tooltips are dismissed with `Escape` without moving the pointer or focus
 
-By default, Tooltip is not triggered by focus events and thus users who use a screen reader
-or navigate with the keyboard will not be able to get tooltip content. Set the `events` prop to enable
-focus/blur tooltip events:
-
-```tsx
-import { Button, Tooltip } from '@mantine/core';
-
-// Tooltip will be visible for screen readers
-function Demo() {
-  return (
-    <Tooltip
-      label="Tooltip"
-      events={{ hover: true, focus: true, touch: false }}
-    >
-      <Button>Button with tooltip</Button>
-    </Tooltip>
-  );
-}
-```
+Tooltip is opened when the target element receives keyboard focus, so users who navigate with
+the keyboard can read its content. Do not disable `focus` in the `events` prop unless the tooltip
+content is available in another way.
 
 [WCAG 2.1 success criterion 1.4.13: Content on Hover or Focus](https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html)
 additionally requires content that appears on hover to be dismissable, hoverable and persistent.

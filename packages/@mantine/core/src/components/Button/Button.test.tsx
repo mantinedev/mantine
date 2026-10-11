@@ -1,4 +1,4 @@
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Button, ButtonProps, ButtonStylesNames } from './Button';
 import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 
@@ -58,6 +58,48 @@ describe('@mantine/core/Button', () => {
     expect(container.querySelector('button')).toHaveAttribute('disabled');
     rerender(<Button disabled={false} />);
     expect(container.querySelector('button')).not.toHaveAttribute('disabled');
+  });
+
+  it('sets aria-busy when loading prop is set', () => {
+    const { rerender } = render(<Button loading>Save</Button>);
+    expect(screen.getByRole('button')).toHaveAttribute('aria-busy', 'true');
+    rerender(<Button loading={false}>Save</Button>);
+    expect(screen.getByRole('button')).not.toHaveAttribute('aria-busy');
+  });
+
+  it('disables the button and blocks click when loading', async () => {
+    const spy = jest.fn();
+    render(
+      <Button loading onClick={spy}>
+        Save
+      </Button>
+    );
+    expect(screen.getByRole('button')).toBeDisabled();
+    await userEvent.click(screen.getByRole('button'));
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('keeps the button clickable with data-disabled and sets aria-disabled', async () => {
+    const spy = jest.fn();
+    render(
+      <Button data-disabled onClick={spy}>
+        Save
+      </Button>
+    );
+    const button = screen.getByRole('button');
+    expect(button).not.toHaveAttribute('disabled');
+    expect(button).toHaveAttribute('aria-disabled', 'true');
+    await userEvent.click(button);
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('sets aria-disabled on polymorphic links with data-disabled', () => {
+    render(
+      <Button component="a" href="#" data-disabled>
+        Link
+      </Button>
+    );
+    expect(screen.getByRole('link')).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('renders given left section', () => {

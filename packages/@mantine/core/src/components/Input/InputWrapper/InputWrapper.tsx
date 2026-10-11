@@ -87,7 +87,7 @@ export interface __InputWrapperProps {
   /** Props passed down to the `Input.Success` component */
   successProps?: InputSuccessProps & DataAttributes & PlaceholderPolymorphicProps;
 
-  /** Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. @default React.Fragment */
+  /** Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. @default (children) => children */
   inputContainer?: (children: React.ReactNode) => React.ReactNode;
 
   /** Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. @default ['label', 'description', 'input', 'error'] */

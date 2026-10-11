@@ -96,6 +96,10 @@
     --switch-cursor: not-allowed;
   }
 
+  &:where([data-error]) {
+    box-shadow: inset 0 0 0 1px var(--mantine-color-error);
+  }
+
   --switch-text-color: var(--mantine-color-dimmed);
   --switch-bg: var(--mantine-color-track);
 

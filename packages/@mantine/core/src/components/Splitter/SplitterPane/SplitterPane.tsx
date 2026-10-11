@@ -78,6 +78,7 @@ export const SplitterPane = factory<SplitterPaneFactory>((_props) => {
         props,
       })}
       mod={[{ collapsed: isCollapsed || undefined }, mod]}
+      inert={isCollapsed || undefined}
       {...others}
     >
       {children}

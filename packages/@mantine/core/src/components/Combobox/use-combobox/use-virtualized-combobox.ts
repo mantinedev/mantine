@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useCallbackRef, useLatestRef, useUncontrolled } from '@mantine/hooks';
-import { getFirstIndex, getNextIndex, getPreviousIndex } from './get-index/get-virtualized-index';
+import {
+  getFirstIndex,
+  getLastIndex,
+  getNextIndex,
+  getPreviousIndex,
+} from './get-index/get-virtualized-index';
 import { ComboboxDropdownEventSource, ComboboxStore } from './use-combobox';
 
 export interface UseVirtualizedComboboxOptions {
@@ -19,7 +24,7 @@ export interface UseVirtualizedComboboxOptions {
   /** Called when dropdown opens */
   onDropdownOpen?: (eventSource: ComboboxDropdownEventSource) => void;
 
-  /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
+  /** Determines whether arrow key presses should loop though items (first to last and last to first) @default true */
   loop?: boolean;
 
   /** Function to determine whether the option is disabled */
@@ -186,6 +191,17 @@ export function useVirtualizedCombobox(
     []
   );
 
+  const selectLastOption = useCallback(
+    () =>
+      selectOption(
+        getLastIndex({
+          isOptionDisabled: settings.current.isOptionDisabled,
+          totalOptionsCount: settings.current.totalOptionsCount,
+        })
+      ),
+    []
+  );
+
   const resetSelectedOption = useCallback(() => {
     settings.current.setSelectedOptionIndex(-1);
   }, []);
@@ -224,6 +240,15 @@ export function useVirtualizedCombobox(
 
   const getSelectedOptionIndex = useCallback(() => settings.current.selectedOptionIndex, []);
 
+  const getSelectedOptionId = useCallback(() => {
+    const index = settings.current.selectedOptionIndex;
+    return index >= 0 && index < settings.current.totalOptionsCount
+      ? settings.current.getOptionId(index)
+      : null;
+  }, []);
+
+  const subscribeToSelectedOptionId = useCallback(() => () => {}, []);
+
   const updateSelectedOptionIndex: ComboboxStore['updateSelectedOptionIndex'] = useCallback(
     (index?: 'active' | 'selected' | number) => {
       if (typeof index === 'number') {
@@ -248,11 +273,15 @@ export function useVirtualizedCombobox(
       getSelectedOptionIndex,
       selectOption,
       selectFirstOption,
+      selectLastOption,
       selectActiveOption,
       selectNextOption,
       selectPreviousOption,
       resetSelectedOption,
       updateSelectedOptionIndex,
+
+      getSelectedOptionId,
+      subscribeToSelectedOptionId,
 
       getListId,
       setListId,

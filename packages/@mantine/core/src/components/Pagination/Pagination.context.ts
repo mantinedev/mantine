@@ -3,6 +3,7 @@ import type { PaginationRootFactory } from './PaginationRoot/PaginationRoot';
 
 export interface PaginationContextValue {
   total: number;
+  startValue: number;
   range: (number | 'dots')[];
   active: number;
   disabled: boolean | undefined;

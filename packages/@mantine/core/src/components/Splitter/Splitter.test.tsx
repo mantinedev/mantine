@@ -64,8 +64,11 @@ describe('@mantine/core/Splitter', () => {
     expect(screen.getByRole('separator')).toHaveAttribute('data-orientation', 'vertical');
   });
 
-  it('sets aria-orientation on handles', () => {
-    render(<Splitter {...defaultProps} />);
+  it('sets aria-orientation of the separator itself on handles', () => {
+    const { rerender } = render(<Splitter {...defaultProps} />);
+    expect(screen.getByRole('separator')).toHaveAttribute('aria-orientation', 'vertical');
+
+    rerender(<Splitter {...defaultProps} orientation="vertical" />);
     expect(screen.getByRole('separator')).toHaveAttribute('aria-orientation', 'horizontal');
   });
 
@@ -169,5 +172,118 @@ describe('@mantine/core/Splitter', () => {
     fireEvent.doubleClick(screen.getAllByRole('separator')[0]);
 
     expect(ref.current!.sizes).toEqual([10, 20, 70]);
+  });
+
+  it('points handle aria-controls at the preceding pane', () => {
+    render(
+      <Splitter>
+        <Splitter.Pane defaultSize={33}>First</Splitter.Pane>
+        <Splitter.Pane defaultSize={34} id="custom-pane-id">
+          Second
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={33}>Third</Splitter.Pane>
+      </Splitter>
+    );
+
+    const handles = screen.getAllByRole('separator');
+    const first = screen.getByText('First');
+    expect(first.id).not.toBe('');
+    expect(handles[0]).toHaveAttribute('aria-controls', first.id);
+    expect(handles[1]).toHaveAttribute('aria-controls', 'custom-pane-id');
+    expect(screen.getByText('Second')).toHaveAttribute('id', 'custom-pane-id');
+  });
+
+  it('passes props returned from getHandleProps to handles', () => {
+    render(
+      <Splitter
+        {...defaultProps}
+        getHandleProps={(index) => ({
+          'aria-label': `Resize pane ${index + 1}`,
+          className: 'custom-handle',
+          role: 'button',
+        })}
+      />
+    );
+    const handle = screen.getByRole('separator', { name: 'Resize pane 1' });
+    expect(handle).toHaveClass('custom-handle');
+    expect(handle).toHaveClass('mantine-Splitter-handle');
+  });
+
+  it('resizes panes with keyboard on a handle', () => {
+    const ref = createRef<UseSplitterReturnValue>();
+    render(
+      <Splitter splitterRef={ref}>
+        <Splitter.Pane defaultSize={50} min={20} max={70}>
+          Left
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={50}>Right</Splitter.Pane>
+      </Splitter>
+    );
+
+    const handle = screen.getByRole('separator');
+
+    fireEvent.keyDown(handle, { key: 'ArrowRight' });
+    expect(ref.current!.sizes).toEqual([51, 49]);
+
+    fireEvent.keyDown(handle, { key: 'ArrowLeft', shiftKey: true });
+    expect(ref.current!.sizes).toEqual([41, 59]);
+
+    fireEvent.keyDown(handle, { key: 'ArrowDown' });
+    expect(ref.current!.sizes).toEqual([41, 59]);
+
+    fireEvent.keyDown(handle, { key: 'Home' });
+    expect(ref.current!.sizes).toEqual([20, 80]);
+
+    fireEvent.keyDown(handle, { key: 'End' });
+    expect(ref.current!.sizes).toEqual([70, 30]);
+    expect(handle).toHaveAttribute('aria-valuenow', '70');
+  });
+
+  it('collapses collapsible pane with Enter and hides its content', () => {
+    const onCollapseChange = jest.fn();
+    render(
+      <Splitter onCollapseChange={onCollapseChange}>
+        <Splitter.Pane defaultSize={30} min={10} collapsible>
+          Sidebar
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={70}>Content</Splitter.Pane>
+      </Splitter>
+    );
+
+    const handle = screen.getByRole('separator');
+    fireEvent.keyDown(handle, { key: 'Enter' });
+
+    expect(onCollapseChange).toHaveBeenLastCalledWith(0, true);
+    expect(screen.getByText('Sidebar')).toHaveAttribute('data-collapsed');
+    expect(screen.getByText('Sidebar')).toHaveAttribute('inert');
+    expect(screen.getByText('Content')).not.toHaveAttribute('inert');
+
+    fireEvent.keyDown(handle, { key: 'Enter' });
+    expect(onCollapseChange).toHaveBeenLastCalledWith(0, false);
+    expect(screen.getByText('Sidebar')).not.toHaveAttribute('data-collapsed');
+    expect(screen.getByText('Sidebar')).not.toHaveAttribute('inert');
+  });
+
+  it('collapses and expands panes with splitterRef', () => {
+    const ref = createRef<UseSplitterReturnValue>();
+    const onCollapseChange = jest.fn();
+    render(
+      <Splitter splitterRef={ref} onCollapseChange={onCollapseChange}>
+        <Splitter.Pane defaultSize={50}>Left</Splitter.Pane>
+        <Splitter.Pane defaultSize={50} collapsible>
+          Right
+        </Splitter.Pane>
+      </Splitter>
+    );
+
+    act(() => ref.current!.collapse(1));
+    expect(ref.current!.collapsed).toEqual([false, true]);
+    expect(onCollapseChange).toHaveBeenLastCalledWith(1, true);
+    expect(screen.getByText('Right')).toHaveAttribute('inert');
+
+    act(() => ref.current!.expand(1));
+    expect(ref.current!.collapsed).toEqual([false, false]);
+    expect(onCollapseChange).toHaveBeenLastCalledWith(1, false);
+    expect(screen.getByText('Right')).not.toHaveAttribute('inert');
   });
 });

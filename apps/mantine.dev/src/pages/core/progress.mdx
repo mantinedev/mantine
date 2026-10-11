@@ -8,6 +8,13 @@ export default Layout(MDX_DATA.Progress);
 
 <Demo data={ProgressDemos.usage} />
 
+## Indeterminate
+
+Set `indeterminate` prop to display a loading animation when the progress value is unknown.
+`aria-valuenow` is not set in this case:
+
+<Demo data={ProgressDemos.indeterminate} />
+
 ## Compound components
 
 <Demo data={ProgressDemos.compound} />
@@ -40,7 +47,8 @@ Set `transitionDuration` to a number of milliseconds to enable width transition:
 - Progress section has the `aria-valuenow` attribute with the current value
 - `aria-valuemin` and `aria-valuemax` attributes are always set to `0` and `100` as the component does not support other values
 
-Set the `aria-label` attribute to label the progress:
+Set the `aria-label` attribute to label the progress. By default, `aria-valuetext` is the value
+in percent, set the `aria-valuetext` attribute to override it (for example, `Step 3 of 5`):
 
 ```tsx
 import { Progress } from '@mantine/core';

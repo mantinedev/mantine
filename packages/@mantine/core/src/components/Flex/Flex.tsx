@@ -111,7 +111,7 @@ export const Flex = polymorphicFactory<FlexFactory>((_props) => {
       )}
       <Box
         {...getStyles('root', {
-          className: responsiveClassName,
+          className: parsedStyleProps.hasResponsiveStyles ? responsiveClassName : undefined,
           style: filterProps(parsedStyleProps.inlineStyles),
         })}
         {...others}

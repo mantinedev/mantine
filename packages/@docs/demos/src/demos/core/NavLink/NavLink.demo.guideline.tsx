@@ -10,7 +10,7 @@ function Demo() {
   return (
     <>
       <NavLink
-        href="#required-for-focus" variant="rail"
+        variant="rail"
         label="Projects"
         leftSection={<FolderIcon size={16} />}
         withGuideline
@@ -19,7 +19,7 @@ function Demo() {
         <NavLink href="#required-for-focus" variant="rail" label="Website" active />
         <NavLink href="#required-for-focus" variant="rail" label="Mobile app" />
         <NavLink
-          href="#required-for-focus" variant="rail"
+          variant="rail"
           label="Design system"
           withGuideline
           defaultOpened
@@ -29,7 +29,7 @@ function Demo() {
         </NavLink>
       </NavLink>
       <NavLink
-        href="#required-for-focus" variant="rail"
+        variant="rail"
         label="Team"
         leftSection={<UsersIcon size={16} />}
         withGuideline
@@ -46,7 +46,6 @@ function Demo() {
   return (
     <>
       <NavLink
-        href="#required-for-focus"
         variant="rail"
         label="Projects"
         leftSection={<FolderIcon size={16} />}
@@ -55,24 +54,12 @@ function Demo() {
       >
         <NavLink href="#required-for-focus" variant="rail" label="Website" active />
         <NavLink href="#required-for-focus" variant="rail" label="Mobile app" />
-        <NavLink
-          href="#required-for-focus"
-          variant="rail"
-          label="Design system"
-          withGuideline
-          defaultOpened
-        >
+        <NavLink variant="rail" label="Design system" withGuideline defaultOpened>
           <NavLink href="#required-for-focus" variant="rail" label="Tokens" />
           <NavLink href="#required-for-focus" variant="rail" label="Components" />
         </NavLink>
       </NavLink>
-      <NavLink
-        href="#required-for-focus"
-        variant="rail"
-        label="Team"
-        leftSection={<UsersIcon size={16} />}
-        withGuideline
-      >
+      <NavLink variant="rail" label="Team" leftSection={<UsersIcon size={16} />} withGuideline>
         <NavLink href="#required-for-focus" variant="rail" label="Members" />
         <NavLink href="#required-for-focus" variant="rail" label="Invitations" />
       </NavLink>

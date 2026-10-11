@@ -87,6 +87,9 @@ export const Drawer = factory<DrawerFactory>((_props) => {
     stackId,
     zIndex,
     onExitTransitionEnd,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
     ...others
   } = useProps('Drawer', defaultProps, _props);
 
@@ -104,7 +107,13 @@ export const Drawer = factory<DrawerFactory>((_props) => {
   return (
     <DrawerRoot opened={opened} onClose={onClose} {...others} {...stackEntry.rootProps}>
       {withOverlay && <DrawerOverlay {...stackEntry.overlayProps} {...overlayProps} />}
-      <DrawerContent {...stackEntry.contentProps} __onDragProgress={stackEntry.reportDrag}>
+      <DrawerContent
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        {...stackEntry.contentProps}
+        __onDragProgress={stackEntry.reportDrag}
+      >
         {hasHeader && (
           <DrawerHeader>
             {title && <DrawerTitle>{title}</DrawerTitle>}

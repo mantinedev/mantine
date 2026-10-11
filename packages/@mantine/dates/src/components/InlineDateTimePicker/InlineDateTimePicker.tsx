@@ -18,7 +18,7 @@ import {
 } from '@mantine/core';
 import { useCallbackRef, useIsomorphicEffect, useLatestRef, useMergedRef } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
-import { DatePickerType, DateStringValue, DateValue } from '../../types';
+import { DateStringValue, DateValue } from '../../types';
 import { assignTime, clampDate, getDefaultClampedDate } from '../../utils';
 import { pickCalendarProps } from '../Calendar';
 import { clampLevel } from '../Calendar/clamp-level/clamp-level';
@@ -58,7 +58,7 @@ export type InlineDateTimePickerStylesNames =
   | 'rangeInfo'
   | DatePickerStylesNames;
 
-export interface InlineDateTimePickerProps<Type extends DatePickerType = 'default'>
+export interface InlineDateTimePickerProps<Type extends 'default' | 'range' = 'default'>
   extends
     BoxProps,
     DatePickerBaseProps<Type>,
@@ -88,7 +88,7 @@ export interface InlineDateTimePickerProps<Type extends DatePickerType = 'defaul
   /** `dayjs` format for range display, or a function that receives the value as a `YYYY-MM-DD HH:mm:ss` string and returns the formatted value @default "DD/MM/YYYY HH:mm" @category appearance */
   valueFormat?: string | ((date: DateStringValue) => string);
 
-  /** Separator between range values @category appearance */
+  /** Separator between range values, overrides `labelSeparator` from `DatesProvider` settings @default '–' @category appearance */
   labelSeparator?: string;
 
   /** Component size @default 'sm' @category appearance */
@@ -111,7 +111,7 @@ export type InlineDateTimePickerFactory = Factory<{
   props: InlineDateTimePickerProps;
   ref: HTMLDivElement;
   stylesNames: InlineDateTimePickerStylesNames;
-  signature: <Type extends DatePickerType = 'default'>(
+  signature: <Type extends 'default' | 'range' = 'default'>(
     props: InlineDateTimePickerProps<Type> & { ref?: React.Ref<HTMLDivElement> }
   ) => React.JSX.Element;
 }>;
@@ -552,7 +552,9 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
 
           {withTimeInputs && isRange && (
             <>
-              <Text {...getStyles('rangeInfo')}>{getFormattedRange()}</Text>
+              <Text {...getStyles('rangeInfo')} aria-live="polite">
+                {getFormattedRange()}
+              </Text>
 
               <div {...getStyles('rangeTimeWrapper')} data-layout={dropdown.layout}>
                 {withNativeTimeInput ? (

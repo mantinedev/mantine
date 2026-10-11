@@ -188,7 +188,13 @@ export const Notification = factory<NotificationFactory>((_props) => {
           {icon}
         </Box>
       )}
-      {loading && <Loader vars={loaderVars} {...getStyles('loader')} {...loaderProps} />}
+      {loading && (
+        <Loader
+          vars={loaderVars}
+          {...loaderProps}
+          {...getStyles('loader', { className: loaderProps?.className, style: loaderProps?.style })}
+        />
+      )}
 
       <div {...getStyles('body')}>
         {title && <div {...getStyles('title')}>{title}</div>}
@@ -209,7 +215,7 @@ export const Notification = factory<NotificationFactory>((_props) => {
             closeButtonProps?.onClick?.(event);
             onClose?.();
           }}
-          {...getStyles('closeButton')}
+          {...getStyles('closeButton', { className: closeButtonProps?.className })}
         />
       )}
     </Box>

@@ -13,7 +13,12 @@ export function useInputProps<T extends BaseProps, U extends Partial<T> | null>(
   defaultProps: U,
   _props: T
 ) {
-  const props = useProps<T, U>(['Input', 'InputWrapper', component], defaultProps, _props);
+  return splitInputProps(
+    useProps<T, U>(['Input', 'InputWrapper', component], defaultProps, _props)
+  );
+}
+
+export function splitInputProps<T extends BaseProps>(props: T) {
   const {
     label,
     description,

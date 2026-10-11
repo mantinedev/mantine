@@ -11,7 +11,7 @@ export interface NativeSelectProps
     StylesApiProps<NativeSelectFactory>,
     ElementProps<'select', 'size'> {
   /**
-   * Data used to render options. Accepts strings, objects with label/value,
+   * Data used to render options. Accepts strings, objects with `label`, `value` and optional `disabled`,
    * or grouped options. If `children` prop is provided, `data` will be ignored.
    */
   data?: ComboboxStringGroupData;

@@ -146,7 +146,12 @@ export function TreeNode({
       }
     }
 
-    if (event.nativeEvent.code === 'ArrowDown' || event.nativeEvent.code === 'ArrowUp') {
+    if (
+      event.nativeEvent.code === 'ArrowDown' ||
+      event.nativeEvent.code === 'ArrowUp' ||
+      ((event.nativeEvent.code === 'Home' || event.nativeEvent.code === 'End') &&
+        event.target === event.currentTarget)
+    ) {
       const root = findElementAncestor(event.currentTarget as HTMLElement, '[data-tree-root]');
 
       if (!root) {
@@ -164,20 +169,39 @@ export function TreeNode({
         return;
       }
 
-      const nextIndex = event.nativeEvent.code === 'ArrowDown' ? index + 1 : index - 1;
+      const nextIndex =
+        event.nativeEvent.code === 'Home'
+          ? 0
+          : event.nativeEvent.code === 'End'
+            ? nodes.length - 1
+            : event.nativeEvent.code === 'ArrowDown'
+              ? index + 1
+              : index - 1;
       const nextNode = nodes[nextIndex];
       nextNode?.setAttribute('data-focus-ring', 'true');
       nextNode?.focus();
 
-      if (event.shiftKey) {
-        const selectNode = nodes[nextIndex];
+      const isArrow =
+        event.nativeEvent.code === 'ArrowDown' || event.nativeEvent.code === 'ArrowUp';
 
-        if (selectNode) {
+      if (isArrow && event.shiftKey && allowRangeSelection && store.multiple && store.anchorNode) {
+        if (nextNode) {
           store.setSelectedState(
-            getValuesRange(store.anchorNode, selectNode.dataset.value, flatValues)
+            getValuesRange(store.anchorNode, nextNode.dataset.value, flatValues)
           );
         }
       }
+    }
+
+    if (event.nativeEvent.code === 'Enter' && event.target === event.currentTarget) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (expandOnClick && hasChildren) {
+        store.toggleExpanded(node.value);
+      }
+
+      selectOnClick && store.select(node.value);
     }
 
     if (event.nativeEvent.code === 'Space') {
@@ -231,6 +255,8 @@ export function TreeNode({
       })}
       role="treeitem"
       aria-selected={selected}
+      aria-expanded={hasChildren ? isExpanded : undefined}
+      aria-busy={isLoading || undefined}
       data-value={node.value}
       data-selected={selected || undefined}
       data-level={level}

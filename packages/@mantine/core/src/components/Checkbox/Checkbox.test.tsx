@@ -37,6 +37,23 @@ describe('@mantine/core/Checkbox', () => {
     expect(container.querySelector('.mantine-Checkbox-root')).not.toHaveAttribute('data-checked');
   });
 
+  it('sets data-checked attribute on the root element for uncontrolled checkbox', async () => {
+    const { container } = render(<Checkbox label="test" defaultChecked />);
+    const root = container.querySelector('.mantine-Checkbox-root');
+    expect(root).toHaveAttribute('data-checked');
+    await userEvent.click(screen.getByRole('checkbox'));
+    expect(root).not.toHaveAttribute('data-checked');
+    await userEvent.click(screen.getByRole('checkbox'));
+    expect(root).toHaveAttribute('data-checked');
+  });
+
+  it('sets aria-invalid on the input when error is set', () => {
+    const { rerender } = render(<Checkbox label="test" error="Required" />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute('aria-invalid', 'true');
+    rerender(<Checkbox label="test" />);
+    expect(screen.getByRole('checkbox')).not.toHaveAttribute('aria-invalid');
+  });
+
   it('sets data-checked attribute on the root element if checkbox is checked within Checkbox.Group', () => {
     const { container, rerender } = render(
       <Checkbox.Group value={[]}>

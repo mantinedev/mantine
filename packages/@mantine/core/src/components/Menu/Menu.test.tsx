@@ -299,6 +299,27 @@ describe('@mantine/core/Menu', () => {
       expect(document.querySelector('[data-menu-active]')).toBeNull();
     });
 
+    it('exposes the highlighted item with aria-activedescendant', async () => {
+      render(<SearchMenu />);
+      const search = screen.getByLabelText('search');
+      search.focus();
+      expect(search).not.toHaveAttribute('aria-activedescendant');
+      expect(search).toHaveAttribute('aria-controls', screen.getByRole('menu').id);
+
+      await userEvent.keyboard('{ArrowDown}');
+      const apple = screen.getByRole('menuitem', { name: 'Apple' });
+      expect(apple.id).not.toBe('');
+      expect(search).toHaveAttribute('aria-activedescendant', apple.id);
+
+      await userEvent.keyboard('{ArrowDown}');
+      const banana = screen.getByRole('menuitem', { name: 'Banana' });
+      expect(banana.id).not.toBe(apple.id);
+      expect(search).toHaveAttribute('aria-activedescendant', banana.id);
+
+      await userEvent.type(search, 'a');
+      expect(search).not.toHaveAttribute('aria-activedescendant');
+    });
+
     it('Escape closes the menu', async () => {
       render(<SearchMenu />);
       const search = screen.getByLabelText('search');
@@ -349,6 +370,81 @@ describe('@mantine/core/Menu', () => {
       expect(screen.getByTestId('query')).toBeEmptyDOMElement();
     });
 
+    it('does not clear search value of an unmounted Menu.Search on close', async () => {
+      const onChange = jest.fn();
+      function Demo() {
+        const [opened, setOpened] = useState(true);
+        const [withSearch, setWithSearch] = useState(true);
+        return (
+          <>
+            <button type="button" onClick={() => setOpened((o) => !o)}>
+              toggle
+            </button>
+            <button type="button" onClick={() => setWithSearch(false)}>
+              remove-search
+            </button>
+            <Menu
+              opened={opened}
+              onChange={setOpened}
+              transitionProps={{ duration: 0, exitDuration: 0 }}
+              withinPortal={false}
+              closeOnClickOutside={false}
+            >
+              <Menu.Target>
+                <button type="button">test-target</button>
+              </Menu.Target>
+              <Menu.Dropdown>
+                {withSearch && <Menu.Search aria-label="search" value="" onChange={onChange} />}
+                <Menu.Item>Item</Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </>
+        );
+      }
+
+      render(<Demo />);
+      await userEvent.click(screen.getByText('remove-search'));
+      await userEvent.click(screen.getByText('toggle'));
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('clears values of all Menu.Search components on close', async () => {
+      const onFirstChange = jest.fn();
+      const onSecondChange = jest.fn();
+      function Demo() {
+        const [opened, setOpened] = useState(true);
+        return (
+          <>
+            <button type="button" onClick={() => setOpened((o) => !o)}>
+              toggle
+            </button>
+            <Menu
+              opened={opened}
+              onChange={setOpened}
+              transitionProps={{ duration: 0, exitDuration: 0 }}
+              withinPortal={false}
+            >
+              <Menu.Target>
+                <button type="button">test-target</button>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Search aria-label="first" value="a" onChange={onFirstChange} />
+                <Menu.Search aria-label="second" value="b" onChange={onSecondChange} />
+                <Menu.Item>Item</Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </>
+        );
+      }
+
+      render(<Demo />);
+      await userEvent.click(screen.getByText('toggle'));
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      expect(onFirstChange).toHaveBeenCalledTimes(1);
+      expect(onSecondChange).toHaveBeenCalledTimes(1);
+    });
+
     it('keeps search value on close when clearSearchOnClose={false}', async () => {
       render(<ClearOnCloseMenu clearSearchOnClose={false} />);
       expect(screen.getByTestId('query')).toHaveTextContent('initial');
@@ -357,6 +453,99 @@ describe('@mantine/core/Menu', () => {
       await new Promise((resolve) => setTimeout(resolve, 20));
       expect(screen.getByTestId('query')).toHaveTextContent('initial');
     });
+  });
+
+  it('allows Tab navigation through items with menuItemTabIndex={0}', async () => {
+    render(
+      <Menu
+        transitionProps={{ duration: 0 }}
+        withinPortal={false}
+        defaultOpened
+        menuItemTabIndex={0}
+        trapFocus={false}
+      >
+        <Menu.Target>
+          <button type="button">test-target</button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>first</Menu.Item>
+          <Menu.Item>second</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    );
+
+    expect(screen.getByRole('menuitem', { name: 'first' })).toHaveAttribute('tabindex', '0');
+    screen.getByRole('menuitem', { name: 'first' }).focus();
+    await userEvent.tab();
+    expect(screen.getByRole('menuitem', { name: 'second' })).toHaveFocus();
+  });
+
+  it('keeps items out of Tab order by default', () => {
+    render(
+      <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+        <Menu.Target>
+          <button type="button">test-target</button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>first</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    );
+
+    expect(screen.getByRole('menuitem', { name: 'first' })).toHaveAttribute('tabindex', '-1');
+  });
+
+  it('prefers item checkIcon over Menu checkIcon', () => {
+    render(
+      <Menu
+        transitionProps={{ duration: 0 }}
+        withinPortal={false}
+        defaultOpened
+        checkIcon={<span data-testid="menu-icon" />}
+      >
+        <Menu.Target>
+          <button type="button">test-target</button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.CheckboxItem defaultChecked checkIcon={<span data-testid="item-icon" />}>
+            with-item-icon
+          </Menu.CheckboxItem>
+          <Menu.CheckboxItem defaultChecked>with-menu-icon</Menu.CheckboxItem>
+        </Menu.Dropdown>
+      </Menu>
+    );
+
+    expect(screen.getAllByTestId('item-icon')).toHaveLength(1);
+    expect(screen.getAllByTestId('menu-icon')).toHaveLength(1);
+    expect(screen.getByRole('menuitemcheckbox', { name: 'with-item-icon' })).toContainElement(
+      screen.getByTestId('item-icon')
+    );
+  });
+
+  it('connects Menu.ContextMenu child with the dropdown', () => {
+    render(
+      <Menu transitionProps={{ duration: 0 }} withinPortal={false}>
+        <Menu.ContextMenu>
+          <div data-testid="context-area" id="user-area">
+            area
+          </div>
+        </Menu.ContextMenu>
+        <Menu.Dropdown>
+          <Menu.Item>item</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    );
+
+    const area = screen.getByTestId('context-area');
+    expect(area).not.toHaveAttribute('aria-controls');
+
+    fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+
+    const menu = screen.getByRole('menu');
+    expect(area).toHaveAttribute('aria-controls', menu.id);
+    expect(area).toHaveAttribute('id', 'user-area');
+    expect(area).not.toHaveAttribute('aria-haspopup');
+    expect(area).not.toHaveAttribute('aria-expanded');
   });
 
   describe('Menu.CheckboxItem', () => {

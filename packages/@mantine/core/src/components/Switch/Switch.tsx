@@ -91,6 +91,9 @@ export interface SwitchProps
 
   /** If set, displays a colored dot inside the thumb that matches the track background color @default true @category appearance */
   withThumbIndicator?: boolean;
+
+  /** If set, the checked state cannot be changed by the user @default false @category behavior */
+  readOnly?: boolean;
 }
 
 export type SwitchFactory = Factory<{
@@ -150,6 +153,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
     mod,
     withThumbIndicator,
     attributes,
+    readOnly,
     ...others
   } = props;
 
@@ -185,6 +189,10 @@ export const Switch = factory<SwitchFactory>((_props) => {
       ctx?.value.includes(rest.value as string) ??
       (formField.subscribed ? (formField.value ?? defaultChecked ?? false) : checked),
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (readOnly) {
+        return;
+      }
+
       ctx?.onChange(event);
       onChange?.(event);
     },
@@ -215,7 +223,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
-      data-checked={withContextProps.checked}
+      data-checked={_checked || undefined}
       variant={variant}
       ref={rootRef}
       mod={mod}
@@ -225,12 +233,19 @@ export const Switch = factory<SwitchFactory>((_props) => {
       {...wrapperProps}
     >
       <input
+        aria-invalid={!!error || undefined}
         {...rest}
         {...withContextProps}
         disabled={_disabled}
+        readOnly={readOnly}
+        aria-readonly={readOnly || undefined}
         checked={_checked}
-        data-checked={withContextProps.checked}
+        data-checked={_checked || undefined}
         onChange={(event) => {
+          if (readOnly) {
+            return;
+          }
+
           withContextProps.onChange?.(event);
           handleChange(event.currentTarget.checked);
         }}
@@ -245,7 +260,11 @@ export const Switch = factory<SwitchFactory>((_props) => {
       <Box
         aria-hidden="true"
         component="span"
-        mod={{ error, 'label-position': labelPosition, 'without-labels': !onLabel && !offLabel }}
+        mod={{
+          error: !!error,
+          'label-position': labelPosition,
+          'without-labels': !onLabel && !offLabel,
+        }}
         {...getStyles('track')}
       >
         <Box

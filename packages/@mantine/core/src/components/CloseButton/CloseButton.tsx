@@ -23,6 +23,7 @@ export type CloseButtonCssVariables = {
 };
 
 export interface __CloseButtonProps {
+  /** If set, applies disabled styles and `aria-disabled` without the native `disabled` attribute, the button stays focusable and receives events */
   'data-disabled'?: boolean;
 
   /** Controls width and height of the button. Numbers are converted to rem. @default 'md' */
@@ -108,6 +109,7 @@ export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props) => {
 
   return (
     <UnstyledButton
+      aria-disabled={dataDisabled || undefined}
       {...others}
       unstyled={unstyled}
       variant={variant}

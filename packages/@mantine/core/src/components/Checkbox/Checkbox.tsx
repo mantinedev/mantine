@@ -1,4 +1,4 @@
-import { use, useEffect, useRef } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import { useFormField, useId, useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -249,10 +249,17 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
         return;
       }
 
+      if (withContextProps.checked === undefined) {
+        setUncontrolledChecked(event.currentTarget.checked);
+      }
+
       ctx?.onChange(event);
       onChange?.(event);
     },
   };
+
+  const isUncontrolled = withContextProps.checked === undefined;
+  const [uncontrolledChecked, setUncontrolledChecked] = useState(!!rest.defaultChecked);
 
   const isDisabledByGroup = ctx?.isDisabled?.(rest.value as string) ?? false;
   const finalDisabled = disabled || isDisabledByGroup;
@@ -284,7 +291,9 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
-      data-checked={withContextProps.checked || checked || undefined}
+      data-checked={
+        (isUncontrolled ? uncontrolledChecked : withContextProps.checked || checked) || undefined
+      }
       variant={variant}
       ref={rootRef}
       mod={mod}
@@ -300,6 +309,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
           ref={useMergedRef(inputRef, ref)}
           mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
           {...getStyles('input', { focusable: true, variant })}
+          aria-invalid={!!error || undefined}
           {...rest}
           {...withContextProps}
           aria-describedby={describedBy}

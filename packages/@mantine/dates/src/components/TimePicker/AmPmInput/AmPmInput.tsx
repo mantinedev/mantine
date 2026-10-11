@@ -1,4 +1,45 @@
+import { useState } from 'react';
 import { useTimePickerContext } from '../TimePicker.context';
+
+const CLEAR_BUFFER_KEYS = [
+  'Home',
+  'End',
+  'Backspace',
+  'Delete',
+  'ArrowLeft',
+  'ArrowUp',
+  'ArrowDown',
+];
+const CLEAR_BUFFER_CODES = ['KeyA', 'KeyP'];
+
+function resolveTypedAmPm(typed: string, buffer: string, labels: { am: string; pm: string }) {
+  const options = [labels.am, labels.pm];
+  const normalized = typed.toLowerCase();
+  const exact = options.find((option) => normalized.endsWith(option.toLowerCase()));
+
+  if (exact) {
+    return { value: exact, buffer: '' };
+  }
+
+  const lastChar = typed.slice(-1);
+  const prefixes = buffer ? [buffer + lastChar, lastChar] : [lastChar];
+
+  for (const prefix of prefixes) {
+    const matches = options.filter((option) =>
+      option.toLowerCase().startsWith(prefix.toLowerCase())
+    );
+
+    if (matches.length === 1) {
+      return { value: matches[0], buffer: '' };
+    }
+
+    if (matches.length > 1) {
+      return { value: null, buffer: prefix };
+    }
+  }
+
+  return null;
+}
 
 interface AmPmInputProps extends Omit<React.ComponentProps<'select'>, 'value' | 'onChange'> {
   labels: { am: string; pm: string };
@@ -19,14 +60,23 @@ export function AmPmInput({
   readOnly,
   onMouseDown,
   onTouchStart,
+  onBlur,
   inputType,
   ...others
 }: AmPmInputProps) {
   const ctx = useTimePickerContext();
+  const [typedBuffer, setTypedBuffer] = useState('');
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLSelectElement>) => {
     if (readOnly) {
       return;
+    }
+
+    if (
+      typedBuffer &&
+      (CLEAR_BUFFER_KEYS.includes(event.key) || CLEAR_BUFFER_CODES.includes(event.code))
+    ) {
+      setTypedBuffer('');
     }
 
     if (event.key === 'Home') {
@@ -42,7 +92,7 @@ export function AmPmInput({
     if (event.key === 'Backspace' || event.key === 'Delete') {
       event.preventDefault();
       if (value === null) {
-        onPreviousInput?.();
+        !typedBuffer && onPreviousInput?.();
       } else {
         onChange(null);
       }
@@ -70,7 +120,7 @@ export function AmPmInput({
   };
 
   if (inputType === 'input') {
-    const displayValue = value || '--';
+    const displayValue = typedBuffer || value || '--';
     const inputSize = displayValue.length + 1;
 
     return (
@@ -78,7 +128,31 @@ export function AmPmInput({
         {...ctx.getStyles('field', { className, style })}
         value={displayValue}
         size={inputSize}
-        onChange={(event) => !readOnly && onChange(event.target.value || null)}
+        onChange={(event) => {
+          if (readOnly) {
+            return;
+          }
+
+          const typed = event.target.value;
+          if (!typed) {
+            setTypedBuffer('');
+            onChange(null);
+            return;
+          }
+
+          const resolved = resolveTypedAmPm(typed, typedBuffer, labels);
+
+          if (!resolved) {
+            return;
+          }
+
+          setTypedBuffer(resolved.buffer);
+          resolved.value && onChange(resolved.value);
+        }}
+        onBlur={(event) => {
+          setTypedBuffer('');
+          onBlur?.(event as any);
+        }}
         onClick={((event: any) => event.stopPropagation()) as any}
         onKeyDown={handleKeyDown as any}
         onMouseDown={(event) => {
@@ -98,6 +172,7 @@ export function AmPmInput({
       onChange={(event) => !readOnly && onChange(event.target.value || null)}
       onClick={(event) => event.stopPropagation()}
       onKeyDown={handleKeyDown}
+      onBlur={onBlur}
       onMouseDown={(event) => {
         event.stopPropagation();
         onMouseDown?.(event);

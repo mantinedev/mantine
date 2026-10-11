@@ -5,3 +5,4 @@ export { stylesApi } from './Progress.demo.stylesApi';
 export { transition } from './Progress.demo.transition';
 export { segments } from './Progress.demo.segments';
 export { vertical } from './Progress.demo.vertical';
+export { indeterminate } from './Progress.demo.indeterminate';

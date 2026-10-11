@@ -18,7 +18,7 @@ export interface ComboboxTargetProps {
   /** If set, the target has `aria-` attributes @default true */
   withAriaAttributes?: boolean;
 
-  /** If set, the target has `aria-expanded` attribute @default false */
+  /** If set, the target has `role="combobox"` and `aria-expanded` attributes @default true */
   withExpandedAttribute?: boolean;
 
   /** Determines which events is handled by the target element.
@@ -36,7 +36,7 @@ const defaultProps = {
   targetType: 'input',
   withKeyboardNavigation: true,
   withAriaAttributes: true,
-  withExpandedAttribute: false,
+  withExpandedAttribute: true,
   autoComplete: 'off',
 } satisfies Partial<ComboboxTargetProps>;
 
@@ -76,6 +76,7 @@ export const ComboboxTarget = factory<ComboboxTargetFactory>((props) => {
     onKeyDown: (child.props as any).onKeyDown,
     onClick: (child.props as any).onClick,
     autoComplete,
+    readOnly: (child.props as any).readOnly,
   });
 
   const clonedElement = cloneElement(child, {

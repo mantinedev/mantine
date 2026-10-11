@@ -118,6 +118,10 @@ export function CalendarLevel({
     return formatDecadeLabel(decadeLabelFormat, start, end, ctx.locale);
   };
 
+  const label = getLabel();
+  const gridLabel =
+    typeof label === 'string' || typeof label === 'number' ? String(label) : undefined;
+
   const levelAttribute =
     level === 'month'
       ? { 'data-month-level': true }
@@ -131,7 +135,7 @@ export function CalendarLevel({
     <CalendarColumnProvider value={{ index: levelIndex, period }}>
       <Box {...levelAttribute} size={size}>
         <CalendarHeader
-          label={getLabel()}
+          label={label}
           nextIcon={nextIcon}
           previousIcon={previousIcon}
           nextLabel={nextLabel}
@@ -165,6 +169,7 @@ export function CalendarLevel({
             static={isStatic}
             withCellSpacing={withCellSpacing}
             fullWidth={fullWidth}
+            aria-label={gridLabel}
             {...monthSettings}
             {...ctx.stylesApiProps}
           />
@@ -180,6 +185,7 @@ export function CalendarLevel({
             }
             withCellSpacing={withCellSpacing}
             fullWidth={fullWidth}
+            label={gridLabel}
           />
         )}
 
@@ -191,6 +197,7 @@ export function CalendarLevel({
             getControlProps={getYearControlProps}
             withCellSpacing={withCellSpacing}
             fullWidth={fullWidth}
+            label={gridLabel}
           />
         )}
       </Box>

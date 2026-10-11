@@ -2,6 +2,7 @@ import { Children, cloneElement, useImperativeHandle } from 'react';
 import {
   SplitterPaneSize,
   SplitterStep,
+  useId,
   useMergedRef,
   useSplitter,
   UseSplitterRedistributeFn,
@@ -102,6 +103,9 @@ export interface SplitterProps
   /** Restore the two panes adjacent to a handle to their default ratio (preserving their combined size) when the handle is double-clicked @default true @category behavior */
   resetOnDoubleClick?: boolean;
 
+  /** A function to pass props down to handles, called with the handle index, use it to set `aria-label` on each handle @category behavior */
+  getHandleProps?: (index: number) => React.ComponentProps<'div'> & Record<`data-${string}`, any>;
+
   /** Ref to imperative splitter API (sizes, collapse, expand, etc.) */
   splitterRef?: React.RefObject<UseSplitterReturnValue | null>;
 
@@ -150,6 +154,7 @@ export const Splitter = factory<SplitterFactory>((_props) => {
     handleIcon,
     withHandle,
     resetOnDoubleClick,
+    getHandleProps,
     splitterRef,
     children,
     className,
@@ -165,6 +170,7 @@ export const Splitter = factory<SplitterFactory>((_props) => {
   } = props;
 
   const { dir } = useDirection();
+  const idBase = useId();
 
   const paneChildren = Children.toArray(children) as React.ReactElement<SplitterPaneProps>[];
 
@@ -217,12 +223,25 @@ export const Splitter = factory<SplitterFactory>((_props) => {
 
   const items: React.ReactNode[] = [];
 
+  const getPaneId = (index: number) => paneChildren[index].props.id ?? `${idBase}-pane-${index}`;
+
   paneChildren.forEach((child, index) => {
     if (index > 0) {
       const handleProps = splitter.getHandleProps({ index: index - 1 });
       const isActive = splitter.activeHandle === index - 1;
+      const {
+        className: handleClassName,
+        style: handleStyle,
+        ...userHandleProps
+      } = getHandleProps?.(index - 1) || {};
       items.push(
-        <Box {...getStyles('handle')} key={`handle-${index - 1}`} {...handleProps}>
+        <Box
+          {...getStyles('handle', { className: handleClassName, style: handleStyle })}
+          key={`handle-${index - 1}`}
+          aria-controls={getPaneId(index - 1)}
+          {...userHandleProps}
+          {...handleProps}
+        >
           {withHandle && (
             <div
               {...getStyles('thumb')}
@@ -239,6 +258,7 @@ export const Splitter = factory<SplitterFactory>((_props) => {
     items.push(
       cloneElement(child, {
         key: `pane-${index}`,
+        id: getPaneId(index),
         __index: index,
       })
     );

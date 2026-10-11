@@ -4,10 +4,19 @@ import { toDateString, toDateTimeString } from '../../utils';
 export type HiddenDatesInputValue = DatesRangeValue | DateValue | DateValue[];
 
 export interface HiddenDatesInputProps {
+  /** Value to serialize, single date, array of dates or dates range */
   value: HiddenDatesInputValue;
+
+  /** Picker type, determines how `value` is serialized */
   type: DatePickerType;
+
+  /** Hidden input `name` attribute */
   name: string | undefined;
+
+  /** Hidden input `form` attribute */
   form: string | undefined;
+
+  /** If set, dates are serialized in `YYYY-MM-DD HH:mm:ss` format instead of `YYYY-MM-DD` @default false */
   withTime?: boolean;
 }
 
@@ -36,7 +45,10 @@ function formatValue({ value, type, withTime }: FormatValueInput) {
   }
 
   if (type === 'multiple' && Array.isArray(value)) {
-    return value.filter(Boolean).join(', ');
+    return value
+      .map((date) => formatter(date))
+      .filter(Boolean)
+      .join(', ');
   }
 
   if (!Array.isArray(value) && value) {

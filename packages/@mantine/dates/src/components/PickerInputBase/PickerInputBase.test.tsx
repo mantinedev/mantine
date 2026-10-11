@@ -127,6 +127,83 @@ describe('@mantine/dates/PickerInputBase', () => {
     expect(spy).toHaveBeenCalled();
   });
 
+  it('does not render clear button when input is disabled or read only', () => {
+    const { rerender } = render(
+      <PickerInputBase
+        {...defaultProps}
+        clearable
+        shouldClear
+        disabled
+        clearButtonProps={{ 'aria-label': 'test-clear' }}
+      />
+    );
+    expect(screen.queryByLabelText('test-clear')).not.toBeInTheDocument();
+
+    rerender(
+      <PickerInputBase
+        {...defaultProps}
+        clearable
+        shouldClear
+        readOnly
+        clearButtonProps={{ 'aria-label': 'test-clear' }}
+      />
+    );
+    expect(screen.queryByLabelText('test-clear')).not.toBeInTheDocument();
+  });
+
+  it('sets data-read-only and does not render dropdown when read only', () => {
+    const { container, rerender } = render(
+      <PickerInputBase {...defaultProps} dropdownOpened readOnly />
+    );
+    expect(screen.getByText('test-value')).toHaveAttribute('data-read-only');
+    expect(container.querySelector('.mantine-Popover-dropdown')).not.toBeInTheDocument();
+
+    rerender(<PickerInputBase {...defaultProps} dropdownOpened dropdownType="modal" readOnly />);
+    expect(container.querySelector('.mantine-Modal-content')).not.toBeInTheDocument();
+  });
+
+  it('does not open dropdown when picker input is disabled or read only', async () => {
+    const { rerender } = render(
+      <DatePickerInput disabled popoverProps={{ withinPortal: false }} />
+    );
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    rerender(<DatePickerInput readOnly popoverProps={{ withinPortal: false }} />);
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.getByRole('button')).toHaveAttribute('data-read-only');
+  });
+
+  it('does not reference popover dropdown from the trigger in modal mode', () => {
+    const { rerender } = render(<PickerInputBase {...defaultProps} dropdownType="modal" />);
+    const trigger = screen.getByText('test-value');
+    expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+
+    rerender(<PickerInputBase {...defaultProps} dropdownType="modal" dropdownOpened />);
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    const controlled = document.getElementById(trigger.getAttribute('aria-controls')!);
+    expect(controlled).toHaveTextContent('test-children');
+    expect(controlled!.closest('[data-dates-modal]')).not.toBeNull();
+  });
+
+  it('labels popover dropdown with the trigger and marks it as modal', () => {
+    render(<PickerInputBase {...defaultProps} dropdownOpened label="Pick date" />);
+    const dialog = screen.getByRole('dialog');
+    const trigger = screen.getByRole('button', { name: 'Pick date' });
+    expect(dialog).toHaveAttribute('aria-labelledby', trigger.id);
+    expect(dialog).toHaveAttribute('aria-modal', 'true');
+    expect(screen.getByRole('dialog', { name: 'Pick date' })).toBe(dialog);
+  });
+
+  it('references popover dropdown from the trigger in popover mode', () => {
+    const { container } = render(<PickerInputBase {...defaultProps} dropdownOpened />);
+    const trigger = screen.getByText('test-value');
+    const dropdown = container.querySelector('.mantine-Popover-dropdown')!;
+    expect(trigger).toHaveAttribute('aria-controls', dropdown.id);
+  });
+
   it.each([
     ['DatePickerInput', DatePickerInput],
     ['MonthPickerInput', MonthPickerInput],

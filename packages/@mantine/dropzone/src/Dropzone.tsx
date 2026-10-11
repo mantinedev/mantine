@@ -23,7 +23,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { assignRef } from '@mantine/hooks';
+import { assignRef, useMergedRef } from '@mantine/hooks';
 import { DropzoneProvider } from './Dropzone.context';
 import type {
   DropzoneFullScreenFactory,
@@ -110,7 +110,7 @@ export interface DropzoneProps
   /** Determines whether a loading overlay should be displayed over the dropzone @default false @category behavior */
   loading?: boolean;
 
-  /** Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types. @category behavior */
+  /** Mime types of the files that dropzone can accept. By default, dropzone accepts all file types. @category behavior */
   accept?: Accept | string[];
 
   /** A ref function which when called opens the file system file picker */
@@ -276,6 +276,8 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
     inputProps,
     mod,
     attributes,
+    ref,
+    role,
     ...others
   } = props;
 
@@ -293,7 +295,7 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
     varsResolver,
   });
 
-  const { getRootProps, getInputProps, isDragAccept, isDragReject, isDragActive, open } =
+  const { getRootProps, getInputProps, isDragAccept, isDragReject, isDragActive, open, rootRef } =
     useDropzone({
       onDrop: onDropAny as DropzoneOptions['onDrop'],
       onDropAccepted: onDrop as DropzoneOptions['onDropAccepted'],
@@ -320,6 +322,8 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
     });
 
   assignRef(openRef, open);
+  const mergedRef = useMergedRef(ref, rootRef);
+  const rootRole = role ?? (activateOnKeyboard && activateOnClick ? 'button' : undefined);
 
   const isAccepted = isDragActive && isDragAccept;
   const isRejected = isDragActive && isDragReject;
@@ -328,9 +332,13 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
   return (
     <DropzoneProvider value={{ accept: isAccepted, reject: isRejected, idle: isIdle }}>
       <Box
-        {...getRootProps()}
+        {...getRootProps({
+          ...others,
+          role: rootRole,
+          ref: mergedRef,
+        })}
         {...getStyles('root', { focusable: true })}
-        {...others}
+        aria-busy={loading || undefined}
         mod={[
           {
             accept: isAccepted,
@@ -349,7 +357,13 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
           unstyled={unstyled}
           loaderProps={loaderProps}
         />
-        <input {...getInputProps(inputProps)} name={name} />
+        <input
+          {...getInputProps({
+            'aria-hidden': rootRole === 'button' || undefined,
+            ...inputProps,
+          })}
+          name={name}
+        />
         <div {...getStyles('inner')} data-enable-pointer-events={enablePointerEvents || undefined}>
           {children}
         </div>

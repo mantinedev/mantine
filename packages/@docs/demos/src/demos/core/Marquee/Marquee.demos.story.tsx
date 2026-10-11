@@ -32,3 +32,8 @@ export const Demo_fadeEdges = {
   name: '⭐ Demo: fadeEdges',
   render: renderDemo(demos.fadeEdges),
 };
+
+export const Demo_playing = {
+  name: '⭐ Demo: playing',
+  render: renderDemo(demos.playing),
+};

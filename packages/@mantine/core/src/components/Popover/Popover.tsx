@@ -299,7 +299,6 @@ export function Popover(_props: PopoverProps) {
     onChange,
     onOpen,
     onClose,
-    onDismiss,
     strategy: floatingStrategy,
     disabled,
     preventPositionChangeWhenVisible,
@@ -308,7 +307,7 @@ export function Popover(_props: PopoverProps) {
 
   useClickOutside(
     () => {
-      if (closeOnClickOutside) {
+      if (closeOnClickOutside && popover.opened) {
         popover.onClose();
         onDismiss?.();
       }

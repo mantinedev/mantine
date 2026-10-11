@@ -52,7 +52,7 @@ export interface RingProgressProps
    */
   sections: RingProgressSection[];
 
-  /** Color of the unfilled portion of the ring (background). Defaults to gray-2 in light mode, dark-4 in dark mode */
+  /** Color of the unfilled portion of the ring (background) @default var(--mantine-color-track) */
   rootColor?: MantineColor;
 
   /** Transition duration in milliseconds for section value and color changes @default 0 */
@@ -63,6 +63,9 @@ export interface RingProgressProps
 
   /** Starting angle in degrees. 0 = right, 90 = bottom, 180 = left, 270 = top @default 270 */
   startAngle?: number;
+
+  /** Determines whether `role="progressbar"` and `aria-*` value attributes should be added to section curves @default true */
+  withAria?: boolean;
 }
 
 export type RingProgressFactory = Factory<{
@@ -76,13 +79,14 @@ const defaultProps = {
   size: 120,
   thickness: 12,
   startAngle: 270,
+  withAria: true,
 } satisfies Partial<RingProgressProps>;
 
 const varsResolver = createVarsResolver<RingProgressFactory>(
   (_, { size, thickness, transitionDuration, startAngle }) => ({
     root: {
       '--rp-size': rem(size),
-      '--rp-label-offset': rem(thickness! * 2),
+      '--rp-label-offset': rem(getClampedThickness(thickness!, size!) * 2),
       '--rp-transition-duration': transitionDuration ? `${transitionDuration}ms` : undefined,
     },
     svg: {
@@ -109,6 +113,7 @@ export const RingProgress = factory<RingProgressFactory>((_props) => {
     transitionDuration,
     sectionGap,
     startAngle,
+    withAria,
     attributes,
     ...others
   } = props;
@@ -129,10 +134,24 @@ export const RingProgress = factory<RingProgressFactory>((_props) => {
 
   const clampedThickness = getClampedThickness(thickness, size);
 
+  const sectionsWithAria = withAria
+    ? sections.map((section) => {
+        const ariaValue = Math.min(Math.max(section.value, 0), 100);
+        return {
+          role: 'progressbar',
+          'aria-valuemin': 0,
+          'aria-valuemax': 100,
+          'aria-valuenow': ariaValue,
+          'aria-valuetext': `${ariaValue}%`,
+          ...section,
+        };
+      })
+    : sections;
+
   const curves = getCurves({
     size,
     thickness: clampedThickness,
-    sections,
+    sections: sectionsWithAria,
     renderRoundedLineCaps: roundCaps,
     rootColor,
     sectionGap,

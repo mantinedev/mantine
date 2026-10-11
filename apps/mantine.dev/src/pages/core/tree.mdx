@@ -92,6 +92,9 @@ export interface RenderTreeNodePayload {
   /** `true` if the node is selected */
   selected: boolean;
 
+  /** `true` if the node is at the top-most level of the tree (level 1) */
+  isRoot: boolean;
+
   /** `true` if the node's children are currently being loaded */
   isLoading: boolean;
 
@@ -111,6 +114,12 @@ export interface RenderTreeNodePayload {
     onClick: (event: React.MouseEvent) => void;
     'data-selected': boolean | undefined;
     'data-value': string;
+    draggable?: boolean;
+    onDragStart?: (event: React.DragEvent) => void;
+    onDragOver?: (event: React.DragEvent) => void;
+    onDragLeave?: (event: React.DragEvent) => void;
+    onDrop?: (event: React.DragEvent) => void;
+    onDragEnd?: (event: React.DragEvent) => void;
   };
 
   /** Props to spread into the drag handle element when `withDragHandle` is set on `Tree`,
@@ -199,6 +208,18 @@ export interface UseTreeReturnType {
    */
   anchorNode: string | null;
 
+  /** Returns a record of `node.value` and boolean values that represent nodes expanded state */
+  getExpandedState: () => TreeExpandedState;
+
+  /** Returns an array of selected nodes values */
+  getSelectedState: () => string[];
+
+  /** Returns an array of checked nodes values */
+  getCheckedState: () => string[];
+
+  /** Returns the value of the node that was last clicked, `null` if there is none */
+  getAnchorNode: () => string | null;
+
   /** Initializes tree state based on provided data, called automatically by the Tree component */
   initialize: (data: TreeNodeData[]) => void;
 
@@ -218,9 +239,7 @@ export interface UseTreeReturnType {
   collapseAllNodes: () => void;
 
   /** Sets expanded state */
-  setExpandedState: React.Dispatch<
-    React.SetStateAction<TreeExpandedState>
-  >;
+  setExpandedState: (value: TreeExpandedState) => void;
 
   /** Toggles selected state of the node with provided value */
   toggleSelected: (value: string) => void;
@@ -235,7 +254,7 @@ export interface UseTreeReturnType {
   clearSelected: () => void;
 
   /** Sets selected state */
-  setSelectedState: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedState: (value: string[]) => void;
 
   /** Checks node with provided value */
   checkNode: (value: string) => void;
@@ -250,7 +269,7 @@ export interface UseTreeReturnType {
   uncheckAllNodes: () => void;
 
   /** Sets checked state */
-  setCheckedState: React.Dispatch<React.SetStateAction<string[]>>;
+  setCheckedState: (value: string[]) => void;
 
   /** Returns all checked nodes with status */
   getCheckedNodes: () => CheckedNodeStatus[];

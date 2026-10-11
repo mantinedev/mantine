@@ -1,9 +1,10 @@
-import { cloneElement } from 'react';
+import { cloneElement, useEffect } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { factory, Factory, getRefProp, getSingleElementChild, useProps } from '../../core';
 import { useComboboxContext } from '../Combobox/Combobox.context';
 import { useComboboxTargetProps } from '../Combobox/use-combobox-target-props/use-combobox-target-props';
 import { Popover } from '../Popover';
+import { useComboboxPopoverContext } from './ComboboxPopover.context';
 
 export interface ComboboxPopoverTargetProps {
   children: React.ReactNode;
@@ -37,6 +38,12 @@ export const ComboboxPopoverTarget = factory<ComboboxPopoverTargetFactory>((prop
   }
 
   const ctx = useComboboxContext();
+  const popoverCtx = useComboboxPopoverContext();
+  const targetId: string | undefined = (child.props as any).id ?? popoverCtx?.generatedTargetId;
+
+  useEffect(() => {
+    targetId && popoverCtx?.setTargetId(targetId);
+  }, [targetId]);
   const targetRef = useMergedRef(ref, ctx.store.targetRef, getRefProp(child));
 
   const targetProps = useComboboxTargetProps({
@@ -55,6 +62,7 @@ export const ComboboxPopoverTarget = factory<ComboboxPopoverTargetFactory>((prop
   const clonedElement = cloneElement(child, {
     ...targetProps,
     ...others,
+    id: targetId,
     [refProp!]: targetRef,
   } as any);
 

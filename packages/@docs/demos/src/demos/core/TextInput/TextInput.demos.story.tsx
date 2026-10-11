@@ -8,11 +8,6 @@ export const Demo_usage = {
   render: renderDemo(demos.usage),
 };
 
-export const Demo_type = {
-  name: '⭐ Demo: type',
-  render: renderDemo(demos.type),
-};
-
 export const Demo_sections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),

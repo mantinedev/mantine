@@ -27,6 +27,7 @@ export function TimeGridControl({
   return (
     <UnstyledButton
       mod={[{ active }]}
+      aria-pressed={active}
       {...ctx.getStyles('control', { className: cx(theme.activeClassName, className) })}
       {...others}
     >

@@ -525,7 +525,6 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
         onChange={controller.setDay}
         min={1}
         max={dayMax}
-        focusable={fieldsOrder![0] === 'day'}
         step={1}
         ref={_dayRef}
         aria-label={dayInputLabel}
@@ -556,7 +555,6 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
         onChange={controller.setMonth}
         min={1}
         max={12}
-        focusable={fieldsOrder![0] === 'month'}
         step={1}
         ref={_monthRef}
         aria-label={monthInputLabel}
@@ -587,7 +585,6 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
         onChange={controller.setYear}
         min={1}
         max={9999}
-        focusable={fieldsOrder![0] === 'year'}
         step={1}
         ref={_yearRef}
         aria-label={yearInputLabel}
@@ -698,7 +695,6 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
                       min={format === '12h' ? 1 : 0}
                       max={format === '12h' ? 12 : 23}
                       allowTemporaryZero={format === '12h'}
-                      focusable={false}
                       step={hoursStep}
                       ref={_hoursRef}
                       aria-label={hoursInputLabel}
@@ -725,7 +721,6 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
                       onChange={controller.setMinutes}
                       min={0}
                       max={59}
-                      focusable={false}
                       step={minutesStep}
                       ref={_minutesRef}
                       aria-label={minutesInputLabel}
@@ -755,7 +750,6 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
                           onChange={controller.setSeconds}
                           min={0}
                           max={59}
-                          focusable={false}
                           step={secondsStep}
                           ref={_secondsRef}
                           aria-label={secondsInputLabel}

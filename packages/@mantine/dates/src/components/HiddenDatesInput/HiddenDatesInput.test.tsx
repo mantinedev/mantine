@@ -62,4 +62,70 @@ describe('@mantine/dates/HiddenDatesInput', () => {
     );
     expect(container.querySelector('input')).toHaveValue('');
   });
+
+  it('formats Date values', () => {
+    const { container, rerender } = render(
+      <HiddenDatesInput name="n" form="f" type="default" value={new Date(2022, 3, 11, 14, 30)} />
+    );
+    expect(container.querySelector('input')).toHaveValue('2022-04-11');
+
+    rerender(
+      <HiddenDatesInput
+        name="n"
+        form="f"
+        type="multiple"
+        value={[new Date(2022, 3, 11), new Date(2022, 4, 11)]}
+      />
+    );
+    expect(container.querySelector('input')).toHaveValue('2022-04-11, 2022-05-11');
+
+    rerender(
+      <HiddenDatesInput
+        name="n"
+        form="f"
+        type="range"
+        value={[new Date(2022, 3, 11), new Date(2022, 4, 11)]}
+      />
+    );
+    expect(container.querySelector('input')).toHaveValue('2022-04-11 – 2022-05-11');
+  });
+
+  it('includes time when withTime is set', () => {
+    const { container, rerender } = render(
+      <HiddenDatesInput
+        name="n"
+        form="f"
+        type="default"
+        value={new Date(2022, 3, 11, 14, 30)}
+        withTime
+      />
+    );
+    expect(container.querySelector('input')).toHaveValue('2022-04-11 14:30:00');
+
+    rerender(
+      <HiddenDatesInput
+        name="n"
+        form="f"
+        type="multiple"
+        value={['2022-04-11 10:00:00', null, '2022-05-11 12:15:00']}
+        withTime
+      />
+    );
+    expect(container.querySelector('input')).toHaveValue(
+      '2022-04-11 10:00:00, 2022-05-11 12:15:00'
+    );
+
+    rerender(
+      <HiddenDatesInput
+        name="n"
+        form="f"
+        type="range"
+        value={['2022-04-11 10:00:00', '2022-05-11 12:15:00']}
+        withTime
+      />
+    );
+    expect(container.querySelector('input')).toHaveValue(
+      '2022-04-11 10:00:00 – 2022-05-11 12:15:00'
+    );
+  });
 });

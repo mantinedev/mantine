@@ -35,6 +35,7 @@ export const AlphaSlider = factory<AlphaSliderFactory>((props: AlphaSliderProps)
       onChangeEnd={(val) => onChangeEnd?.(round(val, 2))}
       maxValue={1}
       round={false}
+      getValueText={(val) => `${Math.round(val * 100)}%`}
       data-alpha
       overlays={[
         {

@@ -1,4 +1,3 @@
-import { DatePickerType } from '../../types';
 import type {
   InlineDateTimePickerFactory,
   InlineDateTimePickerProps,
@@ -33,7 +32,7 @@ export type {
 };
 
 export namespace InlineDateTimePicker {
-  export type Props<Type extends DatePickerType> = InlineDateTimePickerProps<Type>;
+  export type Props<Type extends 'default' | 'range'> = InlineDateTimePickerProps<Type>;
   export type StylesNames = InlineDateTimePickerStylesNames;
   export type Factory = InlineDateTimePickerFactory;
   export type Controller = InlineDateTimePickerController;

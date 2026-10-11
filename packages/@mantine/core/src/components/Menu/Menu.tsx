@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useIsomorphicEffect, useUncontrolled } from '@mantine/hooks';
 import {
   factory,
   Factory,
@@ -239,9 +239,37 @@ export const Menu = factory<MenuFactory>((_props) => {
     };
   }, []);
 
-  const searchExitClearRef = useRef<(() => void) | null>(null);
+  const searchExitClearRef = useRef<Map<() => void, boolean>>(new Map());
+  const openedRef = useRef(_opened);
+  useIsomorphicEffect(() => {
+    openedRef.current = _opened;
+  }, [_opened]);
+
+  const registerSearchExitClear = useCallback((clear: () => void) => {
+    const callbacks = searchExitClearRef.current;
+    callbacks.forEach((mounted, callback) => {
+      if (!mounted) {
+        callbacks.delete(callback);
+      }
+    });
+    callbacks.set(clear, true);
+
+    return () => {
+      if (openedRef.current) {
+        callbacks.delete(clear);
+      } else {
+        callbacks.set(clear, false);
+      }
+    };
+  }, []);
+
   const handleExitTransitionEnd = () => {
-    searchExitClearRef.current?.();
+    searchExitClearRef.current.forEach((mounted, clear) => {
+      clear();
+      if (!mounted) {
+        searchExitClearRef.current.delete(clear);
+      }
+    });
     onExitTransitionEnd?.();
   };
 
@@ -275,7 +303,7 @@ export const Menu = factory<MenuFactory>((_props) => {
         registerOpenSub,
         hasSearch,
         registerSearch,
-        searchExitClearRef,
+        registerSearchExitClear,
         alignItemsLabels: alignItemsLabels!,
         checkIcon,
         variant,

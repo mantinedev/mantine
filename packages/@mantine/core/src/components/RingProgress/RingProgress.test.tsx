@@ -9,6 +9,17 @@ const defaultProps: RingProgressProps = {
 };
 
 describe('@mantine/core/RingProgress', () => {
+  tests.axe([
+    <RingProgress
+      key="1"
+      label="test"
+      sections={[
+        { value: 40, color: 'blue', 'aria-label': 'Documents' },
+        { value: 20, color: 'red', 'aria-label': 'Photos' },
+      ]}
+    />,
+  ]);
+
   tests.itSupportsSystemProps<RingProgressProps, RingProgressStylesNames>({
     component: RingProgress,
     props: defaultProps,
@@ -66,5 +77,46 @@ describe('@mantine/core/RingProgress', () => {
       />
     );
     expect(screen.getByTestId('test-label')).toBeInTheDocument();
+  });
+
+  it('exposes section values with progressbar role', () => {
+    render(
+      <RingProgress
+        sections={[
+          { value: 40, color: 'blue', 'aria-label': 'Documents' },
+          { value: 120, color: 'red', 'aria-label': 'Photos' },
+        ]}
+      />
+    );
+
+    const documents = screen.getByRole('progressbar', { name: 'Documents' });
+    expect(documents).toHaveAttribute('aria-valuenow', '40');
+    expect(documents).toHaveAttribute('aria-valuemin', '0');
+    expect(documents).toHaveAttribute('aria-valuemax', '100');
+    expect(documents).toHaveAttribute('aria-valuetext', '40%');
+    expect(screen.getByRole('progressbar', { name: 'Photos' })).toHaveAttribute(
+      'aria-valuenow',
+      '100'
+    );
+  });
+
+  it('allows overriding section aria attributes', () => {
+    render(
+      <RingProgress
+        sections={[{ value: 40, color: 'blue', 'aria-label': 'Storage', 'aria-valuetext': '4 GB' }]}
+      />
+    );
+    expect(screen.getByRole('progressbar', { name: 'Storage' })).toHaveAttribute(
+      'aria-valuetext',
+      '4 GB'
+    );
+  });
+
+  it('does not add progressbar role when withAria is false', () => {
+    const { container } = render(
+      <RingProgress withAria={false} sections={[{ value: 40, color: 'blue' }]} />
+    );
+    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+    expect(container.querySelector('[aria-valuenow]')).toBeNull();
   });
 });

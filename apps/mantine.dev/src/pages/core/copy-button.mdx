@@ -9,7 +9,7 @@ export default Layout(MDX_DATA.CopyButton);
 `CopyButton` is based on the [use-clipboard](/hooks/use-clipboard/) hook.
 Its children is a function that receives an object with the following properties:
 
-- `copied` – boolean value that indicates that a given value was recently copied to the clipboard, it resets after a given timeout (defaults to 500ms)
+- `copied` – boolean value that indicates that a given value was recently copied to the clipboard, it resets after a given timeout (defaults to 1000ms)
 - `copy` – function that should be called to copy the given value to the clipboard
 
 <Demo data={CopyButtonDemos.usage} />

@@ -67,7 +67,7 @@ export interface TimeGridProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius @category appearance */
   radius?: MantineRadius;
 
-  /** Control `font-size` of controls, key of `theme.fontSizes` or any valid CSS value @default 'sm' @category appearance */
+  /** Control `font-size` of controls, key of `theme.fontSizes` @default 'sm' @category appearance */
   size?: MantineSize;
 
   /** All controls before this time are disabled @category behavior */

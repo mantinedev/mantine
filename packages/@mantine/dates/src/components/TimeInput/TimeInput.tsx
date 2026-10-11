@@ -37,6 +37,12 @@ export type TimeInputFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
+function setNativeInputValue(input: HTMLInputElement, value: string) {
+  const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set;
+  setter?.call(input, value);
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
 export const TimeInput = factory<TimeInputFactory>((_props) => {
   const props = useProps(['Input', 'InputWrapper', 'TimeInput'], null, _props);
   const {
@@ -99,27 +105,22 @@ export const TimeInput = factory<TimeInputFactory>((_props) => {
 
   const onTimeBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     props.onBlur?.(event);
-    if (minTime !== undefined || maxTime !== undefined) {
-      const val = event.currentTarget.value;
+    const input = event.currentTarget;
+    const val = input.value;
 
-      if (val) {
-        const check = checkIfTimeLimitExceeded(val);
-        if (check === 1) {
-          if (maxTime) {
-            event.currentTarget.value = maxTime;
-          }
+    if (!val || (minTime === undefined && maxTime === undefined)) {
+      return;
+    }
 
-          props.onChange?.(event);
-        } else if (check === -1) {
-          if (minTime) {
-            event.currentTarget.value = minTime;
-          }
+    const check = checkIfTimeLimitExceeded(val);
+    const clamped = check === 1 ? maxTime : check === -1 ? minTime : undefined;
 
-          props.onChange?.(event);
-        }
-      }
+    if (clamped && clamped !== val) {
+      setNativeInputValue(input, clamped);
     }
   };
+
+  const withNativeRange = !(minTime && maxTime && minTime > maxTime);
 
   const formField = useFormField<string>(onChange);
   const _value = formField.subscribed ? (formField.value ?? '') : value;
@@ -138,6 +139,8 @@ export const TimeInput = factory<TimeInputFactory>((_props) => {
       unstyled={unstyled}
       value={_value}
       step={step ?? (withSeconds ? 1 : 60)}
+      min={withNativeRange ? minTime : undefined}
+      max={withNativeRange ? maxTime : undefined}
       data-empty={isEmpty || undefined}
       {...others}
       onChange={handleChange}

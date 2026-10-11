@@ -19,7 +19,7 @@ import { TimeGrid } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<string | null>('10:00');
-  return <TimeGrid value={value} onChange={setValue} data={['10:00', '12: 00']} />;
+  return <TimeGrid value={value} onChange={setValue} data={['10:00', '12:00']} />;
 }
 ```
 
@@ -38,8 +38,8 @@ function WithArray() {
 
 function WithRange() {
   // In this example we generate time range from 10:00 to 14:00 with 1 hour step:
-  // ['10:00', '11:00', '12:00', '13:00', '14:00']
-  return <TimeGrid data={getTimeRange({ from: '10:00', to: '14:00', step: '01:00' })} />
+  // ['10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00']
+  return <TimeGrid data={getTimeRange({ startTime: '10:00', endTime: '14:00', interval: '01:00' })} />
 }
 ```
 

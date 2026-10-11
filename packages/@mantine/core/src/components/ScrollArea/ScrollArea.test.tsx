@@ -514,4 +514,28 @@ describe('@mantine/core/ScrollAreaAutosize', () => {
 
     expect(getViewport(container)).toHaveAttribute('data-scroll-fade', 'y');
   });
+
+  it('hides scrollbars and corner with type="never" while boundary callbacks still fire', () => {
+    const onBottomReached = jest.fn();
+    const { container } = render(
+      <ScrollArea h={100} type="never" onBottomReached={onBottomReached}>
+        <div style={{ height: 500, width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const scrollbars = container.querySelectorAll('.mantine-ScrollArea-scrollbar');
+    expect(scrollbars).toHaveLength(2);
+    scrollbars.forEach((scrollbar) => expect(scrollbar).toHaveAttribute('data-hidden'));
+    container
+      .querySelectorAll('.mantine-ScrollArea-corner')
+      .forEach((corner) => expect(corner).toHaveAttribute('data-hidden'));
+
+    const viewport = getViewport(container);
+    Object.defineProperty(viewport, 'scrollHeight', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollTop', { value: 400, configurable: true });
+    fireEvent.scroll(viewport);
+
+    expect(onBottomReached).toHaveBeenCalledTimes(1);
+  });
 });

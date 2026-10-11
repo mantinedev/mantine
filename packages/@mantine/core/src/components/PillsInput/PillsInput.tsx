@@ -40,6 +40,7 @@ export const PillsInput = factory<PillsInputFactory>((_props) => {
     onClick,
     size,
     disabled,
+    required,
     __staticSelector,
     error,
     variant,
@@ -49,7 +50,7 @@ export const PillsInput = factory<PillsInputFactory>((_props) => {
   const fieldRef = useRef<HTMLInputElement>(null);
 
   return (
-    <PillsInputContext value={{ fieldRef, size, disabled, hasError: !!error, variant }}>
+    <PillsInputContext value={{ fieldRef, size, disabled, required, hasError: !!error, variant }}>
       <InputBase
         size={size}
         error={error}
@@ -73,6 +74,7 @@ export const PillsInput = factory<PillsInputFactory>((_props) => {
         {...others}
         multiline
         disabled={disabled}
+        required={required}
         __staticSelector={__staticSelector || 'PillsInput'}
         withAria={false}
       >

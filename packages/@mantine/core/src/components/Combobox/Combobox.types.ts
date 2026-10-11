@@ -76,10 +76,10 @@ export interface ComboboxLikeProps<Value extends Primitive = string> {
   /** Called when dropdown closes */
   onDropdownClose?: () => void;
 
-  /** If set, the first option is selected when value changes, `false` by default */
+  /** If set, the first option is selected when value changes @default false */
   selectFirstOptionOnChange?: boolean;
 
-  /** If set, the first option is selected when dropdown opens, `false` by default */
+  /** If set, the first option is selected when dropdown opens @default false */
   selectFirstOptionOnDropdownOpen?: boolean;
 
   /** Called when option is submitted from dropdown with mouse click or `Enter` key */
@@ -91,7 +91,7 @@ export interface ComboboxLikeProps<Value extends Primitive = string> {
   /** Function based on which items are filtered and sorted */
   filter?: OptionsFilter<Value>;
 
-  /** Maximum number of options displayed at a time, `Infinity` by default */
+  /** Maximum number of options displayed at a time @default Infinity */
   limit?: number;
 
   /** Determines whether the options should be wrapped with `ScrollArea.AutoSize`, `true` by default */

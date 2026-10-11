@@ -50,6 +50,7 @@ export function CalendarTestProvider({ overrides = {}, children }: CalendarTestP
       onDayKeyDown: noop,
       getWeekControlRef: noop,
       onWeekControlKeyDown: noop,
+      preserveDayFocusOnShift: noop,
       ...navigation,
     },
     weekControls: { enabled: false },

@@ -1,4 +1,5 @@
-import { createContext, use } from 'react';
+import { createContext, use, useEffect, useRef, useState } from 'react';
+import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
   createVarsResolver,
@@ -32,7 +33,7 @@ export interface RadioCardProps
   /** Checked state */
   checked?: boolean;
 
-  /** Adds border to the root element */
+  /** Adds border to the root element @default true */
   withBorder?: boolean;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
@@ -43,6 +44,9 @@ export interface RadioCardProps
 
   /** Value used to associate all related radio cards, required for accessibility if used outside of `Radio.Group` */
   name?: string;
+
+  /** Sets `disabled` attribute, prevents interactions. Inherited from `Radio.Group` when not set */
+  disabled?: boolean;
 }
 
 export type RadioCardFactory = Factory<{
@@ -79,6 +83,8 @@ export const RadioCard = factory<RadioCardFactory>((_props) => {
     name,
     onKeyDown,
     attributes,
+    disabled,
+    ref,
     ...others
   } = props;
 
@@ -99,8 +105,48 @@ export const RadioCard = factory<RadioCardFactory>((_props) => {
 
   const { dir } = useDirection();
   const ctx = use(RadioGroupContext);
+  const cardRef = useRef<HTMLButtonElement>(null);
+  const mergedRef = useMergedRef(ref, cardRef);
   const _checked = typeof checked === 'boolean' ? checked : ctx?.value === value || false;
   const _name = name || ctx?.name;
+  const _disabled = disabled ?? ctx?.disabled ?? false;
+  const [isFallbackTabStop, setIsFallbackTabStop] = useState(false);
+
+  const getEnabledSiblings = () =>
+    Array.from(
+      document.querySelectorAll<HTMLButtonElement>(`[role="radio"][name="${_name}"]`)
+    ).filter((element) => !element.disabled);
+
+  useEffect(() => {
+    if (!_name || !cardRef.current) {
+      return;
+    }
+
+    const siblings = getEnabledSiblings();
+    const hasCheckedSibling = siblings.some(
+      (element) => element.getAttribute('aria-checked') === 'true'
+    );
+    setIsFallbackTabStop(!hasCheckedSibling && siblings[0] === cardRef.current);
+  });
+
+  const getTabIndex = () => {
+    if (!_name) {
+      return undefined;
+    }
+
+    if (_disabled) {
+      return -1;
+    }
+
+    return _checked || isFallbackTabStop ? 0 : -1;
+  };
+
+  const selectSibling = (element: HTMLButtonElement | undefined) => {
+    if (element) {
+      element.focus();
+      element.click();
+    }
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
@@ -109,35 +155,38 @@ export const RadioCard = factory<RadioCardFactory>((_props) => {
       return;
     }
 
-    if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.nativeEvent.code)) {
+    const code = event.nativeEvent.code;
+
+    if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(code)) {
       event.preventDefault();
 
-      const siblings = Array.from(
-        document.querySelectorAll<HTMLButtonElement>(`[role="radio"][name="${_name}"]`)
-      );
-
+      const siblings = getEnabledSiblings();
       const currentIndex = siblings.findIndex((element) => element === event.target);
       const nextIndex = currentIndex + 1 >= siblings.length ? 0 : currentIndex + 1;
       const prevIndex = currentIndex - 1 < 0 ? siblings.length - 1 : currentIndex - 1;
 
-      if (event.nativeEvent.code === 'ArrowDown') {
-        siblings[nextIndex].focus();
-        siblings[nextIndex].click();
+      if (code === 'ArrowDown') {
+        selectSibling(siblings[nextIndex]);
       }
 
-      if (event.nativeEvent.code === 'ArrowUp') {
-        siblings[prevIndex].focus();
-        siblings[prevIndex].click();
+      if (code === 'ArrowUp') {
+        selectSibling(siblings[prevIndex]);
       }
 
-      if (event.nativeEvent.code === 'ArrowLeft') {
-        siblings[dir === 'ltr' ? prevIndex : nextIndex].focus();
-        siblings[dir === 'ltr' ? prevIndex : nextIndex].click();
+      if (code === 'ArrowLeft') {
+        selectSibling(siblings[dir === 'ltr' ? prevIndex : nextIndex]);
       }
 
-      if (event.nativeEvent.code === 'ArrowRight') {
-        siblings[dir === 'ltr' ? nextIndex : prevIndex].focus();
-        siblings[dir === 'ltr' ? nextIndex : prevIndex].click();
+      if (code === 'ArrowRight') {
+        selectSibling(siblings[dir === 'ltr' ? nextIndex : prevIndex]);
+      }
+
+      if (code === 'Home') {
+        selectSibling(siblings[0]);
+      }
+
+      if (code === 'End') {
+        selectSibling(siblings[siblings.length - 1]);
       }
     }
   };
@@ -146,15 +195,18 @@ export const RadioCard = factory<RadioCardFactory>((_props) => {
     <RadioCardContext value={{ checked: _checked }}>
       {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus -- UnstyledButton renders a native <button> which is focusable */}
       <UnstyledButton
-        mod={[{ 'with-border': withBorder, checked: _checked }, mod]}
+        mod={[{ 'with-border': withBorder, checked: _checked, disabled: _disabled }, mod]}
         {...getStyles('card')}
+        tabIndex={getTabIndex()}
         {...others}
+        ref={mergedRef}
         role="radio"
         aria-checked={_checked}
+        disabled={_disabled}
         name={_name}
         onClick={(event) => {
           onClick?.(event);
-          ctx?.onChange(value || '');
+          !_disabled && ctx?.onChange(value || '');
         }}
         onKeyDown={handleKeyDown}
       />

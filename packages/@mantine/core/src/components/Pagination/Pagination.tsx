@@ -67,7 +67,7 @@ export interface PaginationProps extends PaginationRootProps {
 
 export type PaginationFactory = Factory<{
   props: PaginationProps;
-  ref: HTMLDivElement;
+  ref: HTMLElement;
   stylesNames: PaginationStylesNames;
   vars: PaginationCssVariables;
   staticComponents: {

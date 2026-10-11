@@ -64,7 +64,7 @@ export interface TableData {
   head?: React.ReactNode[];
   body?: React.ReactNode[][];
   foot?: React.ReactNode[];
-  caption?: string;
+  caption?: React.ReactNode;
 }
 
 export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, ElementProps<'table'> {
@@ -89,7 +89,7 @@ export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, Elem
   /** Horizontal cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default xs @category appearance */
   horizontalSpacing?: MantineSpacing;
 
-  /** Vertical cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default xs @category appearance */
+  /** Vertical cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default 7 @category appearance */
   verticalSpacing?: MantineSpacing;
 
   /** If set, every odd/even row background changes to `stripedColor`, if set to `true`, then `odd` value will be used @default false @category appearance */

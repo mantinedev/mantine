@@ -12,7 +12,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '../../core';
-import { Combobox, ComboboxLikeStylesNames, useCombobox } from '../Combobox';
+import { Combobox, ComboboxLikeStylesNames, ComboboxProps, useCombobox } from '../Combobox';
 import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
@@ -204,7 +204,7 @@ export interface TreeSelectProps<Mode extends TreeSelectMode = 'single'>
   onDropdownClose?: () => void;
 
   /** Props passed to the underlying Combobox */
-  comboboxProps?: Record<string, any>;
+  comboboxProps?: ComboboxProps;
 
   /** Clear search on selection change @default true @category behavior */
   clearSearchOnChange?: boolean;
@@ -442,6 +442,33 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     onChange,
   });
 
+  const initialDataApplied = useRef(data.length > 0);
+
+  useEffect(() => {
+    if (initialDataApplied.current || data.length === 0) {
+      return;
+    }
+
+    initialDataApplied.current = true;
+
+    if (expandedValues === undefined && (defaultExpandAll || defaultExpandedValues)) {
+      setExpandedState(getTreeExpandedState(data, defaultExpandAll ? '*' : defaultExpandedValues!));
+    }
+
+    if (
+      mode === 'single' &&
+      typeof _value === 'string' &&
+      _value &&
+      searchValue === undefined &&
+      defaultSearchValue === undefined &&
+      _searchValue === ''
+    ) {
+      const node = findTreeNode(_value, data);
+      const label = node && typeof node.label === 'string' ? node.label : '';
+      label && setSearchValue(label);
+    }
+  }, [data]);
+
   const internalChecked = useMemo(() => {
     if (!isCheckbox || !_value || !Array.isArray(_value)) {
       return [];
@@ -532,6 +559,11 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     rest: { type, autoComplete, ...rest },
   } = extractStyleProps(others);
 
+  const isNodeDisabled = (nodeValue: string) => !!nodeLookup[nodeValue]?.nodeProps?.disabled;
+
+  const getEnabledChildrenValues = (nodeValue: string) =>
+    getChildrenNodesValues(nodeValue, data).filter((v) => !isNodeDisabled(v));
+
   const handleOptionSubmit = (val: string) => {
     if (mode === 'single') {
       if (expandOnClick) {
@@ -568,33 +600,6 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
         setSearchValue('');
       }
     } else if (mode === 'checkbox') {
-      const nodeChecked = checkStrictly
-        ? internalChecked.includes(val)
-        : isNodeChecked(val, data, internalChecked);
-
-      let newInternalChecked: string[];
-      if (checkStrictly) {
-        newInternalChecked = nodeChecked
-          ? internalChecked.filter((v) => v !== val)
-          : [...internalChecked, val];
-      } else {
-        const childLeaves = getChildrenNodesValues(val, data);
-        if (nodeChecked) {
-          newInternalChecked = internalChecked.filter((v) => !childLeaves.includes(v));
-        } else {
-          newInternalChecked = [...new Set([...internalChecked, ...childLeaves])];
-        }
-      }
-
-      const newValue = checkedToValue(newInternalChecked, data, checkedStrategy!);
-      if (!nodeChecked && newValue.length > (maxValues ?? Infinity)) {
-        return;
-      }
-      setValue(newValue);
-      if (clearSearchOnChange) {
-        setSearchValue('');
-      }
-
       if (expandOnClick) {
         const node = findTreeNode(val, data);
         if (node && Array.isArray(node.children) && node.children.length > 0) {
@@ -602,6 +607,38 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
             toggleExpand(val);
           }
         }
+      }
+
+      const nodeChecked = checkStrictly
+        ? internalChecked.includes(val)
+        : isNodeChecked(val, data, internalChecked);
+
+      let newInternalChecked: string[];
+      let unchecking = nodeChecked;
+      if (checkStrictly) {
+        newInternalChecked = nodeChecked
+          ? internalChecked.filter((v) => v !== val)
+          : [...internalChecked, val];
+      } else {
+        const childLeaves = getEnabledChildrenValues(val);
+        if (childLeaves.length === 0) {
+          return;
+        }
+        unchecking = nodeChecked || childLeaves.every((v) => internalChecked.includes(v));
+        if (unchecking) {
+          newInternalChecked = internalChecked.filter((v) => !childLeaves.includes(v));
+        } else {
+          newInternalChecked = [...new Set([...internalChecked, ...childLeaves])];
+        }
+      }
+
+      const newValue = checkedToValue(newInternalChecked, data, checkedStrategy!);
+      if (!unchecking && newValue.length > (maxValues ?? Infinity)) {
+        return;
+      }
+      setValue(newValue);
+      if (clearSearchOnChange) {
+        setSearchValue('');
       }
     }
   };
@@ -614,12 +651,15 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
       store.toggleDropdown();
     }
 
-    if (event.key === 'Backspace' && _searchValue.length === 0 && isMulti) {
+    if (event.key === 'Backspace' && !readOnly && _searchValue.length === 0 && isMulti) {
       const arr = (_value as string[]) || [];
-      if (arr.length > 0) {
-        const removed = arr[arr.length - 1];
-        onRemove?.(removed);
-        setValue(arr.slice(0, -1));
+      let removableIndex = arr.length - 1;
+      while (removableIndex >= 0 && isNodeDisabled(arr[removableIndex])) {
+        removableIndex -= 1;
+      }
+
+      if (removableIndex !== -1) {
+        removePillValue(arr[removableIndex]);
       }
     }
 
@@ -739,7 +779,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
 
   const removePillValue = (item: string) => {
     if (isCheckbox) {
-      const childLeaves = checkStrictly ? [item] : getChildrenNodesValues(item, data);
+      const childLeaves = checkStrictly ? [item] : getEnabledChildrenValues(item);
       const newInternal = internalChecked.filter((v) => !childLeaves.includes(v));
       setValue(checkedToValue(newInternal, data, checkedStrategy!));
     } else {
@@ -766,7 +806,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     return (
       <Pill
         key={`${item}-${index}`}
-        withRemoveButton={!readOnly}
+        withRemoveButton={!readOnly && !isNodeDisabled(item)}
         onRemove={() => removePillValue(item)}
         unstyled={unstyled}
         disabled={disabled}

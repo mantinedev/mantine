@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import { useDidUpdate } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
-import { CalendarLevel, DatePickerType, DatePickerValue, DateStringValue } from '../../types';
+import { CalendarLevel, DatePickerValue, DateStringValue } from '../../types';
 import { clampDate, getDefaultClampedDate, toDateString } from '../../utils';
 import {
   CalendarBaseProps,
@@ -50,7 +50,7 @@ export type DateTimePickerStylesNames =
   | PickerInputBaseStylesNames
   | CalendarStylesNames;
 
-export interface DateTimePickerProps<Type extends DatePickerType = 'default'>
+export interface DateTimePickerProps<Type extends 'default' | 'range' = 'default'>
   extends
     BoxProps,
     Omit<
@@ -108,7 +108,7 @@ export type DateTimePickerFactory = Factory<{
   ref: HTMLButtonElement;
   stylesNames: DateTimePickerStylesNames;
   variant: InputVariant;
-  signature: <Type extends DatePickerType = 'default'>(
+  signature: <Type extends 'default' | 'range' = 'default'>(
     props: DateTimePickerProps<Type> & { ref?: React.Ref<HTMLButtonElement> }
   ) => React.JSX.Element;
 }>;

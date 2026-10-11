@@ -15,29 +15,27 @@ export function defaultOptionsFilter({
 }: FilterOptionsInput): ComboboxParsedItem<Primitive>[] {
   const parsedSearch = search.trim().toLowerCase();
   const result: ComboboxParsedItem<Primitive>[] = [];
+  let optionsCount = 0;
 
   for (let i = 0; i < options.length; i += 1) {
     const item = options[i];
 
-    if (result.length === limit) {
+    if (optionsCount >= limit) {
       return result;
     }
 
     if (isOptionsGroup(item)) {
-      result.push({
-        group: item.group,
-        items: defaultOptionsFilter({
-          options: item.items,
-          search,
-          limit: limit - result.length,
-        }) as ComboboxItem[],
-      });
-    }
+      const items = defaultOptionsFilter({
+        options: item.items,
+        search,
+        limit: limit - optionsCount,
+      }) as ComboboxItem[];
 
-    if (!isOptionsGroup(item)) {
-      if (item.label.toLowerCase().includes(parsedSearch)) {
-        result.push(item);
-      }
+      optionsCount += items.length;
+      result.push({ group: item.group, items });
+    } else if (item.label.toLowerCase().includes(parsedSearch)) {
+      optionsCount += 1;
+      result.push(item);
     }
   }
 

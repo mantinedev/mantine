@@ -37,7 +37,7 @@ export interface ButtonGroupSectionProps
   /** Gradient configuration used when `variant="gradient"` @default theme.defaultGradient */
   gradient?: MantineGradient;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color for `filled` variant @default theme.autoContrast */
   autoContrast?: boolean;
 
   /** Controls section `height`, `font-size` and horizontal `padding` @default 'sm' */

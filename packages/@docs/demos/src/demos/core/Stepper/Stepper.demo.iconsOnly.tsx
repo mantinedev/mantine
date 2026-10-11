@@ -13,9 +13,9 @@ function Demo() {
 
   return (
     <Stepper active={active} onStepClick={setActive}>
-      <Stepper.Step icon={<UserCheckIcon size={18} />} />
-      <Stepper.Step icon={<EnvelopeOpenIcon size={18} />} />
-      <Stepper.Step icon={<ShieldCheckIcon size={18} />} />
+      <Stepper.Step icon={<UserCheckIcon size={18} />} aria-label="Account details" />
+      <Stepper.Step icon={<EnvelopeOpenIcon size={18} />} aria-label="Verify email" />
+      <Stepper.Step icon={<ShieldCheckIcon size={18} />} aria-label="Get full access" />
     </Stepper>
   );
 }
@@ -25,9 +25,9 @@ function Demo() {
   const [active, setActive] = useState(0);
   return (
     <Stepper active={active} onStepClick={setActive}>
-      <Stepper.Step icon={<UserCheckIcon size={18} />} />
-      <Stepper.Step icon={<EnvelopeOpenIcon size={18} />} />
-      <Stepper.Step icon={<ShieldCheckIcon size={18} />} />
+      <Stepper.Step icon={<UserCheckIcon size={18} />} aria-label="Account details" />
+      <Stepper.Step icon={<EnvelopeOpenIcon size={18} />} aria-label="Verify email" />
+      <Stepper.Step icon={<ShieldCheckIcon size={18} />} aria-label="Get full access" />
     </Stepper>
   );
 }

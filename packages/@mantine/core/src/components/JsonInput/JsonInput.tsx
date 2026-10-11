@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useRef, useState } from 'react';
+import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import { factory, Factory, useProps } from '../../core';
 import { __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
@@ -22,7 +22,7 @@ export interface JsonInputProps extends Omit<TextareaProps, 'onChange'> {
   /** Error message shown when the input value is invalid JSON (checked on blur). If not provided, a generic error state is shown. Takes precedence over the `error` prop when validation fails. @category state */
   validationError?: React.ReactNode;
 
-  /** Function to serialize value into a string for formatting. Called with (value, null, 2) where 2 is the indentation level. @default JSON.stringify @category behavior */
+  /** Function to serialize value into a string for formatting. Called with `(value, null, indentSpaces)`. @default JSON.stringify @category behavior */
   serialize?: typeof JSON.stringify;
 
   /** Function to deserialize string value for formatting and validation. Must throw an error if the string is invalid JSON. @default JSON.parse @category behavior */
@@ -69,14 +69,23 @@ export const JsonInput = factory<JsonInputFactory>((props) => {
   });
 
   const [valid, setValid] = useState(validateJson(_value, deserialize));
+  const focusedRef = useRef(false);
+
+  useDidUpdate(() => {
+    if (value !== undefined && !focusedRef.current) {
+      setValid(validateJson(value, deserialize));
+    }
+  }, [value]);
 
   const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
     onFocus?.(event);
+    focusedRef.current = true;
     setValid(true);
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
     onBlur?.(event);
+    focusedRef.current = false;
     const isValid = validateJson(event.currentTarget.value, deserialize);
     formatOnBlur &&
       !readOnly &&

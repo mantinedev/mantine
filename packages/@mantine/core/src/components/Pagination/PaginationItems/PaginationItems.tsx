@@ -16,6 +16,8 @@ export function PaginationItems({ dotsIcon }: PaginationItemsProps) {
       return <PaginationDots icon={dotsIcon} key={index} />;
     }
 
+    const itemProps = ctx.getItemProps?.(page);
+
     return (
       <PaginationControl
         key={index}
@@ -23,9 +25,9 @@ export function PaginationItems({ dotsIcon }: PaginationItemsProps) {
         aria-current={page === ctx.active ? 'page' : undefined}
         onClick={() => ctx.onChange(page)}
         disabled={ctx.disabled}
-        {...ctx.getItemProps?.(page)}
+        {...itemProps}
       >
-        {ctx.getItemProps?.(page)?.children ?? page}
+        {itemProps?.children ?? page}
       </PaginationControl>
     );
   });

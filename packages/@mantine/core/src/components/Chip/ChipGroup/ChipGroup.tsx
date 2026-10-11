@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import { Factory, genericFactory, Primitive, useProps } from '../../../core';
 
 export interface ChipGroupProps<
@@ -39,11 +39,12 @@ export const ChipGroup = genericFactory<ChipGroupFactory>((props) => {
     onChange: onChange as any,
   });
 
-  const isChipSelected = (val: string) =>
+  const name = useId();
+
+  const isChipSelected = (val: Primitive) =>
     Array.isArray(_value) ? _value.includes(val) : val === _value;
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const val = event.currentTarget.value;
+  const handleChange = (val: Primitive) => {
     if (Array.isArray(_value)) {
       setValue(_value.includes(val) ? _value.filter((v) => v !== val) : [..._value, val]);
     } else {
@@ -52,7 +53,7 @@ export const ChipGroup = genericFactory<ChipGroupFactory>((props) => {
   };
 
   return (
-    <ChipGroupContext value={{ isChipSelected, onChange: handleChange, multiple }}>
+    <ChipGroupContext value={{ isChipSelected, onChange: handleChange, multiple, name }}>
       {children}
     </ChipGroupContext>
   );
@@ -62,8 +63,9 @@ ChipGroup.displayName = '@mantine/core/ChipGroup';
 
 export interface ChipGroupContextValue<Value extends Primitive = string> {
   isChipSelected: (value: Value) => boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: Value) => void;
   multiple: boolean | undefined;
+  name: string;
 }
 
-export const ChipGroupContext = createContext<ChipGroupContextValue | null>(null);
+export const ChipGroupContext = createContext<ChipGroupContextValue<Primitive> | null>(null);

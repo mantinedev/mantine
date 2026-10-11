@@ -27,7 +27,7 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
   const Component = (props: PaginationEdgeProps) => {
     const { icon: Icon, ...others } = useProps(name, defaultProps, props);
     const ctx = usePaginationContext();
-    const disabled = type === 'next' ? ctx.active === ctx.total : ctx.active === 1;
+    const disabled = type === 'next' ? ctx.active === ctx.total : ctx.active === ctx.startValue;
 
     return (
       <PaginationControl

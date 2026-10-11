@@ -38,4 +38,24 @@ describe('@mantine/dates/WeekdaysRow', () => {
     render(<Wrapper __staticSelector="Month" />);
     expect(screen.getByRole('row')).toHaveClass('mantine-Month-weekdaysRow ');
   });
+
+  it('sets scope="col" on th cells', () => {
+    const { rerender } = render(<Wrapper withWeekNumbers />);
+    const headers = screen.getAllByRole('columnheader');
+    expect(headers).toHaveLength(8);
+    headers.forEach((header) => expect(header).toHaveAttribute('scope', 'col'));
+
+    rerender(<Wrapper cellComponent="td" withWeekNumbers />);
+    screen.getAllByRole('cell').forEach((cell) => expect(cell).not.toHaveAttribute('scope'));
+  });
+
+  it('renders week number header cell when withWeekNumbers is set', () => {
+    const { rerender } = render(<Wrapper />);
+    expect(screen.getAllByRole('columnheader')).toHaveLength(7);
+    expect(screen.queryByText('#')).not.toBeInTheDocument();
+
+    rerender(<Wrapper withWeekNumbers />);
+    expect(screen.getAllByRole('columnheader')).toHaveLength(8);
+    expect(screen.getAllByRole('columnheader')[0]).toHaveTextContent('#');
+  });
 });

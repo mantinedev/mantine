@@ -294,10 +294,9 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
       onClick={hasNextLevel ? onLevelClick : undefined}
       unstyled={unstyled}
       onMouseDown={hasNextLevel ? preventFocus : undefined}
-      disabled={!hasNextLevel}
       data-static={!hasNextLevel || undefined}
       aria-label={levelControlAriaLabel}
-      tabIndex={dropdown.preventFocus || !hasNextLevel ? -1 : 0}
+      tabIndex={hasNextLevel ? (dropdown.preventFocus ? -1 : 0) : undefined}
       data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
     >
       {label}

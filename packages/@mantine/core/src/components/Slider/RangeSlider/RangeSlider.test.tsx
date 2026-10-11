@@ -397,4 +397,85 @@ describe('@mantine/core/RangeSlider', () => {
     expect(sliders[1]).toHaveAttribute('aria-describedby', 'help-1');
     expect(sliders[1]).toHaveAttribute('id', 'thumb-1');
   });
+
+  it('keeps the upper thumb in place when it reaches minRange with pushOnOverlap={false}', async () => {
+    const { container } = render(
+      <RangeSlider defaultValue={[30, 50]} pushOnOverlap={false} minRange={10} step={10} />
+    );
+
+    await act(async () => {
+      getSliders()[1].focus();
+    });
+    await userEvent.keyboard('{ArrowLeft}');
+    expectInputValue('30', container, 0);
+    expectInputValue('40', container, 1);
+
+    await userEvent.keyboard('{ArrowLeft}');
+    expectInputValue('30', container, 0);
+    expectInputValue('40', container, 1);
+  });
+
+  it('allows moving the lower thumb when max - minRange equals 0', async () => {
+    const { container } = render(
+      <RangeSlider min={-10} max={10} minRange={10} defaultValue={[-10, 10]} step={1} />
+    );
+
+    await act(async () => {
+      getSliders()[0].focus();
+    });
+    await userEvent.keyboard('{ArrowRight}');
+    expectInputValue('-9', container, 0);
+    expectInputValue('10', container, 1);
+  });
+
+  it('moves focused thumb with Home and End keys within minRange', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <RangeSlider defaultValue={[30, 60]} minRange={10} onChangeEnd={spy} />
+    );
+
+    await act(async () => {
+      getSliders()[0].focus();
+    });
+    await userEvent.keyboard('{Home}');
+    expectInputValue('0', container, 0);
+    expect(spy).toHaveBeenLastCalledWith([0, 60]);
+
+    await userEvent.keyboard('{End}');
+    expectInputValue('50', container, 0);
+    expectInputValue('60', container, 1);
+
+    await act(async () => {
+      getSliders()[1].focus();
+    });
+    await userEvent.keyboard('{End}');
+    expectInputValue('100', container, 1);
+
+    await userEvent.keyboard('{Home}');
+    expectInputValue('50', container, 0);
+    expectInputValue('60', container, 1);
+    expect(spy).toHaveBeenLastCalledWith([50, 60]);
+  });
+
+  it('uses thumbLabel as aria-label for both thumbs', () => {
+    const { container } = render(<RangeSlider defaultValue={[20, 80]} thumbLabel="Price" />);
+    const sliders = getSliders();
+    expect(sliders[0]).toHaveAttribute('aria-label', 'Price');
+    expect(sliders[1]).toHaveAttribute('aria-label', 'Price');
+    expect(container.querySelector('.mantine-RangeSlider-root')).not.toHaveAttribute('thumbLabel');
+  });
+
+  it('prefers thumbFromLabel and thumbToLabel over thumbLabel', () => {
+    render(
+      <RangeSlider
+        defaultValue={[20, 80]}
+        thumbLabel="Price"
+        thumbFromLabel="Min"
+        thumbToLabel="Max"
+      />
+    );
+    const sliders = getSliders();
+    expect(sliders[0]).toHaveAttribute('aria-label', 'Min');
+    expect(sliders[1]).toHaveAttribute('aria-label', 'Max');
+  });
 });

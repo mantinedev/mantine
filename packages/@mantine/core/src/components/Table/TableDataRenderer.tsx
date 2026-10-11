@@ -22,7 +22,9 @@ export function TableDataRenderer({ data }: TableDataRendererProps) {
         <TableThead>
           <TableTr>
             {data.head.map((item, index) => (
-              <TableTh key={index}>{item}</TableTh>
+              <TableTh key={index} scope="col">
+                {item}
+              </TableTh>
             ))}
           </TableTr>
         </TableThead>
@@ -44,7 +46,9 @@ export function TableDataRenderer({ data }: TableDataRendererProps) {
         <TableTfoot>
           <TableTr>
             {data.foot.map((item, index) => (
-              <TableTh key={index}>{item}</TableTh>
+              <TableTh key={index} scope="col">
+                {item}
+              </TableTh>
             ))}
           </TableTr>
         </TableTfoot>

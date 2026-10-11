@@ -42,7 +42,7 @@ export interface PickerControlProps
   /** Assigns last in range styles */
   lastInRange?: boolean;
 
-  /** Component size */
+  /** Component size @default 'sm' */
   size?: MantineSize;
 
   /** Determines whether the control should take the full width of its cell @default false */
@@ -109,6 +109,7 @@ export const PickerControl = factory<PickerControlFactory>((_props) => {
       data-picker-control
       data-full-width={fullWidth || undefined}
       data-selected={(selected && !disabled) || undefined}
+      aria-pressed={!!(selected && !disabled)}
       data-disabled={disabled || undefined}
       data-in-range={(inRange && !disabled && !selected) || undefined}
       data-first-in-range={(firstInRange && !disabled) || undefined}

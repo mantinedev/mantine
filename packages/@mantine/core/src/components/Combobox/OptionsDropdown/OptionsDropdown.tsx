@@ -116,6 +116,7 @@ export interface OptionsDropdownProps {
   unstyled: boolean | undefined;
   labelId: string | undefined;
   'aria-label': string | undefined;
+  multiple?: boolean;
   renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
   scrollAreaProps: ScrollAreaProps | undefined;
 }
@@ -141,6 +142,7 @@ export function OptionsDropdown({
   renderOption,
   scrollAreaProps,
   'aria-label': ariaLabel,
+  multiple,
 }: OptionsDropdownProps) {
   const ctx = useComboboxContext();
   validateOptions(data);
@@ -174,7 +176,11 @@ export function OptionsDropdown({
 
   return (
     <Combobox.Dropdown hidden={hidden || (hiddenWhenEmpty && isEmpty)} data-composed>
-      <Combobox.Options labelledBy={labelId} aria-label={ariaLabel}>
+      <Combobox.Options
+        labelledBy={labelId}
+        aria-label={ariaLabel}
+        aria-multiselectable={multiple || undefined}
+      >
         {withScrollArea ? (
           <ScrollArea.Autosize
             mah={

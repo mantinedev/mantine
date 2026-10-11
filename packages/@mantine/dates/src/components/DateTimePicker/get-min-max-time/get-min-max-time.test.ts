@@ -9,11 +9,19 @@ describe('@mantine/dates/get-min-max-time', () => {
       expect(getMinTime({ minDate, value })).toBe('00:30:00');
     });
 
-    it('returns undefined when value does not equal minDate', () => {
-      const minDate = '2022-04-11 00:30:00';
-      const value = '2022-04-11 00:00:00';
+    it('returns min time when value is on the same day as minDate', () => {
+      expect(getMinTime({ minDate: '2022-04-11 00:30:00', value: '2022-04-11 00:00:00' })).toBe(
+        '00:30:00'
+      );
+      expect(getMinTime({ minDate: '2022-04-11 10:15:00', value: '2022-04-11 18:45:00' })).toBe(
+        '10:15:00'
+      );
+    });
 
-      expect(getMinTime({ minDate, value })).toBe(undefined);
+    it('returns undefined when value is on a different day than minDate', () => {
+      expect(getMinTime({ minDate: '2022-04-11 10:15:00', value: '2022-04-12 08:00:00' })).toBe(
+        undefined
+      );
     });
 
     it('returns undefined when minDate is undefined', () => {
@@ -37,11 +45,19 @@ describe('@mantine/dates/get-min-max-time', () => {
       expect(getMaxTime({ maxDate, value })).toBe('22:30:00');
     });
 
-    it('returns undefined when value does not equal maxDate', () => {
-      const maxDate = '2022-04-11 22:30:00';
-      const value = '2022-04-11 22:00:00';
+    it('returns max time when value is on the same day as maxDate', () => {
+      expect(getMaxTime({ maxDate: '2022-04-11 22:30:00', value: '2022-04-11 22:00:00' })).toBe(
+        '22:30:00'
+      );
+      expect(getMaxTime({ maxDate: '2022-04-11 18:15:00', value: '2022-04-11 08:00:00' })).toBe(
+        '18:15:00'
+      );
+    });
 
-      expect(getMaxTime({ maxDate, value })).toBe(undefined);
+    it('returns undefined when value is on a different day than maxDate', () => {
+      expect(getMaxTime({ maxDate: '2022-04-11 18:15:00', value: '2022-04-10 20:00:00' })).toBe(
+        undefined
+      );
     });
 
     it('returns undefined when maxDate is undefined', () => {

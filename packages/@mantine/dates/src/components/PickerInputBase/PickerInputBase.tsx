@@ -23,7 +23,7 @@ import {
   useInputProps,
   useStyles,
 } from '@mantine/core';
-import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
+import { useDidUpdate, useDisclosure, useId, useMergedRef } from '@mantine/hooks';
 import { DatePickerType } from '../../types';
 import { DateFormatter } from '../../utils';
 import { useDatesContext } from '../DatesProvider';
@@ -188,6 +188,8 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
   } = useInputProps('PickerInputBase', { size: 'sm' }, _props);
 
   const inputRef = useRef<HTMLButtonElement>(null);
+  const inputId = useId(inputProps.id);
+  const overlayId = `${inputId}-dropdown`;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const keyboardInteractionRef = useRef(false);
 
@@ -278,6 +280,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
           size="auto"
           data-dates-modal
           unstyled={unstyled}
+          id={overlayId}
           {...modalProps}
           onClose={() => {
             modalProps?.onClose?.();
@@ -299,6 +302,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
           withHandle
           data-dates-drawer
           unstyled={unstyled}
+          id={overlayId}
           {...drawerProps}
           onClose={() => {
             drawerProps?.onClose?.();
@@ -315,7 +319,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
         </Drawer>
       )}
 
-      <Input.Wrapper {...wrapperProps}>
+      <Input.Wrapper {...wrapperProps} id={inputId}>
         <Popover
           position="bottom-start"
           opened={dropdownOpened}
@@ -325,6 +329,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
           {...popoverProps}
           middlewares={getDatesPopoverMiddlewares(popoverProps?.middlewares)}
           disabled={popoverProps?.disabled || !isPopover || readOnly}
+          withRoles={isPopover && !readOnly ? popoverProps?.withRoles : false}
           onChange={(_opened) => {
             if (!_opened) {
               handleClose();
@@ -335,6 +340,13 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
             <Input
               data-dates-input
               data-read-only={readOnly || undefined}
+              aria-haspopup={!isPopover && !readOnly ? 'dialog' : undefined}
+              aria-expanded={!isPopover && !readOnly ? dropdownOpened : undefined}
+              aria-controls={
+                !isPopover && !readOnly && dropdownOpened
+                  ? `${(isModal ? modalProps?.id : drawerProps?.id) || overlayId}-body`
+                  : undefined
+              }
               disabled={disabled}
               component="button"
               type="button"
@@ -348,6 +360,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
               __clearSectionMode={clearSectionMode}
               rightSection={rightSection}
               {...inputProps}
+              id={inputId}
               classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
               {...others}
               ref={useMergedRef(inputRef, ref)}
@@ -368,6 +381,8 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
 
           <Popover.Dropdown
             data-dates-dropdown
+            aria-labelledby={inputId}
+            aria-modal={popoverProps?.trapFocus === false ? undefined : true}
             data-with-presets={withPresets || undefined}
             className={unstyled ? undefined : classes.dropdown}
             ref={dropdownRef}

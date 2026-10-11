@@ -363,9 +363,17 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
       store.toggleDropdown();
     }
 
-    if (event.key === 'Backspace' && _searchValue.length === 0 && _value.length > 0) {
-      onRemove?.(_value[_value.length - 1]);
-      setValue(_value.slice(0, _value.length - 1));
+    if (event.key === 'Backspace' && !readOnly && _searchValue.length === 0) {
+      let removableIndex = _value.length - 1;
+      while (removableIndex >= 0 && optionsLockup[`${_value[removableIndex]}`]?.disabled) {
+        removableIndex -= 1;
+      }
+
+      if (removableIndex !== -1) {
+        const removedValue = _value[removableIndex];
+        onRemove?.(removedValue);
+        setValue(_value.filter((_, index) => index !== removableIndex));
+      }
     }
 
     handleInputKeyDown(event);
@@ -455,7 +463,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
         attributes={attributes}
         floatingHeight={floatingHeight}
         onOptionSubmit={(val) => {
-          onOptionSubmit?.(val as any);
+          onOptionSubmit?.(optionsLockup[`${val}`].value as any);
           if (clearSearchOnChange) {
             handleSearchChange('');
           }
@@ -588,6 +596,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
                   disabled={disabled}
                   readOnly={readOnly || !searchable}
                   pointer={!searchable}
+                  required={required && _value.length === 0}
                 />
               </Combobox.EventsTarget>
             </Pill.Group>
@@ -612,6 +621,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
           unstyled={unstyled}
           labelId={label ? `${_id}-label` : undefined}
           aria-label={label ? undefined : others['aria-label']}
+          multiple
           renderOption={renderOption}
           scrollAreaProps={scrollAreaProps}
         />

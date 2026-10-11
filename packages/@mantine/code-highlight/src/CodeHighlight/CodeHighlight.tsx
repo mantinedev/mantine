@@ -19,7 +19,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   useHighlight,
   useIsLanguageLoaded,
@@ -221,6 +221,8 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
     onChange: onExpandedChange,
   });
 
+  const scrollAreaId = useId();
+
   const shouldDisplayControls =
     (controls && controls.length > 0) || withExpandButton || withCopyButton;
 
@@ -281,6 +283,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
                 onExpand={setExpanded}
                 expandCodeLabel={expandCodeLabel}
                 collapseCodeLabel={collapseCodeLabel}
+                controlsId={scrollAreaId}
               />
             )}
             {withCopyButton && (
@@ -298,6 +301,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
           scrollbarSize={4}
           dir="ltr"
           offsetScrollbars={false}
+          id={scrollAreaId}
           data-collapsed={!_expanded || undefined}
           styles={{ viewport: { overscrollBehaviorInline: 'none' } }}
           {...getStyles('scrollarea')}
@@ -327,6 +331,8 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
           {...getStyles('showCodeButton')}
           mod={{ hidden: _expanded }}
           onClick={() => setExpanded(true)}
+          aria-expanded={_expanded}
+          aria-controls={scrollAreaId}
           data-code-color-scheme={codeColorScheme}
         >
           {expandCodeLabel}

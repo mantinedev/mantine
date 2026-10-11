@@ -272,4 +272,63 @@ describe('@mantine/core/Stepper', () => {
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith(2);
   });
+
+  it('exposes steps as a list and marks the active step with aria-current', () => {
+    render(<Stepper {...defaultProps} />);
+    const list = screen.getByRole('list');
+    expect(screen.getAllByRole('listitem')).toHaveLength(4);
+    expect(list).toContainElement(screen.getAllByRole('button')[0]);
+
+    const steps = screen.getAllByRole('button');
+    expect(steps[1]).toHaveAttribute('aria-current', 'step');
+    expect(steps[0]).not.toHaveAttribute('aria-current');
+    expect(steps[2]).not.toHaveAttribute('aria-current');
+  });
+
+  it('keeps content of all steps mounted when keepMounted is set', async () => {
+    const { rerender } = render(<Stepper {...defaultProps} keepMounted />);
+    expect(screen.getByText('test-step-content-0')).toHaveStyle({ display: 'none' });
+    expect(screen.getByText('test-step-content-1')).not.toHaveStyle({ display: 'none' });
+    expect(screen.getByText('test-step-completed')).toHaveStyle({ display: 'none' });
+
+    rerender(<Stepper {...defaultProps} keepMounted active={4} />);
+    expect(screen.getByText('test-step-content-1')).toHaveStyle({ display: 'none' });
+    expect(screen.getByText('test-step-completed')).not.toHaveStyle({ display: 'none' });
+  });
+
+  it('unmounts inactive steps content when keepMounted is not set', () => {
+    render(<Stepper {...defaultProps} />);
+    expect(screen.queryByText('test-step-content-0')).not.toBeInTheDocument();
+  });
+
+  it('replaces step icon with loader when step is loading', () => {
+    const { container } = render(
+      <Stepper active={0}>
+        <Stepper.Step label="0" icon="test-icon" loading>
+          content
+        </Stepper.Step>
+        <Stepper.Step label="1" icon="test-icon-1">
+          content
+        </Stepper.Step>
+      </Stepper>
+    );
+    expect(screen.queryByText('test-icon')).not.toBeInTheDocument();
+    expect(screen.getByText('test-icon-1')).toBeInTheDocument();
+    expect(container.querySelectorAll('.mantine-Stepper-stepLoader')).toHaveLength(1);
+  });
+
+  it('renders progress and completed icons based on step state', () => {
+    render(
+      <Stepper active={1} progressIcon="test-progress" completedIcon="test-completed">
+        <Stepper.Step label="0">content</Stepper.Step>
+        <Stepper.Step label="1">content</Stepper.Step>
+        <Stepper.Step label="2" icon="test-icon">
+          content
+        </Stepper.Step>
+      </Stepper>
+    );
+    expect(screen.getByText('test-completed')).toBeInTheDocument();
+    expect(screen.getByText('test-progress')).toBeInTheDocument();
+    expect(screen.getByText('test-icon')).toBeInTheDocument();
+  });
 });

@@ -50,7 +50,7 @@ export interface TimelineItemProps
   /** If set, switches the position of content and opposite @default false */
   alternate?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default '1000px' */
   radius?: MantineRadius;
 
   /** Key of `theme.colors` or any valid CSS color to control active item colors @default theme.primaryColor */
@@ -126,6 +126,8 @@ export const TimelineItem = factory<TimelineItemFactory>((_props) => {
         '--tli-color': color ? getThemeColor(color, theme) : undefined,
         '--tli-border-style': lineVariant || undefined,
       }}
+      role="listitem"
+      aria-current={resolved.current ? 'step' : undefined}
       {...others}
     >
       {resolved.bodyFirst ? bodyNode : oppositeNode}

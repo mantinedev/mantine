@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface CloseIconProps extends React.ComponentProps<'svg'> {
-  /** Icon width and height, `var(--icon-size)` by default */
+  /** Icon width and height @default 'var(--cb-icon-size, 70%)' */
   size?: string;
 }
 

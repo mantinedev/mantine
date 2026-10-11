@@ -38,4 +38,11 @@ describe('@mantine/core/ColorSwatch', () => {
     rerender(<ColorSwatch {...defaultProps} withShadow />);
     expect(container.querySelector('.mantine-ColorSwatch-shadowOverlay')).toBeInTheDocument();
   });
+
+  it('applies color to the color overlay', () => {
+    const { container } = render(<ColorSwatch color="rgba(255, 0, 0, 0.5)" />);
+    expect(container.querySelector('.mantine-ColorSwatch-colorOverlay')).toHaveStyle({
+      backgroundColor: 'rgba(255, 0, 0, 0.5)',
+    });
+  });
 });

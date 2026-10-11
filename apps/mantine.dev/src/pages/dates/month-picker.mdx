@@ -168,16 +168,17 @@ function Demo() {
 Use `getYearControlProps`/`getMonthControlProps` to customize the `aria-label` attribute:
 
 ```tsx
+import dayjs from 'dayjs';
 import { MonthPicker } from '@mantine/dates';
 
 function Demo() {
   return (
     <MonthPicker
       getYearControlProps={(date) => ({
-        'aria-label': `Select year ${date.getFullYear()}`,
+        'aria-label': `Select year ${dayjs(date).year()}`,
       })}
       getMonthControlProps={(date) => ({
-        'aria-label': `Select month ${date.getFullYear()}/${date.getMonth()}`,
+        'aria-label': `Select month ${dayjs(date).format('YYYY/MM')}`,
       })}
     />
   );

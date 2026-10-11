@@ -97,7 +97,7 @@ export interface RadioProps
   /** Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting @category appearance */
   iconColor?: MantineColor;
 
-  /** If set, adjusts text color based on background color for `filled` variant @category appearance */
+  /** If set, adjusts text color based on background color for `filled` variant @default theme.autoContrast @category appearance */
   autoContrast?: boolean;
 
   /** If set, applies error styles to the radio when `error` prop is set @default true @category appearance */
@@ -189,6 +189,7 @@ export const Radio = factory<RadioFactory>((_props) => {
     icon: Icon = RadioIcon,
     rootRef,
     iconColor,
+    autoContrast,
     onChange,
     mod,
     attributes,

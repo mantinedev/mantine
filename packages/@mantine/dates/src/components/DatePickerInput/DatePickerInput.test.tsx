@@ -103,6 +103,30 @@ describe('@mantine/dates/DatePickerInput', () => {
     expectValue(container, 'April – May');
   });
 
+  it('displays month of defaultDate when the dropdown is opened', async () => {
+    const { container } = render(<DatePickerInput {...defaultProps} defaultDate="2021-08-15" />);
+    await clickInput(container);
+    expect(
+      container.querySelector('.mantine-DatePickerInput-calendarHeaderLevel')
+    ).toHaveTextContent('August 2021');
+  });
+
+  it('displays month of minDate when the current date is before minDate', async () => {
+    const { container } = render(<DatePickerInput {...defaultProps} minDate="2100-03-10" />);
+    await clickInput(container);
+    expect(
+      container.querySelector('.mantine-DatePickerInput-calendarHeaderLevel')
+    ).toHaveTextContent('March 2100');
+  });
+
+  it('displays month of maxDate when the current date is after maxDate', async () => {
+    const { container } = render(<DatePickerInput {...defaultProps} maxDate="2000-06-10" />);
+    await clickInput(container);
+    expect(
+      container.querySelector('.mantine-DatePickerInput-calendarHeaderLevel')
+    ).toHaveTextContent('June 2000');
+  });
+
   it('has correct default __staticSelector', () => {
     const { container } = render(
       <DatePickerInput

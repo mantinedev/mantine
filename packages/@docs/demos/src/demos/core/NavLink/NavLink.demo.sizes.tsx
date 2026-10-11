@@ -22,7 +22,6 @@ function Demo() {
         leftSection={<GaugeIcon size={${iconSize}} />}${sizeProp}
       />
       <NavLink
-        href="#required-for-focus"
         label="Projects"
         leftSection={<FolderIcon size={${iconSize}} />}${sizeProp}
         defaultOpened
@@ -55,7 +54,6 @@ function Demo(props: any) {
           {...props}
         />
         <NavLink
-          href="#required-for-focus"
           label="Projects"
           leftSection={<FolderIcon size={iconSize} />}
           defaultOpened

@@ -81,7 +81,7 @@ export interface ComboboxProps extends __PopoverProps, StylesApiProps<ComboboxFa
   /** Determines whether selection should be reset when option is hovered @default false */
   resetSelectionOnOptionHover?: boolean;
 
-  /** Determines whether the `Combobox` value can be changed */
+  /** Determines whether the `Combobox` value can be changed @default false */
   readOnly?: boolean;
 
   /** If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. */

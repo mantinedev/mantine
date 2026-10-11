@@ -50,6 +50,20 @@ describe('@mantine/core/Drawer', () => {
     sizeSelector: '.mantine-Drawer-root',
   });
 
+  it('forwards aria-label to the dialog element when title is not set', () => {
+    render(<Drawer {...defaultProps} title={undefined} aria-label="custom-label" />);
+    expect(screen.getByRole('dialog', { name: 'custom-label' })).toBeInTheDocument();
+  });
+
+  it('applies zIndex={0} instead of the default z-index', () => {
+    const { container } = render(<Drawer {...defaultProps} zIndex={0} />);
+    expect(
+      (container.querySelector('.mantine-Drawer-root') as HTMLElement).style.getPropertyValue(
+        '--mb-z-index'
+      )
+    ).toBe('0');
+  });
+
   it('does not render overlay when withOverlay is false', () => {
     const { container, rerender } = render(<Drawer {...defaultProps} withOverlay={false} />);
     expect(container.querySelector('.mantine-Drawer-overlay')).not.toBeInTheDocument();

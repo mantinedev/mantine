@@ -113,8 +113,16 @@
     animation-direction: reverse;
   }
 
-  .root[data-pause-on-hover]:hover > & {
+  .root[data-pause-on-hover]:hover > &,
+  .root[data-pause-on-hover]:focus-within > &,
+  .root[data-paused] > & {
     animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-respect-reduced-motion]) .root > &[data-reduce-motion] {
+      animation-name: none;
+    }
   }
 }
 

@@ -212,6 +212,7 @@ export function useTagsInput(options: TagsInputStoreOptions = {}): TagsInputStor
       currentTags: latest.current.value,
       isDuplicate,
       onDuplicate,
+      onMaxTags,
       isValidTag,
     });
 

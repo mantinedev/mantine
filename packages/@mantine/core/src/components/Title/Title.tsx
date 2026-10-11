@@ -32,7 +32,7 @@ export interface TitleProps
   /** Number of lines after which heading will be truncated */
   lineClamp?: number;
 
-  /** Heading `text-wrap` CSS property @default 'wrap' */
+  /** Heading `text-wrap` CSS property @default theme.headings.textWrap */
   textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
 }
 

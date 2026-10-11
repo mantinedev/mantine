@@ -47,6 +47,12 @@ from which you should only specify two (for example, `top` and `left`, `bottom` 
 
 <Demo data={FloatingWindowDemos.setPosition} />
 
+## Keyboard support
+
+The window root element is focusable. When it has focus, arrow keys move the window
+in 10px steps, hold `Shift` to move it in 50px steps. Keys pressed inside window
+content (for example, in inputs) do not move the window.
+
 ## Resize handle
 
 Use `FloatingWindow.ResizeHandle` compound component to add a resize handle to the floating window.

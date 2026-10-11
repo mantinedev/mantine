@@ -18,10 +18,7 @@ export interface MaskInputProps
   /** Called before masking on each keystroke, can return overrides for mask options @category behavior */
   modify?: (
     value: string
-  ) => Partial<Pick<MaskInputProps, 'mask' | 'tokens' | 'slotChar' | 'separate'>> | undefined;
-
-  /** When true, raw and display values are decoupled @category state */
-  separate?: boolean;
+  ) => Partial<Pick<MaskInputProps, 'mask' | 'tokens' | 'slotChar'>> | undefined;
 
   /** Character displayed in unfilled slots, `"_"` by default @category appearance */
   slotChar?: string | null;

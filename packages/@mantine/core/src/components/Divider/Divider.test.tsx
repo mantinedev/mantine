@@ -43,4 +43,23 @@ describe('@mantine/core/Divider', () => {
     rerender(<Divider />);
     expect(container.querySelector('.mantine-Divider-root')).not.toHaveAttribute('data-with-label');
   });
+
+  it('sets aria-orientation for vertical dividers', () => {
+    const { container, rerender } = render(<Divider orientation="vertical" />);
+    expect(container.querySelector('.mantine-Divider-root')).toHaveAttribute(
+      'aria-orientation',
+      'vertical'
+    );
+
+    rerender(<Divider orientation="horizontal" />);
+    expect(container.querySelector('.mantine-Divider-root')).not.toHaveAttribute(
+      'aria-orientation'
+    );
+  });
+
+  it('does not render label for vertical orientation', () => {
+    const { container } = render(<Divider orientation="vertical" label="test-label" />);
+    expect(container.querySelector('.mantine-Divider-label')).not.toBeInTheDocument();
+    expect(container.querySelector('.mantine-Divider-root')).not.toHaveAttribute('data-with-label');
+  });
 });

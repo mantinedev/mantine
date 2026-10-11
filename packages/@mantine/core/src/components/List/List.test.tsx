@@ -1,4 +1,4 @@
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { List, ListProps, ListStylesNames } from './List';
 import { ListItem } from './ListItem/ListItem';
 
@@ -86,5 +86,32 @@ describe('@mantine/core/List', () => {
 
     const root = container.querySelector('.mantine-List-root');
     expect(root).toHaveAttribute('data-with-padding');
+  });
+
+  it('renders item content in a block element to allow nested lists', () => {
+    const { container } = render(
+      <List>
+        <List.Item>
+          Parent
+          <List>
+            <List.Item>Child</List.Item>
+          </List>
+        </List.Item>
+      </List>
+    );
+
+    const label = container.querySelector('.mantine-List-itemLabel')!;
+    expect(label.tagName).toBe('DIV');
+    expect(label.querySelector('ul')).toBeInTheDocument();
+  });
+
+  it('sets value attribute on list item', () => {
+    render(
+      <List type="ordered">
+        <List.Item value={5}>Item</List.Item>
+      </List>
+    );
+
+    expect(screen.getByRole('listitem')).toHaveAttribute('value', '5');
   });
 });

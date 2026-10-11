@@ -226,4 +226,14 @@ describe('@mantine/hooks/use-pagination', () => {
     expect(onChange).toHaveBeenCalledWith(6);
     expect(result.current.active).toBe(5);
   });
+
+  it('returns normalized startValue', () => {
+    expect(renderHook(() => usePagination({ total: 10 })).result.current.startValue).toBe(1);
+    expect(
+      renderHook(() => usePagination({ total: 10, startValue: 3 })).result.current.startValue
+    ).toBe(3);
+    expect(
+      renderHook(() => usePagination({ total: 10, startValue: 0 })).result.current.startValue
+    ).toBe(1);
+  });
 });

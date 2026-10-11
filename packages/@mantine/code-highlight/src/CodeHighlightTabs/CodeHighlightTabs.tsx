@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -12,7 +12,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   CodeHighlight,
   CodeHighlightSettings,
@@ -52,7 +52,7 @@ export interface CodeHighlightTabsProps
   /** Function that returns icon based on file name @category appearance */
   getFileIcon?: (fileName: string) => React.ReactNode;
 
-  /** Default active tab index @category state */
+  /** Default active tab index @default 0 @category state */
   defaultActiveTab?: number;
 
   /** Index of controlled active tab state @category state */
@@ -136,8 +136,11 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props) => {
     props,
   });
 
+  const uid = useId();
+  const filesRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (value >= code.length) {
+    if (code.length > 0 && value >= code.length) {
       setValue(code.length - 1);
     }
   }, [value, code]);
@@ -147,13 +150,40 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props) => {
   }
 
   const currentCode = code[value] || { code: '', language: 'tsx', fileName: '' };
+  const getTabId = (index: number) => `${uid}-tab-${index}`;
+  const panelId = `${uid}-panel`;
+
+  const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const lastIndex = code.length - 1;
+    const indexByKey: Partial<Record<string, number>> = {
+      ArrowRight: index === lastIndex ? 0 : index + 1,
+      ArrowLeft: index === 0 ? lastIndex : index - 1,
+      Home: 0,
+      End: lastIndex,
+    };
+    const nextIndex = indexByKey[event.key];
+
+    if (nextIndex === undefined) {
+      return;
+    }
+
+    event.preventDefault();
+    setValue(nextIndex);
+    filesRef.current?.querySelectorAll<HTMLButtonElement>('[role="tab"]')[nextIndex]?.focus();
+  };
 
   const files = code.map((node, index) => (
     <UnstyledButton
       {...getStyles('file')}
-      key={node.fileName}
+      key={index}
+      id={getTabId(index)}
+      role="tab"
+      aria-selected={index === value}
+      aria-controls={panelId}
+      tabIndex={index === value ? 0 : -1}
       mod={{ active: index === value }}
       onClick={() => setValue(index)}
+      onKeyDown={(event: React.KeyboardEvent<HTMLButtonElement>) => handleTabKeyDown(event, index)}
       data-color-scheme={codeColorScheme}
     >
       <FileIcon
@@ -170,7 +200,9 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props) => {
   return (
     <Box {...getStyles('root')} {...others}>
       <ScrollArea type="never" dir="ltr" offsetScrollbars={false} {...getStyles('filesScrollarea')}>
-        <div {...getStyles('files')}>{files}</div>
+        <div {...getStyles('files')} ref={filesRef} role="tablist" aria-orientation="horizontal">
+          {files}
+        </div>
       </ScrollArea>
 
       <CodeHighlight
@@ -192,6 +224,9 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props) => {
         codeColorScheme={codeColorScheme}
         withLineNumbers={withLineNumbers}
         withFirstLineIndentation={withFirstLineIndentation}
+        id={panelId}
+        role="tabpanel"
+        aria-labelledby={getTabId(value)}
         __withOffset
         __staticSelector="CodeHighlightTabs"
         classNames={resolvedClassNames}

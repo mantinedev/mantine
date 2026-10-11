@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Image, ImageProps, ImageStylesNames } from './Image';
 
@@ -18,5 +19,19 @@ describe('@mantine/core/Image', () => {
 
     rerender(<Image src="test" fallbackSrc="test" />);
     expect(screen.getByRole('img')).not.toHaveAttribute('data-fallback');
+  });
+
+  it('switches to fallbackSrc when image fails to load', () => {
+    const spy = jest.fn();
+    render(<Image src="broken.png" fallbackSrc="fallback.png" onError={spy} />);
+
+    const image = screen.getByRole('img');
+    expect(image).toHaveAttribute('src', 'broken.png');
+    expect(image).not.toHaveAttribute('data-fallback');
+
+    fireEvent.error(image);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('img')).toHaveAttribute('src', 'fallback.png');
+    expect(screen.getByRole('img')).toHaveAttribute('data-fallback', 'true');
   });
 });

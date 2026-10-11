@@ -74,6 +74,35 @@ describe('@mantine/core/CheckboxGroup', () => {
     expect(screen.getAllByRole('checkbox')[2]).not.toBeDisabled();
   });
 
+  it('disables all children and blocks onChange when disabled prop is set', async () => {
+    const spy = jest.fn();
+    render(<CheckboxGroup {...defaultProps} disabled onChange={spy} />);
+    const checkboxes = screen.getAllByRole('checkbox');
+    expect(checkboxes.every((checkbox) => (checkbox as HTMLInputElement).disabled)).toBe(true);
+    await userEvent.click(checkboxes[0]);
+    expect(spy).not.toHaveBeenCalled();
+    expect(checkboxes[0]).not.toBeChecked();
+  });
+
+  it('derives Checkbox.Card aria-checked from group value and calls group onChange on click', async () => {
+    const spy = jest.fn();
+    render(
+      <CheckboxGroup value={['a']} onChange={spy}>
+        <Checkbox.Card value="a">A</Checkbox.Card>
+        <Checkbox.Card value="b">B</Checkbox.Card>
+      </CheckboxGroup>
+    );
+    const cards = screen.getAllByRole('checkbox');
+    expect(cards[0]).toHaveAttribute('aria-checked', 'true');
+    expect(cards[1]).toHaveAttribute('aria-checked', 'false');
+
+    await userEvent.click(cards[1]);
+    expect(spy).toHaveBeenLastCalledWith(['a', 'b']);
+
+    await userEvent.click(cards[0]);
+    expect(spy).toHaveBeenLastCalledWith([]);
+  });
+
   it('links group to the label with aria-labelledby only when label is rendered', () => {
     const { rerender } = render(
       <CheckboxGroup label="Group label">

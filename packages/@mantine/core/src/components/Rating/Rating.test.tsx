@@ -28,6 +28,11 @@ function touchList(...points: [number, number][]) {
 }
 
 describe('@mantine/core/Rating', () => {
+  tests.axe([
+    <Rating key="1" aria-label="Product rating" defaultValue={3} />,
+    <Rating key="2" readOnly value={3.5} fractions={2} />,
+  ]);
+
   tests.itSupportsSystemProps<RatingProps, RatingStylesNames>({
     component: Rating,
     props: defaultProps,
@@ -207,8 +212,9 @@ describe('@mantine/core/Rating', () => {
     expect(spy).toHaveBeenCalledWith(2);
   });
 
-  it('throws error for negative fractions', () => {
-    expect(() => render(<Rating fractions={-2} />)).toThrow();
+  it('throws error for fractions less than 1', () => {
+    expect(() => render(<Rating fractions={-2} />)).toThrow(/fractions/);
+    expect(() => render(<Rating fractions={0} />)).toThrow(/fractions/);
   });
 
   it('handles zero count prop', () => {
@@ -407,5 +413,44 @@ describe('@mantine/core/Rating', () => {
     const secondInput = inputs.find((input) => input.value === '2');
 
     expect(secondInput?.getAttribute('aria-label')).toBe('2');
+  });
+
+  it('names the radio group with aria-label', () => {
+    render(<Rating aria-label="Product rating" />);
+    expect(screen.getByRole('radiogroup', { name: 'Product rating' })).toBeInTheDocument();
+    expect(screen.getAllByRole('radio')).toHaveLength(6);
+  });
+
+  it('exposes current value with role="img" in readOnly mode', () => {
+    const { rerender } = render(<Rating readOnly value={3} />);
+    expect(screen.getByRole('img', { name: '3' })).toBeInTheDocument();
+    expect(screen.queryByRole('radiogroup')).not.toBeInTheDocument();
+
+    rerender(<Rating readOnly value={2} getSymbolLabel={(value) => `${value} of 5 stars`} />);
+    expect(screen.getByRole('img', { name: '2 of 5 stars' })).toBeInTheDocument();
+  });
+
+  it('disables inputs and ignores clicks when disabled', async () => {
+    const spy = jest.fn();
+    const { container } = render(<Rating disabled onChange={spy} />);
+    const root = screen.getByRole('radiogroup');
+    expect(root).toHaveAttribute('data-disabled');
+    expect(root).toHaveAttribute('aria-disabled', 'true');
+    screen.getAllByRole('radio').forEach((radio) => expect(radio).toBeDisabled());
+
+    fireEvent.click(container.querySelectorAll('label')[2]);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('highlights only the selected item with highlightSelectedOnly', () => {
+    const { container, rerender } = render(<Rating value={3} highlightSelectedOnly />);
+    const getFilled = () =>
+      Array.from(container.querySelectorAll('.mantine-Rating-starSymbol')).map((symbol) =>
+        symbol.hasAttribute('data-filled')
+      );
+
+    expect(getFilled()).toStrictEqual([false, false, false, true, false, false]);
+    rerender(<Rating value={3} />);
+    expect(getFilled()).toStrictEqual([true, true, true, true, false, false]);
   });
 });

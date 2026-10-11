@@ -152,7 +152,8 @@ you don't want to show to the user. Use this feature together with `restrictToMa
 - When the user uses mouse to interact with the slider, focus is moved to the slider track, when the user presses arrows focus is moved to the thumb
 - Value can be changed with arrows with step increment/decrement
 
-To label component for screen readers, add labels to thumbs:
+To label component for screen readers, add labels to thumbs. `thumbLabel` sets the same label
+for both thumbs:
 
 ```tsx
 import { RangeSlider } from '@mantine/core';
@@ -196,6 +197,18 @@ function Demo() {
     {
       key: 'ArrowLeft/ArrowDown',
       description: 'Decreases slider value by one step',
+    },
+    {
+      key: 'Shift + Arrow, PageUp/PageDown',
+      description: 'Increases or decreases focused thumb value by largeStep',
+    },
+    {
+      key: 'Home',
+      description: 'Moves focused thumb to the lowest value allowed by min and minRange',
+    },
+    {
+      key: 'End',
+      description: 'Moves focused thumb to the highest value allowed by max and minRange',
     },
   ]}
 />

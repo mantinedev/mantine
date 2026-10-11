@@ -159,6 +159,17 @@ describe('@mantine/dates/MonthPicker', () => {
     expect(container.querySelector('.mantine-Calendar-monthsList')).toBeInTheDocument();
   });
 
+  it('calls onMonthSelect with selected month', async () => {
+    const onMonthSelect = jest.fn();
+    const onChange = jest.fn();
+    const { container } = render(
+      <MonthPicker {...defaultProps} onMonthSelect={onMonthSelect} onChange={onChange} />
+    );
+    await userEvent.click(container.querySelectorAll('table button')[2]);
+    expect(onMonthSelect).toHaveBeenCalledWith('2022-03-01');
+    expect(onChange).toHaveBeenCalledWith('2022-03-01');
+  });
+
   it('correctly handles presets', async () => {
     const spy = jest.fn();
     const { container } = render(

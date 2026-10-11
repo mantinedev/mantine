@@ -1,4 +1,5 @@
-import { render, tests, userEvent } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { PillsInput } from '../PillsInput';
 import { Pill, PillProps, PillStylesNames } from './Pill';
 
 const defaultProps: PillProps = {
@@ -55,5 +56,52 @@ describe('@mantine/core/Pill', () => {
 
     rerender(<Pill {...defaultProps} withRemoveButton={false} />);
     expect(container.querySelector('[data-with-remove]')).not.toBeInTheDocument();
+  });
+
+  it('calls onRemove when remove button is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <Pill withRemoveButton onRemove={spy}>
+        test-pill
+      </Pill>
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Remove' }));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('makes remove button reachable with keyboard outside of PillsInput', async () => {
+    const spy = jest.fn();
+    render(
+      <Pill withRemoveButton onRemove={spy}>
+        test-pill
+      </Pill>
+    );
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: 'Remove' })).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('hides remove button from keyboard and assistive technology inside PillsInput', () => {
+    const { container } = render(
+      <PillsInput>
+        <Pill withRemoveButton>test-pill</Pill>
+      </PillsInput>
+    );
+    const remove = container.querySelector('.mantine-Pill-remove')!;
+    expect(remove).toHaveAttribute('tabindex', '-1');
+    expect(remove).toHaveAttribute('aria-hidden', 'true');
+  });
+
+  it('inherits disabled and size from Pill.Group', () => {
+    const { container } = render(
+      <Pill.Group disabled size="lg">
+        <Pill withRemoveButton>test-pill</Pill>
+      </Pill.Group>
+    );
+    const pill = container.querySelector('.mantine-Pill-root')!;
+    expect(pill).toHaveAttribute('data-disabled');
+    expect(pill).not.toHaveAttribute('data-with-remove');
+    expect(pill).toHaveAttribute('data-size', 'lg');
   });
 });

@@ -73,4 +73,34 @@ describe('@mantine/core/NativeSelect', () => {
     expect(onChange).toHaveBeenCalledWith('test-2');
     expect(container.querySelector('select')!.value).toBe('test-1');
   });
+
+  it('renders disabled options from data prop', () => {
+    const { container } = render(
+      <NativeSelect
+        data={[
+          { value: 'test-1', label: 'Test 1' },
+          { value: 'test-2', label: 'Test 2', disabled: true },
+        ]}
+      />
+    );
+    const options = container.querySelectorAll('option');
+    expect(options[0]).not.toBeDisabled();
+    expect(options[1]).toBeDisabled();
+  });
+
+  it('renders children instead of data when both are set', () => {
+    const { container } = render(
+      <NativeSelect data={['data-1', 'data-2']}>
+        <option value="child-1">Child 1</option>
+      </NativeSelect>
+    );
+    const options = container.querySelectorAll('option');
+    expect(options).toHaveLength(1);
+    expect(options[0]).toHaveValue('child-1');
+  });
+
+  it('sets aria-busy on the select when loading', () => {
+    const { container } = render(<NativeSelect label="test-label" data={['test-1']} loading />);
+    expect(container.querySelector('select')).toHaveAttribute('aria-busy', 'true');
+  });
 });

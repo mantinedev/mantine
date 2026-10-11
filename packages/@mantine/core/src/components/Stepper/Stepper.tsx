@@ -240,7 +240,11 @@ export const Stepper = factory<StepperFactory>((_props) => {
 
   const items = _children.reduce<React.ReactElement<StepperStepProps>[]>(
     (acc, item: React.ReactElement<StepperStepProps>, index) => {
-      acc.push(cloneElement(item, { key: index, step: item.props.step ?? index }));
+      acc.push(
+        <div role="listitem" key={index} style={{ display: 'contents' }}>
+          {cloneElement(item, { step: item.props.step ?? index })}
+        </div>
+      );
 
       if (orientation === 'horizontal' && index !== stepsCount - 1) {
         acc.push(
@@ -248,6 +252,7 @@ export const Stepper = factory<StepperFactory>((_props) => {
             {...getStyles('separator')}
             data-active={index < activeStep || undefined}
             data-orientation={orientation}
+            aria-hidden
             key={`separator-${index}`}
           />
         );
@@ -262,18 +267,19 @@ export const Stepper = factory<StepperFactory>((_props) => {
   const completedContent = completedStep?.props?.children;
   const content = activeStep > stepsCount - 1 ? completedContent : stepContent;
 
+  const renderKeptContent = (node: React.ReactNode, visible: boolean, key: string | number) => (
+    <Activity key={key} mode={visible ? 'visible' : 'hidden'}>
+      <div {...getStyles('content')}>{node}</div>
+    </Activity>
+  );
+
   const contentSection = keepMounted ? (
     <>
-      {_children.map((child, index) => (
-        <Activity key={index} mode={activeStep === index ? 'visible' : 'hidden'}>
-          <div {...getStyles('content')}>{child.props.children}</div>
-        </Activity>
-      ))}
-      {completedStep && (
-        <Activity mode={activeStep > stepsCount - 1 ? 'visible' : 'hidden'}>
-          <div {...getStyles('content')}>{completedStep.props.children}</div>
-        </Activity>
+      {_children.map((child, index) =>
+        renderKeptContent(child.props.children, activeStep === index, index)
       )}
+      {completedStep &&
+        renderKeptContent(completedStep.props.children, activeStep > stepsCount - 1, 'completed')}
     </>
   ) : (
     content && <div {...getStyles('content')}>{content}</div>
@@ -302,6 +308,7 @@ export const Stepper = factory<StepperFactory>((_props) => {
       <Box {...getStyles('root')} size={size} {...others}>
         <Box
           {...getStyles('steps')}
+          role="list"
           mod={{
             orientation,
             iconPosition,

@@ -12,10 +12,6 @@ function Demo() {
       scrollSpyOptions={{
         selector: '#mdx :is(h1, h2, h3, h4, h5, h6)',
       }}
-      getControlProps={({ data }) => ({
-        onClick: () => data.getNode().scrollIntoView(),
-        children: data.value,
-      })}
     />
   );
 }
@@ -28,10 +24,6 @@ function Wrapper(props: any) {
       scrollSpyOptions={{
         selector: '#mdx :is(h1, h2, h3, h4, h5, h6)',
       }}
-      getControlProps={({ data }) => ({
-        onClick: () => data.getNode().scrollIntoView(),
-        children: data.value,
-      })}
     />
   );
 }

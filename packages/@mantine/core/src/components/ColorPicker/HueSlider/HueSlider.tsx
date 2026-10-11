@@ -33,6 +33,7 @@ export const HueSlider = factory<HueSliderFactory>((props: HueSliderProps) => {
       maxValue={360}
       thumbColor={`hsl(${value}, 100%, 50%)`}
       round
+      getValueText={(val) => `${Math.round(val)}°`}
       data-hue
       overlays={[
         {

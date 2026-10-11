@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { waitFor } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Tooltip, TooltipProps } from './Tooltip';
 import { TooltipStylesNames } from './Tooltip.types';
@@ -185,5 +187,123 @@ describe('@mantine/core/Tooltip', () => {
     await userEvent.click(screen.getByText('target'));
     await userEvent.click(screen.getByTestId('outside'));
     expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+  });
+
+  it('opens on keyboard focus by default', async () => {
+    render(
+      <Tooltip label="test-tooltip" transitionProps={{ duration: 0 }}>
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    await userEvent.tab();
+    expect(screen.getByRole('tooltip')).toHaveTextContent('test-tooltip');
+    expect(screen.getByRole('button')).toHaveAccessibleDescription('test-tooltip');
+  });
+
+  it('does not open on focus with events.focus set to false', async () => {
+    render(
+      <Tooltip label="test-tooltip" events={{ focus: false }} transitionProps={{ duration: 0 }}>
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    await userEvent.tab();
+    expect(screen.queryByText('test-tooltip')).not.toBeInTheDocument();
+  });
+
+  it('opens when the target element is hovered and sets aria-describedby on it', async () => {
+    render(
+      <>
+        <button type="button" id="external-target" aria-describedby="own-description">
+          target
+        </button>
+        <span id="own-description">own</span>
+        <Tooltip label="test-tooltip" target="#external-target" transitionProps={{ duration: 0 }} />
+      </>
+    );
+
+    const target = screen.getByRole('button');
+    await userEvent.hover(target);
+    const tooltip = screen.getByRole('tooltip');
+    expect(target).toHaveAttribute('aria-describedby', `own-description ${tooltip.id}`);
+
+    await userEvent.unhover(target);
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+    expect(target).toHaveAttribute('aria-describedby', 'own-description');
+  });
+
+  it('opens when the target element passed as ref is focused with the keyboard', async () => {
+    function Demo() {
+      const ref = useRef<HTMLButtonElement>(null);
+      return (
+        <>
+          <button type="button" ref={ref}>
+            target
+          </button>
+          <Tooltip label="test-tooltip" target={ref} transitionProps={{ duration: 0 }} />
+        </>
+      );
+    }
+
+    render(<Demo />);
+    await userEvent.tab();
+    expect(screen.getByRole('tooltip')).toHaveTextContent('test-tooltip');
+    expect(screen.getByRole('button')).toHaveAccessibleDescription('test-tooltip');
+
+    await userEvent.tab();
+    await waitFor(() => expect(screen.queryByRole('tooltip')).not.toBeInTheDocument());
+  });
+
+  it('picks up the target element passed as ref when it is rendered after the tooltip', async () => {
+    function Demo({ visible }: { visible: boolean }) {
+      const ref = useRef<HTMLButtonElement>(null);
+      return (
+        <>
+          {visible && (
+            <button type="button" ref={ref}>
+              target
+            </button>
+          )}
+          <Tooltip label="test-tooltip" target={ref} transitionProps={{ duration: 0 }} />
+        </>
+      );
+    }
+
+    const { rerender } = render(<Demo visible={false} />);
+    rerender(<Demo visible />);
+
+    await userEvent.hover(screen.getByRole('button'));
+    expect(screen.getByRole('tooltip')).toHaveTextContent('test-tooltip');
+  });
+
+  it('switches between target and children without breaking', async () => {
+    const { rerender } = render(
+      <>
+        <button type="button" id="external-target">
+          external
+        </button>
+        <Tooltip label="test-tooltip" target="#external-target" transitionProps={{ duration: 0 }} />
+      </>
+    );
+
+    rerender(
+      <>
+        <button type="button" id="external-target">
+          external
+        </button>
+        <Tooltip label="test-tooltip" transitionProps={{ duration: 0 }}>
+          <button type="button">child</button>
+        </Tooltip>
+      </>
+    );
+
+    await userEvent.hover(screen.getByRole('button', { name: 'child' }));
+    expect(screen.getByRole('tooltip')).toHaveTextContent('test-tooltip');
+  });
+
+  it('does not render the tooltip when opened and disabled are set', () => {
+    render(<Tooltip {...defaultProps} disabled />);
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
   });
 });

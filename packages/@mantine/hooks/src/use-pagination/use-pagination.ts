@@ -91,6 +91,9 @@ export interface UsePaginationReturnValue {
   /** Total amount of pages, same value as the `total` option */
   total: number;
 
+  /** Number of the first page, normalized `startValue` option */
+  startValue: number;
+
   /** Function to get active page number */
   getActive: () => number;
 
@@ -172,6 +175,7 @@ export function usePagination({
       range: paginationRange,
       active: activePage,
       total,
+      startValue: _startValue,
       getActive,
       getRange,
       setPage,
@@ -180,7 +184,7 @@ export function usePagination({
       first,
       last,
     }),
-    [paginationRange, activePage, total]
+    [paginationRange, activePage, total, _startValue]
   );
 }
 

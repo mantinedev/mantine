@@ -164,7 +164,8 @@ function OneTimeCodeInput() {
 
 ## Accessibility
 
-Inputs do not have associated labels. Set `aria-label` to make the component visible to screen readers:
+PinInput does not have a visible label. Set `aria-label` to label the group of inputs. Each input
+gets the same label with its position appended, for example `One time code 1 of 4`:
 
 ```tsx
 import { PinInput } from '@mantine/core';

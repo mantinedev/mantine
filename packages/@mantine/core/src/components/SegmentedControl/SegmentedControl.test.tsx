@@ -38,6 +38,56 @@ describe('@mantine/core/SegmentedControl', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
+  it('disables all radios and blocks onChange when disabled is set', async () => {
+    const spy = jest.fn();
+    render(<SegmentedControl {...defaultProps} disabled onChange={spy} />);
+    const radios = screen.getAllByRole('radio');
+    radios.forEach((radio) => expect(radio).toBeDisabled());
+    await userEvent.click(radios[1]);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('disables only items with disabled flag in data', async () => {
+    const spy = jest.fn();
+    render(
+      <SegmentedControl
+        transitionDuration={0}
+        data={[
+          { label: 'First', value: 'first' },
+          { label: 'Second', value: 'second', disabled: true },
+          { label: 'Third', value: 'third' },
+        ]}
+        onChange={spy}
+      />
+    );
+    const radios = screen.getAllByRole('radio');
+    expect(radios[0]).not.toBeDisabled();
+    expect(radios[1]).toBeDisabled();
+    expect(radios[2]).not.toBeDisabled();
+
+    await userEvent.click(radios[1]);
+    expect(spy).not.toHaveBeenCalled();
+
+    await userEvent.click(radios[2]);
+    expect(spy).toHaveBeenCalledWith('third');
+  });
+
+  it('checks the first non-disabled item when no value is given', () => {
+    render(
+      <SegmentedControl
+        transitionDuration={0}
+        data={[
+          { label: 'First', value: 'first', disabled: true },
+          { label: 'Second', value: 'second' },
+          { label: 'Third', value: 'third' },
+        ]}
+      />
+    );
+    const radios = screen.getAllByRole('radio');
+    expect(radios[0]).not.toBeChecked();
+    expect(radios[1]).toBeChecked();
+  });
+
   it('allows value changes when readOnly is false', async () => {
     const spy = jest.fn();
     render(<SegmentedControl {...defaultProps} value="First" onChange={spy} readOnly={false} />);

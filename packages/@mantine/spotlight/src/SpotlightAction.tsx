@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import {
   Box,
   BoxProps,
@@ -91,6 +92,7 @@ export const SpotlightAction = factory<SpotlightActionFactory>((_props) => {
   } = props;
 
   const ctx = useSpotlightContext();
+  const actionId = `mantine-${useId().replace(/:/g, '')}`;
 
   const stylesApi = { classNames, styles };
 
@@ -111,6 +113,9 @@ export const SpotlightAction = factory<SpotlightActionFactory>((_props) => {
   return (
     <UnstyledButton
       data-action
+      id={actionId}
+      role="option"
+      aria-selected={false}
       {...ctx.getStyles('action', { className, style, ...stylesApi })}
       {...others}
       onMouseDown={(event) => {

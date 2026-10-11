@@ -124,13 +124,16 @@ export const Day = factory<DayFactory>((_props) => {
   });
 
   const dropdown = useDatesDropdownContext();
+  const isToday = dayjs(date).isSame(new Date(), 'day');
 
   return (
     <UnstyledButton<any>
       {...getStyles('day', { style: hidden ? { display: 'none' } : undefined })}
       component={isStatic ? 'div' : 'button'}
-      disabled={disabled}
-      data-today={dayjs(date).isSame(new Date(), 'day') || undefined}
+      disabled={isStatic ? undefined : disabled}
+      aria-pressed={isStatic ? undefined : !!(selected && !disabled)}
+      aria-current={isToday ? 'date' : undefined}
+      data-today={isToday || undefined}
       data-hidden={hidden || undefined}
       data-highlight-today={highlightToday || undefined}
       data-disabled={disabled || undefined}
@@ -145,13 +148,13 @@ export const Day = factory<DayFactory>((_props) => {
       data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
       unstyled={unstyled}
       {...others}
-      tabIndex={dropdown.preventFocus ? -1 : tabIndex}
+      tabIndex={isStatic ? undefined : dropdown.preventFocus ? -1 : tabIndex}
       onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
         onMouseDown?.(event);
         dropdown.preventFocus && event.preventDefault();
       }}
     >
-      {renderDay?.(date) || dayjs(date).date()}
+      {renderDay?.(date) ?? dayjs(date).date()}
     </UnstyledButton>
   );
 });

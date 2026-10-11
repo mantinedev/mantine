@@ -62,10 +62,10 @@ export interface IndicatorProps
   /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor @category appearance */
   color?: MantineColor;
 
-  /** Adds border to the root element @category appearance */
+  /** Adds border to the root element @default false @category appearance */
   withBorder?: boolean;
 
-  /** Hides the indicator when set @category appearance */
+  /** Hides the indicator when set @default false @category appearance */
   disabled?: boolean;
 
   /** If set, the indicator has processing animation @default false @category appearance */
@@ -74,7 +74,7 @@ export interface IndicatorProps
   /** Indicator z-index @default 200 */
   zIndex?: string | number;
 
-  /** If set, adjusts text color based on background color @category appearance */
+  /** If set, adjusts text color based on background color @default theme.autoContrast @category appearance */
   autoContrast?: boolean;
 
   /** Maximum value to display. If label is a number greater than this value, it will be displayed as `{maxValue}+` @category appearance */

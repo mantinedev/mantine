@@ -4,6 +4,7 @@ import {
   getDefaultZIndex,
   ScrollAreaAutosizeProps,
   useProps,
+  VisuallyHidden,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { defaultSpotlightFilter } from './default-spotlight-filter';
@@ -79,6 +80,9 @@ export interface SpotlightProps extends SpotlightRootProps {
 
   /** Props passed down to the `ScrollArea` component */
   scrollAreaProps?: Partial<ScrollAreaAutosizeProps>;
+
+  /** Returns the message announced to screen readers when the search query changes, receives the number of displayed actions @default (count) => `${count} results` @category accessibility */
+  getResultsAnnouncement?: (count: number) => string;
 }
 
 export type SpotlightFactory = Factory<{
@@ -99,6 +103,13 @@ export type SpotlightFactory = Factory<{
   };
 }>;
 
+const defaultGetResultsAnnouncement = (count: number) =>
+  count === 0 ? 'No results' : count === 1 ? '1 result' : `${count} results`;
+
+function getActionsCount(actions: SpotlightActions[]) {
+  return actions.reduce((acc, item) => acc + (isActionsGroup(item) ? item.actions.length : 1), 0);
+}
+
 const defaultProps = {
   size: 600,
   yOffset: 80,
@@ -111,6 +122,7 @@ const defaultProps = {
   clearQueryOnClose: true,
   closeOnActionTrigger: true,
   shortcut: 'mod + K',
+  getResultsAnnouncement: defaultGetResultsAnnouncement,
 } satisfies Partial<SpotlightProps>;
 
 export const Spotlight = factory<SpotlightFactory>((_props) => {
@@ -125,6 +137,7 @@ export const Spotlight = factory<SpotlightFactory>((_props) => {
     highlightQuery,
     limit,
     scrollAreaProps,
+    getResultsAnnouncement,
     ...others
   } = props;
 
@@ -135,7 +148,8 @@ export const Spotlight = factory<SpotlightFactory>((_props) => {
     onChange: onQueryChange,
   });
 
-  const filteredActions = limitActions(filter(_query, actions), limit).map((item) => {
+  const limitedActions = limitActions(filter(_query, actions), limit);
+  const filteredActions = limitedActions.map((item) => {
     if (isActionsGroup(item)) {
       const items = item.actions.map(({ id, ...actionData }) => (
         <SpotlightAction key={id} highlightQuery={highlightQuery} {...actionData} />
@@ -160,6 +174,9 @@ export const Spotlight = factory<SpotlightFactory>((_props) => {
       {filteredActions.length === 0 && nothingFound && (
         <SpotlightEmpty>{nothingFound}</SpotlightEmpty>
       )}
+      <VisuallyHidden role="status" aria-live="polite" aria-atomic>
+        {_query.trim().length > 0 ? getResultsAnnouncement(getActionsCount(limitedActions)) : ''}
+      </VisuallyHidden>
     </SpotlightRoot>
   );
 });

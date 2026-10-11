@@ -1,4 +1,7 @@
-import { render, tests } from '@mantine-tests/core';
+import { createRef } from 'react';
+import { renderToString } from 'react-dom/server';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { MantineProvider } from '../../core';
 import {
   TableOfContents,
   TableOfContentsProps,
@@ -150,5 +153,64 @@ describe('@mantine/core/TableOfContents', () => {
       expect(controls[0]).toHaveTextContent('First');
       expect(controls[1]).toHaveTextContent('Second');
     });
+
+    it('sets data-active and aria-current on the active control', () => {
+      const { container } = render(<TableOfContents />);
+      const controls = container.querySelectorAll('.mantine-TableOfContents-control');
+      expect(controls[1]).toHaveAttribute('data-active');
+      expect(controls[1]).toHaveAttribute('aria-current', 'location');
+      expect(controls[0]).not.toHaveAttribute('data-active');
+      expect(controls[0]).not.toHaveAttribute('aria-current');
+    });
+
+    it('scrolls to the heading when control is clicked', async () => {
+      const scrollIntoView = jest.fn();
+      const original = HTMLElement.prototype.scrollIntoView;
+      HTMLElement.prototype.scrollIntoView = scrollIntoView;
+
+      render(<TableOfContents />);
+      await userEvent.click(screen.getByRole('button', { name: 'Second' }));
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(document.getElementById('toc-h2'));
+
+      HTMLElement.prototype.scrollIntoView = original;
+    });
+
+    it('passes getControlProps output to controls', () => {
+      const getControlProps = jest.fn(({ active, data }) => ({
+        children: `${data.value}-${active ? 'active' : 'inactive'}`,
+        'data-test': data.id,
+      }));
+      render(<TableOfContents getControlProps={getControlProps} />);
+      expect(screen.getByRole('button', { name: 'First-inactive' })).toHaveAttribute(
+        'data-test',
+        'toc-h1'
+      );
+      expect(screen.getByRole('button', { name: 'Second-active' })).toHaveAttribute(
+        'data-test',
+        'toc-h2'
+      );
+    });
+
+    it('assigns reinitialize function to reinitializeRef', () => {
+      const ref = createRef<() => void>() as React.RefObject<() => void>;
+      render(<TableOfContents reinitializeRef={ref} />);
+      expect(typeof ref.current).toBe('function');
+    });
+  });
+
+  it('renders controls from initialData before headings are retrieved', () => {
+    const html = renderToString(
+      <MantineProvider>
+        <TableOfContents
+          initialData={[
+            { id: '1', value: 'Initial heading 1', depth: 1 },
+            { id: '2', value: 'Initial heading 2', depth: 2 },
+          ]}
+        />
+      </MantineProvider>
+    );
+    expect(html).toContain('Initial heading 1');
+    expect(html).toContain('Initial heading 2');
   });
 });

@@ -39,7 +39,7 @@ export interface UseFloatingWindowOptions {
   /** Initial position. If not set, calculated from element styles. @category state */
   initialPosition?: FloatingWindowPositionConfig;
 
-  /** Called when the element position changes @category state */
+  /** Called when the element position changes: on initial placement, drag, keyboard move, `setPosition` call and re-clamp after the element is resized @category state */
   onPositionChange?: (pos: FloatingWindowPosition) => void;
 
   /** Called when the drag starts @category behavior */
@@ -61,6 +61,15 @@ export interface UseFloatingWindowReturnValue<T extends HTMLElement> {
   /** `true` if the element is currently being dragged */
   isDragging: boolean;
 }
+
+const KEYBOARD_STEP = 10;
+const KEYBOARD_LARGE_STEP = 50;
+const KEYBOARD_DELTAS: Record<string, FloatingWindowPosition | undefined> = {
+  ArrowLeft: { x: -1, y: 0 },
+  ArrowRight: { x: 1, y: 0 },
+  ArrowUp: { x: 0, y: -1 },
+  ArrowDown: { x: 0, y: 1 },
+};
 
 export function useFloatingWindow<T extends HTMLElement>(
   options: UseFloatingWindowOptions = {}
@@ -103,6 +112,7 @@ export function useFloatingWindow<T extends HTMLElement>(
       el.style.top = `${pos.current.y}px`;
       el.style.right = 'unset';
       el.style.bottom = 'unset';
+      onPositionChangeRef.current?.(pos.current);
     }
 
     return () => {
@@ -126,6 +136,7 @@ export function useFloatingWindow<T extends HTMLElement>(
 
     const controller = new AbortController();
     const signal = controller.signal;
+    let dragController: AbortController | null = null;
 
     const onStart = (e: MouseEvent | TouchEvent) => {
       if (enabledRef.current === false) {
@@ -155,11 +166,15 @@ export function useFloatingWindow<T extends HTMLElement>(
 
       onDragStartRef.current?.();
 
-      document.addEventListener('mousemove', onMove, { signal });
-      document.addEventListener('mouseup', onEnd, { signal });
-      document.addEventListener('touchmove', onMove, { signal, passive: false });
-      document.addEventListener('touchend', onEnd, { signal });
-      document.addEventListener('touchcancel', onEnd, { signal });
+      dragController?.abort();
+      dragController = new AbortController();
+      const dragSignal = dragController.signal;
+
+      document.addEventListener('mousemove', onMove, { signal: dragSignal });
+      document.addEventListener('mouseup', onEnd, { signal: dragSignal });
+      document.addEventListener('touchmove', onMove, { signal: dragSignal, passive: false });
+      document.addEventListener('touchend', onEnd, { signal: dragSignal });
+      document.addEventListener('touchcancel', onEnd, { signal: dragSignal });
     };
 
     const onMove = (e: MouseEvent | TouchEvent) => {
@@ -170,20 +185,13 @@ export function useFloatingWindow<T extends HTMLElement>(
       const point = 'touches' in e ? e.touches[0] : e;
       e.preventDefault();
 
-      let x = point.clientX - offset.current.x;
-      let y = point.clientY - offset.current.y;
+      moveTo({ x: point.clientX - offset.current.x, y: point.clientY - offset.current.y });
+    };
 
-      const constrained = getConstrainedPosition(el, { x, y }, options);
-      if (options.axis === 'x') {
-        x = constrained.x;
-        y = pos.current.y;
-      } else if (options.axis === 'y') {
-        x = pos.current.x;
-        y = constrained.y;
-      } else {
-        x = constrained.x;
-        y = constrained.y;
-      }
+    const moveTo = (target: FloatingWindowPosition) => {
+      const constrained = getConstrainedPosition(el, target, options);
+      const x = options.axis === 'y' ? pos.current.x : constrained.x;
+      const y = options.axis === 'x' ? pos.current.y : constrained.y;
 
       pos.current = { x, y };
 
@@ -196,6 +204,9 @@ export function useFloatingWindow<T extends HTMLElement>(
     };
 
     const onEnd = () => {
+      dragController?.abort();
+      dragController = null;
+
       if (isDraggingRef.current) {
         setDragging(false);
         document.body.style.userSelect = '';
@@ -204,11 +215,29 @@ export function useFloatingWindow<T extends HTMLElement>(
       }
     };
 
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (enabledRef.current === false || e.target !== el) {
+        return;
+      }
+
+      const step = e.shiftKey ? KEYBOARD_LARGE_STEP : KEYBOARD_STEP;
+      const delta = KEYBOARD_DELTAS[e.key];
+
+      if (!delta) {
+        return;
+      }
+
+      e.preventDefault();
+      moveTo({ x: pos.current.x + delta.x * step, y: pos.current.y + delta.y * step });
+    };
+
     el.addEventListener('mousedown', onStart, { signal });
     el.addEventListener('touchstart', onStart, { signal, passive: false });
+    el.addEventListener('keydown', onKeyDown, { signal });
 
     return () => {
       controller.abort();
+      dragController?.abort();
     };
   }, [
     options.constrainToViewport,
@@ -229,11 +258,15 @@ export function useFloatingWindow<T extends HTMLElement>(
     }
 
     const observer = new ResizeObserver(() => {
-      // Re-clamp current position if element size changes
       const constrained = getConstrainedPosition(el, pos.current, options);
+      const changed = constrained.x !== pos.current.x || constrained.y !== pos.current.y;
       pos.current = constrained;
       el.style.left = `${constrained.x}px`;
       el.style.top = `${constrained.y}px`;
+
+      if (changed) {
+        onPositionChangeRef.current?.(constrained);
+      }
     });
 
     observer.observe(el);
@@ -241,7 +274,7 @@ export function useFloatingWindow<T extends HTMLElement>(
     return () => {
       observer.disconnect();
     };
-  }, [options.constrainToViewport, options.constrainOffset]);
+  }, [options.constrainToViewport, options.constrainOffset, element]);
 
   const setPosition = useCallback((position: FloatingWindowPositionConfig) => {
     const el = ref.current;

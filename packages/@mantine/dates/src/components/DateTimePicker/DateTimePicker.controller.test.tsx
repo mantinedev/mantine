@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { act, waitFor } from '@testing-library/react';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { clickInput, expectValue } from '@mantine-tests/dates';
-import { DatePickerType } from '../../types';
 import { DateTimePicker, DateTimePickerProps } from './DateTimePicker';
 import {
   useDateTimePicker,
@@ -56,7 +55,7 @@ function PopoverOpenedPicker({
   );
 }
 
-function ControllerPicker<Type extends DatePickerType = 'default'>({
+function ControllerPicker<Type extends 'default' | 'range' = 'default'>({
   options,
   capture,
   ...others

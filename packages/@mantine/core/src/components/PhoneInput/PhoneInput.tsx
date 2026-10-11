@@ -430,7 +430,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       onOptionSubmit={handleCountrySelect}
       {...comboboxProps}
     >
-      <Combobox.Target targetType="input" autoComplete={autoComplete}>
+      <Combobox.Target targetType="input" autoComplete={autoComplete} withExpandedAttribute={false}>
         <InputBase
           ref={inputRef}
           type="tel"

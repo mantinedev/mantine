@@ -12,8 +12,6 @@ interface SpinInputProps extends Omit<React.ComponentProps<'input'>, 'onChange' 
   /** @category state */
   onChange: (value: number | null) => void;
   /** @category behavior */
-  focusable: boolean;
-  /** @category behavior */
   step: number;
   /** @category behavior */
   onNextInput?: () => void;
@@ -38,7 +36,6 @@ export function SpinInput({
   min,
   max,
   onChange,
-  focusable,
   step,
   onNextInput,
   onPreviousInput,
@@ -58,6 +55,8 @@ export function SpinInput({
   const hasMax = Number.isFinite(max);
   const maxDigit = hasMax ? getMaxDigit(max) : Infinity;
   const arrowsMax = hasMax ? max + 1 - step : max;
+
+  const displayValue = value === null ? '' : (padValue || padTime)(value);
 
   const emitChange = (newValue: number | null) => {
     emittedValueRef.current = newValue;
@@ -107,7 +106,7 @@ export function SpinInput({
       return;
     }
 
-    if (event.key === '0' || event.key === 'Num0') {
+    if (event.key === '0') {
       const { selectionStart, selectionEnd, value: inputValue } = event.currentTarget;
       const isEntireValueSelected =
         inputValue.length > 0 && selectionStart === 0 && selectionEnd === inputValue.length;
@@ -170,11 +169,13 @@ export function SpinInput({
       role="spinbutton"
       aria-valuemin={min}
       aria-valuemax={hasMax ? max : undefined}
-      aria-valuenow={value === null ? 0 : value}
+      aria-valuenow={value === null ? undefined : value}
+      aria-valuetext={value === null ? undefined : displayValue}
+      readOnly={readOnly}
       data-empty={value === null || undefined}
       inputMode="numeric"
       placeholder={placeholder}
-      value={value === null ? '' : (padValue || padTime)(value)}
+      value={displayValue}
       onChange={(event) => handleChange(event.currentTarget.value)}
       onKeyDown={handleKeyDown}
       onFocus={(event) => {

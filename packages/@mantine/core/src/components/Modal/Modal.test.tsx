@@ -238,6 +238,95 @@ describe('@mantine/core/Modal', () => {
   });
 });
 
+describe('@mantine/core/Modal behavior', () => {
+  it('calls onClose when the overlay is clicked', async () => {
+    const onClose = jest.fn();
+    const { container } = render(<Modal {...defaultProps} onClose={onClose} />);
+    await userEvent.click(container.querySelector('.mantine-Modal-overlay')!);
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not call onClose on overlay click when closeOnClickOutside is false', async () => {
+    const onClose = jest.fn();
+    const { container } = render(
+      <Modal {...defaultProps} onClose={onClose} closeOnClickOutside={false} />
+    );
+    await userEvent.click(container.querySelector('.mantine-Modal-overlay')!);
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('calls onClose on Escape and respects closeOnEscape={false}', async () => {
+    const onClose = jest.fn();
+    const { rerender } = render(<Modal {...defaultProps} onClose={onClose} />);
+    await userEvent.keyboard('{Escape}');
+    expect(onClose).toHaveBeenCalledTimes(1);
+
+    rerender(<Modal {...defaultProps} onClose={onClose} closeOnEscape={false} />);
+    await userEvent.keyboard('{Escape}');
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('labels the dialog with title and describes it with body', () => {
+    render(<Modal {...defaultProps}>modal-body</Modal>);
+    const dialog = screen.getByRole('dialog', { name: 'test-title' });
+    expect(dialog).toHaveAccessibleDescription('modal-body');
+  });
+
+  it('forwards aria-label to the dialog element when title is not set', () => {
+    render(<Modal {...defaultProps} title={undefined} aria-label="custom-label" />);
+    expect(screen.getByRole('dialog', { name: 'custom-label' })).toBeInTheDocument();
+  });
+
+  it('prefers aria-labelledby passed by the user over the title id', () => {
+    render(
+      <>
+        <span id="external-label">external</span>
+        <Modal {...defaultProps} aria-labelledby="external-label" />
+      </>
+    );
+    expect(screen.getByRole('dialog', { name: 'external' })).toBeInTheDocument();
+  });
+
+  it('applies zIndex={0} instead of the default z-index', () => {
+    const { container } = render(<Modal {...defaultProps} zIndex={0} />);
+    expect(
+      (container.querySelector('.mantine-Modal-root') as HTMLElement).style.getPropertyValue(
+        '--mb-z-index'
+      )
+    ).toBe('0');
+  });
+
+  it('returns focus to the trigger on close when trapFocus is false', async () => {
+    function Demo() {
+      const [opened, setOpened] = useState(false);
+      return (
+        <>
+          <button type="button" onClick={() => setOpened(true)}>
+            open
+          </button>
+          <Modal
+            opened={opened}
+            onClose={() => setOpened(false)}
+            withinPortal={false}
+            trapFocus={false}
+            title="modal"
+            transitionProps={{ duration: 0 }}
+          >
+            <button type="button">inside</button>
+          </Modal>
+        </>
+      );
+    }
+
+    render(<Demo />);
+    await userEvent.click(screen.getByRole('button', { name: 'open' }));
+    await userEvent.click(screen.getByRole('button', { name: 'inside' }));
+    expect(screen.getByRole('button', { name: 'inside' })).toHaveFocus();
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'open' })).toHaveFocus());
+  });
+});
+
 describe('@mantine/core/ModalRoot', () => {
   tests.itSupportsSystemProps<ModalRootProps, 'root'>({
     component: ModalRoot,
@@ -374,6 +463,14 @@ describe('@mantine/core/ModalStack', () => {
     expect(screen.getByText('modal-a')).toBeInTheDocument();
     expect(screen.getByText('modal-b')).toBeInTheDocument();
     expect(screen.getByText('modal-a').closest('[data-stack-hidden]')).toBeNull();
+  });
+
+  it('makes non-top stacked modals inert', async () => {
+    render(<StackDemo />);
+    await userEvent.click(screen.getByText('open'));
+    expect(screen.getByText('modal-a').closest('[role="dialog"]')).toHaveAttribute('inert');
+    expect(screen.getByText('modal-b').closest('[role="dialog"]')).toHaveAttribute('inert');
+    expect(screen.getByText('modal-c').closest('[role="dialog"]')).not.toHaveAttribute('inert');
   });
 
   it('renders a newly opened modal as the top card without freezing its layout', async () => {

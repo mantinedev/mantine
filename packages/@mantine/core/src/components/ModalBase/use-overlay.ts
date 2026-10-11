@@ -76,7 +76,7 @@ export function useOverlay({
     { capture: true }
   );
 
-  const shouldReturnFocus = !!(trapFocus && returnFocus);
+  const shouldReturnFocus = !!returnFocus;
   const focusTrapActive = !!(opened && trapFocus && stackActive);
   useFocusReturn({ opened, shouldReturnFocus });
   useStackFocusRestore({ id: _id, opened, stackActive, focusTrapActive, shouldReturnFocus });

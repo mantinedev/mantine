@@ -1,4 +1,4 @@
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { RollingNumber, RollingNumberProps, RollingNumberStylesNames } from './RollingNumber';
 
 const defaultProps: RollingNumberProps = {
@@ -7,6 +7,11 @@ const defaultProps: RollingNumberProps = {
 };
 
 describe('@mantine/core/RollingNumber', () => {
+  tests.axe([
+    <RollingNumber key="1" value={1234} prefix="$" thousandSeparator />,
+    <RollingNumber key="2" value={42} withLiveRegion />,
+  ]);
+
   tests.itSupportsSystemProps<RollingNumberProps, RollingNumberStylesNames>({
     component: RollingNumber,
     props: defaultProps,
@@ -234,5 +239,21 @@ describe('@mantine/core/RollingNumber', () => {
       'aria-label',
       '$ 1,000,000 USD'
     );
+  });
+
+  it('updates aria-label of the live region on rerender', () => {
+    const { rerender } = render(<RollingNumber value={10} suffix="%" withLiveRegion />);
+    expect(screen.getByRole('status')).toHaveAttribute('aria-label', '10%');
+    rerender(<RollingNumber value={25} suffix="%" withLiveRegion />);
+    expect(screen.getByRole('status')).toHaveAttribute('aria-label', '25%');
+  });
+
+  it('marks animated elements with data-reduce-motion', () => {
+    const { container } = render(<RollingNumber value={12} prefix="$" />);
+    container
+      .querySelectorAll(
+        '.mantine-RollingNumber-digit, .mantine-RollingNumber-digitColumn, .mantine-RollingNumber-char'
+      )
+      .forEach((element) => expect(element).toHaveAttribute('data-reduce-motion'));
   });
 });

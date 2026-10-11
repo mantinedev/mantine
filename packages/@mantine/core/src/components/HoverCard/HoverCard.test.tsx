@@ -526,4 +526,44 @@ describe('@mantine/core/HoverCard', () => {
     await userEvent.keyboard('{Escape}');
     expect(screen.queryByText('test-dropdown')).not.toBeInTheDocument();
   });
+
+  it('opens dropdown after openDelay', async () => {
+    render(<TestContainer openDelay={100} />);
+    await userEvent.hover(screen.getByText('test-target'));
+    expect(screen.queryByText('test-dropdown')).not.toBeInTheDocument();
+
+    await flushTimers(150);
+    expect(screen.getByText('test-dropdown')).toBeInTheDocument();
+  });
+
+  it('does not open dropdown when the target is unhovered before openDelay', async () => {
+    render(<TestContainer openDelay={100} />);
+    await userEvent.hover(screen.getByText('test-target'));
+    await userEvent.unhover(screen.getByText('test-target'));
+
+    await flushTimers(150);
+    expect(screen.queryByText('test-dropdown')).not.toBeInTheDocument();
+  });
+
+  it('closes dropdown after closeDelay', async () => {
+    render(<TestContainer closeDelay={100} />);
+    await userEvent.hover(screen.getByText('test-target'));
+    expect(screen.getByText('test-dropdown')).toBeInTheDocument();
+
+    await userEvent.unhover(screen.getByText('test-target'));
+    expect(screen.getByText('test-dropdown')).toBeInTheDocument();
+
+    await flushTimers(150);
+    expect(screen.queryByText('test-dropdown')).not.toBeInTheDocument();
+  });
+
+  it('keeps dropdown opened when the pointer moves to the dropdown before closeDelay', async () => {
+    render(<TestContainer closeDelay={100} />);
+    await userEvent.hover(screen.getByText('test-target'));
+    await userEvent.unhover(screen.getByText('test-target'));
+    await userEvent.hover(screen.getByText('test-dropdown'));
+
+    await flushTimers(150);
+    expect(screen.getByText('test-dropdown')).toBeInTheDocument();
+  });
 });

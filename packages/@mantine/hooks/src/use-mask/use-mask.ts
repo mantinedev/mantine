@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDidUpdate } from '../use-did-update/use-did-update';
 import { useLatestRef } from '../utils';
 
 const DEFAULT_TOKENS: Record<string, RegExp> = {
@@ -19,10 +20,7 @@ export interface UseMaskOptions {
   /** Called before masking on each keystroke, can return overrides for mask options */
   modify?: (
     value: string
-  ) => Partial<Pick<UseMaskOptions, 'mask' | 'tokens' | 'slotChar' | 'separate'>> | undefined;
-
-  /** When true, raw and display values are decoupled */
-  separate?: boolean;
+  ) => Partial<Pick<UseMaskOptions, 'mask' | 'tokens' | 'slotChar'>> | undefined;
 
   /** Character displayed in unfilled slots, `"_"` by default */
   slotChar?: string | null;
@@ -296,7 +294,6 @@ function getResolvedOptions(options: UseMaskOptions, rawValue: string) {
   const tokens = { ...DEFAULT_TOKENS, ...options.tokens };
   let mask = options.mask;
   let slotChar: string | null | undefined = options.slotChar === undefined ? '_' : options.slotChar;
-  let separate = options.separate ?? false;
 
   if (options.modify) {
     const overrides = options.modify(rawValue);
@@ -310,14 +307,27 @@ function getResolvedOptions(options: UseMaskOptions, rawValue: string) {
       if (overrides.slotChar !== undefined) {
         slotChar = overrides.slotChar;
       }
-      if (overrides.separate !== undefined) {
-        separate = overrides.separate;
-      }
     }
   }
 
   const slots = parseMask(mask, tokens);
-  return { slots, slotChar, separate, tokens, transform: options.transform };
+  return { slots, slotChar, tokens, transform: options.transform };
+}
+
+function getMaskKey(options: UseMaskOptions) {
+  const serialize = (part: string | RegExp) => (typeof part === 'string' ? part : String(part));
+  const mask = Array.isArray(options.mask) ? options.mask.map(serialize) : options.mask;
+  const tokens = options.tokens
+    ? Object.entries(options.tokens).map(([key, value]) => [key, String(value)])
+    : null;
+
+  return JSON.stringify([
+    mask,
+    tokens,
+    options.slotChar,
+    options.alwaysShowMask,
+    options.showMaskOnFocus,
+  ]);
 }
 
 export function formatMask(raw: string, options: UseMaskOptions): string {
@@ -450,7 +460,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
       return { displayValue, newRaw, reprocessed, resolvedSlots };
     },
-    [applyValue, getOptions]
+    [applyValue]
   );
 
   const initializeInputValue = useCallback(
@@ -494,6 +504,22 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       return true;
     },
     [applyValue]
+  );
+
+  const syncInputValue = useCallback(
+    (node: HTMLInputElement) => {
+      const hasInitialValue = initializeInputValue(node);
+      const opts = optionsRef.current;
+
+      if (opts.alwaysShowMask && !hasInitialValue) {
+        const { slots, slotChar } = getResolvedOptions(opts, '');
+        const display = buildDisplayValue('', slots, slotChar, true);
+        node.value = display;
+        displayValueRef.current = display;
+        setMaskedValue(display);
+      }
+    },
+    [initializeInputValue]
   );
 
   const pushUndoState = useCallback(() => {
@@ -672,7 +698,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       return;
     }
 
-    const { slots, slotChar } = getResolvedOptions(opts, rawValue);
+    const { slots, slotChar } = getResolvedOptions(opts, rawValueRef.current);
     const expectedFocusDisplay = buildDisplayValue(processedRef.current, slots, slotChar, true);
     const processed =
       input.value === expectedFocusDisplay
@@ -723,14 +749,14 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       displayValueRef.current = display;
       setMaskedValue(display);
     }
-  }, [rawValue]);
+  }, []);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       const input = e.target as HTMLInputElement;
       const opts = optionsRef.current;
 
-      const { slots, slotChar, transform } = getResolvedOptions(opts, rawValue);
+      const { slots, slotChar, transform } = getResolvedOptions(opts, rawValueRef.current);
       const start = input.selectionStart ?? 0;
       const end = input.selectionEnd ?? 0;
       const processed = processedRef.current;
@@ -897,7 +923,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         updateValue(newValue, newCursorPos);
       }
     },
-    [applyHistoryState, pushUndoState, rawValue, updateValue]
+    [applyHistoryState, pushUndoState, updateValue]
   );
 
   const handlePaste = useCallback(
@@ -971,16 +997,7 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
         node.addEventListener('paste', handlePaste as EventListener);
 
         setAriaAttributes(node);
-
-        const hasInitialValue = initializeInputValue(node);
-
-        if (options.alwaysShowMask && !hasInitialValue) {
-          const { slots, slotChar } = getResolvedOptions(options, '');
-          const display = buildDisplayValue('', slots, slotChar, true);
-          node.value = display;
-          displayValueRef.current = display;
-          setMaskedValue(display);
-        }
+        syncInputValue(node);
       }
     },
     [
@@ -991,11 +1008,18 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
       handleMouseUp,
       handleKeyDown,
       handlePaste,
-      initializeInputValue,
+      syncInputValue,
       setAriaAttributes,
-      options,
     ]
   );
+
+  const maskKey = getMaskKey(options);
+
+  useDidUpdate(() => {
+    if (inputRef.current) {
+      syncInputValue(inputRef.current);
+    }
+  }, [maskKey, syncInputValue]);
 
   useEffect(() => {
     const input = inputRef.current;

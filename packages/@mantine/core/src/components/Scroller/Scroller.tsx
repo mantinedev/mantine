@@ -27,13 +27,13 @@ export interface ScrollerProps
   /** Content to display @category appearance */
   children: React.ReactNode;
 
-  /** Amount of pixels to scroll when clicking the control buttons, `200` by default @category behavior */
+  /** Amount of pixels to scroll when clicking the control buttons @default 200 @category behavior */
   scrollAmount?: number;
 
   /** Size of the control buttons, `xs`, `sm`, `md`, `lg`, `xl` or any valid CSS value @default 'md' @category appearance */
   controlSize?: string | number;
 
-  /** Background color for the gradient fade on controls, `'var(--mantine-color-body)'` by default @category appearance */
+  /** Background color for the gradient fade on controls @default 'var(--mantine-color-body)' @category appearance */
   edgeGradientColor?: string;
 
   /** Props passed to the start control button */
@@ -48,13 +48,13 @@ export interface ScrollerProps
   /** Icon component for the end control, AccordionChevron by default @category appearance */
   endControlIcon?: React.ReactNode;
 
-  /** Determines whether start control should always be visible regardless of scroll position, `false` by default @category appearance */
+  /** Determines whether start control should always be visible regardless of scroll position @default false @category appearance */
   showStartControl?: boolean;
 
-  /** Determines whether end control should always be visible regardless of scroll position, `false` by default @category appearance */
+  /** Determines whether end control should always be visible regardless of scroll position @default false @category appearance */
   showEndControl?: boolean;
 
-  /** Determines whether content can be scrolled by dragging with mouse, `true` by default @category behavior */
+  /** Determines whether content can be scrolled by dragging with mouse @default true @category behavior */
   draggable?: boolean;
 
   /** Determines whether the start and end control buttons with edge gradients are rendered @default true @category appearance */
@@ -146,6 +146,7 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
           data-position="start"
           data-hidden={!showStart || undefined}
           aria-label="Scroll left"
+          aria-hidden={!showStart || undefined}
           tabIndex={showStart ? 0 : -1}
           {...startControlProps}
         >
@@ -170,6 +171,7 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
           data-position="end"
           data-hidden={!showEnd || undefined}
           aria-label="Scroll right"
+          aria-hidden={!showEnd || undefined}
           tabIndex={showEnd ? 0 : -1}
           {...endControlProps}
         >

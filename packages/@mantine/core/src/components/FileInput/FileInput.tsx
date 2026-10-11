@@ -26,6 +26,7 @@ export interface FileInputProps<Multiple = false>
     __BaseInputProps,
     StylesApiProps<FileInputFactory>,
     ElementProps<'button', 'value' | 'defaultValue' | 'onChange' | 'placeholder'> {
+  /** Element or component rendered as the input, the input acts as a button that opens the file picker @default 'button' */
   component?: any;
 
   /** Called when value changes @category state */
@@ -61,7 +62,7 @@ export interface FileInputProps<Multiple = false>
   /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentProps<'button'>;
 
-  /** If set, the input value cannot be changed @category behavior */
+  /** If set, the input value cannot be changed @default false @category behavior */
   readOnly?: boolean;
 
   /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. @category behavior */

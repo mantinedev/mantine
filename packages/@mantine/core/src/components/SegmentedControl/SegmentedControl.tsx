@@ -100,10 +100,10 @@ export interface SegmentedControlProps<Value extends Primitive = string>
   /** Component orientation @default 'horizontal' @category appearance */
   orientation?: 'vertical' | 'horizontal';
 
-  /** If set to `false`, prevents changing the value @category behavior */
+  /** If set, prevents changing the value @default false @category behavior */
   readOnly?: boolean;
 
-  /** If set, automatically adjusts label text color for optimal contrast against the indicator background color @category appearance */
+  /** If set, automatically adjusts label text color for optimal contrast against the indicator background color @default theme.autoContrast @category appearance */
   autoContrast?: boolean;
 
   /** Determines whether there should be borders between items @default true @category appearance */
@@ -198,8 +198,7 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
       return;
     }
 
-    refs[val] = element;
-    setRefs({ ...refs });
+    setRefs((current) => (current[val] === element ? current : { ...current, [val]: element }));
   };
 
   const [_value, handleValueChange] = useUncontrolled({

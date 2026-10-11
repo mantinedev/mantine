@@ -17,6 +17,7 @@ interface GetSplittedTagsInput {
   currentTags: string[];
   isDuplicate?: (value: string, currentValues: string[]) => boolean;
   onDuplicate?: (value: string) => void;
+  onMaxTags?: (value: string) => void;
   isValidTag?: (value: string, currentValues: string[]) => boolean;
 }
 
@@ -33,6 +34,7 @@ export function getSplittedTags({
   currentTags,
   isDuplicate,
   onDuplicate,
+  onMaxTags,
   isValidTag,
 }: GetSplittedTagsInput): GetSplittedTagsResult {
   const invalid: string[] = [];
@@ -52,6 +54,11 @@ export function getSplittedTags({
 
     if (duplicated) {
       onDuplicate?.(tag);
+      continue;
+    }
+
+    if (maxTags && merged.length >= maxTags) {
+      onMaxTags?.(tag);
       continue;
     }
 

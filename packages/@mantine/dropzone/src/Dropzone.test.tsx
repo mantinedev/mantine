@@ -1,6 +1,6 @@
 import { createRef } from 'react';
-import { waitFor } from '@testing-library/react';
-import { render, tests, userEvent } from '@mantine-tests/core';
+import { fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { DropzoneFullScreen } from './DropzoneFullScreen';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
 import { Dropzone, DropzoneProps, DropzoneStylesNames } from './index';
@@ -111,5 +111,154 @@ describe('@mantine/dropzone/Dropzone', () => {
       path: './custom.png',
       relativePath: './custom.png',
     });
+  });
+
+  it('has role="button" by default', () => {
+    const { container, rerender } = render(<Dropzone {...defaultProps} />);
+    expect(container.querySelector('.mantine-Dropzone-root')).toHaveAttribute('role', 'button');
+    expect(container.querySelector('input')).toHaveAttribute('aria-hidden', 'true');
+
+    rerender(<Dropzone {...defaultProps} role="region" />);
+    expect(container.querySelector('.mantine-Dropzone-root')).toHaveAttribute('role', 'region');
+
+    rerender(<Dropzone {...defaultProps} activateOnKeyboard={false} />);
+    expect(container.querySelector('.mantine-Dropzone-root')).toHaveAttribute(
+      'role',
+      'presentation'
+    );
+    expect(container.querySelector('input')).not.toHaveAttribute('aria-hidden');
+
+    rerender(
+      <Dropzone {...defaultProps} activateOnClick={false}>
+        <button type="button">Select files</button>
+      </Dropzone>
+    );
+    expect(container.querySelector('.mantine-Dropzone-root')).toHaveAttribute(
+      'role',
+      'presentation'
+    );
+  });
+
+  it('sets aria-disabled when disabled', () => {
+    const { container, rerender } = render(<Dropzone {...defaultProps} />);
+    const root = container.querySelector('.mantine-Dropzone-root')!;
+    expect(root).not.toHaveAttribute('aria-disabled');
+    expect(root).toHaveAttribute('tabindex', '0');
+
+    rerender(<Dropzone {...defaultProps} disabled />);
+    expect(root).toHaveAttribute('aria-disabled', 'true');
+    expect(root).not.toHaveAttribute('tabindex');
+  });
+
+  it('sets aria-busy when loading', () => {
+    const { container, rerender } = render(<Dropzone {...defaultProps} />);
+    const root = container.querySelector('.mantine-Dropzone-root')!;
+    expect(root).not.toHaveAttribute('aria-busy');
+
+    rerender(<Dropzone {...defaultProps} loading />);
+    expect(root).toHaveAttribute('aria-busy', 'true');
+  });
+
+  it('does not open file picker on click when disabled or loading', async () => {
+    const { container, rerender } = render(<Dropzone {...defaultProps} disabled />);
+    const click = jest.spyOn(container.querySelector('input')!, 'click');
+
+    await userEvent.click(container.querySelector('.mantine-Dropzone-root')!);
+    expect(click).not.toHaveBeenCalled();
+
+    rerender(<Dropzone {...defaultProps} loading />);
+    await userEvent.click(container.querySelector('.mantine-Dropzone-root')!);
+    expect(click).not.toHaveBeenCalled();
+
+    rerender(<Dropzone {...defaultProps} />);
+    await userEvent.click(container.querySelector('.mantine-Dropzone-root')!);
+    expect(click).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls consumer handlers and keeps dropzone handlers', async () => {
+    const onClick = jest.fn();
+    const onKeyDown = jest.fn();
+    const { container } = render(
+      <Dropzone {...defaultProps} onClick={onClick} onKeyDown={onKeyDown} />
+    );
+    const click = jest.spyOn(container.querySelector('input')!, 'click');
+    const root = container.querySelector<HTMLElement>('.mantine-Dropzone-root')!;
+
+    await userEvent.click(root);
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(click).toHaveBeenCalledTimes(1);
+
+    root.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(onKeyDown).toHaveBeenCalled();
+    expect(click).toHaveBeenCalledTimes(2);
+  });
+
+  it('assigns ref to the root element while keeping keyboard activation working', async () => {
+    const ref = createRef<HTMLDivElement>();
+    const { container } = render(<Dropzone {...defaultProps} ref={ref} />);
+    const click = jest.spyOn(container.querySelector('input')!, 'click');
+    expect(ref.current).toBe(container.querySelector('.mantine-Dropzone-root'));
+
+    ref.current!.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(click).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders only Dropzone.Idle by default', () => {
+    render(
+      <Dropzone {...defaultProps}>
+        <Dropzone.Idle>idle</Dropzone.Idle>
+        <Dropzone.Accept>accept</Dropzone.Accept>
+        <Dropzone.Reject>reject</Dropzone.Reject>
+      </Dropzone>
+    );
+
+    expect(screen.getByText('idle')).toBeInTheDocument();
+    expect(screen.queryByText('accept')).not.toBeInTheDocument();
+    expect(screen.queryByText('reject')).not.toBeInTheDocument();
+  });
+
+  it('renders Dropzone.Accept when accepted files are dragged over', async () => {
+    const { container } = render(
+      <Dropzone {...defaultProps} accept={['image/png']}>
+        <Dropzone.Idle>idle</Dropzone.Idle>
+        <Dropzone.Accept>accept</Dropzone.Accept>
+        <Dropzone.Reject>reject</Dropzone.Reject>
+      </Dropzone>
+    );
+
+    fireEvent.dragEnter(container.querySelector('.mantine-Dropzone-root')!, {
+      dataTransfer: {
+        files: [createFile('a.png')],
+        items: [{ kind: 'file', type: 'image/png', getAsFile: () => createFile('a.png') }],
+        types: ['Files'],
+      },
+    });
+
+    expect(await screen.findByText('accept')).toBeInTheDocument();
+    expect(screen.queryByText('idle')).not.toBeInTheDocument();
+    expect(screen.queryByText('reject')).not.toBeInTheDocument();
+  });
+
+  it('renders Dropzone.Reject when rejected files are dragged over', async () => {
+    const { container } = render(
+      <Dropzone {...defaultProps} accept={['image/png']}>
+        <Dropzone.Idle>idle</Dropzone.Idle>
+        <Dropzone.Accept>accept</Dropzone.Accept>
+        <Dropzone.Reject>reject</Dropzone.Reject>
+      </Dropzone>
+    );
+
+    fireEvent.dragEnter(container.querySelector('.mantine-Dropzone-root')!, {
+      dataTransfer: {
+        files: [new File(['a'], 'a.txt', { type: 'text/plain' })],
+        items: [{ kind: 'file', type: 'text/plain' }],
+        types: ['Files'],
+      },
+    });
+
+    expect(await screen.findByText('reject')).toBeInTheDocument();
+    expect(screen.queryByText('idle')).not.toBeInTheDocument();
   });
 });

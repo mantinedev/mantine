@@ -85,4 +85,39 @@ describe('@mantine/core/Portal', () => {
       document.querySelectorAll('[data-portal]:not([data-mantine-shared-portal-node])')
     ).toHaveLength(2);
   });
+
+  it('does not apply className, style and id to the shared portal node', () => {
+    removeSharedPortalNodes();
+    render(
+      <Portal className="first-portal" id="first-portal" style={{ color: 'red' }}>
+        first
+      </Portal>
+    );
+    const sharedNode = document.querySelector<HTMLElement>('[data-mantine-shared-portal-node]')!;
+    expect(sharedNode.classList).not.toContain('first-portal');
+    expect(sharedNode).not.toHaveAttribute('id');
+    expect(sharedNode.style.color).toBe('');
+  });
+
+  it('renders content inside the target element', () => {
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    render(<Portal target={target}>element-target</Portal>);
+    expect(target.textContent).toBe('element-target');
+    target.remove();
+  });
+
+  it('renders content inside the element that matches the target selector', () => {
+    const target = document.createElement('div');
+    target.id = 'portal-selector-target';
+    document.body.appendChild(target);
+    render(<Portal target="#portal-selector-target">selector-target</Portal>);
+    expect(target.textContent).toBe('selector-target');
+    target.remove();
+  });
+
+  it('does not render content when the target selector does not match any element', () => {
+    render(<Portal target="#missing-portal-target">missing-target</Portal>);
+    expect(document.body.textContent).not.toContain('missing-target');
+  });
 });

@@ -1,3 +1,4 @@
+import { useEditorState } from '@tiptap/react';
 import { BoxProps, ColorSwatch, ElementProps, useProps } from '@mantine/core';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
 import { RichTextEditorControl } from './RichTextEditorControl';
@@ -10,7 +11,11 @@ export interface RichTextEditorColorControlProps extends BoxProps, ElementProps<
 export function RichTextEditorColorControl(props: RichTextEditorColorControlProps) {
   const { color, ...others } = useProps('RichTextEditorColorControl', null, props);
   const { editor, labels, variant } = useRichTextEditorContext();
-  const currentColor = editor?.getAttributes('textStyle').color || null;
+  const currentColor = useEditorState({
+    editor: editor ?? null,
+    selector: () =>
+      editor && !editor.isDestroyed ? editor.getAttributes('textStyle').color || null : null,
+  });
   const label = labels.colorControlLabel(color);
 
   return (

@@ -61,4 +61,45 @@ describe('@mantine/core/FloatingIndicator', () => {
     expect(indicatorRef.current.style.height).toBe('50px');
     expect(indicatorRef.current.style.transform).toBe('translateY(50px) translateX(100px)');
   });
+
+  it('renders nothing without target or parent', () => {
+    const { container, rerender } = render(
+      <FloatingIndicator target={null} parent={document.createElement('div')} />
+    );
+    expect(container.querySelector('.mantine-FloatingIndicator-root')).toBeNull();
+
+    rerender(<FloatingIndicator target={document.createElement('div')} parent={undefined} />);
+    expect(container.querySelector('.mantine-FloatingIndicator-root')).toBeNull();
+  });
+
+  it('is hidden from assistive technology', () => {
+    const { container } = render(<FloatingIndicator {...defaultProps} />);
+    expect(container.querySelector('.mantine-FloatingIndicator-root')).toHaveAttribute(
+      'aria-hidden',
+      'true'
+    );
+  });
+
+  it('sets data-hidden initially with displayAfterTransitionEnd', () => {
+    const { container } = render(<FloatingIndicator {...defaultProps} displayAfterTransitionEnd />);
+    expect(container.querySelector('.mantine-FloatingIndicator-root')).toHaveAttribute(
+      'data-hidden'
+    );
+
+    const { container: secondContainer } = render(<FloatingIndicator {...defaultProps} />);
+    expect(secondContainer.querySelector('.mantine-FloatingIndicator-root')).not.toHaveAttribute(
+      'data-hidden'
+    );
+  });
+
+  it('does not reconnect dir observer on every render', () => {
+    const observeSpy = jest.spyOn(MutationObserver.prototype, 'observe');
+    const { rerender } = render(<FloatingIndicator {...defaultProps} />);
+    const initialCalls = observeSpy.mock.calls.length;
+
+    rerender(<FloatingIndicator {...defaultProps} className="rerender" />);
+    rerender(<FloatingIndicator {...defaultProps} className="rerender-2" />);
+    expect(observeSpy.mock.calls.length).toBe(initialCalls);
+    observeSpy.mockRestore();
+  });
 });

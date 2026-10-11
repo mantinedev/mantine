@@ -494,6 +494,25 @@ describe('@mantine/core/NumberInput', () => {
     expect(controls).not.toBeInTheDocument();
   });
 
+  it('hides controls when hideControls is set', () => {
+    const { container } = render(<NumberInput hideControls />);
+    expect(container.querySelector('.mantine-NumberInput-controls')).not.toBeInTheDocument();
+  });
+
+  it('replaces controls with rightSection', () => {
+    const { container } = render(<NumberInput rightSection="custom-section" />);
+    expect(screen.getByText('custom-section')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-NumberInput-controls')).not.toBeInTheDocument();
+  });
+
+  it('increments empty input to min when startValue is below min', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput min={5} max={10} startValue={2} onChange={spy} />);
+    await clickIncrement(container);
+    expectValue('5');
+    expect(spy).toHaveBeenLastCalledWith(5);
+  });
+
   it('calls onValueChange with correct payload structure', async () => {
     const spy = jest.fn();
     render(<NumberInput onValueChange={spy} />);

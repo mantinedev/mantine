@@ -82,6 +82,9 @@ export interface MiniCalendarProps
 
   /** dayjs locale used for formatting @category appearance */
   locale?: string;
+
+  /** Assigns `aria-label` to day buttons based on date, by default the label is the date formatted with `D MMMM YYYY` in the current locale @category accessibility */
+  getDayAriaLabel?: (date: string) => string;
 }
 
 export type MiniCalendarFactory = Factory<{
@@ -129,6 +132,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props) => {
     nextControlProps,
     previousControlProps,
     locale,
+    getDayAriaLabel,
     ...others
   } = props;
 
@@ -185,19 +189,23 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props) => {
         (maxDate && date.isAfter(dayjs(maxDate), 'day')) ||
         false;
 
-      const dayProps = getDayProps?.(toDateString(date));
+      const dateString = toDateString(date)!;
+      const dayProps = getDayProps?.(dateString);
+      const selected = !!value && dayjs(date).isSame(value, 'day') && !disabled;
 
       return (
         <UnstyledButton
           key={date.toString()}
           disabled={disabled}
-          aria-label={date.format('YYYY-MM-DD')}
+          aria-label={getDayAriaLabel?.(dateString) || date.locale(_locale).format('D MMMM YYYY')}
+          aria-pressed={selected}
+          aria-current={date.isSame(dayjs(), 'day') ? 'date' : undefined}
           data-disabled={disabled || undefined}
-          data-selected={value && dayjs(date).isSame(value, 'day') ? true : undefined}
+          data-selected={(value && dayjs(date).isSame(value, 'day')) || undefined}
           {...dayProps}
           onClick={(event) => {
             dayProps?.onClick?.(event);
-            onChange?.(toDateString(date));
+            onChange?.(dateString);
           }}
           {...getStyles('day', {
             active: !disabled,
@@ -207,7 +215,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props) => {
         >
           <span {...getStyles('dayMonth')}>
             {typeof monthLabelFormat === 'function'
-              ? monthLabelFormat(toDateString(date))
+              ? monthLabelFormat(dateString)
               : date.locale(_locale).format(monthLabelFormat)}
           </span>
           <span {...getStyles('dayNumber')}>{date.date()}</span>

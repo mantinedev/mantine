@@ -20,7 +20,7 @@ export interface MenuContextValue {
   registerOpenSub: (closeFn: () => void) => () => void;
   hasSearch: boolean;
   registerSearch: () => () => void;
-  searchExitClearRef: React.RefObject<(() => void) | null>;
+  registerSearchExitClear: (clear: () => void) => () => void;
   alignItemsLabels: 'all' | 'with-indicators' | 'none';
   checkIcon: React.ReactNode;
   variant: MenuVariant | undefined;

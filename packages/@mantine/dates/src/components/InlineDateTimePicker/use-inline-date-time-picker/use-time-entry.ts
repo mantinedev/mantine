@@ -220,11 +220,11 @@ export function useTimeEntry(options: TimeEntryControllerOptions): TimeEntryCont
         const defaultTimeValue = latest.current.defaultTimeValue;
 
         if (!latest.current.timeControlled) {
-          writeTime(defaultTimeValue || settings.valueTime);
+          writeTime(settings.valueTime || defaultTimeValue || '');
         }
 
         if (!latest.current.endTimeControlled) {
-          writeEndTime(defaultTimeValue || settings.valueEndTime);
+          writeEndTime(settings.valueEndTime || defaultTimeValue || '');
         }
       }
     } else if (

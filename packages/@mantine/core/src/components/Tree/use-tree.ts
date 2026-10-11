@@ -459,16 +459,19 @@ export function useTree({
     if (!latest.current.multiple) {
       if (current.includes(value)) {
         setAnchorNode(null);
-        return [];
+        setSelectedState([]);
+        return;
       }
 
       setAnchorNode(value);
-      return [value];
+      setSelectedState([value]);
+      return;
     }
 
     if (current.includes(value)) {
       setAnchorNode(null);
-      return current.filter((item) => item !== value);
+      setSelectedState(current.filter((item) => item !== value));
+      return;
     }
 
     setAnchorNode(value);

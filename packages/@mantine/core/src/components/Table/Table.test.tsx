@@ -78,6 +78,17 @@ describe('@mantine/core/Table', () => {
     expect(container.querySelector('caption')).toHaveTextContent('test-caption');
   });
 
+  it('sets scope="col" on header and footer cells generated from data prop', () => {
+    render(<Table data={{ head: ['Name'], body: [['John']], foot: ['Total'] }} />);
+    expect(screen.getByRole('columnheader', { name: 'Name' })).toHaveAttribute('scope', 'col');
+    expect(screen.getByRole('columnheader', { name: 'Total' })).toHaveAttribute('scope', 'col');
+  });
+
+  it('supports React nodes as data caption', () => {
+    render(<Table data={{ caption: <strong>Bold caption</strong>, body: [['1']] }} />);
+    expect(screen.getByText('Bold caption').tagName).toBe('STRONG');
+  });
+
   it('sets data-with-table-border attribute when withTableBorder prop is set', () => {
     render(<Table withTableBorder />);
     expect(screen.getByRole('table')).toHaveAttribute('data-with-table-border');

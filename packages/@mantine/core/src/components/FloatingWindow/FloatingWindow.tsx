@@ -177,6 +177,7 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
         <Paper
           ref={useMergedRef(ref, floatingWindow.ref, rootRef)}
           mod={[{ dragging: floatingWindow.isDragging }, mod]}
+          tabIndex={enabled === false ? undefined : 0}
           {...getStyles('root')}
           {...others}
           __vars={cssVars}

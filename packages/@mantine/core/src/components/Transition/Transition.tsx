@@ -25,7 +25,7 @@ export interface TransitionProps {
   /** Exit transition duration in ms @default 250 @category appearance */
   exitDuration?: number;
 
-  /** Transition timing function @default theme.transitionTimingFunction @category appearance */
+  /** Transition timing function @default 'ease' @category appearance */
   timingFunction?: string;
 
   /** Determines whether component should be mounted to the DOM @category state */

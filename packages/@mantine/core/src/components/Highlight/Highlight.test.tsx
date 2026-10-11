@@ -225,4 +225,14 @@ describe('@mantine/core/Highlight', () => {
     const mark = container.querySelector('mark');
     expect(mark).toHaveStyle({ fontWeight: 700 });
   });
+
+  it('supports highlightStyles as a function of theme', () => {
+    const { container } = render(
+      <Highlight highlight="test" highlightStyles={(theme) => ({ color: theme.white })}>
+        This is a test
+      </Highlight>
+    );
+    const mark = container.querySelector('mark');
+    expect(mark).toHaveStyle({ color: '#fff' });
+  });
 });

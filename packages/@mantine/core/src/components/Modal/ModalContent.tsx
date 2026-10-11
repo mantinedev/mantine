@@ -204,6 +204,9 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
                 {...others}
                 component="section"
                 {...contentProps}
+                aria-labelledby={others['aria-labelledby'] ?? contentProps['aria-labelledby']}
+                aria-describedby={others['aria-describedby'] ?? contentProps['aria-describedby']}
+                inert={__stackActive === false || undefined}
                 style={[
                   contentStyles.style,
                   transitionStyles,

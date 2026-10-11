@@ -119,7 +119,7 @@ export interface PinInputProps
     | 'search'
     | undefined;
 
-  /** `aria-label` attribute @category accessibility */
+  /** Base of the `aria-label` applied to every input, the input position is appended to it, for example `Code 1 of 4`. Falls back to the root `aria-label`. @default 'PinInput' @category accessibility */
   ariaLabel?: string;
 
   /** Props passed down to the hidden input */
@@ -146,7 +146,6 @@ const defaultProps = {
   oneTimeCode: true,
   placeholder: '○',
   type: 'alphanumeric',
-  ariaLabel: 'PinInput',
   size: 'sm',
 } satisfies Partial<PinInputProps>;
 
@@ -229,6 +228,7 @@ export const PinInput = factory<PinInputFactory>((props) => {
   });
 
   const currentLength = pinInput.length;
+  const inputLabel = ariaLabel ?? others['aria-label'] ?? 'PinInput';
   const currentValue = pinInput.fieldValues;
 
   const validate = (code: string) => {
@@ -288,12 +288,11 @@ export const PinInput = factory<PinInputFactory>((props) => {
     const inputValue = (target as HTMLInputElement).value;
 
     if (inputMode === 'numeric') {
-      const allowedKeys = ['Backspace', 'Tab', 'Control', 'Delete', 'ArrowLeft', 'ArrowRight'];
       const isModifierShortcut = ctrlKey || metaKey;
-      const isAllowedKey =
-        allowedKeys.includes(key) || isModifierShortcut || !Number.isNaN(Number(key));
+      const isBlockedKey =
+        key.length === 1 && key !== ' ' && !/[0-9]/.test(key) && !isModifierShortcut;
 
-      if (!isAllowedKey) {
+      if (isBlockedKey) {
         event.preventDefault();
         return;
       }
@@ -436,7 +435,7 @@ export const PinInput = factory<PinInputFactory>((props) => {
             value={char}
             autoFocus={autoFocus && index === 0}
             unstyled={unstyled}
-            aria-label={ariaLabel}
+            aria-label={`${inputLabel} ${index + 1} of ${currentLength}`}
             readOnly={readOnly}
             {...getInputProps?.(index)}
           />

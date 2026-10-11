@@ -15,6 +15,7 @@ import {
   MantineColor,
   MantineRadius,
   MantineSize,
+  Primitive,
   StylesApiProps,
   useProps,
   useStyles,
@@ -83,7 +84,7 @@ export interface ChipProps
   /** Assigns ref of the root element */
   rootRef?: React.Ref<HTMLDivElement>;
 
-  /** If set, adjusts text color based on the chip background color for `filled` variant @category appearance */
+  /** If set, adjusts text color based on the chip background color for `filled` variant @default theme.autoContrast @category appearance */
   autoContrast?: boolean;
 }
 
@@ -184,12 +185,13 @@ export const Chip = factory<ChipFactory>((_props) => {
 
   const contextProps = ctx
     ? {
-        checked: ctx.isChipSelected(value as string),
+        checked: ctx.isChipSelected(value as Primitive),
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-          ctx.onChange(event);
+          ctx.onChange(value as Primitive);
           onChange?.(event.currentTarget.checked);
         },
         type: ctx.multiple ? 'checkbox' : 'radio',
+        name: ctx.multiple ? undefined : ctx.name,
       }
     : {};
 
