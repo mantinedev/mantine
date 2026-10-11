@@ -5,11 +5,16 @@ import { render, screen } from '@mantine-tests/core';
 import { Transition } from './Transition';
 
 describe('@mantine/core/Transition', () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
+  beforeEach(() => {
+    jest.useFakeTimers();
   });
 
-  it('does not request more frames when it is unmounted by the first frame commit', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.useRealTimers();
+  });
+
+  it('does not request more frames or call onEntered when it is unmounted by the first frame commit', () => {
     const frames = new Map<number, FrameRequestCallback>();
     let lastFrame = 0;
     jest.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => {
@@ -21,6 +26,7 @@ describe('@mantine/core/Transition', () => {
       frames.delete(frame);
     });
 
+    const onEntered = jest.fn();
     const controls: { show?: () => void; leave?: () => void } = {};
 
     function Owner() {
@@ -30,7 +36,7 @@ describe('@mantine/core/Transition', () => {
       controls.leave = () => setStanding(false);
 
       return standing ? (
-        <Transition mounted={mounted} duration={100}>
+        <Transition mounted={mounted} duration={100} onEntered={onEntered}>
           {(styles) => <div style={styles}>content</div>}
         </Transition>
       ) : null;
@@ -51,5 +57,12 @@ describe('@mantine/core/Transition', () => {
 
     expect(screen.queryByText('content')).not.toBeInTheDocument();
     expect(frames.size).toBe(0);
+
+    act(() => {
+      frames.forEach((callback) => callback(0));
+      jest.advanceTimersByTime(100);
+    });
+
+    expect(onEntered).not.toHaveBeenCalled();
   });
 });
