@@ -28,6 +28,20 @@ describe('@mantine/core/Divider', () => {
     );
   });
 
+  it('sets aria-orientation attribute based on orientation prop', () => {
+    const { rerender, container } = render(<Divider />);
+    expect(container.querySelector('.mantine-Divider-root')).toHaveAttribute(
+      'aria-orientation',
+      'horizontal'
+    );
+
+    rerender(<Divider orientation="vertical" />);
+    expect(container.querySelector('.mantine-Divider-root')).toHaveAttribute(
+      'aria-orientation',
+      'vertical'
+    );
+  });
+
   it('sets data-position on label element based on labelPosition prop', () => {
     const { container } = render(<Divider label="test-label" labelPosition="left" />);
     expect(container.querySelector('.mantine-Divider-label')).toHaveAttribute(

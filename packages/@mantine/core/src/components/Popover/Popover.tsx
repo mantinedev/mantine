@@ -138,6 +138,9 @@ export interface __PopoverProps {
 
   /** If `true`, the dropdown picks its side on open (flip runs once, preferring the `position` prop) and then never changes side — scrolling, resizing, and content size changes will not flip the dropdown. The side is recalculated fresh on the next open. Does not affect the `shift` middleware. Set to `false` to keep flip active and allow the dropdown to re-flip on every change. @default true */
   preventPositionChangeWhenVisible?: boolean;
+
+  /** If set, outside click listeners are registered in the capture phase @default false */
+  clickOutsideCapture?: boolean;
 }
 
 export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFactory> {
@@ -199,6 +202,7 @@ const defaultProps = {
   hideDetached: true,
   preventPositionChangeWhenVisible: true,
   clickOutsideEvents: ['mousedown', 'touchstart'],
+  clickOutsideCapture: false,
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
   width: 'max-content',
@@ -237,6 +241,7 @@ export function Popover(_props: PopoverProps) {
     portalProps,
     closeOnEscape,
     clickOutsideEvents,
+    clickOutsideCapture,
     trapFocus,
     onClose,
     onDismiss,
@@ -314,7 +319,9 @@ export function Popover(_props: PopoverProps) {
       }
     },
     clickOutsideEvents,
-    [targetNode, dropdownNode]
+    [targetNode, dropdownNode],
+    true,
+    clickOutsideCapture
   );
 
   const reference = useCallback(
