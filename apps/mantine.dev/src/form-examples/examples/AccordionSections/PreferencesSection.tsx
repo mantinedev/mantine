@@ -1,9 +1,8 @@
 import { Select, Stack, Switch } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { OnboardingValues } from './types';
+import { OnboardingForm } from './types';
 
 interface PreferencesSectionProps {
-  form: UseFormReturnType<OnboardingValues>;
+  form: OnboardingForm;
 }
 
 export function PreferencesSection({ form }: PreferencesSectionProps) {

@@ -1,9 +1,8 @@
 import { Stack, TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { SettingsValues } from './types';
+import { SettingsForm } from './types';
 
 interface ProfileTabProps {
-  form: UseFormReturnType<SettingsValues>;
+  form: SettingsForm;
 }
 
 export function ProfileTab({ form }: ProfileTabProps) {

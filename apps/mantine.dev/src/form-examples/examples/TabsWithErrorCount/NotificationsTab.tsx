@@ -1,9 +1,8 @@
 import { Stack, Switch } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { SettingsValues } from './types';
+import { SettingsForm } from './types';
 
 interface NotificationsTabProps {
-  form: UseFormReturnType<SettingsValues>;
+  form: SettingsForm;
 }
 
 export function NotificationsTab({ form }: NotificationsTabProps) {

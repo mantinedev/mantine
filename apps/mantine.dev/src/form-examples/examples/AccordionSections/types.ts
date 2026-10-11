@@ -1,3 +1,5 @@
+import { UseFormReturnType } from '@mantine/form';
+
 export interface OnboardingValues {
   personal: {
     firstName: string;
@@ -13,3 +15,5 @@ export interface OnboardingValues {
     newsletter: boolean;
   };
 }
+
+export type OnboardingForm = UseFormReturnType<OnboardingValues>;

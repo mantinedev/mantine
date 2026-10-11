@@ -1,39 +1,32 @@
-import { Button, Group, Surface, Text } from '@mantine/core';
+import { ActionBar, Button, Text } from '@mantine/core';
 
 interface SaveBarProps {
-  visible: boolean;
+  opened: boolean;
   saving: boolean;
   onDiscard: () => void;
 }
 
-export function SaveBar({ visible, saving, onDiscard }: SaveBarProps) {
-  if (!visible) {
-    return null;
-  }
-
+export function SaveBar({ opened, saving, onDiscard }: SaveBarProps) {
   return (
-    <Surface
-      withBorder
+    <ActionBar
+      opened={opened}
+      withinPortal={false}
       shadow="md"
-      p="md"
-      mt="xl"
-      style={{ position: 'sticky', bottom: 'var(--mantine-spacing-md)' }}
+      aria-label="Unsaved changes actions"
     >
-      <Group justify="space-between">
-        <Text size="sm" fw={500}>
-          You have unsaved changes
-        </Text>
+      <Text size="sm" fw={500} px="xs">
+        You have unsaved changes
+      </Text>
 
-        <Group gap="xs">
-          <Button size="md" variant="default" onClick={onDiscard} disabled={saving}>
-            Discard
-          </Button>
+      <ActionBar.Divider />
 
-          <Button size="md" type="submit" loading={saving}>
-            Save
-          </Button>
-        </Group>
-      </Group>
-    </Surface>
+      <Button size="md" variant="default" onClick={onDiscard} disabled={saving}>
+        Discard
+      </Button>
+
+      <Button size="md" type="submit" loading={saving}>
+        Save
+      </Button>
+    </ActionBar>
   );
 }

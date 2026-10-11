@@ -47,7 +47,7 @@ export function RowsTable({ form }: RowsTableProps) {
 
   return (
     <ScrollArea h={400} type="auto" offsetScrollbars>
-      <Table verticalSpacing={2} stickyHeader>
+      <Table layout="fixed" miw={560} verticalSpacing={2} stickyHeader>
         <Table.Thead>
           <Table.Tr>
             <Table.Th w={40} py="sm">
@@ -55,7 +55,9 @@ export function RowsTable({ form }: RowsTableProps) {
             </Table.Th>
             <Table.Th py="sm">Name</Table.Th>
             <Table.Th py="sm">Email</Table.Th>
-            <Table.Th py="sm">Qty</Table.Th>
+            <Table.Th w={90} py="sm">
+              Qty
+            </Table.Th>
             <Table.Th w={50} py="sm" />
           </Table.Tr>
         </Table.Thead>

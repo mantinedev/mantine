@@ -1,9 +1,8 @@
 import { Stack, TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { WizardValues } from './types';
+import { WizardForm } from './types';
 
 interface ProfileStepProps {
-  form: UseFormReturnType<WizardValues>;
+  form: WizardForm;
 }
 
 export function ProfileStep({ form }: ProfileStepProps) {

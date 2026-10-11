@@ -1,9 +1,8 @@
 import { PasswordInput, Stack } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { SettingsValues } from './types';
+import { SettingsForm } from './types';
 
 interface SecurityTabProps {
-  form: UseFormReturnType<SettingsValues>;
+  form: SettingsForm;
 }
 
 export function SecurityTab({ form }: SecurityTabProps) {

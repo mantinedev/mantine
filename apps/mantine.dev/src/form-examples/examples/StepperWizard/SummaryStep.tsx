@@ -1,9 +1,8 @@
 import { Group, Stack, Text } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { WizardValues } from './types';
+import { WizardForm } from './types';
 
 interface SummaryStepProps {
-  form: UseFormReturnType<WizardValues>;
+  form: WizardForm;
 }
 
 export function SummaryStep({ form }: SummaryStepProps) {

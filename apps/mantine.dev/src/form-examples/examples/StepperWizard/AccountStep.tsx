@@ -1,9 +1,8 @@
 import { PasswordInput, Stack, TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { WizardValues } from './types';
+import { WizardForm } from './types';
 
 interface AccountStepProps {
-  form: UseFormReturnType<WizardValues>;
+  form: WizardForm;
 }
 
 export function AccountStep({ form }: AccountStepProps) {

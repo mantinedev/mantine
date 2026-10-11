@@ -13,12 +13,11 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { Input, Stack, Text } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
 import { SortableItem } from './SortableItem';
-import { TasksValues } from './types';
+import { TasksForm } from './types';
 
 interface TasksListProps {
-  form: UseFormReturnType<TasksValues>;
+  form: TasksForm;
 }
 
 export function TasksList({ form }: TasksListProps) {

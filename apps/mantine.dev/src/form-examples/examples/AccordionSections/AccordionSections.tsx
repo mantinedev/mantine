@@ -1,5 +1,5 @@
-import { Accordion, Button, Group } from '@mantine/core';
-import { isEmail, isNotEmpty, isUrl, useForm } from '@mantine/form';
+import { Accordion, Button, Group, useAccordion } from '@mantine/core';
+import { FormErrors, isEmail, isNotEmpty, isUrl, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { CompanySection } from './CompanySection';
 import { PersonalSection } from './PersonalSection';
@@ -14,6 +14,11 @@ function completeOnboarding(values: OnboardingValues) {
 }
 
 export function AccordionSections() {
+  const accordion = useAccordion({
+    multiple: true,
+    defaultValue: ['personal'],
+  });
+
   const form = useForm<OnboardingValues>({
     initialValues: {
       personal: {
@@ -59,9 +64,13 @@ export function AccordionSections() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    Object.keys(errors).forEach((path) => accordion.expand(path.split('.')[0]));
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Accordion multiple defaultValue={['personal']} variant="separated">
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
+      <Accordion controller={accordion} variant="separated">
         <Accordion.Item value="personal">
           <Accordion.Control>
             <SectionControl label="Personal" valid={form.isValid('personal')} />

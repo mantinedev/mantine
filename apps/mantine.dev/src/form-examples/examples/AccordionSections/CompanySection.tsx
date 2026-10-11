@@ -1,9 +1,8 @@
 import { Stack, TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { OnboardingValues } from './types';
+import { OnboardingForm } from './types';
 
 interface CompanySectionProps {
-  form: UseFormReturnType<OnboardingValues>;
+  form: OnboardingForm;
 }
 
 export function CompanySection({ form }: CompanySectionProps) {

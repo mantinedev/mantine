@@ -1,9 +1,8 @@
 import { SimpleGrid, Stack, TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { OnboardingValues } from './types';
+import { OnboardingForm } from './types';
 
 interface PersonalSectionProps {
-  form: UseFormReturnType<OnboardingValues>;
+  form: OnboardingForm;
 }
 
 export function PersonalSection({ form }: PersonalSectionProps) {

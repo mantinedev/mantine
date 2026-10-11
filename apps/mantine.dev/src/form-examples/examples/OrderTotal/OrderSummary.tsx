@@ -19,7 +19,7 @@ export function OrderSummary({ product, quantity, discount, total }: OrderSummar
   const percent = typeof discount === 'number' ? discount : 0;
 
   return (
-    <Surface withBorder p="md">
+    <Surface level={0} withBorder p="md">
       <Stack gap="xs">
         <Group justify="space-between">
           <Text size="sm">{item ? item.label : 'No product selected'}</Text>

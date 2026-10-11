@@ -80,7 +80,7 @@ export function SettingsSaveBar() {
         />
       </Stack>
 
-      <SaveBar visible={dirty} saving={form.submitting} onDiscard={form.reset} />
+      <SaveBar opened={dirty} saving={form.submitting} onDiscard={form.reset} />
     </form>
   );
 }

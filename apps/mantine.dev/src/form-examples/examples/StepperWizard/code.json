@@ -7,21 +7,21 @@
   {
     "fileName": "AccountStep.tsx",
     "language": "tsx",
-    "code": "import { PasswordInput, Stack, TextInput } from '@mantine/core';\nimport { UseFormReturnType } from '@mantine/form';\nimport { WizardValues } from './types';\n\ninterface AccountStepProps {\n  form: UseFormReturnType<WizardValues>;\n}\n\nexport function AccountStep({ form }: AccountStepProps) {\n  return (\n    <Stack mt=\"md\">\n      <TextInput\n        size=\"md\"\n        label=\"Username\"\n        placeholder=\"johndoe\"\n        withAsterisk\n        {...form.getInputProps('username')}\n      />\n\n      <PasswordInput\n        size=\"md\"\n        label=\"Password\"\n        placeholder=\"At least 8 characters\"\n        withAsterisk\n        {...form.getInputProps('password')}\n      />\n    </Stack>\n  );\n}\n"
+    "code": "import { PasswordInput, Stack, TextInput } from '@mantine/core';\nimport { WizardForm } from './types';\n\ninterface AccountStepProps {\n  form: WizardForm;\n}\n\nexport function AccountStep({ form }: AccountStepProps) {\n  return (\n    <Stack mt=\"md\">\n      <TextInput\n        size=\"md\"\n        label=\"Username\"\n        placeholder=\"johndoe\"\n        withAsterisk\n        {...form.getInputProps('username')}\n      />\n\n      <PasswordInput\n        size=\"md\"\n        label=\"Password\"\n        placeholder=\"At least 8 characters\"\n        withAsterisk\n        {...form.getInputProps('password')}\n      />\n    </Stack>\n  );\n}\n"
   },
   {
     "fileName": "ProfileStep.tsx",
     "language": "tsx",
-    "code": "import { Stack, TextInput } from '@mantine/core';\nimport { UseFormReturnType } from '@mantine/form';\nimport { WizardValues } from './types';\n\ninterface ProfileStepProps {\n  form: UseFormReturnType<WizardValues>;\n}\n\nexport function ProfileStep({ form }: ProfileStepProps) {\n  return (\n    <Stack mt=\"md\">\n      <TextInput\n        size=\"md\"\n        label=\"Name\"\n        placeholder=\"John Doe\"\n        withAsterisk\n        {...form.getInputProps('name')}\n      />\n\n      <TextInput\n        size=\"md\"\n        label=\"Email\"\n        placeholder=\"john@mantine.dev\"\n        withAsterisk\n        {...form.getInputProps('email')}\n      />\n    </Stack>\n  );\n}\n"
+    "code": "import { Stack, TextInput } from '@mantine/core';\nimport { WizardForm } from './types';\n\ninterface ProfileStepProps {\n  form: WizardForm;\n}\n\nexport function ProfileStep({ form }: ProfileStepProps) {\n  return (\n    <Stack mt=\"md\">\n      <TextInput\n        size=\"md\"\n        label=\"Name\"\n        placeholder=\"John Doe\"\n        withAsterisk\n        {...form.getInputProps('name')}\n      />\n\n      <TextInput\n        size=\"md\"\n        label=\"Email\"\n        placeholder=\"john@mantine.dev\"\n        withAsterisk\n        {...form.getInputProps('email')}\n      />\n    </Stack>\n  );\n}\n"
   },
   {
     "fileName": "SummaryStep.tsx",
     "language": "tsx",
-    "code": "import { Group, Stack, Text } from '@mantine/core';\nimport { UseFormReturnType } from '@mantine/form';\nimport { WizardValues } from './types';\n\ninterface SummaryStepProps {\n  form: UseFormReturnType<WizardValues>;\n}\n\nexport function SummaryStep({ form }: SummaryStepProps) {\n  const values = form.getValues();\n\n  const rows = [\n    { label: 'Username', value: values.username },\n    { label: 'Password', value: '•'.repeat(values.password.length) },\n    { label: 'Name', value: values.name },\n    { label: 'Email', value: values.email },\n  ].map((row) => (\n    <Group key={row.label} justify=\"space-between\" gap=\"xs\">\n      <Text size=\"sm\">{row.label}</Text>\n\n      <Text size=\"sm\" fw={500}>\n        {row.value}\n      </Text>\n    </Group>\n  ));\n\n  return (\n    <Stack mt=\"md\" gap=\"xs\">\n      {rows}\n    </Stack>\n  );\n}\n"
+    "code": "import { Group, Stack, Text } from '@mantine/core';\nimport { WizardForm } from './types';\n\ninterface SummaryStepProps {\n  form: WizardForm;\n}\n\nexport function SummaryStep({ form }: SummaryStepProps) {\n  const values = form.getValues();\n\n  const rows = [\n    { label: 'Username', value: values.username },\n    { label: 'Password', value: '•'.repeat(values.password.length) },\n    { label: 'Name', value: values.name },\n    { label: 'Email', value: values.email },\n  ].map((row) => (\n    <Group key={row.label} justify=\"space-between\" gap=\"xs\">\n      <Text size=\"sm\">{row.label}</Text>\n\n      <Text size=\"sm\" fw={500}>\n        {row.value}\n      </Text>\n    </Group>\n  ));\n\n  return (\n    <Stack mt=\"md\" gap=\"xs\">\n      {rows}\n    </Stack>\n  );\n}\n"
   },
   {
     "fileName": "types.ts",
     "language": "tsx",
-    "code": "export interface WizardValues {\n  username: string;\n  password: string;\n  name: string;\n  email: string;\n}\n"
+    "code": "import { UseFormReturnType } from '@mantine/form';\n\nexport interface WizardValues {\n  username: string;\n  password: string;\n  name: string;\n  email: string;\n}\n\nexport type WizardForm = UseFormReturnType<WizardValues>;\n"
   }
 ]

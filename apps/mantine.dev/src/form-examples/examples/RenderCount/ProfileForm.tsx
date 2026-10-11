@@ -35,7 +35,7 @@ export function ProfileForm({ mode }: ProfileFormProps) {
   };
 
   return (
-    <Surface withBorder p="md">
+    <Surface level={0} withBorder p="md">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           <Group>

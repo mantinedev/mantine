@@ -1,10 +1,9 @@
 import { PlusIcon, TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Button, Group, Input, Stack, TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { createOption, QuestionnaireValues } from './types';
+import { QuestionnaireForm, createOption } from './types';
 
 interface OptionsListProps {
-  form: UseFormReturnType<QuestionnaireValues>;
+  form: QuestionnaireForm;
   questionIndex: number;
 }
 

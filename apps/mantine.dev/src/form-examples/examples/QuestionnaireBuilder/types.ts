@@ -1,3 +1,4 @@
+import { UseFormReturnType } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 
 export interface Option {
@@ -30,3 +31,5 @@ export function createQuestion(): Question {
     options: [createOption(), createOption()],
   };
 }
+
+export type QuestionnaireForm = UseFormReturnType<QuestionnaireValues>;

@@ -1,17 +1,16 @@
 import { TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Group, Surface, Stack, TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
 import { OptionsList } from './OptionsList';
-import { QuestionnaireValues } from './types';
+import { QuestionnaireForm } from './types';
 
 interface QuestionCardProps {
-  form: UseFormReturnType<QuestionnaireValues>;
+  form: QuestionnaireForm;
   index: number;
 }
 
 export function QuestionCard({ form, index }: QuestionCardProps) {
   return (
-    <Surface withBorder p="md">
+    <Surface level={0} withBorder p="md">
       <Stack gap="sm">
         <Group gap="xs" wrap="nowrap" align="flex-start">
           <TextInput

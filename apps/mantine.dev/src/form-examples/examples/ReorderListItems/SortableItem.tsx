@@ -2,13 +2,12 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { DotsSixVerticalIcon, TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Group, TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { TasksValues } from './types';
+import { TasksForm } from './types';
 
 interface SortableItemProps {
   id: string;
   index: number;
-  form: UseFormReturnType<TasksValues>;
+  form: TasksForm;
 }
 
 export function SortableItem({ id, index, form }: SortableItemProps) {

@@ -43,7 +43,7 @@ export function AddressCard({ form, index }: AddressCardProps) {
   };
 
   return (
-    <Surface withBorder p="md">
+    <Surface level={0} withBorder p="md">
       <Stack gap="sm">
         <Group justify="space-between" wrap="nowrap">
           <Group gap="xs">

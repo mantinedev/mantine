@@ -1,3 +1,5 @@
+import { UseFormReturnType } from '@mantine/form';
+
 export interface SettingsValues {
   name: string;
   email: string;
@@ -6,3 +8,5 @@ export interface SettingsValues {
   emailNotifications: boolean;
   pushNotifications: boolean;
 }
+
+export type SettingsForm = UseFormReturnType<SettingsValues>;

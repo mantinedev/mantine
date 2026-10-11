@@ -3,7 +3,7 @@ import { demoFormActions } from './form-actions';
 
 export function ExternalControls() {
   return (
-    <Surface withBorder p="md">
+    <Surface level={0} withBorder p="md">
       <Group gap="xs">
         <Button
           size="xs"
