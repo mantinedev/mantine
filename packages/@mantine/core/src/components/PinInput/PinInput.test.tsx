@@ -413,6 +413,35 @@ describe('@mantine/core/PinInput', () => {
     });
   });
 
+  it('readOnly does not change value on Delete', () => {
+    const { container } = render(<PinInput defaultValue="1234" readOnly />);
+    fireEvent.keyDown(getInputs(container)[0], { key: 'Delete' });
+    expect(getInputValues(container)).toEqual(['1', '2', '3', '4']);
+  });
+
+  it('readOnly does not change value on Backspace', () => {
+    const { container } = render(<PinInput defaultValue="1234" readOnly />);
+    fireEvent.keyDown(getInputs(container)[3], { key: 'Backspace' });
+    fireEvent.keyDown(getInputs(container)[1], { key: 'Backspace' });
+    expect(getInputValues(container)).toEqual(['1', '2', '3', '4']);
+  });
+
+  it('readOnly does not change value on paste', () => {
+    const { container } = render(<PinInput defaultValue="1234" readOnly />);
+    fireEvent.paste(getInputs(container)[0], {
+      clipboardData: { getData: () => '5678' },
+    });
+    expect(getInputValues(container)).toEqual(['1', '2', '3', '4']);
+  });
+
+  it('readOnly keeps arrow key focus navigation', () => {
+    const { container } = render(<PinInput defaultValue="1234" readOnly />);
+    const inputs = getInputs(container);
+    inputs[0].focus();
+    fireEvent.keyDown(inputs[0], { key: 'ArrowRight' });
+    expect(inputs[1]).toHaveFocus();
+  });
+
   it('error prop applies error styles', () => {
     const { container } = render(<PinInput length={4} error />);
     const inputs = getInputs(container);
