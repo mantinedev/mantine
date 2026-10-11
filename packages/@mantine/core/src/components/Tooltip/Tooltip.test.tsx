@@ -71,6 +71,48 @@ describe('@mantine/core/Tooltip', () => {
     expect(screen.getByRole('button')).not.toHaveAttribute('aria-describedby');
   });
 
+  it('does not reopen when disabled is set back to false after the tooltip was opened', async () => {
+    const { rerender } = render(
+      <Tooltip label="test-tooltip" openDelay={0} closeDelay={0} transitionProps={{ duration: 0 }}>
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    await userEvent.hover(screen.getByRole('button'));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+
+    rerender(
+      <>
+        <Tooltip
+          label="test-tooltip"
+          disabled
+          openDelay={0}
+          closeDelay={0}
+          transitionProps={{ duration: 0 }}
+        >
+          <button type="button">target</button>
+        </Tooltip>
+      </>
+    );
+    await userEvent.unhover(screen.getByRole('button'));
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+
+    rerender(
+      <>
+        <Tooltip
+          label="test-tooltip"
+          openDelay={0}
+          closeDelay={0}
+          transitionProps={{ duration: 0 }}
+        >
+          <button type="button">target</button>
+        </Tooltip>
+      </>
+    );
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+    expect(screen.getByRole('button')).not.toHaveAttribute('aria-describedby');
+  });
+
   it('exposes TooltipGroup and TooltipFloating as static properties', () => {
     expect(Tooltip.Floating).toBe(TooltipFloating);
     expect(Tooltip.Group).toBe(TooltipGroup);
