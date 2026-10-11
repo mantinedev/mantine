@@ -1,4 +1,4 @@
-import { use, useCallback, useRef, useState } from 'react';
+import { use, useCallback, useEffect, useRef, useState } from 'react';
 import {
   arrow,
   autoUpdate,
@@ -31,6 +31,7 @@ interface UseTooltip {
   onPositionChange?: (position: FloatingPosition) => void;
   opened?: boolean;
   defaultOpened?: boolean;
+  disabled?: boolean;
   offset: number | FloatingAxesOffsets;
   arrowRef?: React.RefObject<HTMLDivElement | null>;
   arrowOffset?: number;
@@ -97,7 +98,13 @@ function getTooltipMiddlewares(settings: UseTooltip) {
 export function useTooltip(settings: UseTooltip) {
   const [uncontrolledOpened, setUncontrolledOpened] = useState(settings.defaultOpened);
   const controlled = typeof settings.opened === 'boolean';
-  const opened = controlled ? settings.opened : uncontrolledOpened;
+  const opened = !settings.disabled && (controlled ? settings.opened : uncontrolledOpened);
+
+  useEffect(() => {
+    if (settings.disabled) {
+      setUncontrolledOpened(false);
+    }
+  }, [settings.disabled]);
   const withinGroup = use(TooltipGroupContext).withinGroup;
   const uid = useId();
   const env = useMantineEnv();
@@ -131,9 +138,9 @@ export function useTooltip(settings: UseTooltip) {
 
   const { delay: groupDelay, currentId, setCurrentId } = useDelayGroup(context, { id: uid });
 
-  const clickEnabled = settings.events?.click === true;
-  const hoverEnabled = !clickEnabled && (settings.events?.hover ?? true);
-  const focusEnabled = !clickEnabled && (settings.events?.focus ?? true);
+  const clickEnabled = !settings.disabled && settings.events?.click === true;
+  const hoverEnabled = !settings.disabled && !clickEnabled && (settings.events?.hover ?? true);
+  const focusEnabled = !settings.disabled && !clickEnabled && (settings.events?.focus ?? true);
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {

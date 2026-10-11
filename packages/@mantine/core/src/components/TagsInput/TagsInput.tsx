@@ -27,6 +27,7 @@ import {
   OptionsFilter,
   usePillsReorder,
 } from '../Combobox';
+import { getComboboxLabelId } from '../Combobox/get-combobox-label-id/get-combobox-label-id';
 import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
@@ -254,6 +255,12 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
   } = props;
 
   const _id = useId(id);
+  const comboboxLabelId = getComboboxLabelId({
+    id: _id,
+    label,
+    labelProps,
+    inputWrapperOrder,
+  });
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -585,8 +592,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
           unstyled={unstyled}
-          labelId={label ? `${_id}-label` : undefined}
-          aria-label={label ? undefined : others['aria-label']}
+          labelId={comboboxLabelId}
+          aria-label={comboboxLabelId ? undefined : others['aria-label']}
           renderOption={renderOption}
           scrollAreaProps={scrollAreaProps}
         />

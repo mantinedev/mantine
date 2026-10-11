@@ -214,6 +214,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     onPositionChange,
     opened,
     defaultOpened,
+    disabled,
     events,
     closeOnClickOutside,
     closeOnEscape,

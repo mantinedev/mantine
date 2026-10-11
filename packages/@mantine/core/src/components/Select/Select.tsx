@@ -23,6 +23,7 @@ import {
   OptionsDropdown,
   OptionsFilter,
 } from '../Combobox';
+import { getComboboxLabelId } from '../Combobox/get-combobox-label-id/get-combobox-label-id';
 import { getOptionByLabel } from '../Combobox/get-options-lockup/get-option-by-label';
 import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
@@ -200,6 +201,12 @@ export const Select = genericFactory<SelectFactory>((_props) => {
   const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
   const _id = useId(id);
   const initialValue = value !== undefined ? value : defaultValue;
+  const comboboxLabelId = getComboboxLabelId({
+    id: _id,
+    label: others.label,
+    labelProps: others.labelProps,
+    inputWrapperOrder: others.inputWrapperOrder,
+  });
 
   const store = useController(
     useSelect<Primitive>,
@@ -412,8 +419,8 @@ export const Select = genericFactory<SelectFactory>((_props) => {
           withAlignedLabels={withAlignedLabels}
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
-          labelId={others.label ? `${_id}-label` : undefined}
-          aria-label={others.label ? undefined : others['aria-label']}
+          labelId={comboboxLabelId}
+          aria-label={comboboxLabelId ? undefined : others['aria-label']}
           renderOption={renderOption}
           scrollAreaProps={scrollAreaProps}
         />

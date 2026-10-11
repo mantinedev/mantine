@@ -18,8 +18,16 @@ describe('@mantine/dates/get-min-max-time', () => {
       );
     });
 
+    it('returns min time when minDate is a Date object', () => {
+      const minDate = new Date(2022, 3, 11, 10, 30);
+      expect(getMinTime({ minDate, value: '2022-04-11 12:00:00' })).toBe('10:30:00');
+    });
+
     it('returns undefined when value is on a different day than minDate', () => {
       expect(getMinTime({ minDate: '2022-04-11 10:15:00', value: '2022-04-12 08:00:00' })).toBe(
+        undefined
+      );
+      expect(getMinTime({ minDate: '2022-04-11 10:15:00', value: '2022-04-10 23:59:59' })).toBe(
         undefined
       );
     });
@@ -54,8 +62,16 @@ describe('@mantine/dates/get-min-max-time', () => {
       );
     });
 
+    it('returns max time when maxDate is a Date object', () => {
+      const maxDate = new Date(2022, 3, 11, 18, 15);
+      expect(getMaxTime({ maxDate, value: '2022-04-11 12:00:00' })).toBe('18:15:00');
+    });
+
     it('returns undefined when value is on a different day than maxDate', () => {
       expect(getMaxTime({ maxDate: '2022-04-11 18:15:00', value: '2022-04-10 20:00:00' })).toBe(
+        undefined
+      );
+      expect(getMaxTime({ maxDate: '2022-04-11 18:15:00', value: '2022-04-12 00:00:00' })).toBe(
         undefined
       );
     });

@@ -81,6 +81,22 @@ function tests(mode: FormMode) {
     act(() => hook.result.current.setFieldValue('items.1', 'value'));
     expect(hook.result.current.errors).toStrictEqual({ 'items.10': 'ten' });
   });
+
+  it('does not pollute Object.prototype with __proto__ path', () => {
+    const hook = renderHook(() => useForm({ mode, initialValues: { name: '' } }));
+
+    act(() => hook.result.current.setFieldValue('__proto__.polluted' as any, 'YES'));
+    expect(({} as any).polluted).toBeUndefined();
+    expect(hook.result.current.getValues()).toStrictEqual({ name: '' });
+  });
+
+  it('does not pollute Object.prototype with constructor.prototype path', () => {
+    const hook = renderHook(() => useForm({ mode, initialValues: { name: '' } }));
+
+    act(() => hook.result.current.setFieldValue('constructor.prototype.polluted' as any, 'YES'));
+    expect(({} as any).polluted).toBeUndefined();
+    expect(hook.result.current.getValues()).toStrictEqual({ name: '' });
+  });
 }
 
 describe('@mantine/form/setFieldValue-controlled', () => {

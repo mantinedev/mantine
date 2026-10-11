@@ -123,4 +123,14 @@ describe('@mantine/form/set-path', () => {
     expect(result.point).toBeInstanceOf(Point);
     expect(result.point.sum()).toBe(7);
   });
+
+  it('does not pollute Object.prototype with prototype-polluting paths', () => {
+    expect(setPath('__proto__.polluted', 'YES', { name: '' })).toStrictEqual({ name: '' });
+    expect(({} as any).polluted).toBeUndefined();
+
+    expect(setPath('constructor.prototype.polluted', 'YES', { name: '' })).toStrictEqual({
+      name: '',
+    });
+    expect(({} as any).polluted).toBeUndefined();
+  });
 });

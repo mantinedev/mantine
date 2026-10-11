@@ -138,6 +138,21 @@ describe('@mantine/core/Select', () => {
     expect(screen.queryByRole('listbox')).toBe(null);
   });
 
+  it('sets aria-disabled on disabled options', () => {
+    render(
+      <Select
+        {...defaultProps}
+        dropdownOpened
+        data={[
+          { value: 'test-1', label: 'test-1' },
+          { value: 'test-2', label: 'test-2', disabled: true },
+        ]}
+      />
+    );
+    expect(screen.getByRole('option', { name: 'test-1' })).not.toHaveAttribute('aria-disabled');
+    expect(screen.getByRole('option', { name: 'test-2' })).toHaveAttribute('aria-disabled', 'true');
+  });
+
   it('allows searching options with searchable prop', async () => {
     render(<Select {...defaultProps} searchable />);
     await userEvent.click(screen.getByRole('combobox'));
@@ -590,5 +605,37 @@ describe('@mantine/core/Select', () => {
 
     await userEvent.keyboard('{Enter}{Home}{Enter}');
     expect(spy).toHaveBeenLastCalledWith('Apple', expect.objectContaining({ value: 'Apple' }));
+  });
+
+  it('links listbox to the rendered label with aria-labelledby', () => {
+    const { rerender } = render(
+      <Select label="Test label" data={['test-1', 'test-2']} dropdownOpened />
+    );
+    expect(screen.getByRole('listbox')).toHaveAccessibleName('Test label');
+
+    rerender(
+      <Select
+        label="Test label"
+        labelProps={{ id: 'custom-label-id' }}
+        data={['test-1', 'test-2']}
+        dropdownOpened
+      />
+    );
+    expect(screen.getByRole('listbox')).toHaveAttribute('aria-labelledby', 'custom-label-id');
+    expect(screen.getByRole('listbox')).toHaveAccessibleName('Test label');
+  });
+
+  it('does not reference label in aria-labelledby when label is excluded from inputWrapperOrder', () => {
+    render(
+      <Select
+        label="Test label"
+        aria-label="Test aria-label"
+        inputWrapperOrder={['input']}
+        data={['test-1', 'test-2']}
+        dropdownOpened
+      />
+    );
+    expect(screen.getByRole('listbox')).not.toHaveAttribute('aria-labelledby');
+    expect(screen.getByRole('listbox')).toHaveAccessibleName('Test aria-label');
   });
 });

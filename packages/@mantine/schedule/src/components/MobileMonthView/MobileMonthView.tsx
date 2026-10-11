@@ -35,6 +35,8 @@ import {
   getMonthDays,
   getWeekdaysNames,
   getWeekNumber,
+  isAllDayEvent,
+  isMultidayEvent,
   isSameMonth,
   sortEvents,
   toDateString,
@@ -416,7 +418,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   const eventsList = selectedDateEvents.map((event) => {
     const startTime = dayjs(event.start).format('HH:mm');
     const endTime = dayjs(event.end).format('HH:mm');
-    const isAllDay = startTime === '00:00' && endTime === '00:00';
+    const isAllDay = isMultidayEvent(event) || isAllDayEvent({ event, date: _selectedDate! });
 
     const eventChildren = (
       <Box {...getStyles('mobileMonthViewEventBody')}>

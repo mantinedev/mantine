@@ -742,7 +742,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     const cornerEl = viewportRef.current.querySelector(`.${classes.resourcesDayViewCorner}`);
     const labelWidth = cornerEl ? cornerEl.getBoundingClientRect().width : 0;
     viewportRef.current.scrollTo({
-      left: slotRect.left - viewportRect.left - labelWidth,
+      left: slotRect.left - viewportRect.left + viewportRef.current.scrollLeft - labelWidth,
       top: 0,
     });
   }, []);

@@ -23,6 +23,7 @@ import {
   OptionsDropdown,
   OptionsFilter,
 } from '../Combobox';
+import { getComboboxLabelId } from '../Combobox/get-combobox-label-id/get-combobox-label-id';
 import {
   __BaseInputProps,
   __InputStylesNames,
@@ -147,6 +148,12 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
   } = props;
 
   const _id = useId(id);
+  const comboboxLabelId = getComboboxLabelId({
+    id: _id,
+    label: others.label,
+    labelProps: others.labelProps,
+    inputWrapperOrder: others.inputWrapperOrder,
+  });
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
 
@@ -271,8 +278,8 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
         withScrollArea={withScrollArea}
         maxDropdownHeight={maxDropdownHeight}
         unstyled={unstyled}
-        labelId={others.label ? `${_id}-label` : undefined}
-        aria-label={others['aria-label']}
+        labelId={comboboxLabelId}
+        aria-label={comboboxLabelId ? undefined : others['aria-label']}
         renderOption={renderOption}
         scrollAreaProps={scrollAreaProps}
       />

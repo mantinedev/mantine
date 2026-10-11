@@ -49,6 +49,7 @@ export function useTransition({
     window.clearTimeout(transitionTimeoutRef.current);
     window.clearTimeout(delayTimeoutRef.current);
     cancelAnimationFrame(rafRef.current);
+    rafRef.current = -1;
   }
 
   const handleStateChange = (shouldMount: boolean) => {
@@ -66,10 +67,15 @@ export function useTransition({
         setTransitionDuration(duration);
       }
     } else {
-      rafRef.current = requestAnimationFrame(() => {
+      const frame = requestAnimationFrame(() => {
         ReactDOM.flushSync(() => {
           setStatus(shouldMount ? 'pre-entering' : 'pre-exiting');
         });
+
+        if (rafRef.current !== frame) {
+          return;
+        }
+
         rafRef.current = requestAnimationFrame(() => {
           typeof preHandler === 'function' && preHandler();
           setStatus(shouldMount ? 'entering' : 'exiting');
@@ -79,6 +85,7 @@ export function useTransition({
           }, newTransitionDuration);
         });
       });
+      rafRef.current = frame;
     }
   };
 

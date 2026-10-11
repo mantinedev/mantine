@@ -39,8 +39,8 @@ const testEvents: ScheduleEventData[] = [
   {
     id: '4',
     title: 'All Day Event',
-    start: '2025-11-15',
-    end: '2025-11-15',
+    start: '2025-11-15 00:00:00',
+    end: '2025-11-16 00:00:00',
     color: 'orange',
     payload: {},
   },
@@ -387,6 +387,76 @@ describe('@mantine/schedule/MobileMonthView', () => {
 
     expect(screen.getByText('Ganztägig')).toBeInTheDocument();
     expect(screen.queryByText('All day')).not.toBeInTheDocument();
+  });
+
+  it('shows "All day" for events ending at 23:59:59 the same day', () => {
+    const allDayEvents: ScheduleEventData[] = [
+      {
+        id: 'allday',
+        title: 'All Day',
+        start: '2025-11-06 00:00:00',
+        end: '2025-11-06 23:59:59',
+        color: 'red',
+        payload: {},
+      },
+    ];
+    render(<MobileMonthView {...defaultProps} events={allDayEvents} selectedDate="2025-11-06" />);
+
+    expect(screen.getByText('All day')).toBeInTheDocument();
+    expect(screen.queryByText('00:00 – 23:59')).not.toBeInTheDocument();
+  });
+
+  it('shows "All day" on every day of a multi-day event that starts and ends with a time', () => {
+    const multidayEvents: ScheduleEventData[] = [
+      {
+        id: 'holiday',
+        title: 'Holiday',
+        start: '2025-11-25 15:00:00',
+        end: '2025-11-29 23:00:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+    const { rerender } = render(
+      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-25" />
+    );
+
+    expect(screen.getByText('All day')).toBeInTheDocument();
+    expect(screen.queryByText('15:00 – 23:00')).not.toBeInTheDocument();
+
+    rerender(
+      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-27" />
+    );
+    expect(screen.getByText('All day')).toBeInTheDocument();
+
+    rerender(
+      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-29" />
+    );
+    expect(screen.getByText('All day')).toBeInTheDocument();
+    expect(screen.queryByText('15:00 – 23:00')).not.toBeInTheDocument();
+  });
+
+  it('does not show a multi-day event that ends at midnight on its exclusive end date', () => {
+    const multidayEvents: ScheduleEventData[] = [
+      {
+        id: 'event',
+        title: 'Event',
+        start: '2025-11-17 10:00:00',
+        end: '2025-11-20',
+        color: 'yellow',
+        payload: {},
+      },
+    ];
+    const { rerender } = render(
+      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-19" />
+    );
+
+    expect(screen.getByText('All day')).toBeInTheDocument();
+
+    rerender(
+      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-20" />
+    );
+    expect(screen.getByText('No events')).toBeInTheDocument();
   });
 
   it('hides outside days when withOutsideDays is false', () => {

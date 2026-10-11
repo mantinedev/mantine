@@ -222,4 +222,9 @@ describe('@mantine/core/AngleSlider', () => {
     fireEvent.keyDown(slider, { key: 'ArrowLeft' });
     expect(onChange).toHaveBeenLastCalledWith(357);
   });
+
+  it('sets aria-disabled when disabled', () => {
+    render(<AngleSlider {...defaultProps} disabled />);
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-disabled', 'true');
+  });
 });

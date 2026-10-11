@@ -29,7 +29,7 @@ function getPaginationRange(
   const rightSiblingIndex = Math.min(activePage + siblings, endValue - boundaries);
 
   const shouldShowLeftDots = leftSiblingIndex > startValue + boundaries + 1;
-  const shouldShowRightDots = rightSiblingIndex < endValue - boundaries;
+  const shouldShowRightDots = rightSiblingIndex < endValue - (boundaries + 1);
 
   if (!shouldShowLeftDots && shouldShowRightDots) {
     const leftItemCount = siblings * 2 + boundaries + 2;
