@@ -55,6 +55,22 @@ function tests(mode: FormMode) {
     act(() => hook.result.current.setFieldValue('a.b.c', (prev) => prev + 1));
     expect(hook.result.current.getValues()).toStrictEqual({ a: { d: 2, b: { c: 2 } } });
   });
+
+  it('does not pollute Object.prototype with __proto__ path', () => {
+    const hook = renderHook(() => useForm({ mode, initialValues: { name: '' } }));
+
+    act(() => hook.result.current.setFieldValue('__proto__.polluted' as any, 'YES'));
+    expect(({} as any).polluted).toBeUndefined();
+    expect(hook.result.current.getValues()).toStrictEqual({ name: '' });
+  });
+
+  it('does not pollute Object.prototype with constructor.prototype path', () => {
+    const hook = renderHook(() => useForm({ mode, initialValues: { name: '' } }));
+
+    act(() => hook.result.current.setFieldValue('constructor.prototype.polluted' as any, 'YES'));
+    expect(({} as any).polluted).toBeUndefined();
+    expect(hook.result.current.getValues()).toStrictEqual({ name: '' });
+  });
 }
 
 describe('@mantine/form/setFieldValue-controlled', () => {
