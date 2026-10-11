@@ -39,8 +39,8 @@ const testEvents: ScheduleEventData[] = [
   {
     id: '4',
     title: 'All Day Event',
-    start: '2025-11-15',
-    end: '2025-11-15',
+    start: '2025-11-15 00:00:00',
+    end: '2025-11-16 00:00:00',
     color: 'orange',
     payload: {},
   },
@@ -380,7 +380,24 @@ describe('@mantine/schedule/MobileMonthView', () => {
     expect(screen.queryByText('All day')).not.toBeInTheDocument();
   });
 
-  it('shows "All day" on middle days of a multi-day event that starts and ends with a time', () => {
+  it('shows "All day" for events ending at 23:59:59 the same day', () => {
+    const allDayEvents: ScheduleEventData[] = [
+      {
+        id: 'allday',
+        title: 'All Day',
+        start: '2025-11-06 00:00:00',
+        end: '2025-11-06 23:59:59',
+        color: 'red',
+        payload: {},
+      },
+    ];
+    render(<MobileMonthView {...defaultProps} events={allDayEvents} selectedDate="2025-11-06" />);
+
+    expect(screen.getByText('All day')).toBeInTheDocument();
+    expect(screen.queryByText('00:00 – 23:59')).not.toBeInTheDocument();
+  });
+
+  it('shows "All day" on every day of a multi-day event that starts and ends with a time', () => {
     const multidayEvents: ScheduleEventData[] = [
       {
         id: 'holiday',
@@ -392,52 +409,25 @@ describe('@mantine/schedule/MobileMonthView', () => {
       },
     ];
     const { rerender } = render(
-      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-27" />
+      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-25" />
     );
 
     expect(screen.getByText('All day')).toBeInTheDocument();
     expect(screen.queryByText('15:00 – 23:00')).not.toBeInTheDocument();
 
     rerender(
-      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-25" />
+      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-27" />
     );
-    expect(screen.getByText('15:00 – 23:59')).toBeInTheDocument();
+    expect(screen.getByText('All day')).toBeInTheDocument();
 
     rerender(
       <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-29" />
     );
-    expect(screen.getByText('00:00 – 23:00')).toBeInTheDocument();
+    expect(screen.getByText('All day')).toBeInTheDocument();
+    expect(screen.queryByText('15:00 – 23:00')).not.toBeInTheDocument();
   });
 
-  it('shows "All day" on the first day of a multi-day event that starts at midnight and ends with a time', () => {
-    const multidayEvents: ScheduleEventData[] = [
-      {
-        id: 'event',
-        title: 'Event',
-        start: '2025-11-17',
-        end: '2025-11-20 11:00:00',
-        color: 'grape',
-        payload: {},
-      },
-    ];
-    const { rerender } = render(
-      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-17" />
-    );
-
-    expect(screen.getByText('All day')).toBeInTheDocument();
-
-    rerender(
-      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-18" />
-    );
-    expect(screen.getByText('All day')).toBeInTheDocument();
-
-    rerender(
-      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-20" />
-    );
-    expect(screen.getByText('00:00 – 11:00')).toBeInTheDocument();
-  });
-
-  it('shows "All day" on the last day of a multi-day event that starts with a time and ends at exclusive midnight', () => {
+  it('does not show a multi-day event that ends at midnight on its exclusive end date', () => {
     const multidayEvents: ScheduleEventData[] = [
       {
         id: 'event',
@@ -449,14 +439,9 @@ describe('@mantine/schedule/MobileMonthView', () => {
       },
     ];
     const { rerender } = render(
-      <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-17" />
-    );
-
-    expect(screen.getByText('10:00 – 23:59')).toBeInTheDocument();
-
-    rerender(
       <MobileMonthView {...defaultProps} events={multidayEvents} selectedDate="2025-11-19" />
     );
+
     expect(screen.getByText('All day')).toBeInTheDocument();
 
     rerender(
