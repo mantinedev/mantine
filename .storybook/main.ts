@@ -2,19 +2,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { StorybookConfig } from '@storybook/nextjs';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
-import yargs from 'yargs';
-import { hideBin } from 'yargs/helpers';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const { argv } = yargs(hideBin(process.argv));
-
-if (argv instanceof Promise) {
-  throw new Error('Failed to load cli arguments');
-}
 
 const getPath = (storyPath: string) => path.resolve(process.cwd(), storyPath).replace(/\\/g, '/');
 
-function getStoryPaths(fileName: string | number = '*') {
+function getStoryPaths(fileName: string = '*') {
   return [
     getPath(`packages/@mantine/*/src/**/${fileName}.story.@(ts|tsx)`),
     getPath(`packages/@mantinex/*/src/**/${fileName}.story.@(ts|tsx)`),
@@ -22,9 +15,10 @@ function getStoryPaths(fileName: string | number = '*') {
   ];
 }
 
-const storiesPath = !argv._[1]
+const componentName = process.env.COMPONENT;
+const storiesPath = !componentName
   ? [...getStoryPaths()]
-  : [...getStoryPaths(argv._[1]), ...getStoryPaths(`${argv._[1]}.demos`)];
+  : [...getStoryPaths(componentName), ...getStoryPaths(`${componentName}.demos`)];
 
 const config: StorybookConfig = {
   core: {

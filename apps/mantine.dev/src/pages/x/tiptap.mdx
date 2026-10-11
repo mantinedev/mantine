@@ -213,12 +213,13 @@ Use `getUploadImageExtension` from `@mantine/tiptap` to create a tiptap extensio
 
 - `onImageUpload` – required, receives a `File` and returns a promise that resolves to the uploaded image URL or to an object with `src` and optional `alt` and `title` attributes
 - `onImageUploadError` – optional, called with the file and the error when the upload fails
+- `shouldUploadPastedImage` – optional, decides which images in pasted HTML are uploaded, see [pasted HTML content](#pasted-html-content)
 
 Images can be added via:
 
 - `RichTextEditor.ImageUpload` toolbar control (opens file picker)
 - Drag and drop into the editor
-- Paste from clipboard
+- Paste from clipboard, including images embedded in pasted HTML
 
 `RichTextEditor.ImageUpload` control uses `onImageUpload` and `onImageUploadError` options of the extension – configuring the extension is enough to enable the toolbar button. If the toolbar control needs different handlers, pass `onImageUpload` and `onImageUploadError` props to the `RichTextEditor` component, they take precedence over the extension options.
 
@@ -236,6 +237,21 @@ async function handleImageUpload(file: File) {
 Note that the image node must be created with `getUploadImageExtension`: if a plain `@tiptap/extension-image` extension is used instead, `RichTextEditor.ImageUpload` control logs a warning and does not insert anything.
 
 <Demo data={TipTapDemos.imageUpload} />
+
+### Pasted HTML content
+
+When HTML with embedded images is pasted (for example, content copied from Google Docs, Apple Notes or a web page), text is inserted as usual and every image with a `data:` URL is uploaded with `onImageUpload` in place, with the same loading state as picked files. Images with regular URLs are kept as they are. To upload them as well, pass `shouldUploadPastedImage` option: it receives image `src` and must return `true` for images that should be downloaded and passed to `onImageUpload`. An image that cannot be downloaded (for example, because of CORS restrictions) is kept with its original `src`:
+
+```tsx
+import Image from '@tiptap/extension-image';
+import { getUploadImageExtension } from '@mantine/tiptap';
+
+const UploadImage = getUploadImageExtension(Image, {
+  onImageUpload: handleImageUpload,
+  shouldUploadPastedImage: (src) =>
+    src.startsWith('data:') || src.startsWith('https://old-cdn.example.com/'),
+});
+```
 
 ### Upload error handling
 

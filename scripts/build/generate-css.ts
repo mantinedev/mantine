@@ -18,7 +18,7 @@ async function processFile(
   outputFolder: string
 ) {
   const result = await postcss([
-    postcssPresetMantine,
+    postcssPresetMantine({ autoRem: true }),
     postcssModules({ generateScopedName, getJSON: () => {}, scopeBehaviour }),
   ]).process(fs.readFileSync(filePath, 'utf-8'), { from: path.basename(filePath) });
 

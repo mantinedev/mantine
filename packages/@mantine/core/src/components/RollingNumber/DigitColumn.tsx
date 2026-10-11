@@ -40,9 +40,9 @@ export function DigitColumn({
         {...columnStyles}
         style={{
           ...columnStyles.style,
-          transform: `translateY(${-digitIndex}em)`,
-          ['--rn-roll-from' as any]: `translateY(${-previousDigitIndex}em)`,
-          ['--rn-roll-to' as any]: `translateY(${-animateToIndex}em)`,
+          top: `${-digitIndex}em`,
+          ['--rn-roll-from' as any]: `translateY(${digitIndex - previousDigitIndex}em)`,
+          ['--rn-roll-to' as any]: `translateY(${digitIndex - animateToIndex}em)`,
         }}
         data-direction={direction}
       >

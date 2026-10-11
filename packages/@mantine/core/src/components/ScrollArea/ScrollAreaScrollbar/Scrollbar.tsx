@@ -40,9 +40,10 @@ export function Scrollbar(props: ScrollbarProps) {
   const composeRefs = useMergedRef(ref, setScrollbar);
   const rectRef = useRef<DOMRect | null>(null);
   const prevWebkitUserSelectRef = useRef<string>('');
-  const { viewport } = context;
   const maxScrollPos = sizes.content - sizes.viewport;
-  const handleWheelScroll = useEffectEvent(onWheelScroll);
+  const handleWheelScroll = useEffectEvent((event: WheelEvent) =>
+    onWheelScroll(event, maxScrollPos)
+  );
   const handleThumbPositionChange = useCallbackRef(onThumbPositionChange);
   const handleResize = useDebouncedCallback(onResize, 10);
 
@@ -55,16 +56,14 @@ export function Scrollbar(props: ScrollbarProps) {
   };
 
   useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
-      const element = event.target as HTMLElement;
-      const isScrollbarWheel = scrollbar?.contains(element);
-      if (isScrollbarWheel) {
-        handleWheelScroll(event, maxScrollPos);
-      }
-    };
-    document.addEventListener('wheel', handleWheel, { passive: false });
-    return () => document.removeEventListener('wheel', handleWheel, { passive: false } as any);
-  }, [viewport, scrollbar, maxScrollPos]);
+    if (!scrollbar) {
+      return undefined;
+    }
+
+    const handleWheel = (event: WheelEvent) => handleWheelScroll(event);
+    scrollbar.addEventListener('wheel', handleWheel, { passive: false });
+    return () => scrollbar.removeEventListener('wheel', handleWheel);
+  }, [scrollbar]);
 
   useEffect(handleThumbPositionChange, [sizes, handleThumbPositionChange]);
 

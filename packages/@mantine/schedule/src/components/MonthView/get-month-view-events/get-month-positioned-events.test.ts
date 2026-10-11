@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { testUtils } from '../../../test-utils';
+import { MonthPositionedEventData } from '../../../types';
 import { getMonthPositionedEvents } from './get-month-positioned-events';
 
 describe('@mantine/schedule/get-month-positioned-events', () => {
@@ -827,5 +828,125 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       expect(dayEvents[0].position?.weekIndex).toBeDefined();
       expect(typeof dayEvents[0].position?.weekIndex).toBe('number');
     });
+  });
+
+  describe('row assignment equivalence', () => {
+    function createRandom(seed: number) {
+      let state = seed;
+      return (max: number) => {
+        state = (state + 0x6d2b79f5) | 0;
+        let t = Math.imul(state ^ (state >>> 15), 1 | state);
+        t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+        return Math.floor((((t ^ (t >>> 14)) >>> 0) / 4294967296) * max);
+      };
+    }
+
+    function generateEvents(seed: number) {
+      const random = createRandom(seed);
+      const rangeStart = dayjs('2024-12-28');
+
+      return Array.from({ length: 400 }, (_, id) => {
+        const kind = random(6);
+        const start = rangeStart
+          .add(random(45), 'day')
+          .hour(random(24))
+          .minute(15 * random(4));
+
+        const eventStart = kind === 0 ? start.startOf('day') : start;
+        const end =
+          kind === 0
+            ? eventStart.add(1 + random(3), 'day')
+            : kind === 1
+              ? start.add(1 + random(14), 'day')
+              : kind === 2
+                ? start.add(1 + random(3), 'day').startOf('day')
+                : start.add(1 + random(120), 'minute');
+
+        return testUtils.createEvent({
+          id,
+          start: eventStart.format('YYYY-MM-DD HH:mm:ss'),
+          end: end.format('YYYY-MM-DD HH:mm:ss'),
+          display: kind === 5 && random(2) === 0 ? 'background' : undefined,
+        });
+      });
+    }
+
+    function getDayRange(event: MonthPositionedEventData) {
+      return {
+        startDayIndex: Math.round((event.position.startOffset / 100) * 7),
+        daysSpanned: Math.round((event.position.width / 100) * 7),
+      };
+    }
+
+    function getReferenceRow(
+      existingEvents: MonthPositionedEventData[],
+      startDayIndex: number,
+      daysSpanned: number
+    ) {
+      let row = 0;
+
+      for (const existing of existingEvents) {
+        const existingRange = getDayRange(existing);
+
+        if (
+          existingRange.startDayIndex + existingRange.daysSpanned > startDayIndex &&
+          existingRange.startDayIndex < startDayIndex + daysSpanned
+        ) {
+          row = Math.max(row, existing.position.row + 1);
+        }
+      }
+
+      return row;
+    }
+
+    it.each([
+      [1, 0],
+      [1, 1],
+      [2, 6],
+      [3, 1],
+    ] as const)(
+      'assigns the same rows as a full overlap scan (seed %s, firstDayOfWeek %s)',
+      (seed, firstDayOfWeek) => {
+        const range = { start: '2024-12-30 00:00:00', end: '2025-02-09 23:59:59' };
+        const result = getMonthPositionedEvents({
+          date: testMonth,
+          events: generateEvents(seed),
+          firstDayOfWeek,
+          range,
+        });
+
+        let placedEvents = 0;
+        let hangingEvents = 0;
+        let backgroundEvents = 0;
+
+        Object.entries(result.groupedByWeek).forEach(([weekIdx, weekEvents]) => {
+          weekEvents.forEach((event, index) => {
+            const { startDayIndex, daysSpanned } = getDayRange(event);
+            expect(event.position.row).toBe(
+              getReferenceRow(weekEvents.slice(0, index), startDayIndex, daysSpanned)
+            );
+          });
+
+          for (const event of result.backgroundByWeek[weekIdx]) {
+            expect(event.position.row).toBe(0);
+          }
+
+          placedEvents += weekEvents.length;
+          hangingEvents += weekEvents.filter((event) => event.position.hanging !== 'none').length;
+          backgroundEvents += result.backgroundByWeek[weekIdx].length;
+        });
+
+        expect(placedEvents).toBeGreaterThan(400);
+        expect(hangingEvents).toBeGreaterThan(50);
+        expect(backgroundEvents).toBeGreaterThan(10);
+        expect(
+          Math.max(
+            ...Object.values(result.groupedByWeek)
+              .flat()
+              .map((event) => event.position.row)
+          )
+        ).toBeGreaterThan(3);
+      }
+    );
   });
 });

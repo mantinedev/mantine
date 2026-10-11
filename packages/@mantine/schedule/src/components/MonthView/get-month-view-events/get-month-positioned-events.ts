@@ -8,8 +8,8 @@ import {
 } from '../../../types';
 import { addEventToDayGroups } from './add-event-to-day-groups';
 import { calculateEventPositionInWeek } from './calculate-event-position-in-week';
-import { findAvailableRow } from './find-available-row';
 import { getWeeksInRange } from './get-weeks-in-range';
+import { reserveRow } from './reserve-row';
 
 interface GetMonthPositionedEventsInput {
   /** Date (month start) at which events are positioned */
@@ -65,6 +65,12 @@ export function getMonthPositionedEvents({
     firstDayOfWeek,
   });
 
+  const weekStates = weeks.map((week) => ({
+    weekStart: dayjs(week[0]).startOf('day'),
+    weekEnd: dayjs(week[6]).endOf('day'),
+    nextRowByDay: new Array<number>(7).fill(0),
+  }));
+
   for (let i = 0; i < weeks.length; i++) {
     groupedByWeek[i.toString()] = [];
     backgroundByWeek[i.toString()] = [];
@@ -80,9 +86,7 @@ export function getMonthPositionedEvents({
     const isMultiday = eventEnd.isAfter(eventStart);
 
     for (let weekIdx = 0; weekIdx < weeks.length; weekIdx++) {
-      const week = weeks[weekIdx];
-      const weekStart = dayjs(week[0]).startOf('day');
-      const weekEnd = dayjs(week[6]).endOf('day');
+      const { weekStart, weekEnd, nextRowByDay } = weekStates[weekIdx];
 
       if (
         (eventStart.isBefore(weekEnd) || eventStart.isSame(weekEnd, 'day')) &&
@@ -111,11 +115,10 @@ export function getMonthPositionedEvents({
           continue;
         }
 
-        const row = findAvailableRow({
-          existingEvents: groupedByWeek[weekIdx.toString()],
+        const row = reserveRow({
+          nextRowByDay,
           startDayIndex,
           daysSpanned,
-          weekStart,
         });
 
         const positionedEvent: MonthPositionedEventData = {

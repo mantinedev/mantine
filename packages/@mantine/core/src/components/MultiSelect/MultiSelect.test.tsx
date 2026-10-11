@@ -175,6 +175,16 @@ describe('@mantine/core/MultiSelect', () => {
     expect(screen.getByText('test-1', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
   });
 
+  it('does not remove last value when backspace is pressed and readOnly is set', async () => {
+    render(
+      <MultiSelect {...defaultProps} defaultValue={['test-1', 'test-2']} searchable readOnly />
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.keyboard('{Backspace}');
+    expect(screen.getByText('test-1', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    expect(screen.getByText('test-2', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+  });
+
   it('toggles dropdown when space is pressed and searchable is false', async () => {
     render(<MultiSelect {...defaultProps} searchable={false} />);
     // Use focus instead of click to avoid triggering onClick handler
@@ -600,5 +610,39 @@ describe('@mantine/core/MultiSelect', () => {
       expect(screen.queryByRole('option', { name: 'Armenia' })).toBe(null);
       expect(getHiddenInput()).toHaveValue('');
     });
+  });
+
+  it('links listbox to the rendered label with aria-labelledby', () => {
+    const { rerender } = render(
+      <MultiSelect label="Test label" data={['test-1', 'test-2']} dropdownOpened />
+    );
+    expect(screen.getByRole('listbox')).toHaveAccessibleName('Test label');
+
+    rerender(
+      <>
+        <MultiSelect
+          label="Test label"
+          labelProps={{ id: 'custom-label-id' }}
+          data={['test-1', 'test-2']}
+          dropdownOpened
+        />
+      </>
+    );
+    expect(screen.getByRole('listbox')).toHaveAttribute('aria-labelledby', 'custom-label-id');
+    expect(screen.getByRole('listbox')).toHaveAccessibleName('Test label');
+  });
+
+  it('does not reference label in aria-labelledby when label is excluded from inputWrapperOrder', () => {
+    render(
+      <MultiSelect
+        label="Test label"
+        aria-label="Test aria-label"
+        inputWrapperOrder={['input']}
+        data={['test-1', 'test-2']}
+        dropdownOpened
+      />
+    );
+    expect(screen.getByRole('listbox')).not.toHaveAttribute('aria-labelledby');
+    expect(screen.getByRole('listbox')).toHaveAccessibleName('Test aria-label');
   });
 });

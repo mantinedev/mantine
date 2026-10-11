@@ -757,7 +757,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     const cornerEl = viewportRef.current.querySelector(`.${classes.resourcesWeekViewCorner}`);
     const labelWidth = cornerEl ? cornerEl.getBoundingClientRect().width : 0;
     viewportRef.current.scrollTo({
-      left: slotRect.left - viewportRect.left - labelWidth,
+      left: slotRect.left - viewportRect.left + viewportRef.current.scrollLeft - labelWidth,
       top: 0,
     });
   }, []);

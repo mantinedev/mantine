@@ -47,7 +47,7 @@
   display: flex;
   position: sticky;
   top: 0;
-  z-index: 5;
+  z-index: 14;
   background-color: var(--mantine-color-body);
   border-bottom: 1px solid var(--resources-day-view-border-color);
   margin-bottom: -1px;
