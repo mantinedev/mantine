@@ -1,5 +1,16 @@
-const TABBABLE_NODES = /input|select|textarea|button|object/;
-export const FOCUS_SELECTOR = 'a, input, select, textarea, button, object, [tabindex]';
+const TABBABLE_NODES = /input|select|textarea|button|object|summary|iframe/;
+export const FOCUS_SELECTOR =
+  'a, input, select, textarea, button, object, summary, iframe, audio[controls], video[controls], [contenteditable], [tabindex]';
+
+function isContentEditable(element: HTMLElement) {
+  const value = element.getAttribute('contenteditable');
+  return value !== null && value !== 'false';
+}
+
+function hasMediaControls(element: HTMLElement) {
+  const nodeName = element.nodeName.toLowerCase();
+  return (nodeName === 'audio' || nodeName === 'video') && element.hasAttribute('controls');
+}
 
 function hidden(element: HTMLElement) {
   if (process.env.NODE_ENV === 'test') {
@@ -49,6 +60,8 @@ export function focusable(element: HTMLElement) {
   const res =
     // @ts-expect-error function accepts any html element but if it is a button, it should not be disabled to trigger the condition
     (TABBABLE_NODES.test(nodeName) && !element.disabled) ||
+    isContentEditable(element) ||
+    hasMediaControls(element) ||
     (element instanceof HTMLAnchorElement ? element.href || isTabIndexNotNaN : isTabIndexNotNaN);
 
   return res && visible(element);
@@ -61,5 +74,12 @@ export function tabbable(element: HTMLElement) {
 }
 
 export function findTabbableDescendants(element: HTMLElement): HTMLElement[] {
-  return Array.from(element.querySelectorAll<HTMLElement>(FOCUS_SELECTOR)).filter(tabbable);
+  const elements = Array.from(element.querySelectorAll<HTMLElement>(FOCUS_SELECTOR)).filter(
+    tabbable
+  );
+  const positive = elements
+    .filter((item) => getElementTabIndex(item) > 0)
+    .sort((a, b) => getElementTabIndex(a) - getElementTabIndex(b));
+  const regular = elements.filter((item) => !(getElementTabIndex(item) > 0));
+  return [...positive, ...regular];
 }
