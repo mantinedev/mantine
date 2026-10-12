@@ -52,7 +52,7 @@ export interface SelectProps<Value extends Primitive = string>
   defaultValue?: Value | null;
 
   /** Called when value changes */
-  onChange?: (value: Value | null, option: ComboboxItem<Value>) => void;
+  onChange?: (value: Value | null, option: ComboboxItem<Value> | null) => void;
 
   /** Called when the clear button is clicked */
   onClear?: () => void;

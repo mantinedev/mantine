@@ -81,6 +81,23 @@ describe('@mantine/core/Select', () => {
     expect(spy).toHaveBeenCalledWith('test-2', { label: 'test-2', value: 'test-2' });
   });
 
+  it('calls onChange with null value and option when selected option is deselected', async () => {
+    const spy = jest.fn();
+    render(<Select {...defaultProps} defaultValue="test-1" onChange={spy} />);
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(screen.getByRole('option', { name: 'test-1' }));
+    expect(spy).toHaveBeenCalledWith(null, null);
+  });
+
+  it('calls onChange with null value and option when clear button is clicked', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <Select {...defaultProps} defaultValue="test-1" clearable onChange={spy} />
+    );
+    await userEvent.click(container.querySelector('.mantine-InputClearButton-root')!);
+    expect(spy).toHaveBeenCalledWith(null, null);
+  });
+
   it('opens/closes dropdown on input click', async () => {
     render(<Select {...defaultProps} />);
     expect(screen.queryByRole('listbox')).toBe(null);
